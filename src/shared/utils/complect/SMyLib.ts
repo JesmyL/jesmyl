@@ -77,6 +77,7 @@ export class SMyLib {
   static keys<T, Key extends T extends Record<infer Key, any> | Partial<Record<infer Key, any>> ? Key : string>(
     obj: T,
   ): Key[] {
+    if (obj == null) return [];
     return Object.keys(obj as never) as never;
   }
 
