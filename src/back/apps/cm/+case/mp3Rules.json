@@ -7,18 +7,8 @@
     "isHTML": 1,
     "textQuery": "pre#music_text"
   },
-  {
-    "url": "https://youthsongs.ru",
-    "attr": "src",
-    "query": "source[src]",
-    "w": 1675952461043.098
-  },
-  {
-    "url": "https://alliluya.com",
-    "attr": "href",
-    "query": "div.filename a[href]",
-    "w": 1675972788074.424
-  },
+  { "url": "https://youthsongs.ru", "attr": "src", "query": "source[src]", "w": 1675952461043.098 },
+  { "url": "https://alliluya.com", "attr": "href", "query": "div.filename a[href]", "w": 1675972788074.424 },
   {
     "url": "https://hvalite.com",
     "attr": "href",
