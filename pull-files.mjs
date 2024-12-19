@@ -1,42 +1,39 @@
-import file_system from 'fs';
-import fetch from 'node-fetch';
+import { exec } from 'child_process';
 
-[
-  ['', 'package'],
-  ['apps/index', 'schedules'],
-  ['', 'bonjour', null],
-  ['apps/cm', 'cols'],
-  ['apps/cm', 'eeStorage'],
-  ['apps/cm', 'meetings'],
-  ['apps/cm', 'mp3Rules'],
-  ['apps/cm', 'chords'],
-  ['apps/cm', 'chordTracks'],
-  // ['apps/leader', 'people'],
-  // ['apps/leader', 'contexts'],
-].forEach(([path, name, ext = 'json']) => {
-  const fileExt = ext === null ? '' : `.${ext}`;
-  const filePath = `${path}/${name}${fileExt}`;
+(async () => {
+  const execAsync = stringCommand => {
+    return new Promise((res, rej) =>
+      exec(stringCommand, error => {
+        if (error) rej(error);
+        else res();
+      }),
+    );
+  };
 
-  fetch(`https://jesmyl.ru/${filePath}`)
-    .then(r => r.text())
-    .then(contentStr => {
-      const caseDir = `./src/back/${path ? `${path}/` : ''}+case`;
+  const paths = [
+    ['', 'package'],
+    ['apps/index', 'schedules'],
+    ['', 'bonjour', null],
+    ['apps/cm'],
+    // ['apps/leader', 'people'],
+    // ['apps/leader', 'contexts'],
+  ];
 
-      if (!file_system.existsSync(caseDir)) file_system.mkdirSync(caseDir);
+  for (const [path, name, ext = 'json'] of paths) {
+    const joinPath = listPaths => listPaths.filter(i => i).join('/');
 
-      file_system.readFile(`${caseDir}/${name}${fileExt}`, (_err, data) => {
-        if (data && JSON.stringify(JSON.parse(contentStr)) === JSON.stringify(JSON.parse('' + data))) return;
+    const nameWithExtOnly = name ? `${name}${ext === null ? '' : `.${ext}`}` : '';
+    const serverPath = joinPath([path, nameWithExtOnly || '*.json']);
+    const localPath = joinPath([path, '+case', nameWithExtOnly]);
 
-        let content = contentStr;
+    console.info('TRY LOAD FILE', serverPath, '=>', localPath);
 
-        try {
-          content = JSON.stringify(JSON.parse(contentStr), null, 2);
-        } catch (e) {}
+    try {
+      await execAsync(`scp -r root@185.244.173.52:/var/www/jesmyl.ru/${serverPath} ./src/back/${localPath}`);
 
-        file_system.writeFile(`${caseDir}/${name}${fileExt}`, content, () =>
-          console.info(`File ${path}/${name}${fileExt} checked!`),
-        );
-      });
-    })
-    .catch(err => console.info(err));
-});
+      console.info(`${serverPath} saved!`);
+    } catch (error) {
+      console.info(`${serverPath} load FAILURE!`);
+    }
+  }
+})();
