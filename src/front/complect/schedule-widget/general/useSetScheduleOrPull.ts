@@ -8,6 +8,7 @@ export const useGetScheduleOrPull = (scheduleInstance: string | IScheduleWidgetW
   const [schedule, setSchedule] = useState<IScheduleWidget | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const schedules = useIndexSchedules();
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (!mylib.isStr(scheduleInstance) && isNaN(scheduleInstance)) return;
@@ -29,12 +30,14 @@ export const useGetScheduleOrPull = (scheduleInstance: string | IScheduleWidgetW
 
         try {
           setSchedule(await serviceMaster('index')('takeDaySchedule', scheduleInstance));
-        } catch (error) {}
+        } catch (error) {
+          setError('' + error);
+        }
 
         setIsLoading?.(false);
       }, 600)
       .effect();
   }, [scheduleInstance, schedules.list, setIsLoading, setSchedule]);
 
-  return [schedule, isLoading] as const;
+  return { schedule, isLoading, error } as const;
 };

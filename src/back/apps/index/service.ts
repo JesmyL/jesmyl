@@ -77,7 +77,7 @@ export const indexService: SokiServiceCallback = (key, value, getCapsule, { clie
 
       const schedules: ScheduleStorage = filer.contents.index['schedules'].data;
 
-      if (schedules.list === undefined) return sendError('Ошибка');
+      if (schedules.list === undefined) return sendError('Ошибка 39162369496123');
 
       const chatInstance: string | IScheduleWidgetWid = value;
 

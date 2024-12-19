@@ -53,7 +53,7 @@ type Props = {
 
 const Child = ({ api, isLoading, initData }: Props) => {
   const [auth, setAuth] = useAuthState();
-  const [schedule] = useGetScheduleOrPull(initData.chat_instance);
+  const { schedule, error } = useGetScheduleOrPull(initData.chat_instance);
 
   useEffect(() => api?.disableVerticalSwipes(), [api]);
 
@@ -82,7 +82,7 @@ const Child = ({ api, isLoading, initData }: Props) => {
         />
       ) : (
         <div className="full-size flex center">
-          {isLoading ? <TheIconLoading /> : <span className="color--ko">Мероприятие не найдено</span>}
+          {isLoading ? <TheIconLoading /> : <span className="color--ko">{error || 'Мероприятие не найдено'}</span>}
         </div>
       )}
     </StyledBox>
