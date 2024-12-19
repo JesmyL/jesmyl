@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { bibleTitles } from '../hooks/texts';
+import { bibleTitles } from '../hooks/bibleTitlesJson';
 import { bibleMolecule } from '../molecules';
 import { BibleTranslateName } from './complect';
 import { useBibleMyTranslates, useBibleShowTranslatesValue } from './hooks';

@@ -1,4 +1,3 @@
-import * as bibleTitlesJSON from 'bibles/book-titles.json';
 import { soki } from 'front/soki';
 import { MyLib } from 'front/utils';
 import { useEffect } from 'react';
@@ -9,8 +8,7 @@ import { translateDescriptions } from '../translates/complect';
 import { useBibleShowTranslatesValue } from '../translates/hooks';
 import { verseTranslateTitleCssClassName } from '../translations/complect';
 import { useBibleAddressBooki } from './address/books';
-
-export const bibleTitles: { titles: [string, string][] } = { ...bibleTitlesJSON } as never;
+import { bibleTitles } from './bibleTitlesJson';
 
 const numSortFunc = (a: number, b: number) => a - b;
 
