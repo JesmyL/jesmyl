@@ -484,11 +484,11 @@
       "app": "index",
       "dsc": "",
       "topic": "",
-      "days": [{ "list": [{ "type": 0, "mi": 0 }], "wup": 7, "mi": 0 }],
+      "days": [{ "list": [], "wup": 7, "mi": 0 }],
       "tatts": [],
       "types": [{ "tm": 90, "title": "Заезд" }],
-      "tgInformTime": 5,
-      "start": 1737147600000,
+      "tgInformTime": 15,
+      "start": 1735765200000,
       "ctrl": {
         "cats": ["Основное"],
         "users": [
@@ -498,12 +498,13 @@
             "nick": "gfirf",
             "tgId": 958383738,
             "mi": 0,
-            "R": 127
+            "R": 127,
+            "tgInform": 1
           },
           { "fio": "Сергей", "mi": 1, "R": 47 }
         ],
         "roles": [{ "mi": 0, "title": "Координатор", "icon": "Teacher", "user": 0 }],
-        "type": 1,
+        "type": 15,
         "defu": 5
       },
       "games": { "criterias": [{ "title": "Сила", "sorts": {} }], "list": [] },
@@ -512,7 +513,8 @@
         "units": [{ "cat": 0, "mi": 1, "title": "Первая", "dsc": "" }]
       },
       "w": 1734513309756.546,
-      "tgChatReqs": "-4665130393/5666913590237312583"
+      "tgChatReqs": "-4665130393/5666913590237312583",
+      "tgInform": 1
     }
   ]
 }
