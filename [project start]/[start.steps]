@@ -1,9 +1,9 @@
+apt-get update && apt-get upgrade
 apt install nano
 apt install nginx
 apt install apache2
 ufw status
 ufw allow 'Apache'
-apt update 
 apt install php7.4
 php -v
 ??? apt-get install -y php-zip
@@ -12,7 +12,10 @@ mkdir /var/www/jesmyl.ru/
 chmod 777 /var/www/jesmyl.ru/
 a2enmod rewrite # for .htaccess work
 
-fuser -k 4446/tcp 
+fuser -k 4446/tcp ###
+
+scp -r ./build/* root@89.104.71.170:/var/www/html # XE5fYQaR41ostIS8
+scp -r ./src/back/back.index.js root@89.104.71.170:/var/www/jesmyl.ru/back.index.js # XE5fYQaR41ostIS8
 
 apt install npm
 cd /var/www/jesmyl.ru/
@@ -84,3 +87,8 @@ systemctl restart apache2
 systemctl restart jesmyl_soki
 systemctl restart jmsg
 netstat -tlpn
+
+
+
+// about certificates
+https://certbot.eff.org/instructions?ws=nginx&os=pip
