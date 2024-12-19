@@ -4,6 +4,6 @@ Description=The Msg Soki Service
 [Service]
 Restart=on-failure
 RestartSec=5s
-ExecStart=node /var/www/html/back.index.js
+ExecStart=node /var/www/sub/back.index.js
 
 #3359

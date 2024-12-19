@@ -56,7 +56,7 @@ DATABASE_URL="postgresql://jesmyl:????@localhost:5432/jdb"
 /////////////// .env
 
 nano /etc/systemd/system/jesmyl_soki.service
-nano /etc/systemd/system/jmsg.service
+vim /etc/systemd/system/jsub.service
 
 nano /etc/php/7.4/apache2/php.ini
 
