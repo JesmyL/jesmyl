@@ -123,14 +123,11 @@ export const invitesTgBotListener = () => {
 
   jesmylTgBot.catchMessages(async (message, bot) => {
     if (message.text === undefined) return;
-    console.log(message);
 
     if (message.reply_to_message?.text) {
       const chatId = message.chat.id;
 
       if (checkIsMessageWithId(message.reply_to_message.text, inners.newChannelName)) {
-        console.log({ name: message.text, chatId });
-
         const meet = await TBInvites.tb.inviteMeeting.findFirst({ where: { chatId } });
 
         if (meet !== null) return;

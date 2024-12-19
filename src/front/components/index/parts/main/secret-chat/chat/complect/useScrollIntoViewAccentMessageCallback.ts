@@ -34,7 +34,6 @@ export const useScrollIntoViewAccentMessageCallback = (
 
         targetMessageNode.scrollIntoView({ block: 'center' });
 
-        console.log(targetMessageNode);
         targetMessageNode.classList.add(secretChatClassNamesDict.markAsAccent);
 
         clearTimeout(markAsAccentClickTimeoutDict[messageId]);
@@ -48,7 +47,6 @@ export const useScrollIntoViewAccentMessageCallback = (
       };
 
       if (targetMessageNode === null) {
-        console.log(targetMessageIdi, alternativeMessagesHashMap, messageId);
         if (targetMessageIdi < 0) {
           if (alternativeMessagesHashMap?.[messageId]) {
             if (isAlternativeList[chatId]) loadMessagesNearIdRef.current(messageId, makeAccent);

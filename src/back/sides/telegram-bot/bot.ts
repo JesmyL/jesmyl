@@ -21,8 +21,6 @@ jesmylTgBot.setCommands([
 
 jesmylTgBot.catchMessages((message, bot) => {
   if (message.text?.startsWith('/init@') || message.text === '/init') {
-    console.log(message);
-
     bot.deleteMessage(message.chat.id, message.message_id);
 
     bot.sendMessage(message.chat.id, `Выберите пункт`, {

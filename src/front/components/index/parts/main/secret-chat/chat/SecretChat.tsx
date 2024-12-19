@@ -52,7 +52,7 @@ const PageChatInContexts = () => {
   const [initialLastReadTs, setInitialLastReadTs] = useState(chatLastReadTs);
   const messageTssRef = useActualRef(useSecretChatMessagesTssContext());
   const contextOfMessageTs = useAtomValue(secretChatMessageTsAsOpenContextAtom);
-  const fetchedMessageIdsSet = useMemo(() => new Set<SecretChat.MessageId>(), []);
+  // const fetchedMessageIdsSet = useMemo(() => new Set<SecretChat.MessageId>(), []);
 
   useEffect(() => {
     soki.send({ chatFetch: { chatId: chat.chatId, pullMessages: true } }, 'index');
@@ -71,30 +71,29 @@ const PageChatInContexts = () => {
   const { limits, updateLimits } = useListInfiniteScrollController(
     listRef,
     messageTssRef.current,
-    'message-place',
     messageTs => messageTs === chatLastReadTs,
-    isMessageStart => {
-      const messageId = isMessageStart
-        ? Math.max(...(messageTssRef.current as never as []))
-        : Math.min(...(messageTssRef.current as never as []));
+    // isMessageStart => {
+    //   const messageId = isMessageStart
+    //     ? Math.max(...(messageTssRef.current as never as []))
+    //     : Math.min(...(messageTssRef.current as never as []));
 
-      if (fetchedMessageIdsSet.has(messageId)) return;
-      fetchedMessageIdsSet.add(messageId);
+    //   if (fetchedMessageIdsSet.has(messageId)) return;
+    //   fetchedMessageIdsSet.add(messageId);
 
-      soki.send(
-        {
-          chatFetch: {
-            chatId: chat.chatId,
-            pullMessages: {
-              isMessageStart,
-              messageId,
-              fetchCount: 30,
-            },
-          },
-        },
-        'index',
-      );
-    },
+    //   soki.send(
+    //     {
+    //       chatFetch: {
+    //         chatId: chat.chatId,
+    //         pullMessages: {
+    //           isMessageStart,
+    //           messageId,
+    //           fetchCount: 30,
+    //         },
+    //       },
+    //     },
+    //     'index',
+    //   );
+    // },
   );
 
   const scrollToAccentMessage = useScrollIntoViewAccentMessageCallback(
@@ -102,8 +101,6 @@ const PageChatInContexts = () => {
     limits,
     updateLimits,
     messageId => {
-      console.log(messageId);
-
       soki
         .send(
           {

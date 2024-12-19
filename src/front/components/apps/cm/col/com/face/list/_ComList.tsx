@@ -1,3 +1,4 @@
+import { isIPhone } from 'front/complect/device-differences';
 import { useListInfiniteScrollController } from 'front/complect/useListInfiniteScrollController';
 import { useSetComListLimitsExtracterContext } from 'front/components/apps/cm/base/SetComListLimitsExtracterContext';
 import { mylib } from 'front/utils';
@@ -19,12 +20,7 @@ export const faceItemDescriptionClassName = 'face-item-description';
 
 export const ComFaceListComList = (props: ComFaceListProps) => {
   const listRef = useRef<HTMLDivElement>(null);
-  const { limits, updateLimits } = useListInfiniteScrollController(
-    listRef,
-    props.list,
-    'face-item',
-    com => com.wid === props.ccomw,
-  );
+  const { limits, updateLimits } = useListInfiniteScrollController(listRef, props.list, com => com.wid === props.ccomw);
 
   useSetComListLimitsExtracterContext().current = updateLimits;
 
@@ -38,7 +34,7 @@ export const ComFaceListComList = (props: ComFaceListProps) => {
       {...props}
       listRef={listRef}
     >
-      {props.list.slice(limits.start, limits.finish).map((com, comi) => {
+      {props.list.slice(isIPhone ? 0 : limits.start, limits.finish).map((com, comi) => {
         return (
           <FaceItem
             key={isSetWids ? com.wid : comi}
