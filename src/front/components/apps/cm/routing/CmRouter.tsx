@@ -1,7 +1,10 @@
 import { MyLib } from 'front/utils';
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { CmComWid } from 'shared/api';
 import { useAtom } from '../../../../complect/atoms';
+import { cmAppActions } from '../app-actions/cm-app-actions';
+import { CmSharedComListActionInterpretator } from '../app-actions/SharedComList';
 import TheCat from '../col/cat/TheCat';
 import { useTakeActualComw } from '../col/com/useCcom';
 import Lists from '../lists/Lists';
@@ -14,6 +17,12 @@ const commentsAtom = cmMolecule.select(s => s.comComments);
 
 export default function CmRouter({ mainNode }: { mainNode: React.ReactNode }) {
   useTakeActualComw();
+  const [comListOnAction, setComListOnAction] = useState<CmComWid[] | null>(null);
+
+  cmAppActions.useOnAction(({ props, navigate }) => {
+    if (props.comws?.length) setComListOnAction(props.comws);
+    if (props.comw != null) navigate(`/cm/i/${props.comw}`);
+  });
 
   // todo remove it
   //////////////////////////
@@ -55,6 +64,13 @@ export default function CmRouter({ mainNode }: { mainNode: React.ReactNode }) {
       </Routes>
 
       <CmFooter />
+
+      {comListOnAction && (
+        <CmSharedComListActionInterpretator
+          comws={comListOnAction}
+          onClose={setComListOnAction}
+        />
+      )}
     </>
   );
 }

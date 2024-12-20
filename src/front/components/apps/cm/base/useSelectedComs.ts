@@ -62,5 +62,6 @@ export default function useSelectedComs() {
     updateSelectedComws,
     clearSelectedComws: () => updateSelectedComws([]),
     toggleSelectedCom,
+    setSelectedComws,
   };
 }

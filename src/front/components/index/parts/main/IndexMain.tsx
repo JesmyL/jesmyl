@@ -1,3 +1,4 @@
+import { IconComputerSettingsStrokeRounded } from 'front/complect/the-icon/icons/computer-settings';
 import React, { Suspense, useState } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import { itNNull } from 'shared/utils';
@@ -10,7 +11,6 @@ import { FullContent } from '../../../../complect/fullscreen-content/FullContent
 import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
 import ScheduleWidgetAlarm from '../../../../complect/schedule-widget/alarm/Alarm';
 import { scheduleWidgetListPageRoute } from '../../../../complect/schedule-widget/general/ListPageRoute';
-import { IconCloudStrokeRounded } from '../../../../complect/the-icon/icons/cloud';
 import { IconInformationCircleStrokeRounded } from '../../../../complect/the-icon/icons/information-circle';
 import { IconRefreshStrokeRounded } from '../../../../complect/the-icon/icons/refresh';
 import { IconSettings02StrokeRounded } from '../../../../complect/the-icon/icons/settings-02';
@@ -99,13 +99,22 @@ export default function IndexMain() {
                       title="Настройки"
                     />
                   </Link>
-                  <Link
+                  {/* <Link
                     to="advertising"
                     className="full-width"
                   >
                     <BrutalItem
                       icon={<IconCloudStrokeRounded />}
                       title="Посмотреть стороннюю рекламу"
+                    />
+                  </Link> */}
+                  <Link
+                    to="./actions"
+                    className="full-width"
+                  >
+                    <BrutalItem
+                      icon={<IconComputerSettingsStrokeRounded />}
+                      title="Взаимодействие"
                     />
                   </Link>
                   <BrutalItem

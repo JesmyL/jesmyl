@@ -15,6 +15,7 @@ import { HideMetronomeTool } from './complect/HideMetronomeTool';
 import { MarkedComTool } from './complect/MarkedComTool';
 import { MiniAnchorSwitchTool } from './complect/MiniAnchorSwitchTool';
 import { OpenPlayerTool } from './complect/OpenPlayerTool';
+import { QrComShare } from './complect/QrComShare';
 import { RedactComTool } from './complect/RedactComTool';
 import { SelectedToggleTool } from './complect/SelectedToggleTool';
 import { TranslationTool } from './complect/TranslationTool';
@@ -64,6 +65,7 @@ const toolsDict: Record<MigratableComToolName, React.ReactNode> = {
   'hide-metronome': <HideMetronomeTool />,
   'is-mini-anchor': <MiniAnchorSwitchTool />,
   'edit-com': <RedactComTool />,
+  'qr-share': <QrComShare />,
 };
 const toolKeys = MyLib.keys(toolsDict);
 

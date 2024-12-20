@@ -1,3 +1,4 @@
+import { LinkAppActionFabric } from 'front/complect/link-app-actions';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './App.scss';
@@ -18,6 +19,10 @@ function App() {
 const FirstNaver = ({ onSet }: { onSet: (is: false) => void }) => {
   const navigate = useNavigate();
   const loc = useLocation();
+
+  useEffect(() => {
+    LinkAppActionFabric.onHrefData(navigate, window.location.href);
+  }, [navigate]);
 
   useEffect(() => {
     onSet(false);

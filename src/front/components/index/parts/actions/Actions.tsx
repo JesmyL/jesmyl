@@ -1,13 +1,16 @@
-import { Route, Routes } from 'react-router-dom';
+import { LinkAppActionFabric } from 'front/complect/link-app-actions';
+import { QrReader } from 'front/complect/qr-code/useQrReader';
+import { useState } from 'react';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
 import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
-import useQRMaster from '../../../../complect/qr-code/useQRMaster';
 import { IconFile02StrokeRounded } from '../../../../complect/the-icon/icons/file-02';
 import { IconQrCode01StrokeRounded } from '../../../../complect/the-icon/icons/qr-code-01';
 import IndexMyFiles from './files/MyFiles';
 
 export default function IndexActions() {
-  const { readQR, qrNode } = useQRMaster();
+  const [isQrOpen, setIsQrOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <Routes>
@@ -20,11 +23,21 @@ export default function IndexActions() {
             contentClass="flex column padding-gap"
             content={
               <>
-                {qrNode}
+                {isQrOpen && (
+                  <QrReader
+                    onClose={setIsQrOpen}
+                    onReadData={value => {
+                      if (value.data.startsWith('https://')) {
+                        LinkAppActionFabric.onHrefData(navigate, value.data);
+                        setIsQrOpen(false);
+                      }
+                    }}
+                  />
+                )}
                 <BrutalItem
                   icon={<IconQrCode01StrokeRounded />}
                   title="Читать QR"
-                  onClick={() => readQR()}
+                  onClick={() => setIsQrOpen(true)}
                 />
                 <BrutalItem
                   icon={<IconFile02StrokeRounded />}

@@ -11,7 +11,6 @@ import IconButton from '../../../../complect/the-icon/IconButton';
 import IconCheckbox from '../../../../complect/the-icon/IconCheckbox';
 import { IconArrowDownDoubleStrokeRounded } from '../../../../complect/the-icon/icons/arrow-down-double';
 import { IconArrowUpDoubleStrokeRounded } from '../../../../complect/the-icon/icons/arrow-up-double';
-import { IconComputerSettingsStrokeRounded } from '../../../../complect/the-icon/icons/computer-settings';
 import { IconKeyboardStrokeRounded } from '../../../../complect/the-icon/icons/keyboard';
 import { IconPaintBoardStrokeRounded } from '../../../../complect/the-icon/icons/paint-board';
 import { IconRssErrorStrokeRounded } from '../../../../complect/the-icon/icons/rss-error';
@@ -67,15 +66,6 @@ export default function IndexSettings() {
         />
       </Link>
     ),
-    <Link
-      to="../actions"
-      className="full-width"
-    >
-      <BrutalItem
-        icon={<IconComputerSettingsStrokeRounded />}
-        title="Взаимодействие"
-      />
-    </Link>,
     // <BrutalItem
     //   icon={<SecretChatsIcon />}
     //   title="Секретные чаты в нижнем меню"

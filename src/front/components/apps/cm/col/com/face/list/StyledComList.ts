@@ -7,7 +7,6 @@ import { currentComwIdPrefix } from './_ComList';
 export const StyledComList = styled.div<{
   $ccomw: CmComWid | NaN | nil;
   $accentComw: number | nil;
-  $selectedComws: CmComWid[];
   $isPutCcomFaceOff: boolean | nil;
   $comTitles: Record<number, string> | und;
 }>`
@@ -54,20 +53,6 @@ export const StyledComList = styled.div<{
             }
           `
         : ''}
-
-      ${props.$selectedComws.map(selectedComwMapper).join(' ')}
     `;
   }}
 `;
-
-const selectedComwMapper = (comw: CmComWid, comwi: number) => {
-  return Array.from(css`
-    #${currentComwIdPrefix}${comw} .face-logo {
-      border-color: var(--color--3);
-
-      &::after {
-        content: '${comwi + 1}';
-      }
-    }
-  `).join('');
-};

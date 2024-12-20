@@ -3,11 +3,10 @@ import { useMemo } from 'react';
 import { CmComWid } from '../../../../../../../../shared/api/complect/apps/cm/complect/enums';
 import { FloatPopup, useFloatPopupCoords } from '../../../../../../../complect/absolute-popup/float-popup/FloatPopup';
 import propsOfClicker from '../../../../../../../complect/clicker/propsOfClicker';
-import useSelectedComs from '../../../../base/useSelectedComs';
 import ComFaceContextMenu from '../ComFaceContextMenu';
 import { ComFaceListProps, currentComwIdPrefix } from './_ComList';
 import { StyledComList } from './StyledComList';
-import { useComListClickListener } from './useComListClickListener';
+import { ComListPreviousSibling } from './StyledComListPrevious';
 import { useScrollToCurrentComFace } from './useScrollToCurrentComFace';
 
 interface Props extends ComFaceListProps {
@@ -17,9 +16,7 @@ interface Props extends ComFaceListProps {
 
 export const ComListControlledContainer = (props: Props) => {
   const [floatMenuCoords, setFloatMenuCoords] = useFloatPopupCoords<{ comw: CmComWid }>();
-  const { selectedComws, toggleSelectedCom } = useSelectedComs();
 
-  useComListClickListener(props.listRef, props.importantOnClick, props.list, toggleSelectedCom);
   useScrollToCurrentComFace(props.listRef, props);
 
   const clickerProps = useMemo(
@@ -54,10 +51,14 @@ export const ComListControlledContainer = (props: Props) => {
 
   return (
     <>
+      <ComListPreviousSibling
+        list={props.list}
+        listRef={props.listRef}
+        importantOnClick={props.importantOnClick}
+      />
       <StyledComList
         $ccomw={props.ccomw}
         $accentComw={floatMenuCoords?.comw}
-        $selectedComws={selectedComws}
         $isPutCcomFaceOff={props.isPutCcomFaceOff}
         $comTitles={props.titles}
         className={props.className}
