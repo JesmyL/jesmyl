@@ -22,6 +22,8 @@ export const QrReader = ({ facingMode = 'environment', onReadData, onClose }: Pr
     });
     qrScanner.start();
 
+    qrScanner.setInversionMode('both');
+
     return () => {
       qrScanner.pause();
     };
