@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useCheckIsAccessed } from '../../../../../../complect/exer/hooks/check-is-accessed';
 import { useExerExec } from '../../../../../../complect/exer/hooks/useExer';
@@ -22,8 +22,12 @@ export default function EditComposition() {
   const auth = useAuth();
   const checkIsAccessed = useCheckIsAccessed(auth);
   const connectionNode = useConnectionState('margin-gap');
+  const navigate = useNavigate();
 
-  if (!ccom) return null;
+  if (!ccom) {
+    setTimeout(navigate, 0, '..');
+    return null;
+  }
 
   return (
     <StyledContainer

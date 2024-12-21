@@ -18,7 +18,7 @@ export default function TextsChordsRedactor({ ccoln }: { ccoln: 'texts' | 'chord
 
   return (
     <>
-      {[colList?.length ? colList : ''].flat().map((col, coli) => {
+      {(colList?.length ? colList : ['']).map((col, coli) => {
         return (
           <EditContainerCorrectsInformer
             className="margin-big-gap-v"
