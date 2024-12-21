@@ -1,4 +1,3 @@
-import { QrCodeFullScreen } from 'front/complect/qr-code/QrCodeFullScreen';
 import { IconQrCode01StrokeRounded } from 'front/complect/the-icon/icons/qr-code-01';
 import { useState } from 'react';
 import { BottomPopupItem } from '../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
@@ -7,8 +6,8 @@ import { FullContent } from '../../../../../complect/fullscreen-content/FullCont
 import { IconBookOpen02StrokeRounded } from '../../../../../complect/the-icon/icons/book-open-02';
 import { IconComputerStrokeRounded } from '../../../../../complect/the-icon/icons/computer';
 import { IconPlayStrokeRounded } from '../../../../../complect/the-icon/icons/play';
-import { cmAppActions } from '../../app-actions/cm-app-actions';
 import { Com } from '../../col/com/Com';
+import { ComListQrShare } from './ComListShare';
 import FullscreenExpandComList from './FullscreenExpandComList';
 
 export const LocalListToolsPopup = ({ coms }: { coms: Com[] | und }) => {
@@ -44,9 +43,9 @@ export const LocalListToolsPopup = ({ coms }: { coms: Com[] | und }) => {
           }}
         />
         {isOpenQr && (
-          <QrCodeFullScreen
+          <ComListQrShare
             onClose={setIsOpenQr}
-            text={cmAppActions.makeLink({ comws: coms.map(com => com.wid) })}
+            coms={coms}
           />
         )}
       </>

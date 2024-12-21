@@ -2,7 +2,13 @@ import CopyTextButton from '../CopyTextButton';
 import { FullContent } from '../fullscreen-content/FullContent';
 import QRCode from './QRCode';
 
-export const QrCodeFullScreen = ({ text, onClose }: { text: string; onClose: (isOpen: false) => void }) => {
+interface Props {
+  text: string;
+  onClose: (isOpen: false) => void;
+  copyText?: string;
+}
+
+export const QrCodeFullScreen = ({ text, onClose, copyText }: Props) => {
   return (
     <FullContent
       onClose={onClose}
@@ -13,7 +19,7 @@ export const QrCodeFullScreen = ({ text, onClose }: { text: string; onClose: (is
         text={text}
         className="full-width full-max-height"
       />
-      <CopyTextButton text={text} />
+      <CopyTextButton text={copyText ?? text} />
     </FullContent>
   );
 };
