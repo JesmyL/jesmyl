@@ -38,7 +38,7 @@ export class EditableCat extends Cat {
           .map(com => {
             com.texts?.forEach((text, texti) => com.setBlockCorrects('texts', texti, text, true));
             com.chords?.forEach((chords, chordsi) => com.setBlockCorrects('chords', chordsi, chords, true));
-            com.rename(com.name, null, false, true);
+            com.rename(com.name, null, true);
 
             return Object.values(com.corrects).some(correct => correct?.isSome()) ? { com } : null;
           })

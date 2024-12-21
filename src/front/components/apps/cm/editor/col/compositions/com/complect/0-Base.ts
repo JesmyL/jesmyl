@@ -19,19 +19,7 @@ export class EditableComBase extends Com {
     this.initial = new Com(mylib.clone(top), index);
   }
 
-  get isCreated() {
-    return this.col.isCreated;
-  }
-  set isCreated(val: boolean) {
-    this.col.isCreated = val;
-  }
-
   create() {
-    this.isCreated = true;
-    return this;
-  }
-
-  publicate(onLoad: () => void) {
     this.col.execCol(
       {
         action: 'comAdd',
@@ -41,18 +29,14 @@ export class EditableComBase extends Com {
           comw: this.wid,
           value: this.toCreateDict(),
         },
-        onLoad,
       },
       'com',
     );
+
+    return this;
   }
 
-  rename(
-    name: string,
-    onCorrecting?: ((val?: string) => any | nil | void) | nil,
-    isSetExec = true,
-    isSetAllText?: boolean,
-  ) {
+  rename(name: string, onCorrecting?: ((val?: string) => any | nil | void) | nil, isSetAllText?: boolean) {
     this.col.renameCol(
       name,
       'com',
@@ -60,33 +44,12 @@ export class EditableComBase extends Com {
         this.rename(correct, onCorrecting);
         onCorrecting?.(correct);
       },
-      isSetExec,
       isSetAllText,
     );
-
-    this.setCreatedCom();
   }
 
   exec<Value>(bag: FreeExecDict<Value>) {
-    this.setCreatedCom(() => this.col.execCol(bag, 'com'));
-  }
-
-  setCreatedCom(elseCb?: () => void) {
-    if (this.isCreated)
-      setTimeout(() =>
-        this.col.execCol(
-          {
-            action: 'comAdd',
-            method: 'set',
-            prev: NaN,
-            args: {
-              value: this.toCreateDict(),
-            },
-          },
-          'com',
-        ),
-      );
-    else elseCb?.();
+    this.col.execCol(bag, 'com');
   }
 
   toCreateDict() {

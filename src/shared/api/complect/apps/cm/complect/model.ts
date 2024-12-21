@@ -1,4 +1,4 @@
-import { CmCatWid, CmComOrderWid, CmComWid, CmMeetingEventWid } from './enums';
+import { CmCatWid, CmComMod, CmComOrderWid, CmComWid, CmMeetingEventWid } from './enums';
 
 export interface CmMp3Rule {
   w: number;
@@ -53,6 +53,7 @@ export interface IExportableOrder extends InheritancableOrder {
 export interface IExportableCom {
   n: string;
   w: CmComWid;
+  m: CmComMod;
   k?: number; // вариант группировки строк для трансляций
   p?: number; // уровень модулирования
   l?: number; // язык песни

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CmMp3Rule } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
@@ -12,7 +12,7 @@ import { EditableCom } from '../com/EditableCom';
 import ComAudio from './audio/ComAudio';
 import ObserveUrlResource from './audio/ObserveUrlResource';
 
-export default function NewComposition({ close }: { close: () => void }) {
+export default function NewComposition({ close, com }: { close: () => void; com: EditableCom }) {
   const navigate = useNavigate();
   const cols = useEditableCols();
   const exec = useExerExec();
@@ -21,11 +21,6 @@ export default function NewComposition({ close }: { close: () => void }) {
   const [isTakeName, setIsTakeName] = useState(true);
   const [innerHTML, setInnerHTML] = useState('');
   const [mp3Rule, setMp3Rule] = useState<CmMp3Rule | und>();
-
-  const com = useMemo(
-    () => new EditableCom({ n: '', w: Date.now(), t: [], c: [], o: [] }, cols?.coms.length || -1).create(),
-    [cols],
-  );
 
   const setTextAsValue = (value: string) => {
     setValue(value);
@@ -36,21 +31,12 @@ export default function NewComposition({ close }: { close: () => void }) {
     }
   };
 
-  const goToRoute = () => {
-    navigate('' + com.wid);
-    close();
-  };
-
-  const publicate = () => {
-    if (cols?.addCom(com)) {
-      com.publicate(() => goToRoute());
-      exec();
-    }
-  };
-
   return (
     <>
-      <div className="new-composition">
+      <div
+        className="new-composition"
+        onClick={event => event.stopPropagation()}
+      >
         <div className="title">Новая песня</div>
 
         <EditContainerCorrectsInformer
@@ -107,9 +93,13 @@ export default function NewComposition({ close }: { close: () => void }) {
           Icon={IconTickDouble02StrokeRounded}
           className="parse-com-data-button pointer margin-big-gap"
           onClick={() => {
-            publicate();
-            com.parseBlocks(value);
-            goToRoute();
+            if (cols?.addCom(com)) {
+              com.create();
+              com.parseBlocks(value);
+              navigate('' + com.wid);
+              close();
+              exec();
+            }
           }}
         />
       </div>

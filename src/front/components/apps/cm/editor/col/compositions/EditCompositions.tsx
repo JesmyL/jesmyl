@@ -1,6 +1,6 @@
+import { BottomPopup } from 'front/complect/absolute-popup/bottom-popup/BottomPopup';
 import { useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useBottomPopup } from '../../../../../../complect/absolute-popup/bottom-popup/useBottomPopup';
 import DebouncedSearchInput from '../../../../../../complect/DebouncedSearchInput';
 import { useExerListener } from '../../../../../../complect/exer/hooks/useExer';
 import { ComFaceList } from '../../../col/com/face/list/ComFaceList';
@@ -14,7 +14,7 @@ import EditComposition from './EditComposition';
 export default function EditCompositions() {
   const zcat: EditableCat | und = useEditableCcat(0);
   const [term, setTerm] = useState(zcat?.term || '');
-  const [popupNode, openPopup] = useBottomPopup(EditCompositionsMore);
+  const [isOpenMorePopup, setIsOpenMorePopup] = useState(false);
   useExerListener();
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -24,7 +24,6 @@ export default function EditCompositions() {
         index
         element={
           <>
-            {popupNode}
             <PhaseCmEditorContainer
               className="edit-compositions"
               headClass="flex between full-width"
@@ -43,10 +42,15 @@ export default function EditCompositions() {
                   />
                 )
               }
-              onMoreClick={openPopup}
+              onMoreClick={setIsOpenMorePopup}
               contentRef={listRef}
               content={<ComFaceList list={zcat?.wraps.map(wrap => wrap.item)} />}
             />
+            {isOpenMorePopup && (
+              <BottomPopup onClose={setIsOpenMorePopup}>
+                <EditCompositionsMore />
+              </BottomPopup>
+            )}
           </>
         }
       />

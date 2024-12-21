@@ -13,13 +13,11 @@ export class EditableCol<Col extends BaseNamedExportables> extends BaseNamed<Col
   removed = false;
   incorrectName = false;
   corrects: Record<string, CorrectsBox | nil> = {};
-  isCreated = false;
 
   renameCol<Coln extends keyof IExportableCol>(
     name: string,
     coln: Coln,
     onFix?: (correct: string) => void,
-    isSetExec = true,
     isSetAllText?: boolean,
   ) {
     const action = `${coln}Rename`;
@@ -28,20 +26,19 @@ export class EditableCol<Col extends BaseNamedExportables> extends BaseNamed<Col
 
     this.name = name;
 
-    if (!this.isCreated && isSetExec) {
-      const exec = this.execCol(
-        {
-          action,
-          prev,
-          method: 'set',
-          value: name,
-          args: { value: name },
-          corrects,
-        },
-        coln,
-      );
-      this.corrects.name = exec?.corrects ?? corrects;
-    } else this.corrects.name = corrects;
+    const exec = this.execCol(
+      {
+        action,
+        prev,
+        method: 'set',
+        value: name,
+        args: { value: name },
+        corrects,
+      },
+      coln,
+    );
+
+    this.corrects.name = exec?.corrects ?? corrects;
   }
 
   removeCol<Coln extends keyof IExportableCol>(coln: Coln, isRemoved = true) {

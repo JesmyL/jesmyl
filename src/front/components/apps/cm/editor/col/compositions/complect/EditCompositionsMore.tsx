@@ -1,30 +1,36 @@
-import { BottomPopupContenter } from '../../../../../../../complect/absolute-popup/bottom-popup/model';
-import useFullContent from '../../../../../../../complect/fullscreen-content/useFullContent';
-import IconButton from '../../../../../../../complect/the-icon/IconButton';
+import { BottomPopupItem } from 'front/complect/absolute-popup/bottom-popup/BottomPopupItem';
+import { FullContent } from 'front/complect/fullscreen-content/FullContent';
+import { useState } from 'react';
 import { IconPlusSignCircleStrokeRounded } from '../../../../../../../complect/the-icon/icons/plus-sign-circle';
+import { useEditableCols } from '../../useEditableCols';
+import { EditableCom } from '../com/EditableCom';
 import NewComposition from './NewComposition';
 
-export const EditCompositionsMore: BottomPopupContenter = (isOpen, closePopup) => {
-  const [fullContentNode, openFullContent] = useFullContent(close => (
-    <NewComposition
-      close={() => {
-        close();
-        closePopup();
-      }}
-    />
-  ));
+export const EditCompositionsMore = () => {
+  const [newEditableCom, setNewEditableCom] = useState<EditableCom | null>(null);
+  const cols = useEditableCols();
 
-  return [
-    <>{fullContentNode}</>,
-    isOpen && (
-      <IconButton
+  return (
+    <>
+      {newEditableCom && (
+        <FullContent onClose={() => setNewEditableCom(null)}>
+          <NewComposition
+            com={newEditableCom}
+            close={() => {
+              setNewEditableCom(null);
+            }}
+          />
+        </FullContent>
+      )}
+      <BottomPopupItem
         Icon={IconPlusSignCircleStrokeRounded}
-        postfix="Новая песня"
-        onClick={() => {
-          openFullContent();
-          closePopup();
+        title="Новая песня"
+        onClick={event => {
+          event.stopPropagation();
+          const w = Date.now();
+          setNewEditableCom(new EditableCom({ n: '', w, m: w, t: [], c: [], o: [] }, cols?.coms.length || -1).create());
         }}
       />
-    ),
-  ];
+    </>
+  );
 };

@@ -44,6 +44,7 @@ export class EditableCom extends EditableComCutBlock {
         t: '',
         ton: '',
         w: '',
+        m: '',
         bpm: 'setComBeatsPerMinute',
         s: 'setComMeterSize',
       },
@@ -130,10 +131,6 @@ export class EditableCom extends EditableComCutBlock {
   }
 
   setAudio(val: string) {
-    if (this.isCreated) {
-      this.audio = val.trim();
-      return false;
-    }
     const prev = this.audio.trim();
     const value = val.trim().replace(makeRegExp('/\\n{2,}/'), '\n');
     this.exec({

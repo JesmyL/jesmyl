@@ -2,6 +2,10 @@ export enum CmComWid {
   def = -1,
 }
 
+export enum CmComMod {
+  def = -1,
+}
+
 export enum CmComOrderWid {
   def = -1,
 }

@@ -17,6 +17,7 @@ import { actionBoxSetSystems } from 'shared/values';
 
 const globs: Record<string, any> = {
   'setNewWid()': () => new Date().getTime() + Math.random(),
+  'DateNow()': () => Date.now(),
 };
 
 export class ExecuterBasics {

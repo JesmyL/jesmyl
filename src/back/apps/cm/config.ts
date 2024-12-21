@@ -162,16 +162,21 @@ const config: FilerAppConfig = {
         '<add>': {
           level: 50,
           action: 'comAdd',
-          title: 'Добавлена новая Песня "$name;"',
+          title: 'Добавлена новая Песня',
           method: 'push',
           args: {
             value: '#Dict',
-            name: '#String',
           },
         },
         '/[w === {comw}]': {
           args: {
             comw: '#Number',
+          },
+          side: {
+            '/m': {
+              method: 'set',
+              value: '{@DateNow()}',
+            },
           },
           '/{coln}': {
             level: 50,
