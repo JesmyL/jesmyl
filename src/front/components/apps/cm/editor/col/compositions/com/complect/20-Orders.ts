@@ -168,9 +168,12 @@ export class EditableComOrders extends EditableComCorrects {
           return strategy => strategy.RememberNew;
       },
     });
+
     const index = this.ords.findIndex(o => o.top.w === wid);
 
-    this.ords.splice(index, 1);
+    if (index < 0) return;
+
+    this.top.o?.splice(index, 1);
     this.afterOrderChange();
 
     this.resetChordLabels();
@@ -189,7 +192,7 @@ export class EditableComOrders extends EditableComCorrects {
     const anchor = ord.takeUniq();
     const nextWid = this.getNextOrdWid();
 
-    this.ords.push({ top: { a: anchor, w: nextWid }, header: this.emptyOrderHeader });
+    this.top.o?.push({ a: anchor, w: nextWid });
     this.afterOrderChange();
 
     return this.exec({
