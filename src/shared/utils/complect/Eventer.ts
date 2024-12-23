@@ -19,8 +19,8 @@ export type EventerValueListeners<Value, Return = void> =
   | Set<EventerValueCallback<Value, Return>>;
 
 export type EventerListenScope<Value = void> = {
-  listen: (cb: EventerValueCallback<Value>) => () => void;
-  listenFirst: (cb: EventerValueCallback<Value>) => void;
+  listen: (cb: EventerValueCallback<Value>, initValue?: Value) => () => void;
+  listenFirst: (cb: EventerValueCallback<Value>) => () => void;
   mute: (cb: EventerValueCallback<Value>) => void;
   invoke: (value: Value) => Value;
 };
@@ -145,7 +145,7 @@ export class Eventer {
     const listeners: EventerValueListeners<Value> = new Set();
 
     return {
-      listen: cb => this.listenValue(listeners, cb),
+      listen: (cb, initValue) => this.listenValue(listeners, cb, initValue),
       mute: cb => this.muteValue(listeners, cb),
       invoke: value => this.invokeValue(listeners, value),
       listenFirst: cb => {
@@ -153,6 +153,8 @@ export class Eventer {
           cb(value);
           rem();
         });
+
+        return rem;
       },
     };
   }

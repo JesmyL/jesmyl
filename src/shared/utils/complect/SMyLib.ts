@@ -220,7 +220,7 @@ export class SMyLib {
     return md5(content);
   }
 
-  overlap<T extends {}>(...args: any[]): T {
+  overlap<T extends object>(...args: any[]): T {
     if (args.length === 0) return null as never;
     const zero = args[0] ?? {};
 
@@ -230,11 +230,11 @@ export class SMyLib {
     return zero;
   }
 
-  keys<T extends {}>(o: T): (keyof T)[] {
+  keys<T extends object>(o: T): (keyof T)[] {
     return Object.keys(o) as never;
   }
 
-  values<T extends {}>(o: T): T[keyof T][] {
+  values<T extends object>(o: T): T[keyof T][] {
     return Object.values(o) as never;
   }
 
