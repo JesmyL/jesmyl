@@ -7,7 +7,7 @@ import { IconDelete02StrokeRounded } from '../../../../complect/the-icon/icons/d
 import { IconPencilEdit02StrokeRounded } from '../../../../complect/the-icon/icons/pencil-edit-02';
 import { soki } from '../../../../soki';
 import { bibleMolecule } from '../molecules';
-import { bibleAllTranslates, bibleDefaultTranslates, BibleTranslateName, translateDescriptions } from './complect';
+import { bibleAllTranslates, BibleTranslateName, translateDescriptions } from './complect';
 import { useBibleMyTranslates } from './hooks';
 
 export default function BibleModulesTranslationsRedactButton(): JSX.Element {
@@ -23,16 +23,16 @@ export default function BibleModulesTranslationsRedactButton(): JSX.Element {
           <>
             <h3 className="margin-gap-v text-bold">Загруженные переводы</h3>
             {myTranslates.map(tName => {
-              const isDefault = bibleDefaultTranslates.includes(tName as never);
+              const isUnremovable = myTranslates.length < 2;
               const title = `${translateDescriptions[tName]} (${tName.toUpperCase()})`;
 
               return (
                 <IconButton
                   key={tName}
-                  Icon={isDefault ? IconBookOpen02StrokeRounded : IconDelete02StrokeRounded}
+                  Icon={isUnremovable ? IconBookOpen02StrokeRounded : IconDelete02StrokeRounded}
                   className="margin-gap-l margin-gap-v"
-                  iconClassName={isDefault ? undefined : 'color--ko'}
-                  disabled={isDefault}
+                  iconClassName={isUnremovable ? undefined : 'color--ko'}
+                  disabled={isUnremovable}
                   confirm={`Удалить безвозвратно модуль  "${title}"`}
                   prefix={title}
                   onClick={() => {
