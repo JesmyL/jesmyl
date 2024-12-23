@@ -9,12 +9,16 @@ export const QrComShare = () => {
   const ccom = useComToolsCcomContext();
   const [isOpenQr, setIsOpenQr] = useState(false);
 
+  if (!ccom) return;
+  const link = cmAppActions.makeLink({ comw: ccom?.wid });
+
   return (
     <>
       {isOpenQr && (
         <QrCodeFullScreen
           onClose={setIsOpenQr}
-          text={cmAppActions.makeLink({ comw: ccom?.wid })}
+          text={link}
+          copyText={`${link} - ${ccom.name}`}
         />
       )}
       <ComTool
