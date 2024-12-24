@@ -20,22 +20,14 @@ export default function useConnectionState(className?: string) {
   );
 
   useEffect(() => {
-    if (isFocused) {
-      const to = setTimeout(() => setIsConnected(false), 500);
-      soki.ping(() => {
-        clearTimeout(to);
-        setIsConnected(true);
-      });
-
-      return () => clearTimeout(to);
-    }
+    if (isFocused) soki.ping();
   }, [isFocused]);
 
   return isOnline ? (
     isConnected ? null : (
       <TheIconLoading
         className={className}
-        onClick={() => soki.ping(() => setIsConnected(true))}
+        onClick={soki.ping}
       />
     )
   ) : (

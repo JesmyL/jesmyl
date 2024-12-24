@@ -37,13 +37,10 @@ const info = console.info;
 
 interface ResponseWaiter {
   requestId: string;
-  isPing?: true;
   ok: (response: SokiServerEvent) => void;
   ko?: (errorMessage: string) => boolean | void;
   final?: () => void;
 }
-
-let pingTimeout: TimeOut;
 
 export class SokiTrip {
   private ws?: WebSocket;
@@ -194,6 +191,13 @@ export class SokiTrip {
     this.ws.onmessage = async ({ data }: { data: string }) => {
       try {
         const event: SokiServerEvent = JSON.parse(data);
+
+        if (event.pong) {
+          this.setIsConnected(true);
+          clearTimeout(this.pingDisconnectedSetterTimeout);
+          return;
+        }
+
         this.onServerEvent.invoke(event);
         info(event);
         let waiter: ResponseWaiter | null = null;
@@ -201,7 +205,7 @@ export class SokiTrip {
         for (let i = this.responseWaiters.length - 1; i > -1; i--) {
           waiter = this.responseWaiters[i];
 
-          if (waiter.requestId === event.requestId || waiter.isPing === true) {
+          if (waiter.requestId === event.requestId) {
             if (event.errorMessage) waiter.ko?.(event.errorMessage);
             else waiter.ok(event);
 
@@ -336,15 +340,24 @@ export class SokiTrip {
           ok,
           ko,
           final,
-          isPing: body.ping,
         });
       },
     };
   };
 
-  ping: ResponseWaiterCallback = (ok, ko, final) => {
-    clearTimeout(pingTimeout);
-    pingTimeout = setTimeout(() => this.send({ ping: true }, 'index').on(ok, ko, final), 0);
+  private pingTimeout: TimeOut;
+  private pingDisconnectedSetterTimeout: TimeOut;
+  ping = () => {
+    if (this.pingTimeout === undefined) {
+      clearTimeout(this.pingDisconnectedSetterTimeout);
+      this.pingDisconnectedSetterTimeout = setTimeout(() => this.setIsConnected(false), 500);
+    }
+
+    clearTimeout(this.pingTimeout);
+    this.pingTimeout = setTimeout(() => {
+      this.ws?.send(JSON.stringify({ ping: true }));
+      this.pingTimeout = undefined;
+    }, 0);
   };
 }
 

@@ -1,4 +1,4 @@
-import { Eventer, EventerCallback, EventerListeners, EventerValueCallback, EventerValueListeners } from 'shared/utils';
+import { Eventer, EventerCallback, EventerListeners, EventerValueCallback } from 'shared/utils';
 
 type ThrowEventKeyDownKey = 'Escape' | 'Enter';
 
@@ -8,8 +8,8 @@ class ThrowEventClass {
     Enter: [],
   };
 
-  private windowFocusEvents: EventerValueListeners<boolean> = [];
-  private windowOnlineEvents: EventerValueListeners<boolean> = [];
+  private windowFocusEvents = Eventer.createValue<boolean>();
+  private windowOnlineEvents = Eventer.createValue<boolean>();
 
   constructor() {
     window.addEventListener('keydown', event => {
@@ -18,17 +18,17 @@ class ThrowEventClass {
     });
 
     window.addEventListener('focus', () => {
-      Eventer.invokeValue(this.windowFocusEvents, true);
+      this.windowFocusEvents.invoke(true);
     });
     window.addEventListener('blur', () => {
-      Eventer.invokeValue(this.windowFocusEvents, false);
+      this.windowFocusEvents.invoke(false);
     });
 
     window.addEventListener('online', () => {
-      Eventer.invokeValue(this.windowOnlineEvents, true);
+      this.windowOnlineEvents.invoke(true);
     });
     window.addEventListener('offline', () => {
-      Eventer.invokeValue(this.windowOnlineEvents, false);
+      this.windowOnlineEvents.invoke(false);
     });
   }
 
@@ -42,19 +42,19 @@ class ThrowEventClass {
 
   listenIsOnline = (cb: EventerValueCallback<boolean>) => {
     cb(window.navigator?.onLine);
-    return Eventer.listenValue(this.windowOnlineEvents, cb);
+    return this.windowOnlineEvents.listen(cb);
   };
 
   muteIsOnline = (cb: EventerValueCallback<boolean>) => {
-    Eventer.muteValue(this.windowOnlineEvents, cb);
+    this.windowOnlineEvents.mute(cb);
   };
 
   listenIsWinFocused = (cb: EventerValueCallback<boolean>) => {
-    return Eventer.listenValue(this.windowFocusEvents, cb);
+    return this.windowFocusEvents.listen(cb);
   };
 
   muteIsWinFocused = (cb: EventerValueCallback<boolean>) => {
-    Eventer.muteValue(this.windowFocusEvents, cb);
+    this.windowFocusEvents.mute(cb);
   };
 }
 

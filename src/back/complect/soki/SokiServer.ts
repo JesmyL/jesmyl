@@ -21,8 +21,8 @@ export class SokiServer extends SokiServerOtherEvents {
       client.on('message', async (data: WebSocket.RawData) => {
         const eventData: SokiClientEvent = JSON.parse('' + data);
 
-        if (eventData.body.ping === true) {
-          this.send({ requestId: eventData.requestId, pong: true, appName: eventData.appName }, client);
+        if (eventData.ping === true) {
+          this.send({ pong: true, appName: eventData.appName }, client);
           return;
         }
 

@@ -94,7 +94,6 @@ export interface TelegramNativeAuthUserData extends OmitOwn<User, 'language_code
 
 export interface SokiClientEventBody {
   connect?: true;
-  ping?: true;
   tgAuthorization?: number;
   tgNativeAuthorization?: TelegramNativeAuthUserData;
   authorization?: { type: 'login'; value: ServerAuthorizationData } | { type: 'register'; value: ServerRegisterData };
@@ -175,6 +174,7 @@ export interface SokiStatistic {
 export interface SokiClientEvent {
   requestId?: string;
   body: SokiClientEventBody;
+  ping?: true;
   auth?: LocalSokiAuth;
   appName: SokiAppName;
   deviceId: DeviceId;
