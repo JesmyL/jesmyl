@@ -9,7 +9,7 @@ export const deviceIdAtom = atom(DeviceId.def, 'index', 'deviceId');
 export const useDeviceId = () => useAtomValue(deviceIdAtom);
 
 let deviceId: DeviceId | und;
-const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'.repeat(3).split('');
+const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'.repeat(3).split('');
 const symbols = "@#$%^&+=:;.,'~!?><|\\/-_*".repeat(3).split('').concat(letters);
 
 const takeRandomSymbols = (take = 4) =>

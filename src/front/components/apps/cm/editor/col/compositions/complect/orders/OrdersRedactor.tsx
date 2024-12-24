@@ -49,7 +49,7 @@ export default function OrdersRedactor() {
 
         const editNode = !ord.me.isAnchorInherit && (
           <IconEdit02StrokeRounded
-            className="margin-gap-h pointer vertical-middle"
+            className="margin-gap-h margin-gap-b pointer vertical-middle"
             onClick={() => setToolProps({ blockHeader, ccom, onClose: setToolProps, ord, ordi })}
           />
         );

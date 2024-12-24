@@ -1,39 +1,39 @@
-import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
 import { ThrowEvent } from '../../eventer/ThrowEvent';
-import useModal from '../useModal';
-
-const isFunc = (_is: boolean) => {};
+import Modal from '../Modal/Modal';
+import { ModalBody } from '../Modal/ModalBody';
+import { ModalFooter } from '../Modal/ModalFooter';
+import { ModalHeader } from '../Modal/ModalHeader';
 
 export const useConfirm = () => {
   const [bodyContent, setBodyContent] = useState<ReactNode>();
   const [headerContent, setHeaderContent] = useState<ReactNode>('Подтверди');
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const onResolveRef = useRef(isFunc);
+  const confirmationPromise = useMemo(() => Promise.withResolvers<boolean>(), []);
 
   useEffect(() => {
-    if (isModalOpen)
-      return ThrowEvent.listenKeyDown('Enter', event => {
-        event.stopPropagation();
-        onResolveRef.current(true);
-        setIsModalOpen(false);
-      });
-  }, [isModalOpen]);
+    if (!isModalOpen) return;
 
-  const [modalNode] = useModal(
-    ({ header, body, footer }, closeModal) => {
-      return (
-        <>
-          {header(headerContent)}
-          {body(bodyContent)}
-          {footer(
+    return ThrowEvent.listenKeyDown('Enter', event => {
+      event.stopPropagation();
+      confirmationPromise.resolve(true);
+      setIsModalOpen(false);
+    });
+  }, [isModalOpen, confirmationPromise]);
+
+  return [
+    <>
+      {isModalOpen && (
+        <Modal onClose={setIsModalOpen}>
+          <ModalHeader>{headerContent}</ModalHeader>
+          <ModalBody>{bodyContent}</ModalBody>
+          <ModalFooter>
             <span className="flex flex-big-gap">
               <span
                 className="pointer"
-                onClick={event => {
-                  event.stopPropagation();
-                  onResolveRef.current(true);
-                  closeModal();
+                onClick={() => {
+                  confirmationPromise.resolve(true);
+                  setIsModalOpen(false);
                 }}
               >
                 Да
@@ -41,37 +41,26 @@ export const useConfirm = () => {
               <span
                 className="pointer"
                 onClick={() => {
-                  onResolveRef.current(false);
-                  closeModal();
+                  confirmationPromise.resolve(false);
+                  setIsModalOpen(false);
                 }}
               >
                 Нет
               </span>
-            </span>,
-          )}
-        </>
-      );
-    },
-    is => {
-      if (is) return;
+            </span>
+          </ModalFooter>
+        </Modal>
+      )}
+    </>,
+    useCallback(
+      (content: ReactNode, header?: ReactNode) => {
+        if (header !== undefined) setHeaderContent(header);
+        setBodyContent(content);
+        setIsModalOpen(true);
 
-      setIsModalOpen(false);
-      onResolveRef.current(false);
-    },
-    isModalOpen,
-  );
-
-  return [
-    modalNode,
-    useCallback((content: ReactNode, header?: ReactNode) => {
-      const confirmResolver = new Promise<boolean>(res => {
-        onResolveRef.current = res;
-      });
-      if (header !== undefined) setHeaderContent(header);
-      setBodyContent(content);
-      setIsModalOpen(true);
-
-      return confirmResolver;
-    }, []),
+        return confirmationPromise.promise;
+      },
+      [confirmationPromise.promise],
+    ),
   ] as const;
 };

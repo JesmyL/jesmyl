@@ -1,6 +1,5 @@
 export const enum DeviceId {
-  def = '',
-  full = 'NO',
+  def = '{DEVICE_ID}',
 }
 
 export const enum IsInvitedGuestCome {

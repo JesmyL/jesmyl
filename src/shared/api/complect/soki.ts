@@ -18,9 +18,9 @@ export enum SokiSharedKey {
   ScheduleWidgetPhotos = 'ScheduleWidgetPhotos',
 }
 
-export type SokiSharedValueType = {
+export type SokiSharedValueType = Partial<{
   [SokiSharedKey.ScheduleWidgetPhotos]: Record<ScheduleWidgetPhotoKey, string>;
-};
+}>;
 
 export interface SokiCapsule {
   auth: LocalSokiAuth | null;
@@ -35,38 +35,35 @@ export interface SokiCapsule {
 export interface SokiServerEvent {
   appName: SokiAppName | 'external';
   requestId?: string;
-  unregister?: true;
   pong?: true;
-  authorized?: boolean;
   pull?: PullEventValue;
-  tgAuthorization?: { ok: false; value: string } | { ok: true; value: LocalSokiAuth };
-  authorization?: { type: 'login' | 'register' } & ({ ok: false; value: string } | { ok: true; value: LocalSokiAuth });
   execs?: {
     appName: SokiAppName;
     list: ExecutionReal[];
     lastUpdate: number | null;
   };
   errorMessage?: string | null;
-  system?: { name: 'reloadFiles' | 'restartWS' } & (
-    | { ok: true; message?: string | null }
-    | { ok: false; error?: string | null }
-  );
   service?: {
     key: string;
     value?: any;
     errorMessage?: string;
   };
-  statistic?: SokiStatistic;
-  liveData?: Record<SokiClientSubData, unknown>;
   download?: {
     key: string;
     value: string;
   };
-  sharedData?: SokiSharedData;
+  sharedData?: SokiSharedValueType;
   freshUserContents?: ServerStoreContent[];
   pullFreshUserContentsByTs?: number;
   chatsData?: ChatsData;
   invitedGuest?: { name: string; isCome: IsInvitedGuestCome };
+
+  unregister?: true;
+  authorized?: boolean;
+  tgAuthorization?: { ok: false; value: string } | { ok: true; value: LocalSokiAuth };
+  authorization?: { type: 'login' | 'register' } & ({ ok: false; value: string } | { ok: true; value: LocalSokiAuth });
+  statistic?: SokiStatistic;
+  liveData?: Record<SokiClientSubData, unknown>;
 }
 
 export interface ChatsData {
@@ -77,11 +74,6 @@ export interface ChatsData {
   alternativeMessages?: Partial<Record<SecretChat.ChatId, SecretChat.ImportableMessage[]>>;
   users?: SecretChat.ChatMemberUser[];
 }
-
-export type SokiSharedData = {
-  key: SokiSharedKey;
-  value: Record<string, unknown>;
-};
 
 export type SokiSharedDataValuesBox = Partial<{
   [Key in SokiSharedKey]: (data: SokiSharedValueType[Key]) => void;
@@ -115,10 +107,7 @@ export interface SokiClientEventBody {
   unsubscribe?: SokiSubscribtionName;
   liveData?: null | Record<SokiClientSubData, unknown>;
   download?: string;
-  shareData?: {
-    key: SokiSharedKey;
-    value: Record<string, unknown>;
-  };
+  shareData?: SokiSharedValueType;
   getShared?: {
     prefix?: string;
     key: SokiSharedKey;
@@ -153,10 +142,12 @@ export interface SokiClientEventBody {
 }
 
 export type SokiClientSubData<
-  Spec extends string = string,
   AppName extends SokiAppName = SokiAppName,
+  Spec extends string = string,
   Id extends number | string = string,
-> = `${AppName}-${Spec}-${Id}${`:${string | ''}` | ''}`;
+  SubPerson extends number | string | und = und,
+  Person extends number | string | und = und,
+> = `${AppName}-${Spec}-${Id}${SubPerson extends und ? '' : `:${SubPerson}`}${Person extends und ? '' : `%${Person}`}`;
 
 export type SokiSubscribtionName = 'statistic' | 'liveData';
 

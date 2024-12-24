@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import { listenSokiEventsForBible } from '../../+complect/listenSokiEventsForBible';
 import { CurrentForceViweAppContext } from '../../+complect/translations/Translation.contexts';
 import BibleReaderCurrentBookPage from '../reader/book/CurrentBookPage';
 import BibleReaderSearchPage from '../reader/search/SearchPage';
@@ -38,3 +39,5 @@ export default function BibleRouter({ mainNode }: { mainNode: React.ReactNode })
     </>
   );
 }
+
+listenSokiEventsForBible();

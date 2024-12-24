@@ -27,10 +27,8 @@ export const ScheduleWidgetLiveTranslation = ({ onClose, schedule, isShowMarkdow
 
   useEffect(() => {
     if (subscribeData !== undefined) return;
-    const schedulePrefix: ScheduleWidgetTranslationLiveDataKey = `index-sch-${schedule.w}:`;
-    const dataNames = mylib
-      .keys(liveData)
-      .filter(name => name.startsWith(schedulePrefix) && !name.startsWith(`${schedulePrefix}${auth.login}`));
+    const schedulePrefix: ScheduleWidgetTranslationLiveDataKey<'', und> = `index-sch-${schedule.w}:`;
+    const dataNames = mylib.keys(liveData).filter(name => name.startsWith(schedulePrefix));
 
     if (dataNames.length === 0) {
       setMessageNode(<div className="flex center full-size">Трансляций нет</div>);

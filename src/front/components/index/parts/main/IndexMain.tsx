@@ -143,7 +143,7 @@ export default function IndexMain() {
                   )}
 
                   {isUserMoreOpen && (
-                    <BottomPopup onClose={() => {}}>
+                    <BottomPopup onClose={setIsUserMoreOpen}>
                       <UserMore onClose={setIsUserMoreOpen} />
                     </BottomPopup>
                   )}

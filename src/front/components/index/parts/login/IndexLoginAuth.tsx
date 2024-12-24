@@ -52,7 +52,7 @@ export default function IndexLoginAuth() {
 
   const setAuthData = async (auth: LocalSokiAuth) => {
     setAuth(auth);
-    soki.onConnect();
+    soki.sendConnectionHandshake();
   };
 
   const registerInSystem = (state: OmitOwn<ClientRegisterData, 'login'>) => {

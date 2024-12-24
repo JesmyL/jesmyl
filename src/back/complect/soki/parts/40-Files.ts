@@ -37,14 +37,6 @@ export class SokiServerFiles extends SokiServerLiveTransfers implements SokiServ
     });
   }
 
-  async reloadFiles() {
-    await filer.load();
-    this.send({
-      system: { name: 'reloadFiles', ok: true },
-      appName: 'index',
-    });
-  }
-
   private getContents(
     appName: SokiAppName,
     pullCortage: SokiClientUpdateCortage,

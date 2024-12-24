@@ -10,9 +10,9 @@ export class SokiServerShareds
 
   async doOnShareData({ eventBody }: SokiServerDoActionProps) {
     if (eventBody.shareData === undefined) return false;
-    const { key, value } = eventBody.shareData;
-
-    this.sharedValues[key] = { ...this.sharedValues[key], ...value };
+    SMyLib.entries(eventBody.shareData).forEach(([key, value]) => {
+      this.sharedValues[key] = { ...this.sharedValues[key], ...value };
+    });
 
     return false;
   }
@@ -44,7 +44,7 @@ export class SokiServerShareds
       }
     }
 
-    this.send({ sharedData: { key, value }, appName, requestId }, client);
+    this.send({ sharedData: { [key as never]: value }, appName, requestId }, client);
 
     return false;
   }

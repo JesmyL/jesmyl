@@ -1,20 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { IScheduleWidgetWid } from 'shared/api';
+import { itNNull } from 'shared/utils';
 import { soki } from '../../../../soki';
 import { useCurrentTranslationTextAppValue } from '../../../apps/+complect/translations/hooks/current-app';
 import { useScreenTranslationWindows } from '../../../apps/+complect/translations/hooks/windows';
 import { useTranslationInitialSlideSet } from '../../../apps/+complect/translations/initial-slide-context';
 import BibleTranslatesContextProvider from '../../../apps/bible/translates/TranslatesContext';
 import { FollowTranslationInitialSlide } from '../../../apps/cm/translation/complect/live/FollowTranslationInitialSlide';
+import { ScheduleWidgetTranslationLiveDataKey } from '../../Index.model';
 import { useAuth, useIndexSchedules } from '../../molecules';
+import { useDeviceId } from '../takeDeviceId';
 import { IndexScheduleWidgetBibleTranslationsControlled } from './LiveBible';
 import { ScheduleWidgetLiveCmTranslations } from './LiveCm';
-
-const checkIsNNull = (it: unknown) => it !== null;
-function findSchedule(this: IScheduleWidgetWid, item: { w: number }) {
-  return item.w === this;
-}
 
 export const IndexScheduleWidgetTranslations = () => {
   const auth = useAuth();
@@ -23,9 +20,10 @@ export const IndexScheduleWidgetTranslations = () => {
   const [isCantTranslateLive, setIsCantTranslateLive] = useState(true);
   const schedules = useIndexSchedules();
   const setInitialSlide = useTranslationInitialSlideSet();
+  const deviceId = useDeviceId();
 
   const schw = +useParams().schw!;
-  const schedule = isNaN(schw) ? null : schedules.list.find(findSchedule, schw);
+  const schedule = isNaN(schw) ? null : schedules.list.find(item => item.w === schw);
 
   useEffect(() => {
     if (!schedule) return;
@@ -33,10 +31,10 @@ export const IndexScheduleWidgetTranslations = () => {
     setInitialSlide(<FollowTranslationInitialSlide schw={schedule.w} />);
   }, [schedule, setInitialSlide]);
 
-  const subscribeData = `index-sch-${schw}:${auth.login}` as const;
+  const subscribeData: ScheduleWidgetTranslationLiveDataKey = `index-sch-${schedule!?.w}:${deviceId}%${auth.login!}`;
 
   useEffect(() => {
-    if (windows.some(checkIsNNull)) setIsCantTranslateLive(false);
+    if (windows.some(itNNull)) setIsCantTranslateLive(false);
     else {
       setIsCantTranslateLive(true);
       soki.send({ liveData: null, subscribeData }, 'index');

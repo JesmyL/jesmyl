@@ -67,7 +67,7 @@ const Child = ({ api, isLoading, initData }: Props) => {
 
           setAuth(tgAuthorization.value);
           removePullRequisites();
-          soki.onConnect();
+          soki.sendConnectionHandshake();
         });
       }, 300)
       .effect();

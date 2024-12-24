@@ -12,7 +12,7 @@ export default function useConnectionState(className?: string) {
   useEffect(
     () =>
       hookEffectLine().effect(
-        soki.onConnected(setIsConnected),
+        soki.onConnectionState(setIsConnected),
         ThrowEvent.listenIsOnline(setIsOnline),
         ThrowEvent.listenIsWinFocused(setIsFocused),
       ),

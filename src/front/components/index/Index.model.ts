@@ -1,4 +1,5 @@
 import {
+  DeviceId,
   IScheduleWidgetWid,
   LocalSokiAuth,
   ScheduleStorage,
@@ -51,7 +52,10 @@ export type IndexSchWTranslationLiveDataValue = {
   markdown?: string;
 };
 
-export type ScheduleWidgetTranslationLiveDataKey = SokiClientSubData<'sch', 'index', IScheduleWidgetWid>;
+export type ScheduleWidgetTranslationLiveDataKey<
+  DevId extends DeviceId | '' = DeviceId,
+  Login extends string | und = string,
+> = SokiClientSubData<'index', 'sch', IScheduleWidgetWid, DevId, Login>;
 
 export type IndexStateSchLiveData = Record<ScheduleWidgetTranslationLiveDataKey, IndexSchWTranslationLiveDataValue>;
 

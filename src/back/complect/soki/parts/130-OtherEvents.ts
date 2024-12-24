@@ -3,7 +3,7 @@ import { TBInvites } from 'back/db/TBInvites';
 import { TBMessages } from 'back/db/TBMessages';
 import { TBUsers } from 'back/db/Users';
 import { jesmylTgBot } from 'back/sides/telegram-bot/bot';
-import { ChatsData, SokiAppName, SokiCapsule, SokiServerDoAction, SokiServerDoActionProps } from 'shared/api';
+import { ChatsData, SokiCapsule, SokiServerDoAction, SokiServerDoActionProps } from 'shared/api';
 import { Eventer } from 'shared/utils';
 import { WebSocket } from 'ws';
 import { SokiServerServerStore } from './120-ServerStore';
@@ -28,11 +28,11 @@ export class SokiServerOtherEvents extends SokiServerServerStore implements Soki
     });
   }
 
-  private async doOnChatsFetchData({ appName, client, eventBody, requestId }: SokiServerDoActionProps) {
+  private async doOnChatsFetchData({ client, eventBody, requestId }: SokiServerDoActionProps) {
     if (eventBody.chatsFetch === undefined) throw new Error();
 
     if (eventBody.chatsFetch.users) {
-      this.send({ appName, chatsData: { users: await TBUsers.getAll() }, requestId }, client);
+      this.send({ appName: 'index', chatsData: { users: await TBUsers.getAll() }, requestId }, client);
     }
   }
 
@@ -40,13 +40,12 @@ export class SokiServerOtherEvents extends SokiServerServerStore implements Soki
     members: { user: { login: string } }[],
     chatsData: ChatsData,
     senderLogin: string,
-    appName: SokiAppName,
     requestId: string | und,
     client: WebSocket,
   ) => {
-    this.send({ appName, chatsData, requestId }, client);
+    this.send({ appName: 'index', chatsData, requestId }, client);
 
-    const messageData = { appName, chatsData };
+    const messageData = { appName: 'index', chatsData } as const;
     const sendDataForEach = (capsule: SokiCapsule) => this.send(messageData, capsule.client);
 
     members.forEach(member => {
@@ -67,14 +66,7 @@ export class SokiServerOtherEvents extends SokiServerServerStore implements Soki
       const chat = await TBChats.addMemberToChat(chatId, userLogin);
       if (chat === null) return;
 
-      this.sendChatsDataToMembers(
-        chat.members,
-        { chats: [chat] },
-        userLogin,
-        event.appName,
-        event.requestId,
-        event.client,
-      );
+      this.sendChatsDataToMembers(chat.members, { chats: [chat] }, userLogin, event.requestId, event.client);
     }
 
     if (eventFetch.pullMessages != null) {
@@ -90,7 +82,7 @@ export class SokiServerOtherEvents extends SokiServerServerStore implements Soki
       if (messages === null) return;
       this.send(
         {
-          appName: event.appName,
+          appName: 'index',
           chatsData: {
             messages: { [chatId]: messages },
             unreachedMessages: { [chatId]: unreachedMessages },
@@ -108,7 +100,7 @@ export class SokiServerOtherEvents extends SokiServerServerStore implements Soki
 
       this.send(
         {
-          appName: event.appName,
+          appName: 'index',
           chatsData: {
             alternativeMessages: { [chatId]: alternativeMessages },
             unreachedMessages: { [chatId]: unreachedMessages },
@@ -133,7 +125,6 @@ export class SokiServerOtherEvents extends SokiServerServerStore implements Soki
             chat.members,
             { messages: { [chat.chatId]: removedMessages }, chats: [chat] },
             capsule.auth.login,
-            event.appName,
             event.requestId,
             capsule.client,
           );
@@ -142,7 +133,7 @@ export class SokiServerOtherEvents extends SokiServerServerStore implements Soki
     }
   }
 
-  private async doOnChatFetchMessageData({ appName, client, eventBody, requestId }: SokiServerDoActionProps) {
+  private async doOnChatFetchMessageData({ client, eventBody, requestId }: SokiServerDoActionProps) {
     if (eventBody.chatFetch?.message === undefined) throw new Error();
 
     const chatMessage = eventBody.chatFetch.message;
@@ -155,7 +146,7 @@ export class SokiServerOtherEvents extends SokiServerServerStore implements Soki
       if (chatMessage.type === 'ChatCreate') {
         const chat = await TBChats.createChat(senderLogin, chatMessage.text);
         if (chat?.members != null) {
-          this.sendChatsDataToMembers(chat.members, { chats: [chat] }, senderLogin, appName, requestId, client);
+          this.sendChatsDataToMembers(chat.members, { chats: [chat] }, senderLogin, requestId, client);
         }
         return;
       }
@@ -174,7 +165,6 @@ export class SokiServerOtherEvents extends SokiServerServerStore implements Soki
             chat.members,
             { chats: [chat], messages: { [chat.chatId]: [newMessage] } },
             senderLogin,
-            appName,
             requestId,
             client,
           );
@@ -196,7 +186,6 @@ export class SokiServerOtherEvents extends SokiServerServerStore implements Soki
             unreachedMessages: { [chat.chatId]: unreachedMessages },
           },
           senderLogin,
-          appName,
           requestId,
           client,
         );
@@ -219,7 +208,7 @@ export class SokiServerOtherEvents extends SokiServerServerStore implements Soki
         if (guest) {
           this.send(
             {
-              appName: event.appName,
+              appName: 'index',
               invitedGuest: guest,
               requestId: event.requestId,
             },
@@ -246,7 +235,7 @@ export class SokiServerOtherEvents extends SokiServerServerStore implements Soki
 
             this.send(
               {
-                appName: event.appName,
+                appName: 'index',
                 invitedGuest: { isCome, name: guest.name },
                 requestId: event.requestId,
               },

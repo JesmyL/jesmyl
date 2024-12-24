@@ -2,7 +2,7 @@ import { SokiServerDoAction, SokiServerDoActionProps } from 'shared/api';
 import { SokiServerSubscribes } from './20-Subscribes';
 
 export class SokiServerLiveTransfers extends SokiServerSubscribes implements SokiServerDoAction<'LiveData'> {
-  async doOnLiveData({ appName, eventBody }: SokiServerDoActionProps) {
+  async doOnLiveData({ eventBody }: SokiServerDoActionProps) {
     if (eventBody.liveData === undefined || eventBody.subscribeData === undefined) return false;
 
     if (eventBody.liveData === null) delete this.liveData[eventBody.subscribeData];
@@ -18,7 +18,7 @@ export class SokiServerLiveTransfers extends SokiServerSubscribes implements Sok
         return;
       }
       if (capsule.subscribeData !== eventBody.subscribeData) return;
-      this.send({ appName, liveData }, client);
+      this.send({ appName: 'index', liveData }, client);
     });
 
     return false;

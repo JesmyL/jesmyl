@@ -66,3 +66,5 @@ export const setUpdateRequisitesValue = atomValueSetter(indexMolecule.take('upda
 export const removePullRequisites = () => setUpdateRequisitesValue(null);
 
 export const useCurrentApp = () => useParams().appName as AppName | und;
+
+export const isAuthorizedAtom = atom<boolean>(false);

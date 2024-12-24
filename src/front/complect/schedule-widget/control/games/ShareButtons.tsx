@@ -1,7 +1,8 @@
+import { mylib } from 'front/utils';
 import { useState } from 'react';
+import { ScheduleWidgetPhotoKey, SokiSharedKey } from 'shared/api';
 import { soki } from '../../../../soki';
 import Modal from '../../../modal/Modal/Modal';
-import { mylib } from 'front/utils';
 import EvaSendButton from '../../../sends/eva-send-button/EvaSendButton';
 import IconButton from '../../../the-icon/IconButton';
 import { IconCloudDownloadStrokeRounded } from '../../../the-icon/icons/cloud-download';
@@ -11,7 +12,6 @@ import { getScheduleWidgetUserPhotoStorageKey, scheduleWidgetPhotosStorage } fro
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import { ScheduleWidgetPhotoGalery } from './PhotoGalery';
 import { checkIsUserPhotoable } from './utils';
-import { ScheduleWidgetPhotoKey, SokiSharedKey } from 'shared/api';
 
 interface Props {
   prefix?: React.ReactNode;
@@ -52,15 +52,7 @@ export const ScheduleWidgetShareButtons = function ShareButtons({ prefix }: Prop
 
           if (!mylib.keys(value).length) return;
 
-          soki.send(
-            {
-              shareData: {
-                key: SokiSharedKey.ScheduleWidgetPhotos,
-                value,
-              },
-            },
-            'index',
-          );
+          soki.send({ shareData: { [SokiSharedKey.ScheduleWidgetPhotos as never]: value } }, 'index');
         }}
       />
       <EvaSendButton

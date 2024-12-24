@@ -5,13 +5,6 @@ import { useSetAuth } from '../../molecules';
 
 export const UserMore = ({ onClose }: { onClose: (isOpen: false) => void }) => {
   const setAuth = useSetAuth();
-
-  const logout = () => {
-    setAuth({ level: 0 });
-    window.location.reload();
-    onClose(false);
-  };
-
   const [confirmNode, confirm] = useConfirm();
 
   return (
@@ -22,7 +15,13 @@ export const UserMore = ({ onClose }: { onClose: (isOpen: false) => void }) => {
         Icon={IconUserStrokeRounded}
         onClick={async event => {
           event.preventDefault();
-          if (await confirm('Произвести выход из системы?', 'Разлогиниться')) logout();
+          event.stopPropagation();
+
+          if (await confirm('Произвести выход из системы?', 'Разлогиниться')) {
+            setAuth({ level: 0 });
+            window.location.reload();
+            onClose(false);
+          }
         }}
       />
     </>

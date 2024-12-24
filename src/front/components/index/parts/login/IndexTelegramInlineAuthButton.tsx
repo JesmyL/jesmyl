@@ -36,7 +36,7 @@ export const IndexTelegramInlineAuthButton = () => {
                           if (!tgAuthorization || !tgAuthorization.ok || mylib.isStr(tgAuthorization.value)) return;
 
                           setAuth(tgAuthorization.value);
-                          soki.onConnect();
+                          soki.sendConnectionHandshake();
                         });
                     }}
                   />

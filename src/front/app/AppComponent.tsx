@@ -9,7 +9,6 @@ import { hookEffectPipe, setTimeoutPipe } from '../complect/hookEffectPipe';
 import JesmylLogo from '../complect/jesmyl-logo/JesmylLogo';
 import { KEYBOARD_FLASH } from '../complect/keyboard/KeyboardInput';
 import { useCurrentApp } from '../components/index/molecules';
-import { IndexAdvertisingReminder } from '../components/index/parts/advertising/Reminder';
 import { useSecretChatMessagesListen } from '../components/index/parts/main/secret-chat/useSecretChatMessagesListen';
 import { useIsReadyRouter } from '../components/router/atoms';
 import './App.scss';
@@ -62,7 +61,7 @@ export default function AppComponent() {
         <div className={`application-container app_${currentApp}${isFullscreen ? ' fullscreen-mode' : ''}`}>
           {fullscreenIcon}
           <Outlet />
-          <IndexAdvertisingReminder />
+          {/* <IndexAdvertisingReminder /> */}
         </div>
         <KEYBOARD_FLASH {...keyboardProps} />
       </div>

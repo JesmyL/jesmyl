@@ -18,6 +18,7 @@ export const TgNativeAuth = ({ onAuthSuccessRef, showToastRef }: Props) => {
   useEffect(() => {
     if (!isScriptLoaded || tgNativeRef.current === null || tgNativeRef.current.childElementCount !== 0) return;
     const tgAuthIframe = document.querySelector('#telegram-login-jesmylbot');
+
     (window as any)[funcName] = (user: TelegramNativeAuthUserData) => {
       soki.send({ tgNativeAuthorization: user }, 'index').on(onAuthSuccessRef.current, showToastRef.current);
     };

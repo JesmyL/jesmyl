@@ -6,7 +6,7 @@ import { SokiAuther } from '../SokiAuther';
 import { SokiServerServices } from './80-Services';
 
 export class SokiServerTelegram extends SokiServerServices implements SokiServerDoAction<`${'Telegram'}${'Auth'}`> {
-  async doOnTelegramAuth({ appName, client, eventBody, requestId }: SokiServerDoActionProps) {
+  async doOnTelegramAuth({ client, eventBody, requestId }: SokiServerDoActionProps) {
     if (eventBody.tgNativeAuthorization === undefined && eventBody.tgAuthorization === undefined) return false;
 
     const sendErrorMessage = (errorMessage: string) => {
@@ -15,7 +15,7 @@ export class SokiServerTelegram extends SokiServerServices implements SokiServer
           requestId,
           unregister: true,
           errorMessage,
-          appName,
+          appName: 'index',
         },
         client,
       );
@@ -54,7 +54,7 @@ export class SokiServerTelegram extends SokiServerServices implements SokiServer
           ok: true,
           value: auth,
         },
-        appName,
+        appName: 'index',
       },
       client,
     );

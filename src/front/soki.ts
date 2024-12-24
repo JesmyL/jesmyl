@@ -2,6 +2,7 @@ import { mylib, MyLib } from 'front/utils';
 import {
   environment,
   PullEventValue,
+  ServerStoreContent,
   SimpleKeyValue,
   SokiAppName,
   sokiAppNamesSet,
@@ -9,16 +10,13 @@ import {
   SokiClientEventBody,
   SokiClientUpdateCortage,
   SokiServerEvent,
-  SokiSharedDataValuesBox,
-  SokiSubscribtionName,
 } from 'shared/api';
 import { ExecuterBasics } from 'shared/executer';
-import { Eventer, EventerListeners, EventerValueCallback, EventerValueListeners, makeRegExp } from 'shared/utils';
+import { Eventer, makeRegExp } from 'shared/utils';
 import { jversion } from 'shared/values';
 import { AppName } from './app/App.model';
 import { Molecule } from './complect/atoms';
 import { lsJStorageLSSwitcherName } from './complect/JStorage';
-import { onGetSharedScheduleWidgetData } from './complect/schedule-widget/on-shareds';
 import { bibleMolecule } from './components/apps/bible/molecules';
 import { cmMolecule } from './components/apps/cm/molecules';
 import { wedMolecule } from './components/apps/wedding/molecules';
@@ -27,7 +25,6 @@ import {
   getAuthValue,
   getUpdateRequisitesValue,
   indexMolecule,
-  setAuthValue,
   setUpdateRequisitesValue,
 } from './components/index/molecules';
 
@@ -48,20 +45,17 @@ interface ResponseWaiter {
 
 let pingTimeout: TimeOut;
 
-type SokiEvent<Key extends keyof SokiServerEvent> = { key: Key; value: SokiServerEvent[Key] };
-
 export class SokiTrip {
-  ws?: WebSocket;
-  isConnected = false;
-  authListeners: EventerListeners<boolean> = [];
-  eventListeners: EventerValueListeners<SokiEvent<any>> = [];
-  eventValuesOnDelay: Partial<Record<keyof SokiServerEvent, unknown>> = {};
+  private ws?: WebSocket;
+
+  private isConnected = false;
+  private connectionState = Eventer.createValue<boolean>();
+
+  private onServerEvent = Eventer.createValue<SokiServerEvent>();
+  private onClientEvent = Eventer.createValue<SokiClientEvent>();
+  private onAuthorized = Eventer.createValue<boolean>();
 
   private responseWaiters: ResponseWaiter[] = [];
-  private subscriptions: Partial<Record<SokiSubscribtionName, SokiClientEventBody>> = {};
-  private onGetSharedData: SokiSharedDataValuesBox = {
-    ...onGetSharedScheduleWidgetData,
-  };
 
   private molecules: Partial<{ [Key in AppName]: Molecule<any, Key> }> = {
     index: indexMolecule,
@@ -78,9 +72,18 @@ export class SokiTrip {
         molecule =>
           molecule &&
           (molecule.onServerStorageValueSend = (serverUserContents, appName) =>
-            soki.send({ serverUserContents }, appName)),
+            this.send({ serverUserContents }, appName)),
       );
     })();
+  }
+
+  setIsConnected(value: boolean) {
+    this.isConnected = value;
+    this.connectionState.invoke(value);
+  }
+
+  onConnectionState(cb: (is: boolean) => void) {
+    return this.connectionState.listen(cb, this.isConnected);
   }
 
   appName() {
@@ -92,12 +95,34 @@ export class SokiTrip {
   }
 
   onClose = () => {
-    Eventer.invoke(this.authListeners, false);
-    this.isConnected = false;
+    this.onAuthorized.invoke(false);
+    this.setIsConnected(false);
     setTimeout(() => this.start(), 500);
   };
 
-  onConnect = async () => {
+  onEventServerListen(appName: AppName | '*', cb: (event: SokiServerEvent) => void) {
+    return this.onServerEvent.listen(
+      appName === '*'
+        ? cb
+        : event => {
+            if (event.appName !== appName) return;
+            cb(event);
+          },
+    );
+  }
+
+  onEventClientListen(appName: AppName | '*', cb: (event: SokiClientEvent) => void) {
+    return this.onClientEvent.listen(
+      appName === '*'
+        ? cb
+        : event => {
+            if (event.appName !== appName) return;
+            cb(event);
+          },
+    );
+  }
+
+  sendConnectionHandshake = async () => {
     const date = new Date();
 
     this.sendForce(
@@ -108,15 +133,68 @@ export class SokiTrip {
     );
   };
 
+  serverEventAppExecs(
+    setterBox: { set(fix: string, content: unknown): void; getValues(): object },
+    event: SokiServerEvent,
+  ) {
+    const appName = event.appName;
+
+    if (appName === 'external') return;
+
+    if (event.execs && event.appName) {
+      const execs = event.execs;
+      const contents = mylib.clone({ ...setterBox.getValues() });
+
+      ExecuterBasics.executeReals(contents, event.execs.list)
+        .then(fixes => {
+          if (setterBox !== undefined) fixes.forEach(fix => setterBox.set(fix, contents[fix as never] as never));
+
+          this.setLastUpdates(appName, [null, null, execs.lastUpdate, null]);
+        })
+        .catch();
+    }
+  }
+
+  serverEventAppActions(
+    setterBox: {
+      set(fix: string, content: unknown): void;
+      saveFreshContents(freshUserContents?: ServerStoreContent[]): void;
+      collectFreshServerStoreContents(ts: number): ServerStoreContent[] | und;
+    },
+    event: SokiServerEvent,
+  ) {
+    const appName = event.appName;
+
+    if (appName === 'external') return;
+
+    if (event.download) {
+      try {
+        setterBox.set(event.download.key, JSON.parse(event.download.value));
+      } catch (error) {
+        setterBox.set(event.download.key, event.download.value);
+      }
+    }
+
+    if (event.freshUserContents) {
+      setterBox.saveFreshContents(event.freshUserContents);
+    }
+
+    if (event.pullFreshUserContentsByTs !== undefined) {
+      const serverUserContents = setterBox.collectFreshServerStoreContents(event.pullFreshUserContentsByTs);
+      if (serverUserContents?.length) this.send({ serverUserContents }, appName);
+    }
+  }
+
   start() {
     this.ws = new WebSocket(`wss://${environment.dns}/websocket/`);
 
     this.ws.onclose = this.onClose;
-    this.ws.onopen = this.onConnect;
+    this.ws.onopen = this.sendConnectionHandshake;
 
     this.ws.onmessage = async ({ data }: { data: string }) => {
       try {
         const event: SokiServerEvent = JSON.parse(data);
+        this.onServerEvent.invoke(event);
         info(event);
         let waiter: ResponseWaiter | null = null;
 
@@ -133,86 +211,10 @@ export class SokiTrip {
         }
 
         if ((waiter === null || waiter.requestId !== event.requestId) && event.pull) this.updatedPulledData(event.pull);
-
-        if (event) {
-          if (event.unregister) {
-            this.onUnregister();
-            return;
-          }
-
-          if (event.liveData !== undefined) indexMolecule.set('liveData', event.liveData);
-
-          if (event.authorized !== undefined) {
-            this.isConnected = true;
-            Eventer.invoke(this.authListeners, true);
-            const appName = this.appName();
-            if (appName === null) return;
-            this.makeInitialRequests(appName);
-            mylib.values(this.subscriptions).forEach(body => body && this.sendForce(body, appName));
-          }
-
-          if (event.appName === 'external') return;
-          const appName = event.appName;
-
-          const molecule = this.molecules[event.appName];
-
-          if (event.execs && event.appName) {
-            const execs = event.execs;
-            const contents = mylib.clone({ ...molecule?.getValues() });
-
-            ExecuterBasics.executeReals(contents, event.execs.list)
-              .then(fixes => {
-                if (molecule !== undefined) fixes.forEach(fix => molecule.set(fix, contents[fix]));
-
-                this.setLastUpdates(appName!, [null, null, execs.lastUpdate, null]);
-              })
-              .catch();
-          }
-
-          if (event.statistic) indexMolecule.set('statistic', event.statistic);
-
-          if (event.sharedData !== undefined)
-            this.onGetSharedData[event.sharedData.key]?.(event.sharedData.value as never);
-
-          if (molecule) {
-            if (event.download) {
-              try {
-                molecule.set(event.download.key, JSON.parse(event.download.value));
-              } catch (error) {
-                molecule.set(event.download.key, event.download.value);
-              }
-            }
-
-            if (event.freshUserContents) {
-              molecule.saveFreshContents(event.freshUserContents);
-            }
-
-            if (event.pullFreshUserContentsByTs !== undefined) {
-              const serverUserContents = molecule.collectFreshServerStoreContents(event.pullFreshUserContentsByTs);
-              if (serverUserContents?.length) this.send({ serverUserContents }, event.appName);
-            }
-          }
-
-          if (event.chatsData) {
-            this.eventValuesOnDelay['chatsData'] = event.chatsData;
-
-            Eventer.invokeValue(this.eventListeners, {
-              key: 'chatsData',
-              value: this.eventValuesOnDelay['chatsData'],
-            });
-          }
-        }
       } catch (e) {}
     };
 
     return this;
-  }
-
-  onConnected(callback: (is: boolean) => void) {
-    return Eventer.listen(this.authListeners, event => {
-      callback(event.value);
-      event.mute();
-    });
   }
 
   setLastUpdates(appName: SokiAppName, pullCortage: SokiClientUpdateCortage) {
@@ -227,12 +229,7 @@ export class SokiTrip {
     });
   }
 
-  onUnregister() {
-    setAuthValue({ level: 0 });
-    setUpdateRequisitesValue(null);
-  }
-
-  async makeInitialRequests(appName: SokiAppName) {
+  async makeInitialRequests(appName = this.appName()) {
     const {
       index: [indexLastUpdate = 0, indexRulesMd5 = ''] = [],
       [appName]: [appLastUpdate = 0, appRulesMd5 = ''] = [],
@@ -249,7 +246,7 @@ export class SokiTrip {
   }
 
   updatedPulledData(pull: PullEventValue) {
-    const update = (pullContents: SimpleKeyValue<string, unknown>[], store: Molecule<unknown> | nil) => {
+    const update = (pullContents: SimpleKeyValue<string, unknown>[], molecule: Molecule<unknown> | nil) => {
       if (!pullContents.length) return;
 
       const fixes: string[] = [];
@@ -259,27 +256,24 @@ export class SokiTrip {
         fixes.push(key);
       });
 
-      if (store) fixes.forEach(fix => store.set(fix as never, contents[fix]));
+      if (molecule) fixes.forEach(fix => molecule.set(fix as never, contents[fix]));
     };
 
     const {
       contents: [indexContents, appContents],
       updates,
     } = pull;
-    const appStore = this.molecules[pull.appName];
 
-    if (!appStore) return;
+    const appMolecule = this.molecules[pull.appName];
 
-    update(appContents, appStore);
+    if (!appMolecule) return;
+
+    update(appContents, appMolecule);
     update(indexContents, this.molecules.index);
 
-    appContents.forEach(({ key, value }) => appStore.set(key, value));
+    appContents.forEach(({ key, value }) => appMolecule.set(key, value));
     indexContents.forEach(({ key, value }) => indexMolecule.set(key as never, value as never));
     this.setLastUpdates(pull.appName, updates);
-  }
-
-  onAppChange(appName: SokiAppName) {
-    this.makeInitialRequests(appName);
   }
 
   getCurrentUrl() {
@@ -313,9 +307,7 @@ export class SokiTrip {
             isUseLS: localStorage[lsJStorageLSSwitcherName] ? true : undefined,
           };
 
-          if (body.subscribe) this.subscriptions[body.subscribe] = body;
-          if (body.unsubscribe) delete this.subscriptions[body.unsubscribe];
-
+          this.onClientEvent.invoke(sendEvent);
           this.ws.send(JSON.stringify(sendEvent));
 
           this.urls = [this.getCurrentUrl()];
@@ -333,7 +325,7 @@ export class SokiTrip {
 
     Promise.resolve().then(() => {
       if (this.isConnected) this.sendForce(body, appName, requestId);
-      else this.onConnected(() => this.sendForce(body, appName, requestId));
+      else this.onAuthorized.listenFirst(() => this.sendForce(body, appName, requestId));
     });
 
     return {
@@ -354,14 +346,6 @@ export class SokiTrip {
     clearTimeout(pingTimeout);
     pingTimeout = setTimeout(() => this.send({ ping: true }, 'index').on(ok, ko, final), 0);
   };
-
-  listenEvent<Key extends keyof SokiServerEvent>(key: Key, cb: EventerValueCallback<SokiServerEvent[Key]>) {
-    if (this.eventValuesOnDelay[key] !== undefined) {
-      cb(this.eventValuesOnDelay[key] as never);
-      delete this.eventValuesOnDelay[key];
-    }
-    return Eventer.listenValue(this.eventListeners, event => key === event.key && cb(event.value));
-  }
 }
 
 export const soki = new SokiTrip().start();

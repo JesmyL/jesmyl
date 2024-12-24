@@ -50,7 +50,7 @@ export class SokiServerConnection extends SokiServerVisits implements SokiServer
     }
   };
 
-  async doOnConnect({ appName, client, eventBody, eventData, requestId }: SokiServerDoActionProps) {
+  async doOnConnect({ client, eventBody, eventData, requestId }: SokiServerDoActionProps) {
     if (eventBody.connect === undefined) return false;
 
     let auth: LocalSokiAuth | null;
@@ -64,7 +64,7 @@ export class SokiServerConnection extends SokiServerVisits implements SokiServer
         urls: eventData.urls,
       });
 
-      this.send({ authorized: false, appName: eventData.appName }, client);
+      this.send({ authorized: false, appName: 'index' }, client);
 
       this.setCapsule(client, null, eventData);
       return true;
@@ -76,7 +76,7 @@ export class SokiServerConnection extends SokiServerVisits implements SokiServer
           requestId,
           unregister: true,
           errorMessage,
-          appName,
+          appName: 'index',
         },
         client,
       );
@@ -121,7 +121,7 @@ export class SokiServerConnection extends SokiServerVisits implements SokiServer
 
       this.clients.set(eventData.deviceId, client);
 
-      this.send({ authorized: true, appName }, client);
+      this.send({ authorized: true, appName: 'index' }, client);
 
       const infoText = `Client ${
         auth.fio !== undefined && auth.fio !== auth.nick ? `${auth.fio} (${auth.nick})` : auth.nick ?? '???'

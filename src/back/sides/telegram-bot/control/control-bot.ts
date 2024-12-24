@@ -1,5 +1,4 @@
 import { SendMessageOptions } from 'node-telegram-bot-api';
-import sokiServer from '../../../complect/soki/SokiServer';
 import { jesmylTgBot } from '../bot';
 import { tgBotUrlController } from '../complect/url-controller';
 import { logTelegramBot, tglogger } from '../log/log-bot';
@@ -26,24 +25,6 @@ const devStartOptions: SendMessageOptions = controlTelegramBot.makeSendMessageOp
           })
           .catch(error => {
             bot.postMessage(`Ошибка обновления списка админов ${error}`);
-          });
-      },
-    },
-  ],
-  [
-    {
-      text: '💫 Перечитать файлы',
-      callback_data: 'refresh_files',
-      cb: async bot => {
-        sokiServer
-          .reloadFiles()
-          .then(() => {
-            bot.logger.log(`💫 Файлы были перечитаны`);
-            bot.postMessage(`💫 Файлы были перечитаны`);
-          })
-          .catch(error => {
-            bot.logger.log(`💫 Ошибка перечитывания файлов\n\n${error}`);
-            bot.postMessage(`💫 Ошибка перечитывания файлов\n\n${error}`);
           });
       },
     },

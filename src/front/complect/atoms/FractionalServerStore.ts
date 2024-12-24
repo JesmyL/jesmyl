@@ -45,7 +45,7 @@ export class FractionalServerStore<Key extends string | number, Value extends No
     this.knownKeys.forEach(key => {
       const localTs = this.lastWriteTs(key);
 
-      if (!localTs || localTs < ts) return;
+      if (!localTs || localTs <= ts) return;
 
       contents.push({
         key: `${this.contentValuePrefix}${key}` as never,

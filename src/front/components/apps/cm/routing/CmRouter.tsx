@@ -7,6 +7,7 @@ import { cmAppActions } from '../app-actions/cm-app-actions';
 import { CmSharedComListActionInterpretator } from '../app-actions/SharedComList';
 import TheCat from '../col/cat/TheCat';
 import { useTakeActualComw } from '../col/com/useCcom';
+import { listenSokiEventsForCm } from '../complect/listenSokiEventsForCm';
 import Lists from '../lists/Lists';
 import { cmMolecule, comCommentFractionalStore } from '../molecules';
 import { CmFooter } from './CmFooter';
@@ -74,3 +75,5 @@ export default function CmRouter({ mainNode }: { mainNode: React.ReactNode }) {
     </>
   );
 }
+
+listenSokiEventsForCm();

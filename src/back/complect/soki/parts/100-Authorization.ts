@@ -5,7 +5,7 @@ import { sokiAuther } from '../SokiAuther';
 import { SokiServerTelegram } from './90-Telegram';
 
 export class SokiServerAuthorization extends SokiServerTelegram implements SokiServerDoAction<'Authorization'> {
-  async doOnAuthorization({ appName, client, eventBody, requestId }: SokiServerDoActionProps) {
+  async doOnAuthorization({ client, eventBody, requestId }: SokiServerDoActionProps) {
     if (eventBody.authorization === undefined) return false;
     const event = eventBody.authorization;
 
@@ -17,7 +17,7 @@ export class SokiServerAuthorization extends SokiServerTelegram implements SokiS
           {
             requestId,
             authorization: { ok: true, type: event.type, value },
-            appName,
+            appName: 'index',
           },
           client,
         );
@@ -28,7 +28,7 @@ export class SokiServerAuthorization extends SokiServerTelegram implements SokiS
           {
             requestId,
             authorization: { ok: false, type: event.type, value },
-            appName,
+            appName: 'index',
           },
           client,
         );

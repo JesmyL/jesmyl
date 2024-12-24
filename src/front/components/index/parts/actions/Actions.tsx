@@ -2,6 +2,7 @@ import { LinkAppActionFabric } from 'front/complect/link-app-actions';
 import { QrReader } from 'front/complect/qr-code/useQrReader';
 import { useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
+import { environment } from 'shared/api';
 import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
 import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
 import { IconFile02StrokeRounded } from '../../../../complect/the-icon/icons/file-02';
@@ -27,7 +28,7 @@ export default function IndexActions() {
                   <QrReader
                     onClose={setIsQrOpen}
                     onReadData={value => {
-                      if (value.data.startsWith('https://')) {
+                      if (value.data.startsWith(environment.host)) {
                         LinkAppActionFabric.onHrefData(navigate, value.data);
                         setIsQrOpen(false);
                       }
