@@ -1,7 +1,6 @@
 import { exec } from 'child_process';
 import { build } from 'esbuild';
 import file_system from 'fs';
-export * from '../jesmyl-msg/deploy.mjs';
 
 /**
  *
@@ -17,8 +16,11 @@ export const deployTheCode = async (front, back) => {
       console.info(`collect known icons: finished`);
     } catch (error) {}
 
-    const files = [`./${front.builtFolder}/*`, './src/back/+version.json'];
-    console.info('Files to load: ', files.join(' '));
+    const isIgnoreVersionUpdate = ~process.argv.indexOf('--IVU');
+
+    const files = [`./${front.builtFolder}/*`, ...(isIgnoreVersionUpdate ? [] : ['./src/back/+version.json'])];
+
+    console.info('Files to load: ', files);
 
     if (~process.argv.indexOf('--IB')) {
       console.info('Sending ignored building');
@@ -30,7 +32,7 @@ export const deployTheCode = async (front, back) => {
       return;
     }
 
-    const [num, resetVersion] = await updateVersion(~process.argv.indexOf('--IVU'));
+    const [num, resetVersion] = await updateVersion(isIgnoreVersionUpdate);
 
     try {
       console.info(`Build ${num} is running...`);
@@ -67,7 +69,7 @@ export const deployTheCode = async (front, back) => {
 
       charset: 'utf8',
       external: ['node-schedule', 'ws', '@prisma/client', '.prisma/client', 'MyLib'],
-      drop: ['console', 'debugger'],
+      // drop: ['console', 'debugger'],
       dropLabels: ['DEV', 'TEST'],
     });
 
