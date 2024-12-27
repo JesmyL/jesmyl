@@ -10,7 +10,7 @@ interface Props {
 export const TheCatSpecialSearches = ({ setTerm, setMapper, term }: Props) => {
   return (
     <div className="margin-gap bgcolor--2 padding-gap">
-      {MyLib.entries(catSpecialSearches).map(([key, { map, title }]) => {
+      {MyLib.entries(catSpecialSearches).map(([key, { map, title, isRerenderOnInput }]) => {
         if (term.length > 1 && !term.startsWith(key)) return null;
 
         return (
@@ -20,6 +20,12 @@ export const TheCatSpecialSearches = ({ setTerm, setMapper, term }: Props) => {
             onClick={() => {
               setTerm(key);
               setMapper(() => map);
+
+              if (isRerenderOnInput)
+                setTimeout(() => {
+                  setTerm(key + ' ');
+                  setTimeout(setTerm, 0, key);
+                }, 100);
             }}
           >
             {title}

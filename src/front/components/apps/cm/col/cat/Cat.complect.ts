@@ -1,5 +1,7 @@
 import { MyLib, mylib } from 'front/utils';
 import { itIt, makeRegExp } from 'shared/utils';
+import { CmState } from '../../Cm.model';
+import { CmEditorStoraged } from '../../editor/CmEditor.model';
 import { cmMolecule } from '../../molecules';
 import { Com } from '../com/Com';
 import { Cat } from './Cat';
@@ -36,19 +38,50 @@ export const catTrackers: CatTracker[] = [
 export type CatSpecialSearches = {
   title: string;
   map: (coms: Com[], term: string) => Com[];
+  isRerenderOnInput?: boolean;
 };
 
-let knownChordsSet: Set<string> | und;
+const delayedValueSetDefiner = <Key extends keyof (CmState & CmEditorStoraged), Value>(
+  key: Key,
+  defaultValue: Value,
+  mapper: (value: (CmState & CmEditorStoraged)[Key]) => Value,
+) => {
+  let value: Value | und;
+  let isNeedLoad = true;
 
-(async () => {
-  cmMolecule
-    .select(m => m.chordTracks)
-    .subscribe(chords => {
-      knownChordsSet = new Set(MyLib.keys(chords));
-    });
+  return (): Value => {
+    if (value === undefined && isNeedLoad) {
+      isNeedLoad = false;
+      const setKnownChordsSet: typeof mapper = chords => {
+        value = mapper(chords);
 
-  knownChordsSet = new Set(MyLib.keys(cmMolecule.get('chordTracks')));
-})();
+        return value;
+      };
+
+      cmMolecule.take(key).subscribe(setKnownChordsSet);
+      setKnownChordsSet(cmMolecule.get(key));
+
+      return defaultValue;
+    }
+
+    return value ?? defaultValue;
+  };
+};
+
+const knownChordsSet = delayedValueSetDefiner('chordTracks', new Set<string>(), chords => new Set(MyLib.keys(chords)));
+const eeIncorrectWordsReg = delayedValueSetDefiner('eeStorage', /^ееее$/, value => {
+  const notRuLetter = '([^а-яёіґїє])';
+  return new RegExp(
+    notRuLetter +
+      '(' +
+      MyLib.keys(value)
+        .filter(word => value[word] === 2 || (mylib.isArr(value[word]) && value[word].includes(2)))
+        .join('|') +
+      ')' +
+      notRuLetter,
+    'ig',
+  );
+});
 
 export const catSpecialSearches: Record<`@${string}`, CatSpecialSearches> = {
   '@audioLess': {
@@ -116,9 +149,9 @@ export const catSpecialSearches: Record<`@${string}`, CatSpecialSearches> = {
   },
   '@withUnknownChords': {
     title: 'С неизвестными аккордами',
+    isRerenderOnInput: true,
     map: coms => {
-      if (knownChordsSet === undefined) return [];
-      const knownChordsSetLocal = knownChordsSet;
+      const knownChordsSetLocal = knownChordsSet();
 
       return coms.filter(com => {
         const difference = new Set(
@@ -131,6 +164,15 @@ export const catSpecialSearches: Record<`@${string}`, CatSpecialSearches> = {
 
         return difference.size;
       });
+    },
+  },
+  '@incorrect-ЁЕ': {
+    title: 'Некорректные Ё-Е',
+    isRerenderOnInput: true,
+    map: coms => {
+      const reg = eeIncorrectWordsReg();
+
+      return coms.filter(com => com.texts != null && reg.exec(' ' + com.name + '\n' + com.texts.join('\n') + ' '));
     },
   },
 };
