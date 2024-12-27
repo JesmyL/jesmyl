@@ -1,8 +1,10 @@
 import { useCcom } from '../useCcom';
 import ChordCard from './ChordCard';
+import { CmUndefinedChordCard } from './UndefinedChordCard';
 
 export default function ChordImagesList() {
   const ccom = useCcom();
+
   return (
     <div className="margin-big-gap flex center column">
       {ccom?.usedChords &&
@@ -19,7 +21,7 @@ export default function ChordImagesList() {
                       key={chordName}
                       className="flex column margin-big-gap"
                     >
-                      {card || <div className="error-message">Неизвестный аккорд</div>}
+                      {card || <CmUndefinedChordCard chord={chordName} />}
                       {ccom.usedChords?.[chordName] || '?'}
                     </div>
                   );

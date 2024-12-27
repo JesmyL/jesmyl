@@ -1,3 +1,4 @@
+import { propagationStopper } from 'front/complect/utils/utils';
 import { MyLib, mylib } from 'front/utils';
 import { useEffect, useMemo, useState } from 'react';
 import { useAtomValue } from '../../../../../complect/atoms';
@@ -6,6 +7,7 @@ import { useExerExec } from '../../../../../complect/exer/hooks/useExer';
 import KeyboardInput from '../../../../../complect/keyboard/KeyboardInput';
 import { IconPlusSignCircleStrokeRounded } from '../../../../../complect/the-icon/icons/plus-sign-circle';
 import { cmExer } from '../../CmExer';
+import { useToNewChordSearches } from '../../col/com/chord-card/chord-redactor-searches';
 import ChordCard from '../../col/com/chord-card/ChordCard';
 import { ChordPack, ChordTrack } from '../../col/com/chord-card/ChordCard.model';
 import { cmMolecule } from '../../molecules';
@@ -17,13 +19,15 @@ import './ChordRedactor.scss';
 const chordTracksAtom = cmMolecule.select(s => s.chordTracks);
 
 export default function ChordRedactor() {
+  const [{ newChordName = '' }, setProps] = useToNewChordSearches();
+
   const chords = useAtomValue(chordTracksAtom);
-  const [currentChord, setCurrentChord] = useState('');
-  const [newChordName, setNewChordName] = useState('');
-  const [isNewChord, setIsNewChord] = useState(false);
+  const [currentChordName, setCurrentChord] = useState(newChordName);
+  const [isNewChord, setIsNewChord] = useState(!!newChordName);
   const [redactableChords, updateRedactableChords] = useState<ChordPack>({});
-  const redactableChord: ChordTrack = redactableChords[currentChord];
-  const isExists = chords[currentChord];
+
+  const redactableChord: ChordTrack = redactableChords[currentChordName];
+  const isExists = chords[currentChordName];
   const [newNameError, setNewNameError] = useState('');
   const exec = useExerExec();
 
@@ -41,7 +45,9 @@ export default function ChordRedactor() {
       prev: {},
       args: {
         value,
+        chordNames: MyLib.keys(value).join(', '),
       },
+      onLoad: () => setProps({ newChordName: '' }),
     });
     exec();
   };
@@ -61,14 +67,9 @@ export default function ChordRedactor() {
   const chordNodes = useMemo(() => {
     const chordBoxes: Record<string, string[]> = {};
     let box: [string, number][] = [];
-    const sorted = MyLib.entries({ ...redactableChords, ...chords }).sort();
+    const sorted = MyLib.entries({ ...redactableChords, ...chords }).sort(([a], [b]) => (a > b ? 1 : a < b ? -1 : 0));
     const pushBox = () => {
-      const names = box
-        .map(([name, lad]) => [name, Math.trunc(lad)] as [string, number])
-        .sort(([aChord, aLad], [bChord, bLad]) => {
-          return aLad - bLad ? aLad - bLad : aChord > bChord ? 1 : -1;
-        })
-        .map(([name]) => name);
+      const names = box.map(([name, lad]) => [name, Math.trunc(lad)] as [string, number]).map(([name]) => name);
       chordBoxes[names[0]?.[0]] = names;
     };
 
@@ -87,7 +88,7 @@ export default function ChordRedactor() {
     return MyLib.entries(chordBoxes).map(([chordBase, names]) => {
       return (
         <div key={chordBase}>
-          <div className={`sticky chord-base-title ${currentChord[0] === chordBase ? 'text-bold' : ''}`}>
+          <div className={`sticky chord-base-title ${currentChordName[0] === chordBase ? 'text-bold' : ''}`}>
             {chordBase}
           </div>
           {names.map(chordName => {
@@ -95,9 +96,11 @@ export default function ChordRedactor() {
               <div
                 key={chordName}
                 onClick={() => setCurrentChord(chordName)}
-                className={`flex center margin-gap pointer ${currentChord === chordName ? 'text-underline' : ''} ${
-                  redactableChords[chordName] ? 'color--3' : ''
-                }`}
+                className={
+                  'flex center margin-gap pointer' +
+                  (currentChordName === chordName ? ' text-underline' : '') +
+                  (redactableChords[chordName] ? ' color--3' : '')
+                }
               >
                 {chordName}
               </div>
@@ -106,7 +109,7 @@ export default function ChordRedactor() {
         </div>
       );
     });
-  }, [chords, currentChord, redactableChords]);
+  }, [chords, currentChordName, redactableChords, setCurrentChord]);
 
   const modifyTrack = (map: (track: ChordTrack) => ChordTrack | void) => {
     let track: ChordTrack = mylib.clone(redactableChord);
@@ -116,7 +119,7 @@ export default function ChordRedactor() {
 
     const newRedactableChords = {
       ...redactableChords,
-      [currentChord]: JSON.parse(JSON.stringify(track)).map((point: number) => point || 0),
+      [currentChordName]: JSON.parse(JSON.stringify(track)).map((point: number) => point || 0),
     } as ChordPack;
 
     updateRedactableChords(newRedactableChords);
@@ -131,7 +134,11 @@ export default function ChordRedactor() {
       headTitle="Редактор аккордов"
       content={
         <>
-          <div className="chord-list">
+          <div
+            className="chord-list"
+            onTouchStart={propagationStopper}
+            onTouchMove={propagationStopper}
+          >
             <div className="chords-scroll">{chordNodes}</div>
             <div className="add-chord-button flex center">
               <IconPlusSignCircleStrokeRounded onClick={() => setIsNewChord(true)} />
@@ -140,7 +147,10 @@ export default function ChordRedactor() {
           <div className="flex column center old-chord">
             {isNewChord ? (
               <>
-                <KeyboardInput onInput={value => setNewChordName(value)} />
+                <KeyboardInput
+                  onInput={newChordName => setProps({ newChordName })}
+                  value={newChordName}
+                />
                 {newNameError && <div className="error-message margin-gap">{newNameError}</div>}
                 <div
                   className="padding-giant-gap pointer"
@@ -149,17 +159,17 @@ export default function ChordRedactor() {
                   Вернуться к редактированию
                 </div>
               </>
-            ) : currentChord ? (
+            ) : currentChordName ? (
               <>
-                <h2 className="text-center">{currentChord}</h2>
-                <ChordCard chordName={currentChord} />
+                <h2 className="text-center">{currentChordName}</h2>
+                <ChordCard chordName={currentChordName} />
               </>
             ) : (
               <div>Выбери аккорд для редактирования</div>
             )}
           </div>
           <div className="flex flex-gap column center new-chord">
-            {currentChord || isNewChord ? (
+            {currentChordName || isNewChord ? (
               <>
                 {redactableChord && !isNewChord && (
                   <ChordRedactableTrack
@@ -184,11 +194,11 @@ export default function ChordRedactor() {
                       setIsNewChord(false);
                       setNewNameError('');
                       if (!isExists) setCurrentChord('');
-                      setNewChordName('');
-                      delete newRedacts[currentChord];
+                      setProps({ newChordName: '' });
+                      delete newRedacts[currentChordName];
                       updateRedactableChords(newRedacts);
                     } else {
-                      newRedacts[currentChord] = chords[currentChord];
+                      newRedacts[currentChordName] = chords[currentChordName];
                       updateRedactableChords(newRedacts);
                     }
                     setExecution(newRedacts);

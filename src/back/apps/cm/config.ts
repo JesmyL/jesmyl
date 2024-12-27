@@ -33,7 +33,7 @@ const config: FilerAppConfig = {
       expected: {},
       level: 50,
       action: 'updateChordTracksDict',
-      title: 'Изменение изображений аккордов',
+      title: 'Изменение изображений аккордов: $chordNames;',
       method: 'set_all',
       args: {
         value: '#Dict',

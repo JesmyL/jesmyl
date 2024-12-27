@@ -1,5 +1,6 @@
 import { MyLib, mylib } from 'front/utils';
 import { itIt, makeRegExp } from 'shared/utils';
+import { cmMolecule } from '../../molecules';
 import { Com } from '../com/Com';
 import { Cat } from './Cat';
 import { CatTracker } from './Cat.model';
@@ -36,6 +37,18 @@ export type CatSpecialSearches = {
   title: string;
   map: (coms: Com[], term: string) => Com[];
 };
+
+let knownChordsSet: Set<string> | und;
+
+(async () => {
+  cmMolecule
+    .select(m => m.chordTracks)
+    .subscribe(chords => {
+      knownChordsSet = new Set(MyLib.keys(chords));
+    });
+
+  knownChordsSet = new Set(MyLib.keys(cmMolecule.get('chordTracks')));
+})();
 
 export const catSpecialSearches: Record<`@${string}`, CatSpecialSearches> = {
   '@audioLess': {
@@ -99,6 +112,25 @@ export const catSpecialSearches: Record<`@${string}`, CatSpecialSearches> = {
                 ),
           ),
       );
+    },
+  },
+  '@withUnknownChords': {
+    title: 'С неизвестными аккордами',
+    map: coms => {
+      if (knownChordsSet === undefined) return [];
+      const knownChordsSetLocal = knownChordsSet;
+
+      return coms.filter(com => {
+        const difference = new Set(
+          com
+            .transBlocks()
+            ?.map(block => block.split(makeRegExp('/[\\s.-]+/')))
+            .flat()
+            .filter(itIt),
+        ).difference(knownChordsSetLocal);
+
+        return difference.size;
+      });
     },
   },
 };
