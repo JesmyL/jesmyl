@@ -79,34 +79,4 @@
     <div id="root"></div>
     <div id="qr-code-application-container"></div>
   </body>
-
-  <script>
-    const floatNode = document.createElement('div');
-    const placeNode = document.createElement('div');
-
-    floatNode.id = 'yandex_rtb_R-A-float';
-
-    placeNode.id = 'yandex_rtb_R-A-place';
-    placeNode.hidden = true;
-
-    placeNode.appendChild(floatNode);
-    document.body.appendChild(placeNode);
-    const prefixMiddle = 'R-A-12370450-';
-    const prefix = `yandex_rtb_${prefixMiddle}`;
-
-    Array.from(
-      { length: localStorage.countOfAdvertisingBanners == null ? 30 : +localStorage.countOfAdvertisingBanners },
-      () => null,
-    ).forEach((_null, numi) => {
-      const renderTo = `${prefix}${numi + 1}`;
-      const blockId = `${prefixMiddle}${numi + 1}`;
-
-      const node = document.createElement('div');
-      floatNode.appendChild(node);
-
-      node.id = renderTo;
-
-      window.yaContextCb.push(() => Ya.Context.AdvManager.render({ blockId, renderTo }));
-    });
-  </script>
 </html>
