@@ -52,8 +52,7 @@ const makeAndSendPoll = async (text: string, chatId: number) => {
 
   sentOptions.forEach((sentOption, sentOptioni) => {
     if (sentOption.length !== options[sentOptioni]?.length) {
-      jesmylTgBot.bot.sendMessage(
-        chatId,
+      gul94iAdminTelegramBot.postMessage(
         spoilerDiv +
           `\n\n${sentOptioni + 1}-й пункт войдёт не полностью!\n\n` +
           options[sentOptioni] +
@@ -73,6 +72,10 @@ gul94iAdminTelegramBot.onChatMessages(async (bot, message) => {
     if (message.text === msgForPublicate) {
       makeAndSendPoll(message.reply_to_message.text, gul94iTelegramBot.chatId);
       await bot.deleteMessage(message.message_id);
+
+      bot.postMessage('Опрос опубликован', {
+        reply_to_message_id: message.reply_to_message.message_id,
+      });
     }
 
     if (message.text === msgForCheck) {
