@@ -1,7 +1,6 @@
 import { mylib } from 'front/utils';
 import { useEffect, useMemo, useState } from 'react';
 import { IScheduleWidget } from 'shared/api';
-import { environment } from 'shared/api/complect/environments/environment';
 import { makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
 import { IconArrowRight01StrokeRounded } from '../../complect/the-icon/icons/arrow-right-01';
@@ -13,11 +12,12 @@ import { IconPlusSignStrokeRounded } from '../../complect/the-icon/icons/plus-si
 import { IconSchoolReportCardStrokeRounded } from '../../complect/the-icon/icons/school-report-card';
 import { IconShapesStrokeRounded } from '../../complect/the-icon/icons/shapes';
 import { useAuth } from '../../components/index/molecules';
-import ShareEvaButton from '../ShareEvaButton';
+import { QrCodeFullScreen } from '../qr-code/QrCodeFullScreen';
 import StrongButton from '../strong-control/StrongButton';
 import StrongControlDateTimeExtracter from '../strong-control/StrongDateTimeExtracter';
 import StrongEvaButton from '../strong-control/StrongEvaButton';
 import StrongEditableField from '../strong-control/field/StrongEditableField';
+import { IconQrCodeStrokeRounded } from '../the-icon/icons/qr-code';
 import useIsRedactArea from '../useIsRedactArea';
 import ScheduleWidgetCustomAttachments from './atts/custom/CustomAttachments';
 import ScheduleWidgetStartTimeText from './complect/StartTimeText';
@@ -27,6 +27,7 @@ import { ScheduleWidgetDay } from './days/Day';
 import ScheduleWidgetEventList from './events/EventList';
 import ScheduleWidgetContextWrapper from './general/ContextWrapper';
 import { ScheduleWidgetCopy } from './general/Copy';
+import { schLinkAction } from './links';
 import ScheduleWidgetLists from './lists/Lists';
 import { ScheduleWidgetWatchLiveTranslationButton } from './live-translations/WatchLiveButton';
 import { ScheduleWidgetMyUserTgInform } from './tg-inform/UserTgInform';
@@ -52,6 +53,8 @@ export default function ScheduleWidget({
 
   const { editIcon, isRedact } = useIsRedactArea(true, null, rights.isCanRedact, true);
   const [startTime, setStartTime] = useState(schedule?.start);
+  const [isOpenInviteQr, setIsOpenInviteQr] = useState(false);
+
   const titleNode = (
     <div className="flex full-width between">
       <ScheduleWidgetTopicTitle
@@ -61,13 +64,7 @@ export default function ScheduleWidget({
         topicBox={schedule}
       />
       <span className="flex flex-gap">
-        {schedule && (
-          <ShareEvaButton
-            url={`${environment.host}/cm/!other/schs/${schedule.w}`}
-            title={schedule.title}
-            text={`Мероприятие ${schedule.title}${schedule.dsc ? `: ${schedule.dsc}` : ''}`}
-          />
-        )}
+        <IconQrCodeStrokeRounded onClick={() => setIsOpenInviteQr(true)} />
         {editIcon}
       </span>
     </div>
@@ -140,6 +137,12 @@ export default function ScheduleWidget({
       schedule={schedule}
       rights={rights}
     >
+      {isOpenInviteQr && (
+        <QrCodeFullScreen
+          text={schLinkAction.makeLink({ inviteSch: schedule.w })}
+          onClose={setIsOpenInviteQr}
+        />
+      )}
       <Widget className={'schedule-widget'}>
         {titleNode}
         <div className="margin-big-gap-v">

@@ -1,15 +1,18 @@
-import { useEffect } from 'react';
-import { NavigateFunction } from 'react-router-dom';
+import { useCallback, useEffect } from 'react';
+import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { SokiAppName } from 'shared/api';
 import { atom, useAtomValue } from '../atoms';
 import { MyLib } from '../my-lib';
 import { useActualRef } from '../useActualRef';
 
+type ActionFor = SokiAppName | `*/${string}`;
+
 export type LinkActionEvent<Props extends Record<string, unknown> = Record<string, unknown>> = {
-  appName: SokiAppName;
   props: Props;
-  navigate: NavigateFunction;
+  navigateFromRoot: NavigateFunction;
 };
+
+const registededPathsMap = new Map<string, string>();
 
 const searchParamName = 'appAction';
 const actonAtom = atom<LinkActionEvent | null>(null);
@@ -25,32 +28,54 @@ const useOnAction = (cb: (props: unknown) => void) => {
   }, [cbActualRef, props]);
 };
 
+const useOnHrefData = (..._fabricsRegister: LinkAppActionFabric[]) => {
+  const navigate = useNavigate();
+
+  return useCallback(
+    (href: string) => {
+      try {
+        const url = new URL(href);
+        const actionFor = url.searchParams.get(searchParamName) as ActionFor | '';
+
+        if (!actionFor) return;
+
+        url.searchParams.delete(searchParamName);
+        const props: Record<string, unknown> = {};
+
+        Array.from(url.searchParams.entries()).forEach(([key, value]) => (props[key] = JSON.parse(value)));
+
+        actonAtom.set({ props, navigateFromRoot: navigate });
+
+        if (actionFor.startsWith('*/')) setTimeout(navigate, 200, registededPathsMap.get(actionFor) ?? '/');
+        else navigate(`/${actionFor}/i`);
+      } catch (error) {}
+    },
+    [navigate],
+  );
+};
+
 export class LinkAppActionFabric<Props extends Record<string, unknown> = Record<string, unknown>> {
-  constructor(private appName: SokiAppName) {}
+  constructor(
+    private actionFor: ActionFor,
+    path?: `/${string}`,
+  ) {
+    if (!actionFor.startsWith('*/')) return;
+    if (path === undefined) throw new Error(`${actionFor} action does not have path parameter`);
+    if (registededPathsMap.has(actionFor)) throw new Error(`the action for ${actionFor} was registered`);
+
+    registededPathsMap.set(actionFor, path);
+  }
 
   useOnAction = useOnAction as (cb: (props: LinkActionEvent<Props>) => void) => void;
 
   makeLink(props: Props) {
     const url = new URL(window.location.origin);
-    url.searchParams.set(searchParamName, this.appName);
+    url.searchParams.set(searchParamName, this.actionFor);
     MyLib.keys(props).forEach(key => url.searchParams.set(key, JSON.stringify(props[key])));
     return url.toString();
   }
 
-  static onHrefData(navigate: NavigateFunction, href: string) {
-    try {
-      const url = new URL(href);
-      const appName = url.searchParams.get(searchParamName) as SokiAppName | '';
+  rootAnchor() {}
 
-      if (!appName) return;
-
-      url.searchParams.delete(searchParamName);
-      const props: Record<string, unknown> = {};
-
-      Array.from(url.searchParams.entries()).forEach(([key, value]) => (props[key] = JSON.parse(value)));
-
-      navigate(`/${appName}/i`);
-      actonAtom.set({ appName, props, navigate });
-    } catch (error) {}
-  }
+  static useOnHrefData = useOnHrefData;
 }

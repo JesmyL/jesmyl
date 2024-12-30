@@ -1,7 +1,7 @@
 import { LinkAppActionFabric } from 'front/complect/link-app-actions';
 import { QrReader } from 'front/complect/qr-code/useQrReader';
 import { useState } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { environment } from 'shared/api';
 import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
 import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
@@ -11,7 +11,7 @@ import IndexMyFiles from './files/MyFiles';
 
 export default function IndexActions() {
   const [isQrOpen, setIsQrOpen] = useState(false);
-  const navigate = useNavigate();
+  const onHrefData = LinkAppActionFabric.useOnHrefData();
 
   return (
     <Routes>
@@ -29,7 +29,7 @@ export default function IndexActions() {
                     onClose={setIsQrOpen}
                     onReadData={value => {
                       if (value.data.startsWith(environment.host)) {
-                        LinkAppActionFabric.onHrefData(navigate, value.data);
+                        onHrefData(value.data);
                         setIsQrOpen(false);
                       }
                     }}

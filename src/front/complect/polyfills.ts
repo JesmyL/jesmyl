@@ -3,7 +3,6 @@ import { setSharedPolyfills } from 'shared/utils';
 export const setPolyfills = () => {
   setSharedPolyfills();
 
-  const clearTimeouts = (param: TimeOut) => clearTimeout(param);
   const remListens = (param: any[]) => {
     const [element, ...otherProps] = param;
     element.removeEventListener(...otherProps);
@@ -55,9 +54,8 @@ export const setPolyfills = () => {
       effect: (...onUnmounts: (() => void)[]) => {
         return () => {
           onUnmounts.forEach(invokeEach);
-          timeoutsSet.forEach(clearTimeouts);
-          debounceTimers.forEach(clearTimeouts);
-
+          timeoutsSet.forEach(clearTimeout);
+          debounceTimers.forEach(clearTimeout);
           eventListeners.forEach(remListens);
 
           eventListeners.clear();

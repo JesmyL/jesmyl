@@ -20,9 +20,9 @@ export default function CmRouter({ mainNode }: { mainNode: React.ReactNode }) {
   useTakeActualComw();
   const [comListOnAction, setComListOnAction] = useState<CmComWid[] | null>(null);
 
-  cmAppActions.useOnAction(({ props, navigate }) => {
+  cmAppActions.useOnAction(({ props, navigateFromRoot }) => {
     if (props.comws?.length) setComListOnAction(props.comws);
-    if (props.comw != null) navigate(`/cm/i/${props.comw}`);
+    if (props.comw != null) navigateFromRoot(`/cm/i/${props.comw}`);
   });
 
   // todo remove it

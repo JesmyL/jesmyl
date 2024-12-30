@@ -49,7 +49,10 @@ const Redirect = () => {
 
   useEffect(() => {
     return hookEffectLine()
-      .setTimeout(() => navigate(`/${appName}/i`), 500)
+      .setTimeout(() => {
+        if (window.location.pathname.split('/').length > 1) return;
+        navigate(`/${appName}/i`);
+      }, 500)
       .effect();
   }, [appName, navigate]);
 
