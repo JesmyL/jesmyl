@@ -122,16 +122,16 @@ export class JesmylTelegramBot {
       this,
       this.chatId,
       this.logAllAsJSON && this.logger
-        ? (bot, query, metadata) => {
+        ? (bot, query, answer) => {
             this.logger.jsonCode({ query });
-            cb(bot, query, metadata);
+            cb(bot, query, answer);
           }
         : cb,
     );
   }
 
   deleteMessage(messageId: number, chatId?: number) {
-    this._bot.bot.deleteMessage(chatId ?? this.chatId, messageId);
+    return this._bot.bot.deleteMessage(chatId ?? this.chatId, messageId);
   }
 
   async editMessageText(messageId: number, text: string, keyboard?: SendMessageOptions) {

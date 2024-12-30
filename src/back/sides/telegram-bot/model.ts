@@ -5,12 +5,12 @@ import { JesmylTelegramBotWrapper } from './tg-bot-wrapper';
 export type FreeAnswerCallbackQueryOptions = OmitOwn<Partial<TgBot.AnswerCallbackQueryOptions>, 'callback_query_id'>;
 export type JTgBotCallbackQueryWithoutBot = (
   query: CallbackQuery,
-  answer: (options: string | FreeAnswerCallbackQueryOptions) => void,
+  answer: (options: string | FreeAnswerCallbackQueryOptions) => 'answered',
 ) => string | void | undefined | Promise<FreeAnswerCallbackQueryOptions | undefined | void | string>;
 export type JTgBotCallbackQuery = (
   bot: JesmylTelegramBot,
   query: CallbackQuery,
-  answer: (options: string | FreeAnswerCallbackQueryOptions) => void,
+  answer: (options: string | FreeAnswerCallbackQueryOptions) => 'answered',
 ) => string | void | undefined | Promise<FreeAnswerCallbackQueryOptions | undefined | void | string>;
 export type JTgBotChatMessageCallbackWithoutBot = (message: TgBot.Message, metadata: TgBot.Metadata) => any;
 export type JTgBotChatMessageCallback = (
