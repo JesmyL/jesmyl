@@ -1,25 +1,18 @@
+import { useExerExec } from 'front/complect/exer/hooks/useExer';
+import { MyLib } from 'front/utils';
 import { useEffect, useState } from 'react';
-import { itIt, makeRegExp } from 'shared/utils';
 import TheButton from '../../../../../complect/Button';
 import Dropdown from '../../../../../complect/dropdown/Dropdown';
 import { DropdownItem } from '../../../../../complect/dropdown/Dropdown.model';
-import { useExerExec } from '../../../../../complect/exer/hooks/useExer';
 import IconCheckbox from '../../../../../complect/the-icon/IconCheckbox';
 import { cmExer } from '../../CmExer';
 import { eeStorage } from '../../base/ee-storage/EeStorage';
+import { EeStorageStoreType } from '../../base/ee-storage/EeStorage.model';
 import PhaseCmEditorContainer from '../phase-editor-container/PhaseCmEditorContainer';
 import { EERulesListComputer } from './EERulesListComputer';
+import { EERulesWord } from './EERulesWord';
 
-const radioTitles = ['И е и ё', 'Только е', 'Только ё'].map((typeName, type) => <div key={type}>{typeName}</div>);
 const sizes = [10, 30, 50];
-
-const marginStyle = {
-  marginRight: '-.3em',
-};
-
-const textAlignStyle = {
-  textAlign: 'right',
-} as const;
 
 let listBox = { list: [] } as { list: string[] };
 
@@ -30,23 +23,27 @@ export default function EERules() {
   const exec = useExerExec();
   const [isCheckBible, setIsCheckBible] = useState(false);
   const [isShowListComputer, setIsShowListComputer] = useState(false);
+  const [editedWords, setEditedWords] = useState<EeStorageStoreType>({});
 
   useEffect(() => setIsShowListComputer(false), [updates]);
 
-  const setWord = (word: string, value: number | number[]) => {
+  useEffect(() => {
+    const words = MyLib.keys(editedWords);
+    if (!words.length) return;
+
     cmExer.set({
       method: 'set',
-      scope: `set-ee-word-rule.${word}`,
-      action: 'setEERuleWordTrack',
-      value,
+      scope: 'setEERuleWordTracks',
+      action: 'setEERuleWordTracks',
+      value: editedWords,
       generalId: 'word-ee-setting',
-      prev: eeStorage.get(word),
-      args: { word, value },
+      prev: {},
+      args: { value: editedWords, words: words.join(', '), count: words.length },
+      onLoad: () => setEditedWords({}),
     });
 
-    eeStorage.set(word, value);
     exec();
-  };
+  }, [editedWords, exec]);
 
   return (
     <PhaseCmEditorContainer
@@ -100,67 +97,12 @@ export default function EERules() {
               />
               слов: {listBox.list.length}
               {listBox.list.slice(currentPage * pageSize, currentPage * pageSize + pageSize).map((word, wordi) => {
-                const storeType = eeStorage.get(word);
-                const parts = word.split(makeRegExp('/([а-дж-я]*е)/')).filter(itIt);
-
                 return (
-                  <table
+                  <EERulesWord
                     key={word}
-                    className="margin-big-gap-v"
-                  >
-                    <tbody>
-                      <tr>
-                        <th className={storeType == null ? 'color--ko' : undefined}>Слово:</th>
-                        {parts.map((part, parti) => (
-                          <td key={parti}>
-                            {storeType === 2 || (storeType as number[])?.[parti] === 2
-                              ? part.replace(makeRegExp('/е/'), 'ё')
-                              : part}
-                          </td>
-                        ))}
-                      </tr>
-                      <tr>
-                        <th>{radioTitles}</th>
-                        {parts.map((part, parti) => (
-                          <td
-                            key={parti}
-                            style={textAlignStyle}
-                          >
-                            {part.endsWith('е') &&
-                              radioTitles.map((_, type) => (
-                                <input
-                                  key={type}
-                                  type="radio"
-                                  className="block margin-gap-v"
-                                  name={`ee-word-radio_${word}-${parti}`}
-                                  style={marginStyle}
-                                  checked={storeType === type || (storeType as number[])?.[parti] === type}
-                                  onChange={() => {
-                                    let track = Array.isArray(storeType) ? storeType.slice(0) : storeType;
-                                    const elen = word.match(makeRegExp('/е/g'))?.length || 0;
-
-                                    if (storeType == null) {
-                                      if (elen > 1) {
-                                        track = '.'
-                                          .repeat(elen)
-                                          .split('')
-                                          .map(() => 1);
-                                        track[parti] = type;
-                                      } else track = type;
-                                    } else {
-                                      if (elen > 1) (track as number[])[parti] = type;
-                                      else track = type;
-                                    }
-
-                                    setWord(word, track);
-                                  }}
-                                />
-                              ))}
-                          </td>
-                        ))}
-                      </tr>
-                    </tbody>
-                  </table>
+                    word={word}
+                    setEditedWords={setEditedWords}
+                  />
                 );
               })}
             </>

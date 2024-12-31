@@ -78,7 +78,7 @@ export const EERulesListComputer = memo(function ListComputer({
 
                       if (!wordsList.length) {
                         etap('Сортировка слов', () => {
-                          listBox.list = words;
+                          listBox.list = words.reverse();
 
                           etap(`Отрисовка списка ${words.length}`, () => setUpdates(num => num + 1));
                         });

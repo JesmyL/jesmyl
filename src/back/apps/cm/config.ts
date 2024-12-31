@@ -507,13 +507,12 @@ const config: FilerAppConfig = {
       level: 80,
       action: 'canEditEERules',
     },
-    '/eeStorage/{word}': {
-      action: 'setEERuleWordTrack',
-      title: "Задано правило правописания е/ё для слова '$word'",
-      method: 'set',
+    '/eeStorage': {
+      action: 'setEERuleWordTracks',
+      title: 'Задано правило правописания е/ё для $count; слов $words;',
+      method: 'set_all',
       args: {
-        word: '#String',
-        value: ['#list', '#number'],
+        value: '#Dict',
       },
     },
     '/meetings': {

@@ -142,7 +142,17 @@ export class SokiServerExecs extends SokiServerFiles implements SokiServerDoActi
             .map(this.extractTitle)
             .join('\n\n')}` +
           `\n\n\nJSON изменений:\n<blockquote expandable>` +
-          (execsAlt || JSON.stringify(result?.replacedExecs, null, indent)) +
+          (execsAlt ||
+            JSON.stringify(
+              result?.replacedExecs.map(ex => {
+                const exec = { ...ex };
+                delete exec.value;
+
+                return exec;
+              }),
+              null,
+              indent,
+            )) +
           `</blockquote>\n\nАвтор:\n<blockquote expandable>` +
           (eventData.auth ? JSON.stringify(eventData.auth, null, ' ') : 'Не авторизоан') +
           `</blockquote>`;

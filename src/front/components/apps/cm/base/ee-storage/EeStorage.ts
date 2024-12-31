@@ -18,7 +18,7 @@ export class EeStorage {
   }
 
   get(word: string) {
-    return this.store ? this.store[word] : -1;
+    return this.store !== undefined ? this.store[word] : -1;
   }
 
   set(word: string, value: number | number[]) {
