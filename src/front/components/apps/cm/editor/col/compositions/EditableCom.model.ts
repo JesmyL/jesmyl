@@ -1,3 +1,1 @@
-import { migratableEditableComToolNameList } from './complect/MigratableEditableComTools';
-
-export type MigratableEditableComToolName = (typeof migratableEditableComToolNameList)[number];
+export type MigratableEditableComToolName = 'edit-com';

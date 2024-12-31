@@ -8,6 +8,7 @@ import { cmMolecule } from '../../../molecules';
 import { Com } from '../Com';
 import { MigratableComToolName } from '../Com.model';
 import { useCcom } from '../useCcom';
+import { CmCatsBindsComTool } from './complect/CatsBinds';
 import { ChordImagesTool } from './complect/ChordImagesTool';
 import { ChordsVariantTool } from './complect/ChordsVariantTool';
 import { FullscreenTool } from './complect/FullscreenTool';
@@ -16,10 +17,11 @@ import { MarkedComTool } from './complect/MarkedComTool';
 import { MiniAnchorSwitchTool } from './complect/MiniAnchorSwitchTool';
 import { OpenPlayerTool } from './complect/OpenPlayerTool';
 import { QrComShare } from './complect/QrComShare';
-import { RedactComTool } from './complect/RedactComTool';
 import { SelectedToggleTool } from './complect/SelectedToggleTool';
 import { TranslationTool } from './complect/TranslationTool';
 import { ComToolItemAttrsContext, IsComToolIconItemsContext } from './ComTool';
+
+const RedactComTool = React.lazy(() => import('./complect/RedactComTool'));
 
 const comTopToolsAtom = cmMolecule.select(s => s.comTopTools);
 
@@ -64,8 +66,10 @@ const toolsDict: Record<MigratableComToolName, React.ReactNode> = {
   'open-player': <OpenPlayerTool />,
   'hide-metronome': <HideMetronomeTool />,
   'is-mini-anchor': <MiniAnchorSwitchTool />,
-  'edit-com': <RedactComTool />,
   'qr-share': <QrComShare />,
+  'cats-binds': <CmCatsBindsComTool />,
+
+  'edit-com': <RedactComTool />,
 };
 const toolKeys = MyLib.keys(toolsDict);
 

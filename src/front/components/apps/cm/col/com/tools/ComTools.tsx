@@ -1,4 +1,3 @@
-import React from 'react';
 import { BottomPopupItem } from '../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
 import { useAtom } from '../../../../../../complect/atoms';
 import IconButton from '../../../../../../complect/the-icon/IconButton';
@@ -9,31 +8,13 @@ import { IconTextFontStrokeRounded } from '../../../../../../complect/the-icon/i
 import { ChordVisibleVariant } from '../../../Cm.model';
 import { useNumComUpdates } from '../../../atoms';
 import { useChordVisibleVariant } from '../../../base/useChordVisibleVariant';
-import { Cols } from '../../../cols/Cols';
-import { useCols } from '../../../cols/useCols';
 import { cmComFontSizeAtom } from '../../../molecules';
-import { Com } from '../Com';
 import { useCcom } from '../useCcom';
+import { CmComCatMentions } from '../useGetCatMentions';
 import { useMigratableListComTools } from './useMigratableComTools';
-
-const catMentions = (cols?: Cols, com?: Com): string[] => {
-  if (!cols || !com) return [];
-  const wid = com.wid;
-  const natives: string[] = [];
-
-  const inCats = cols.cats
-    .filter(cat => {
-      if (cat.dict[wid] != null) natives.push(`${cat.name} ${cat.dict[wid]}`);
-      return cat.stack.includes(wid);
-    })
-    .map(cat => cat.name);
-
-  return inCats.concat(natives);
-};
 
 export const ComTools = () => {
   const ccom = useCcom();
-  const cols = useCols();
   const [fontSize, setFontSize] = useAtom(cmComFontSizeAtom);
   const [chordVisibleVariant] = useChordVisibleVariant();
   const comToolsNode = useMigratableListComTools();
@@ -126,12 +107,7 @@ export const ComTools = () => {
       {comToolsNode}
 
       <div className="fade-05 full-width margin-gap-v color--7">
-        {catMentions(cols, ccom).map((mention, mentioni) => (
-          <React.Fragment key={mentioni}>
-            {mentioni ? ', ' : ''}
-            <span className="nowrap">{mention}</span>
-          </React.Fragment>
-        ))}
+        <CmComCatMentions com={ccom} />
       </div>
 
       <div className="full-width fade-05 flex center font-size:0.7em margin-gap-v">

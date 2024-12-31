@@ -54,3 +54,4 @@ export const cmComFontSizeAtom = cmMolecule.select(s => s.comFontSize);
 export const cmTranslationScreenConfigsAtom = cmMolecule.select(s => s.translationScreenConfigs);
 
 export const isOpenChordImagesAtom = atom(false);
+export const cmIsShowCatBindsInCompositionAtom = atom(false);

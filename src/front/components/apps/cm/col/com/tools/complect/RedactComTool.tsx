@@ -3,7 +3,7 @@ import { useAuth } from '../../../../../../index/molecules';
 import { ComTool } from '../ComTool';
 import { useComToolsCcomContext } from '../useMigratableComTools';
 
-export const RedactComTool = () => {
+export default function RedactComTool() {
   const auth = useAuth();
   const ccom = useComToolsCcomContext();
 
@@ -16,4 +16,4 @@ export const RedactComTool = () => {
       />
     )
   );
-};
+}

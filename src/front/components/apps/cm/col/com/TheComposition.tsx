@@ -10,7 +10,7 @@ import BibleTranslatesContextProvider from '../../../bible/translates/Translates
 import { useCmTranslationComListContext } from '../../base/translations/context';
 import { useChordVisibleVariant } from '../../base/useChordVisibleVariant';
 import useLaterComList from '../../base/useLaterComList';
-import { cmMolecule, isOpenChordImagesAtom } from '../../molecules';
+import { cmIsShowCatBindsInCompositionAtom, cmMolecule, isOpenChordImagesAtom } from '../../molecules';
 import './Com.scss';
 import { ComNotFoundPage } from './ComNotFoundPage';
 import TheControlledCom from './TheControlledCom';
@@ -20,6 +20,7 @@ import ComPlayer from './player/ComPlayer';
 import { ComTools } from './tools/ComTools';
 import { useMigratableTopComTools } from './tools/useMigratableComTools';
 import { useCcom, useTakeActualComw } from './useCcom';
+import { CmComCatMentions } from './useGetCatMentions';
 
 const playerHideModeAtom = cmMolecule.select(s => s.playerHideMode);
 const isMetronomeHideAtom = cmMolecule.select(s => s.isMetronomeHide);
@@ -35,6 +36,7 @@ export default function TheComposition() {
   const isMetronomeHide = useAtomValue(isMetronomeHideAtom);
   const comAudio = ccom?.audio.trim();
   const [isOpenChordImages, setIsOpenChordImages] = useAtom(isOpenChordImagesAtom);
+  const isShowCatBinds = useAtomValue(cmIsShowCatBindsInCompositionAtom);
 
   useTakeActualComw();
 
@@ -101,6 +103,11 @@ export default function TheComposition() {
             meterSize={ccom.meterSize}
             bpm={ccom.beatsPerMinute}
           />
+          {isShowCatBinds && (
+            <div className="fade-05 full-width color--7">
+              <CmComCatMentions com={ccom} />
+            </div>
+          )}
 
           {controlledComNode}
         </>

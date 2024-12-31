@@ -9,20 +9,20 @@ export interface SettingsItem {
   icon: TheIconType;
 }
 
-export type MigratableComToolName = (typeof menuComToolNameList)[number] | MigratableEditableComToolName;
+export type MigratableComToolName = MenuComToolNameList | MigratableEditableComToolName;
 
-export const menuComToolNameList = [
-  'fullscreen-mode',
-  'mark-com',
-  'show-translation',
-  'chords-variant',
-  'chord-images',
-  'selected-toggle',
-  'is-mini-anchor',
-  'open-player',
-  'hide-metronome',
-  'qr-share',
-] as const;
+export type MenuComToolNameList =
+  | 'fullscreen-mode'
+  | 'mark-com'
+  | 'show-translation'
+  | 'chords-variant'
+  | 'chord-images'
+  | 'selected-toggle'
+  | 'is-mini-anchor'
+  | 'open-player'
+  | 'hide-metronome'
+  | 'qr-share'
+  | 'cats-binds';
 
 export interface MigratableComTool {
   title: string;

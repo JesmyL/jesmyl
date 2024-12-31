@@ -2,6 +2,7 @@ import { mylib } from 'front/utils';
 import { IExportableCom, IExportableOrder } from 'shared/api/complect/apps/cm';
 import { itIt, makeRegExp } from 'shared/utils';
 import { BaseNamed } from '../../base/BaseNamed';
+import { Cat } from '../cat/Cat';
 import { blockStyles } from './block-styles/BlockStyles';
 import { StyleBlock } from './block-styles/StyleBlock';
 import {
@@ -301,6 +302,21 @@ export class Com extends BaseNamed<IExportableCom> {
     this.updateChordLabels();
 
     return this.excludedModulations;
+  }
+
+  catMentions(cats: Cat[] | nil) {
+    if (!cats) return [];
+    const wid = this.wid;
+    const natives: string[] = [];
+
+    const inCats = cats
+      .filter(cat => {
+        if (cat.dict[wid] != null) natives.push(`${cat.name} ${cat.dict[wid]}`);
+        return cat.stack.includes(wid);
+      })
+      .map(cat => cat.name);
+
+    return inCats.concat(natives);
   }
 
   updateChordLabels() {
