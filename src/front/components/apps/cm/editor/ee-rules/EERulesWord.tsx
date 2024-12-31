@@ -16,11 +16,13 @@ export const EERulesWord = memo(
   ({
     word,
     setEditedWords,
+    editedWordsRef,
   }: {
     word: string;
     setEditedWords: (setter: (words: EeStorageStoreType) => EeStorageStoreType) => void;
+    editedWordsRef: { current: EeStorageStoreType };
   }) => {
-    const [trackState, setTrackState] = useState(eeStorage.get(word));
+    const [trackState, setTrackState] = useState(editedWordsRef.current[word] ?? eeStorage.get(word));
     const parts = word.split(makeRegExp('/([а-дж-я]*е)/')).filter(itIt);
     const typesLine = mylib.isArr(trackState) ? trackState : [trackState];
     const isVariated = mylib.isArr(trackState) ? trackState.includes(0) : !trackState;
@@ -31,9 +33,11 @@ export const EERulesWord = memo(
       <StyledTable className="margin-big-gap-v">
         <tbody>
           <StyledWordTr>
-            <th className={trackState == null ? 'color--ko' : 'color--ok'}>Слово:</th>
             {parts.map((part, parti) => (
-              <th key={parti}>
+              <th
+                key={parti}
+                className={trackState == null ? 'color--ko' : 'color--ok'}
+              >
                 <>
                   {isVariated && <div>{part}</div>}
                   <div>
@@ -49,7 +53,6 @@ export const EERulesWord = memo(
             ))}
           </StyledWordTr>
           <tr>
-            <th>{radioTitles}</th>
             {parts.map((part, parti) => (
               <td
                 key={parti}
@@ -57,11 +60,12 @@ export const EERulesWord = memo(
               >
                 <StyledCheckboxesTd>
                   {part.endsWith('е') &&
-                    radioTitles.map((_, type) => (
-                      <IconCheckbox
-                        key={type}
-                        checked={typesLine[parti] === type}
-                        disabled={typesLine[parti] === type}
+                    radioTitles.map((type, typei) => (
+                      <StyledIconCheckbox
+                        key={typei}
+                        checked={typesLine[parti] === typei}
+                        disabled={typesLine[parti] === typei}
+                        prefix={type}
                         onChange={() => {
                           let track = Array.isArray(trackState) ? trackState.slice(0) : trackState;
                           const elen = word.match(makeRegExp('/е/g'))?.length || 0;
@@ -72,11 +76,11 @@ export const EERulesWord = memo(
                                 .repeat(elen)
                                 .split('')
                                 .map(() => 1);
-                              track[parti] = type;
-                            } else track = type;
+                              track[parti] = typei;
+                            } else track = typei;
                           } else {
-                            if (elen > 1) (track as number[])[parti] = type;
-                            else track = type;
+                            if (elen > 1) (track as number[])[parti] = typei;
+                            else track = typei;
                           }
 
                           setTrackState(track);
@@ -94,6 +98,10 @@ export const EERulesWord = memo(
   },
 );
 
+const StyledIconCheckbox = styled(IconCheckbox)`
+  font-size: 0.5em;
+`;
+
 const StyledCheckboxesTd = styled.div`
   display: flex;
   align-items: flex-end;
@@ -107,7 +115,7 @@ const StyledCheckboxesTd = styled.div`
 `;
 
 const StyledTable = styled.table`
-  font-size: 2em;
+  font-size: 1.5em;
 `;
 
 const StyledWordTr = styled.tr`

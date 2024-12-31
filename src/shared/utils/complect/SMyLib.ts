@@ -267,7 +267,10 @@ export class SMyLib {
 
       return ret == null ? args[args.length - 1] : ret;
     },
-    declension: (num: number, one: string, two: string, five: string) => this.declension(num, one, two, five),
+    declension: this.declension,
+    keys: this.keys,
+    join: (by: string, ...arr: []) => arr.join(by),
+    count: (obj: object) => this.keys(obj).length,
     isEq: (...args: any[]) => {
       let val: any;
 

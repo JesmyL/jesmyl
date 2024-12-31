@@ -1,6 +1,7 @@
+import { atom, useAtom } from 'front/complect/atoms';
 import { useExerExec } from 'front/complect/exer/hooks/useExer';
 import { MyLib } from 'front/utils';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import TheButton from '../../../../../complect/Button';
 import Dropdown from '../../../../../complect/dropdown/Dropdown';
 import { DropdownItem } from '../../../../../complect/dropdown/Dropdown.model';
@@ -16,14 +17,24 @@ const sizes = [10, 30, 50];
 
 let listBox = { list: [] } as { list: string[] };
 
+const eeWordsAtom = atom<EeStorageStoreType>({});
+const pageSizeAtom = atom(50);
+const currentPageAtom = atom(1);
+const isCheckBibleAtom = atom(false);
+
 export default function EERules() {
-  const [pageSize, setPageSize] = useState(50);
-  const [updates, setUpdates] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
   const exec = useExerExec();
-  const [isCheckBible, setIsCheckBible] = useState(false);
+
+  const [pageSize, setPageSize] = useAtom(pageSizeAtom);
+  const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
+  const [isCheckBible, setIsCheckBible] = useAtom(isCheckBibleAtom);
+  const [editedWords, setEditedWords] = useAtom(eeWordsAtom);
+
+  const [updates, setUpdates] = useState(0);
   const [isShowListComputer, setIsShowListComputer] = useState(false);
-  const [editedWords, setEditedWords] = useState<EeStorageStoreType>({});
+
+  const editedWordsRef = useRef<EeStorageStoreType>();
+  editedWordsRef.current = editedWords;
 
   useEffect(() => setIsShowListComputer(false), [updates]);
 
@@ -38,12 +49,12 @@ export default function EERules() {
       value: editedWords,
       generalId: 'word-ee-setting',
       prev: {},
-      args: { value: editedWords, words: words.join(', '), count: words.length },
+      args: { value: editedWords },
       onLoad: () => setEditedWords({}),
     });
 
     exec();
-  }, [editedWords, exec]);
+  }, [editedWords, exec, setEditedWords]);
 
   return (
     <PhaseCmEditorContainer
@@ -102,6 +113,7 @@ export default function EERules() {
                     key={word}
                     word={word}
                     setEditedWords={setEditedWords}
+                    editedWordsRef={editedWordsRef as never}
                   />
                 );
               })}

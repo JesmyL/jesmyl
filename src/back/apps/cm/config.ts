@@ -509,7 +509,8 @@ const config: FilerAppConfig = {
     },
     '/eeStorage': {
       action: 'setEERuleWordTracks',
-      title: 'Задано правило правописания е/ё для $count; слов $words;',
+      title:
+        'Задано правило правописания е/ё для $count{{$value;}} $declension{{$count{{$value;}}}{слова}{слов}{слов}} $join{{, }{$keys{{$value;}}}}',
       method: 'set_all',
       args: {
         value: '#Dict',
