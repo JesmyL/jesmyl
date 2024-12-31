@@ -1,54 +1,65 @@
-import { BottomPopupContenter } from '../../../../../complect/absolute-popup/bottom-popup/model';
+import { BottomPopupItem } from 'front/complect/absolute-popup/bottom-popup/BottomPopupItem';
+import { FullContent } from 'front/complect/fullscreen-content/FullContent';
+import { useState } from 'react';
 import { useCheckIsAccessed } from '../../../../../complect/exer/hooks/check-is-accessed';
-import useFullContent from '../../../../../complect/fullscreen-content/useFullContent';
-import IconButton from '../../../../../complect/the-icon/IconButton';
 import { IconFolderAddStrokeRounded } from '../../../../../complect/the-icon/icons/folder-add';
 import { IconPlusSignCircleStrokeRounded } from '../../../../../complect/the-icon/icons/plus-sign-circle';
 import { useAuth } from '../../../../index/molecules';
 import AddContext from './AddContext';
 import MeetingsCreator from './MeetingsCreator';
 
-export const EditMeetingsMore: BottomPopupContenter<number[] | und> = (isOpen, closePopup, prepare, currPath) => {
+export const EditMeetingsMore = ({ closePopup, currPath }: { closePopup: (is: false) => void; currPath: number[] }) => {
   const auth = useAuth();
   const checkIsAccessed = useCheckIsAccessed(auth);
-
-  const [createMeetingNode, createMeeting] = useFullContent(close => <MeetingsCreator close={close} />);
-  const [addContextNode, addContext] = useFullContent(
-    close =>
-      isOpen &&
-      currPath && (
-        <AddContext
-          close={close}
-          currPath={currPath}
-        />
-      ),
-  );
+  const [isOpenMeetingsCreator, setIsOpenMeetingsCreator] = useState(false);
+  const [isOpenAddContextNode, setIsOpenAddContextNode] = useState(false);
 
   return (
     <>
-      {createMeetingNode}
-      {addContextNode}
-      {isOpen && (
-        <>
-          <IconButton
-            Icon={IconPlusSignCircleStrokeRounded}
-            postfix="Создать событие"
-            onClick={() => {
-              closePopup();
-              createMeeting();
-            }}
+      <BottomPopupItem
+        Icon={IconPlusSignCircleStrokeRounded}
+        title="Создать событие"
+        onClick={event => {
+          event.stopPropagation();
+          setIsOpenMeetingsCreator(true);
+        }}
+      />
+
+      {checkIsAccessed(50) && (
+        <BottomPopupItem
+          Icon={IconFolderAddStrokeRounded}
+          title="Создать контекст"
+          onClick={event => {
+            event.stopPropagation();
+            setIsOpenAddContextNode(true);
+          }}
+        />
+      )}
+
+      {isOpenMeetingsCreator && (
+        <FullContent
+          onClose={() => {
+            closePopup(false);
+            setIsOpenMeetingsCreator(false);
+          }}
+        >
+          <MeetingsCreator close={setIsOpenMeetingsCreator} />
+        </FullContent>
+      )}
+
+      {isOpenAddContextNode && (
+        <FullContent
+          containerClassName=""
+          onClose={() => {
+            closePopup(false);
+            setIsOpenAddContextNode(false);
+          }}
+        >
+          <AddContext
+            close={setIsOpenAddContextNode}
+            currPath={currPath}
           />
-          {checkIsAccessed(50) && (
-            <IconButton
-              Icon={IconFolderAddStrokeRounded}
-              postfix="Создать контекст"
-              onClick={() => {
-                closePopup();
-                addContext();
-              }}
-            />
-          )}
-        </>
+        </FullContent>
       )}
     </>
   );

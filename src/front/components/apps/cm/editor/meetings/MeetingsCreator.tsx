@@ -5,7 +5,7 @@ import KeyboardInput from '../../../../../complect/keyboard/KeyboardInput';
 import { cmEventContextAtom } from '../../molecules';
 import { useEditableMeetings } from './useEditableMeetings';
 
-export default function MeetingsCreator({ close }: { close: () => void }) {
+export default function MeetingsCreator({ close }: { close: (is: false) => void }) {
   const [name, setName] = useState('');
   const { meetings } = useEditableMeetings();
   const exec = useExerExec();
@@ -27,7 +27,7 @@ export default function MeetingsCreator({ close }: { close: () => void }) {
         disabled={!name || !currContextw || !meetings}
         onClick={() => {
           meetings && currContextw && exec(meetings.addEvent(name, currContextw));
-          close();
+          close(false);
         }}
       >
         Создать

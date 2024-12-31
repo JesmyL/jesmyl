@@ -1,3 +1,4 @@
+import { BottomPopupItem } from 'front/complect/absolute-popup/bottom-popup/BottomPopupItem';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
@@ -178,9 +179,9 @@ export default function EditMeetingsEvent() {
 
                 {isMoreOpen && (
                   <BottomPopup onClose={setIsMoreOpen}>
-                    <IconButton
+                    <BottomPopupItem
                       Icon={IconLeftToRightListBulletStrokeRounded}
-                      postfix="История"
+                      title="История"
                       onClick={() => {
                         setIsOpenHistory(true);
                         setIsMoreOpen(false);

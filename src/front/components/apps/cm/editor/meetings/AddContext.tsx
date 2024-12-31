@@ -1,3 +1,5 @@
+import TheButton from 'front/complect/Button';
+import IconCheckbox from 'front/complect/the-icon/IconCheckbox';
 import { useMemo, useState } from 'react';
 import styled from 'styled-components';
 import BrutalItem from '../../../../../complect/brutal-item/BrutalItem';
@@ -7,7 +9,7 @@ import { IconCalendar01StrokeRounded } from '../../../../../complect/the-icon/ic
 import { EditableMeetingsEvent } from './EditableMeetingsEvent';
 import { useEditableMeetings } from './useEditableMeetings';
 
-export default function AddContext({ close, currPath }: { close: () => void; currPath: number[] }) {
+export default function AddContext({ close, currPath }: { close: (is: false) => void; currPath: number[] }) {
   const [name, setName] = useState('');
   const { meetings } = useEditableMeetings();
   const exec = useExerExec();
@@ -40,6 +42,7 @@ export default function AddContext({ close, currPath }: { close: () => void; cur
       ? setBindEvents(bindEvents.filter(eventw => eventw !== event))
       : setBindEvents([...bindEvents, event]);
   };
+
   const eventsStack = meetings?.events
     ?.map((event, eventi) => {
       if (event.contextw && event.contextw !== currGroupw) return null;
@@ -49,20 +52,15 @@ export default function AddContext({ close, currPath }: { close: () => void; cur
           icon={<IconCalendar01StrokeRounded />}
           title={event.name}
           onClick={() => switchEvent(event)}
-          box={
-            <input
-              type="checkbox"
-              checked={bindEvents.indexOf(event) > -1}
-              onChange={() => switchEvent(event)}
-            />
-          }
+          box={<IconCheckbox checked={bindEvents.indexOf(event) > -1} />}
         />
       );
     })
     .filter(item => item);
 
   return (
-    <div className="add-context flex column full-height padding-big-gap center">
+    <div className="add-context full-height padding-big-gap center over-y-auto">
+      <h2>Название нового контекста</h2>
       <KeyboardInput
         className="full-width"
         value={name}
@@ -71,21 +69,23 @@ export default function AddContext({ close, currPath }: { close: () => void; cur
       {stack}
       {eventsStack?.length ? (
         <>
-          <div>Переместить</div>
+          <h2>Переместить в новый контекст:</h2>
           {eventsStack}
         </>
       ) : null}
-      <button
-        className=""
-        disabled={!name || usedContexts.indexOf(name) > -1}
-        onClick={() => {
-          meetings?.addContext(name, currPath, bindEvents);
-          close();
-          setTimeout(() => exec());
-        }}
-      >
-        Добавить
-      </button>
+      <div className="full-width flex center">
+        <TheButton
+          className="margin-giant-gap"
+          disabled={!name || usedContexts.indexOf(name) > -1}
+          onClick={() => {
+            meetings?.addContext(name, currPath, bindEvents);
+            close(false);
+            setTimeout(() => exec());
+          }}
+        >
+          Добавить
+        </TheButton>
+      </div>
     </div>
   );
 }

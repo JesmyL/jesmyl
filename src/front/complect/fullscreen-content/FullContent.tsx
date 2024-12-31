@@ -10,6 +10,7 @@ import IconButton from '../the-icon/IconButton';
 import { IconCancel01StrokeRounded } from '../the-icon/icons/cancel-01';
 import { useActualRef } from '../useActualRef';
 import { useWid } from '../useWid';
+import { propagationStopper } from '../utils/utils';
 
 const swipeEvents: EventerListeners<void> = [];
 
@@ -47,7 +48,7 @@ export function FullContent({ onClose, closable, children, className, asRootAnch
         <Swiped
           key={wid}
           close={close}
-          onClick={closable ? close : undefined}
+          onClick={closable ? close : propagationStopper}
           className={className}
         >
           {closable || (

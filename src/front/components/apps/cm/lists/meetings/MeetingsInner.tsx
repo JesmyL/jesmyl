@@ -56,6 +56,30 @@ export default function MeetingsInner<Meets extends Meetings>({
       </div>
       {eventContextRef.current.length ? null : (
         <>
+          {favorites.contexts.map((contextw, contextwi) => {
+            const context = meetings.contexts[contextw];
+            if (!context) return null;
+
+            return (
+              <div
+                key={contextwi}
+                className="relative"
+              >
+                <BrutalItem
+                  icon={<IconFolder01StrokeRounded />}
+                  title={meetings.names[context.context[context.context.length - 1]]}
+                  onClick={() => setCurrContextRef.current(context.context)}
+                  box={<IconStarSolidRounded className="fade-05" />}
+                />
+                <div className="absolute flex center full-width pos-bottom fade-05 pointers-none">
+                  {context.context
+                    ?.slice(0, -1)
+                    .map(context => meetings.names[context])
+                    .join(' - ')}
+                </div>
+              </div>
+            );
+          })}
           {favorites.events.map((eventw, eventwi) => {
             const event = meetings.events?.find(event => event.wid === eventw);
             if (!event) return null;
@@ -92,32 +116,37 @@ export default function MeetingsInner<Meets extends Meetings>({
               </Link>
             );
           })}
-          {favorites.contexts.map((contextw, contextwi) => {
-            const context = meetings.contexts[contextw];
-            if (!context) return null;
-
-            return (
-              <div
-                key={contextwi}
-                className="relative"
-              >
-                <BrutalItem
-                  icon={<IconFolder01StrokeRounded />}
-                  title={meetings.names[context.context[context.context.length - 1]]}
-                  onClick={() => setCurrContextRef.current(context.context)}
-                  box={<IconStarSolidRounded className="fade-05" />}
-                />
-                <div className="absolute flex center full-width pos-bottom fade-05 pointers-none">
-                  {context.context
-                    ?.slice(0, -1)
-                    .map(context => meetings.names[context])
-                    .join(' - ')}
-                </div>
-              </div>
-            );
-          })}
         </>
       )}
+      {contexts.map(([contexti, contextn, contextw], groupi) => {
+        const isFavorite = favorites.contexts.indexOf(contextw) > -1;
+
+        return (
+          <BrutalItem
+            key={groupi}
+            icon={<IconFolder01StrokeRounded />}
+            title={contextn}
+            onClick={() => setCurrContextRef.current([...eventContextRef.current, contexti])}
+            box={
+              eventContextRef.current.length ? (
+                <IconButton
+                  Icon={isFavorite ? IconStarSolidRounded : IconStarStrokeRounded}
+                  onClick={e => {
+                    e.stopPropagation();
+
+                    setFavorites({
+                      ...favorites,
+                      contexts: isFavorite
+                        ? favorites.contexts.filter(context => context !== contextw)
+                        : [...favorites.contexts, contextw],
+                    });
+                  }}
+                />
+              ) : null
+            }
+          />
+        );
+      })}
       {meetings.events?.map((event, eventi) => {
         if (event.contextw && event.contextw !== currContextw) return null;
         const isFavorite = favorites.events.indexOf(event.wid) > -1;
@@ -159,35 +188,6 @@ export default function MeetingsInner<Meets extends Meetings>({
               ) : null
             }
           />,
-        );
-      })}
-      {contexts.map(([contexti, contextn, contextw], groupi) => {
-        const isFavorite = favorites.contexts.indexOf(contextw) > -1;
-
-        return (
-          <BrutalItem
-            key={groupi}
-            icon={<IconFolder01StrokeRounded />}
-            title={contextn}
-            onClick={() => setCurrContextRef.current([...eventContextRef.current, contexti])}
-            box={
-              eventContextRef.current.length ? (
-                <IconButton
-                  Icon={isFavorite ? IconStarSolidRounded : IconStarStrokeRounded}
-                  onClick={e => {
-                    e.stopPropagation();
-
-                    setFavorites({
-                      ...favorites,
-                      contexts: isFavorite
-                        ? favorites.contexts.filter(context => context !== contextw)
-                        : [...favorites.contexts, contextw],
-                    });
-                  }}
-                />
-              ) : null
-            }
-          />
         );
       })}
     </>
