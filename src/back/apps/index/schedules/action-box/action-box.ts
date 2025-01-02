@@ -2,6 +2,7 @@ import {
   ActionBox,
   ActionBoxOnFinalCallback,
   ActionBoxValue,
+  ExecutionArgs,
   IScheduleWidget,
   IScheduleWidgetUser,
   IScheduleWidgetUserCati,
@@ -45,6 +46,24 @@ const makeTitlesTitle =
               ? (args.value ? (schedule.tgChatReqs ? 'изменены' : 'добавлены') : 'удалены') + ' TG-реквизиты'
               : `${args.key}:`
     }${args.value ? ` <b>"${args.value}"</b>` : ''}`;
+  };
+
+type SchedulePrefixText<Title extends string> = Title | ((args: ExecutionArgs, schedule: IScheduleWidget) => Title);
+
+const makeInSchedulePrefix =
+  (
+    titlePrefix: SchedulePrefixText<'' | `${string}расписани${string} ` | `${string}Расписани${string} `>,
+    makeText: SchedulePrefixText<string>,
+  ) =>
+  (args: Record<string, unknown>) => {
+    const schedule = ScheduleWidgetActionBoxCleans.getSchedule(args.schw);
+
+    if (schedule === undefined) return '';
+
+    return (
+      `${(smylib.isStr(titlePrefix) ? titlePrefix : titlePrefix?.(args, schedule)) || 'В расписании '}` +
+      `<b>${schedule.title}</b> ${smylib.isStr(makeText) ? makeText : makeText(args, schedule)}`
+    );
   };
 
 const addUserValue = {
@@ -142,7 +161,7 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
   '/list': {
     D: {
       value: ['w', '===', '{schw}'],
-      title: args => `Расписание <b>${ScheduleWidgetActionBoxCleans.getScheduleTitle(args.schw)}</b> удалено`,
+      title: makeInSchedulePrefix(`Расписание `, `удалено`),
     },
     C: {
       RRej: true,
@@ -153,7 +172,7 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
         title: '#String',
         app: '#String',
       },
-      title: args => `Добавлено новое расписание <b>${args.title}</b>`,
+      title: makeInSchedulePrefix(`Добавлено новое расписание `, ``),
     },
     onSuccess: onTgInformingChangeSuccess,
     '/[w === {schw}]': {
@@ -165,9 +184,11 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
         scopeNode: 'copy',
         C: {
           method: 'set_all',
-          title: args =>
-            `Сделана копия расписания <b>${(args.value as IScheduleWidget).title}</b>` +
-            ` в <b>${ScheduleWidgetActionBoxCleans.getScheduleTitle(args.schw)}</b>`,
+          title: makeInSchedulePrefix(
+            `От расписания `,
+            args => ` сделана копия "${(args.value as IScheduleWidget).title}"`,
+          ),
+
           value: args => {
             const value = { ...(args?.value as { title?: string }) };
             delete value.title;
@@ -185,9 +206,13 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
           args: {
             value: '#Number',
           },
-          title: args =>
-            `В расписании <b>${ScheduleWidgetActionBoxCleans.getScheduleTitle(args.schw)}</b> изменена дата начала` +
-            (smylib.isNum(args.value) ? ` - ${new Date(args.value).toLocaleDateString('ru')}` : ''),
+
+          title: makeInSchedulePrefix(
+            ``,
+            args =>
+              `изменена дата начала ` +
+              (smylib.isNum(args.value) ? ` - ${new Date(args.value).toLocaleDateString('ru')}` : ''),
+          ),
         },
         setEachInParent: { 'days.list': { tgInform: 1 } },
         onSuccess: onTgInformingChangeSuccess,
@@ -209,10 +234,7 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
           args: {
             value: '#Num',
           },
-          title: args =>
-            `В расписании <b>${ScheduleWidgetActionBoxCleans.getScheduleTitle(args.schw)}</b> первый день -` +
-            (args.value ? '' : ' не') +
-            ` технический`,
+          title: makeInSchedulePrefix(``, args => `первый день -${args.value ? '' : ' не'} технический`),
         },
         onSuccess: onTgInformingChangeSuccess,
       },
@@ -231,10 +253,7 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
           args: {
             value: '#Num',
           },
-          title: args =>
-            `В расписании <b>${ScheduleWidgetActionBoxCleans.getScheduleTitle(args.schw)}</b> ` +
-            (args.value ? 'вк' : 'отк') +
-            `лючено TG-информирвание`,
+          title: makeInSchedulePrefix(``, args => `${args.value ? 'вк' : 'отк'}лючено TG-информирвание`),
         },
         onSuccess: onTgInformingChangeSuccess,
       },
@@ -243,9 +262,10 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
           args: {
             value: '#Number',
           },
-          title: args =>
-            `В расписании <b>${ScheduleWidgetActionBoxCleans.getScheduleTitle(args.schw)}</b> TG-напомининия ` +
-            (args.value ? `будут за ${args.value} мин.` : 'отключены'),
+          title: makeInSchedulePrefix(
+            ``,
+            args => `TG-напомининия  ${args.value ? `будут за ${args.value} мин.` : 'отключены'}`,
+          ),
         },
         onSuccess: onTgInformingChangeSuccess,
       },
@@ -257,34 +277,29 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
             args: {
               value: '#Number',
             },
-            title: args =>
-              `В расписании <b>` +
-              ScheduleWidgetActionBoxCleans.getScheduleTitle(args.schw) +
-              `</b> изменено значение прав неизвестных пользователей по умолчанию` +
-              (smylib.isNum(args.value)
-                ? ` - ${
-                    scheduleWidgetUserRights.texts[scheduleWidgetUserRights.rightsBalance(args.value)]?.role?.[0] ??
-                    '<s>Неизвестный</s>'
-                  }`
-                : ''),
+            title: makeInSchedulePrefix(
+              ``,
+              args =>
+                `изменено значение прав неизвестных пользователей по умолчанию` +
+                (smylib.isNum(args.value)
+                  ? ` - ${
+                      scheduleWidgetUserRights.texts[scheduleWidgetUserRights.rightsBalance(args.value)]?.role?.[0] ??
+                      '<s>Неизвестный</s>'
+                    }`
+                  : ''),
+            ),
           },
         },
         '/cats': {
           scopeNode: 'categories',
           C: {
             value: '',
-            title: args =>
-              `В расписании <b>` +
-              ScheduleWidgetActionBoxCleans.getScheduleTitle(args.schw) +
-              `</b> добавлена новая категория`,
+            title: makeInSchedulePrefix(``, () => `добавлена новая категория`),
           },
           '/{cati}': {
             scopeNode: 'cati',
             U: {
-              title: args =>
-                `В расписании <b>` +
-                ScheduleWidgetActionBoxCleans.getScheduleTitle(args.schw) +
-                `</b> обновлена категория ${args.value}`,
+              title: makeInSchedulePrefix(``, args => `обновлена категория ${args.value}`),
             },
           },
         },
@@ -293,17 +308,14 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
             RRej: ScheduleWidgetUserRoleRight.Read,
             setSystems: ['mi'],
             value: addUserValue,
-            title: args => {
+
+            title: makeInSchedulePrefix(``, args => {
               const value = args.value as typeof addUserValue;
 
               const postfix = value == null ? '' : ` (${value.fio}, ${value.nick})`;
 
-              return (
-                `В расписании <b>` +
-                ScheduleWidgetActionBoxCleans.getScheduleTitle(args.schw) +
-                `</b> новый участник${postfix}`
-              );
-            },
+              return `новый участник${postfix}`;
+            }),
           },
           '<add me by link>': {
             scopeNode: 'addMeByLink',
@@ -315,17 +327,14 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
                 },
               },
               value: addUserValue,
-              title: args => {
+
+              title: makeInSchedulePrefix(``, args => {
                 const value = args.value as typeof addUserValue;
 
                 const postfix = value == null ? '' : ` (${value.fio}, ${value.nick})`;
 
-                return (
-                  `В расписании <b>` +
-                  ScheduleWidgetActionBoxCleans.getScheduleTitle(args.schw) +
-                  `</b> добавился новый участник по ссылке${postfix}`
-                );
-              },
+                return `добавился новый участник по ссылке${postfix}`;
+              }),
             },
           },
           '<add user from schedule>': {
@@ -339,33 +348,26 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
               },
             },
             method: 'push',
-            title: args => {
+            title: makeInSchedulePrefix(``, args => {
               const value = args.value as typeof addUserValue;
 
               const postfix = value == null ? '' : ` (${value.fio}, ${value.nick})`;
 
-              return (
-                `В расписании <b>` +
-                ScheduleWidgetActionBoxCleans.getScheduleTitle(args.schw) +
-                `</b> добавился новый участник по переходу в TG-расписание${postfix}`
-              );
-            },
+              return `добавился новый участник по переходу в TG-расписание${postfix}`;
+            }),
           },
           '<add user>': {
             scopeNode: 'newUser',
             C: {
               setSystems: ['mi'],
-              title: args => {
+
+              title: makeInSchedulePrefix(``, args => {
                 const value = args.value as typeof addUserValue;
 
                 const postfix = value == null ? '' : ` (${value.fio})`;
 
-                return (
-                  `В расписании <b>` +
-                  ScheduleWidgetActionBoxCleans.getScheduleTitle(args.schw) +
-                  `</b> добавилась новая ссылка для участника${postfix}`
-                );
-              },
+                return `добавилась новая ссылка для участника${postfix}`;
+              }),
             },
           },
           '<add users>': {
@@ -377,13 +379,11 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
               setItemSystems: ['mi'],
               method: 'concat',
               uniqs: ['fio'],
-              title: args => {
-                return (
-                  `В расписании <b>` +
-                  ScheduleWidgetActionBoxCleans.getScheduleTitle(args.schw) +
-                  `</b> добавлены новые участники${smylib.isArr(args.value) ? ` - ${args.value} чел.` : ''}`
-                );
-              },
+
+              title: makeInSchedulePrefix(
+                ``,
+                args => `добавлены новые участники${smylib.isArr(args.value) ? ` - ${args.value} чел.` : ''}`,
+              ),
             },
           },
           '/[mi === {userMi}]': {
@@ -395,13 +395,11 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
               action: 'joinUserByLink',
               method: 'set_all',
               value: addUserValue,
-              title: args => {
-                return (
-                  `В расписании <b>` +
-                  ScheduleWidgetActionBoxCleans.getScheduleTitle(args.schw) +
-                  `</b> участник${smylib.isObj(args.value) ? ` ${args.value.fio}` : ''} присоединился по ссылке`
-                );
-              },
+
+              title: makeInSchedulePrefix(
+                ``,
+                args => `участник${smylib.isObj(args.value) ? ` ${args.value.fio}` : ''} присоединился по ссылке`,
+              ),
             },
             '<userData>': {
               scopeNode: 'userData',
@@ -412,13 +410,11 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
                   nick: '{*nick}',
                   login: '{login}',
                 },
-                title: args => {
-                  return (
-                    `В расписании <b>` +
-                    ScheduleWidgetActionBoxCleans.getScheduleTitle(args.schw) +
-                    `</b> данные участника${smylib.isObj(args.value) ? ` ${args.value.fio}` : ''} обновлены`
-                  );
-                },
+
+                title: makeInSchedulePrefix(
+                  ``,
+                  args => `данные участника${smylib.isObj(args.value) ? ` ${args.value.fio}` : ''} обновлены`,
+                ),
               },
             },
             '<setUserTgInform action>': {
@@ -430,20 +426,15 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
               args: {
                 value: '#Num',
               },
-              title: args => {
-                const schedule = ScheduleWidgetActionBoxCleans.getSchedule(args.schw);
 
-                if (schedule == null) return '';
-
+              title: makeInSchedulePrefix(``, (args, schedule) => {
                 const user = schedule.ctrl.users.find(user => user.mi === args.userMi);
 
                 return (
-                  `В расписании <b>` +
-                  schedule.title +
-                  `</b> участник${smylib.isObj(user) ? ` ${user.fio}` : ''} ` +
+                  `участник${smylib.isObj(user) ? ` ${user.fio}` : ''} ` +
                   `${args.value ? 'подписался на' : 'отписался от'} TG-информирования`
                 );
-              },
+              }),
             },
             '<tg alerts>': {
               scopeNode: 'tgInform',
@@ -456,20 +447,15 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
                 args: {
                   value: '#Num',
                 },
-                title: args => {
-                  const schedule = ScheduleWidgetActionBoxCleans.getSchedule(args.schw);
 
-                  if (schedule == null) return '';
-
+                title: makeInSchedulePrefix(``, (args, schedule) => {
                   const user = schedule.ctrl.users.find(user => user.mi === args.userMi);
 
                   return (
-                    `В расписании <b>` +
-                    schedule.title +
-                    `</b> участник${smylib.isObj(user) ? ` ${user.fio}` : ''} ` +
+                    `участник${smylib.isObj(user) ? ` ${user.fio}` : ''} ` +
                     `${args.value ? 'подписался на' : 'отписался от'} TG-информирования через TG-bot`
                   );
-                },
+                }),
               },
             },
             '/fio': {
@@ -477,6 +463,10 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
                 args: {
                   value: '#String',
                 },
+
+                title: makeInSchedulePrefix(``, args => {
+                  return `переименован участник ${args.$$vars?.$$currentValue ?? '?'} на ${args.value}`;
+                }),
               },
             },
             '/R': {
@@ -485,6 +475,14 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
                 args: {
                   value: '#Number',
                 },
+
+                title: makeInSchedulePrefix(``, (args, schedule) => {
+                  const user = schedule.ctrl.users.find(user => user.mi === args.userMi);
+
+                  if (user == null) return '??##24187346623';
+
+                  return `изменен уровень доступа для участника ${user.fio} - ${args.value}`;
+                }),
               },
             },
             '/li': {
@@ -493,9 +491,16 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
                 scopeNode: 'cati',
                 C: {
                   method: 'set',
+
+                  title: makeInSchedulePrefix(
+                    ``,
+                    (args, schedule) =>
+                      `изменения в категории ${schedule.ctrl.cats[args.cati] ?? ''} - ${JSON.stringify(args.value)}`,
+                  ),
                 },
                 D: {
                   method: 'delete',
+                  title: makeInSchedulePrefix(``, `удалена категория`),
                 },
               },
             },
@@ -507,6 +512,7 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
             value: {
               title: '',
             },
+            title: makeInSchedulePrefix(``, `добавлена роль`),
           },
           '/[mi === {roleMi}]': {
             scopeNode: 'roleMi',
@@ -520,6 +526,7 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
               D: {
                 method: 'delete',
               },
+              title: makeInSchedulePrefix(``, `удалена роль`),
             },
           },
         },
@@ -676,6 +683,7 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
           args: {
             value: '#Dict',
           },
+          title: makeInSchedulePrefix(``, `добавлен шаблон вложения`),
         },
         '/[mi === {tattMi}]': {
           scopeNode: 'tattMi',
@@ -686,6 +694,33 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
               scopeNode: 'field',
               U: {
                 RRej: false,
+                title: makeInSchedulePrefix(``, (args, schedule) => {
+                  const tatt = schedule.tatts.find(tatt => tatt.mi === args.tattMi);
+
+                  if (tatt == null) return '';
+
+                  const prev = args.$$vars?.$$currentValue;
+                  const value = args.value;
+                  const modifyTitle = prev ? (value ? 'изменено' : 'удалено') : value ? 'добавлено' : '';
+
+                  const fieldTitle = {
+                    title: `${modifyTitle} название`,
+                    description: `${modifyTitle} описание`,
+                    titles: `${modifyTitle} значение заголовков`,
+                    use: `${modifyTitle} значение использований`,
+                    roles: `${modifyTitle} значение списка ролей`,
+                    list: `${modifyTitle} значение списков`,
+                    R: `${modifyTitle} значение правила чтения`,
+                    Rs: `${modifyTitle} значение специальных правил чтения`,
+                    U: `${modifyTitle} значение правила изменения`,
+                    Us: `${modifyTitle} значение специальных правил изменения`,
+                  };
+
+                  return (
+                    `${fieldTitle[args.key as never]} шаблона вложения ${tatt.title}:\n\n` +
+                    `Было: ${JSON.stringify(prev, null, ' ')}\n\nСтало: ${JSON.stringify(value, null, ' ')}`
+                  );
+                }),
               },
             },
 
@@ -793,8 +828,8 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
             list: [],
             wup: 7,
           },
-          title: args =>
-            `В расписание <b>${ScheduleWidgetActionBoxCleans.getScheduleTitle(args.schw)}</b> добавлен новый день`,
+
+          title: makeInSchedulePrefix(`В расписание `, 'добавлен новый день'),
         },
         '/{dayi}': {
           scopeNode: 'dayi',
@@ -853,40 +888,30 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
                 setItemSystems: ['mi'],
               },
               onSuccess: onTgInformingChangeSuccess,
-              title: args => {
-                const schedule = ScheduleWidgetActionBoxCleans.getSchedule(args.schw);
 
-                if (!schedule) return 'Расписание не найдено';
+              title: makeInSchedulePrefix(``, (args, schedule) => {
                 const dayi = args.dayi as number;
 
-                return (
-                  `В расписании <b>` +
-                  ScheduleWidgetActionBoxCleans.getScheduleTitle(args.schw) +
-                  `</b> в ` +
-                  (schedule.withTech ? (dayi ? dayi + '-ом' : 'техническом') : dayi + 1 + '-ом') +
-                  ` дне обновлён список событий текстом`
-                );
-              },
+                return `в ${
+                  schedule.withTech ? (dayi ? dayi + '-ом' : 'техническом') : dayi + 1 + '-ом'
+                }  дне обновлён список событий текстом`;
+              }),
             },
             '<put schedule>': {
               action: 'putDayEventList',
               method: 'set',
               setItemSystems: ['mi'],
               onSuccess: onTgInformingChangeSuccess,
-              title: args => {
-                const schedule = ScheduleWidgetActionBoxCleans.getSchedule(args.schw);
 
-                if (!schedule) return 'Расписание не найдено';
+              title: makeInSchedulePrefix(``, (args, schedule) => {
                 const dayi = args.dayi as number;
 
                 return (
-                  `В расписании <b>` +
-                  ScheduleWidgetActionBoxCleans.getScheduleTitle(args.schw) +
-                  `</b> в ` +
+                  `в ` +
                   (schedule.withTech ? (dayi ? dayi + '-ом' : 'техническом') : dayi + 1 + '-ом') +
                   ` дне обновлён список событий`
                 );
-              },
+              }),
             },
             '/[mi === {eventMi}]': {
               scopeNode: 'eventMi',
