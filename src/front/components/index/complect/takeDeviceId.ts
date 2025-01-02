@@ -26,9 +26,9 @@ export const takeDeviceId = async () => {
     deviceId = await deviceIdAtom.getStorageValue();
     const storage = await nounPronsWordsAtom.getStorageValue();
 
-    if (!storage) return '' as DeviceId;
+    if (!storage) return DeviceId.def;
 
-    if (!deviceId || deviceId.startsWith('__')) {
+    if (!deviceId || deviceId.startsWith('__') || deviceId === DeviceId.def) {
       deviceId = (makeRandomTwiceName(storage).join('_') + '_' + takeRandomSymbols()) as DeviceId;
       if (!deviceId.startsWith('__')) deviceIdAtom.set(deviceId as never);
     }
@@ -36,6 +36,6 @@ export const takeDeviceId = async () => {
     return deviceId;
   } catch (error) {
     console.error(error);
-    return '' as DeviceId;
+    return DeviceId.def;
   }
 };
