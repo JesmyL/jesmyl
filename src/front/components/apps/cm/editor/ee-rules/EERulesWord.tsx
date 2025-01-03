@@ -27,8 +27,6 @@ export const EERulesWord = memo(
     const typesLine = mylib.isArr(trackState) ? trackState : [trackState];
     const isVariated = mylib.isArr(trackState) ? trackState.includes(0) : !trackState;
 
-    if (trackState != null) console.log(typesLine);
-
     return (
       <StyledTable className="margin-big-gap-v">
         <tbody>
