@@ -5,6 +5,8 @@ import {
   CmComBindAttach,
   CmComWid,
   CmMeetingEventWid,
+  IScheduleWidget,
+  IScheduleWidgetDayEvent,
   IScheduleWidgetDayEventMi,
   IScheduleWidgetWid,
 } from 'shared/api';
@@ -73,12 +75,7 @@ const Inner = ({
   eventMi: IScheduleWidgetDayEventMi;
   attMi: string;
 }) => {
-  const [isOpenListRedact, setIsOpenListRedact] = useState<unknown>(false);
-  const [isOpenMorePopup, setIsOpenMorePopup] = useState(false);
-  const [isOpenComposition, setIsOpenComposition] = useState(false);
-  const [ccom, setCcom] = useState<Com | und>();
   const { schedule, isLoading } = useGetScheduleOrPull(schw);
-  const rights = useScheduleWidgetRights(schedule);
   const meetings = useMeetings();
   const cat = useCcat(true);
 
@@ -119,72 +116,15 @@ const Inner = ({
         <Route
           index
           element={
-            <PhaseContainerConfigurer
-              className=""
-              headTitle={
-                <StyledTitle className="ellipsis block">
-                  {schedule.types[event.type]?.title ?? ''}
-                  <b> ● {schedule.title}</b>
-                </StyledTitle>
-              }
-              onMoreClick={setIsOpenMorePopup}
-              content={
-                <>
-                  <ComFaceList list={comws} />
-                  {isOpenListRedact && (
-                    <FullContent onClose={setIsOpenListRedact}>
-                      <CmExternalComListAttRedactList
-                        scope={takeStrongScopeMaker(
-                          takeStrongScopeMaker(
-                            takeStrongScopeMaker(takeScheduleStrongScopeMaker(schedule.w), ` dayi/`, dayi),
-                            ' eventMi/',
-                            eventMi,
-                          ),
-                          ' attKey/',
-                          attName,
-                        )}
-                        value={comsAtt}
-                        setCcom={setCcom}
-                        setIsOpenComposition={setIsOpenComposition}
-                      />
-                    </FullContent>
-                  )}
-
-                  {isOpenComposition && (
-                    <FullContent onClose={setIsOpenComposition}>
-                      <TheComForFullScreen
-                        com={ccom}
-                        chordVisibleVariant={ChordVisibleVariant.Maximal}
-                        comList={comws.map(comw => cat.coms.find(com => com.wid === comw)!).filter(itIt) ?? []}
-                        onComSet={setCcom}
-                      />
-                    </FullContent>
-                  )}
-
-                  {isOpenMorePopup && (
-                    <BottomPopup onClose={setIsOpenMorePopup}>
-                      <CopyTextButton
-                        text={makeCmScheduleWidgetComListUrl(schedule.w, dayi, eventMi, attMi)}
-                        withoutIcon
-                        description={
-                          <BottomPopupItem
-                            Icon={IconCopy01StrokeRounded}
-                            title="Копировать ссылку на список"
-                          />
-                        }
-                      />
-
-                      {rights.isCanRedact && (
-                        <BottomPopupItem
-                          Icon={IconNoteEditStrokeRounded}
-                          title="Редактировать список"
-                          onClick={setIsOpenListRedact}
-                        />
-                      )}
-                    </BottomPopup>
-                  )}
-                </>
-              }
+            <Page
+              schedule={schedule}
+              attMi={attMi}
+              cat={cat}
+              comsAtt={comsAtt}
+              comws={comws}
+              dayi={dayi}
+              event={event}
+              eventMi={eventMi}
             />
           }
         />
@@ -201,6 +141,102 @@ const Inner = ({
       </Routes>
       <CmFooter />
     </>
+  );
+};
+
+const Page = ({
+  schedule,
+  comws,
+  event,
+  eventMi,
+  dayi,
+  cat,
+  comsAtt,
+  attMi,
+}: {
+  schedule: IScheduleWidget;
+  comws: CmComWid[];
+  event: IScheduleWidgetDayEvent;
+  eventMi: IScheduleWidgetDayEventMi;
+  dayi: number;
+  cat: Cat;
+  comsAtt: CmComBindAttach;
+  attMi: string;
+}) => {
+  const [isOpenListRedact, setIsOpenListRedact] = useState<unknown>(false);
+  const [isOpenMorePopup, setIsOpenMorePopup] = useState(false);
+  const [isOpenComposition, setIsOpenComposition] = useState(false);
+  const [ccom, setCcom] = useState<Com | und>();
+  const rights = useScheduleWidgetRights(schedule);
+
+  return (
+    <PhaseContainerConfigurer
+      className=""
+      headTitle={
+        <StyledTitle className="ellipsis block">
+          {schedule.types[event.type]?.title ?? ''}
+          <b> ● {schedule.title}</b>
+        </StyledTitle>
+      }
+      onMoreClick={setIsOpenMorePopup}
+      content={
+        <>
+          <ComFaceList list={comws} />
+          {isOpenListRedact && (
+            <FullContent onClose={setIsOpenListRedact}>
+              <CmExternalComListAttRedactList
+                scope={takeStrongScopeMaker(
+                  takeStrongScopeMaker(
+                    takeStrongScopeMaker(takeScheduleStrongScopeMaker(schedule.w), ` dayi/`, dayi),
+                    ' eventMi/',
+                    eventMi,
+                  ),
+                  ' attKey/',
+                  attName,
+                )}
+                value={comsAtt}
+                setCcom={setCcom}
+                setIsOpenComposition={setIsOpenComposition}
+              />
+            </FullContent>
+          )}
+
+          {isOpenComposition && (
+            <FullContent onClose={setIsOpenComposition}>
+              <TheComForFullScreen
+                com={ccom}
+                chordVisibleVariant={ChordVisibleVariant.Maximal}
+                comList={comws.map(comw => cat.coms.find(com => com.wid === comw)!).filter(itIt) ?? []}
+                onComSet={setCcom}
+              />
+            </FullContent>
+          )}
+
+          {isOpenMorePopup && (
+            <BottomPopup onClose={setIsOpenMorePopup}>
+              <CopyTextButton
+                text={makeCmScheduleWidgetComListUrl(schedule.w, dayi, eventMi, attMi)}
+                withoutIcon
+                description={
+                  <BottomPopupItem
+                    Icon={IconCopy01StrokeRounded}
+                    title="Копировать ссылку на список"
+                  />
+                }
+              />
+
+              {rights.isCanRedact && (
+                <BottomPopupItem
+                  Icon={IconNoteEditStrokeRounded}
+                  title="Редактировать список"
+                  onClick={setIsOpenListRedact}
+                />
+              )}
+            </BottomPopup>
+          )}
+        </>
+      }
+    />
   );
 };
 

@@ -6,6 +6,7 @@ import { prodTelegramBot } from '../../sides/telegram-bot/prod/prod-bot';
 import { supportTelegramBot } from '../../sides/telegram-bot/support/support-bot';
 import { JesmylTelegramBot } from '../../sides/telegram-bot/tg-bot';
 import { filer } from '../filer/Filer';
+import { SokiAutherUtils } from './utils';
 
 export class SokiAuther {
   mtime = 0;
@@ -29,10 +30,8 @@ export class SokiAuther {
     });
   }
 
-  makePassw = SokiAuther.makePassw;
-  static makePassw(id: number | und, nick: string | und) {
-    return smylib.md5(`{${id}.${nick}} `);
-  }
+  makePassw = SokiAutherUtils.makePassw;
+  static makePassw = SokiAutherUtils.makePassw;
 
   static getTgAuth = async (
     tgId: number,

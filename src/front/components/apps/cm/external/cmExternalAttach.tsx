@@ -20,10 +20,11 @@ export const cmOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
     result: (value, scope, isRedact, switchIsRedact) => {
       const { dayi, eventMi, attKey } = getObjectFromScope(scope);
       const [, , attMi] = attKey.split(':');
+      const listPath = `${dayi}/${eventMi}/${attMi || '-'}/com-list`;
 
       return (
         <>
-          <Link to={`${dayi}/${eventMi}/${attMi || '-'}/com-list`}>
+          <Link to={listPath}>
             <IconButton
               Icon={IconLinkSquare01SolidRounded}
               postfix="Открыть список"
@@ -35,6 +36,7 @@ export const cmOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
             isRedact={isRedact}
             scope={scope}
             value={value}
+            listPath={listPath}
           />
         </>
       );

@@ -26,6 +26,14 @@ const AppRouter = () => {
             </Suspense>
           }
         />
+        <Route
+          path="schedule-day/:schw/*"
+          element={
+            <Suspense>
+              <ScheduleWidgetTgDayView />
+            </Suspense>
+          }
+        />
       </Route>
       <Route
         path={scheduleWidgetActionsRouteName}

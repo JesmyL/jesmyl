@@ -1,5 +1,8 @@
-import { mylib } from 'front/utils';
-import { useEffect } from 'react';
+import { appAttsStore } from 'front/components/complect/appScheduleAttrsStorage';
+import { MyLib, mylib } from 'front/utils';
+import React, { useEffect } from 'react';
+import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
+import { ScheduleWidgetAppAttBasic } from 'shared/api';
 import styled from 'styled-components';
 import { useInitSoki } from '../../../app/useInitSoki';
 import { removePullRequisites, useAuthState } from '../../../components/index/molecules';
@@ -29,19 +32,30 @@ export default function ScheduleWidgetTgDayView() {
   useInitSoki('cm');
 
   return (
-    <TelegramWebAppApiOr>
-      {(api, isLoading) =>
-        initData === null ? (
-          <div className="flex center color--ko">Ошибка данных</div>
-        ) : (
-          <Child
-            api={api}
-            isLoading={isLoading}
-            initData={initData}
-          />
-        )
-      }
-    </TelegramWebAppApiOr>
+    <Routes>
+      <Route
+        index
+        element={
+          <TelegramWebAppApiOr>
+            {(api, isLoading) =>
+              initData === null ? (
+                <div className="flex center color--ko full-size">Ошибка данных</div>
+              ) : (
+                <Child
+                  api={api}
+                  isLoading={isLoading}
+                  initData={initData}
+                />
+              )
+            }
+          </TelegramWebAppApiOr>
+        }
+      />
+      {MyLib.values(appAttsStore).map(appStoreBox => {
+        const box = appStoreBox as ScheduleWidgetAppAttBasic;
+        return <React.Fragment key={box.title}>{box.routes}</React.Fragment>;
+      })}
+    </Routes>
   );
 }
 
@@ -51,9 +65,16 @@ type Props = {
   initData: TelegramWebAppInitData;
 };
 
-const Child = ({ api, isLoading, initData }: Props) => {
+const Child = ({ api, initData }: Props) => {
   const [auth, setAuth] = useAuthState();
-  const { schedule, error } = useGetScheduleOrPull(initData.chat_instance);
+  const navigate = useNavigate();
+  const params = useParams();
+  const { schedule, error, isLoading } = useGetScheduleOrPull(initData.chat_instance);
+
+  useEffect(() => {
+    if (params.schw != null || schedule?.w == null) return;
+    navigate('' + schedule.w);
+  }, [navigate, params.schw, schedule?.w]);
 
   useEffect(() => api?.disableVerticalSwipes(), [api]);
 
@@ -93,6 +114,5 @@ const StyledBox = styled.div`
   overflow: auto;
   height: 100vh;
   width: 100vw;
-  padding-left: 10px;
-  padding-bottom: 30px;
+  padding: 0 10px 30px 10px;
 `;

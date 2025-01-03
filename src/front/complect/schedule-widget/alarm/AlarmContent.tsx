@@ -57,11 +57,12 @@ interface Props {
   isJustShowAllDay?: boolean;
 }
 
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
 export default function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAllDay }: Props) {
   const schedules = useIndexSchedules();
   const now = Date.now();
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
   const [isFullOpen, setIsFullOpen] = useState(false);
 
   const [updates, setUpdates] = useState<null | number>(null);

@@ -1,12 +1,15 @@
+import { atom, useAtom } from 'front/complect/atoms';
 import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetWid } from 'shared/api';
 import { useIndexSchedules } from '../../../components/index/molecules';
 import serviceMaster from '../../service/serviceMaster';
 
+const scheduleAtom = atom<IScheduleWidget | null>(null);
+
 export const useGetScheduleOrPull = (scheduleInstance: string | IScheduleWidgetWid | NaN) => {
-  const [schedule, setSchedule] = useState<IScheduleWidget | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [schedule, setSchedule] = useAtom(scheduleAtom);
+  const [isLoading, setIsLoading] = useState(true);
   const schedules = useIndexSchedules();
   const [error, setError] = useState('');
 
@@ -21,12 +24,13 @@ export const useGetScheduleOrPull = (scheduleInstance: string | IScheduleWidgetW
 
     if (schedule !== undefined) {
       setSchedule(schedule);
+      setIsLoading(false);
       return;
     }
 
     return hookEffectLine()
       .setTimeout(async () => {
-        setIsLoading?.(true);
+        setIsLoading(true);
 
         try {
           setSchedule(await serviceMaster('index')('takeDaySchedule', scheduleInstance));
@@ -34,10 +38,10 @@ export const useGetScheduleOrPull = (scheduleInstance: string | IScheduleWidgetW
           setError('' + error);
         }
 
-        setIsLoading?.(false);
+        setIsLoading(false);
       }, 600)
       .effect();
-  }, [scheduleInstance, schedules.list, setIsLoading, setSchedule]);
+  }, [scheduleInstance, schedules.list, setSchedule]);
 
   return { schedule, isLoading, error } as const;
 };

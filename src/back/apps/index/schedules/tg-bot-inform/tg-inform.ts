@@ -10,9 +10,7 @@ import {
   IScheduleWidgetUser,
   IScheduleWidgetWid,
   LocalSokiAuth,
-  ScheduleWidgetAttKey,
   ScheduleWidgetCleans,
-  ScheduleWidgetDayEventAttValue,
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
@@ -161,33 +159,25 @@ export const indexScheduleSetMessageInform = (
               if (nextTimedEventi > -1) break;
             }
 
-            const map = ([key, value]: [ScheduleWidgetAttKey, ScheduleWidgetDayEventAttValue]) => {
-              const [, , attMi] = key.split(':');
-
-              return (
-                attInformStorage[key]?.(
-                  value,
-                  isSetAttTitle ? ` (${schedule.types[event.type].title})` : '',
-                  schedule,
-                  dayi,
-                  event,
-                  attMi || '-',
-                ) ?? ''
-              );
-            };
-
             for (let attEventi = eventi; attEventi < day.list.length; attEventi++) {
               const event = day.list[attEventi];
               const eventTm = ScheduleWidgetCleans.takeEventTm(event, schedule.types[event.type]);
 
-              if (!event.atts) continue;
+              if (!event.atts) break;
 
               const attEntries = SMyLib.entries(event.atts);
 
               if (!eventTm) isSetAttTitle = true;
               if (!isSetAttTitle && (event.atts == null || !attEntries.length)) break;
+              const eventTitle = isSetAttTitle ? ` (${schedule.types[event.type].title})` : '';
 
-              const attText = attEntries.map(map).join('');
+              const attText = attEntries
+                .map(([key, value]) => {
+                  return (
+                    attInformStorage[key]?.(value, eventTitle, schedule, dayi, event, key.split(':')[2] || '-') ?? ''
+                  );
+                })
+                .join('');
 
               if (attText) attsText += newPointLineMarker + attText;
               if (eventTm) break;

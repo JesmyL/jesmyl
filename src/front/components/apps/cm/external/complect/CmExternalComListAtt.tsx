@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CmComBindAttach } from 'shared/api';
 import { itIt } from 'shared/utils';
 import { FullContent } from '../../../../../complect/fullscreen-content/FullContent';
@@ -15,10 +16,12 @@ interface Props {
   scope: string;
   isRedact?: boolean;
   switchIsRedact: (is?: boolean) => void;
+  listPath: string;
 }
 
-export default function CmExternalComListAtt({ value, scope, isRedact, switchIsRedact }: Props) {
+export default function CmExternalComListAtt({ value, scope, isRedact, switchIsRedact, listPath }: Props) {
   const [isOpenComposition, setIsOpenComposition] = useState(false);
+  const navigate = useNavigate();
 
   const [ccom, setCcom] = useState<Com | und>();
   const cat = useCcat(true);
@@ -35,10 +38,7 @@ export default function CmExternalComListAtt({ value, scope, isRedact, switchIsR
       {cat && (
         <ComFaceList
           list={comws}
-          importantOnClick={com => {
-            setCcom(com);
-            setIsOpenComposition(true);
-          }}
+          importantOnClick={com => navigate(`${listPath}/${com.wid}`)}
         />
       )}
 

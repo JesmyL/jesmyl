@@ -127,7 +127,7 @@ export default function ScheduleWidgetDayEvent(props: Props) {
   } else {
     const date = new Date(eventStartMs);
     timeMark = `${('' + date.getHours()).padStart(2, '0')}:${('' + date.getMinutes()).padStart(2, '0')}`;
-    timerClassNamePlus = eventTm === 0 ? ' fade-03' : '';
+    timerClassNamePlus = prevTm === 0 && prevEvent != null ? ' fade-03' : '';
   }
 
   const isCurrentEvent = now > eventStartMs && now < eventFinishMs;
