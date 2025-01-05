@@ -19,21 +19,25 @@ import { exec } from 'child_process';
     // ['apps/leader', 'contexts'],
   ];
 
-  for (const [path, name, ext = 'json'] of paths) {
-    const joinPath = listPaths => listPaths.filter(i => i).join('/');
+  const joinPath = listPaths => listPaths.filter(i => i).join('/');
+  const jsonExt = '.json';
+  const allJsons = `*${jsonExt}`;
 
-    const nameWithExtOnly = name ? `${name}${ext === null ? '' : `.${ext}`}` : '';
-    const serverPath = joinPath([path, nameWithExtOnly || '*.json']);
-    const localPath = joinPath([path, '+case', nameWithExtOnly]);
+  for (const [path, name, ext = jsonExt] of paths) {
+    const nameWithExt = name ? `${name}${ext ?? ''}` : '';
+    const serverPath = joinPath([path, nameWithExt || allJsons]);
+    const localPath = `./src/back/${joinPath([path, '+case', nameWithExt])}`;
 
     console.info('TRY LOAD FILE', serverPath, '=>', localPath);
 
     try {
-      await execAsync(`scp -r root@185.244.173.52:/var/www/jesmyl.ru/${serverPath} ./src/back/${localPath}`);
+      await execAsync(`scp -r root@185.244.173.52:/var/www/jesmyl.ru/${serverPath} ${localPath}`);
 
       console.info(`${serverPath} saved!`);
     } catch (error) {
       console.info(`${serverPath} load FAILURE!`);
     }
   }
+
+  await execAsync('npm run format-jsons');
 })();

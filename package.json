@@ -46,7 +46,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "tg-dev": "nodemon tg-bot.mjs",
-    "format": "prettier --write \"**/src/**/*.{tsx,ts,scss,json}\""
+    "format": "prettier --write \"**/src/**/*.{tsx,ts,scss,json}\"",
+    "format-jsons": "prettier --write \"**/src/**/*.json\""
   },
   "eslintConfig": {
     "extends": [
