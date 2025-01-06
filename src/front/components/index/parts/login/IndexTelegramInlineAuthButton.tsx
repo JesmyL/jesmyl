@@ -23,7 +23,7 @@ export const IndexTelegramInlineAuthButton = () => {
               icon={<IconAuthorizedStrokeRounded />}
               title="Авторизоваться"
               box={
-                api?.initData && (
+                api?.initDataUnsafe?.user && (
                   <IconButton
                     Icon={IconTelegramStrokeRounded}
                     className="color--ok"

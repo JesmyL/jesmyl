@@ -9,6 +9,7 @@ import {
   SokiClientEvent,
   SokiClientEventBody,
   SokiClientUpdateCortage,
+  SokiInvokerEvent,
   SokiServerEvent,
 } from 'shared/api';
 import { ExecuterBasics } from 'shared/executer';
@@ -27,6 +28,7 @@ import {
   indexMolecule,
   setUpdateRequisitesValue,
 } from './components/index/molecules';
+import { onSokiClientEventerInvocatorInvoke } from './eventers';
 
 export type ResponseWaiterCallback = (
   ok: ResponseWaiter['ok'],
@@ -215,11 +217,21 @@ export class SokiTrip {
         }
 
         if ((waiter === null || waiter.requestId !== event.requestId) && event.pull) this.updatedPulledData(event.pull);
+
+        if (event.invoke != null) {
+          onSokiClientEventerInvocatorInvoke.invoke({
+            invoke: event.invoke,
+            send: this.invokeSend,
+            tool: undefined,
+          });
+        }
       } catch (e) {}
     };
 
     return this;
   }
+
+  private invokeSend = (event: SokiInvokerEvent) => this.send(event, 'index');
 
   setLastUpdates(appName: SokiAppName, pullCortage: SokiClientUpdateCortage) {
     setUpdateRequisitesValue((prev = {}) => {

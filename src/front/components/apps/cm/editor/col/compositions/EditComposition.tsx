@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { hookEffectPipe, setTimeoutPipe } from 'front/complect/hookEffectPipe';
+import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { useCheckIsAccessed } from '../../../../../../complect/exer/hooks/check-is-accessed';
@@ -24,10 +25,17 @@ export default function EditComposition() {
   const connectionNode = useConnectionState('margin-gap');
   const navigate = useNavigate();
 
-  if (!ccom) {
-    setTimeout(navigate, 0, '..');
-    return null;
-  }
+  useEffect(() => {
+    return hookEffectPipe()
+      .pipe(
+        setTimeoutPipe(() => {
+          if (!ccom) navigate('..');
+        }, 500),
+      )
+      .effect();
+  }, [ccom, navigate]);
+
+  if (!ccom) return null;
 
   return (
     <StyledContainer

@@ -1,3 +1,4 @@
+import { cmClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator';
 import Dropdown from '../../../../../../../../complect/dropdown/Dropdown';
 import { DropdownItem } from '../../../../../../../../complect/dropdown/Dropdown.model';
 import { useCheckIsAccessed } from '../../../../../../../../complect/exer/hooks/check-is-accessed';
@@ -40,22 +41,21 @@ export default function EditableCompositionMain() {
     <>
       {confirmNode}
       <EditContainerCorrectsInformer
-        corrects={ccom?.corrects.name}
+        corrects={ccom.corrects.name}
         className="flex"
       >
         <IconSchoolReportCardStrokeRounded />
         <div className="margin-gap-h">Название</div>
-        <KeyboardInput
-          value={ccom?.name}
-          className="full-width"
-          onChange={value => exec(ccom?.rename(value, exec))}
+        <input
+          defaultValue={ccom.name}
+          onChange={event => cmClientInvocatorMethods.rename(null, ccom.wid, event.target.value)}
         />
       </EditContainerCorrectsInformer>
       <div className="flex full-width between margin-gap-v">
         <IconDashboardSpeed02StrokeRounded />
         <div className="margin-gap-h nowrap">Ударов в минуту</div>
         <KeyboardInput
-          value={'' + (ccom?.beatsPerMinute ?? '')}
+          value={'' + (ccom.beatsPerMinute ?? '')}
           type="number"
           onChange={value => exec(ccom.setField('bpm', +value, 0))}
         />

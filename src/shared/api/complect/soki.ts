@@ -64,6 +64,9 @@ export interface SokiServerEvent {
   authorization?: { type: 'login' | 'register' } & ({ ok: false; value: string } | { ok: true; value: LocalSokiAuth });
   statistic?: SokiStatistic;
   liveData?: Record<SokiClientSubData, unknown>;
+
+  invokedResult?: unknown;
+  invoke?: SokiInvokerData;
 }
 
 export interface ChatsData {
@@ -138,7 +141,24 @@ export interface SokiClientEventBody {
     getData?: true;
     setIsCome?: IsInvitedGuestCome;
   };
+
+  invoke?: SokiInvokerData;
+  invokedResult?: unknown;
 }
+
+export type SokiInvokerEvent = { invokedResult?: unknown; errorMessage?: string };
+
+export type SokiInvokerData = {
+  name: string;
+  method: string;
+  params: unknown[];
+};
+
+export type SokiInvokerTranferDto<Tool = und> = {
+  invoke: SokiInvokerData;
+  send: (event: SokiInvokerEvent, tool: Tool) => void;
+  tool: Tool;
+};
 
 export type SokiClientSubData<
   AppName extends SokiAppName = SokiAppName,

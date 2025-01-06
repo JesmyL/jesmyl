@@ -3,6 +3,7 @@ import { makeRegExp } from 'shared/utils';
 import { ExecArgs, FreeExecDict } from '../../../../../complect/exer/Exer.model';
 import { BaseNamed, BaseNamedExportables } from '../../base/BaseNamed';
 import { eeStorage } from '../../base/ee-storage/EeStorage';
+import { cmClientInvocatorMethods } from '../../cm-invocator';
 import { cmExer } from '../../CmExer';
 import { IEditableCol, IExportableCol } from '../../cols/Cols.model';
 import { CorrectsBox } from '../corrects-box/CorrectsBox';
@@ -37,6 +38,8 @@ export class EditableCol<Col extends BaseNamedExportables> extends BaseNamed<Col
       },
       coln,
     );
+
+    cmClientInvocatorMethods.rename(null, this.wid, name);
 
     this.corrects.name = exec?.corrects ?? corrects;
   }

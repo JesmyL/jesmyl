@@ -8,6 +8,7 @@ import { scheduleWidgetMessageCatcher } from '../../apps/index/schedules/tg-bot-
 import { startTgGamerListener } from '../../sides/telegram-bot/gamer/tg-gamer';
 import { baseMessagesCatcher } from '../../sides/telegram-bot/message-catchers';
 import { ErrorCatcher } from '../ErrorCatcher';
+import { onSokiServerEventerInvocatorInvoke } from './eventers';
 import { SokiServerOtherEvents } from './parts/130-OtherEvents';
 
 setSharedPolyfills();
@@ -33,6 +34,18 @@ export class SokiServer extends SokiServerOtherEvents {
           appName: eventData.appName,
           requestId: eventData.requestId,
         };
+
+        if (eventData.body.invoke) {
+          onSokiServerEventerInvocatorInvoke.invoke({
+            invoke: eventData.body.invoke,
+            send: (params, client) => {
+              this.send({ appName: 'index', requestId: eventData.requestId, ...params }, client);
+            },
+            tool: client,
+          });
+
+          return;
+        }
 
         if (await this.doOnConnect(doProps)) return;
         if (await this.doOnLiveData(doProps)) return;
