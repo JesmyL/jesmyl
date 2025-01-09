@@ -1,43 +1,48 @@
+import Modal from 'front/complect/modal/Modal/Modal';
+import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
+import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
+import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator';
+import { useState } from 'react';
 import { BottomPopupItem } from '../../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
-import { useExerExec } from '../../../../../../../../../complect/exer/hooks/useExer';
-import useModal from '../../../../../../../../../complect/modal/useModal';
 import IconCheckbox from '../../../../../../../../../complect/the-icon/IconCheckbox';
 import { IconTextStrokeRounded } from '../../../../../../../../../complect/the-icon/icons/text';
 import { ChordVisibleVariant } from '../../../../../../Cm.model';
 import TheOrder from '../../../../../../col/com/order/TheOrder';
 import { OrdersRedactorOrderToolsProps } from '../OrdersRedactorOrderTools';
 
-export const OrdersRedactorOrderToolsChangeText = ({
-  ccom,
-  ord,
-  ordi,
-  blockHeader,
-  onClose,
-}: OrdersRedactorOrderToolsProps) => {
-  const exec = useExerExec();
+export const OrdersRedactorOrderToolsChangeText = ({ com, ord, ordi, onClose }: OrdersRedactorOrderToolsProps) => {
+  const [isModalOpen, setIsModalOpen] = useState<unknown>(null);
 
-  const blockHeaderHtml = (textPre = '', textPost = '') =>
-    `${textPre && `${textPre} `}${ord.isEmptyHeader ? <s>{blockHeader}</s> : blockHeader}${textPost && ` ${textPost}`}`;
+  const blockHeaderHtml = (textPre = '') =>
+    `${textPre && `${textPre} `}${ord.isEmptyHeader ? <s>{ord.me.header()}</s> : ord.me.header()}`;
 
-  const [modalNode, openModal] = useModal(({ header, body }, close) => {
-    return (
-      <>
-        {header(<>{blockHeaderHtml('Установи Текстовый блок для блока')}</>)}
-        {body(
-          <>
+  return (
+    <>
+      <BottomPopupItem
+        Icon={IconTextStrokeRounded}
+        title="Заменить текст"
+        onClick={setIsModalOpen}
+      />
+
+      {isModalOpen && (
+        <Modal onClose={setIsModalOpen}>
+          <ModalHeader>{blockHeaderHtml('Установи Текстовый блок для блока')}</ModalHeader>
+          <ModalBody>
             <TheOrder
               orderUnit={ord}
               orderUniti={ordi}
               chordVisibleVariant={ChordVisibleVariant.Maximal}
-              com={ccom}
+              com={com}
             />
-            {ccom.texts?.map((text, texti) => {
+            {com.texts?.map((text, texti) => {
               if (!text) return null;
 
               return (
                 <IconCheckbox
                   key={texti}
                   className="margin-gap-t"
+                  disabled={ord.texti === texti}
+                  checked={ord.texti === texti}
                   postfix={
                     <>
                       <b>{texti - -1}</b>
@@ -45,33 +50,18 @@ export const OrdersRedactorOrderToolsChangeText = ({
                     </>
                   }
                   onChange={() => {
-                    exec(
-                      ord.setField('t', texti, {
-                        def: ord.texti,
-                        i: ordi - -1,
-                        ist: 1,
-                      }),
-                    );
-                    close();
+                    setIsModalOpen(false);
                     onClose(false);
                   }}
+                  onClick={() =>
+                    cmComOrderClientInvocatorMethods.setTexti(null, ord.me.header(), com.wid, ord.wid, texti)
+                  }
                 />
               );
             })}
-          </>,
-        )}
-      </>
-    );
-  });
-
-  return (
-    <>
-      {modalNode}
-      <BottomPopupItem
-        Icon={IconTextStrokeRounded}
-        title="Заменить текст"
-        onClick={openModal}
-      />
+          </ModalBody>
+        </Modal>
+      )}
     </>
   );
 };

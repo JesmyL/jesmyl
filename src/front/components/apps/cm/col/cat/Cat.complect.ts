@@ -156,7 +156,7 @@ export const catSpecialSearches: Record<`@${string}`, CatSpecialSearches> = {
       return coms.filter(com => {
         const difference = new Set(
           com
-            .transBlocks()
+            .transposedBlocks()
             ?.map(block => block.split(makeRegExp('/[\\s.-]+/')))
             .flat()
             .filter(itIt),

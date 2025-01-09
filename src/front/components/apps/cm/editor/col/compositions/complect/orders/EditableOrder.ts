@@ -1,3 +1,4 @@
+import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator';
 import { mylib } from 'front/utils';
 import { IExportableOrder, IExportableOrderFieldValues, InheritancableOrder, OrderRepeats } from 'shared/api';
 import { FreeExecDict, FreeExecDictUniq } from '../../../../../../../../complect/exer/Exer.model';
@@ -173,15 +174,8 @@ export class EditableOrder extends Order {
       : this.me.isAnchor && this.me.source?.top[key] == null;
   }
 
-  get unique() {
-    return this.me.source?.top.u ?? this.top.u;
-  }
-  set unique(val) {
-    this.me.source && (this.me.source.top.u = val);
-  }
-
   async setChordPosition(linei: number, pos: number) {
-    const prev = mylib.clone(this.positions?.[linei] || []).sort((a: number, b: number) => a - b);
+    const prev = [...(this.positions?.[linei] || [])].sort((a: number, b: number) => a - b);
     const line = this.positions?.[linei] || [];
     const posi = line.indexOf(pos);
     const textLines = (this.text || '').split('\n');
@@ -200,44 +194,37 @@ export class EditableOrder extends Order {
       if (vowel && vowel.length === 1) lineSplitted[vowels[pos]] = `[${vowel}]`;
     });
 
-    this.exec({
-      uniq: linei,
-      prev,
-      value: line,
-      method: 'set',
-      action: 'comSetOrderChordPositionLine',
-      args: {
-        linei,
-        value: line,
-        ordw: this.getTargetFirst('w'),
-      },
-      onSet: exec => {
-        const lineSplitted = textLine.split('');
-        const prev = exec.args?.prev || [];
+    prev.concat(positions).forEach((pos: number) => {
+      const vowel = lineSplitted[vowels[pos]];
+      if (!vowel || vowel.length !== 1) return;
 
-        prev.concat(positions).forEach((pos: number) => {
-          const vowel = lineSplitted[vowels[pos]];
-          if (!vowel || vowel.length !== 1) return;
+      const inPos = positions.indexOf(pos) > -1;
+      const inPrev = prev.indexOf(pos) > -1;
+      const [lbr, rbr] = inPos && inPrev ? ['[', ']'] : !inPrev && inPos ? ['{', '}'] : ['<', '>'];
 
-          const inPos = positions.indexOf(pos) > -1;
-          const inPrev = prev.indexOf(pos) > -1;
-          const [lbr, rbr] = inPos && inPrev ? ['[', ']'] : !inPrev && inPos ? ['{', '}'] : ['<', '>'];
-
-          lineSplitted[vowels[pos]] = lbr + vowel + rbr;
-        });
-
-        const preInPos = line.indexOf(-1) > -1;
-        const preInPrev = prev.indexOf(-1) > -1;
-        const postInPos = line.indexOf(-2) > -1;
-        const postInPrev = prev.indexOf(-2) > -1;
-        const preLabel =
-          preInPos && preInPrev ? ['●'] : preInPos && !preInPrev ? ['★'] : !preInPos && preInPrev ? ['☆'] : [];
-        const postLabel =
-          postInPos && postInPrev ? ['●'] : postInPos && !postInPrev ? ['★'] : !postInPos && postInPrev ? ['☆'] : [];
-
-        if (exec.args) exec.args.lineTitle = preLabel.concat(lineSplitted).concat(postLabel).join('');
-      },
+      lineSplitted[vowels[pos]] = lbr + vowel + rbr;
     });
+
+    const preInPos = line.indexOf(-1) > -1;
+    const preInPrev = prev.indexOf(-1) > -1;
+    const postInPos = line.indexOf(-2) > -1;
+    const postInPrev = prev.indexOf(-2) > -1;
+    const preLabel =
+      preInPos && preInPrev ? ['●'] : preInPos && !preInPrev ? ['★'] : !preInPos && preInPrev ? ['☆'] : [];
+    const postLabel =
+      postInPos && postInPrev ? ['●'] : postInPos && !postInPrev ? ['★'] : !postInPos && postInPrev ? ['☆'] : [];
+
+    const lineChangesText = preLabel.concat(lineSplitted).concat(postLabel).join('');
+
+    cmComOrderClientInvocatorMethods.setPositionsLine(
+      null,
+      this.com.wid,
+      this.me.header(),
+      this.getTargetFirst('w'),
+      linei,
+      line,
+      lineChangesText,
+    );
   }
 
   cutChordPositions(line: string, linei: number) {
@@ -253,21 +240,5 @@ export class EditableOrder extends Order {
 
   removeInheritance<Key extends keyof IExportableOrder>(key: Key) {
     this.setField(key, null);
-  }
-
-  takeUniq() {
-    if (this.unique != null) return this.unique;
-    const value = this.com.ords.reduce((max, ord) => (ord.top.u != null && ord.top.u > max ? ord.top.u : max), -1) - -1;
-
-    this.exec({
-      method: 'set',
-      action: 'addOrderUnitUniq',
-      value,
-      args: { value },
-    });
-
-    this.unique = value;
-
-    return value;
   }
 }

@@ -1,3 +1,4 @@
+import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator';
 import { Order } from 'front/components/apps/cm/col/com/order/Order';
 import { mylib } from 'front/utils';
 import { makeRegExp } from 'shared/utils';
@@ -8,33 +9,48 @@ const itTrim = (it: string) => it.trim();
 export class EditableComBlocks extends EditableComOrders {
   changeBlock(coln: 'texts' | 'chords', coli: number, val: string, isInsert = false) {
     const value = coln === 'texts' ? val : this.transBlock(val, 12 - (this.transPosition || 0));
-    if (value == null) return;
-    const execValue = value.split('\n').map(itTrim).join('\n');
-    const corrects = this.setBlockCorrects(coln, coli, val);
-    const colnLiteral = coln === 'texts' ? 't' : 'c';
 
-    this.exec({
-      uniq: [coln, coli],
-      prev: (coln === 'texts' ? this.texts : this.chords)?.[coli]?.replace(makeRegExp('/^\\s+|\\s+$/gm'), ''),
-      value: execValue,
-      method: 'set',
-      action: 'changeBlocks',
-      corrects,
-      args: {
-        value: execValue,
-        coln: colnLiteral,
-        index: coli,
-      },
-      data: {
-        isInsert,
-      },
-    });
+    if (value == null) throw new Error();
+
+    const trimmedLinesValue = value.split('\n').map(itTrim).join('\n');
+    // const corrects = this.setBlockCorrects(coln, coli, val);
+    // const colnLiteral = coln === 'texts' ? 't' : 'c';
+
+    // this.exec({
+    //   uniq: [coln, coli],
+    //   prev: (coln === 'texts' ? this.texts : this.chords)?.[coli]?.replace(makeRegExp('/^\\s+|\\s+$/gm'), ''),
+    //   value: execValue,
+    //   method: 'set',
+    //   action: 'changeBlocks',
+    //   corrects,
+    //   args: {
+    //     value: execValue,
+    //     coln: colnLiteral,
+    //     index: coli,
+    //   },
+    //   data: {
+    //     isInsert,
+    //   },
+    // });
 
     if (coln === 'texts' && this.texts) this.texts[coli] = value;
     else if (this.chords) {
       this.chords[coli] = value;
       this.resetChordLabels();
     }
+  }
+
+  changeChordsBlock(coli: number, val: string) {
+    const value = this.transBlock(val, 12 - (this.transPosition || 0));
+    const trimmedLinesValue = value.split('\n').map(itTrim).join('\n');
+
+    return cmComClientInvocatorMethods.changeChordBlock(null, coli, this.wid, trimmedLinesValue);
+  }
+
+  changeTextBlock(coli: number, value: string) {
+    const trimmedLinesValue = value.split('\n').map(itTrim).join('\n');
+
+    return cmComClientInvocatorMethods.changeTextBlock(null, coli, this.wid, trimmedLinesValue);
   }
 
   add(fieldn: 'texts' | 'chords', value: string | string[], isInsert = false) {
@@ -106,12 +122,10 @@ export class EditableComBlocks extends EditableComOrders {
     type Render = <Elem>(render: (isCanShow: boolean, attrs?: Attrs) => Elem) => Elem;
     const splitter = '\n\n';
 
-    return (exec: <Value>(value?: Value) => Value | und, txti: number): Render => {
+    return (exec: <Value>(value?: Value) => Value | und, text: string, txti: number): Render => {
       const texts = this.texts;
 
       if (!texts) return render => render(false);
-
-      const text = texts[txti]?.trim();
 
       if (!text?.includes(splitter)) return render => render(false);
 

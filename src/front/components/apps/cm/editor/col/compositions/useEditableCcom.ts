@@ -6,7 +6,6 @@ import { EditableCom } from './com/EditableCom';
 
 export function useEditableCcom(): EditableCom | und {
   const ccomw = +useParams().comw!;
-
   const icom = useLiveQuery(() => cmIDB.db.coms.where({ w: ccomw }).first());
 
   return useMemo(() => icom && new EditableCom(icom, 1), [icom]);

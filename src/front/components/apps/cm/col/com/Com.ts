@@ -1,3 +1,4 @@
+import { cmComLanguages } from 'back/apps/cm/values';
 import { mylib } from 'front/utils';
 import { IExportableCom, IExportableOrder } from 'shared/api/complect/apps/cm';
 import { itIt, makeRegExp } from 'shared/utils';
@@ -143,7 +144,7 @@ export class Com extends BaseNamed<IExportableCom> {
     return Com.langs[this.langi || 0];
   }
   static get langs() {
-    return ['русский', 'украинский'];
+    return cmComLanguages;
   }
 
   getVowelPositions(textLine: string) {
@@ -165,7 +166,7 @@ export class Com extends BaseNamed<IExportableCom> {
     return cblock?.replace(gSimpleHashChordReg, chord => this.transChord(chord, delta));
   }
 
-  transBlocks(delta?: number) {
+  transposedBlocks(delta?: number) {
     return this.chords?.map((cblock: string) => this.transBlock(cblock, delta));
   }
 
@@ -394,7 +395,7 @@ export class Com extends BaseNamed<IExportableCom> {
     const setMin = (src: IExportableOrderMe) => {
       const styleName = src.style?.key.trim();
       if (src.style?.isModulation) minimals = [];
-      src.top.m = minimals.some(([s, c]) => styleName === s && src.top.c === c) ? 0 : 1;
+      src.top.m = minimals.some(([s, c]) => styleName === s && src.top.c === c) ? undefined : 1;
       minimals.push([styleName, src.top.c]);
     };
 
@@ -425,7 +426,7 @@ export class Com extends BaseNamed<IExportableCom> {
         orders.push(this.orderConstructor({ header: this.emptyOrderHeader, top: {} } as IExportableOrderMe));
         continue;
       }
-      const targetOrd: Order | nil = ordMe.top.a == null ? null : orders.find(o => o.unique === ordMe.top.a);
+      const targetOrd: Order | nil = ordMe.top.a == null ? null : orders.find(o => o.wid === ordMe.top.a);
       const me = Order.getWithExtendableFields(targetOrd?.me, ordMe);
 
       const style = getStyle(me);
@@ -446,12 +447,12 @@ export class Com extends BaseNamed<IExportableCom> {
       me.style = style;
       me.source = ordMe;
       me.isNextInherit = !!getStyle(ords[topi + 1])?.isInherit;
-      me.isNextAnchorOrd = !!(ordMe.top.u != null && ords[topi + 1] && ords[topi + 1].top.a === ordMe.top.u);
+      me.isNextAnchorOrd = !!(ords[topi + 1] && ords[topi + 1].top.a === ordMe.top.w);
       me.isPrevTargetOrd = !!(targetOrd && ords[topi - 1] === targetOrd.me.source);
       me.targetOrd = targetOrd;
       me.watchOrd = targetOrd;
       me.isAnchor = ordMe.top.a != null;
-      me.isTarget = ordMe.top.u != null && ords.some(me => me.top.a === ordMe.top.u);
+      me.isTarget = ords.some(me => me.top.a === ordMe.top.w);
       me.viewIndex = viewIndex++;
       me.sourceIndex = ords.indexOf(ordMe);
 

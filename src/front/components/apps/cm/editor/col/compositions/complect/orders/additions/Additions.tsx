@@ -1,79 +1,71 @@
+import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator';
 import { useState } from 'react';
-import styled from 'styled-components';
 import { BottomPopupItem } from '../../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
-import { useExerExec } from '../../../../../../../../../complect/exer/hooks/useExer';
 import Modal from '../../../../../../../../../complect/modal/Modal/Modal';
-import { ModalBody } from '../../../../../../../../../complect/modal/Modal/ModalBody';
-import { ModalHeader } from '../../../../../../../../../complect/modal/Modal/ModalHeader';
 import { IconOptionStrokeRounded } from '../../../../../../../../../complect/the-icon/icons/option';
 import { IconTextStrokeRounded } from '../../../../../../../../../complect/the-icon/icons/text';
 import { EditableCom } from '../../../com/EditableCom';
+import { CmComOrderOnClickBetweenData } from '../model';
+import { OrdersRedactorAdditionsEtapsModalInner } from './Etaps';
+import { CmNewOrderMakeEtap } from './values';
 
-export const OrdersRedactorAdditions = ({ com, onClose }: { com: EditableCom | und; onClose: (is: false) => void }) => {
-  const exec = useExerExec();
-  const [isNewTextBlockModalOpen, setIsNewTextBlockModalOpen] = useState<unknown>(false);
-  const [isNewChordBlockModalOpen, setIsNewChordBlockModalOpen] = useState<unknown>(false);
+export const OrdersRedactorAdditions = ({
+  com,
+  onClose,
+  setClickBetweenOrds,
+}: {
+  com: EditableCom | und;
+  onClose: (is: false) => void;
+  setClickBetweenOrds: (data: CmComOrderOnClickBetweenData) => void;
+}) => {
+  const [modalSelectForstEtap, setModalSelectForstEtap] = useState<null | CmNewOrderMakeEtap>(null);
+
+  if (!com) return;
 
   return (
     <>
       <BottomPopupItem
         Icon={IconTextStrokeRounded}
         title="Текстовый блок"
-        onClick={setIsNewTextBlockModalOpen}
+        onClick={() => setModalSelectForstEtap(CmNewOrderMakeEtap.Text)}
       />
       <BottomPopupItem
         Icon={IconOptionStrokeRounded}
         title="Аккордный блок"
-        onClick={setIsNewChordBlockModalOpen}
+        onClick={() => setModalSelectForstEtap(CmNewOrderMakeEtap.Chord)}
       />
-      {isNewTextBlockModalOpen && (
-        <Modal onClose={setIsNewTextBlockModalOpen}>
-          <ModalHeader>Новый текст</ModalHeader>
-          <ModalBody>
-            {com?.texts?.map((text, texti) => {
-              return (
-                <StyledBlockItem
-                  key={texti}
-                  className="pointer"
-                  onClick={() => {
-                    onClose(false);
-                    exec(com.addOrder({ t: texti, s: 'one' }));
-                  }}
-                >
-                  <pre>
-                    {texti + 1}.{text}
-                  </pre>
-                </StyledBlockItem>
-              );
-            })}
-          </ModalBody>
-        </Modal>
-      )}
-      {isNewChordBlockModalOpen && (
-        <Modal onClose={setIsNewChordBlockModalOpen}>
-          <ModalHeader>Новый аккордный блок</ModalHeader>
-          <ModalBody>
-            {com?.chords?.map((chords, chordsi) => {
-              return (
-                <StyledBlockItem
-                  key={chordsi}
-                  className="pointer"
-                  onClick={() => {
-                    onClose(false);
-                    exec(com.addOrder({ c: chordsi, s: 'enter' }));
-                  }}
-                >
-                  <pre>
-                    {chordsi + 1}.{com.transBlock(chords)}
-                  </pre>
-                </StyledBlockItem>
-              );
-            })}
-          </ModalBody>
+      {modalSelectForstEtap && (
+        <Modal onClose={() => setModalSelectForstEtap(null)}>
+          <OrdersRedactorAdditionsEtapsModalInner
+            com={com}
+            firstEtap={modalSelectForstEtap}
+            onClose={onClose}
+            onOrderBuilt={(styleBlock, chordi, texti) => {
+              setModalSelectForstEtap(null);
+              onClose(false);
+              setClickBetweenOrds({
+                buttonTitle: (
+                  <>
+                    Новый блок <span className="color--7">{styleBlock.title[com.langi]}</span>
+                  </>
+                ),
+                checkIsShowButton: () => true,
+                onClick: async aboveOrd => {
+                  cmComOrderClientInvocatorMethods.insertNewBlock(
+                    null,
+                    com.wid,
+                    styleBlock.title[com.langi],
+                    aboveOrd?.wid,
+                    chordi,
+                    styleBlock.key,
+                    texti,
+                  );
+                },
+              });
+            }}
+          />
         </Modal>
       )}
     </>
   );
 };
-
-const StyledBlockItem = styled.div``;

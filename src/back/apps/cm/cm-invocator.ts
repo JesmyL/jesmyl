@@ -5,4 +5,5 @@ class CmSokiInvocatorServer extends SokiInvocatorServer<CmSokiInvocatorStreamMet
 
 export const cmServerInvocatorMethods = new CmSokiInvocatorServer('CmSokiInvocatorServer', {
   editedCom: true,
+  editedCat: true,
 });

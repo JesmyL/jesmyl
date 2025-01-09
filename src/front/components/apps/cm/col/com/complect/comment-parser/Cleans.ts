@@ -2,7 +2,7 @@ import { bibleTitles } from 'front/components/apps/bible/hooks/bibleTitlesJson';
 import { mylib } from 'front/utils';
 import { makeRegExp } from 'shared/utils';
 import { css } from 'styled-components';
-import { CmComWid } from '../../../../../../../../shared/api/complect/apps/cm/complect/enums';
+import { CmComOrderWid } from '../../../../../../../../shared/api/complect/apps/cm/complect/enums';
 import { makePseudoElementCorrectContentText } from '../../../../../../../complect/utils';
 import { bibleAllTranslates, translateDescriptions } from '../../../../../bible/translates/complect';
 import { BibleBookTranslates, bibleLowerBooks } from '../../../../../bible/translates/TranslatesContext';
@@ -57,10 +57,10 @@ export class ComBlockCommentMakerCleans {
       ? (+('' + infoWidStr || '').replace(
           makeRegExp(`/[${this.numberAssociationLine}]/g`),
           all => '' + this.numberAssociationLine.indexOf(all),
-        ) as CmComWid)
+        ) as CmComOrderWid)
       : null;
 
-  static makeWidToSecret = (wid: CmComWid) =>
+  static makeWidToSecret = (wid: CmComOrderWid) =>
     ('' + wid).replace(makeRegExp('/./g'), all => this.numberAssociationLine[+all]);
 
   static makePseudoComment = (text: string) => makePseudoElementCorrectContentText(text.trim());

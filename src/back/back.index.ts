@@ -1,7 +1,11 @@
-import { cmServerInvocatorBase } from './apps/cm/cm-invocator.base';
+import { cmCatServerInvocatorBase } from './apps/cm/cm-cat-invocator.base';
+import { cmComServerInvocatorBase } from './apps/cm/cm-com-invocator.base';
+import { cmComOrderServerInvocatorBase } from './apps/cm/cm-com-order-invocator.base';
 import sokiServer from './complect/soki/SokiServer';
 import { supportTelegramBot } from './sides/telegram-bot/support/support-bot';
 
 supportTelegramBot.getAdmins().finally(() => sokiServer.start());
 
-cmServerInvocatorBase.$$register();
+cmComServerInvocatorBase.$$register();
+cmCatServerInvocatorBase.$$register();
+cmComOrderServerInvocatorBase.$$register();

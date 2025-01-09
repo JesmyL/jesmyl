@@ -1,5 +1,6 @@
 import { MyLib, mylib } from 'front/utils';
 import {
+  CmComOrderWid,
   IExportableOrder,
   IExportableOrderFieldValues,
   InheritancableOrder,
@@ -23,7 +24,7 @@ export class Order extends SourceBased<IExportableOrder> {
     super(me.top);
     this.com = com;
 
-    this.texti = mylib.isNum(me.top.t) ? me.top.t : null;
+    this.texti = mylib.isNum(me.top.t) ? me.top.t : undefined;
 
     this.fieldValues = me.top.f;
     this.me = me;
@@ -40,15 +41,8 @@ export class Order extends SourceBased<IExportableOrder> {
   get wid() {
     return this.me.source?.top.w || this.top.w;
   }
-  set wid(val: number) {
+  set wid(val: CmComOrderWid) {
     this.me.source && (this.me.source.top.w = val);
-  }
-
-  get unique() {
-    return this.me.source?.top.u ?? this.top.u;
-  }
-  set unique(val) {
-    this.me.source && (this.me.source.top.u = val);
   }
 
   get isAnchor() {
@@ -424,8 +418,8 @@ export class Order extends SourceBased<IExportableOrder> {
     }`;
   }
 
-  repeatedText() {
-    return Order.makeRepeatedText(this.com.bracketsTransformed(this.text).text, this.repeats);
+  repeatedText(repeats: OrderRepeats | null = this.repeats) {
+    return Order.makeRepeatedText(this.com.bracketsTransformed(this.text).text, repeats);
   }
 
   static makeRepeatedText(text: string, repeats: OrderRepeats | nil = null) {

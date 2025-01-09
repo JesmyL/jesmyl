@@ -1,9 +1,11 @@
-import { cmClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator';
+import { InputWithLoadingIcon } from 'front/components/apps/cm/base/InputWithLoadingIcon';
+import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator';
+import { useState } from 'react';
+import { emptyFunc } from 'shared/utils';
 import Dropdown from '../../../../../../../../complect/dropdown/Dropdown';
 import { DropdownItem } from '../../../../../../../../complect/dropdown/Dropdown.model';
 import { useCheckIsAccessed } from '../../../../../../../../complect/exer/hooks/check-is-accessed';
 import { useExerExec } from '../../../../../../../../complect/exer/hooks/useExer';
-import KeyboardInput from '../../../../../../../../complect/keyboard/KeyboardInput';
 import { useConfirm } from '../../../../../../../../complect/modal/confirm/useConfirm';
 import { IconDashboardSpeed02StrokeRounded } from '../../../../../../../../complect/the-icon/icons/dashboard-speed-02';
 import { IconDelete01StrokeRounded } from '../../../../../../../../complect/the-icon/icons/delete-01';
@@ -13,7 +15,7 @@ import { IconSchoolReportCardStrokeRounded } from '../../../../../../../../compl
 import { useAuth } from '../../../../../../../index/molecules';
 import { ChordVisibleVariant } from '../../../../../Cm.model';
 import TheCom from '../../../../../col/com/TheCom';
-import EditContainerCorrectsInformer from '../../../../edit-container-corrects-informer/EditContainerCorrectsInformer';
+import { TextCorrectMessages } from '../../../../complect/TextBlockIncorrectMessages';
 import { useEditableCcom } from '../../useEditableCcom';
 import { EditableCompositionMainTon } from './Ton';
 
@@ -34,47 +36,48 @@ export default function EditableCompositionMain() {
   const auth = useAuth();
   const checkIsAccessed = useCheckIsAccessed(auth);
   const [confirmNode, confirm] = useConfirm();
+  const [name, setName] = useState('');
 
   if (!ccom) return null;
+  const nameCorrects = ccom.textBlockIncorrectMessages(name);
 
   return (
     <>
       {confirmNode}
-      <EditContainerCorrectsInformer
-        corrects={ccom.corrects.name}
-        className="flex"
-      >
-        <IconSchoolReportCardStrokeRounded />
-        <div className="margin-gap-h">Название</div>
-        <input
-          defaultValue={ccom.name}
-          onChange={event => cmClientInvocatorMethods.rename(null, ccom.wid, event.target.value)}
-        />
-      </EditContainerCorrectsInformer>
-      <div className="flex full-width between margin-gap-v">
-        <IconDashboardSpeed02StrokeRounded />
-        <div className="margin-gap-h nowrap">Ударов в минуту</div>
-        <KeyboardInput
-          value={'' + (ccom.beatsPerMinute ?? '')}
-          type="number"
-          onChange={value => exec(ccom.setField('bpm', +value, 0))}
-        />
-      </div>
+      <InputWithLoadingIcon
+        Icon={IconSchoolReportCardStrokeRounded}
+        label="Название"
+        defaultValue={ccom.name}
+        corrects={nameCorrects}
+        onChange={value => cmComClientInvocatorMethods.rename(null, ccom.wid, value)}
+        onInput={setName}
+      />
+      <TextCorrectMessages corrects={nameCorrects} />
+
+      <InputWithLoadingIcon
+        Icon={IconDashboardSpeed02StrokeRounded}
+        label="Ударов в минуту"
+        type="number"
+        defaultValue={'' + (ccom.beatsPerMinute ?? '')}
+        onChange={value => cmComClientInvocatorMethods.setBpM(null, ccom.wid, +value)}
+        onInput={emptyFunc}
+      />
       <div className="flex full-width between margin-gap-v">
         <IconDashboardSpeed02StrokeRounded />
         <div className="margin-gap-h nowrap">Размерность</div>
         <Dropdown
           id={ccom.meterSize}
           items={meterSizeItems}
-          onSelectId={value => exec(ccom.setField('s', value, meterSizeItems[0].id))}
+          onSelectId={value => {
+            cmComClientInvocatorMethods.setMeterSize(null, ccom.wid, value);
+          }}
         />
       </div>
       <div
         className="flex full-width between margin-gap-v pointer"
         onClick={event => {
           event.stopPropagation();
-          ccom.switchLang();
-          exec();
+          cmComClientInvocatorMethods.changeLanguage(null, ccom.wid, ccom.langi ? 0 : 1);
         }}
       >
         <IconFlag03StrokeRounded />
@@ -85,7 +88,7 @@ export default function EditableCompositionMain() {
       <div
         className="flex full-width between margin-gap-v pointer"
         onClick={() => {
-          exec(ccom.setField('b', ccom.isBemoled === 1 ? 0 : 1, 0));
+          cmComClientInvocatorMethods.makeBemoled(null, ccom.wid, ccom.isBemoled === 1 ? 0 : 1);
         }}
       >
         <IconGridStrokeRounded />

@@ -1,12 +1,14 @@
+import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator';
 import { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { OrderRepeats } from 'shared/api';
+import { makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
 import { useExerExec } from '../../../../../../../complect/exer/hooks/useExer';
 import { useConfirm } from '../../../../../../../complect/modal/confirm/useConfirm';
 import { IconCancel01StrokeRounded } from '../../../../../../../complect/the-icon/icons/cancel-01';
 import { IconFlag03StrokeRounded } from '../../../../../../../complect/the-icon/icons/flag-03';
 import { IconLinkBackwardStrokeRounded } from '../../../../../../../complect/the-icon/icons/link-backward';
-import { IconPinStrokeRounded } from '../../../../../../../complect/the-icon/icons/pin';
+import { IconRowDeleteStrokeRounded } from '../../../../../../../complect/the-icon/icons/row-delete';
 import { ChordVisibleVariant } from '../../../../Cm.model';
 import ComLine from '../../../../col/com/line/ComLine';
 import TheOrder from '../../../../col/com/order/TheOrder';
@@ -31,7 +33,6 @@ export default function ComRepeats() {
   const [confirmNode, confirm] = useConfirm();
 
   const ccom = useEditableCcom();
-  const coln = 'r';
   const { textLinei: startLinei, wordi: startWordi, orderUnit: startOrd } = start || {};
   let startedFlashes = 0;
   let beforeFlashes = 0;
@@ -48,11 +49,17 @@ export default function ComRepeats() {
       const keys = Object.keys(repeats);
       if (repeats['.'] === 0) delete repeats['.'];
 
-      exec(
-        ord.setField(coln, (keys.length ? (keys.length === 1 && keys[0] === '.' ? repeats['.'] : repeats) : 0) ?? 0),
-      );
+      ccom &&
+        cmComOrderClientInvocatorMethods.setRepeats(
+          null,
+          ord.wid,
+          ord.me.header(),
+          ccom.wid,
+          (keys.length ? (keys.length === 1 && keys[0] === '.' ? repeats['.'] : repeats) : 0) ?? 0,
+          ord.repeatedText(repeats).replace(makeRegExp('/&nbsp;/g'), ' '),
+        );
     },
-    [exec],
+    [ccom],
   );
 
   const reset = useCallback(() => {
@@ -123,12 +130,19 @@ export default function ComRepeats() {
                             ord.me.watchOrd?.element?.scrollIntoView();
                           }}
                         />
-                        <IconPinStrokeRounded
+                        <IconRowDeleteStrokeRounded
                           className={`vertical-middle pointer ${ord.isInheritValue('r') ? 'disabled' : ''}`}
-                          onClick={() => {
-                            confirm('Очистить собственные правила повторения?').then(isClear => {
-                              if (isClear) exec(ord.removeInheritance('r'));
-                            });
+                          onClick={async () => {
+                            const isClear = await confirm('Очистить собственные правила повторения?');
+
+                            if (isClear)
+                              cmComOrderClientInvocatorMethods.clearOwnRepeats(
+                                null,
+                                ord.wid,
+                                ord.me.header(),
+                                ccom.wid,
+                                undefined,
+                              );
                           }}
                         />
                       </>

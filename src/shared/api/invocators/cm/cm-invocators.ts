@@ -1,9 +1,6 @@
-import { CmComWid, IExportableCom } from 'shared/api/complect/apps';
-
-export type CmComSokiInvocatorMethods = {
-  rename: (comw: CmComWid, name: string) => IExportableCom;
-};
+import { IExportableCat, IExportableCom } from 'shared/api/complect/apps';
 
 export type CmSokiInvocatorStreamMethods = {
   editedCom: (com: IExportableCom) => unknown;
+  editedCat: (com: IExportableCat) => unknown;
 };

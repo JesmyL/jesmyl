@@ -1,11 +1,7 @@
 import { Executer } from 'back/complect/executer/Executer';
-import { IExportableOrder } from 'shared/api';
-import { cmExer } from '../../../../../CmExer';
 import { IExportableOrderMe, INewExportableOrder } from '../../../../../col/com/order/Order.model';
 import { EditableOrder } from '../../complect/orders/EditableOrder';
 import { EditableComCorrects } from './10-Corrects';
-
-const keysIExportableOrderTop: (keyof IExportableOrder)[] = ['t', 's', 'a', 'u', 'c'];
 
 export class EditableComOrders extends EditableComCorrects {
   protected _o?: EditableOrder[];
@@ -36,29 +32,6 @@ export class EditableComOrders extends EditableComCorrects {
 
     const findAfterOrder = insertBeforeOrdw == null ? null : ['w', '===', insertBeforeOrdw];
 
-    const exec = {
-      action: 'comAddOrderBlock',
-      method: 'insert_before_item_or_push',
-      args: {
-        ordw: w,
-        texti: topOrd.t,
-        type: topOrd.s,
-        chordsi: topOrd.c,
-        anchor: topOrd.a,
-        uniq: topOrd.u,
-        positions: topOrd.p,
-        findAfterOrder,
-      },
-    } as const;
-
-    this.exec(exec);
-
-    const ord: IExportableOrderMe = { top: { w }, header: this.emptyOrderHeader };
-
-    keysIExportableOrderTop.forEach(key => {
-      if (topOrd[key as never] != null) ord.top[key] = topOrd[key as never];
-    });
-
     Executer.doIt({
       method: 'insert_before_item_or_push',
       value: { insertValue: { ...topOrd, w }, findAfterItem: findAfterOrder },
@@ -87,7 +60,7 @@ export class EditableComOrders extends EditableComCorrects {
     if (coln === 'texts') {
       anchors = this.orders.filter((ord, ordi) => {
         return containers.some(contOrd => {
-          const isAnch = ord.isAnchor && contOrd.top.u === ord.top.a;
+          const isAnch = ord.isAnchor && contOrd.top.w === ord.top.a;
           if (isAnch) indexes.push({ ordi, ord });
           return isAnch;
         });
@@ -99,58 +72,6 @@ export class EditableComOrders extends EditableComCorrects {
       anchors,
       indexes: indexes.sort((a, b) => b.ordi - a.ordi),
     };
-  }
-
-  isImpossibleToMigrateOrder(ord: EditableOrder, ordi: number, ords: EditableOrder[]) {
-    let isSelfOrd = false;
-
-    return (
-      ord.me.isAnchorInherit ||
-      ordi === ords.length - 1 ||
-      !ords.some(currOrd => {
-        if (currOrd === ord) {
-          isSelfOrd = true;
-          return false;
-        }
-        if (!isSelfOrd) return false;
-        return !currOrd.me.isAnchorInherit;
-      })
-    );
-  }
-
-  isCantResortOrder(ord: EditableOrder, ordi: number) {
-    return (
-      (!ordi && ord.me.isNextInherit) ||
-      ord.me.isNextAnchorOrd ||
-      (ord.me.isNextAnchorOrd && !ordi) ||
-      (index => !(index < 0 || index === cmExer.execs.length - 1))(
-        cmExer.execs.findIndex(exec => exec.action === 'comResortOrders' && exec.args?.comw === this.wid),
-      )
-    );
-  }
-
-  resortOrder(topOrd: EditableOrder) {
-    const orders = this.ords;
-
-    if (!orders) return;
-
-    const basei = orders.findIndex(ord => ord.top.w === topOrd.wid);
-    const prev = orders.map(ord => ord.top.w);
-
-    [orders[basei], orders[basei + 1]] = [orders[basei + 1], orders[basei]];
-
-    const value = orders.map(ord => ord.top.w);
-    this.top.o?.sort((a, b) => value.indexOf(a.w) - value.indexOf(b.w));
-
-    this.exec({
-      value,
-      prev,
-      method: 'resort',
-      action: 'comResortOrders',
-      args: { value, prev },
-    });
-
-    this.afterOrderChange();
   }
 
   removeOrderBlock({ wid, isAnchor, me }: EditableOrder) {
@@ -181,29 +102,6 @@ export class EditableComOrders extends EditableComCorrects {
 
   getNextOrdWid() {
     return (this.top.o?.reduce((w, ord) => (ord.w == null || ord.w < w ? w : ord.w), -1) ?? -1) - -1;
-  }
-
-  addOrderAnchor(ord: EditableOrder) {
-    if (ord.isAnchor) {
-      console.error('Не возможно ссылаться на ссылку');
-      return;
-    }
-
-    const anchor = ord.takeUniq();
-    const nextWid = this.getNextOrdWid();
-
-    this.top.o?.push({ a: anchor, w: nextWid });
-    this.afterOrderChange();
-
-    return this.exec({
-      action: 'comAddOrderAnchorBlock',
-      method: 'push',
-      args: {
-        ordw: nextWid,
-        anchor,
-        blockn: ord.me.header(),
-      },
-    });
   }
 
   updateOrderSticks(coln: 'texts' | 'chords', coli: number, delta: number, isReset?: boolean) {

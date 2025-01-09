@@ -1,17 +1,12 @@
+import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator';
 import { BottomPopupItem } from '../../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
-import { useExerExec } from '../../../../../../../../../complect/exer/hooks/useExer';
 import { useConfirm } from '../../../../../../../../../complect/modal/confirm/useConfirm';
 import { IconDelete02StrokeRounded } from '../../../../../../../../../complect/the-icon/icons/delete-02';
 import { OrdersRedactorOrderToolsProps } from '../OrdersRedactorOrderTools';
 
-export const OrdersRedactorOrderToolsAnchorDelete = ({
-  ccom,
-  ord,
-  blockHeader,
-  onClose,
-}: OrdersRedactorOrderToolsProps) => {
-  const exec = useExerExec();
+export const OrdersRedactorOrderToolsAnchorDelete = ({ com, ord, onClose }: OrdersRedactorOrderToolsProps) => {
   const [confirmNode, confirm] = useConfirm();
+  const ifAnchorSuffix = ord.isAnchor ? 'ссылку на ' : '';
 
   return (
     <>
@@ -19,20 +14,27 @@ export const OrdersRedactorOrderToolsAnchorDelete = ({
       <BottomPopupItem
         Icon={IconDelete02StrokeRounded}
         className="color--ko"
-        title={`Удалить ${ord.isAnchor ? 'ссылку на ' : ''} ${blockHeader}`}
+        title={`Удалить ${ifAnchorSuffix} ${ord.me.header()}`}
         onClick={async () => {
           if (
-            await confirm(
-              `Удалить ${blockHeader}?${
-                (ord.positions || []).length
+            !(await confirm(
+              <>
+                {'Удалить '}
+                <span className="color--7">
+                  {ifAnchorSuffix}
+                  {ord.me.header()}
+                </span>
+                ?
+                {ord.top.p?.flat().length
                   ? ' Данное действие повлечёт за собой уничтожение аппликатуры в данном блоке.'
-                  : ''
-              }`,
-            )
-          ) {
-            exec(ccom.removeOrderBlock(ord));
-            onClose(false);
-          }
+                  : ''}
+              </>,
+            ))
+          )
+            return;
+
+          await cmComOrderClientInvocatorMethods.remove(null, ord.me.header(), com.wid, ord.wid, ord.isAnchor);
+          onClose(false);
         }}
       />
     </>

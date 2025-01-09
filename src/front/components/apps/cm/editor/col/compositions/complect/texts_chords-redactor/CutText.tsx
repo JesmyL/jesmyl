@@ -6,8 +6,8 @@ import { ChordVisibleVariant } from '../../../../../Cm.model';
 import TheOrder from '../../../../../col/com/order/TheOrder';
 import { EditableCom } from '../../com/EditableCom';
 
-export const CutTextRedactor = ({ ccom, coli, text }: { ccom: EditableCom; coli: number; text: string }) => {
-  const preparedCutBlock = ccom.prepareCutBlock(coli);
+export const CutTextRedactor = ({ ccom, texti, text }: { ccom: EditableCom; texti: number; text: string }) => {
+  const preparedCutBlock = ccom.prepareCutBlock(texti);
   const exec = useExerExec();
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export const CutTextRedactor = ({ ccom, coli, text }: { ccom: EditableCom; coli:
           disabled={preparedCutBlock.disabled}
           disabledReason={() => exec(preparedCutBlock.disabledReason)}
           className="color--ok margin-gap"
-          onClick={() => exec(ccom.cutBlock(coli, preparedCutBlock.ords))}
+          onClick={() => exec(ccom.cutBlock(texti, preparedCutBlock.ords))}
           postfix="Разделить текст"
         />
         {preparedCutBlock.ords.map((ord, ordi) => (

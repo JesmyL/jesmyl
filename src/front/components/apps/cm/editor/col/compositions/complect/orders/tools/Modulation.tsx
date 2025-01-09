@@ -14,7 +14,7 @@ const intervals = '.'
   .map((_, i) => i + 1)
   .reverse();
 
-export const OrdersRedactorOrderToolsModulation = ({ ccom, ord, ordi, onClose }: OrdersRedactorOrderToolsProps) => {
+export const OrdersRedactorOrderToolsModulation = ({ com, ord, ordi, onClose }: OrdersRedactorOrderToolsProps) => {
   const exec = useExerExec();
 
   const [modalNode, openModal] = useModal(({ header, body }, close) => {
@@ -27,7 +27,7 @@ export const OrdersRedactorOrderToolsModulation = ({ ccom, ord, ordi, onClose }:
               orderUnit={ord}
               orderUniti={ordi}
               chordVisibleVariant={ChordVisibleVariant.Maximal}
-              com={ccom}
+              com={com}
             />
             {intervals.map(position => {
               return (
@@ -38,7 +38,7 @@ export const OrdersRedactorOrderToolsModulation = ({ ccom, ord, ordi, onClose }:
                   className="margin-gap-t"
                   onChange={() => {
                     ord.setFieldValue('md', position);
-                    ccom.resetChordLabels();
+                    com.resetChordLabels();
                     exec();
                     close();
                     onClose(false);

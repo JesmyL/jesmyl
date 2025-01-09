@@ -30,7 +30,8 @@ import ChordApplicationsRedactor from './col/compositions/complect/chord-applica
 import ComOnTranslations from './col/compositions/complect/ComOnTranslations';
 import EditableCompositionMain from './col/compositions/complect/main/EditableCompositionMain';
 import OrdersRedactor from './col/compositions/complect/orders/OrdersRedactor';
-import TextsChordsRedactor from './col/compositions/complect/texts_chords-redactor/TextsChordsRedactor';
+import CmChordsBlocksRedactor from './col/compositions/complect/textable-blocks/chords-blocks/ChordsBlocksRedactor';
+import { CmTextBlocksRedactor } from './col/compositions/complect/textable-blocks/text-blocks/TextBlocksRedactor';
 import EditableCompositionWatch from './col/compositions/complect/Watch';
 import ComRepeats from './col/compositions/repeats/ComRepeats';
 
@@ -82,7 +83,7 @@ export const editCompositionNavs: INavigationRouteChildItem<
   {
     phase: ['txt'],
     path: 'txt',
-    element: <TextsChordsRedactor ccoln="texts" />,
+    element: <CmTextBlocksRedactor />,
     data: {
       iconPack: iconPackOfTextVerticalAlignment,
     },
@@ -90,7 +91,7 @@ export const editCompositionNavs: INavigationRouteChildItem<
   {
     phase: ['ch'],
     path: 'ch',
-    element: <TextsChordsRedactor ccoln="chords" />,
+    element: <CmChordsBlocksRedactor />,
     data: {
       iconPack: iconPackOfPlaylist03,
     },

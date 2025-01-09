@@ -3,7 +3,7 @@ import { makeRegExp } from 'shared/utils';
 import { ExecArgs, FreeExecDict } from '../../../../../complect/exer/Exer.model';
 import { BaseNamed, BaseNamedExportables } from '../../base/BaseNamed';
 import { eeStorage } from '../../base/ee-storage/EeStorage';
-import { cmClientInvocatorMethods } from '../../cm-invocator';
+import { cmComClientInvocatorMethods } from '../../cm-invocator';
 import { cmExer } from '../../CmExer';
 import { IEditableCol, IExportableCol } from '../../cols/Cols.model';
 import { CorrectsBox } from '../corrects-box/CorrectsBox';
@@ -39,7 +39,7 @@ export class EditableCol<Col extends BaseNamedExportables> extends BaseNamed<Col
       coln,
     );
 
-    cmClientInvocatorMethods.rename(null, this.wid, name);
+    cmComClientInvocatorMethods.rename(null, this.wid, name);
 
     this.corrects.name = exec?.corrects ?? corrects;
   }
@@ -127,7 +127,7 @@ export class EditableCol<Col extends BaseNamedExportables> extends BaseNamed<Col
     const msg = (msg?: string) =>
       msg && `"${name}" - не корректное имя для ${coln === 'cat' ? 'категории' : 'песни'}. ${msg}`;
     const ret = (err?: string, onFix?: () => void) =>
-      this.textCorrects(name, undefined, isSetAllText).merge({
+      this.textCorrects(name, isSetAllText).merge({
         errors: err ? [{ message: err, onFix, uniq }] : null,
       });
 
@@ -152,7 +152,7 @@ export class EditableCol<Col extends BaseNamedExportables> extends BaseNamed<Col
     return mylib.isStr(name) ? name.replace(correctNotSlavicNameReg_i, '') : name;
   }
 
-  textCorrects(text: string | nil, correctsScope?: string, isSetAllText = false) {
+  textCorrects(text: string | nil, isSetAllText = false) {
     if (typeof text !== 'string') return new CorrectsBox().setIncorrectType('[got not string]');
     const errors: ICorrect[] = [];
     const warnings: ICorrect[] = [];
@@ -197,8 +197,6 @@ export class EditableCol<Col extends BaseNamedExportables> extends BaseNamed<Col
       });
     });
 
-    const corrects = new CorrectsBox(errors, warnings, unknowns);
-    if (correctsScope) this.corrects[correctsScope] = corrects;
-    return corrects;
+    return new CorrectsBox(errors, warnings, unknowns);
   }
 }

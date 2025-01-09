@@ -1,3 +1,4 @@
+import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator';
 import { useExerExec } from '../../../../../../../complect/exer/hooks/useExer';
 import { translationPushKinds } from '../../../../col/com/Com.complect';
 import { useCmScreenTranslationCurrentConfig } from '../../../../translation/complect/controlled/hooks/configs';
@@ -17,7 +18,9 @@ export default function ComOnTranslations() {
           <button
             key={kindi}
             disabled={ccom.translationPushKind === kindi}
-            onClick={() => exec(ccom.setTranslationPushKind(kindi))}
+            onClick={() => {
+              cmComClientInvocatorMethods.changePushKind(null, ccom.wid, kindi);
+            }}
           >
             {title}
           </button>

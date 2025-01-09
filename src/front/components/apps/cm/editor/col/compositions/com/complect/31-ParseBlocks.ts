@@ -133,7 +133,6 @@ export class EditableComParseBlocks extends EditableComBlocks {
     const chords: string[] = [];
     const unitSlogGroups = Object.values(slogUnits).sort((a, b) => b.length - a.length);
 
-    let uniq = 0;
     const orders: INewExportableOrder[] = [];
 
     units.forEach((unit, uniti) => {
@@ -181,8 +180,6 @@ export class EditableComParseBlocks extends EditableComBlocks {
         ord => ord.c === unit.chordsi && ord.t === unit.texti && ord.s === unit.style?.key,
       );
       if (similarOrd) {
-        if (similarOrd.u === undefined) similarOrd.u = uniq++;
-        ord.a = similarOrd.u;
       } else {
         if (unit.chordsi !== undefined) ord.c = unit.chordsi;
         if (unit.texti !== undefined) ord.t = unit.texti;

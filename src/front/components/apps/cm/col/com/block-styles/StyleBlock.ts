@@ -33,6 +33,14 @@ export class StyleBlock extends SourceBased<IExportableStyleProp> {
     return this.getBasic('isHeaderNoneForce');
   }
 
+  get isBlockForTextableOnly() {
+    return this.getBasic('isBlockForTextableOnly');
+  }
+
+  get isBlockForChordedOnly() {
+    return this.getBasic('isBlockForChordedOnly');
+  }
+
   get group() {
     return this.getBasic('group');
   }

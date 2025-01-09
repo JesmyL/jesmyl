@@ -38,15 +38,14 @@ type Inheritancables<K extends keyof InheritancableOrder = keyof InheritancableO
 
 export interface IExportableOrder extends InheritancableOrder {
   w: CmComOrderWid; // Уникальный айди
-  a?: number; // Ссылка на блок
+  a?: CmComOrderWid; // Ссылка на блок
+  t?: number; // Текстовый блок
   c?: number; // Блок аккордов
-  e?: num; // Без названия
+  e?: 1; // Без названия
   f?: IExportableOrderFieldValues; // Особые значения
-  m?: num; // Минималка
-  o?: num; // Открыто в полном режиме
+  m?: 1; // Минималка
+  o?: 1; // Открыто в полном режиме
   s?: string; // Тип блока
-  t?: number | null; // Текстовый блок
-  u?: number; // Целевой айди
   inh?: Inheritancables; //
 }
 
@@ -69,12 +68,12 @@ export interface IExportableCom {
 }
 
 export interface IExportableCat {
-  n: string;
-  s?: CmComWid[];
-  d?: Partial<Record<CmComWid, number>>;
-  t?: string[] | null;
-  k: string;
-  w: CmCatWid;
+  w: CmCatWid; // writed time
+  m: number; // modified time
+  n: string; // name
+  s?: CmComWid[]; // comWid stack
+  d?: Partial<Record<CmComWid, number>>; // dictionary of numbers
+  k: string; // kind of cat
 }
 
 export interface IExportableCols {

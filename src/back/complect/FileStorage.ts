@@ -24,7 +24,6 @@ export class FileStore<Value> {
     try {
       clearTimeout(this.writeValueTimeout);
       this.writeValueTimeout = setTimeout(() => {
-        console.log(value);
         fs.writeFile(this.path, JSON.stringify(value), () => {});
       }, 10);
       return true;

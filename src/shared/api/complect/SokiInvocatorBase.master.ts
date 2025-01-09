@@ -2,9 +2,10 @@ import { EventerListenScope, smylib } from 'shared/utils';
 import { isDevelopmentMode } from './environments';
 import { SokiInvokerTranferDto } from './soki';
 
-export const makeSokiInvocatorBase = <ClassNamePostfix extends string, ToolParam = und>(
+export const makeSokiInvocatorBase = <ClassNamePostfix extends string, ToolParam = und, OnEachesRet = und>(
   classNamePostfix: ClassNamePostfix,
   eventerValue: EventerListenScope<SokiInvokerTranferDto<ToolParam>>,
+  onEachInvoke?: OnEachesRet extends und ? void : (onEachesRet: OnEachesRet) => void,
 ) => {
   type Methods = Record<string, (...args: any[]) => any>;
 
@@ -13,14 +14,24 @@ export const makeSokiInvocatorBase = <ClassNamePostfix extends string, ToolParam
   };
 
   const registeredInvocators: Record<string, Invocator<any>> = {};
+  const registeredOnEachInvocations: Record<string, OnEachOnvocations<any>> = {};
 
   eventerValue.listen(async ({ invoke: { name, method, params }, send, tool }) => {
     try {
       if (registeredInvocators[name] == null) throw new Error(`the name ${name} not registered`);
       if (!smylib.isFunc(registeredInvocators[name][method]))
         throw new Error(`the ${name}${classNamePostfix} has no the ${method} method`);
+      const invokedResult = await registeredInvocators[name][method](tool)(...params);
 
-      send({ invokedResult: await registeredInvocators[name][method](tool)(...params) }, tool);
+      if (
+        onEachInvoke !== undefined &&
+        registeredOnEachInvocations[name] !== undefined &&
+        registeredOnEachInvocations[name][method] !== undefined
+      ) {
+        const retValue = registeredOnEachInvocations[name][method](invokedResult, ...params);
+        onEachInvoke(retValue);
+      }
+      send({ invokedResult }, tool);
     } catch (error) {
       send({ errorMessage: '' + error }, tool);
     }
@@ -28,12 +39,22 @@ export const makeSokiInvocatorBase = <ClassNamePostfix extends string, ToolParam
 
   type ClassName = `${string}${string}${typeof classNamePostfix}`;
 
+  type OnEachOnvocations<M extends Methods> = OnEachesRet extends und
+    ? never
+    : { [K in keyof M]: (value: ReturnType<M[K]>, ...args: Parameters<M[K]>) => OnEachesRet };
+
   type SokiInvocator = new <M extends Methods>(
     className: ClassName,
     methods: Invocator<M>,
+    onEachInvocations?: OnEachOnvocations<M>,
   ) => Invocator<M> & { $$register: () => void };
 
-  return function (this: unknown, className: ClassName, methods: Invocator<any>) {
+  return function (
+    this: unknown,
+    className: ClassName,
+    methods: Invocator<any>,
+    onEachInvocations: OnEachOnvocations<any>,
+  ) {
     const self = this as any;
 
     if (isDevelopmentMode) {
@@ -44,19 +65,17 @@ export const makeSokiInvocatorBase = <ClassNamePostfix extends string, ToolParam
     Object.keys(methods).forEach(methodName => {
       self[methodName] =
         (tool: ToolParam) =>
-        (...params: unknown[]) => {
-          console.log(methodName, params);
-          return methods[methodName](tool)(...params);
-        };
+        (...params: unknown[]) =>
+          methods[methodName](tool)(...params);
     });
 
     self.$$register = () => {
-      const prefix = className.slice(0, -classNamePostfix.length);
+      const name = className.slice(0, -classNamePostfix.length);
 
-      if (registeredInvocators[prefix] !== undefined)
-        throw new Error(`the ${className} is registered more then 1 times`);
+      if (registeredInvocators[name] !== undefined) throw new Error(`the ${className} is registered more then 1 times`);
 
-      registeredInvocators[prefix] = self;
+      registeredInvocators[name] = self;
+      registeredOnEachInvocations[name] = onEachInvocations;
     };
 
     return this;

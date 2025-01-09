@@ -1,11 +1,11 @@
+import { TheIconLoading } from 'front/complect/the-icon/IconLoading';
+import { IconCancelCircleStrokeRounded } from 'front/complect/the-icon/icons/cancel-circle';
+import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator';
 import { MyLib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { CmMp3Rule } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
-import { useExerExec } from '../../../../../../../../complect/exer/hooks/useExer';
-import IconButton from '../../../../../../../../complect/the-icon/IconButton';
 import { IconGoogleStrokeRounded } from '../../../../../../../../complect/the-icon/icons/google';
-import { IconHelpCircleStrokeRounded } from '../../../../../../../../complect/the-icon/icons/help-circle';
 import { IconPlusSignCircleStrokeRounded } from '../../../../../../../../complect/the-icon/icons/plus-sign-circle';
 import ComPlayer from '../../../../../col/com/player/ComPlayer';
 import { EditableCom } from '../../com/EditableCom';
@@ -26,17 +26,11 @@ export default function ComAudio({
 
   const [innerHTML, setInnerHTML] = useState(topHTML);
   const [mp3Rule, setMp3Rule] = useState<CmMp3Rule | und>(topMp3Rule);
-  const exec = useExerExec();
   const [hrefs, updateHrefs] = useState<(string | null)[]>([]);
-  const [audio, setAudio] = useState(ccom?.audio || '');
   const [openAddBlock, setOpenAddBlock] = useState(false);
   const uniqs: (string | null)[] = [];
   const [removedSrcs, updateRemovedSrcs] = useState<Record<string, string>>({});
-  const setAudioExec = (audio: string) => {
-    setAudio(audio);
-    ccom?.setAudio(audio);
-    exec();
-  };
+  const [tracksInProcess, setTracksInProcess] = useState<string[]>([]);
 
   useEffect(() => {
     if (innerHTML && mp3Rule) {
@@ -84,11 +78,17 @@ export default function ComAudio({
 
   if (!ccom) return null;
 
+  const setInLoadings = async (src: string, audio: string) => {
+    setTracksInProcess(tracksInProcess.concat(src));
+    await cmComClientInvocatorMethods.setAudioLinks(null, ccom.wid, audio);
+    setTracksInProcess(tracksInProcess.filter(s => s !== src));
+  };
+
   return (
     <>
       <h2>Прикреплённые аудио</h2>
-      {audio ? (
-        audio.split('\n').map((src, srci, srca) => {
+      {ccom.audio ? (
+        ccom.audio.split('\n').map((src, srci, srca) => {
           if (!src) return null;
           return (
             <div
@@ -96,11 +96,12 @@ export default function ComAudio({
               className="flex flex-gap margin-gap-v full-width"
             >
               <ComPlayer src={src} />
-              <IconButton
-                className="error-message"
-                Icon={IconHelpCircleStrokeRounded}
-                onClick={() => {
-                  setAudioExec(srca.map((s, si) => (si !== srci ? s : '')).join('\n'));
+              <TheIconLoading
+                isLoading={tracksInProcess.includes(src)}
+                Icon={IconCancelCircleStrokeRounded}
+                className="color--ko pointer"
+                onClick={async () => {
+                  await setInLoadings(src, srca.map((s, si) => (si !== srci ? s : '')).join('\n'));
                   const newRemoveds = { ...removedSrcs };
                   newRemoveds[srci] = src;
                   updateRemovedSrcs(newRemoveds);
@@ -112,7 +113,7 @@ export default function ComAudio({
       ) : (
         <div>Нет треков</div>
       )}
-      {MyLib.entries(removedSrcs).length ? (
+      {MyLib.keys(removedSrcs).length ? (
         <>
           <h2>Удалённые аудио</h2>
           {MyLib.entries(removedSrcs).map(([index, src]) => {
@@ -123,11 +124,16 @@ export default function ComAudio({
                 className="flex flex-gap margin-gap-v full-width"
               >
                 <ComPlayer src={src} />
-                <IconPlusSignCircleStrokeRounded
-                  onClick={() => {
-                    const srcs = audio.split('\n');
+                <TheIconLoading
+                  isLoading={tracksInProcess.includes(src)}
+                  Icon={IconPlusSignCircleStrokeRounded}
+                  className="pointer"
+                  onClick={async () => {
+                    const srcs = ccom.audio.split('\n');
                     srcs[+index] = src;
-                    setAudioExec(srcs.join('\n'));
+
+                    await setInLoadings(src, srcs.join('\n'));
+
                     const newRemoveds = { ...removedSrcs };
                     delete newRemoveds[index];
                     updateRemovedSrcs(newRemoveds);
@@ -178,10 +184,13 @@ export default function ComAudio({
                   className="flex flex-gap margin-gap-v full-width"
                 >
                   <ComPlayer src={src} />
-                  <IconPlusSignCircleStrokeRounded
-                    onClick={() => {
+                  <TheIconLoading
+                    isLoading={tracksInProcess.includes(src)}
+                    Icon={IconPlusSignCircleStrokeRounded}
+                    className="pointer"
+                    onClick={async () => {
+                      await setInLoadings(src, `${ccom.audio}\n${src}`);
                       updateHrefs(hrefs.filter(href => href !== src));
-                      setAudioExec(`${audio}\n${src}`);
                     }}
                   />
                 </div>
