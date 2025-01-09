@@ -216,7 +216,7 @@ export class EditableOrder extends Order {
 
     const lineChangesText = preLabel.concat(lineSplitted).concat(postLabel).join('');
 
-    cmComOrderClientInvocatorMethods.setPositionsLine(
+    return cmComOrderClientInvocatorMethods.setPositionsLine(
       null,
       this.com.wid,
       this.me.header(),
