@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { CmMp3Rule } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import { useExerExec } from '../../../../../../../complect/exer/hooks/useExer';
@@ -7,14 +6,11 @@ import KeyboardInput from '../../../../../../../complect/keyboard/KeyboardInput'
 import IconButton from '../../../../../../../complect/the-icon/IconButton';
 import { IconTickDouble02StrokeRounded } from '../../../../../../../complect/the-icon/icons/tick-double-02';
 import EditContainerCorrectsInformer from '../../../edit-container-corrects-informer/EditContainerCorrectsInformer';
-import { useEditableCols } from '../../useEditableCols';
 import { EditableCom } from '../com/EditableCom';
 import ComAudio from './audio/ComAudio';
 import ObserveUrlResource from './audio/ObserveUrlResource';
 
 export default function NewComposition({ close, com }: { close: () => void; com: EditableCom }) {
-  const navigate = useNavigate();
-  const cols = useEditableCols();
   const exec = useExerExec();
   const [value, setValue] = useState('');
   const [name, setName] = useState('');
@@ -93,13 +89,13 @@ export default function NewComposition({ close, com }: { close: () => void; com:
           Icon={IconTickDouble02StrokeRounded}
           className="parse-com-data-button pointer margin-big-gap"
           onClick={() => {
-            if (cols?.addCom(com)) {
-              com.create();
-              com.parseBlocks(value);
-              navigate('' + com.wid);
-              close();
-              exec();
-            }
+            // if (cols?.addCom(com)) {
+            //   com.create();
+            //   com.parseBlocks(value);
+            //   navigate('' + com.wid);
+            //   close();
+            //   exec();
+            // }
           }}
         />
       </div>

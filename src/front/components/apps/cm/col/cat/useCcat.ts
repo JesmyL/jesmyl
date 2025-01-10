@@ -1,17 +1,18 @@
-import { mylib } from 'front/utils';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import { CmCatWid } from '../../../../../../shared/api/complect/apps/cm/complect/enums';
-import { useCols } from '../../cols/useCols';
+import { cmIDB } from '../../_db/cm-db';
+import { useComs } from '../../cols/useCols';
 import { Cat } from './Cat';
 
 export function useCcat(isTakeZeroCat?: boolean): Cat | nil {
-  const cols = useCols();
-  const params = useParams();
+  const icat = useIccat(isTakeZeroCat ? 0 : undefined);
+  const coms = useComs();
 
-  if (isTakeZeroCat) return cols?.cats.find(cat => CmCatWid.zero === cat.wid);
+  return useMemo(() => icat && coms && new Cat(icat, coms), [coms, icat]);
+}
 
-  const catw = +params.catw! as CmCatWid | NaN;
-  if (mylib.isNaN(catw)) return undefined;
-
-  return cols?.cats.find(cat => catw === cat.wid);
+export function useIccat(catw?: number) {
+  const ccatw = +useParams().catw!;
+  return useLiveQuery(() => cmIDB.db.cats.where({ w: catw ?? ccatw }).first());
 }

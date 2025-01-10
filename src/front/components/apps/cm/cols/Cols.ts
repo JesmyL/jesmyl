@@ -27,9 +27,9 @@ export class Cols extends SourceBased<IExportableCols> implements ICols {
             };
           }
 
-          return new Com(top, comi);
+          return new Com(top);
         });
-    } else this.coms = [...(cols?.coms || [])].sort((a, b) => a.w - b.w).map((com, comi) => new Com(com, comi));
+    } else this.coms = [...(cols?.coms || [])].sort((a, b) => a.w - b.w).map((com, comi) => new Com(com));
 
     this.cats = [...(cols?.cats || [])].sort((a, b) => a.w - b.w).map(cat => new Cat(cat, this.coms));
   }

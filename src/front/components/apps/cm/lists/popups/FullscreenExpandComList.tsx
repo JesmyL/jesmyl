@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useAtomValue } from '../../../../../complect/atoms';
 import RollControled from '../../base/RolledContent';
 import { Com } from '../../col/com/Com';
+import { CmComNumber } from '../../col/com/complect/ComNumber';
 import ComOrders from '../../col/com/orders/ComOrders';
 import { cmComFontSizeAtom } from '../../molecules';
 
@@ -14,7 +15,7 @@ export default function FullscreenExpandComList({ coms }: { coms: Com[] }) {
         <div className="inner-content">
           {coms?.map(com => (
             <div key={com.wid}>
-              <div className="com-number">#{com.number}</div>
+              <div className="com-number">#{<CmComNumber comw={com.wid} />}</div>
               <ComOrders
                 com={com}
                 fontSize={fontSize}

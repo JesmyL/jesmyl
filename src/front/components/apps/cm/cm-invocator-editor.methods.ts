@@ -38,6 +38,7 @@ export const cmComOrderClientInvocatorMethods = new CmComOrderSokiInvocatorClien
   setType: true,
   bindChordBlock: true,
   toggleVisibility: true,
+  toggleAnchorInheritVisibility: true,
   moveOrdAfter: true,
   addAnchorOrder: true,
   setTexti: true,
@@ -46,4 +47,5 @@ export const cmComOrderClientInvocatorMethods = new CmComOrderSokiInvocatorClien
   remove: true,
   insertNewBlock: true,
   setPositionsLine: true,
+  setModulationValue: true,
 });

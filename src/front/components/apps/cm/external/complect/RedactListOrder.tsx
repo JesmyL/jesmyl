@@ -1,21 +1,20 @@
 import { useState } from 'react';
-import { CmComBindAttach } from 'shared/api';
+import { CmComBindAttach, CmComWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import StrongEvaButton from '../../../../../complect/strong-control/StrongEvaButton';
 import { IconArrowDataTransferVerticalStrokeRounded } from '../../../../../complect/the-icon/icons/arrow-data-transfer-vertical';
 import { IconDelete01StrokeRounded } from '../../../../../complect/the-icon/icons/delete-01';
 import { IconLinkBackwardStrokeRounded } from '../../../../../complect/the-icon/icons/link-backward';
 import { useCcat } from '../../col/cat/useCcat';
-import { Com } from '../../col/com/Com';
 import { ComFaceList } from '../../col/com/face/list/ComFaceList';
 
 interface Props {
   value: CmComBindAttach;
   scope: string;
-  setCcom: (com: Com) => void;
+  setCcomw: (comw: CmComWid) => void;
 }
 
-export default function CmExternalComListAttRedactListOrder({ value, scope, setCcom }: Props) {
+export default function CmExternalComListAttRedactListOrder({ value, scope, setCcomw }: Props) {
   const [removedComws, setRemovedComws] = useState<number[]>([]);
   const cat = useCcat(true);
 
@@ -66,7 +65,7 @@ export default function CmExternalComListAttRedactListOrder({ value, scope, setC
           {cat && (
             <ComFaceList
               list={uniqRemovedComws}
-              importantOnClick={com => setCcom(com)}
+              importantOnClick={com => setCcomw(com.wid)}
               comDescription={(com, comi) => (
                 <StrongEvaButton
                   scope={scope}

@@ -1,11 +1,11 @@
 import React from 'react';
-import { useCols } from '../../cols/useCols';
+import { useCats } from '../../cols/useCols';
 import { Com } from './Com';
 
 export const CmComCatMentions = ({ com }: { com: Com }) => {
-  const cols = useCols();
+  const cats = useCats();
 
-  return com.catMentions(cols?.cats).map((mention, mentioni) => (
+  return com.catMentions(cats).map((mention, mentioni) => (
     <React.Fragment key={mentioni}>
       {mentioni ? ', ' : ''}
       <span className="nowrap">{mention}</span>

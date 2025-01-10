@@ -1,4 +1,3 @@
-import { IExportableCols } from 'shared/api';
 import { CmComWid } from '../../../../shared/api/complect/apps/cm/complect/enums';
 import { IExportableMeetings } from '../../../../shared/api/complect/apps/cm/complect/Meetings';
 import { ClientExecutionDict } from '../../../complect/exer/Exer.model';
@@ -18,7 +17,6 @@ export enum ChordVisibleVariant {
 
 export type FavoriteMeetings = Record<'events' | 'contexts', number[]>;
 export interface CmState {
-  cols: IExportableCols | nil;
   laterComwList: number[];
   chordVisibleVariant: ChordVisibleVariant;
   marks: number[];

@@ -11,6 +11,7 @@ import {
 } from '../../../../../../complect/the-icon/icons/music-note-03';
 import { useAuth } from '../../../../../index/molecules';
 import useConnectionState from '../../../../../index/useConnectionState';
+import { CmComNumber } from '../../../col/com/complect/ComNumber';
 import ComPlayer from '../../../col/com/player/ComPlayer';
 import { editCompositionNavs } from '../../editorNav';
 import PhaseCmEditorContainer from '../../phase-editor-container/PhaseCmEditorContainer';
@@ -40,7 +41,11 @@ export default function EditComposition() {
   return (
     <StyledContainer
       className="edit-composition"
-      headTitle={`#${ccom.number} ${ccom.initialName || ccom.name}`}
+      headTitle={
+        <>
+          #{<CmComNumber comw={ccom.wid} />} {ccom.initialName || ccom.name}
+        </>
+      }
       rememberProps={['comw']}
       head={
         <>

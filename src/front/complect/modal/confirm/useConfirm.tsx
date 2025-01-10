@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { ThrowEvent } from '../../eventer/ThrowEvent';
 import Modal from '../Modal/Modal';
 import { ModalBody } from '../Modal/ModalBody';
@@ -9,17 +9,17 @@ export const useConfirm = () => {
   const [bodyContent, setBodyContent] = useState<ReactNode>();
   const [headerContent, setHeaderContent] = useState<ReactNode>('Подтверди');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const confirmationPromise = useMemo(() => Promise.withResolvers<boolean>(), []);
+  const [confirmationResolvers, setConfirmationResolvers] = useState(Promise.withResolvers<boolean>());
 
   useEffect(() => {
     if (!isModalOpen) return;
 
     return ThrowEvent.listenKeyDown('Enter', event => {
       event.stopPropagation();
-      confirmationPromise.resolve(true);
+      confirmationResolvers.resolve(true);
       setIsModalOpen(false);
     });
-  }, [isModalOpen, confirmationPromise]);
+  }, [isModalOpen, confirmationResolvers]);
 
   return [
     <>
@@ -32,7 +32,7 @@ export const useConfirm = () => {
               <span
                 className="pointer"
                 onClick={() => {
-                  confirmationPromise.resolve(true);
+                  confirmationResolvers.resolve(true);
                   setIsModalOpen(false);
                 }}
               >
@@ -41,7 +41,7 @@ export const useConfirm = () => {
               <span
                 className="pointer"
                 onClick={() => {
-                  confirmationPromise.resolve(false);
+                  confirmationResolvers.resolve(false);
                   setIsModalOpen(false);
                 }}
               >
@@ -52,15 +52,15 @@ export const useConfirm = () => {
         </Modal>
       )}
     </>,
-    useCallback(
-      (content: ReactNode, header?: ReactNode) => {
-        if (header !== undefined) setHeaderContent(header);
-        setBodyContent(content);
-        setIsModalOpen(true);
+    useCallback((content: ReactNode, header?: ReactNode) => {
+      if (header !== undefined) setHeaderContent(header);
+      setBodyContent(content);
+      setIsModalOpen(true);
 
-        return confirmationPromise.promise;
-      },
-      [confirmationPromise.promise],
-    ),
+      const resolvers = Promise.withResolvers<boolean>();
+      setConfirmationResolvers(resolvers);
+
+      return resolvers.promise;
+    }, []),
   ] as const;
 };

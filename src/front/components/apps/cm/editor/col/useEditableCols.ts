@@ -1,21 +1,16 @@
-import { mylib } from 'front/utils';
-import { IExportableCols } from 'shared/api';
-import { useAtomValue } from '../../../../../complect/atoms';
-import { cmMolecule } from '../../molecules';
-import { EditableCols } from './EditableCols';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { cmIDB } from '../../_db/cm-db';
+import { EditableCat } from './categories/EditableCat';
+import { EditableCom } from './compositions/com/EditableCom';
 
-let localCols: EditableCols | und;
-let localICols: IExportableCols | und;
+export const useEditableComs = () => {
+  const icoms = useLiveQuery(() => cmIDB.db.coms.toArray());
 
-const colsAtom = cmMolecule.select(s => s.cols);
+  return icoms?.map(icom => new EditableCom(icom));
+};
 
-export function useEditableCols(): EditableCols | und {
-  const cols = useAtomValue(colsAtom);
+export const useEditableCats = () => {
+  const icats = useLiveQuery(() => cmIDB.db.cats.toArray());
 
-  if (cols == null) return;
-  if (localCols && localICols === cols) return localCols;
-
-  localCols = cols && new EditableCols(mylib.clone(cols));
-  localICols = cols;
-  return localCols;
-}
+  return icats?.map(icat => new EditableCat(icat, []));
+};

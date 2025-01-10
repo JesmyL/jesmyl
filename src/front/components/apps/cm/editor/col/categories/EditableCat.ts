@@ -3,7 +3,6 @@ import { IExportableCat } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import { FreeExecDict } from '../../../../../../complect/exer/Exer.model';
 import { Cat } from '../../../col/cat/Cat';
-import { catTrackers } from '../../../col/cat/Cat.complect';
 import { CatTracker, ComWrap } from '../../../col/cat/Cat.model';
 import { Com } from '../../../col/com/Com';
 import { CorrectsBox } from '../../corrects-box/CorrectsBox';
@@ -12,7 +11,6 @@ import { EditableCol } from '../EditableCol';
 
 export class EditableCat extends Cat {
   corrects: Record<string, CorrectsBox | nil> = {};
-  coms: EditableCom[];
   topComs: EditableCom[];
   initialName: string;
   term: string = '';
@@ -21,54 +19,16 @@ export class EditableCat extends Cat {
 
   initial: Cat;
 
-  constructor(top: IExportableCat, coms: EditableCom[]) {
+  constructor(
+    top: IExportableCat,
+    public coms: EditableCom[],
+  ) {
     super(top, coms);
     this.col = new EditableCol(top);
     this.topComs = coms;
     this.initialName = this.name;
 
-    this.coms = this.putComs();
     this.initial = new Cat(mylib.clone(top), this.coms);
-  }
-
-  search(term = this.term) {
-    if (term) {
-      if (term === '@@2') {
-        this.wraps = this.coms
-          .map(com => {
-            com.texts?.forEach((text, texti) => com.setBlockCorrects('texts', texti, text, true));
-            com.chords?.forEach((chords, chordsi) => com.setBlockCorrects('chords', chordsi, chords, true));
-            com.rename(com.name, null, true);
-
-            return Object.values(com.corrects).some(correct => correct?.isSome()) ? { com } : null;
-          })
-          .filter(wrap => wrap) as never;
-      } else {
-        this.wraps = mylib.searchRate(this.coms, term, [
-          'name',
-          mylib.c.POSITION,
-          ['orders', mylib.c.INDEX, 'text'],
-        ]) as ComWrap<EditableCom>[];
-      }
-    } else this.wraps = this.coms.map(com => ({ item: com }));
-
-    this.term = term;
-
-    return this.wraps;
-  }
-
-  putComs() {
-    const { select } = catTrackers.find(({ id }) => id === this.kind) || {};
-    this.coms = select ? this.topComs.filter(com => select(com, this)) : [];
-
-    this.search();
-
-    return this.coms;
-  }
-
-  newCom(com: EditableCom) {
-    this.topComs.push(com);
-    this.putComs();
   }
 
   exec<Value>(bag: FreeExecDict<Value>) {
@@ -116,7 +76,6 @@ export class EditableCat extends Cat {
 
     this.coms = [];
     setTimeout(() => {
-      this.putComs();
       onSet && onSet();
     });
     this.col.corrects.catSetKind = null;

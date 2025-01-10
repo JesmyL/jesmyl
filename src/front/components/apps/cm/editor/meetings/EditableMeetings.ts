@@ -7,7 +7,7 @@ import {
 import { ClientExecutionDict } from '../../../../../complect/exer/Exer.model';
 import { cmExer } from '../../CmExer';
 import { Meetings } from '../../lists/meetings/Meetings';
-import { EditableCols } from '../col/EditableCols';
+import { EditableCom } from '../col/compositions/com/EditableCom';
 import { EditableMeetingsEvent } from './EditableMeetingsEvent';
 
 export class EditableMeetings extends Meetings {
@@ -16,18 +16,19 @@ export class EditableMeetings extends Meetings {
   events?: EditableMeetingsEvent[];
   contexts: MeetingsContextMap;
   names: string[];
-  cols?: EditableCols;
 
-  constructor(meetings?: IExportableMeetings, cols?: EditableCols) {
+  constructor(
+    public coms: EditableCom[],
+    meetings?: IExportableMeetings,
+  ) {
     const { events, contexts, names } = meetings || ({} as IExportableMeetings);
 
-    super(meetings, cols);
+    super(meetings);
 
-    this.cols = cols;
     this.stack = events;
     this.contexts = this.takeContexts(contexts);
     this.names = [...(names ?? [])];
-    this.events = events?.map(event => new EditableMeetingsEvent(event, cols));
+    this.events = events?.map(event => new EditableMeetingsEvent(event, coms));
     this.event = this.events?.[0];
   }
 
@@ -91,7 +92,7 @@ export class EditableMeetings extends Meetings {
         s: [],
         w: Date.now(),
       },
-      this.cols,
+      this.coms,
     );
 
     this.exec({

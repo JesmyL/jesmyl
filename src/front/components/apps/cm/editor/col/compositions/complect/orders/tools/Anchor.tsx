@@ -1,4 +1,4 @@
-import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator';
+import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
 import { BottomPopupItem } from '../../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
 import { IconLink02StrokeRounded } from '../../../../../../../../../complect/the-icon/icons/link-02';
 import { OrdersRedactorOrderToolsProps } from '../OrdersRedactorOrderTools';

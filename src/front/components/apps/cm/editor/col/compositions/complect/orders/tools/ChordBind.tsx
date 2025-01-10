@@ -1,5 +1,5 @@
 import { IconPlaylist03StrokeRounded } from 'front/complect/the-icon/icons/playlist-03';
-import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator';
+import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
 import { BottomPopupItem } from '../../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
 import useModal from '../../../../../../../../../complect/modal/useModal';
 import IconCheckbox from '../../../../../../../../../complect/the-icon/IconCheckbox';

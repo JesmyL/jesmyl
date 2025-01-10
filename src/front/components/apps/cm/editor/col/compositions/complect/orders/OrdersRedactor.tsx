@@ -2,9 +2,9 @@ import TheButton from 'front/complect/Button';
 import IconButton from 'front/complect/the-icon/IconButton';
 import { IconCancel01StrokeRounded } from 'front/complect/the-icon/icons/cancel-01';
 import { IconLink02StrokeRounded } from 'front/complect/the-icon/icons/link-02';
+import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
 import { useState } from 'react';
 import { BottomPopup } from '../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopup';
-import { useExerExec } from '../../../../../../../../complect/exer/hooks/useExer';
 import { IconEdit02StrokeRounded } from '../../../../../../../../complect/the-icon/icons/edit-02';
 import { IconPlusSignCircleStrokeRounded } from '../../../../../../../../complect/the-icon/icons/plus-sign-circle';
 import { IconViewStrokeRounded } from '../../../../../../../../complect/the-icon/icons/view';
@@ -20,7 +20,6 @@ import { CmComOrderOnClickBetweenData } from './model';
 export default function OrdersRedactor() {
   const ccom = useEditableCcom();
   const [newBlockAdderPopupCom, setNewBlockAdderPopupCom] = useState<EditableCom | false>(false);
-  const exec = useExerExec();
   const [toolProps, setToolProps] = useState<OrdersRedactorOrderToolsProps | false>(false);
   const [clickBetweenData, setClickBetweenOrds] = useState<CmComOrderOnClickBetweenData | null>(null);
 
@@ -43,16 +42,6 @@ export default function OrdersRedactor() {
         )}
       </>
       {ccom.orders?.map((ord, ordi, orda) => {
-        const leadHeader = ord.me.header(
-          {
-            isEdit: true,
-            isTexted: ord.me.isInherit,
-            repeats: ord.repeatsTitle,
-          },
-          true,
-        );
-        const blockHeader = ord.me.isInherit ? `${leadHeader} ${ord.type}` : leadHeader;
-
         const editNode = !ord.me.isAnchorInherit && (
           <IconButton
             Icon={ord.isAnchor ? IconLink02StrokeRounded : IconEdit02StrokeRounded}
@@ -69,7 +58,7 @@ export default function OrdersRedactor() {
           />
         );
         const isWithHead = ord.isWithHead();
-        const Icon = ord.isVisible ? IconViewStrokeRounded : IconViewOffSlashStrokeRounded;
+
         const cancelClickBetweenDataButtonNode = (
           <IconButton
             Icon={IconCancel01StrokeRounded}
@@ -99,13 +88,25 @@ export default function OrdersRedactor() {
               </div>
             )}
             <div className="margin-big-gap-h">
-              {isWithHead ? null : ord.me.isAnchorInherit ? (
-                <Icon
+              {isWithHead ? null : ord.me.isAnchorInherit && ord.me.leadOrd && ord.me.anchorInheritIndex != null ? (
+                <IconButton
+                  Icon={ord.isVisible ? IconViewStrokeRounded : IconViewOffSlashStrokeRounded}
+                  confirm={
+                    <>
+                      Сделать {ord.me.anchorInheritIndex + 2}-ю часть ссылки на
+                      <span className="color--7"> {ord.me.leadOrd.me.header()} </span>
+                      {ord.me.leadOrd.top.inh?.v?.[ord.me.anchorInheritIndex] == null ? 'не' : ''}видимой?
+                    </>
+                  }
                   onClick={() => {
-                    exec(
-                      ord.setField('v', ord.antiIsVisible, {
-                        b: blockHeader,
-                      }),
+                    if (ord.me.anchorInheritIndex == null || ord.me.leadOrd == null) return;
+
+                    return cmComOrderClientInvocatorMethods.toggleAnchorInheritVisibility(
+                      null,
+                      ord.com.wid,
+                      ord.me.leadOrd.wid,
+                      ord.me.anchorInheritIndex,
+                      ord.me.leadOrd.me.header(),
                     );
                   }}
                 />

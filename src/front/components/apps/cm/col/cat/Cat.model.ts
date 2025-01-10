@@ -1,11 +1,6 @@
 import { Com } from '../com/Com';
 import { Cat } from './Cat';
 
-export interface ICat {
-  coms: Com[];
-  topComs: Com[];
-}
-
 export interface ComWrap<C = Com> {
   item: C;
   deep?: number;

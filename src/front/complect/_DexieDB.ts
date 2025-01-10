@@ -62,22 +62,29 @@ export class DexieDB<Store> {
     return this.db[keyvalues as never] as EntityTable<unknown>;
   }
 
-  async getSingleValue<Key extends keyof Store>(key: Key) {
+  async getSingleValue<Key extends keyof Store, DefaultValue extends Store[Key] | und>(
+    key: Key,
+    defaultValue?: DefaultValue,
+  ): Promise<Store[Key] | DefaultValue> {
     this.tryIsSimpleValue(key);
+    const store = (await this.getKeyvalues().get({ key })) as any;
 
-    return ((await this.getKeyvalues().get({ key })) as any)!?.val;
+    if (store === undefined) return defaultValue as never;
+
+    return store.val;
   }
 
-  async setSingleValue<Key extends keyof Store, Value extends Store[Key] extends any[] ? never : Store[Key]>(
-    key: Key,
-    value: Value | ((value: Value) => Value),
-  ) {
+  async setSingleValue<
+    Key extends keyof Store,
+    Value extends Store[Key] extends any[] ? never : Store[Key],
+    DefaultValue extends Store[Key] | und,
+  >(key: Key, value: Value | ((value: Value | DefaultValue) => Value), defaultValue?: DefaultValue) {
     this.tryIsSimpleValue(key);
 
     if (smylib.isFunc(value)) {
       return await this.getKeyvalues().put({
         key,
-        val: value((await this.getSingleValue(key)) as never),
+        val: value((await this.getSingleValue(key, defaultValue)) as never),
       } as never);
     } else {
       return await this.getKeyvalues().put({ key, val: value } as never);

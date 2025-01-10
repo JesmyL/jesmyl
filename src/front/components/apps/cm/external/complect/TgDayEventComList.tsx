@@ -27,12 +27,13 @@ import {
 } from '../../../../../complect/schedule-widget/useScheduleWidget';
 import { IconCopy01StrokeRounded } from '../../../../../complect/the-icon/icons/copy-01';
 import { IconNoteEditStrokeRounded } from '../../../../../complect/the-icon/icons/note-edit';
-import { CmTranslationComListContext, CmTranslationComListContextValue } from '../../base/translations/context';
+import { CmComListContext, CmComListContextValue } from '../../base/translations/context';
 import { ChordVisibleVariant } from '../../Cm.model';
 import { Cat } from '../../col/cat/Cat';
 import { useCcat } from '../../col/cat/useCcat';
-import { Com } from '../../col/com/Com';
 import { ComFaceList } from '../../col/com/face/list/ComFaceList';
+import { useCcom } from '../../col/com/useCcom';
+import { useComs } from '../../cols/useCols';
 import { useMeetings } from '../../lists/meetings/useMeetings';
 import { CmFooter } from '../../routing/CmFooter';
 import { cmCompositionRoute } from '../../routing/cmRoutingApp';
@@ -132,7 +133,6 @@ const Inner = ({
         {cmCompositionRoute(children => (
           <ContextList
             list={comws}
-            cat={cat}
             pageTitlePostfix={' - ' + schedule.types[event.type].title}
           >
             {children}
@@ -166,8 +166,9 @@ const Page = ({
   const [isOpenListRedact, setIsOpenListRedact] = useState<unknown>(false);
   const [isOpenMorePopup, setIsOpenMorePopup] = useState(false);
   const [isOpenComposition, setIsOpenComposition] = useState(false);
-  const [ccom, setCcom] = useState<Com | und>();
+  const [ccomw, setCcomw] = useState<CmComWid | und>();
   const rights = useScheduleWidgetRights(schedule);
+  const ccom = useCcom(ccomw);
 
   return (
     <PhaseContainerConfigurer
@@ -195,7 +196,7 @@ const Page = ({
                   attName,
                 )}
                 value={comsAtt}
-                setCcom={setCcom}
+                setComw={setCcomw}
                 setIsOpenComposition={setIsOpenComposition}
               />
             </FullContent>
@@ -206,8 +207,8 @@ const Page = ({
               <TheComForFullScreen
                 com={ccom}
                 chordVisibleVariant={ChordVisibleVariant.Maximal}
-                comList={comws.map(comw => cat.coms.find(com => com.wid === comw)!).filter(itIt) ?? []}
-                onComSet={setCcom}
+                comwList={comws.map(comw => cat.comws.find(comWid => comWid === comw)!).filter(itIt) ?? []}
+                onComSet={setCcomw}
               />
             </FullContent>
           )}
@@ -243,22 +244,21 @@ const Page = ({
 const ContextList = ({
   children,
   list,
-  cat,
   pageTitlePostfix,
 }: {
   children: React.ReactNode;
   list: CmComWid[];
-  cat: Cat;
   pageTitlePostfix: string;
 }) => {
-  const value = useMemo((): CmTranslationComListContextValue => {
+  const coms = useComs(list);
+  const value = useMemo((): CmComListContextValue => {
     return {
-      list: list.map(comw => cat.coms.find(com => com.wid === comw)!).filter(itIt),
+      list: coms,
       pageTitlePostfix,
     };
-  }, [cat.coms, list, pageTitlePostfix]);
+  }, [coms, pageTitlePostfix]);
 
-  return <CmTranslationComListContext.Provider value={value}>{children}</CmTranslationComListContext.Provider>;
+  return <CmComListContext.Provider value={value}>{children}</CmComListContext.Provider>;
 };
 
 const StyledTitle = styled.span`

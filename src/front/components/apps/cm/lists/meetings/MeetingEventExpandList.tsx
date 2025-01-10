@@ -63,7 +63,7 @@ export default function MeetingEventExpandList() {
             const titles = context.slice(eventContext.length).map(ctx => meetings.names[ctx]);
 
             return `${event.name}${titles.length ? ` (${titles.join(' - ')})` : ''}\n${event.coms
-              ?.map(com => `${com.number}. ${com.name.trim()}`)
+              ?.map(com => com.name.trim())
               .join('\n')}`;
           })
           .join('\n\n');

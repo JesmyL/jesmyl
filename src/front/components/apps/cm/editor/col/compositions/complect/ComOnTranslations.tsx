@@ -1,12 +1,10 @@
-import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator';
-import { useExerExec } from '../../../../../../../complect/exer/hooks/useExer';
+import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
 import { translationPushKinds } from '../../../../col/com/Com.complect';
 import { useCmScreenTranslationCurrentConfig } from '../../../../translation/complect/controlled/hooks/configs';
 import { useEditableCcom } from '../useEditableCcom';
 
 export default function ComOnTranslations() {
   const ccom = useEditableCcom();
-  const exec = useExerExec();
   const currentConfig = useCmScreenTranslationCurrentConfig();
 
   if (!ccom) return null;

@@ -2,6 +2,8 @@ import { DexieDB } from 'front/complect/_DexieDB';
 import { IExportableCat, IExportableCom } from 'shared/api';
 
 interface Storage {
+  comLastModified: number;
+  catLastModified: number;
   coms: IExportableCom[];
   cats: IExportableCat[];
 }
@@ -9,6 +11,8 @@ interface Storage {
 class CmIDB extends DexieDB<Storage> {
   constructor() {
     super(true, 'cm', {
+      comLastModified: 0,
+      catLastModified: 1,
       coms: {
         w: '++',
       },

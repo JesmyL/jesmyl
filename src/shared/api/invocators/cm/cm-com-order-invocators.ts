@@ -29,6 +29,13 @@ export type CmComOrderSokiInvocatorMethods = {
 
   toggleVisibility: (ordw: CmComOrderWid, orderTitle: string, comw: CmComWid) => IExportableCom;
 
+  toggleAnchorInheritVisibility: (
+    comw: CmComWid,
+    leadOrderWid: CmComOrderWid,
+    anchorInheritIndex: number,
+    leadOrderTitle: string,
+  ) => IExportableCom;
+
   moveOrdAfter: (
     ordw: CmComOrderWid,
     orderTitle: string,
@@ -65,4 +72,6 @@ export type CmComOrderSokiInvocatorMethods = {
     line: number[],
     lineChangesText: string,
   ) => IExportableCom;
+
+  setModulationValue: (comw: CmComWid, orderTitle: string, ordw: CmComOrderWid, value: number) => IExportableCom;
 };

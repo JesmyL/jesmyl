@@ -1,17 +1,17 @@
 import { useMemo } from 'react';
 import { useMarks } from '../../lists/marks/useMarks';
-import { CmTranslationComListContext, CmTranslationComListContextValue } from './context';
+import { CmComListContext, CmComListContextValue } from './context';
 
 export const CmTranslationComListContextInMarks = function InMarks({ children }: { children: React.ReactNode }) {
   const list = useMarks().markedComs;
 
-  const value = useMemo((): CmTranslationComListContextValue => {
+  const value = useMemo((): CmComListContextValue => {
     return {
       list,
       pageTitlePostfix: ' - Избранное',
     };
   }, [list]);
 
-  return <CmTranslationComListContext.Provider value={value}>{children}</CmTranslationComListContext.Provider>;
+  return <CmComListContext.Provider value={value}>{children}</CmComListContext.Provider>;
 };
 export default CmTranslationComListContextInMarks;

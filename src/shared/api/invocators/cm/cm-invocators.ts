@@ -1,6 +1,6 @@
 import { IExportableCat, IExportableCom } from 'shared/api/complect/apps';
 
-export type CmSokiInvocatorStreamMethods = {
-  editedCom: (com: IExportableCom) => unknown;
-  editedCat: (com: IExportableCat) => unknown;
+export type CmSokiInvocatorMethods = {
+  getFreshComList: (lastModfiedMs: number) => IExportableCom[];
+  getFreshCatList: (lastModfiedMs: number) => IExportableCat[];
 };

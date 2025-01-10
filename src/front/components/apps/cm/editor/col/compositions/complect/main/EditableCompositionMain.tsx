@@ -1,5 +1,5 @@
 import { InputWithLoadingIcon } from 'front/components/apps/cm/base/InputWithLoadingIcon';
-import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator';
+import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
 import { useState } from 'react';
 import { emptyFunc } from 'shared/utils';
 import Dropdown from '../../../../../../../../complect/dropdown/Dropdown';

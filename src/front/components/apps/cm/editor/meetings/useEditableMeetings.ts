@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { IExportableMeetings } from '../../../../../../shared/api/complect/apps/cm/complect/Meetings';
 import { useAtomValue } from '../../../../../complect/atoms';
 import { cmMeetingsAtom } from '../../molecules';
-import { useEditableCols } from '../col/useEditableCols';
+import { useEditableComs } from '../col/useEditableCols';
 import { EditableMeetings } from './EditableMeetings';
 
 let localMeetings: EditableMeetings | nil;
@@ -14,15 +14,15 @@ export function useEditableMeetings() {
   const navigate = useNavigate();
 
   const eventw = +useParams().eventw!;
-  const cols = useEditableCols();
+  const coms = useEditableComs();
   const meetings: EditableMeetings | nil = useMemo(() => {
-    if (!cols) return;
+    if (!coms) return;
     if (localIMeetings && localIMeetings === imeetings) return localMeetings;
 
-    localMeetings = new EditableMeetings(imeetings, cols);
+    localMeetings = new EditableMeetings(coms, imeetings);
     localIMeetings = imeetings;
     return localMeetings;
-  }, [cols, imeetings]);
+  }, [coms, imeetings]);
 
   return {
     meetings,

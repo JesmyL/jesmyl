@@ -1,5 +1,5 @@
 import { SokiInvocatorBaseClient } from 'front/SokiInvocatorBase.client';
-import { CmSokiInvocatorStreamMethods as CmSokiInvocatorBaseMethods } from 'shared/api/invocators/cm/cm-invocators';
+import { CmSokiInvocatorWaitsMethods as CmSokiInvocatorBaseMethods } from 'shared/api/invocators/cm/cm-invocator.waits';
 import { cmIDB } from './_db/cm-db';
 
 class CmSokiInvocatorBaseClient extends SokiInvocatorBaseClient<CmSokiInvocatorBaseMethods> {}

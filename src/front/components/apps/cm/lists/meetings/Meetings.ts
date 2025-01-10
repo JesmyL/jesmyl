@@ -6,7 +6,7 @@ import {
   MeetingsContext,
   MeetingsContextMap,
 } from '../../../../../../shared/api/complect/apps/cm/complect/Meetings';
-import { Cols } from '../../cols/Cols';
+import { Com } from '../../col/com/Com';
 import { MeetingsEvent } from './MeetingsEvent';
 
 export class Meetings {
@@ -16,10 +16,10 @@ export class Meetings {
   contexts: MeetingsContextMap;
   names: string[];
 
-  constructor({ events, contexts, names }: IExportableMeetings = {} as IExportableMeetings, cols?: Cols) {
+  constructor({ events, contexts, names }: IExportableMeetings = {} as IExportableMeetings, coms?: Com[]) {
     this.stack = events;
     this.contexts = this.takeContexts(contexts);
-    this.events = events?.map(event => new MeetingsEvent(event, cols));
+    this.events = events?.map(event => new MeetingsEvent(event, coms));
     this.event = this.events?.[0];
     this.names = names === undefined ? [] : [...names];
   }

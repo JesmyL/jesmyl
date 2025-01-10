@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 import { useMeetings } from '../../lists/meetings/useMeetings';
-import { CmTranslationComListContext, CmTranslationComListContextValue } from './context';
+import { CmComListContext, CmComListContextValue } from './context';
 
 export const CmTranslationComListContextInMeetings = function InMeetings({ children }: { children: React.ReactNode }) {
   const { currentEvent } = useMeetings();
 
-  const value = useMemo((): CmTranslationComListContextValue => {
+  const value = useMemo((): CmComListContextValue => {
     if (currentEvent == null) return {};
 
     return {
@@ -14,6 +14,6 @@ export const CmTranslationComListContextInMeetings = function InMeetings({ child
     };
   }, [currentEvent]);
 
-  return <CmTranslationComListContext.Provider value={value}>{children}</CmTranslationComListContext.Provider>;
+  return <CmComListContext.Provider value={value}>{children}</CmComListContext.Provider>;
 };
 export default CmTranslationComListContextInMeetings;

@@ -10,7 +10,7 @@ interface Props {
   Icon: TheIconType;
   disabled?: boolean;
   disabledReason?: (() => ReactNode) | ReactNode;
-  confirm?: string;
+  confirm?: React.ReactNode;
   prefix?: ReactNode;
   postfix?: ReactNode;
   className?: string;
@@ -39,6 +39,17 @@ const IconButton = <P extends Props = Props>(
     <ConfirmContent
       confirm={props.confirm}
       content={onConfirm => {
+        const onClick =
+          props.onClick &&
+          (async (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+            event.stopPropagation();
+            if (await onConfirm()) {
+              setIsLoading(true);
+              await props.onClick!(event);
+              setIsLoading(false);
+            }
+          });
+
         return (
           <>
             {props.prefix === undefined && props.postfix === undefined ? (
@@ -47,18 +58,7 @@ const IconButton = <P extends Props = Props>(
                 className={className}
                 disabledReason={props.disabledReason}
                 disabled={props.disabled}
-                onClick={
-                  onConfirm &&
-                  props.onClick &&
-                  (async event => {
-                    event.stopPropagation();
-                    if (await onConfirm()) {
-                      setIsLoading(true);
-                      await props.onClick!(event);
-                      setIsLoading(false);
-                    }
-                  })
-                }
+                onClick={onClick}
               />
             ) : (
               <DisabledReasonContained
@@ -66,18 +66,7 @@ const IconButton = <P extends Props = Props>(
                 className={`flex flex-gap flex-max ${className || ''}`}
                 disabledReason={props.disabledReason}
                 disabled={props.disabled}
-                onClick={
-                  onConfirm &&
-                  props.onClick &&
-                  (async event => {
-                    event.stopPropagation();
-                    if (await onConfirm()) {
-                      setIsLoading(true);
-                      await props.onClick!(event);
-                      setIsLoading(false);
-                    }
-                  })
-                }
+                onClick={onClick}
               >
                 {props.prefix}
                 <Icon className={props.iconClassName} />

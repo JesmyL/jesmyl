@@ -1,9 +1,8 @@
-import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator';
+import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
 import { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { OrderRepeats } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
-import { useExerExec } from '../../../../../../../complect/exer/hooks/useExer';
 import { useConfirm } from '../../../../../../../complect/modal/confirm/useConfirm';
 import { IconCancel01StrokeRounded } from '../../../../../../../complect/the-icon/icons/cancel-01';
 import { IconFlag03StrokeRounded } from '../../../../../../../complect/the-icon/icons/flag-03';
@@ -24,7 +23,6 @@ const defaultPos = {
 } as const;
 
 export default function ComRepeats() {
-  const exec = useExerExec();
   const [start, setStart] = useState<IEditableComLineProps | null>(null);
   const [pos, setPos] = useState(defaultPos);
   const [isChordBlock, setIsChordBlock] = useState(false);
@@ -41,7 +39,7 @@ export default function ComRepeats() {
 
   const setField = useCallback(
     (ord?: EditableOrder | null, repeateds?: OrderRepeats | nil, prevs?: OrderRepeats | nil) => {
-      if (!ord) return;
+      if (!ord || !ccom) return;
 
       const reps = typeof prevs === 'number' ? { '.': prevs } : prevs || {};
       const repds = typeof repeateds === 'number' ? { '.': repeateds } : repeateds || {};
@@ -49,15 +47,14 @@ export default function ComRepeats() {
       const keys = Object.keys(repeats);
       if (repeats['.'] === 0) delete repeats['.'];
 
-      ccom &&
-        cmComOrderClientInvocatorMethods.setRepeats(
-          null,
-          ord.wid,
-          ord.me.header(),
-          ccom.wid,
-          (keys.length ? (keys.length === 1 && keys[0] === '.' ? repeats['.'] : repeats) : 0) ?? 0,
-          ord.repeatedText(repeats).replace(makeRegExp('/&nbsp;/g'), ' '),
-        );
+      cmComOrderClientInvocatorMethods.setRepeats(
+        null,
+        ord.wid,
+        ord.me.header(),
+        ccom.wid,
+        (keys.length ? (keys.length === 1 && keys[0] === '.' ? repeats['.'] : repeats) : 0) ?? 0,
+        ord.repeatedText(repeats).replace(makeRegExp('/&nbsp;/g'), ' '),
+      );
     },
     [ccom],
   );
@@ -249,7 +246,6 @@ export default function ComRepeats() {
                         startOrd?.resetRegions();
 
                         reset();
-                        exec();
                       }
                     }}
                   />

@@ -11,12 +11,12 @@ export class EditableComBase extends Com {
   initialName: string;
   initial: Com;
 
-  constructor(top: IExportableCom, index: number) {
-    super(mylib.clone(top), index);
+  constructor(top: IExportableCom) {
+    super(mylib.clone(top));
 
     this.col = new EditableCol(top);
     this.initialName = this.name;
-    this.initial = new Com(mylib.clone(top), index);
+    this.initial = new Com(mylib.clone(top));
   }
 
   create() {

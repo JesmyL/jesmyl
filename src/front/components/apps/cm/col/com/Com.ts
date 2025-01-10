@@ -22,7 +22,6 @@ export class Com extends BaseNamed<IExportableCom> {
   ton?: number;
   tonc?: string;
   firstChord?: string;
-  number: string = '';
   initialName: string;
   excludedModulations: number[] = [];
 
@@ -31,10 +30,9 @@ export class Com extends BaseNamed<IExportableCom> {
   private _chordLabels?: string[][][];
   private _usedChords?: Record<string, string>;
 
-  constructor(top: IExportableCom, index: number) {
+  constructor(top: IExportableCom) {
     super(top);
     this.initialName = this.name;
-    this.number = `${index + (index > 402 ? 2 : 1)}`;
     this.ton = top.ton;
 
     this.initial = {};

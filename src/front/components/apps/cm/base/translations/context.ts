@@ -3,11 +3,10 @@ import { Com } from '../../col/com/Com';
 
 type Titles = Record<number, string>;
 
-export type CmTranslationComListContextValue = {
+export type CmComListContextValue = {
   list?: Com[] | nil;
   pageTitlePostfix?: string;
   titles?: Titles;
 };
 
-export const [CmTranslationComListContext, useCmTranslationComListContext] =
-  contextCreator<CmTranslationComListContextValue>({});
+export const [CmComListContext, useCmTranslationComListContext] = contextCreator<CmComListContextValue>({});

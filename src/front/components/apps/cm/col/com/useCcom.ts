@@ -4,7 +4,7 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { CmComWid } from '../../../../../../shared/api/complect/apps/cm/complect/enums';
 import { atom, useAtomSet, useAtomValue } from '../../../../../complect/atoms';
 import { useNumComUpdates } from '../../atoms';
-import { useCols } from '../../cols/useCols';
+import { useComs } from '../../cols/useCols';
 import { Com } from './Com';
 
 export const useCcomw = (): CmComWid | NaN => {
@@ -15,20 +15,20 @@ export const useCcomw = (): CmComWid | NaN => {
 
 export function useCcom(topComw?: number): Com | und {
   useNumComUpdates();
-  const cols = useCols();
+  const coms = useComs();
   const ccomw = useCcomw();
   const comw = topComw ?? ccomw;
 
-  return useMemo(() => cols?.coms.find(com => com.wid === comw), [comw, cols]);
+  return useMemo(() => coms.find(com => com.wid === comw), [coms, comw]);
 }
 
 export const ccomwAtom = atom<CmComWid | und>(undefined);
 
 export function useCom(): Com | und {
-  const cols = useCols();
+  const coms = useComs();
   const comw = useAtomValue(ccomwAtom);
 
-  return useMemo(() => cols?.coms.find(com => com.wid === comw), [comw, cols]);
+  return useMemo(() => coms.find(com => com.wid === comw), [coms, comw]);
 }
 
 export const useTakeActualComw = (): number | NaN => {

@@ -2,25 +2,24 @@ import { useCallback, useEffect, useMemo } from 'react';
 import { useAtom } from '../../../../complect/atoms';
 import { useActualRef } from '../../../../complect/useActualRef';
 import { Com } from '../col/com/Com';
-import { Cols } from '../cols/Cols';
-import { useCols } from '../cols/useCols';
+import { useComs } from '../cols/useCols';
 import { cmMolecule } from '../molecules';
 
 let laterComs: Com[] | und;
-const setLaterComs = (cols: Cols, list: number[]) =>
-  (laterComs = list.map(comw => cols.coms.find(com => com.wid === comw)).filter(com => com) as Com[]);
+const setLaterComs = (coms: Com[], list: number[]) =>
+  (laterComs = list.map(comw => coms.find(com => com.wid === comw)).filter(com => com) as Com[]);
 
 const laterComwListAtom = cmMolecule.select(s => s.laterComwList);
 
 export default function useLaterComList({ maxStack = 4 } = {}) {
   const [list, setList] = useAtom(laterComwListAtom);
   const listRef = useActualRef(list);
-  const cols = useCols();
+  const coms = useComs();
 
-  if (cols && laterComs == null) setLaterComs(cols, listRef.current);
+  if (coms && laterComs == null) setLaterComs(coms, listRef.current);
   useEffect(() => {
-    cols && setLaterComs(cols, listRef.current);
-  }, [cols, listRef]);
+    coms && setLaterComs(coms, listRef.current);
+  }, [coms, listRef]);
 
   const addLaterComw = useCallback(
     (comw: number) => {

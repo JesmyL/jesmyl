@@ -5,6 +5,7 @@ import { mylib } from 'front/utils';
 import { useRef } from 'react';
 import { FaceItem } from '../../../../../../../complect/FaceItem';
 import { Com } from '../../Com';
+import { CmComNumber } from '../../complect/ComNumber';
 import { ListComFaceForSelectionsProps } from '../ComFace.model';
 import { ComListControlledContainer } from './ComListControlledContainer';
 import { IComFaceList } from './model';
@@ -41,7 +42,9 @@ export const ComFaceListComList = (props: ComFaceListProps) => {
             id={`${currentComwIdPrefix}${com.wid}`}
             className={`flex between pointer ${comi}-comi`}
           >
-            <div className="face-logo">{com.number}</div>
+            <div className="face-logo">
+              <CmComNumber comw={com.wid} />
+            </div>
             <span className="face-title ellipsis">{com.name}</span>
             {setComDescription(com, comi)}
           </FaceItem>

@@ -1,5 +1,5 @@
+import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
 import { mylib } from 'front/utils';
-import { IExportableCom } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import { chordDiezEquivalent, gSimpleBemoleChordReg } from '../../../../col/com/Com.complect';
 import { IExportableOrderMe } from '../../../../col/com/order/Order.model';
@@ -22,36 +22,6 @@ export class EditableCom extends EditableComCutBlock {
     return [this.wid, '.', mylib.typ('[action]', action), ':', [].concat(mylib.def(uniq, ['[uniq]'])).join(',')].join(
       '',
     );
-  }
-
-  setField<Fieldn extends keyof IExportableCom>(
-    fieldn: Fieldn,
-    value: IExportableCom[Fieldn],
-    defVal?: IExportableCom[Fieldn],
-  ) {
-    this.col.setFieldCol<keyof IExportableCom, 'com'>(
-      fieldn,
-      value,
-      {
-        b: 'comSetDefaultBemolType',
-        a: '',
-        c: '',
-        k: '',
-        l: '',
-        n: '',
-        o: '',
-        p: '',
-        t: '',
-        ton: '',
-        w: '',
-        m: '',
-        bpm: 'setComBeatsPerMinute',
-        s: 'setComMeterSize',
-      },
-      'com',
-      defVal,
-    );
-    if (fieldn === 'b') this.isBemoled = value as num;
   }
 
   switchLang() {
@@ -81,7 +51,8 @@ export class EditableCom extends EditableComCutBlock {
     if (!col) return;
 
     const val = col.replace(gSimpleBemoleChordReg, chord => chordDiezEquivalent[chord] || chord);
-    this.changeBlock('chords', coli, val);
+
+    cmComClientInvocatorMethods.changeChordBlock(null, coli, this.wid, val);
   }
 
   setTransPosition(value: number | und) {

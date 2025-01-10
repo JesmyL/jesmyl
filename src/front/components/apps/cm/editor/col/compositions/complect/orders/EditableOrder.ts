@@ -1,4 +1,4 @@
-import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator';
+import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
 import { mylib } from 'front/utils';
 import { IExportableOrder, IExportableOrderFieldValues, InheritancableOrder, OrderRepeats } from 'shared/api';
 import { FreeExecDict, FreeExecDictUniq } from '../../../../../../../../complect/exer/Exer.model';

@@ -1,12 +1,11 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CmComBindAttach } from 'shared/api';
-import { itIt } from 'shared/utils';
+import { CmComBindAttach, CmComWid } from 'shared/api';
 import { FullContent } from '../../../../../complect/fullscreen-content/FullContent';
 import { ChordVisibleVariant } from '../../Cm.model';
 import { useCcat } from '../../col/cat/useCcat';
-import { Com } from '../../col/com/Com';
 import { ComFaceList } from '../../col/com/face/list/ComFaceList';
+import { useCcom } from '../../col/com/useCcom';
 import { useMeetings } from '../../lists/meetings/useMeetings';
 import CmExternalComListAttRedactList from './RedactList';
 import TheComForFullScreen from './TheComForFullScreen';
@@ -23,7 +22,8 @@ export default function CmExternalComListAtt({ value, scope, isRedact, switchIsR
   const [isOpenComposition, setIsOpenComposition] = useState(false);
   const navigate = useNavigate();
 
-  const [ccom, setCcom] = useState<Com | und>();
+  const [comw, setComw] = useState<CmComWid | und>();
+  const com = useCcom(comw);
   const cat = useCcat(true);
   const { meetings } = useMeetings();
   const currentEvent = value.eventw == null ? null : meetings?.stack?.find(event => event.w === value.eventw!);
@@ -47,7 +47,7 @@ export default function CmExternalComListAtt({ value, scope, isRedact, switchIsR
           <CmExternalComListAttRedactList
             scope={scope}
             value={value}
-            setCcom={setCcom}
+            setComw={setComw}
             setIsOpenComposition={setIsOpenComposition}
           />
         </FullContent>
@@ -56,10 +56,10 @@ export default function CmExternalComListAtt({ value, scope, isRedact, switchIsR
       {isOpenComposition && (
         <FullContent onClose={setIsOpenComposition}>
           <TheComForFullScreen
-            com={ccom}
+            com={com}
             chordVisibleVariant={ChordVisibleVariant.Maximal}
-            comList={(cat && value.comws?.map(comw => cat.coms.find(com => com.wid === comw)!).filter(itIt)) ?? []}
-            onComSet={setCcom}
+            comwList={value.comws}
+            onComSet={setComw}
           />
         </FullContent>
       )}

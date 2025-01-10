@@ -7,7 +7,7 @@ import { Metronome } from '../../../../../complect/metronome/Metronome';
 import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
 import { DocTitle } from '../../../../../complect/tags/DocTitle';
 import BibleTranslatesContextProvider from '../../../bible/translates/TranslatesContext';
-import { useCmTranslationComListContext } from '../../base/translations/context';
+import { useCmTranslationComListContext as useCmComListContext } from '../../base/translations/context';
 import { useChordVisibleVariant } from '../../base/useChordVisibleVariant';
 import useLaterComList from '../../base/useLaterComList';
 import { cmIsShowCatBindsInCompositionAtom, cmMolecule, isOpenChordImagesAtom } from '../../molecules';
@@ -15,6 +15,7 @@ import './Com.scss';
 import { ComNotFoundPage } from './ComNotFoundPage';
 import TheControlledCom from './TheControlledCom';
 import ChordImagesList from './chord-card/ChordImagesList';
+import { CmComNumber } from './complect/ComNumber';
 import { useCheckIsComCommentIncludesBibleAddress } from './complect/comment-parser/useCheckIsComCommentIncludesBibleAddress';
 import ComPlayer from './player/ComPlayer';
 import { ComTools } from './tools/ComTools';
@@ -31,7 +32,7 @@ export default function TheComposition() {
   const { addLaterComw } = useLaterComList();
   const [isOpenTools, setIsOpenTools] = useState(false);
   const comToolsNode = useMigratableTopComTools();
-  const { list } = useCmTranslationComListContext();
+  const { list } = useCmComListContext();
   const playerHideMode = useAtomValue(playerHideModeAtom);
   const isMetronomeHide = useAtomValue(isMetronomeHideAtom);
   const comAudio = ccom?.audio.trim();
@@ -56,7 +57,7 @@ export default function TheComposition() {
   let controlledComNode = (
     <TheControlledCom
       com={ccom}
-      comList={list}
+      comwList={list?.map(({ wid }) => wid)}
       chordVisibleVariant={chordVisibleVariant}
     />
   );
@@ -73,7 +74,7 @@ export default function TheComposition() {
         (playerHideMode && comAudio ? ` with-open-player ${playerHideMode}` : '') +
         (isMetronomeHide ? ' hide-metronome' : '')
       }
-      headTitle={ccom.number}
+      headTitle={<CmComNumber comw={ccom.wid} />}
       onMoreClick={setIsOpenTools}
       contentClass="composition-content padding-gap"
       contentRef={comListElem}

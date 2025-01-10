@@ -18,10 +18,6 @@ export class EditableComCorrects extends EditableComBase {
       .replace(makeRegExp('/\\s*([,.;!?:])\\s*([^"])/g'), '$1 $2');
   }
 
-  correctRename(name: string) {
-    return mylib.isStr(name) ? this.rename(this.takeCorrectName(name)) : name;
-  }
-
   correctName(name: string) {
     return name.replace(correctNotSlavicNameReg_i, '');
   }

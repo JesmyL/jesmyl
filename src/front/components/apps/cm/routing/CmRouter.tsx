@@ -3,8 +3,10 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { CmComWid } from 'shared/api';
 import { useAtom } from '../../../../complect/atoms';
+import { cmIDB } from '../_db/cm-db';
 import { cmAppActions } from '../app-actions/cm-app-actions';
 import { CmSharedComListActionInterpretator } from '../app-actions/SharedComList';
+import { cmFreshesSokiInvocatorClient } from '../cm-invocator.methods';
 import TheCat from '../col/cat/TheCat';
 import { useTakeActualComw } from '../col/com/useCcom';
 import { listenSokiEventsForCm } from '../complect/listenSokiEventsForCm';
@@ -77,3 +79,11 @@ export default function CmRouter({ mainNode }: { mainNode: React.ReactNode }) {
 }
 
 listenSokiEventsForCm();
+
+setTimeout(async () => {
+  const comLastModified = await cmIDB.getSingleValue('comLastModified', 0);
+  await cmFreshesSokiInvocatorClient.getFreshComList(null, comLastModified);
+
+  const catLastModified = await cmIDB.getSingleValue('catLastModified', 0);
+  await cmFreshesSokiInvocatorClient.getFreshCatList(null, catLastModified);
+}, 1000);

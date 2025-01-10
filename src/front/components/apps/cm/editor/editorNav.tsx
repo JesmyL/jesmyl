@@ -9,7 +9,6 @@ import { iconPackOfBookOpen02 } from '../../../../complect/the-icon/icons/book-o
 import { iconPackOfCalendar02 } from '../../../../complect/the-icon/icons/calendar-02';
 import { iconPackOfComputer } from '../../../../complect/the-icon/icons/computer';
 import { iconPackOfDistributeVerticalTop } from '../../../../complect/the-icon/icons/distribute-vertical-top';
-import { iconPackOfEdit01 } from '../../../../complect/the-icon/icons/edit-01';
 import { iconPackOfEdit02 } from '../../../../complect/the-icon/icons/edit-02';
 import { iconPackOfHeadphones } from '../../../../complect/the-icon/icons/headphones';
 import { iconPackOfLayers01 } from '../../../../complect/the-icon/icons/layers-01';
@@ -44,7 +43,6 @@ const LazyEditComposition = React.lazy(() => import('./col/compositions/EditComp
 const LazyEditCompositions = React.lazy(() => import('./col/compositions/EditCompositions'));
 
 const LazyEERules = React.lazy(() => import('./ee-rules/EERules'));
-const LazyExecsVisor = React.lazy(() => import('./execs/ExecsVisor'));
 const LazyEditMeetings = React.lazy(() => import('./meetings/EditMeetings'));
 const LazyEditMeetingsEvent = React.lazy(() => import('./meetings/EditMeetingsEvent'));
 const LazyMp3RulesRedactor = React.lazy(() => import('./mp3-rule-redactor/Mp3RulesRedactor'));
@@ -224,15 +222,6 @@ export const editorRouteItems: INavigationRouteChildItem<
     data: {
       title: '',
       iconSelfPack: iconPackOfText,
-    },
-  },
-  {
-    phase: ['execs'],
-    node: <LazyExecsVisor />,
-    accessLevel: 100,
-    data: {
-      title: 'Изменения',
-      iconSelfPack: iconPackOfEdit01,
     },
   },
 ];

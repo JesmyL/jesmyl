@@ -2,17 +2,13 @@ import { mylib } from 'front/utils';
 import { IExportableMeetingsEvent } from '../../../../../../shared/api/complect/apps/cm/complect/Meetings';
 import { BaseNamed } from '../../base/BaseNamed';
 import { Com } from '../../col/com/Com';
-import { Cols } from '../../cols/Cols';
 
 export class MeetingsEvent extends BaseNamed<IExportableMeetingsEvent> {
-  coms?: Com[];
-  cols?: Cols;
-
-  constructor(top: IExportableMeetingsEvent, cols?: Cols) {
+  constructor(
+    top: IExportableMeetingsEvent,
+    public coms?: Com[],
+  ) {
     super(top);
-    this.cols = cols;
-
-    this.coms = this.takeComs();
   }
 
   get contextw() {
@@ -55,13 +51,6 @@ export class MeetingsEvent extends BaseNamed<IExportableMeetingsEvent> {
   }
   set stack(value) {
     this.setExportable('s', value);
-  }
-
-  takeComs() {
-    return (
-      this.cols &&
-      (this.stack.map(comw => (this.cols as Cols).coms.find(com => com.wid === comw)).filter(com => com) as Com[])
-    );
   }
 
   getTitle() {

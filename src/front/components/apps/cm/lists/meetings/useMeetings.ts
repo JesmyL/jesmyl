@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAtomValue } from '../../../../../complect/atoms';
-import { useCols } from '../../cols/useCols';
+import { useComs } from '../../cols/useCols';
 import { cmMeetingsAtom } from '../../molecules';
 import { Meetings } from './Meetings';
 import { MeetingsEvent } from './MeetingsEvent';
@@ -12,8 +12,8 @@ export function useMeetings(): {
 } {
   const imeetings = useAtomValue(cmMeetingsAtom);
   const eventw = +useParams().eventw!;
-  const cols = useCols();
-  const meetings = useMemo(() => cols && new Meetings(imeetings, cols), [cols, imeetings]);
+  const coms = useComs();
+  const meetings = useMemo(() => coms && new Meetings(imeetings, coms), [coms, imeetings]);
 
   return {
     meetings,

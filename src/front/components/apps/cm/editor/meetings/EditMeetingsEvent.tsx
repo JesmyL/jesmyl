@@ -2,7 +2,6 @@ import { BottomPopupItem } from 'front/complect/absolute-popup/bottom-popup/Bott
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
-import DebouncedSearchInput from '../../../../../complect/DebouncedSearchInput';
 import { BottomPopup } from '../../../../../complect/absolute-popup/bottom-popup/BottomPopup';
 import { useExerExec } from '../../../../../complect/exer/hooks/useExer';
 import { FullContent } from '../../../../../complect/fullscreen-content/FullContent';
@@ -19,9 +18,9 @@ import { IconViewStrokeRounded } from '../../../../../complect/the-icon/icons/vi
 import { IconViewOffSlashStrokeRounded } from '../../../../../complect/the-icon/icons/view-off-slash';
 import CmTranslationComListContextInZeroCat from '../../base/translations/InZeroCat';
 import { ComFaceList } from '../../col/com/face/list/ComFaceList';
+import { CmComListSearchFilterInput } from '../../complect/ComListSearchFilterInput';
 import { cmCompositionRoute } from '../../routing/cmRoutingApp';
-import { EditableCat } from '../col/categories/EditableCat';
-import { useEditableCcat } from '../col/categories/useEditableCcat';
+import { EditableCom } from '../col/compositions/com/EditableCom';
 import EditContainerCorrectsInformer from '../edit-container-corrects-informer/EditContainerCorrectsInformer';
 import PhaseCmEditorContainer from '../phase-editor-container/PhaseCmEditorContainer';
 import { EditableMeetingsEvent } from './EditableMeetingsEvent';
@@ -31,11 +30,10 @@ import { useEditableMeetings } from './useEditableMeetings';
 export default function EditMeetingsEvent() {
   const currentEvent: EditableMeetingsEvent | und = useEditableMeetings().currentEvent;
   const exec = useExerExec();
-  const zcat: EditableCat | und = useEditableCcat(0);
-  const [term, setTerm] = useState(zcat?.term || '');
   const [isClosedComList, setIsClosedComList] = useState(true);
   const [isOpenHistory, setIsOpenHistory] = useState(false);
   const [isMoreOpen, setIsMoreOpen] = useState(false);
+  const [coms, setComs] = useState<EditableCom[]>([]);
 
   if (!currentEvent) return null;
 
@@ -141,18 +139,15 @@ export default function EditMeetingsEvent() {
                     onClick={() => setIsClosedComList(!isClosedComList)}
                   />
                 </div>
-                {!zcat || isClosedComList ? null : (
+                {isClosedComList ? null : (
                   <>
-                    <DebouncedSearchInput
-                      placeholder="Поиск песен"
-                      className="debounced-searcher round-styled margin-gap-v"
-                      initialTerm={term}
-                      onSearch={term => zcat.search(term)}
-                      debounce={500}
-                      onTermChange={term => setTerm(term)}
+                    <CmComListSearchFilterInput
+                      Constructor={EditableCom}
+                      onSearch={setComs}
                     />
+
                     <ComFaceList
-                      list={zcat?.wraps.map(wrap => wrap.item)}
+                      list={coms}
                       selectable={false}
                       comDescription={com =>
                         usedComwList.indexOf(com.wid) < 0 ? (

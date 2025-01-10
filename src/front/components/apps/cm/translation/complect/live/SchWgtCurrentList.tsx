@@ -7,10 +7,9 @@ import {
   ScheduleWidgetCleans,
 } from 'shared/api';
 import { itNUnd } from 'shared/utils';
-import { CmTranslationComListContext, CmTranslationComListContextValue } from '../../../base/translations/context';
+import { CmComListContext, CmComListContextValue } from '../../../base/translations/context';
 import { Com } from '../../../col/com/Com';
-import { Cols } from '../../../cols/Cols';
-import { useCols } from '../../../cols/useCols';
+import { useComs } from '../../../cols/useCols';
 import { Meetings } from '../../../lists/meetings/Meetings';
 import { useMeetings } from '../../../lists/meetings/useMeetings';
 
@@ -23,26 +22,24 @@ const findEventWithComs = (event: IScheduleWidgetDayEvent) => event.atts?.['[cm]
 const findDayWithComs = (day: IScheduleWidgetDay) => day.list.some(findEventWithComs);
 
 export const ScheduleWidgetCurrentCmTranslationList = ({ schedule, children }: Props) => {
-  const cols = useCols();
   const meetings = useMeetings().meetings;
 
-  if (meetings == null || cols == null || schedule == null || schedule.days.length === 0) return children;
+  if (meetings == null || schedule == null || schedule.days.length === 0) return children;
 
-  return <Component {...{ cols, meetings, schedule, children }} />;
+  return <Component {...{ meetings, schedule, children }} />;
 };
 
 const Component = ({
   schedule,
   meetings,
-  cols,
   children,
 }: {
   schedule: IScheduleWidget;
   meetings: Meetings;
-  cols: Cols;
   children: React.ReactNode;
 }) => {
-  const value = useMemo((): CmTranslationComListContextValue => {
+  const allComs = useComs();
+  const value = useMemo((): CmComListContextValue => {
     let coms: Com[] | null = null;
     const titles: Record<number, string> = {};
 
@@ -58,7 +55,7 @@ const Component = ({
         }
 
         if (comws !== undefined) {
-          coms = coms.concat(comws.map(comw => cols.coms.find(com => com.wid === comw)).filter(itNUnd));
+          coms = coms.concat(comws.map(comw => allComs.find(com => com.wid === comw)).filter(itNUnd));
         }
 
         return coms;
@@ -94,7 +91,7 @@ const Component = ({
       list: coms,
       titles,
     };
-  }, [cols.coms, meetings.events, schedule]);
+  }, [allComs, meetings.events, schedule]);
 
-  return <CmTranslationComListContext.Provider value={value}>{children}</CmTranslationComListContext.Provider>;
+  return <CmComListContext.Provider value={value}>{children}</CmComListContext.Provider>;
 };

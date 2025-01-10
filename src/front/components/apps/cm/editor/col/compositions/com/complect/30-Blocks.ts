@@ -1,4 +1,4 @@
-import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator';
+import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
 import { Order } from 'front/components/apps/cm/col/com/order/Order';
 import { mylib } from 'front/utils';
 import { makeRegExp } from 'shared/utils';
@@ -12,7 +12,7 @@ export class EditableComBlocks extends EditableComOrders {
 
     if (value == null) throw new Error();
 
-    const trimmedLinesValue = value.split('\n').map(itTrim).join('\n');
+    // const trimmedLinesValue = value.split('\n').map(itTrim).join('\n');
     // const corrects = this.setBlockCorrects(coln, coli, val);
     // const colnLiteral = coln === 'texts' ? 't' : 'c';
 
@@ -63,45 +63,6 @@ export class EditableComBlocks extends EditableComOrders {
     if (fieldn === 'chords') this.resetChordLabels();
 
     return this;
-  }
-
-  removeBlock(coln: 'texts' | 'chords', coli: number) {
-    if (coln === 'texts') {
-      const { indexes } = this.getOrdersOnBlockDeletion(coln, coli);
-
-      indexes?.forEach(({ ord }) => {
-        this.removeOrderBlock(ord);
-      });
-    }
-
-    this.updateOrderSticks(coln, coli, -1, coln === 'chords');
-    const colnLiteral = coln === 'texts' ? 't' : 'c';
-    const currLen = this[coln]?.length;
-
-    this.exec({
-      action: 'removeBlock',
-      method: 'remove',
-      uniq: `${coln}-${coli}`,
-      args: {
-        value: coli,
-        coln: colnLiteral,
-      },
-      anti: exec => {
-        const { action, args, data } = exec;
-        if (action === 'changeBlocks' && args && args.coln === colnLiteral && args.comw === this.wid) {
-          if (args.index === coli)
-            return data?.isInsert
-              ? strategy => strategy.RemoveNew
-              : args.value === ''
-                ? strategy => strategy.RememberNew
-                : null;
-          else if (currLen !== undefined && args.index === currLen - 1) return strategy => strategy.RememberNew;
-        }
-      },
-    });
-    this[coln]?.splice(coli, 1);
-
-    if (coln === 'chords') this.resetChordLabels();
   }
 
   insertBlocks(coln: 'texts' | 'chords', coli: number, value = '', prev = '...') {

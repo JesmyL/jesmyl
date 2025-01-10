@@ -3,7 +3,7 @@ import { memo, useEffect, useState } from 'react';
 import { itIt, makeRegExp } from 'shared/utils';
 import { bibleMolecule } from '../../../bible/molecules';
 import { eeStorage } from '../../base/ee-storage/EeStorage';
-import { useEditableCols } from '../col/useEditableCols';
+import { useEditableCats, useEditableComs } from '../col/useEditableCols';
 
 const emptyArr = [] as [];
 
@@ -16,7 +16,8 @@ export const EERulesListComputer = memo(function ListComputer({
   setUpdates: React.Dispatch<React.SetStateAction<number>>;
   listBox: { list: string[] };
 }) {
-  const cols = useEditableCols();
+  const cats = useEditableCats();
+  const coms = useEditableComs();
   const [store, setStore] = useState<string[]>([]);
   const [etap, setEtap] = useState('Подготовка');
 
@@ -25,8 +26,6 @@ export const EERulesListComputer = memo(function ListComputer({
   }, []);
 
   useEffect(() => {
-    if (!cols) return;
-
     let timeout: TimeOut;
     const etap = (etapTitle: string, cb: () => void) => {
       setEtap(etapTitle);
@@ -35,8 +34,8 @@ export const EERulesListComputer = memo(function ListComputer({
 
     etap('Считывание текстов', async () => {
       const texts: string[] = [
-        cols.cats.map(col => col.name),
-        cols.coms.map(col => (col.texts ? [col.name, ...col.texts] : col.name)),
+        cats?.map(col => col.name) ?? [],
+        coms?.map(col => (col.texts ? [col.name, ...col.texts] : col.name)) ?? [],
         isCheckBible ? (await bibleMolecule.take('rst').getStorageValue())?.chapters ?? emptyArr : emptyArr,
         isCheckBible ? (await bibleMolecule.take('nrt').getStorageValue())?.chapters ?? emptyArr : emptyArr,
         isCheckBible
@@ -102,7 +101,7 @@ export const EERulesListComputer = memo(function ListComputer({
     });
 
     return () => clearTimeout(timeout);
-  }, [cols, isCheckBible, listBox, setUpdates, store]);
+  }, [cats, coms, isCheckBible, listBox, setUpdates, store]);
 
   return <>{etap}</>;
 });

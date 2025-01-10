@@ -5,28 +5,16 @@ import { ClientExecutionDict } from '../../../../../complect/exer/Exer.model';
 import { cmExer } from '../../CmExer';
 import { MeetingsEvent } from '../../lists/meetings/MeetingsEvent';
 import { EditableCom } from '../col/compositions/com/EditableCom';
-import { EditableCols } from '../col/EditableCols';
 
 export class EditableMeetingsEvent extends MeetingsEvent {
   initialName = this.name;
-  cols?: EditableCols;
   prevComws?: CmComWid[];
-  coms?: EditableCom[];
 
-  constructor(top: IExportableMeetingsEvent, cols?: EditableCols) {
-    super(top, cols);
-
-    this.cols = cols;
-    this.coms = this.takeComs();
-  }
-
-  takeComs() {
-    return (
-      this.cols &&
-      (this.stack
-        .map(comw => (this.cols as EditableCols).coms.find(com => com.wid === comw))
-        .filter(com => com) as EditableCom[])
-    );
+  constructor(
+    top: IExportableMeetingsEvent,
+    public coms: EditableCom[],
+  ) {
+    super(top, coms);
   }
 
   scope(...args: (string | number)[]) {
@@ -83,7 +71,6 @@ export class EditableMeetingsEvent extends MeetingsEvent {
     const prev = mylib.clone(this.stack);
     cb();
     const value = mylib.clone(this.stack);
-    this.coms = this.takeComs();
 
     this.exec({
       method: 'set',

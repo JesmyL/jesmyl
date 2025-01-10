@@ -1,6 +1,6 @@
 import { TheIconLoading } from 'front/complect/the-icon/IconLoading';
 import { IconCancelCircleStrokeRounded } from 'front/complect/the-icon/icons/cancel-circle';
-import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator';
+import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
 import { MyLib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { CmMp3Rule } from 'shared/api';

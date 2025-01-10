@@ -6,7 +6,7 @@ import { IconCancel01StrokeRounded } from 'front/complect/the-icon/icons/cancel-
 import { IconListViewStrokeRounded } from 'front/complect/the-icon/icons/list-view';
 import { cmIDB } from 'front/components/apps/cm/_db/cm-db';
 import { InputWithLoadingIcon } from 'front/components/apps/cm/base/InputWithLoadingIcon';
-import { cmCatClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator';
+import { cmCatClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
 import { useMemo } from 'react';
 import { emptyFunc, makeRegExp } from 'shared/utils';
 import EditContainerCorrectsInformer from '../../../edit-container-corrects-informer/EditContainerCorrectsInformer';

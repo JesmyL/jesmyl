@@ -3,7 +3,7 @@ import { makeRegExp } from 'shared/utils';
 import { ExecArgs, FreeExecDict } from '../../../../../complect/exer/Exer.model';
 import { BaseNamed, BaseNamedExportables } from '../../base/BaseNamed';
 import { eeStorage } from '../../base/ee-storage/EeStorage';
-import { cmComClientInvocatorMethods } from '../../cm-invocator';
+import { cmComClientInvocatorMethods } from '../../cm-invocator-editor.methods';
 import { cmExer } from '../../CmExer';
 import { IEditableCol, IExportableCol } from '../../cols/Cols.model';
 import { CorrectsBox } from '../corrects-box/CorrectsBox';
