@@ -12,6 +12,8 @@ export const cmCatClientInvocatorMethods = new CmCatSokiInvocatorClient('CmCatSo
 
 class CmComSokiInvocatorClient extends SokiInvocatorClient<CmComSokiInvocatorMethods> {}
 export const cmComClientInvocatorMethods = new CmComSokiInvocatorClient('CmComSokiInvocatorClient', {
+  newCom: true,
+
   rename: true,
   setBpM: true,
   setMeterSize: true,
@@ -29,6 +31,9 @@ export const cmComClientInvocatorMethods = new CmComSokiInvocatorClient('CmComSo
 
   removeChordBlock: true,
   removeTextBlock: true,
+
+  getMp3RulesList: true,
+  getResourceHTMLString: true,
 });
 
 class CmComOrderSokiInvocatorClient extends SokiInvocatorClient<CmComOrderSokiInvocatorMethods> {}

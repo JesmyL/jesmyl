@@ -1,6 +1,7 @@
 import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
 import { Order } from 'front/components/apps/cm/col/com/order/Order';
 import { mylib } from 'front/utils';
+import { CmComOrderWid } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import { EditableComOrders } from './20-Orders';
 
@@ -167,6 +168,7 @@ export class EditableComBlocks extends EditableComOrders {
 
                 this.addOrder(
                   {
+                    w: CmComOrderWid.def,
                     t: txti,
                     c: chordi + blockLinesi,
                     s: '++',

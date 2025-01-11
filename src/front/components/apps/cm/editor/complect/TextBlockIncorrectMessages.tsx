@@ -4,30 +4,30 @@ import { CorrectsBox } from '../corrects-box/CorrectsBox';
 export const TextCorrectMessages = ({ corrects }: { corrects: CorrectsBox }) => {
   return (
     <>
-      {corrects.errors?.map(({ message }) => {
+      {corrects.errors?.map(({ message }, correcti) => {
         return (
           <StyledBox
-            key={message}
+            key={correcti}
             $isError
           >
             {message}
           </StyledBox>
         );
       })}
-      {corrects.warnings?.map(({ message }) => {
+      {corrects.warnings?.map(({ message }, correcti) => {
         return (
           <StyledBox
-            key={message}
+            key={correcti}
             $isWarning
           >
             {message}
           </StyledBox>
         );
       })}
-      {corrects.unknowns?.map(({ message }) => {
+      {corrects.unknowns?.map(({ message }, correcti) => {
         return (
           <StyledBox
-            key={message}
+            key={correcti}
             $isUnknown
           >
             {message}

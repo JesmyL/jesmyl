@@ -1,13 +1,10 @@
 import { ReactNode, useState } from 'react';
 import { CmMp3Rule } from 'shared/api';
-import { useAtomValue } from '../../../../../complect/atoms';
 import KeyboardInput from '../../../../../complect/keyboard/KeyboardInput';
 import IconButton from '../../../../../complect/the-icon/IconButton';
 import { IconCheckmarkCircle02StrokeRounded } from '../../../../../complect/the-icon/icons/checkmark-circle-02';
 import { IconEdit02StrokeRounded } from '../../../../../complect/the-icon/icons/edit-02';
-import { cmMolecule } from '../../molecules';
-
-const mp3RulesAtom = cmMolecule.select(s => s.mp3Rules);
+import { useCmMp3Rules } from './useCmMp3Rules';
 
 export default function Mp3RuleEditor(
   props: Partial<CmMp3Rule> & {
@@ -17,7 +14,7 @@ export default function Mp3RuleEditor(
     newRule?: boolean;
   },
 ) {
-  const mp3Rules = useAtomValue(mp3RulesAtom);
+  const mp3Rules = useCmMp3Rules();
   const [url, setUrl] = useState(props.url || '');
   const [attr, setAttr] = useState(props.attr || '');
   const [textQuery, setTextQuery] = useState(props.textQuery || '');
@@ -30,7 +27,7 @@ export default function Mp3RuleEditor(
     <>
       <div className="flex column margin-big-gap">
         <div className="full-width">
-          URL-адрес:{' '}
+          {'URL-адрес: '}
           {isRedact ? (
             <>
               <KeyboardInput

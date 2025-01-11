@@ -1,8 +1,13 @@
-import { CmComWid, IExportableCom } from 'shared/api/complect/apps';
+import { CmComWid, CmMp3ContainsPageResult, CmMp3Rule, IExportableCom } from 'shared/api/complect/apps';
 
 type SimpleComValueSetter<Value> = (comw: CmComWid, value: Value) => IExportableCom;
 
 export type CmComSokiInvocatorMethods = {
+  newCom: (value: OmitOwn<IExportableCom, 'w'>) => IExportableCom;
+
+  getResourceHTMLString: (src: string) => CmMp3ContainsPageResult;
+  getMp3RulesList: () => CmMp3Rule[];
+
   rename: SimpleComValueSetter<string>;
   setBpM: SimpleComValueSetter<number>;
   setMeterSize: SimpleComValueSetter<3 | 4>;

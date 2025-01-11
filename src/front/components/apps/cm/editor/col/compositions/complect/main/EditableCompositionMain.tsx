@@ -16,6 +16,7 @@ import { useAuth } from '../../../../../../../index/molecules';
 import { ChordVisibleVariant } from '../../../../../Cm.model';
 import TheCom from '../../../../../col/com/TheCom';
 import { TextCorrectMessages } from '../../../../complect/TextBlockIncorrectMessages';
+import { EditableCom } from '../../com/EditableCom';
 import { useEditableCcom } from '../../useEditableCcom';
 import { EditableCompositionMainTon } from './Ton';
 
@@ -39,7 +40,7 @@ export default function EditableCompositionMain() {
   const [name, setName] = useState('');
 
   if (!ccom) return null;
-  const nameCorrects = ccom.textBlockIncorrectMessages(name);
+  const nameCorrects = EditableCom.textBlockIncorrectMessages(name);
 
   return (
     <>

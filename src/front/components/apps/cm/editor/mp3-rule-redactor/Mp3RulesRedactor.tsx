@@ -1,19 +1,17 @@
 import { useState } from 'react';
 import { CmMp3Rule } from 'shared/api';
-import { useAtomValue } from '../../../../../complect/atoms';
 import IconButton from '../../../../../complect/the-icon/IconButton';
 import { IconHelpCircleStrokeRounded } from '../../../../../complect/the-icon/icons/help-circle';
 import { IconPlusSignCircleStrokeRounded } from '../../../../../complect/the-icon/icons/plus-sign-circle';
 import { cmExer } from '../../CmExer';
-import { cmMolecule } from '../../molecules';
 import PhaseCmEditorContainer from '../phase-editor-container/PhaseCmEditorContainer';
 import Mp3RuleEditor from './Mp3RuleEditor';
-
-const mp3RulesAtom = cmMolecule.select(s => s.mp3Rules);
+import { useCmMp3Rules } from './useCmMp3Rules';
 
 export default function Mp3RulesRedactor() {
   const [newRules, updateNewRules] = useState<CmMp3Rule[]>([]);
-  const [redactRules, updateRedactRules] = useState(useAtomValue(mp3RulesAtom));
+  const mp3Rules = useCmMp3Rules();
+  const [redactRules, updateRedactRules] = useState(mp3Rules);
   const [isOpenNewRule, setIsOpenNewRule] = useState(false);
 
   return (

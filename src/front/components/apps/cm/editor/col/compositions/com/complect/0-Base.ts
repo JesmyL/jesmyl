@@ -36,18 +36,6 @@ export class EditableComBase extends Com {
     return this;
   }
 
-  rename(name: string, onCorrecting?: ((val?: string) => any | nil | void) | nil, isSetAllText?: boolean) {
-    this.col.renameCol(
-      name,
-      'com',
-      (correct: string) => {
-        this.rename(correct, onCorrecting);
-        onCorrecting?.(correct);
-      },
-      isSetAllText,
-    );
-  }
-
   exec<Value>(bag: FreeExecDict<Value>) {
     this.col.execCol(bag, 'com');
   }
@@ -70,7 +58,7 @@ export class EditableComBase extends Com {
     };
   }
 
-  takeStyleByTitle(text: string) {
+  static takeStyleByTitle(text: string) {
     if (!text) return;
     const preparedText = text.toLowerCase().replace(makeRegExp('/[^а-я]/g'), '').trim();
     return blockStyles?.styles.find(style => style.tags?.some(tag => preparedText.startsWith(tag)));

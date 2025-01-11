@@ -4,7 +4,7 @@ import { StyleBlock } from '../block-styles/StyleBlock';
 import { Com } from '../Com';
 import { Order } from './Order';
 
-export type INewExportableOrder = OmitOwn<IExportableOrder, 'w'>;
+export type INewExportableOrder = IExportableOrder;
 
 export type EditableOrderRegion<Ord extends Order> = {
   count: number;

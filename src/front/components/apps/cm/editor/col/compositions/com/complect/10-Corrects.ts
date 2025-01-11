@@ -2,6 +2,7 @@ import { mylib } from 'front/utils';
 import { makeRegExp } from 'shared/utils';
 import { CorrectsBox } from '../../../../corrects-box/CorrectsBox';
 import { correctNotSlavicNameReg_i, textedChordReg } from '../../../../Editor.complect';
+import { EditableCol } from '../../../EditableCol';
 import { EditableComBase } from './0-Base';
 
 export class EditableComCorrects extends EditableComBase {
@@ -22,7 +23,7 @@ export class EditableComCorrects extends EditableComBase {
     return name.replace(correctNotSlavicNameReg_i, '');
   }
 
-  takeCorrectName(text: string) {
+  static takeCorrectName(text: string) {
     let name = '';
 
     text.split(makeRegExp('/\\n\\s*\\n/')).find(block => {
@@ -41,13 +42,7 @@ export class EditableComCorrects extends EditableComBase {
     return name.replace(makeRegExp('/[^а-я!]+$/i'), '');
   }
 
-  setBlockCorrects(coln: 'texts' | 'chords', coli: number, val: string, isSetAllText?: boolean) {
-    const corrects = this.chordsBlockIncorrectMessage(val);
-    this.corrects[`${coln}-block-${coli}`] = corrects;
-    return corrects;
-  }
-
-  textBlockIncorrectMessages(text: string | und, texti?: number, isSetAllText?: boolean) {
+  static textBlockIncorrectMessages(text: string | und, isSetAllText?: boolean) {
     const ret = (err: string | null) => new CorrectsBox(err ? [{ message: err, code: 0 }] : null);
 
     let mistakes = '';
@@ -71,10 +66,10 @@ export class EditableComCorrects extends EditableComBase {
       );
     }
 
-    return this.col.textCorrects(text, isSetAllText);
+    return EditableCol.textCorrects(text, isSetAllText);
   }
 
-  chordsBlockIncorrectMessage(value: string | und) {
+  static chordsBlockIncorrectMessage(value: string | und) {
     const incorrectChords: string[] = [];
     const textWithIncorrects = (value || '')
       .trim()

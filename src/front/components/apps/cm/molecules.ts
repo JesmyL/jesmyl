@@ -36,7 +36,6 @@ export const cmMolecule = new Molecule<CmState & CmEditorStoraged>(
     favoriteMeetings: { contexts: [], events: [] },
 
     // editor
-    mp3Rules: [],
     rules: [],
     eeStorage: {},
   },

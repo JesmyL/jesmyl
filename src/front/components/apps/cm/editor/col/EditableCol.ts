@@ -23,7 +23,6 @@ export class EditableCol<Col extends BaseNamedExportables> extends BaseNamed<Col
   ) {
     const action = `${coln}Rename`;
     const prev = this.name;
-    const corrects = this.nameCorrects(name, coln, onFix, `${action}:${this.wid}`, isSetAllText);
 
     this.name = name;
 
@@ -34,14 +33,11 @@ export class EditableCol<Col extends BaseNamedExportables> extends BaseNamed<Col
         method: 'set',
         value: name,
         args: { value: name },
-        corrects,
       },
       coln,
     );
 
     cmComClientInvocatorMethods.rename(null, this.wid, name);
-
-    this.corrects.name = exec?.corrects ?? corrects;
   }
 
   removeCol<Coln extends keyof IExportableCol>(coln: Coln, isRemoved = true) {
@@ -116,7 +112,7 @@ export class EditableCol<Col extends BaseNamedExportables> extends BaseNamed<Col
     return this;
   }
 
-  nameCorrects<Coln extends keyof IEditableCol>(
+  static nameCorrects<Coln extends keyof IEditableCol>(
     name = this.name,
     coln: Coln,
     onIncorrectsFix?: (correct: string) => void,
@@ -152,7 +148,7 @@ export class EditableCol<Col extends BaseNamedExportables> extends BaseNamed<Col
     return mylib.isStr(name) ? name.replace(correctNotSlavicNameReg_i, '') : name;
   }
 
-  textCorrects(text: string | nil, isSetAllText = false) {
+  static textCorrects(text: string | nil, isSetAllText = false) {
     if (typeof text !== 'string') return new CorrectsBox().setIncorrectType('[got not string]');
     const errors: ICorrect[] = [];
     const warnings: ICorrect[] = [];
@@ -166,9 +162,9 @@ export class EditableCol<Col extends BaseNamedExportables> extends BaseNamed<Col
 
       if (eeStorage.get(word) == null) {
         unknowns.push({
-          message: `Слово '${realWord}' ещё не встречалось среди существующих песен. Проверь, пожалуйста, правильность написания букв ё/е, встречающихся в нём${
-            isSetAllText ? `.\n\nУпоминание:\n${text}` : ''
-          }`,
+          message:
+            `Слово '${realWord}' ещё не встречалось среди существующих песен. Проверь, пожалуйста, ` +
+            `правильность написания букв ё/е, встречающихся в нём${isSetAllText ? `.\n\nУпоминание:\n${text}` : ''}`,
           code: 2,
         });
         return;

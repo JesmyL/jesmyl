@@ -2,22 +2,16 @@ import { BottomPopupItem } from 'front/complect/absolute-popup/bottom-popup/Bott
 import { FullContent } from 'front/complect/fullscreen-content/FullContent';
 import { useState } from 'react';
 import { IconPlusSignCircleStrokeRounded } from '../../../../../../../complect/the-icon/icons/plus-sign-circle';
-import { EditableCom } from '../com/EditableCom';
-import NewComposition from './NewComposition';
+import NewComposition from './new-com/NewComposition';
 
 export const EditCompositionsMore = () => {
-  const [newEditableCom, setNewEditableCom] = useState<EditableCom | null>(null);
+  const [isComCreatorOpen, setIsComCreatorOpen] = useState<unknown>(null);
 
   return (
     <>
-      {newEditableCom && (
-        <FullContent onClose={() => setNewEditableCom(null)}>
-          <NewComposition
-            com={newEditableCom}
-            close={() => {
-              setNewEditableCom(null);
-            }}
-          />
+      {isComCreatorOpen && (
+        <FullContent onClose={() => setIsComCreatorOpen(null)}>
+          <NewComposition onClose={setIsComCreatorOpen} />
         </FullContent>
       )}
       <BottomPopupItem
@@ -25,8 +19,7 @@ export const EditCompositionsMore = () => {
         title="Новая песня"
         onClick={event => {
           event.stopPropagation();
-          const w = Date.now();
-          setNewEditableCom(new EditableCom({ n: '', w, m: w, t: [], c: [], o: [] }).create());
+          setIsComCreatorOpen(true);
         }}
       />
     </>

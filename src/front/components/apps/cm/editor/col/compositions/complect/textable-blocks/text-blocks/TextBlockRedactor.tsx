@@ -11,7 +11,7 @@ import CmTextableBlockAnchorTitles from '../CmTextableBlockAnchorTitles';
 
 export default function CmTextBlockRedactor({ texti, text, ccom }: { texti: number; text: string; ccom: EditableCom }) {
   const [value, setValue] = useState(text);
-  const corrects = ccom.textBlockIncorrectMessages(value, texti);
+  const corrects = EditableCom.textBlockIncorrectMessages(value);
 
   return (
     <div className="margin-big-gap-v">

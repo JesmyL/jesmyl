@@ -1,10 +1,9 @@
 import { ReactNode } from 'react';
-import { CmMp3Rule, ShortRealRule } from 'shared/api';
+import { ShortRealRule } from 'shared/api';
 import { EeStorageStoreType } from '../base/ee-storage/EeStorage.model';
 
 export interface CmEditorStoraged {
   rules: ShortRealRule[];
-  mp3Rules: CmMp3Rule[];
   eeStorage: EeStorageStoreType;
 }
 

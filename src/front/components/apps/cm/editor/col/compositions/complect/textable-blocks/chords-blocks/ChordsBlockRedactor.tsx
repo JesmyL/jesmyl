@@ -21,7 +21,7 @@ export default function CmChordsBlockRedactor({
   ccom: EditableCom;
 }) {
   const [value, setValue] = useState(text);
-  const corrects = ccom.chordsBlockIncorrectMessage(value);
+  const corrects = EditableCom.chordsBlockIncorrectMessage(value);
 
   return (
     <div className="margin-big-gap-v">

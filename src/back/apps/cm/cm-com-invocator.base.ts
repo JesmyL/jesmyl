@@ -4,6 +4,7 @@ import { CmComSokiInvocatorMethods } from 'shared/api/invocators/cm/cm-com-invoc
 import { smylib } from 'shared/utils';
 import { comsFileStore } from './cm-freshes-invocator.base';
 import { cmServerInvocatorMethods } from './cm-invocator';
+import { cmGetMp3RulesList, cmGetResourceHTMLString } from './mp3-rules';
 import { cmComLanguages } from './values';
 
 // import * as colsJSON from './+case/cols.json';
@@ -51,8 +52,8 @@ export const modifyInvocableCom = async (comw: CmComWid, mapper: (com: IExportab
   mapper(com);
   com.m = Date.now() + Math.random();
 
-  await cmServerInvocatorMethods.editedCom(null, com);
   comsFileStore.saveValue();
+  cmServerInvocatorMethods.editedCom(null, com);
 
   return com;
 };
@@ -105,6 +106,18 @@ export const cmComServerInvocatorBase = new CmComSokiInvocatorBaseServer(
 
     removeChordBlock: removeTextableBlock('c'),
     removeTextBlock: removeTextableBlock('t'),
+
+    getResourceHTMLString: () => cmGetResourceHTMLString,
+    getMp3RulesList: () => cmGetMp3RulesList,
+
+    newCom: () => async newCom => {
+      const com = { ...newCom, w: Date.now(), m: Date.now() };
+      comsFileStore.getValue().push(com);
+      comsFileStore.saveValue();
+      cmServerInvocatorMethods.editedCom(null, com);
+
+      return com;
+    },
   },
 
   {
@@ -148,5 +161,10 @@ export const cmComServerInvocatorBase = new CmComSokiInvocatorBaseServer(
     removeChordBlock: (com, _comw, value) =>
       `Удалён${value ? '' : ' новый'} аккордный блок в песне ` +
       `${getCmComNameInBrackets(com)}${value ? `:\n\n${value}` : ''}`,
+
+    getResourceHTMLString: (_, src) => `Запрос HTML-кода ресурcа ${src}`,
+    getMp3RulesList: () => `Запрос MP3-правил`,
+
+    newCom: com => `Добавлена новая песня ${getCmComNameInBrackets(com)}`,
   },
 );

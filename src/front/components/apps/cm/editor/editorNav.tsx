@@ -23,7 +23,7 @@ import { iconPackOfVoice } from '../../../../complect/the-icon/icons/voice';
 import { TheIconSelfPack } from '../../../../complect/the-icon/model';
 import { RoutePhasePoint } from '../../../router/Router.model';
 import { CmNavData } from '../Cm.model';
-import ComAudio from './col/compositions/complect/audio/ComAudio';
+import ComAudioTab from './col/compositions/complect/audio/Tab';
 import CategoryBinds from './col/compositions/complect/CategoryBinds';
 import ChordApplicationsRedactor from './col/compositions/complect/chord-applications/ChordApplicationsRedactor';
 import ComOnTranslations from './col/compositions/complect/ComOnTranslations';
@@ -97,7 +97,7 @@ export const editCompositionNavs: INavigationRouteChildItem<
   {
     phase: ['audio'],
     path: 'audio',
-    element: <ComAudio />,
+    element: <ComAudioTab />,
     data: {
       iconPack: iconPackOfVoice,
     },

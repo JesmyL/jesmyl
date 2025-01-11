@@ -1,11 +1,9 @@
 import { SokiServerDoAction, SokiServerDoActionProps, SokiServicePack } from 'shared/api';
-import cmService from '../../../apps/cm/service';
 import { indexService } from '../../../apps/index/service';
 import wedService from '../../../apps/wed/service';
 import { SokiServerConnection } from './70-Connection';
 
 const services: SokiServicePack = {
-  cm: cmService,
   index: indexService,
   wed: wedService,
 };

@@ -234,7 +234,7 @@ export class Com extends BaseNamed<IExportableCom> {
     return kinds.clearList();
   }
 
-  bracketsTransformed = (() => {
+  static bracketsTransformed = (() => {
     const brackets = [
       ['«', '»'],
       ['„', '“'],

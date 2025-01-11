@@ -419,7 +419,7 @@ export class Order extends SourceBased<IExportableOrder> {
   }
 
   repeatedText(repeats: OrderRepeats | null = this.repeats) {
-    return Order.makeRepeatedText(this.com.bracketsTransformed(this.text).text, repeats);
+    return Order.makeRepeatedText(Com.bracketsTransformed(this.text).text, repeats);
   }
 
   static makeRepeatedText(text: string, repeats: OrderRepeats | nil = null) {
