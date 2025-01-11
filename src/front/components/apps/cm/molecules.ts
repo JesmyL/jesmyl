@@ -14,7 +14,6 @@ export const useComComment = comCommentFractionalStore.useValue;
 
 export const cmMolecule = new Molecule<CmState & CmEditorStoraged>(
   {
-    chordTracks: {},
     meetings: { contexts: [] },
 
     chordVisibleVariant: 0,

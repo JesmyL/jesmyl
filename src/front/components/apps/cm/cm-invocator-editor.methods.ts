@@ -2,6 +2,7 @@ import { SokiInvocatorClient } from 'front/SokiInvocator.client';
 import { CmCatSokiInvocatorMethods } from 'shared/api/invocators/cm/cm-cat-invocators';
 import { CmComSokiInvocatorMethods } from 'shared/api/invocators/cm/cm-com-invocators';
 import { CmComOrderSokiInvocatorMethods } from 'shared/api/invocators/cm/cm-com-order-invocators';
+import { CmOtherSokiInvocatorMethods } from 'shared/api/invocators/cm/cm-other-invocators';
 
 class CmCatSokiInvocatorClient extends SokiInvocatorClient<CmCatSokiInvocatorMethods> {}
 export const cmCatClientInvocatorMethods = new CmCatSokiInvocatorClient('CmCatSokiInvocatorClient', {
@@ -53,4 +54,9 @@ export const cmComOrderClientInvocatorMethods = new CmComOrderSokiInvocatorClien
   insertNewBlock: true,
   setPositionsLine: true,
   setModulationValue: true,
+});
+
+class CmOtherSokiInvocatorClient extends SokiInvocatorClient<CmOtherSokiInvocatorMethods> {}
+export const cmOtherClientInvocatorMethods = new CmOtherSokiInvocatorClient('CmOtherSokiInvocatorClient', {
+  setChords: true,
 });

@@ -6,4 +6,5 @@ class CmSokiInvocatorServer extends SokiInvocatorServer<CmSokiInvocatorWaitsMeth
 export const cmServerInvocatorMethods = new CmSokiInvocatorServer('CmSokiInvocatorServer', {
   editedCom: true,
   editedCat: true,
+  editedChords: true,
 });

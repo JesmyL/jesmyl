@@ -1,9 +1,14 @@
 import { DexieDB } from 'front/complect/_DexieDB';
 import { IExportableCat, IExportableCom } from 'shared/api';
+import { ChordPack } from '../col/com/chord-card/ChordCard.model';
 
 interface Storage {
+  chordPack: ChordPack;
+
   comLastModified: number;
   catLastModified: number;
+  chordPackLastModified: number;
+
   coms: IExportableCom[];
   cats: IExportableCat[];
 }
@@ -11,8 +16,12 @@ interface Storage {
 class CmIDB extends DexieDB<Storage> {
   constructor() {
     super(true, 'cm', {
-      comLastModified: 0,
-      catLastModified: 1,
+      chordPack: true,
+
+      comLastModified: true,
+      catLastModified: true,
+      chordPackLastModified: true,
+
       coms: {
         w: '++',
       },

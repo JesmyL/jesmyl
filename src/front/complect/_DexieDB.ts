@@ -1,4 +1,5 @@
 import Dexie, { EntityTable } from 'dexie';
+import { useLiveQuery } from 'dexie-react-hooks';
 import { SMyLib, smylib } from '../../shared/utils';
 
 const keyvalues = '%keyvalues%';
@@ -21,22 +22,13 @@ export class DexieDB<Store> {
         ? keyof Store[K][number] extends string
           ? Partial<Record<'_', '++'> & Record<keyof Store[K][number], true | '++'>>
           : never
-        : number;
+        : true;
     }>,
     version = 1,
   ) {
     if (isDev) {
-      const uniqueIndexKeyMap = new Map<number, string>();
-
-      SMyLib.keys(defaults).forEach(key => {
-        if (!smylib.isNum(defaults[key])) return;
-        const prevKey = uniqueIndexKeyMap.get(defaults[key]);
-        if (prevKey !== undefined) throw new Error(`"${key as never}" and "${prevKey}" has same key ${defaults[key]}`);
-        uniqueIndexKeyMap.set(defaults[key], key as never);
-      });
-
       this.tryIsSimpleValue = key => {
-        if (smylib.isNum(defaults[key])) return;
+        if (defaults[key] === true) return;
         throw new Error(`${key as never} is not simple object value`);
       };
     } else this.tryIsSimpleValue = () => {};
@@ -46,7 +38,7 @@ export class DexieDB<Store> {
     const stores = {} as Record<string, string>;
 
     Object.keys(defaults).forEach(key => {
-      if (smylib.isNum(defaults[key as never])) return;
+      if (defaults[key as never] === true) return;
 
       stores[key] = SMyLib.entries(defaults[key as never])
         .map(([key, val]) => `${val === '++' ? '++' : ''}${key as never}`)
@@ -95,4 +87,13 @@ export class DexieDB<Store> {
     this.tryIsSimpleValue(key);
     return await this.getKeyvalues().where({ key }).delete();
   }
+
+  useSingleValueLiveQuery<Key extends keyof Store, Def extends Store[Key] | und>(
+    key: Key,
+    def?: Def,
+  ): Def | Store[Key] {
+    return (justUse(() => this.getKeyvalues().get({ key }) as never as { val: Store[Key] })?.val as never) ?? def;
+  }
 }
+
+const justUse = useLiveQuery;

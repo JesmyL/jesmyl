@@ -3,7 +3,6 @@ import { IExportableMeetings } from '../../../../shared/api/complect/apps/cm/com
 import { ClientExecutionDict } from '../../../complect/exer/Exer.model';
 import { EeStorageStoreType } from './base/ee-storage/EeStorage.model';
 import { IExportableSetts } from './col/com/block-styles/BlockStyles.model';
-import { ChordPack } from './col/com/chord-card/ChordCard.model';
 import { MigratableComToolName } from './col/com/Com.model';
 import { CmTranslationScreenConfig } from './translation/complect/controlled/model';
 
@@ -26,7 +25,6 @@ export interface CmState {
   // todo: remove it
   comComments: Partial<Record<CmComWid, string>>;
   isShowComHashComments: boolean;
-  chordTracks: ChordPack;
   comTopTools: MigratableComToolName[];
   isMiniAnchor: boolean;
   playerHideMode: PlayerHideMode;

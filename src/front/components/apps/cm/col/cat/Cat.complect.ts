@@ -68,7 +68,7 @@ const delayedValueSetDefiner = <Key extends keyof (CmState & CmEditorStoraged), 
   };
 };
 
-const knownChordsSet = delayedValueSetDefiner('chordTracks', new Set<string>(), chords => new Set(MyLib.keys(chords)));
+// const knownChordsSet = delayedValueSetDefiner('chordTracks', new Set<string>(), chords => new Set(MyLib.keys(chords)));
 const eeIncorrectWordsReg = delayedValueSetDefiner('eeStorage', /^ееее$/, value => {
   const notRuLetter = '([^а-яёіґїє])';
   return new RegExp(
@@ -147,25 +147,25 @@ export const catSpecialSearches: Record<`@${string}`, CatSpecialSearches> = {
       );
     },
   },
-  '@withUnknownChords': {
-    title: 'С неизвестными аккордами',
-    isRerenderOnInput: true,
-    map: coms => {
-      const knownChordsSetLocal = knownChordsSet();
+  // '@withUnknownChords': {
+  //   title: 'С неизвестными аккордами',
+  //   isRerenderOnInput: true,
+  //   map: coms => {
+  //     const knownChordsSetLocal = knownChordsSet();
 
-      return coms.filter(com => {
-        const difference = new Set(
-          com
-            .transposedBlocks()
-            ?.map(block => block.split(makeRegExp('/[\\s.-]+/')))
-            .flat()
-            .filter(itIt),
-        ).difference(knownChordsSetLocal);
+  //     return coms.filter(com => {
+  //       const difference = new Set(
+  //         com
+  //           .transposedBlocks()
+  //           ?.map(block => block.split(makeRegExp('/[\\s.-]+/')))
+  //           .flat()
+  //           .filter(itIt),
+  //       ).difference(knownChordsSetLocal);
 
-        return difference.size;
-      });
-    },
-  },
+  //       return difference.size;
+  //     });
+  //   },
+  // },
   '@incorrect-ЁЕ': {
     title: 'Некорректные Ё-Е',
     isRerenderOnInput: true,

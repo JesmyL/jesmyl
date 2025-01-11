@@ -1,35 +1,38 @@
+import IconButton from 'front/complect/the-icon/IconButton';
+import { IconSentStrokeRounded } from 'front/complect/the-icon/icons/sent';
 import { propagationStopper } from 'front/complect/utils/utils';
 import { MyLib, mylib } from 'front/utils';
 import { useEffect, useMemo, useState } from 'react';
-import { useAtomValue } from '../../../../../complect/atoms';
+import { atom, useAtom } from '../../../../../complect/atoms';
 import TheButton from '../../../../../complect/Button';
-import { useExerExec } from '../../../../../complect/exer/hooks/useExer';
 import KeyboardInput from '../../../../../complect/keyboard/KeyboardInput';
 import { IconPlusSignCircleStrokeRounded } from '../../../../../complect/the-icon/icons/plus-sign-circle';
-import { cmExer } from '../../CmExer';
+import { cmIDB } from '../../_db/cm-db';
+import { cmOtherClientInvocatorMethods } from '../../cm-invocator-editor.methods';
 import { useToNewChordSearches } from '../../col/com/chord-card/chord-redactor-searches';
 import ChordCard from '../../col/com/chord-card/ChordCard';
 import { ChordPack, ChordTrack } from '../../col/com/chord-card/ChordCard.model';
-import { cmMolecule } from '../../molecules';
 import { correctChordNameReg } from '../Editor.complect';
 import PhaseCmEditorContainer from '../phase-editor-container/PhaseCmEditorContainer';
 import ChordRedactableTrack from './ChordRedactableTrack';
 import './ChordRedactor.scss';
 
-const chordTracksAtom = cmMolecule.select(s => s.chordTracks);
+const redactableChordsAtom = atom<ChordPack>({});
+const chordsToSendAtom = atom<ChordPack>({});
+const defChordPack: ChordPack = {};
 
 export default function ChordRedactor() {
   const [{ newChordName = '' }, setProps] = useToNewChordSearches();
 
-  const chords = useAtomValue(chordTracksAtom);
+  const chords = cmIDB.useSingleValueLiveQuery('chordPack', defChordPack);
   const [currentChordName, setCurrentChord] = useState(newChordName);
   const [isNewChord, setIsNewChord] = useState(!!newChordName);
-  const [redactableChords, updateRedactableChords] = useState<ChordPack>({});
+  const [redactableChords, updateRedactableChords] = useAtom(redactableChordsAtom);
+  const [chordsToSend, setChordsToSend] = useAtom(chordsToSendAtom);
 
   const redactableChord: ChordTrack = redactableChords[currentChordName];
   const isExists = chords[currentChordName];
   const [newNameError, setNewNameError] = useState('');
-  const exec = useExerExec();
 
   const setExecution = (pack = redactableChords) => {
     const value: ChordPack = {};
@@ -38,18 +41,7 @@ export default function ChordRedactor() {
       while (realTrack.at(-1) === 0) realTrack.pop();
       if (!mylib.isEq(chords[chordName], realTrack)) value[chordName] = realTrack as ChordTrack;
     });
-    cmExer.set({
-      action: 'updateChordTracksDict',
-      method: 'set',
-      value,
-      prev: {},
-      args: {
-        value,
-        chordNames: MyLib.keys(value).join(', '),
-      },
-      onLoad: () => setProps({ newChordName: '' }),
-    });
-    exec();
+    setChordsToSend(value);
   };
 
   useEffect(() => {
@@ -132,6 +124,20 @@ export default function ChordRedactor() {
       className="chord-redactor"
       contentClass={`chord-redactor-content padding-gap ${isNewChord ? 'chord-addition' : ''}`}
       headTitle="Редактор аккордов"
+      head={
+        <IconButton
+          Icon={IconSentStrokeRounded}
+          disabled={!mylib.keys(chordsToSend).length}
+          disabledReason="Изменений нет"
+          className="margin-gap"
+          confirm={`Отправить аккорды ${mylib.keys(chordsToSend).join('; ')} ?`}
+          onClick={async () => {
+            await cmOtherClientInvocatorMethods.setChords(null, chordsToSend);
+            setChordsToSend({});
+            updateRedactableChords({});
+          }}
+        />
+      }
       content={
         <>
           <div
@@ -197,7 +203,7 @@ export default function ChordRedactor() {
                       setProps({ newChordName: '' });
                       delete newRedacts[currentChordName];
                       updateRedactableChords(newRedacts);
-                    } else {
+                    } else if (chords) {
                       newRedacts[currentChordName] = chords[currentChordName];
                       updateRedactableChords(newRedacts);
                     }

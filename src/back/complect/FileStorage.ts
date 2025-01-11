@@ -1,30 +1,43 @@
 import fs from 'fs';
 
+type Modifieds = Record<string, number>;
+
 export class FileStore<Value> {
   private value: Value;
-  private writeValueTimeout: TimeOut;
+  private writeValueTimeout: Record<string, TimeOut> = {};
+  private modifiedTimeStampDict?: Modifieds;
+  private filePath = '';
 
   constructor(
     private path: string,
     defaultValue: Value,
   ) {
-    this.path = `${__dirname}${this.path}`;
+    this.filePath = `${__dirname}${this.path}`;
+    fs.chmodSync(this.filePath, 0o777);
     this.value = this.readValue(defaultValue);
   }
 
-  private readValue(defaultValue: Value) {
+  private readModifiedsDict(): Modifieds {
+    return this.readValue({} as never, `${this.filePath}.modifieds`);
+  }
+
+  private saveModifiedsDict() {
+    this.writeValue(this.modifiedTimeStampDict as never, `${this.filePath}.modifieds`);
+  }
+
+  private readValue(defaultValue: Value, filePath = this.filePath) {
     try {
-      return JSON.parse('' + fs.readFileSync(this.path));
+      return JSON.parse('' + fs.readFileSync(filePath));
     } catch (error) {
       return defaultValue;
     }
   }
 
-  private writeValue(value: Value) {
+  private writeValue(value: Value, filePath = this.filePath) {
     try {
-      clearTimeout(this.writeValueTimeout);
-      this.writeValueTimeout = setTimeout(() => {
-        fs.writeFile(this.path, JSON.stringify(value), () => {});
+      clearTimeout(this.writeValueTimeout[filePath]);
+      this.writeValueTimeout[filePath] = setTimeout(() => {
+        fs.writeFileSync(filePath, JSON.stringify(value));
       }, 10);
       return true;
     } catch (error) {
@@ -43,5 +56,21 @@ export class FileStore<Value> {
 
   saveValue() {
     this.writeValue(this.value);
+  }
+
+  setModifiedTimeStamp(key: string | null) {
+    this.modifiedTimeStampDict ??= this.readModifiedsDict();
+    const mod = (this.modifiedTimeStampDict[key ?? this.path] = Date.now() + Math.random());
+    this.saveModifiedsDict();
+    return mod;
+  }
+
+  getModifiedTimeStamp(key: string | null) {
+    this.modifiedTimeStampDict ??= this.readModifiedsDict();
+    return this.modifiedTimeStampDict[key ?? this.path];
+  }
+
+  getModifiedTimeStampDict() {
+    return (this.modifiedTimeStampDict ??= this.readModifiedsDict());
   }
 }

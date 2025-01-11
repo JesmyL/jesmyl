@@ -86,4 +86,7 @@ setTimeout(async () => {
 
   const catLastModified = await cmIDB.getSingleValue('catLastModified', 0);
   await cmFreshesSokiInvocatorClient.getFreshCatList(null, catLastModified);
+
+  const chordPackLastModified = await cmIDB.getSingleValue('chordPackLastModified', 0);
+  await cmFreshesSokiInvocatorClient.getFreshChordPackList(null, chordPackLastModified);
 }, 1000);

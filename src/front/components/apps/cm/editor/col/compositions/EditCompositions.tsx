@@ -94,7 +94,7 @@ export default function EditCompositions() {
             />
             {isOpenMorePopup && (
               <BottomPopup onClose={setIsOpenMorePopup}>
-                <EditCompositionsMore />
+                <EditCompositionsMore onClose={setIsOpenMorePopup} />
               </BottomPopup>
             )}
           </>

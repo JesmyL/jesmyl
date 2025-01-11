@@ -14,4 +14,8 @@ export const cmFreshesSokiInvocatorClient = new CmFreshesSokiInvocatorClient('Cm
     const max = icats.reduce((max, com) => Math.max(max, com.m ?? com.w), 0);
     await cmIDB.setSingleValue('catLastModified', value => Math.max(max, value), 0);
   },
+  getFreshChordPackList: async ({ pack, modifiedAt }) => {
+    if (pack) cmIDB.setSingleValue('chordPack', pack);
+    await cmIDB.setSingleValue('catLastModified', value => Math.max(modifiedAt, value), 0);
+  },
 });

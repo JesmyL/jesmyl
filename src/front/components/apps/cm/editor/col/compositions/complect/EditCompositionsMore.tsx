@@ -4,14 +4,19 @@ import { useState } from 'react';
 import { IconPlusSignCircleStrokeRounded } from '../../../../../../../complect/the-icon/icons/plus-sign-circle';
 import NewComposition from './new-com/NewComposition';
 
-export const EditCompositionsMore = () => {
+export const EditCompositionsMore = ({ onClose }: { onClose(is: false): void }) => {
   const [isComCreatorOpen, setIsComCreatorOpen] = useState<unknown>(null);
 
   return (
     <>
       {isComCreatorOpen && (
         <FullContent onClose={() => setIsComCreatorOpen(null)}>
-          <NewComposition onClose={setIsComCreatorOpen} />
+          <NewComposition
+            onClose={() => {
+              setIsComCreatorOpen(false);
+              onClose(false);
+            }}
+          />
         </FullContent>
       )}
       <BottomPopupItem
