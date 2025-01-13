@@ -1,6 +1,8 @@
 import { isDevelopmentMode } from './environments';
 import { SokiInvokerData } from './soki';
 
+const registeredClasses = new Set<string>();
+
 export const makeSokiInvocator = <ClassNamePostfix extends string, ToolParam = null>(
   classNamePostfix: ClassNamePostfix,
   send: (data: SokiInvokerData, tool: ToolParam) => Promise<unknown>,
@@ -25,8 +27,11 @@ export const makeSokiInvocator = <ClassNamePostfix extends string, ToolParam = n
   return function (this: unknown, className: ClassName, listeners: Methods) {
     const self = this as any;
 
-    if (isDevelopmentMode && self.constructor.name !== className)
-      throw new Error(`constructor name and className must equal`);
+    if (isDevelopmentMode) {
+      if (self.constructor.name !== className) throw new Error(`constructor name and className must equal`);
+      if (registeredClasses.has(className)) throw new Error(`The invoker class ${className} was created again`);
+      registeredClasses.add(className);
+    }
 
     const name = className.slice(0, -classNamePostfix.length);
 

@@ -2,12 +2,12 @@ import { SokiInvocatorBaseClient } from 'front/SokiInvocatorBase.client';
 import { CmSokiInvocatorBaseMethods } from 'shared/api/invocators/cm/invocator.shares.model';
 import { cmIDB } from './_db/cm-db';
 
-let lastModifiedValue: null | number = null;
+let lastModifiedLocal: null | number = null;
 export const setLastModifiedValue = async (lastModified: number) => {
-  lastModifiedValue ??= await cmIDB.getSingleValue('lastModified', 0);
+  lastModifiedLocal ??= await cmIDB.getSingleValue('lastModified', 0);
 
-  if (lastModifiedValue >= lastModified) return;
-  lastModifiedValue = lastModified;
+  if (lastModifiedLocal >= lastModified) return;
+  lastModifiedLocal = lastModified;
 
   cmIDB.setSingleValue('lastModified', lastModified);
 };
