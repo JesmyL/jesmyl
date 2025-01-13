@@ -47,6 +47,7 @@ export default function EERules() {
         <IconButton
           Icon={IconSentStrokeRounded}
           disabled={!words.length}
+          className="margin-gap"
           confirm={
             `Отправить ${words.length} ${mylib.declension(words.length, 'слово', 'слова', 'слов')}: ` +
             `${words.join(', ')}`
