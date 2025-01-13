@@ -1,4 +1,4 @@
-import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
+import { cmOtherClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useEffect, useState } from 'react';
 import { CmMp3ContainsPageResult } from 'shared/api';
 import KeyboardInput from '../../../../../../../../complect/keyboard/KeyboardInput';
@@ -60,7 +60,7 @@ export default function ObserveUrlResource({
           title="Обзор URL"
           disabled={!url || !!errorMessage}
           onSuccess={onSuccess}
-          onSend={() => cmComClientInvocatorMethods.getResourceHTMLString(null, url)}
+          onSend={() => cmOtherClientInvocatorMethods.getResourceHTMLString(null, url)}
         />
       </div>
       {errorMessage && <div className="error-message">{errorMessage}</div>}

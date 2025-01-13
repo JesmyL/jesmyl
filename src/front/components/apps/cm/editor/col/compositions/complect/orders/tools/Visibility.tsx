@@ -1,6 +1,6 @@
 import { useConfirm } from 'front/complect/modal/confirm/useConfirm';
 import { StyledLoadingSpinner } from 'front/complect/the-icon/IconLoading';
-import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
+import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
 import { BottomPopupItem } from '../../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
 import { IconViewStrokeRounded } from '../../../../../../../../../complect/the-icon/icons/view';

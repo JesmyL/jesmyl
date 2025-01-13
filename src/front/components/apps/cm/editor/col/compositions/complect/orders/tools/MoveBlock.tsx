@@ -1,5 +1,5 @@
 import { IconLink02StrokeRounded } from 'front/complect/the-icon/icons/link-02';
-import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
+import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { BottomPopupItem } from '../../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
 import { IconArrowDataTransferDiagonalStrokeRounded } from '../../../../../../../../../complect/the-icon/icons/arrow-data-transfer-diagonal';
 import { OrdersRedactorOrderToolsProps } from '../OrdersRedactorOrderTools';

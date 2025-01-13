@@ -2,14 +2,9 @@ import { mylib } from 'front/utils';
 import { IExportableCat } from 'shared/api';
 import { BaseNamed } from '../../base/BaseNamed';
 import { Com } from '../com/Com';
-import { ComWrap } from './Cat.model';
 
 export class Cat extends BaseNamed<IExportableCat> {
-  searchTimeout: TimeOut;
-
-  index: number = -1;
   term?: string;
-  wraps: ComWrap[] = [];
 
   constructor(
     top: IExportableCat,

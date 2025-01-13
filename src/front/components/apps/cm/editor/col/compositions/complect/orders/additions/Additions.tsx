@@ -1,4 +1,4 @@
-import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
+import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
 import { BottomPopupItem } from '../../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
 import Modal from '../../../../../../../../../complect/modal/Modal/Modal';

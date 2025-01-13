@@ -1,8 +1,8 @@
-import cmStorage from '../../cmStorage';
-import { EeStorageStoreType } from './EeStorage.model';
+import { EeStorePack } from 'shared/api';
+import { cmIDB } from '../../_db/cm-db';
 
 export class EeStorage {
-  store?: EeStorageStoreType;
+  store?: EeStorePack;
 
   constructor() {
     this.load();
@@ -10,11 +10,11 @@ export class EeStorage {
 
   async load() {
     if (this.store != null) return this.store;
-    return (this.store = await cmStorage.getOr('eeStorage', {}));
+    return (this.store = await cmIDB.getSingleValue('eeStore'));
   }
 
   save() {
-    cmStorage.set('eeStorage', this.store || {});
+    cmIDB.setSingleValue('eeStore', this.store || {});
   }
 
   get(word: string) {

@@ -81,12 +81,6 @@ export default function CmRouter({ mainNode }: { mainNode: React.ReactNode }) {
 listenSokiEventsForCm();
 
 setTimeout(async () => {
-  const comLastModified = await cmIDB.getSingleValue('comLastModified', 0);
-  await cmFreshesSokiInvocatorClient.getFreshComList(null, comLastModified);
-
-  const catLastModified = await cmIDB.getSingleValue('catLastModified', 0);
-  await cmFreshesSokiInvocatorClient.getFreshCatList(null, catLastModified);
-
-  const chordPackLastModified = await cmIDB.getSingleValue('chordPackLastModified', 0);
-  await cmFreshesSokiInvocatorClient.getFreshChordPackList(null, chordPackLastModified);
+  const lastModified = await cmIDB.getSingleValue('lastModified', 0);
+  await cmFreshesSokiInvocatorClient.getFreshes(null, lastModified);
 }, 1000);

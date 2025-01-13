@@ -2,7 +2,7 @@ import TheButton from 'front/complect/Button';
 import IconButton from 'front/complect/the-icon/IconButton';
 import { IconCancel01StrokeRounded } from 'front/complect/the-icon/icons/cancel-01';
 import { IconLink02StrokeRounded } from 'front/complect/the-icon/icons/link-02';
-import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
+import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
 import { BottomPopup } from '../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopup';
 import { IconEdit02StrokeRounded } from '../../../../../../../../complect/the-icon/icons/edit-02';

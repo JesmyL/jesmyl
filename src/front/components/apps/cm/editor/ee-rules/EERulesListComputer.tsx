@@ -2,7 +2,7 @@ import { mylib } from 'front/utils';
 import { memo, useEffect, useState } from 'react';
 import { itIt, makeRegExp } from 'shared/utils';
 import { bibleMolecule } from '../../../bible/molecules';
-import { eeStorage } from '../../base/ee-storage/EeStorage';
+import { cmIDB } from '../../_db/cm-db';
 import { useEditableCats, useEditableComs } from '../col/useEditableCols';
 
 const emptyArr = [] as [];
@@ -22,7 +22,7 @@ export const EERulesListComputer = memo(function ListComputer({
   const [etap, setEtap] = useState('Подготовка');
 
   useEffect(() => {
-    eeStorage.load().then(store => setStore(mylib.keys(store)));
+    cmIDB.getSingleValue('eeStore').then(store => setStore(mylib.keys(store ?? {})));
   }, []);
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
+import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { OrderRepeats } from 'shared/api';
 import { makeRegExp } from 'shared/utils';

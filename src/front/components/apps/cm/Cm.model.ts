@@ -1,7 +1,6 @@
 import { CmComWid } from '../../../../shared/api/complect/apps/cm/complect/enums';
 import { IExportableMeetings } from '../../../../shared/api/complect/apps/cm/complect/Meetings';
 import { ClientExecutionDict } from '../../../complect/exer/Exer.model';
-import { EeStorageStoreType } from './base/ee-storage/EeStorage.model';
 import { IExportableSetts } from './col/com/block-styles/BlockStyles.model';
 import { MigratableComToolName } from './col/com/Com.model';
 import { CmTranslationScreenConfig } from './translation/complect/controlled/model';
@@ -43,7 +42,6 @@ export type PlayerHideMode = 'expand' | 'min' | '';
 
 export interface CmStorage extends CmState {
   settings: IExportableSetts;
-  eeStorage: EeStorageStoreType;
   executions: ClientExecutionDict[];
 }
 

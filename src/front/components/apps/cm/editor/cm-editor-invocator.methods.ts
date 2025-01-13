@@ -1,14 +1,21 @@
 import { SokiInvocatorClient } from 'front/SokiInvocator.client';
-import { CmCatSokiInvocatorMethods } from 'shared/api/invocators/cm/cm-cat-invocators';
-import { CmComSokiInvocatorMethods } from 'shared/api/invocators/cm/cm-com-invocators';
-import { CmComOrderSokiInvocatorMethods } from 'shared/api/invocators/cm/cm-com-order-invocators';
-import { CmOtherSokiInvocatorMethods } from 'shared/api/invocators/cm/cm-other-invocators';
+import { CmCatSokiInvocatorMethods } from 'shared/api/invocators/cm/cat-invocators.model';
+import { CmComSokiInvocatorMethods } from 'shared/api/invocators/cm/com-invocators.model';
+import { CmComOrderSokiInvocatorMethods } from 'shared/api/invocators/cm/com-order-invocators.model';
+import { CmOtherSokiInvocatorMethods } from 'shared/api/invocators/cm/other-invocators.model';
 
 class CmCatSokiInvocatorClient extends SokiInvocatorClient<CmCatSokiInvocatorMethods> {}
 export const cmCatClientInvocatorMethods = new CmCatSokiInvocatorClient('CmCatSokiInvocatorClient', {
+  rename: true,
+
   toggleComExistence: true,
   removeNativeComNum: true,
   setNativeComNum: true,
+  setKind: true,
+  clearStack: true,
+
+  remove: true,
+  bringBackToLife: true,
 });
 
 class CmComSokiInvocatorClient extends SokiInvocatorClient<CmComSokiInvocatorMethods> {}
@@ -33,8 +40,8 @@ export const cmComClientInvocatorMethods = new CmComSokiInvocatorClient('CmComSo
   removeChordBlock: true,
   removeTextBlock: true,
 
-  getMp3RulesList: true,
-  getResourceHTMLString: true,
+  remove: true,
+  bringBackToLife: true,
 });
 
 class CmComOrderSokiInvocatorClient extends SokiInvocatorClient<CmComOrderSokiInvocatorMethods> {}
@@ -59,4 +66,7 @@ export const cmComOrderClientInvocatorMethods = new CmComOrderSokiInvocatorClien
 class CmOtherSokiInvocatorClient extends SokiInvocatorClient<CmOtherSokiInvocatorMethods> {}
 export const cmOtherClientInvocatorMethods = new CmOtherSokiInvocatorClient('CmOtherSokiInvocatorClient', {
   setChords: true,
+  setEEWords: true,
+  getMp3RulesList: true,
+  getResourceHTMLString: true,
 });

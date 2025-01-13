@@ -1,10 +1,9 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { CmComWid, IExportableCom } from 'shared/api';
-import { CmComSokiInvocatorMethods } from 'shared/api/invocators/cm/cm-com-invocators';
+import { CmComSokiInvocatorMethods } from 'shared/api/invocators/cm/com-invocators.model';
 import { smylib } from 'shared/utils';
 import { comsFileStore } from './cm-freshes-invocator.base';
-import { cmServerInvocatorMethods } from './cm-invocator';
-import { cmGetMp3RulesList, cmGetResourceHTMLString } from './mp3-rules';
+import { cmServerInvocatorShareMethods } from './cm-invocator.shares';
 import { cmComLanguages } from './values';
 
 // import * as colsJSON from './+case/cols.json';
@@ -53,7 +52,7 @@ export const modifyInvocableCom = async (comw: CmComWid, mapper: (com: IExportab
   com.m = Date.now() + Math.random();
 
   comsFileStore.saveValue();
-  cmServerInvocatorMethods.editedCom(null, com);
+  cmServerInvocatorShareMethods.editedCom(null, com);
 
   return com;
 };
@@ -107,17 +106,17 @@ export const cmComServerInvocatorBase = new CmComSokiInvocatorBaseServer(
     removeChordBlock: removeTextableBlock('c'),
     removeTextBlock: removeTextableBlock('t'),
 
-    getResourceHTMLString: () => cmGetResourceHTMLString,
-    getMp3RulesList: () => cmGetMp3RulesList,
-
     newCom: () => async newCom => {
       const com = { ...newCom, w: Date.now(), m: Date.now() };
       comsFileStore.getValue().push(com);
       comsFileStore.saveValue();
-      cmServerInvocatorMethods.editedCom(null, com);
+      cmServerInvocatorShareMethods.editedCom(null, com);
 
       return com;
     },
+
+    remove: () => comw => modifyInvocableCom(comw, com => (com.isRemoved = 1)),
+    bringBackToLife: () => comw => modifyInvocableCom(comw, com => delete com.isRemoved),
   },
 
   {
@@ -129,9 +128,10 @@ export const cmComServerInvocatorBase = new CmComSokiInvocatorBaseServer(
 
     changeTon: (com, _comw, value) => `Тональность песни ${getCmComNameInBrackets(com)} изменена на ${value}`,
 
-    makeBemoled: (com, _comw, value) => `Песня ${getCmComNameInBrackets(com)} теперь ${value}`,
+    makeBemoled: (com, _comw, value) =>
+      `Песня ${getCmComNameInBrackets(com)} теперь ${value ? 'бемольная' : 'диезная'}`,
 
-    rename: (com, _comw, value) => `Песня ${getCmComNameInBrackets(com)} переименована на ${value}`,
+    rename: com => `Песня ${getCmComNameInBrackets(com)} переименована`,
 
     setAudioLinks: (com, _comw, value) =>
       `Изменение аудио-ссылок для песни ${getCmComNameInBrackets(com)}:\n\n${value}`,
@@ -162,9 +162,9 @@ export const cmComServerInvocatorBase = new CmComSokiInvocatorBaseServer(
       `Удалён${value ? '' : ' новый'} аккордный блок в песне ` +
       `${getCmComNameInBrackets(com)}${value ? `:\n\n${value}` : ''}`,
 
-    getResourceHTMLString: (_, src) => `Запрос HTML-кода ресурcа ${src}`,
-    getMp3RulesList: () => `Запрос MP3-правил`,
-
     newCom: com => `Добавлена новая песня ${getCmComNameInBrackets(com)}`,
+
+    remove: com => `Песня ${getCmComNameInBrackets(com)} удалена`,
+    bringBackToLife: com => `Удалённая песня ${getCmComNameInBrackets(com)} возвращена`,
   },
 );

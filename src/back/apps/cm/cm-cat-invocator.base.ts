@@ -1,9 +1,9 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { CmCatWid, IExportableCat } from 'shared/api';
-import { CmCatSokiInvocatorMethods } from 'shared/api/invocators/cm/cm-cat-invocators';
+import { CmCatSokiInvocatorMethods } from 'shared/api/invocators/cm/cat-invocators.model';
 import { getCmComNameInBrackets } from './cm-com-invocator.base';
 import { catsFileStore } from './cm-freshes-invocator.base';
-import { cmServerInvocatorMethods } from './cm-invocator';
+import { cmServerInvocatorShareMethods } from './cm-invocator.shares';
 
 class CmCatSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmCatSokiInvocatorMethods> {}
 
@@ -14,7 +14,7 @@ const modifyCat = async (catw: CmCatWid, modifier: (cat: IExportableCat) => void
 
   modifier(cat);
   cat.m = Date.now();
-  cmServerInvocatorMethods.editedCat(null, cat);
+  cmServerInvocatorShareMethods.editedCat(null, cat);
 
   return cat;
 };
@@ -22,6 +22,10 @@ const modifyCat = async (catw: CmCatWid, modifier: (cat: IExportableCat) => void
 export const cmCatServerInvocatorBase = new CmCatSokiInvocatorBaseServer(
   'CmCatSokiInvocatorBaseServer',
   {
+    rename: () => (catw, name) => modifyCat(catw, cat => (cat.n = name)),
+    setKind: () => (catw, kind) => modifyCat(catw, cat => (cat.k = kind)),
+    clearStack: () => catw => modifyCat(catw, cat => delete cat.s),
+
     toggleComExistence: () => (comw, catw) =>
       modifyCat(catw, cat => {
         const stackSet = new Set(cat.s);
@@ -39,8 +43,15 @@ export const cmCatServerInvocatorBase = new CmCatSokiInvocatorBaseServer(
       }),
 
     setNativeComNum: () => (comw, catw, value) => modifyCat(catw, cat => (cat.d = { ...cat.d, [comw]: value })),
+
+    remove: () => catw => modifyCat(catw, cat => (cat.isRemoved = 1)),
+    bringBackToLife: () => catw => modifyCat(catw, cat => delete cat.isRemoved),
   },
   {
+    rename: cat => `Категория "${cat.n}" переименована`,
+    setKind: (cat, kind) => `Тип категории "${cat.n}" - ${kind}`,
+    clearStack: cat => `Список песен, принадлежащих категории "${cat.n}", очищен`,
+
     removeNativeComNum: (cat, comw) => `Из сборника "${cat.n}" удалён номер песни ${getCmComNameInBrackets(comw)}`,
 
     setNativeComNum: (cat, comw, _catw, value) =>
@@ -48,5 +59,8 @@ export const cmCatServerInvocatorBase = new CmCatSokiInvocatorBaseServer(
 
     toggleComExistence: (cat, comw) =>
       `Категория "${cat.n}": ${cat.s?.includes(comw) ? 'добавлена' : 'удалена'} песня ${getCmComNameInBrackets(comw)}`,
+
+    remove: cat => `Категория "${cat.n}" удалена`,
+    bringBackToLife: cat => `Удалённая категория "${cat.n}" восстановлена`,
   },
 );

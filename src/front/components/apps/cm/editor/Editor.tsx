@@ -8,6 +8,7 @@ import { IconMusicNote01TwotoneRounded } from '../../../../complect/the-icon/ico
 import { IconTextTwotoneRounded } from '../../../../complect/the-icon/icons/text';
 import { useAuth } from '../../../index/molecules';
 import ChordRedactor from './chord-redactor/ChordRedactor';
+import { cmEditorSokiInvocatorBaseClient } from './cm-editor-invocator.base';
 import EditCategories from './col/categories/EditCategories';
 import EditCompositions from './col/compositions/EditCompositions';
 import './Editor.scss';
@@ -113,3 +114,5 @@ export default function Editor() {
     </Routes>
   );
 }
+
+cmEditorSokiInvocatorBaseClient.$$register();

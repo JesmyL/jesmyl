@@ -3,7 +3,7 @@ import { IconCancel01StrokeRounded } from 'front/complect/the-icon/icons/cancel-
 import { IconGridStrokeRounded } from 'front/complect/the-icon/icons/grid';
 import { IconPlaylist03StrokeRounded } from 'front/complect/the-icon/icons/playlist-03';
 import { InputWithLoadingIcon } from 'front/components/apps/cm/base/InputWithLoadingIcon';
-import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
+import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
 import { makeRegExp } from 'shared/utils';
 import { IconPlusSignCircleStrokeRounded } from '../../../../../../../../../complect/the-icon/icons/plus-sign-circle';

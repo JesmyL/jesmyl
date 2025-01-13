@@ -1,20 +1,18 @@
 import fs from 'fs';
 
 type Modifieds = Record<string, number>;
+const registeredPaths = new Set<string>();
 
 export class FileStore<Value> {
   private value: Value;
-  private writeValueTimeout: Record<string, TimeOut> = {};
   private modifiedTimeStampDict?: Modifieds;
   private filePath = '';
 
-  constructor(
-    private path: string,
-    defaultValue: Value,
-  ) {
-    this.filePath = `${__dirname}${this.path}`;
-    fs.chmodSync(this.filePath, 0o777);
+  constructor(path: string, defaultValue: Value) {
+    this.filePath = `${__dirname}${path}`;
     this.value = this.readValue(defaultValue);
+    if (registeredPaths.has(path)) throw new Error(`The path ${path} was registered again`);
+    registeredPaths.add(path);
   }
 
   private readModifiedsDict(): Modifieds {
@@ -35,10 +33,7 @@ export class FileStore<Value> {
 
   private writeValue(value: Value, filePath = this.filePath) {
     try {
-      clearTimeout(this.writeValueTimeout[filePath]);
-      this.writeValueTimeout[filePath] = setTimeout(() => {
-        fs.writeFileSync(filePath, JSON.stringify(value));
-      }, 10);
+      fs.writeFileSync(filePath, JSON.stringify(value));
       return true;
     } catch (error) {
       return false;
@@ -58,16 +53,18 @@ export class FileStore<Value> {
     this.writeValue(this.value);
   }
 
-  setModifiedTimeStamp(key: string | null) {
+  getFileModifiedAt = () => fs.statSync(this.filePath).mtime.getTime();
+
+  setModifiedTimeStamp(key: string) {
     this.modifiedTimeStampDict ??= this.readModifiedsDict();
-    const mod = (this.modifiedTimeStampDict[key ?? this.path] = Date.now() + Math.random());
+    const mod = (this.modifiedTimeStampDict[key] = Date.now() + Math.random());
     this.saveModifiedsDict();
     return mod;
   }
 
-  getModifiedTimeStamp(key: string | null) {
+  getModifiedTimeStamp(key: string) {
     this.modifiedTimeStampDict ??= this.readModifiedsDict();
-    return this.modifiedTimeStampDict[key ?? this.path];
+    return this.modifiedTimeStampDict[key];
   }
 
   getModifiedTimeStampDict() {

@@ -65,6 +65,8 @@ export interface IExportableCom {
   s?: 3 | 4; // размерность песни
 
   ton?: number;
+
+  isRemoved?: 1;
 }
 
 export interface IExportableCat {
@@ -74,6 +76,8 @@ export interface IExportableCat {
   s?: CmComWid[]; // comWid stack
   d?: Partial<Record<CmComWid, number>>; // dictionary of numbers
   k: string; // kind of cat
+
+  isRemoved?: 1;
 }
 
 export interface IExportableCols {

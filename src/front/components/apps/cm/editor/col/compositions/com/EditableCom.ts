@@ -1,5 +1,4 @@
-import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
-import { mylib } from 'front/utils';
+import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { makeRegExp } from 'shared/utils';
 import { chordDiezEquivalent, gSimpleBemoleChordReg } from '../../../../col/com/Com.complect';
 import { IExportableOrderMe } from '../../../../col/com/order/Order.model';
@@ -18,32 +17,6 @@ export class EditableCom extends EditableComCutBlock {
     this.col.setExportable('n', value);
   }
 
-  scope(action?: string, uniq?: string | number) {
-    return [this.wid, '.', mylib.typ('[action]', action), ':', [].concat(mylib.def(uniq, ['[uniq]'])).join(',')].join(
-      '',
-    );
-  }
-
-  switchLang() {
-    const prev = this.langi;
-    const value = (this.langi = this.langi ? 0 : 1);
-
-    this.exec({
-      action: 'comSetLangi',
-      prev,
-      method: 'set',
-      value,
-      uniq: this.wid,
-      args: {
-        value,
-      },
-    });
-  }
-
-  comeBack() {
-    this.col.comeBackCol('com');
-  }
-
   replaceBemoles(coli: number) {
     if (this.chords === undefined) return;
 
@@ -53,22 +26,6 @@ export class EditableCom extends EditableComCutBlock {
     const val = col.replace(gSimpleBemoleChordReg, chord => chordDiezEquivalent[chord] || chord);
 
     cmComClientInvocatorMethods.changeChordBlock(null, coli, this.wid, val);
-  }
-
-  setTransPosition(value: number | und) {
-    this.exec({
-      prev: this.transPosition,
-      value,
-      method: 'set',
-      action: 'comSetTransPosition',
-      args: {
-        value,
-      },
-    });
-
-    this.transPosition = value;
-
-    this.resetChordLabels();
   }
 
   getRegionNextLetter() {
@@ -87,34 +44,5 @@ export class EditableCom extends EditableComCutBlock {
         .find(num => chars.indexOf(num) < 0);
 
     return next && String.fromCharCode(next);
-  }
-
-  setTranslationPushKind(value: number) {
-    this.exec({
-      action: 'comSetTranslationPushKind',
-      method: 'set',
-      prev: this.translationPushKind,
-      value,
-      args: { value },
-    });
-
-    this.translationPushKind = value;
-  }
-
-  setAudio(val: string) {
-    const prev = this.audio.trim();
-    const value = val.trim().replace(makeRegExp('/\\n{2,}/'), '\n');
-    this.exec({
-      action: 'comSetAudio',
-      method: 'set',
-      prev,
-      value,
-      args: {
-        prev,
-        value,
-        comw: this.wid,
-        name: this.name,
-      },
-    });
   }
 }

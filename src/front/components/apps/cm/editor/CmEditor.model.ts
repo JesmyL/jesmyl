@@ -1,10 +1,9 @@
 import { ReactNode } from 'react';
-import { ShortRealRule } from 'shared/api';
-import { EeStorageStoreType } from '../base/ee-storage/EeStorage.model';
+import { EeStorePack, ShortRealRule } from 'shared/api';
 
 export interface CmEditorStoraged {
   rules: ShortRealRule[];
-  eeStorage: EeStorageStoreType;
+  eeStorage: EeStorePack;
 }
 
 export type ExecVision = ShortRealRule & Partial<Exec> & Partial<ExecVisionVisual>;

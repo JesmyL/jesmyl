@@ -1,7 +1,7 @@
-import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
+import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { mylib } from 'front/utils';
-import { IExportableOrder, IExportableOrderFieldValues, InheritancableOrder, OrderRepeats } from 'shared/api';
-import { FreeExecDict, FreeExecDictUniq } from '../../../../../../../../complect/exer/Exer.model';
+import { IExportableOrder, InheritancableOrder, OrderRepeats } from 'shared/api';
+import { FreeExecDict } from '../../../../../../../../complect/exer/Exer.model';
 import { cmExer } from '../../../../../CmExer';
 import { Order } from '../../../../../col/com/order/Order';
 import { EditableOrderRegion, IExportableOrderMe } from '../../../../../col/com/order/Order.model';
@@ -14,10 +14,6 @@ export class EditableOrder extends Order {
   constructor(me: IExportableOrderMe, com: EditableCom) {
     super(me, com);
     this.com = com;
-  }
-
-  get antiIsVisible() {
-    return this.isVisible ? 0 : 1;
   }
 
   comOrders() {
@@ -112,33 +108,6 @@ export class EditableOrder extends Order {
     this.setExportable('f', val);
   }
 
-  setFieldValue<Key extends keyof IExportableOrderFieldValues>(fieldn: Key, value: IExportableOrderFieldValues[Key]) {
-    this.exec({
-      prev: this.fieldValues[fieldn],
-      value,
-      method: 'set',
-      action: 'comSetOrderFieldValue',
-      args: {
-        value,
-        fieldn,
-      },
-    });
-
-    this.fieldValues[fieldn] = value;
-  }
-
-  scope(action: string, uniq?: FreeExecDictUniq, wid?: number | null) {
-    return [
-      this.com.scope(),
-      '->',
-      mylib.def(wid, this.wid),
-      '.',
-      mylib.typ('[action]', action),
-      ':',
-      ([] as (string | number)[]).concat(mylib.def(uniq, '[uniq]') || []).join(','),
-    ].join('');
-  }
-
   isWithHead() {
     return (
       !this.me.isInherit &&
@@ -153,7 +122,6 @@ export class EditableOrder extends Order {
 
     cmExer.set({
       ...bag,
-      scope: this.scope(bag.action, bag.uniq, wid),
       args: {
         ordw: mylib.def(wid, this.wid),
         comw: this.com.wid,
@@ -236,9 +204,5 @@ export class EditableOrder extends Order {
       }
       return stub;
     }, 0);
-  }
-
-  removeInheritance<Key extends keyof IExportableOrder>(key: Key) {
-    this.setField(key, null);
   }
 }

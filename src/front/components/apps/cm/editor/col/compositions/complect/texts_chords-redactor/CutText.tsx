@@ -20,7 +20,7 @@ export const CutTextRedactor = ({ ccom, texti, text }: { ccom: EditableCom; text
         <IconButton
           Icon={IconScissor01StrokeRounded}
           disabled={preparedCutBlock.disabled}
-          disabledReason={() => exec(preparedCutBlock.disabledReason)}
+          disabledReason={() => preparedCutBlock.disabledReason}
           className="color--ok margin-gap"
           onClick={() => exec(ccom.cutBlock(texti, preparedCutBlock.ords))}
           postfix="Разделить текст"

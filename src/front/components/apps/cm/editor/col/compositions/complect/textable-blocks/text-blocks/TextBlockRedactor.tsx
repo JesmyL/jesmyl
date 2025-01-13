@@ -2,7 +2,7 @@ import IconButton from 'front/complect/the-icon/IconButton';
 import { IconCancel01StrokeRounded } from 'front/complect/the-icon/icons/cancel-01';
 import { IconTextAlignLeftStrokeRounded } from 'front/complect/the-icon/icons/text-align-left';
 import { InputWithLoadingIcon } from 'front/components/apps/cm/base/InputWithLoadingIcon';
-import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
+import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
 import { IconPlusSignCircleStrokeRounded } from '../../../../../../../../../complect/the-icon/icons/plus-sign-circle';
 import { TextCorrectMessages } from '../../../../../complect/TextBlockIncorrectMessages';

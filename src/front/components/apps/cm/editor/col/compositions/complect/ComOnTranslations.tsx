@@ -1,4 +1,4 @@
-import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
+import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { translationPushKinds } from '../../../../col/com/Com.complect';
 import { useCmScreenTranslationCurrentConfig } from '../../../../translation/complect/controlled/hooks/configs';
 import { useEditableCcom } from '../useEditableCcom';

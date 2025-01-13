@@ -9,7 +9,7 @@ import { CorrectsBox } from '../editor/corrects-box/CorrectsBox';
 
 type Props<ChangedValue> = {
   onChange: (value: string) => Promise<ChangedValue>;
-  onInput: (value: string) => void;
+  onInput?: (value: string) => void;
   type?: React.InputHTMLAttributes<HTMLInputElement>['type'];
   defaultValue: string;
   label?: string;
@@ -83,7 +83,7 @@ export const InputWithLoadingIcon = <ChangedValue,>({
           className="full-width pointer"
           value={value}
           onChange={event => {
-            onInput(event.currentTarget.value);
+            onInput?.(event.currentTarget.value);
             setValue(event.currentTarget.value);
           }}
         />
@@ -94,7 +94,7 @@ export const InputWithLoadingIcon = <ChangedValue,>({
           className="full-width pointer"
           value={value}
           onChange={event => {
-            onInput(event.currentTarget.value);
+            onInput?.(event.currentTarget.value);
             setValue(event.currentTarget.value);
           }}
         />

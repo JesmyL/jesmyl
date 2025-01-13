@@ -1,116 +1,14 @@
 import { mylib } from 'front/utils';
 import { makeRegExp } from 'shared/utils';
-import { ExecArgs, FreeExecDict } from '../../../../../complect/exer/Exer.model';
 import { BaseNamed, BaseNamedExportables } from '../../base/BaseNamed';
 import { eeStorage } from '../../base/ee-storage/EeStorage';
-import { cmComClientInvocatorMethods } from '../../cm-invocator-editor.methods';
-import { cmExer } from '../../CmExer';
-import { IEditableCol, IExportableCol } from '../../cols/Cols.model';
+import { IEditableCol } from '../../cols/Cols.model';
 import { CorrectsBox } from '../corrects-box/CorrectsBox';
 import { ICorrect } from '../corrects-box/CorrectsBox.model';
 import { correctNotSlavicNameReg_i } from '../Editor.complect';
 
 export class EditableCol<Col extends BaseNamedExportables> extends BaseNamed<Col> {
-  removed = false;
   incorrectName = false;
-  corrects: Record<string, CorrectsBox | nil> = {};
-
-  renameCol<Coln extends keyof IExportableCol>(
-    name: string,
-    coln: Coln,
-    onFix?: (correct: string) => void,
-    isSetAllText?: boolean,
-  ) {
-    const action = `${coln}Rename`;
-    const prev = this.name;
-
-    this.name = name;
-
-    const exec = this.execCol(
-      {
-        action,
-        prev,
-        method: 'set',
-        value: name,
-        args: { value: name },
-      },
-      coln,
-    );
-
-    cmComClientInvocatorMethods.rename(null, this.wid, name);
-  }
-
-  removeCol<Coln extends keyof IExportableCol>(coln: Coln, isRemoved = true) {
-    this.execCol(
-      {
-        action: `${coln}Del`,
-        method: 'remove',
-      },
-      coln,
-    );
-    return (this.removed = isRemoved);
-  }
-
-  comeBackCol<Coln extends keyof IExportableCol>(coln: Coln) {
-    this.execCol(
-      {
-        action: `${coln}ComeBack`,
-        method: 'set',
-        anti: ({ action, args }) => {
-          if (action === `${coln}Del` && args?.[`${coln}w`] === this.wid) return strategy => strategy.RemoveNew;
-        },
-      },
-      coln,
-    );
-
-    this.removed = false;
-  }
-
-  execCol<Value, Coln extends keyof IExportableCol>(bag: FreeExecDict<Value>, coln: Coln) {
-    return cmExer.set<Value>({
-      ...bag,
-      scope: this.scope(bag.action, bag.uniq),
-      args: {
-        prev: bag.prev,
-        name: this.name,
-        ...bag.args,
-        [`${coln}w`]: this.wid,
-      },
-      generalId: this.wid,
-    });
-  }
-
-  scope(action?: string, uniq?: number | string | (number | string)[]) {
-    return [this.wid, '.', mylib.typ('[no-action]', action), ':', [mylib.def(uniq, '[no-uniq]')].flat().join(',')].join(
-      '',
-    );
-  }
-
-  setFieldCol<Fieldn extends keyof Col, Coln extends keyof IExportableCol>(
-    fieldn: Fieldn,
-    value: Col[Fieldn],
-    actions: Record<Fieldn, string>,
-    coln: Coln,
-    defVal?: Col[Fieldn],
-  ) {
-    this.execCol(
-      {
-        prev: mylib.def(this.getBasic(fieldn), defVal),
-        value,
-        method: 'set',
-        action: actions[fieldn],
-        args: {
-          n: this.name,
-          value,
-        } as ExecArgs<Col[Fieldn]>,
-      },
-      coln,
-    );
-
-    this.setExportable(fieldn, value);
-
-    return this;
-  }
 
   static nameCorrects<Coln extends keyof IEditableCol>(
     name = this.name,

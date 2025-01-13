@@ -1,4 +1,4 @@
-import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
+import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { BottomPopupItem } from '../../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
 import { useConfirm } from '../../../../../../../../../complect/modal/confirm/useConfirm';
 import { IconDelete02StrokeRounded } from '../../../../../../../../../complect/the-icon/icons/delete-02';

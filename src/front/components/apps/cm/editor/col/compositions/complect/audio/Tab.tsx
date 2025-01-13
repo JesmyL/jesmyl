@@ -1,5 +1,5 @@
 import { IconCancelCircleStrokeRounded } from 'front/complect/the-icon/icons/cancel-circle';
-import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
+import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
 import { CmMp3Rule } from 'shared/api';
 import { itIt, makeRegExp } from 'shared/utils';

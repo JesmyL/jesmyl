@@ -1,13 +1,13 @@
 import { DexieDB } from 'front/complect/_DexieDB';
 import { IExportableCat, IExportableCom } from 'shared/api';
-import { ChordPack } from '../col/com/chord-card/ChordCard.model';
+import { EeStorePack } from 'shared/api/complect/apps/cm/complect/ee-store';
+import { ChordPack } from '../../../../../shared/api/complect/apps/cm/complect/chord-card';
 
 interface Storage {
   chordPack: ChordPack;
+  eeStore: EeStorePack;
 
-  comLastModified: number;
-  catLastModified: number;
-  chordPackLastModified: number;
+  lastModified: number;
 
   coms: IExportableCom[];
   cats: IExportableCat[];
@@ -17,16 +17,16 @@ class CmIDB extends DexieDB<Storage> {
   constructor() {
     super(true, 'cm', {
       chordPack: true,
-
-      comLastModified: true,
-      catLastModified: true,
-      chordPackLastModified: true,
+      lastModified: true,
+      eeStore: true,
 
       coms: {
         w: '++',
+        isRemoved: true,
       },
       cats: {
         w: '++',
+        isRemoved: true,
       },
     });
   }

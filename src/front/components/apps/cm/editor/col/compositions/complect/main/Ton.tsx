@@ -1,4 +1,4 @@
-import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
+import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { mylib } from 'front/utils';
 import { useState } from 'react';
 import useModal from '../../../../../../../../complect/modal/useModal';

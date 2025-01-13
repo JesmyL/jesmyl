@@ -1,10 +1,10 @@
 import { mylib } from 'front/utils';
 import { memo, useState } from 'react';
+import { EeStorePack } from 'shared/api';
 import { itIt, makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
 import IconCheckbox from '../../../../../complect/the-icon/IconCheckbox';
 import { eeStorage } from '../../base/ee-storage/EeStorage';
-import { EeStorageStoreType } from '../../base/ee-storage/EeStorage.model';
 
 const radioTitles = ['е/ё', 'е!!', 'ё!!'].map((typeName, type) => <div key={type}>{typeName}</div>);
 
@@ -19,8 +19,8 @@ export const EERulesWord = memo(
     editedWordsRef,
   }: {
     word: string;
-    setEditedWords: (setter: (words: EeStorageStoreType) => EeStorageStoreType) => void;
-    editedWordsRef: { current: EeStorageStoreType };
+    setEditedWords: (setter: (words: EeStorePack) => EeStorePack) => void;
+    editedWordsRef: { current: EeStorePack };
   }) => {
     const [trackState, setTrackState] = useState(editedWordsRef.current[word] ?? eeStorage.get(word));
     const parts = word.split(makeRegExp('/([а-дж-я]*е)/')).filter(itIt);
@@ -34,7 +34,7 @@ export const EERulesWord = memo(
             {parts.map((part, parti) => (
               <th
                 key={parti}
-                className={trackState == null ? 'color--ko' : 'color--ok'}
+                className={trackState == null ? undefined : 'color--ok'}
               >
                 <>
                   {isVariated && <div>{part}</div>}

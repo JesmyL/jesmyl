@@ -1,11 +1,11 @@
+import { useAtomSet } from 'front/complect/atoms';
 import { InputWithLoadingIcon } from 'front/components/apps/cm/base/InputWithLoadingIcon';
-import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
+import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
 import { emptyFunc } from 'shared/utils';
 import Dropdown from '../../../../../../../../complect/dropdown/Dropdown';
 import { DropdownItem } from '../../../../../../../../complect/dropdown/Dropdown.model';
 import { useCheckIsAccessed } from '../../../../../../../../complect/exer/hooks/check-is-accessed';
-import { useExerExec } from '../../../../../../../../complect/exer/hooks/useExer';
 import { useConfirm } from '../../../../../../../../complect/modal/confirm/useConfirm';
 import { IconDashboardSpeed02StrokeRounded } from '../../../../../../../../complect/the-icon/icons/dashboard-speed-02';
 import { IconDelete01StrokeRounded } from '../../../../../../../../complect/the-icon/icons/delete-01';
@@ -16,6 +16,7 @@ import { useAuth } from '../../../../../../../index/molecules';
 import { ChordVisibleVariant } from '../../../../../Cm.model';
 import TheCom from '../../../../../col/com/TheCom';
 import { TextCorrectMessages } from '../../../../complect/TextBlockIncorrectMessages';
+import { removedCompositionsAtom } from '../../atoms';
 import { EditableCom } from '../../com/EditableCom';
 import { useEditableCcom } from '../../useEditableCcom';
 import { EditableCompositionMainTon } from './Ton';
@@ -33,7 +34,7 @@ const meterSizeItems: DropdownItem<3 | 4>[] = [
 
 export default function EditableCompositionMain() {
   const ccom = useEditableCcom();
-  const exec = useExerExec();
+  const setRemovedComs = useAtomSet(removedCompositionsAtom);
   const auth = useAuth();
   const checkIsAccessed = useCheckIsAccessed(auth);
   const [confirmNode, confirm] = useConfirm();
@@ -99,8 +100,10 @@ export default function EditableCompositionMain() {
       {checkIsAccessed(100) && (
         <div
           className="flex full-width between error-message margin-gap-v pointer"
-          onClick={() => {
-            confirm(`Удалить песню "${ccom.name}"?`).then(isRemove => isRemove && exec(ccom.remove()));
+          onClick={async () => {
+            if (!(await confirm(`Удалить песню "${ccom.name}"?`))) return;
+            setRemovedComs(prev => ({ ...prev, [ccom.wid]: ccom.name }));
+            cmComClientInvocatorMethods.remove(null, ccom.wid);
           }}
         >
           <IconDelete01StrokeRounded />

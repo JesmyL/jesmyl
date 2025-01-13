@@ -1,7 +1,7 @@
 import React from 'react';
+import { ChordTrack } from '../../../../../../shared/api/complect/apps/cm/complect/chord-card';
 import Dropdown from '../../../../../complect/dropdown/Dropdown';
 import { IconPlusSignCircleStrokeRounded } from '../../../../../complect/the-icon/icons/plus-sign-circle';
-import { ChordTrack } from '../../col/com/chord-card/ChordCard.model';
 import ChordCardTracked from '../../col/com/chord-card/ChordCardTracked';
 
 const ladLine = Array(20).fill(0);

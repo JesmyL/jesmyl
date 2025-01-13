@@ -37,7 +37,7 @@ const IconButton = <P extends Props = Props>(
 
   return (
     <ConfirmContent
-      confirm={props.confirm}
+      confirm={props.confirm === true ? props.postfix || props.prefix : props.confirm}
       content={onConfirm => {
         const onClick =
           props.onClick &&

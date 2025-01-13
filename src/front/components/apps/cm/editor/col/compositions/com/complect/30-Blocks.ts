@@ -1,7 +1,6 @@
-import { cmComClientInvocatorMethods } from 'front/components/apps/cm/cm-invocator-editor.methods';
 import { Order } from 'front/components/apps/cm/col/com/order/Order';
+import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { mylib } from 'front/utils';
-import { CmComOrderWid } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import { EditableComOrders } from './20-Orders';
 
@@ -73,8 +72,6 @@ export class EditableComBlocks extends EditableComOrders {
 
       this.changeBlock(coln, ccoli, val, true);
     });
-
-    this.updateOrderSticks(coln, coli, 1);
 
     if (coln === 'chords') this.resetChordLabels();
   }
@@ -154,8 +151,8 @@ export class EditableComBlocks extends EditableComOrders {
             if (ord.top.t == null || ord.top.c !== chordi) return;
             const texti = ord.top.t;
             const textBlocks = splitBlock(Order.makeRepeatedText(texts[ord.top.t], ord.top.r));
-            const nextOrder = orda[ordi + 1];
-            let startSlicePositionsLinei = textBlocks[0].length;
+            // const nextOrder = orda[ordi + 1];
+            // let startSlicePositionsLinei = textBlocks[0].length;
 
             textBlocks.forEach((blockLines, blockLinesi, blockLinesa) => {
               if (!blockLines.length) return;
@@ -166,20 +163,20 @@ export class EditableComBlocks extends EditableComOrders {
                 const txti = texti + blockLinesi;
                 this.insertBlocks('texts', txti - 1, block);
 
-                this.addOrder(
-                  {
-                    w: CmComOrderWid.def,
-                    t: txti,
-                    c: chordi + blockLinesi,
-                    s: '++',
-                    p:
-                      blockLinesa.length - 1 === blockLinesi
-                        ? ord.top.p?.slice(startSlicePositionsLinei)
-                        : ord.top.p?.slice(startSlicePositionsLinei, (startSlicePositionsLinei += blockLines.length)),
-                  },
-                  true,
-                  nextOrder?.top?.w,
-                );
+                // this.addOrder(
+                //   {
+                //     w: CmComOrderWid.def,
+                //     t: txti,
+                //     c: chordi + blockLinesi,
+                //     s: '++',
+                //     p:
+                //       blockLinesa.length - 1 === blockLinesi
+                //         ? ord.top.p?.slice(startSlicePositionsLinei)
+                //         : ord.top.p?.slice(startSlicePositionsLinei, (startSlicePositionsLinei += blockLines.length)),
+                //   },
+                //   true,
+                //   nextOrder?.top?.w,
+                // );
               }
             });
           });
