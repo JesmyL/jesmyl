@@ -3,9 +3,9 @@ import { makeRegExp } from 'shared/utils';
 import { chordDiezEquivalent, gSimpleBemoleChordReg } from '../../../../col/com/Com.complect';
 import { IExportableOrderMe } from '../../../../col/com/order/Order.model';
 import { EditableOrder } from '../complect/orders/EditableOrder';
-import { EditableComCutBlock } from './complect/40-CutBlock';
+import { EditableComParseBlocks } from './complect/31-ParseBlocks';
 
-export class EditableCom extends EditableComCutBlock {
+export class EditableCom extends EditableComParseBlocks {
   orderConstructor(me: IExportableOrderMe) {
     return new EditableOrder(me, this);
   }
