@@ -1,37 +1,25 @@
-import { makeRegExp } from 'shared/utils';
-import { isNIs } from 'shared/utils';
-import { IconLink02StrokeRounded } from '../../../../complect/the-icon/icons/link-02';
-import { IconViewStrokeRounded } from '../../../../complect/the-icon/icons/view';
-import { useIsRememberExpand } from '../../../expand/useIsRememberExpand';
 import { mylib } from 'front/utils';
-import { StrongComponentProps } from '../../../strong-control/Strong.model';
-import { strongScopeKeyValueSeparator } from '../../../strong-control/useStrongControl';
-import TheIcon from '../../../the-icon/TheIcon';
-import useIsRedactArea from '../../../useIsRedactArea';
+import { useMemo } from 'react';
 import {
   IScheduleWidget,
   IScheduleWidgetDay,
   IScheduleWidgetDayEvent,
+  ScheduleDayEventScopeProps,
   ScheduleWidgetAttKey,
   ScheduleWidgetDayEventAttValue,
   ScheduleWidgetDayListItemTypeBox,
 } from 'shared/api';
+import { isNIs } from 'shared/utils';
+import { IconLink02StrokeRounded } from '../../../../complect/the-icon/icons/link-02';
+import { IconViewStrokeRounded } from '../../../../complect/the-icon/icons/view';
+import { useIsRememberExpand } from '../../../expand/useIsRememberExpand';
+import TheIcon from '../../../the-icon/TheIcon';
+import useIsRedactArea from '../../../useIsRedactArea';
 import ScheduleWidgetTopicTitle from '../../complect/TopicTitle';
-import {
-  ScheduleWidgetScopePhase,
-  takeStrongScopeMaker,
-  useScheduleWidgetAppAttsContext,
-} from '../../useScheduleWidget';
+import { useScheduleWidgetAppAttsContext } from '../../useScheduleWidget';
 import ScheduleWidgetDayEventPeriodicTranslation from './DayEventPeriodicTranslationAtt';
 
-const makeReg = (phase: ScheduleWidgetScopePhase) => {
-  return makeRegExp(`/(${phase}${strongScopeKeyValueSeparator})\\d+/`);
-};
-
-const dayPhaseMarkerReg = makeReg('dayi');
-const eventPhaseMarkerReg = makeReg('eventMi');
-
-type Props = StrongComponentProps<{
+type Props = {
   typeBox: ScheduleWidgetDayListItemTypeBox;
   event: IScheduleWidgetDayEvent;
   day: IScheduleWidgetDay;
@@ -41,13 +29,18 @@ type Props = StrongComponentProps<{
   isPast: boolean;
   schedule: IScheduleWidget;
   isCanRedact: boolean;
-}>;
+  dayEventScopeProps: ScheduleDayEventScopeProps;
+};
 
 export default function ScheduleWidgetDayEventAtt(props: Props) {
   const [appAtts] = useScheduleWidgetAppAttsContext();
   const appAtt = appAtts[props.attKey];
+  const attScopeProps = useMemo(
+    () => ({ ...props.dayEventScopeProps, attKey: props.attKey }),
+    [props.attKey, props.dayEventScopeProps],
+  );
   const [attTitleNode, isExpand] = useIsRememberExpand(
-    props.scope,
+    JSON.stringify(attScopeProps),
     <>
       <TheIcon name={appAtt.icon} />
       {appAtt.title}
@@ -64,7 +57,6 @@ export default function ScheduleWidgetDayEventAtt(props: Props) {
 
   try {
     let attValue = props.att;
-    let scope = props.scope;
 
     if (mylib.isArr(attValue)) {
       const [dayi, eventMi] = attValue;
@@ -88,8 +80,6 @@ export default function ScheduleWidgetDayEventAtt(props: Props) {
       } else notateNode = <IconLink02StrokeRounded className="color--3 icon-scale-05" />;
 
       if (props.schedule.days && day && event?.atts) {
-        scope = scope.replace(dayPhaseMarkerReg, `$1${dayi}`).replace(eventPhaseMarkerReg, `$1${event.mi}`);
-
         attValue = event.atts[props.attKey];
 
         if (props.schedule.types)
@@ -114,7 +104,7 @@ export default function ScheduleWidgetDayEventAtt(props: Props) {
           <div>
             {att.result?.(
               props.att?.[appAtt.im as never] ?? att.initVal,
-              takeStrongScopeMaker(scope, ' imAttKey/', appAtt.im),
+              { ...attScopeProps, imAttKey: appAtt.im },
               isRedact,
               is => setIsSelfRedact(is ?? isNIs),
               props.schedule,
@@ -127,7 +117,7 @@ export default function ScheduleWidgetDayEventAtt(props: Props) {
         <div>
           {appAtt.result?.(
             attValue ?? appAtt.initVal,
-            scope,
+            attScopeProps,
             isRedact,
             is => setIsSelfRedact(is ?? isNIs),
             props.schedule,

@@ -5,7 +5,9 @@ import { SokiInvokerTranferDto } from './soki';
 export const makeSokiInvocatorBase = <ClassNamePostfix extends string, ToolParam = und, OnEachesRet = und>(
   classNamePostfix: ClassNamePostfix,
   eventerValue: EventerListenScope<SokiInvokerTranferDto<ToolParam>>,
-  onEachInvoke?: OnEachesRet extends und ? void : (onEachesRet: OnEachesRet) => void,
+  onEachInvoke?: OnEachesRet extends und
+    ? void
+    : (onEachesRet: OnEachesRet, data: { tool: ToolParam; name: string; method: string }) => void,
 ) => {
   type Methods = Record<string, (...args: any[]) => any>;
 
@@ -29,7 +31,7 @@ export const makeSokiInvocatorBase = <ClassNamePostfix extends string, ToolParam
         registeredOnEachInvocations[name][method] !== undefined
       ) {
         const retValue = registeredOnEachInvocations[name][method](invokedResult, ...params);
-        onEachInvoke(retValue);
+        onEachInvoke(retValue, { tool, method, name });
       }
       send({ invokedResult }, tool);
     } catch (error) {

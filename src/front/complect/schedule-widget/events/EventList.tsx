@@ -1,3 +1,4 @@
+import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
 import { mylib } from 'front/utils';
 import React, { ReactNode, useMemo, useState } from 'react';
 import { IScheduleWidget, ScheduleWidgetCleans, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
@@ -6,10 +7,10 @@ import DebouncedSearchInput from '../../DebouncedSearchInput';
 import Modal from '../../modal/Modal/Modal';
 import { ModalBody } from '../../modal/Modal/ModalBody';
 import { ModalHeader } from '../../modal/Modal/ModalHeader';
-import StrongEvaButton from '../../strong-control/StrongEvaButton';
 import IconButton from '../../the-icon/IconButton';
 import { IconPlusSignStrokeRounded } from '../../the-icon/icons/plus-sign';
 import { TheIconType } from '../../the-icon/model';
+import { schSokiInvocatorClient } from '../invocators/invocators.methods';
 import ScheduleWidgetEventType from './EventType';
 import { useAttTypeTitleError } from './useAttTypeTitleError';
 
@@ -20,7 +21,6 @@ const eqByTitle = (a: { title: string }, b: { title: string }) => (a.title > b.t
 
 export default function ScheduleWidgetEventList({
   selectScope,
-  scheduleScope,
   postfix,
   schedule,
   Icon,
@@ -28,7 +28,6 @@ export default function ScheduleWidgetEventList({
   usedCounts,
 }: {
   selectScope: string;
-  scheduleScope: string;
   selectFieldName: string;
   postfix: ReactNode;
   schedule: IScheduleWidget;
@@ -68,10 +67,10 @@ export default function ScheduleWidgetEventList({
       );
 
       return (
-        <StrongEvaButton
+        <EvaSendButton
           key={tm}
-          scope={scheduleScope}
-          fieldName="types"
+          // scope={scheduleScope}
+          // fieldName="types"
           className="margin-gap-v flex-max"
           Icon={IconPlusSignStrokeRounded}
           confirm={
@@ -80,16 +79,17 @@ export default function ScheduleWidgetEventList({
             </>
           }
           postfix={node}
-          mapExecArgs={args => {
-            return {
-              ...args,
-              value: { tm, title },
-            };
-          }}
+          // mapExecArgs={args => {
+          //   return {
+          //     ...args,
+          //     value: { tm, title },
+          //   };
+          // }}
+          onSend={() => schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null)}
         />
       );
     });
-  }, [error, scheduleScope, sortedTypes, term]);
+  }, [error, sortedTypes, term]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -118,7 +118,6 @@ export default function ScheduleWidgetEventList({
                   <ScheduleWidgetEventType
                     onSelect={() => setIsModalOpen(false)}
                     schedule={schedule}
-                    scheduleScope={scheduleScope}
                     selectFieldName={selectFieldName}
                     selectScope={selectScope}
                     typeBox={typeBox}

@@ -1,16 +1,17 @@
+import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
 import { useState } from 'react';
+import { IScheduleWidgetUser } from 'shared/api';
 import Modal from '../../../modal/Modal/Modal';
-import StrongEvaButton from '../../../strong-control/StrongEvaButton';
+import { ModalHeader } from '../../../modal/Modal/ModalHeader';
+import IconButton from '../../../the-icon/IconButton';
 import { IconCancel02StrokeRounded } from '../../../the-icon/icons/cancel-02';
 import { IconImage02StrokeRounded } from '../../../the-icon/icons/image-02';
 import { IconLinkBackwardStrokeRounded } from '../../../the-icon/icons/link-backward';
-import { IScheduleWidgetUser } from 'shared/api';
+import { useScheduleScopePropsContext } from '../../complect/scope-contexts/useScheduleScopePropsContext';
+import { schSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetUserTakePhoto from '../users/TakePhoto';
 import ScheduleWidgetUserPhoto from '../users/UserPhoto';
-import { useSchWGamesScopeContext } from './games/Games';
-import { ModalHeader } from '../../../modal/Modal/ModalHeader';
-import IconButton from '../../../the-icon/IconButton';
 
 interface Props {
   user: IScheduleWidgetUser;
@@ -20,7 +21,7 @@ interface Props {
 
 export default function ScheduleWidgetRemovableUserFace({ user, isStriked, buttons }: Props) {
   const rights = useScheduleWidgetRightsContext();
-  const gamesScope = useSchWGamesScopeContext();
+  const scheduleScopeProps = useScheduleScopePropsContext();
   const isUserStriked = isStriked ?? rights.schedule.games?.strikedUsers?.includes(user.mi);
   const [isPhotoOpen, setIsPhotoOpen] = useState(false);
 
@@ -52,24 +53,13 @@ export default function ScheduleWidgetRemovableUserFace({ user, isStriked, butto
           }
         />
         {buttons}
-        {isUserStriked ? (
-          <StrongEvaButton
-            scope={gamesScope}
-            fieldName="strikedUsers"
-            fieldValue={['.', '===', user.mi]}
-            cud="D"
-            Icon={IconLinkBackwardStrokeRounded}
-            className="color--ok"
-          />
-        ) : (
-          <StrongEvaButton
-            scope={gamesScope}
-            fieldName="strikedUsers"
-            fieldValue={user.mi}
-            Icon={IconCancel02StrokeRounded}
-            className="color--ko"
-          />
-        )}
+        <EvaSendButton
+          Icon={isUserStriked ? IconLinkBackwardStrokeRounded : IconCancel02StrokeRounded}
+          className={isUserStriked ? 'color--ok' : 'color--ko'}
+          onSend={() =>
+            schSokiInvocatorClient.toggleGameStrikedUser(null, scheduleScopeProps, user.mi, user.fio ?? user.nick ?? '')
+          }
+        />
       </div>
     </>
   );

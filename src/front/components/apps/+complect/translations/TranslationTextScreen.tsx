@@ -18,7 +18,7 @@ export const TranslationTextScreen = ({ children }: Props) => {
 const Screen = ({ children }: Props) => {
   const schw = +useParams().schw!;
   const schedules = useIndexSchedules();
-  const schedule = schedules.list.find(sch => sch.w === schw);
+  const schedule = schedules?.find(sch => sch.w === schw);
 
   if (schedule === undefined) return <>{children}</>;
 

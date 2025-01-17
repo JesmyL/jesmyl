@@ -1,26 +1,11 @@
 import { User } from 'node-telegram-bot-api';
 import WebSocket from 'ws';
-import {
-  DeviceId,
-  IsInvitedGuestCome,
-  ScheduleWidgetPhotoKey,
-  SecretChat,
-  ServerStoreContent,
-  SimpleKeyValue,
-} from '..';
+import { DeviceId, IsInvitedGuestCome, SecretChat, ServerStoreContent, SimpleKeyValue } from '..';
 import { ExecutionDict, ExecutionReal } from './executer/model';
 
 export const sokiAppNames = ['index', 'cm', 'tuner', 'admin', 'gamer', 'leader', 'bible', 'wed'] as const;
 export const sokiAppNamesSet = new Set(sokiAppNames);
 export type SokiAppName = (typeof sokiAppNames)[number];
-
-export enum SokiSharedKey {
-  ScheduleWidgetPhotos = 'ScheduleWidgetPhotos',
-}
-
-export type SokiSharedValueType = Partial<{
-  [SokiSharedKey.ScheduleWidgetPhotos]: Record<ScheduleWidgetPhotoKey, string>;
-}>;
 
 export interface SokiCapsule {
   auth: LocalSokiAuth | null;
@@ -52,7 +37,6 @@ export interface SokiServerEvent {
     key: string;
     value: string;
   };
-  sharedData?: SokiSharedValueType;
   freshUserContents?: ServerStoreContent[];
   pullFreshUserContentsByTs?: number;
   chatsData?: ChatsData;
@@ -78,10 +62,6 @@ export interface ChatsData {
   users?: SecretChat.ChatMemberUser[];
 }
 
-export type SokiSharedDataValuesBox = Partial<{
-  [Key in SokiSharedKey]: (data: SokiSharedValueType[Key]) => void;
-}>;
-
 export type SokiClientUpdateCortage = [
   number | nil, // index last update
   string | nil, // index short rules JSON md5
@@ -102,18 +82,12 @@ export interface SokiClientEventBody {
   authorization?: { type: 'login'; value: ServerAuthorizationData } | { type: 'register'; value: ServerRegisterData };
   pullData?: SokiClientUpdateCortage;
   execs?: ExecutionDict[];
-  system?: { name: 'reloadFiles' | 'restartWS'; passphrase: string };
   service?: SimpleKeyValue;
   subscribe?: SokiSubscribtionName;
   subscribeData?: SokiClientSubData;
   unsubscribe?: SokiSubscribtionName;
   liveData?: null | Record<SokiClientSubData, unknown>;
   download?: string;
-  shareData?: SokiSharedValueType;
-  getShared?: {
-    prefix?: string;
-    key: SokiSharedKey;
-  };
   serverUserContents?: ServerStoreContent[];
   pullFreshUserContentsByTs?: number;
   chatFetch?: {
@@ -215,6 +189,10 @@ export interface PullEventValue {
   ];
 }
 
+export enum SokiAuthLogin {
+  def = '{SokiAuthLogin}',
+}
+
 export interface SokiAuth extends BaseSokiAuth {
   level: number;
   passw: string;
@@ -223,7 +201,7 @@ export interface SokiAuth extends BaseSokiAuth {
 export interface BaseSokiAuth {
   fio: string;
   nick: string;
-  login: string;
+  login: SokiAuthLogin;
   tgId?: number;
   tgAva?: string;
 }
@@ -234,12 +212,12 @@ export interface LocalSokiAuth extends Partial<BaseSokiAuth> {
 }
 
 export interface ServerAuthorizationData {
-  login: string;
+  login: SokiAuthLogin;
   passw: string;
 }
 
 export interface ServerRegisterData {
-  login: string;
+  login: SokiAuthLogin;
   passw: string;
   rpassw: string;
   fio: string;

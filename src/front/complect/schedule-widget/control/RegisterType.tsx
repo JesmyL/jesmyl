@@ -16,15 +16,16 @@ export default function ScheduleWidgetRegisterType({ scope }: StrongComponentPro
         {isExpand && (
           <>
             <ScheduleWidgetRightControlList
-              scope={scope}
-              fieldName="type"
+              // scope={scope}
+              // fieldName="type"
               rightCtrl={scheduleWidgetRegTypeRights}
               R={rights.schedule.ctrl.type}
               className="margin-gap-l"
               isCantEdit={!rights.isCanTotalRedact}
               isDescriptionsCollect
+              onSend={async () => {}}
             />
-            {rights.isCanTotalRedact && <ScheduleWidgetNewUserRegisterLevel scope={scope} />}
+            {rights.isCanTotalRedact && <ScheduleWidgetNewUserRegisterLevel />}
           </>
         )}
       </div>

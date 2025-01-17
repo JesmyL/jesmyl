@@ -3,7 +3,6 @@ import {
   IScheduleWidgetDay,
   IScheduleWidgetDayEvent,
   IScheduleWidgetUser,
-  ScheduleStorage,
   ScheduleWidgetRegType,
   scheduleWidgetRegTypeRights,
   scheduleWidgetUserRights,
@@ -83,7 +82,7 @@ export type ScheduleWidgetOnCantReadExec = ExecutionDict<
 
 type ScheduleWidgetOnCantReadRule = ExecutionReal<unknown, ExecutionArgs<unknown, { schw: number }, {}>>;
 
-export const indexSchedulesConfig: FilerAppRequirement<ScheduleStorage> = {
+export const indexSchedulesConfig: FilerAppRequirement<IScheduleWidget[]> = {
   ...indexSchedulesConfigOnInit,
   onCantRead: (
     isShareData,
@@ -101,7 +100,7 @@ export const indexSchedulesConfig: FilerAppRequirement<ScheduleStorage> = {
       bag.schw = exec.args?.schw!;
       if (bag.schw === undefined) return 'no_schw';
 
-      bag.schedule = schedules.list.find(sch => sch.w === bag.schw)!;
+      bag.schedule = schedules?.find(sch => sch.w === bag.schw)!;
       if (bag.schedule === undefined) return 'no_sch';
       bag.users = bag.schedule.ctrl.users!;
     }
@@ -138,9 +137,9 @@ export const indexSchedulesConfig: FilerAppRequirement<ScheduleStorage> = {
 
     return scheduleWidgetUserRights.checkIsHasRights(userR, rule.RRej) ? null : whenRejButTs;
   },
-  prepareContent: (schedules: ScheduleStorage, auth): ScheduleStorage => {
+  prepareContent: (schedules: IScheduleWidget[], auth): IScheduleWidget[] => {
     if (!auth) {
-      const list = schedules.list
+      const list = schedules
         .map((schedule): IScheduleWidget | null => {
           if (
             scheduleWidgetRegTypeRights.checkIsHasRights(schedule.ctrl.type, ScheduleWidgetRegType.Public) &&
@@ -164,11 +163,11 @@ export const indexSchedulesConfig: FilerAppRequirement<ScheduleStorage> = {
         })
         .filter(itNNull);
 
-      return { list };
+      return list;
     }
 
     const authLogin = auth.login;
-    const list = schedules.list.map((schedule): IScheduleWidget => {
+    const list = schedules.map((schedule): IScheduleWidget => {
       const user = schedule.ctrl.users.find(user => user.login === authLogin);
 
       if (user === undefined) {
@@ -215,6 +214,7 @@ export const indexSchedulesConfig: FilerAppRequirement<ScheduleStorage> = {
         }
 
         return {
+          m: schedule.m,
           title: '',
           app: schedule.app,
           w: schedule.w,
@@ -312,7 +312,7 @@ export const indexSchedulesConfig: FilerAppRequirement<ScheduleStorage> = {
 
     return {
       ...schedules,
-      list,
+      ...list,
     };
   },
 };

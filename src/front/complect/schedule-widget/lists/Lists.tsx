@@ -1,34 +1,31 @@
+import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
 import { IconArrowRight01StrokeRounded } from '../../../complect/the-icon/icons/arrow-right-01';
 import { IconLeftToRightListBulletStrokeRounded } from '../../../complect/the-icon/icons/left-to-right-list-bullet';
 import { IconPlusSignStrokeRounded } from '../../../complect/the-icon/icons/plus-sign';
 import useIsExpand from '../../expand/useIsExpand';
 import useFullContent from '../../fullscreen-content/useFullContent';
-import { StrongComponentProps } from '../../strong-control/Strong.model';
-import StrongEvaButton from '../../strong-control/StrongEvaButton';
 import IconButton from '../../the-icon/IconButton';
+import { useScheduleScopePropsContext } from '../complect/scope-contexts/useScheduleScopePropsContext';
 import ScheduleWidgetTeamGames from '../control/games/games/Games';
 import ScheduleWidgetRoleList from '../control/roles/RoleList';
+import { schSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import { ScheduleWidgetListCategory } from './Category';
 
-export default function ScheduleWidgetLists({
-  scope,
-  scheduleScope,
-}: StrongComponentProps & { scheduleScope: string }) {
+export default function ScheduleWidgetLists({ scheduleScope }: { scheduleScope: string }) {
   const rights = useScheduleWidgetRightsContext();
-  const listsScope = scope + ' lists';
+  const scheduleScopeProps = useScheduleScopePropsContext();
   const [listsTitle, isExpand] = useIsExpand(
     true,
     'Списки',
     isExpand =>
       isExpand &&
       rights.isCanTotalRedact && (
-        <StrongEvaButton
-          scope={listsScope}
-          fieldName="cats"
+        <EvaSendButton
           Icon={IconPlusSignStrokeRounded}
           prefix="список"
           confirm="Создать новый список?"
+          onSend={() => schSokiInvocatorClient.createListCategory(null, scheduleScopeProps)}
         />
       ),
   );
@@ -42,14 +39,12 @@ export default function ScheduleWidgetLists({
             return (
               <ScheduleWidgetListCategory
                 key={cati}
-                scope={listsScope}
-                scheduleScope={scope}
                 cat={cat}
                 cati={cati}
               />
             );
           })}
-        {rights.isCanRedact && <ScheduleWidgetRoleList scope={scheduleScope} />}
+        {rights.isCanRedact && <ScheduleWidgetRoleList />}
         {rights.isCanRedact && <ScheduleWidgetTeamGames scope={scheduleScope} />}
       </>
     );

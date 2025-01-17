@@ -28,7 +28,7 @@ export default function StrongInputDateTimeExtracter(
     className?: string;
     takeDate: TakeDateComponent;
     takeTime: TakeTimeDiapason;
-    onSend?: (isChanged: boolean, stringValue: string) => void;
+    onSend: (isChanged: boolean, stringValue: string) => void;
     onComponentsChange?: (timeDelta: number, timeString: string, dateString: string, date: Date) => void;
   },
 ) {
@@ -121,10 +121,7 @@ export default function StrongInputDateTimeExtracter(
         description={timeImagine}
         placeholder="Нецифра - разделитель"
         onChange={setInputValue}
-        mapExecArgs={props.mapExecArgs && (args => props.mapExecArgs!(args, timeImagine))}
-        onSend={
-          props.isCanSend !== false && props.onSend ? () => props.onSend!(initTs !== currentTs, timeImagine) : undefined
-        }
+        onSend={async () => props.isCanSend !== false && props.onSend(initTs !== currentTs, timeImagine)}
       />
     </>
   );

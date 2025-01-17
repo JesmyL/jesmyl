@@ -4,7 +4,7 @@ import IconCheckbox from 'front/complect/the-icon/IconCheckbox';
 import { IconBookOpen02StrokeRounded } from 'front/complect/the-icon/icons/book-open-02';
 import { IconCancel01StrokeRounded } from 'front/complect/the-icon/icons/cancel-01';
 import { IconListViewStrokeRounded } from 'front/complect/the-icon/icons/list-view';
-import { cmIDB } from 'front/components/apps/cm/_db/cm-db';
+import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
 import { InputWithLoadingIcon } from 'front/components/apps/cm/base/InputWithLoadingIcon';
 import { cmCatClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useMemo } from 'react';

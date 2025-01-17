@@ -1,10 +1,13 @@
+import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
 import { MyLib, mylib } from 'front/utils';
-import { ReactNode } from 'react';
+import { ReactNode, useMemo } from 'react';
 import {
   indexScheduleGetEventFinishMs,
   IScheduleWidget,
   IScheduleWidgetDay,
   IScheduleWidgetDayEvent,
+  ScheduleDayEventScopeProps,
+  ScheduleDayScopeProps,
   ScheduleWidgetCleans,
 } from 'shared/api';
 import styled from 'styled-components';
@@ -19,14 +22,14 @@ import { IconNotificationOff01StrokeRounded } from '../../../../complect/the-ico
 import { IconSquareStrokeRounded } from '../../../../complect/the-icon/icons/square';
 import { IconViewOffSlashStrokeRounded } from '../../../../complect/the-icon/icons/view-off-slash';
 import { useIsRememberExpand } from '../../../expand/useIsRememberExpand';
-import StrongEvaButton from '../../../strong-control/StrongEvaButton';
 import StrongEditableField from '../../../strong-control/field/StrongEditableField';
 import IconButton from '../../../the-icon/IconButton';
 import useIsRedactArea from '../../../useIsRedactArea';
 import ScheduleWidgetBindAtts from '../../atts/BindAtts';
 import ScheduleWidgetTopicTitle from '../../complect/TopicTitle';
 import ScheduleWidgetDayEventAtts from '../../events/atts/DayEventAtts';
-import { takeStrongScopeMaker, useScheduleWidgetRightsContext } from '../../useScheduleWidget';
+import { schSokiInvocatorClient } from '../../invocators/invocators.methods';
+import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetDayEventRating from './DayEventRating';
 
 const msInMin = mylib.howMs.inMin;
@@ -35,8 +38,6 @@ const mapExecTmArgs = (args: {}) => ({ ...args, techKey: 'tm' });
 const mapExecTgInformArgs = (args: {}) => ({ ...args, techKey: 'tgInform' });
 
 interface Props {
-  scope: string;
-  scheduleScope: string;
   schedule: IScheduleWidget;
   event: IScheduleWidgetDayEvent;
   eventi: number;
@@ -54,6 +55,7 @@ interface Props {
   isForceExpand?: boolean;
   isForceCanRedact?: boolean;
   isForceHideRating?: boolean;
+  dayScopeProps: ScheduleDayScopeProps;
 }
 
 export default function ScheduleWidgetDayEvent(props: Props) {
@@ -62,7 +64,11 @@ export default function ScheduleWidgetDayEvent(props: Props) {
   const rights = useScheduleWidgetRightsContext();
   const box = props.schedule.types[props.event.type];
   const { editIcon, isRedact, isSelfRedact, setIsSelfRedact } = useIsRedactArea(true, null, rights.isCanRedact, true);
-  const selfScope = takeStrongScopeMaker(props.scope, ' eventMi/', props.event.mi);
+  // const selfScope = takeStrongScopeMaker(props.scope, ' eventMi/', props.event.mi);
+  const dayEventScopeProps: ScheduleDayEventScopeProps = useMemo(
+    () => ({ ...props.dayScopeProps, eventMi: props.event.mi }),
+    [props.event.mi],
+  );
 
   const now = Date.now();
   const eventTm = ScheduleWidgetCleans.takeEventTm(props.event, box);
@@ -106,7 +112,7 @@ export default function ScheduleWidgetDayEvent(props: Props) {
   let isInGroup = prevEvent && prevTm === 0 && eventTm === 0;
   let isLastInGroup = prevEvent && prevTm === 0 && eventTm !== 0;
 
-  const [, isExpand, switchIsExpand] = useIsRememberExpand(selfScope);
+  const [, isExpand, switchIsExpand] = useIsRememberExpand(JSON.stringify(dayEventScopeProps));
 
   const isCanExpandEvent =
     props.isForceExpand ??
@@ -196,59 +202,64 @@ export default function ScheduleWidgetDayEvent(props: Props) {
             <div className="sign-line" />
             {isRedact ? (
               <>
-                <StrongEvaButton
-                  scope={selfScope}
-                  fieldName="secret"
-                  fieldValue={props.event.secret ? 0 : 1}
-                  cud="U"
+                <EvaSendButton
+                  // scope={selfScope}
+                  // fieldName="secret"
+                  // fieldValue={props.event.secret ? 0 : 1}
+                  // cud="U"
                   Icon={props.event.secret ? IconCheckmarkSquare02StrokeRounded : IconSquareStrokeRounded}
                   confirm={`Событие ${box.title} ${
                     props.event.secret ? 'больше не только для лидеров' : 'будет только для лидеров'
                   }?`}
                   postfix="Событие только для лидеров"
+                  onSend={async () => {}}
                 />
                 {props.event.tgInform === 0 || isPastEvent || isCurrentEvent ? (
-                  <StrongEvaButton
-                    scope={selfScope}
-                    fieldName="techField"
-                    fieldValue={1}
-                    cud="U"
+                  <EvaSendButton
+                    // scope={selfScope}
+                    // fieldName="techField"
+                    // fieldValue={1}
+                    // cud="U"
                     disabled={isPastEvent || isCurrentEvent}
                     Icon={IconNotificationOff01StrokeRounded}
                     postfix="TG-Напоминания не будет"
-                    mapExecArgs={mapExecTgInformArgs}
+                    // mapExecArgs={mapExecTgInformArgs}
+                    onSend={async () => {}}
                   />
                 ) : (
-                  <StrongEvaButton
-                    scope={selfScope}
-                    fieldName="techField"
-                    fieldValue={0}
-                    cud="U"
+                  <EvaSendButton
+                    // scope={selfScope}
+                    // fieldName="techField"
+                    // fieldValue={0}
+                    // cud="U"
                     disabled={isPastEvent || isCurrentEvent}
                     Icon={IconNotification01StrokeRounded}
                     postfix="TG-Напоминание будет"
-                    mapExecArgs={mapExecTgInformArgs}
+                    // mapExecArgs={mapExecTgInformArgs}
+                    onSend={() => schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null)}
                   />
                 )}
                 <StrongEditableField
                   isRedact
-                  scope={selfScope}
-                  fieldName="techField"
+                  // scope={selfScope}
+                  // fieldName="techField"
                   type="number"
                   value={'' + eventTm}
                   postfix=" мин"
                   title="Продолжительность, мин"
                   Icon={IconClock01StrokeRounded}
-                  mapExecArgs={mapExecTmArgs}
+                  // mapExecArgs={mapExecTmArgs}
+                  onSend={() => schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null)}
                 />
                 <StrongEditableField
                   isRedact
-                  scope={selfScope}
-                  fieldName="field"
+                  // scope={selfScope}
+                  // fieldName="field"
                   value={props.event}
                   fieldKey="topic"
                   title="Тема"
                   Icon={IconBookmark03StrokeRounded}
+                  onSend={() => schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null)}
                 />
               </>
             ) : (
@@ -263,28 +274,28 @@ export default function ScheduleWidgetDayEvent(props: Props) {
             {(isRedact || props.event.dsc) && (
               <StrongEditableField
                 isRedact={isRedact}
-                scope={selfScope}
-                fieldName="field"
+                // scope={selfScope}
+                // fieldName="field"
                 multiline
                 value={props.event}
                 fieldKey="dsc"
                 title="Содержание"
                 textClassName=" "
                 Icon={IconFile02StrokeRounded}
+                onSend={async () => {}}
               />
             )}
             {isRedact ? (
               <ScheduleWidgetBindAtts
+                // dayEventScopeProps={dayEventScopeProps}
                 atts={props.event.atts}
-                scope={selfScope}
                 schedule={props.schedule}
-                scheduleScope={props.scheduleScope}
                 forTitle={<span className="color--7">{box.title}</span>}
               />
             ) : (
               <>
                 <ScheduleWidgetDayEventAtts
-                  scope={selfScope}
+                  dayEventScopeProps={dayEventScopeProps}
                   typeBox={box}
                   event={props.event}
                   day={props.day}
@@ -294,7 +305,7 @@ export default function ScheduleWidgetDayEvent(props: Props) {
                 />
                 {rights.isCanReadTitles && rights.myUser && !props.isForceHideRating && (
                   <ScheduleWidgetDayEventRating
-                    scope={selfScope}
+                    dayEventScopeProps={dayEventScopeProps}
                     event={props.event}
                   />
                 )}

@@ -2,7 +2,7 @@ export type CUD = 'C' | 'U' | 'D';
 export type CRUD = CUD | 'R';
 
 export type StrongComponentProps<Props = {}, ValType extends string | number = string> = Props & {
-  scope: string;
+  scope?: string;
   cud?: CUD;
   mapExecArgs?:
     | ((
@@ -13,7 +13,7 @@ export type StrongComponentProps<Props = {}, ValType extends string | number = s
 };
 
 export type StrongControlProps<Props = {}> = StrongComponentProps<Props> & {
-  fieldName: string;
+  fieldName?: string;
   fieldKey?: unknown;
   fieldValue?: unknown;
   isCanSend?: boolean;

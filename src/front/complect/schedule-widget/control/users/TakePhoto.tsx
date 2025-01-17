@@ -1,11 +1,13 @@
+import { FullContent } from 'front/complect/fullscreen-content/FullContent';
+import { indexIDB } from 'front/components/index/db/index-idb';
 import { useEffect, useRef, useState } from 'react';
+import { IScheduleWidgetUser } from 'shared/api';
+import { isNIs } from 'shared/utils';
 import styled from 'styled-components';
-import useFullContent from '../../../fullscreen-content/useFullContent';
 import IconButton from '../../../the-icon/IconButton';
 import { IconCamera01StrokeRounded } from '../../../the-icon/icons/camera-01';
 import { IconCheckmarkBadge01StrokeRounded } from '../../../the-icon/icons/checkmark-badge-01';
-import { IScheduleWidgetUser } from 'shared/api';
-import { getScheduleWidgetUserPhotoStorageKey, scheduleWidgetPhotosStorage } from '../../storage';
+import { getScheduleWidgetUserPhotoStorageKey } from '../../storage';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetUserPhoto from './UserPhoto';
 
@@ -14,23 +16,23 @@ interface Props {
 }
 
 export default function ScheduleWidgetUserTakePhoto({ user }: Props) {
-  const [fullNode, openFull] = useFullContent(close => {
-    return (
-      <Camera
-        close={close}
-        user={user}
-      />
-    );
-  });
+  const [isFullNodeOpen, setIsFullNodeOpen] = useState(false);
 
   return (
     <>
-      {fullNode}
+      {isFullNodeOpen && (
+        <FullContent onClose={setIsFullNodeOpen}>
+          <Camera
+            close={() => setIsFullNodeOpen(false)}
+            user={user}
+          />
+        </FullContent>
+      )}
       <IconButton
         Icon={IconCamera01StrokeRounded}
         onClick={event => {
           event.stopPropagation();
-          openFull();
+          setIsFullNodeOpen(true);
         }}
       />
     </>
@@ -48,7 +50,7 @@ function Camera({ close, user }: Props & { close: () => void }) {
   const [error, setError] = useState('');
   const [stream, setStream] = useState<MediaStream | null>(null);
   const [src, setSrc] = useState('');
-  const [, setRefresgh] = useState(false);
+  const [, setRefresh] = useState(false);
 
   useEffect(() => {
     if (videoRef.current === null || videoWrapperRef.current === null || canvasRef.current === null) return;
@@ -82,7 +84,7 @@ function Camera({ close, user }: Props & { close: () => void }) {
         });
       } catch (error) {
         console.error(error);
-        setRefresgh(is => !is);
+        setRefresh(isNIs);
         setError('Ошибка');
       }
     })();
@@ -127,7 +129,7 @@ function Camera({ close, user }: Props & { close: () => void }) {
             disabled={!src}
             onClick={async () => {
               stream?.getTracks().forEach(track => track.stop());
-              scheduleWidgetPhotosStorage.set(getScheduleWidgetUserPhotoStorageKey(user, rights.schedule), src);
+              indexIDB.db.schedulePhotos.put({ key: getScheduleWidgetUserPhotoStorageKey(user, rights.schedule), src });
               close();
             }}
           />

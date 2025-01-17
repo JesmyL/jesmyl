@@ -1,51 +1,54 @@
-import { ReactNode, useState } from 'react';
-import { makeAppActionLink } from '../../../../app/AppServiceActions';
+import { ReactNode, useMemo, useState } from 'react';
 import { IconEdit02StrokeRounded } from '../../../../complect/the-icon/icons/edit-02';
 import { IconLink02StrokeRounded } from '../../../../complect/the-icon/icons/link-02';
 import { IconNotification01StrokeRounded } from '../../../../complect/the-icon/icons/notification-01';
 import { IconNotificationOff01StrokeRounded } from '../../../../complect/the-icon/icons/notification-off-01';
-import { IconQrCodeStrokeRounded } from '../../../../complect/the-icon/icons/qr-code';
 import { IconUserRemove02StrokeRounded } from '../../../../complect/the-icon/icons/user-remove-02';
 
 import {
   IScheduleWidgetUser,
-  packScheduleWidgetInviteLink,
+  ScheduleUserScopeProps,
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
-import ShareEvaButton from '../../../ShareEvaButton';
 import Modal from '../../../modal/Modal/Modal';
 import { ModalBody } from '../../../modal/Modal/ModalBody';
 import { ModalHeader } from '../../../modal/Modal/ModalHeader';
-import useToast from '../../../modal/useToast';
-import useQRMaster from '../../../qr-code/useQRMaster';
-import { StrongComponentProps } from '../../../strong-control/Strong.model';
-import StrongEvaButton from '../../../strong-control/StrongEvaButton';
 import IconButton from '../../../the-icon/IconButton';
-import { takeStrongScopeMaker, useScheduleWidgetRightsContext } from '../../useScheduleWidget';
+import { useScheduleScopePropsContext } from '../../complect/scope-contexts/useScheduleScopePropsContext';
+import { ScheduleUserScopePropsContext } from '../../complect/scope-contexts/useScheduleUserScopePropsContext';
+import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetUserTakePhoto from './TakePhoto';
 import { ScheduleWidgetUserEdit } from './UserEdit';
 import ScheduleWidgetUserPhoto from './UserPhoto';
 
-export default function ScheduleWidgetUser({
-  scope,
-  user,
-  balance,
-  asUserPlusPrefix,
-}: StrongComponentProps<{
+interface Props {
   user: IScheduleWidgetUser;
   balance: number;
-  asUserPlusPrefix?: (userNode: ReactNode, userScope: string, user: IScheduleWidgetUser, balance: number) => ReactNode;
-}>) {
+  asUserPlusPrefix?: (userNode: ReactNode, user: IScheduleWidgetUser, balance: number) => ReactNode;
+}
+
+export const ScheduleWidgetUser = (props: Props) => {
+  const scheduleScopeProps = useScheduleScopePropsContext();
+  const userScopeProps: ScheduleUserScopeProps = useMemo(
+    () => ({ ...scheduleScopeProps, userMi: props.user.mi }),
+    [scheduleScopeProps, props.user.mi],
+  );
+  return (
+    <ScheduleUserScopePropsContext.Provider value={userScopeProps}>
+      <ScheduleWidgetUserInContext {...props} />
+    </ScheduleUserScopePropsContext.Provider>
+  );
+};
+
+const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props) => {
   const rights = useScheduleWidgetRightsContext();
   const userName =
     user.nick === undefined
       ? user.fio || <span className="color--7 text-italic">Ссылка</span>
       : `${user.fio && user.fio !== user.nick ? `${user.fio} (${user.nick})` : user.nick} `;
-  const { readQR, qrNode } = useQRMaster();
 
-  const [toastNode, toast] = useToast();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isRedactModalOpen, setIsRedactModalOpen] = useState(false);
 
   const userNode = (
     <div className="flex flex-gap between margin-gap-v">
@@ -71,34 +74,10 @@ export default function ScheduleWidgetUser({
             )}
           </span>
           <span className="flex flex-gap">
-            {user.login === undefined && (
-              <ShareEvaButton
-                prepare={() => {
-                  if (balance < 1) {
-                    toast('Необходимо выдать права');
-                    return;
-                  }
-
-                  const levelTitle = scheduleWidgetUserRights.texts[balance].role?.[1];
-
-                  return {
-                    url: makeAppActionLink(
-                      'index',
-                      'swInvite',
-                      packScheduleWidgetInviteLink(rights.schedule.w, user.mi),
-                    ),
-                    title: `Приглашение ${levelTitle}${user.fio ? ` - ${user.fio}` : ''}`,
-                    text: user.fio
-                      ? `${user.fio}, приветствую! Приглашаю вас в качестве ${levelTitle} на мероприятие ${rights.schedule.title}`
-                      : undefined,
-                  };
-                }}
-              />
-            )}
             <IconButton
               Icon={IconEdit02StrokeRounded}
               className="flex between full-width"
-              onClick={() => setIsModalOpen(true)}
+              onClick={() => setIsRedactModalOpen(true)}
             />
           </span>
         </>
@@ -108,8 +87,8 @@ export default function ScheduleWidgetUser({
 
   return (
     <>
-      {isModalOpen && (
-        <Modal onClose={setIsModalOpen}>
+      {isRedactModalOpen && (
+        <Modal onClose={setIsRedactModalOpen}>
           <ModalHeader>
             <div className="flex between flex-gap">
               <span>
@@ -123,38 +102,11 @@ export default function ScheduleWidgetUser({
               </span>
               <span className="flex flex-gap">
                 <ScheduleWidgetUserTakePhoto user={user} />
-                {user.login === undefined && (
-                  <StrongEvaButton
-                    scope={takeStrongScopeMaker(scope, ' userMi/', user.mi)}
-                    fieldName="userData"
-                    cud="U"
-                    Icon={IconQrCodeStrokeRounded}
-                    mapExecArgs={async args => {
-                      return await readQR(data => {
-                        if (data.appName === 'index' && data.key === 'passport') {
-                          const valueLogin = (data.value as { login: never }).login;
-                          if (rights.schedule.ctrl.users.some(user => valueLogin === user.login)) {
-                            toast('Пользователь уже является участником!', { mood: 'ko' });
-                            return;
-                          }
-                        }
-
-                        return {
-                          ...args,
-                          ...(data.value as {}),
-                        };
-                      });
-                    }}
-                  />
-                )}
               </span>
             </div>
           </ModalHeader>
           <ModalBody>
-            <ScheduleWidgetUserEdit
-              scope={scope}
-              user={user}
-            />
+            <ScheduleWidgetUserEdit user={user} />
             {user.tgId != null && (
               <div className="margin-big-gap-t">
                 {user.tgInform === 0 ||
@@ -179,11 +131,7 @@ export default function ScheduleWidgetUser({
           </ModalBody>
         </Modal>
       )}
-      {toastNode}
-      {qrNode}
-      {asUserPlusPrefix === undefined
-        ? userNode
-        : asUserPlusPrefix(userNode, takeStrongScopeMaker(scope, ' userMi/', user.mi), user, balance)}
+      {asUserPlusPrefix === undefined ? userNode : asUserPlusPrefix(userNode, user, balance)}
     </>
   );
-}
+};

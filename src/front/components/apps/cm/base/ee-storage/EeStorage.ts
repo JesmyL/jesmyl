@@ -1,5 +1,5 @@
 import { EeStorePack } from 'shared/api';
-import { cmIDB } from '../../_db/cm-db';
+import { cmIDB } from '../../_db/cm-idb';
 
 export class EeStorage {
   store?: EeStorePack;

@@ -1,23 +1,27 @@
+import { FullContent } from 'front/complect/fullscreen-content/FullContent';
+import { useState } from 'react';
 import TheButton from '../../../../../Button';
-import useFullContent from '../../../../../fullscreen-content/useFullContent';
 import { useScheduleWidgetRightsContext } from '../../../../useScheduleWidget';
 import ScheduleWidgetTeamGameSetTeamsScreen from './SetTeamsScreen';
 
 export default function ScheduleWidgetTeamGameSetTeamsButton() {
   const rights = useScheduleWidgetRightsContext();
   const criterias = rights.schedule.games?.criterias;
-
-  const [fullNode, openFull] = useFullContent(() => <ScheduleWidgetTeamGameSetTeamsScreen />);
+  const [isOpen, setIsOpen] = useState<unknown>(false);
 
   return (
     <>
-      {fullNode}
       <TheButton
         disabled={!criterias?.length}
-        onClick={() => openFull()}
+        onClick={setIsOpen}
       >
         Сформировать команды
       </TheButton>
+      {isOpen && (
+        <FullContent onClose={setIsOpen}>
+          <ScheduleWidgetTeamGameSetTeamsScreen />
+        </FullContent>
+      )}
     </>
   );
 }

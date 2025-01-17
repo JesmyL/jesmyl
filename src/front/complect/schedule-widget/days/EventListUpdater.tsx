@@ -1,5 +1,11 @@
-import { useEffect, useState } from 'react';
-import { indexScheduleGetDayEventTimes, IScheduleWidget, IScheduleWidgetDay, ScheduleWidgetCleans } from 'shared/api';
+import { useEffect, useMemo, useState } from 'react';
+import {
+  indexScheduleGetDayEventTimes,
+  IScheduleWidget,
+  IScheduleWidgetDay,
+  ScheduleScopeProps,
+  ScheduleWidgetCleans,
+} from 'shared/api';
 import { emptyFunc, itNNull, retNull } from 'shared/utils';
 import styled from 'styled-components';
 import KeyboardInput from '../../keyboard/KeyboardInput';
@@ -11,14 +17,22 @@ interface Props {
   dayi: number;
   schedule: IScheduleWidget;
   dayScope: string;
-  scope: string;
   onClose: (isOpen: false) => void;
+  scheduleScopeProps: ScheduleScopeProps;
 }
 
-export const ScheduleWidgetEventListUpdater = ({ day, dayScope, dayi, schedule, scope, onClose }: Props) => {
+export const ScheduleWidgetEventListUpdater = ({
+  day,
+  dayScope,
+  dayi,
+  schedule,
+  onClose,
+  scheduleScopeProps,
+}: Props) => {
   const [value, setValue] = useState('');
   const [node, setNode] = useState<React.ReactNode>(null);
   const [errorText, setErrorText] = useState('');
+  const dayScopeProps = useMemo(() => ({ ...scheduleScopeProps, dayi }), [dayi, scheduleScopeProps]);
 
   useEffect(() => {
     setErrorText('');
@@ -64,7 +78,6 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayScope, dayi, schedule, 
                 <StrongButton
                   fieldName="types"
                   cud="U"
-                  scope={scope}
                   title="Отправить только новые события"
                   fieldValue={newTatts}
                 />
@@ -75,7 +88,7 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayScope, dayi, schedule, 
               <StrongButton
                 fieldName="wup"
                 cud="U"
-                scope={dayScope}
+                // scope={dayScope}
                 title={`Установить время начала дня: ${ScheduleWidgetCleans.computeDayWakeUpTime(dayWup, 'string')}`}
                 fieldValue={dayWup}
               />
@@ -96,11 +109,10 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayScope, dayi, schedule, 
                 <StyledEvent
                   key={eventi}
                   schedule={theSchedule}
+                  dayScopeProps={dayScopeProps}
                   bottomContent={retNull}
                   day={theDay}
                   dayi={dayi}
-                  scope=""
-                  scheduleScope=""
                   isPastDay={false}
                   event={event}
                   eventTimes={times}
@@ -130,7 +142,7 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayScope, dayi, schedule, 
         );
       }, 300)
       .effect();
-  }, [day, dayScope, dayi, onClose, schedule, scope, value]);
+  }, [day, dayScope, dayScopeProps, dayi, onClose, schedule, value]);
 
   return (
     <div className="margin-giant-gap-t">

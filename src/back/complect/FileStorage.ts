@@ -1,4 +1,5 @@
 import fs from 'fs';
+import { itIt } from 'shared/utils';
 
 type Modifieds = Record<string, number>;
 const registeredPaths = new Set<string>();
@@ -36,7 +37,25 @@ export class FileStore<Value> {
       fs.writeFileSync(filePath, JSON.stringify(value));
       return true;
     } catch (error) {
-      return false;
+      try {
+        let prev = '/';
+
+        filePath
+          .split('/')
+          .filter(itIt)
+          .slice(0, -1)
+          .forEach(pathPart => {
+            const path = `${prev}${pathPart}`;
+            if (!fs.existsSync(path)) fs.mkdirSync(path);
+            prev = `${path}/`;
+          });
+
+        fs.writeFileSync(filePath, JSON.stringify(value));
+
+        return true;
+      } catch (error) {
+        return false;
+      }
     }
   }
 

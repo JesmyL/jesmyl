@@ -1,11 +1,13 @@
+import { FullContent } from 'front/complect/fullscreen-content/FullContent';
+import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/useScheduleScopePropsContext';
+import { schSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
 import { mylib } from 'front/utils';
 import { useMemo, useState } from 'react';
-import { IScheduleWidgetTeamCriteria, IScheduleWidgetUser } from 'shared/api';
+import { IScheduleWidgetTeamCriteria, IScheduleWidgetUser, ScheduleGameCriteriaScopeProps } from 'shared/api';
+import { isNIs } from 'shared/utils';
 import TheButton from '../../../../Button';
 import DebouncedSearchInput from '../../../../DebouncedSearchInput';
 import { ExpandableContent } from '../../../../expand/ExpandableContent';
-import useFullContent from '../../../../fullscreen-content/useFullContent';
-import { StrongComponentProps } from '../../../../strong-control/Strong.model';
 import StrongEditableField from '../../../../strong-control/field/StrongEditableField';
 import IconButton from '../../../../the-icon/IconButton';
 import { IconPencilEdit01StrokeRounded } from '../../../../the-icon/icons/pencil-edit-01';
@@ -16,14 +18,22 @@ import { checkIsUserPhotoable } from '../utils';
 import ScheduleWidgetTeamsCriteriaSorterScreen from './sort/SorterScreen';
 
 interface Props {
+  criteriai: number;
   criteria: IScheduleWidgetTeamCriteria;
 }
 
 const itemIt = <Item,>({ item }: { item: Item }) => item;
 
-export default function ScheduleWidgetSortCriteria({ scope, criteria }: StrongComponentProps & Props) {
+export default function ScheduleWidgetSortCriteria({ criteria, criteriai }: Props) {
   const rights = useScheduleWidgetRightsContext();
   const [isRenaming, setIsRenaming] = useState(false);
+  const [isOpenSorter, setIsOpenSorter] = useState<unknown>(false);
+  const [insertUser, setInsertUser] = useState<IScheduleWidgetUser | null>(null);
+  const scheduleScopeProps = useScheduleScopePropsContext();
+  const criteriaScopeProps: ScheduleGameCriteriaScopeProps = useMemo(
+    () => ({ ...scheduleScopeProps, criteriai }),
+    [criteriai, scheduleScopeProps],
+  );
 
   const [usersForSort, uncriteriedUsers, sortedUsers] = useMemo(() => {
     const uncriteriedUsers: IScheduleWidgetUser[] = [];
@@ -56,34 +66,20 @@ export default function ScheduleWidgetSortCriteria({ scope, criteria }: StrongCo
     [uncriteriedUsers, term],
   );
 
-  const [sorterScreenNode, openSorterScreen] = useFullContent<IScheduleWidgetUser>((close, insertUser) => {
-    return (
-      <ScheduleWidgetTeamsCriteriaSorterScreen
-        scope={scope}
-        criteria={criteria}
-        uncriteriedUsers={uncriteriedUsers}
-        usersForSort={usersForSort}
-        close={close}
-        singleInsertUser={insertUser}
-      />
-    );
-  });
-
   return (
     <>
-      {sorterScreenNode}
-
       <ExpandableContent
         title={
           <div className="flex flex-gap">
             <StrongEditableField
-              scope={scope}
-              fieldName="title"
               value={criteria.title}
               placeholder="Новый критерий"
               isRedact={isRenaming}
+              onSend={value =>
+                schSokiInvocatorClient.setGameCriteriaTitle(null, criteriaScopeProps, value, criteria.title)
+              }
             />
-            <IconPencilEdit01StrokeRounded onClick={() => setIsRenaming(is => !is)} />
+            <IconPencilEdit01StrokeRounded onClick={() => setIsRenaming(isNIs)} />
           </div>
         }
       >
@@ -105,7 +101,10 @@ export default function ScheduleWidgetSortCriteria({ scope, criteria }: StrongCo
                   buttons={
                     <IconButton
                       Icon={IconSortingAZ01StrokeRounded}
-                      onClick={() => openSorterScreen(false, user)}
+                      onClick={() => {
+                        setIsOpenSorter(true);
+                        setInsertUser(user);
+                      }}
                     />
                   }
                 />
@@ -122,8 +121,20 @@ export default function ScheduleWidgetSortCriteria({ scope, criteria }: StrongCo
                 user={user}
               />
             ))}
-            <TheButton onClick={() => openSorterScreen()}>Распределить</TheButton>
+            <TheButton onClick={setIsOpenSorter}>Распределить</TheButton>
           </>
+        )}
+        {!isOpenSorter || (
+          <FullContent onClose={setIsOpenSorter}>
+            <ScheduleWidgetTeamsCriteriaSorterScreen
+              criteria={criteria}
+              criteriaScopeProps={criteriaScopeProps}
+              uncriteriedUsers={uncriteriedUsers}
+              usersForSort={usersForSort}
+              onClose={setIsOpenSorter}
+              singleInsertUser={insertUser}
+            />
+          </FullContent>
         )}
       </ExpandableContent>
     </>

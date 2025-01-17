@@ -1,14 +1,11 @@
-import { SokiAppName } from '../../soki';
+import { SokiAppName, SokiAuthLogin } from '../../soki';
 import { ScheduleWidgetRegType, ScheduleWidgetUserRoleRight } from './rights';
 
 export enum IScheduleWidgetWid {
   def = 1,
 }
 export enum IScheduleWidgetUserMi {
-  def = 1,
-}
-export enum IScheduleWidgetUserLogin {
-  def = 'string',
+  def = 0,
 }
 export enum IScheduleWidgetTeamMi {
   def = 1,
@@ -34,7 +31,7 @@ export enum IScheduleWidgetUserTgId {
 export type ScheduleWidgetPhotoKey =
   | `${IScheduleWidgetWid}/mi:${IScheduleWidgetUserMi}`
   | `tg.${IScheduleWidgetUserTgId}`
-  | `login.${IScheduleWidgetUserLogin}`;
+  | `login.${SokiAuthLogin}`;
 
 export interface ScheduleStorage {
   list: IScheduleWidget[];
@@ -47,7 +44,7 @@ export interface IScheduleWidgetLists {
 
 export interface IScheduleWidgetListUnit {
   mi: number;
-  cat: IScheduleWidgetUserCati;
+  cati: IScheduleWidgetUserCati;
   title: string;
   dsc: string;
 }
@@ -60,20 +57,22 @@ export interface IScheduleWidgetListCat {
 
 export interface IScheduleWidget {
   w: IScheduleWidgetWid;
+  m: number;
+  isRemoved?: 1;
   start: number;
   title: string;
   topic: string;
   dsc: string;
   days: IScheduleWidgetDay[];
-  withTech?: num;
+  withTech?: 1 | nil;
   types: ScheduleWidgetDayListItemTypeBox[];
   tatts: ScheduleWidgetAppAttCustomized[];
   app: SokiAppName;
   ctrl: IScheduleWidgetCtrl;
   games?: IScheduleWidgetTeamGames;
   lists: IScheduleWidgetLists;
-  tgInform?: num;
-  tgChatReqs?: `${number}`;
+  tgInform?: 0;
+  tgChatReqs?: string;
   tgInformTime: number;
 }
 
@@ -188,14 +187,14 @@ export interface IScheduleWidgetTeamGames {
 export interface IScheduleWidgetRole {
   mi: number;
   title: string;
-  user?: number;
+  userMi?: IScheduleWidgetUserMi;
   icon?: KnownIconName;
-  cat?: number;
+  cati?: number;
 }
 
 export interface IScheduleWidgetUser {
   mi: IScheduleWidgetUserMi;
-  login?: IScheduleWidgetUserLogin;
+  login?: SokiAuthLogin;
   fio?: string;
   nick?: string;
   R?: number;
@@ -212,3 +211,48 @@ export type ScheduleWidgetDayEventAttValue = ScheduleWidgetAttOwnValue | Schedul
 
 export type ScheduleWidgetAttRef = [number, number];
 export type ScheduleWidgetAttOwnValue = Record<string, unknown>;
+
+////////////////////////////////////// scopes
+
+export type ScheduleScopeProps = {
+  schw: IScheduleWidgetWid;
+};
+
+export type ScheduleListCategoryScopeProps = ScheduleScopeProps & {
+  cati: number;
+};
+
+export type ScheduleGameScopeProps = ScheduleScopeProps & {
+  gameMi: IScheduleWidgetTeamGameMi;
+};
+
+export type ScheduleGameCriteriaScopeProps = ScheduleScopeProps & {
+  criteriai: number;
+};
+
+export type ScheduleUnitScopeProps = ScheduleScopeProps & {
+  unitMi: number;
+};
+
+export type ScheduleRoleScopeProps = ScheduleScopeProps & {
+  roleMi: number;
+};
+
+export type ScheduleUserScopeProps = ScheduleScopeProps & {
+  userMi: IScheduleWidgetUserMi;
+};
+
+export type ScheduleUserListMemberScopeProps = ScheduleUserScopeProps & ScheduleListCategoryScopeProps;
+
+export type ScheduleDayScopeProps = ScheduleScopeProps & {
+  dayi: number;
+};
+
+export type ScheduleDayEventScopeProps = ScheduleDayScopeProps & {
+  eventMi: IScheduleWidgetDayEventMi;
+};
+
+export type ScheduleDayEventAttImagineScopeProps = ScheduleDayEventScopeProps & {
+  imAttKey?: `[SCH]:${string}`;
+  attKey: `[${string}]:${string}`;
+};

@@ -4,7 +4,7 @@ import DebouncedSearchInput from 'front/complect/DebouncedSearchInput';
 import { mylib } from 'front/utils';
 import { useEffect } from 'react';
 import { CmComWid, IExportableCom } from 'shared/api';
-import { cmIDB } from '../_db/cm-db';
+import { cmIDB } from '../_db/cm-idb';
 import { Com } from '../col/com/Com';
 
 export const categoryTermAtom = atom('');

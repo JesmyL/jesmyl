@@ -23,7 +23,7 @@ export const IndexScheduleWidgetTranslations = () => {
   const deviceId = useDeviceId();
 
   const schw = +useParams().schw!;
-  const schedule = isNaN(schw) ? null : schedules.list.find(item => item.w === schw);
+  const schedule = isNaN(schw) ? null : schedules?.find(item => item.w === schw);
 
   useEffect(() => {
     if (!schedule) return;

@@ -2,7 +2,6 @@ import { ScheduleWidgetAppAtts } from 'front/complect/schedule-widget/ScheduleWi
 import React, { Suspense } from 'react';
 import { Link, Route } from 'react-router-dom';
 import { CmComBindAttach, scheduleWidgetUserRights, ScheduleWidgetUserRoleRight } from 'shared/api';
-import { getObjectFromScope } from '../../../../complect/strong-control/useStrongControl';
 import IconButton from '../../../../complect/the-icon/IconButton';
 import { IconLinkSquare01SolidRounded } from '../../../../complect/the-icon/icons/link-square-01';
 import CmExternalComListAtt from './complect/CmExternalComListAtt';
@@ -18,7 +17,7 @@ export const cmOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
     R: ScheduleWidgetUserRoleRight.Free,
     U: scheduleWidgetUserRights.includeRights(ScheduleWidgetUserRoleRight.Redact),
     result: (value, scope, isRedact, switchIsRedact) => {
-      const { dayi, eventMi, attKey } = getObjectFromScope(scope);
+      const { dayi, eventMi, attKey } = scope;
       const [, , attMi] = attKey.split(':');
       const listPath = `${dayi}/${eventMi}/${attMi || '-'}/com-list`;
 
@@ -34,7 +33,6 @@ export const cmOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
           <CmExternalComListAtt
             switchIsRedact={switchIsRedact}
             isRedact={isRedact}
-            scope={scope}
             value={value}
             listPath={listPath}
           />

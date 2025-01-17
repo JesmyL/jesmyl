@@ -7,8 +7,6 @@ import { ScheduleWidgetShareButtons } from '../ShareButtons';
 import ScheduleWidgetSortCriterias from '../criterias/SortCriterias';
 import ScheduleWidgetTeamGameList from './GameList';
 
-export const [SchWGamesScopeContext, useSchWGamesScopeContext] = contextCreator('');
-export const [SchWGameScopeContext, useSchWGameScopeContext] = contextCreator('');
 export const [SchWGameContext, useSchWGameContext] = contextCreator<IScheduleWidgetTeamGame>(null!);
 
 export default function ScheduleWidgetTeamGames({ scope }: StrongComponentProps) {
@@ -18,16 +16,15 @@ export default function ScheduleWidgetTeamGames({ scope }: StrongComponentProps)
     <>Командные игры</>,
     isExpand => isExpand && <ScheduleWidgetShareButtons />,
   );
-  const gamesScope = `${scope} games`;
 
   return (
     <>
       <h3>{teamsExpandNode}</h3>
       {isTeamsExpand && (
-        <SchWGamesScopeContext.Provider value={gamesScope}>
-          {rights.isCanRedact && <ScheduleWidgetSortCriterias scope={scope} />}
+        <>
+          {rights.isCanRedact && <ScheduleWidgetSortCriterias />}
           <ScheduleWidgetTeamGameList />
-        </SchWGamesScopeContext.Provider>
+        </>
       )}
     </>
   );

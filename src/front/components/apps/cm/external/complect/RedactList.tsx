@@ -2,14 +2,9 @@ import { useState } from 'react';
 import { CmComBindAttach, CmComWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import { FullContent } from '../../../../../complect/fullscreen-content/FullContent';
-import StrongEvaButton from '../../../../../complect/strong-control/StrongEvaButton';
 import IconButton from '../../../../../complect/the-icon/IconButton';
 import { IconArrangeStrokeRounded } from '../../../../../complect/the-icon/icons/arrange';
 import { IconCalendar03StrokeRounded } from '../../../../../complect/the-icon/icons/calendar-03';
-import { IconCheckmarkSquare02StrokeRounded } from '../../../../../complect/the-icon/icons/checkmark-square-02';
-import { IconMinusSignSquareStrokeRounded } from '../../../../../complect/the-icon/icons/minus-sign-square';
-import { IconPlusSignCircleStrokeRounded } from '../../../../../complect/the-icon/icons/plus-sign-circle';
-import { IconSquareStrokeRounded } from '../../../../../complect/the-icon/icons/square';
 import { Com } from '../../col/com/Com';
 import { ComFaceList } from '../../col/com/face/list/ComFaceList';
 import { CmComListSearchFilterInput } from '../../complect/ComListSearchFilterInput';
@@ -70,28 +65,27 @@ export default function CmExternalComListAttRedactList({
               setCcomw(com.wid);
               setIsOpenComposition(true);
             }}
-            comDescription={com => {
-              return value.comws?.includes(com.wid) ? (
-                <StrongEvaButton
-                  scope={scope}
-                  fieldName="listKey"
-                  fieldKey="comws"
-                  fieldValue={['.', '===', com.wid]}
-                  cud="D"
-                  Icon={IconMinusSignSquareStrokeRounded}
-                  className="color--ko"
-                />
-              ) : (
-                <StrongEvaButton
-                  scope={scope}
-                  fieldName="listKey"
-                  fieldKey="comws"
-                  fieldValue={com.wid}
-                  cud="C"
-                  Icon={IconPlusSignCircleStrokeRounded}
-                />
-              );
-            }}
+            // comDescription={com => {
+            //   return value.comws?.includes(com.wid) ? (
+            //     <StrongEvaButton
+            //       fieldName="listKey"
+            //       fieldKey="comws"
+            //       fieldValue={['.', '===', com.wid]}
+            //       cud="D"
+            //       Icon={IconMinusSignSquareStrokeRounded}
+            //       className="color--ko"
+            //     />
+            //   ) : (
+            //     <StrongEvaButton
+            //       scope={scope}
+            //       fieldName="listKey"
+            //       fieldKey="comws"
+            //       fieldValue={com.wid}
+            //       cud="C"
+            //       Icon={IconPlusSignCircleStrokeRounded}
+            //     />
+            //   );
+            // }}
           />
         </div>
       </div>
@@ -101,26 +95,26 @@ export default function CmExternalComListAttRedactList({
           <MeetingsInner
             meetings={meetings}
             onEventClick={emptyFunc}
-            asEventBox={event =>
-              value.eventw === event.wid ? (
-                <StrongEvaButton
-                  scope={scope}
-                  fieldName="singleKey"
-                  fieldKey="eventw"
-                  cud="D"
-                  Icon={IconCheckmarkSquare02StrokeRounded}
-                />
-              ) : (
-                <StrongEvaButton
-                  scope={scope}
-                  fieldName="singleKey"
-                  fieldKey="eventw"
-                  fieldValue={event.wid}
-                  cud="U"
-                  Icon={IconSquareStrokeRounded}
-                />
-              )
-            }
+            // asEventBox={event =>
+            //   value.eventw === event.wid ? (
+            //     <StrongEvaButton
+            //       scope={scope}
+            //       fieldName="singleKey"
+            //       fieldKey="eventw"
+            //       cud="D"
+            //       Icon={IconCheckmarkSquare02StrokeRounded}
+            //     />
+            //   ) : (
+            //     <StrongEvaButton
+            //       scope={scope}
+            //       fieldName="singleKey"
+            //       fieldKey="eventw"
+            //       fieldValue={event.wid}
+            //       cud="U"
+            //       Icon={IconSquareStrokeRounded}
+            //     />
+            //   )
+            // }
           />
         </FullContent>
       )}

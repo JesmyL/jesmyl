@@ -1,7 +1,9 @@
+import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/useScheduleScopePropsContext';
+import { schSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
+import { mylib } from 'front/utils';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Dropdown from '../../../../dropdown/Dropdown';
 import useToast from '../../../../modal/useToast';
-import { MyLib, mylib } from 'front/utils';
 import { excel2jsonParserBox } from '../../../../parseExcel2Json';
 import { StrongComponentProps } from '../../../../strong-control/Strong.model';
 import StrongButton from '../../../../strong-control/StrongButton';
@@ -21,6 +23,7 @@ export function ScheduleWidgetUserAddByExcelContent({ scope, close }: StrongComp
     () => rights.schedule.ctrl.users.reduce((set, user) => (user.fio ? set.add(user.fio) : set), new Set<string>()),
     [rights.schedule.ctrl.users],
   );
+  const scheduleScopeProps = useScheduleScopePropsContext();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [toastNode, toast] = useToast();
@@ -161,13 +164,10 @@ export function ScheduleWidgetUserAddByExcelContent({ scope, close }: StrongComp
       </div>
       <div className="flex center margin-big-gap">
         <StrongButton
-          fieldName="addUsers"
-          cud="U"
-          fieldValue={resultUsers}
-          scope={scope}
           disabled={!resultUsers?.length}
           title="Загрузить список"
-          onSuccess={() => close()}
+          onSuccess={close}
+          onSend={() => schSokiInvocatorClient.addUsersByExcel(null, scheduleScopeProps, resultUsers ?? [])}
         />
       </div>
       {!existsUsers?.length || (

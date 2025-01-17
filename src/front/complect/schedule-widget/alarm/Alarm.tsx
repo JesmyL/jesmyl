@@ -8,7 +8,7 @@ export default function ScheduleWidgetAlarm({ isForceShow }: { isForceShow?: boo
 
   return (
     <>
-      {(isForceShow || schedules.list.some(schedule => schedule.start)) && (
+      {(isForceShow || schedules?.some(schedule => schedule.start)) && (
         <ScheduleWidgetAlarmContent observeSchw={schw} />
       )}
     </>

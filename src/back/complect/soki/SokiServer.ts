@@ -38,10 +38,10 @@ export class SokiServer extends SokiServerOtherEvents {
         if (eventData.body.invoke) {
           onSokiServerEventerInvocatorInvoke.invoke({
             invoke: eventData.body.invoke,
-            send: (params, client) => {
-              this.send({ appName: 'index', requestId: eventData.requestId, ...params }, client);
+            send: (params, tool) => {
+              this.send({ appName: 'index', requestId: eventData.requestId, ...params }, tool.client);
             },
-            tool: client,
+            tool: { client, auth: eventData.auth },
           });
 
           return;
@@ -55,8 +55,6 @@ export class SokiServer extends SokiServerOtherEvents {
         if (await this.doOnServiceActions(doProps)) return;
         if (await this.doOnSubscribes(doProps)) return;
         if (await this.doOnExecs(doProps)) return;
-        if (await this.doOnShareData(doProps)) return;
-        if (await this.doOnGetShared(doProps)) return;
         if (await this.doOnDownloads(doProps)) return;
         if (await this.doOnServerStore(doProps)) return;
         if (await this.doOnOtherEvents(doProps)) return;

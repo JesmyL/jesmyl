@@ -2,7 +2,7 @@ import { mylib } from 'front/utils';
 import { memo, useEffect, useState } from 'react';
 import { itIt, makeRegExp } from 'shared/utils';
 import { bibleMolecule } from '../../../bible/molecules';
-import { cmIDB } from '../../_db/cm-db';
+import { cmIDB } from '../../_db/cm-idb';
 import { useEditableCats, useEditableComs } from '../col/useEditableCols';
 
 const emptyArr = [] as [];

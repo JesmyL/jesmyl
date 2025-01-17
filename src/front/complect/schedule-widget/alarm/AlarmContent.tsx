@@ -77,7 +77,7 @@ export default function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJu
   }, [updates]);
 
   const scheduleBoxes = useMemo(() => {
-    return (schedule ? [schedule] : [...schedules.list].sort((a, b) => a.start - b.start))
+    return (schedule ? [schedule] : [...(schedules ?? [])].sort((a, b) => a.start - b.start))
       .map(sch => {
         const lastFullDayIndex = mylib.findLastIndex(sch.days, day => day.list.length) ?? -1;
         const days = sch.days.slice(0, lastFullDayIndex + 1) ?? [];
@@ -100,7 +100,7 @@ export default function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJu
         };
       })
       .filter(itNNull);
-  }, [schedule, schedules.list]);
+  }, [schedule, schedules]);
 
   const [node, fullValue, observeSchedule]: [ReactNode, FullContentValue | und, (typeof scheduleBoxes)[number] | und] =
     useMemo(() => {
@@ -163,6 +163,7 @@ export default function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJu
                   dayi={currDayi}
                   schedule={currSchBox.sch}
                   isForceOpen
+                  scheduleScopeProps={{ schw: currSchBox.sch.w }!}
                 />
               );
             };
@@ -309,6 +310,7 @@ export default function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJu
                       dayi={1}
                       schedule={willSchBox.sch}
                       isForceOpen
+                      scheduleScopeProps={{ schw: willSchBox.sch.w }}
                     />
                   );
                 };
@@ -320,6 +322,7 @@ export default function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJu
                       dayi={0}
                       schedule={willSchBox.sch}
                       isForceOpen
+                      scheduleScopeProps={{ schw: willSchBox.sch.w }}
                     />
                   );
                 };

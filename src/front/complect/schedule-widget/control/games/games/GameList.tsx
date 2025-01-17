@@ -1,13 +1,15 @@
+import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/useScheduleScopePropsContext';
+import { schSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
+import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
 import useIsExpand from '../../../../expand/useIsExpand';
-import StrongEvaButton from '../../../../strong-control/StrongEvaButton';
 import { IconPlusSignStrokeRounded } from '../../../../the-icon/icons/plus-sign';
-import { takeStrongScopeMaker, useScheduleWidgetRightsContext } from '../../../useScheduleWidget';
-import { SchWGameContext, SchWGameScopeContext, useSchWGamesScopeContext } from './Games';
+import { useScheduleWidgetRightsContext } from '../../../useScheduleWidget';
+import { SchWGameContext } from './Games';
 import ScheduleWidgetTeamGame from './game/Game';
 
 export default function ScheduleWidgetTeamGameList() {
   const rights = useScheduleWidgetRightsContext();
-  const gamesScope = useSchWGamesScopeContext();
+  const scheduleScopeProps = useScheduleScopePropsContext();
 
   const [teamsListExpandNode, isTeamsListExpand] = useIsExpand(
     false,
@@ -16,12 +18,11 @@ export default function ScheduleWidgetTeamGameList() {
       isExpand &&
       rights.isCanTotalRedact &&
       !rights.schedule.games?.list.some(team => !team.title) && (
-        <StrongEvaButton
-          scope={gamesScope}
-          fieldName="list"
+        <EvaSendButton
           Icon={IconPlusSignStrokeRounded}
           prefix="игра"
           confirm="Добавить новую игру?"
+          onSend={() => schSokiInvocatorClient.addGame(null, scheduleScopeProps)}
         />
       ),
   );
@@ -33,14 +34,12 @@ export default function ScheduleWidgetTeamGameList() {
         <>
           {rights.schedule.games?.list.map(game => {
             return (
-              <SchWGameScopeContext.Provider
+              <SchWGameContext.Provider
                 key={game.mi}
-                value={takeStrongScopeMaker(gamesScope, ` gameMi/`, game.mi)}
+                value={game}
               >
-                <SchWGameContext.Provider value={game}>
-                  <ScheduleWidgetTeamGame />
-                </SchWGameContext.Provider>
-              </SchWGameScopeContext.Provider>
+                <ScheduleWidgetTeamGame />
+              </SchWGameContext.Provider>
             );
           })}
         </>

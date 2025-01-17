@@ -5,6 +5,8 @@ import {
   indexScheduleGetDayStartMs,
   IScheduleWidget,
   IScheduleWidgetDay,
+  ScheduleDayScopeProps,
+  ScheduleScopeProps,
 } from 'shared/api';
 import { isNIs } from 'shared/utils';
 import styled from 'styled-components';
@@ -18,6 +20,7 @@ import StrongEditableField from '../../strong-control/field/StrongEditableField'
 import IconButton from '../../the-icon/IconButton';
 import useIsRedactArea from '../../useIsRedactArea';
 import ScheduleAlarmDay from '../alarm/AlarmDay';
+import { schSokiInvocatorClient } from '../invocators/invocators.methods';
 import { takeStrongScopeMaker, useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetDayEditPanel from './DayEditPanel';
 import ScheduleWidgetDayEventList from './events/DayEventList';
@@ -26,10 +29,10 @@ export interface ScheduleWidgetDayProps {
   day: IScheduleWidgetDay;
   dayi: number;
   schedule: IScheduleWidget;
-  scope: string;
   isPrint?: boolean;
   isCanOpenFull?: boolean;
   isForceOpen?: boolean;
+  scheduleScopeProps: ScheduleScopeProps;
 }
 
 const defaultPrint = {
@@ -40,20 +43,21 @@ export const ScheduleWidgetDay = function Day({
   day,
   dayi,
   schedule,
-  scope,
   isPrint,
   isCanOpenFull,
   isForceOpen,
+  scheduleScopeProps,
 }: ScheduleWidgetDayProps) {
   const date = new Date(indexScheduleGetDayStartMs(schedule, dayi));
   const isPastDay = indexScheduleCheckIsDayIsPast(schedule, dayi);
   const title = mylib.dayFullTitles[date.getDay()];
   const times: number[] = [];
-  const selfScope = takeStrongScopeMaker(scope, ' dayi/', dayi);
+  const selfScope = takeStrongScopeMaker('', ' dayi/', dayi);
   const [isShowDay, setIsShowDay] = useState(!isPastDay);
   const rights = useScheduleWidgetRightsContext();
   const { editIcon, isRedact } = useIsRedactArea(true, null, rights.isCanRedact, true);
   const [print, setPrint] = useState(defaultPrint);
+  const dayScopeProps: ScheduleDayScopeProps = useMemo(() => ({ ...scheduleScopeProps, dayi }), []);
 
   const dayRating = useMemo(() => {
     let rating = 0;
@@ -72,6 +76,7 @@ export const ScheduleWidgetDay = function Day({
       day={day}
       dayi={dayi}
       schedule={schedule}
+      scheduleScopeProps={scheduleScopeProps}
     />
   ));
 
@@ -124,19 +129,19 @@ export const ScheduleWidgetDay = function Day({
             <div className="day-info">
               {(isRedact || day.topic) && (
                 <StrongEditableField
-                  scope={selfScope}
-                  fieldName="field"
                   value={day}
                   fieldKey="topic"
                   isRedact={isRedact}
                   Icon={IconBookmark03StrokeRounded}
                   title="Тема дня"
+                  // onSend={value => schSokiInvocatorClient.setDayTopic(null, dayScopeProps, value)}
+                  onSend={value =>
+                    schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null, dayScopeProps, value)
+                  }
                 />
               )}
               {(isRedact || day.dsc) && (
                 <StrongEditableField
-                  scope={selfScope}
-                  fieldName="field"
                   value={day}
                   fieldKey="dsc"
                   isRedact={isRedact}
@@ -144,6 +149,10 @@ export const ScheduleWidgetDay = function Day({
                   textClassName=" "
                   Icon={IconFile02StrokeRounded}
                   title="Описание дня"
+                  // onSend={value => schSokiInvocatorClient.setDaySescription(null, dayScopeProps, value)}
+                  onSend={value =>
+                    schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null, dayScopeProps, value)
+                  }
                 />
               )}
               {isRedact ? (
@@ -152,7 +161,7 @@ export const ScheduleWidgetDay = function Day({
                   dayScope={selfScope}
                   dayi={dayi}
                   schedule={schedule}
-                  scope={scope}
+                  scheduleScopeProps={scheduleScopeProps}
                 />
               ) : (
                 <IconButton
@@ -166,8 +175,8 @@ export const ScheduleWidgetDay = function Day({
           <ScheduleWidgetDayEventList
             day={day}
             dayi={dayi}
+            dayScopeProps={dayScopeProps}
             scope={selfScope}
-            scheduleScope={scope}
             isPastDay={isPastDay}
             isForceExpand={isPrint || isForceOpen}
           />

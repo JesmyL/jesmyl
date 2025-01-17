@@ -7,18 +7,16 @@ import { useCcat } from '../../col/cat/useCcat';
 import { ComFaceList } from '../../col/com/face/list/ComFaceList';
 import { useCcom } from '../../col/com/useCcom';
 import { useMeetings } from '../../lists/meetings/useMeetings';
-import CmExternalComListAttRedactList from './RedactList';
 import TheComForFullScreen from './TheComForFullScreen';
 
 interface Props {
   value: CmComBindAttach;
-  scope: string;
   isRedact?: boolean;
   switchIsRedact: (is?: boolean) => void;
   listPath: string;
 }
 
-export default function CmExternalComListAtt({ value, scope, isRedact, switchIsRedact, listPath }: Props) {
+export default function CmExternalComListAtt({ value, isRedact, switchIsRedact, listPath }: Props) {
   const [isOpenComposition, setIsOpenComposition] = useState(false);
   const navigate = useNavigate();
 
@@ -44,12 +42,12 @@ export default function CmExternalComListAtt({ value, scope, isRedact, switchIsR
 
       {isRedact && (
         <FullContent onClose={switchIsRedact}>
-          <CmExternalComListAttRedactList
+          {/* <CmExternalComListAttRedactList
             scope={scope}
             value={value}
             setComw={setComw}
             setIsOpenComposition={setIsOpenComposition}
-          />
+          /> */}
         </FullContent>
       )}
 

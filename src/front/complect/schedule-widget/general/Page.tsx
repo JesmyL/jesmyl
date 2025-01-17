@@ -14,7 +14,7 @@ import { ScheduleWidgetAttRoutes } from './AttRoutes';
 export default function ScheduleWidgetPage() {
   const schedules = useIndexSchedules();
   const schw = useCschw();
-  const schedule = schedules.list.find(({ w }) => w === schw);
+  const schedule = schedules?.find(({ w }) => w === schw);
   const connectionNode = useConnectionState();
   const auth = useAuth();
 

@@ -2,7 +2,6 @@ import {
   DeviceId,
   IScheduleWidgetWid,
   LocalSokiAuth,
-  ScheduleStorage,
   ServerAuthorizationData,
   ServerRegisterData,
   SokiClientSubData,
@@ -20,7 +19,6 @@ export interface IndexState {
   appVersion: number;
   values: IndexValues;
   auth: Auth;
-  schedules: ScheduleStorage;
   statistic: SokiStatistic | null;
   liveData: Record<SokiClientSubData, unknown>;
   nounPronsWords: NounPronsType | null;

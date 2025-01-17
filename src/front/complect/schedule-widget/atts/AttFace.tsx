@@ -1,3 +1,4 @@
+import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
 import { ReactNode } from 'react';
 import { ScheduleWidgetAttKey, scheduleWidgetUserRights } from 'shared/api';
 import styled from 'styled-components';
@@ -5,8 +6,6 @@ import { IconCancel01StrokeRounded } from '../../../complect/the-icon/icons/canc
 import { IconHelpCircleStrokeRounded } from '../../../complect/the-icon/icons/help-circle';
 import { IconLink02StrokeRounded } from '../../../complect/the-icon/icons/link-02';
 import useModal from '../../modal/useModal';
-import { StrongComponentProps } from '../../strong-control/Strong.model';
-import StrongEvaButton from '../../strong-control/StrongEvaButton';
 import TheIcon from '../../the-icon/TheIcon';
 import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
@@ -16,20 +15,17 @@ export default function ScheduleWidgetAttFace({
   tatt,
   typeTitle,
   attKey,
-  scope,
   isRedact,
-  scheduleScope,
   isLink,
   customAttTopContent,
-}: StrongComponentProps<{
+}: {
   isRedact?: boolean;
   tatt?: ScheduleWidgetAppAtt;
   attKey: ScheduleWidgetAttKey;
   typeTitle: ReactNode;
-  customAttTopContent?: (scope: string, attKey: ScheduleWidgetAttKey) => ReactNode;
-  scheduleScope: string;
+  customAttTopContent?: (attKey: ScheduleWidgetAttKey) => ReactNode;
   isLink?: boolean;
-}>) {
+}) {
   const rights = useScheduleWidgetRightsContext();
   const myUserR = rights.myUser?.R ?? rights.schedule.ctrl.defu;
   const [modalNode, screen] = useModal(
@@ -46,8 +42,7 @@ export default function ScheduleWidgetAttFace({
               <ScheduleWidgetCustomAtt
                 tatt={tatt as never}
                 isRedact
-                scope={scheduleScope}
-                topContent={customAttTopContent?.(scope, attKey)}
+                topContent={customAttTopContent?.(attKey)}
               />,
             )}
           </>
@@ -66,10 +61,7 @@ export default function ScheduleWidgetAttFace({
       >
         {isLink && <IconLink02StrokeRounded className="absolute pos-left pos-top color--3 fade-05" />}
         {isRedact && isCanRedact && (
-          <StrongEvaButton
-            scope={scope}
-            fieldName=""
-            cud="D"
+          <EvaSendButton
             Icon={IconCancel01StrokeRounded}
             className="close-button"
             confirm={
@@ -79,6 +71,7 @@ export default function ScheduleWidgetAttFace({
                 {typeTitle}?
               </>
             }
+            onSend={async () => {}}
           />
         )}
         {tatt ? (

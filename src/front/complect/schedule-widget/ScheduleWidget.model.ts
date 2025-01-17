@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import {
   AttKey,
   IScheduleWidget,
+  ScheduleDayEventAttImagineScopeProps,
   ScheduleWidgetAppAttBasic,
   ScheduleWidgetAttKey,
   ScheduleWidgetAttRef,
@@ -22,7 +23,7 @@ export type ScheduleWidgetAppAttResultItem<AttValue extends any> = (
 export interface ScheduleWidgetAppAtt<AttValue extends any = any> extends ScheduleWidgetAppAttBasic<AttValue> {
   result: (
     value: AttValue,
-    scope: string,
+    scopeProps: ScheduleDayEventAttImagineScopeProps,
     isRedact: boolean,
     switchIsRedact: (isRedact?: boolean) => void,
     schedule: IScheduleWidget,

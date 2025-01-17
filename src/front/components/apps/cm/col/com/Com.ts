@@ -1,4 +1,4 @@
-import { cmComLanguages } from 'back/apps/cm/values';
+import { cmComLanguages } from 'back/apps/cm/complect/values';
 import { mylib } from 'front/utils';
 import { IExportableCom, IExportableOrder } from 'shared/api/complect/apps/cm';
 import { itIt, makeRegExp } from 'shared/utils';

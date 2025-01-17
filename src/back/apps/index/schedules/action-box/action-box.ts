@@ -1,11 +1,12 @@
 import {
   ActionBox,
   ActionBoxOnFinalCallback,
-  ActionBoxValue,
   ExecutionArgs,
   IScheduleWidget,
   IScheduleWidgetUser,
   IScheduleWidgetUserCati,
+  IScheduleWidgetUserMi,
+  IScheduleWidgetWid,
   makeTwiceKnownName,
   NounPronsType,
   scheduleWidgetRegTypeRights,
@@ -96,37 +97,27 @@ const cmComsListSetters: ActionBox = {
   },
 };
 
-const newSchedule: ActionBoxValue<IScheduleWidget> = {
-  w: '{schw}',
-  title: '{title}',
-  app: '{app}',
+export const newSchedule: IScheduleWidget = {
+  w: IScheduleWidgetWid.def,
+  m: IScheduleWidgetUserCati.def,
+  title: '',
+  app: 'index',
   dsc: '',
   topic: '',
   days: emptyArray,
   tatts: emptyArray,
   types: emptyArray,
   tgInformTime: 5,
-  start: () => {
-    const date = new Date();
-    date.setMonth(date.getMonth() + 1);
-    date.setHours(0, 0, 0, 0);
-    return date.getTime();
-  },
+  start: 0,
   ctrl: {
     cats: ['Основное'],
-    users: [
-      {
-        ...addUserValue,
-        mi: 0 as never,
-        R: scheduleWidgetUserRights.getAllRights(),
-      },
-    ],
+    users: [],
     roles: [
       {
         mi: 0,
         title: 'Координатор',
         icon: 'Teacher',
-        user: 0,
+        userMi: IScheduleWidgetUserMi.def,
       },
     ],
     type: scheduleWidgetRegTypeRights.collectRights(),
@@ -146,9 +137,9 @@ const newSchedule: ActionBoxValue<IScheduleWidget> = {
     ],
     units: [
       {
-        cat: IScheduleWidgetUserCati.def,
+        cati: IScheduleWidgetUserCati.def,
         mi: 1,
-        title: 'Первая',
+        title: 'Группа 1',
         dsc: '',
       },
     ],
@@ -159,10 +150,10 @@ export const indexSchedulesActionBox: ActionBox<IScheduleWidget[]> = {
   scopeNode: 'schs',
   expected: { list: [] },
   '/list': {
-    D: {
-      value: ['w', '===', '{schw}'],
-      title: makeInSchedulePrefix(`Расписание `, `удалено`),
-    },
+    // D: {
+    //   value: ['w', '===', '{schw}'],
+    //   title: makeInSchedulePrefix(`Расписание `, `удалено`),
+    // },
     C: {
       RRej: true,
       value: newSchedule,

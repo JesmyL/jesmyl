@@ -1,15 +1,9 @@
+import { MyLib } from 'front/utils';
 import { useMemo } from 'react';
-import { MyLib, mylib } from 'front/utils';
-import StrongDropdown from '../../../strong-control/StrongDropdown';
+import SendableDropdown from '../../../sends/dropdown/SendableDropdown';
 import { makeAttStorage } from '../../useScheduleWidget';
 
-export const ScheduleWidgetCustomAttLocalImagineSelector = ({
-  scope,
-  id,
-}: {
-  scope: string;
-  id: `[SCH]:${string}` | nil;
-}) => {
+export const ScheduleWidgetCustomAttLocalImagineSelector = ({ id }: { id: `[SCH]:${string}` | nil }) => {
   const localAttsItems = useMemo(() => {
     return MyLib.entries(makeAttStorage()[0]).map(([id, att]) => {
       return {
@@ -20,13 +14,14 @@ export const ScheduleWidgetCustomAttLocalImagineSelector = ({
   }, []);
 
   return (
-    <StrongDropdown
+    <SendableDropdown
       id={id ?? undefined}
       items={localAttsItems}
       nullTitle="Образ не выбран"
-      scope={scope}
-      fieldName="imagine"
-      cud="U"
+      // scope={scope}
+      // fieldName="imagine"
+      // cud="U"
+      onSend={async () => {}}
     />
   );
 };

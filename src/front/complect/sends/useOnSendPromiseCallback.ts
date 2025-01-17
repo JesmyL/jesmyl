@@ -17,7 +17,7 @@ export const useOnSendPromiseCallback = <Value, Dto = any>(
 
   return [
     useCallback(
-      dto => {
+      (dto: Dto) => {
         if (onSendRef.current === undefined) return;
         const promise = onSendRef.current(dto);
 

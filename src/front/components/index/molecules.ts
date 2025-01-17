@@ -1,3 +1,4 @@
+import { useLiveQuery } from 'dexie-react-hooks';
 import { useParams } from 'react-router-dom';
 import { LocalSokiAuth, SokiClientSubData, SokiStatistic } from 'shared/api';
 import { AppName } from '../../app/App.model';
@@ -11,6 +12,7 @@ import {
   useAtomSet,
   useAtomValue,
 } from '../../complect/atoms';
+import { indexIDB } from './db/index-idb';
 import { IndexState } from './Index.model';
 
 const liveDataAtom = atom<Record<SokiClientSubData, unknown>>({});
@@ -21,7 +23,6 @@ export const indexMolecule = new Molecule<IndexState>(
     auth: { level: 0 },
     currentApp: 'cm',
     appVersion: 0,
-    schedules: { list: [] },
     statistic: statisticAtom,
     liveData: liveDataAtom,
     rules: [],
@@ -33,9 +34,8 @@ export const indexMolecule = new Molecule<IndexState>(
   },
   'index',
 );
-const schedulesAtom = indexMolecule.select(s => s.schedules);
 
-export const useIndexSchedules = () => useAtomValue(schedulesAtom);
+export const useIndexSchedules = () => useLiveQuery(() => indexIDB.db.schs.toArray());
 export const useIndexFileAssociations = () => useAtomValue(indexMolecule.take('fileAssociations'));
 export const useIndexNounPronsWords = () => useAtomValue(indexMolecule.take('nounPronsWords'));
 export const useIndexLiveData = () => useAtomValue(indexMolecule.take('liveData'));

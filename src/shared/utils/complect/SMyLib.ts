@@ -161,6 +161,10 @@ export class SMyLib {
     return what;
   }
 
+  takeNextMi<Item extends { mi: number }>(list: Item[]) {
+    return list.reduce((max, item) => Math.max(item.mi, max), -1) + 1;
+  }
+
   isEq(base: unknown, source: unknown, isIgnoreArrayItemsOrder?: boolean) {
     if (base === source) return true;
     if (base == null && base == source) return true;

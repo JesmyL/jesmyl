@@ -105,6 +105,7 @@ export const itIt = <It>(it: It) => it;
 export const itNIt = <It>(it: It) => !it;
 export const isNIs = (is: boolean) => !is;
 export const emptyFunc = () => {};
+export const emptyAsyncFunc = async () => {};
 export const retUnd = () => undefined;
 export const itNUnd = <It>(it: It) => it !== undefined;
 export const retNull = () => null;

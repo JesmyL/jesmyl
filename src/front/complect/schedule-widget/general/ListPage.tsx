@@ -9,6 +9,15 @@ import ScheduleCreateWidgetButton from './CreateButton';
 import ScheduleWidgetPage from './Page';
 
 export default function ScheduleWidgetListPage() {
+  const schedules = useIndexSchedules();
+  const navigate = useNavigate();
+
+  schLinkAction.useOnAction(({ props }) => {
+    if (props.inviteSch && schedules?.some(sch => sch.w === props.inviteSch)) {
+      navigate('' + props.inviteSch);
+    }
+  });
+
   return (
     <Routes>
       <Route
@@ -28,13 +37,6 @@ const Component = () => {
   const schedules = useIndexSchedules();
   const connectionNode = useConnectionState();
   const auth = useAuth();
-  const navigate = useNavigate();
-
-  schLinkAction.useOnAction(({ props }) => {
-    if (props.inviteSch && schedules.list.some(sch => sch.w === props.inviteSch)) {
-      navigate('' + props.inviteSch);
-    }
-  });
 
   return (
     <PhaseContainerConfigurer
@@ -43,7 +45,7 @@ const Component = () => {
       head={<span className="flex flex-gap margin-gap">{connectionNode}</span>}
       content={
         <>
-          {schedules.list.map(schedule => {
+          {schedules?.map(schedule => {
             if (!schedule.start) return null;
             return (
               <Link
@@ -63,7 +65,7 @@ const Component = () => {
               </Link>
             );
           })}
-          {auth && auth.level > 29 && <ScheduleCreateWidgetButton appName="index" />}
+          {auth && auth.level > 29 && <ScheduleCreateWidgetButton />}
         </>
       }
     />

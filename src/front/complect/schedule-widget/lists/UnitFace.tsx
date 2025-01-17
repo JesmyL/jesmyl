@@ -17,14 +17,14 @@ export default function ScheduleWidgetListUnitFace({
 
   const unit = topUnit ?? rights.schedule.lists?.units.find(unit => unit.mi === unitMi);
   if (unit === undefined) return null;
-  const cat = rights.schedule.lists.cats[unit.cat];
+  const cat = rights.schedule.lists.cats[unit.cati];
   if (cat === undefined) return null;
-  const mentors = rights.schedule.ctrl.users.filter(user => user.li?.[unit.cat] === -unit.mi);
+  const mentors = rights.schedule.ctrl.users.filter(user => user.li?.[unit.cati] === -unit.mi);
 
   return (
     <div className="flex flex-gap margin-gap-v">
       <span
-        className={'flex flex-gap pointer' + (rights.myUser?.li?.[unit.cat] === -unit.mi ? ' color--7' : ' color--3')}
+        className={'flex flex-gap pointer' + (rights.myUser?.li?.[unit.cati] === -unit.mi ? ' color--7' : ' color--3')}
         onClick={() => setIsShowMentors(!isShowMentors)}
       >
         <TheIcon name={cat?.icon} />

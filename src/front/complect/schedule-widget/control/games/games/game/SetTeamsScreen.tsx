@@ -1,14 +1,16 @@
+import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/useScheduleScopePropsContext';
+import { schSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
+import SendButton from 'front/complect/sends/send-button/SendButton';
 import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { IScheduleWidgetExportableTeam, IScheduleWidgetUserMi } from 'shared/api';
 import Dropdown from '../../../../../dropdown/Dropdown';
 import KeyboardInput from '../../../../../keyboard/KeyboardInput';
-import StrongButton from '../../../../../strong-control/StrongButton';
 import { IconCheckmarkCircle02StrokeRounded } from '../../../../../the-icon/icons/checkmark-circle-02';
 import { IconCircleStrokeRounded } from '../../../../../the-icon/icons/circle';
 import { useScheduleWidgetRightsContext } from '../../../../useScheduleWidget';
 import ScheduleWidgetRemovableUserFace from '../../RemovableUserFace';
-import { useSchWGameContext, useSchWGameScopeContext } from '../Games';
+import { useSchWGameContext } from '../Games';
 
 const arrayMapper = () => [];
 const retriesLine = [40, 100, 200, 300, 600, 1000, 2000, 5000, 20000, 100000];
@@ -16,7 +18,6 @@ const defStrikedUsers: IScheduleWidgetUserMi[] = [];
 
 export default function ScheduleWidgetTeamGameSetTeamsScreen() {
   const rights = useScheduleWidgetRightsContext();
-  const gameScope = useSchWGameScopeContext();
   const game = useSchWGameContext();
 
   const criterias = rights.schedule.games?.criterias;
@@ -27,6 +28,7 @@ export default function ScheduleWidgetTeamGameSetTeamsScreen() {
   const [diapason, setDiapason] = useState(0);
   const [retries, setRetries] = useState(retriesLine[1]);
   const [isRecompute, setIsRecompute] = useState(false);
+  const scheduleScopeProps = useScheduleScopePropsContext();
 
   const strikedUsers = rights.schedule.games?.strikedUsers ?? defStrikedUsers;
 
@@ -166,13 +168,12 @@ export default function ScheduleWidgetTeamGameSetTeamsScreen() {
               </div>
             );
           })}
-          <StrongButton
-            scope={gameScope}
+
+          <SendButton
             title="Отправить"
             disabled={!criterias?.length || !teams.length}
             confirm="Отправить список команд?"
-            fieldName="teams"
-            fieldValue={teams}
+            onSend={() => schSokiInvocatorClient.setGameTeams(null, { ...scheduleScopeProps, gameMi: game.mi }, teams)}
           />
         </>
       )}

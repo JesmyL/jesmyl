@@ -1,9 +1,6 @@
 import { ReactNode } from 'react';
 import { ConfirmContent } from '../modal/confirm/ConfirmContent';
 import { StrongControlProps } from './Strong.model';
-import { strongPrepareArgsAndSend, useStrongExerContext } from './useStrongControl';
-
-const simpleFunc = () => {};
 
 export default function StrongDiv(
   props: StrongControlProps<{
@@ -15,8 +12,6 @@ export default function StrongDiv(
     confirm?: ReactNode;
   }>,
 ) {
-  const exer = useStrongExerContext();
-
   return (
     <ConfirmContent
       confirm={props.confirm}
@@ -29,19 +24,19 @@ export default function StrongDiv(
                   if (!(await onConfirm())) return;
 
                   props.onClick?.();
-                  strongPrepareArgsAndSend(
-                    exer,
-                    props.scope,
-                    props.fieldName,
-                    props.cud ?? 'C',
-                    undefined,
-                    simpleFunc,
-                    props.mapExecArgs,
-                    props.fieldKey,
-                    props.fieldValue,
-                  )
-                    ?.then(props.onSuccess)
-                    .catch(props.onFailure);
+                  // strongPrepareArgsAndSend(
+                  //   exer,
+                  //   props.scope,
+                  //   props.fieldName,
+                  //   props.cud ?? 'C',
+                  //   undefined,
+                  //   simpleFunc,
+                  //   props.mapExecArgs,
+                  //   props.fieldKey,
+                  //   props.fieldValue,
+                  // )
+                  //   ?.then(props.onSuccess)
+                  //   .catch(props.onFailure);
                 }
               : undefined
           }

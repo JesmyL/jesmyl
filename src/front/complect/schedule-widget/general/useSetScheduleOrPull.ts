@@ -20,7 +20,7 @@ export const useGetScheduleOrPull = (scheduleInstance: string | IScheduleWidgetW
       ? (sch: IScheduleWidget) => sch.tgChatReqs?.endsWith(scheduleInstance)
       : (sch: IScheduleWidget) => sch.w === scheduleInstance;
 
-    const schedule = schedules.list.find(find);
+    const schedule = schedules?.find(find);
 
     if (schedule !== undefined) {
       setSchedule(schedule);
@@ -41,7 +41,7 @@ export const useGetScheduleOrPull = (scheduleInstance: string | IScheduleWidgetW
         setIsLoading(false);
       }, 600)
       .effect();
-  }, [scheduleInstance, schedules.list, setSchedule]);
+  }, [scheduleInstance, schedules, setSchedule]);
 
   return { schedule, isLoading, error } as const;
 };

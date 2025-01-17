@@ -1,5 +1,5 @@
 import { MyLib } from 'front/utils';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { IScheduleWidget, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
 import styled from 'styled-components';
 import { IconAlert02StrokeRounded } from '../../../complect/the-icon/icons/alert-02';
@@ -9,18 +9,17 @@ import { IconEdit02StrokeRounded } from '../../../complect/the-icon/icons/edit-0
 import { IconSchoolReportCardStrokeRounded } from '../../../complect/the-icon/icons/school-report-card';
 import Dropdown from '../../dropdown/Dropdown';
 import useModal from '../../modal/useModal';
+import SendableDropdown from '../../sends/dropdown/SendableDropdown';
 import StrongDiv from '../../strong-control/StrongDiv';
-import StrongDropdown from '../../strong-control/StrongDropdown';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
 import StrongClipboardPicker from '../../strong-control/field/clipboard/Picker';
 import ScheduleWidgetBindAtts from '../atts/BindAtts';
 import { AttTranslatorType, attTranslatorTypes } from '../complect/attTranslatorType';
-import { takeStrongScopeMaker } from '../useScheduleWidget';
+import { schSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useAttTypeTitleError } from './useAttTypeTitleError';
 
 export default function ScheduleWidgetEventType(props: {
   selectScope: string;
-  scheduleScope: string;
   selectFieldName: string;
   schedule: IScheduleWidget;
   typei: number;
@@ -32,8 +31,10 @@ export default function ScheduleWidgetEventType(props: {
   const error = useAttTypeTitleError(title, props.schedule, props.isRedact, props.typei);
   const [attTranslatorType, setAttTranslatorType] = useState(AttTranslatorType.Today);
 
-  const selfScope = takeStrongScopeMaker(props.scheduleScope, ' typei/', props.typei);
+  // const selfScope = takeStrongScopeMaker(props.scheduleScope, ' typei/', props.typei);
   const attEntries = (props.typeBox.atts ? MyLib.keys(props.typeBox.atts) : []).length;
+
+  const eventTypeScopeProps = useMemo(() => ({}), []);
 
   const [modalNode, screen] = useModal(({ header, body }) => {
     return (
@@ -61,22 +62,19 @@ export default function ScheduleWidgetEventType(props: {
   const innerNode = (
     <>
       <StrongEditableField
-        scope={selfScope}
-        fieldName="field"
-        value={props.typeBox.title}
+        // scope={selfScope}
+        // fieldName="field"
+        fieldKey="title"
+        value={props.typeBox}
         isRedact={props.isRedact}
         Icon={IconSchoolReportCardStrokeRounded}
         title="Название"
         isImpossibleEmptyValue
         onChange={setTitle}
-        mapExecArgs={(args, val) => {
-          if (error) return;
-          return {
-            ...args,
-            value: val,
-            key: 'title',
-          };
-        }}
+        // onSend={value => schSokiInvocatorClient.setEventTypeTitle(null, eventTypeScopeProps as never, value)}
+        onSend={value =>
+          schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null, eventTypeScopeProps as never, value)
+        }
       />
       {error && (
         <div className="flex flex-gap center error-message">
@@ -85,20 +83,25 @@ export default function ScheduleWidgetEventType(props: {
         </div>
       )}
       <StrongEditableField
-        scope={selfScope}
-        fieldName="tm"
+        // scope={selfScope}
+        // fieldName="tm"
         type="number"
         value={'' + (props.typeBox.tm ?? '')}
         postfix=" мин"
         isRedact={props.isRedact}
         title="Продолжительность, мин"
         Icon={IconClock01StrokeRounded}
+        // onSend={value => schSokiInvocatorClient.setEventTypeTm(null, eventTypeScopeProps as never, +value)}
+        onSend={value =>
+          schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null, eventTypeScopeProps as never, +value)
+        }
       />
       {props.isRedact ? (
         <ScheduleWidgetBindAtts
-          scope={selfScope}
+          // scope={selfScope}
           schedule={props.schedule}
-          scheduleScope={props.scheduleScope}
+          // scheduleScope={props.scheduleScope}
+          // dayEventScopeProps={dayEventScopeProps}
           atts={props.typeBox.atts}
           forTitle={
             <>
@@ -113,22 +116,23 @@ export default function ScheduleWidgetEventType(props: {
               onSelect={({ id }) => setAttTranslatorType(id)}
             />
           }
-          customAttTopContent={(scope, attKey) => (
-            <StrongDropdown
+          customAttTopContent={attKey => (
+            <SendableDropdown
               id={props.typeBox.atts?.[attKey]?.[0] as AttTranslatorType}
-              scope={scope}
-              fieldName="period"
-              cud="U"
+              // scope={scope}
+              // fieldName="period"
+              // cud="U"
               items={attTranslatorTypes}
               className="margin-gap-b"
+              onSend={async () => {}}
             />
           )}
-          mapExecArgs={args => {
-            return {
-              ...args,
-              value: attTranslatorType,
-            };
-          }}
+          // mapExecArgs={args => {
+          //   return {
+          //     ...args,
+          //     value: attTranslatorType,
+          //   };
+          // }}
         />
       ) : (
         !attEntries || (

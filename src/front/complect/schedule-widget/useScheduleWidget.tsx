@@ -15,7 +15,6 @@ import { appAttsStore } from '../../components/complect/appScheduleAttrsStorage'
 import { useAuth, useIndexSchedules } from '../../components/index/molecules';
 import { contextCreator } from '../contextCreator';
 import { strongScopeMakerBuilder } from '../strong-control/useStrongControl';
-import ScheduleKeyValueListAtt from './atts/attachments/key-value/KeyValueListAtt';
 import { scheduleOwnAtts } from './atts/attachments/ownAtts';
 import { ScheduleWidgetAppAtts, ScheduleWidgetAttRefs } from './ScheduleWidget.model';
 
@@ -27,7 +26,7 @@ export default function useScheduleWidget(schedulew?: number, schedule?: ISchedu
       schedule === undefined
         ? schedulew === undefined
           ? undefined
-          : schedules.list.find(({ w }) => w === schedulew)
+          : schedules?.find(({ w }) => w === schedulew)
         : schedule,
   };
 
@@ -40,6 +39,7 @@ export const [ScheduleWidgetAppAttsContext, useScheduleWidgetAppAttsContext] = c
 
 export const defaultScheduleWidget: IScheduleWidget = {
   w: 0 as never,
+  m: 0,
   start: 0,
   title: '',
   topic: '',
@@ -207,7 +207,7 @@ export const extractScheduleWidgetRoleUser = (
   roleMi: number,
   role?: IScheduleWidgetRole | nil,
 ) => {
-  const roleUserMi = (role ?? extractScheduleWidgetRole(schedule, roleMi))?.user;
+  const roleUserMi = (role ?? extractScheduleWidgetRole(schedule, roleMi))?.userMi;
   if (roleUserMi === undefined) return null;
   const roleUser = schedule.ctrl.users.find(user => user.mi === roleUserMi);
   if (roleUser === undefined) return null;
@@ -228,19 +228,19 @@ export const makeAttStorage = (schedule?: IScheduleWidget): [ScheduleWidgetAppAt
     });
   });
 
-  schedule?.tatts.forEach(att => {
-    atts[`[SCH]:custom:${att.mi}`] = {
-      ...att,
-      isCustomize: true,
-      result: (value, scope, isRedact) => (
-        <ScheduleKeyValueListAtt
-          isRedact={isRedact}
-          att={att}
-          scope={scope}
-          value={value}
-        />
-      ),
-    };
-  });
+  // schedule?.tatts.forEach(att => {
+  //   atts[`[SCH]:custom:${att.mi}`] = {
+  //     ...att,
+  //     isCustomize: true,
+  //     result: (value, scope, isRedact) => (
+  //       <ScheduleKeyValueListAtt
+  //         isRedact={isRedact}
+  //         att={att}
+  //         scope={scope}
+  //         value={value}
+  //       />
+  //     ),
+  //   };
+  // });
   return [{ ...appAttsStore, ...scheduleOwnAtts, ...atts }, attRefs];
 };

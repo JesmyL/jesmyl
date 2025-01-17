@@ -45,7 +45,7 @@ export default function IndexLoginAuth() {
 
   const loginInSystem = (state: ClientAuthorizationData) => {
     return sendData('login', {
-      login: mylib.md5(state.nick.trim()),
+      login: mylib.md5(state.nick.trim()) as never,
       passw: mylib.md5(state.passw),
     });
   };
@@ -59,7 +59,7 @@ export default function IndexLoginAuth() {
     const nick = state.nick.trim();
 
     return sendData('register', {
-      login: mylib.md5(nick),
+      login: mylib.md5(nick) as never,
       passw: mylib.md5(state.passw),
       fio: nick,
       nick,

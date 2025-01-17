@@ -1,9 +1,9 @@
 import fs from 'fs';
 import { SokiServerDoAction, SokiServerDoActionProps } from 'shared/api';
 import { filer } from '../../filer/Filer';
-import { SokiServerShareds } from './105-Shareds';
+import { SokiServerAuthorization } from './100-Authorization';
 
-export class SokiServerDownloads extends SokiServerShareds implements SokiServerDoAction<'Downloads'> {
+export class SokiServerDownloads extends SokiServerAuthorization implements SokiServerDoAction<'Downloads'> {
   async doOnDownloads({ appName, client, eventBody, requestId }: SokiServerDoActionProps) {
     if (eventBody.download === undefined) return false;
     const capsule = this.capsules.get(client);

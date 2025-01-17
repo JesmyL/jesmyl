@@ -1,17 +1,20 @@
+import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
 import { useMemo, useState } from 'react';
-import useIsExpand from '../../../expand/useIsExpand';
-import { StrongComponentProps } from '../../../strong-control/Strong.model';
-import StrongEvaButton from '../../../strong-control/StrongEvaButton';
-import IconButton from '../../../the-icon/IconButton';
+import { IScheduleWidgetRole } from 'shared/api';
 import { IconArrowDownDoubleStrokeRounded } from '../../../../complect/the-icon/icons/arrow-down-double';
 import { IconArrowUpDoubleStrokeRounded } from '../../../../complect/the-icon/icons/arrow-up-double';
 import { IconPlusSignStrokeRounded } from '../../../../complect/the-icon/icons/plus-sign';
-import { IScheduleWidgetRole } from 'shared/api';
+import useIsExpand from '../../../expand/useIsExpand';
+import IconButton from '../../../the-icon/IconButton';
+import { useScheduleScopePropsContext } from '../../complect/scope-contexts/useScheduleScopePropsContext';
+import { schSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetRole from './Role';
 
-export default function ScheduleWidgetRoleList({ scope }: StrongComponentProps) {
+export default function ScheduleWidgetRoleList() {
   const rights = useScheduleWidgetRightsContext();
+  const scheduleScopeProps = useScheduleScopePropsContext();
+
   const [rolesExpandNode, isRolesExpand] = useIsExpand(
     false,
     <>Роли</>,
@@ -19,20 +22,21 @@ export default function ScheduleWidgetRoleList({ scope }: StrongComponentProps) 
       isExpand &&
       rights.isCanTotalRedact &&
       !rights.schedule.ctrl?.roles.some(role => !role.title) && (
-        <StrongEvaButton
-          scope={scope}
-          fieldName="roles"
+        <EvaSendButton
+          // scope={scope}
+          // fieldName="roles"
           Icon={IconPlusSignStrokeRounded}
           prefix="роль"
           confirm="Добавить новую роль?"
+          onSend={async () => schSokiInvocatorClient.createRole(null, scheduleScopeProps)}
         />
       ),
   );
   const categories = useMemo(() => {
-    const sorted = [...rights.schedule.ctrl.roles].sort((a, b) => (a.cat || 0) - (b.cat || 0));
+    const sorted = [...rights.schedule.ctrl.roles].sort((a, b) => (a.cati || 0) - (b.cati || 0));
     const roles: IScheduleWidgetRole[][] = [];
     sorted.forEach(role => {
-      const list = (roles[role.cat || 0] ??= []);
+      const list = (roles[role.cati || 0] ??= []);
       list.push(role);
     });
     return roles;
@@ -58,7 +62,6 @@ export default function ScheduleWidgetRoleList({ scope }: StrongComponentProps) 
                   return (
                     <ScheduleWidgetRole
                       key={role.mi}
-                      scope={scope}
                       role={role}
                     />
                   );

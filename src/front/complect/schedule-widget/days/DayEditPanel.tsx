@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { IScheduleWidget, IScheduleWidgetDay } from 'shared/api';
+import { IScheduleWidget, IScheduleWidgetDay, ScheduleScopeProps } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import { renderComponentInNewWindow } from '../../..';
 import { FullContent } from '../../fullscreen-content/FullContent';
@@ -14,14 +14,14 @@ import ScheduleWidgetPrintableDay from './PrintableDay';
 const dotReg = makeRegExp('/\\./');
 
 interface Props {
+  scheduleScopeProps: ScheduleScopeProps;
   day: IScheduleWidgetDay;
   dayi: number;
   schedule: IScheduleWidget;
   dayScope: string;
-  scope: string;
 }
 
-export default function ScheduleWidgetDayEditPanel({ day, dayi, schedule, dayScope, scope }: Props) {
+export default function ScheduleWidgetDayEditPanel({ day, dayi, schedule, dayScope, scheduleScopeProps }: Props) {
   const [isOpenDayListUpdater, setIsOpenDayListUpdater] = useState<unknown>(false);
 
   return (
@@ -33,8 +33,8 @@ export default function ScheduleWidgetDayEditPanel({ day, dayi, schedule, daySco
             dayScope={dayScope}
             dayi={dayi}
             schedule={schedule}
-            scope={scope}
             onClose={setIsOpenDayListUpdater}
+            scheduleScopeProps={scheduleScopeProps}
           />
         </FullContent>
       )}
@@ -52,6 +52,7 @@ export default function ScheduleWidgetDayEditPanel({ day, dayi, schedule, daySco
             value: +value.replace(makeRegExp('/:/'), '.'),
           };
         }}
+        onSend={() => {}}
       />
       <IconButton
         Icon={IconPrinterStrokeRounded}
@@ -59,10 +60,10 @@ export default function ScheduleWidgetDayEditPanel({ day, dayi, schedule, daySco
         onClick={() =>
           renderComponentInNewWindow(win => (
             <ScheduleWidgetPrintableDay
+              scheduleScopeProps={scheduleScopeProps}
               day={day}
               dayi={dayi}
               schedule={schedule}
-              scope={scope}
               win={win}
             />
           ))

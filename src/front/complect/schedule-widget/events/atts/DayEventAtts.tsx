@@ -3,15 +3,12 @@ import {
   IScheduleWidget,
   IScheduleWidgetDay,
   IScheduleWidgetDayEvent,
+  ScheduleDayEventScopeProps,
   ScheduleWidgetDayListItemTypeBox,
   scheduleWidgetUserRights,
 } from 'shared/api';
 import { StrongComponentProps } from '../../../strong-control/Strong.model';
-import {
-  takeStrongScopeMaker,
-  useScheduleWidgetAppAttsContext,
-  useScheduleWidgetRightsContext,
-} from '../../useScheduleWidget';
+import { useScheduleWidgetAppAttsContext, useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetDayEventAtt from './DayEventAtt';
 
 export default function ScheduleWidgetDayEventAtts(
@@ -22,6 +19,7 @@ export default function ScheduleWidgetDayEventAtts(
     dayi: number;
     isPast: boolean;
     schedule: IScheduleWidget;
+    dayEventScopeProps: ScheduleDayEventScopeProps;
   }>,
 ) {
   const [appAtts] = useScheduleWidgetAppAttsContext();
@@ -45,8 +43,6 @@ export default function ScheduleWidgetDayEventAtts(
         )
           return null;
 
-        const scope = takeStrongScopeMaker(props.scope, ' attKey/', attKey);
-
         const isCanUpdate =
           scheduleWidgetUserRights.checkInvertIsCan(userR, appAtt.U) ||
           (appAtt.Us?.length ? !!rights.myUser && appAtt.Us.includes(rights.myUser.mi) : false);
@@ -54,7 +50,7 @@ export default function ScheduleWidgetDayEventAtts(
         return (
           <ScheduleWidgetDayEventAtt
             key={attKey}
-            scope={scope}
+            dayEventScopeProps={props.dayEventScopeProps}
             typeBox={props.typeBox}
             att={att}
             attKey={attKey}

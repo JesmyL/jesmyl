@@ -9,7 +9,7 @@ import {
 } from 'shared/api';
 import { IconViewStrokeRounded } from '../../../../../complect/the-icon/icons/view';
 import { IconViewOffSlashStrokeRounded } from '../../../../../complect/the-icon/icons/view-off-slash';
-import StrongDropdown from '../../../../strong-control/StrongDropdown';
+import SendableDropdown from '../../../../sends/dropdown/SendableDropdown';
 import IconButton from '../../../../the-icon/IconButton';
 import KeyValueListAttNumberMember from './KeyValueListAttNumberMember';
 
@@ -92,13 +92,14 @@ export default function ScheduleKeyValueListAttLiItemDropdown({
         Icon={isShowAll ? IconViewStrokeRounded : IconViewOffSlashStrokeRounded}
         onClick={() => setIsShowAll(!isShowAll)}
       />
-      <StrongDropdown
-        scope={scope}
-        fieldName="value list"
-        cud="C"
+      <SendableDropdown
+        // scope={scope}
+        // fieldName="value list"
+        // cud="C"
         placeholder="Из списка"
         className="mood-for-2"
         items={[...titles, ...roles, ...lists, ...users]}
+        onSend={async () => {}}
       />
     </div>
   );

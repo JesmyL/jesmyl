@@ -1,32 +1,34 @@
+import Modal from 'front/complect/modal/Modal/Modal';
+import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
+import { ModalFooter } from 'front/complect/modal/Modal/ModalFooter';
+import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
+import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import SendButton from 'front/complect/sends/send-button/SendButton';
 import { useState } from 'react';
-import { AppName } from '../../../app/App.model';
 import { IconCancel01StrokeRounded } from '../../../complect/the-icon/icons/cancel-01';
 import { IconPlusSignStrokeRounded } from '../../../complect/the-icon/icons/plus-sign';
 import KeyboardInput from '../../keyboard/KeyboardInput';
-import useModal from '../../modal/useModal';
-import useToast from '../../modal/useToast';
-import StrongButton from '../../strong-control/StrongButton';
-import StrongEvaButton from '../../strong-control/StrongEvaButton';
 import IconButton from '../../the-icon/IconButton';
-import { initialScheduleScope } from '../useScheduleWidget';
+import { schSokiInvocatorClient } from '../invocators/invocators.methods';
 
-export default function ScheduleCreateWidgetButton({
-  title: topTitle,
-  schw,
-  appName,
-}: {
-  title?: string;
-  schw?: number;
-  appName?: AppName;
-}) {
-  const [title, setTitle] = useState(topTitle);
-  const [tosterNode, toast] = useToast();
-  const [modalNode, screen] = useModal(({ header, body, footer }, closeModal) => {
-    return (
-      <>
-        {header(<>Новое расписание</>)}
-        {body(
-          <>
+export default function ScheduleCreateWidgetButton() {
+  const [title, setTitle] = useState('');
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  return (
+    <>
+      <SendButton
+        title="Создать расписание"
+        onSend={() => {
+          setTitle('');
+          setIsOpenModal(true);
+        }}
+      />
+
+      {isOpenModal && (
+        <Modal onClose={setIsOpenModal}>
+          <ModalHeader>Новое расписание</ModalHeader>
+          <ModalBody>
             <div>Создать расписание с названием</div>
             <div>
               <KeyboardInput
@@ -34,74 +36,39 @@ export default function ScheduleCreateWidgetButton({
                 onChange={setTitle}
               />
             </div>
-          </>,
-        )}
-        {footer(
-          <div className="flex flex-gap">
-            <StrongEvaButton
-              Icon={IconPlusSignStrokeRounded}
-              scope={initialScheduleScope}
-              fieldName="list"
-              cud="C"
-              className="color--ok"
-              postfix="Создать"
-              onSuccess={() => {
-                closeModal();
-                setTitle('');
-              }}
-              mapExecArgs={args => {
-                if (!title) {
-                  toast('Нужно дать название!');
-                  return;
-                }
+          </ModalBody>
+          <ModalFooter>
+            <div className="flex flex-gap">
+              <EvaSendButton
+                Icon={IconPlusSignStrokeRounded}
+                className="color--ok"
+                postfix="Создать"
+                disabled={!title}
+                onSuccess={() => {
+                  setTitle('');
+                  setIsOpenModal(false);
+                }}
+                onSend={() => {
+                  if (!title) {
+                    return;
+                  }
 
-                return {
-                  ...args,
-                  schw,
-                  title,
-                  app: appName,
-                };
-              }}
-            />
-            <IconButton
-              Icon={IconCancel01StrokeRounded}
-              postfix="Отменить"
-              className="color--ko"
-              onClick={() => {
-                setTitle('');
-                closeModal();
-              }}
-            />
-          </div>,
-        )}
-      </>
-    );
-  });
-
-  return (
-    <>
-      {modalNode}
-      {tosterNode}
-      <StrongButton
-        title="Создать расписание"
-        scope={initialScheduleScope}
-        fieldName="list"
-        cud="C"
-        mapExecArgs={args => {
-          if (!title) {
-            screen();
-            return;
-          }
-          setTitle('');
-
-          return {
-            ...args,
-            schw,
-            title,
-            app: appName,
-          };
-        }}
-      />
+                  return schSokiInvocatorClient.create(null, title);
+                }}
+              />
+              <IconButton
+                Icon={IconCancel01StrokeRounded}
+                postfix="Отменить"
+                className="color--ko"
+                onClick={() => {
+                  setTitle('');
+                  setIsOpenModal(false);
+                }}
+              />
+            </div>
+          </ModalFooter>
+        </Modal>
+      )}
     </>
   );
 }

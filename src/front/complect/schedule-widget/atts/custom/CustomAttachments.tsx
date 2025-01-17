@@ -1,3 +1,4 @@
+import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
 import {
   ScheduleWidgetAppAttCustomizable,
   ScheduleWidgetAppAttCustomized,
@@ -8,8 +9,6 @@ import { IconArrowRight01StrokeRounded } from '../../../../complect/the-icon/ico
 import { IconAttachment02StrokeRounded } from '../../../../complect/the-icon/icons/attachment-02';
 import { IconPlusSignStrokeRounded } from '../../../../complect/the-icon/icons/plus-sign';
 import useModal from '../../../modal/useModal';
-import { StrongComponentProps } from '../../../strong-control/Strong.model';
-import StrongEvaButton from '../../../strong-control/StrongEvaButton';
 import IconButton from '../../../the-icon/IconButton';
 import ScheduleWidgetCustomAtt from './CustomAtt';
 
@@ -22,11 +21,7 @@ const newTatt: ScheduleWidgetAppAttCustomizable = {
   U: scheduleWidgetUserRights.includeRights(ScheduleWidgetUserRoleRight.Redact),
 };
 
-export default function ScheduleWidgetCustomAttachments(
-  props: StrongComponentProps<{
-    tatts: ScheduleWidgetAppAttCustomized[];
-  }>,
-) {
+export default function ScheduleWidgetCustomAttachments(props: { tatts: ScheduleWidgetAppAttCustomized[] }) {
   const [modalNode, screen] = useModal(({ header, body }) => {
     return (
       <>
@@ -34,12 +29,12 @@ export default function ScheduleWidgetCustomAttachments(
           <div className="flex full-width between">
             Шаблоны вложений
             {!props.tatts.some(att => !att.title || !att.description) && (
-              <StrongEvaButton
-                scope={props.scope}
-                fieldName="tatts"
-                fieldValue={newTatt}
+              <EvaSendButton
+                // fieldName="tatts"
+                // fieldValue={newTatt}
                 Icon={IconPlusSignStrokeRounded}
                 confirm="Создать шаблон вложения?"
+                onSend={async () => {}}
               />
             )}
           </div>,
@@ -49,7 +44,6 @@ export default function ScheduleWidgetCustomAttachments(
             return (
               <ScheduleWidgetCustomAtt
                 key={tatt.mi}
-                scope={props.scope}
                 tatt={tatt}
               />
             );

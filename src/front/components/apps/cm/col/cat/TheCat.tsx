@@ -6,7 +6,7 @@ import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
 import LoadIndicatedContent from '../../../../../complect/load-indicated-content/LoadIndicatedContent';
 import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
-import { cmIDB } from '../../_db/cm-db';
+import { cmIDB } from '../../_db/cm-idb';
 import { SetComListLimitsExtracterContext } from '../../base/SetComListLimitsExtracterContext';
 import CmTranslationComListContextInCat from '../../base/translations/InCat';
 import CmTranslationComListContextInZeroCat from '../../base/translations/InZeroCat';

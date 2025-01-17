@@ -1,3 +1,5 @@
+import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import { useMemo } from 'react';
 import { IScheduleWidgetListCat } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import { IconEdit02StrokeRounded } from '../../../complect/the-icon/icons/edit-02';
@@ -5,30 +7,22 @@ import { IconPlusSignStrokeRounded } from '../../../complect/the-icon/icons/plus
 import { IconSchoolReportCardStrokeRounded } from '../../../complect/the-icon/icons/school-report-card';
 import { ExpandableContent } from '../../expand/ExpandableContent';
 import useModal from '../../modal/useModal';
-import { StrongComponentProps } from '../../strong-control/Strong.model';
-import StrongEvaButton from '../../strong-control/StrongEvaButton';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
 import TheIcon from '../../the-icon/TheIcon';
 import ScheduleWidgetIconChange from '../complect/IconChange';
+import { useScheduleScopePropsContext } from '../complect/scope-contexts/useScheduleScopePropsContext';
+import { schSokiInvocatorClient } from '../invocators/invocators.methods';
 import { takeStrongScopeMaker, useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetListUnit from './Unit';
 
 const reg = makeRegExp('/([а-яё]?[йуеъыаоэяиью]+[а-яё]).+/i');
 const cutTitle = (title: string) => title.replace(reg, '$1.');
 
-export function ScheduleWidgetListCategory({
-  scope,
-  scheduleScope,
-  cat,
-  cati,
-}: StrongComponentProps<{
-  scheduleScope: string;
-  cat: IScheduleWidgetListCat;
-  cati: number;
-}>) {
+export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidgetListCat; cati: number }) {
   const rights = useScheduleWidgetRightsContext();
   const catScopePostfix = takeStrongScopeMaker('', ' cati/', cati);
-  const catScope = scope + catScopePostfix;
+  const scheduleScopeProps = useScheduleScopePropsContext();
+  const catScopeProps = useMemo(() => ({ ...scheduleScopeProps, cati }), [cati, scheduleScopeProps]);
   const title = <>{cat.title || <span className="text-italic">Список</span>}</>;
   const shortTitles: [string, string] = [cutTitle(cat.titles[0]), cutTitle(cat.titles[1])];
 
@@ -39,32 +33,30 @@ export function ScheduleWidgetListCategory({
         {body(
           <>
             <ScheduleWidgetIconChange
-              scope={catScope}
               header={`Иконка для списка ${cat.title}`}
               icon={cat.icon}
+              used={[cat.icon]}
+              onSend={icon => schSokiInvocatorClient.setListCategoryIcon(null, catScopeProps, icon)}
             />
             <StrongEditableField
-              scope={catScope}
-              fieldName="field"
               Icon={IconSchoolReportCardStrokeRounded}
               title="Название списка"
               value={cat}
               fieldKey="title"
               isRedact
+              onSend={value => schSokiInvocatorClient.setListCategoryTitle(null, catScopeProps, value)}
             />
             <StrongEditableField
-              scope={catScope}
-              fieldName="mentorsTitle"
               title="Заголовок руководителям"
               value={cat.titles[0]}
               isRedact
+              onSend={value => schSokiInvocatorClient.setCategoryMentorsTitle(null, catScopeProps, value)}
             />
             <StrongEditableField
-              scope={catScope}
-              fieldName="membersTitle"
               title="Заголовок участникам"
               value={cat.titles[1]}
               isRedact
+              onSend={value => schSokiInvocatorClient.setCategoryMembersTitle(null, catScopeProps, value)}
             />
           </>,
         )}
@@ -87,16 +79,10 @@ export function ScheduleWidgetListCategory({
             <div className="flex flex-gap">
               <div className="ellipsis max-width:5em">{cat.title.toLowerCase()}</div>
               {!rights.schedule.lists?.units.some(unit => !unit.title) && (
-                <StrongEvaButton
-                  scope={scope}
-                  fieldName="units"
+                <EvaSendButton
                   Icon={IconPlusSignStrokeRounded}
-                  mapExecArgs={args => {
-                    return {
-                      ...args,
-                      cati,
-                    };
-                  }}
+                  confirm={`Создать новое ${cat.title}?`}
+                  onSend={() => schSokiInvocatorClient.createListCategoryUnit(null, catScopeProps, cati)}
                 />
               )}
               <IconEdit02StrokeRounded onClick={screen} />
@@ -108,15 +94,13 @@ export function ScheduleWidgetListCategory({
           <div className="margin-big-gap-h">
             {isExpand &&
               rights.schedule.lists?.units.map(unit => {
-                if (unit.cat !== cati) return null;
+                if (unit.cati !== cati) return null;
 
                 return (
                   <ScheduleWidgetListUnit
                     key={unit.mi}
                     cat={cat}
                     cati={cati}
-                    scheduleScope={scheduleScope}
-                    scope={scope}
                     unit={unit}
                     catScopePostfix={catScopePostfix}
                     shortTitles={shortTitles}

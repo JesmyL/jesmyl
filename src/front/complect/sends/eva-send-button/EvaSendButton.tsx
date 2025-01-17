@@ -20,7 +20,7 @@ export default function EvaSendButton<Value>(props: EvaSendButtonProps<Value>) {
         return props.prefix === undefined && props.postfix === undefined ? (
           <TheIconLoading
             isLoading={isLoading}
-            className={sysClassName + (isLoading ? ' rotate ' : '') + (props.className || '')}
+            className={sysClassName + (props.className || '')}
             onClick={onClick}
             Icon={props.Icon}
           />

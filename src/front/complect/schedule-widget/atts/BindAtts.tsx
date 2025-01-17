@@ -12,14 +12,9 @@ import { IconPlusSignStrokeRounded } from '../../../complect/the-icon/icons/plus
 import Modal from '../../modal/Modal/Modal';
 import { ModalBody } from '../../modal/Modal/ModalBody';
 import { ModalFooter } from '../../modal/Modal/ModalFooter';
-import { StrongComponentProps } from '../../strong-control/Strong.model';
 import StrongDiv from '../../strong-control/StrongDiv';
 import IconButton from '../../the-icon/IconButton';
-import {
-  takeStrongScopeMaker,
-  useScheduleWidgetAppAttsContext,
-  useScheduleWidgetRightsContext,
-} from '../useScheduleWidget';
+import { useScheduleWidgetAppAttsContext, useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetAttFace from './AttFace';
 import ScheduleWidgetBindAttRefKeyButton from './BindAttRefKeyButton';
 import ScheduleWidgetCustomAttachments from './custom/CustomAttachments';
@@ -27,22 +22,18 @@ import ScheduleWidgetCustomAttachments from './custom/CustomAttachments';
 export default function ScheduleWidgetBindAtts({
   atts,
   forTitle,
-  scope,
-  scheduleScope,
   schedule,
-  mapExecArgs,
   cantBindLinks,
   topContent,
   customAttTopContent,
-}: StrongComponentProps<{
-  scheduleScope: string;
+}: {
   forTitle: ReactNode;
   atts?: ScheduleWidgetDayEventAttValues;
   schedule: IScheduleWidget;
   cantBindLinks?: boolean;
   topContent?: ReactNode;
-  customAttTopContent?: (scope: string, attKey: ScheduleWidgetAttKey) => ReactNode;
-}>) {
+  customAttTopContent?: (attKey: ScheduleWidgetAttKey) => ReactNode;
+}) {
   const [appAtts, attRefs] = useScheduleWidgetAppAttsContext();
   const appAttList = MyLib.entries(appAtts);
   const rights = useScheduleWidgetRightsContext();
@@ -66,33 +57,27 @@ export default function ScheduleWidgetBindAtts({
                 !scheduleWidgetUserRights.checkIsCan(myUserR, tatt.U)
               )
                 return null;
-              const attScope = takeStrongScopeMaker(scope, ' attKey/', attKey);
+              // const attScope = takeStrongScopeMaker(scope, ' attKey/', attKey);
 
               return (
                 <StrongDiv
                   key={attKey}
-                  scope={attScope}
                   fieldName=""
                   cud="U"
                   className={
                     'relative flex flex-gap bgcolor--1 padding-gap margin-big-gap-v pointer' +
                     (atts?.[attKey] ? ' disabled ' : '')
                   }
-                  mapExecArgs={
-                    mapExecArgs ||
-                    (args => {
-                      if (atts?.[attKey]) return;
-                      return {
-                        ...args,
-                        value: tatt.initVal,
-                      };
-                    })
-                  }
+                  mapExecArgs={args => {
+                    if (atts?.[attKey]) return;
+                    return {
+                      ...args,
+                      value: tatt.initVal,
+                    };
+                  }}
                   onClick={() => setIsModalOpen(true)}
                 >
                   <ScheduleWidgetAttFace
-                    scope={scope}
-                    scheduleScope={scheduleScope}
                     tatt={tatt}
                     typeTitle={forTitle}
                     attKey={attKey}
@@ -102,7 +87,7 @@ export default function ScheduleWidgetBindAtts({
                     <ScheduleWidgetBindAttRefKeyButton
                       refs={attRefs[attKey]}
                       forTitle={forTitle}
-                      attScope={attScope}
+                      // attScope={attScope}
                       tatt={tatt}
                       attKey={attKey}
                       atts={atts}
@@ -115,10 +100,7 @@ export default function ScheduleWidgetBindAtts({
           </ModalBody>
 
           <ModalFooter>
-            <ScheduleWidgetCustomAttachments
-              scope={scheduleScope}
-              tatts={schedule.tatts}
-            />
+            <ScheduleWidgetCustomAttachments tatts={schedule.tatts} />
           </ModalFooter>
         </Modal>
       )}
@@ -133,14 +115,14 @@ export default function ScheduleWidgetBindAtts({
       <Secs className="flex flex-gap no-scrollbar">
         {attEntries?.length ? (
           attEntries.map(([attKey]) => {
-            const attScope = takeStrongScopeMaker(scope, ' attKey/', attKey);
+            // const attScope = takeStrongScopeMaker(scope, ' attKey/', attKey);
 
             return (
               <ScheduleWidgetAttFace
                 isRedact
                 key={attKey}
-                scope={attScope}
-                scheduleScope={scheduleScope}
+                // scope={attScope}
+                // scheduleScope={scheduleScope}
                 tatt={appAtts[attKey]}
                 attKey={attKey}
                 typeTitle={forTitle}

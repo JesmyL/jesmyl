@@ -16,7 +16,6 @@ import ScheduleWidgetAttFace from './AttFace';
 export default function ScheduleWidgetBindAttRefKeyButton({
   atts,
   forTitle,
-  attScope,
   attKey,
   refs,
   tatt,
@@ -26,7 +25,6 @@ export default function ScheduleWidgetBindAttRefKeyButton({
   atts?: ScheduleWidgetDayEventAttValues;
   attKey: ScheduleWidgetAttKey;
   refs: ScheduleWidgetAttRef[];
-  attScope: string;
   tatt: ScheduleWidgetAppAtt;
   schedule: IScheduleWidget;
 }) {
@@ -50,7 +48,7 @@ export default function ScheduleWidgetBindAttRefKeyButton({
               return (
                 <StrongDiv
                   key={attKey + dayi + eventMi}
-                  scope={attScope}
+                  // scope={attScope}
                   fieldName=""
                   cud="U"
                   className="margin-big-gap-v"
@@ -70,8 +68,6 @@ export default function ScheduleWidgetBindAttRefKeyButton({
                     className={'flex flex-gap bgcolor--1 padding-gap pointer' + (atts?.[attKey] ? ' disabled ' : '')}
                   >
                     <ScheduleWidgetAttFace
-                      scope=""
-                      scheduleScope=""
                       tatt={tatt}
                       typeTitle={forTitle}
                       attKey={attKey}

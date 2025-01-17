@@ -1,3 +1,4 @@
+import { SokiAuthLogin } from 'shared/api';
 import { smylib } from 'shared/utils';
 
 export class SokiAutherUtils {
@@ -5,5 +6,5 @@ export class SokiAutherUtils {
     return smylib.md5(`{${id}.${nick}} `);
   }
 
-  static makeLoginFromId = (id: number) => 'T' + smylib.md5('' + id).slice(1);
+  static makeLoginFromId = (id: number): SokiAuthLogin => ('T' + smylib.md5('' + id).slice(1)) as never;
 }

@@ -1,14 +1,15 @@
+import { indexIDB } from 'front/components/index/db/index-idb';
 import { mylib } from 'front/utils';
 import { useState } from 'react';
-import { ScheduleWidgetPhotoKey, SokiSharedKey } from 'shared/api';
-import { soki } from '../../../../soki';
+import { ScheduleWidgetPhotoKey } from 'shared/api';
 import Modal from '../../../modal/Modal/Modal';
 import EvaSendButton from '../../../sends/eva-send-button/EvaSendButton';
 import IconButton from '../../../the-icon/IconButton';
 import { IconCloudDownloadStrokeRounded } from '../../../the-icon/icons/cloud-download';
 import { IconCloudUploadStrokeRounded } from '../../../the-icon/icons/cloud-upload';
 import { IconEyeStrokeRounded } from '../../../the-icon/icons/eye';
-import { getScheduleWidgetUserPhotoStorageKey, scheduleWidgetPhotosStorage } from '../../storage';
+import { schSokiInvocatorClient } from '../../invocators/invocators.methods';
+import { getScheduleWidgetUserPhotoStorageKey } from '../../storage';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import { ScheduleWidgetPhotoGalery } from './PhotoGalery';
 import { checkIsUserPhotoable } from './utils';
@@ -36,42 +37,29 @@ export const ScheduleWidgetShareButtons = function ShareButtons({ prefix }: Prop
       <EvaSendButton
         Icon={IconCloudUploadStrokeRounded}
         onSend={async () => {
-          const value: Partial<Record<ScheduleWidgetPhotoKey, string>> = {};
+          const value = {} as Record<ScheduleWidgetPhotoKey, string>;
           const users = rights.schedule.ctrl.users;
 
           for (const user of users) {
             if (!checkIsUserPhotoable(user)) continue;
 
             const key = getScheduleWidgetUserPhotoStorageKey(user, rights.schedule);
-            const photo = await scheduleWidgetPhotosStorage.get(key);
+            const photo = await indexIDB.db.schedulePhotos.get(key);
 
-            if (!photo) continue;
+            if (!photo?.src) continue;
 
-            value[key] = photo;
+            value[key] = photo.src;
           }
 
           if (!mylib.keys(value).length) return;
 
-          soki.send({ shareData: { [SokiSharedKey.ScheduleWidgetPhotos as never]: value } }, 'index');
+          return schSokiInvocatorClient.putSharedPhotos(null, rights.schedule.w, value);
         }}
       />
       <EvaSendButton
         Icon={IconCloudDownloadStrokeRounded}
-        onSend={() => {
-          return new Promise((resolve, reject) =>
-            soki
-              .send(
-                {
-                  getShared: {
-                    prefix: '' + rights.schedule.w,
-                    key: SokiSharedKey.ScheduleWidgetPhotos,
-                  },
-                },
-                'index',
-              )
-              .on(resolve, reject),
-          );
-        }}
+        onSuccess={photos => indexIDB.db.schedulePhotos.bulkPut(photos)}
+        onSend={() => schSokiInvocatorClient.getSharedPhotos(null, rights.schedule.w)}
       />
     </div>
   );

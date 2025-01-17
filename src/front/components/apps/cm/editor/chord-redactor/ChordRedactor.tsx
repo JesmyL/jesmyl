@@ -8,7 +8,7 @@ import { atom, useAtom } from '../../../../../complect/atoms';
 import TheButton from '../../../../../complect/Button';
 import KeyboardInput from '../../../../../complect/keyboard/KeyboardInput';
 import { IconPlusSignCircleStrokeRounded } from '../../../../../complect/the-icon/icons/plus-sign-circle';
-import { cmIDB } from '../../_db/cm-db';
+import { cmIDB } from '../../_db/cm-idb';
 import { useToNewChordSearches } from '../../col/com/chord-card/chord-redactor-searches';
 import ChordCard from '../../col/com/chord-card/ChordCard';
 import { cmOtherClientInvocatorMethods } from '../cm-editor-invocator.methods';

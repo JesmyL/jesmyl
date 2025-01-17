@@ -1,45 +1,38 @@
 import {
   IScheduleWidgetUser,
+  IScheduleWidgetWid,
   packScheduleWidgetInviteLink,
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
 import { makeAppActionLink } from '../../../../app/AppServiceActions';
 import { IconUserStrokeRounded } from '../../../../complect/the-icon/icons/user';
-import { StrongComponentProps } from '../../../strong-control/Strong.model';
 import StrongEditableField from '../../../strong-control/field/StrongEditableField';
-import { takeStrongScopeMaker, useScheduleWidgetRightsContext } from '../../useScheduleWidget';
+import { useScheduleUserScopePropsContext } from '../../complect/scope-contexts/useScheduleUserScopePropsContext';
+import { schSokiInvocatorClient } from '../../invocators/invocators.methods';
+import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetRightControlList from '../RightControlList';
 
 const accessLevel = scheduleWidgetUserRights.rightLevel(ScheduleWidgetUserRoleRight.ReadTitles);
 
-export function ScheduleWidgetUserEdit({
-  scope,
-  user,
-  onUpdate,
-}: StrongComponentProps & {
-  user: IScheduleWidgetUser;
-  onUpdate?: <User extends IScheduleWidgetUser, Key extends keyof User>(key: Key, value: User[Key]) => void;
-}) {
+export function ScheduleWidgetUserEdit({ user }: { user: IScheduleWidgetUser }) {
   const rights = useScheduleWidgetRightsContext();
-  const userScope = takeStrongScopeMaker(scope, ' userMi/', user.mi);
+  const scheduleUserScopeProps = useScheduleUserScopePropsContext();
+
+  if (scheduleUserScopeProps.schw === IScheduleWidgetWid.def) return <div className="color--ko">Не в контексте</div>;
 
   return (
     <>
       <StrongEditableField
-        scope={userScope}
-        fieldName="fio"
         isRedact
         setSelfRedact
         title="Имя"
         Icon={IconUserStrokeRounded}
         value={user.fio || user.nick}
-        onUpdate={onUpdate && (value => onUpdate('fio', value))}
+        onSend={value => schSokiInvocatorClient.setUserFio(null, scheduleUserScopeProps, value)}
       />
       {rights.myUser && (
         <ScheduleWidgetRightControlList
-          scope={userScope}
-          fieldName="R"
           rightCtrl={scheduleWidgetUserRights}
           R={user.R}
           isHidden={
@@ -51,7 +44,7 @@ export function ScheduleWidgetUserEdit({
             (!rights.isCanTotalRedact &&
               scheduleWidgetUserRights.checkIsHasRights(user.R, ScheduleWidgetUserRoleRight.TotalRedact))
           }
-          onUpdate={onUpdate && (value => onUpdate('R', value))}
+          onSend={value => schSokiInvocatorClient.setUserRights(null, scheduleUserScopeProps, value)}
         />
       )}
       {!user.login && (

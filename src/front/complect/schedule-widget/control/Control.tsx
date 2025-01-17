@@ -1,3 +1,4 @@
+import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
 import { IconArrowRight01StrokeRounded } from '../../../complect/the-icon/icons/arrow-right-01';
 import { IconCheckmarkSquare02StrokeRounded } from '../../../complect/the-icon/icons/checkmark-square-02';
 import { IconNotification01StrokeRounded } from '../../../complect/the-icon/icons/notification-01';
@@ -6,15 +7,13 @@ import { IconSettings01StrokeRounded } from '../../../complect/the-icon/icons/se
 import { IconSquareStrokeRounded } from '../../../complect/the-icon/icons/square';
 import { IconUserStrokeRounded } from '../../../complect/the-icon/icons/user';
 import useModal from '../../modal/useModal';
+import SendableDropdown from '../../sends/dropdown/SendableDropdown';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
-import { StrongComponentProps } from '../../strong-control/Strong.model';
-import StrongDropdown from '../../strong-control/StrongDropdown';
-import StrongEvaButton from '../../strong-control/StrongEvaButton';
 import IconButton from '../../the-icon/IconButton';
+import { useScheduleScopePropsContext } from '../complect/scope-contexts/useScheduleScopePropsContext';
+import { schSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetRegisterType from './RegisterType';
-import { ScheduleWidgetUserByLinkInvite } from './users/ByLinkInvite';
-import { ScheduleWidgetUserByQrRedactor } from './users/ByQrRedactor';
 import { ScheduleWidgetUserAddByExcel } from './users/excel/AddByExcel';
 import ScheduleWidgetUserList from './users/UserList';
 
@@ -23,8 +22,9 @@ const tgInformTimesItems = [
   ...[5, 10, 15, 30].map(time => ({ title: 'Напоминать TG за ' + time + ' мин.', id: time })),
 ];
 
-export default function ScheduleWidgetControl({ scope }: StrongComponentProps) {
+export const ScheduleWidgetControl = () => {
   const rights = useScheduleWidgetRightsContext();
+  const scheduleScopeProps = useScheduleScopePropsContext();
 
   const [modalNode, screen] = useModal(({ header, body }) => {
     return rights.isCanRedact ? (
@@ -37,73 +37,53 @@ export default function ScheduleWidgetControl({ scope }: StrongComponentProps) {
         {body(
           <>
             <ScheduleWidgetUserList
-              scope={scope}
-              titlePostfix={
-                rights.isCanRedactUsers &&
-                (isExpand =>
-                  isExpand && (
-                    <span className="flex flex-gap qwq">
-                      <ScheduleWidgetUserAddByExcel scope={scope} />
-                      <ScheduleWidgetUserByLinkInvite scope={scope} />
-                      <ScheduleWidgetUserByQrRedactor scope={scope} />
-                    </span>
-                  ))
-              }
+              titlePostfix={rights.isCanRedactUsers && (isExpand => isExpand && <ScheduleWidgetUserAddByExcel />)}
             />
-            <ScheduleWidgetRegisterType scope={scope} />
+            <ScheduleWidgetRegisterType />
             {rights.isCanTotalRedact && (
               <>
-                <StrongEvaButton
-                  scope={scope}
-                  cud="U"
-                  fieldName="withTech"
-                  fieldValue={rights.schedule.withTech ? 0 : 1}
+                <EvaSendButton
                   Icon={rights.schedule.withTech ? IconCheckmarkSquare02StrokeRounded : IconSquareStrokeRounded}
                   postfix="Первый - технический день"
                   confirm={`Сделать первый день ${rights.schedule.withTech ? 'обычным' : 'подготовительным'}?`}
                   className="margin-gap-b"
+                  onSend={() =>
+                    schSokiInvocatorClient.setFirstDayAsTech(
+                      null,
+                      scheduleScopeProps,
+                      rights.schedule.withTech ? undefined : 1,
+                    )
+                  }
                 />
                 <StrongEditableField
-                  scope={scope}
-                  fieldName="tgChatReqs"
                   value={rights.schedule.tgChatReqs}
                   isRedact
                   setSelfRedact
                   title="TG-чат-реквизиты"
+                  onSend={value => schSokiInvocatorClient.setTgChatRequisites(null, scheduleScopeProps, value)}
                 />
-                {rights.schedule.tgInform === 0 ? (
-                  <StrongEvaButton
-                    scope={scope}
-                    cud="U"
-                    fieldName="tgInform"
-                    fieldValue={1}
-                    Icon={IconNotificationOff01StrokeRounded}
-                    postfix="TG-Напоминание: отключено"
-                    className="margin-gap-b"
-                  />
-                ) : (
-                  <StrongEvaButton
-                    scope={scope}
-                    cud="U"
-                    fieldName="tgInform"
-                    fieldValue={0}
-                    Icon={IconNotification01StrokeRounded}
-                    postfix={
-                      rights.schedule.tgInformTime
+                <EvaSendButton
+                  className="margin-gap-b"
+                  Icon={
+                    rights.schedule.tgInform === 0
+                      ? IconNotificationOff01StrokeRounded
+                      : IconNotification01StrokeRounded
+                  }
+                  postfix={
+                    rights.schedule.tgInform === 0
+                      ? 'TG-Напоминание: отключено'
+                      : rights.schedule.tgInformTime
                         ? 'TG-Напоминание: за ' + rights.schedule.tgInformTime + ' мин. и в начале события'
                         : 'TG-Напоминание: только по началу события'
-                    }
-                    className="margin-gap-b"
-                  />
-                )}
-                <StrongDropdown
-                  scope={scope}
-                  cud="U"
-                  fieldName="tgInformTime"
+                  }
+                  onSend={() => schSokiInvocatorClient.toggleIsTgInform(null, scheduleScopeProps)}
+                />
+                <SendableDropdown
                   items={tgInformTimesItems}
                   disabled={rights.schedule.tgInform === 0}
                   id={rights.schedule.tgInformTime}
                   className="margin-big-gap-b"
+                  onSend={tm => schSokiInvocatorClient.setTgInformTime(null, scheduleScopeProps, tm)}
                 />
               </>
             )}
@@ -158,4 +138,4 @@ export default function ScheduleWidgetControl({ scope }: StrongComponentProps) {
       )}
     </>
   );
-}
+};

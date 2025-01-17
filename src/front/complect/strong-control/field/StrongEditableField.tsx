@@ -1,5 +1,4 @@
 import { ReactNode, useEffect, useState } from 'react';
-import { SokiServerEvent } from 'shared/api';
 import { IconAlert01StrokeRounded } from '../../../complect/the-icon/icons/alert-01';
 import { IconCloudUploadStrokeRounded } from '../../../complect/the-icon/icons/cloud-upload';
 import { IconLinkBackwardStrokeRounded } from '../../../complect/the-icon/icons/link-backward';
@@ -8,8 +7,6 @@ import useToast from '../../modal/useToast';
 import { TheIconLoading } from '../../the-icon/IconLoading';
 import { TheIconType } from '../../the-icon/model';
 import useIsRedactArea from '../../useIsRedactArea';
-import { StrongControlProps } from '../Strong.model';
-import { strongPrepareArgsAndSend, useStrongExerContext } from '../useStrongControl';
 import StrongEditableFieldMultiline from './StrongEditableFieldMultiline';
 import { onStrongFieldBlur, onStrongFieldDragStart, onStrongFieldFocus } from './clipboard/Picker';
 
@@ -17,7 +14,7 @@ const onFocus = onStrongFieldFocus;
 const onBlur = onStrongFieldBlur;
 const onDragStart = onStrongFieldDragStart;
 
-type Props<Key, Value> = StrongControlProps<{
+type Props<Key, Value> = {
   fieldKey?: Key;
   value?: Value;
   title?: string;
@@ -35,9 +32,9 @@ type Props<Key, Value> = StrongControlProps<{
   className?: string;
   onChange?: (value: string) => void | Promise<boolean>;
   onUpdate?: (value: string) => void | Promise<boolean>;
-  onSend?: (value: string) => void | Promise<SokiServerEvent | null>;
+  onSend: (value: string) => Promise<unknown>;
   onSelfRedactChange?: (is: boolean) => void;
-}>;
+};
 
 export default function StrongEditableField<Key extends string, Value extends string | Partial<Record<Key, string>>>(
   props: Props<Key, Value>,
@@ -51,8 +48,6 @@ export default function StrongEditableField<Key extends string, Value extends st
   const { editIcon, isSelfRedact } = useIsRedactArea(true, null, true, true, props.onSelfRedactChange);
   const isRedact = props.setSelfRedact ? isSelfRedact : props.isRedact;
 
-  const exer = useStrongExerContext();
-
   const sendValue = () => {
     const isSendResuls =
       stateValue !== undefined &&
@@ -65,49 +60,19 @@ export default function StrongEditableField<Key extends string, Value extends st
     }
 
     if (isSendResuls) {
-      const onSendResult = props.onSend?.(stateValue.trim());
+      setIsLoading(true);
+      setIsError(false);
 
-      if (onSendResult) {
-        setIsLoading(true);
-        setIsError(false);
-
-        onSendResult
-          ?.then(isOk => {
-            if (isOk) {
-              setIsLoading(false);
-              setIsUserChange(false);
-            } else setIsError(true);
-          })
-          .catch(errorMessage => {
-            toast(errorMessage, { mood: 'ko' });
-            setIsError(true);
-          });
-      } else {
-        strongPrepareArgsAndSend(
-          exer,
-          props.scope,
-          props.fieldName,
-          props.cud ?? 'U',
-          (props.type === 'number' ? +stateValue.trim() : stateValue.trim()) as never,
-          () => {
-            setIsLoading(true);
-            setIsError(false);
-          },
-          props.mapExecArgs,
-          props.fieldKey,
-          props.fieldValue,
-        )
-          ?.then(isOk => {
-            if (isOk) {
-              setIsLoading(false);
-              setIsUserChange(false);
-            } else setIsError(true);
-          })
-          .catch(errorMessage => {
-            toast(errorMessage, { mood: 'ko' });
-            setIsError(true);
-          });
-      }
+      props
+        .onSend(stateValue.trim())
+        .then(() => {
+          setIsLoading(false);
+          setIsUserChange(false);
+        })
+        .catch(errorMessage => {
+          toast(errorMessage, { mood: 'ko' });
+          setIsError(true);
+        });
     } else setStateValue(value);
   };
 
@@ -133,7 +98,6 @@ export default function StrongEditableField<Key extends string, Value extends st
   return (
     <div
       className={props.className || 'margin-gap-v'}
-      attr-id={props.scope + props.fieldName + (props.fieldKey === undefined ? '' : props.fieldKey)}
       attr-text={stateValue}
     >
       {modalNode}
