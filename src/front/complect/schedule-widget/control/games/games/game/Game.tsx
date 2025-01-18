@@ -1,5 +1,5 @@
-import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/useScheduleScopePropsContext';
-import { schSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
+import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/scope-props-contexts';
+import { schGamesSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
 import { useState } from 'react';
 import { ExpandableContent } from '../../../../../expand/ExpandableContent';
 import StrongEditableField from '../../../../../strong-control/field/StrongEditableField';
@@ -22,7 +22,7 @@ export default function ScheduleWidgetTeamGame() {
         placeholder="Командная игра"
         isRedact={isRenaming}
         onSend={value =>
-          schSokiInvocatorClient.setGameTitle(null, { ...scheduleScopeProps, gameMi: game.mi }, value, game.title)
+          schGamesSokiInvocatorClient.setTitle(null, { ...scheduleScopeProps, gameMi: game.mi }, value, game.title)
         }
       />
       <IconPencilEdit01StrokeRounded

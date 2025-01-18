@@ -8,8 +8,8 @@ import {
 import { makeAppActionLink } from '../../../../app/AppServiceActions';
 import { IconUserStrokeRounded } from '../../../../complect/the-icon/icons/user';
 import StrongEditableField from '../../../strong-control/field/StrongEditableField';
-import { useScheduleUserScopePropsContext } from '../../complect/scope-contexts/useScheduleUserScopePropsContext';
-import { schSokiInvocatorClient } from '../../invocators/invocators.methods';
+import { useScheduleUserScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
+import { schUsersSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetRightControlList from '../RightControlList';
 
@@ -29,7 +29,7 @@ export function ScheduleWidgetUserEdit({ user }: { user: IScheduleWidgetUser }) 
         title="Имя"
         Icon={IconUserStrokeRounded}
         value={user.fio || user.nick}
-        onSend={value => schSokiInvocatorClient.setUserFio(null, scheduleUserScopeProps, value)}
+        onSend={value => schUsersSokiInvocatorClient.setUserFio(null, scheduleUserScopeProps, value)}
       />
       {rights.myUser && (
         <ScheduleWidgetRightControlList
@@ -44,7 +44,7 @@ export function ScheduleWidgetUserEdit({ user }: { user: IScheduleWidgetUser }) 
             (!rights.isCanTotalRedact &&
               scheduleWidgetUserRights.checkIsHasRights(user.R, ScheduleWidgetUserRoleRight.TotalRedact))
           }
-          onSend={value => schSokiInvocatorClient.setUserRights(null, scheduleUserScopeProps, value)}
+          onSend={value => schUsersSokiInvocatorClient.setUserRights(null, scheduleUserScopeProps, value)}
         />
       )}
       {!user.login && (

@@ -10,33 +10,29 @@ import { ModalHeader } from '../../modal/Modal/ModalHeader';
 import IconButton from '../../the-icon/IconButton';
 import { IconPlusSignStrokeRounded } from '../../the-icon/icons/plus-sign';
 import { TheIconType } from '../../the-icon/model';
-import { schSokiInvocatorClient } from '../invocators/invocators.methods';
+import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
+import { schEventTypesSokiInvocatorClient } from '../invocators/invocators.methods';
 import ScheduleWidgetEventType from './EventType';
 import { useAttTypeTitleError } from './useAttTypeTitleError';
+
+type Props = {
+  postfix: ReactNode;
+  schedule: IScheduleWidget;
+  Icon: TheIconType;
+  usedCounts?: Record<number, number>;
+  onItemSelectSend?: (typei: number) => Promise<unknown>;
+};
 
 const emptyArr: [] = [];
 
 const itemIt = <Item,>({ item }: { item: Item }) => item;
 const eqByTitle = (a: { title: string }, b: { title: string }) => (a.title > b.title ? 1 : b.title < a.title ? -1 : 0);
 
-export default function ScheduleWidgetEventList({
-  selectScope,
-  postfix,
-  schedule,
-  Icon,
-  selectFieldName,
-  usedCounts,
-}: {
-  selectScope: string;
-  selectFieldName: string;
-  postfix: ReactNode;
-  schedule: IScheduleWidget;
-  Icon: TheIconType;
-  usedCounts?: Record<number, number>;
-}) {
+export const ScheduleWidgetEventTypeList = ({ postfix, schedule, Icon, usedCounts, onItemSelectSend }: Props) => {
   const types = schedule.types || emptyArr;
   const [term, setTerm] = useState('');
   const error = useAttTypeTitleError(term, schedule, true);
+  const scheduleScopeProps = useScheduleScopePropsContext();
 
   const sortedTypes = useMemo(() => {
     const sortedTypes: ScheduleWidgetDayListItemTypeBox[] = (
@@ -69,27 +65,19 @@ export default function ScheduleWidgetEventList({
       return (
         <EvaSendButton
           key={tm}
-          // scope={scheduleScope}
-          // fieldName="types"
           className="margin-gap-v flex-max"
           Icon={IconPlusSignStrokeRounded}
           confirm={
             <>
-              Добавить шаблон <span className="color--7">{node}</span>
+              Добавить шаблон события <span className="color--7">{node}</span>
             </>
           }
           postfix={node}
-          // mapExecArgs={args => {
-          //   return {
-          //     ...args,
-          //     value: { tm, title },
-          //   };
-          // }}
-          onSend={() => schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null)}
+          onSend={() => schEventTypesSokiInvocatorClient.create(null, scheduleScopeProps, title, tm)}
         />
       );
     });
-  }, [error, sortedTypes, term]);
+  }, [error, scheduleScopeProps, sortedTypes, term]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -98,15 +86,13 @@ export default function ScheduleWidgetEventList({
       {isModalOpen && (
         <Modal onClose={setIsModalOpen}>
           <ModalHeader>
-            <div className="">
-              <div>Шаблоны событий</div>
-              <DebouncedSearchInput
-                className="debounced-searcher round-styled"
-                placeholder="Фильтр по названию"
-                debounce={30}
-                onDebounced={setTerm}
-              />
-            </div>
+            <div>Шаблоны событий</div>
+            <DebouncedSearchInput
+              className="debounced-searcher round-styled"
+              placeholder="Фильтр по названию"
+              debounce={30}
+              onDebounced={setTerm}
+            />
           </ModalHeader>
           <ModalBody>
             {sortedTypes.length !== 1 && typesToAdd}
@@ -118,10 +104,9 @@ export default function ScheduleWidgetEventList({
                   <ScheduleWidgetEventType
                     onSelect={() => setIsModalOpen(false)}
                     schedule={schedule}
-                    selectFieldName={selectFieldName}
-                    selectScope={selectScope}
                     typeBox={typeBox}
                     typei={typei}
+                    onItemSelectSend={onItemSelectSend}
                   />
                   {usedCounts ? (
                     <div className={'text-right' + (usedCounts[typei] ? '' : ' error-message')}>
@@ -145,7 +130,7 @@ export default function ScheduleWidgetEventList({
       />
     </>
   );
-}
+};
 
 const StyledItem = styled.div`
   margin-bottom: 20px;

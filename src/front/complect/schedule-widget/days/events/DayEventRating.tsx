@@ -10,7 +10,6 @@ import { IconHelpCircleStrokeRounded } from '../../../../complect/the-icon/icons
 import { IconMessage01StrokeRounded } from '../../../../complect/the-icon/icons/message-01';
 import useIsExpand from '../../../expand/useIsExpand';
 import StrongEditableField from '../../../strong-control/field/StrongEditableField';
-import { schSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 
 const ratePoints = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5];
@@ -129,7 +128,8 @@ export default function ScheduleWidgetDayEventRating(props: {
                         ? IconHelpCircleStrokeRounded
                         : IconFavouriteStrokeRounded
                   }
-                  onSend={() => schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null)}
+                  // onSend={() => schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null)}
+                  onSend={async () => {}}
                 />
               );
             })}
@@ -148,7 +148,8 @@ export default function ScheduleWidgetDayEventRating(props: {
             setSelfRedact
             multiline
             // onSend={value => schSokiInvocatorClient.setEventRatingComment(null, rateScopeProps, value)}
-            onSend={value => schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null, rateScopeProps, value)}
+            // onSend={value => schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null, rateScopeProps, value)}
+            onSend={async () => {}}
           />
           {ratingNode}
         </div>

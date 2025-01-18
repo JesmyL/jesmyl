@@ -104,7 +104,8 @@ export default function ScheduleWidgetDayEventAtt(props: Props) {
           <div>
             {att.result?.(
               props.att?.[appAtt.im as never] ?? att.initVal,
-              { ...attScopeProps, imAttKey: appAtt.im },
+              // { ...attScopeProps, imAttKey: appAtt.im },
+              attScopeProps,
               isRedact,
               is => setIsSelfRedact(is ?? isNIs),
               props.schedule,

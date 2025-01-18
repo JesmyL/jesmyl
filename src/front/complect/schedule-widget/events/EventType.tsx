@@ -1,3 +1,6 @@
+import Modal from 'front/complect/modal/Modal/Modal';
+import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
+import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
 import { MyLib } from 'front/utils';
 import { useMemo, useState } from 'react';
 import { IScheduleWidget, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
@@ -8,62 +11,40 @@ import { IconClock01StrokeRounded } from '../../../complect/the-icon/icons/clock
 import { IconEdit02StrokeRounded } from '../../../complect/the-icon/icons/edit-02';
 import { IconSchoolReportCardStrokeRounded } from '../../../complect/the-icon/icons/school-report-card';
 import Dropdown from '../../dropdown/Dropdown';
-import useModal from '../../modal/useModal';
 import SendableDropdown from '../../sends/dropdown/SendableDropdown';
 import StrongDiv from '../../strong-control/StrongDiv';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
 import StrongClipboardPicker from '../../strong-control/field/clipboard/Picker';
 import ScheduleWidgetBindAtts from '../atts/BindAtts';
 import { AttTranslatorType, attTranslatorTypes } from '../complect/attTranslatorType';
-import { schSokiInvocatorClient } from '../invocators/invocators.methods';
+import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
+import { schEventTypesSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useAttTypeTitleError } from './useAttTypeTitleError';
 
 export default function ScheduleWidgetEventType(props: {
-  selectScope: string;
-  selectFieldName: string;
   schedule: IScheduleWidget;
   typei: number;
   typeBox: ScheduleWidgetDayListItemTypeBox;
   onSelect?: () => void;
   isRedact?: boolean;
+  onItemSelectSend?: (typei: number) => Promise<unknown>;
 }) {
   const [title, setTitle] = useState(props.typeBox.title);
   const error = useAttTypeTitleError(title, props.schedule, props.isRedact, props.typei);
   const [attTranslatorType, setAttTranslatorType] = useState(AttTranslatorType.Today);
+  const [isRedactModalOpen, setIsRedactModalOpen] = useState<unknown>(false);
 
-  // const selfScope = takeStrongScopeMaker(props.scheduleScope, ' typei/', props.typei);
   const attEntries = (props.typeBox.atts ? MyLib.keys(props.typeBox.atts) : []).length;
 
-  const eventTypeScopeProps = useMemo(() => ({}), []);
-
-  const [modalNode, screen] = useModal(({ header, body }) => {
-    return (
-      <>
-        {header(
-          <span className="flex flex-gap full-width between">
-            <span>
-              <span className="color--7">{props.typeBox.title} </span>- Редактирование шаблона
-            </span>
-            <StrongClipboardPicker />
-          </span>,
-        )}
-        {body(
-          <>
-            <ScheduleWidgetEventType
-              {...props}
-              isRedact
-            />
-          </>,
-        )}
-      </>
-    );
-  });
+  const scheduleScopeProps = useScheduleScopePropsContext();
+  const eventTypeScopeProps = useMemo(
+    () => ({ ...scheduleScopeProps, typei: props.typei }),
+    [props.typei, scheduleScopeProps],
+  );
 
   const innerNode = (
     <>
       <StrongEditableField
-        // scope={selfScope}
-        // fieldName="field"
         fieldKey="title"
         value={props.typeBox}
         isRedact={props.isRedact}
@@ -71,9 +52,8 @@ export default function ScheduleWidgetEventType(props: {
         title="Название"
         isImpossibleEmptyValue
         onChange={setTitle}
-        // onSend={value => schSokiInvocatorClient.setEventTypeTitle(null, eventTypeScopeProps as never, value)}
         onSend={value =>
-          schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null, eventTypeScopeProps as never, value)
+          schEventTypesSokiInvocatorClient.setTitle(null, eventTypeScopeProps, value, props.typeBox.title)
         }
       />
       {error && (
@@ -83,18 +63,13 @@ export default function ScheduleWidgetEventType(props: {
         </div>
       )}
       <StrongEditableField
-        // scope={selfScope}
-        // fieldName="tm"
         type="number"
         value={'' + (props.typeBox.tm ?? '')}
         postfix=" мин"
         isRedact={props.isRedact}
         title="Продолжительность, мин"
         Icon={IconClock01StrokeRounded}
-        // onSend={value => schSokiInvocatorClient.setEventTypeTm(null, eventTypeScopeProps as never, +value)}
-        onSend={value =>
-          schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null, eventTypeScopeProps as never, +value)
-        }
+        onSend={value => schEventTypesSokiInvocatorClient.setTm(null, eventTypeScopeProps, +value)}
       />
       {props.isRedact ? (
         <ScheduleWidgetBindAtts
@@ -133,6 +108,20 @@ export default function ScheduleWidgetEventType(props: {
           //     value: attTranslatorType,
           //   };
           // }}
+          onAddAttSend={(attKey, value) =>
+            schEventTypesSokiInvocatorClient.bindAttImagine(
+              null,
+              { ...scheduleScopeProps, typei: props.typei, attKey },
+              value,
+            )
+          }
+          onRemoveAttSend={async attKey => {
+            schEventTypesSokiInvocatorClient.removeAttImagine(null, {
+              ...scheduleScopeProps,
+              typei: props.typei,
+              attKey,
+            });
+          }}
         />
       ) : (
         !attEntries || (
@@ -149,33 +138,45 @@ export default function ScheduleWidgetEventType(props: {
 
   return (
     <div className="relative">
-      {modalNode}
       {props.isRedact || (
         <div className="flex flex-end full-width absolute pos-top pos-right margin-sm-gap z-index:5">
-          <IconEdit02StrokeRounded onClick={screen} />
+          <IconEdit02StrokeRounded onClick={setIsRedactModalOpen} />
         </div>
       )}
+
       {props.isRedact || !props.typeBox.title ? (
         innerNode
       ) : (
         <SelectItem
-          scope={props.selectScope}
-          fieldName={props.selectFieldName}
           className={
             'schedule-event-type-select-item' +
-            (props.selectScope ? (props.isRedact ? '' : props.typeBox.title ? ' pointer ' : ' disabled ') : '') +
+            (props.onItemSelectSend ? (props.isRedact ? '' : props.typeBox.title ? ' pointer ' : ' disabled ') : '') +
             (props.isRedact ? '' : ' bgcolor--5 padding-gap margin-gap-v')
           }
-          mapExecArgs={args => {
-            props.onSelect?.();
-            return {
-              ...args,
-              eventType: props.typei,
-            };
-          }}
+          onSend={async () => props.onItemSelectSend?.(props.typei)}
         >
           {innerNode}
         </SelectItem>
+      )}
+
+      {!isRedactModalOpen || (
+        <Modal onClose={setIsRedactModalOpen}>
+          <ModalHeader>
+            <span className="flex flex-gap full-width between">
+              <span>
+                <span className="color--7">{props.typeBox.title} </span>- Редактирование шаблона
+              </span>
+              <StrongClipboardPicker />
+            </span>
+          </ModalHeader>
+
+          <ModalBody>
+            <ScheduleWidgetEventType
+              {...props}
+              isRedact
+            />
+          </ModalBody>
+        </Modal>
       )}
     </div>
   );

@@ -8,9 +8,9 @@ import Modal from '../../modal/Modal/Modal';
 import { StrongComponentProps } from '../../strong-control/Strong.model';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
 import IconButton from '../../the-icon/IconButton';
-import { useScheduleScopePropsContext } from '../complect/scope-contexts/useScheduleScopePropsContext';
+import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import ScheduleWidgetUserList from '../control/users/UserList';
-import { schSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetListUnitRedactor from './UnitRedactor';
 
@@ -66,10 +66,7 @@ export default function ScheduleWidgetListUnit(props: Props) {
               multiline
               setSelfRedact
               isRedact
-              // onSend={value => schSokiInvocatorClient.setUnitDescription(null, unitScopeData, value)}
-              onSend={value =>
-                schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null, unitScopeData, value)
-              }
+              onSend={value => schListsSokiInvocatorClient.setUnitDescription(null, unitScopeData, value, cati)}
             />
           )}
 

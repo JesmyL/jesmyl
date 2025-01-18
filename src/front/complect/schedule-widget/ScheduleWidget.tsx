@@ -22,13 +22,17 @@ import useIsRedactArea from '../useIsRedactArea';
 import ScheduleWidgetCustomAttachments from './atts/custom/CustomAttachments';
 import ScheduleWidgetStartTimeText from './complect/StartTimeText';
 import ScheduleWidgetTopicTitle from './complect/TopicTitle';
-import { ScheduleScopePropsContext } from './complect/scope-contexts/useScheduleScopePropsContext';
+import { ScheduleScopePropsContext } from './complect/scope-contexts/scope-props-contexts';
 import { ScheduleWidgetControl } from './control/Control';
 import { ScheduleWidgetDay } from './days/Day';
-import ScheduleWidgetEventList from './events/EventList';
+import { ScheduleWidgetEventTypeList } from './events/EventTypeList';
 import ScheduleWidgetContextWrapper from './general/ContextWrapper';
 import { ScheduleWidgetCopy } from './general/Copy';
-import { schSokiInvocatorClient } from './invocators/invocators.methods';
+import {
+  schDaysSokiInvocatorClient,
+  schSokiInvocatorClient,
+  schUsersSokiInvocatorClient,
+} from './invocators/invocators.methods';
 import { schLinkAction } from './links';
 import ScheduleWidgetLists from './lists/Lists';
 import { ScheduleWidgetWatchLiveTranslationButton } from './live-translations/WatchLiveButton';
@@ -95,13 +99,11 @@ export default function ScheduleWidget({
       if (rights.isSwBeforeRegistration) {
         blockContent = (
           <SendButton
-            // scope={selfScope}
-            // scopeData={schScopeData}
-            // fieldName="users"
             title="Буду участвовать"
             confirm="Вы будете записаны как участник"
-            // onSend={() => schSokiInvocatorClient.addMeByLink(null, scheduleScopeProps)}
-            onSend={async () => {}}
+            onSend={() =>
+              schUsersSokiInvocatorClient.addMeByLink(null, scheduleScopeProps, auth.fio ?? auth.nick ?? '?')
+            }
           />
         );
       } else if (rights.isSwHideContent)
@@ -159,8 +161,9 @@ export default function ScheduleWidget({
                 takeDate="day"
                 takeTime="NO"
                 onComponentsChange={(_, __, ___, date) => setStartTime(date.getTime())}
-                mapExecArgs={args => ({ ...args, value: startTime })}
-                onSend={() => startTime && schSokiInvocatorClient.setStartTime(null, scheduleScopeProps, startTime)}
+                onSend={async () =>
+                  startTime && schSokiInvocatorClient.setStartTime(null, scheduleScopeProps, startTime)
+                }
               />
             ) : (
               <ScheduleWidgetStartTimeText
@@ -219,10 +222,7 @@ export default function ScheduleWidget({
 
                 {isRedact && (
                   <>
-                    <ScheduleWidgetEventList
-                      selectScope=""
-                      selectFieldName=""
-                      // scheduleScope={selfScope}
+                    <ScheduleWidgetEventTypeList
                       postfix={
                         <>
                           Шаблоны событий <IconArrowRight01StrokeRounded />
@@ -231,10 +231,7 @@ export default function ScheduleWidget({
                       Icon={IconShapesStrokeRounded}
                       schedule={schedule}
                     />
-                    <ScheduleWidgetCustomAttachments
-                      // scope={selfScope}
-                      tatts={schedule.tatts}
-                    />
+                    <ScheduleWidgetCustomAttachments tatts={schedule.tatts} />
                     {!schedule.days.length && !schedule.tatts.length && !schedule.types.length && (
                       <ScheduleWidgetCopy schw={schedule.w} />
                     )}
@@ -244,7 +241,7 @@ export default function ScheduleWidget({
                         postfix="Добавить день"
                         confirm="Дни удалять не возможно! Создать новый?"
                         className="margin-gap-v"
-                        onSend={() => schSokiInvocatorClient.addDay(null, scheduleScopeProps)}
+                        onSend={() => schDaysSokiInvocatorClient.addDay(null, scheduleScopeProps)}
                       />
                     )}
                     {auth && auth.level >= 80 && (
@@ -263,8 +260,9 @@ export default function ScheduleWidget({
                     <SendButton
                       title="Хочу комментить события"
                       className="margin-giant-gap-t"
-                      // onSend={() => schSokiInvocatorClient.addMeByLink(null, scheduleScopeProps)}
-                      onSend={async () => {}}
+                      onSend={() =>
+                        schUsersSokiInvocatorClient.addMeByLink(null, scheduleScopeProps, auth.fio ?? auth.nick ?? '?')
+                      }
                     />
                   ) : (
                     <div className="margin-big-gap-t">

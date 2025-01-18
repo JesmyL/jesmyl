@@ -1,5 +1,5 @@
-import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/useScheduleScopePropsContext';
-import { schSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
+import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/scope-props-contexts';
+import { schGamesSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
 import SendButton from 'front/complect/sends/send-button/SendButton';
 import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
@@ -173,7 +173,7 @@ export default function ScheduleWidgetTeamGameSetTeamsScreen() {
             title="Отправить"
             disabled={!criterias?.length || !teams.length}
             confirm="Отправить список команд?"
-            onSend={() => schSokiInvocatorClient.setGameTeams(null, { ...scheduleScopeProps, gameMi: game.mi }, teams)}
+            onSend={() => schGamesSokiInvocatorClient.setTeams(null, { ...scheduleScopeProps, gameMi: game.mi }, teams)}
           />
         </>
       )}

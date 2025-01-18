@@ -10,7 +10,7 @@ import useModal from '../../modal/useModal';
 import SendableDropdown from '../../sends/dropdown/SendableDropdown';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
 import IconButton from '../../the-icon/IconButton';
-import { useScheduleScopePropsContext } from '../complect/scope-contexts/useScheduleScopePropsContext';
+import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetRegisterType from './RegisterType';

@@ -2,7 +2,6 @@ import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { itIt, makeRegExp } from 'shared/utils';
 import { TheIconType } from '../the-icon/model';
-import { StrongControlProps } from './Strong.model';
 import StrongEditableField from './field/StrongEditableField';
 type TakeDateComponent = 'NO' | 'year' | 'month' | 'day';
 type TakeTimeComponent = 'hour' | 'min' | 'sec' | 'ms';
@@ -19,19 +18,17 @@ const takeInPeriod = (num: string | null, finish: string, start?: number) => {
       : ` ${('' + numFinish).padStart(finish.length, '0')}`;
 };
 
-export default function StrongInputDateTimeExtracter(
-  props: StrongControlProps & {
-    fieldKey?: string;
-    value: string;
-    Icon?: TheIconType;
-    title?: string;
-    className?: string;
-    takeDate: TakeDateComponent;
-    takeTime: TakeTimeDiapason;
-    onSend: (isChanged: boolean, stringValue: string) => void;
-    onComponentsChange?: (timeDelta: number, timeString: string, dateString: string, date: Date) => void;
-  },
-) {
+export default function StrongInputDateTimeExtracter(props: {
+  fieldKey?: string;
+  value: string;
+  Icon?: TheIconType;
+  title?: string;
+  className?: string;
+  takeDate: TakeDateComponent;
+  takeTime: TakeTimeDiapason;
+  onSend: (isChanged: boolean, stringValue: string) => Promise<unknown>;
+  onComponentsChange?: (timeDelta: number, timeString: string, dateString: string, date: Date) => void;
+}) {
   const [initTs, setInitTs] = useState<number | null>(null);
   const [currentTs, setCurrentTs] = useState<number | null>(null);
   const [inputValue, setInputValue] = useState(props.value);
@@ -121,7 +118,7 @@ export default function StrongInputDateTimeExtracter(
         description={timeImagine}
         placeholder="Нецифра - разделитель"
         onChange={setInputValue}
-        onSend={async () => props.isCanSend !== false && props.onSend(initTs !== currentTs, timeImagine)}
+        onSend={() => props.onSend(initTs !== currentTs, timeImagine)}
       />
     </>
   );

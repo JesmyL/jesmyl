@@ -1,6 +1,7 @@
 import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
 import { useEffect, useMemo, useState } from 'react';
 import { indexScheduleGetDayEventTimes, IScheduleWidgetDay, ScheduleDayScopeProps } from 'shared/api';
+import { isNIs } from 'shared/utils';
 import styled from 'styled-components';
 import { IconArrowLeftDoubleStrokeRounded } from '../../../../complect/the-icon/icons/arrow-left-double';
 import { IconCropStrokeRounded } from '../../../../complect/the-icon/icons/crop';
@@ -12,34 +13,28 @@ import StrongDiv from '../../../strong-control/StrongDiv';
 import { TheIconLoading } from '../../../the-icon/IconLoading';
 import useIsRedactArea from '../../../useIsRedactArea';
 import ScheduleWidgetTopicTitle from '../../complect/TopicTitle';
-import ScheduleWidgetEventList from '../../events/EventList';
-import { schSokiInvocatorClient } from '../../invocators/invocators.methods';
+import { ScheduleWidgetEventTypeList } from '../../events/EventTypeList';
+import { schDaysSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetDayEvent, { StyledScheduleWidgetDayEvent } from './DayEvent';
 import { ScheduleWidgetDayEventEventActions } from './EventActions';
 
-export default function ScheduleWidgetDayEventList({
-  day,
-  scope,
-  isPastDay,
-  dayi,
-  isForceExpand,
-  dayScopeProps,
-}: {
+type Props = {
   day: IScheduleWidgetDay;
-  scope: string;
   isPastDay: boolean;
   isForceExpand?: boolean;
   dayi: number;
   dayScopeProps: ScheduleDayScopeProps;
-}) {
+};
+
+export default function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand, dayScopeProps }: Props) {
   const [isShowPeriodsNotTs, setIsShowTsNotPeriods] = useState(false);
   const [isReplacementInProcess, setIsReplacementInProcess] = useState(false);
   const rights = useScheduleWidgetRightsContext();
   const [isIndividualReplacement, setIsIndividualReplacement] = useState(false);
   const { editIcon, isRedact } = useIsRedactArea(true, isIndividualReplacement || null, rights.isCanRedact, true);
   const [listTitle, isExpand, switchIsExpand] = useIsRememberExpand(
-    scope,
+    '',
     <>
       <IconLeftToRightListBulletStrokeRounded className="color--7" />
       {' Распорядок'}
@@ -92,23 +87,27 @@ export default function ScheduleWidgetDayEventList({
               isRedact && (
                 <div className={'insert-panel flex flex-gap' + (beforei === 0 ? ' first' : '')}>
                   <StrongDiv
-                    scope={scope}
-                    fieldName="list"
-                    cud="U"
+                    // scope={scope}
+                    // fieldName="list"
+                    // cud="U"
                     className="flex flex-gap pointer"
-                    mapExecArgs={args => {
-                      setIsReplacementInProcess(true);
-                      return {
-                        ...args,
-                        value: beforei,
-                        eventMi: movementEvent?.mi,
-                      };
-                    }}
+                    // mapExecArgs={args => {
+                    //   setIsReplacementInProcess(true);
+                    //   return {
+                    //     ...args,
+                    //     value: beforei,
+                    //     eventMi: movementEvent?.mi,
+                    //   };
+                    // }}
                     onSuccess={() => {
                       setIsReplacementInProcess(false);
                       setIsIndividualReplacement(false);
                       setTimeout(() => setMoveEventMi(null), 300);
                     }}
+                    onSend={async () =>
+                      movementEvent &&
+                      schDaysSokiInvocatorClient.moveEvent(null, dayScopeProps, movementEvent.mi, beforei)
+                    }
                   >
                     {movementBox && (
                       <div className="flex flex-gap fade-05">
@@ -141,8 +140,6 @@ export default function ScheduleWidgetDayEventList({
               >
                 {eventi === 0 && insertControl(0)}
                 <ScheduleWidgetDayEvent
-                  // scope={scope}
-                  // scheduleScope={scheduleScope}
                   dayScopeProps={dayScopeProps}
                   schedule={rights.schedule}
                   isPastDay={isPastDay}
@@ -155,7 +152,7 @@ export default function ScheduleWidgetDayEventList({
                   eventTimes={times}
                   secretTime={secretTime}
                   isShowPeriodsNotTs={isShowPeriodsNotTs}
-                  onClickOnTs={() => setIsShowTsNotPeriods(is => !is)}
+                  onClickOnTs={() => setIsShowTsNotPeriods(isNIs)}
                   bottomContent={isRedact =>
                     isRedact && (
                       <>
@@ -163,13 +160,13 @@ export default function ScheduleWidgetDayEventList({
                           <TheIconLoading />
                         ) : (
                           <ScheduleWidgetDayEventEventActions
-                            scope={scope}
                             event={event}
                             schedule={rights.schedule}
                             onEventCut={() => {
                               setIsIndividualReplacement(true);
                               setMoveEventMi(event.mi);
                             }}
+                            dayScopeProps={dayScopeProps}
                           />
                         )}
                       </>
@@ -183,23 +180,24 @@ export default function ScheduleWidgetDayEventList({
                     </TheIconLoading>
                     {rights.schedule.types && (
                       <EvaSendButton
-                        // scope={scope}
-                        // fieldName="list"
-                        // cud="D"
                         Icon={IconDelete01StrokeRounded}
                         confirm={
                           <ScheduleWidgetTopicTitle
-                            prefix="Удалить событие "
+                            prefix="Удалить"
                             titleBox={rights.schedule.types[event.type]}
                             topicBox={event}
                           />
                         }
                         className="color--ko"
                         disabled={moveEventMi !== null}
-                        onSend={() => schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null)}
-                        // mapExecArgs={args => {
-                        //   return { ...args, eventMi: event.mi };
-                        // }}
+                        onSend={() =>
+                          schDaysSokiInvocatorClient.removeEvent(
+                            null,
+                            dayScopeProps,
+                            event.mi,
+                            rights.schedule.types[event.type].title,
+                          )
+                        }
                       />
                     )}
                   </>
@@ -213,13 +211,12 @@ export default function ScheduleWidgetDayEventList({
             return node;
           })}
           {isRedact && moveEventMi === null && (
-            <ScheduleWidgetEventList
-              selectScope={scope}
-              selectFieldName="list"
+            <ScheduleWidgetEventTypeList
               postfix="Добавить событие"
               Icon={IconPlusSignStrokeRounded}
               schedule={rights.schedule}
               usedCounts={usedCounts}
+              onItemSelectSend={typei => schDaysSokiInvocatorClient.addEvent(null, dayScopeProps, typei)}
             />
           )}
         </>

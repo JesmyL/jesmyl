@@ -1,6 +1,6 @@
 import { FullContent } from 'front/complect/fullscreen-content/FullContent';
-import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/useScheduleScopePropsContext';
-import { schSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
+import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/scope-props-contexts';
+import { schGamesSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
 import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
 import { useState } from 'react';
 import TheButton from '../../../../Button';
@@ -24,7 +24,7 @@ export default function ScheduleWidgetSortCriterias() {
             <EvaSendButton
               Icon={IconPlusSignStrokeRounded}
               confirm="Добавить новый критерий?"
-              onSend={() => schSokiInvocatorClient.addGameCriteria(null, scheduleScopeProps)}
+              onSend={() => schGamesSokiInvocatorClient.addCriteria(null, scheduleScopeProps)}
             />
           </h3>
 

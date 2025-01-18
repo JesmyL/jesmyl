@@ -1,6 +1,6 @@
 import { FullContent } from 'front/complect/fullscreen-content/FullContent';
-import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/useScheduleScopePropsContext';
-import { schSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
+import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/scope-props-contexts';
+import { schGamesSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
 import { mylib } from 'front/utils';
 import { useMemo, useState } from 'react';
 import { IScheduleWidgetTeamCriteria, IScheduleWidgetUser, ScheduleGameCriteriaScopeProps } from 'shared/api';
@@ -76,7 +76,7 @@ export default function ScheduleWidgetSortCriteria({ criteria, criteriai }: Prop
               placeholder="Новый критерий"
               isRedact={isRenaming}
               onSend={value =>
-                schSokiInvocatorClient.setGameCriteriaTitle(null, criteriaScopeProps, value, criteria.title)
+                schGamesSokiInvocatorClient.setCriteriaTitle(null, criteriaScopeProps, value, criteria.title)
               }
             />
             <IconPencilEdit01StrokeRounded onClick={() => setIsRenaming(isNIs)} />

@@ -28,7 +28,7 @@ import useIsRedactArea from '../../../useIsRedactArea';
 import ScheduleWidgetBindAtts from '../../atts/BindAtts';
 import ScheduleWidgetTopicTitle from '../../complect/TopicTitle';
 import ScheduleWidgetDayEventAtts from '../../events/atts/DayEventAtts';
-import { schSokiInvocatorClient } from '../../invocators/invocators.methods';
+import { schDayEventsSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetDayEventRating from './DayEventRating';
 
@@ -67,7 +67,7 @@ export default function ScheduleWidgetDayEvent(props: Props) {
   // const selfScope = takeStrongScopeMaker(props.scope, ' eventMi/', props.event.mi);
   const dayEventScopeProps: ScheduleDayEventScopeProps = useMemo(
     () => ({ ...props.dayScopeProps, eventMi: props.event.mi }),
-    [props.event.mi],
+    [props.dayScopeProps, props.event.mi],
   );
 
   const now = Date.now();
@@ -203,16 +203,12 @@ export default function ScheduleWidgetDayEvent(props: Props) {
             {isRedact ? (
               <>
                 <EvaSendButton
-                  // scope={selfScope}
-                  // fieldName="secret"
-                  // fieldValue={props.event.secret ? 0 : 1}
-                  // cud="U"
                   Icon={props.event.secret ? IconCheckmarkSquare02StrokeRounded : IconSquareStrokeRounded}
                   confirm={`Событие ${box.title} ${
                     props.event.secret ? 'больше не только для лидеров' : 'будет только для лидеров'
                   }?`}
                   postfix="Событие только для лидеров"
-                  onSend={async () => {}}
+                  onSend={() => schDayEventsSokiInvocatorClient.toggleIsSecret(null, dayEventScopeProps)}
                 />
                 {props.event.tgInform === 0 || isPastEvent || isCurrentEvent ? (
                   <EvaSendButton
@@ -236,7 +232,7 @@ export default function ScheduleWidgetDayEvent(props: Props) {
                     Icon={IconNotification01StrokeRounded}
                     postfix="TG-Напоминание будет"
                     // mapExecArgs={mapExecTgInformArgs}
-                    onSend={() => schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null)}
+                    onSend={async () => {}}
                   />
                 )}
                 <StrongEditableField
@@ -249,7 +245,8 @@ export default function ScheduleWidgetDayEvent(props: Props) {
                   title="Продолжительность, мин"
                   Icon={IconClock01StrokeRounded}
                   // mapExecArgs={mapExecTmArgs}
-                  onSend={() => schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null)}
+                  // onSend={() => schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null)}
+                  onSend={async () => {}}
                 />
                 <StrongEditableField
                   isRedact
@@ -259,7 +256,8 @@ export default function ScheduleWidgetDayEvent(props: Props) {
                   fieldKey="topic"
                   title="Тема"
                   Icon={IconBookmark03StrokeRounded}
-                  onSend={() => schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null)}
+                  // onSend={() => schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null)}
+                  onSend={async () => {}}
                 />
               </>
             ) : (
@@ -291,6 +289,10 @@ export default function ScheduleWidgetDayEvent(props: Props) {
                 atts={props.event.atts}
                 schedule={props.schedule}
                 forTitle={<span className="color--7">{box.title}</span>}
+                onAddAttSend={async () => {}}
+                onRemoveAttSend={async () => {
+                  console.log('14411 remm');
+                }}
               />
             ) : (
               <>

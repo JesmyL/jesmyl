@@ -1,8 +1,13 @@
 import {
   IScheduleWidget,
+  IScheduleWidgetDayEventMi,
   IScheduleWidgetExportableTeam,
   IScheduleWidgetUserMi,
   IScheduleWidgetWid,
+  ScheduleDayEventScopeProps,
+  ScheduleDayScopeProps,
+  ScheduleEventTypeAttImagineScopeProps,
+  ScheduleEventTypeScopeProps,
   ScheduleGameCriteriaScopeProps,
   ScheduleGameScopeProps,
   ScheduleListCategoryScopeProps,
@@ -11,17 +16,18 @@ import {
   ScheduleUnitScopeProps,
   ScheduleUserListMemberScopeProps,
   ScheduleUserScopeProps,
+  ScheduleWidgetDayEventAttValue,
   ScheduleWidgetPhotoKey,
 } from 'shared/api/complect/schedule-widget';
 
 type Callback<Value> = (props: ScheduleScopeProps, value: Value) => IScheduleWidget;
 
-export type SchSokiInvocatorMethods = {
-  oooooooooooooooooooooooooooooooooooooo: (...args: any[]) => void;
-
-  // general
+export type SchGeneralSokiInvocatorMethods = {
   create: (title: string) => IScheduleWidget;
   remove: (props: ScheduleScopeProps) => IScheduleWidget;
+  copySchedule: (props: ScheduleScopeProps, schedule: IScheduleWidget) => IScheduleWidget;
+  setDefaultUserRights: (props: ScheduleScopeProps, R: number) => IScheduleWidget;
+  setScheduleRegisterType: (props: ScheduleScopeProps, type: number) => IScheduleWidget;
 
   rename: Callback<string>;
   setTopic: Callback<string>;
@@ -32,36 +38,38 @@ export type SchSokiInvocatorMethods = {
   setTgChatRequisites: Callback<string>;
   toggleIsTgInform: Callback<void>;
   setTgInformTime: Callback<number>;
+};
 
-  //days
-  addDay: (props: ScheduleScopeProps) => IScheduleWidget;
-
-  // users
+export type SchUsersSokiInvocatorMethods = {
   addUsersByExcel: (props: ScheduleScopeProps, users: { fio: string }[]) => IScheduleWidget;
+  addMeByLink: (props: ScheduleScopeProps, userName: string) => IScheduleWidget;
   setUserFio: (props: ScheduleUserScopeProps, fio: string) => IScheduleWidget;
   setUserRights: (props: ScheduleUserScopeProps, R: number) => IScheduleWidget;
+  addUserListUnitMembership: (props: ScheduleUserListMemberScopeProps, value: number) => IScheduleWidget;
+  removeUserListUnitMembership: (props: ScheduleUserListMemberScopeProps) => IScheduleWidget;
+};
 
-  // photos
+export type SchPhotosSokiInvocatorMethods = {
   getSharedPhotos: (schw: IScheduleWidgetWid) => { key: ScheduleWidgetPhotoKey; src: string }[];
   putSharedPhotos: (
     schw: IScheduleWidgetWid,
     photoDict: Record<ScheduleWidgetPhotoKey, string>,
   ) => { addedCount: number; loadedCount: number };
+};
 
-  // lists
-  createListCategory: (props: ScheduleScopeProps) => IScheduleWidget;
-  createListCategoryUnit: (props: ScheduleScopeProps, cati: number) => IScheduleWidget;
-  setListCategoryTitle: (props: ScheduleListCategoryScopeProps, value: string) => IScheduleWidget;
-  setListCategoryIcon: (props: ScheduleListCategoryScopeProps, value: KnownIconName) => IScheduleWidget;
+export type SchListsSokiInvocatorMethods = {
+  createCategory: (props: ScheduleScopeProps) => IScheduleWidget;
+  createUnit: (props: ScheduleScopeProps, cati: number) => IScheduleWidget;
+  setCategoryTitle: (props: ScheduleListCategoryScopeProps, value: string) => IScheduleWidget;
+  setCategoryIcon: (props: ScheduleListCategoryScopeProps, value: KnownIconName) => IScheduleWidget;
   setCategoryMembersTitle: (props: ScheduleListCategoryScopeProps, value: string) => IScheduleWidget;
   setCategoryMentorsTitle: (props: ScheduleListCategoryScopeProps, value: string) => IScheduleWidget;
 
-  setListUnitTitle: (props: ScheduleUnitScopeProps, cati: number, value: string) => IScheduleWidget;
-  setListUnitDescription: (props: ScheduleUnitScopeProps, cati: number, value: string) => IScheduleWidget;
-  addUserListUnitMembership: (props: ScheduleUserListMemberScopeProps, value: number) => IScheduleWidget;
-  removeUserListUnitMembership: (props: ScheduleUserListMemberScopeProps) => IScheduleWidget;
+  setUnitTitle: (props: ScheduleUnitScopeProps, value: string, cati: number) => IScheduleWidget;
+  setUnitDescription: (props: ScheduleUnitScopeProps, value: string, cati: number) => IScheduleWidget;
+};
 
-  // roles
+export type SchRolesSokiInvocatorMethods = {
   createRole: (props: ScheduleScopeProps) => IScheduleWidget;
   setRoleIcon: (props: ScheduleRoleScopeProps, icon: KnownIconName, roleTitle: string) => IScheduleWidget;
   setRoleTitle: (props: ScheduleRoleScopeProps, title: string, prevTitle: string) => IScheduleWidget;
@@ -82,32 +90,51 @@ export type SchSokiInvocatorMethods = {
     userName: string,
   ) => IScheduleWidget;
   makeFreeRole: (props: ScheduleRoleScopeProps, roleTitle: string) => IScheduleWidget;
+};
 
-  // games + criterias
+export type SchGamesSokiInvocatorMethods = {
   addGame: (props: ScheduleScopeProps) => IScheduleWidget;
-  setGameTeams: (props: ScheduleGameScopeProps, teams: IScheduleWidgetExportableTeam[]) => IScheduleWidget;
-  setGameTitle: (props: ScheduleGameScopeProps, value: string, prevTitle: string) => IScheduleWidget;
-  toggleGameStrikedUser: (
-    props: ScheduleScopeProps,
-    userMi: IScheduleWidgetUserMi,
-    userName: string,
-  ) => IScheduleWidget;
-  addGameCriteria: (props: ScheduleScopeProps) => IScheduleWidget;
-  setGameCriteriaTitle: (props: ScheduleGameCriteriaScopeProps, value: string, prevTitle: string) => IScheduleWidget;
-  setGameSortedDict: (
+  setTeams: (props: ScheduleGameScopeProps, teams: IScheduleWidgetExportableTeam[]) => IScheduleWidget;
+  setTitle: (props: ScheduleGameScopeProps, value: string, prevTitle: string) => IScheduleWidget;
+  toggleStrikedUser: (props: ScheduleScopeProps, userMi: IScheduleWidgetUserMi, userName: string) => IScheduleWidget;
+  addCriteria: (props: ScheduleScopeProps) => IScheduleWidget;
+  setCriteriaTitle: (props: ScheduleGameCriteriaScopeProps, value: string, prevTitle: string) => IScheduleWidget;
+  setSortedDict: (
     props: ScheduleGameCriteriaScopeProps,
     dict: Record<IScheduleWidgetUserMi, number>,
     criteriaTitle: string,
   ) => IScheduleWidget;
+};
 
-  // // days
-  // setDayTopic: (props: ScheduleDayScopeProps, value: string) => IScheduleWidget;
-  // setDaySescription: (props: ScheduleDayScopeProps, value: string) => IScheduleWidget;
+export type SchDaysSokiInvocatorMethods = {
+  addDay: (props: ScheduleScopeProps) => IScheduleWidget;
+  setBeginTime: (props: ScheduleDayScopeProps, value: string) => IScheduleWidget;
+  setTopic: (props: ScheduleDayScopeProps, value: string) => IScheduleWidget;
+  setDescription: (props: ScheduleDayScopeProps, value: string) => IScheduleWidget;
+  addEvent: (props: ScheduleDayScopeProps, typei: number) => IScheduleWidget;
+  removeEvent: (
+    props: ScheduleDayScopeProps,
+    eventMi: IScheduleWidgetDayEventMi,
+    eventTypeTitle: string,
+  ) => IScheduleWidget;
+  moveEvent: (props: ScheduleDayScopeProps, eventMi: IScheduleWidgetDayEventMi, beforei: number) => IScheduleWidget;
+};
 
-  // // events
-  // setEventTypeTitle: (props: ScheduleScopeProps, value: string) => IScheduleWidget;
-  // setEventTypeTm: (props: ScheduleScopeProps, value: number) => IScheduleWidget;
+export type SchDayEventsSokiInvocatorMethods = {
+  setTopic: (props: ScheduleDayEventScopeProps, value: string) => IScheduleWidget;
+  toggleIsSecret: (props: ScheduleDayEventScopeProps, value: void) => IScheduleWidget;
 
-  // // rating
-  // setEventRatingComment: (props: ScheduleScopeProps, value: string) => IScheduleWidget;
+  // switchOffIsTgInform: (props: ScheduleDayEventScopeProps, value: void) => IScheduleWidget;
+  // setRatingComment: (props: ScheduleScopeProps, value: string) => IScheduleWidget;
+};
+
+export type SchEventTypesSokiInvocatorMethods = {
+  create: (props: ScheduleScopeProps, title: string, tm: number) => IScheduleWidget;
+  setTitle: (props: ScheduleEventTypeScopeProps, value: string, prevTitle: string) => IScheduleWidget;
+  setTm: (props: ScheduleEventTypeScopeProps, tm: number) => IScheduleWidget;
+  bindAttImagine: (
+    props: ScheduleEventTypeAttImagineScopeProps,
+    defaultValue: ScheduleWidgetDayEventAttValue,
+  ) => IScheduleWidget;
+  removeAttImagine: (props: ScheduleEventTypeAttImagineScopeProps) => IScheduleWidget;
 };

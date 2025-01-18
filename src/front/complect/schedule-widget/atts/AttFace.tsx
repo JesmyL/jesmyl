@@ -1,15 +1,27 @@
+import Modal from 'front/complect/modal/Modal/Modal';
+import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
+import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
 import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { ScheduleWidgetAttKey, scheduleWidgetUserRights } from 'shared/api';
 import styled from 'styled-components';
 import { IconCancel01StrokeRounded } from '../../../complect/the-icon/icons/cancel-01';
 import { IconHelpCircleStrokeRounded } from '../../../complect/the-icon/icons/help-circle';
 import { IconLink02StrokeRounded } from '../../../complect/the-icon/icons/link-02';
-import useModal from '../../modal/useModal';
 import TheIcon from '../../the-icon/TheIcon';
 import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetCustomAtt from './custom/CustomAtt';
+
+type Props = {
+  isRedact?: boolean;
+  tatt?: ScheduleWidgetAppAtt;
+  attKey: ScheduleWidgetAttKey;
+  typeTitle: ReactNode;
+  customAttTopContent?: (attKey: ScheduleWidgetAttKey) => ReactNode;
+  isLink?: boolean;
+  onRemoveAttSend: (attKey: ScheduleWidgetAttKey) => Promise<unknown>;
+};
 
 export default function ScheduleWidgetAttFace({
   tatt,
@@ -18,46 +30,21 @@ export default function ScheduleWidgetAttFace({
   isRedact,
   isLink,
   customAttTopContent,
-}: {
-  isRedact?: boolean;
-  tatt?: ScheduleWidgetAppAtt;
-  attKey: ScheduleWidgetAttKey;
-  typeTitle: ReactNode;
-  customAttTopContent?: (attKey: ScheduleWidgetAttKey) => ReactNode;
-  isLink?: boolean;
-}) {
+  onRemoveAttSend,
+}: Props) {
   const rights = useScheduleWidgetRightsContext();
   const myUserR = rights.myUser?.R ?? rights.schedule.ctrl.defu;
-  const [modalNode, screen] = useModal(
-    tatt &&
-      (({ header, body }) => {
-        return (
-          <>
-            {header(
-              <>
-                Вложение <span className="color--7">{tatt.title}</span>
-              </>,
-            )}
-            {body(
-              <ScheduleWidgetCustomAtt
-                tatt={tatt as never}
-                isRedact
-                topContent={customAttTopContent?.(attKey)}
-              />,
-            )}
-          </>
-        );
-      }),
-  );
+  const [isModalOpen, setIsModalOpen] = useState<unknown>(false);
+
   if (!scheduleWidgetUserRights.checkIsCan(myUserR, tatt?.R)) return null;
+
   const isCanRedact = scheduleWidgetUserRights.checkIsCan(myUserR, tatt?.U);
 
   return (
     <>
-      {modalNode}
       <Tatt
         className={'relative flex center column' + (isCanRedact && tatt?.isCustomize ? ' color--7 pointer' : '')}
-        onClick={isCanRedact && tatt?.isCustomize ? screen : undefined}
+        onClick={isCanRedact && tatt?.isCustomize ? setIsModalOpen : undefined}
       >
         {isLink && <IconLink02StrokeRounded className="absolute pos-left pos-top color--3 fade-05" />}
         {isRedact && isCanRedact && (
@@ -71,7 +58,7 @@ export default function ScheduleWidgetAttFace({
                 {typeTitle}?
               </>
             }
-            onSend={async () => {}}
+            onSend={() => onRemoveAttSend(attKey)}
           />
         )}
         {tatt ? (
@@ -86,6 +73,20 @@ export default function ScheduleWidgetAttFace({
           </>
         )}
       </Tatt>
+      {!tatt || !isModalOpen || (
+        <Modal onClose={setIsModalOpen}>
+          <ModalHeader>
+            Вложение <span className="color--7">{tatt.title}</span>
+          </ModalHeader>
+          <ModalBody>
+            <ScheduleWidgetCustomAtt
+              tatt={tatt as never}
+              isRedact
+              topContent={customAttTopContent?.(attKey)}
+            />
+          </ModalBody>
+        </Modal>
+      )}
     </>
   );
 }

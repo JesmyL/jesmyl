@@ -1,52 +1,147 @@
 import { SokiInvocatorClient } from 'front/SokiInvocator.client';
-import { SchSokiInvocatorMethods } from 'shared/api/invocators/schedules/invocators.model';
+import {
+  SchDayEventsSokiInvocatorMethods,
+  SchDaysSokiInvocatorMethods,
+  SchEventTypesSokiInvocatorMethods,
+  SchGamesSokiInvocatorMethods,
+  SchGeneralSokiInvocatorMethods,
+  SchListsSokiInvocatorMethods,
+  SchPhotosSokiInvocatorMethods,
+  SchRolesSokiInvocatorMethods,
+  SchUsersSokiInvocatorMethods,
+} from 'shared/api/invocators/schedules/invocators.model';
 
-class SchSokiInvocatorClient extends SokiInvocatorClient<SchSokiInvocatorMethods> {}
-export const schSokiInvocatorClient = new SchSokiInvocatorClient('SchSokiInvocatorClient', {
-  oooooooooooooooooooooooooooooooooooooo: true,
+class SchSokiInvocatorClient extends SokiInvocatorClient<SchGeneralSokiInvocatorMethods> {
+  constructor() {
+    super('SchSokiInvocatorClient', {
+      create: true,
+      remove: true,
+      copySchedule: true,
+      rename: true,
+      setDefaultUserRights: true,
+      setScheduleRegisterType: true,
+      setTopic: true,
+      setDescription: true,
+      setStartTime: true,
+      setFirstDayAsTech: true,
+      setTgChatRequisites: true,
+      toggleIsTgInform: true,
+      setTgInformTime: true,
+    });
+  }
+}
+export const schSokiInvocatorClient = new SchSokiInvocatorClient();
 
-  create: true,
-  remove: true,
-  rename: true,
-  setTopic: true,
-  setDescription: true,
-  setStartTime: true,
-  addDay: true,
-  addUsersByExcel: true,
-  setUserFio: true,
-  putSharedPhotos: true,
-  getSharedPhotos: true,
-  setUserRights: true,
-  setFirstDayAsTech: true,
-  setTgChatRequisites: true,
-  toggleIsTgInform: true,
-  setTgInformTime: true,
+class SchDaysSokiInvocatorClient extends SokiInvocatorClient<SchDaysSokiInvocatorMethods> {
+  constructor() {
+    super('SchDaysSokiInvocatorClient', {
+      addDay: true,
+      setBeginTime: true,
 
-  createRole: true,
-  setRoleIcon: true,
-  setRoleTitle: true,
-  addRoleCategory: true,
-  setRoleCategoryTitle: true,
-  setCategoryForRole: true,
-  setRoleUser: true,
-  makeFreeRole: true,
+      setTopic: true,
+      setDescription: true,
+      addEvent: true,
+      removeEvent: true,
+      moveEvent: true,
+    });
+  }
+}
+export const schDaysSokiInvocatorClient = new SchDaysSokiInvocatorClient();
 
-  createListCategory: true,
-  setListCategoryTitle: true,
-  setCategoryMembersTitle: true,
-  setCategoryMentorsTitle: true,
-  setListCategoryIcon: true,
-  createListCategoryUnit: true,
-  setListUnitDescription: true,
-  setListUnitTitle: true,
-  addUserListUnitMembership: true,
-  removeUserListUnitMembership: true,
+class SchDayEventsSokiInvocatorClient extends SokiInvocatorClient<SchDayEventsSokiInvocatorMethods> {
+  constructor() {
+    super('SchDayEventsSokiInvocatorClient', {
+      setTopic: true,
+      toggleIsSecret: true,
 
-  addGameCriteria: true,
-  setGameCriteriaTitle: true,
-  setGameSortedDict: true,
-  toggleGameStrikedUser: true,
-  addGame: true,
-  setGameTeams: true,
-  setGameTitle: true,
-});
+      // setEventRatingComment: true,
+      // setEventTypeTitle: true,
+      // setEventTypeTm: true,
+    });
+  }
+}
+export const schDayEventsSokiInvocatorClient = new SchDayEventsSokiInvocatorClient();
+
+class SchEventTypesSokiInvocatorClient extends SokiInvocatorClient<SchEventTypesSokiInvocatorMethods> {
+  constructor() {
+    super('SchEventTypesSokiInvocatorClient', {
+      create: true,
+      setTitle: true,
+      setTm: true,
+      bindAttImagine: true,
+      removeAttImagine: true,
+    });
+  }
+}
+export const schEventTypesSokiInvocatorClient = new SchEventTypesSokiInvocatorClient();
+
+class SchPhotosSokiInvocatorClient extends SokiInvocatorClient<SchPhotosSokiInvocatorMethods> {
+  constructor() {
+    super('SchPhotosSokiInvocatorClient', {
+      putSharedPhotos: true,
+      getSharedPhotos: true,
+    });
+  }
+}
+export const schPhotosSokiInvocatorClient = new SchPhotosSokiInvocatorClient();
+
+class SchUsersSokiInvocatorClient extends SokiInvocatorClient<SchUsersSokiInvocatorMethods> {
+  constructor() {
+    super('SchUsersSokiInvocatorClient', {
+      addUsersByExcel: true,
+      addMeByLink: true,
+      setUserFio: true,
+      setUserRights: true,
+      addUserListUnitMembership: true,
+      removeUserListUnitMembership: true,
+    });
+  }
+}
+export const schUsersSokiInvocatorClient = new SchUsersSokiInvocatorClient();
+
+class SchRolesSokiInvocatorClient extends SokiInvocatorClient<SchRolesSokiInvocatorMethods> {
+  constructor() {
+    super('SchRolesSokiInvocatorClient', {
+      createRole: true,
+      setRoleIcon: true,
+      setRoleTitle: true,
+      addRoleCategory: true,
+      setRoleCategoryTitle: true,
+      setCategoryForRole: true,
+      setRoleUser: true,
+      makeFreeRole: true,
+    });
+  }
+}
+export const schRolesSokiInvocatorClient = new SchRolesSokiInvocatorClient();
+
+class SchListsSokiInvocatorClient extends SokiInvocatorClient<SchListsSokiInvocatorMethods> {
+  constructor() {
+    super('SchListsSokiInvocatorClient', {
+      createCategory: true,
+      setCategoryTitle: true,
+      setCategoryMembersTitle: true,
+      setCategoryMentorsTitle: true,
+      setCategoryIcon: true,
+      createUnit: true,
+      setUnitDescription: true,
+      setUnitTitle: true,
+    });
+  }
+}
+export const schListsSokiInvocatorClient = new SchListsSokiInvocatorClient();
+
+class SchGamesSokiInvocatorClient extends SokiInvocatorClient<SchGamesSokiInvocatorMethods> {
+  constructor() {
+    super('SchGamesSokiInvocatorClient', {
+      addCriteria: true,
+      setCriteriaTitle: true,
+      setSortedDict: true,
+      toggleStrikedUser: true,
+      addGame: true,
+      setTeams: true,
+      setTitle: true,
+    });
+  }
+}
+export const schGamesSokiInvocatorClient = new SchGamesSokiInvocatorClient();

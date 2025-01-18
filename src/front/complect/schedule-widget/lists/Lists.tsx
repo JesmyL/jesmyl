@@ -5,10 +5,10 @@ import { IconPlusSignStrokeRounded } from '../../../complect/the-icon/icons/plus
 import useIsExpand from '../../expand/useIsExpand';
 import useFullContent from '../../fullscreen-content/useFullContent';
 import IconButton from '../../the-icon/IconButton';
-import { useScheduleScopePropsContext } from '../complect/scope-contexts/useScheduleScopePropsContext';
+import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import ScheduleWidgetTeamGames from '../control/games/games/Games';
 import ScheduleWidgetRoleList from '../control/roles/RoleList';
-import { schSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import { ScheduleWidgetListCategory } from './Category';
 
@@ -25,7 +25,7 @@ export default function ScheduleWidgetLists({ scheduleScope }: { scheduleScope: 
           Icon={IconPlusSignStrokeRounded}
           prefix="список"
           confirm="Создать новый список?"
-          onSend={() => schSokiInvocatorClient.createListCategory(null, scheduleScopeProps)}
+          onSend={() => schListsSokiInvocatorClient.createCategory(null, scheduleScopeProps)}
         />
       ),
   );

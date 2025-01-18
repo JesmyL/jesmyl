@@ -1,5 +1,5 @@
-import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/useScheduleScopePropsContext';
-import { schSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
+import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/scope-props-contexts';
+import { schGamesSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
 import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
 import useIsExpand from '../../../../expand/useIsExpand';
 import { IconPlusSignStrokeRounded } from '../../../../the-icon/icons/plus-sign';
@@ -22,7 +22,7 @@ export default function ScheduleWidgetTeamGameList() {
           Icon={IconPlusSignStrokeRounded}
           prefix="игра"
           confirm="Добавить новую игру?"
-          onSend={() => schSokiInvocatorClient.addGame(null, scheduleScopeProps)}
+          onSend={() => schGamesSokiInvocatorClient.addGame(null, scheduleScopeProps)}
         />
       ),
   );

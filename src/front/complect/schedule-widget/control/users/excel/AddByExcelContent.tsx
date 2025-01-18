@@ -1,5 +1,5 @@
-import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/useScheduleScopePropsContext';
-import { schSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
+import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/scope-props-contexts';
+import { schUsersSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
 import { mylib } from 'front/utils';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Dropdown from '../../../../dropdown/Dropdown';
@@ -167,7 +167,7 @@ export function ScheduleWidgetUserAddByExcelContent({ scope, close }: StrongComp
           disabled={!resultUsers?.length}
           title="Загрузить список"
           onSuccess={close}
-          onSend={() => schSokiInvocatorClient.addUsersByExcel(null, scheduleScopeProps, resultUsers ?? [])}
+          onSend={() => schUsersSokiInvocatorClient.addUsersByExcel(null, scheduleScopeProps, resultUsers ?? [])}
         />
       </div>
       {!existsUsers?.length || (

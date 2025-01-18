@@ -15,8 +15,10 @@ import Modal from '../../../modal/Modal/Modal';
 import { ModalBody } from '../../../modal/Modal/ModalBody';
 import { ModalHeader } from '../../../modal/Modal/ModalHeader';
 import IconButton from '../../../the-icon/IconButton';
-import { useScheduleScopePropsContext } from '../../complect/scope-contexts/useScheduleScopePropsContext';
-import { ScheduleUserScopePropsContext } from '../../complect/scope-contexts/useScheduleUserScopePropsContext';
+import {
+  ScheduleUserScopePropsContext,
+  useScheduleScopePropsContext,
+} from '../../complect/scope-contexts/scope-props-contexts';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetUserTakePhoto from './TakePhoto';
 import { ScheduleWidgetUserEdit } from './UserEdit';

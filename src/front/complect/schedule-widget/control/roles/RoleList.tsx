@@ -6,8 +6,8 @@ import { IconArrowUpDoubleStrokeRounded } from '../../../../complect/the-icon/ic
 import { IconPlusSignStrokeRounded } from '../../../../complect/the-icon/icons/plus-sign';
 import useIsExpand from '../../../expand/useIsExpand';
 import IconButton from '../../../the-icon/IconButton';
-import { useScheduleScopePropsContext } from '../../complect/scope-contexts/useScheduleScopePropsContext';
-import { schSokiInvocatorClient } from '../../invocators/invocators.methods';
+import { useScheduleScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
+import { schRolesSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetRole from './Role';
 
@@ -28,7 +28,7 @@ export default function ScheduleWidgetRoleList() {
           Icon={IconPlusSignStrokeRounded}
           prefix="роль"
           confirm="Добавить новую роль?"
-          onSend={async () => schSokiInvocatorClient.createRole(null, scheduleScopeProps)}
+          onSend={async () => schRolesSokiInvocatorClient.createRole(null, scheduleScopeProps)}
         />
       ),
   );

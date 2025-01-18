@@ -1,3 +1,4 @@
+import { FullContent } from 'front/complect/fullscreen-content/FullContent';
 import { mylib, MyLib } from 'front/utils';
 import { useMemo, useState } from 'react';
 import {
@@ -15,12 +16,12 @@ import { IconFavouriteStrokeRounded } from '../../../complect/the-icon/icons/fav
 import { IconFile02StrokeRounded } from '../../../complect/the-icon/icons/file-02';
 import { IconViewStrokeRounded } from '../../../complect/the-icon/icons/view';
 import { IconViewOffSlashStrokeRounded } from '../../../complect/the-icon/icons/view-off-slash';
-import useFullContent from '../../fullscreen-content/useFullContent';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
 import IconButton from '../../the-icon/IconButton';
 import useIsRedactArea from '../../useIsRedactArea';
 import ScheduleAlarmDay from '../alarm/AlarmDay';
-import { schSokiInvocatorClient } from '../invocators/invocators.methods';
+import { ScheduleDayScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
+import { schDaysSokiInvocatorClient } from '../invocators/invocators.methods';
 import { takeStrongScopeMaker, useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetDayEditPanel from './DayEditPanel';
 import ScheduleWidgetDayEventList from './events/DayEventList';
@@ -39,7 +40,7 @@ const defaultPrint = {
   title: true,
 };
 
-export const ScheduleWidgetDay = function Day({
+export const ScheduleWidgetDay = ({
   day,
   dayi,
   schedule,
@@ -47,7 +48,7 @@ export const ScheduleWidgetDay = function Day({
   isCanOpenFull,
   isForceOpen,
   scheduleScopeProps,
-}: ScheduleWidgetDayProps) {
+}: ScheduleWidgetDayProps) => {
   const date = new Date(indexScheduleGetDayStartMs(schedule, dayi));
   const isPastDay = indexScheduleCheckIsDayIsPast(schedule, dayi);
   const title = mylib.dayFullTitles[date.getDay()];
@@ -57,7 +58,11 @@ export const ScheduleWidgetDay = function Day({
   const rights = useScheduleWidgetRightsContext();
   const { editIcon, isRedact } = useIsRedactArea(true, null, rights.isCanRedact, true);
   const [print, setPrint] = useState(defaultPrint);
-  const dayScopeProps: ScheduleDayScopeProps = useMemo(() => ({ ...scheduleScopeProps, dayi }), []);
+  const [isFullDayOpen, setIsFullDayOpen] = useState<unknown>(false);
+  const dayScopeProps: ScheduleDayScopeProps = useMemo(
+    () => ({ ...scheduleScopeProps, dayi }),
+    [dayi, scheduleScopeProps],
+  );
 
   const dayRating = useMemo(() => {
     let rating = 0;
@@ -71,118 +76,113 @@ export const ScheduleWidgetDay = function Day({
     times.push((item.tm || schedule.types[item.type]?.tm || 0) + (times[times.length - 1] || 0));
   });
 
-  const [fullDayNode, openFullDay] = useFullContent(() => (
-    <ScheduleAlarmDay
-      day={day}
-      dayi={dayi}
-      schedule={schedule}
-      scheduleScopeProps={scheduleScopeProps}
-    />
-  ));
-
   return (
-    <StyledScheduleWidgetDay
-      className={'ScheduleWidgetDay relative' + (isPastDay ? ' past' : '') + (isPrint ? ' print' : '')}
-    >
-      {fullDayNode}
-      <div
-        className={'day-title flex flex-gap padding-gap-v sticky pos-top' + (print.title ? '' : ' not-printable')}
-        onClick={isCanOpenFull ? () => openFullDay() : undefined}
+    <ScheduleDayScopePropsContext.Provider value={dayScopeProps}>
+      <StyledScheduleWidgetDay
+        className={'ScheduleWidgetDay relative' + (isPastDay ? ' past' : '') + (isPrint ? ' print' : '')}
       >
-        {title}
-        {schedule.withTech ? (
-          dayi === 0 ? (
-            <span className="color--ko"> подготовка</span>
+        <div
+          className={'day-title flex flex-gap padding-gap-v sticky pos-top' + (print.title ? '' : ' not-printable')}
+          onClick={isCanOpenFull ? setIsFullDayOpen : undefined}
+        >
+          {title}
+          {schedule.withTech ? (
+            dayi === 0 ? (
+              <span className="color--ko"> подготовка</span>
+            ) : (
+              <>, {dayi} день</>
+            )
           ) : (
-            <>, {dayi} день</>
-          )
-        ) : (
-          <>, {dayi + 1} день</>
-        )}
-        {isPrint && (
-          <IconButton
-            Icon={print.title ? IconViewStrokeRounded : IconViewOffSlashStrokeRounded}
-            className="not-printable"
-            onClick={event => {
-              event.stopPropagation();
-              setPrint(prev => ({ ...prev, title: !prev.title }));
-            }}
-          />
-        )}
-      </div>
-      <div className="edit-day-panel absolute pos-top pos-right margin-gap-t flex flex-gap">
-        {isPastDay ? (
-          <>
-            <IconButton
-              Icon={isShowDay ? IconViewOffSlashStrokeRounded : IconViewStrokeRounded}
-              onClick={() => setIsShowDay(isNIs)}
-            />
-            {isShowDay && editIcon}
-          </>
-        ) : (
-          editIcon
-        )}
-      </div>
-      {isShowDay && (
-        <>
-          {rights.isCanReadTitles && (
-            <div className="day-info">
-              {(isRedact || day.topic) && (
-                <StrongEditableField
-                  value={day}
-                  fieldKey="topic"
-                  isRedact={isRedact}
-                  Icon={IconBookmark03StrokeRounded}
-                  title="Тема дня"
-                  // onSend={value => schSokiInvocatorClient.setDayTopic(null, dayScopeProps, value)}
-                  onSend={value =>
-                    schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null, dayScopeProps, value)
-                  }
-                />
-              )}
-              {(isRedact || day.dsc) && (
-                <StrongEditableField
-                  value={day}
-                  fieldKey="dsc"
-                  isRedact={isRedact}
-                  multiline
-                  textClassName=" "
-                  Icon={IconFile02StrokeRounded}
-                  title="Описание дня"
-                  // onSend={value => schSokiInvocatorClient.setDaySescription(null, dayScopeProps, value)}
-                  onSend={value =>
-                    schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null, dayScopeProps, value)
-                  }
-                />
-              )}
-              {isRedact ? (
-                <ScheduleWidgetDayEditPanel
-                  day={day}
-                  dayScope={selfScope}
-                  dayi={dayi}
-                  schedule={schedule}
-                  scheduleScopeProps={scheduleScopeProps}
-                />
-              ) : (
-                <IconButton
-                  Icon={IconFavouriteStrokeRounded}
-                  className={'flex-max ' + (dayRating < 0 ? 'color--ko' : dayRating > 0 ? 'color--ok' : 'color--3')}
-                  postfix={'Рейтинг дня: ' + dayRating}
-                />
-              )}
-            </div>
+            <>, {dayi + 1} день</>
           )}
-          <ScheduleWidgetDayEventList
+          {isPrint && (
+            <IconButton
+              Icon={print.title ? IconViewStrokeRounded : IconViewOffSlashStrokeRounded}
+              className="not-printable"
+              onClick={event => {
+                event.stopPropagation();
+                setPrint(prev => ({ ...prev, title: !prev.title }));
+              }}
+            />
+          )}
+        </div>
+        <div className="edit-day-panel absolute pos-top pos-right margin-gap-t flex flex-gap">
+          {isPastDay ? (
+            <>
+              <IconButton
+                Icon={isShowDay ? IconViewOffSlashStrokeRounded : IconViewStrokeRounded}
+                onClick={() => setIsShowDay(isNIs)}
+              />
+              {isShowDay && editIcon}
+            </>
+          ) : (
+            editIcon
+          )}
+        </div>
+        {isShowDay && (
+          <>
+            {rights.isCanReadTitles && (
+              <div className="day-info">
+                {(isRedact || day.topic) && (
+                  <StrongEditableField
+                    value={day}
+                    fieldKey="topic"
+                    isRedact={isRedact}
+                    Icon={IconBookmark03StrokeRounded}
+                    title="Тема дня"
+                    onSend={value => schDaysSokiInvocatorClient.setTopic(null, dayScopeProps, value)}
+                  />
+                )}
+                {(isRedact || day.dsc) && (
+                  <StrongEditableField
+                    value={day}
+                    fieldKey="dsc"
+                    isRedact={isRedact}
+                    multiline
+                    textClassName=" "
+                    Icon={IconFile02StrokeRounded}
+                    title="Описание дня"
+                    onSend={value => schDaysSokiInvocatorClient.setDescription(null, dayScopeProps, value)}
+                  />
+                )}
+                {isRedact ? (
+                  <ScheduleWidgetDayEditPanel
+                    day={day}
+                    dayScope={selfScope}
+                    dayi={dayi}
+                    schedule={schedule}
+                    scheduleScopeProps={scheduleScopeProps}
+                  />
+                ) : (
+                  <IconButton
+                    Icon={IconFavouriteStrokeRounded}
+                    className={'flex-max ' + (dayRating < 0 ? 'color--ko' : dayRating > 0 ? 'color--ok' : 'color--3')}
+                    postfix={'Рейтинг дня: ' + dayRating}
+                  />
+                )}
+              </div>
+            )}
+            <ScheduleWidgetDayEventList
+              day={day}
+              dayi={dayi}
+              dayScopeProps={dayScopeProps}
+              isPastDay={isPastDay}
+              isForceExpand={isPrint || isForceOpen}
+            />
+          </>
+        )}
+      </StyledScheduleWidgetDay>
+      {!isFullDayOpen || (
+        <FullContent onClose={setIsFullDayOpen}>
+          <ScheduleAlarmDay
             day={day}
             dayi={dayi}
-            dayScopeProps={dayScopeProps}
-            scope={selfScope}
-            isPastDay={isPastDay}
-            isForceExpand={isPrint || isForceOpen}
+            schedule={schedule}
+            scheduleScopeProps={scheduleScopeProps}
           />
-        </>
+        </FullContent>
       )}
-    </StyledScheduleWidgetDay>
+    </ScheduleDayScopePropsContext.Provider>
   );
 };
 

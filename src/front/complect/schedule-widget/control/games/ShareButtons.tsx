@@ -8,7 +8,7 @@ import IconButton from '../../../the-icon/IconButton';
 import { IconCloudDownloadStrokeRounded } from '../../../the-icon/icons/cloud-download';
 import { IconCloudUploadStrokeRounded } from '../../../the-icon/icons/cloud-upload';
 import { IconEyeStrokeRounded } from '../../../the-icon/icons/eye';
-import { schSokiInvocatorClient } from '../../invocators/invocators.methods';
+import { schPhotosSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { getScheduleWidgetUserPhotoStorageKey } from '../../storage';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import { ScheduleWidgetPhotoGalery } from './PhotoGalery';
@@ -53,13 +53,13 @@ export const ScheduleWidgetShareButtons = function ShareButtons({ prefix }: Prop
 
           if (!mylib.keys(value).length) return;
 
-          return schSokiInvocatorClient.putSharedPhotos(null, rights.schedule.w, value);
+          return schPhotosSokiInvocatorClient.putSharedPhotos(null, rights.schedule.w, value);
         }}
       />
       <EvaSendButton
         Icon={IconCloudDownloadStrokeRounded}
         onSuccess={photos => indexIDB.db.schedulePhotos.bulkPut(photos)}
-        onSend={() => schSokiInvocatorClient.getSharedPhotos(null, rights.schedule.w)}
+        onSend={() => schPhotosSokiInvocatorClient.getSharedPhotos(null, rights.schedule.w)}
       />
     </div>
   );

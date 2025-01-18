@@ -10,8 +10,8 @@ import useModal from '../../modal/useModal';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
 import TheIcon from '../../the-icon/TheIcon';
 import ScheduleWidgetIconChange from '../complect/IconChange';
-import { useScheduleScopePropsContext } from '../complect/scope-contexts/useScheduleScopePropsContext';
-import { schSokiInvocatorClient } from '../invocators/invocators.methods';
+import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
+import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
 import { takeStrongScopeMaker, useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetListUnit from './Unit';
 
@@ -36,7 +36,7 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
               header={`Иконка для списка ${cat.title}`}
               icon={cat.icon}
               used={[cat.icon]}
-              onSend={icon => schSokiInvocatorClient.setListCategoryIcon(null, catScopeProps, icon)}
+              onSend={icon => schListsSokiInvocatorClient.setCategoryIcon(null, catScopeProps, icon)}
             />
             <StrongEditableField
               Icon={IconSchoolReportCardStrokeRounded}
@@ -44,19 +44,19 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
               value={cat}
               fieldKey="title"
               isRedact
-              onSend={value => schSokiInvocatorClient.setListCategoryTitle(null, catScopeProps, value)}
+              onSend={value => schListsSokiInvocatorClient.setCategoryTitle(null, catScopeProps, value)}
             />
             <StrongEditableField
               title="Заголовок руководителям"
               value={cat.titles[0]}
               isRedact
-              onSend={value => schSokiInvocatorClient.setCategoryMentorsTitle(null, catScopeProps, value)}
+              onSend={value => schListsSokiInvocatorClient.setCategoryMentorsTitle(null, catScopeProps, value)}
             />
             <StrongEditableField
               title="Заголовок участникам"
               value={cat.titles[1]}
               isRedact
-              onSend={value => schSokiInvocatorClient.setCategoryMembersTitle(null, catScopeProps, value)}
+              onSend={value => schListsSokiInvocatorClient.setCategoryMembersTitle(null, catScopeProps, value)}
             />
           </>,
         )}
@@ -82,7 +82,7 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
                 <EvaSendButton
                   Icon={IconPlusSignStrokeRounded}
                   confirm={`Создать новое ${cat.title}?`}
-                  onSend={() => schSokiInvocatorClient.createListCategoryUnit(null, catScopeProps, cati)}
+                  onSend={() => schListsSokiInvocatorClient.createUnit(null, catScopeProps, cati)}
                 />
               )}
               <IconEdit02StrokeRounded onClick={screen} />

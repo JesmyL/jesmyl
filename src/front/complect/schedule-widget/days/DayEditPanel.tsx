@@ -8,6 +8,8 @@ import IconButton from '../../the-icon/IconButton';
 import { IconCalendarUpload02StrokeRounded } from '../../the-icon/icons/calendar-upload-02';
 import { IconClock01StrokeRounded } from '../../the-icon/icons/clock-01';
 import { IconPrinterStrokeRounded } from '../../the-icon/icons/printer';
+import { useScheduleDayScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
+import { schDaysSokiInvocatorClient } from '../invocators/invocators.methods';
 import { ScheduleWidgetEventListUpdater } from './EventListUpdater';
 import ScheduleWidgetPrintableDay from './PrintableDay';
 
@@ -23,36 +25,19 @@ interface Props {
 
 export default function ScheduleWidgetDayEditPanel({ day, dayi, schedule, dayScope, scheduleScopeProps }: Props) {
   const [isOpenDayListUpdater, setIsOpenDayListUpdater] = useState<unknown>(false);
+  const dayScopeProps = useScheduleDayScopePropsContext();
 
   return (
     <>
-      {isOpenDayListUpdater && (
-        <FullContent onClose={setIsOpenDayListUpdater}>
-          <ScheduleWidgetEventListUpdater
-            day={day}
-            dayScope={dayScope}
-            dayi={dayi}
-            schedule={schedule}
-            onClose={setIsOpenDayListUpdater}
-            scheduleScopeProps={scheduleScopeProps}
-          />
-        </FullContent>
-      )}
       <StrongControlDateTimeExtracter
-        scope={dayScope}
-        fieldName="wup"
         value={day.wup?.toFixed?.(2).replace(dotReg, ' ') || ''}
         Icon={IconClock01StrokeRounded}
         title="Начало дня"
         takeDate="NO"
         takeTime="hour-min"
-        mapExecArgs={(args, value) => {
-          return {
-            ...args,
-            value: +value.replace(makeRegExp('/:/'), '.'),
-          };
-        }}
-        onSend={() => {}}
+        onSend={async (isChanged, value) =>
+          isChanged && schDaysSokiInvocatorClient.setBeginTime(null, dayScopeProps, value)
+        }
       />
       <IconButton
         Icon={IconPrinterStrokeRounded}
@@ -77,6 +62,19 @@ export default function ScheduleWidgetDayEditPanel({ day, dayi, schedule, daySco
         disabledReason="Расписание дня должно быть пустым"
         onClick={setIsOpenDayListUpdater}
       />
+
+      {isOpenDayListUpdater && (
+        <FullContent onClose={setIsOpenDayListUpdater}>
+          <ScheduleWidgetEventListUpdater
+            day={day}
+            dayScope={dayScope}
+            dayi={dayi}
+            schedule={schedule}
+            onClose={setIsOpenDayListUpdater}
+            scheduleScopeProps={scheduleScopeProps}
+          />
+        </FullContent>
+      )}
     </>
   );
 }

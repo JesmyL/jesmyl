@@ -2,7 +2,6 @@ import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
 import { IScheduleWidget, ScheduleScopeProps } from 'shared/api';
 import { IconNotification01StrokeRounded } from '../../../complect/the-icon/icons/notification-01';
 import { IconNotificationOff01StrokeRounded } from '../../../complect/the-icon/icons/notification-off-01';
-import { schSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRights } from '../useScheduleWidget';
 
 export const ScheduleWidgetMyUserTgInform = ({
@@ -24,7 +23,7 @@ export const ScheduleWidgetMyUserTgInform = ({
       postfix="Не оповещать меня о событиях в TG"
       className="margin-gap-b"
       // onSend={() => schSokiInvocatorClient.toggleIsNotifyMeInTg(null, scheduleScopeProps, 1)}
-      onSend={() => schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null, scheduleScopeProps, 1)}
+      onSend={async () => {}}
     />
   ) : (
     <EvaSendButton
@@ -32,7 +31,7 @@ export const ScheduleWidgetMyUserTgInform = ({
       postfix="Оповещать меня о событиях в TG"
       className="margin-gap-b"
       // onSend={() => schSokiInvocatorClient.toggleIsNotifyMeInTg(null, scheduleScopeProps, 0)}
-      onSend={() => schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null, scheduleScopeProps, 0)}
+      onSend={async () => {}}
     />
   );
 };

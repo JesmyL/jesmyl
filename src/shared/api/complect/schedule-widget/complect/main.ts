@@ -252,7 +252,15 @@ export type ScheduleDayEventScopeProps = ScheduleDayScopeProps & {
   eventMi: IScheduleWidgetDayEventMi;
 };
 
-export type ScheduleDayEventAttImagineScopeProps = ScheduleDayEventScopeProps & {
+export type ScheduleEventTypeScopeProps = ScheduleScopeProps & {
+  typei: number;
+};
+
+export type ScheduleDayEventAttScopeProps = ScheduleDayEventScopeProps & {
+  attKey: ScheduleWidgetAttKey;
+};
+
+export type ScheduleEventTypeAttImagineScopeProps = ScheduleEventTypeScopeProps & {
   imAttKey?: `[SCH]:${string}`;
-  attKey: `[${string}]:${string}`;
+  attKey: ScheduleWidgetAttKey;
 };

@@ -1,8 +1,5 @@
 import { IconArrowReloadHorizontalStrokeRounded } from '../../../../../complect/the-icon/icons/arrow-reload-horizontal';
 
-import useModal from '../../../../modal/useModal';
-import StrongDiv from '../../../../strong-control/StrongDiv';
-import IconButton from '../../../../the-icon/IconButton';
 import {
   CustomAttUseTaleId,
   IScheduleWidgetListUnit,
@@ -10,6 +7,9 @@ import {
   IScheduleWidgetTeamGame,
   IScheduleWidgetUser,
 } from 'shared/api';
+import useModal from '../../../../modal/useModal';
+import StrongDiv from '../../../../strong-control/StrongDiv';
+import IconButton from '../../../../the-icon/IconButton';
 import KeyValueListAttNumberMember from './KeyValueListAttNumberMember';
 
 export default function ScheduleKeyValueListAttArrayItemKeyChange(props: {
@@ -25,12 +25,13 @@ export default function ScheduleKeyValueListAttArrayItemKeyChange(props: {
       return (
         <StrongDiv
           key={id}
-          scope={props.scope}
-          fieldName="key"
-          fieldValue={id}
-          cud="U"
+          // scope={props.scope}
+          // fieldName="key"
+          // fieldValue={id}
+          // cud="U"
           onSuccess={closeModal}
           className="margin-gap-v"
+          onSend={async () => {}}
         >
           <KeyValueListAttNumberMember value={id} />
         </StrongDiv>

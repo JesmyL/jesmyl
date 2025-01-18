@@ -1,4 +1,4 @@
-import { schSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
+import { schGamesSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
 import SendButton from 'front/complect/sends/send-button/SendButton';
 import { useCallback, useState } from 'react';
 import {
@@ -85,7 +85,7 @@ export default function ScheduleWidgetTeamsCriteriaSorterScreen({
               value[user.mi] = useri;
             });
 
-            return schSokiInvocatorClient.setGameSortedDict(null, criteriaScopeProps, value, criteria.title);
+            return schGamesSokiInvocatorClient.setSortedDict(null, criteriaScopeProps, value, criteria.title);
           }}
         />
       </div>

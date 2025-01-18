@@ -2,7 +2,10 @@ import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { IScheduleWidget } from 'shared/api';
 import { IndexFreshSokiInvocatorMethods } from 'shared/api/invocators/index/fresh-invocators.model';
 import { itNNull } from 'shared/utils';
-import { schedulesFileStore, schSokiInvocatorBaseServer } from './schedules/invocators.base';
+import {
+  schedulesFileStore,
+  schGeneralSokiInvocatorBaseServer,
+} from './schedules/base-invocators/general-invocators.base';
 import { schServerInvocatorShareMethods } from './schedules/invocators.shares';
 
 class IndexFreshSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexFreshSokiInvocatorMethods> {
@@ -32,4 +35,4 @@ class IndexFreshSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexFre
 }
 export const indexServerInvocatorBase = new IndexFreshSokiInvocatorBaseServer();
 
-schSokiInvocatorBaseServer.$$register();
+schGeneralSokiInvocatorBaseServer.$$register();

@@ -16,7 +16,7 @@ import { IconFile02StrokeRounded } from '../../the-icon/icons/file-02';
 import { IconSquareStrokeRounded } from '../../the-icon/icons/square';
 import { IconUserRemove02StrokeRounded } from '../../the-icon/icons/user-remove-02';
 import ScheduleWidgetUserList from '../control/users/UserList';
-import { schSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schListsSokiInvocatorClient, schUsersSokiInvocatorClient } from '../invocators/invocators.methods';
 
 export default function ScheduleWidgetListUnitRedactor({
   unit,
@@ -48,7 +48,7 @@ export default function ScheduleWidgetListUnitRedactor({
           value={unit}
           fieldKey="title"
           isRedact
-          onSend={value => schSokiInvocatorClient.setListUnitTitle(null, unitScopeData, cati, value)}
+          onSend={value => schListsSokiInvocatorClient.setUnitTitle(null, unitScopeData, value, cati)}
         />
         <StrongEditableField
           Icon={IconFile02StrokeRounded}
@@ -57,7 +57,7 @@ export default function ScheduleWidgetListUnitRedactor({
           fieldKey="dsc"
           multiline
           isRedact
-          onSend={value => schSokiInvocatorClient.setListUnitDescription(null, unitScopeData, cati, value)}
+          onSend={value => schListsSokiInvocatorClient.setUnitDescription(null, unitScopeData, value, cati)}
         />
         <ScheduleWidgetUserList
           title="Состав"
@@ -81,7 +81,7 @@ export default function ScheduleWidgetListUnitRedactor({
                       )
                     }
                     onSend={() =>
-                      schSokiInvocatorClient.addUserListUnitMembership(
+                      schUsersSokiInvocatorClient.addUserListUnitMembership(
                         null,
                         { ...unitScopeData, userMi: user.mi, cati },
                         isForMember ? unit.mi : -unit.mi,
@@ -104,7 +104,7 @@ export default function ScheduleWidgetListUnitRedactor({
                           : ' color--ko')
                     }
                     onSend={() =>
-                      schSokiInvocatorClient.removeUserListUnitMembership(null, {
+                      schUsersSokiInvocatorClient.removeUserListUnitMembership(null, {
                         ...unitScopeData,
                         userMi: user.mi,
                         cati,

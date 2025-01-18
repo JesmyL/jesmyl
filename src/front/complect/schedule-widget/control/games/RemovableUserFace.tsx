@@ -7,8 +7,8 @@ import IconButton from '../../../the-icon/IconButton';
 import { IconCancel02StrokeRounded } from '../../../the-icon/icons/cancel-02';
 import { IconImage02StrokeRounded } from '../../../the-icon/icons/image-02';
 import { IconLinkBackwardStrokeRounded } from '../../../the-icon/icons/link-backward';
-import { useScheduleScopePropsContext } from '../../complect/scope-contexts/useScheduleScopePropsContext';
-import { schSokiInvocatorClient } from '../../invocators/invocators.methods';
+import { useScheduleScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
+import { schGamesSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetUserTakePhoto from '../users/TakePhoto';
 import ScheduleWidgetUserPhoto from '../users/UserPhoto';
@@ -57,7 +57,12 @@ export default function ScheduleWidgetRemovableUserFace({ user, isStriked, butto
           Icon={isUserStriked ? IconLinkBackwardStrokeRounded : IconCancel02StrokeRounded}
           className={isUserStriked ? 'color--ok' : 'color--ko'}
           onSend={() =>
-            schSokiInvocatorClient.toggleGameStrikedUser(null, scheduleScopeProps, user.mi, user.fio ?? user.nick ?? '')
+            schGamesSokiInvocatorClient.toggleStrikedUser(
+              null,
+              scheduleScopeProps,
+              user.mi,
+              user.fio ?? user.nick ?? '',
+            )
           }
         />
       </div>

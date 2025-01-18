@@ -1,58 +1,36 @@
+import Modal from 'front/complect/modal/Modal/Modal';
+import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
+import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
 import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
-import { IScheduleWidget, IScheduleWidgetDayEvent } from 'shared/api';
+import { useState } from 'react';
+import { IScheduleWidget, IScheduleWidgetDayEvent, ScheduleDayScopeProps } from 'shared/api';
 import { IconCropStrokeRounded } from '../../../../complect/the-icon/icons/crop';
 import { IconDelete01StrokeRounded } from '../../../../complect/the-icon/icons/delete-01';
 import { IconShapesStrokeRounded } from '../../../../complect/the-icon/icons/shapes';
-import useModal from '../../../modal/useModal';
-import { StrongComponentProps } from '../../../strong-control/Strong.model';
 import IconButton from '../../../the-icon/IconButton';
 import ScheduleWidgetTopicTitle from '../../complect/TopicTitle';
 import ScheduleWidgetEventType from '../../events/EventType';
-import { schSokiInvocatorClient } from '../../invocators/invocators.methods';
+import { schDaysSokiInvocatorClient } from '../../invocators/invocators.methods';
+import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 
-export function ScheduleWidgetDayEventEventActions({
-  schedule,
-  event,
-  onEventCut,
-}: StrongComponentProps & {
+type Props = {
   event: IScheduleWidgetDayEvent;
   schedule: IScheduleWidget;
   onEventCut: () => void;
-}) {
-  const [modalNode, screen] = useModal(({ header, body }) => {
-    return (
-      <>
-        {header(
-          <>
-            Шаблон события <span className="color--7">{schedule.types[event.type].title}</span>
-          </>,
-        )}
-        {body(
-          schedule.types[event.type] ? (
-            <ScheduleWidgetEventType
-              schedule={schedule}
-              selectFieldName=""
-              selectScope=""
-              typeBox={schedule.types[event.type]}
-              typei={event.type}
-              isRedact
-            />
-          ) : (
-            <>Шаблон не найден</>
-          ),
-        )}
-      </>
-    );
-  });
+  dayScopeProps: ScheduleDayScopeProps;
+};
+
+export function ScheduleWidgetDayEventEventActions({ schedule, event, onEventCut, dayScopeProps }: Props) {
+  const [isOpenModal, setIsOpenModal] = useState<unknown>(false);
+  const rights = useScheduleWidgetRightsContext();
 
   return (
     <>
-      {modalNode}
       <IconButton
         Icon={IconShapesStrokeRounded}
         postfix="Редактировать шаблон события"
         className="flex-max margin-gap-v"
-        onClick={screen}
+        onClick={setIsOpenModal}
       />
       <IconButton
         Icon={IconCropStrokeRounded}
@@ -62,9 +40,6 @@ export function ScheduleWidgetDayEventEventActions({
       />
       {schedule.types && (
         <EvaSendButton
-          // scope={scope}
-          // fieldName="list"
-          // cud="D"
           Icon={IconDelete01StrokeRounded}
           postfix="Удалить событие"
           confirm={
@@ -75,11 +50,38 @@ export function ScheduleWidgetDayEventEventActions({
             />
           }
           className="flex-max color--ko margin-gap-v"
-          onSend={() => schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null)}
-          // mapExecArgs={args => {
-          //   return { ...args, eventMi: event.mi };
-          // }}
+          onSend={() =>
+            schDaysSokiInvocatorClient.removeEvent(
+              null,
+              dayScopeProps,
+              event.mi,
+              rights.schedule.types[event.type].title,
+            )
+          }
         />
+      )}
+
+      {!isOpenModal || (
+        <Modal onClose={setIsOpenModal}>
+          <ModalHeader>
+            Шаблон события <span className="color--7">{schedule.types[event.type].title}</span>
+          </ModalHeader>
+          <ModalBody>
+            {schedule.types[event.type] ? (
+              <ScheduleWidgetEventType
+                schedule={schedule}
+                typeBox={schedule.types[event.type]}
+                typei={event.type}
+                isRedact
+                onItemSelectSend={async () => {
+                  console.log('qeqwe23123123eqwrwfvb');
+                }}
+              />
+            ) : (
+              <>Шаблон не найден</>
+            )}
+          </ModalBody>
+        </Modal>
       )}
     </>
   );
