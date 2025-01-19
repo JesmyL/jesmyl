@@ -87,18 +87,7 @@ export default function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isFor
               isRedact && (
                 <div className={'insert-panel flex flex-gap' + (beforei === 0 ? ' first' : '')}>
                   <StrongDiv
-                    // scope={scope}
-                    // fieldName="list"
-                    // cud="U"
                     className="flex flex-gap pointer"
-                    // mapExecArgs={args => {
-                    //   setIsReplacementInProcess(true);
-                    //   return {
-                    //     ...args,
-                    //     value: beforei,
-                    //     eventMi: movementEvent?.mi,
-                    //   };
-                    // }}
                     onSuccess={() => {
                       setIsReplacementInProcess(false);
                       setIsIndividualReplacement(false);

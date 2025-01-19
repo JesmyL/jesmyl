@@ -52,11 +52,10 @@ class SchDayEventsSokiInvocatorClient extends SokiInvocatorClient<SchDayEventsSo
   constructor() {
     super('SchDayEventsSokiInvocatorClient', {
       setTopic: true,
+      setTm: true,
       toggleIsSecret: true,
-
-      // setEventRatingComment: true,
-      // setEventTypeTitle: true,
-      // setEventTypeTm: true,
+      addAttachment: true,
+      removeAttachment: true,
     });
   }
 }
@@ -70,6 +69,7 @@ class SchEventTypesSokiInvocatorClient extends SokiInvocatorClient<SchEventTypes
       setTm: true,
       bindAttImagine: true,
       removeAttImagine: true,
+      setAttImaginePeriod: true,
     });
   }
 }

@@ -2,9 +2,9 @@ import { mylib, MyLib } from 'front/utils';
 import React, { ReactNode } from 'react';
 import { IScheduleWidget, IScheduleWidgetDay, ScheduleWidgetAttKey, ScheduleWidgetAttRef } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
+import { AttTranslatorType, attTranslatorTypes } from '../../../../../back/apps/index/schedules/attTranslatorType';
 import { ScheduleWidgetAppAtt } from '../../ScheduleWidget.model';
 import ScheduleWidgetTopicTitle from '../../complect/TopicTitle';
-import { AttTranslatorType, attTranslatorTypes } from '../../complect/attTranslatorType';
 
 export default function ScheduleWidgetDayEventPeriodicTranslation(props: {
   day: IScheduleWidgetDay;

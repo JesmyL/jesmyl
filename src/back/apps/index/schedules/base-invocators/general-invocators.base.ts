@@ -15,6 +15,7 @@ import { SchGeneralSokiInvocatorMethods } from 'shared/api/invocators/schedules/
 import { smylib } from 'shared/utils';
 import { newSchedule } from '../action-box/action-box';
 import { schServerInvocatorShareMethods } from '../invocators.shares';
+import { schDayEventsSokiInvocatorBaseServer } from './day-events-invocators.base';
 import { schDaysSokiInvocatorBaseServer } from './days-invocators.base';
 import { schEventTypesSokiInvocatorBaseServer } from './event-types-invocators.base';
 import { schGamesSokiInvocatorBaseServer } from './games-invocators.base';
@@ -188,6 +189,7 @@ export const scheduleTitleInBrackets = (schScalar: IScheduleWidget | IScheduleWi
 export const schGeneralSokiInvocatorBaseServer = new SchGeneralSokiInvocatorBaseServer();
 
 schDaysSokiInvocatorBaseServer.$$register();
+schDayEventsSokiInvocatorBaseServer.$$register();
 schGamesSokiInvocatorBaseServer.$$register();
 schListsSokiInvocatorBaseServer.$$register();
 schRolesSokiInvocatorBaseServer.$$register();

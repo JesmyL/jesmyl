@@ -5,6 +5,7 @@ import { MyLib } from 'front/utils';
 import { useMemo, useState } from 'react';
 import { IScheduleWidget, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
 import styled from 'styled-components';
+import { AttTranslatorType, attTranslatorTypes } from '../../../../back/apps/index/schedules/attTranslatorType';
 import { IconAlert02StrokeRounded } from '../../../complect/the-icon/icons/alert-02';
 import { IconAttachmentStrokeRounded } from '../../../complect/the-icon/icons/attachment';
 import { IconClock01StrokeRounded } from '../../../complect/the-icon/icons/clock-01';
@@ -16,7 +17,6 @@ import StrongDiv from '../../strong-control/StrongDiv';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
 import StrongClipboardPicker from '../../strong-control/field/clipboard/Picker';
 import ScheduleWidgetBindAtts from '../atts/BindAtts';
-import { AttTranslatorType, attTranslatorTypes } from '../complect/attTranslatorType';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schEventTypesSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useAttTypeTitleError } from './useAttTypeTitleError';
@@ -76,11 +76,10 @@ export default function ScheduleWidgetEventType(props: {
           // scope={selfScope}
           schedule={props.schedule}
           // scheduleScope={props.scheduleScope}
-          // dayEventScopeProps={dayEventScopeProps}
           atts={props.typeBox.atts}
           forTitle={
             <>
-              Шаблон <span className="color--7">{props.typeBox.title}</span>
+              Шаблон <span className="color--7">{props.typeBox.title}</span> - Вставить обзорное вложение
             </>
           }
           cantBindLinks
@@ -94,12 +93,15 @@ export default function ScheduleWidgetEventType(props: {
           customAttTopContent={attKey => (
             <SendableDropdown
               id={props.typeBox.atts?.[attKey]?.[0] as AttTranslatorType}
-              // scope={scope}
-              // fieldName="period"
-              // cud="U"
               items={attTranslatorTypes}
               className="margin-gap-b"
-              onSend={async () => {}}
+              onSend={() =>
+                schEventTypesSokiInvocatorClient.setAttImaginePeriod(
+                  null,
+                  { ...eventTypeScopeProps, attKey },
+                  attTranslatorType,
+                )
+              }
             />
           )}
           // mapExecArgs={args => {
@@ -109,18 +111,10 @@ export default function ScheduleWidgetEventType(props: {
           //   };
           // }}
           onAddAttSend={(attKey, value) =>
-            schEventTypesSokiInvocatorClient.bindAttImagine(
-              null,
-              { ...scheduleScopeProps, typei: props.typei, attKey },
-              value,
-            )
+            schEventTypesSokiInvocatorClient.bindAttImagine(null, { ...eventTypeScopeProps, attKey }, attTranslatorType)
           }
           onRemoveAttSend={async attKey => {
-            schEventTypesSokiInvocatorClient.removeAttImagine(null, {
-              ...scheduleScopeProps,
-              typei: props.typei,
-              attKey,
-            });
+            schEventTypesSokiInvocatorClient.removeAttImagine(null, { ...eventTypeScopeProps, attKey });
           }}
         />
       ) : (

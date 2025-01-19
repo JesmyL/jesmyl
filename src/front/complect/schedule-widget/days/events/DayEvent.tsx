@@ -64,7 +64,6 @@ export default function ScheduleWidgetDayEvent(props: Props) {
   const rights = useScheduleWidgetRightsContext();
   const box = props.schedule.types[props.event.type];
   const { editIcon, isRedact, isSelfRedact, setIsSelfRedact } = useIsRedactArea(true, null, rights.isCanRedact, true);
-  // const selfScope = takeStrongScopeMaker(props.scope, ' eventMi/', props.event.mi);
   const dayEventScopeProps: ScheduleDayEventScopeProps = useMemo(
     () => ({ ...props.dayScopeProps, eventMi: props.event.mi }),
     [props.dayScopeProps, props.event.mi],
@@ -237,27 +236,20 @@ export default function ScheduleWidgetDayEvent(props: Props) {
                 )}
                 <StrongEditableField
                   isRedact
-                  // scope={selfScope}
-                  // fieldName="techField"
                   type="number"
                   value={'' + eventTm}
                   postfix=" мин"
                   title="Продолжительность, мин"
                   Icon={IconClock01StrokeRounded}
-                  // mapExecArgs={mapExecTmArgs}
-                  // onSend={() => schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null)}
-                  onSend={async () => {}}
+                  onSend={value => schDayEventsSokiInvocatorClient.setTm(null, dayEventScopeProps, +value)}
                 />
                 <StrongEditableField
                   isRedact
-                  // scope={selfScope}
-                  // fieldName="field"
                   value={props.event}
                   fieldKey="topic"
                   title="Тема"
                   Icon={IconBookmark03StrokeRounded}
-                  // onSend={() => schSokiInvocatorClient.oooooooooooooooooooooooooooooooooooooo(null)}
-                  onSend={async () => {}}
+                  onSend={value => schDayEventsSokiInvocatorClient.setTopic(null, dayEventScopeProps, value)}
                 />
               </>
             ) : (
@@ -285,14 +277,19 @@ export default function ScheduleWidgetDayEvent(props: Props) {
             )}
             {isRedact ? (
               <ScheduleWidgetBindAtts
-                // dayEventScopeProps={dayEventScopeProps}
                 atts={props.event.atts}
                 schedule={props.schedule}
-                forTitle={<span className="color--7">{box.title}</span>}
-                onAddAttSend={async () => {}}
-                onRemoveAttSend={async () => {
-                  console.log('14411 remm');
-                }}
+                forTitle={
+                  <>
+                    <span className="color--7">{box.title}</span> - Вставить вложение
+                  </>
+                }
+                onAddAttSend={(attKey, defaultValue) =>
+                  schDayEventsSokiInvocatorClient.addAttachment(null, dayEventScopeProps, attKey, defaultValue)
+                }
+                onRemoveAttSend={attKey =>
+                  schDayEventsSokiInvocatorClient.removeAttachment(null, dayEventScopeProps, attKey)
+                }
               />
             ) : (
               <>

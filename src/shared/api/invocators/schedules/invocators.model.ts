@@ -1,3 +1,4 @@
+import { AttTranslatorType } from 'back/apps/index/schedules/attTranslatorType';
 import {
   IScheduleWidget,
   IScheduleWidgetDayEventMi,
@@ -16,6 +17,7 @@ import {
   ScheduleUnitScopeProps,
   ScheduleUserListMemberScopeProps,
   ScheduleUserScopeProps,
+  ScheduleWidgetAttKey,
   ScheduleWidgetDayEventAttValue,
   ScheduleWidgetPhotoKey,
 } from 'shared/api/complect/schedule-widget';
@@ -122,10 +124,16 @@ export type SchDaysSokiInvocatorMethods = {
 
 export type SchDayEventsSokiInvocatorMethods = {
   setTopic: (props: ScheduleDayEventScopeProps, value: string) => IScheduleWidget;
+  setTm: (props: ScheduleDayEventScopeProps, value: number) => IScheduleWidget;
   toggleIsSecret: (props: ScheduleDayEventScopeProps, value: void) => IScheduleWidget;
 
-  // switchOffIsTgInform: (props: ScheduleDayEventScopeProps, value: void) => IScheduleWidget;
-  // setRatingComment: (props: ScheduleScopeProps, value: string) => IScheduleWidget;
+  addAttachment: (
+    props: ScheduleDayEventScopeProps,
+    attKey: ScheduleWidgetAttKey,
+    defaultValue: ScheduleWidgetDayEventAttValue,
+  ) => IScheduleWidget;
+
+  removeAttachment: (props: ScheduleDayEventScopeProps, attKey: ScheduleWidgetAttKey) => IScheduleWidget;
 };
 
 export type SchEventTypesSokiInvocatorMethods = {
@@ -134,7 +142,8 @@ export type SchEventTypesSokiInvocatorMethods = {
   setTm: (props: ScheduleEventTypeScopeProps, tm: number) => IScheduleWidget;
   bindAttImagine: (
     props: ScheduleEventTypeAttImagineScopeProps,
-    defaultValue: ScheduleWidgetDayEventAttValue,
+    attTranslatorType: AttTranslatorType,
   ) => IScheduleWidget;
   removeAttImagine: (props: ScheduleEventTypeAttImagineScopeProps) => IScheduleWidget;
+  setAttImaginePeriod: (props: ScheduleEventTypeAttImagineScopeProps, value: AttTranslatorType) => IScheduleWidget;
 };

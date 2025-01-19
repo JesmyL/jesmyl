@@ -53,7 +53,7 @@ export default function ScheduleWidgetBindAtts({
     <>
       {isModalOpen && (
         <Modal onClose={setIsModalOpen}>
-          <ModalFooter>{forTitle} - Вставить обзорное вложение</ModalFooter>
+          <ModalFooter>{forTitle}</ModalFooter>
 
           <ModalBody>
             {topContent}
