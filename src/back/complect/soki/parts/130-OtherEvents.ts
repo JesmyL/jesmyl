@@ -4,7 +4,6 @@ import { TBMessages } from 'back/db/TBMessages';
 import { TBUsers } from 'back/db/Users';
 import { jesmylTgBot } from 'back/sides/telegram-bot/bot';
 import { ChatsData, SokiCapsule, SokiServerDoAction, SokiServerDoActionProps } from 'shared/api';
-import { Eventer } from 'shared/utils';
 import { WebSocket } from 'ws';
 import { SokiServerServerStore } from './120-ServerStore';
 
@@ -12,20 +11,20 @@ export class SokiServerOtherEvents extends SokiServerServerStore implements Soki
   constructor() {
     super();
 
-    Eventer.listenValue(this.onCapsuleSetValueListeners, capsule => {
-      (async () => {
-        if (capsule.auth?.login == null) return;
-        const chats = await TBChats.getFreshDataForUser(capsule.auth.login);
+    // Eventer.listenValue(this.onCapsuleSetValueListeners, capsule => {
+    //   (async () => {
+    //     if (capsule.auth?.login == null) return;
+    //     const chats = await TBChats.getFreshDataForUser(capsule.auth.login);
 
-        this.send(
-          {
-            appName: 'index',
-            chatsData: { chats },
-          },
-          capsule.client,
-        );
-      })();
-    });
+    //     this.send(
+    //       {
+    //         appName: 'index',
+    //         chatsData: { chats },
+    //       },
+    //       capsule.client,
+    //     );
+    //   })();
+    // });
   }
 
   private async doOnChatsFetchData({ client, eventBody, requestId }: SokiServerDoActionProps) {

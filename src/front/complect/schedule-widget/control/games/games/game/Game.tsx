@@ -8,7 +8,6 @@ import { useSchWGameContext } from '../Games';
 import ScheduleWidgetTeamGameTeam from '../Team';
 import { ScheduleWidgetTeamGamePrintTeamsButton } from './PrintTeamsButton';
 import ScheduleWidgetTeamGameSetTeamsButton from './SetTeamsButton';
-import { ScheduleWidgetTeamGameTranslateTeamsButton } from './TranslateTeamsButton';
 
 export default function ScheduleWidgetTeamGame() {
   const [isRenaming, setIsRenaming] = useState(false);
@@ -31,7 +30,7 @@ export default function ScheduleWidgetTeamGame() {
           setIsRenaming(is => !is);
         }}
       />
-      <ScheduleWidgetTeamGameTranslateTeamsButton />
+      {/* <ScheduleWidgetTeamGameTranslateTeamsButton /> */}
       <ScheduleWidgetTeamGamePrintTeamsButton />
     </h3>
   );

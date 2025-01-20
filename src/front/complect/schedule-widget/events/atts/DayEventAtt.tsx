@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import {
   IScheduleWidget,
   IScheduleWidgetDay,
+  ScheduleDayEventAttachmentScopeProps,
   ScheduleDayEventScopeProps,
   ScheduleWidgetAttKey,
   ScheduleWidgetDayEventAttValue,
@@ -30,7 +31,7 @@ type Props = {
 export default function ScheduleWidgetDayEventAtt(props: Props) {
   const [appAtts] = useScheduleWidgetAppAttsContext();
   const appAtt = appAtts[props.attKey];
-  const dayEventAttScopeProps = useMemo(
+  const dayEventAttScopeProps: ScheduleDayEventAttachmentScopeProps = useMemo(
     () => ({ ...props.dayEventScopeProps, attKey: props.attKey }),
     [props.attKey, props.dayEventScopeProps],
   );

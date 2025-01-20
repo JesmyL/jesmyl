@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react';
 import {
   IScheduleWidget,
   IScheduleWidgetDay,
-  ScheduleDayEventAttScopeProps,
+  ScheduleDayEventAttachmentScopeProps,
   ScheduleWidgetAttKey,
   ScheduleWidgetAttRef,
 } from 'shared/api';
@@ -19,7 +19,7 @@ export default function ScheduleWidgetDayEventPeriodicTranslation(props: {
   att: ScheduleWidgetAttRef;
   schedule: IScheduleWidget;
   appAtt: ScheduleWidgetAppAtt;
-  dayEventAttScopeProps: ScheduleDayEventAttScopeProps;
+  dayEventAttScopeProps: ScheduleDayEventAttachmentScopeProps;
 }) {
   const [attTranslatorType] = props.att;
   const periodTitle = attTranslatorTypes.find(({ id }) => attTranslatorType === id)?.title;

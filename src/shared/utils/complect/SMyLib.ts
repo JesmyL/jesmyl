@@ -161,8 +161,13 @@ export class SMyLib {
     return what;
   }
 
-  takeNextMi<Mi extends number, Item extends { mi: Mi | number }>(list: Item[], minimalMi: Mi | number) {
-    return list.reduce((max, item) => Math.max(item.mi, max), minimalMi - 1) + 1;
+  takeNextMi<Mi extends number, Item extends Record<MiKey, Mi | number>, MiKey extends string = 'mi'>(
+    list: Item[],
+    minimalMi: Mi | number,
+    miKey?: MiKey,
+  ) {
+    const key = miKey ?? 'mi';
+    return list.reduce((max, item) => Math.max(item[key as never] as never, max), minimalMi - 1) + 1;
   }
 
   isEq(base: unknown, source: unknown, isIgnoreArrayItemsOrder?: boolean) {
@@ -510,6 +515,14 @@ export class SMyLib {
 
   toSorted<Item>(items: Item[], compareFunction?: (a: Item, b: Item) => number) {
     return [...items].sort(compareFunction);
+  }
+
+  withInsertedBeforei<Item>(list: Item[], beforei: number, targeti: number) {
+    const fakeEvent = {} as Item;
+    const [event] = list.splice(targeti, 1, fakeEvent);
+    list.splice(beforei, 0, event);
+
+    return list.filter(event => event !== fakeEvent);
   }
 
   sort<Item>(items: Item[], compareFunction?: (a: Item, b: Item) => number) {

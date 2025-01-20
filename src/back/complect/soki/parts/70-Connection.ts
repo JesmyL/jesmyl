@@ -1,4 +1,3 @@
-import { TBUsers } from 'back/db/Users';
 import { LocalSokiAuth, SokiCapsule, SokiClientEvent, SokiServerDoAction, SokiServerDoActionProps } from 'shared/api';
 import { Eventer, smylib } from 'shared/utils';
 import { WebSocket } from 'ws';
@@ -103,8 +102,8 @@ export class SokiServerConnection extends SokiServerVisits implements SokiServer
     }
 
     if (auth) {
-      if (auth.fio && auth.login && auth.nick)
-        TBUsers.setLastVisitOrCreate(auth.fio, auth.login, auth.nick, auth.tgAva, eventData.auth.tgId);
+      // if (auth.fio && auth.login && auth.nick)
+      //   TBUsers.setLastVisitOrCreate(auth.fio, auth.login, auth.nick, auth.tgAva, eventData.auth.tgId);
 
       if (auth.level < 100 && auth.nick !== undefined)
         this.setVisit({

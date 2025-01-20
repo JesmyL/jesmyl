@@ -62,6 +62,14 @@ class SchDayEventsSokiInvocatorClient extends SokiInvocatorClient<SchDayEventsSo
       removeAttachment: true,
       setRatePoint: true,
       setRateComment: true,
+      putKeyValueAttachment: true,
+      setKeyValueAttachmentValue: true,
+      setKeyValueAttachmentKey: true,
+      addKeyValueAttachmentListItem: true,
+      setKeyValueAttachmentListItemValue: true,
+      removeKeyValueAttachmentListItemValue: true,
+      moveKeyValueAttachment: true,
+      moveKeyValueAttachmentListItem: true,
     });
   }
 }

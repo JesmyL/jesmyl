@@ -502,14 +502,6 @@ export class MyLib extends SMyLib {
     return items[(items.indexOf(item) + Math.abs(step)) % items.length];
   }
 
-  withInsertedBeforei<Item>(list: Item[], beforei: number, targeti: number) {
-    const fakeEvent = {} as Item;
-    const [event] = list.splice(targeti, 1, fakeEvent);
-    list.splice(beforei, 0, event);
-
-    return list.filter(event => event !== fakeEvent);
-  }
-
   nextCircularIndex(currentIndex: number, line: unknown[], dir: 1 | -1 = 1) {
     return dir < 0
       ? currentIndex <= 0

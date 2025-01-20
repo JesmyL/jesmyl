@@ -50,7 +50,7 @@ export const ScheduleWidgetBindAtts = ({
   const appAttList = MyLib.entries(appAtts);
   const rights = useScheduleWidgetRightsContext();
   const myUserR = rights.myUser?.R ?? rights.schedule.ctrl.defu;
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<unknown>(false);
 
   const attEntries = atts ? MyLib.entries(atts) : [];
 
@@ -103,10 +103,10 @@ export const ScheduleWidgetBindAtts = ({
         Вложения
         <IconButton
           Icon={IconPlusSignStrokeRounded}
-          onClick={() => setIsModalOpen(true)}
+          onClick={setIsModalOpen}
         />
       </div>
-      <Secs className="flex flex-gap no-scrollbar">
+      <StyledBoxes className="flex flex-gap no-scrollbar">
         {attEntries?.length ? (
           attEntries.map(([attKey]) => {
             return (
@@ -125,12 +125,12 @@ export const ScheduleWidgetBindAtts = ({
         ) : (
           <span className="color--7">Вложений нет</span>
         )}
-      </Secs>
+      </StyledBoxes>
     </>
   );
 };
 
-const Secs = styled.div`
+const StyledBoxes = styled.div`
   padding-right: var(--margin-gap);
   width: 100%;
   overflow-x: auto;

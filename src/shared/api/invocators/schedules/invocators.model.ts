@@ -6,6 +6,7 @@ import {
   IScheduleWidgetUserMi,
   IScheduleWidgetWid,
   ScheduleAttachmentTypeScopeProps,
+  ScheduleDayEventAttachmentScopeProps,
   ScheduleDayEventScopeProps,
   ScheduleDayScopeProps,
   ScheduleEventTypeAttImagineScopeProps,
@@ -145,6 +146,51 @@ export type SchDayEventsSokiInvocatorMethods = {
   ) => IScheduleWidget;
 
   removeAttachment: (props: ScheduleDayEventScopeProps, attKey: ScheduleWidgetAttKey) => IScheduleWidget;
+
+  putKeyValueAttachment: (
+    props: ScheduleDayEventAttachmentScopeProps,
+    key: number | string | boolean,
+    value: string | number | [] | null,
+  ) => IScheduleWidget;
+
+  setKeyValueAttachmentKey: (
+    props: ScheduleDayEventAttachmentScopeProps,
+    itemMi: number,
+    value: string | number | boolean,
+  ) => IScheduleWidget;
+
+  setKeyValueAttachmentValue: (
+    props: ScheduleDayEventAttachmentScopeProps,
+    itemMi: number,
+    value: string | number | [] | null,
+  ) => IScheduleWidget;
+
+  addKeyValueAttachmentListItem: (
+    props: ScheduleDayEventAttachmentScopeProps,
+    itemMi: number,
+    value: string | number,
+  ) => IScheduleWidget;
+
+  setKeyValueAttachmentListItemValue: (
+    props: ScheduleDayEventAttachmentScopeProps,
+    itemMi: number,
+    valuei: number,
+    value: string | number,
+  ) => IScheduleWidget;
+
+  removeKeyValueAttachmentListItemValue: (
+    props: ScheduleDayEventAttachmentScopeProps,
+    itemMi: number,
+    value: string | number,
+  ) => IScheduleWidget;
+
+  moveKeyValueAttachment: (props: ScheduleDayEventAttachmentScopeProps, itemMi: number) => IScheduleWidget;
+
+  moveKeyValueAttachmentListItem: (
+    props: ScheduleDayEventAttachmentScopeProps,
+    itemMi: number,
+    value: string | number,
+  ) => IScheduleWidget;
 
   // rating
   setRatePoint: (

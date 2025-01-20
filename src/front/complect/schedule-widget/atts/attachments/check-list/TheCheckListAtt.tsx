@@ -1,5 +1,5 @@
 import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
-import { ScheduleDayEventAttScopeProps } from 'shared/api';
+import { ScheduleDayEventAttachmentScopeProps } from 'shared/api';
 import { IconCheckmarkSquare02StrokeRounded } from '../../../../../complect/the-icon/icons/checkmark-square-02';
 import { IconPlusSignStrokeRounded } from '../../../../../complect/the-icon/icons/plus-sign';
 import { IconSquareStrokeRounded } from '../../../../../complect/the-icon/icons/square';
@@ -12,7 +12,7 @@ export default function ScheduleCheckListAtt({
   isRedact,
 }: {
   value: ScheduleChListAtt;
-  scope: ScheduleDayEventAttScopeProps;
+  scope: ScheduleDayEventAttachmentScopeProps;
   isRedact: boolean;
 }) {
   // const attScope = scope + ' checkList';

@@ -57,7 +57,7 @@ export class SokiServer extends SokiServerOtherEvents {
         if (await this.doOnExecs(doProps)) return;
         if (await this.doOnDownloads(doProps)) return;
         if (await this.doOnServerStore(doProps)) return;
-        if (await this.doOnOtherEvents(doProps)) return;
+        // if (await this.doOnOtherEvents(doProps)) return;
       });
 
       client.on('close', () => this.onClientDisconnect(client));

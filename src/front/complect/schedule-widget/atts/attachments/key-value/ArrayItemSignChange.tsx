@@ -13,7 +13,6 @@ import IconButton from '../../../../the-icon/IconButton';
 import KeyValueListAttNumberMember from './KeyValueListAttNumberMember';
 
 export default function ScheduleKeyValueListAttArrayItemKeyChange(props: {
-  scope: string;
   users: IScheduleWidgetUser[];
   lists: IScheduleWidgetListUnit[] | und;
   roles: IScheduleWidgetRole[] | und;

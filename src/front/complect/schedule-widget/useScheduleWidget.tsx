@@ -15,6 +15,7 @@ import { appAttsStore } from '../../components/complect/appScheduleAttrsStorage'
 import { useAuth, useIndexSchedules } from '../../components/index/molecules';
 import { contextCreator } from '../contextCreator';
 import { strongScopeMakerBuilder } from '../strong-control/useStrongControl';
+import ScheduleKeyValueListAtt from './atts/attachments/key-value/KeyValueListAtt';
 import { scheduleOwnAtts } from './atts/attachments/ownAtts';
 import { ScheduleWidgetAppAtts, ScheduleWidgetAttRefs } from './ScheduleWidget.model';
 
@@ -228,19 +229,19 @@ export const makeAttStorage = (schedule?: IScheduleWidget): [ScheduleWidgetAppAt
     });
   });
 
-  // schedule?.tatts.forEach(att => {
-  //   atts[`[SCH]:custom:${att.mi}`] = {
-  //     ...att,
-  //     isCustomize: true,
-  //     result: (value, scope, isRedact) => (
-  //       <ScheduleKeyValueListAtt
-  //         isRedact={isRedact}
-  //         att={att}
-  //         scope={scope}
-  //         value={value}
-  //       />
-  //     ),
-  //   };
-  // });
+  schedule?.tatts.forEach(att => {
+    atts[`[SCH]:custom:${att.mi}`] = {
+      ...att,
+      isCustomize: true,
+      result: (value, dayEventAttScopeProps, isRedact) => (
+        <ScheduleKeyValueListAtt
+          isRedact={isRedact}
+          att={att}
+          value={value}
+          dayEventAttScopeProps={{ ...dayEventAttScopeProps, attTitle: att.title }}
+        />
+      ),
+    };
+  });
   return [{ ...appAttsStore, ...scheduleOwnAtts, ...atts }, attRefs];
 };

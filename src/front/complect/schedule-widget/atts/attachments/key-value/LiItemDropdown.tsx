@@ -15,23 +15,25 @@ import KeyValueListAttNumberMember from './KeyValueListAttNumberMember';
 
 const zeroFunc = () => 0;
 
+type Props = {
+  value: (string | number)[];
+  topValues: ScheduleWidgetAppAttCustomizableValueItem[];
+  users: IScheduleWidgetUser[] | und;
+  titles: string[] | und;
+  roles: IScheduleWidgetRole[] | und;
+  lists: IScheduleWidgetListUnit[] | und;
+  onSend: (value: string | number) => Promise<unknown>;
+};
+
 export default function ScheduleKeyValueListAttLiItemDropdown({
   value,
-  scope,
   users: topUsers,
   titles: topTitles,
   roles: topRoles,
   lists: topLists,
   topValues,
-}: {
-  value: (string | number)[];
-  topValues: ScheduleWidgetAppAttCustomizableValueItem[];
-  scope: string;
-  users: IScheduleWidgetUser[] | und;
-  titles: string[] | und;
-  roles: IScheduleWidgetRole[] | und;
-  lists: IScheduleWidgetListUnit[] | und;
-}) {
+  onSend,
+}: Props) {
   const [isShowAll, setIsShowAll] = useState(false);
   const filter = (id: number) =>
     !value.includes(id) &&
@@ -93,13 +95,10 @@ export default function ScheduleKeyValueListAttLiItemDropdown({
         onClick={() => setIsShowAll(!isShowAll)}
       />
       <SendableDropdown
-        // scope={scope}
-        // fieldName="value list"
-        // cud="C"
         placeholder="Из списка"
         className="mood-for-2"
         items={[...titles, ...roles, ...lists, ...users]}
-        onSend={async () => {}}
+        onSend={onSend}
       />
     </div>
   );
