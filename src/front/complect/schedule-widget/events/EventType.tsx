@@ -16,7 +16,7 @@ import SendableDropdown from '../../sends/dropdown/SendableDropdown';
 import StrongDiv from '../../strong-control/StrongDiv';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
 import StrongClipboardPicker from '../../strong-control/field/clipboard/Picker';
-import ScheduleWidgetBindAtts from '../atts/BindAtts';
+import { ScheduleWidgetBindAtts } from '../atts/BindAtts';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schEventTypesSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useAttTypeTitleError } from './useAttTypeTitleError';
@@ -73,16 +73,13 @@ export default function ScheduleWidgetEventType(props: {
       />
       {props.isRedact ? (
         <ScheduleWidgetBindAtts
-          // scope={selfScope}
           schedule={props.schedule}
-          // scheduleScope={props.scheduleScope}
           atts={props.typeBox.atts}
           forTitle={
             <>
               Шаблон <span className="color--7">{props.typeBox.title}</span> - Вставить обзорное вложение
             </>
           }
-          cantBindLinks
           topContent={
             <Dropdown
               id={attTranslatorType}
@@ -104,12 +101,6 @@ export default function ScheduleWidgetEventType(props: {
               }
             />
           )}
-          // mapExecArgs={args => {
-          //   return {
-          //     ...args,
-          //     value: attTranslatorType,
-          //   };
-          // }}
           onAddAttSend={(attKey, value) =>
             schEventTypesSokiInvocatorClient.bindAttImagine(null, { ...eventTypeScopeProps, attKey }, attTranslatorType)
           }

@@ -25,7 +25,7 @@ class SchListsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchListsSo
 
         createUnit: () => (props, cati) =>
           modifySchedule(props, sch => {
-            const mi = smylib.takeNextMi(sch.lists.units);
+            const mi = smylib.takeNextMi(sch.lists.units, 0);
 
             sch.lists.units.push({
               mi,

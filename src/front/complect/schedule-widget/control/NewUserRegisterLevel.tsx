@@ -5,7 +5,7 @@ import { scheduleWidgetUserRights } from 'shared/api';
 import { IconArrowRight01StrokeRounded } from '../../../complect/the-icon/icons/arrow-right-01';
 import IconButton from '../../the-icon/IconButton';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
-import { schSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetRightControlList from './RightControlList';
 
@@ -29,7 +29,7 @@ export default function ScheduleWidgetNewUserRegisterLevel() {
             <ScheduleWidgetRightControlList
               rightCtrl={scheduleWidgetUserRights}
               R={rights.schedule.ctrl.defu}
-              onSend={value => schSokiInvocatorClient.setDefaultUserRights(null, scheduleScopeProps, value)}
+              onSend={value => schGeneralSokiInvocatorClient.setDefaultUserRights(null, scheduleScopeProps, value)}
             />
           </ModalBody>
         </Modal>

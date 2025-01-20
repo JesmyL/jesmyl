@@ -5,6 +5,7 @@ import {
   IScheduleWidgetExportableTeam,
   IScheduleWidgetUserMi,
   IScheduleWidgetWid,
+  ScheduleAttachmentTypeScopeProps,
   ScheduleDayEventScopeProps,
   ScheduleDayScopeProps,
   ScheduleEventTypeAttImagineScopeProps,
@@ -18,7 +19,8 @@ import {
   ScheduleUserListMemberScopeProps,
   ScheduleUserScopeProps,
   ScheduleWidgetAttKey,
-  ScheduleWidgetDayEventAttValue,
+  ScheduleWidgetAttOwnValue,
+  ScheduleWidgetAttRef,
   ScheduleWidgetPhotoKey,
 } from 'shared/api/complect/schedule-widget';
 
@@ -124,16 +126,40 @@ export type SchDaysSokiInvocatorMethods = {
 
 export type SchDayEventsSokiInvocatorMethods = {
   setTopic: (props: ScheduleDayEventScopeProps, value: string) => IScheduleWidget;
+  setDescription: (props: ScheduleDayEventScopeProps, value: string) => IScheduleWidget;
+  setIsNeedTgInform: (props: ScheduleDayEventScopeProps, value: num) => IScheduleWidget;
   setTm: (props: ScheduleDayEventScopeProps, value: number) => IScheduleWidget;
   toggleIsSecret: (props: ScheduleDayEventScopeProps, value: void) => IScheduleWidget;
 
+  // attachments
   addAttachment: (
     props: ScheduleDayEventScopeProps,
     attKey: ScheduleWidgetAttKey,
-    defaultValue: ScheduleWidgetDayEventAttValue,
+    defaultValue: ScheduleWidgetAttOwnValue,
+  ) => IScheduleWidget;
+
+  addAttachmentRef: (
+    props: ScheduleDayEventScopeProps,
+    attKey: ScheduleWidgetAttKey,
+    attRef: ScheduleWidgetAttRef,
   ) => IScheduleWidget;
 
   removeAttachment: (props: ScheduleDayEventScopeProps, attKey: ScheduleWidgetAttKey) => IScheduleWidget;
+
+  // rating
+  setRatePoint: (
+    props: ScheduleDayEventScopeProps,
+    userMi: IScheduleWidgetUserMi,
+    ratePoint: number,
+    userName: string,
+  ) => IScheduleWidget;
+
+  setRateComment: (
+    props: ScheduleDayEventScopeProps,
+    userMi: IScheduleWidgetUserMi,
+    comment: string,
+    userName: string,
+  ) => IScheduleWidget;
 };
 
 export type SchEventTypesSokiInvocatorMethods = {
@@ -146,4 +172,43 @@ export type SchEventTypesSokiInvocatorMethods = {
   ) => IScheduleWidget;
   removeAttImagine: (props: ScheduleEventTypeAttImagineScopeProps) => IScheduleWidget;
   setAttImaginePeriod: (props: ScheduleEventTypeAttImagineScopeProps, value: AttTranslatorType) => IScheduleWidget;
+};
+
+export type SchAttachmentTypesSokiInvocatorMethods = {
+  create: (props: ScheduleScopeProps) => IScheduleWidget;
+  setTitle: (props: ScheduleAttachmentTypeScopeProps, value: string, prevTitle: string) => IScheduleWidget;
+  setDescription: (props: ScheduleAttachmentTypeScopeProps, value: string, tattTitle: string) => IScheduleWidget;
+  setIcon: (props: ScheduleAttachmentTypeScopeProps, value: KnownIconName, tattTitle: string) => IScheduleWidget;
+  setUse: (props: ScheduleAttachmentTypeScopeProps, value: number, tattTitle: string) => IScheduleWidget;
+  setRolesUses: (props: ScheduleAttachmentTypeScopeProps, value: number, tattTitle: string) => IScheduleWidget;
+  setListsUses: (props: ScheduleAttachmentTypeScopeProps, value: number, tattTitle: string) => IScheduleWidget;
+
+  createTitleValue: (
+    props: ScheduleAttachmentTypeScopeProps,
+    tattTitle: string,
+    titlesCount: number,
+  ) => IScheduleWidget;
+
+  setTitleValue: (
+    props: ScheduleAttachmentTypeScopeProps,
+    titlei: number,
+    value: string,
+    tattTitle: string,
+    prevTitle: string,
+  ) => IScheduleWidget;
+
+  setWhoCanLevel: (
+    props: ScheduleAttachmentTypeScopeProps,
+    rule: 'R' | 'U',
+    value: number,
+    tattTitle: string,
+  ) => IScheduleWidget;
+
+  toggleUserWhoCan: (
+    props: ScheduleAttachmentTypeScopeProps,
+    rule: 'Rs' | 'Us',
+    userMi: IScheduleWidgetUserMi,
+    tattTitle: string,
+    userName: string,
+  ) => IScheduleWidget;
 };

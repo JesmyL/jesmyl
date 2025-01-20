@@ -17,7 +17,7 @@ export default function ScheduleWidgetDayEventAtts(
     event: IScheduleWidgetDayEvent;
     day: IScheduleWidgetDay;
     dayi: number;
-    isPast: boolean;
+    isPrevEvent: boolean;
     schedule: IScheduleWidget;
     dayEventScopeProps: ScheduleDayEventScopeProps;
   }>,
@@ -51,14 +51,11 @@ export default function ScheduleWidgetDayEventAtts(
           <ScheduleWidgetDayEventAtt
             key={attKey}
             dayEventScopeProps={props.dayEventScopeProps}
-            typeBox={props.typeBox}
             att={att}
             attKey={attKey}
             day={props.day}
             dayi={props.dayi}
             schedule={props.schedule}
-            event={props.event}
-            isPast={props.isPast}
             isCanRedact={isCanUpdate}
           />
         );

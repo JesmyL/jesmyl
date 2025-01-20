@@ -30,7 +30,7 @@ import ScheduleWidgetContextWrapper from './general/ContextWrapper';
 import { ScheduleWidgetCopy } from './general/Copy';
 import {
   schDaysSokiInvocatorClient,
-  schSokiInvocatorClient,
+  schGeneralSokiInvocatorClient,
   schUsersSokiInvocatorClient,
 } from './invocators/invocators.methods';
 import { schLinkAction } from './links';
@@ -162,7 +162,7 @@ export default function ScheduleWidget({
                 takeTime="NO"
                 onComponentsChange={(_, __, ___, date) => setStartTime(date.getTime())}
                 onSend={async () =>
-                  startTime && schSokiInvocatorClient.setStartTime(null, scheduleScopeProps, startTime)
+                  startTime && schGeneralSokiInvocatorClient.setStartTime(null, scheduleScopeProps, startTime)
                 }
               />
             ) : (
@@ -181,7 +181,7 @@ export default function ScheduleWidget({
                       isRedact
                       Icon={IconSchoolReportCardStrokeRounded}
                       title="Заголовок"
-                      onSend={value => schSokiInvocatorClient.rename(null, scheduleScopeProps, value)}
+                      onSend={value => schGeneralSokiInvocatorClient.rename(null, scheduleScopeProps, value)}
                     />
                     <StrongEditableField
                       fieldKey="topic"
@@ -189,7 +189,7 @@ export default function ScheduleWidget({
                       isRedact
                       Icon={IconBookmark03StrokeRounded}
                       title="Тема"
-                      onSend={value => schSokiInvocatorClient.setTopic(null, scheduleScopeProps, value)}
+                      onSend={value => schGeneralSokiInvocatorClient.setTopic(null, scheduleScopeProps, value)}
                     />
                   </>
                 )}
@@ -202,7 +202,7 @@ export default function ScheduleWidget({
                     textClassName=" "
                     Icon={IconFile02StrokeRounded}
                     title="Описание"
-                    onSend={value => schSokiInvocatorClient.setDescription(null, scheduleScopeProps, value)}
+                    onSend={value => schGeneralSokiInvocatorClient.setDescription(null, scheduleScopeProps, value)}
                   />
                 )}
                 {rights.isCanReadTitles && (
@@ -250,7 +250,7 @@ export default function ScheduleWidget({
                         Icon={IconDelete02StrokeRounded}
                         confirm="Восстановить расписание будет не возможно. Продолжить?"
                         postfix="Удалить расписание"
-                        onSend={() => schSokiInvocatorClient.remove(null, scheduleScopeProps)}
+                        onSend={() => schGeneralSokiInvocatorClient.remove(null, scheduleScopeProps)}
                       />
                     )}
                   </>

@@ -23,6 +23,7 @@ type Props = {
   tatt: ScheduleWidgetAppAtt;
   schedule: IScheduleWidget;
   onRemoveAttSend: (attKey: ScheduleWidgetAttKey) => Promise<unknown>;
+  onSend: (attRef: ScheduleWidgetAttRef) => Promise<unknown>;
 };
 
 export default function ScheduleWidgetBindAttRefKeyButton({
@@ -33,6 +34,7 @@ export default function ScheduleWidgetBindAttRefKeyButton({
   tatt,
   schedule,
   onRemoveAttSend,
+  onSend,
 }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -49,7 +51,7 @@ export default function ScheduleWidgetBindAttRefKeyButton({
       />
       {isModalOpen && (
         <Modal onClose={setIsModalOpen}>
-          <ModalHeader>{forTitle} - Сослаться на вложение</ModalHeader>
+          <ModalHeader>{forTitle} - сослаться на вложение</ModalHeader>
 
           <ModalBody>
             {refs.map(attRef => {
@@ -66,19 +68,9 @@ export default function ScheduleWidgetBindAttRefKeyButton({
               return (
                 <StrongDiv
                   key={attKey + dayi + eventMi}
-                  // scope={attScope}
-                  // fieldName=""
-                  // cud="U"
                   className="margin-big-gap-v"
-                  // mapExecArgs={args => {
-                  //   if (atts?.[attKey]) return;
-                  //   return {
-                  //     ...args,
-                  //     value: attRef,
-                  //   };
-                  // }}
                   onSuccess={() => setIsModalOpen(false)}
-                  onSend={async () => {}}
+                  onSend={() => onSend(attRef)}
                 >
                   <div className="color--7">
                     {dayi + 1} день, {mylib.dayFullTitles[dayDate.getDay()]} - {schedule.types[event.type].title}

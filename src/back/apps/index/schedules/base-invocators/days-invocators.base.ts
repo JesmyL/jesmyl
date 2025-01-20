@@ -1,6 +1,6 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { mylib } from 'front/utils';
-import { IScheduleWidgetDay, ScheduleDayScopeProps } from 'shared/api';
+import { IScheduleWidgetDay, IScheduleWidgetDayEventMi, ScheduleDayScopeProps } from 'shared/api';
 import { SchDaysSokiInvocatorMethods } from 'shared/api/invocators/schedules/invocators.model';
 import { makeRegExp, smylib } from 'shared/utils';
 import { modifySchedule, scheduleTitleInBrackets } from './general-invocators.base';
@@ -14,7 +14,7 @@ class SchDaysSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchDaysSoki
           modifySchedule(props, sch =>
             sch.days.push({
               list: [],
-              mi: smylib.takeNextMi(sch.days),
+              mi: smylib.takeNextMi(sch.days, 0),
               wup: 7,
             }),
           ),
@@ -28,7 +28,13 @@ class SchDaysSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchDaysSoki
 
         setTopic: () => modifyScheduleDay((day, value) => (day.topic = value)),
         setDescription: () => modifyScheduleDay((day, value) => (day.dsc = value)),
-        addEvent: () => modifyScheduleDay((day, type) => day.list.push({ mi: mylib.takeNextMi(day.list), type })),
+        addEvent: () =>
+          modifyScheduleDay((day, type) =>
+            day.list.push({
+              type,
+              mi: mylib.takeNextMi(day.list, IScheduleWidgetDayEventMi.def),
+            }),
+          ),
 
         removeEvent: () =>
           modifyScheduleDay((day, eventMi) => {

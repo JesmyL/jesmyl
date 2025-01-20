@@ -11,10 +11,13 @@ export enum IScheduleWidgetTeamMi {
   def = 1,
 }
 export enum IScheduleWidgetTeamGameMi {
-  def = 1,
+  def = 0,
 }
 export enum IScheduleWidgetDayEventMi {
   def = 1,
+}
+export enum IScheduleWidgetAttachmentTypeMi {
+  def = 0,
 }
 
 export enum IScheduleWidgetUserCati {
@@ -91,8 +94,8 @@ export interface ScheduleWidgetDayListItemTypeBox {
 }
 
 export interface ScheduleWidgetAppAttCustomized extends ScheduleWidgetAppAttCustomizable {
-  mi: number;
-  isCustomize: true;
+  mi: IScheduleWidgetAttachmentTypeMi;
+  isCustomize?: true;
 }
 
 export interface ScheduleWidgetAppAttCustomizable
@@ -119,7 +122,7 @@ export interface IScheduleWidgetDayEvent {
   tm?: number;
   atts?: ScheduleWidgetDayEventAttValues;
   secret?: 1 | 0;
-  rate?: Record<number, [number, string]>;
+  rate?: Record<IScheduleWidgetUserMi, [number, string]>;
   tgInform?: 1 | 0;
 }
 
@@ -209,7 +212,7 @@ export type ScheduleWidgetAttKey<AttAppName extends AttKey = AttKey> = `[${AttAp
 
 export type ScheduleWidgetDayEventAttValue = ScheduleWidgetAttOwnValue | ScheduleWidgetAttRef;
 
-export type ScheduleWidgetAttRef = [number, number];
+export type ScheduleWidgetAttRef = [dayi: number, eventMi: IScheduleWidgetDayEventMi];
 export type ScheduleWidgetAttOwnValue = Record<string, unknown>;
 
 ////////////////////////////////////// scopes
@@ -250,6 +253,10 @@ export type ScheduleDayScopeProps = ScheduleScopeProps & {
 
 export type ScheduleDayEventScopeProps = ScheduleDayScopeProps & {
   eventMi: IScheduleWidgetDayEventMi;
+};
+
+export type ScheduleAttachmentTypeScopeProps = ScheduleScopeProps & {
+  tattMi: IScheduleWidgetAttachmentTypeMi;
 };
 
 export type ScheduleEventTypeScopeProps = ScheduleScopeProps & {

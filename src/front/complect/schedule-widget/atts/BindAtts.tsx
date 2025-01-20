@@ -1,9 +1,10 @@
 import { mylib, MyLib } from 'front/utils';
-import { ReactNode, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import {
   IScheduleWidget,
   ScheduleWidgetAttKey,
-  ScheduleWidgetDayEventAttValue,
+  ScheduleWidgetAttOwnValue,
+  ScheduleWidgetAttRef,
   ScheduleWidgetDayEventAttValues,
   scheduleWidgetUserRights,
 } from 'shared/api';
@@ -15,32 +16,36 @@ import { ModalBody } from '../../modal/Modal/ModalBody';
 import { ModalFooter } from '../../modal/Modal/ModalFooter';
 import StrongDiv from '../../strong-control/StrongDiv';
 import IconButton from '../../the-icon/IconButton';
+import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
 import { useScheduleWidgetAppAttsContext, useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetAttFace from './AttFace';
-import ScheduleWidgetBindAttRefKeyButton from './BindAttRefKeyButton';
 import ScheduleWidgetCustomAttachments from './custom/CustomAttachments';
 
 type Props = {
   forTitle: ReactNode;
   atts?: ScheduleWidgetDayEventAttValues;
   schedule: IScheduleWidget;
-  cantBindLinks?: boolean;
   topContent?: ReactNode;
   customAttTopContent?: (attKey: ScheduleWidgetAttKey) => ReactNode;
-  onAddAttSend: (attKey: ScheduleWidgetAttKey, value: ScheduleWidgetDayEventAttValue) => Promise<unknown>;
+  onAddAttSend: (attKey: ScheduleWidgetAttKey, value: ScheduleWidgetAttOwnValue) => Promise<unknown>;
   onRemoveAttSend: (attKey: ScheduleWidgetAttKey) => Promise<unknown>;
+  inAttNodeAdds?: (
+    attKey: ScheduleWidgetAttKey,
+    tatt: ScheduleWidgetAppAtt,
+    refs: ScheduleWidgetAttRef[],
+  ) => React.ReactNode;
 };
 
-export default function ScheduleWidgetBindAtts({
+export const ScheduleWidgetBindAtts = ({
   atts,
   forTitle,
   schedule,
-  cantBindLinks,
   topContent,
   customAttTopContent,
   onAddAttSend,
   onRemoveAttSend,
-}: Props) {
+  inAttNodeAdds,
+}: Props) => {
   const [appAtts, attRefs] = useScheduleWidgetAppAttsContext();
   const appAttList = MyLib.entries(appAtts);
   const rights = useScheduleWidgetRightsContext();
@@ -82,17 +87,7 @@ export default function ScheduleWidgetBindAtts({
                     onRemoveAttSend={onRemoveAttSend}
                   />
                   <div className="fade-05 ">{tatt.description}</div>
-                  {!cantBindLinks && !!attRefs[attKey]?.length && (
-                    <ScheduleWidgetBindAttRefKeyButton
-                      refs={attRefs[attKey]}
-                      forTitle={forTitle}
-                      tatt={tatt}
-                      attKey={attKey}
-                      atts={atts}
-                      schedule={schedule}
-                      onRemoveAttSend={onRemoveAttSend}
-                    />
-                  )}
+                  {inAttNodeAdds?.(attKey, tatt, attRefs[attKey] ?? [])}
                 </StrongDiv>
               );
             })}
@@ -114,14 +109,10 @@ export default function ScheduleWidgetBindAtts({
       <Secs className="flex flex-gap no-scrollbar">
         {attEntries?.length ? (
           attEntries.map(([attKey]) => {
-            // const attScope = takeStrongScopeMaker(scope, ' attKey/', attKey);
-
             return (
               <ScheduleWidgetAttFace
                 isRedact
                 key={attKey}
-                // scope={attScope}
-                // scheduleScope={scheduleScope}
                 tatt={appAtts[attKey]}
                 attKey={attKey}
                 typeTitle={forTitle}
@@ -137,7 +128,7 @@ export default function ScheduleWidgetBindAtts({
       </Secs>
     </>
   );
-}
+};
 
 const Secs = styled.div`
   padding-right: var(--margin-gap);

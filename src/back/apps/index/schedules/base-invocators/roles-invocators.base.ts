@@ -11,7 +11,7 @@ class SchRolesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchRolesSo
       {
         createRole: () => props =>
           modifySchedule(props, sch =>
-            sch.ctrl.roles.push({ mi: smylib.takeNextMi(sch.ctrl.roles), title: 'Помощьник' }),
+            sch.ctrl.roles.push({ mi: smylib.takeNextMi(sch.ctrl.roles, 0), title: 'Помощьник' }),
           ),
 
         setRoleCategoryTitle: () => (props, cati, value) => modifySchedule(props, sch => (sch.ctrl.cats[cati] = value)),

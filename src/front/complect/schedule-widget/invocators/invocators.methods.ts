@@ -1,5 +1,6 @@
 import { SokiInvocatorClient } from 'front/SokiInvocator.client';
 import {
+  SchAttachmentTypesSokiInvocatorMethods,
   SchDayEventsSokiInvocatorMethods,
   SchDaysSokiInvocatorMethods,
   SchEventTypesSokiInvocatorMethods,
@@ -11,9 +12,9 @@ import {
   SchUsersSokiInvocatorMethods,
 } from 'shared/api/invocators/schedules/invocators.model';
 
-class SchSokiInvocatorClient extends SokiInvocatorClient<SchGeneralSokiInvocatorMethods> {
+class SchGeneralSokiInvocatorClient extends SokiInvocatorClient<SchGeneralSokiInvocatorMethods> {
   constructor() {
-    super('SchSokiInvocatorClient', {
+    super('SchGeneralSokiInvocatorClient', {
       create: true,
       remove: true,
       copySchedule: true,
@@ -30,7 +31,7 @@ class SchSokiInvocatorClient extends SokiInvocatorClient<SchGeneralSokiInvocator
     });
   }
 }
-export const schSokiInvocatorClient = new SchSokiInvocatorClient();
+export const schGeneralSokiInvocatorClient = new SchGeneralSokiInvocatorClient();
 
 class SchDaysSokiInvocatorClient extends SokiInvocatorClient<SchDaysSokiInvocatorMethods> {
   constructor() {
@@ -53,9 +54,14 @@ class SchDayEventsSokiInvocatorClient extends SokiInvocatorClient<SchDayEventsSo
     super('SchDayEventsSokiInvocatorClient', {
       setTopic: true,
       setTm: true,
+      setDescription: true,
+      setIsNeedTgInform: true,
       toggleIsSecret: true,
       addAttachment: true,
+      addAttachmentRef: true,
       removeAttachment: true,
+      setRatePoint: true,
+      setRateComment: true,
     });
   }
 }
@@ -74,6 +80,25 @@ class SchEventTypesSokiInvocatorClient extends SokiInvocatorClient<SchEventTypes
   }
 }
 export const schEventTypesSokiInvocatorClient = new SchEventTypesSokiInvocatorClient();
+
+class SchAttachmentTypesSokiInvocatorClient extends SokiInvocatorClient<SchAttachmentTypesSokiInvocatorMethods> {
+  constructor() {
+    super('SchAttachmentTypesSokiInvocatorClient', {
+      create: true,
+      setTitle: true,
+      setDescription: true,
+      setIcon: true,
+      setUse: true,
+      setRolesUses: true,
+      setListsUses: true,
+      setTitleValue: true,
+      createTitleValue: true,
+      setWhoCanLevel: true,
+      toggleUserWhoCan: true,
+    });
+  }
+}
+export const schAttachmentTypesSokiInvocatorClient = new SchAttachmentTypesSokiInvocatorClient();
 
 class SchPhotosSokiInvocatorClient extends SokiInvocatorClient<SchPhotosSokiInvocatorMethods> {
   constructor() {

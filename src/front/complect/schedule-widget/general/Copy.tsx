@@ -16,7 +16,7 @@ import { IconCopy02StrokeRounded } from '../../../complect/the-icon/icons/copy-0
 import { useAuth, useIndexSchedules } from '../../../components/index/molecules';
 import IconButton from '../../the-icon/IconButton';
 import ScheduleWidgetTopicTitle from '../complect/TopicTitle';
-import { schSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 
 export function ScheduleWidgetCopy(props: { schw: IScheduleWidgetWid }) {
@@ -110,7 +110,7 @@ export function ScheduleWidgetCopy(props: { schw: IScheduleWidgetWid }) {
                     }),
                   };
 
-                  return schSokiInvocatorClient.copySchedule(null, { schw: props.schw }, value);
+                  return schGeneralSokiInvocatorClient.copySchedule(null, { schw: props.schw }, value);
                 }}
               />
             </ModalBody>

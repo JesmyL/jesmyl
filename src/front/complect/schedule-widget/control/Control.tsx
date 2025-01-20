@@ -11,7 +11,7 @@ import SendableDropdown from '../../sends/dropdown/SendableDropdown';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
 import IconButton from '../../the-icon/IconButton';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
-import { schSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetRegisterType from './RegisterType';
 import { ScheduleWidgetUserAddByExcel } from './users/excel/AddByExcel';
@@ -48,7 +48,7 @@ export const ScheduleWidgetControl = () => {
                   confirm={`Сделать первый день ${rights.schedule.withTech ? 'обычным' : 'подготовительным'}?`}
                   className="margin-gap-b"
                   onSend={() =>
-                    schSokiInvocatorClient.setFirstDayAsTech(
+                    schGeneralSokiInvocatorClient.setFirstDayAsTech(
                       null,
                       scheduleScopeProps,
                       rights.schedule.withTech ? undefined : 1,
@@ -60,7 +60,7 @@ export const ScheduleWidgetControl = () => {
                   isRedact
                   setSelfRedact
                   title="TG-чат-реквизиты"
-                  onSend={value => schSokiInvocatorClient.setTgChatRequisites(null, scheduleScopeProps, value)}
+                  onSend={value => schGeneralSokiInvocatorClient.setTgChatRequisites(null, scheduleScopeProps, value)}
                 />
                 <EvaSendButton
                   className="margin-gap-b"
@@ -76,14 +76,14 @@ export const ScheduleWidgetControl = () => {
                         ? 'TG-Напоминание: за ' + rights.schedule.tgInformTime + ' мин. и в начале события'
                         : 'TG-Напоминание: только по началу события'
                   }
-                  onSend={() => schSokiInvocatorClient.toggleIsTgInform(null, scheduleScopeProps)}
+                  onSend={() => schGeneralSokiInvocatorClient.toggleIsTgInform(null, scheduleScopeProps)}
                 />
                 <SendableDropdown
                   items={tgInformTimesItems}
                   disabled={rights.schedule.tgInform === 0}
                   id={rights.schedule.tgInformTime}
                   className="margin-big-gap-b"
-                  onSend={tm => schSokiInvocatorClient.setTgInformTime(null, scheduleScopeProps, tm)}
+                  onSend={tm => schGeneralSokiInvocatorClient.setTgInformTime(null, scheduleScopeProps, tm)}
                 />
               </>
             )}

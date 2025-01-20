@@ -1,4 +1,3 @@
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
 import { MyLib, mylib } from 'front/utils';
 import { ReactNode, useMemo } from 'react';
 import {
@@ -8,34 +7,28 @@ import {
   IScheduleWidgetDayEvent,
   ScheduleDayEventScopeProps,
   ScheduleDayScopeProps,
+  ScheduleWidgetAttKey,
   ScheduleWidgetCleans,
 } from 'shared/api';
 import styled from 'styled-components';
 import { IconArrowDown01StrokeRounded } from '../../../../complect/the-icon/icons/arrow-down-01';
 import { IconArrowUp01StrokeRounded } from '../../../../complect/the-icon/icons/arrow-up-01';
-import { IconBookmark03StrokeRounded } from '../../../../complect/the-icon/icons/bookmark-03';
-import { IconCheckmarkSquare02StrokeRounded } from '../../../../complect/the-icon/icons/checkmark-square-02';
-import { IconClock01StrokeRounded } from '../../../../complect/the-icon/icons/clock-01';
 import { IconFile02StrokeRounded } from '../../../../complect/the-icon/icons/file-02';
-import { IconNotification01StrokeRounded } from '../../../../complect/the-icon/icons/notification-01';
-import { IconNotificationOff01StrokeRounded } from '../../../../complect/the-icon/icons/notification-off-01';
-import { IconSquareStrokeRounded } from '../../../../complect/the-icon/icons/square';
 import { IconViewOffSlashStrokeRounded } from '../../../../complect/the-icon/icons/view-off-slash';
 import { useIsRememberExpand } from '../../../expand/useIsRememberExpand';
 import StrongEditableField from '../../../strong-control/field/StrongEditableField';
 import IconButton from '../../../the-icon/IconButton';
 import useIsRedactArea from '../../../useIsRedactArea';
-import ScheduleWidgetBindAtts from '../../atts/BindAtts';
+import ScheduleWidgetBindAttRefKeyButton from '../../atts/BindAttRefKeyButton';
+import { ScheduleWidgetBindAtts } from '../../atts/BindAtts';
 import ScheduleWidgetTopicTitle from '../../complect/TopicTitle';
 import ScheduleWidgetDayEventAtts from '../../events/atts/DayEventAtts';
 import { schDayEventsSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetDayEventRating from './DayEventRating';
+import { DayEventRedactControls } from './RedactControls';
 
 const msInMin = mylib.howMs.inMin;
-
-const mapExecTmArgs = (args: {}) => ({ ...args, techKey: 'tm' });
-const mapExecTgInformArgs = (args: {}) => ({ ...args, techKey: 'tgInform' });
 
 interface Props {
   schedule: IScheduleWidget;
@@ -62,7 +55,7 @@ export default function ScheduleWidgetDayEvent(props: Props) {
   let timeMark = '';
   let timerClassNamePlus = '';
   const rights = useScheduleWidgetRightsContext();
-  const box = props.schedule.types[props.event.type];
+  const eventType = props.schedule.types[props.event.type];
   const { editIcon, isRedact, isSelfRedact, setIsSelfRedact } = useIsRedactArea(true, null, rights.isCanRedact, true);
   const dayEventScopeProps: ScheduleDayEventScopeProps = useMemo(
     () => ({ ...props.dayScopeProps, eventMi: props.event.mi }),
@@ -70,7 +63,7 @@ export default function ScheduleWidgetDayEvent(props: Props) {
   );
 
   const now = Date.now();
-  const eventTm = ScheduleWidgetCleans.takeEventTm(props.event, box);
+  const eventTm = ScheduleWidgetCleans.takeEventTm(props.event, eventType);
   const wakeupMs = ScheduleWidgetCleans.computeDayWakeUpTime(props.day.wup, 'number');
   const eventFinishMs = indexScheduleGetEventFinishMs(
     props.schedule,
@@ -79,10 +72,10 @@ export default function ScheduleWidgetDayEvent(props: Props) {
     props.eventTimes[props.eventi],
   );
   const eventStartMs = eventFinishMs - eventTm * msInMin;
-  let isPastEvent = now > eventFinishMs;
+  let isPrevEvent = now > eventFinishMs;
 
   if (eventTm === 0) {
-    if (isPastEvent && !props.isPastDay) {
+    if (isPrevEvent && !props.isPastDay) {
       let eventTmMs = eventFinishMs;
       let eventiPlus = 1;
 
@@ -100,7 +93,7 @@ export default function ScheduleWidgetDayEvent(props: Props) {
         }
       }
 
-      isPastEvent = now > eventTmMs;
+      isPrevEvent = now > eventTmMs;
     }
   }
 
@@ -121,12 +114,12 @@ export default function ScheduleWidgetDayEvent(props: Props) {
 
   const isExpandEvent = (isSelfRedact || isExpand) && isCanExpandEvent;
 
-  if (!box) return <>Неизвестный шаблон события</>;
+  if (!eventType) return <>Неизвестный шаблон события</>;
 
   if (props.isShowPeriodsNotTs) {
     timeMark = eventTm + props.secretTime + 'м';
     timerClassNamePlus =
-      props.event.tm == null || props.event.tm === box.tm || (props.event.tm === 0 && box.tm == null)
+      props.event.tm == null || props.event.tm === eventType.tm || (props.event.tm === 0 && eventType.tm == null)
         ? ''
         : ' color--7';
   } else {
@@ -145,13 +138,16 @@ export default function ScheduleWidgetDayEvent(props: Props) {
     </div>
   );
 
+  const onRemoveAttSend = (attKey: ScheduleWidgetAttKey) =>
+    schDayEventsSokiInvocatorClient.removeAttachment(null, dayEventScopeProps, attKey);
+
   return (
     <>
       <StyledScheduleWidgetDayEvent
         className={
           (props.className || '') +
           ' day-event relative' +
-          (props.isPastDay ? '' : isPastEvent ? ' past' : '') +
+          (props.isPastDay ? '' : isPrevEvent ? ' past' : '') +
           (timeToTitle ? ' margin-big-gap-b' : '') +
           (isInGroup ? ' in-group' : '') +
           (isFirstInGroup ? ' first-in-group' : '') +
@@ -185,7 +181,7 @@ export default function ScheduleWidgetDayEvent(props: Props) {
             </span>
             {!isExpandEvent && !!props.event.secret && <IconViewOffSlashStrokeRounded className="color--ko" />}
             <ScheduleWidgetTopicTitle
-              titleBox={box}
+              titleBox={eventType}
               topicBox={props.event}
             />
           </div>
@@ -200,58 +196,15 @@ export default function ScheduleWidgetDayEvent(props: Props) {
           <StyledContent className="no-scrollbar">
             <div className="sign-line" />
             {isRedact ? (
-              <>
-                <EvaSendButton
-                  Icon={props.event.secret ? IconCheckmarkSquare02StrokeRounded : IconSquareStrokeRounded}
-                  confirm={`Событие ${box.title} ${
-                    props.event.secret ? 'больше не только для лидеров' : 'будет только для лидеров'
-                  }?`}
-                  postfix="Событие только для лидеров"
-                  onSend={() => schDayEventsSokiInvocatorClient.toggleIsSecret(null, dayEventScopeProps)}
-                />
-                {props.event.tgInform === 0 || isPastEvent || isCurrentEvent ? (
-                  <EvaSendButton
-                    // scope={selfScope}
-                    // fieldName="techField"
-                    // fieldValue={1}
-                    // cud="U"
-                    disabled={isPastEvent || isCurrentEvent}
-                    Icon={IconNotificationOff01StrokeRounded}
-                    postfix="TG-Напоминания не будет"
-                    // mapExecArgs={mapExecTgInformArgs}
-                    onSend={async () => {}}
-                  />
-                ) : (
-                  <EvaSendButton
-                    // scope={selfScope}
-                    // fieldName="techField"
-                    // fieldValue={0}
-                    // cud="U"
-                    disabled={isPastEvent || isCurrentEvent}
-                    Icon={IconNotification01StrokeRounded}
-                    postfix="TG-Напоминание будет"
-                    // mapExecArgs={mapExecTgInformArgs}
-                    onSend={async () => {}}
-                  />
-                )}
-                <StrongEditableField
-                  isRedact
-                  type="number"
-                  value={'' + eventTm}
-                  postfix=" мин"
-                  title="Продолжительность, мин"
-                  Icon={IconClock01StrokeRounded}
-                  onSend={value => schDayEventsSokiInvocatorClient.setTm(null, dayEventScopeProps, +value)}
-                />
-                <StrongEditableField
-                  isRedact
-                  value={props.event}
-                  fieldKey="topic"
-                  title="Тема"
-                  Icon={IconBookmark03StrokeRounded}
-                  onSend={value => schDayEventsSokiInvocatorClient.setTopic(null, dayEventScopeProps, value)}
-                />
-              </>
+              <DayEventRedactControls
+                isPastEvent={isPrevEvent || isCurrentEvent}
+                eventTopic={props.event.topic}
+                eventTypeTitle={eventType.title}
+                isSecret={props.event.secret}
+                tgInform={props.event.tgInform}
+                dayEventScopeProps={dayEventScopeProps}
+                eventTm={eventTm}
+              />
             ) : (
               !!props.event.secret && (
                 <IconButton
@@ -264,43 +217,59 @@ export default function ScheduleWidgetDayEvent(props: Props) {
             {(isRedact || props.event.dsc) && (
               <StrongEditableField
                 isRedact={isRedact}
-                // scope={selfScope}
-                // fieldName="field"
                 multiline
                 value={props.event}
                 fieldKey="dsc"
                 title="Содержание"
                 textClassName=" "
                 Icon={IconFile02StrokeRounded}
-                onSend={async () => {}}
+                onSend={value => schDayEventsSokiInvocatorClient.setDescription(null, dayEventScopeProps, value)}
               />
             )}
             {isRedact ? (
-              <ScheduleWidgetBindAtts
-                atts={props.event.atts}
-                schedule={props.schedule}
-                forTitle={
-                  <>
-                    <span className="color--7">{box.title}</span> - Вставить вложение
-                  </>
-                }
-                onAddAttSend={(attKey, defaultValue) =>
-                  schDayEventsSokiInvocatorClient.addAttachment(null, dayEventScopeProps, attKey, defaultValue)
-                }
-                onRemoveAttSend={attKey =>
-                  schDayEventsSokiInvocatorClient.removeAttachment(null, dayEventScopeProps, attKey)
-                }
-              />
+              <div>
+                <ScheduleWidgetBindAtts
+                  atts={props.event.atts}
+                  schedule={props.schedule}
+                  forTitle={
+                    <>
+                      <span className="color--7">{eventType.title}</span> - вставить вложение
+                    </>
+                  }
+                  onAddAttSend={(attKey, defaultValue) =>
+                    schDayEventsSokiInvocatorClient.addAttachment(null, dayEventScopeProps, attKey, defaultValue)
+                  }
+                  onRemoveAttSend={onRemoveAttSend}
+                  inAttNodeAdds={(attKey, tatt, refs) => {
+                    return (
+                      !refs.length || (
+                        <ScheduleWidgetBindAttRefKeyButton
+                          refs={refs}
+                          forTitle={<span className="color--7">{eventType.title}</span>}
+                          tatt={tatt}
+                          attKey={attKey}
+                          atts={props.event.atts}
+                          schedule={rights.schedule}
+                          onRemoveAttSend={onRemoveAttSend}
+                          onSend={attRef =>
+                            schDayEventsSokiInvocatorClient.addAttachmentRef(null, dayEventScopeProps, attKey, attRef)
+                          }
+                        />
+                      )
+                    );
+                  }}
+                />
+              </div>
             ) : (
               <>
                 <ScheduleWidgetDayEventAtts
                   dayEventScopeProps={dayEventScopeProps}
-                  typeBox={box}
+                  typeBox={eventType}
                   event={props.event}
                   day={props.day}
                   dayi={props.dayi}
                   schedule={props.schedule}
-                  isPast={isPastEvent || props.isPastDay}
+                  isPrevEvent={isPrevEvent || props.isPastDay}
                 />
                 {rights.isCanReadTitles && rights.myUser && !props.isForceHideRating && (
                   <ScheduleWidgetDayEventRating

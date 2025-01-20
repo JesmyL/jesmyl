@@ -11,7 +11,7 @@ export interface ScheduleWidgetRightTexts<Right> {
 
 export class ScheduleWidgetRightsCtrl<Right extends number = number> {
   texts: ScheduleWidgetRightTexts<Right>[];
-  private enumOrder: Right[];
+  enumOrder: Right[];
 
   constructor(texts: ScheduleWidgetRightTexts<Right>[], enumOrder?: Right[]) {
     if (enumOrder === undefined) enumOrder = texts.map(({ id }) => id);

@@ -1,6 +1,12 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { mylib } from 'front/utils';
-import { IScheduleWidgetUser, LocalSokiAuth, ScheduleUserScopeProps, scheduleWidgetUserRights } from 'shared/api';
+import {
+  IScheduleWidgetUser,
+  IScheduleWidgetUserMi,
+  LocalSokiAuth,
+  ScheduleUserScopeProps,
+  scheduleWidgetUserRights,
+} from 'shared/api';
 import { SchUsersSokiInvocatorMethods } from 'shared/api/invocators/schedules/invocators.model';
 import { smylib } from 'shared/utils';
 import { modifySchedule, scheduleTitleInBrackets } from './general-invocators.base';
@@ -12,20 +18,20 @@ class SchUsersSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchUsersSo
       {
         addUsersByExcel: () => (props, users) =>
           modifySchedule(props, sch => {
-            let lastUserMi = smylib.takeNextMi(sch.ctrl.users);
+            let lastUserMi = smylib.takeNextMi(sch.ctrl.users, IScheduleWidgetUserMi.def);
             users.forEach(user => sch.ctrl.users.push({ ...user, mi: ++lastUserMi }));
           }),
         addMeByLink:
           ({ auth }) =>
           props =>
             modifySchedule(props, sch => {
-              if (auth == null) throw new Error('not authorized');
+              if (auth == null) throw new Error('Необходимо авторизоваться');
               if (sch.ctrl.users.some(user => user.login === auth.login)) throw new Error('user exists');
               const authClone: Partial<LocalSokiAuth> = { ...auth };
               delete authClone.passw;
               delete authClone.level;
 
-              sch.ctrl.users.push({ ...authClone, mi: smylib.takeNextMi(sch.ctrl.users) });
+              sch.ctrl.users.push({ ...authClone, mi: smylib.takeNextMi(sch.ctrl.users, IScheduleWidgetUserMi.def) });
             }),
 
         addUserListUnitMembership: () => (props, value) =>

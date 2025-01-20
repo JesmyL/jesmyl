@@ -1,7 +1,7 @@
 import { scheduleWidgetRegTypeRights } from 'shared/api';
 import useIsExpand from '../../expand/useIsExpand';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
-import { schSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetNewUserRegisterLevel from './NewUserRegisterLevel';
 import ScheduleWidgetRightControlList from './RightControlList';
@@ -25,7 +25,7 @@ export default function ScheduleWidgetRegisterType() {
               className="margin-gap-l"
               isCantEdit={!rights.isCanTotalRedact}
               isDescriptionsCollect
-              onSend={value => schSokiInvocatorClient.setScheduleRegisterType(null, scheduleScopeProps, value)}
+              onSend={value => schGeneralSokiInvocatorClient.setScheduleRegisterType(null, scheduleScopeProps, value)}
             />
             {rights.isCanTotalRedact && <ScheduleWidgetNewUserRegisterLevel />}
           </>

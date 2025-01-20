@@ -9,7 +9,7 @@ import { IconCancel01StrokeRounded } from '../../../complect/the-icon/icons/canc
 import { IconPlusSignStrokeRounded } from '../../../complect/the-icon/icons/plus-sign';
 import KeyboardInput from '../../keyboard/KeyboardInput';
 import IconButton from '../../the-icon/IconButton';
-import { schSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 
 export default function ScheduleCreateWidgetButton() {
   const [title, setTitle] = useState('');
@@ -53,7 +53,7 @@ export default function ScheduleCreateWidgetButton() {
                     return;
                   }
 
-                  return schSokiInvocatorClient.create(null, title);
+                  return schGeneralSokiInvocatorClient.create(null, title);
                 }}
               />
               <IconButton

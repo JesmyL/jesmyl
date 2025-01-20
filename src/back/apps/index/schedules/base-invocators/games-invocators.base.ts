@@ -4,6 +4,7 @@ import { mylib } from 'front/utils';
 import {
   IScheduleWidgetTeamCriteria,
   IScheduleWidgetTeamGame,
+  IScheduleWidgetTeamGameMi,
   makeTwiceKnownName,
   NounPronsType,
   ScheduleGameCriteriaScopeProps,
@@ -28,7 +29,7 @@ class SchGamesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGamesSo
             sch.games ??= { criterias: [], list: [] };
             sch.games.list.push({
               title: `Игра ${sch.games.list.length + 1}`,
-              mi: mylib.takeNextMi(sch.games.list),
+              mi: mylib.takeNextMi(sch.games.list, IScheduleWidgetTeamGameMi.def),
               teams: [],
             });
           }),
