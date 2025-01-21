@@ -34,7 +34,7 @@ export default function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isFor
   const [isIndividualReplacement, setIsIndividualReplacement] = useState(false);
   const { editIcon, isRedact } = useIsRedactArea(true, isIndividualReplacement || null, rights.isCanRedact, true);
   const [listTitle, isExpand, switchIsExpand] = useIsRememberExpand(
-    '',
+    JSON.stringify(dayScopeProps),
     <>
       <IconLeftToRightListBulletStrokeRounded className="color--7" />
       {' Распорядок'}

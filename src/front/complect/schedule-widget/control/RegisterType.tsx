@@ -18,8 +18,6 @@ export default function ScheduleWidgetRegisterType() {
         {isExpand && (
           <>
             <ScheduleWidgetRightControlList
-              // scope={scope}
-              // fieldName="type"
               rightCtrl={scheduleWidgetRegTypeRights}
               R={rights.schedule.ctrl.type}
               className="margin-gap-l"

@@ -29,7 +29,7 @@ export default function ScheduleCheckListAtt({
             <EvaSendButton
               className={'self-start relative z-index:15 color--3 ' + (isDone ? 'fade-05' : '')}
               Icon={isDone ? IconCheckmarkSquare02StrokeRounded : IconSquareStrokeRounded}
-              onSend={async () =>
+              onSend={() =>
                 schDayEventsSokiInvocatorClient.updateCheckListAttachmentValue(
                   null,
                   scheduleDayEventAttachmentScopeProps,
@@ -63,7 +63,7 @@ export default function ScheduleCheckListAtt({
           prefix="Пункт"
           disabled={value.list.some(li => !li[1])}
           disabledReason="Есть пустые пункты"
-          onSend={async () =>
+          onSend={() =>
             schDayEventsSokiInvocatorClient.updateCheckListAttachmentValue(
               null,
               scheduleDayEventAttachmentScopeProps,

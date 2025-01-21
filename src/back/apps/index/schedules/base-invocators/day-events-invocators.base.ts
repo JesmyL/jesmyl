@@ -1,6 +1,7 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import {
   IScheduleWidget,
+  IScheduleWidgetDay,
   IScheduleWidgetDayEvent,
   ScheduleDayEventAttachmentScopeProps,
   ScheduleDayEventScopeProps,
@@ -210,11 +211,14 @@ class SchDayEventsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchDay
     (props: ScheduleDayEventScopeProps, value: Value) =>
       this.modifyEvent(props, event => (event[key] = value));
 
-  private modifyEvent = (props: ScheduleDayEventScopeProps, modifier: (event: IScheduleWidgetDayEvent) => void) =>
-    modifyScheduleDay(day => {
+  private modifyEvent = (
+    props: ScheduleDayEventScopeProps,
+    modifier: (event: IScheduleWidgetDayEvent, day: IScheduleWidgetDay, sch: IScheduleWidget) => void,
+  ) =>
+    modifyScheduleDay((day, sch) => {
       const event = day.list.find(event => event.mi === props.eventMi);
       if (event == null) throw new Error('day event not found');
-      modifier(event);
+      modifier(event, day, sch);
     })(props);
 
   private inEventTypeTtileOfDay = (sch: IScheduleWidget, props: ScheduleDayEventScopeProps) => {
@@ -236,13 +240,22 @@ class SchDayEventsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchDay
       itemi: Itemi,
     ) => void | Required<ScheduleWidgetAppAttCustomizableValue>[ListField],
   ) =>
-    this.modifyEvent(props, event => {
+    this.modifyEvent(props, (event, _, sch) => {
       event.atts ??= {};
       event.atts[props.attKey] ??= {};
 
-      const att = event.atts[props.attKey] as ScheduleWidgetAppAttCustomizableValue;
+      let att = event.atts[props.attKey] as ScheduleWidgetAppAttCustomizableValue;
 
-      if (smylib.isArr(att)) throw new Error('attachment type is anchor');
+      if (smylib.isArr(att)) {
+        if (att[0] < 0) throw new Error('attachment type is anchor');
+        const [dayi, eventMi] = att as unknown as [number, number];
+
+        att = sch.days[dayi].list.find(event => event.mi === eventMi)?.atts?.[
+          props.attKey
+        ] as ScheduleWidgetAppAttCustomizableValue;
+
+        if (att == null) throw new Error('attachment anchor is invalid 84194422067');
+      }
 
       const listFieldValue = listField;
       let itemi = null;

@@ -23,12 +23,10 @@ export default function ScheduleWidgetRoleList() {
       rights.isCanTotalRedact &&
       !rights.schedule.ctrl?.roles.some(role => !role.title) && (
         <EvaSendButton
-          // scope={scope}
-          // fieldName="roles"
           Icon={IconPlusSignStrokeRounded}
           prefix="роль"
           confirm="Добавить новую роль?"
-          onSend={async () => schRolesSokiInvocatorClient.createRole(null, scheduleScopeProps)}
+          onSend={() => schRolesSokiInvocatorClient.createRole(null, scheduleScopeProps)}
         />
       ),
   );

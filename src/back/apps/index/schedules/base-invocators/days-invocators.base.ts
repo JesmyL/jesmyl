@@ -1,6 +1,6 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { mylib } from 'front/utils';
-import { IScheduleWidgetDay, IScheduleWidgetDayEventMi, ScheduleDayScopeProps } from 'shared/api';
+import { IScheduleWidget, IScheduleWidgetDay, IScheduleWidgetDayEventMi, ScheduleDayScopeProps } from 'shared/api';
 import { SchDaysSokiInvocatorMethods } from 'shared/api/invocators/schedules/invocators.model';
 import { makeRegExp, smylib } from 'shared/utils';
 import { modifySchedule, scheduleTitleInBrackets } from './general-invocators.base';
@@ -20,16 +20,28 @@ class SchDaysSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchDaysSoki
           ),
 
         setBeginTime: () =>
-          modifyScheduleDay((day, value) => {
+          modifyScheduleDay((day, _, value) => {
             const wup = +value.replace(makeRegExp('/:/'), '.');
             if (isNaN(wup)) throw new Error(`time ${value} is invalid`);
             day.wup = wup;
           }),
 
-        setTopic: () => modifyScheduleDay((day, value) => (day.topic = value)),
-        setDescription: () => modifyScheduleDay((day, value) => (day.dsc = value)),
+        setEventList: () =>
+          modifyScheduleDay((day, _, events) => {
+            let miniMi = 0;
+
+            day.list = events.map(event => {
+              return {
+                ...event,
+                mi: miniMi++,
+              };
+            });
+          }),
+
+        setTopic: () => modifyScheduleDay((day, _, value) => (day.topic = value)),
+        setDescription: () => modifyScheduleDay((day, _, value) => (day.dsc = value)),
         addEvent: () =>
-          modifyScheduleDay((day, type) =>
+          modifyScheduleDay((day, _, type) =>
             day.list.push({
               type,
               mi: mylib.takeNextMi(day.list, IScheduleWidgetDayEventMi.def),
@@ -37,14 +49,14 @@ class SchDaysSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchDaysSoki
           ),
 
         removeEvent: () =>
-          modifyScheduleDay((day, eventMi) => {
+          modifyScheduleDay((day, _, eventMi) => {
             const eventi = day.list.findIndex(event => event.mi === eventMi);
             if (eventi < 0) throw new Error('event not found');
             day.list.splice(eventi, 1);
           }),
 
         moveEvent: () =>
-          modifyScheduleDay((day, eventMi, beforei) => {
+          modifyScheduleDay((day, _, eventMi, beforei) => {
             const eventi = day.list.findIndex(event => event.mi === eventMi);
             if (eventi < 0) throw new Error('event not found');
 
@@ -55,6 +67,8 @@ class SchDaysSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchDaysSoki
         addDay: sch => `В расписании ${scheduleTitleInBrackets(sch)} добавлен день`,
         setTopic: (sch, props, value) =>
           `В расписании ${scheduleTitleInBrackets(sch)}, в ${props.dayi + 1} дне установлена тема "${value}"`,
+        setEventList: (sch, props) =>
+          `В расписании ${scheduleTitleInBrackets(sch)}, в ${props.dayi + 1} дне установлено расписание из текста`,
         setDescription: (sch, props, value) =>
           `В расписании ${scheduleTitleInBrackets(sch)}, в ${props.dayi + 1} дне установлено описание "${value}"`,
         setBeginTime: (sch, props, value) =>
@@ -73,12 +87,12 @@ class SchDaysSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchDaysSoki
 }
 
 export const modifyScheduleDay =
-  <Values extends unknown[]>(modifier: (day: IScheduleWidgetDay, ...values: Values) => void) =>
+  <Values extends unknown[]>(modifier: (day: IScheduleWidgetDay, sch: IScheduleWidget, ...values: Values) => void) =>
   (props: ScheduleDayScopeProps, ...values: Values) =>
     modifySchedule(props, sch => {
       const day = sch.days[props.dayi];
       if (day == null) throw new Error('day not found');
-      modifier(day, ...values);
+      modifier(day, sch, ...values);
     });
 
 export const schDaysSokiInvocatorBaseServer = new SchDaysSokiInvocatorBaseServer();

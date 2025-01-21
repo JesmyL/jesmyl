@@ -45,6 +45,7 @@ class SchDaysSokiInvocatorClient extends SokiInvocatorClient<SchDaysSokiInvocato
       addEvent: true,
       removeEvent: true,
       moveEvent: true,
+      setEventList: true,
     });
   }
 }
@@ -87,6 +88,7 @@ class SchEventTypesSokiInvocatorClient extends SokiInvocatorClient<SchEventTypes
       bindAttImagine: true,
       removeAttImagine: true,
       setAttImaginePeriod: true,
+      putMany: true,
     });
   }
 }

@@ -46,6 +46,8 @@ class SchEventTypesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchEv
             if (type.atts == null) return;
             type.atts[props.attKey][0] = value;
           }),
+
+        putMany: () => (props, typeList) => modifySchedule(props, sch => (sch.types = sch.types.concat(typeList))),
       },
       {
         create: (sch, title, tm) =>
@@ -71,6 +73,10 @@ class SchEventTypesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchEv
           `В расписании ${scheduleTitleInBrackets(sch)} в типе событий ` +
           `${sch.types[props.typei]?.title ?? '?'} в обзорном вложении ${props.attKey} ` +
           `установлен период обзроа - ${attTranslatorTypes.find(s => s.id === attTranslatorType)?.title ?? '??'}`,
+
+        putMany: (sch, _, tatts) =>
+          `В расписание ${scheduleTitleInBrackets(sch)} добавлено несколько типов событий:\n` +
+          `${tatts.map(({ title, tm }) => `${title} (${tm} мин.)`).join(';\n')}`,
       },
     );
   }

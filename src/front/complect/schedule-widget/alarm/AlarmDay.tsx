@@ -32,7 +32,6 @@ export default function ScheduleAlarmDay(props: ScheduleWidgetDayProps) {
         day={props.day}
         dayi={props.dayi}
         schedule={props.schedule}
-        // scope={scope}
         scheduleScopeProps={scheduleScopeProps}
         isForceOpen={props.isForceOpen}
       />

@@ -1,6 +1,7 @@
 import { AttTranslatorType } from 'back/apps/index/schedules/attTranslatorType';
 import {
   IScheduleWidget,
+  IScheduleWidgetDayEvent,
   IScheduleWidgetDayEventMi,
   IScheduleWidgetExportableTeam,
   IScheduleWidgetUserMi,
@@ -116,6 +117,7 @@ export type SchGamesSokiInvocatorMethods = {
 export type SchDaysSokiInvocatorMethods = {
   addDay: (props: ScheduleScopeProps) => IScheduleWidget;
   setBeginTime: (props: ScheduleDayScopeProps, value: string) => IScheduleWidget;
+  setEventList: (props: ScheduleDayScopeProps, list: OmitOwn<IScheduleWidgetDayEvent, 'mi'>[]) => IScheduleWidget;
   setTopic: (props: ScheduleDayScopeProps, value: string) => IScheduleWidget;
   setDescription: (props: ScheduleDayScopeProps, value: string) => IScheduleWidget;
   addEvent: (props: ScheduleDayScopeProps, typei: number) => IScheduleWidget;
@@ -225,6 +227,7 @@ export type SchDayEventsSokiInvocatorMethods = {
 
 export type SchEventTypesSokiInvocatorMethods = {
   create: (props: ScheduleScopeProps, title: string, tm: number) => IScheduleWidget;
+  putMany: (props: ScheduleScopeProps, tatts: { title: string; tm: number }[]) => IScheduleWidget;
   setTitle: (props: ScheduleEventTypeScopeProps, value: string, prevTitle: string) => IScheduleWidget;
   setTm: (props: ScheduleEventTypeScopeProps, tm: number) => IScheduleWidget;
   bindAttImagine: (

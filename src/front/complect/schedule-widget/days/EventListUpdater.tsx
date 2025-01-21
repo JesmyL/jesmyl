@@ -10,6 +10,7 @@ import { emptyFunc, itNNull, retNull } from 'shared/utils';
 import styled from 'styled-components';
 import KeyboardInput from '../../keyboard/KeyboardInput';
 import StrongButton from '../../strong-control/StrongButton';
+import { schDaysSokiInvocatorClient, schEventTypesSokiInvocatorClient } from '../invocators/invocators.methods';
 import ScheduleWidgetDayEvent from './events/DayEvent';
 
 interface Props {
@@ -48,7 +49,7 @@ export const ScheduleWidgetEventListUpdater = ({
           return;
         }
 
-        const { dayWup, list, newTatts } = ScheduleWidgetCleans.preparedText2DayList(text, schedule);
+        const { dayWup, list, newTypes } = ScheduleWidgetCleans.preparedText2DayList(text, schedule);
 
         const theDay = {
           ...day,
@@ -64,10 +65,10 @@ export const ScheduleWidgetEventListUpdater = ({
 
         setNode(
           <div className="margin-gap-t">
-            {!newTatts.length || (
+            {!newTypes.length || (
               <>
                 <h2>Новые события</h2>
-                {newTatts.map(({ title, tm }) => {
+                {newTypes.map(({ title, tm }) => {
                   return (
                     <div key={title}>
                       {title} <span className="color--7">{tm}м.</span>
@@ -76,21 +77,18 @@ export const ScheduleWidgetEventListUpdater = ({
                 })}
 
                 <StrongButton
-                  fieldName="types"
-                  cud="U"
                   title="Отправить только новые события"
-                  fieldValue={newTatts}
+                  onSend={async () => schEventTypesSokiInvocatorClient.putMany(null, scheduleScopeProps, newTypes)}
                 />
               </>
             )}
 
             {day.wup !== dayWup && (
               <StrongButton
-                fieldName="wup"
-                cud="U"
-                // scope={dayScope}
                 title={`Установить время начала дня: ${ScheduleWidgetCleans.computeDayWakeUpTime(dayWup, 'string')}`}
-                fieldValue={dayWup}
+                onSend={async () =>
+                  schDaysSokiInvocatorClient.setBeginTime(null, { ...scheduleScopeProps, dayi }, '' + dayWup)
+                }
               />
             )}
 
@@ -130,19 +128,18 @@ export const ScheduleWidgetEventListUpdater = ({
             })}
 
             <StrongButton
-              scope={dayScope}
-              cud="U"
-              fieldName="updateDayEventList"
-              fieldValue={list.filter(itNNull)}
               disabled={isShowPeriodsNotTs}
               title="Отправить расписание"
               onSuccess={() => onClose(false)}
+              onSend={() =>
+                schDaysSokiInvocatorClient.setEventList(null, { ...scheduleScopeProps, dayi }, list.filter(itNNull))
+              }
             />
           </div>,
         );
       }, 300)
       .effect();
-  }, [day, dayScope, dayScopeProps, dayi, onClose, schedule, value]);
+  }, [day, dayScope, dayScopeProps, dayi, onClose, schedule, scheduleScopeProps, value]);
 
   return (
     <div className="margin-giant-gap-t">

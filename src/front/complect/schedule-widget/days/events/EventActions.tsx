@@ -73,9 +73,6 @@ export function ScheduleWidgetDayEventEventActions({ schedule, event, onEventCut
                 typeBox={schedule.types[event.type]}
                 typei={event.type}
                 isRedact
-                onItemSelectSend={async () => {
-                  console.log('qeqwe23123123eqwrwfvb');
-                }}
               />
             ) : (
               <>Шаблон не найден</>

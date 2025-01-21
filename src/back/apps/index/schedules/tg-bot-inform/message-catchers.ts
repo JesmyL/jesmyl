@@ -142,14 +142,14 @@ jesmylTgBot.catchCallbackQuery(async (query, bot, answer) => {
 
   if (!schedule.days[dayi]?.list.length) return ret('Для обновления расписания список событий должен быть пустым');
 
-  const { dayWup, list, newTatts } = ScheduleWidgetCleans.preparedText2DayList(query.message.text, schedule);
+  const { dayWup, list, newTypes } = ScheduleWidgetCleans.preparedText2DayList(query.message.text, schedule);
 
   const addAttTypesExecs = [
     {
       action: 'addAttTypes',
       args: {
         schw: schedule.w,
-        value: newTatts,
+        value: newTypes,
       },
     },
   ] satisfies ExecutionDict[];
