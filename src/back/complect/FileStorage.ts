@@ -9,7 +9,7 @@ export class FileStore<Value> {
   private modifiedTimeStampDict?: Modifieds;
   private filePath = '';
 
-  constructor(path: string, defaultValue: Value) {
+  constructor(path: `/${string}`, defaultValue: Value) {
     this.filePath = `${__dirname}${path}`;
     this.value = this.readValue(defaultValue);
     if (registeredPaths.has(path)) throw new Error(`The path ${path} was registered again`);
