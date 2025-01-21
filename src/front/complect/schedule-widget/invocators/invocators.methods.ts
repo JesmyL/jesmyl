@@ -28,6 +28,7 @@ class SchGeneralSokiInvocatorClient extends SokiInvocatorClient<SchGeneralSokiIn
       setTgChatRequisites: true,
       toggleIsTgInform: true,
       setTgInformTime: true,
+      setIsTgInformMe: true,
     });
   }
 }

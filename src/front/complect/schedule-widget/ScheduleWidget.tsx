@@ -37,7 +37,7 @@ import { schLinkAction } from './links';
 import ScheduleWidgetLists from './lists/Lists';
 import { ScheduleWidgetWatchLiveTranslationButton } from './live-translations/WatchLiveButton';
 import { ScheduleWidgetMyUserTgInform } from './tg-inform/UserTgInform';
-import { ScheduleWidgetRights, takeScheduleStrongScopeMaker, useScheduleWidgetRights } from './useScheduleWidget';
+import { ScheduleWidgetRights, useScheduleWidgetRights } from './useScheduleWidget';
 
 const msInMin = mylib.howMs.inMin;
 
@@ -48,7 +48,6 @@ export default function ScheduleWidget({
   schedule?: IScheduleWidget;
   rights?: ScheduleWidgetRights;
 }) {
-  const selfScope = takeScheduleStrongScopeMaker(schedule?.w ?? IScheduleWidgetWid.def);
   const auth = useAuth();
   const rights = useScheduleWidgetRights(schedule, topRights);
   const scheduleScopeProps: ScheduleScopeProps = useMemo(
@@ -208,12 +207,11 @@ export default function ScheduleWidget({
                 {rights.isCanReadTitles && (
                   <>
                     {rights.myUser && <ScheduleWidgetControl />}
-                    <ScheduleWidgetLists scheduleScope={selfScope} />
+                    <ScheduleWidgetLists />
                   </>
                 )}
 
                 <ScheduleWidgetMyUserTgInform
-                  scope={selfScope}
                   schedule={schedule}
                   scheduleScopeProps={scheduleScopeProps}
                 />

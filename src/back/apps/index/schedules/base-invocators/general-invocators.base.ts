@@ -73,6 +73,17 @@ class SchGeneralSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGener
         setTgChatRequisites: () => this.updateScheduleValue('tgChatReqs'),
         setTgInformTime: () => this.updateScheduleValue('tgInformTime'),
 
+        setIsTgInformMe:
+          ({ auth }) =>
+          (props, isNotInform) =>
+            modifySchedule(props, sch => {
+              if (auth == null) throw new Error('Не авторизован');
+              const login = auth.login;
+              const user = sch.ctrl.users.find(user => user.login === login);
+              if (user == null) throw new Error('user not found');
+              user.tgInform = isNotInform;
+            }),
+
         toggleIsTgInform: () => props =>
           modifySchedule(props, sch => (sch.tgInform = sch.tgInform === 0 ? undefined : 0)),
 
@@ -156,6 +167,12 @@ class SchGeneralSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGener
           `В расписании ${scheduleTitleInBrackets(sch)} TG-напоминания ${
             sch.tgInform === 0 ? 'отключены' : 'включены'
           }`,
+
+        setIsTgInformMe:
+          (sch, _, isNotInform) =>
+          ({ auth }) =>
+            `В расписании ${scheduleTitleInBrackets(sch)} участник ${auth?.fio ?? '?'} (${auth?.nick ?? '?'}) ` +
+            `${isNotInform ? 'отключил' : 'включил'} TG-напоминания`,
       },
     );
   }

@@ -12,7 +12,7 @@ import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import { ScheduleWidgetListCategory } from './Category';
 
-export default function ScheduleWidgetLists({ scheduleScope }: { scheduleScope: string }) {
+export default function ScheduleWidgetLists() {
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
   const [listsTitle, isExpand] = useIsExpand(
@@ -45,7 +45,7 @@ export default function ScheduleWidgetLists({ scheduleScope }: { scheduleScope: 
             );
           })}
         {rights.isCanRedact && <ScheduleWidgetRoleList />}
-        {rights.isCanRedact && <ScheduleWidgetTeamGames scope={scheduleScope} />}
+        {rights.isCanRedact && <ScheduleWidgetTeamGames />}
       </>
     );
   });

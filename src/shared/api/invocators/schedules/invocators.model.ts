@@ -43,6 +43,8 @@ export type SchGeneralSokiInvocatorMethods = {
   setTgChatRequisites: Callback<string>;
   toggleIsTgInform: Callback<void>;
   setTgInformTime: Callback<number>;
+
+  setIsTgInformMe: (props: ScheduleScopeProps, type: num) => IScheduleWidget;
 };
 
 export type SchUsersSokiInvocatorMethods = {
