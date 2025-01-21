@@ -455,6 +455,7 @@ export default function ScheduleKeyValueListAtt({
                       )}
                     {mylib.isNum(key) && (
                       <ScheduleKeyValueListAttArrayItemKeyChange
+                        dayEventAttScopeProps={dayEventAttScopeProps}
                         theKey={key}
                         users={exclusiveUsers}
                         lists={exclusiveLists}

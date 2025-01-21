@@ -2,8 +2,10 @@ import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import {
   IScheduleWidget,
   IScheduleWidgetDayEvent,
+  ScheduleDayEventAttachmentScopeProps,
   ScheduleDayEventScopeProps,
   ScheduleWidgetAppAttCustomizableValue,
+  ScheduleWidgetAppAttCustomizableValueItem,
 } from 'shared/api';
 import { SchDayEventsSokiInvocatorMethods } from 'shared/api/invocators/schedules/invocators.model';
 import { smylib } from 'shared/utils';
@@ -45,136 +47,67 @@ class SchDayEventsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchDay
             if (!smylib.keys(event.atts).length) delete event.atts;
           }),
 
+        updateCheckListAttachmentValue: () => (props, itemMi, key, value) =>
+          this.modifyKeyValueAttachmentValueList(props, null, 'list', values => {
+            if (itemMi == null) {
+              if (key == null || value == null) return;
+              values.push([key, value, smylib.takeNextMi(values, 0, '2')]);
+              return;
+            }
+
+            const item = values.find(([, , mi]) => mi === itemMi);
+            if (item == null) throw new Error('item not found 3187614431009');
+
+            if (key != null) item[0] = key;
+            if (value != null) item[1] = value;
+          }),
+
         putKeyValueAttachment: () => (props, key, value) =>
-          this.modifyEvent(props, event => {
-            event.atts ??= {};
-            event.atts[props.attKey] ??= {};
-
-            const att = event.atts[props.attKey] as ScheduleWidgetAppAttCustomizableValue;
-
-            if (smylib.isArr(att)) throw new Error('attachment type is invalid');
-
-            att.values ??= [];
+          this.modifyKeyValueAttachmentValueList(props, null, 'values', values => {
             if (value === null) {
-              const index = att.values.findIndex(([, , mi]) => mi === key);
+              const index = values.findIndex(([, , mi]) => mi === key);
               if (index < 0) throw new Error('value not found');
-              att.values.splice(index, 1);
-            } else att.values.push([key, value, smylib.takeNextMi(att.values, 0, '2')]);
+              values.splice(index, 1);
+            } else values.push([key, value, smylib.takeNextMi(values, 0, '2')]);
           }),
 
         setKeyValueAttachmentValue: () => (props, itemMi, value) =>
-          this.modifyEvent(props, event => {
-            event.atts ??= {};
-            event.atts[props.attKey] ??= {};
-
-            const att = event.atts[props.attKey] as ScheduleWidgetAppAttCustomizableValue;
-
-            if (smylib.isArr(att)) throw new Error('attachment type is invalid');
-
-            att.values ??= [];
-            if (value === null) {
-              const index = att.values.findIndex(([, , mi]) => mi === itemMi);
-              if (index < 0) throw new Error('value not found 7373771625152');
-              att.values.splice(index, 1);
-            } else {
-              const item = att.values.find(([, , mi]) => mi === itemMi);
-              if (item == null) throw new Error('value not found 130928347');
-              item[1] = value;
-            }
+          this.modifyKeyValueAttachmentValueList(props, itemMi, 'values', (values, itemi) => {
+            if (value === null) values.splice(itemi, 1);
+            else values[itemi][1] = value;
           }),
 
         setKeyValueAttachmentKey: () => (props, itemMi, value) =>
-          this.modifyEvent(props, event => {
-            event.atts ??= {};
-            event.atts[props.attKey] ??= {};
+          this.modifyKeyValueAttachmentValueList(props, itemMi, 'values', (values, itemi) => {
+            values[itemi][0] = value;
+          }),
 
-            const att = event.atts[props.attKey] as ScheduleWidgetAppAttCustomizableValue;
-
-            if (smylib.isArr(att)) throw new Error('attachment type is invalid');
-
-            att.values ??= [];
-            if (value === null) {
-              const index = att.values.findIndex(([, , mi]) => mi === itemMi);
-              if (index < 0) throw new Error('value not found 7373771625152');
-              att.values.splice(index, 1);
-            } else {
-              const item = att.values.find(([, , mi]) => mi === itemMi);
-              if (item == null) throw new Error('value not found 130928347');
-              item[0] = value;
-            }
+        changeKeyValueAttachmentKey: () => (props, key, value) =>
+          this.modifyKeyValueAttachmentValueList(props, null, 'values', values => {
+            const item = values.find(item => item[0] === key);
+            if (item == null) throw new Error('item not found');
+            item[0] = value;
           }),
 
         addKeyValueAttachmentListItem: () => (props, itemMi, value) =>
-          this.modifyEvent(props, event => {
-            event.atts ??= {};
-            event.atts[props.attKey] ??= {};
-
-            const att = event.atts[props.attKey] as ScheduleWidgetAppAttCustomizableValue;
-
-            if (smylib.isArr(att)) throw new Error('attachment type is invalid');
-
-            att.values ??= [];
-            const item = att.values.find(([, , mi]) => mi === itemMi);
-            if (item == null) throw new Error('att value list item not found');
-            const [, itemValue] = item;
-            if (!smylib.isArr(itemValue)) throw new Error('att value list item not array type');
-
+          this.modifyKeyValueAttachmentListValue(props, itemMi, itemValue => {
             itemValue.push(value);
           }),
 
         setKeyValueAttachmentListItemValue: () => (props, itemMi, valuei, value) =>
-          this.modifyEvent(props, event => {
-            event.atts ??= {};
-            event.atts[props.attKey] ??= {};
-
-            const att = event.atts[props.attKey] as ScheduleWidgetAppAttCustomizableValue;
-
-            if (smylib.isArr(att)) throw new Error('attachment type is invalid');
-
-            att.values ??= [];
-            const item = att.values.find(([, , mi]) => mi === itemMi);
-            if (item == null) throw new Error('att value list item not found');
-            const [, itemValue] = item;
-            if (!smylib.isArr(itemValue)) throw new Error('att value list item not array type');
-
+          this.modifyKeyValueAttachmentListValue(props, itemMi, itemValue => {
             itemValue[valuei] = value;
           }),
 
         removeKeyValueAttachmentListItemValue: () => (props, itemMi, value) =>
-          this.modifyEvent(props, event => {
-            event.atts ??= {};
-            event.atts[props.attKey] ??= {};
-
-            const att = event.atts[props.attKey] as ScheduleWidgetAppAttCustomizableValue;
-
-            if (smylib.isArr(att)) throw new Error('attachment type is invalid');
-
-            att.values ??= [];
-            const item = att.values.find(([, , mi]) => mi === itemMi);
-            if (item == null) throw new Error('att value list item not found');
-            const [, itemValue] = item;
-            if (!smylib.isArr(itemValue)) throw new Error('att value list item not array type');
-
+          this.modifyKeyValueAttachmentListValue(props, itemMi, itemValue => {
             const index = itemValue.findIndex(val => val === value);
             if (index < 0) throw new Error('value not found 238716818');
             itemValue.splice(index, 1);
           }),
 
         moveKeyValueAttachmentListItem: () => (props, itemMi, value) =>
-          this.modifyEvent(props, event => {
-            event.atts ??= {};
-            event.atts[props.attKey] ??= {};
-
-            const att = event.atts[props.attKey] as ScheduleWidgetAppAttCustomizableValue;
-
-            if (smylib.isArr(att)) throw new Error('attachment type is invalid');
-
-            att.values ??= [];
-            const item = att.values.find(([, , mi]) => mi === itemMi);
-            if (item == null) throw new Error('att value list item not found');
-            const [, itemValue] = item;
-            if (!smylib.isArr(itemValue)) throw new Error('att value list item not array type');
-
+          this.modifyKeyValueAttachmentListValue(props, itemMi, (itemValue, item) => {
             const index = itemValue.findIndex(val => val === value);
             if (index < 0) throw new Error('value not found 238716818');
 
@@ -182,19 +115,8 @@ class SchDayEventsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchDay
           }),
 
         moveKeyValueAttachment: () => (props, itemMi) =>
-          this.modifyEvent(props, event => {
-            event.atts ??= {};
-            event.atts[props.attKey] ??= {};
-
-            const att = event.atts[props.attKey] as ScheduleWidgetAppAttCustomizableValue;
-
-            if (smylib.isArr(att)) throw new Error('attachment type is invalid');
-
-            att.values ??= [];
-            const index = att.values.findIndex(([, , mi]) => mi === itemMi);
-            if (index < 0) throw new Error('value not found 019988172');
-
-            att.values = smylib.withInsertedBeforei(att.values, index === 0 ? 2 : index - 1, index);
+          this.modifyKeyValueAttachmentValueList(props, itemMi, 'values', (values, itemi) => {
+            return smylib.withInsertedBeforei(values, itemi === 0 ? 2 : itemi - 1, itemi);
           }),
 
         setRatePoint: () => (props, userMi, ratePoint) =>
@@ -227,9 +149,14 @@ class SchDayEventsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchDay
 
         addAttachment: (sch, props, attKey) => `${this.inEventTypeTtileOfDay(sch, props)} добавлено вложение ${attKey}`,
 
+        updateCheckListAttachmentValue: (sch, props, itemMi, key, value) =>
+          `${this.inEventTypeTtileOfDay(sch, props)} ` +
+          `${value === null ? 'удалён выполняемый пункт из вложения' : 'добавлен выполняемый пункт во вложение'} ` +
+          `${props.attTitle ?? props.attKey} - ${JSON.stringify([key, value, itemMi])}`,
+
         putKeyValueAttachment: (sch, props, key, value) =>
-          `${this.inEventTypeTtileOfDay(sch, props)} добавлено списочное значение во вложение ` +
-          `${props.attTitle ?? props.attKey} - ${JSON.stringify([key, value])}`,
+          `${this.inEventTypeTtileOfDay(sch, props)} ${value === null ? 'удалено' : 'добавлено'} ` +
+          `списочное значение во вложение ${props.attTitle ?? props.attKey} - ${JSON.stringify([key, value])}`,
 
         addKeyValueAttachmentListItem: (sch, props, key, value) =>
           `${this.inEventTypeTtileOfDay(sch, props)} ${value === null ? 'удалено' : 'добавлено'} ` +
@@ -244,8 +171,12 @@ class SchDayEventsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchDay
           `списочное значение во вложении ${props.attTitle ?? props.attKey} - ${JSON.stringify(value)}`,
 
         setKeyValueAttachmentKey: (sch, props, _, value) =>
-          `${this.inEventTypeTtileOfDay(sch, props)} изменено ` +
-          `списочное значение во вложении ${props.attTitle ?? props.attKey} - ${JSON.stringify(value)}`,
+          `${this.inEventTypeTtileOfDay(sch, props)} установлен ключ ` +
+          `списочного значения во вложении ${props.attTitle ?? props.attKey} - ${JSON.stringify(value)}`,
+
+        changeKeyValueAttachmentKey: (sch, props, key, value) =>
+          `${this.inEventTypeTtileOfDay(sch, props)} изменён ключ ` +
+          `списочного значения во вложении ${props.attTitle ?? props.attKey} - ${JSON.stringify([key, value])}`,
 
         moveKeyValueAttachment: (sch, props) =>
           `${this.inEventTypeTtileOfDay(sch, props)} изменён ` +
@@ -294,6 +225,50 @@ class SchDayEventsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchDay
       `В расписании ${scheduleTitleInBrackets(sch)} в событии ` +
       `"${sch.types[eventTypei]?.title}" ${props.dayi + 1}-го дня`
     );
+  };
+
+  private modifyKeyValueAttachmentValueList = <Itemi extends number | null, ListField extends 'values' | 'list'>(
+    props: ScheduleDayEventAttachmentScopeProps,
+    itemMi: Itemi,
+    listField: ListField,
+    modifier: (
+      values: Required<ScheduleWidgetAppAttCustomizableValue>[ListField],
+      itemi: Itemi,
+    ) => void | Required<ScheduleWidgetAppAttCustomizableValue>[ListField],
+  ) =>
+    this.modifyEvent(props, event => {
+      event.atts ??= {};
+      event.atts[props.attKey] ??= {};
+
+      const att = event.atts[props.attKey] as ScheduleWidgetAppAttCustomizableValue;
+
+      if (smylib.isArr(att)) throw new Error('attachment type is anchor');
+
+      const listFieldValue = listField;
+      let itemi = null;
+      att[listFieldValue] ??= [] as never;
+
+      if (itemMi !== null) {
+        itemi = att[listFieldValue].findIndex(([, , mi]) => mi === itemMi);
+        if (itemi < 0) throw new Error('value not found 019988172');
+      }
+
+      const newList = modifier(att[listFieldValue] as never, itemi as Itemi);
+
+      if (newList !== undefined) att[listFieldValue] = newList;
+      if (!att[listFieldValue].length) delete att[listFieldValue];
+    });
+
+  private modifyKeyValueAttachmentListValue = (
+    props: ScheduleDayEventAttachmentScopeProps,
+    itemMi: number,
+    modifier: (listItem: (string | number)[], item: ScheduleWidgetAppAttCustomizableValueItem) => void,
+  ) => {
+    return this.modifyKeyValueAttachmentValueList(props, itemMi, 'values', (values, itemi) => {
+      const [, itemValue] = values[itemi];
+      if (!smylib.isArr(itemValue)) throw new Error('att value list item not array type');
+      modifier(itemValue, values[itemi]);
+    });
   };
 }
 export const schDayEventsSokiInvocatorBaseServer = new SchDayEventsSokiInvocatorBaseServer();

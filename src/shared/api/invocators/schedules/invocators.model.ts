@@ -147,6 +147,13 @@ export type SchDayEventsSokiInvocatorMethods = {
 
   removeAttachment: (props: ScheduleDayEventScopeProps, attKey: ScheduleWidgetAttKey) => IScheduleWidget;
 
+  updateCheckListAttachmentValue: (
+    props: ScheduleDayEventAttachmentScopeProps,
+    itemMi: number | null,
+    key: num | null,
+    value: string | null,
+  ) => IScheduleWidget;
+
   putKeyValueAttachment: (
     props: ScheduleDayEventAttachmentScopeProps,
     key: number | string | boolean,
@@ -156,6 +163,12 @@ export type SchDayEventsSokiInvocatorMethods = {
   setKeyValueAttachmentKey: (
     props: ScheduleDayEventAttachmentScopeProps,
     itemMi: number,
+    value: string | number | boolean,
+  ) => IScheduleWidget;
+
+  changeKeyValueAttachmentKey: (
+    props: ScheduleDayEventAttachmentScopeProps,
+    key: string | number | boolean,
     value: string | number | boolean,
   ) => IScheduleWidget;
 

@@ -148,8 +148,11 @@ export type ScheduleWidgetAppAttCustomizableValueItem = [
   number,
 ];
 
+export type ScheduleWidgetAppAttCheckListValueItem = [num, string, number];
+
 export interface ScheduleWidgetAppAttCustomizableValue {
   values?: ScheduleWidgetAppAttCustomizableValueItem[];
+  list?: ScheduleWidgetAppAttCheckListValueItem[];
 }
 
 export interface IScheduleWidgetTeamCriteria {
