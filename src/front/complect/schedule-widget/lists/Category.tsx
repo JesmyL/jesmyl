@@ -12,7 +12,7 @@ import TheIcon from '../../the-icon/TheIcon';
 import ScheduleWidgetIconChange from '../complect/IconChange';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
-import { takeStrongScopeMaker, useScheduleWidgetRightsContext } from '../useScheduleWidget';
+import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetListUnit from './Unit';
 
 const reg = makeRegExp('/([а-яё]?[йуеъыаоэяиью]+[а-яё]).+/i');
@@ -20,7 +20,6 @@ const cutTitle = (title: string) => title.replace(reg, '$1.');
 
 export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidgetListCat; cati: number }) {
   const rights = useScheduleWidgetRightsContext();
-  const catScopePostfix = takeStrongScopeMaker('', ' cati/', cati);
   const scheduleScopeProps = useScheduleScopePropsContext();
   const catScopeProps = useMemo(() => ({ ...scheduleScopeProps, cati }), [cati, scheduleScopeProps]);
   const title = <>{cat.title || <span className="text-italic">Список</span>}</>;
@@ -102,7 +101,6 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
                     cat={cat}
                     cati={cati}
                     unit={unit}
-                    catScopePostfix={catScopePostfix}
                     shortTitles={shortTitles}
                   />
                 );

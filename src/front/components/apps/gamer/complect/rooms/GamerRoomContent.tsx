@@ -7,7 +7,7 @@ import IconButton from '../../../../../complect/the-icon/IconButton';
 import { IconCancel01StrokeRounded } from '../../../../../complect/the-icon/icons/cancel-01';
 import { IconDelete01StrokeRounded } from '../../../../../complect/the-icon/icons/delete-01';
 import { IconLinkBackwardStrokeRounded } from '../../../../../complect/the-icon/icons/link-backward';
-import { useAuth } from '../../../../index/molecules';
+import { useAuth } from '../../../../index/atoms';
 import { GamerGameName, GamerNavData, GamerRoom } from '../../Gamer.model';
 import useGamerNav, { GamerRoomGameSkelet } from '../../useGamerNav';
 import GamerRoomMemberList from '../GamerRoomMemberList';

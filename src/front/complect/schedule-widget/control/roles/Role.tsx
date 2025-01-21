@@ -14,7 +14,7 @@ import { IconSchoolReportCardStrokeRounded } from '../../../../complect/the-icon
 import { IconUserStrokeRounded } from '../../../../complect/the-icon/icons/user';
 import { IconUserAdd01StrokeRounded } from '../../../../complect/the-icon/icons/user-add-01';
 import { IconUserRemove01StrokeRounded } from '../../../../complect/the-icon/icons/user-remove-01';
-import { useAuth } from '../../../../components/index/molecules';
+import { useAuth } from '../../../../components/index/atoms';
 import StrongEditableField from '../../../strong-control/field/StrongEditableField';
 import IconButton from '../../../the-icon/IconButton';
 import useIsRedactArea from '../../../useIsRedactArea';

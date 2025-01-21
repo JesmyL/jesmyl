@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { IndexSchWTranslationLiveDataValue } from '../../../../components/index/Index.model';
-import { useAuth } from '../../../../components/index/molecules';
+import { useAuth } from '../../../../components/index/atoms';
 import { soki } from '../../../../soki';
+import { useAtomSet } from '../../../atoms';
 import { NewWindow } from '../../../tags/NewWindow';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import { ScheduleWidgetMarkdownTranslationWindow } from './Window';
 import { markdownTranslationAtom } from './atoms';
-import { useAtomSet } from '../../../atoms';
 
 interface Props {
   md?: string;

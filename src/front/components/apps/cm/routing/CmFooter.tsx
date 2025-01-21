@@ -4,7 +4,7 @@ import AppFooterItem from '../../../../app/AppFooterItem';
 import { iconPackOfEdit02 } from '../../../../complect/the-icon/icons/edit-02';
 import { iconPackOfLeftToRightListBullet } from '../../../../complect/the-icon/icons/left-to-right-list-bullet';
 import { iconPackOfPlaylist01 } from '../../../../complect/the-icon/icons/playlist-01';
-import { useAuth } from '../../../index/molecules';
+import { useAuth } from '../../../index/atoms';
 import { useActualCcomw } from '../col/com/useCcom';
 
 export const CmFooter = () => {

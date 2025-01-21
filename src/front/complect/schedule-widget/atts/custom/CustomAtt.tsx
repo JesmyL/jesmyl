@@ -22,7 +22,6 @@ import Modal from '../../../modal/Modal/Modal';
 import { ModalBody } from '../../../modal/Modal/ModalBody';
 import { ModalHeader } from '../../../modal/Modal/ModalHeader';
 import StrongEditableField from '../../../strong-control/field/StrongEditableField';
-import StrongClipboardPicker from '../../../strong-control/field/clipboard/Picker';
 import IconButton from '../../../the-icon/IconButton';
 import { theIconFromPack } from '../../../the-icon/TheIcon';
 import { TheIconType } from '../../../the-icon/model';
@@ -398,7 +397,6 @@ export default function ScheduleWidgetCustomAtt(props: {
               <span>
                 <span className="color--7">{props.tatt.title} </span>- Редактирование вложения
               </span>
-              <StrongClipboardPicker />
             </span>
           </ModalHeader>
           <ModalBody>

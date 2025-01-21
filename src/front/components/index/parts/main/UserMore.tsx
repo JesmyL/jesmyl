@@ -1,7 +1,7 @@
 import { BottomPopupItem } from '../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
 import { useConfirm } from '../../../../complect/modal/confirm/useConfirm';
 import { IconUserStrokeRounded } from '../../../../complect/the-icon/icons/user';
-import { useSetAuth } from '../../molecules';
+import { useSetAuth } from '../../atoms';
 
 export const UserMore = ({ onClose }: { onClose: (isOpen: false) => void }) => {
   const setAuth = useSetAuth();

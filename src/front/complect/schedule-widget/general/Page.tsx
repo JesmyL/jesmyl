@@ -1,10 +1,9 @@
 import SendButton from 'front/complect/sends/send-button/SendButton';
 import { Link, Route, Routes } from 'react-router-dom';
+import { useAuth, useIndexSchedules } from '../../../components/index/atoms';
 import { IndexScheduleWidgetTranslations } from '../../../components/index/complect/translations/LiveTranslations';
-import { useAuth, useIndexSchedules } from '../../../components/index/molecules';
 import useConnectionState from '../../../components/index/useConnectionState';
 import PhaseContainerConfigurer from '../../phase-container/PhaseContainerConfigurer';
-import StrongClipboardPicker from '../../strong-control/field/clipboard/Picker';
 import { IconComputerStrokeRounded } from '../../the-icon/icons/computer';
 import ScheduleWidget from '../ScheduleWidget';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
@@ -36,7 +35,6 @@ export default function ScheduleWidgetPage() {
                 <Link to="tran">
                   <IconComputerStrokeRounded className="margin-gap-v" />
                 </Link>
-                <StrongClipboardPicker />
               </span>
             }
             content={

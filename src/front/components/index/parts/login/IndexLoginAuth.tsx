@@ -11,7 +11,7 @@ import LoadIndicatedContent from '../../../../complect/load-indicated-content/Lo
 import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
 import { soki } from '../../../../soki';
 import { AuthMode, ClientAuthorizationData, ClientRegisterData, ServerAuthorizeInSystem } from '../../Index.model';
-import { removePullRequisites, useSetAuth } from '../../molecules';
+import { useSetAuth } from '../../atoms';
 import useConnectionState from '../../useConnectionState';
 import { useAuthErrors } from './atoms';
 
@@ -157,7 +157,6 @@ export default function IndexLoginAuth() {
                   ({ authorization }) => {
                     if (authorization && authorization.ok !== false) {
                       setIsInProscess(1);
-                      removePullRequisites();
                       setAuthData(authorization.value);
                     } else {
                       setErrors({

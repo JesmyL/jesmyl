@@ -1,5 +1,5 @@
 import { LocalSokiAuth } from 'shared/api';
-import { useAuth } from '../../../../../index/molecules';
+import { useAuth } from '../../../../../index/atoms';
 import { useAliasCurrentTeamNaked } from './current-team';
 import { useAliasSpeakerLogin } from './speaker-login';
 

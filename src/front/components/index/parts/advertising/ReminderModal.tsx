@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ModalBody } from '../../../../complect/modal/Modal/ModalBody';
 import { ModalHeader } from '../../../../complect/modal/Modal/ModalHeader';
-import { useCurrentApp } from '../../molecules';
+import { useCurrentApp } from '../../atoms';
 
 export const IndexAdvertisingReminderModalContent = ({ onClose }: { onClose: (isOpen: false) => void }) => {
   const currentApp = useCurrentApp() ?? 'cm';

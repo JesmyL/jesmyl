@@ -14,7 +14,7 @@ import {
   IconPlusSignCircleSolidRounded,
   IconPlusSignCircleStrokeRounded,
 } from '../../../../../complect/the-icon/icons/plus-sign-circle';
-import { useAuth } from '../../../../index/molecules';
+import { useAuth } from '../../../../index/atoms';
 import { useAliasRejectWord, useAliasSimpleExecs } from './hooks/execs';
 import { useAliasIsMySpeech, useAliasIsMyTeamByAuth } from './hooks/is-my-speech';
 import { useAliasRoomState } from './hooks/state';

@@ -15,7 +15,6 @@ import Dropdown from '../../dropdown/Dropdown';
 import SendableDropdown from '../../sends/dropdown/SendableDropdown';
 import StrongDiv from '../../strong-control/StrongDiv';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
-import StrongClipboardPicker from '../../strong-control/field/clipboard/Picker';
 import { ScheduleWidgetBindAtts } from '../atts/BindAtts';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schEventTypesSokiInvocatorClient } from '../invocators/invocators.methods';
@@ -151,7 +150,6 @@ export default function ScheduleWidgetEventType(props: {
               <span>
                 <span className="color--7">{props.typeBox.title} </span>- Редактирование шаблона
               </span>
-              <StrongClipboardPicker />
             </span>
           </ModalHeader>
 

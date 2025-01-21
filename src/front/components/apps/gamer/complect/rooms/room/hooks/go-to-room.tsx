@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useConfirm } from '../../../../../../../complect/modal/confirm/useConfirm';
 import useToast from '../../../../../../../complect/modal/useToast';
-import { useAuth } from '../../../../../../index/molecules';
+import { useAuth } from '../../../../../../index/atoms';
 import { gamerExer } from '../../../../gamerExer';
 import gamerStorage from '../../../../gamerStorage';
 import { useGamerRoomwSetter } from '../../../../molecules';

@@ -5,22 +5,20 @@ import { IconEdit02StrokeRounded } from '../../../complect/the-icon/icons/edit-0
 import { IconFile02StrokeRounded } from '../../../complect/the-icon/icons/file-02';
 import { ExpandableContent } from '../../expand/ExpandableContent';
 import Modal from '../../modal/Modal/Modal';
-import { StrongComponentProps } from '../../strong-control/Strong.model';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
 import IconButton from '../../the-icon/IconButton';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import ScheduleWidgetUserList from '../control/users/UserList';
 import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
-import ScheduleWidgetListUnitRedactor from './UnitRedactor';
+import { ScheduleWidgetListUnitRedactor } from './UnitRedactor';
 
-type Props = StrongComponentProps<{
+type Props = {
   unit: IScheduleWidgetListUnit;
   cat: IScheduleWidgetListCat;
   cati: IScheduleWidgetUserCati;
-  catScopePostfix: string;
   shortTitles: [string, string];
-}>;
+};
 
 export default function ScheduleWidgetListUnit(props: Props) {
   const { unit, cat, cati } = props;

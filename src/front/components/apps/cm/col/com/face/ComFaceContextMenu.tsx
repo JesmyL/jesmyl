@@ -6,7 +6,7 @@ import { IconAddCircleHalfDotStrokeRounded } from '../../../../../../complect/th
 import { IconCancelCircleHalfDotStrokeRounded } from '../../../../../../complect/the-icon/icons/cancel-circle-half-dot';
 import { IconRemoveCircleHalfDotStrokeRounded } from '../../../../../../complect/the-icon/icons/remove-circle-half-dot';
 import { IconStarSolidRounded, IconStarStrokeRounded } from '../../../../../../complect/the-icon/icons/star';
-import { useAuth } from '../../../../../index/molecules';
+import { useAuth } from '../../../../../index/atoms';
 import useSelectedComs from '../../../base/useSelectedComs';
 import ComFaceContextMenuEditorItems from '../../../editor/col/compositions/ComFaceContextMenuEditorItems';
 import { useMarks } from '../../../lists/marks/useMarks';

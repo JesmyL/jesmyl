@@ -8,8 +8,7 @@ import { useGlobalFullscreenChanger } from '../complect/global-listeners/useGlob
 import { hookEffectPipe, setTimeoutPipe } from '../complect/hookEffectPipe';
 import JesmylLogo from '../complect/jesmyl-logo/JesmylLogo';
 import { KEYBOARD_FLASH } from '../complect/keyboard/KeyboardInput';
-import { useCurrentApp } from '../components/index/molecules';
-import { useSecretChatMessagesListen } from '../components/index/parts/main/secret-chat/useSecretChatMessagesListen';
+import { useCurrentApp } from '../components/index/atoms';
 import { useIsReadyRouter } from '../components/router/atoms';
 import './App.scss';
 
@@ -31,7 +30,6 @@ export default function AppComponent() {
 
   useFingersActions();
   useGlobalFontFamilySetter();
-  useSecretChatMessagesListen();
 
   const [isFullscreen, fullscreenIcon] = useGlobalFullscreenChanger();
 

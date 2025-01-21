@@ -7,7 +7,6 @@ import IconCheckbox from '../../../../../../../complect/the-icon/IconCheckbox';
 import { IconBook02StrokeRounded } from '../../../../../../../complect/the-icon/icons/book-02';
 import { IconBookOpen02StrokeRounded } from '../../../../../../../complect/the-icon/icons/book-open-02';
 import { IconTarget03StrokeRounded } from '../../../../../../../complect/the-icon/icons/target-03';
-import { useNounsPronounsLines } from '../../hooks/nouns-pronouns-lines';
 import { useAliasRoomState } from '../../hooks/state';
 import { useAliasPacks } from '../../molecules';
 import { AliasRoomLessWordsCompute } from './LessWordsCompute';
@@ -38,7 +37,7 @@ interface Props {
 export const AliasRoomWordsConfigures = ({ setIsDictsRejToStart, stateRef }: Props) => {
   const state = useAliasRoomState();
   const packs = useAliasPacks();
-  const nounProns = useNounsPronounsLines();
+  // const nounProns = useNounsPronounsLines();
 
   const [isResortWordsState, setIsResortWords] = useState(initialAliasDictsPropsPart.isResortWords);
 
@@ -78,12 +77,12 @@ export const AliasRoomWordsConfigures = ({ setIsDictsRejToStart, stateRef }: Pro
                     return item.id < 0
                       ? {
                           ...item,
-                          title: `${item.title} (${nounProns.nouns.length} ${mylib.declension(
-                            nounProns.nouns.length,
-                            'слово',
-                            'слова',
-                            'слов',
-                          )})`,
+                          // title: `${item.title} (${nounProns.nouns.length} ${mylib.declension(
+                          //   nounProns.nouns.length,
+                          //   'слово',
+                          //   'слова',
+                          //   'слов',
+                          // )})`,
                         }
                       : item;
                   })}

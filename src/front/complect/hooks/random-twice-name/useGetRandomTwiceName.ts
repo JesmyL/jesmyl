@@ -1,6 +1,5 @@
 import { mylib } from 'front/utils';
 import { makeTwiceKnownName, NounPronsType } from 'shared/api';
-import { useIndexNounPronsWords } from '../../../components/index/molecules';
 
 export const makeRandomTwiceName = (
   storage: NounPronsType | nil,
@@ -20,12 +19,6 @@ export const makeRandomTwiceName = (
   if (!pronoun || !noun) return ['', ''];
 
   return makeTwiceKnownName(pronoun, noun);
-};
-
-export const useGetRandomTwiceName = () => {
-  const storage = useIndexNounPronsWords();
-
-  return (topPronoun?: string | nil, topNoun?: string | nil) => makeRandomTwiceName(storage, topPronoun, topNoun);
 };
 
 // for (let i = 0; i < 10; i++) console.info(getRandomTwiceName().join(' '));

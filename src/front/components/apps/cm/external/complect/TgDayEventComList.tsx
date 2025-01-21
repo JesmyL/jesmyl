@@ -20,11 +20,7 @@ import CopyTextButton from '../../../../../complect/CopyTextButton';
 import { FullContent } from '../../../../../complect/fullscreen-content/FullContent';
 import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
 import { useGetScheduleOrPull } from '../../../../../complect/schedule-widget/general/useSetScheduleOrPull';
-import {
-  takeScheduleStrongScopeMaker,
-  takeStrongScopeMaker,
-  useScheduleWidgetRights,
-} from '../../../../../complect/schedule-widget/useScheduleWidget';
+import { useScheduleWidgetRights } from '../../../../../complect/schedule-widget/useScheduleWidget';
 import { IconCopy01StrokeRounded } from '../../../../../complect/the-icon/icons/copy-01';
 import { IconNoteEditStrokeRounded } from '../../../../../complect/the-icon/icons/note-edit';
 import { CmComListContext, CmComListContextValue } from '../../base/translations/context';
@@ -186,15 +182,6 @@ const Page = ({
           {isOpenListRedact && (
             <FullContent onClose={setIsOpenListRedact}>
               <CmExternalComListAttRedactList
-                scope={takeStrongScopeMaker(
-                  takeStrongScopeMaker(
-                    takeStrongScopeMaker(takeScheduleStrongScopeMaker(schedule.w), ` dayi/`, dayi),
-                    ' eventMi/',
-                    eventMi,
-                  ),
-                  ' attKey/',
-                  attName,
-                )}
                 value={comsAtt}
                 setComw={setCcomw}
                 setIsOpenComposition={setIsOpenComposition}

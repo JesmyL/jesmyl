@@ -1,6 +1,5 @@
 import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
-import { useGetRandomTwiceName } from '../../../../../../complect/hooks/random-twice-name/useGetRandomTwiceName';
 import KeyboardInput from '../../../../../../complect/keyboard/KeyboardInput';
 import IconButton from '../../../../../../complect/the-icon/IconButton';
 import IconCheckbox from '../../../../../../complect/the-icon/IconCheckbox';
@@ -35,7 +34,7 @@ export const AliasRoomTeamsConfigures = ({ isCantStartRound, setIsTeamsRejToStar
   const isCantComputeNewTeams =
     membersInPrevRound?.length !== players?.length ||
     (membersInPrevRound && players?.some(member => !membersInPrevRound.includes(member.login)));
-  const nameRandomizer = useGetRandomTwiceName();
+  // const nameRandomizer = useGetRandomTwiceName();
   const [isComputeNewTeamsState, setIsComputeNewTeamsState] = useState(initialAliasTeamsPropsPart.isComputeNewTeams);
   const [isHystericsModeState, setIsHystericsModeState] = useState(false);
   const [teamsCountState, setTeamsCountState] = useState(state?.teams.length || initialAliasTeamsPropsPart.teamsCount);
@@ -53,13 +52,13 @@ export const AliasRoomTeamsConfigures = ({ isCantStartRound, setIsTeamsRejToStar
     setIsTeamsRejToStart(teamsCount < 2 || !players || players.length < teamsCount);
   }, [isHystericsMode, players, setIsTeamsRejToStart, teamsCount]);
 
-  useEffect(() => {
-    if (teamsCount && (!teamsTitles.length || (teamsTitles.length !== teamsCount && !isCantStartRound))) {
-      const titles: string[] = [];
-      while (titles.length < teamsCount) titles.push(nameRandomizer().join(' '));
-      setTeamTitles(titles);
-    }
-  }, [teamsTitles, teamsCount, isCantStartRound, nameRandomizer, setTeamTitles]);
+  // useEffect(() => {
+  //   if (teamsCount && (!teamsTitles.length || (teamsTitles.length !== teamsCount && !isCantStartRound))) {
+  //     const titles: string[] = [];
+  //     while (titles.length < teamsCount) titles.push(nameRandomizer().join(' '));
+  //     setTeamTitles(titles);
+  //   }
+  // }, [teamsTitles, teamsCount, isCantStartRound, nameRandomizer, setTeamTitles]);
 
   if (players == null) return null;
 

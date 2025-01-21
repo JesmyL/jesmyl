@@ -7,7 +7,7 @@ import useQRMaster from '../../../../complect/qr-code/useQRMaster';
 import IconButton from '../../../../complect/the-icon/IconButton';
 import { IconEdit02StrokeRounded } from '../../../../complect/the-icon/icons/edit-02';
 import { IconQrCodeStrokeRounded } from '../../../../complect/the-icon/icons/qr-code';
-import { useAuth } from '../../../index/molecules';
+import { useAuth } from '../../../index/atoms';
 import { GamerPassport } from '../Gamer.model';
 import { useGamerOfflineRoomsPassportSetter, useGamerOfflineRoomsPassportValue } from '../molecules';
 import useGamerNav from '../useGamerNav';

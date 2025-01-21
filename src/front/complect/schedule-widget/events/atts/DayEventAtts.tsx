@@ -7,21 +7,18 @@ import {
   ScheduleWidgetDayListItemTypeBox,
   scheduleWidgetUserRights,
 } from 'shared/api';
-import { StrongComponentProps } from '../../../strong-control/Strong.model';
 import { useScheduleWidgetAppAttsContext, useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetDayEventAtt from './DayEventAtt';
 
-export default function ScheduleWidgetDayEventAtts(
-  props: StrongComponentProps<{
-    typeBox: ScheduleWidgetDayListItemTypeBox;
-    event: IScheduleWidgetDayEvent;
-    day: IScheduleWidgetDay;
-    dayi: number;
-    isPrevEvent: boolean;
-    schedule: IScheduleWidget;
-    dayEventScopeProps: ScheduleDayEventScopeProps;
-  }>,
-) {
+export default function ScheduleWidgetDayEventAtts(props: {
+  typeBox: ScheduleWidgetDayListItemTypeBox;
+  event: IScheduleWidgetDayEvent;
+  day: IScheduleWidgetDay;
+  dayi: number;
+  isPrevEvent: boolean;
+  schedule: IScheduleWidget;
+  dayEventScopeProps: ScheduleDayEventScopeProps;
+}) {
   const [appAtts] = useScheduleWidgetAppAttsContext();
   const rights = useScheduleWidgetRightsContext();
   const userR = rights.myUser?.R ?? rights.schedule.ctrl.defu;

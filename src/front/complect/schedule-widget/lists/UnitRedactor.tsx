@@ -7,7 +7,6 @@ import {
 } from 'shared/api';
 import { ModalBody } from '../../modal/Modal/ModalBody';
 import { ModalHeader } from '../../modal/Modal/ModalHeader';
-import { StrongComponentProps } from '../../strong-control/Strong.model';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
 import TheIcon from '../../the-icon/TheIcon';
 import { IconBookmark03StrokeRounded } from '../../the-icon/icons/bookmark-03';
@@ -18,19 +17,15 @@ import { IconUserRemove02StrokeRounded } from '../../the-icon/icons/user-remove-
 import ScheduleWidgetUserList from '../control/users/UserList';
 import { schListsSokiInvocatorClient, schUsersSokiInvocatorClient } from '../invocators/invocators.methods';
 
-export default function ScheduleWidgetListUnitRedactor({
-  unit,
-  cat,
-  cati,
-  shortTitles,
-  unitScopeData,
-}: StrongComponentProps<{
+type Props = {
   unit: IScheduleWidgetListUnit;
   cat: IScheduleWidgetListCat;
   cati: IScheduleWidgetUserCati;
   shortTitles: [string, string];
   unitScopeData: ScheduleUnitScopeProps;
-}>) {
+};
+
+export const ScheduleWidgetListUnitRedactor = ({ unit, cat, cati, shortTitles, unitScopeData }: Props) => {
   const title = <>{unit.title || <span className="text-italic">Без названия</span>}</>;
 
   return (
@@ -120,4 +115,4 @@ export default function ScheduleWidgetListUnitRedactor({
       </ModalBody>
     </>
   );
-}
+};

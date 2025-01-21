@@ -17,8 +17,8 @@ import { IconRssErrorStrokeRounded } from '../../../../complect/the-icon/icons/r
 import { IconSourceCodeCircleStrokeRounded } from '../../../../complect/the-icon/icons/source-code-circle';
 import { IconTextStrokeRounded } from '../../../../complect/the-icon/icons/text';
 import { soki } from '../../../../soki';
+import { statisticAtom, useAppFontFamily, useAuth } from '../../atoms';
 import { indexSimpleValIsPlayAnimations, indexSimpleValIsUseNativeKeyboard } from '../../complect/index.simpleValues';
-import { indexMolecule, useAppFontFamilyAtom, useAuth } from '../../molecules';
 import useConnectionState from '../../useConnectionState';
 import { FontFamilySelector } from '../actions/files/complect/FontFamilySelector';
 import { Visitor } from './Visitor';
@@ -40,13 +40,12 @@ const styles = {
 };
 
 const visitorsDeclension = (num: number) => `${num} ${mylib.declension(num, 'челикс', 'челикса', 'челиксов')}`;
-const statisticAtom = indexMolecule.select(s => s.statistic);
 
 export default function IndexSettings() {
   const auth = useAuth();
   const statistic = useAtomValue(statisticAtom);
   const [expands, setExpands] = useState<(AppName | '')[]>([]);
-  const [appFontFamily, setAppFontFamily] = useAppFontFamilyAtom();
+  const [appFontFamily, setAppFontFamily] = useAppFontFamily();
   const connectionNode = useConnectionState('margin-gap');
   // const [isShowSecretChatsInBottom, setIsShowSecretChatsInBottom] = useAtom(isSecretChatsShowInBottomMenuAtom);
 

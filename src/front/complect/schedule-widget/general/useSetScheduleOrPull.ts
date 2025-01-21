@@ -2,7 +2,7 @@ import { atom, useAtom } from 'front/complect/atoms';
 import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetWid } from 'shared/api';
-import { useIndexSchedules } from '../../../components/index/molecules';
+import { useIndexSchedules } from '../../../components/index/atoms';
 import serviceMaster from '../../service/serviceMaster';
 
 const scheduleAtom = atom<IScheduleWidget | null>(null);

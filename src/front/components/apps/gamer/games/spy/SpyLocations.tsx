@@ -5,7 +5,7 @@ import useIsExpand from '../../../../../complect/expand/useIsExpand';
 import KeyboardInput from '../../../../../complect/keyboard/KeyboardInput';
 import SendButton from '../../../../../complect/sends/send-button/SendButton';
 import { IconPlusSignCircleStrokeRounded } from '../../../../../complect/the-icon/icons/plus-sign-circle';
-import { useAuth } from '../../../../index/molecules';
+import { useAuth } from '../../../../index/atoms';
 import { gamerExer } from '../../gamerExer';
 import { useSpyLocations } from './molecules';
 

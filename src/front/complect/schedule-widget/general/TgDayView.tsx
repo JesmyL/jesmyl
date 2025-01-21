@@ -5,7 +5,7 @@ import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import { ScheduleWidgetAppAttBasic } from 'shared/api';
 import styled from 'styled-components';
 import { useInitSoki } from '../../../app/useInitSoki';
-import { removePullRequisites, useAuthState } from '../../../components/index/molecules';
+import { useAuthState } from '../../../components/index/atoms';
 import { soki } from '../../../soki';
 import { TelegramWebAppApiOr } from '../../tg-app/getTgApi';
 import { TelegramWebApp, TelegramWebAppInitData } from '../../tg-app/model';
@@ -87,7 +87,7 @@ const Child = ({ api, initData }: Props) => {
           if (!tgAuthorization || !tgAuthorization.ok || mylib.isStr(tgAuthorization.value)) return;
 
           setAuth(tgAuthorization.value);
-          removePullRequisites();
+          // removePullRequisites();
           soki.sendConnectionHandshake();
         });
       }, 300)

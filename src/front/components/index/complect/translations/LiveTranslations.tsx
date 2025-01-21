@@ -8,8 +8,7 @@ import { useTranslationInitialSlideSet } from '../../../apps/+complect/translati
 import BibleTranslatesContextProvider from '../../../apps/bible/translates/TranslatesContext';
 import { FollowTranslationInitialSlide } from '../../../apps/cm/translation/complect/live/FollowTranslationInitialSlide';
 import { ScheduleWidgetTranslationLiveDataKey } from '../../Index.model';
-import { useAuth, useIndexSchedules } from '../../molecules';
-import { useDeviceId } from '../takeDeviceId';
+import { useAuth, useDeviceId, useIndexSchedules } from '../../atoms';
 import { IndexScheduleWidgetBibleTranslationsControlled } from './LiveBible';
 import { ScheduleWidgetLiveCmTranslations } from './LiveCm';
 

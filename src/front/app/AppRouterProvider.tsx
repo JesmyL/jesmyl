@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { Route, useParams, useSearchParams } from 'react-router-dom';
 import { atom, useAtomSet } from '../complect/atoms';
 import IndexMain from '../components/index/parts/main/IndexMain';
-import { IndexSecretChats } from '../components/index/parts/main/secret-chat/SecretChats';
 import { soki } from '../soki';
 import { AppName } from './App.model';
 import { routingApps } from './routing-apps';
@@ -25,10 +24,6 @@ const AppRouterProvider = () => {
 
 const otherRoute = (
   <>
-    <Route
-      path="!chats/*"
-      element={<IndexSecretChats withoutBackButton />}
-    />
     <Route
       path="!other/*"
       element={<IndexMain />}

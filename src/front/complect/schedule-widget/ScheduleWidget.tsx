@@ -11,7 +11,7 @@ import { IconFile02StrokeRounded } from '../../complect/the-icon/icons/file-02';
 import { IconPlusSignStrokeRounded } from '../../complect/the-icon/icons/plus-sign';
 import { IconSchoolReportCardStrokeRounded } from '../../complect/the-icon/icons/school-report-card';
 import { IconShapesStrokeRounded } from '../../complect/the-icon/icons/shapes';
-import { useAuth } from '../../components/index/molecules';
+import { useAuth } from '../../components/index/atoms';
 import { QrCodeFullScreen } from '../qr-code/QrCodeFullScreen';
 import EvaSendButton from '../sends/eva-send-button/EvaSendButton';
 import SendButton from '../sends/send-button/SendButton';

@@ -1,4 +1,4 @@
-import { useAuth } from '../../../../../../index/molecules';
+import { useAuth } from '../../../../../../index/atoms';
 import { useGamerOfflineRoomsPassportValue } from '../../../../molecules';
 
 export const useGamerOfflineRoomsPassport = () => {

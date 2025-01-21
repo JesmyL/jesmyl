@@ -13,7 +13,7 @@ import {
 } from 'shared/api';
 import { itNNull } from 'shared/utils';
 import { IconCopy02StrokeRounded } from '../../../complect/the-icon/icons/copy-02';
-import { useAuth, useIndexSchedules } from '../../../components/index/molecules';
+import { useAuth, useIndexSchedules } from '../../../components/index/atoms';
 import IconButton from '../../the-icon/IconButton';
 import ScheduleWidgetTopicTitle from '../complect/TopicTitle';
 import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';

@@ -15,17 +15,11 @@ import CmExternalComListAttRedactListOrder from './RedactListOrder';
 
 interface Props {
   value: CmComBindAttach;
-  scope: string;
   setComw: (comw: CmComWid) => void;
   setIsOpenComposition: (isOpen: boolean) => void;
 }
 
-export default function CmExternalComListAttRedactList({
-  value,
-  scope,
-  setComw: setCcomw,
-  setIsOpenComposition,
-}: Props) {
+export default function CmExternalComListAttRedactList({ value, setComw: setCcomw, setIsOpenComposition }: Props) {
   const [isOrderOpen, setIsOrderOpen] = useState(false);
   const [isMeetingBinderOpen, setIsMeetingBinderOpen] = useState(false);
   const { meetings } = useMeetings();
@@ -122,7 +116,6 @@ export default function CmExternalComListAttRedactList({
       {isOrderOpen && (
         <FullContent onClose={setIsOrderOpen}>
           <CmExternalComListAttRedactListOrder
-            scope={scope}
             value={value}
             setCcomw={setCcomw}
           />

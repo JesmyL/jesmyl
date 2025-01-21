@@ -15,7 +15,7 @@ import Dropdown from '../../../../complect/dropdown/Dropdown';
 import IconButton from '../../../../complect/the-icon/IconButton';
 import { IconDownload04StrokeRounded } from '../../../../complect/the-icon/icons/download-04';
 import { IconPlusSignCircleStrokeRounded } from '../../../../complect/the-icon/icons/plus-sign-circle';
-import { useAuth } from '../../../index/molecules';
+import { useAuth } from '../../../index/atoms';
 import { WedCleans } from '../Cleans';
 import { GuestConversation } from '../guest/complect/GuestConversation';
 import { WedGuestEditorModal } from '../guest/GuestEditorModal';

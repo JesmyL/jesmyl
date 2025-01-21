@@ -1,5 +1,5 @@
 import SendButton from 'front/complect/sends/send-button/SendButton';
-import { useAuth } from 'front/components/index/molecules';
+import { useAuth } from 'front/components/index/atoms';
 import { useMemo } from 'react';
 import ScheduleWidgetTopicTitle from '../complect/TopicTitle';
 import { ScheduleWidgetDay, ScheduleWidgetDayProps } from '../days/Day';

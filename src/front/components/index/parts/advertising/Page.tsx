@@ -4,7 +4,7 @@ import { atom, useAtom } from '../../../../complect/atoms';
 import Dropdown from '../../../../complect/dropdown/Dropdown';
 import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
 import IconCheckbox from '../../../../complect/the-icon/IconCheckbox';
-import { useAuth } from '../../molecules';
+import { useAuth } from '../../atoms';
 
 const bannersCountItems = [0, 10, 20, 30, 40, 50, 80, 100, 120, 150, 170, 200].map(num => {
   return {

@@ -1,5 +1,5 @@
 import { IconPencilEdit02StrokeRounded } from '../../../../../../../complect/the-icon/icons/pencil-edit-02';
-import { useAuth } from '../../../../../../index/molecules';
+import { useAuth } from '../../../../../../index/atoms';
 import { ComTool } from '../ComTool';
 import { useComToolsCcomContext } from '../useMigratableComTools';
 

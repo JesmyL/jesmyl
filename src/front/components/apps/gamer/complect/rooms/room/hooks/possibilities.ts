@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useAuth } from '../../../../../../index/molecules';
+import { useAuth } from '../../../../../../index/atoms';
 import { GamerRoom, GamerRoomMemberStatus } from '../../../../Gamer.model';
 import { useGamerCurrentRoom } from './current-room';
 

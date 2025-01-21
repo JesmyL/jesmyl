@@ -1,16 +1,7 @@
 import { indexIDB } from 'front/components/index/db/index-idb';
+import { setLastModifiedValue } from 'front/components/index/db/invocators/invocator.base';
 import { SokiInvocatorBaseClient } from 'front/SokiInvocatorBase.client';
 import { SchSokiInvocatorSharesMethods } from 'shared/api/invocators/schedules/invocators.shares.model';
-
-let lastModifiedLocal: null | number = null;
-export const setLastModifiedValue = async (lastModified: number) => {
-  lastModifiedLocal ??= await indexIDB.getSingleValue('lastModified', 0);
-
-  if (lastModifiedLocal >= lastModified) return;
-  lastModifiedLocal = lastModified;
-
-  indexIDB.setSingleValue('lastModified', lastModified);
-};
 
 class SchSokiInvocatorBaseClient extends SokiInvocatorBaseClient<SchSokiInvocatorSharesMethods> {}
 export const schSokiInvocatorBaseClient = new SchSokiInvocatorBaseClient('SchSokiInvocatorBaseClient', {

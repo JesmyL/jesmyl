@@ -1,3 +1,4 @@
+import { useAtomValue } from 'front/complect/atoms';
 import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { IScheduleWidget } from 'shared/api';
@@ -8,7 +9,7 @@ import BibleTranslationSlideMiniInfo from '../../../components/apps/bible/transl
 import { CmTranslationSlideMiniInfo } from '../../../components/apps/cm/translation/complect/live/MiniInfo';
 import { CmLiveTranslationScreen } from '../../../components/apps/cm/translation/complect/live/Screen';
 import { IndexStateSchLiveData, ScheduleWidgetTranslationLiveDataKey } from '../../../components/index/Index.model';
-import { useAuth, useIndexLiveData } from '../../../components/index/molecules';
+import { liveDataAtom, useAuth } from '../../../components/index/atoms';
 import { soki } from '../../../soki';
 import BrutalItem from '../../brutal-item/BrutalItem';
 import { ScheduleWidgetMarkdownLiveTranslation } from './MarkdownLive';
@@ -20,7 +21,7 @@ interface Props {
 }
 
 export const ScheduleWidgetLiveTranslation = ({ onClose, schedule, isShowMarkdownOnly }: Props) => {
-  const liveData = useIndexLiveData() as IndexStateSchLiveData;
+  const liveData = useAtomValue(liveDataAtom) as IndexStateSchLiveData;
   const [subscribeData, setSubscribeData] = useState<ScheduleWidgetTranslationLiveDataKey | und>();
   const [messageNode, setMessageNode] = useState<JSX.Element | null>(null);
   const auth = useAuth();

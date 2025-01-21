@@ -11,7 +11,7 @@ import {
   IconMusicNote03SolidRounded,
   IconMusicNote03StrokeRounded,
 } from '../../../../../../complect/the-icon/icons/music-note-03';
-import { useAuth } from '../../../../../index/molecules';
+import { useAuth } from '../../../../../index/atoms';
 import useConnectionState from '../../../../../index/useConnectionState';
 import { CmComNumber } from '../../../col/com/complect/ComNumber';
 import ComPlayer from '../../../col/com/player/ComPlayer';

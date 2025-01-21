@@ -17,19 +17,11 @@ interface Props {
   day: IScheduleWidgetDay;
   dayi: number;
   schedule: IScheduleWidget;
-  dayScope: string;
   onClose: (isOpen: false) => void;
   scheduleScopeProps: ScheduleScopeProps;
 }
 
-export const ScheduleWidgetEventListUpdater = ({
-  day,
-  dayScope,
-  dayi,
-  schedule,
-  onClose,
-  scheduleScopeProps,
-}: Props) => {
+export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, scheduleScopeProps }: Props) => {
   const [value, setValue] = useState('');
   const [node, setNode] = useState<React.ReactNode>(null);
   const [errorText, setErrorText] = useState('');
@@ -139,7 +131,7 @@ export const ScheduleWidgetEventListUpdater = ({
         );
       }, 300)
       .effect();
-  }, [day, dayScope, dayScopeProps, dayi, onClose, schedule, scheduleScopeProps, value]);
+  }, [day, dayScopeProps, dayi, onClose, schedule, scheduleScopeProps, value]);
 
   return (
     <div className="margin-giant-gap-t">

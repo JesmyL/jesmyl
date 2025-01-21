@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { emptyFunc } from 'shared/utils';
 import { ScheduleWidgetLiveTranslation } from '../../../../complect/schedule-widget/live-translations/Live';
-import { useIndexSchedules } from '../../../index/molecules';
+import { useIndexSchedules } from '../../../index/atoms';
 import { useIsCanShowTextTranslation } from './atoms';
 
 interface Props {

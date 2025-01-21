@@ -10,7 +10,7 @@ import SendButton from '../../../../complect/sends/send-button/SendButton';
 import { IconTelegramStrokeRounded } from '../../../../complect/the-icon/icons/telegram';
 import { useActualRef } from '../../../../complect/useActualRef';
 import { soki } from '../../../../soki';
-import { useIndexValues, useSetAuth } from '../../molecules';
+import { useIndexValues, useSetAuth } from '../../atoms';
 import useConnectionState from '../../useConnectionState';
 import { LoginIndex } from './IndexLoginAuth';
 import { TgNativeAuth } from './TgNativeAuth';

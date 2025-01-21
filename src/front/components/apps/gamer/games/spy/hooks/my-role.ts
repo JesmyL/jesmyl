@@ -1,5 +1,5 @@
 import { LocalSokiAuth } from 'shared/api';
-import { useAuth } from '../../../../../index/molecules';
+import { useAuth } from '../../../../../index/atoms';
 import { SpyRoomState } from '../Spy.model';
 import { unsecretSpyRole } from './locations';
 import { useSpyRoomStateNaked } from './state';

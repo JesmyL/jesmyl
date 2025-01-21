@@ -1,4 +1,4 @@
-import { useIndexSchedules } from '../../../components/index/molecules';
+import { useIndexSchedules } from '../../../components/index/atoms';
 import { useActualSchw } from '../useSch';
 import ScheduleWidgetAlarmContent from './AlarmContent';
 

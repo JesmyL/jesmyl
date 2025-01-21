@@ -12,7 +12,7 @@ import { IconDelete01StrokeRounded } from '../../../../../../../../complect/the-
 import { IconFlag03StrokeRounded } from '../../../../../../../../complect/the-icon/icons/flag-03';
 import { IconGridStrokeRounded } from '../../../../../../../../complect/the-icon/icons/grid';
 import { IconSchoolReportCardStrokeRounded } from '../../../../../../../../complect/the-icon/icons/school-report-card';
-import { useAuth } from '../../../../../../../index/molecules';
+import { useAuth } from '../../../../../../../index/atoms';
 import { ChordVisibleVariant } from '../../../../../Cm.model';
 import TheCom from '../../../../../col/com/TheCom';
 import { TextCorrectMessages } from '../../../../complect/TextBlockIncorrectMessages';

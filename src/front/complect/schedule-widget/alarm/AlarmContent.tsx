@@ -13,7 +13,7 @@ import styled from 'styled-components';
 import { IconCalendar01StrokeRounded } from '../../../complect/the-icon/icons/calendar-01';
 import { IconLeftToRightListDashStrokeRounded } from '../../../complect/the-icon/icons/left-to-right-list-dash';
 import { IconSmileStrokeRounded } from '../../../complect/the-icon/icons/smile';
-import { useIndexSchedules } from '../../../components/index/molecules';
+import { useIndexSchedules } from '../../../components/index/atoms';
 import useFullContent, { FullContentValue } from '../../fullscreen-content/useFullContent';
 import ScheduleWidgetTopicTitle from '../complect/TopicTitle';
 import ScheduleAlarmDay from './AlarmDay';

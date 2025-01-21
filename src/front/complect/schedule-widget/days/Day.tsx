@@ -22,7 +22,7 @@ import useIsRedactArea from '../../useIsRedactArea';
 import ScheduleAlarmDay from '../alarm/AlarmDay';
 import { ScheduleDayScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schDaysSokiInvocatorClient } from '../invocators/invocators.methods';
-import { takeStrongScopeMaker, useScheduleWidgetRightsContext } from '../useScheduleWidget';
+import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetDayEditPanel from './DayEditPanel';
 import ScheduleWidgetDayEventList from './events/DayEventList';
 
@@ -53,7 +53,6 @@ export const ScheduleWidgetDay = ({
   const isPastDay = indexScheduleCheckIsDayIsPast(schedule, dayi);
   const title = mylib.dayFullTitles[date.getDay()];
   const times: number[] = [];
-  const selfScope = takeStrongScopeMaker('', ' dayi/', dayi);
   const [isShowDay, setIsShowDay] = useState(!isPastDay);
   const rights = useScheduleWidgetRightsContext();
   const { editIcon, isRedact } = useIsRedactArea(true, null, rights.isCanRedact, true);
@@ -148,7 +147,6 @@ export const ScheduleWidgetDay = ({
                 {isRedact ? (
                   <ScheduleWidgetDayEditPanel
                     day={day}
-                    dayScope={selfScope}
                     dayi={dayi}
                     schedule={schedule}
                     scheduleScopeProps={scheduleScopeProps}

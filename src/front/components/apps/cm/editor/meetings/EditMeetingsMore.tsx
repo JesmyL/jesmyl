@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useCheckIsAccessed } from '../../../../../complect/exer/hooks/check-is-accessed';
 import { IconFolderAddStrokeRounded } from '../../../../../complect/the-icon/icons/folder-add';
 import { IconPlusSignCircleStrokeRounded } from '../../../../../complect/the-icon/icons/plus-sign-circle';
-import { useAuth } from '../../../../index/molecules';
+import { useAuth } from '../../../../index/atoms';
 import AddContext from './AddContext';
 import MeetingsCreator from './MeetingsCreator';
 

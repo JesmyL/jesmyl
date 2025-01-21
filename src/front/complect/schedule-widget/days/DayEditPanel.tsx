@@ -20,10 +20,9 @@ interface Props {
   day: IScheduleWidgetDay;
   dayi: number;
   schedule: IScheduleWidget;
-  dayScope: string;
 }
 
-export default function ScheduleWidgetDayEditPanel({ day, dayi, schedule, dayScope, scheduleScopeProps }: Props) {
+export default function ScheduleWidgetDayEditPanel({ day, dayi, schedule, scheduleScopeProps }: Props) {
   const [isOpenDayListUpdater, setIsOpenDayListUpdater] = useState<unknown>(false);
   const dayScopeProps = useScheduleDayScopePropsContext();
 
@@ -67,7 +66,6 @@ export default function ScheduleWidgetDayEditPanel({ day, dayi, schedule, daySco
         <FullContent onClose={setIsOpenDayListUpdater}>
           <ScheduleWidgetEventListUpdater
             day={day}
-            dayScope={dayScope}
             dayi={dayi}
             schedule={schedule}
             onClose={setIsOpenDayListUpdater}

@@ -6,7 +6,7 @@ import IconButton from '../../../../complect/the-icon/IconButton';
 import { IconAuthorizedStrokeRounded } from '../../../../complect/the-icon/icons/authorized';
 import { IconTelegramStrokeRounded } from '../../../../complect/the-icon/icons/telegram';
 import { soki } from '../../../../soki';
-import { useSetAuth } from '../../molecules';
+import { useSetAuth } from '../../atoms';
 
 export const IndexTelegramInlineAuthButton = () => {
   const setAuth = useSetAuth();

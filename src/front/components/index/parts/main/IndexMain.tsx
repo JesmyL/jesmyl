@@ -15,7 +15,7 @@ import { IconInformationCircleStrokeRounded } from '../../../../complect/the-ico
 import { IconRefreshStrokeRounded } from '../../../../complect/the-icon/icons/refresh';
 import { IconSettings02StrokeRounded } from '../../../../complect/the-icon/icons/settings-02';
 import { checkIsThereNewSW } from '../../../../serviceWorkerRegistration';
-import { useAuth, useCurrentApp } from '../../molecules';
+import { useAuth, useCurrentApp } from '../../atoms';
 import useConnectionState from '../../useConnectionState';
 import IndexActions from '../actions/Actions';
 import IndexAdvertisingPage from '../advertising/Page';
@@ -24,7 +24,6 @@ import { IndexTelegramInlineAuthButton } from '../login/IndexTelegramInlineAuthB
 import IndexSettings from '../settings/Settings';
 import { AppFace } from './AppFace';
 import { IndexProfileInfo } from './ProfileInfo';
-import { IndexSecretChats } from './secret-chat/SecretChats';
 import { UserMore } from './UserMore';
 
 const IndexAuthorization = React.lazy(() => import('../login/IndexAuthorization'));
@@ -182,11 +181,6 @@ export default function IndexMain() {
       <Route
         path="settings/*"
         element={<IndexSettings />}
-      />
-
-      <Route
-        path="chats/*"
-        element={<IndexSecretChats />}
       />
 
       <Route

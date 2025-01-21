@@ -8,11 +8,6 @@ import { TheIconLoading } from '../../the-icon/IconLoading';
 import { TheIconType } from '../../the-icon/model';
 import useIsRedactArea from '../../useIsRedactArea';
 import StrongEditableFieldMultiline from './StrongEditableFieldMultiline';
-import { onStrongFieldBlur, onStrongFieldDragStart, onStrongFieldFocus } from './clipboard/Picker';
-
-const onFocus = onStrongFieldFocus;
-const onBlur = onStrongFieldBlur;
-const onDragStart = onStrongFieldDragStart;
 
 type Props<Key, Value> = {
   fieldKey?: Key;
@@ -124,11 +119,7 @@ export default function StrongEditableField<Key extends string, Value extends st
                 setIsUserChange(true);
                 props.onChange?.(val);
               }}
-              onFocus={onFocus}
-              onBlur={() => {
-                onBlur();
-                sendValue();
-              }}
+              onBlur={sendValue}
               onKeyUp={event => {
                 if (event.key === 'Escape') setIsUserChange(false);
 
@@ -142,7 +133,6 @@ export default function StrongEditableField<Key extends string, Value extends st
         <div
           draggable={!!value}
           className="flex flex-gap"
-          onDragStart={onDragStart as never}
         >
           {props.Icon && <props.Icon className="color--7 self-start" />}
           {value ? (

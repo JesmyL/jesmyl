@@ -1,5 +1,5 @@
-import { schSokiInvocatorBaseClient } from 'front/complect/schedule-widget/invocators/invocator.base';
 import { indexIDB } from 'front/components/index/db/index-idb';
+import { indexSokiInvocatorBaseClient } from 'front/components/index/db/invocators/invocator.base';
 import { indexFreshSokiInvocatorClient } from 'front/components/index/db/invocators/schedules/fresh-invocator.methods';
 import React, { Suspense, useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
@@ -74,7 +74,7 @@ const appNameAtom = atom<AppName>('cm');
 
 export default AppRouter;
 
-schSokiInvocatorBaseClient.$$register();
+indexSokiInvocatorBaseClient.$$register();
 
 setTimeout(async () => {
   const lastModified = await indexIDB.getSingleValue('lastModified', 0);

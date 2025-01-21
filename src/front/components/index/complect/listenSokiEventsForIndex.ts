@@ -2,7 +2,7 @@ import { atomValueSetter } from 'front/complect/atoms';
 import { soki } from 'front/soki';
 import { mylib } from 'front/utils';
 import { SokiClientEvent, SokiSubscribtionName } from 'shared/api';
-import { indexMolecule, isAuthorizedAtom, setAuthValue, setUpdateRequisitesValue } from '../molecules';
+import { isAuthorizedAtom, liveDataAtom, setAuthValue, statisticAtom } from '../atoms';
 
 export const listenSokiEventsForIndex = () => {
   const subscriptions = {} as Record<SokiSubscribtionName, SokiClientEvent>;
@@ -11,22 +11,19 @@ export const listenSokiEventsForIndex = () => {
   soki.onEventServerListen('index', event => {
     if (event.unregister) {
       setAuthValue({ level: 0 });
-      setUpdateRequisitesValue(null);
+      // setUpdateRequisitesValue(null);
       return;
     }
 
-    if (event.liveData !== undefined) indexMolecule.set('liveData', event.liveData);
-    if (event.statistic) indexMolecule.set('statistic', event.statistic);
+    if (event.liveData !== undefined) liveDataAtom.set(event.liveData);
+    if (event.statistic) statisticAtom.set(event.statistic);
 
     if (event.authorized !== undefined) {
       soki.setIsConnected(true);
       setIsAuthorized(true);
-      soki.makeInitialRequests();
+      // soki.makeInitialRequests();
       mylib.values(subscriptions).forEach(event => soki.sendForce(event.body, event.appName));
     }
-
-    soki.serverEventAppExecs(indexMolecule, event);
-    soki.serverEventAppActions(indexMolecule, event);
   });
 
   soki.onEventClientListen('*', event => {

@@ -4,7 +4,7 @@ import { useCheckIsAccessed } from '../../../../complect/exer/hooks/check-is-acc
 import useFullContent from '../../../../complect/fullscreen-content/useFullContent';
 import useToast from '../../../../complect/modal/useToast';
 import { IconPlusSignStrokeRounded } from '../../../../complect/the-icon/icons/plus-sign';
-import { useAuth } from '../../../index/molecules';
+import { useAuth } from '../../../index/atoms';
 import NewGamerRoomScreen from './rooms/NewGamerRoomScreen';
 import { useGamerOfflineRoomsPassport } from './rooms/offline-room/hooks/passport';
 

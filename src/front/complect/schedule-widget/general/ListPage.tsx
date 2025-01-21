@@ -1,5 +1,5 @@
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
-import { useAuth, useIndexSchedules } from '../../../components/index/molecules';
+import { useAuth, useIndexSchedules } from '../../../components/index/atoms';
 import useConnectionState from '../../../components/index/useConnectionState';
 import PhaseContainerConfigurer from '../../phase-container/PhaseContainerConfigurer';
 import IconButton from '../../the-icon/IconButton';

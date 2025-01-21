@@ -1,6 +1,7 @@
 import Dexie, { EntityTable } from 'dexie';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { SMyLib, smylib } from '../../shared/utils';
+import { useCallback } from 'react';
+import { emptyArray, SMyLib, smylib } from '../../shared/utils';
 
 const keyvalues = '%keyvalues%';
 
@@ -93,6 +94,17 @@ export class DexieDB<Store> {
   ): Def | Store[Key] {
     return (justUse(() => this.getKeyvalues().get({ key }) as never as { val: Store[Key] })?.val as never) ?? def;
   }
+
+  useSingleValueState<Key extends keyof Store, Def extends Store[Key] | und>(key: Key, def?: Def) {
+    return [
+      this.useSingleValueLiveQuery(key, def),
+      justCallback(
+        (val: Store[Key] | ((val: Store[Key]) => Store[Key])) => this.setSingleValue(key, val as never),
+        emptyArray,
+      ),
+    ] as const;
+  }
 }
 
 const justUse = useLiveQuery;
+const justCallback = useCallback;

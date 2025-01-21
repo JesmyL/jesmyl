@@ -1,18 +1,15 @@
-import { mylib, MyLib } from 'front/utils';
+import { MyLib } from 'front/utils';
 import {
+  DeviceId,
   environment,
-  PullEventValue,
   ServerStoreContent,
-  SimpleKeyValue,
   SokiAppName,
   sokiAppNamesSet,
   SokiClientEvent,
   SokiClientEventBody,
-  SokiClientUpdateCortage,
   SokiInvokerEvent,
   SokiServerEvent,
 } from 'shared/api';
-import { ExecuterBasics } from 'shared/executer';
 import { Eventer, makeRegExp } from 'shared/utils';
 import { jversion } from 'shared/values';
 import { AppName } from './app/App.model';
@@ -21,13 +18,7 @@ import { lsJStorageLSSwitcherName } from './complect/JStorage';
 import { bibleMolecule } from './components/apps/bible/molecules';
 import { cmMolecule } from './components/apps/cm/molecules';
 import { wedMolecule } from './components/apps/wedding/molecules';
-import { takeDeviceId } from './components/index/complect/takeDeviceId';
-import {
-  getAuthValue,
-  getUpdateRequisitesValue,
-  indexMolecule,
-  setUpdateRequisitesValue,
-} from './components/index/molecules';
+import { getAuthValue } from './components/index/atoms';
 import { onSokiClientEventerInvocatorInvoke } from './eventers';
 
 export type ResponseWaiterCallback = (
@@ -57,7 +48,6 @@ export class SokiTrip {
   private responseWaiters: ResponseWaiter[] = [];
 
   private molecules: Partial<{ [Key in AppName]: Molecule<any, Key> }> = {
-    index: indexMolecule,
     cm: cmMolecule,
     bible: bibleMolecule,
     wed: wedMolecule,
@@ -65,7 +55,7 @@ export class SokiTrip {
 
   constructor() {
     (async () => {
-      if (!(await getAuthValue()).level) return;
+      if (!(await getAuthValue())?.level) return;
 
       MyLib.values(this.molecules).forEach(
         molecule =>
@@ -139,19 +129,6 @@ export class SokiTrip {
     const appName = event.appName;
 
     if (appName === 'external') return;
-
-    if (event.execs && event.appName) {
-      const execs = event.execs;
-      const contents = mylib.clone({ ...setterBox.getValues() });
-
-      ExecuterBasics.executeReals(contents, event.execs.list)
-        .then(fixes => {
-          if (setterBox !== undefined) fixes.forEach(fix => setterBox.set(fix, contents[fix as never] as never));
-
-          this.setLastUpdates(appName, [null, null, execs.lastUpdate, null]);
-        })
-        .catch();
-    }
   }
 
   serverEventAppActions(
@@ -216,8 +193,6 @@ export class SokiTrip {
           }
         }
 
-        if ((waiter === null || waiter.requestId !== event.requestId) && event.pull) this.updatedPulledData(event.pull);
-
         if (event.invoke != null) {
           onSokiClientEventerInvocatorInvoke.invoke({
             invoke: event.invoke,
@@ -232,65 +207,6 @@ export class SokiTrip {
   }
 
   private invokeSend = (event: SokiInvokerEvent) => this.send(event, 'index');
-
-  setLastUpdates(appName: SokiAppName, pullCortage: SokiClientUpdateCortage) {
-    setUpdateRequisitesValue((prev = {}) => {
-      const [indexLastUpdate, indexRulesMd5, appLastUpdate, appRulesMd5] = pullCortage;
-
-      return {
-        ...prev,
-        index: [indexLastUpdate || prev?.index?.[0] || 0, indexRulesMd5 || prev?.index?.[1] || undefined],
-        [appName]: [appLastUpdate || prev?.[appName]?.[0] || 0, appRulesMd5 || prev?.[appName]?.[1] || undefined],
-      };
-    });
-  }
-
-  async makeInitialRequests(appName = this.appName()) {
-    const {
-      index: [indexLastUpdate = 0, indexRulesMd5 = ''] = [],
-      [appName]: [appLastUpdate = 0, appRulesMd5 = ''] = [],
-    } = (await getUpdateRequisitesValue()) || {};
-    const auth = await getAuthValue();
-
-    this.send(
-      {
-        pullData: [indexLastUpdate, indexRulesMd5, appLastUpdate, appRulesMd5],
-        pullFreshUserContentsByTs: auth.login ? this.molecules[appName]?.getLastAppWriteTs() : undefined,
-      },
-      appName,
-    ).on(event => event.pull && this.updatedPulledData(event.pull));
-  }
-
-  updatedPulledData(pull: PullEventValue) {
-    const update = (pullContents: SimpleKeyValue<string, unknown>[], molecule: Molecule<unknown> | nil) => {
-      if (!pullContents.length) return;
-
-      const fixes: string[] = [];
-      const contents: Record<string, unknown> = {};
-      pullContents.forEach(({ key, value }) => {
-        contents[key] = value;
-        fixes.push(key);
-      });
-
-      if (molecule) fixes.forEach(fix => molecule.set(fix as never, contents[fix]));
-    };
-
-    const {
-      contents: [indexContents, appContents],
-      updates,
-    } = pull;
-
-    const appMolecule = this.molecules[pull.appName];
-
-    if (!appMolecule) return;
-
-    update(appContents, appMolecule);
-    update(indexContents, this.molecules.index);
-
-    appContents.forEach(({ key, value }) => appMolecule.set(key, value));
-    indexContents.forEach(({ key, value }) => indexMolecule.set(key as never, value as never));
-    this.setLastUpdates(pull.appName, updates);
-  }
 
   getCurrentUrl() {
     return window.location.href.replace(makeRegExp('/^https?:/'), 'https:');
@@ -314,9 +230,9 @@ export class SokiTrip {
           const sendEvent: SokiClientEvent = {
             requestId,
             body,
-            auth: auth.level === 0 ? undefined : auth,
+            auth: auth?.level === 0 ? undefined : auth,
             appName,
-            deviceId: await takeDeviceId(),
+            deviceId: DeviceId.def,
             version: jversion.num,
             browser,
             urls: this.urls.length ? this.urls : [this.getCurrentUrl()],

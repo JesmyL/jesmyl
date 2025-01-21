@@ -1,5 +1,4 @@
 import { mylib } from 'front/utils';
-import { useNounsPronounsLines } from '../../hooks/nouns-pronouns-lines';
 import { useAliasPacks } from '../../molecules';
 
 export const levelGradationTitles = [
@@ -17,9 +16,11 @@ interface Props {
   dicts: number[];
 }
 
+const nounProns = { nouns: [] };
+
 export const AliasSelectedDictsTextInfo = ({ dicts }: Props) => {
   const packs = useAliasPacks();
-  const nounProns = useNounsPronounsLines();
+  // const nounProns = useNounsPronounsLines();
 
   return (
     <>
