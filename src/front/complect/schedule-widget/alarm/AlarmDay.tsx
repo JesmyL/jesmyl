@@ -1,13 +1,12 @@
-import StrongButton from 'front/complect/strong-control/StrongButton';
+import SendButton from 'front/complect/sends/send-button/SendButton';
 import { useAuth } from 'front/components/index/molecules';
 import { useMemo } from 'react';
 import ScheduleWidgetTopicTitle from '../complect/TopicTitle';
 import { ScheduleWidgetDay, ScheduleWidgetDayProps } from '../days/Day';
 import ScheduleWidgetContextWrapper from '../general/ContextWrapper';
-import { takeScheduleStrongScopeMaker } from '../useScheduleWidget';
+import { schUsersSokiInvocatorClient } from '../invocators/invocators.methods';
 
 export default function ScheduleAlarmDay(props: ScheduleWidgetDayProps) {
-  // const scope = takeScheduleStrongScopeMaker(props.schedule.w);
   const auth = useAuth();
   const scheduleScopeProps = useMemo(() => ({ schw: props.schedule.w }), [props.schedule.w]);
 
@@ -21,11 +20,16 @@ export default function ScheduleAlarmDay(props: ScheduleWidgetDayProps) {
         />
       </h3>
       {auth.login && !props.schedule.ctrl.users.some(user => user.login === auth.login) && (
-        <StrongButton
-          scope={takeScheduleStrongScopeMaker(props.schedule.w)}
-          fieldName="addMeByLink"
+        <SendButton
           title="Хочу комментить события"
           className="margin-giant-gap-t"
+          onSend={() =>
+            schUsersSokiInvocatorClient.addMe(
+              null,
+              scheduleScopeProps,
+              'по кнопке "Хочу комментить события" в отдельном дне',
+            )
+          }
         />
       )}
       <ScheduleWidgetDay

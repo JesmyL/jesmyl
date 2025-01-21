@@ -50,7 +50,7 @@ export type SchGeneralSokiInvocatorMethods = {
 
 export type SchUsersSokiInvocatorMethods = {
   addUsersByExcel: (props: ScheduleScopeProps, users: { fio: string }[]) => IScheduleWidget;
-  addMeByLink: (props: ScheduleScopeProps, userName: string) => IScheduleWidget;
+  addMe: (props: ScheduleScopeProps, place: string) => IScheduleWidget;
   setUserFio: (props: ScheduleUserScopeProps, fio: string) => IScheduleWidget;
   setUserRights: (props: ScheduleUserScopeProps, R: number) => IScheduleWidget;
   addUserListUnitMembership: (props: ScheduleUserListMemberScopeProps, value: number) => IScheduleWidget;

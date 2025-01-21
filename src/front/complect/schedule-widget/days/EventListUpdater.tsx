@@ -1,3 +1,4 @@
+import SendButton from 'front/complect/sends/send-button/SendButton';
 import { useEffect, useMemo, useState } from 'react';
 import {
   indexScheduleGetDayEventTimes,
@@ -9,7 +10,6 @@ import {
 import { emptyFunc, itNNull, retNull } from 'shared/utils';
 import styled from 'styled-components';
 import KeyboardInput from '../../keyboard/KeyboardInput';
-import StrongButton from '../../strong-control/StrongButton';
 import { schDaysSokiInvocatorClient, schEventTypesSokiInvocatorClient } from '../invocators/invocators.methods';
 import ScheduleWidgetDayEvent from './events/DayEvent';
 
@@ -76,7 +76,7 @@ export const ScheduleWidgetEventListUpdater = ({
                   );
                 })}
 
-                <StrongButton
+                <SendButton
                   title="Отправить только новые события"
                   onSend={async () => schEventTypesSokiInvocatorClient.putMany(null, scheduleScopeProps, newTypes)}
                 />
@@ -84,7 +84,7 @@ export const ScheduleWidgetEventListUpdater = ({
             )}
 
             {day.wup !== dayWup && (
-              <StrongButton
+              <SendButton
                 title={`Установить время начала дня: ${ScheduleWidgetCleans.computeDayWakeUpTime(dayWup, 'string')}`}
                 onSend={async () =>
                   schDaysSokiInvocatorClient.setBeginTime(null, { ...scheduleScopeProps, dayi }, '' + dayWup)
@@ -127,7 +127,7 @@ export const ScheduleWidgetEventListUpdater = ({
               );
             })}
 
-            <StrongButton
+            <SendButton
               disabled={isShowPeriodsNotTs}
               title="Отправить расписание"
               onSuccess={() => onClose(false)}

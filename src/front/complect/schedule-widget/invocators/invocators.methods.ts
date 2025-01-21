@@ -127,7 +127,7 @@ class SchUsersSokiInvocatorClient extends SokiInvocatorClient<SchUsersSokiInvoca
   constructor() {
     super('SchUsersSokiInvocatorClient', {
       addUsersByExcel: true,
-      addMeByLink: true,
+      addMe: true,
       setUserFio: true,
       setUserRights: true,
       addUserListUnitMembership: true,

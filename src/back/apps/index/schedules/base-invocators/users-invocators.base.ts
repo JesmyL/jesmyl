@@ -21,7 +21,7 @@ class SchUsersSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchUsersSo
             let lastUserMi = smylib.takeNextMi(sch.ctrl.users, IScheduleWidgetUserMi.def);
             users.forEach(user => sch.ctrl.users.push({ ...user, mi: ++lastUserMi }));
           }),
-        addMeByLink:
+        addMe:
           ({ auth }) =>
           props =>
             modifySchedule(props, sch => {
@@ -50,7 +50,11 @@ class SchUsersSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchUsersSo
         setUserRights: () => (props, value) => this.modifyUser(props, user => (user.R = value)),
       },
       {
-        addMeByLink: (sch, _, userName) => `В расписании ${scheduleTitleInBrackets(sch)} новый участник ${userName}`,
+        addMe:
+          (sch, _, place) =>
+          ({ auth }) =>
+            `В расписании ${scheduleTitleInBrackets(sch)} новый участник  ` +
+            `${place}: ${auth?.fio ?? '?'} (${auth?.nick ?? '?'})`,
 
         setUserFio: (sch, _, value) => `В расписании ${scheduleTitleInBrackets(sch)} переименован участник ${value}`,
         setUserRights: (sch, _, value) =>

@@ -100,9 +100,7 @@ export default function ScheduleWidget({
           <SendButton
             title="Буду участвовать"
             confirm="Вы будете записаны как участник"
-            onSend={() =>
-              schUsersSokiInvocatorClient.addMeByLink(null, scheduleScopeProps, auth.fio ?? auth.nick ?? '?')
-            }
+            onSend={() => schUsersSokiInvocatorClient.addMe(null, scheduleScopeProps, 'по кнопке в расписании')}
           />
         );
       } else if (rights.isSwHideContent)
@@ -259,7 +257,11 @@ export default function ScheduleWidget({
                       title="Хочу комментить события"
                       className="margin-giant-gap-t"
                       onSend={() =>
-                        schUsersSokiInvocatorClient.addMeByLink(null, scheduleScopeProps, auth.fio ?? auth.nick ?? '?')
+                        schUsersSokiInvocatorClient.addMe(
+                          null,
+                          scheduleScopeProps,
+                          'по кнопке "Хочу комментить события"',
+                        )
                       }
                     />
                   ) : (
