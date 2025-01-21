@@ -6,13 +6,19 @@ import { SchSokiInvocatorSharesMethods } from 'shared/api/invocators/schedules/i
 class SchSokiInvocatorBaseClient extends SokiInvocatorBaseClient<SchSokiInvocatorSharesMethods> {}
 export const schSokiInvocatorBaseClient = new SchSokiInvocatorBaseClient('SchSokiInvocatorBaseClient', {
   editedSchedule: () => async sch => {
-    indexIDB.db.schs.put(sch);
-    indexIDB.db.schs.where({ isRemoved: 1 }).delete();
+    if (sch.isRemoved) {
+      await indexIDB.db.schs.where('w').equals(sch.w).delete();
+    } else await indexIDB.db.schs.put(sch);
+
     setLastModifiedValue(sch.m ?? sch.w);
   },
   freshSchedules: () => async schs => {
-    indexIDB.db.schs.bulkPut(schs);
-    indexIDB.db.schs.where({ isRemoved: 1 }).delete();
+    for (const sch of schs) {
+      if (sch.isRemoved) {
+        await indexIDB.db.schs.where('w').equals(sch.w).delete();
+      } else await indexIDB.db.schs.put(sch);
+    }
+
     const schedules = await indexIDB.db.schs.toArray();
     const max = schedules.reduce((max, sch) => Math.max(max, sch.m ?? sch.w), 0);
     setLastModifiedValue(max);
