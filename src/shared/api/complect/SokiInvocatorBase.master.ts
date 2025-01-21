@@ -2,12 +2,10 @@ import { EventerListenScope, smylib } from 'shared/utils';
 import { isDevelopmentMode } from './environments';
 import { SokiInvokerTranferDto } from './soki';
 
-export const makeSokiInvocatorBase = <ClassNamePostfix extends string, ToolParam = und, OnEachesRet = und>(
+export const makeSokiInvocatorBase = <ClassNamePostfix extends string, ToolParam = und, OnEachesRet = void>(
   classNamePostfix: ClassNamePostfix,
   eventerValue: EventerListenScope<SokiInvokerTranferDto<ToolParam>>,
-  onEachInvoke?: OnEachesRet extends und
-    ? void
-    : (onEachesRet: OnEachesRet, data: { tool: ToolParam; name: string; method: string }) => void,
+  onEachInvoke?: (onEachesRet: OnEachesRet, data: { tool: ToolParam; name: string; method: string }) => void,
 ) => {
   type Methods = Record<string, (...args: any[]) => any>;
 
@@ -41,9 +39,9 @@ export const makeSokiInvocatorBase = <ClassNamePostfix extends string, ToolParam
 
   type ClassName = `${string}${string}${typeof classNamePostfix}`;
 
-  type OnEachOnvocations<M extends Methods> = OnEachesRet extends und
-    ? never
-    : { [K in keyof M]: (value: ReturnType<M[K]>, ...args: Parameters<M[K]>) => OnEachesRet };
+  type OnEachOnvocations<M extends Methods> = {
+    [K in keyof M]: (value: ReturnType<M[K]>, ...args: Parameters<M[K]>) => OnEachesRet;
+  };
 
   type SokiInvocator = new <M extends Methods>(
     className: ClassName,
