@@ -1,18 +1,18 @@
 import { SokiInvocatorBaseClient } from 'front/SokiInvocatorBase.client';
-import { CmSokiInvocatorBaseMethods } from 'shared/api/invocators/cm/invocator.shares.model';
-import { cmIDB } from '../cm-idb';
+import { CmSokiInvocatorSharesModel } from 'shared/api/invocators/cm/invocator.shares.model';
+import { cmIDB } from '../_db/cm-idb';
 
 let lastModifiedLocal: null | number = null;
 export const setLastModifiedValue = async (lastModified: number) => {
-  lastModifiedLocal ??= await cmIDB.getSingleValue('lastModified', 0);
+  lastModifiedLocal ??= await cmIDB.get.lastModified();
 
   if (lastModifiedLocal >= lastModified) return;
   lastModifiedLocal = lastModified;
 
-  cmIDB.setSingleValue('lastModified', lastModified);
+  cmIDB.set.lastModified(lastModified);
 };
 
-class CmSokiInvocatorBaseClient extends SokiInvocatorBaseClient<CmSokiInvocatorBaseMethods> {
+class CmSokiInvocatorBaseClient extends SokiInvocatorBaseClient<CmSokiInvocatorSharesModel> {
   constructor() {
     super('CmSokiInvocatorBaseClient', {
       editedCom: () => async com => {
@@ -46,16 +46,27 @@ class CmSokiInvocatorBaseClient extends SokiInvocatorBaseClient<CmSokiInvocatorB
       editedChords:
         () =>
         async ({ chords, modifiedAt }) => {
-          cmIDB.setSingleValue('chordPack', prev => ({ ...prev, ...chords }));
+          cmIDB.set.chordPack(prev => ({ ...prev, ...chords }));
           setLastModifiedValue(modifiedAt);
         },
 
       freshChordPack:
         () =>
         async ({ pack, modifiedAt }) => {
-          if (pack) cmIDB.setSingleValue('chordPack', pack);
+          if (pack) cmIDB.set.chordPack(pack);
           setLastModifiedValue(modifiedAt);
         },
+
+      freshComComments: () => async comments => {
+        cmIDB.db.comComments.bulkPut(comments);
+        const modifiedAt = comments.reduce((max, comment) => Math.max(max, comment.m), 0);
+        setLastModifiedValue(modifiedAt);
+      },
+
+      freshComFavorites: () => async (list, modifiedAt) => {
+        cmIDB.set.favoriteComs(list);
+        setLastModifiedValue(modifiedAt);
+      },
     });
   }
 }

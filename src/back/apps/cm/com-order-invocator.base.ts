@@ -1,10 +1,10 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { CmComOrderWid, CmComWid, IExportableCom, IExportableOrder } from 'shared/api';
-import { CmComOrderSokiInvocatorMethods } from 'shared/api/invocators/cm/com-order-invocators.model';
+import { CmComOrderSokiInvocatorModel } from 'shared/api/invocators/cm/com-order-invocators.model';
 import { itNNil, smylib } from 'shared/utils';
 import { getCmComNameInBrackets, modifyInvocableCom } from './com-invocator.base';
 
-class CmComOrderSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmComOrderSokiInvocatorMethods> {
+class CmComOrderSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmComOrderSokiInvocatorModel> {
   constructor() {
     super(
       'CmComOrderSokiInvocatorBaseServer',

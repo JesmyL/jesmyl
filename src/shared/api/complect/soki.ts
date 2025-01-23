@@ -76,6 +76,7 @@ export interface TelegramNativeAuthUserData extends OmitOwn<User, 'language_code
 }
 
 export interface SokiClientEventBody {
+  errorMessage?: string;
   connect?: true;
   tgAuthorization?: number;
   tgNativeAuthorization?: TelegramNativeAuthUserData;

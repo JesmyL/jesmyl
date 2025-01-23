@@ -1,12 +1,11 @@
 import { MyLib } from 'front/utils';
 import React from 'react';
+import { MigratableComToolName } from 'shared/api';
 import styled, { css } from 'styled-components';
-import { useAtom, useAtomValue } from '../../../../../../complect/atoms';
 import propsOfClicker from '../../../../../../complect/clicker/propsOfClicker';
 import { contextCreator } from '../../../../../../complect/contextCreator';
-import { cmMolecule } from '../../../molecules';
+import { cmIDB } from '../../../_db/cm-idb';
 import { Com } from '../Com';
-import { MigratableComToolName } from '../Com.model';
 import { useCcom } from '../useCcom';
 import { CmCatsBindsComTool } from './complect/CatsBinds';
 import { ChordImagesTool } from './complect/ChordImagesTool';
@@ -22,8 +21,6 @@ import { TranslationTool } from './complect/TranslationTool';
 import { ComToolItemAttrsContext, IsComToolIconItemsContext } from './ComTool';
 
 const RedactComTool = React.lazy(() => import('./complect/RedactComTool'));
-
-const comTopToolsAtom = cmMolecule.select(s => s.comTopTools);
 
 const [ComToolsCcomContext, useComToolsCcomContext] = contextCreator<Com | und>(undefined);
 
@@ -75,7 +72,7 @@ const toolKeys = MyLib.keys(toolsDict);
 
 export const useMigratableListComTools = () => {
   const ccom = useCcom();
-  const [comTopTools, setComTopTools] = useAtom(comTopToolsAtom);
+  const [comTopTools, setComTopTools] = cmIDB.use.comTopTools();
 
   mapToolsSelf.comTopTools = comTopTools;
   mapToolsSelf.fun = (tool: MigratableComToolName) => {
@@ -89,7 +86,7 @@ export const useMigratableListComTools = () => {
 
 export const useMigratableTopComTools = () => {
   const ccom = useCcom();
-  const comTopTools = useAtomValue(comTopToolsAtom);
+  const comTopTools = cmIDB.useValue.comTopTools();
 
   return (
     <ComToolsCcomContext.Provider value={ccom}>

@@ -1,16 +1,44 @@
+import { useLiveQuery } from 'dexie-react-hooks';
+import { indexIDB } from 'front/components/index/db/index-idb';
 import { CmComWid } from '../../../../shared/api/complect/apps/cm/complect/enums';
 import { atom, Molecule } from '../../../complect/atoms';
-import { FractionalServerStore } from '../../../complect/atoms/FractionalServerStore';
+import { cmIDB } from './_db/cm-idb';
 import { CmState } from './Cm.model';
 import { CmEditorStoraged } from './editor/CmEditor.model';
+import { cmUserStoreSokiInvocatorClient } from './invocators/user-store-invocator.methods';
 import { defaultCmConfig } from './translation/complect/controlled/hooks/configs';
 
-export const comCommentFractionalStore = new FractionalServerStore<CmComWid, string | und>(
-  'cm/comComment::',
-  'cm/comCommentLastTs:',
-  '',
-);
-export const useComComment = comCommentFractionalStore.useValue;
+export const useComComment = (comw: CmComWid) => useLiveQuery(() => cmIDB.db.comComments.get(comw), [comw])?.comment;
+
+let trySend = async (comw: CmComWid, comment: string, setIsLoading?: (is: boolean) => void) => {
+  const auth = await indexIDB.get.auth();
+  if (auth?.login == null) {
+    trySend = () => Promise.resolve();
+    return;
+  } else {
+    trySend = async (comw: CmComWid, comment: string, setIsLoading?: (is: boolean) => void) => {
+      setIsLoading?.(true);
+      const prevComment = (await cmIDB.db.comComments.get(comw))?.comment;
+
+      if (prevComment === comment) return;
+
+      clearTimeout(updateComCommentTimeOut[comw]);
+      updateComCommentTimeOut[comw] = setTimeout(async () => {
+        await cmUserStoreSokiInvocatorClient.setComComment(null, comw, comment);
+        setIsLoading?.(false);
+      }, 1000);
+    };
+
+    trySend(comw, comment, setIsLoading);
+  }
+};
+
+let updateComCommentTimeOut = {} as Record<CmComWid, TimeOut>;
+export const updateComComment = async (comw: CmComWid, comment: string, setIsLoading?: (is: boolean) => void) => {
+  await trySend(comw, comment, setIsLoading);
+
+  await cmIDB.db.comComments.put({ comw, comment });
+};
 
 export const cmMolecule = new Molecule<CmState & CmEditorStoraged>(
   {
@@ -20,11 +48,9 @@ export const cmMolecule = new Molecule<CmState & CmEditorStoraged>(
     laterComwList: [],
     isMiniAnchor: false,
     playerHideMode: 'min',
-    marks: [],
     comFontSize: 15,
-    comTopTools: ['mark-com', 'fullscreen-mode', 'chords-variant'],
+    // comTopTools: ['mark-com', 'fullscreen-mode', 'chords-variant'],
     translationScreenConfigs: [defaultCmConfig],
-    comComments: {},
     isMetronomeHide: true,
     metronomeAccentes: '1000',
     metronomeMainSound: '380',
@@ -40,8 +66,7 @@ export const cmMolecule = new Molecule<CmState & CmEditorStoraged>(
   },
   'cm',
   {
-    serverStored: ['marks', 'favoriteMeetings', 'comComments', 'comTopTools'],
-    dynamicStores: { ...comCommentFractionalStore.self },
+    serverStored: ['favoriteMeetings'],
   },
 );
 

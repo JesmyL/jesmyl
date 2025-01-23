@@ -5,14 +5,14 @@ import {
   SchDaysSokiInvocatorMethods,
   SchEventTypesSokiInvocatorMethods,
   SchGamesSokiInvocatorMethods,
-  SchGeneralSokiInvocatorMethods,
+  SchGeneralSokiInvocatorModel,
   SchListsSokiInvocatorMethods,
   SchPhotosSokiInvocatorMethods,
   SchRolesSokiInvocatorMethods,
   SchUsersSokiInvocatorMethods,
 } from 'shared/api/invocators/schedules/invocators.model';
 
-class SchGeneralSokiInvocatorClient extends SokiInvocatorClient<SchGeneralSokiInvocatorMethods> {
+class SchGeneralSokiInvocatorClient extends SokiInvocatorClient<SchGeneralSokiInvocatorModel> {
   constructor() {
     super('SchGeneralSokiInvocatorClient', {
       create: true,

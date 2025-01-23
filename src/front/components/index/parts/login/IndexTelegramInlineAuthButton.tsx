@@ -37,6 +37,7 @@ export const IndexTelegramInlineAuthButton = () => {
 
                           setAuth(tgAuthorization.value);
                           soki.sendConnectionHandshake();
+                          soki.onUserAuthorize.invoke(true);
                         });
                     }}
                   />

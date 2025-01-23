@@ -1,6 +1,6 @@
 import { CmCatWid, CmComWid, IExportableCat } from 'shared/api/complect/apps';
 
-export type CmCatSokiInvocatorMethods = {
+export type CmCatSokiInvocatorModel = {
   rename: (catw: CmCatWid, name: string) => IExportableCat;
   setKind: (catw: CmCatWid, kind: string) => IExportableCat;
   clearStack: (catw: CmCatWid) => IExportableCat;

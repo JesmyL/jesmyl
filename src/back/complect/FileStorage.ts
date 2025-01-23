@@ -1,27 +1,20 @@
-import fs from 'fs';
+import fs, { StatsListener } from 'fs';
 import { itIt } from 'shared/utils';
 
-type Modifieds = Record<string, number>;
 const registeredPaths = new Set<string>();
 
 export class FileStore<Value> {
   private value: Value;
-  private modifiedTimeStampDict?: Modifieds;
   private filePath = '';
 
-  constructor(path: `/${string}`, defaultValue: Value) {
+  constructor(
+    path: `/${string}`,
+    private defaultValue: Value,
+  ) {
     this.filePath = `${__dirname}${path}`;
     this.value = this.readValue(defaultValue);
     if (registeredPaths.has(path)) throw new Error(`The path ${path} was registered again`);
     registeredPaths.add(path);
-  }
-
-  private readModifiedsDict(): Modifieds {
-    return this.readValue({} as never, `${this.filePath}.modifieds`);
-  }
-
-  private saveModifiedsDict() {
-    this.writeValue(this.modifiedTimeStampDict as never, `${this.filePath}.modifieds`);
   }
 
   private readValue(defaultValue: Value, filePath = this.filePath) {
@@ -63,6 +56,11 @@ export class FileStore<Value> {
     return this.value;
   }
 
+  getValueWithAutoSave(): Value {
+    Promise.resolve().then(() => this.saveValue());
+    return this.value;
+  }
+
   setValue(value: Value) {
     this.value = value;
     this.writeValue(value);
@@ -72,21 +70,12 @@ export class FileStore<Value> {
     this.writeValue(this.value);
   }
 
-  getFileModifiedAt = () => fs.statSync(this.filePath).mtime.getTime();
+  fileModifiedAt = () => fs.statSync(this.filePath).mtime.getTime();
 
-  setModifiedTimeStamp(key: string) {
-    this.modifiedTimeStampDict ??= this.readModifiedsDict();
-    const mod = (this.modifiedTimeStampDict[key] = Date.now() + Math.random());
-    this.saveModifiedsDict();
-    return mod;
-  }
-
-  getModifiedTimeStamp(key: string) {
-    this.modifiedTimeStampDict ??= this.readModifiedsDict();
-    return this.modifiedTimeStampDict[key];
-  }
-
-  getModifiedTimeStampDict() {
-    return (this.modifiedTimeStampDict ??= this.readModifiedsDict());
+  watchFile(cb: (value: Value, ...args: Parameters<StatsListener>) => void) {
+    fs.watchFile(this.filePath, (curr, prev) => {
+      this.value = this.readValue(this.defaultValue);
+      cb(this.value, curr, prev);
+    });
   }
 }

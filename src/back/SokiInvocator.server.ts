@@ -1,8 +1,8 @@
 import { makeSokiInvocator } from 'shared/api/complect/SokiInvocator.master';
-import { WebSocket } from 'ws';
 import sokiServer from './complect/soki/SokiServer';
+import { SokiServerClientSelector } from './complect/soki/model';
 
-export const SokiInvocatorServer = makeSokiInvocator<'SokiInvocatorServer', WebSocket | null>(
+export const SokiInvocatorServer = makeSokiInvocator<'SokiInvocatorServer', SokiServerClientSelector>(
   'SokiInvocatorServer',
   (invoke, client) => {
     const { promise, reject, resolve } = Promise.withResolvers();

@@ -7,7 +7,7 @@ import { useIndexValues } from '../atoms';
 import { indexIDB } from '../db/index-idb';
 
 export default function IndexAbout() {
-  const appVersion = indexIDB.useSingleValueLiveQuery('appVersion');
+  const appVersion = indexIDB.useValue.appVersion();
   const values = useIndexValues();
 
   return (

@@ -28,7 +28,7 @@ import {
 
 type Callback<Value> = (props: ScheduleScopeProps, value: Value) => IScheduleWidget;
 
-export type SchGeneralSokiInvocatorMethods = {
+export type SchGeneralSokiInvocatorModel = {
   create: (title: string) => IScheduleWidget;
   remove: (props: ScheduleScopeProps) => IScheduleWidget;
   copySchedule: (props: ScheduleScopeProps, schedule: IScheduleWidget) => IScheduleWidget;

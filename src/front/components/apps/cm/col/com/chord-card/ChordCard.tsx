@@ -1,9 +1,7 @@
-import { ChordPack, ChordTrack } from '../../../../../../../shared/api/complect/apps/cm/complect/chord-card';
+import { ChordTrack } from '../../../../../../../shared/api/complect/apps/cm/complect/chord-card';
 import { cmIDB } from '../../../_db/cm-idb';
 import './ChordCard.scss';
 import ChordCardTracked from './ChordCardTracked';
-
-const defChordPack: ChordPack = {};
 
 export default function ChordCard({
   chordName,
@@ -15,7 +13,7 @@ export default function ChordCard({
   customContent?: (card: JSX.Element | null) => JSX.Element;
   bottomPadding?: number;
 }) {
-  const chords = cmIDB.useSingleValueLiveQuery('chordPack', defChordPack);
+  const chords = cmIDB.useValue.chordPack();
   const track = (resource ?? chords)[chordName];
 
   return (

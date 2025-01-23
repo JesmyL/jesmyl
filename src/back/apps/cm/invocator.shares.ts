@@ -1,7 +1,7 @@
 import { SokiInvocatorServer } from 'back/SokiInvocator.server';
-import { CmSokiInvocatorBaseMethods } from 'shared/api/invocators/cm/invocator.shares.model';
+import { CmSokiInvocatorSharesModel } from 'shared/api/invocators/cm/invocator.shares.model';
 
-class CmSokiInvocatorServer extends SokiInvocatorServer<CmSokiInvocatorBaseMethods> {
+class CmSokiInvocatorServer extends SokiInvocatorServer<CmSokiInvocatorSharesModel> {
   constructor() {
     super('CmSokiInvocatorServer', {
       editedCom: true,
@@ -12,8 +12,10 @@ class CmSokiInvocatorServer extends SokiInvocatorServer<CmSokiInvocatorBaseMetho
 
       editedChords: true,
       freshChordPack: true,
+
+      freshComComments: true,
+      freshComFavorites: true,
     });
   }
 }
-
 export const cmServerInvocatorShareMethods = new CmSokiInvocatorServer();

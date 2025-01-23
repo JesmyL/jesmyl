@@ -1,6 +1,6 @@
 import { IScheduleWidget } from 'shared/api/complect/schedule-widget';
 
-export type SchSokiInvocatorSharesMethods = {
+export type SchSokiInvocatorSharesModel = {
   editedSchedule: (sch: IScheduleWidget) => unknown;
   freshSchedules: (schs: IScheduleWidget[]) => unknown;
 };

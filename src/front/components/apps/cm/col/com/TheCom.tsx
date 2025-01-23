@@ -16,14 +16,14 @@ interface Props {
   listRef?: RefObject<HTMLDivElement>;
 }
 
-export default function TheCom({
+export const TheCom = ({
   com: topCom,
   showInvisibles,
   chordVisibleVariant,
   isMiniAnchor,
   fontSize,
   listRef,
-}: Props) {
+}: Props) => {
   const ccom = useCcom();
   const com = topCom ?? ccom;
 
@@ -39,4 +39,4 @@ export default function TheCom({
       listRef={listRef}
     />
   );
-}
+};

@@ -9,7 +9,7 @@ interface Storage {
   auth: LocalSokiAuth;
   values: IndexValues;
   appFontFamily: string | null;
-  dviceId: DeviceId;
+  deviceId: DeviceId;
 
   currentApp: AppName;
   appVersion: number;
@@ -21,15 +21,15 @@ interface Storage {
 
 class IndexIDB extends DexieDB<Storage> {
   constructor() {
-    super(true, 'index', {
-      lastModified: true,
-      auth: true,
-      values: true,
-      appFontFamily: true,
-      appVersion: true,
-      currentApp: true,
-      fileAssociations: true,
-      dviceId: true,
+    super('index', {
+      lastModified: { $byDefault: 0 },
+      auth: { $byDefault: { level: 0 } },
+      values: { $byDefault: {} },
+      appFontFamily: { $byDefault: null },
+      appVersion: { $byDefault: 0 },
+      currentApp: { $byDefault: 'cm' },
+      fileAssociations: { $byDefault: {} as never },
+      deviceId: { $byDefault: DeviceId.def },
 
       schs: {
         w: '++',

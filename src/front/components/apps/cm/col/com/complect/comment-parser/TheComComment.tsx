@@ -1,7 +1,12 @@
-import { useEffect, useState } from 'react';
+import { addEventListenerPipe, hookEffectPipe } from 'front/complect/hookEffectPipe';
+import { TheIconLoading } from 'front/complect/the-icon/IconLoading';
+import { propagationStopper } from 'front/complect/utils/utils';
+import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
+import { useEffect, useRef, useState } from 'react';
+import { isNIs } from 'shared/utils';
+import styled from 'styled-components';
 import { CmComWid } from '../../../../../../../../shared/api/complect/apps/cm/complect/enums';
 import { useAtom } from '../../../../../../../complect/atoms';
-import KeyboardInput from '../../../../../../../complect/keyboard/KeyboardInput';
 import Modal from '../../../../../../../complect/modal/Modal/Modal';
 import { ModalBody } from '../../../../../../../complect/modal/Modal/ModalBody';
 import { ModalHeader } from '../../../../../../../complect/modal/Modal/ModalHeader';
@@ -10,11 +15,9 @@ import { IconCheckmarkCircle02StrokeRounded } from '../../../../../../../complec
 import { IconEdit01StrokeRounded } from '../../../../../../../complect/the-icon/icons/edit-01';
 import { IconMessageQuestionStrokeRounded } from '../../../../../../../complect/the-icon/icons/message-question';
 import { IconNote03StrokeRounded } from '../../../../../../../complect/the-icon/icons/note-03';
-import { cmMolecule, useComComment } from '../../../../molecules';
+import { cmMolecule, updateComComment, useComComment } from '../../../../molecules';
 import { isComCommentRedactAtom } from './complect';
 import TheComCommentInfo from './infos/TheComCommentInfo';
-
-const callbackStopper: CallbackStopper = event => event.stopPropagation();
 
 interface Props {
   comw: CmComWid;
@@ -24,24 +27,56 @@ const HashSwitcherIcon = IconNote03StrokeRounded;
 
 const isShowConHashCommentsAtom = cmMolecule.select(s => s.isShowComHashComments);
 
-export default function TheComComment({ comw }: Props) {
-  const [comment, setComment] = useComComment(comw);
+export const TheComComment = ({ comw }: Props) => {
+  const comment = useComComment(comw) ?? '';
   const [isShowConHashComments, setIsShowConHashComments] = useAtom(isShowConHashCommentsAtom);
   const [isShowInfoModal, setIsShowInfoModal] = useState(false);
-  const [editedComment, setEditedComment] = useState(comment);
   const [isRedact, setIsRedact] = useAtom(isComCommentRedactAtom);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(
-    () =>
-      setComment(prev => {
-        if (prev === editedComment || (!prev && !editedComment)) return prev;
-        return editedComment || undefined;
-      }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [editedComment],
-  );
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => setEditedComment(comment), [isRedact]);
+  const setInputHeight = () => {
+    if (inputRef.current === null) return;
+    const textareaNode = inputRef.current;
+    textareaNode.style.height = '1px';
+    textareaNode.style.height = `${textareaNode.scrollHeight}px`;
+  };
+
+  useEffect(() => {
+    (async () => {
+      if (inputRef.current === null) return;
+      const inputNode = inputRef.current;
+      const commentBox = await cmIDB.db.comComments.get(comw);
+      if (commentBox == null) return;
+
+      inputNode.value = commentBox.comment;
+      setInputHeight();
+    })();
+  }, [comw, isRedact]);
+
+  useEffect(() => {
+    if (isRedact || inputRef.current === null) return;
+    inputRef.current.value = comment;
+  }, [comment, isRedact]);
+
+  useEffect(() => {
+    if (inputRef.current === null) return;
+    const inputNode = inputRef.current;
+
+    setInputHeight();
+
+    return hookEffectPipe()
+      .pipe(addEventListenerPipe(inputNode, 'focus', setInputHeight))
+      .pipe(addEventListenerPipe(inputNode, 'click', propagationStopper))
+      .pipe(
+        addEventListenerPipe(inputNode, 'input', () => {
+          setInputHeight();
+
+          updateComComment(comw, inputNode.value, setIsLoading);
+        }),
+      )
+      .effect();
+  }, [comw, isRedact]);
 
   return (
     <>
@@ -53,15 +88,22 @@ export default function TheComComment({ comw }: Props) {
             className="flex full-width between color--7 margin-gap-v"
             onClick={() => setIsRedact(!isRedact)}
           />
+          <TheIconLoading isLoading={isLoading} />
         </span>
         <div className="flex flex-gap">
           <HashSwitcherIcon
             className={`flex full-width between color--7 margin-gap-v${isShowConHashComments ? '' : ' fade-05'}`}
-            onClick={() => setIsShowConHashComments(is => !is)}
+            onClick={event => {
+              propagationStopper(event);
+              setIsShowConHashComments(isNIs);
+            }}
           />
           <IconMessageQuestionStrokeRounded
             className={`flex full-width between color--7 margin-gap-v`}
-            onClick={() => setIsShowInfoModal(is => !is)}
+            onClick={event => {
+              propagationStopper(event);
+              setIsShowInfoModal(isNIs);
+            }}
           />
         </div>
       </div>
@@ -74,17 +116,17 @@ export default function TheComComment({ comw }: Props) {
         </Modal>
       )}
       {isRedact ? (
-        <KeyboardInput
-          multiline
-          withoutCloseButton
+        <StyledInput
           className="full-width bgcolor--2"
-          value={editedComment}
-          onChange={setEditedComment}
-          onKeyDown={callbackStopper}
+          ref={inputRef}
         />
       ) : (
         <div className="white-pre-line break-wrap padding-big-gap-b">{comment}</div>
       )}
     </>
   );
-}
+};
+
+const StyledInput = styled.textarea`
+  resize: none;
+`;

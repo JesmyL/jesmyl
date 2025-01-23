@@ -10,8 +10,8 @@ import RollControled from '../../base/RolledContent';
 import { cmComFontSizeAtom, cmMolecule } from '../../molecules';
 import { Com } from './Com';
 import './Com.scss';
-import TheCom from './TheCom';
-import TheComComment from './complect/comment-parser/TheComComment';
+import { TheCom } from './TheCom';
+import { TheComComment } from './complect/comment-parser/TheComComment';
 import { useComCommentBlockCss } from './complect/comment-parser/useComCommentBlock';
 
 let onPrevCom: () => void;
@@ -53,7 +53,7 @@ export default function TheControlledCom({
   };
 
   onPrevCom = () => {
-    if (!comwList) return;
+    if (!comwList?.length) return;
     const comi = comwList.findIndex(wid => wid === com.wid);
     if (comi > 0) {
       onComSet?.(comwList[comi - 1]);

@@ -1,8 +1,6 @@
-import { CmComWid } from '../../../../shared/api/complect/apps/cm/complect/enums';
 import { IExportableMeetings } from '../../../../shared/api/complect/apps/cm/complect/Meetings';
 import { ClientExecutionDict } from '../../../complect/exer/Exer.model';
 import { IExportableSetts } from './col/com/block-styles/BlockStyles.model';
-import { MigratableComToolName } from './col/com/Com.model';
 import { CmTranslationScreenConfig } from './translation/complect/controlled/model';
 
 export type CmRollMode = 'pause' | 'play' | null;
@@ -17,14 +15,11 @@ export type FavoriteMeetings = Record<'events' | 'contexts', number[]>;
 export interface CmState {
   laterComwList: number[];
   chordVisibleVariant: ChordVisibleVariant;
-  marks: number[];
   meetings: IExportableMeetings;
   comFontSize: number;
 
-  // todo: remove it
-  comComments: Partial<Record<CmComWid, string>>;
   isShowComHashComments: boolean;
-  comTopTools: MigratableComToolName[];
+  // comTopTools: MigratableComToolName[];
   isMiniAnchor: boolean;
   playerHideMode: PlayerHideMode;
   isMetronomeHide: boolean;

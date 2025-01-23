@@ -19,12 +19,11 @@ import './ChordRedactor.scss';
 
 const redactableChordsAtom = atom<ChordPack>({});
 const chordsToSendAtom = atom<ChordPack>({});
-const defChordPack: ChordPack = {};
 
 export default function ChordRedactor() {
   const [{ newChordName = '' }, setProps] = useToNewChordSearches();
 
-  const chords = cmIDB.useSingleValueLiveQuery('chordPack', defChordPack);
+  const chords = cmIDB.useValue.chordPack();
   const [currentChordName, setCurrentChord] = useState(newChordName);
   const [isNewChord, setIsNewChord] = useState(!!newChordName);
   const [redactableChords, updateRedactableChords] = useAtom(redactableChordsAtom);

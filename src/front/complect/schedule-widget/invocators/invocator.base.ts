@@ -1,9 +1,9 @@
 import { indexIDB } from 'front/components/index/db/index-idb';
 import { setLastModifiedValue } from 'front/components/index/db/invocators/invocator.base';
 import { SokiInvocatorBaseClient } from 'front/SokiInvocatorBase.client';
-import { SchSokiInvocatorSharesMethods } from 'shared/api/invocators/schedules/invocators.shares.model';
+import { SchSokiInvocatorSharesModel } from 'shared/api/invocators/schedules/invocators.shares.model';
 
-class SchSokiInvocatorBaseClient extends SokiInvocatorBaseClient<SchSokiInvocatorSharesMethods> {}
+class SchSokiInvocatorBaseClient extends SokiInvocatorBaseClient<SchSokiInvocatorSharesModel> {}
 export const schSokiInvocatorBaseClient = new SchSokiInvocatorBaseClient('SchSokiInvocatorBaseClient', {
   editedSchedule: () => async sch => {
     if (sch.isRemoved) {

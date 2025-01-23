@@ -23,6 +23,7 @@ export default function useLaterComList({ maxStack = 4 } = {}) {
 
   const addLaterComw = useCallback(
     (comw: number) => {
+      if (comw === 0) return;
       const newList = [comw].concat(
         listRef.current.filter(laterComw => laterComw !== comw).filter((_, laterComwi) => maxStack - 1 > laterComwi),
       );

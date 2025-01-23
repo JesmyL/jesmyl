@@ -1,24 +1,29 @@
 import { DexieDB } from 'front/complect/_DexieDB';
-import { IExportableCat, IExportableCom } from 'shared/api';
+import { CmComWid, ICmComComment, IExportableCat, IExportableCom, MigratableComToolName } from 'shared/api';
 import { EeStorePack } from 'shared/api/complect/apps/cm/complect/ee-store';
 import { ChordPack } from '../../../../../shared/api/complect/apps/cm/complect/chord-card';
 
 interface Storage {
   chordPack: ChordPack;
   eeStore: EeStorePack;
+  favoriteComs: CmComWid[];
+  comTopTools: MigratableComToolName[];
 
   lastModified: number;
 
+  comComments: ICmComComment[];
   coms: IExportableCom[];
   cats: IExportableCat[];
 }
 
 class CmIDB extends DexieDB<Storage> {
   constructor() {
-    super(true, 'cm', {
-      chordPack: true,
-      lastModified: true,
-      eeStore: true,
+    super('cm', {
+      chordPack: { $byDefault: {} },
+      lastModified: { $byDefault: 0 },
+      eeStore: { $byDefault: {} },
+      favoriteComs: { $byDefault: [] },
+      comTopTools: { $byDefault: ['mark-com', 'fullscreen-mode', 'chords-variant'] as never },
 
       coms: {
         w: '++',
@@ -27,6 +32,9 @@ class CmIDB extends DexieDB<Storage> {
       cats: {
         w: '++',
         isRemoved: true,
+      },
+      comComments: {
+        comw: '++',
       },
     });
   }

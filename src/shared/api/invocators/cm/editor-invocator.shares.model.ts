@@ -1,6 +1,6 @@
 import { EeStorePack } from 'shared/api/complect/apps';
 
-export type CmEditorSokiInvocatorBaseMethods = {
+export type CmEditorSokiInvocatorModel = {
   editedEEWords: (data: { words: EeStorePack; modifiedAt: number }) => unknown;
   freshEEPack: (data: { pack: EeStorePack; modifiedAt: number }) => unknown;
 };

@@ -22,7 +22,7 @@ export const EERulesListComputer = memo(function ListComputer({
   const [etap, setEtap] = useState('Подготовка');
 
   useEffect(() => {
-    cmIDB.getSingleValue('eeStore').then(store => setStore(mylib.keys(store ?? {})));
+    cmIDB.get.eeStore().then(store => setStore(mylib.keys(store ?? {})));
   }, []);
 
   useEffect(() => {

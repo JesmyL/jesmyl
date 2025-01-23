@@ -4,107 +4,89 @@ import { useCallback } from 'react';
 import { emptyArray, SMyLib, smylib } from '../../shared/utils';
 
 const keyvalues = '%keyvalues%';
+const byDefaultField = '$byDefault';
+type ByDefaultField = typeof byDefaultField;
+
+type ValueSetter<Store, K extends keyof Store> = (value: Store[K] | ((val: Store[K]) => Store[K])) => void;
 
 export class DexieDB<Store> {
   db: Dexie &
     Required<{
-      [K in keyof Store]: Store[K] extends any[] ? EntityTable<Store[K][number], keyof Store[K][number]> : never;
+      [K in keyof Store]: Store[K] extends unknown[] ? EntityTable<Store[K][number], keyof Store[K][number]> : never;
     }>;
 
-  private tryIsSimpleValue: <Key extends keyof Store>(key: Key) => void;
+  private selectors = {} as { [K in keyof Required<Store>]: K };
+
+  set = {} as { [K in keyof Required<Store>]: ValueSetter<Store, K> };
+  get = {} as { [K in keyof Required<Store>]: () => Promise<Store[K]> };
+  rem = {} as { [K in keyof Required<Store>]: () => Promise<number> };
+
+  use = {} as { [K in keyof Required<Store>]: () => [Store[K], ValueSetter<Store, K>] };
+  useSet = {} as { [K in keyof Required<Store>]: () => ValueSetter<Store, K> };
+  useValue = {} as { [K in keyof Required<Store>]: () => Store[K] };
 
   constructor(
-    isDev: boolean,
     storageName: string,
-    defaults: Required<{
+    private defaults: Required<{
       [K in keyof Store]: Store[K] extends any[]
-        ? keyof Store[K][number] extends string
-          ? Partial<Record<'_', '++'> & Record<keyof Store[K][number], true | '++'>>
-          : never
-        : true;
+        ?
+            | Omit<Partial<Record<'_', '++'> & Record<keyof Store[K][number], true | '++'>>, ByDefaultField>
+            | Record<ByDefaultField, Store[K]>
+        : Record<ByDefaultField, Store[K]>;
     }>,
     version = 1,
   ) {
-    if (isDev) {
-      this.tryIsSimpleValue = key => {
-        if (defaults[key] === true) return;
-        throw new Error(`${key as never} is not simple object value`);
-      };
-    } else this.tryIsSimpleValue = () => {};
-
     this.db = new Dexie(storageName) as never;
 
-    const stores = {} as Record<string, string>;
+    const stores = {} as Record<keyof Store, string>;
 
-    Object.keys(defaults).forEach(key => {
-      if (defaults[key as never] === true) return;
+    smylib.keys(defaults).forEach(key => {
+      if (byDefaultField in defaults[key]) {
+        this.selectors[key] = key;
+        this.get[key] = async () => {
+          const store = (await this.getKeyvalues().get({ key })) as any;
+          if (store === undefined) return this.defaults[key][byDefaultField];
+          return store.val;
+        };
 
-      stores[key] = SMyLib.entries(defaults[key as never])
-        .map(([key, val]) => `${val === '++' ? '++' : ''}${key as never}`)
+        this.rem[key] = () => this.getKeyvalues().where({ key }).delete();
+
+        this.set[key] = async value => {
+          if (smylib.isFunc(value)) {
+            return await this.getKeyvalues().put({ val: value(await this.get[key]()), key });
+          } else {
+            return await this.getKeyvalues().put({ val: value, key });
+          }
+        };
+
+        this.use[key] = () => [this.useValue[key](), this.useSet[key]()];
+
+        this.useSet[key] = () => justUseCallback((value: unknown) => this.set[key](value as never), emptyArray);
+
+        const defaultValue = this.defaults[key][byDefaultField];
+
+        this.useValue[key] = () => {
+          return (
+            justUseLiveQuery(() => this.getKeyvalues().get({ key }) as never as { val: never })?.val ??
+            (defaultValue as never)
+          );
+        };
+
+        return;
+      }
+
+      stores[key] = SMyLib.entries(defaults[key])
+        .map(([key, val]) => `${val === '++' ? val : ''}${key as never}`)
         .join(', ');
     });
 
-    stores[keyvalues] = '++key';
+    stores[keyvalues as keyof Store] = '++key';
 
     this.db.version(version).stores(stores);
   }
 
-  private getKeyvalues() {
-    return this.db[keyvalues as never] as EntityTable<unknown>;
-  }
-
-  async getSingleValue<
-    Key extends keyof Store,
-    Value extends Store[Key] extends any[] ? never : Store[Key],
-    DefaultValue extends Value | und,
-  >(key: Key, defaultValue?: DefaultValue): Promise<Value | DefaultValue> {
-    this.tryIsSimpleValue(key);
-    const store = (await this.getKeyvalues().get({ key })) as any;
-
-    if (store === undefined) return defaultValue as never;
-
-    return store.val;
-  }
-
-  async setSingleValue<
-    Key extends keyof Store,
-    Value extends Store[Key] extends any[] ? never : Store[Key],
-    DefaultValue extends Value | und,
-  >(key: Key, value: Value | ((value: Value | DefaultValue) => Value), defaultValue?: DefaultValue) {
-    this.tryIsSimpleValue(key);
-
-    if (smylib.isFunc(value)) {
-      return await this.getKeyvalues().put({
-        key,
-        val: value((await this.getSingleValue(key, defaultValue as never)) as never),
-      } as never);
-    } else {
-      return await this.getKeyvalues().put({ key, val: value } as never);
-    }
-  }
-
-  async remSingleValue<Key extends keyof Store>(key: Key) {
-    this.tryIsSimpleValue(key);
-    return await this.getKeyvalues().where({ key }).delete();
-  }
-
-  useSingleValueLiveQuery<Key extends keyof Store, Def extends Store[Key] | und>(
-    key: Key,
-    def?: Def,
-  ): Def | Store[Key] {
-    return (justUse(() => this.getKeyvalues().get({ key }) as never as { val: Store[Key] })?.val as never) ?? def;
-  }
-
-  useSingleValueState<Key extends keyof Store, Def extends Store[Key] | und>(key: Key, def?: Def) {
-    return [
-      this.useSingleValueLiveQuery(key, def),
-      justCallback(
-        (val: Store[Key] | ((val: Store[Key]) => Store[Key])) => this.setSingleValue(key, val as never),
-        emptyArray,
-      ),
-    ] as const;
-  }
+  private getKeyvalues = () => this.db[keyvalues as never] as EntityTable<unknown>;
 }
 
-const justUse = useLiveQuery;
-const justCallback = useCallback;
+const justUseLiveQuery = useLiveQuery;
+const justUseCallback = useCallback;

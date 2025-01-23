@@ -6,10 +6,10 @@ import CmTranslationComListContextInMarks from '../../base/translations/InMarks'
 import { ComFaceList } from '../../col/com/face/list/ComFaceList';
 import { cmCompositionRoute } from '../../routing/cmRoutingApp';
 import { LocalListToolsPopup } from '../popups/LocalListToolsPopup';
-import { useMarks } from './useMarks';
+import { useFavoriteComs } from './useFavoriteComs';
 
-export default function Marks() {
-  const { markedComs } = useMarks();
+export default function FavoriteComs() {
+  const { markedComs } = useFavoriteComs();
   const [isOpenTools, setIsOpenTools] = useState(false);
 
   return (

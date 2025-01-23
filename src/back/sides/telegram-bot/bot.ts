@@ -2,6 +2,7 @@ import { FileStore } from 'back/complect/FileStorage';
 import { JesmylTelegramBotWrapper } from './tg-bot-wrapper';
 
 const botEnv = new FileStore('/.tgBotEnv', { token: '' });
+// botEnv.setValue({ token: '' });
 
 export const jesmylTgBot = new JesmylTelegramBotWrapper(botEnv.getValue().token, {
   polling: true,

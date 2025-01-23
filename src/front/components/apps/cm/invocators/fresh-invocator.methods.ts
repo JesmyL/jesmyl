@@ -1,7 +1,7 @@
 import { SokiInvocatorClient } from 'front/SokiInvocator.client';
-import { CmFreshSokiInvocatorMethods } from 'shared/api/invocators/cm/fresh-invocators.model';
+import { CmFreshSokiInvocatorModel } from 'shared/api/invocators/cm/fresh-invocators.model';
 
-class CmFreshSokiInvocatorClient extends SokiInvocatorClient<CmFreshSokiInvocatorMethods> {
+class CmFreshSokiInvocatorClient extends SokiInvocatorClient<CmFreshSokiInvocatorModel> {
   constructor() {
     super('CmFreshSokiInvocatorClient', {
       getFreshes: true,

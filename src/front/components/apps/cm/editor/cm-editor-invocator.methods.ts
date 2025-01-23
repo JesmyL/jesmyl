@@ -1,10 +1,10 @@
 import { SokiInvocatorClient } from 'front/SokiInvocator.client';
-import { CmCatSokiInvocatorMethods } from 'shared/api/invocators/cm/cat-invocators.model';
-import { CmComSokiInvocatorMethods } from 'shared/api/invocators/cm/com-invocators.model';
-import { CmComOrderSokiInvocatorMethods } from 'shared/api/invocators/cm/com-order-invocators.model';
-import { CmOtherSokiInvocatorMethods } from 'shared/api/invocators/cm/other-invocators.model';
+import { CmCatSokiInvocatorModel } from 'shared/api/invocators/cm/cat-invocators.model';
+import { CmComSokiInvocatorModel } from 'shared/api/invocators/cm/com-invocators.model';
+import { CmComOrderSokiInvocatorModel } from 'shared/api/invocators/cm/com-order-invocators.model';
+import { CmEditorSokiInvocatorModel } from 'shared/api/invocators/cm/editor-invocators.model';
 
-class CmCatSokiInvocatorClient extends SokiInvocatorClient<CmCatSokiInvocatorMethods> {}
+class CmCatSokiInvocatorClient extends SokiInvocatorClient<CmCatSokiInvocatorModel> {}
 export const cmCatClientInvocatorMethods = new CmCatSokiInvocatorClient('CmCatSokiInvocatorClient', {
   rename: true,
 
@@ -18,7 +18,7 @@ export const cmCatClientInvocatorMethods = new CmCatSokiInvocatorClient('CmCatSo
   bringBackToLife: true,
 });
 
-class CmComSokiInvocatorClient extends SokiInvocatorClient<CmComSokiInvocatorMethods> {}
+class CmComSokiInvocatorClient extends SokiInvocatorClient<CmComSokiInvocatorModel> {}
 export const cmComClientInvocatorMethods = new CmComSokiInvocatorClient('CmComSokiInvocatorClient', {
   newCom: true,
 
@@ -44,7 +44,7 @@ export const cmComClientInvocatorMethods = new CmComSokiInvocatorClient('CmComSo
   bringBackToLife: true,
 });
 
-class CmComOrderSokiInvocatorClient extends SokiInvocatorClient<CmComOrderSokiInvocatorMethods> {}
+class CmComOrderSokiInvocatorClient extends SokiInvocatorClient<CmComOrderSokiInvocatorModel> {}
 export const cmComOrderClientInvocatorMethods = new CmComOrderSokiInvocatorClient('CmComOrderSokiInvocatorClient', {
   setRepeats: true,
   clearOwnRepeats: true,
@@ -63,8 +63,8 @@ export const cmComOrderClientInvocatorMethods = new CmComOrderSokiInvocatorClien
   setModulationValue: true,
 });
 
-class CmOtherSokiInvocatorClient extends SokiInvocatorClient<CmOtherSokiInvocatorMethods> {}
-export const cmOtherClientInvocatorMethods = new CmOtherSokiInvocatorClient('CmOtherSokiInvocatorClient', {
+class CmEditorSokiInvocatorClient extends SokiInvocatorClient<CmEditorSokiInvocatorModel> {}
+export const cmOtherClientInvocatorMethods = new CmEditorSokiInvocatorClient('CmEditorSokiInvocatorClient', {
   setChords: true,
   setEEWords: true,
   getMp3RulesList: true,

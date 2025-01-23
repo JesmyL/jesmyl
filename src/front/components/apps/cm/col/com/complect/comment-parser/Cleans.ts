@@ -142,7 +142,7 @@ export class ComBlockCommentMakerCleans {
     );
     const accentsCss = this.makePseudoCommentContentAccentsCss(startComment);
 
-    startComment = this.makePseudoComment(startComment).replace(this.firstCommentBibleAddressRegExp, (...args) => {
+    startComment = startComment.replace(this.firstCommentBibleAddressRegExp, (...args) => {
       const addr = this.makePropsFromCommentBibleAddressArgs(args);
 
       const translate = translates[addr.$translate as 'rst'];

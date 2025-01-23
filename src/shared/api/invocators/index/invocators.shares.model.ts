@@ -1,5 +1,3 @@
-import { SokiStatistic } from 'shared/api/complect/soki';
-
-export type IndexSokiInvocatorSharesMethods = {
-  statisticData: (statistic: SokiStatistic) => unknown;
+export type IndexSokiInvocatorSharesModel = {
+  appVersion: (version: number, modifiedAt: number) => unknown;
 };

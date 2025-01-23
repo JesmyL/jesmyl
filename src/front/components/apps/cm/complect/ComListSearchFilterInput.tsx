@@ -22,8 +22,9 @@ export const CmComListSearchFilterInput = <ComConstructor extends Com>({
 }) => {
   const [term, setTerm] = useAtom(categoryTermAtom);
 
-  const fullIcomList = useLiveQuery(() =>
-    showComwList == null ? cmIDB.db.coms.toArray() : cmIDB.db.coms.where('w').anyOf(showComwList).toArray(),
+  const fullIcomList = useLiveQuery(
+    () => (showComwList == null ? cmIDB.db.coms.toArray() : cmIDB.db.coms.where('w').anyOf(showComwList).toArray()),
+    [showComwList],
   );
   useEffect(() => {
     const coms = fullIcomList?.map(icom => new Constructor(icom)) ?? [];

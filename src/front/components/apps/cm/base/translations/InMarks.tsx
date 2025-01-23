@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
-import { useMarks } from '../../lists/marks/useMarks';
+import { useFavoriteComs } from '../../lists/favorites/useFavoriteComs';
 import { CmComListContext, CmComListContextValue } from './context';
 
 export const CmTranslationComListContextInMarks = function InMarks({ children }: { children: React.ReactNode }) {
-  const list = useMarks().markedComs;
+  const list = useFavoriteComs().markedComs;
 
   const value = useMemo((): CmComListContextValue => {
     return {

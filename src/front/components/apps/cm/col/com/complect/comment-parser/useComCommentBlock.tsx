@@ -11,7 +11,7 @@ const isShowConHashCommentsAtom = cmMolecule.select(s => s.isShowComHashComments
 
 export const useComCommentBlockCss = (com: Com) => {
   const [isRedact, setIsRedact] = useAtom(isComCommentRedactAtom);
-  const [comment, setComment] = useComComment(com.wid);
+  const comment = useComComment(com.wid);
 
   const visibleOrders = useMemo(() => {
     return com.orders?.filter(ComBlockCommentMakerCleans.withHeaderTextOrderFilter);
@@ -19,9 +19,9 @@ export const useComCommentBlockCss = (com: Com) => {
 
   const styles = useComBlockCommentCssStyles(com, visibleOrders, comment);
 
-  useComBlockCommentUpdateBlockNames(com, visibleOrders, isRedact, comment, setComment);
+  useComBlockCommentUpdateBlockNames(com, visibleOrders, isRedact, comment);
 
-  useEffect(() => setIsRedact(false), [com, setIsRedact]);
+  useEffect(() => setIsRedact(false), [com.wid, setIsRedact]);
 
   return useAtomValue(isShowConHashCommentsAtom) ? styles : '';
 };

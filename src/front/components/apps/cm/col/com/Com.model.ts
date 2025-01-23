@@ -1,5 +1,5 @@
-import { TheIconType } from '../../../../../complect/the-icon/model';
-import { MigratableEditableComToolName } from '../../editor/col/compositions/EditableCom.model';
+import { TheIconType } from 'front/model';
+import { MigratableComToolName } from 'shared/api';
 
 export type SettingsItemName = 'ton' | 'font-size' | 'open-anchors';
 
@@ -8,21 +8,6 @@ export interface SettingsItem {
   name: SettingsItemName;
   icon: TheIconType;
 }
-
-export type MigratableComToolName = MenuComToolNameList | MigratableEditableComToolName;
-
-export type MenuComToolNameList =
-  | 'fullscreen-mode'
-  | 'mark-com'
-  | 'show-translation'
-  | 'chords-variant'
-  | 'chord-images'
-  | 'selected-toggle'
-  | 'is-mini-anchor'
-  | 'open-player'
-  | 'hide-metronome'
-  | 'qr-share'
-  | 'cats-binds';
 
 export interface MigratableComTool {
   title: string;

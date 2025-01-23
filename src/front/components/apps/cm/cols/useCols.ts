@@ -5,8 +5,9 @@ import { Cat } from '../col/cat/Cat';
 import { Com } from '../col/com/Com';
 
 export const useComs = (comwsLine?: CmComWid[]) => {
-  const icoms = useLiveQuery(() =>
-    comwsLine == null ? cmIDB.db.coms.toArray() : cmIDB.db.coms.where('w').anyOf(comwsLine).toArray(),
+  const icoms = useLiveQuery(
+    () => (comwsLine == null ? cmIDB.db.coms.toArray() : cmIDB.db.coms.where('w').anyOf(comwsLine).toArray()),
+    [comwsLine],
   );
 
   return icoms?.map(icom => new Com(icom)) ?? [];

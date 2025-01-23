@@ -14,7 +14,7 @@ import { IconGridStrokeRounded } from '../../../../../../../../complect/the-icon
 import { IconSchoolReportCardStrokeRounded } from '../../../../../../../../complect/the-icon/icons/school-report-card';
 import { useAuth } from '../../../../../../../index/atoms';
 import { ChordVisibleVariant } from '../../../../../Cm.model';
-import TheCom from '../../../../../col/com/TheCom';
+import { TheCom } from '../../../../../col/com/TheCom';
 import { TextCorrectMessages } from '../../../../complect/TextBlockIncorrectMessages';
 import { removedCompositionsAtom } from '../../atoms';
 import { EditableCom } from '../../com/EditableCom';

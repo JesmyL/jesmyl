@@ -1,4 +1,3 @@
-import { FileStore } from 'back/complect/FileStorage';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { mylib } from 'front/utils';
 import {
@@ -6,18 +5,13 @@ import {
   IScheduleWidgetTeamGame,
   IScheduleWidgetTeamGameMi,
   makeTwiceKnownName,
-  NounPronsType,
   ScheduleGameCriteriaScopeProps,
   ScheduleGameScopeProps,
 } from 'shared/api';
 import { SchGamesSokiInvocatorMethods } from 'shared/api/invocators/schedules/invocators.model';
 import { smylib } from 'shared/utils';
+import { nounPronsWordsFileStore } from '../../fresh-invocator.base';
 import { modifySchedule, scheduleTitleInBrackets } from './general-invocators.base';
-
-export const nounPronsWordsFileStore = new FileStore<NounPronsType>('/apps/index/nounPronsWords.json', {
-  nouns: {},
-  pronouns: {},
-});
 
 class SchGamesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGamesSokiInvocatorMethods> {
   constructor() {

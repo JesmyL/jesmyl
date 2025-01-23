@@ -1,6 +1,5 @@
 import { MyLib } from 'front/utils';
 import {
-  DeviceId,
   environment,
   ServerStoreContent,
   SokiAppName,
@@ -19,6 +18,7 @@ import { bibleMolecule } from './components/apps/bible/molecules';
 import { cmMolecule } from './components/apps/cm/molecules';
 import { wedMolecule } from './components/apps/wedding/molecules';
 import { getAuthValue } from './components/index/atoms';
+import { indexIDB } from './components/index/db/index-idb';
 import { onSokiClientEventerInvocatorInvoke } from './eventers';
 
 export type ResponseWaiterCallback = (
@@ -44,6 +44,8 @@ export class SokiTrip {
   private onServerEvent = Eventer.createValue<SokiServerEvent>();
   private onClientEvent = Eventer.createValue<SokiClientEvent>();
   private onAuthorized = Eventer.createValue<boolean>();
+
+  onUserAuthorize = Eventer.createValue<boolean>();
 
   private responseWaiters: ResponseWaiter[] = [];
 
@@ -232,7 +234,7 @@ export class SokiTrip {
             body,
             auth: auth?.level === 0 ? undefined : auth,
             appName,
-            deviceId: DeviceId.def,
+            deviceId: await indexIDB.get.deviceId(),
             version: jversion.num,
             browser,
             urls: this.urls.length ? this.urls : [this.getCurrentUrl()],

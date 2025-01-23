@@ -1,7 +1,7 @@
 import { SokiInvocatorServer } from 'back/SokiInvocator.server';
-import { SchSokiInvocatorSharesMethods } from 'shared/api/invocators/schedules/invocators.shares.model';
+import { SchSokiInvocatorSharesModel } from 'shared/api/invocators/schedules/invocators.shares.model';
 
-class SchSokiInvocatorServer extends SokiInvocatorServer<SchSokiInvocatorSharesMethods> {
+class SchSokiInvocatorServer extends SokiInvocatorServer<SchSokiInvocatorSharesModel> {
   constructor() {
     super('SchSokiInvocatorServer', {
       editedSchedule: true,

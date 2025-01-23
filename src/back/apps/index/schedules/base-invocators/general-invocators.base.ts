@@ -11,7 +11,7 @@ import {
   scheduleWidgetRegTypeTitles,
   scheduleWidgetUserRights,
 } from 'shared/api';
-import { SchGeneralSokiInvocatorMethods } from 'shared/api/invocators/schedules/invocators.model';
+import { SchGeneralSokiInvocatorModel } from 'shared/api/invocators/schedules/invocators.model';
 import { smylib } from 'shared/utils';
 import { newSchedule } from '../action-box/action-box';
 import { schServerInvocatorShareMethods } from '../invocators.shares';
@@ -27,7 +27,7 @@ import { schUsersSokiInvocatorBaseServer } from './users-invocators.base';
 
 export const schedulesFileStore = new FileStore<IScheduleWidget[]>('/apps/index/schs.json', []);
 
-class SchGeneralSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGeneralSokiInvocatorMethods> {
+class SchGeneralSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGeneralSokiInvocatorModel> {
   constructor() {
     super(
       'SchGeneralSokiInvocatorBaseServer',

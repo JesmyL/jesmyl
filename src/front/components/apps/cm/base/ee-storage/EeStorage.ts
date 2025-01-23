@@ -10,11 +10,11 @@ export class EeStorage {
 
   async load() {
     if (this.store != null) return this.store;
-    return (this.store = await cmIDB.getSingleValue('eeStore'));
+    return (this.store = await cmIDB.get.eeStore());
   }
 
   save() {
-    cmIDB.setSingleValue('eeStore', this.store || {});
+    cmIDB.set.eeStore(this.store || {});
   }
 
   get(word: string) {

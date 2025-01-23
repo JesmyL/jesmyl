@@ -1,6 +1,6 @@
 import { ChordPack, CmMp3ContainsPageResult, CmMp3Rule, EeStorePack } from 'shared/api/complect/apps';
 
-export type CmOtherSokiInvocatorMethods = {
+export type CmEditorSokiInvocatorModel = {
   setChords: (chords: ChordPack) => ChordPack;
   setEEWords: (words: EeStorePack) => EeStorePack;
   getResourceHTMLString: (src: string) => CmMp3ContainsPageResult;

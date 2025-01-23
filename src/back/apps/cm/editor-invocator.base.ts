@@ -3,7 +3,7 @@ import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { mylib } from 'front/utils';
 import { EeStorePack } from 'shared/api';
 import { ChordPack } from 'shared/api/complect/apps/cm/complect/chord-card';
-import { CmOtherSokiInvocatorMethods } from 'shared/api/invocators/cm/other-invocators.model';
+import { CmEditorSokiInvocatorModel } from 'shared/api/invocators/cm/editor-invocators.model';
 import { smylib } from 'shared/utils';
 import { cmGetMp3RulesList, cmGetResourceHTMLString } from './complect/mp3-rules';
 import { cmEditorServerInvocatorShareMethods } from './editor-invocator.shares';
@@ -12,14 +12,14 @@ import { cmServerInvocatorShareMethods } from './invocator.shares';
 export const chordPackFileStore = new FileStore<ChordPack>('/apps/cm/chordTracks.json', {});
 export const eePackFileStore = new FileStore<EeStorePack>('/apps/cm/eeStorage.json', {});
 
-class CmOtherSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmOtherSokiInvocatorMethods> {
+class CmEditorSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmEditorSokiInvocatorModel> {
   constructor() {
     super(
-      'CmOtherSokiInvocatorBaseServer',
+      'CmEditorSokiInvocatorBaseServer',
       {
         setChords: () => async chords => {
           chordPackFileStore.setValue({ ...chordPackFileStore.getValue(), ...chords });
-          const modifiedAt = chordPackFileStore.getFileModifiedAt();
+          const modifiedAt = chordPackFileStore.fileModifiedAt();
           cmServerInvocatorShareMethods.editedChords(null, { chords, modifiedAt });
 
           return chords;
@@ -27,7 +27,7 @@ class CmOtherSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmOtherSoki
 
         setEEWords: () => async words => {
           eePackFileStore.setValue({ ...eePackFileStore.getValue(), ...words });
-          const modifiedAt = eePackFileStore.getFileModifiedAt();
+          const modifiedAt = eePackFileStore.fileModifiedAt();
           cmEditorServerInvocatorShareMethods.editedEEWords(null, { words, modifiedAt });
 
           return words;
@@ -46,4 +46,4 @@ class CmOtherSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmOtherSoki
     );
   }
 }
-export const cmOtherServerInvocatorBase = new CmOtherSokiInvocatorBaseServer();
+export const cmEditorSokiInvocatorBaseServer = new CmEditorSokiInvocatorBaseServer();

@@ -42,9 +42,9 @@ export default function TheComposition() {
   useTakeActualComw();
 
   useEffect(() => {
-    const add = setTimeout(() => ccom && addLaterComw(ccom.wid), 3000);
+    const add = setTimeout(() => addLaterComw(ccom?.wid ?? 0), 3000);
     return () => clearTimeout(add);
-  }, [addLaterComw, ccom]);
+  }, [addLaterComw, ccom?.wid]);
 
   const comListElem = useRef<HTMLDivElement>(null);
   useEffect(() => {

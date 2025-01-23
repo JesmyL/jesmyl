@@ -69,6 +69,12 @@ export interface IExportableCom {
   isRemoved?: 1;
 }
 
+export type ICmComComment = {
+  comw: CmComWid;
+  comment: string;
+  m: number;
+};
+
 export interface IExportableCat {
   w: CmCatWid; // writed time
   m: number; // modified time
@@ -84,3 +90,20 @@ export interface IExportableCols {
   coms: IExportableCom[];
   cats: IExportableCat[];
 }
+
+export type MigratableEditableComToolName = 'edit-com';
+
+export type MigratableComToolName = MenuComToolNameList | MigratableEditableComToolName;
+
+export type MenuComToolNameList =
+  | 'fullscreen-mode'
+  | 'mark-com'
+  | 'show-translation'
+  | 'chords-variant'
+  | 'chord-images'
+  | 'selected-toggle'
+  | 'is-mini-anchor'
+  | 'open-player'
+  | 'hide-metronome'
+  | 'qr-share'
+  | 'cats-binds';

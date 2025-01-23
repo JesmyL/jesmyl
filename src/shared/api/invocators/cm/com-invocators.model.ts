@@ -2,7 +2,7 @@ import { CmComWid, IExportableCom } from 'shared/api/complect/apps';
 
 type SimpleComValueSetter<Value> = (comw: CmComWid, value: Value) => IExportableCom;
 
-export type CmComSokiInvocatorMethods = {
+export type CmComSokiInvocatorModel = {
   newCom: (value: OmitOwn<IExportableCom, 'w'>) => IExportableCom;
 
   rename: SimpleComValueSetter<string>;

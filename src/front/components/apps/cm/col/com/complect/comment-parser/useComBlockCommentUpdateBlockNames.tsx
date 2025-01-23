@@ -1,3 +1,4 @@
+import { updateComComment } from 'front/components/apps/cm/molecules';
 import { useEffect } from 'react';
 import { hookEffectPipe, setTimeoutPipe } from '../../../../../../../complect/hookEffectPipe';
 import { Com } from '../../Com';
@@ -9,13 +10,12 @@ export const useComBlockCommentUpdateBlockNames = (
   visibleOrders: Order[] | undefined,
   isRedact: boolean,
   comComment: string | nil,
-  setComment: (set: string | und | ((comment: string | und) => string)) => void,
 ) => {
   useEffect(() => {
     return hookEffectPipe()
       .pipe(
         setTimeoutPipe(() => {
-          if (!com || !comComment || visibleOrders == null) return;
+          if (!com?.wid || !comComment || visibleOrders == null) return;
 
           const initialOrders = com?.orders;
 
@@ -90,9 +90,9 @@ export const useComBlockCommentUpdateBlockNames = (
           )
             return;
 
-          setComment(isRedact ? newComment : newComment.trim());
+          updateComComment(com.wid, isRedact ? newComment : newComment.trim());
         }, 500),
       )
       .effect();
-  }, [visibleOrders, com, comComment, isRedact, setComment]);
+  }, [visibleOrders, com?.wid, comComment, isRedact, com?.orders]);
 };

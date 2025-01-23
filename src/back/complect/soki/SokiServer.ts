@@ -35,6 +35,8 @@ export class SokiServer extends SokiServerServerStore {
           requestId: eventData.requestId,
         };
 
+        if (eventData.body.errorMessage) console.info('!!!!!!!!!', eventData.body.errorMessage);
+
         if (eventData.body.invoke) {
           onSokiServerEventerInvocatorInvoke.invoke({
             invoke: eventData.body.invoke,

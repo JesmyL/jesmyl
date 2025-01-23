@@ -1,11 +1,12 @@
 import { SokiInvocatorClient } from 'front/SokiInvocator.client';
-import { IndexFreshSokiInvocatorMethods } from 'shared/api/invocators/index/fresh-invocators.model';
+import { IndexBasicsSokiInvocatorModel } from 'shared/api/invocators/index/basics-invocators.model';
 
-class IndexFreshSokiInvocatorClient extends SokiInvocatorClient<IndexFreshSokiInvocatorMethods> {
+class IndexBasicsSokiInvocatorClient extends SokiInvocatorClient<IndexBasicsSokiInvocatorModel> {
   constructor() {
-    super('IndexFreshSokiInvocatorClient', {
+    super('IndexBasicsSokiInvocatorClient', {
       getFreshes: true,
+      getDeviceId: true,
     });
   }
 }
-export const indexFreshSokiInvocatorClient = new IndexFreshSokiInvocatorClient();
+export const indexBasicsSokiInvocatorClient = new IndexBasicsSokiInvocatorClient();

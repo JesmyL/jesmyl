@@ -1,10 +1,10 @@
 import { SokiInvocatorServer } from 'back/SokiInvocator.server';
-import { IndexSokiInvocatorSharesMethods } from 'shared/api/invocators/index/invocators.shares.model';
+import { IndexSokiInvocatorSharesModel } from 'shared/api/invocators/index/invocators.shares.model';
 
-class IndexSokiInvocatorServer extends SokiInvocatorServer<IndexSokiInvocatorSharesMethods> {
+class IndexSokiInvocatorServer extends SokiInvocatorServer<IndexSokiInvocatorSharesModel> {
   constructor() {
     super('IndexSokiInvocatorServer', {
-      statisticData: true,
+      appVersion: true,
     });
   }
 }

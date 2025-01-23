@@ -9,7 +9,7 @@ import { IconStarSolidRounded, IconStarStrokeRounded } from '../../../../../../c
 import { useAuth } from '../../../../../index/atoms';
 import useSelectedComs from '../../../base/useSelectedComs';
 import ComFaceContextMenuEditorItems from '../../../editor/col/compositions/ComFaceContextMenuEditorItems';
-import { useMarks } from '../../../lists/marks/useMarks';
+import { useFavoriteComs } from '../../../lists/favorites/useFavoriteComs';
 
 interface Props {
   onClick: (reset: null) => void;
@@ -17,7 +17,7 @@ interface Props {
 }
 
 export default function ComFaceContextMenu({ onClick, comWid }: Props) {
-  const { isMarked, toggleMarked } = useMarks();
+  const { isMarked, toggleMarked } = useFavoriteComs();
   const isComMarked = isMarked(comWid);
   const { clearSelectedComws, selectedComws, selectedComPosition: isSelected, toggleSelectedCom } = useSelectedComs();
   const [confirmNode, confirm] = useConfirm();

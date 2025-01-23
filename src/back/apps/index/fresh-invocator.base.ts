@@ -1,16 +1,31 @@
+import { FileStore } from 'back/complect/FileStorage';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
-import { IScheduleWidget } from 'shared/api';
-import { IndexFreshSokiInvocatorMethods } from 'shared/api/invocators/index/fresh-invocators.model';
-import { itNNull } from 'shared/utils';
+import { IScheduleWidget, makeTwiceKnownName, NounPronsType } from 'shared/api';
+import { IndexBasicsSokiInvocatorModel } from 'shared/api/invocators/index/basics-invocators.model';
+import { itNNull, smylib } from 'shared/utils';
+import { indexServerInvocatorShareMethods } from './invocators.shares';
 import {
   schedulesFileStore,
   schGeneralSokiInvocatorBaseServer,
 } from './schedules/base-invocators/general-invocators.base';
 import { schServerInvocatorShareMethods } from './schedules/invocators.shares';
 
-class IndexFreshSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexFreshSokiInvocatorMethods> {
+const deviceIdPostfixSymbols = '!@#$%^&*;.,?/|\\+=-'.split('');
+
+export const nounPronsWordsFileStore = new FileStore<NounPronsType>('/apps/index/nounPronsWords.json', {
+  nouns: {},
+  pronouns: {},
+});
+
+export const appVersionFileStore = new FileStore<{ num: number }>('/+version.json', { num: 0 });
+
+appVersionFileStore.watchFile((value, state) => {
+  indexServerInvocatorShareMethods.appVersion(null, value.num, state.mtimeMs);
+});
+
+class IndexBasicsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexBasicsSokiInvocatorModel> {
   constructor() {
-    super('IndexFreshSokiInvocatorBaseServer', {
+    super('IndexBasicsSokiInvocatorBaseServer', {
       getFreshes:
         ({ client, auth }) =>
         async lastModfiedMs => {
@@ -29,10 +44,26 @@ class IndexFreshSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexFre
             .filter(itNNull);
 
           schServerInvocatorShareMethods.freshSchedules(client, schedules);
+
+          if (appVersionFileStore.fileModifiedAt() > lastModfiedMs) {
+            const modifiedAt = appVersionFileStore.fileModifiedAt();
+            indexServerInvocatorShareMethods.appVersion(null, appVersionFileStore.getValue().num, modifiedAt);
+          }
         },
+      getDeviceId: () => async () => {
+        return (makeTwiceKnownName(
+          smylib.randomItem(smylib.keys(nounPronsWordsFileStore.getValue().pronouns)),
+          smylib.randomItem(smylib.keys(nounPronsWordsFileStore.getValue().nouns)),
+        ).join('_') +
+          '_' +
+          Array(5)
+            .fill(0)
+            .map(() => smylib.randomItem(deviceIdPostfixSymbols))
+            .join('')) as never;
+      },
     });
   }
 }
-export const indexServerInvocatorBase = new IndexFreshSokiInvocatorBaseServer();
+export const indexServerInvocatorBase = new IndexBasicsSokiInvocatorBaseServer();
 
 schGeneralSokiInvocatorBaseServer.$$register();

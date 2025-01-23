@@ -11,7 +11,7 @@ import TheCat from '../col/cat/TheCat';
 import { useCats } from '../cols/useCols';
 import ExternalList from './ExternalList';
 import './Lists.scss';
-import Marks from './marks/Marks';
+import FavoriteComs from './favorites/FavoriteComs';
 import TheMeetings from './meetings/TheMeetings';
 import SelectedComs from './selected-coms/SelectedComs';
 
@@ -32,7 +32,7 @@ export default function Lists() {
             content={
               <>
                 <Link
-                  to="marks"
+                  to="fav"
                   className="full-width"
                 >
                   <BrutalItem
@@ -85,8 +85,8 @@ export default function Lists() {
         element={<TheMeetings />}
       />
       <Route
-        path="marks/*"
-        element={<Marks />}
+        path="fav/*"
+        element={<FavoriteComs />}
       />
       <Route
         path="selected/*"

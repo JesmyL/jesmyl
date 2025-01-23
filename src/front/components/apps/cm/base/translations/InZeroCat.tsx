@@ -5,7 +5,7 @@ import { CmComListContext, CmComListContextValue } from './context';
 
 export const CmTranslationComListContextInZeroCat = function InZeroCat({ children }: { children: React.ReactNode }) {
   const cat = useCcat(true);
-  const coms = useComs(cat?.comws);
+  const coms = useComs();
 
   const value = useMemo((): CmComListContextValue => {
     if (cat == null) return {};

@@ -6,7 +6,7 @@ import { ComBlockCommentMakerCleans } from './Cleans';
 let isWasOpenComWithBibleAddressInComment = false;
 
 export const useCheckIsComCommentIncludesBibleAddress = (com: Com | und) => {
-  const [comment] = useComComment(com?.wid ?? CmComWid.def);
+  const comment = useComComment(com?.wid ?? CmComWid.def);
 
   if (isWasOpenComWithBibleAddressInComment) return true;
 

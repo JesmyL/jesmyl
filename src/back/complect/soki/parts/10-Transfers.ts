@@ -1,5 +1,6 @@
 import { DeviceId, SokiCapsule, SokiServerEvent, sokiWhenRejButTs } from 'shared/api';
 import { WebSocket } from 'ws';
+import { SokiServerClientSelector } from '../model';
 
 export class SokiServerTransfers {
   capsules = new Map<WebSocket, SokiCapsule>();
@@ -19,14 +20,7 @@ export class SokiServerTransfers {
 
   send(
     data: SokiServerEvent,
-    client?:
-      | WebSocket
-      | null
-      | ((
-          capsule: SokiCapsule,
-          client: WebSocket,
-          whenRejButTs: typeof sokiWhenRejButTs,
-        ) => boolean | typeof sokiWhenRejButTs),
+    client?: SokiServerClientSelector,
     errorFor?: WebSocket | null,
     rejEvent?: SokiServerEvent,
   ) {

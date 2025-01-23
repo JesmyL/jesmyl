@@ -1,11 +1,11 @@
 import { IconStarSolidRounded, IconStarStrokeRounded } from '../../../../../../../complect/the-icon/icons/star';
-import { useMarks } from '../../../../lists/marks/useMarks';
+import { useFavoriteComs } from '../../../../lists/favorites/useFavoriteComs';
 import { ComTool } from '../ComTool';
 import { useComToolsCcomContext } from '../useMigratableComTools';
 
 export const MarkedComTool = () => {
   const ccom = useComToolsCcomContext();
-  const { isMarked, toggleMarked } = useMarks();
+  const { isMarked, toggleMarked } = useFavoriteComs();
 
   return (
     ccom && (

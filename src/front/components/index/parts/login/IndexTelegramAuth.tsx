@@ -33,9 +33,10 @@ export default function IndexTelegramAuth({ onLoginAuth }: { onLoginAuth: () => 
     setIsLoading(true);
 
     return new Promise<SokiServerEvent>((res, rej) =>
-      soki
-        .send({ tgAuthorization: codeStr === undefined ? +authCode : +codeStr }, 'index')
-        .on(res, rej, () => setIsLoading(false)),
+      soki.send({ tgAuthorization: codeStr === undefined ? +authCode : +codeStr }, 'index').on(res, rej, () => {
+        setIsLoading(false);
+        soki.onUserAuthorize.invoke(true);
+      }),
     );
   };
 

@@ -9,7 +9,7 @@ export const useCcomw = () => +useParams().comw! as CmComWid | NaN;
 
 export function useEditableCcom(): EditableCom | und {
   const ccomw = useCcomw();
-  const icom = useLiveQuery(() => cmIDB.db.coms.where({ w: ccomw }).first());
+  const icom = useLiveQuery(() => cmIDB.db.coms.where({ w: ccomw }).first(), [ccomw]);
 
   return useMemo(() => icom && new EditableCom(icom), [icom]);
 }

@@ -21,5 +21,5 @@ export const useCcatw = () => +useParams().catw! as CmCatWid | NaN;
 
 export function useIccat(catw?: CmCatWid) {
   const ccatw = useCcatw();
-  return useLiveQuery(() => cmIDB.db.cats.where({ w: catw ?? ccatw }).first());
+  return useLiveQuery(() => cmIDB.db.cats.where({ w: catw ?? ccatw }).first(), [catw, ccatw]);
 }
