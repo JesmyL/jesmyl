@@ -1,18 +1,15 @@
 import { useCallback, useEffect, useMemo } from 'react';
-import { useAtom } from '../../../../complect/atoms';
 import { useActualRef } from '../../../../complect/useActualRef';
+import { cmIDB } from '../_db/cm-idb';
 import { Com } from '../col/com/Com';
 import { useComs } from '../cols/useCols';
-import { cmMolecule } from '../molecules';
 
 let laterComs: Com[] | und;
 const setLaterComs = (coms: Com[], list: number[]) =>
   (laterComs = list.map(comw => coms.find(com => com.wid === comw)).filter(com => com) as Com[]);
 
-const laterComwListAtom = cmMolecule.select(s => s.laterComwList);
-
 export default function useLaterComList({ maxStack = 4 } = {}) {
-  const [list, setList] = useAtom(laterComwListAtom);
+  const [list, setList] = cmIDB.use.laterComwList();
   const listRef = useActualRef(list);
   const coms = useComs();
 

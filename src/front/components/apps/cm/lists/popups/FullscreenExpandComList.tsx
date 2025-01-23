@@ -1,13 +1,12 @@
 import styled from 'styled-components';
-import { useAtomValue } from '../../../../../complect/atoms';
+import { cmIDB } from '../../_db/cm-idb';
 import RollControled from '../../base/RolledContent';
 import { Com } from '../../col/com/Com';
 import { CmComNumber } from '../../col/com/complect/ComNumber';
 import ComOrders from '../../col/com/orders/ComOrders';
-import { cmComFontSizeAtom } from '../../molecules';
 
 export default function FullscreenExpandComList({ coms }: { coms: Com[] }) {
-  const fontSize = useAtomValue(cmComFontSizeAtom);
+  const fontSize = cmIDB.useValue.comFontSize();
 
   return (
     <ExpandContent className="com-expand-content full-height">

@@ -1,10 +1,10 @@
+import { IconCancel01StrokeRounded } from 'front/complect/the-icon/icons/cancel-01';
 import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { OrderRepeats } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
 import { useConfirm } from '../../../../../../../complect/modal/confirm/useConfirm';
-import { IconCancel01StrokeRounded } from '../../../../../../../complect/the-icon/icons/cancel-01';
 import { IconFlag03StrokeRounded } from '../../../../../../../complect/the-icon/icons/flag-03';
 import { IconLinkBackwardStrokeRounded } from '../../../../../../../complect/the-icon/icons/link-backward';
 import { IconRowDeleteStrokeRounded } from '../../../../../../../complect/the-icon/icons/row-delete';
@@ -20,7 +20,7 @@ const flashCounts = [2, 3, 4, 5];
 const defaultPos = {
   '--x': 0,
   '--y': 0,
-} as const;
+};
 
 export default function ComRepeats() {
   const [start, setStart] = useState<IEditableComLineProps | null>(null);
@@ -101,7 +101,7 @@ export default function ComRepeats() {
                       setIsChordBlock(true);
                       setPos({
                         '--x': (event.target as any).offsetLeft,
-                        '--y': (event.target as any).offsetTop,
+                        '--y': (event.target as any).offsetTop + 100,
                       });
                     } else {
                       setIsChordBlock(false);
@@ -264,7 +264,7 @@ export default function ComRepeats() {
 
                 return (
                   <div
-                    className={`float-button-panel${start && ord === start.orderUnit ? '' : ' hidden'}`}
+                    className={`float-button-panel z-index:300${start && ord === start.orderUnit ? '' : ' hidden'}`}
                     style={pos as CSSProperties}
                   >
                     <div
@@ -338,7 +338,7 @@ const Content = styled.div`
   }
 
   .float-button-panel {
-    --size: 1.2em;
+    --size: ${window.innerWidth / 2 / 7}px;
 
     position: absolute;
     display: flex;
@@ -358,6 +358,7 @@ const Content = styled.div`
       opacity: 1;
       margin-left: 0.2em;
       border-radius: 0.3em;
+      padding: 5px;
 
       width: var(--size);
       height: var(--size);

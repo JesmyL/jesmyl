@@ -15,7 +15,7 @@ import { IconCheckmarkCircle02StrokeRounded } from '../../../../../../../complec
 import { IconEdit01StrokeRounded } from '../../../../../../../complect/the-icon/icons/edit-01';
 import { IconMessageQuestionStrokeRounded } from '../../../../../../../complect/the-icon/icons/message-question';
 import { IconNote03StrokeRounded } from '../../../../../../../complect/the-icon/icons/note-03';
-import { cmMolecule, updateComComment, useComComment } from '../../../../molecules';
+import { updateComComment, useComComment } from '../../../../molecules';
 import { isComCommentRedactAtom } from './complect';
 import TheComCommentInfo from './infos/TheComCommentInfo';
 
@@ -25,11 +25,9 @@ interface Props {
 
 const HashSwitcherIcon = IconNote03StrokeRounded;
 
-const isShowConHashCommentsAtom = cmMolecule.select(s => s.isShowComHashComments);
-
 export const TheComComment = ({ comw }: Props) => {
   const comment = useComComment(comw) ?? '';
-  const [isShowConHashComments, setIsShowConHashComments] = useAtom(isShowConHashCommentsAtom);
+  const [isShowConHashComments, setIsShowConHashComments] = cmIDB.use.isShowComHashComments();
   const [isShowInfoModal, setIsShowInfoModal] = useState(false);
   const [isRedact, setIsRedact] = useAtom(isComCommentRedactAtom);
   const inputRef = useRef<HTMLTextAreaElement>(null);

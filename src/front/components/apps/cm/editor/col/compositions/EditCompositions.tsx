@@ -5,15 +5,15 @@ import { hookEffectPipe, setTimeoutPipe } from 'front/complect/hookEffectPipe';
 import { useEffect, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { useExerListener } from '../../../../../../complect/exer/hooks/useExer';
+import { Cat } from '../../../col/cat/Cat';
 import { CatSpecialSearches } from '../../../col/cat/Cat.complect';
 import { TheCatSpecialSearches } from '../../../col/cat/SpecialSearches';
 import { Com } from '../../../col/com/Com';
 import { ComFaceList } from '../../../col/com/face/list/ComFaceList';
+import { useComs } from '../../../cols/useCols';
 import { categoryTermAtom, CmComListSearchFilterInput } from '../../../complect/ComListSearchFilterInput';
 import { editCompositionNavs } from '../../editorNav';
 import PhaseCmEditorContainer from '../../phase-editor-container/PhaseCmEditorContainer';
-import { EditableCat } from '../categories/EditableCat';
-import { useEditableCcat } from '../categories/useEditableCcat';
 import { EditableCom } from './com/EditableCom';
 import { EditCompositionsMore } from './complect/EditCompositionsMore';
 import EditComposition from './EditComposition';
@@ -21,7 +21,7 @@ import EditComposition from './EditComposition';
 const mapExtractItem = <Item,>({ item }: { item: Item }): Item => item;
 
 export default function EditCompositions() {
-  const zcat: EditableCat | und = useEditableCcat(0);
+  const coms = useComs();
   const [isOpenMorePopup, setIsOpenMorePopup] = useState(false);
   const isNumberSearch = useIsNumberSearch();
   useExerListener();
@@ -31,10 +31,15 @@ export default function EditCompositions() {
   const [term, setTerm] = useAtom(categoryTermAtom);
 
   useEffect(() => {
-    if (zcat == null) return;
+    if (!term) {
+      setSearchedComs(coms);
+      return;
+    }
 
     if (mapper) {
-      setSearchedComs(mapper(zcat.coms, term));
+      (async () => {
+        setSearchedComs(await mapper(coms, term));
+      })();
       return;
     }
 
@@ -44,20 +49,20 @@ export default function EditCompositions() {
       .pipe(
         setTimeoutPipe(async () => {
           try {
-            const { list, reset } = zcat.sortedSearch(term, isNumberSearch);
+            const { list, reset } = Cat.sortedSearch(term, coms, isNumberSearch);
 
             resetSearch = reset;
 
-            const coms = (await list)?.map(mapExtractItem);
+            const mappedComs = (await list)?.map(mapExtractItem);
 
-            if (coms == null) return;
+            if (mappedComs == null) return;
 
-            setSearchedComs(coms);
+            setSearchedComs(mappedComs);
           } catch (error) {}
         }),
       )
       .effect(() => resetSearch?.());
-  }, [zcat, isNumberSearch, mapper, term]);
+  }, [isNumberSearch, mapper, term, coms]);
 
   return (
     <Routes>

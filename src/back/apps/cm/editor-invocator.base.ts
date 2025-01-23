@@ -35,13 +35,24 @@ class CmEditorSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmEditorSo
 
         getResourceHTMLString: () => cmGetResourceHTMLString,
         getMp3RulesList: () => cmGetMp3RulesList,
+        addMp3Rule: () => async rule => {
+          (await cmGetMp3RulesList()).push(rule);
+        },
+        setMp3Rule: () => async rule => {
+          const list = await cmGetMp3RulesList();
+          const index = list.findIndex(r => r.w === rule.w);
+          if (index < 0) throw new Error('rule not found');
+          list.splice(index, 1, rule);
+        },
       },
       {
         setChords: (_, chords) => `Изменены аккорды ${mylib.keys(chords).join(', ')}`,
 
-        getResourceHTMLString: (_, src) => `Запрос HTML-кода ресурcа ${src}`,
-        getMp3RulesList: () => `Запрос MP3-правил`,
+        getResourceHTMLString: () => ``,
         setEEWords: (_, words) => `Изменены ё/е-правила в словах ${smylib.keys(words).join(', ')}`,
+        getMp3RulesList: () => ``,
+        addMp3Rule: () => `Добавлено MP3-правило`,
+        setMp3Rule: () => `Изменено MP3-правило`,
       },
     );
   }

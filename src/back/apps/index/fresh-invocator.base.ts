@@ -1,6 +1,6 @@
 import { FileStore } from 'back/complect/FileStorage';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
-import { IScheduleWidget, makeTwiceKnownName, NounPronsType } from 'shared/api';
+import { IndexValues, IScheduleWidget, makeTwiceKnownName, NounPronsType } from 'shared/api';
 import { IndexBasicsSokiInvocatorModel } from 'shared/api/invocators/index/basics-invocators.model';
 import { itNNull, smylib } from 'shared/utils';
 import { indexServerInvocatorShareMethods } from './invocators.shares';
@@ -18,9 +18,14 @@ export const nounPronsWordsFileStore = new FileStore<NounPronsType>('/apps/index
 });
 
 export const appVersionFileStore = new FileStore<{ num: number }>('/+version.json', { num: 0 });
+export const valuesFileStore = new FileStore<IndexValues>('/values', { chatUrl: '' });
 
 appVersionFileStore.watchFile((value, state) => {
   indexServerInvocatorShareMethods.appVersion(null, value.num, state.mtimeMs);
+});
+
+valuesFileStore.watchFile((value, state) => {
+  indexServerInvocatorShareMethods.indexValues(null, value, state.mtimeMs);
 });
 
 class IndexBasicsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexBasicsSokiInvocatorModel> {
@@ -48,6 +53,11 @@ class IndexBasicsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexBa
           if (appVersionFileStore.fileModifiedAt() > lastModfiedMs) {
             const modifiedAt = appVersionFileStore.fileModifiedAt();
             indexServerInvocatorShareMethods.appVersion(null, appVersionFileStore.getValue().num, modifiedAt);
+          }
+
+          if (valuesFileStore.fileModifiedAt() > lastModfiedMs) {
+            const modifiedAt = valuesFileStore.fileModifiedAt();
+            indexServerInvocatorShareMethods.indexValues(null, valuesFileStore.getValue(), modifiedAt);
           }
         },
       getDeviceId: () => async () => {

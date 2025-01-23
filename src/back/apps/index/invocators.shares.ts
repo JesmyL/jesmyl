@@ -5,6 +5,7 @@ class IndexSokiInvocatorServer extends SokiInvocatorServer<IndexSokiInvocatorSha
   constructor() {
     super('IndexSokiInvocatorServer', {
       appVersion: true,
+      indexValues: true,
     });
   }
 }

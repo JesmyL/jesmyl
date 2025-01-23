@@ -1,13 +1,12 @@
 import { mylib } from 'front/utils';
 import { useState } from 'react';
-import { useAtomValue } from '../../../../../complect/atoms';
 import Dropdown from '../../../../../complect/dropdown/Dropdown';
 import IconButton from '../../../../../complect/the-icon/IconButton';
 import { IconArrowDown01StrokeRounded } from '../../../../../complect/the-icon/icons/arrow-down-01';
 import { IconArrowUp01StrokeRounded } from '../../../../../complect/the-icon/icons/arrow-up-01';
 import { IconCopy01StrokeRounded } from '../../../../../complect/the-icon/icons/copy-01';
+import { cmIDB } from '../../_db/cm-idb';
 import { ComFaceList } from '../../col/com/face/list/ComFaceList';
-import { cmEventContextAtom } from '../../molecules';
 import { MeetingsEvent } from './MeetingsEvent';
 import { useMeetings } from './useMeetings';
 
@@ -19,7 +18,7 @@ enum CopyMode {
 
 export default function MeetingEventExpandList() {
   const { meetings } = useMeetings();
-  const eventContext = useAtomValue(cmEventContextAtom);
+  const eventContext = cmIDB.useValue.eventContext();
   let currentEventListPathName = '';
   const [expandedEventLists, setExpandedEventLists] = useState<number[]>([]);
   const [copyMode, setCopyMode] = useState(CopyMode.All);

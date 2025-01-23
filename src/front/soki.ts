@@ -15,7 +15,6 @@ import { AppName } from './app/App.model';
 import { Molecule } from './complect/atoms';
 import { lsJStorageLSSwitcherName } from './complect/JStorage';
 import { bibleMolecule } from './components/apps/bible/molecules';
-import { cmMolecule } from './components/apps/cm/molecules';
 import { wedMolecule } from './components/apps/wedding/molecules';
 import { getAuthValue } from './components/index/atoms';
 import { indexIDB } from './components/index/db/index-idb';
@@ -50,7 +49,6 @@ export class SokiTrip {
   private responseWaiters: ResponseWaiter[] = [];
 
   private molecules: Partial<{ [Key in AppName]: Molecule<any, Key> }> = {
-    cm: cmMolecule,
     bible: bibleMolecule,
     wed: wedMolecule,
   };

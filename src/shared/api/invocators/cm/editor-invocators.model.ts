@@ -5,4 +5,6 @@ export type CmEditorSokiInvocatorModel = {
   setEEWords: (words: EeStorePack) => EeStorePack;
   getResourceHTMLString: (src: string) => CmMp3ContainsPageResult;
   getMp3RulesList: () => CmMp3Rule[];
+  addMp3Rule: (rule: CmMp3Rule) => void;
+  setMp3Rule: (rule: CmMp3Rule) => void;
 };

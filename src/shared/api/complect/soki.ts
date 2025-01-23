@@ -212,6 +212,10 @@ export interface LocalSokiAuth extends Partial<BaseSokiAuth> {
   passw?: string;
 }
 
+export interface IndexValues {
+  chatUrl?: string;
+}
+
 export interface ServerAuthorizationData {
   login: SokiAuthLogin;
   passw: string;

@@ -1,5 +1,3 @@
-import { useAtom } from '../../../../complect/atoms';
-import { cmMolecule } from '../molecules';
+import { cmIDB } from '../_db/cm-idb';
 
-const chordVisibleVariantAtom = cmMolecule.select(s => s.chordVisibleVariant);
-export const useChordVisibleVariant = () => useAtom(chordVisibleVariantAtom);
+export const useChordVisibleVariant = () => cmIDB.use.chordVisibleVariant();

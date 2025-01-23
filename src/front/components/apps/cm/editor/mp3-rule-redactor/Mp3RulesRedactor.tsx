@@ -1,9 +1,7 @@
 import { useState } from 'react';
 import { CmMp3Rule } from 'shared/api';
-import IconButton from '../../../../../complect/the-icon/IconButton';
-import { IconHelpCircleStrokeRounded } from '../../../../../complect/the-icon/icons/help-circle';
 import { IconPlusSignCircleStrokeRounded } from '../../../../../complect/the-icon/icons/plus-sign-circle';
-import { cmExer } from '../../CmExer';
+import { cmOtherClientInvocatorMethods } from '../cm-editor-invocator.methods';
 import PhaseCmEditorContainer from '../phase-editor-container/PhaseCmEditorContainer';
 import Mp3RuleEditor from './Mp3RuleEditor';
 import { useCmMp3Rules } from './useCmMp3Rules';
@@ -31,16 +29,8 @@ export default function Mp3RulesRedactor() {
                     const newRedacts = [...redactRules];
                     newRedacts.splice(index, 1, newRule);
                     updateRedactRules(newRedacts);
-                    cmExer.set({
-                      action: 'updateMp3Rule',
-                      method: 'set',
-                      prev: rule,
-                      value: newRule,
-                      args: {
-                        mp3w: rule.w,
-                        value: newRule,
-                      },
-                    });
+
+                    cmOtherClientInvocatorMethods.setMp3Rule(null, newRule);
                   }
                 }}
               />
@@ -51,23 +41,6 @@ export default function Mp3RulesRedactor() {
               <Mp3RuleEditor
                 key={w}
                 {...rule}
-                button={
-                  <IconButton
-                    Icon={IconHelpCircleStrokeRounded}
-                    className="color--ko"
-                    confirm="Удалить новое правило?"
-                    onClick={() => {
-                      cmExer.set({
-                        action: 'addMp3Rule',
-                        method: 'push',
-                        anti: ({ args, action }) => {
-                          if (action === 'addMp3Rule' && args && args.value.w === w) return action => action.RemoveNew;
-                        },
-                      });
-                      updateNewRules(newRules.filter(rule => rule.w !== w));
-                    }}
-                  />
-                }
               />
             );
           })}
@@ -82,13 +55,8 @@ export default function Mp3RulesRedactor() {
               onComplete={rule => {
                 updateNewRules([...newRules, rule]);
                 setIsOpenNewRule(false);
-                cmExer.set({
-                  action: 'addMp3Rule',
-                  method: 'push',
-                  args: {
-                    value: rule,
-                  },
-                });
+
+                cmOtherClientInvocatorMethods.addMp3Rule(null, rule);
               }}
             />
           )}

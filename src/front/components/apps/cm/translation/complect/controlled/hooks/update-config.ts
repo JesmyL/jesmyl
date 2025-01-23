@@ -1,12 +1,11 @@
+import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
 import { useCallback } from 'react';
 import { useScreenTranslationCurrentConfigi } from '../../../../../+complect/translations/hooks/configs';
-import { useAtom } from '../../../../../../../complect/atoms';
-import { cmTranslationScreenConfigsAtom } from '../../../../molecules';
 import { CmTranslationScreenConfig } from '../model';
 import { defaultCmConfig } from './configs';
 
 export const useUpdateCmTranslationConfig = () => {
-  const [configs, setConfigs] = useAtom(cmTranslationScreenConfigsAtom);
+  const [configs, setConfigs] = cmIDB.use.translationScreenConfigs();
 
   return useCallback(
     (config: Partial<CmTranslationScreenConfig> | null, configi: number) => {

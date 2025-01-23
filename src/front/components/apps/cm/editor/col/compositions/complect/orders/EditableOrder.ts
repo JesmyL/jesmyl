@@ -1,8 +1,5 @@
 import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
-import { mylib } from 'front/utils';
-import { IExportableOrder, InheritancableOrder, OrderRepeats } from 'shared/api';
-import { FreeExecDict } from '../../../../../../../../complect/exer/Exer.model';
-import { cmExer } from '../../../../../CmExer';
+import { InheritancableOrder, OrderRepeats } from 'shared/api';
 import { Order } from '../../../../../col/com/order/Order';
 import { EditableOrderRegion, IExportableOrderMe } from '../../../../../col/com/order/Order.model';
 import { EditableCom } from '../../com/EditableCom';
@@ -26,79 +23,6 @@ export class EditableOrder extends Order {
     return this._regions;
   }
 
-  setField<K extends keyof IExportableOrder>(
-    fieldn: keyof IExportableOrder,
-    value: IExportableOrder[K],
-    args?: Record<string, any>,
-    onFinish?: () => void,
-    refresh = true,
-    onSet?: () => void | null,
-  ) {
-    const setExec = (action: string, additionalArgs: {}, onSet?: () => void) => {
-      this.exec({
-        prev: (
-          {
-            s: this.type,
-            c: this.chordsi,
-            t: this.texti,
-            o: this.isOpened,
-            r: this.repeats,
-            v: this.isVisible ? 1 : 0,
-            e: this.isEmptyHeader,
-          } as never
-        )[fieldn],
-        value,
-        uniq: this.me.viewIndex,
-        method: 'set',
-        action,
-        onSet,
-        args: mylib.overlap({ fieldn }, args, additionalArgs),
-      });
-    };
-
-    if (this.me.isAnchorInherit) {
-      const wid = this.me.leadOrd?.wid;
-
-      setExec('setAnchorInheritValue', { inhIndex: this.me.anchorInheritIndex, wid, value }, onSet);
-    } else {
-      const action = (
-        {
-          s: 'comSetOrderType',
-          c: 'comSetOrderStringBlock',
-          t: 'comSetOrderStringBlock',
-          o: 'comSetOrderOpenedBlock',
-          r: 'comSetOrderRepeatBlock',
-          v: 'comSetOrderVisibleSign',
-          e: 'comSetOrderEmptiedVal',
-        } as Record<keyof Partial<IExportableOrder>, string>
-      )[fieldn];
-
-      setExec(action, { value: value ?? null }, onSet);
-    }
-
-    if (this.me.source) {
-      const inhFieldn = fieldn as keyof InheritancableOrder;
-
-      if (this.me.isAnchorInherit) {
-        const src = this.me.leadOrd?.me.source;
-        if (src && !src.top.inh) src.top.inh = {} as never;
-        const inh = src?.top.inh;
-
-        if (inh && this.me.anchorInheritIndex != null) {
-          if (!inh[inhFieldn]) inh[inhFieldn] = {};
-          const inhScope = inh[inhFieldn];
-          if (inhScope) inhScope[this.me.anchorInheritIndex] = value as never;
-        }
-      } else this.me.source.top[inhFieldn] = value as never;
-      this.setExportable(inhFieldn, value as never);
-    }
-
-    if (refresh) {
-      this.com.afterOrderChange();
-      onFinish?.();
-    }
-  }
-
   setRepeats(_val?: OrderRepeats | null) {}
 
   get fieldValues() {
@@ -115,24 +39,6 @@ export class EditableOrder extends Order {
       (this.texti != null || this.chordsi != null) &&
       !this.isEmptyHeader
     );
-  }
-
-  exec<Value>(bag: FreeExecDict<Value>) {
-    const { scope, args: { wid } = {} } = bag;
-
-    cmExer.set({
-      ...bag,
-      args: {
-        ordw: mylib.def(wid, this.wid),
-        comw: this.com.wid,
-        name: this.com.name,
-        blockn: this.me.header(null, true),
-        isAnchor: this.isAnchor,
-        ...bag.args,
-      },
-      generalId: this.com.wid,
-      ...(scope ? { scope } : null),
-    });
   }
 
   isInheritValue<Key extends keyof InheritancableOrder>(key: Key) {

@@ -74,4 +74,5 @@ export type CmComOrderSokiInvocatorModel = {
   ) => IExportableCom;
 
   setModulationValue: (comw: CmComWid, orderTitle: string, ordw: CmComOrderWid, value: number) => IExportableCom;
+  removeRepeats: (comw: CmComWid, orderTitle: string, ordw: CmComOrderWid) => IExportableCom;
 };

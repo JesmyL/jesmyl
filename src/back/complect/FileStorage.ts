@@ -70,12 +70,28 @@ export class FileStore<Value> {
     this.writeValue(this.value);
   }
 
-  fileModifiedAt = () => fs.statSync(this.filePath).mtime.getTime();
+  fileModifiedAt = (): number => {
+    try {
+      return fs.statSync(this.filePath).mtime.getTime();
+    } catch (error) {
+      this.saveValue();
+      if (this.watchFileTries-- < 0) return 0;
+      return this.fileModifiedAt();
+    }
+  };
+
+  private watchFileTries = 2;
 
   watchFile(cb: (value: Value, ...args: Parameters<StatsListener>) => void) {
-    fs.watchFile(this.filePath, (curr, prev) => {
-      this.value = this.readValue(this.defaultValue);
-      cb(this.value, curr, prev);
-    });
+    try {
+      fs.watchFile(this.filePath, (curr, prev) => {
+        this.value = this.readValue(this.defaultValue);
+        cb(this.value, curr, prev);
+      });
+    } catch (error) {
+      this.saveValue();
+      if (this.watchFileTries-- < 0) return;
+      this.watchFile(cb);
+    }
   }
 }

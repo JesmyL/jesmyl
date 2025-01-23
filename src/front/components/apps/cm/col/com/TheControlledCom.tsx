@@ -2,12 +2,11 @@ import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { CmComWid } from 'shared/api';
 import styled, { css, RuleSet } from 'styled-components';
-import { useAtomValue } from '../../../../../complect/atoms';
 import { backSwipableContainerMaker } from '../../../../../complect/backSwipableContainerMaker';
 import { addEventListenerPipe, hookEffectPipe } from '../../../../../complect/hookEffectPipe';
 import { ChordVisibleVariant } from '../../Cm.model';
+import { cmIDB } from '../../_db/cm-idb';
 import RollControled from '../../base/RolledContent';
-import { cmComFontSizeAtom, cmMolecule } from '../../molecules';
 import { Com } from './Com';
 import './Com.scss';
 import { TheCom } from './TheCom';
@@ -21,8 +20,6 @@ const swiper = backSwipableContainerMaker(
   () => onNextCom(),
 );
 
-const isMiniAnchorAtom = cmMolecule.select(s => s.isMiniAnchor);
-
 export default function TheControlledCom({
   com,
   comwList,
@@ -34,8 +31,8 @@ export default function TheControlledCom({
   chordVisibleVariant: ChordVisibleVariant;
   onComSet?: (comw: CmComWid) => void;
 }) {
-  const fontSize = useAtomValue(cmComFontSizeAtom);
-  const isMiniAnchor = useAtomValue(isMiniAnchorAtom);
+  const fontSize = cmIDB.useValue.comFontSize();
+  const isMiniAnchor = cmIDB.useValue.isMiniAnchor();
   const listRef = useRef<HTMLDivElement>(null);
   const [, setSearchParams] = useSearchParams();
   const commentCss = useComCommentBlockCss(com);

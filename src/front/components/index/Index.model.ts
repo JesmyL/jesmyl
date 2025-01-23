@@ -35,10 +35,6 @@ export interface IndexStateError {
   scope?: IndexErrorScope;
 }
 
-export interface IndexValues {
-  chatUrl?: string;
-}
-
 export interface JesmylPassport {
   login: string;
   nick: string;

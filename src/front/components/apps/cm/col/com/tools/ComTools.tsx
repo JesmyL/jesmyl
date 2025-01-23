@@ -1,21 +1,20 @@
 import { BottomPopupItem } from '../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
-import { useAtom } from '../../../../../../complect/atoms';
 import IconButton from '../../../../../../complect/the-icon/IconButton';
 import { IconMinusSignStrokeRounded } from '../../../../../../complect/the-icon/icons/minus-sign';
 import { IconPlusSignStrokeRounded } from '../../../../../../complect/the-icon/icons/plus-sign';
 import { IconSlidersHorizontalStrokeRounded } from '../../../../../../complect/the-icon/icons/sliders-horizontal';
 import { IconTextFontStrokeRounded } from '../../../../../../complect/the-icon/icons/text-font';
 import { ChordVisibleVariant } from '../../../Cm.model';
+import { cmIDB } from '../../../_db/cm-idb';
 import { useNumComUpdates } from '../../../atoms';
 import { useChordVisibleVariant } from '../../../base/useChordVisibleVariant';
-import { cmComFontSizeAtom } from '../../../molecules';
 import { useCcom } from '../useCcom';
 import { CmComCatMentions } from '../useGetCatMentions';
 import { useMigratableListComTools } from './useMigratableComTools';
 
 export const ComTools = () => {
   const ccom = useCcom();
-  const [fontSize, setFontSize] = useAtom(cmComFontSizeAtom);
+  const [fontSize, setFontSize] = cmIDB.use.comFontSize();
   const [chordVisibleVariant] = useChordVisibleVariant();
   const comToolsNode = useMigratableListComTools();
   const [, setNumComUpdates] = useNumComUpdates();

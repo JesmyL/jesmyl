@@ -102,6 +102,8 @@ class CmComOrderSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmComOrd
             ord.f ??= {};
             ord.f.md = value;
           }),
+
+        removeRepeats: () => (comw, _, ordw) => this.modifyOrd(comw, ordw, ord => delete ord.r),
       },
 
       {
@@ -148,12 +150,15 @@ class CmComOrderSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmComOrd
         insertNewBlock: (com, _, orderTitle) =>
           `В песне ${getCmComNameInBrackets(com)} добавлен новый порядковый блок ${orderTitle}`,
 
-        setPositionsLine: (com, _, orderTitle, __, linei, line, lineChangesText) =>
+        setPositionsLine: (com, _, orderTitle, __, linei, _line, lineChangesText) =>
           `В песне ${getCmComNameInBrackets(com)} в блоке ${orderTitle} изменена аппликатура в ` +
           `${linei + 1}-й строке: ${lineChangesText}`,
 
         setModulationValue: (com, _, orderTitle, __, value) =>
           `В песне ${getCmComNameInBrackets(com)} установлено значение модулирования блока ${orderTitle} - ${value}`,
+
+        removeRepeats: (com, _, orderTitle) =>
+          `В песне ${getCmComNameInBrackets(com)} убраны повторения в блоке ${orderTitle}`,
       },
     );
   }

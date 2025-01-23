@@ -19,6 +19,10 @@ export const indexSokiInvocatorBaseClient = new IndexSokiInvocatorBaseClient('In
     indexIDB.set.appVersion(appVersion);
     setLastModifiedValue(modifiedAt);
   },
+  indexValues: () => async (value, modifiedAt) => {
+    indexIDB.set.values(value);
+    setLastModifiedValue(modifiedAt);
+  },
 });
 
 schSokiInvocatorBaseClient.$$register();

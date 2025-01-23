@@ -7,10 +7,11 @@ import { Metronome } from '../../../../../complect/metronome/Metronome';
 import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
 import { DocTitle } from '../../../../../complect/tags/DocTitle';
 import BibleTranslatesContextProvider from '../../../bible/translates/TranslatesContext';
+import { cmIDB } from '../../_db/cm-idb';
+import { cmIsShowCatBindsInCompositionAtom, isOpenChordImagesAtom } from '../../atoms';
 import { useCmTranslationComListContext as useCmComListContext } from '../../base/translations/context';
 import { useChordVisibleVariant } from '../../base/useChordVisibleVariant';
 import useLaterComList from '../../base/useLaterComList';
-import { cmIsShowCatBindsInCompositionAtom, cmMolecule, isOpenChordImagesAtom } from '../../molecules';
 import './Com.scss';
 import { ComNotFoundPage } from './ComNotFoundPage';
 import TheControlledCom from './TheControlledCom';
@@ -23,9 +24,6 @@ import { useMigratableTopComTools } from './tools/useMigratableComTools';
 import { useCcom, useTakeActualComw } from './useCcom';
 import { CmComCatMentions } from './useGetCatMentions';
 
-const playerHideModeAtom = cmMolecule.select(s => s.playerHideMode);
-const isMetronomeHideAtom = cmMolecule.select(s => s.isMetronomeHide);
-
 export default function TheComposition() {
   const [chordVisibleVariant] = useChordVisibleVariant();
   const ccom = useCcom();
@@ -33,8 +31,8 @@ export default function TheComposition() {
   const [isOpenTools, setIsOpenTools] = useState(false);
   const comToolsNode = useMigratableTopComTools();
   const { list } = useCmComListContext();
-  const playerHideMode = useAtomValue(playerHideModeAtom);
-  const isMetronomeHide = useAtomValue(isMetronomeHideAtom);
+  const playerHideMode = cmIDB.useValue.playerHideMode();
+  const isMetronomeHide = cmIDB.useValue.metronome().isHide;
   const comAudio = ccom?.audio.trim();
   const [isOpenChordImages, setIsOpenChordImages] = useAtom(isOpenChordImagesAtom);
   const isShowCatBinds = useAtomValue(cmIsShowCatBindsInCompositionAtom);

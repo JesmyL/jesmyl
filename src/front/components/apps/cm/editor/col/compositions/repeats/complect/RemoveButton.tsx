@@ -1,13 +1,17 @@
+import Modal from 'front/complect/modal/Modal/Modal';
+import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
+import { ModalFooter } from 'front/complect/modal/Modal/ModalFooter';
+import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
 import { mylib } from 'front/utils';
+import { useState } from 'react';
 import { OrderRepeats } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import { useConfirm } from '../../../../../../../../complect/modal/confirm/useConfirm';
-import useModal from '../../../../../../../../complect/modal/useModal';
 import IconButton from '../../../../../../../../complect/the-icon/IconButton';
 import { IconDelete01StrokeRounded } from '../../../../../../../../complect/the-icon/icons/delete-01';
-import { IconRefreshStrokeRounded } from '../../../../../../../../complect/the-icon/icons/refresh';
 import { IconUnavailableStrokeRounded } from '../../../../../../../../complect/the-icon/icons/unavailable';
 import { Order } from '../../../../../col/com/order/Order';
+import { cmComOrderClientInvocatorMethods } from '../../../../cm-editor-invocator.methods';
 import { EditableOrder } from '../../complect/orders/EditableOrder';
 
 interface Props {
@@ -23,17 +27,43 @@ interface Props {
 const startFlash = '/';
 const finishFlash = '\\';
 const flashDivider = '&nbsp;';
-const coln = 'r';
 
 export const ComRepeatsRemoveButton = ({ isChordBlock, startOrd, ord, textLinei, wordi, reset, setField }: Props) => {
   const [confirmNode, confirm] = useConfirm();
+  const [isOpenModal, setIsOpenModal] = useState<unknown>(false);
 
-  const [modalNode, modalOpen] = useModal(({ header, body, footer }, closeModal) => {
-    return (
-      <>
-        {header(<>Сброс границ</>)}
-        {body(
-          <>
+  return (
+    <>
+      {confirmNode}
+      <div
+        className="button remove"
+        onClick={async event => {
+          event.stopPropagation();
+
+          if (isChordBlock) {
+            if (await confirm(`Сбросить повторения блока "${startOrd.me.header() || ''}"?`, 'Сброс')) {
+              cmComOrderClientInvocatorMethods.removeRepeats(
+                null,
+                startOrd.com.wid,
+                startOrd.me.header(),
+                startOrd.wid,
+              );
+              reset();
+            }
+            return;
+          }
+
+          setIsOpenModal(true);
+        }}
+      >
+        <IconDelete01StrokeRounded />
+      </div>
+
+      {isOpenModal && (
+        <Modal onClose={setIsOpenModal}>
+          <ModalHeader>Сброс границ</ModalHeader>
+
+          <ModalBody>
             {ord.regions
               ?.filter(({ startLinei, startWordi }) => textLinei === startLinei && wordi === startWordi)
               .map((flash, flashi) => {
@@ -82,7 +112,7 @@ export const ComRepeatsRemoveButton = ({ isChordBlock, startOrd, ord, textLinei,
                       }
 
                       reset();
-                      closeModal();
+                      setIsOpenModal(false);
                     }}
                     dangerouslySetInnerHTML={{
                       __html:
@@ -111,51 +141,19 @@ export const ComRepeatsRemoveButton = ({ isChordBlock, startOrd, ord, textLinei,
                   />
                 );
               })}
-          </>,
-        )}
-        {footer(
-          <div className="flex flex-big-gap">
-            <IconButton
-              Icon={IconUnavailableStrokeRounded}
-              postfix="Отмена"
-              onClick={closeModal}
-            />
-            <IconButton
-              Icon={IconRefreshStrokeRounded}
-              postfix="Сброс"
-              onClick={() => {
-                closeModal();
-                reset();
-              }}
-            />
-          </div>,
-        )}
-      </>
-    );
-  });
+          </ModalBody>
 
-  return (
-    <>
-      {confirmNode}
-      {modalNode}
-      <div
-        className="button remove"
-        onClick={async event => {
-          event.stopPropagation();
-
-          if (isChordBlock) {
-            if (await confirm(`Сбросить повторения блока "${startOrd.me.header() || ''}"?`, 'Сброс')) {
-              startOrd.setField(coln, 0);
-              reset();
-            }
-            return;
-          }
-
-          modalOpen();
-        }}
-      >
-        <IconDelete01StrokeRounded />
-      </div>
+          <ModalFooter>
+            <div className="flex flex-big-gap">
+              <IconButton
+                Icon={IconUnavailableStrokeRounded}
+                postfix="Отмена"
+                onClick={setIsOpenModal}
+              />
+            </div>
+          </ModalFooter>
+        </Modal>
+      )}
     </>
   );
 };

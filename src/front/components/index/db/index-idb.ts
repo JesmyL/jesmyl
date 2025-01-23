@@ -1,7 +1,6 @@
 import { AppName } from 'front/app/App.model';
 import { DexieDB } from 'front/complect/_DexieDB';
-import { DeviceId, IScheduleWidget, LocalSokiAuth, ScheduleWidgetPhotoKey } from 'shared/api';
-import { IndexValues } from '../Index.model';
+import { DeviceId, IndexValues, IScheduleWidget, LocalSokiAuth, ScheduleWidgetPhotoKey } from 'shared/api';
 import { FileAssociations } from '../parts/actions/files/complect/MyFilesTypeBox';
 
 interface Storage {

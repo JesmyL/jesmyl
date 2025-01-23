@@ -1,6 +1,5 @@
 import { ReactNode, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useAtom } from '../../../../../complect/atoms';
 import BrutalItem from '../../../../../complect/brutal-item/BrutalItem';
 import IconButton from '../../../../../complect/the-icon/IconButton';
 import { IconCalendar01SolidSharp } from '../../../../../complect/the-icon/icons/calendar-01';
@@ -8,11 +7,9 @@ import { IconCalendar02StrokeRounded } from '../../../../../complect/the-icon/ic
 import { IconFolder01StrokeRounded } from '../../../../../complect/the-icon/icons/folder-01';
 import { IconStarSolidRounded, IconStarStrokeRounded } from '../../../../../complect/the-icon/icons/star';
 import { useActualRef } from '../../../../../complect/useActualRef';
-import { cmEventContextAtom, cmMolecule } from '../../molecules';
+import { cmIDB } from '../../_db/cm-idb';
 import { Meetings } from './Meetings';
 import { MeetingsEvent } from './MeetingsEvent';
-
-const favoriteMeetingsAtom = cmMolecule.select(s => s.favoriteMeetings);
 
 export default function MeetingsInner<Meets extends Meetings>({
   meetings,
@@ -25,8 +22,8 @@ export default function MeetingsInner<Meets extends Meetings>({
   onContextNavigate?: (context: number[]) => void;
   asEventBox?: (event: MeetingsEvent) => ReactNode;
 }) {
-  const [eventContext, setEventContext] = useAtom(cmEventContextAtom);
-  const [favorites, setFavorites] = useAtom(favoriteMeetingsAtom);
+  const [eventContext, setEventContext] = cmIDB.use.eventContext();
+  const [favorites, setFavorites] = cmIDB.use.favoriteMeetings();
   const setCurrContextRef = useActualRef((eventContext: number[]) => setEventContext(eventContext));
   const onContextNavigateRef = useActualRef(onContextNavigate);
   const eventContextRef = useActualRef(eventContext);

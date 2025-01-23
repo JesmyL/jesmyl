@@ -38,16 +38,16 @@ export class Cat extends BaseNamed<IExportableCat> {
     return this.top.s ?? mylib.keys(this.top.d ?? {}).map(Number);
   }
 
-  sortedSearch(term = this.term, isNumberSearch?: boolean) {
+  static sortedSearch(term: string, coms: Com[], isNumberSearch?: boolean) {
     if (term) {
       return mylib.searchRateWithSort(
-        this.coms,
+        coms,
         term,
         ['name', 'number', ['orders', mylib.c.INDEX, 'text']],
         isNumberSearch,
       );
     } else {
-      return { list: Promise.resolve(this.coms.map(com => ({ item: com }))), reset: () => {} };
+      return { list: Promise.resolve(coms.map(com => ({ item: com }))), reset: () => {} };
     }
   }
 }

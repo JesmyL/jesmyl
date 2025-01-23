@@ -1,15 +1,14 @@
 import { useState } from 'react';
-import { useAtomValue } from '../../../../../complect/atoms';
 import { useExerExec } from '../../../../../complect/exer/hooks/useExer';
 import KeyboardInput from '../../../../../complect/keyboard/KeyboardInput';
-import { cmEventContextAtom } from '../../molecules';
+import { cmIDB } from '../../_db/cm-idb';
 import { useEditableMeetings } from './useEditableMeetings';
 
 export default function MeetingsCreator({ close }: { close: (is: false) => void }) {
   const [name, setName] = useState('');
   const { meetings } = useEditableMeetings();
   const exec = useExerExec();
-  const eventContext = useAtomValue(cmEventContextAtom);
+  const eventContext = cmIDB.useValue.eventContext();
 
   const [, currContextw] = meetings?.getContexts(eventContext) || [];
 
