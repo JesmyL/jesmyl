@@ -1,11 +1,10 @@
 import { mylib } from 'front/utils';
 import { useEffect } from 'react';
-import { useAtomSet } from '../../../../../../complect/atoms';
+import { bibleIDB } from '../../../_db/bibleIDB';
 import { useBibleTranslationJoinAddress, useBibleTranslationJoinAddressSetter } from '../../../hooks/address/address';
 import { useBibleAddressVersei } from '../../../hooks/address/verses';
 import { useBibleTranslationSlideSyncContentSetter } from '../../../hooks/slide-sync';
 import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress } from '../../../model';
-import { bibleVerseiAtom } from '../atoms';
 import { verseiIdPrefix } from './VerseList';
 
 export const useVerseListListeners = (
@@ -16,7 +15,6 @@ export const useVerseListListeners = (
   const currentJoinAddress = useBibleTranslationJoinAddress();
   const syncSlide = useBibleTranslationSlideSyncContentSetter();
   const setJoin = useBibleTranslationJoinAddressSetter();
-  const setVersei = useAtomSet(bibleVerseiAtom);
   const currentVersei = useBibleAddressVersei();
   const currentJoin = currentJoinAddress?.[currentBooki]?.[currentChapteri];
 
@@ -42,7 +40,7 @@ export const useVerseListListeners = (
         if (isDblClick) {
           if (!currentJoin?.includes(versei)) {
             setJoin(null);
-            setVersei(versei);
+            bibleIDB.set.versei(versei);
           }
           syncSlide();
           isDblClick = false;
@@ -54,13 +52,13 @@ export const useVerseListListeners = (
         clickTimeout = setTimeout(() => {
           if (!ctrlKey && !shiftKey) {
             setJoin(null);
-            setVersei(versei);
+            bibleIDB.set.versei(versei);
 
             return;
           }
 
           let newJoin = { ...currentJoinAddress } as BibleTranslationJoinAddress;
-          setVersei(versei);
+          bibleIDB.set.versei(versei);
 
           if (currentJoinAddress == null) {
             const verses = ((newJoin[currentBooki] = {} as BibleTranslationJoinAddress[BibleBooki])[currentChapteri] =
@@ -121,7 +119,6 @@ export const useVerseListListeners = (
     currentJoinAddress,
     currentVersei,
     setJoin,
-    setVersei,
     syncSlide,
     verseListNodeRef,
   ]);

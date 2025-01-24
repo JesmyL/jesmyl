@@ -68,7 +68,7 @@ export default memo(function BibleTranslationPlanArchive(): JSX.Element {
       })
       .addEventListener(inputNode, 'blur', () => setSelectedItemi(null))
       .effect();
-  }, [getJoinAddressMaxes, plan, plan.length, selectedItemi, setAddress, setJoinAddress]);
+  }, [getJoinAddressMaxes, plan, selectedItemi, setAddress, setJoinAddress]);
 
   useEffect(() => {
     if (selectedItemi === null) return;

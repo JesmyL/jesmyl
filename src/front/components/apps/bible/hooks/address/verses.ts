@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
-import { useAtomSet } from '../../../../../complect/atoms';
+import { bibleIDB } from '../../_db/bibleIDB';
 import { BibleVersei } from '../../model';
 import { useBibleTranslatesContext } from '../../translates/TranslatesContext';
 import { useBibleShowTranslatesValue } from '../../translates/hooks';
-import { bibleVerseiAtom, useBibleVersei } from '../../translations/lists/atoms';
+import { useBibleVersei } from '../../translations/lists/atoms';
 import { useBibleTranslationSlideSyncContentSetter } from '../slide-sync';
 import { useBibleTranslationJoinAddress, useBibleTranslationJoinAddressSetter } from './address';
 import { useBibleAddressBooki } from './books';
@@ -41,14 +41,13 @@ export const usePutBibleAddressVerseiSetter = () => {
   const currentJoinAddress = useBibleTranslationJoinAddress();
   const syncSlide = useBibleTranslationSlideSyncContentSetter();
   const setJoin = useBibleTranslationJoinAddressSetter();
-  const setVersei = useAtomSet(bibleVerseiAtom);
 
   return useCallback(
     (versei: BibleVersei, isDblClick: boolean): (() => void) | null => {
       if (isDblClick) syncSlide();
       else setJoin(null);
 
-      setVersei(versei);
+      bibleIDB.set.versei(versei);
 
       return () => {
         if (currentJoinAddress?.[currentBooki]?.[currentChapteri]?.includes(versei)) {
@@ -56,7 +55,7 @@ export const usePutBibleAddressVerseiSetter = () => {
         }
       };
     },
-    [currentBooki, currentChapteri, currentJoinAddress, setJoin, setVersei, syncSlide],
+    [currentBooki, currentChapteri, currentJoinAddress, setJoin, syncSlide],
   );
 };
 

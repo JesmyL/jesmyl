@@ -1,43 +1,32 @@
+import { bibleIDB } from 'front/components/apps/bible/_db/bibleIDB';
 import { mylib } from 'front/utils';
 import { useCallback } from 'react';
-import { useAtom, useAtomSet, useAtomValue } from '../../../../../../../complect/atoms';
-import { useActualRef } from '../../../../../../../complect/useActualRef';
 import { BibleTranslationAddress } from '../../../../model';
-import { bibleMolecule } from '../../../../molecules';
 
-const historyAtom = bibleMolecule.select(s => s.translationHistory);
-
-export const useBibleTranslationHistory = () => useAtomValue(historyAtom);
+export const useBibleTranslationHistory = () => bibleIDB.useValue.translationHistory();
 
 export const useBibleTranslationAddToHistory = () => {
-  const historyRef = useActualRef(useAtom(historyAtom));
+  return useCallback(async (item: BibleTranslationAddress, isReplaceFirstNearVersei = false) => {
+    const history = await bibleIDB.get.translationHistory();
 
-  return useCallback(
-    (item: BibleTranslationAddress, isReplaceFirstNearVersei = false) => {
-      const [history, setHistory] = historyRef.current;
+    const previ = history.findIndex(historyItem => mylib.isEq(historyItem, item, true));
+    const newHistory = [...history];
+    if (previ > -1) newHistory.splice(previ, 1);
 
-      const previ = history.findIndex(historyItem => mylib.isEq(historyItem, item, true));
-      const newHistory = [...history];
-      if (previ > -1) newHistory.splice(previ, 1);
-
-      if (isReplaceFirstNearVersei && mylib.isArr(newHistory[0])) {
-        const [biblei, chapteri, versei] = newHistory[0];
-        if (mylib.isEq(item, [biblei, chapteri, versei + 1]) || mylib.isEq(item, [biblei, chapteri, versei - 1])) {
-          newHistory.shift();
-        }
+    if (isReplaceFirstNearVersei && mylib.isArr(newHistory[0])) {
+      const [biblei, chapteri, versei] = newHistory[0];
+      if (mylib.isEq(item, [biblei, chapteri, versei + 1]) || mylib.isEq(item, [biblei, chapteri, versei - 1])) {
+        newHistory.shift();
       }
+    }
 
-      newHistory.unshift(item);
-      if (newHistory.length > 50) newHistory.length = 50;
+    newHistory.unshift(item);
+    if (newHistory.length > 50) newHistory.length = 50;
 
-      setHistory(newHistory);
-    },
-    [historyRef],
-  );
+    bibleIDB.set.translationHistory(newHistory);
+  }, []);
 };
 
 export const useBibleClearTranslationHistorySetter = () => {
-  const set = useAtomSet(historyAtom);
-
-  return useCallback(() => set([]), [set]);
+  return useCallback(() => bibleIDB.set.translationHistory([]), []);
 };

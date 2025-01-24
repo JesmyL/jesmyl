@@ -1,10 +1,5 @@
-import { atom, useAtom } from '../../../../../complect/atoms';
-import { BibleSearchZone } from '../../model';
+import { bibleIDB } from '../../_db/bibleIDB';
 
-const searchTermAtom = atom('', 'bible', 'translationSearchTerm');
-const addressTermAtom = atom('', 'bible', 'translationAddressTerm');
-const searchZoneAtom = atom<BibleSearchZone>('global', 'bible', 'translationSearchZone');
-
-export const useBibleSearchZone = () => useAtom(searchZoneAtom);
-export const useBibleSearchTerm = () => useAtom(searchTermAtom);
-export const useBibleAddressTerm = () => useAtom(addressTermAtom);
+export const useBibleSearchZone = () => bibleIDB.use.searchZone();
+export const useBibleSearchTerm = () => bibleIDB.use.searchTerm();
+export const useBibleAddressTerm = () => bibleIDB.use.addressTerm();

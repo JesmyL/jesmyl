@@ -1,8 +1,7 @@
 import { mylib } from 'front/utils';
 import { useCallback } from 'react';
-import { useAtomSet, useAtomValue } from '../../../../../complect/atoms';
+import { bibleIDB } from '../../_db/bibleIDB';
 import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '../../model';
-import { bibleMolecule } from '../../molecules';
 import { useBibleSingleAddressSetter } from '../../translations/lists/atoms';
 import { useBibleTranslationSearchResultSelectedSet } from '../../translations/search/hooks/results';
 
@@ -61,10 +60,8 @@ export const useSetBibleAddressWithForceJoinReset = () => {
   );
 };
 
-const joinAddressAtom = bibleMolecule.select(s => s.joinAddress);
-
-export const useBibleTranslationJoinAddress = () => useAtomValue(joinAddressAtom);
-export const useBibleTranslationJoinAddressSetter = () => useAtomSet(joinAddressAtom);
+export const useBibleTranslationJoinAddress = () => bibleIDB.useValue.joinAddress();
+export const useBibleTranslationJoinAddressSetter = () => bibleIDB.useSet.joinAddress();
 
 export const useGetterJoinedAddressMaxValues = () =>
   useCallback((joinAddress: BibleTranslationJoinAddress) => {
