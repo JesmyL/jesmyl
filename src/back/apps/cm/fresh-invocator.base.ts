@@ -3,11 +3,14 @@ import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { mylib } from 'front/utils';
 import { IExportableCat, IExportableCom } from 'shared/api';
 import { CmFreshSokiInvocatorModel } from 'shared/api/invocators/cm/fresh-invocators.model';
+import { smylib } from 'shared/utils';
 import { cmCatServerInvocatorBase } from './cat-invocator.base';
+import { cmComExternalsSokiInvocatorBaseServer } from './com-externals-invocator.base';
 import { cmComServerInvocatorBase } from './com-invocator.base';
 import { cmComOrderServerInvocatorBase } from './com-order-invocator.base';
 import { chordPackFileStore, cmEditorSokiInvocatorBaseServer, eePackFileStore } from './editor-invocator.base';
 import { cmEditorServerInvocatorShareMethods } from './editor-invocator.shares';
+import { eventPacksFileStore } from './file-stores';
 import { cmServerInvocatorShareMethods } from './invocator.shares';
 import {
   cmUserStoreSokiInvocatorBaseServer,
@@ -38,6 +41,9 @@ class CmFreshSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmFreshSoki
             });
           }
 
+          const comPacks = smylib.values(eventPacksFileStore.getValue()).filter(pack => pack.m > lastModfiedMs);
+          if (comPacks.length) cmServerInvocatorShareMethods.freshSchEventComPacks(client, comPacks);
+
           if (auth != null) {
             if (auth.level >= 50) {
               const eePackModifiedAt = eePackFileStore.fileModifiedAt();
@@ -66,6 +72,7 @@ class CmFreshSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmFreshSoki
 export const cmFreshServerInvocatorBase = new CmFreshSokiInvocatorBaseServer();
 
 cmComServerInvocatorBase.$$register();
+cmComExternalsSokiInvocatorBaseServer.$$register();
 cmCatServerInvocatorBase.$$register();
 cmComOrderServerInvocatorBase.$$register();
 cmEditorSokiInvocatorBaseServer.$$register();

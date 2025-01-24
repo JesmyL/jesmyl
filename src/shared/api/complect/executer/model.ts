@@ -277,6 +277,8 @@ declare global {
   type numberStr = `${'-' | ''}${intStr}${`.${number}` | ''}`;
   type StringBySlash = `${string}/${string}`;
 
+  type PRecord<Key extends string | number, Value> = Partial<Record<Key, Value>>;
+
   type OmitOwn<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
   type WithRewrites<T, P> = Pick<T, Exclude<keyof T, keyof P>> & Pick<P, keyof P>;
 

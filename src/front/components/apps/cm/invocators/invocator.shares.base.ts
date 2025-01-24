@@ -67,6 +67,13 @@ class CmSokiInvocatorBaseClient extends SokiInvocatorBaseClient<CmSokiInvocatorS
         cmIDB.set.favoriteComs(list);
         setLastModifiedValue(modifiedAt);
       },
+
+      freshSchEventComPacks: () => async list => {
+        cmIDB.db.scheduleComPacks.bulkPut(list);
+
+        const modifiedAt = list.reduce((max, item) => Math.max(max, item.m), 0);
+        setLastModifiedValue(modifiedAt);
+      },
     });
   }
 }

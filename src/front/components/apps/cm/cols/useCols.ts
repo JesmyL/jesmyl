@@ -11,7 +11,20 @@ export const useComs = (comwsLine?: CmComWid[]) => {
     [comwsLine],
   );
 
-  return useMemo(() => icoms?.map(icom => new Com(icom)) ?? [], [icoms]);
+  return useMemo(() => {
+    if (icoms == null) return [];
+
+    if (comwsLine) {
+      const indexes = {} as Record<CmComWid, number>;
+      comwsLine.forEach((comw, comwi) => (indexes[comw] = comwi));
+      icoms?.sort();
+      icoms.sort((a, b) => indexes[a.w] - indexes[b.w]);
+    }
+
+    const coms = icoms.map(icom => new Com(icom));
+
+    return coms;
+  }, [comwsLine, icoms]);
 };
 
 export const useCats = () => {

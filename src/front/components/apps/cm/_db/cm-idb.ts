@@ -1,5 +1,12 @@
 import { DexieDB } from 'front/complect/_DexieDB';
-import { CmComWid, ICmComComment, IExportableCat, IExportableCom, MigratableComToolName } from 'shared/api';
+import {
+  CmComWid,
+  ICmComComment,
+  IExportableCat,
+  IExportableCom,
+  MigratableComToolName,
+  ScheduleComPack,
+} from 'shared/api';
 import { EeStorePack } from 'shared/api/complect/apps/cm/complect/ee-store';
 import { ChordPack } from '../../../../../shared/api/complect/apps/cm/complect/chord-card';
 import { ChordVisibleVariant, FavoriteMeetings, PlayerHideMode } from '../Cm.model';
@@ -17,6 +24,9 @@ export interface CmIDBStorage {
   comComments: ICmComComment[];
   coms: IExportableCom[];
   cats: IExportableCat[];
+
+  scheduleComPacks: ScheduleComPack[];
+  selectedComws: CmComWid[];
 
   laterComwList: number[];
   chordVisibleVariant: ChordVisibleVariant;
@@ -45,6 +55,7 @@ class CmIDB extends DexieDB<CmIDBStorage> {
       lastModified: { $byDefault: 0 },
       eeStore: { $byDefault: {} },
       favoriteComs: { $byDefault: [] },
+      selectedComws: { $byDefault: [] },
       comTopTools: { $byDefault: ['mark-com', 'fullscreen-mode', 'chords-variant'] as never },
 
       chordVisibleVariant: { $byDefault: ChordVisibleVariant.Maximal },
@@ -69,6 +80,9 @@ class CmIDB extends DexieDB<CmIDBStorage> {
       },
       comComments: {
         comw: '++',
+      },
+      scheduleComPacks: {
+        schw: '++',
       },
     });
   }

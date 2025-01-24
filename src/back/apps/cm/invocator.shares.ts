@@ -15,6 +15,8 @@ class CmSokiInvocatorServer extends SokiInvocatorServer<CmSokiInvocatorSharesMod
 
       freshComComments: true,
       freshComFavorites: true,
+
+      freshSchEventComPacks: true,
     });
   }
 }

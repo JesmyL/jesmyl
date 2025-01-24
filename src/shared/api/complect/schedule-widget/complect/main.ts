@@ -16,6 +16,9 @@ export enum IScheduleWidgetTeamGameMi {
 export enum IScheduleWidgetDayEventMi {
   def = 1,
 }
+export enum IScheduleWidgetDayi {
+  def = 0,
+}
 export enum IScheduleWidgetAttachmentTypeMi {
   def = 0,
 }

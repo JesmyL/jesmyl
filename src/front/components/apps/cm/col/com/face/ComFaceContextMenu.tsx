@@ -6,9 +6,7 @@ import { IconAddCircleHalfDotStrokeRounded } from '../../../../../../complect/th
 import { IconCancelCircleHalfDotStrokeRounded } from '../../../../../../complect/the-icon/icons/cancel-circle-half-dot';
 import { IconRemoveCircleHalfDotStrokeRounded } from '../../../../../../complect/the-icon/icons/remove-circle-half-dot';
 import { IconStarSolidRounded, IconStarStrokeRounded } from '../../../../../../complect/the-icon/icons/star';
-import { useAuth } from '../../../../../index/atoms';
 import useSelectedComs from '../../../base/useSelectedComs';
-import ComFaceContextMenuEditorItems from '../../../editor/col/compositions/ComFaceContextMenuEditorItems';
 import { useFavoriteComs } from '../../../lists/favorites/useFavoriteComs';
 
 interface Props {
@@ -21,7 +19,6 @@ export default function ComFaceContextMenu({ onClick, comWid }: Props) {
   const isComMarked = isMarked(comWid);
   const { clearSelectedComws, selectedComws, selectedComPosition: isSelected, toggleSelectedCom } = useSelectedComs();
   const [confirmNode, confirm] = useConfirm();
-  const auth = useAuth();
 
   return (
     <StyledMenu>
@@ -48,7 +45,6 @@ export default function ComFaceContextMenu({ onClick, comWid }: Props) {
           }}
         />
       )}
-      {auth.level > 49 && <ComFaceContextMenuEditorItems />}
     </StyledMenu>
   );
 }

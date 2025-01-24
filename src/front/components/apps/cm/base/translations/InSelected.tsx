@@ -3,7 +3,7 @@ import useSelectedComs from '../useSelectedComs';
 import { CmComListContext, CmComListContextValue } from './context';
 
 export const CmTranslationComListContextInSelected = function InSelected({ children }: { children: React.ReactNode }) {
-  const currentList = useSelectedComs().takeSelectedComs();
+  const currentList = useSelectedComs().selectedComs;
   const [list] = useState(currentList);
 
   const value = useMemo((): CmComListContextValue => {

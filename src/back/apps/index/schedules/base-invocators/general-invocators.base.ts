@@ -1,4 +1,3 @@
-import { FileStore } from 'back/complect/FileStorage';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import {
   IScheduleWidget,
@@ -19,13 +18,12 @@ import { schAttachmentTypesSokiInvocatorBaseServer } from './attachment-types-in
 import { schDayEventsSokiInvocatorBaseServer } from './day-events-invocators.base';
 import { schDaysSokiInvocatorBaseServer } from './days-invocators.base';
 import { schEventTypesSokiInvocatorBaseServer } from './event-types-invocators.base';
+import { schedulesFileStore } from './file-stores';
 import { schGamesSokiInvocatorBaseServer } from './games-invocators.base';
 import { schListsSokiInvocatorBaseServer } from './lists-invocators.base';
 import { schPhotosSokiInvocatorBaseServer } from './photos-invocators.base';
 import { schRolesSokiInvocatorBaseServer } from './roles-invocators.base';
 import { schUsersSokiInvocatorBaseServer } from './users-invocators.base';
-
-export const schedulesFileStore = new FileStore<IScheduleWidget[]>('/apps/index/schs.json', []);
 
 class SchGeneralSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGeneralSokiInvocatorModel> {
   constructor() {

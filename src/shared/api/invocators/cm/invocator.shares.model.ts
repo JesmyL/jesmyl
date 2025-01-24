@@ -1,4 +1,4 @@
-import { CmComWid, ICmComComment, IExportableCat, IExportableCom } from 'shared/api/complect/apps';
+import { CmComWid, ICmComComment, IExportableCat, IExportableCom, ScheduleComPack } from 'shared/api/complect/apps';
 import { ChordPack } from 'shared/api/complect/apps/cm/complect/chord-card';
 
 export type CmSokiInvocatorSharesModel = {
@@ -13,4 +13,6 @@ export type CmSokiInvocatorSharesModel = {
 
   freshComComments: (comments: ICmComComment[]) => void;
   freshComFavorites: (list: CmComWid[], modifiedAt: number) => void;
+
+  freshSchEventComPacks: (packs: ScheduleComPack[]) => void;
 };

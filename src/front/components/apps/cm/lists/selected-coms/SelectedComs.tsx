@@ -1,5 +1,9 @@
+import IconButton from 'front/complect/the-icon/IconButton';
+import { IconArrowDataTransferVerticalStrokeRounded } from 'front/complect/the-icon/icons/arrow-data-transfer-vertical';
+import { mylib } from 'front/utils';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import styled from 'styled-components';
 import { BottomPopup } from '../../../../../complect/absolute-popup/bottom-popup/BottomPopup';
 import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
 import CmTranslationComListContextInSelected from '../../base/translations/InSelected';
@@ -9,7 +13,7 @@ import { cmCompositionRoute } from '../../routing/cmRoutingApp';
 import { LocalListToolsPopup } from '../popups/LocalListToolsPopup';
 
 export default function SelectedComs() {
-  const coms = useSelectedComs().takeSelectedComs();
+  const { selectedComs, selectedComws, setSelectedComws } = useSelectedComs();
   const [isToolsOpen, setIsToolsOpen] = useState(false);
 
   return (
@@ -25,10 +29,26 @@ export default function SelectedComs() {
               <>
                 {isToolsOpen && (
                   <BottomPopup onClose={setIsToolsOpen}>
-                    <LocalListToolsPopup coms={coms} />
+                    <LocalListToolsPopup coms={selectedComs} />
                   </BottomPopup>
                 )}
-                <ComFaceList list={coms} />
+                <ComFaceList
+                  list={selectedComws}
+                  comDescription={(_comw, comi) => {
+                    return (
+                      !comi || (
+                        <MoveComButton
+                          Icon={IconArrowDataTransferVerticalStrokeRounded}
+                          onClick={() => {
+                            setSelectedComws(prev => {
+                              return mylib.withInsertedBeforei(prev, comi - 1, comi);
+                            });
+                          }}
+                        />
+                      )
+                    );
+                  }}
+                />
               </>
             }
           />
@@ -41,3 +61,8 @@ export default function SelectedComs() {
     </Routes>
   );
 }
+
+const MoveComButton = styled(IconButton)`
+  position: relative;
+  top: -20px;
+`;

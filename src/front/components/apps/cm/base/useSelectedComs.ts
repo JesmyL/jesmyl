@@ -1,21 +1,13 @@
 import { mylib } from 'front/utils';
 import { useCallback, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { itNNil } from 'shared/utils';
-import { CmComWid } from '../../../../../shared/api/complect/apps/cm/complect/enums';
-import { atom, useAtom } from '../../../../complect/atoms';
+import { cmIDB } from '../_db/cm-idb';
 import { useComs } from '../cols/useCols';
 
-const scomwsAtom = atom<CmComWid[]>([], 'cm', 'scomws');
-
 export default function useSelectedComs() {
-  const coms = useComs();
   const [searchParams, setSearchParams] = useSearchParams();
-
-  const [selectedComws, setSelectedComws] = useAtom(scomwsAtom);
-  const takeSelectedComs = useCallback(() => {
-    return (coms && selectedComws.map(comw => coms.find(com => com.wid === comw)).filter(itNNil)) || [];
-  }, [coms, selectedComws]);
+  const [selectedComws, setSelectedComws] = cmIDB.use.selectedComws();
+  const selectedComs = useComs(selectedComws);
 
   useEffect(() => {
     const scomws = searchParams.get('scomws');
@@ -55,7 +47,7 @@ export default function useSelectedComs() {
 
   return {
     selectedComws,
-    takeSelectedComs,
+    selectedComs,
     selectedComPosition,
     updateSelectedComws,
     clearSelectedComws: () => updateSelectedComws([]),

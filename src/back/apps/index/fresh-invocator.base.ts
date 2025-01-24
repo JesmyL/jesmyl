@@ -4,10 +4,8 @@ import { IndexValues, IScheduleWidget, makeTwiceKnownName, NounPronsType } from 
 import { IndexBasicsSokiInvocatorModel } from 'shared/api/invocators/index/basics-invocators.model';
 import { itNNull, smylib } from 'shared/utils';
 import { indexServerInvocatorShareMethods } from './invocators.shares';
-import {
-  schedulesFileStore,
-  schGeneralSokiInvocatorBaseServer,
-} from './schedules/base-invocators/general-invocators.base';
+import { schedulesFileStore } from './schedules/base-invocators/file-stores';
+import { schGeneralSokiInvocatorBaseServer } from './schedules/base-invocators/general-invocators.base';
 import { schServerInvocatorShareMethods } from './schedules/invocators.shares';
 
 const deviceIdPostfixSymbols = '!@#$%^&*;.,?/|\\+=-'.split('');

@@ -1,16 +1,24 @@
-import { useState } from 'react';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { useAuth } from 'front/components/index/atoms';
+import { indexIDB } from 'front/components/index/db/index-idb';
 import { Route, Routes } from 'react-router-dom';
-import { BottomPopup } from '../../../../../complect/absolute-popup/bottom-popup/BottomPopup';
 import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
-import CmTranslationComListContextInMeetings from '../../base/translations/InMeetings';
+import { cmIDB } from '../../_db/cm-idb';
+import { CmComListContext } from '../../base/translations/context';
 import { ComFaceList } from '../../col/com/face/list/ComFaceList';
+import { useComs } from '../../cols/useCols';
 import { cmCompositionRoute } from '../../routing/cmRoutingApp';
-import { LocalListToolsPopup } from '../popups/LocalListToolsPopup';
-import { useMeetings } from './useMeetings';
+import { SendMySelectedsButton } from './SendMySelectedsButton';
+import { useMeetingPathParts } from './useMeetingPathParts';
 
 export default function TheMeetingsEvent() {
-  const { currentEvent } = useMeetings();
-  const [isOpenList, setIsOpenList] = useState(false);
+  const { dayi, eventMi, schw } = useMeetingPathParts();
+  const schedule = useLiveQuery(() => indexIDB.db.schs.get(schw), [schw]);
+  const typei = schedule?.days[dayi].list.find(event => event.mi === eventMi)?.type ?? -1;
+  const pack = useLiveQuery(() => cmIDB.db.scheduleComPacks.get({ schw }), [schw]);
+  const packComws = pack?.pack?.[dayi as never]?.[eventMi as never] ?? [];
+  const coms = useComs(packComws);
+  const auth = useAuth();
 
   return (
     <Routes>
@@ -19,24 +27,15 @@ export default function TheMeetingsEvent() {
         element={
           <PhaseContainerConfigurer
             className="meeting-container"
-            headTitle={currentEvent?.name ?? 'Событие'}
-            onMoreClick={setIsOpenList}
-            content={
-              <>
-                {isOpenList && (
-                  <BottomPopup onClose={setIsOpenList}>
-                    <LocalListToolsPopup coms={currentEvent?.coms} />
-                  </BottomPopup>
-                )}
-                <ComFaceList list={currentEvent?.coms} />
-              </>
-            }
+            headTitle={schedule ? `${schedule.title} - ${schedule.types[typei]?.title ?? ''}` : 'Событие'}
+            head={auth.level < 50 || <SendMySelectedsButton packComws={packComws} />}
+            content={<ComFaceList list={coms} />}
           />
         }
       />
 
       {cmCompositionRoute(children => (
-        <CmTranslationComListContextInMeetings>{children}</CmTranslationComListContextInMeetings>
+        <CmComListContext.Provider value={{ list: coms }}>{children}</CmComListContext.Provider>
       ))}
     </Routes>
   );

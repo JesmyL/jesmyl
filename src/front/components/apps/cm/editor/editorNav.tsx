@@ -6,7 +6,6 @@ import {
 import { iconPackOfArrange } from '../../../../complect/the-icon/icons/arrange';
 import { iconPackOfBookOpen01 } from '../../../../complect/the-icon/icons/book-open-01';
 import { iconPackOfBookOpen02 } from '../../../../complect/the-icon/icons/book-open-02';
-import { iconPackOfCalendar02 } from '../../../../complect/the-icon/icons/calendar-02';
 import { iconPackOfComputer } from '../../../../complect/the-icon/icons/computer';
 import { iconPackOfDistributeVerticalTop } from '../../../../complect/the-icon/icons/distribute-vertical-top';
 import { iconPackOfEdit02 } from '../../../../complect/the-icon/icons/edit-02';
@@ -43,8 +42,6 @@ const LazyEditComposition = React.lazy(() => import('./col/compositions/EditComp
 const LazyEditCompositions = React.lazy(() => import('./col/compositions/EditCompositions'));
 
 const LazyEERules = React.lazy(() => import('./ee-rules/EERules'));
-const LazyEditMeetings = React.lazy(() => import('./meetings/EditMeetings'));
-const LazyEditMeetingsEvent = React.lazy(() => import('./meetings/EditMeetingsEvent'));
 const LazyMp3RulesRedactor = React.lazy(() => import('./mp3-rule-redactor/Mp3RulesRedactor'));
 
 export const editCompositionNavs: INavigationRouteChildItem<
@@ -173,27 +170,6 @@ export const editorRouteItems: INavigationRouteChildItem<
         phase: editComNavPhasePoint,
         node: props => <LazyEditComposition />,
         next: editCompositionNavs,
-      },
-    ],
-  },
-  {
-    phase: ['meetings'],
-    node: <LazyEditMeetings />,
-    accessLevel: 50,
-    data: {
-      title: '',
-      iconSelfPack: iconPackOfCalendar02,
-    },
-    next: [
-      {
-        phase: editEventNavPhasePoint,
-        node: <LazyEditMeetingsEvent />,
-        next: [
-          {
-            phase: ['com'],
-            node: <LazyTheComposition />,
-          },
-        ],
       },
     ],
   },

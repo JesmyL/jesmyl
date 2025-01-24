@@ -1,5 +1,6 @@
 import { SokiInvocatorClient } from 'front/SokiInvocator.client';
 import { CmCatSokiInvocatorModel } from 'shared/api/invocators/cm/cat-invocators.model';
+import { CmComExternalsSokiInvocatorModel } from 'shared/api/invocators/cm/com-externals-invocators.model';
 import { CmComSokiInvocatorModel } from 'shared/api/invocators/cm/com-invocators.model';
 import { CmComOrderSokiInvocatorModel } from 'shared/api/invocators/cm/com-order-invocators.model';
 import { CmEditorSokiInvocatorModel } from 'shared/api/invocators/cm/editor-invocators.model';
@@ -43,6 +44,15 @@ export const cmComClientInvocatorMethods = new CmComSokiInvocatorClient('CmComSo
   remove: true,
   bringBackToLife: true,
 });
+
+class CmComExternalsSokiInvocatorClient extends SokiInvocatorClient<CmComExternalsSokiInvocatorModel> {}
+export const cmComExternalsClientInvocatorMethods = new CmComExternalsSokiInvocatorClient(
+  'CmComExternalsSokiInvocatorClient',
+  {
+    setInScheduleEvent: true,
+    getScheduleEventHistory: true,
+  },
+);
 
 class CmComOrderSokiInvocatorClient extends SokiInvocatorClient<CmComOrderSokiInvocatorModel> {}
 export const cmComOrderClientInvocatorMethods = new CmComOrderSokiInvocatorClient('CmComOrderSokiInvocatorClient', {

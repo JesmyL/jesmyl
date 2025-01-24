@@ -7,13 +7,13 @@ import { IconHeadphonesTwotoneRounded } from '../../../../complect/the-icon/icon
 import { IconMusicNote01TwotoneRounded } from '../../../../complect/the-icon/icons/music-note-01';
 import { IconTextTwotoneRounded } from '../../../../complect/the-icon/icons/text';
 import { useAuth } from '../../../index/atoms';
+import TheMeetings from '../lists/meetings/TheMeetings';
 import ChordRedactor from './chord-redactor/ChordRedactor';
 import { cmEditorSokiInvocatorBaseClient } from './cm-editor-invocator.base';
 import EditCategories from './col/categories/EditCategories';
 import EditCompositions from './col/compositions/EditCompositions';
 import './Editor.scss';
 import EERules from './ee-rules/EERules';
-import EditMeetings from './meetings/EditMeetings';
 import Mp3RulesRedactor from './mp3-rule-redactor/Mp3RulesRedactor';
 import PhaseCmEditorContainer from './phase-editor-container/PhaseCmEditorContainer';
 
@@ -95,7 +95,7 @@ export default function Editor() {
           />
           <Route
             path="events/*"
-            element={<EditMeetings />}
+            element={<TheMeetings />}
           />
           <Route
             path="chord"
