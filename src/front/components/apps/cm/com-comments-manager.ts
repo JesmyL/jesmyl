@@ -1,10 +1,7 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import { indexIDB } from 'front/components/index/db/index-idb';
 import { CmComWid } from '../../../../shared/api/complect/apps/cm/complect/enums';
-import { Molecule } from '../../../complect/atoms';
 import { cmIDB } from './_db/cm-idb';
-import { CmState } from './Cm.model';
-import { CmEditorStoraged } from './editor/CmEditor.model';
 import { cmUserStoreSokiInvocatorClient } from './invocators/user-store-invocator.methods';
 
 export const useComComment = (comw: CmComWid) => useLiveQuery(() => cmIDB.db.comComments.get(comw), [comw])?.comment;
@@ -38,15 +35,3 @@ export const updateComComment = async (comw: CmComWid, comment: string, setIsLoa
 
   await cmIDB.db.comComments.put({ comw, comment });
 };
-
-export const cmMolecule = new Molecule<CmState & CmEditorStoraged>(
-  {
-    meetings: { contexts: [] },
-
-    // editor
-    rules: [],
-  },
-  'cm',
-);
-
-export const cmMeetingsAtom = cmMolecule.select(s => s.meetings);

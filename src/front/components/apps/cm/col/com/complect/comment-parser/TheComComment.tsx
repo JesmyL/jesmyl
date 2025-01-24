@@ -15,7 +15,7 @@ import { IconCheckmarkCircle02StrokeRounded } from '../../../../../../../complec
 import { IconEdit01StrokeRounded } from '../../../../../../../complect/the-icon/icons/edit-01';
 import { IconMessageQuestionStrokeRounded } from '../../../../../../../complect/the-icon/icons/message-question';
 import { IconNote03StrokeRounded } from '../../../../../../../complect/the-icon/icons/note-03';
-import { updateComComment, useComComment } from '../../../../molecules';
+import { updateComComment, useComComment } from '../../../../com-comments-manager';
 import { isComCommentRedactAtom } from './complect';
 import TheComCommentInfo from './infos/TheComCommentInfo';
 

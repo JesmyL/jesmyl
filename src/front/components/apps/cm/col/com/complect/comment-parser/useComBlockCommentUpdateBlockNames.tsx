@@ -1,4 +1,4 @@
-import { updateComComment } from 'front/components/apps/cm/molecules';
+import { updateComComment } from 'front/components/apps/cm/com-comments-manager';
 import { useEffect } from 'react';
 import { hookEffectPipe, setTimeoutPipe } from '../../../../../../../complect/hookEffectPipe';
 import { Com } from '../../Com';

@@ -1,7 +1,7 @@
 import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
 import { useEffect, useMemo } from 'react';
 import { useAtom } from '../../../../../../../complect/atoms';
-import { useComComment } from '../../../../molecules';
+import { useComComment } from '../../../../com-comments-manager';
 import { Com } from '../../Com';
 import { ComBlockCommentMakerCleans } from './Cleans';
 import { isComCommentRedactAtom } from './complect';

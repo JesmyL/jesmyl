@@ -9,7 +9,6 @@ import { translationBlockAtom } from '../../../apps/cm/atoms';
 import { useCcom } from '../../../apps/cm/col/com/useCcom';
 import CmTranslationControlled from '../../../apps/cm/translation/complect/controlled/CmTranslationControlled';
 import { useCmScreenTranslationConfigs } from '../../../apps/cm/translation/complect/controlled/hooks/configs';
-import { ScheduleWidgetCurrentCmTranslationList } from '../../../apps/cm/translation/complect/live/SchWgtCurrentList';
 import { IndexSchWTranslationLiveDataValue } from '../../Index.model';
 import { schLiveSokiInvocatorClient } from './live-invocator';
 import { LiveTranslationAppProps } from './model';
@@ -59,19 +58,17 @@ export const ScheduleWidgetLiveCmTranslations = ({
   }, [ccom, config, currTexti, fio, isCantTranslateLive, schedule.w]);
 
   return (
-    <ScheduleWidgetCurrentCmTranslationList schedule={schedule}>
-      <CmTranslationControlled
-        head={
-          <IconButton
-            Icon={IconBookOpen02StrokeRounded}
-            className="margin-gap-r"
-            onClick={() => switchCurrApp()}
-          />
-        }
-        comList={coms}
-        headTitle={headTitle}
-        backButtonPath=".."
-      />
-    </ScheduleWidgetCurrentCmTranslationList>
+    <CmTranslationControlled
+      head={
+        <IconButton
+          Icon={IconBookOpen02StrokeRounded}
+          className="margin-gap-r"
+          onClick={() => switchCurrApp()}
+        />
+      }
+      comList={coms}
+      headTitle={headTitle}
+      backButtonPath=".."
+    />
   );
 };

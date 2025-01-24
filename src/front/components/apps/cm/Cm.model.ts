@@ -1,4 +1,3 @@
-import { IExportableMeetings } from '../../../../shared/api/complect/apps/cm/complect/Meetings';
 import { ClientExecutionDict } from '../../../complect/exer/Exer.model';
 import { IExportableSetts } from './col/com/block-styles/BlockStyles.model';
 
@@ -11,9 +10,7 @@ export enum ChordVisibleVariant {
 }
 
 export type FavoriteMeetings = Record<'events' | 'contexts', number[]>;
-export interface CmState {
-  meetings: IExportableMeetings;
-}
+export interface CmState {}
 
 export type PlayerHideMode = 'expand' | 'min' | '';
 

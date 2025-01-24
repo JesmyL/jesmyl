@@ -1,10 +1,7 @@
 import { useLiveQuery } from 'dexie-react-hooks';
-import { FullContent } from 'front/complect/fullscreen-content/FullContent';
 import { indexIDB } from 'front/components/index/db/index-idb';
-import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
-import MeetingEventExpandList from './MeetingEventExpandList';
 import { MeetingSchPackFace } from './MeetingSchPackFace';
 import TheMeetingsEvent from './TheMeetingsEvent';
 
@@ -26,7 +23,6 @@ export const TheMeetings = () => {
 
 const Page = () => {
   const schedules = useLiveQuery(() => indexIDB.db.schs.toArray());
-  const [isOpenFullContent, setIsOpenFullContent] = useState(false);
 
   return (
     <PhaseContainerConfigurer
@@ -40,12 +36,6 @@ const Page = () => {
               schedule={schedule}
             />
           ))}
-
-          {isOpenFullContent && (
-            <FullContent onClose={setIsOpenFullContent}>
-              <MeetingEventExpandList />
-            </FullContent>
-          )}
         </>
       }
     />
