@@ -85,8 +85,7 @@ export default function EditComposition() {
       content={
         <>
           <div className="flex around sticky nav-panel">
-            {editCompositionNavs.map(({ data: { iconPack, iconText } = {}, phase: [phase], accessLevel }) => {
-              if (accessLevel != null && !checkIsAccessed(accessLevel)) return null;
+            {editCompositionNavs.map(({ data: { iconPack } = {}, phase: [phase] }) => {
               return (
                 <NavLink
                   key={phase}
@@ -101,9 +100,7 @@ export default function EditComposition() {
                       ) : (
                         <iconPack.BulkRounded />
                       )
-                    ) : (
-                      iconText
-                    )
+                    ) : null
                   }
                 </NavLink>
               );

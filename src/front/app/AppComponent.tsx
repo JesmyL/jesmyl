@@ -9,7 +9,6 @@ import { hookEffectPipe, setTimeoutPipe } from '../complect/hookEffectPipe';
 import JesmylLogo from '../complect/jesmyl-logo/JesmylLogo';
 import { KEYBOARD_FLASH } from '../complect/keyboard/KeyboardInput';
 import { useCurrentApp } from '../components/index/atoms';
-import { useIsReadyRouter } from '../components/router/atoms';
 import './App.scss';
 
 const emptyArr: [] = [];
@@ -25,7 +24,6 @@ export default function AppComponent() {
   const currentApp = useCurrentApp();
   const [keyboardOpen, setKeyboardOpen] = useState(false);
   const [isShowLogo, setIsShowLogo] = useState(true);
-  const [, setIsReady] = useIsReadyRouter();
   const [rootAnchorNodes, setRootAnchorNodes] = useState<Record<string, React.ReactNode>>(emptyDict);
 
   useFingersActions();
@@ -35,7 +33,7 @@ export default function AppComponent() {
 
   useEffect(() => {
     return hookEffectPipe()
-      .pipe(setTimeoutPipe(setIsShowLogo, 1200, false), setTimeoutPipe(setIsReady, 100, true))
+      .pipe(setTimeoutPipe(setIsShowLogo, 1200, false))
       .effect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, emptyArr);
