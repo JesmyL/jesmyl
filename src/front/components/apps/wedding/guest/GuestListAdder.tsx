@@ -10,7 +10,6 @@ import TheButton from '../../../../complect/Button';
 import Dropdown from '../../../../complect/dropdown/Dropdown';
 import { FullContent } from '../../../../complect/fullscreen-content/FullContent';
 import { useGetExcelValueList } from '../../../../complect/useGetExcelValueList';
-import { wedExer } from '../exer';
 import { WedGuestFace } from './GuestFace';
 
 interface Props {
@@ -126,18 +125,18 @@ export const WedGuestListAdder = ({ setIsOpen, guests }: Props) => {
               if (!newGuests) return;
               setIsBlockSendButton(true);
 
-              try {
-                await wedExer.send([
-                  {
-                    action: 'concatGuestList',
-                    args: { value: newGuests },
-                  },
-                ]);
+              // try {
+              //   await wedExer.send([
+              //     {
+              //       action: 'concatGuestList',
+              //       args: { value: newGuests },
+              //     },
+              //   ]);
 
-                setIsOpen(false);
-              } catch (error) {
-                setIsBlockSendButton(false);
-              }
+              //   setIsOpen(false);
+              // } catch (error) {
+              //   setIsBlockSendButton(false);
+              // }
             }}
           >
             Отправить список

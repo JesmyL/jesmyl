@@ -5,10 +5,10 @@ import { IconArrowRight01StrokeRounded } from '../../../../../complect/the-icon/
 import { IconComputerStrokeRounded } from '../../../../../complect/the-icon/icons/computer';
 import { IconPlayStrokeRounded } from '../../../../../complect/the-icon/icons/play';
 import { IconQrCodeSolidRounded, IconQrCodeStrokeRounded } from '../../../../../complect/the-icon/icons/qr-code';
+import { useScreenTranslationConfigsValue } from '../atoms';
 import { useWatchScreenTranslations } from '../hooks/watch-translation';
 import { useScreenTranslationCurrentWindow, useScreenTranslationWindows } from '../hooks/windows';
 import { useTranslationIsInitialSlideShow, useTranslationIsInitialSlideShowSet } from '../initial-slide-context';
-import { useScreenTranslationConfigsValue } from '../molecules';
 import { ScreenTranslationControlPanelShowMdButton } from './ShowMdButton';
 
 interface Props {

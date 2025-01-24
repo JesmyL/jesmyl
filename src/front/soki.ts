@@ -1,4 +1,3 @@
-import { MyLib } from 'front/utils';
 import {
   environment,
   ServerStoreContent,
@@ -12,10 +11,7 @@ import {
 import { Eventer, makeRegExp } from 'shared/utils';
 import { jversion } from 'shared/values';
 import { AppName } from './app/App.model';
-import { Molecule } from './complect/atoms';
 import { lsJStorageLSSwitcherName } from './complect/JStorage';
-import { bibleMolecule } from './components/apps/bible/molecules';
-import { wedMolecule } from './components/apps/wedding/molecules';
 import { getAuthValue } from './components/index/atoms';
 import { indexIDB } from './components/index/db/index-idb';
 import { onSokiClientEventerInvocatorInvoke } from './eventers';
@@ -47,24 +43,6 @@ export class SokiTrip {
   onUserAuthorize = Eventer.createValue<boolean>();
 
   private responseWaiters: ResponseWaiter[] = [];
-
-  private molecules: Partial<{ [Key in AppName]: Molecule<any, Key> }> = {
-    bible: bibleMolecule,
-    wed: wedMolecule,
-  };
-
-  constructor() {
-    (async () => {
-      if (!(await getAuthValue())?.level) return;
-
-      MyLib.values(this.molecules).forEach(
-        molecule =>
-          molecule &&
-          (molecule.onServerStorageValueSend = (serverUserContents, appName) =>
-            this.send({ serverUserContents }, appName)),
-      );
-    })();
-  }
 
   setIsConnected(value: boolean) {
     this.isConnected = value;

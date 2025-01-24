@@ -5,7 +5,6 @@ import { WedGuest, WedGuestWillBe } from '../../../../../shared/api/complect/app
 import useToast from '../../../../complect/modal/useToast';
 import serviceMaster from '../../../../complect/service/serviceMaster';
 import { WedCleans } from '../Cleans';
-import { wedExer } from '../exer';
 import { GuestConversation } from '../guest/complect/GuestConversation';
 
 const weddingText = Array(10)
@@ -23,17 +22,17 @@ const myAnswerSetter = (
   return async () => {
     setIsAnswerLoading(true);
 
-    wedExer.send([
-      {
-        action: 'setGuestAnswer',
-        args: {
-          guestMi: guest.mi,
-          text: guest.t?.trim(),
-          will,
-          guestName: WedCleans.makeGuestFullName(guest),
-        },
-      },
-    ]);
+    // wedExer.send([
+    //   {
+    //     action: 'setGuestAnswer',
+    //     args: {
+    //       guestMi: guest.mi,
+    //       text: guest.t?.trim(),
+    //       will,
+    //       guestName: WedCleans.makeGuestFullName(guest),
+    //     },
+    //   },
+    // ]);
     setTimeout(async () => {
       const person = await serviceMaster('wed')<WedGuest>('getGuest', guest.mi);
 

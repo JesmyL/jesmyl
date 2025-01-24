@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { emptyArray } from 'shared/utils';
 import styled from 'styled-components';
 import {
   FirstName,
@@ -9,7 +10,6 @@ import {
   WedGuestWillBe,
 } from '../../../../../shared/api/complect/apps/wed/complect/model';
 import { useInitSoki } from '../../../../app/useInitSoki';
-import { useAtomValue } from '../../../../complect/atoms';
 import CopyTextButton from '../../../../complect/CopyTextButton';
 import Dropdown from '../../../../complect/dropdown/Dropdown';
 import IconButton from '../../../../complect/the-icon/IconButton';
@@ -22,7 +22,6 @@ import { WedGuestEditorModal } from '../guest/GuestEditorModal';
 import { WedGuestFace } from '../guest/GuestFace';
 import { WedGuestListAdder } from '../guest/GuestListAdder';
 import { GuestListExcelZipper } from '../guest/GuestListExcelZipper';
-import { wedMolecule } from '../molecules';
 
 const defGuest: WedGuest = { fn: FirstName.def, c: WedGuestConversation.Single, s: WedGuestSex.Man };
 
@@ -65,7 +64,8 @@ export default function WeddingAdmin() {
   const [showMode, setShowMode] = useState(Show.None);
   const auth = useAuth();
 
-  const guestListAtomValue = useAtomValue(wedMolecule.select(s => s.guests));
+  const guestListAtomValue: WedGuest[] = emptyArray;
+  // const guestListAtomValue = useAtomValue(wedMolecule.select(s => s.guests));
 
   const guests = useMemo(() => {
     return guestListAtomValue

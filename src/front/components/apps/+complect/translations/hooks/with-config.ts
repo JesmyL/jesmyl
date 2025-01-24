@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
+import { useScreenTranslationConfigsSet, useScreenTranslationConfigsValue } from '../atoms';
 import { ScreenTranslationConfig } from '../model';
-import { useScreenTranslationConfigsSet, useScreenTranslationConfigsValue } from '../molecules';
 
 export const useUpdateScreenTranslationConfig = () => {
   const configs = useScreenTranslationConfigsValue();

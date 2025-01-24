@@ -17,7 +17,6 @@ import EvaSendButton from '../../../../complect/sends/eva-send-button/EvaSendBut
 import { IconCheckmarkCircle01StrokeRounded } from '../../../../complect/the-icon/icons/checkmark-circle-01';
 import { IconUserRemove02StrokeRounded } from '../../../../complect/the-icon/icons/user-remove-02';
 import { WedCleans } from '../Cleans';
-import { wedExer } from '../exer';
 import { WedGuestPropositionSentButton } from './complect/SentButton';
 
 const sexItems = [
@@ -125,14 +124,14 @@ export const WedGuestEditorModal = ({ guest, setIsOpen, setGuest }: Props) => {
               </>
             }
             postfix="Удалить гостя"
-            onSend={() =>
-              wedExer.send([
-                {
-                  action: 'removeGuest',
-                  args: { prev: guest, value: guest.mi, guestName: WedCleans.makeGuestFullName(guest) },
-                },
-              ])
-            }
+            // onSend={() =>
+            //   wedExer.send([
+            //     {
+            //       action: 'removeGuest',
+            //       args: { prev: guest, value: guest.mi, guestName: WedCleans.makeGuestFullName(guest) },
+            //     },
+            //   ])
+            // }
             onSuccess={() => setIsOpen(false)}
           />
 
@@ -141,18 +140,18 @@ export const WedGuestEditorModal = ({ guest, setIsOpen, setGuest }: Props) => {
             className="color--ok"
             postfix="Отправить"
             disabled={!guest.fn || mylib.isEq(initGuest, guest)}
-            onSend={() =>
-              wedExer.send([
-                {
-                  action: 'putGuest',
-                  args: {
-                    prev: initGuest,
-                    value: guest,
-                    guestName: WedCleans.makeGuestFullName(guest),
-                  },
-                },
-              ])
-            }
+            // onSend={() =>
+            //   wedExer.send([
+            //     {
+            //       action: 'putGuest',
+            //       args: {
+            //         prev: initGuest,
+            //         value: guest,
+            //         guestName: WedCleans.makeGuestFullName(guest),
+            //       },
+            //     },
+            //   ])
+            // }
             onSuccess={() => setIsOpen(false)}
           />
         </div>
