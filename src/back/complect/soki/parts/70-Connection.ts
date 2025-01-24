@@ -1,5 +1,5 @@
 import { LocalSokiAuth, SokiCapsule, SokiClientEvent, SokiServerDoAction, SokiServerDoActionProps } from 'shared/api';
-import { Eventer, smylib } from 'shared/utils';
+import { smylib } from 'shared/utils';
 import { WebSocket } from 'ws';
 import { SokiAuther, sokiAuther } from '../SokiAuther';
 import { SokiServerVisits } from './60-Visits';
@@ -36,7 +36,7 @@ export class SokiServerConnection extends SokiServerVisits implements SokiServer
       client,
     };
     this.capsules.set(client, capsule);
-    Eventer.invokeValue(this.onCapsuleSetValueListeners, capsule);
+    this.onCapsuleConnected.invoke(capsule);
 
     this.capsulesByDeviceId.set(capsule.deviceId, capsule);
     if (capsule.auth?.login) {

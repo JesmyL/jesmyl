@@ -1,6 +1,13 @@
 import { FileStore } from 'back/complect/FileStorage';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
-import { IndexValues, IScheduleWidget, makeTwiceKnownName, NounPronsType } from 'shared/api';
+import {
+  IndexValues,
+  IScheduleWidget,
+  makeTwiceKnownName,
+  NounPronsType,
+  ScheduleWidgetRegType,
+  scheduleWidgetRegTypeRights,
+} from 'shared/api';
 import { IndexBasicsSokiInvocatorModel } from 'shared/api/invocators/index/basics-invocators.model';
 import { itNNull, smylib } from 'shared/utils';
 import { indexServerInvocatorShareMethods } from './invocators.shares';
@@ -38,6 +45,7 @@ class IndexBasicsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexBa
             .map((sch): IScheduleWidget | null => {
               const removedSch = { w: sch.w, isRemoved: 1 } as IScheduleWidget;
 
+              if (scheduleWidgetRegTypeRights.checkIsHasRights(sch.ctrl.type, ScheduleWidgetRegType.Public)) return sch;
               if (isNoAuth) return removedSch;
               if (!sch.ctrl.users.some(user => user.login === auth.login)) return removedSch;
               if (sch.m <= lastModfiedMs) return null;

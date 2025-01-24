@@ -8,7 +8,7 @@ import MeetingEventExpandList from './MeetingEventExpandList';
 import { MeetingSchPackFace } from './MeetingSchPackFace';
 import TheMeetingsEvent from './TheMeetingsEvent';
 
-export default function TheMeetings() {
+export const TheMeetings = () => {
   return (
     <Routes>
       <Route
@@ -22,7 +22,7 @@ export default function TheMeetings() {
       />
     </Routes>
   );
-}
+};
 
 const Page = () => {
   const schedules = useLiveQuery(() => indexIDB.db.schs.toArray());

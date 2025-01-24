@@ -1,4 +1,6 @@
 import Modal from 'front/complect/modal/Modal/Modal';
+import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
+import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
 import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
 import { IconSentStrokeRounded } from 'front/complect/the-icon/icons/sent';
 import { IconWorkHistoryStrokeRounded } from 'front/complect/the-icon/icons/work-history';
@@ -49,17 +51,20 @@ export const SendMySelectedsButton = ({ packComws }: { packComws: CmComWid[] }) 
 
       {historyPacks && (
         <Modal onClose={() => setHistoryPacks(null)}>
-          {historyPacks.map(pack => {
-            return (
-              <div key={pack.w}>
-                <h3>{new Date(pack.w).toLocaleString('ru')}</h3>
-                <ComFaceList
-                  list={pack.s}
-                  importantOnClick={emptyFunc}
-                />
-              </div>
-            );
-          })}
+          <ModalHeader>История</ModalHeader>
+          <ModalBody>
+            {historyPacks.map(pack => {
+              return (
+                <div key={pack.w}>
+                  <h3>{new Date(pack.w).toLocaleString('ru')}</h3>
+                  <ComFaceList
+                    list={pack.s}
+                    importantOnClick={emptyFunc}
+                  />
+                </div>
+              );
+            })}
+          </ModalBody>
         </Modal>
       )}
     </>

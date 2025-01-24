@@ -1,8 +1,9 @@
+import useMeetingComFaceList from 'front/components/apps/cm/lists/meetings/useMeetingComFaceList';
+import { useMeetingPathParts } from 'front/components/apps/cm/lists/meetings/useMeetingPathParts';
 import { useEffect } from 'react';
 import { useAtomValue } from '../../../../complect/atoms';
 import IconButton from '../../../../complect/the-icon/IconButton';
 import { IconBookOpen02StrokeRounded } from '../../../../complect/the-icon/icons/book-open-02';
-import { soki } from '../../../../soki';
 import { useSwitchCurrentTranslationTextApp } from '../../../apps/+complect/translations/hooks/current-app';
 import { translationBlockAtom } from '../../../apps/cm/atoms';
 import { useCcom } from '../../../apps/cm/col/com/useCcom';
@@ -10,19 +11,22 @@ import CmTranslationControlled from '../../../apps/cm/translation/complect/contr
 import { useCmScreenTranslationConfigs } from '../../../apps/cm/translation/complect/controlled/hooks/configs';
 import { ScheduleWidgetCurrentCmTranslationList } from '../../../apps/cm/translation/complect/live/SchWgtCurrentList';
 import { IndexSchWTranslationLiveDataValue } from '../../Index.model';
+import { schLiveSokiInvocatorClient } from './live-invocator';
 import { LiveTranslationAppProps } from './model';
 
-export const ScheduleWidgetLiveCmTranslations = function LiveCmTr({
+export const ScheduleWidgetLiveCmTranslations = ({
   isCantTranslateLive,
-  subscribeData,
   fio,
   headTitle,
   schedule,
-}: LiveTranslationAppProps) {
+}: LiveTranslationAppProps) => {
   const ccom = useCcom();
   const [config] = useCmScreenTranslationConfigs();
   const switchCurrApp = useSwitchCurrentTranslationTextApp();
   const currTexti = useAtomValue(translationBlockAtom);
+
+  const scopeProps = useMeetingPathParts();
+  const { coms } = useMeetingComFaceList(scopeProps.schw, scopeProps.dayi, scopeProps.eventMi);
 
   useEffect(() => {
     if (isCantTranslateLive) return;
@@ -50,9 +54,9 @@ export const ScheduleWidgetLiveCmTranslations = function LiveCmTr({
         },
       };
 
-      soki.send({ liveData, subscribeData }, 'index');
+      schLiveSokiInvocatorClient.next(null, schedule.w, liveData);
     }, 100);
-  }, [ccom, config, currTexti, fio, isCantTranslateLive, subscribeData]);
+  }, [ccom, config, currTexti, fio, isCantTranslateLive, schedule.w]);
 
   return (
     <ScheduleWidgetCurrentCmTranslationList schedule={schedule}>
@@ -64,6 +68,7 @@ export const ScheduleWidgetLiveCmTranslations = function LiveCmTr({
             onClick={() => switchCurrApp()}
           />
         }
+        comList={coms}
         headTitle={headTitle}
         backButtonPath=".."
       />

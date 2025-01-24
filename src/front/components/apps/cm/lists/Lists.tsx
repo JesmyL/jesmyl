@@ -12,7 +12,7 @@ import { useCats } from '../cols/useCols';
 import ExternalList from './ExternalList';
 import './Lists.scss';
 import FavoriteComs from './favorites/FavoriteComs';
-import TheMeetings from './meetings/TheMeetings';
+import { TheMeetings } from './meetings/TheMeetings';
 import SelectedComs from './selected-coms/SelectedComs';
 
 export default function Lists() {

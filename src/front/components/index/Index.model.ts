@@ -1,11 +1,4 @@
-import {
-  DeviceId,
-  IScheduleWidgetWid,
-  LocalSokiAuth,
-  ServerAuthorizationData,
-  ServerRegisterData,
-  SokiClientSubData,
-} from 'shared/api';
+import { LocalSokiAuth, ServerAuthorizationData, ServerRegisterData } from 'shared/api';
 import { AppName } from '../../app/App.model';
 import { BibleTranslationScreenConfig } from '../apps/bible/translations/model';
 import { CmSchWTranslationLiveDataValue } from '../apps/cm/translation/complect/live/model';
@@ -22,13 +15,6 @@ export type IndexSchWTranslationLiveDataValue = {
   };
   markdown?: string;
 };
-
-export type ScheduleWidgetTranslationLiveDataKey<
-  DevId extends DeviceId | '' = DeviceId,
-  Login extends string | und = string,
-> = SokiClientSubData<'index', 'sch', IScheduleWidgetWid, DevId, Login>;
-
-export type IndexStateSchLiveData = Record<ScheduleWidgetTranslationLiveDataKey, IndexSchWTranslationLiveDataValue>;
 
 export interface IndexStateError {
   message?: string | nil;

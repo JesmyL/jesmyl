@@ -2,7 +2,7 @@ import { atomValueSetter } from 'front/complect/atoms';
 import { soki } from 'front/soki';
 import { mylib } from 'front/utils';
 import { SokiClientEvent, SokiSubscribtionName } from 'shared/api';
-import { isAuthorizedAtom, liveDataAtom, setAuthValue, statisticAtom } from '../atoms';
+import { isAuthorizedAtom, setAuthValue, statisticAtom } from '../atoms';
 
 export const listenSokiEventsForIndex = () => {
   const subscriptions = {} as Record<SokiSubscribtionName, SokiClientEvent>;
@@ -15,7 +15,6 @@ export const listenSokiEventsForIndex = () => {
       return;
     }
 
-    if (event.liveData !== undefined) liveDataAtom.set(event.liveData);
     if (event.statistic) statisticAtom.set(event.statistic);
 
     if (event.authorized !== undefined) {

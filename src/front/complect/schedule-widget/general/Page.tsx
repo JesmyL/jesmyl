@@ -1,10 +1,8 @@
 import SendButton from 'front/complect/sends/send-button/SendButton';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { useAuth, useIndexSchedules } from '../../../components/index/atoms';
-import { IndexScheduleWidgetTranslations } from '../../../components/index/complect/translations/LiveTranslations';
 import useConnectionState from '../../../components/index/useConnectionState';
 import PhaseContainerConfigurer from '../../phase-container/PhaseContainerConfigurer';
-import { IconComputerStrokeRounded } from '../../the-icon/icons/computer';
 import ScheduleWidget from '../ScheduleWidget';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schUsersSokiInvocatorClient } from '../invocators/invocators.methods';
@@ -29,14 +27,7 @@ export default function ScheduleWidgetPage() {
           <PhaseContainerConfigurer
             className="ScheduleWidgetPage"
             headTitle={schedule?.title ?? 'Мероприятие'}
-            head={
-              <span className="flex flex-gap margin-gap">
-                {connectionNode}
-                <Link to="tran">
-                  <IconComputerStrokeRounded className="margin-gap-v" />
-                </Link>
-              </span>
-            }
+            head={<span className="flex flex-gap margin-gap">{connectionNode}</span>}
             content={
               schedule ? (
                 schedule.start === 0 ? (
@@ -57,11 +48,6 @@ export default function ScheduleWidgetPage() {
             }
           />
         }
-      />
-
-      <Route
-        path="tran/*"
-        element={<IndexScheduleWidgetTranslations />}
       />
 
       <Route

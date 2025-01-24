@@ -14,6 +14,7 @@ import { SchGeneralSokiInvocatorModel } from 'shared/api/invocators/schedules/in
 import { smylib } from 'shared/utils';
 import { newSchedule } from '../action-box/action-box';
 import { schServerInvocatorShareMethods } from '../invocators.shares';
+import { schLiveSokiInvocatorServer } from '../live-invocators';
 import { schAttachmentTypesSokiInvocatorBaseServer } from './attachment-types-invocators.base';
 import { schDayEventsSokiInvocatorBaseServer } from './day-events-invocators.base';
 import { schDaysSokiInvocatorBaseServer } from './days-invocators.base';
@@ -213,3 +214,5 @@ schUsersSokiInvocatorBaseServer.$$register();
 schPhotosSokiInvocatorBaseServer.$$register();
 schEventTypesSokiInvocatorBaseServer.$$register();
 schAttachmentTypesSokiInvocatorBaseServer.$$register();
+
+schLiveSokiInvocatorServer.$$register();

@@ -1,66 +1,17 @@
-import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CmComBindAttach, CmComWid } from 'shared/api';
-import { FullContent } from '../../../../../complect/fullscreen-content/FullContent';
-import { ChordVisibleVariant } from '../../Cm.model';
-import { useCcat } from '../../col/cat/useCcat';
-import { ComFaceList } from '../../col/com/face/list/ComFaceList';
-import { useCcom } from '../../col/com/useCcom';
-import { useMeetings } from '../../lists/meetings/useMeetings';
-import TheComForFullScreen from './TheComForFullScreen';
+import { ScheduleDayEventScopeProps } from 'shared/api';
+import useMeetingComFaceList from '../../lists/meetings/useMeetingComFaceList';
 
 interface Props {
-  value: CmComBindAttach;
-  isRedact?: boolean;
-  switchIsRedact: (is?: boolean) => void;
+  scopeProps: ScheduleDayEventScopeProps;
   listPath: string;
 }
 
-export default function CmExternalComListAtt({ value, isRedact, switchIsRedact, listPath }: Props) {
-  const [isOpenComposition, setIsOpenComposition] = useState(false);
+export default function CmExternalComListAtt({ scopeProps, listPath }: Props) {
   const navigate = useNavigate();
-
-  const [comw, setComw] = useState<CmComWid | und>();
-  const com = useCcom(comw);
-  const cat = useCcat(true);
-  const { meetings } = useMeetings();
-  const currentEvent = value.eventw == null ? null : meetings?.stack?.find(event => event.w === value.eventw!);
-  const comws = useMemo(
-    () => (currentEvent ? (value.comws ? [...currentEvent.s, ...value.comws] : currentEvent.s) : value.comws),
-    [currentEvent, value.comws],
+  const { comFaceListNode } = useMeetingComFaceList(scopeProps.schw, scopeProps.dayi, scopeProps.eventMi, com =>
+    navigate(`${listPath}/${com.wid}`),
   );
 
-  return (
-    <>
-      {!currentEvent && !value.comws?.length && <div>Песен нет</div>}
-      {cat && (
-        <ComFaceList
-          list={comws}
-          importantOnClick={com => navigate(`${listPath}/${com.wid}`)}
-        />
-      )}
-
-      {isRedact && (
-        <FullContent onClose={switchIsRedact}>
-          {/* <CmExternalComListAttRedactList
-            scope={scope}
-            value={value}
-            setComw={setComw}
-            setIsOpenComposition={setIsOpenComposition}
-          /> */}
-        </FullContent>
-      )}
-
-      {isOpenComposition && (
-        <FullContent onClose={setIsOpenComposition}>
-          <TheComForFullScreen
-            com={com}
-            chordVisibleVariant={ChordVisibleVariant.Maximal}
-            comwList={value.comws}
-            onComSet={setComw}
-          />
-        </FullContent>
-      )}
-    </>
-  );
+  return <>{comFaceListNode}</>;
 }

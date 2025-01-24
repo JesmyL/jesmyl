@@ -7,7 +7,7 @@ import { IconHeadphonesTwotoneRounded } from '../../../../complect/the-icon/icon
 import { IconMusicNote01TwotoneRounded } from '../../../../complect/the-icon/icons/music-note-01';
 import { IconTextTwotoneRounded } from '../../../../complect/the-icon/icons/text';
 import { useAuth } from '../../../index/atoms';
-import TheMeetings from '../lists/meetings/TheMeetings';
+import { TheMeetings } from '../lists/meetings/TheMeetings';
 import ChordRedactor from './chord-redactor/ChordRedactor';
 import { cmEditorSokiInvocatorBaseClient } from './cm-editor-invocator.base';
 import EditCategories from './col/categories/EditCategories';

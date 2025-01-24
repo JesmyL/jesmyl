@@ -1,11 +1,13 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useParams } from 'react-router-dom';
-import { LocalSokiAuth, SokiClientSubData, SokiStatistic } from 'shared/api';
+import { LocalSokiAuth, SokiAuthLogin, SokiStatistic } from 'shared/api';
 import { AppName } from '../../app/App.model';
 import { atom } from '../../complect/atoms';
 import { indexIDB } from './db/index-idb';
+import { IndexSchWTranslationLiveDataValue } from './Index.model';
 
-export const liveDataAtom = atom<Record<SokiClientSubData, unknown>>({});
+export const liveDataAtom = atom<IndexSchWTranslationLiveDataValue | null>(null);
+export const liveDataStreamersAtom = atom<{ fio: string; login: SokiAuthLogin }[] | null>(null);
 export const statisticAtom = atom<SokiStatistic | null>(null);
 
 export const useIndexSchedules = () => useLiveQuery(() => indexIDB.db.schs.toArray());

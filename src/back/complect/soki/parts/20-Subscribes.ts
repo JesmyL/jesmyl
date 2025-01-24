@@ -6,7 +6,7 @@ import {
   SokiStatistic,
   SokiSubscribtionName,
 } from 'shared/api';
-import { EventerValueListeners } from 'shared/utils';
+import { Eventer } from 'shared/utils';
 import { WebSocket } from 'ws';
 import { SokiServerTransfers } from './10-Transfers';
 
@@ -32,7 +32,7 @@ export class SokiServerSubscribes extends SokiServerTransfers implements SokiSer
     },
   };
 
-  onCapsuleSetValueListeners: EventerValueListeners<SokiCapsule> = [];
+  onCapsuleConnected = Eventer.createValue<SokiCapsule>();
 
   statistic: SokiStatistic = {
     online: 0,
