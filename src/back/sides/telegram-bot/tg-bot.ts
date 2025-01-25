@@ -171,7 +171,7 @@ export class JesmylTelegramBot {
       return this.admins;
     };
 
-    return new Promise<Record<number, ChatMember>>((res, rej) => {
+    return new Promise<PRecord<number, ChatMember>>((res, rej) => {
       if (this.admins[0] === undefined) {
         res(this.admins);
         return;

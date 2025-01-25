@@ -1,4 +1,4 @@
-import { filer } from 'back/complect/filer/Filer';
+import { FileStore } from 'back/complect/FileStore';
 import { jesmylTgBot } from 'back/sides/telegram-bot/bot';
 import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { JesmylTelegramBot } from 'back/sides/telegram-bot/tg-bot';
@@ -18,6 +18,8 @@ const crTelegramBot = new JesmylTelegramBot({
   logger: tglogger,
   uniqPrefix: '>',
 });
+
+const crFileStore = new FileStore<CrAlarm | nil>('/apps/index/crAlarm.json', null);
 
 export const startCrTgAlarm = () => {
   const timeFormatter = new Intl.RelativeTimeFormat('ru', { style: 'long', numeric: 'auto' });
@@ -205,7 +207,8 @@ export const startCrTgAlarm = () => {
   });
 
   const getCrData = () => {
-    const crData = filer.contents.index?.crAlarm?.data as CrAlarm | nil;
+    const crData = crFileStore.getValue();
+
     return crData;
   };
 
@@ -214,7 +217,7 @@ export const startCrTgAlarm = () => {
 
     if (crData == null || cb(crData) === false) return;
 
-    filer.saveChanges(['crAlarm'], 'index');
+    crFileStore.saveValue();
 
     prevJob?.cancel();
     const nextAlarmDate = setAlarm();

@@ -19,6 +19,7 @@ export const UserMore = ({ onClose }: { onClose: (isOpen: false) => void }) => {
 
           if (await confirm('Произвести выход из системы?', 'Разлогиниться')) {
             setAuth({ level: 0 });
+            localStorage.token = '';
             window.location.reload();
             onClose(false);
           }

@@ -1,12 +1,11 @@
 import { appAttsStore } from 'front/components/complect/appScheduleAttrsStorage';
-import { MyLib, mylib } from 'front/utils';
+import { MyLib } from 'front/utils';
 import React, { useEffect } from 'react';
 import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import { ScheduleWidgetAppAttBasic } from 'shared/api';
 import styled from 'styled-components';
 import { useInitSoki } from '../../../app/useInitSoki';
 import { useAuthState } from '../../../components/index/atoms';
-import { soki } from '../../../soki';
 import { TelegramWebAppApiOr } from '../../tg-app/getTgApi';
 import { TelegramWebApp, TelegramWebAppInitData } from '../../tg-app/model';
 import { TheIconLoading } from '../../the-icon/IconLoading';
@@ -83,13 +82,13 @@ const Child = ({ api, initData }: Props) => {
       .setTimeout(() => {
         if (auth.level) return;
 
-        soki.send({ tgNativeAuthorization: initData.user }, 'index').on(({ tgAuthorization }) => {
-          if (!tgAuthorization || !tgAuthorization.ok || mylib.isStr(tgAuthorization.value)) return;
+        // soki.send({ tgNativeAuthorization: initData.user }, 'index').on(({ tgAuthorization }) => {
+        //   if (!tgAuthorization || !tgAuthorization.ok || mylib.isStr(tgAuthorization.value)) return;
 
-          setAuth(tgAuthorization.value);
-          // removePullRequisites();
-          soki.sendConnectionHandshake();
-        });
+        //   setAuth(tgAuthorization.value);
+        //   // removePullRequisites();
+        //   soki.sendConnectionHandshake();
+        // });
       }, 300)
       .effect();
   }, [auth.level, initData.user, setAuth]);

@@ -16,18 +16,16 @@ import {
 } from 'shared/api';
 import { convertMd2HTMLMaker, SMyLib, smylib } from 'shared/utils';
 import { attInformStorage } from '../../../../../shared/api/complect/schedule-widget/complect/attInformStorage';
-import { filer } from '../../../../complect/filer/Filer';
-import { SokiAuther } from '../../../../complect/soki/SokiAuther';
-import sokiServer from '../../../../complect/soki/SokiServer';
 import { jesmylTgBot } from '../../../../sides/telegram-bot/bot';
 import { tglogger } from '../../../../sides/telegram-bot/log/log-bot';
 
+import { schedulesFileStore } from '../base-invocators/file-stores';
 import { makeScheduleWidgetJoinTitle } from './message-catchers';
 
 let schedules: IScheduleWidget[];
 const getSchedule = (scheduleScalar: number | IScheduleWidget) =>
   smylib.isNum(scheduleScalar)
-    ? (schedules ??= filer.contents.index['schedules'].data.list).find(sch => sch.w === scheduleScalar)
+    ? (schedules ??= schedulesFileStore.getValue()).find(sch => sch.w === scheduleScalar)
     : scheduleScalar;
 
 const jobs: Record<number, nodeSchedule.Job> = {};
@@ -304,31 +302,31 @@ export const indexScheduleSetMessageInform = (
             const user = schedule.ctrl.users.find(findUserAdminFunc);
             if (user === undefined || user.tgId === undefined) return;
 
-            auth = {
-              ...user,
-              level: 3,
-              passw: SokiAuther.makePassw(user.tgId, user.nick),
-            };
+            // auth = {
+            //   ...user,
+            //   level: 3,
+            //   passw: SokiAuther.makePassw(user.tgId, user.nick),
+            // };
           }
 
-          sokiServer
-            .execExecs(
-              'index',
-              [
-                {
-                  action: 'setEventIsNeedTgInform',
-                  args: {
-                    schw: schedule.w,
-                    value: 0,
-                    dayi,
-                    eventMi: event.mi,
-                  },
-                },
-              ],
-              { ...auth, isSystem: 1 },
-              { ...auth, isSystem: 1 },
-            )
-            .then(() => setTimeout(() => indexScheduleSetMessageInform(schedule.w, invokerAuth, invokeDayi)));
+          // sokiServer
+          //   .execExecs(
+          //     'index',
+          //     [
+          //       {
+          //         action: 'setEventIsNeedTgInform',
+          //         args: {
+          //           schw: schedule.w,
+          //           value: 0,
+          //           dayi,
+          //           eventMi: event.mi,
+          //         },
+          //       },
+          //     ],
+          //     { ...auth, isSystem: 1 },
+          //     { ...auth, isSystem: 1 },
+          //   )
+          //   .then(() => setTimeout(() => indexScheduleSetMessageInform(schedule.w, invokerAuth, invokeDayi)));
         } else setTimeout(() => indexScheduleSetMessageInform(schedule.w, invokerAuth, invokeDayi));
       });
 
@@ -360,11 +358,11 @@ jesmylTgBot.listenPersonalQueries(async event => {
 
     const isSubscribe = event.value.data.startsWith(subscribeQueryDataNamePrefix);
 
-    const auth = {
-      ...user,
-      level: 3,
-      passw: SokiAuther.makePassw(userTgId, user.nick),
-    };
+    // const auth = {
+    //   ...user,
+    //   level: 3,
+    //   passw: SokiAuther.makePassw(userTgId, user.nick),
+    // };
 
     const text =
       (isSubscribe ? 'Вы подписались на TG-информирование' : 'Вы отписались от TG-информирования') +
@@ -372,41 +370,41 @@ jesmylTgBot.listenPersonalQueries(async event => {
       schedule.title +
       '"';
 
-    sokiServer
-      .execExecs(
-        'index',
-        [
-          {
-            action: 'setUserTgInform',
-            args: {
-              schw,
-              userMi: user.mi,
-              value: isSubscribe ? 1 : 0,
-            },
-          },
-        ],
-        auth,
-        auth,
-      )
-      .then(() => {
-        jesmylTgBot.sendMessage(userTgId, text, tglogger, {
-          reply_markup: {
-            inline_keyboard: [
-              [
-                isSubscribe
-                  ? {
-                      text: 'Отписаться',
-                      callback_data: unsubscribeQueryDataNamePrefix + schedule.w,
-                    }
-                  : {
-                      text: 'Подписаться',
-                      callback_data: subscribeQueryDataNamePrefix + schedule.w,
-                    },
-              ],
-            ],
-          },
-        });
-      });
+    // sokiServer
+    //   .execExecs(
+    //     'index',
+    //     [
+    //       {
+    //         action: 'setUserTgInform',
+    //         args: {
+    //           schw,
+    //           userMi: user.mi,
+    //           value: isSubscribe ? 1 : 0,
+    //         },
+    //       },
+    //     ],
+    //     auth,
+    //     auth,
+    //   )
+    //   .then(() => {
+    //     jesmylTgBot.sendMessage(userTgId, text, tglogger, {
+    //       reply_markup: {
+    //         inline_keyboard: [
+    //           [
+    //             isSubscribe
+    //               ? {
+    //                   text: 'Отписаться',
+    //                   callback_data: unsubscribeQueryDataNamePrefix + schedule.w,
+    //                 }
+    //               : {
+    //                   text: 'Подписаться',
+    //                   callback_data: subscribeQueryDataNamePrefix + schedule.w,
+    //                 },
+    //           ],
+    //         ],
+    //       },
+    //     });
+    //   });
 
     event.stopPropagation({ text });
     return;

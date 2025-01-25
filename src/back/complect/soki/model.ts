@@ -1,11 +1,4 @@
-import { SokiCapsule, sokiWhenRejButTs } from 'shared/api';
+import { LocalSokiAuth } from 'shared/api';
 import { WebSocket } from 'ws';
 
-export type SokiServerClientSelector =
-  | WebSocket
-  | null
-  | ((
-      capsule: SokiCapsule,
-      client: WebSocket,
-      whenRejButTs: typeof sokiWhenRejButTs,
-    ) => boolean | typeof sokiWhenRejButTs);
+export type SokiServerClientSelector = WebSocket | null | ((client: WebSocket, auth: LocalSokiAuth | und) => boolean);

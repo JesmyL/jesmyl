@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { IndexSchWTranslationLiveDataValue } from '../../../../components/index/Index.model';
 import { useAuth } from '../../../../components/index/atoms';
-import { soki } from '../../../../soki';
 import { useAtomSet } from '../../../atoms';
 import { NewWindow } from '../../../tags/NewWindow';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
@@ -32,18 +30,18 @@ export const ScheduleWidgetMarkdownTranslation = ({ md = '' }: Props) => {
     return setTimeoutEffect(() => {
       if (!auth.fio) return;
 
-      const liveData: IndexSchWTranslationLiveDataValue = {
-        fio: auth.fio,
-        markdown,
-      };
+      // const liveData: IndexSchWTranslationLiveDataValue = {
+      //   fio: auth.fio,
+      //   markdown,
+      // };
 
-      soki.send({ liveData, subscribeData }, 'index');
+      // soki.send({ liveData, subscribeData }, 'index');
     }, 300);
   }, [auth.fio, subscribeData, markdown]);
 
   useEffect(
     () => () => {
-      soki.send({ liveData: null, subscribeData }, 'index');
+      // soki.send({ liveData: null, subscribeData }, 'index');
     },
     [subscribeData],
   );

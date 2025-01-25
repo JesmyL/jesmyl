@@ -1,33 +1,34 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
-import { CmComWid, IExportableCom } from 'shared/api';
+import { CmComOrderWid, CmComWid, IExportableCom } from 'shared/api';
 import { CmComSokiInvocatorModel } from 'shared/api/invocators/cm/com-invocators.model';
 import { smylib } from 'shared/utils';
 import { cmComLanguages } from './complect/values';
 import { comsFileStore } from './fresh-invocator.base';
 import { cmServerInvocatorShareMethods } from './invocator.shares';
 
-// import * as colsJSON from './+case/cols.json';
-// const cols = { ...colsJSON };
-// Promise.resolve().then(() => comsFileStore.setValue(cols.coms as never));
+import * as colsJSON from './+case/cols.json';
+const cols = { ...colsJSON };
+Promise.resolve().then(() => comsFileStore.setValue(cols.coms as never));
 
-// setTimeout(() => {
-//   comsFileStore.getValue().forEach(com => {
-//     const anchors: Record<number, CmComOrderWid> = {};
+setTimeout(() => {
+  comsFileStore.getValue().forEach(com => {
+    const anchors: Record<number, CmComOrderWid> = {};
+    com.m ??= com.w + Math.random();
 
-//     com.o?.forEach(ord => {
-//       const o = ord as any;
-//       if (o.u != null) {
-//         anchors[o.u] = ord.w;
-//         delete o.u;
-//       }
+    com.o?.forEach(ord => {
+      const o = ord as any;
+      if (o.u != null) {
+        anchors[o.u] = ord.w;
+        delete o.u;
+      }
 
-//       if (ord.a == null) return;
+      if (ord.a == null) return;
 
-//       ord.a = anchors[ord.a] ?? ord.a;
-//     });
-//   });
-//   comsFileStore.saveValue();
-// }, 100);
+      ord.a = anchors[ord.a] ?? ord.a;
+    });
+  });
+  comsFileStore.saveValue();
+}, 100);
 
 // catsFileStore.getValue().forEach(cat => (cat.m = Date.now() + Math.random()));
 

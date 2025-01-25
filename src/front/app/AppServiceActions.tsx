@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import serviceMaster from '../complect/service/serviceMaster';
 import { TheIconLoading } from '../complect/the-icon/IconLoading';
 import { AppName } from './App.model';
 import { useInitSoki } from './useInitSoki';
@@ -31,7 +30,7 @@ const AppServiceActions = () => {
     return hookEffectLine()
       .setTimeout(async () => {
         try {
-          setSuccess('' + (await serviceMaster(appName as AppName)(key, value)));
+          // setSuccess('' + (await serviceMaster(appName as AppName)(key, value)));
         } catch (error) {
           setError('' + error);
         }

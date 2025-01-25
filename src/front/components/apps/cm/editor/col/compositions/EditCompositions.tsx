@@ -4,7 +4,6 @@ import { useIsNumberSearch } from 'front/complect/DebouncedSearchInput';
 import { hookEffectPipe, setTimeoutPipe } from 'front/complect/hookEffectPipe';
 import { useEffect, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { useExerListener } from '../../../../../../complect/exer/hooks/useExer';
 import { Cat } from '../../../col/cat/Cat';
 import { CatSpecialSearches } from '../../../col/cat/Cat.complect';
 import { TheCatSpecialSearches } from '../../../col/cat/SpecialSearches';
@@ -24,7 +23,6 @@ export default function EditCompositions() {
   const coms = useComs();
   const [isOpenMorePopup, setIsOpenMorePopup] = useState(false);
   const isNumberSearch = useIsNumberSearch();
-  useExerListener();
   const listRef = useRef<HTMLDivElement>(null);
   const [searchedComs, setSearchedComs] = useState<Com[]>([]);
   const [mapper, setMapper] = useState<CatSpecialSearches['map'] | null>(null);

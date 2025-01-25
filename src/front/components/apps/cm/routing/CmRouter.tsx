@@ -1,4 +1,5 @@
 import { useAuth } from 'front/components/index/atoms';
+import { soki } from 'front/soki';
 import React, { memo, Suspense, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { CmComWid } from 'shared/api';
@@ -79,7 +80,7 @@ export const RenderEditorOnce = memo(() => {
   );
 });
 
-setTimeout(async () => {
+soki.listenOnOpenEvent(async () => {
   const lastModified = await cmIDB.get.lastModifiedAt();
   await cmFreshesSokiInvocatorClient.getFreshes(null, lastModified);
-}, 1000);
+});

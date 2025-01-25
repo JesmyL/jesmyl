@@ -1,19 +1,5 @@
-import {
-  environment,
-  ServerStoreContent,
-  SokiAppName,
-  sokiAppNamesSet,
-  SokiClientEvent,
-  SokiClientEventBody,
-  SokiInvokerEvent,
-  SokiServerEvent,
-} from 'shared/api';
-import { Eventer, makeRegExp } from 'shared/utils';
-import { jversion } from 'shared/values';
-import { AppName } from './app/App.model';
-import { lsJStorageLSSwitcherName } from './complect/JStorage';
-import { getAuthValue } from './components/index/atoms';
-import { indexIDB } from './components/index/db/index-idb';
+import { environment, InvocatorEvent } from 'shared/api';
+import { emptyFunc, Eventer, makeRegExp } from 'shared/utils';
 import { onSokiClientEventerInvocatorInvoke } from './eventers';
 
 export type ResponseWaiterCallback = (
@@ -25,7 +11,7 @@ const info = console.info;
 
 interface ResponseWaiter {
   requestId: string;
-  ok: (response: SokiServerEvent) => void;
+  ok: (response: InvocatorEvent) => void;
   ko?: (errorMessage: string) => boolean | void;
   final?: () => void;
 }
@@ -35,14 +21,10 @@ export class SokiTrip {
 
   private isConnected = false;
   private connectionState = Eventer.createValue<boolean>();
+  private requests = {} as Record<string, (event: InvocatorEvent) => void>;
 
-  private onServerEvent = Eventer.createValue<SokiServerEvent>();
-  private onClientEvent = Eventer.createValue<SokiClientEvent>();
-  private onAuthorized = Eventer.createValue<boolean>();
-
-  onUserAuthorize = Eventer.createValue<boolean>();
-
-  private responseWaiters: ResponseWaiter[] = [];
+  private isOpened = false;
+  private onOpenEvent = Eventer.createValue<boolean>();
 
   setIsConnected(value: boolean) {
     this.isConnected = value;
@@ -53,101 +35,21 @@ export class SokiTrip {
     return this.connectionState.listen(cb, this.isConnected);
   }
 
-  appName() {
-    const parts = window.location.pathname.split('/', 2);
-    const appName = (parts[0] || parts[1]) as SokiAppName | '';
-    if (appName !== '' && sokiAppNamesSet.has(appName)) return appName;
-
-    return 'index';
-  }
-
-  onClose = () => {
-    this.onAuthorized.invoke(false);
-    this.setIsConnected(false);
-    setTimeout(() => this.start(), 500);
-  };
-
-  onEventServerListen(appName: AppName | '*', cb: (event: SokiServerEvent) => void) {
-    return this.onServerEvent.listen(
-      appName === '*'
-        ? cb
-        : event => {
-            if (event.appName !== appName) return;
-            cb(event);
-          },
-    );
-  }
-
-  onEventClientListen(appName: AppName | '*', cb: (event: SokiClientEvent) => void) {
-    return this.onClientEvent.listen(
-      appName === '*'
-        ? cb
-        : event => {
-            if (event.appName !== appName) return;
-            cb(event);
-          },
-    );
-  }
-
-  sendConnectionHandshake = async () => {
-    const date = new Date();
-
-    this.sendForce(
-      { connect: true },
-      this.appName(),
-      '',
-      `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}.${date.getMilliseconds()}\n${navigator.userAgent}`,
-    );
-  };
-
-  serverEventAppExecs(
-    setterBox: { set(fix: string, content: unknown): void; getValues(): object },
-    event: SokiServerEvent,
-  ) {
-    const appName = event.appName;
-
-    if (appName === 'external') return;
-  }
-
-  serverEventAppActions(
-    setterBox: {
-      set(fix: string, content: unknown): void;
-      saveFreshContents(freshUserContents?: ServerStoreContent[]): void;
-      collectFreshServerStoreContents(ts: number): ServerStoreContent[] | und;
-    },
-    event: SokiServerEvent,
-  ) {
-    const appName = event.appName;
-
-    if (appName === 'external') return;
-
-    if (event.download) {
-      try {
-        setterBox.set(event.download.key, JSON.parse(event.download.value));
-      } catch (error) {
-        setterBox.set(event.download.key, event.download.value);
-      }
-    }
-
-    if (event.freshUserContents) {
-      setterBox.saveFreshContents(event.freshUserContents);
-    }
-
-    if (event.pullFreshUserContentsByTs !== undefined) {
-      const serverUserContents = setterBox.collectFreshServerStoreContents(event.pullFreshUserContentsByTs);
-      if (serverUserContents?.length) this.send({ serverUserContents }, appName);
-    }
-  }
-
   start() {
     this.ws = new WebSocket(`wss://${environment.dns}/websocket/`);
 
-    this.ws.onclose = this.onClose;
-    this.ws.onopen = this.sendConnectionHandshake;
+    this.ws.onclose = () => {
+      setTimeout(() => this.start(), 500);
+      this.isOpened = false;
+    };
+    this.ws.onopen = () => {
+      this.onOpenEvent.invoke(true);
+      this.isOpened = true;
+    };
 
     this.ws.onmessage = async ({ data }: { data: string }) => {
       try {
-        const event: SokiServerEvent = JSON.parse(data);
+        const event: InvocatorEvent = JSON.parse(data);
 
         if (event.pong) {
           this.setIsConnected(true);
@@ -155,27 +57,17 @@ export class SokiTrip {
           return;
         }
 
-        this.onServerEvent.invoke(event);
         info(event);
-        let waiter: ResponseWaiter | null = null;
 
-        for (let i = this.responseWaiters.length - 1; i > -1; i--) {
-          waiter = this.responseWaiters[i];
-
-          if (waiter.requestId === event.requestId) {
-            if (event.errorMessage) waiter.ko?.(event.errorMessage);
-            else waiter.ok(event);
-
-            waiter.final?.();
-            this.responseWaiters.splice(i, 1);
-          }
-        }
+        this.requests[event.requestId]?.(event);
+        delete this.requests[event.requestId];
 
         if (event.invoke != null) {
           onSokiClientEventerInvocatorInvoke.invoke({
             invoke: event.invoke,
-            send: this.invokeSend,
+            sendResponse: event => this.send(event, emptyFunc),
             tool: undefined,
+            requestId: event.requestId,
           });
         }
       } catch (e) {}
@@ -183,8 +75,6 @@ export class SokiTrip {
 
     return this;
   }
-
-  private invokeSend = (event: SokiInvokerEvent) => this.send(event, 'index');
 
   getCurrentUrl() {
     return window.location.href.replace(makeRegExp('/^https?:/'), 'https:');
@@ -195,32 +85,19 @@ export class SokiTrip {
     this.urls.push(this.getCurrentUrl());
   }
 
-  async sendForce(body: SokiClientEventBody, appName: SokiAppName | null, requestId?: string, browser?: string) {
-    if (appName === null) return;
+  listenOnOpenEvent(cb: () => void) {
+    if (this.isOpened) cb();
+    return this.onOpenEvent.listen(cb);
+  }
+
+  private async sendForce(event: InvocatorEvent) {
     let tries = 20;
 
     const trySend = async () => {
       if (tries-- < 0) return;
       try {
-        const auth = await getAuthValue();
-
         if (this.ws && this.ws.readyState === this.ws.OPEN) {
-          const sendEvent: SokiClientEvent = {
-            requestId,
-            body,
-            auth: auth?.level === 0 ? undefined : auth,
-            appName,
-            deviceId: await indexIDB.get.deviceId(),
-            version: jversion.num,
-            browser,
-            urls: this.urls.length ? this.urls : [this.getCurrentUrl()],
-            isUseLS: localStorage[lsJStorageLSSwitcherName] ? true : undefined,
-          };
-
-          this.onClientEvent.invoke(sendEvent);
-          this.ws.send(JSON.stringify(sendEvent));
-
-          this.urls = [this.getCurrentUrl()];
+          this.ws.send(JSON.stringify(event));
         } else setTimeout(trySend, 100);
       } catch (error) {
         setTimeout(trySend, 100);
@@ -230,25 +107,14 @@ export class SokiTrip {
     trySend();
   }
 
-  send = (body: SokiClientEventBody, appName: SokiAppName): { on: ResponseWaiterCallback } => {
-    let requestId: string | und;
+  send = (event: OmitOwn<InvocatorEvent, 'requestId'>, cb: (event: InvocatorEvent) => void) => {
+    const requestId = '' + Date.now() + Math.random();
+    const fullEvent = { ...event, requestId };
 
-    Promise.resolve().then(() => {
-      if (this.isConnected) this.sendForce(body, appName, requestId);
-      else this.onAuthorized.listenFirst(() => this.sendForce(body, appName, requestId));
-    });
+    this.requests[requestId] = cb;
 
-    return {
-      on: (ok, ko, final) => {
-        requestId = '' + Date.now() + Math.random();
-        this.responseWaiters.push({
-          requestId,
-          ok,
-          ko,
-          final,
-        });
-      },
-    };
+    if (this.ws && this.ws.readyState === this.ws.OPEN) this.sendForce(fullEvent);
+    else this.onOpenEvent.listenFirst(() => this.sendForce(fullEvent));
   };
 
   private pingTimeout: TimeOut;
@@ -261,7 +127,7 @@ export class SokiTrip {
 
     clearTimeout(this.pingTimeout);
     this.pingTimeout = setTimeout(() => {
-      this.ws?.send(JSON.stringify({ ping: true }));
+      this.send({ ping: 1 }, emptyFunc);
       this.pingTimeout = undefined;
     }, 0);
   };

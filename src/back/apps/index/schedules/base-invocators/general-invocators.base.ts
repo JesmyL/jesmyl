@@ -1,6 +1,7 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import {
   IScheduleWidget,
+  IScheduleWidgetUserCati,
   IScheduleWidgetUserMi,
   IScheduleWidgetWid,
   ScheduleScopeProps,
@@ -9,10 +10,10 @@ import {
   scheduleWidgetRegTypeRights,
   scheduleWidgetRegTypeTitles,
   scheduleWidgetUserRights,
+  ScheduleWidgetUserRoleRight,
 } from 'shared/api';
 import { SchGeneralSokiInvocatorModel } from 'shared/api/invocators/schedules/invocators.model';
-import { smylib } from 'shared/utils';
-import { newSchedule } from '../action-box/action-box';
+import { emptyArray, smylib } from 'shared/utils';
 import { schServerInvocatorShareMethods } from '../invocators.shares';
 import { schLiveSokiInvocatorServer } from '../live-invocators';
 import { schAttachmentTypesSokiInvocatorBaseServer } from './attachment-types-invocators.base';
@@ -25,6 +26,55 @@ import { schListsSokiInvocatorBaseServer } from './lists-invocators.base';
 import { schPhotosSokiInvocatorBaseServer } from './photos-invocators.base';
 import { schRolesSokiInvocatorBaseServer } from './roles-invocators.base';
 import { schUsersSokiInvocatorBaseServer } from './users-invocators.base';
+
+export const newSchedule: IScheduleWidget = {
+  w: IScheduleWidgetWid.def,
+  m: IScheduleWidgetUserCati.def,
+  title: '',
+  app: 'index',
+  dsc: '',
+  topic: '',
+  days: emptyArray,
+  tatts: emptyArray,
+  types: emptyArray,
+  tgInformTime: 5,
+  start: 0,
+  ctrl: {
+    cats: ['Основное'],
+    users: [],
+    roles: [
+      {
+        mi: 0,
+        title: 'Координатор',
+        icon: 'Teacher',
+        userMi: IScheduleWidgetUserMi.def,
+      },
+    ],
+    type: scheduleWidgetRegTypeRights.collectRights(),
+    defu: scheduleWidgetUserRights.collectRights(ScheduleWidgetUserRoleRight.Read),
+  },
+  games: {
+    criterias: [{ title: 'Сила', sorts: {} as never }],
+    list: [],
+  },
+  lists: {
+    cats: [
+      {
+        icon: 'UserGroup',
+        title: 'Группа',
+        titles: ['Наставники', 'Участники'],
+      },
+    ],
+    units: [
+      {
+        cati: IScheduleWidgetUserCati.def,
+        mi: 1,
+        title: 'Группа 1',
+        dsc: '',
+      },
+    ],
+  },
+};
 
 class SchGeneralSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGeneralSokiInvocatorModel> {
   constructor() {

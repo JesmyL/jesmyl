@@ -1,78 +1,85 @@
 /* eslint-disable no-throw-literal */
 import { startCrTgAlarm } from 'back/apps/index/crTgAlarm';
 import { invitesTgBotListener } from 'back/sides/telegram-bot/invites/invites.bot';
-import { SokiClientEvent, SokiServerDoActionProps } from 'shared/api';
+import jwt from 'jsonwebtoken';
+import { InvocatorEvent, LocalSokiAuth } from 'shared/api';
 import WebSocket, { WebSocketServer } from 'ws';
 import { setSharedPolyfills } from '../../../shared/utils/complect/polyfills';
 import { scheduleWidgetMessageCatcher } from '../../apps/index/schedules/tg-bot-inform/message-catchers';
-import { startTgGamerListener } from '../../sides/telegram-bot/gamer/tg-gamer';
 import { baseMessagesCatcher } from '../../sides/telegram-bot/message-catchers';
 import { ErrorCatcher } from '../ErrorCatcher';
+import { FileStore } from '../FileStore';
 import { onSokiServerEventerInvocatorInvoke } from './eventers';
-import { SokiServerServerStore } from './parts/120-ServerStore';
+import { SokiServerClientSelector } from './model';
+
+export const tokenSecretFileStore = new FileStore<{ token: string }>('/.tokenSecret', { token: '' });
+// tokenSecretFileStore.setValue({ token: randomBytes(60).toString('hex') });
 
 setSharedPolyfills();
 ErrorCatcher.logAllErrors();
 
-export class SokiServer extends SokiServerServerStore {
+export class SokiServer {
+  private clients = new Set<WebSocket>();
+  private auths = new Map<WebSocket, LocalSokiAuth | und>();
+
   start() {
     new WebSocketServer({ port: 4446 }).on('connection', (client: WebSocket) => {
-      this.sendStatistic();
+      this.clients.add(client);
+      client.on('close', () => this.clients.delete(client));
 
       client.on('message', async (data: WebSocket.RawData) => {
-        const eventData: SokiClientEvent = JSON.parse('' + data);
+        const event: InvocatorEvent = JSON.parse('' + data);
 
-        if (eventData.ping === true) {
-          this.send({ pong: true, appName: eventData.appName }, client);
+        if (event.ping) {
+          client.send(JSON.stringify({ pong: 1 }));
           return;
         }
 
-        const doProps: SokiServerDoActionProps = {
-          client,
-          eventData,
-          eventBody: eventData.body,
-          appName: eventData.appName,
-          requestId: eventData.requestId,
-        };
+        if (event.errorMessage) console.info('!!!!!!!!!', event.errorMessage);
 
-        if (eventData.body.errorMessage) console.info('!!!!!!!!!', eventData.body.errorMessage);
+        if (event.invoke) {
+          let auth: LocalSokiAuth | und;
 
-        if (eventData.body.invoke) {
+          if (event.token && jwt.verify(event.token, tokenSecretFileStore.getValue().token)) {
+            auth = jwt.decode(event.token) as never;
+          }
+
+          this.auths.set(client, auth);
+
           onSokiServerEventerInvocatorInvoke.invoke({
-            invoke: eventData.body.invoke,
-            send: (params, tool) => {
-              this.send({ appName: 'index', requestId: eventData.requestId, ...params }, tool.client);
-            },
-            tool: { client, auth: eventData.auth },
+            invoke: event.invoke,
+            sendResponse: (event, tool) => tool.client.send(JSON.stringify(event)),
+            tool: { client, auth },
+            requestId: event.requestId,
           });
 
           return;
         }
-
-        if (await this.doOnConnect(doProps)) return;
-        if (await this.doOnLiveData(doProps)) return;
-        if (await this.doOnAuthorization(doProps)) return;
-        if (await this.doOnTelegramAuth(doProps)) return;
-        if (await this.doOnPullData(doProps)) return;
-        if (await this.doOnServiceActions(doProps)) return;
-        if (await this.doOnSubscribes(doProps)) return;
-        if (await this.doOnExecs(doProps)) return;
-        if (await this.doOnDownloads(doProps)) return;
-        if (await this.doOnServerStore(doProps)) return;
       });
-
-      client.on('close', () => this.onClientDisconnect(client));
     });
 
     console.info('SokiServer started!!!');
+  }
+
+  send(event: InvocatorEvent, clientScalar: SokiServerClientSelector) {
+    if (clientScalar instanceof WebSocket) {
+      clientScalar.send(JSON.stringify(event));
+      return;
+    }
+    const stringEvent = JSON.stringify(event);
+
+    if (clientScalar === null) this.clients.forEach(client => client.send(stringEvent));
+    else
+      this.clients.forEach(client => {
+        if (clientScalar(client, this.auths.get(client))) return;
+        client.send(stringEvent);
+      });
   }
 }
 
 const sokiServer = new SokiServer();
 
 export default sokiServer;
-
-startTgGamerListener();
 
 baseMessagesCatcher.register();
 scheduleWidgetMessageCatcher.register();

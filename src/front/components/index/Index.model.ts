@@ -1,4 +1,4 @@
-import { LocalSokiAuth, ServerAuthorizationData, ServerRegisterData } from 'shared/api';
+import { LocalSokiAuth } from 'shared/api';
 import { AppName } from '../../app/App.model';
 import { BibleTranslationScreenConfig } from '../apps/bible/translations/model';
 import { CmSchWTranslationLiveDataValue } from '../apps/cm/translation/complect/live/model';
@@ -65,8 +65,3 @@ export type AuthMode = 'check' | 'login' | 'register' | 'auth';
 export type IndexPhase = 'main' | 'apps' | 'settings' | 'login' | 'register';
 export type IndexSpecialPhase = AppName;
 export type IndexAppName = AppName | null;
-
-export interface ServerAuthorizeInSystem {
-  register: ServerRegisterData;
-  login: ServerAuthorizationData;
-}

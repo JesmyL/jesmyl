@@ -1,3 +1,4 @@
+import { soki } from 'front/soki';
 import { Route, Routes } from 'react-router-dom';
 import { CurrentForceViweAppContext } from '../../+complect/translations/Translation.contexts';
 import { bibleIDB, bibleTranslatesIDB } from '../_db/bibleIDB';
@@ -43,9 +44,10 @@ export default function BibleRouter({ mainNode }: { mainNode: React.ReactNode })
 
 bibleSokiInvocatorBaseClient.$$register();
 
-(async () => {
+console.log(77666);
+soki.listenOnOpenEvent(async () => {
   const myTranslates = await bibleIDB.get.myTranslates();
   const lastModifiedAt = await bibleTranslatesIDB.get.lastModifiedAt();
 
   bibleSokiInvocatorClient.requestFreshes(null, lastModifiedAt, myTranslates);
-})();
+});

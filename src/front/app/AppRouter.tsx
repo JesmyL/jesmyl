@@ -1,4 +1,3 @@
-import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
 import { indexIDB } from 'front/components/index/db/index-idb';
 import { indexSokiInvocatorBaseClient } from 'front/components/index/db/invocators/invocator.base';
 import { indexBasicsSokiInvocatorClient } from 'front/components/index/db/invocators/schedules/fresh-invocator.methods';
@@ -8,11 +7,9 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import { DeviceId } from 'shared/api';
 import { atom, useAtomValue } from '../complect/atoms';
 import { AppName } from './App.model';
-import { scheduleWidgetActionsRouteName } from './AppServiceActions';
 
 const AppComponent = React.lazy(() => import('./AppComponent'));
 const AppRouterProvider = React.lazy(() => import('./AppRouterProvider'));
-const AppServiceActions = React.lazy(() => import('./AppServiceActions'));
 const Wedding = React.lazy(() => import('../components/apps/wedding/Wedding'));
 const ScheduleWidgetTgDayView = React.lazy(() => import('../complect/schedule-widget/general/TgDayView'));
 
@@ -41,10 +38,6 @@ const AppRouter = () => {
           }
         />
       </Route>
-      <Route
-        path={scheduleWidgetActionsRouteName}
-        element={<AppServiceActions />}
-      />
       <Route
         path="wedding/:weddn/*"
         element={<Wedding />}
@@ -79,7 +72,7 @@ export default AppRouter;
 
 indexSokiInvocatorBaseClient.$$register();
 
-setTimeout(async () => {
+soki.listenOnOpenEvent(async () => {
   const lastModified = await indexIDB.get.lastModifiedAt();
   indexBasicsSokiInvocatorClient.getFreshes(null, lastModified);
 
@@ -88,9 +81,9 @@ setTimeout(async () => {
     const deviceId = await indexBasicsSokiInvocatorClient.getDeviceId(null);
     indexIDB.set.deviceId(deviceId);
   }
-}, 1000);
-
-soki.onUserAuthorize.listen(() => {
-  cmIDB.remove.lastModifiedAt();
-  indexIDB.remove.lastModifiedAt();
 });
+
+// soki.onUserAuthorize.listen(() => {
+//   cmIDB.remove.lastModifiedAt();
+//   indexIDB.remove.lastModifiedAt();
+// });

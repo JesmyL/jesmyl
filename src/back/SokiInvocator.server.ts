@@ -1,13 +1,13 @@
 import { makeSokiInvocator } from 'shared/api/complect/SokiInvocator.master';
-import sokiServer from './complect/soki/SokiServer';
 import { SokiServerClientSelector } from './complect/soki/model';
+import sokiServer from './complect/soki/SokiServer';
 
 export const SokiInvocatorServer = makeSokiInvocator<'SokiInvocatorServer', SokiServerClientSelector>(
   'SokiInvocatorServer',
   (invoke, client) => {
     const { promise, reject, resolve } = Promise.withResolvers();
     try {
-      sokiServer.send({ appName: 'index', invoke }, client);
+      sokiServer.send({ invoke, requestId: '' + Date.now() + Math.random() }, client);
       resolve(undefined);
     } catch (e) {
       reject('' + e);

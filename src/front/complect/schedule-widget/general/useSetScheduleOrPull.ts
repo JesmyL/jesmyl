@@ -3,7 +3,6 @@ import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetWid } from 'shared/api';
 import { useIndexSchedules } from '../../../components/index/atoms';
-import serviceMaster from '../../service/serviceMaster';
 
 const scheduleAtom = atom<IScheduleWidget | null>(null);
 
@@ -33,7 +32,7 @@ export const useGetScheduleOrPull = (scheduleInstance: string | IScheduleWidgetW
         setIsLoading(true);
 
         try {
-          setSchedule(await serviceMaster('index')('takeDaySchedule', scheduleInstance));
+          // setSchedule(await serviceMaster('index')('takeDaySchedule', scheduleInstance));
         } catch (error) {
           setError('' + error);
         }

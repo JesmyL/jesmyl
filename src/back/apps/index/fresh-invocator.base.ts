@@ -1,8 +1,15 @@
 import { FileStore } from 'back/complect/FileStore';
+import { tokenSecretFileStore } from 'back/complect/soki/SokiServer';
+import { supportTelegramAuthorizations } from 'back/sides/telegram-bot/prod/authorize';
+import { supportTelegramBot } from 'back/sides/telegram-bot/support/support-bot';
+import { JesmylTelegramBot } from 'back/sides/telegram-bot/tg-bot';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
+import jwt from 'jsonwebtoken';
+import TelegramBot from 'node-telegram-bot-api';
 import {
   IndexValues,
   IScheduleWidget,
+  LocalSokiAuth,
   makeTwiceKnownName,
   NounPronsType,
   ScheduleWidgetRegType,
@@ -24,6 +31,18 @@ export const nounPronsWordsFileStore = new FileStore<NounPronsType>('/apps/index
 
 export const appVersionFileStore = new FileStore<{ num: number }>('/+version.json', { num: 0 });
 export const valuesFileStore = new FileStore<IndexValues>('/values', { chatUrl: '' });
+
+const makeAuthFromUser = async (user: OmitOwn<TelegramBot.User, 'is_bot'>) => {
+  const admin = (await supportTelegramBot.getAdmins())[user.id];
+
+  return {
+    level: admin ? (admin.status === 'creator' ? 100 : +(admin as any).custom_title) : 3,
+    nick: user.username,
+    tgId: user.id,
+    login: JesmylTelegramBot.makeLoginFromId(user.id),
+    fio: `${user.first_name}${user.last_name ? ` ${user.last_name}` : ''}`,
+  } satisfies LocalSokiAuth;
+};
 
 appVersionFileStore.watchFile((value, state) => {
   indexServerInvocatorShareMethods.appVersion(null, value.num, state.mtimeMs);
@@ -76,6 +95,18 @@ class IndexBasicsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexBa
             .fill(0)
             .map(() => smylib.randomItem(deviceIdPostfixSymbols))
             .join('')) as never;
+      },
+
+      authMeByTelegramNativeButton: () => async user => {
+        const auth = await makeAuthFromUser(user);
+        return { token: jwt.sign(auth, tokenSecretFileStore.getValue().token), auth };
+      },
+
+      authMeByTelegramBotNumber: () => async secretNumber => {
+        const user = supportTelegramAuthorizations[secretNumber]?.().from;
+        if (user == null) throw new Error('code is invalid');
+        const auth = await makeAuthFromUser(user);
+        return { token: jwt.sign(auth, tokenSecretFileStore.getValue().token), auth };
       },
     });
   }

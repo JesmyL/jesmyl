@@ -2,11 +2,8 @@
 import TelegramBot from 'node-telegram-bot-api';
 import { IScheduleWidget, IScheduleWidgetDay, ScheduleStorage, ScheduleWidgetCleans } from 'shared/api';
 import { itNNull, makeRegExp } from 'shared/utils';
-import { ExecutionDict } from '../../../../../shared/api/complect/executer/model';
-import { filer } from '../../../../complect/filer/Filer';
-import { SokiAuther } from '../../../../complect/soki/SokiAuther';
-import sokiServer from '../../../../complect/soki/SokiServer';
 import { jesmylTgBot } from '../../../../sides/telegram-bot/bot';
+import { schedulesFileStore } from '../base-invocators/file-stores';
 
 export const makeScheduleWidgetJoinTitle = (
   schedule: IScheduleWidget,
@@ -48,7 +45,9 @@ function findAdmin(this: typeof findAdminThis, member: TelegramBot.ChatMember) {
   return member.user.id === this.from.id;
 }
 
-const getSchedules = (): ScheduleStorage => filer.contents.index?.schedules?.data;
+const getSchedules = (): ScheduleStorage => ({
+  list: schedulesFileStore.getValue(),
+});
 const getScheduleByRequisit = (requisit: `${number}/` | `/${string}`) =>
   getSchedules().list.find(sch => sch.tgChatReqs?.includes(requisit));
 
@@ -144,26 +143,16 @@ jesmylTgBot.catchCallbackQuery(async (query, bot, answer) => {
 
   const { dayWup, list, newTypes } = ScheduleWidgetCleans.preparedText2DayList(query.message.text, schedule);
 
-  const addAttTypesExecs = [
-    {
-      action: 'addAttTypes',
-      args: {
-        schw: schedule.w,
-        value: newTypes,
-      },
-    },
-  ] satisfies ExecutionDict[];
+  // const auth = await SokiAuther.getTgAuth(query.from.id);
 
-  const auth = await SokiAuther.getTgAuth(query.from.id);
-
-  if (addAttTypesExecs[0]?.args.value.length) {
-    try {
-      const { errorMessage } = await sokiServer.execExecs('index', addAttTypesExecs, auth, auth);
-      if (errorMessage) return ret(errorMessage);
-    } catch (error) {
-      return ret('' + error);
-    }
-  }
+  // if (addAttTypesExecs[0]?.args.value.length) {
+  //   try {
+  //     const { errorMessage } = await sokiServer.execExecs('index', addAttTypesExecs, auth, auth);
+  //     if (errorMessage) return ret(errorMessage);
+  //   } catch (error) {
+  //     return ret('' + error);
+  //   }
+  // }
 
   if (true) {
     const schedule = getScheduleByRequisit(`/${query.chat_instance}`);
@@ -189,12 +178,12 @@ jesmylTgBot.catchCallbackQuery(async (query, bot, answer) => {
       },
     ];
 
-    try {
-      const { errorMessage } = await sokiServer.execExecs('index', addEventsExecs, auth, auth);
-      if (errorMessage) return ret(errorMessage);
-    } catch (error) {
-      return ret('' + error);
-    }
+    // try {
+    //   const { errorMessage } = await sokiServer.execExecs('index', addEventsExecs, auth, auth);
+    //   if (errorMessage) return ret(errorMessage);
+    // } catch (error) {
+    //   return ret('' + error);
+    // }
   }
 
   if (query.message?.text !== undefined)

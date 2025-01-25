@@ -5,7 +5,7 @@ import { jesmylTgBot } from '../bot';
 import { tglogger } from '../log/log-bot';
 import { JTgBotCallbackQuery } from '../model';
 
-export const supportTelegramAuthorizations: Record<number, () => CallbackQuery> = {};
+export const supportTelegramAuthorizations: PRecord<number, () => CallbackQuery> = {};
 const telegramAuthorizationUsers: Record<number, number> = {};
 const codeExparingTime = 180000;
 let minutesText = '';

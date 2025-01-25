@@ -1,5 +1,5 @@
 import { MyLib, mylib } from 'front/utils';
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import { itIt } from 'shared/utils';
 import { AppName, appNames } from '../../../../app/App.model';
@@ -16,7 +16,6 @@ import { IconPaintBoardStrokeRounded } from '../../../../complect/the-icon/icons
 import { IconRssErrorStrokeRounded } from '../../../../complect/the-icon/icons/rss-error';
 import { IconSourceCodeCircleStrokeRounded } from '../../../../complect/the-icon/icons/source-code-circle';
 import { IconTextStrokeRounded } from '../../../../complect/the-icon/icons/text';
-import { soki } from '../../../../soki';
 import { statisticAtom, useAppFontFamily, useAuth } from '../../atoms';
 import { indexSimpleValIsPlayAnimations, indexSimpleValIsUseNativeKeyboard } from '../../complect/index.simpleValues';
 import useConnectionState from '../../useConnectionState';
@@ -48,13 +47,6 @@ export default function IndexSettings() {
   const [appFontFamily, setAppFontFamily] = useAppFontFamily();
   const connectionNode = useConnectionState('margin-gap');
   // const [isShowSecretChatsInBottom, setIsShowSecretChatsInBottom] = useAtom(isSecretChatsShowInBottomMenuAtom);
-
-  useEffect(() => {
-    soki.send({ subscribe: 'statistic' }, 'index');
-    return () => {
-      soki.send({ unsubscribe: 'statistic' }, 'index');
-    };
-  }, []);
 
   const settingsList = [
     auth.level === 100 && (

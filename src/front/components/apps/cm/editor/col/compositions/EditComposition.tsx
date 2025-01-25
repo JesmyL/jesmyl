@@ -4,14 +4,12 @@ import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useCheckIsAccessed } from '../../../../../../complect/exer/hooks/check-is-accessed';
 import IconButton from '../../../../../../complect/the-icon/IconButton';
 import { IconMapsRefreshStrokeRounded } from '../../../../../../complect/the-icon/icons/maps-refresh';
 import {
   IconMusicNote03SolidRounded,
   IconMusicNote03StrokeRounded,
 } from '../../../../../../complect/the-icon/icons/music-note-03';
-import { useAuth } from '../../../../../index/atoms';
 import useConnectionState from '../../../../../index/useConnectionState';
 import { CmComNumber } from '../../../col/com/complect/ComNumber';
 import ComPlayer from '../../../col/com/player/ComPlayer';
@@ -26,8 +24,7 @@ export default function EditComposition() {
   const ccomw = useCcomw();
   const removedComs = useAtomValue(removedCompositionsAtom);
   const [isOpenPlayer, setIsOpenPlayer] = useState(false);
-  const auth = useAuth();
-  const checkIsAccessed = useCheckIsAccessed(auth);
+  // const auth = useAuth();
   const connectionNode = useConnectionState('margin-gap');
   const navigate = useNavigate();
 

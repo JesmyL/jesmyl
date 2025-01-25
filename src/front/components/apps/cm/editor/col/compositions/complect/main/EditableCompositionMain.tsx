@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { emptyFunc } from 'shared/utils';
 import Dropdown from '../../../../../../../../complect/dropdown/Dropdown';
 import { DropdownItem } from '../../../../../../../../complect/dropdown/Dropdown.model';
-import { useCheckIsAccessed } from '../../../../../../../../complect/exer/hooks/check-is-accessed';
 import { useConfirm } from '../../../../../../../../complect/modal/confirm/useConfirm';
 import { IconDashboardSpeed02StrokeRounded } from '../../../../../../../../complect/the-icon/icons/dashboard-speed-02';
 import { IconDelete01StrokeRounded } from '../../../../../../../../complect/the-icon/icons/delete-01';
@@ -36,7 +35,6 @@ export default function EditableCompositionMain() {
   const ccom = useEditableCcom();
   const setRemovedComs = useAtomSet(removedCompositionsAtom);
   const auth = useAuth();
-  const checkIsAccessed = useCheckIsAccessed(auth);
   const [confirmNode, confirm] = useConfirm();
   const [name, setName] = useState('');
 
@@ -97,7 +95,7 @@ export default function EditableCompositionMain() {
         <div className="title half-width  text-center">Сделать {ccom.isBemoled ? 'диезным' : 'бемольным'}</div>
         <div className="half-width" />
       </div>
-      {checkIsAccessed(100) && (
+      {auth.level === 100 && (
         <div
           className="flex full-width between error-message margin-gap-v pointer"
           onClick={async () => {

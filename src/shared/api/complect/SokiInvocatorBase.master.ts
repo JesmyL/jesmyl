@@ -16,11 +16,11 @@ export const makeSokiInvocatorBase = <ClassNamePostfix extends string, ToolParam
   const registeredInvocators: Record<string, Invocator<any>> = {};
   const registeredOnEachInvocations: Record<string, OnEachOnvocations<any>> = {};
 
-  eventerValue.listen(async ({ invoke: { name, method, params }, send, tool }) => {
+  eventerValue.listen(async ({ invoke: { name, method, params }, sendResponse, tool, requestId }) => {
     try {
       if (registeredInvocators[name] == null) throw new Error(`the name ${name} not registered`);
       if (!smylib.isFunc(registeredInvocators[name][method]))
-        throw new Error(`the ${name}${classNamePostfix} has no the ${method} method`);
+        throw new Error(`the ${name} has no the ${method} method`);
       const invokedResult = await registeredInvocators[name][method](tool)(...params);
 
       if (
@@ -31,9 +31,10 @@ export const makeSokiInvocatorBase = <ClassNamePostfix extends string, ToolParam
         const retValue = registeredOnEachInvocations[name][method](invokedResult, ...params);
         onEachInvoke(retValue, { tool, method, name });
       }
-      send({ invokedResult }, tool);
+
+      sendResponse({ invokedResult, requestId }, tool);
     } catch (error) {
-      send({ errorMessage: '' + error }, tool);
+      sendResponse({ errorMessage: '' + error, requestId }, tool);
     }
   });
 

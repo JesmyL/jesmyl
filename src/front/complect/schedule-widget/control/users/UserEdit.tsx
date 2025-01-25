@@ -1,11 +1,9 @@
 import {
   IScheduleWidgetUser,
   IScheduleWidgetWid,
-  packScheduleWidgetInviteLink,
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
-import { makeAppActionLink } from '../../../../app/AppServiceActions';
 import { IconUserStrokeRounded } from '../../../../complect/the-icon/icons/user';
 import StrongEditableField from '../../../strong-control/field/StrongEditableField';
 import { useScheduleUserScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
@@ -49,7 +47,7 @@ export function ScheduleWidgetUserEdit({ user }: { user: IScheduleWidgetUser }) 
       )}
       {!user.login && (
         <div className="user-select margin-giant-gap-t">
-          {makeAppActionLink('index', 'swInvite', packScheduleWidgetInviteLink(rights.schedule.w, user.mi))}
+          {/* {makeAppActionLink('index', 'swInvite', packScheduleWidgetInviteLink(rights.schedule.w, user.mi))} */}
         </div>
       )}
     </>
