@@ -144,8 +144,6 @@ export class Eventer {
   static createValue<Value = void>(): EventerListenScope<Value> {
     const listeners: EventerValueListeners<Value> = new Set();
 
-    console.log(listeners);
-
     return {
       listen: (cb, initValue) => this.listenValue(listeners, cb, initValue),
       mute: cb => this.muteValue(listeners, cb),

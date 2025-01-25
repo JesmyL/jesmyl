@@ -28,6 +28,7 @@ export class TgLogger {
     test: 1453,
     visit: 3343,
     changes: 3383,
+    userErrors: 94330,
   };
 
   constructor(bot: JesmylTelegramBot) {
@@ -57,6 +58,10 @@ export class TgLogger {
 
   visit(text: string) {
     return this.bot.postMessage(text, this.replyToScope('visit'));
+  }
+
+  userErrors(text: string) {
+    return this.bot.postMessage(text, this.replyToScope('userErrors'));
   }
 
   changes(text: string) {

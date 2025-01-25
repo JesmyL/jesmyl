@@ -1,6 +1,7 @@
 /* eslint-disable no-throw-literal */
 import { startCrTgAlarm } from 'back/apps/index/crTgAlarm';
 import { invitesTgBotListener } from 'back/sides/telegram-bot/invites/invites.bot';
+import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import jwt from 'jsonwebtoken';
 import { InvocatorEvent, LocalSokiAuth } from 'shared/api';
 import WebSocket, { WebSocketServer } from 'ws';
@@ -27,6 +28,12 @@ export class SokiServer {
       this.clients.add(client);
       client.on('close', () => this.clients.delete(client));
 
+      setTimeout(() => {
+        const auth = this.auths.get(client);
+        if (auth == null) return;
+        tglogger.visit(JSON.stringify(auth, null, 1));
+      }, 1000);
+
       client.on('message', async (data: WebSocket.RawData) => {
         const event: InvocatorEvent = JSON.parse('' + data);
 
@@ -35,12 +42,12 @@ export class SokiServer {
           return;
         }
 
-        if (event.errorMessage) console.info('!!!!!!!!!', event.errorMessage);
+        if (event.errorMessage) tglogger.userErrors(event.errorMessage);
 
         if (event.invoke) {
-          let auth: LocalSokiAuth | und;
+          let auth = this.auths.get(client);
 
-          if (event.token && jwt.verify(event.token, tokenSecretFileStore.getValue().token)) {
+          if (auth === undefined && event.token && jwt.verify(event.token, tokenSecretFileStore.getValue().token)) {
             auth = jwt.decode(event.token) as never;
           }
 
@@ -66,6 +73,7 @@ export class SokiServer {
       clientScalar.send(JSON.stringify(event));
       return;
     }
+
     const stringEvent = JSON.stringify(event);
 
     if (clientScalar === null) this.clients.forEach(client => client.send(stringEvent));

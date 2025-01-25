@@ -44,7 +44,6 @@ export default function BibleRouter({ mainNode }: { mainNode: React.ReactNode })
 
 bibleSokiInvocatorBaseClient.$$register();
 
-console.log(77666);
 soki.listenOnOpenEvent(async () => {
   const myTranslates = await bibleIDB.get.myTranslates();
   const lastModifiedAt = await bibleTranslatesIDB.get.lastModifiedAt();
