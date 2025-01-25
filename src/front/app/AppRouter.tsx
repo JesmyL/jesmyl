@@ -80,7 +80,7 @@ export default AppRouter;
 indexSokiInvocatorBaseClient.$$register();
 
 setTimeout(async () => {
-  const lastModified = await indexIDB.get.lastModified();
+  const lastModified = await indexIDB.get.lastModifiedAt();
   indexBasicsSokiInvocatorClient.getFreshes(null, lastModified);
 
   const localDeviceId = await indexIDB.get.deviceId();
@@ -91,6 +91,6 @@ setTimeout(async () => {
 }, 1000);
 
 soki.onUserAuthorize.listen(() => {
-  cmIDB.rem.lastModified();
-  indexIDB.rem.lastModified();
+  cmIDB.remove.lastModifiedAt();
+  indexIDB.remove.lastModifiedAt();
 });

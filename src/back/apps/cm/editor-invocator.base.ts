@@ -1,4 +1,4 @@
-import { FileStore } from 'back/complect/FileStorage';
+import { FileStore } from 'back/complect/FileStore';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { mylib } from 'front/utils';
 import { EeStorePack } from 'shared/api';

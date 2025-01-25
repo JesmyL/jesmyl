@@ -1,4 +1,4 @@
-import { FileStore } from 'back/complect/FileStorage';
+import { FileStore } from 'back/complect/FileStore';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { mylib } from 'front/utils';
 import { IExportableCat, IExportableCom } from 'shared/api';
@@ -28,27 +28,27 @@ class CmFreshSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmFreshSoki
         ({ client, auth }) =>
         async lastModfiedMs => {
           const coms = comsFileStore.getValue().filter(icom => (icom.m ?? icom.w) > lastModfiedMs);
-          if (coms.length) cmServerInvocatorShareMethods.freshComList(client, coms);
+          if (coms.length) cmServerInvocatorShareMethods.refreshComList(client, coms);
 
           const cats = catsFileStore.getValue().filter(icat => (icat.m ?? icat.w) > lastModfiedMs);
-          if (cats.length) cmServerInvocatorShareMethods.freshCatList(client, cats);
+          if (cats.length) cmServerInvocatorShareMethods.refreshCatList(client, cats);
 
           const chordPackModifiedAt = chordPackFileStore.fileModifiedAt();
           if (!chordPackModifiedAt || chordPackModifiedAt > lastModfiedMs) {
-            cmServerInvocatorShareMethods.freshChordPack(client, {
+            cmServerInvocatorShareMethods.refreshChordPack(client, {
               modifiedAt: chordPackModifiedAt,
               pack: chordPackFileStore.getValue(),
             });
           }
 
           const comPacks = smylib.values(eventPacksFileStore.getValue()).filter(pack => pack.m > lastModfiedMs);
-          if (comPacks.length) cmServerInvocatorShareMethods.freshSchEventComPacks(client, comPacks);
+          if (comPacks.length) cmServerInvocatorShareMethods.refreshScheduleEventComPacks(client, comPacks);
 
           if (auth != null) {
             if (auth.level >= 50) {
               const eePackModifiedAt = eePackFileStore.fileModifiedAt();
               if (!eePackModifiedAt || eePackModifiedAt > lastModfiedMs) {
-                cmEditorServerInvocatorShareMethods.freshEEPack(client, {
+                cmEditorServerInvocatorShareMethods.refreshEEPack(client, {
                   modifiedAt: chordPackModifiedAt,
                   pack: eePackFileStore.getValue(),
                 });
@@ -58,11 +58,11 @@ class CmFreshSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmFreshSoki
             if (auth.login != null) {
               const comComments = mylib.values(comCommentsFileStore.getValue()[auth.login]);
               const freshComments = comComments.filter(({ m }) => m > lastModfiedMs);
-              if (freshComments.length) cmServerInvocatorShareMethods.freshComComments(client, freshComments);
+              if (freshComments.length) cmServerInvocatorShareMethods.refreshComComments(client, freshComments);
 
               const favoriteComws = favoriteComwsFileStore.getValue()[auth.login];
               if (favoriteComws != null && favoriteComws.m > lastModfiedMs)
-                cmServerInvocatorShareMethods.freshComFavorites(client, favoriteComws.comws, favoriteComws.m);
+                cmServerInvocatorShareMethods.refreshComFavorites(client, favoriteComws.comws, favoriteComws.m);
             }
           }
         },

@@ -1,4 +1,4 @@
-import { FileStore } from 'back/complect/FileStorage';
+import { FileStore } from 'back/complect/FileStore';
 import https from 'https';
 import { CmMp3ContainsPageResult, CmMp3Rule } from 'shared/api';
 

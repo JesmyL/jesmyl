@@ -1,4 +1,4 @@
-import { FileStore } from 'back/complect/FileStorage';
+import { FileStore } from 'back/complect/FileStore';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import {
   IndexValues,
@@ -54,7 +54,7 @@ class IndexBasicsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexBa
             })
             .filter(itNNull);
 
-          schServerInvocatorShareMethods.freshSchedules(client, schedules);
+          schServerInvocatorShareMethods.refreshSchedules(client, schedules);
 
           if (appVersionFileStore.fileModifiedAt() > lastModfiedMs) {
             const modifiedAt = appVersionFileStore.fileModifiedAt();

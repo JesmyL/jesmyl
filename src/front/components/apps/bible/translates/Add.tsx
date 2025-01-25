@@ -1,26 +1,35 @@
+import Modal from 'front/complect/modal/Modal/Modal';
+import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
+import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
 import { useState } from 'react';
-import useModal from '../../../../complect/modal/useModal';
+import { BibleTranslateName } from 'shared/api';
 import IconButton from '../../../../complect/the-icon/IconButton';
 import { IconBookDownloadStrokeRounded } from '../../../../complect/the-icon/icons/book-download';
 import { IconBookOpen02StrokeRounded } from '../../../../complect/the-icon/icons/book-open-02';
 import { IconDelete02StrokeRounded } from '../../../../complect/the-icon/icons/delete-02';
 import { IconPencilEdit02StrokeRounded } from '../../../../complect/the-icon/icons/pencil-edit-02';
-import { soki } from '../../../../soki';
-import { bibleMolecule } from '../molecules';
-import { bibleAllTranslates, BibleTranslateName, translateDescriptions } from './complect';
+import { bibleSokiInvocatorClient } from '../invoctors/invocator';
+import { removeBibleTranslate } from '../utils';
+import { bibleAllTranslates, translateDescriptions } from './complect';
 import { useBibleMyTranslates } from './hooks';
 
 export default function BibleModulesTranslationsRedactButton(): JSX.Element {
-  const [myTranslates, setMyTranslates] = useBibleMyTranslates();
-
+  const [myTranslates] = useBibleMyTranslates();
   const [translateOnLoad, setTranslateOnLoad] = useState<BibleTranslateName | null>(null);
+  const [isOpenModal, setIsOpenModal] = useState<unknown>(false);
 
-  const [modalNode, openModal] = useModal(({ body, header }) => {
-    return (
-      <>
-        {header(<>Переводы Библии</>)}
-        {body(
-          <>
+  return (
+    <>
+      <IconButton
+        Icon={IconPencilEdit02StrokeRounded}
+        onClick={setIsOpenModal}
+      />
+
+      {isOpenModal && (
+        <Modal onClose={setIsOpenModal}>
+          <ModalHeader>Переводы Библии</ModalHeader>
+
+          <ModalBody>
             <h3 className="margin-gap-v text-bold">Загруженные переводы</h3>
             {myTranslates.map(tName => {
               const isUnremovable = myTranslates.length < 2;
@@ -34,11 +43,8 @@ export default function BibleModulesTranslationsRedactButton(): JSX.Element {
                   iconClassName={isUnremovable ? undefined : 'color--ko'}
                   disabled={isUnremovable}
                   confirm={`Удалить безвозвратно модуль  "${title}"`}
-                  prefix={title}
-                  onClick={() => {
-                    setMyTranslates(prev => prev.filter(name => name !== tName));
-                    bibleMolecule.rem(tName);
-                  }}
+                  postfix={title}
+                  onClick={() => removeBibleTranslate(tName)}
                 />
               );
             })}
@@ -52,31 +58,19 @@ export default function BibleModulesTranslationsRedactButton(): JSX.Element {
                   key={tName}
                   Icon={IconBookDownloadStrokeRounded}
                   className="margin-gap-l margin-gap-v"
-                  prefix={title}
+                  postfix={title}
                   disabled={translateOnLoad !== null}
-                  onClick={() => {
+                  onClick={async () => {
                     setTranslateOnLoad(tName);
-                    soki.send({ download: tName }, 'bible').on(() => {
-                      setMyTranslates(prev => [...prev, tName]);
-                      setTranslateOnLoad(null);
-                    });
+                    await bibleSokiInvocatorClient.requestTranslate(null, tName);
+                    setTranslateOnLoad(null);
                   }}
                 />
               );
             })}
-          </>,
-        )}
-      </>
-    );
-  });
-
-  return (
-    <>
-      {modalNode}
-      <IconButton
-        Icon={IconPencilEdit02StrokeRounded}
-        onClick={openModal}
-      />
+          </ModalBody>
+        </Modal>
+      )}
     </>
   );
 }

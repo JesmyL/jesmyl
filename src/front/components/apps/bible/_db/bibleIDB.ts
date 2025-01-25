@@ -1,13 +1,14 @@
 import { DexieDB } from 'front/complect/_DexieDB';
+import { BibleTranslateName } from 'shared/api';
 import {
   BibleBooki,
   BibleChapteri,
   BibleSearchZone,
+  BibleTranslate,
   BibleTranslationAddress,
   BibleTranslationJoinAddress,
   BibleVersei,
 } from '../model';
-import { BibleTranslateNameLine } from '../translates/complect';
 import { BibleTranslationScreenConfig } from '../translations/model';
 
 export interface BibleIDBStorage {
@@ -15,8 +16,8 @@ export interface BibleIDBStorage {
   chapteri: BibleChapteri;
   versei: BibleVersei;
 
-  showTranslates: BibleTranslateNameLine;
-  myTranslates: BibleTranslateNameLine;
+  showTranslates: BibleTranslateName[];
+  myTranslates: BibleTranslateName[];
 
   addressTerm: string;
   searchTerm: string;
@@ -28,25 +29,35 @@ export interface BibleIDBStorage {
   joinAddress: BibleTranslationJoinAddress | nil;
 }
 
-class BibleIDB extends DexieDB<BibleIDBStorage> {
-  constructor() {
-    super('bible', {
-      booki: { $byDefault: BibleBooki.def },
-      chapteri: { $byDefault: BibleChapteri.def },
-      versei: { $byDefault: BibleVersei.def },
+interface BibleTranslatesIDBStorage extends Record<BibleTranslateName, null | BibleTranslate> {
+  [BibleTranslateName.rst]: BibleTranslate;
 
-      searchTerm: { $byDefault: '' },
-      addressTerm: { $byDefault: '' },
-      searchZone: { $byDefault: 'global' },
-
-      showTranslates: { $byDefault: ['rst'] },
-      myTranslates: { $byDefault: ['rst'] },
-      translationPlan: { $byDefault: [] },
-      translationHistory: { $byDefault: [] },
-      translationScreenConfigs: { $byDefault: [] },
-      joinAddress: { $byDefault: null },
-    });
-  }
+  lastModifiedAt: number;
 }
 
-export const bibleIDB = new BibleIDB();
+class BibleTranslatesIDB extends DexieDB<BibleTranslatesIDBStorage> {}
+export const bibleTranslatesIDB = new BibleTranslatesIDB('bibleTranslates', {
+  lastModifiedAt: { $byDefault: 0 },
+
+  rst: { $byDefault: { chapters: [] } },
+  nrt: { $byDefault: null },
+  kas: { $byDefault: null },
+});
+
+class BibleIDB extends DexieDB<BibleIDBStorage> {}
+export const bibleIDB = new BibleIDB('bible', {
+  booki: { $byDefault: BibleBooki.def },
+  chapteri: { $byDefault: BibleChapteri.def },
+  versei: { $byDefault: BibleVersei.def },
+
+  searchTerm: { $byDefault: '' },
+  addressTerm: { $byDefault: '' },
+  searchZone: { $byDefault: 'global' },
+
+  showTranslates: { $byDefault: [BibleTranslateName.rst] },
+  myTranslates: { $byDefault: [BibleTranslateName.rst] },
+  translationPlan: { $byDefault: [] },
+  translationHistory: { $byDefault: [] },
+  translationScreenConfigs: { $byDefault: [] },
+  joinAddress: { $byDefault: null },
+});

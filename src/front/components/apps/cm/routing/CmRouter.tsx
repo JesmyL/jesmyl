@@ -80,6 +80,6 @@ export const RenderEditorOnce = memo(() => {
 });
 
 setTimeout(async () => {
-  const lastModified = await cmIDB.get.lastModified();
+  const lastModified = await cmIDB.get.lastModifiedAt();
   await cmFreshesSokiInvocatorClient.getFreshes(null, lastModified);
 }, 1000);

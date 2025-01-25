@@ -1,4 +1,4 @@
-import { FileStore } from 'back/complect/FileStorage';
+import { FileStore } from 'back/complect/FileStore';
 import { IScheduleWidgetWid, ScheduleComPack, ScheduleComPackHistory } from 'shared/api';
 
 export const eventPacksFileStore = new FileStore(

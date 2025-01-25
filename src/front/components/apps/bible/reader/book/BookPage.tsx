@@ -5,8 +5,6 @@ import { BibleBooki, BibleChapteri, BibleVersei } from '../../model';
 import { useBibleSingleAddressSetter } from '../../translations/lists/atoms';
 import BibleReaderChapter from './complect/Chapter';
 
-// String.fromCharCode(i + 162)
-
 interface Props {
   chapterList: { __html: string }[][] | und;
   currentBooki: BibleBooki;

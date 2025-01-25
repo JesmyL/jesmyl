@@ -4,7 +4,7 @@ import { DeviceId, IndexValues, IScheduleWidget, LocalSokiAuth, ScheduleWidgetPh
 import { FileAssociations } from '../parts/actions/files/complect/MyFilesTypeBox';
 
 interface Storage {
-  lastModified: number;
+  lastModifiedAt: number;
   auth: LocalSokiAuth;
   values: IndexValues;
   appFontFamily: string | null;
@@ -21,7 +21,7 @@ interface Storage {
 class IndexIDB extends DexieDB<Storage> {
   constructor() {
     super('index', {
-      lastModified: { $byDefault: 0 },
+      lastModifiedAt: { $byDefault: 0 },
       auth: { $byDefault: { level: 0 } },
       values: { $byDefault: {} },
       appFontFamily: { $byDefault: null },

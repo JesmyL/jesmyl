@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
-import { listenSokiEventsForBible } from '../../+complect/listenSokiEventsForBible';
 import { CurrentForceViweAppContext } from '../../+complect/translations/Translation.contexts';
+import { bibleIDB, bibleTranslatesIDB } from '../_db/bibleIDB';
+import { bibleSokiInvocatorBaseClient, bibleSokiInvocatorClient } from '../invoctors/invocator';
 import BibleReaderCurrentBookPage from '../reader/book/CurrentBookPage';
 import BibleReaderSearchPage from '../reader/search/SearchPage';
 import BibleTranslatesContextProvider from '../translates/TranslatesContext';
@@ -40,4 +41,11 @@ export default function BibleRouter({ mainNode }: { mainNode: React.ReactNode })
   );
 }
 
-listenSokiEventsForBible();
+bibleSokiInvocatorBaseClient.$$register();
+
+(async () => {
+  const myTranslates = await bibleIDB.get.myTranslates();
+  const lastModifiedAt = await bibleTranslatesIDB.get.lastModifiedAt();
+
+  bibleSokiInvocatorClient.requestFreshes(null, lastModifiedAt, myTranslates);
+})();

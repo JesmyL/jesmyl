@@ -25,7 +25,7 @@ class CmComExternalsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmCo
 
           history[schw][dayi].unshift({ s: list, w: m });
 
-          cmServerInvocatorShareMethods.freshSchEventComPacks(null, [packs[schw]]);
+          cmServerInvocatorShareMethods.refreshScheduleEventComPacks(null, [packs[schw]]);
         },
 
         getScheduleEventHistory: () => async (schw, dayi) => {

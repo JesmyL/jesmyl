@@ -5,7 +5,7 @@ class SchSokiInvocatorServer extends SokiInvocatorServer<SchSokiInvocatorSharesM
   constructor() {
     super('SchSokiInvocatorServer', {
       editedSchedule: true,
-      freshSchedules: true,
+      refreshSchedules: true,
     });
   }
 }

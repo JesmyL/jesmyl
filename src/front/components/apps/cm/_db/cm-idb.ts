@@ -19,7 +19,7 @@ export interface CmIDBStorage {
   favoriteComs: CmComWid[];
   comTopTools: MigratableComToolName[];
 
-  lastModified: number;
+  lastModifiedAt: number;
 
   comComments: ICmComComment[];
   coms: IExportableCom[];
@@ -52,7 +52,7 @@ class CmIDB extends DexieDB<CmIDBStorage> {
   constructor() {
     super('cm', {
       chordPack: { $byDefault: {} },
-      lastModified: { $byDefault: 0 },
+      lastModifiedAt: { $byDefault: 0 },
       eeStore: { $byDefault: {} },
       favoriteComs: { $byDefault: [] },
       selectedComws: { $byDefault: [] },

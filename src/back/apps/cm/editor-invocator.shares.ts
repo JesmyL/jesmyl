@@ -5,7 +5,7 @@ class CmEditorSokiInvocatorServer extends SokiInvocatorServer<CmEditorSokiInvoca
   constructor() {
     super('CmEditorSokiInvocatorServer', {
       editedEEWords: true,
-      freshEEPack: true,
+      refreshEEPack: true,
     });
   }
 }

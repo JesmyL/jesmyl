@@ -1,7 +1,8 @@
+import { bibleTranslatesIDB } from 'front/components/apps/bible/_db/bibleIDB';
 import { mylib } from 'front/utils';
 import { memo, useEffect, useState } from 'react';
+import { BibleTranslateName } from 'shared/api';
 import { itIt, makeRegExp } from 'shared/utils';
-import { bibleMolecule } from '../../../bible/molecules';
 import { cmIDB } from '../../_db/cm-idb';
 import { useEditableCats, useEditableComs } from '../col/useEditableCols';
 
@@ -36,10 +37,10 @@ export const EERulesListComputer = memo(function ListComputer({
       const texts: string[] = [
         cats?.map(col => col.name) ?? [],
         coms?.map(col => (col.texts ? [col.name, ...col.texts] : col.name)) ?? [],
-        isCheckBible ? (await bibleMolecule.take('rst').getStorageValue())?.chapters ?? emptyArr : emptyArr,
-        isCheckBible ? (await bibleMolecule.take('nrt').getStorageValue())?.chapters ?? emptyArr : emptyArr,
+        isCheckBible ? (await bibleTranslatesIDB.get[BibleTranslateName.rst]())?.chapters ?? emptyArr : emptyArr,
+        isCheckBible ? (await bibleTranslatesIDB.get[BibleTranslateName.nrt]())?.chapters ?? emptyArr : emptyArr,
         isCheckBible
-          ? (await bibleMolecule.take('kas').getStorageValue())?.chapters?.filter(itIt) ?? emptyArr
+          ? (await bibleTranslatesIDB.get[BibleTranslateName.kas]())?.chapters?.filter(itIt) ?? emptyArr
           : emptyArr,
       ].flat(10);
 

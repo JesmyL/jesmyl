@@ -5,18 +5,18 @@ class CmSokiInvocatorServer extends SokiInvocatorServer<CmSokiInvocatorSharesMod
   constructor() {
     super('CmSokiInvocatorServer', {
       editedCom: true,
-      freshComList: true,
+      refreshComList: true,
 
       editedCat: true,
-      freshCatList: true,
+      refreshCatList: true,
 
       editedChords: true,
-      freshChordPack: true,
+      refreshChordPack: true,
 
-      freshComComments: true,
-      freshComFavorites: true,
+      refreshComComments: true,
+      refreshComFavorites: true,
 
-      freshSchEventComPacks: true,
+      refreshScheduleEventComPacks: true,
     });
   }
 }

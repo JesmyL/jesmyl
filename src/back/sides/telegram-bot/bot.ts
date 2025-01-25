@@ -1,4 +1,4 @@
-import { FileStore } from 'back/complect/FileStorage';
+import { FileStore } from 'back/complect/FileStore';
 import { JesmylTelegramBotWrapper } from './tg-bot-wrapper';
 
 const botEnv = new FileStore('/.tgBotEnv', { token: '' });

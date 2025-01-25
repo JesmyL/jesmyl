@@ -1,4 +1,4 @@
-import { FileStore } from 'back/complect/FileStorage';
+import { FileStore } from 'back/complect/FileStore';
 import { SokiServerClientSelector } from 'back/complect/soki/model';
 import { SokiInvocatorBaseServer, SokiServerInvocatorTool } from 'back/SokiInvocatorBase.server';
 import { CmComWid, ICmComComment } from 'shared/api';
@@ -21,7 +21,7 @@ class CmUserStoreSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmUserS
         comments[authLogin] ??= {} as never;
         comments[authLogin][comw] = commentBox;
 
-        cmServerInvocatorShareMethods.freshComComments(clientSelector, [commentBox]);
+        cmServerInvocatorShareMethods.refreshComComments(clientSelector, [commentBox]);
       }),
 
       setComFavorites: valueSendBuilder((authLogin, clientSelector, list) => {
@@ -32,7 +32,7 @@ class CmUserStoreSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmUserS
         const modifiedAt = Date.now() + Math.random();
         favorites[authLogin].m = modifiedAt;
 
-        cmServerInvocatorShareMethods.freshComFavorites(clientSelector, list, modifiedAt);
+        cmServerInvocatorShareMethods.refreshComFavorites(clientSelector, list, modifiedAt);
       }),
     });
   }
