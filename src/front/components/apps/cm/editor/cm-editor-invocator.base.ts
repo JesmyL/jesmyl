@@ -14,7 +14,7 @@ export const cmEditorSokiInvocatorBaseClient = new CmEditorSokiInvocatorBaseClie
   refreshEEPack:
     () =>
     async ({ pack, modifiedAt }) => {
+      await cmIDB.updateLastModifiedAt(modifiedAt);
       cmIDB.set.eeStore(pack);
-      cmIDB.updateLastModifiedAt(modifiedAt);
     },
 });

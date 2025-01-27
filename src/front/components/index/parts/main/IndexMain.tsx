@@ -1,6 +1,6 @@
 import { IconComputerSettingsStrokeRounded } from 'front/complect/the-icon/icons/computer-settings';
 import React, { Suspense, useState } from 'react';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { itNNull } from 'shared/utils';
 import { appNames } from '../../../../app/App.model';
 import { routingApps } from '../../../../app/routing-apps';
@@ -33,7 +33,6 @@ export default function IndexMain() {
 
   const [isUserMoreOpen, setIsUserMoreOpen] = useState<unknown>(false);
   const [isAboutOpen, setIsAboutOpen] = useState<unknown>(false);
-  // const isShowSecretChatsInBottom = useAtomValue(isSecretChatsShowInBottomMenuAtom);
 
   const auth = useAuth();
   const connectionNode = useConnectionState();
@@ -74,13 +73,6 @@ export default function IndexMain() {
                         onClick={setIsUserMoreOpen}
                       />
                     )}
-                    {/* {!isShowSecretChatsInBottom && (
-                      <MarkUnreadSecretChatsPath containerSelector="a">
-                        <Link to="chats">
-                          <SecretChatsIcon />
-                        </Link>
-                      </MarkUnreadSecretChatsPath>
-                    )} */}
                   </div>
                 </div>
               }
@@ -89,33 +81,16 @@ export default function IndexMain() {
                 <>
                   <ScheduleWidgetAlarm isForceShow={auth.level >= 50} />
                   {!auth.nick && <IndexTelegramInlineAuthButton />}
-                  <Link
+                  <BrutalItem
+                    icon={<IconSettings02StrokeRounded />}
+                    title="Настройки"
                     to="settings"
-                    className="full-width"
-                  >
-                    <BrutalItem
-                      icon={<IconSettings02StrokeRounded />}
-                      title="Настройки"
-                    />
-                  </Link>
-                  {/* <Link
-                    to="advertising"
-                    className="full-width"
-                  >
-                    <BrutalItem
-                      icon={<IconCloudStrokeRounded />}
-                      title="Посмотреть стороннюю рекламу"
-                    />
-                  </Link> */}
-                  <Link
+                  />
+                  <BrutalItem
                     to="./actions"
-                    className="full-width"
-                  >
-                    <BrutalItem
-                      icon={<IconComputerSettingsStrokeRounded />}
-                      title="Взаимодействие"
-                    />
-                  </Link>
+                    icon={<IconComputerSettingsStrokeRounded />}
+                    title="Взаимодействие"
+                  />
                   <BrutalItem
                     icon={<IconInformationCircleStrokeRounded />}
                     title="О приложении"

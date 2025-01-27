@@ -6,7 +6,7 @@ import TgBot, {
   SendMessageOptions,
   User,
 } from 'node-telegram-bot-api';
-import { makeRegExp } from 'shared/utils';
+import { emptyFunc, makeRegExp } from 'shared/utils';
 import { Stream } from 'stream';
 import { TgLogger } from './log/log-bot';
 import { JTgBotCallbackQuery, JTgBotChatMessageCallback } from './model';
@@ -197,7 +197,7 @@ export class JesmylTelegramBot {
   }
 
   getUserData(id: number) {
-    return this._bot.bot.getChatMember(this.chatId, id).catch(() => {});
+    return this._bot.bot.getChatMember(this.chatId, id).catch(emptyFunc);
   }
 
   async tryIsUserMember(id: number) {

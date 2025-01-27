@@ -82,5 +82,5 @@ export const RenderEditorOnce = memo(() => {
 
 soki.listenOnOpenEvent(async () => {
   const lastModified = await cmIDB.get.lastModifiedAt();
-  await cmFreshesSokiInvocatorClient.getFreshes(null, lastModified);
+  await cmFreshesSokiInvocatorClient.requestFreshes(null, lastModified);
 });

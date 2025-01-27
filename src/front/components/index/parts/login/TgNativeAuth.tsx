@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { TelegramNativeAuthUserData } from 'shared/api';
 import styled from 'styled-components';
 import { Script } from '../../../../complect/tags/Script';
-import { indexIDB } from '../../db/index-idb';
 import { indexBasicsSokiInvocatorClient } from '../../db/invocators/schedules/fresh-invocator.methods';
 
 const funcName = 'onTelegramNativeAuth';
@@ -22,9 +21,7 @@ export const TgNativeAuth = ({ showToastRef }: Props) => {
     const tgAuthIframe = document.querySelector('#telegram-login-jesmylbot');
 
     (window as any)[funcName] = async (user: TelegramNativeAuthUserData) => {
-      const { token, auth } = await indexBasicsSokiInvocatorClient.authMeByTelegramNativeButton(null, user);
-      indexIDB.set.auth(auth);
-      localStorage.token = token || '';
+      await indexBasicsSokiInvocatorClient.authMeByTelegramNativeButton(null, user);
       navigate('..');
     };
 

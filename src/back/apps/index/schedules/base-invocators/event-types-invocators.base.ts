@@ -50,7 +50,7 @@ class SchEventTypesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchEv
         putMany: () => (props, typeList) => modifySchedule(props, sch => (sch.types = sch.types.concat(typeList))),
       },
       {
-        create: (sch, title, tm) =>
+        create: (sch, _, title, tm) =>
           `В расписании ${scheduleTitleInBrackets(sch)} создан тип событий ${title} продолжительностью в ${tm} мин.`,
 
         setTitle: (sch, _, value, prevTitle) =>

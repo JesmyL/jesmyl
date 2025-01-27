@@ -24,7 +24,7 @@ export interface IndexStateError {
 export interface JesmylPassport {
   login: string;
   nick: string;
-  fio?: string;
+  fio: string;
   tgId?: number;
 }
 

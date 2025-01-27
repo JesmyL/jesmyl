@@ -21,9 +21,13 @@ class CmComExternalsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmCo
           packs[schw].pack[dayi][eventMi] = list;
 
           history[schw] ??= {};
-          if (!smylib.isArr(history[schw][dayi])) history[schw][dayi] = [];
+          let dayHistory = history[schw][dayi];
+          if (!smylib.isArr(dayHistory)) dayHistory = history[schw][dayi] = [];
 
-          history[schw][dayi].unshift({ s: list, w: m });
+          if (dayHistory.length && dayHistory[0].e === eventMi && dayHistory[0].w > new Date().setHours(0, 0, 0, 0))
+            dayHistory.shift();
+
+          dayHistory.unshift({ s: list, w: m, e: eventMi });
 
           cmServerInvocatorShareMethods.refreshScheduleEventComPacks(null, [packs[schw]]);
         },

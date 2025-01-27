@@ -1,13 +1,19 @@
 import { useSearchParams } from 'react-router-dom';
-import { IScheduleWidget } from 'shared/api';
-import { IconComputerStrokeRounded } from '../../../complect/the-icon/icons/computer';
+import { IScheduleWidgetWid } from 'shared/api';
+import { IconComputerPhoneSyncStrokeRounded } from '../../../complect/the-icon/icons/computer-phone-sync';
 import { FullContent } from '../../fullscreen-content/FullContent';
 import IconButton from '../../the-icon/IconButton';
 import { ScheduleWidgetLiveTranslation } from './Live';
 
 const queryKey = 'follow';
 
-export const ScheduleWidgetWatchLiveTranslationButton = ({ schedule }: { schedule: IScheduleWidget }) => {
+export const ScheduleWidgetWatchLiveTranslationButton = ({
+  schw,
+  postfix,
+}: {
+  schw: IScheduleWidgetWid;
+  postfix?: string;
+}) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const setIsOpen = (isOpen: unknown) => {
@@ -29,15 +35,15 @@ export const ScheduleWidgetWatchLiveTranslationButton = ({ schedule }: { schedul
         >
           <ScheduleWidgetLiveTranslation
             onClose={setIsOpen}
-            schedule={schedule}
+            schw={schw}
           />
         </FullContent>
       )}
       <IconButton
-        Icon={IconComputerStrokeRounded}
+        Icon={IconComputerPhoneSyncStrokeRounded}
         onClick={setIsOpen}
         className="margin-gap-v"
-        postfix="Следить за трансляцией"
+        postfix={postfix}
       />
     </>
   );

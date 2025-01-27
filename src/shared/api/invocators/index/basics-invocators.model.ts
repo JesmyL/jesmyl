@@ -5,5 +5,7 @@ export type IndexBasicsSokiInvocatorModel = {
   getFreshes: (lastModfiedMs: number) => void;
   getDeviceId: () => DeviceId;
   authMeByTelegramNativeButton: (user: TelegramNativeAuthUserData) => { token: string; auth: LocalSokiAuth };
+  authMeByTelegramMiniButton: (user: TelegramNativeAuthUserData) => { token: string; auth: LocalSokiAuth };
+  authMeByTelegramInScheduleDay: (user: TelegramNativeAuthUserData) => { token: string; auth: LocalSokiAuth };
   authMeByTelegramBotNumber: (secretNumber: number) => { token: string; auth: LocalSokiAuth };
 };

@@ -21,15 +21,15 @@ ErrorCatcher.logAllErrors();
 
 const visitStringified = (visit: SokiVisit | nil) => {
   if (visit == null) return '';
-  return `${visit.urls[0]}\n\n<code>${JSON.stringify(visit, null, 1)}\nРазница: ${
+  return `${visit.urls[0]}\n\n<blockquote expandable>${JSON.stringify(visit, null, 1)}\nРазница: ${
     Date.now() - visit.clientTm
-  }мс</code>`;
+  }мс</blockquote>`;
 };
 
 const authStringified = (auth: LocalSokiAuth | nil) => {
   return (
     `${auth ? `${auth.fio} t.me/${auth.nick}` : 'Неизвестный'}\n\n` +
-    `<code>${auth ? JSON.stringify(auth, null, 1) : ''}</code>`
+    `<blockquote expandable>${auth ? JSON.stringify(auth, null, 1) : ''}</blockquote>`
   );
 };
 
@@ -58,6 +58,14 @@ export class SokiServer {
         if (event.token !== undefined) {
           if (event.token === null) {
             this.send({ requestId: event.requestId }, client);
+
+            if (event.visit !== undefined) {
+              this.visits.set(client, event.visit);
+
+              if (!event.visit.urls[0]?.includes('localhost'))
+                tglogger.visit(`Не авторизованный\n\n${visitStringified(event.visit)}\n\n`);
+            }
+
             return;
           }
 
@@ -85,16 +93,8 @@ export class SokiServer {
 
         if (event.errorMessage !== undefined) {
           const visit = this.visits.get(client);
-          const title =
-            auth !== undefined
-              ? `${auth.fio || '?'} ${auth.nick || '?'}`
-              : visit !== undefined
-                ? `D - ${visit.deviceId}`
-                : 'Неизвестный';
-
-          tglogger.userErrors(
-            `${event.errorMessage}\n\n${title}\n\n${authStringified(auth)}\n\n${visitStringified(visit)}`,
-          );
+          if (!visit?.urls[0]?.includes('localhost'))
+            tglogger.userErrors(`${event.errorMessage}\n\n${authStringified(auth)}\n\n${visitStringified(visit)}`);
         }
 
         if (event.invoke !== undefined) {

@@ -50,7 +50,7 @@ export type SokiInvokerTranferDto<Event extends InvocatorBaseEvent, Tool = und> 
 };
 
 export interface SokiVisitor {
-  fio?: string;
+  fio: string;
   nick: string;
   version: string | number;
   deviceId?: string;
@@ -79,7 +79,7 @@ export interface SokiAuth extends BaseSokiAuth {
 
 export interface BaseSokiAuth {
   fio: string;
-  nick: string;
+  nick?: string;
   login: SokiAuthLogin;
   tgId: number;
   tgAva?: string;
@@ -87,7 +87,6 @@ export interface BaseSokiAuth {
 
 export interface LocalSokiAuth extends Partial<BaseSokiAuth> {
   level: number;
-  passw?: string;
 }
 
 export interface IndexValues {

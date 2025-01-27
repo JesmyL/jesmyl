@@ -9,12 +9,10 @@ import KeyboardInput from '../../../../complect/keyboard/KeyboardInput';
 import LoadIndicatedContent from '../../../../complect/load-indicated-content/LoadIndicatedContent';
 import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
 import { AuthMode } from '../../Index.model';
-import { useSetAuth } from '../../atoms';
 import useConnectionState from '../../useConnectionState';
 import { useAuthErrors } from './atoms';
 
 export default function IndexLoginAuth() {
-  const setAuth = useSetAuth();
   const [nick, setNick] = useState('');
   const [passw, setPassword] = useState('');
   const [rpassw, setRPassword] = useState('');

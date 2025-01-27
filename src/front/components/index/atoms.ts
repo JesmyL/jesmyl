@@ -1,6 +1,6 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useParams } from 'react-router-dom';
-import { LocalSokiAuth, SokiAuthLogin, SokiStatistic } from 'shared/api';
+import { SokiAuthLogin, SokiStatistic } from 'shared/api';
 import { AppName } from '../../app/App.model';
 import { atom } from '../../complect/atoms';
 import { indexIDB } from './db/index-idb';
@@ -13,17 +13,11 @@ export const statisticAtom = atom<SokiStatistic | null>(null);
 export const useIndexSchedules = () => useLiveQuery(() => indexIDB.db.schs.toArray());
 
 export const useIndexFileAssociations = () => indexIDB.useValue.fileAssociations();
-export const useDeviceId = () => indexIDB.useValue.deviceId();
 export const useIndexValues = () => indexIDB.useValue.values();
 
 export const useAuth = () => indexIDB.useValue.auth();
-export const useAuthState = () => indexIDB.use.auth();
-export const useSetAuth = () => indexIDB.useSet.auth();
 
 export const useAppFontFamily = () => indexIDB.use.appFontFamily();
-
-export const getAuthValue = () => indexIDB.get.auth();
-export const setAuthValue = (auth: LocalSokiAuth) => indexIDB.set.auth(auth);
 
 export const useCurrentApp = () => useParams().appName as AppName | und;
 

@@ -10,7 +10,7 @@ import {
 } from 'front/components/index/complect/translations/live-invocator';
 import { soki } from 'front/soki';
 import { useEffect, useState } from 'react';
-import { IScheduleWidget, SokiAuthLogin } from 'shared/api';
+import { IScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
 import { IconComputerStrokeRounded } from '../../../complect/the-icon/icons/computer';
 import { ScreenTranslationControlPanelShowMdButton } from '../../../components/apps/+complect/translations/controls/ShowMdButton';
 import BibleTranslationSlide from '../../../components/apps/bible/translations/BibleTranslationSlide';
@@ -20,11 +20,11 @@ import { ScheduleWidgetMarkdownLiveTranslation } from './MarkdownLive';
 
 interface Props {
   onClose: (isOpen: boolean) => void;
-  schedule: IScheduleWidget;
+  schw: IScheduleWidgetWid;
   isShowMarkdownOnly?: boolean;
 }
 
-export const ScheduleWidgetLiveTranslation = ({ onClose, schedule, isShowMarkdownOnly }: Props) => {
+export const ScheduleWidgetLiveTranslation = ({ onClose, schw, isShowMarkdownOnly }: Props) => {
   const liveData = useAtomValue(liveDataAtom);
   const [streamerLogin, setStreamerLogin] = useState<SokiAuthLogin | null>(null);
   const streamers = useAtomValue(liveDataStreamersAtom);
@@ -32,26 +32,26 @@ export const ScheduleWidgetLiveTranslation = ({ onClose, schedule, isShowMarkdow
 
   useEffect(() => {
     if (streamerLogin != null) {
-      schLiveSokiInvocatorClient.watch(null, schedule.w, streamerLogin);
+      schLiveSokiInvocatorClient.watch(null, schw, streamerLogin);
 
       const unsubscribe = soki.onConnectionState(isConnected => {
         if (!isConnected) return;
 
-        schLiveSokiInvocatorClient.watch(null, schedule.w, streamerLogin);
+        schLiveSokiInvocatorClient.watch(null, schw, streamerLogin);
       });
 
       return () => {
         unsubscribe();
-        schLiveSokiInvocatorClient.unwatch(null, schedule.w, streamerLogin);
+        schLiveSokiInvocatorClient.unwatch(null, schw, streamerLogin);
       };
     }
 
     (async () => {
       setIsLoading(true);
-      await schLiveSokiInvocatorClient.requestStreamers(null, schedule.w);
+      await schLiveSokiInvocatorClient.requestStreamers(null, schw);
       setTimeout(setIsLoading, 1000, false);
     })();
-  }, [schedule.w, streamerLogin]);
+  }, [schw, streamerLogin]);
 
   useEffect(() => {
     if (streamerLogin != null || streamers == null) return;

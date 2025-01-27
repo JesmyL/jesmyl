@@ -6,6 +6,7 @@ export type ScheduleComPackEventPath = `${number}/${IScheduleWidgetDayEventMi}`;
 export type ScheduleComPackHistoryItem = {
   w: number | num;
   s: CmComWid[];
+  e: IScheduleWidgetDayEventMi;
 };
 
 export type ScheduleComPack = {

@@ -3,7 +3,6 @@ import { mylib } from 'front/utils';
 import {
   IScheduleWidgetUser,
   IScheduleWidgetUserMi,
-  LocalSokiAuth,
   ScheduleUserScopeProps,
   scheduleWidgetUserRights,
 } from 'shared/api';
@@ -27,11 +26,11 @@ class SchUsersSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchUsersSo
             modifySchedule(props, sch => {
               if (auth == null) throw new Error('Необходимо авторизоваться');
               if (sch.ctrl.users.some(user => user.login === auth.login)) throw new Error('user exists');
-              const authClone: Partial<LocalSokiAuth> = { ...auth };
-              delete authClone.passw;
+              const authClone = { ...(auth as any), mi: smylib.takeNextMi(sch.ctrl.users, IScheduleWidgetUserMi.def) };
+
               delete authClone.level;
 
-              sch.ctrl.users.push({ ...authClone, mi: smylib.takeNextMi(sch.ctrl.users, IScheduleWidgetUserMi.def) });
+              sch.ctrl.users.push(authClone);
             }),
 
         addUserListUnitMembership: () => (props, value) =>

@@ -46,7 +46,6 @@ export default function IndexSettings() {
   const [expands, setExpands] = useState<(AppName | '')[]>([]);
   const [appFontFamily, setAppFontFamily] = useAppFontFamily();
   const connectionNode = useConnectionState('margin-gap');
-  // const [isShowSecretChatsInBottom, setIsShowSecretChatsInBottom] = useAtom(isSecretChatsShowInBottomMenuAtom);
 
   const settingsList = [
     auth.level === 100 && (
@@ -57,16 +56,6 @@ export default function IndexSettings() {
         />
       </Link>
     ),
-    // <BrutalItem
-    //   icon={<SecretChatsIcon />}
-    //   title="Секретные чаты в нижнем меню"
-    //   box={
-    //     <IconCheckbox
-    //       checked={isShowSecretChatsInBottom}
-    //       onChange={setIsShowSecretChatsInBottom}
-    //     />
-    //   }
-    // />,
     <BrutalItem
       icon={<IconKeyboardStrokeRounded />}
       title="Фирменная клавиатура"

@@ -1,4 +1,6 @@
 import { useLiveQuery } from 'dexie-react-hooks';
+import { isMobileDevice } from 'front/complect/device-differences';
+import { ScheduleWidgetWatchLiveTranslationButton } from 'front/complect/schedule-widget/live-translations/WatchLiveButton';
 import { IconComputerStrokeRounded } from 'front/complect/the-icon/icons/computer';
 import { useAuth } from 'front/components/index/atoms';
 import { IndexScheduleWidgetTranslations } from 'front/components/index/complect/translations/LiveTranslations';
@@ -19,8 +21,11 @@ export default function TheMeetingsEvent() {
     scopeProps.eventMi,
   );
   const schedule = useLiveQuery(() => indexIDB.db.schs.get(scopeProps.schw), [scopeProps.schw]);
-  const typei = schedule?.days[scopeProps.dayi].list.find(event => event.mi === scopeProps.eventMi)?.type ?? -1;
   const auth = useAuth();
+
+  if (schedule == null) return;
+
+  const typei = schedule.days[scopeProps.dayi].list.find(event => event.mi === scopeProps.eventMi)?.type ?? -1;
 
   return (
     <Routes>
@@ -29,14 +34,18 @@ export default function TheMeetingsEvent() {
         element={
           <PhaseContainerConfigurer
             className="meeting-container"
-            headTitle={schedule ? `${schedule.title} - ${schedule.types[typei]?.title ?? ''}` : 'Событие'}
+            headTitle={`${schedule.title} - ${schedule.types[typei]?.title ?? ''}`}
             head={
-              <>
-                <Link to="tran">
-                  <IconComputerStrokeRounded className="margin-gap-v" />
-                </Link>
+              <div className="flex flex-gap margin-gap-h">
+                {isMobileDevice ? (
+                  <ScheduleWidgetWatchLiveTranslationButton schw={schedule.w} />
+                ) : (
+                  <Link to="tran">
+                    <IconComputerStrokeRounded className="margin-gap-v" />
+                  </Link>
+                )}
                 {auth.level < 50 || <SendMySelectedsButton packComws={packComws} />}
-              </>
+              </div>
             }
             content={comFaceListNode}
           />

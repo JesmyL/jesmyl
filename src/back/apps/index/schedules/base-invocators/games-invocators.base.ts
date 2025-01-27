@@ -10,7 +10,7 @@ import {
 } from 'shared/api';
 import { SchGamesSokiInvocatorMethods } from 'shared/api/invocators/schedules/invocators.model';
 import { smylib } from 'shared/utils';
-import { nounPronsWordsFileStore } from '../../fresh-invocator.base';
+import { nounPronsWordsFileStore } from '../../basics-invocator.base';
 import { modifySchedule, scheduleTitleInBrackets } from './general-invocators.base';
 
 class SchGamesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGamesSokiInvocatorMethods> {

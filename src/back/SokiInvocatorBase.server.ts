@@ -12,10 +12,17 @@ export const SokiInvocatorBaseServer = makeSokiInvocatorBase<
   'SokiInvocatorBaseServer',
   SokiServerInvocatorTool,
   string | ((tool: SokiServerInvocatorTool) => string)
->('SokiInvocatorBaseServer', onSokiServerEventerInvocatorInvoke, (titleScalar, { tool, method, name }) =>
+>('SokiInvocatorBaseServer', onSokiServerEventerInvocatorInvoke, (titleScalar, { tool, method, name }) => {
+  if (titleScalar === '') return;
+
+  const title = smylib.isFunc(titleScalar) ? titleScalar(tool) : titleScalar;
+
+  if (title === '') return;
+
   jesmylChangesBot.postMessage(
-    `${tool.auth?.fio}\n${name}.${method}\n${smylib.isFunc(titleScalar) ? titleScalar(tool) : titleScalar}` +
-      `\n\n${JSON.stringify(tool.auth, null, 1)}`,
+    `${tool.auth ? `${tool.auth.fio} ${tool.auth.nick ? `t.me/${tool.auth.nick}` : ''}` : ''}` +
+      `\n${name}.${method}\n\n<b>${title}</b>` +
+      `\n\n<blockquote expandable>${JSON.stringify(tool.auth, null, 1)}</blockquote>`,
     { parse_mode: 'HTML' },
-  ),
-);
+  );
+});

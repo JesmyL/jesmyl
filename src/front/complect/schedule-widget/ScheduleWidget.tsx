@@ -54,6 +54,7 @@ export default function ScheduleWidget({
     () => ({ schw: schedule?.w ?? IScheduleWidgetWid.def }),
     [schedule?.w],
   );
+  const prevDate = schedule?.prevStart == null ? null : new Date(schedule.prevStart);
 
   const { editIcon, isRedact } = useIsRedactArea(true, null, rights.isCanRedact, true);
   const [startTime, setStartTime] = useState(schedule?.start);
@@ -114,11 +115,18 @@ export default function ScheduleWidget({
     }
   }
 
+  const prevDateNode = prevDate && (
+    <StyledPrevDateText className={schedule && prevDate.getTime() > schedule.start ? 'color--ko' : undefined}>
+      Предыдущее - {prevDate.toLocaleDateString('ru', { month: 'long', day: '2-digit', year: 'numeric' })}
+    </StyledPrevDateText>
+  );
+
   if (blockContent)
     return (
       <div className="margin-sm-gap">
         <div className="margin-gap-v">{titleNode}</div>
         <ScheduleWidgetStartTimeText schedule={schedule} />
+        {prevDateNode}
         {blockContent}
       </div>
     );
@@ -163,10 +171,13 @@ export default function ScheduleWidget({
                 }
               />
             ) : (
-              <ScheduleWidgetStartTimeText
-                schedule={schedule}
-                date={date}
-              />
+              <>
+                <ScheduleWidgetStartTimeText
+                  schedule={schedule}
+                  date={date}
+                />
+                {prevDateNode}
+              </>
             )}
             {rights.isCanRead && (
               <>
@@ -214,7 +225,10 @@ export default function ScheduleWidget({
                   scheduleScopeProps={scheduleScopeProps}
                 />
 
-                <ScheduleWidgetWatchLiveTranslationButton schedule={schedule} />
+                <ScheduleWidgetWatchLiveTranslationButton
+                  schw={schedule.w}
+                  postfix="Следить за трансляцией"
+                />
 
                 {isRedact && (
                   <>
@@ -303,4 +317,9 @@ const Widget = styled.div`
   .icon-scale-05 {
     --icon-scale: 0.5;
   }
+`;
+
+const StyledPrevDateText = styled.div`
+  opacity: 0.7;
+  font-size: 0.8em;
 `;

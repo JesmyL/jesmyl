@@ -8,7 +8,6 @@ import SendButton from '../../../../complect/sends/send-button/SendButton';
 import { IconTelegramStrokeRounded } from '../../../../complect/the-icon/icons/telegram';
 import { useActualRef } from '../../../../complect/useActualRef';
 import { useIndexValues } from '../../atoms';
-import { indexIDB } from '../../db/index-idb';
 import { indexBasicsSokiInvocatorClient } from '../../db/invocators/schedules/fresh-invocator.methods';
 import useConnectionState from '../../useConnectionState';
 import { LoginIndex } from './IndexLoginAuth';
@@ -123,10 +122,8 @@ export default function IndexTelegramAuth({ onLoginAuth }: { onLoginAuth: () => 
                     title="Авторизоваться"
                     className="send-button"
                     disabled={isLoading || authCode.length < 3}
-                    onSuccess={async ({ auth, token }) => {
+                    onSuccess={async () => {
                       setIsLoading(false);
-                      await indexIDB.set.auth(auth);
-                      localStorage.token = token;
                       navigate('..');
                     }}
                     onFailure={errorMessage => {

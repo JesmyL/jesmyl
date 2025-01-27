@@ -25,7 +25,7 @@ const Screen = ({ children }: Props) => {
   return (
     <ScheduleWidgetLiveTranslation
       onClose={emptyFunc}
-      schedule={schedule}
+      schw={schedule.w}
       isShowMarkdownOnly
     />
   );

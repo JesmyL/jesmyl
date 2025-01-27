@@ -27,15 +27,21 @@ export const CmComListSearchFilterInput = <ComConstructor extends Com>({
     [showComwList],
   );
   useEffect(() => {
+    if (term === '404') {
+      onSearch([]);
+      return;
+    }
     const coms = fullIcomList?.map(icom => new Constructor(icom)) ?? [];
     if (!term) {
       onSearch(coms);
       return;
     }
 
+    const numCheckedTerm = isNaN(+term) ? term : +term > 403 ? `${+term - 1}` : term;
+
     onSearch(
       mylib
-        .searchRate(coms, term, ['name', mylib.c.POSITION, ['orders', mylib.c.INDEX, 'text']])
+        .searchRate(coms, numCheckedTerm, ['name', mylib.c.POSITION, ['orders', mylib.c.INDEX, 'text']])
         .sort((a, b) => b.rate - a.rate)
         .map(({ item }) => item),
     );

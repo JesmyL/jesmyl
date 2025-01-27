@@ -4,7 +4,7 @@ import { CmFreshSokiInvocatorModel } from 'shared/api/invocators/cm/fresh-invoca
 class CmFreshSokiInvocatorClient extends SokiInvocatorClient<CmFreshSokiInvocatorModel> {
   constructor() {
     super('CmFreshSokiInvocatorClient', {
-      getFreshes: true,
+      requestFreshes: true,
     });
   }
 }

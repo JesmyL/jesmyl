@@ -66,6 +66,7 @@ export interface IScheduleWidget {
   m: number;
   isRemoved?: 1;
   start: number;
+  prevStart?: number;
   title: string;
   topic: string;
   dsc: string;

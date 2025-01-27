@@ -66,14 +66,14 @@ export class SokiTrip {
         this.requests[event.requestId]?.(event);
         delete this.requests[event.requestId];
 
-        if (event.invoke !== undefined) {
-          onSokiClientEventerInvocatorInvoke.invoke({
-            invoke: event.invoke,
-            sendResponse: event => this.send(event),
-            tool: undefined,
-            requestId: event.requestId,
-          });
-        }
+        if (event.invoke === undefined) return;
+
+        onSokiClientEventerInvocatorInvoke.invoke({
+          invoke: event.invoke,
+          sendResponse: this.send,
+          tool: undefined,
+          requestId: event.requestId,
+        });
       } catch (e) {}
     };
 

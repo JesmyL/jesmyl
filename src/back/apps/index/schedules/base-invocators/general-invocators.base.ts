@@ -117,10 +117,15 @@ class SchGeneralSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGener
         rename: () => this.updateScheduleValue('title'),
         setTopic: () => this.updateScheduleValue('topic'),
         setDescription: () => this.updateScheduleValue('dsc'),
-        setStartTime: () => this.updateScheduleValue('start'),
         setFirstDayAsTech: () => this.updateScheduleValue('withTech'),
         setTgChatRequisites: () => this.updateScheduleValue('tgChatReqs'),
         setTgInformTime: () => this.updateScheduleValue('tgInformTime'),
+
+        setStartTime: () => (props: ScheduleScopeProps, value) =>
+          modifySchedule(props, sch => {
+            sch.prevStart = sch.start;
+            sch.start = value;
+          }),
 
         setIsTgInformMe:
           ({ auth }) =>

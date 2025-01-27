@@ -1,4 +1,4 @@
-import { Link, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
 import { IconArrangeTwotoneRounded } from '../../../../complect/the-icon/icons/arrange';
 import { IconBookOpen01TwotoneRounded } from '../../../../complect/the-icon/icons/book-open-01';
@@ -32,47 +32,41 @@ export default function Editor() {
             content={
               <>
                 {auth.level === 100 && (
-                  <Link to="cats">
-                    <BrutalItem
-                      icon={<IconBookOpen01TwotoneRounded />}
-                      title="Категории"
-                    />
-                  </Link>
-                )}
-                <Link to="coms">
                   <BrutalItem
-                    icon={<IconHeadphonesTwotoneRounded />}
-                    title="Песни"
+                    icon={<IconBookOpen01TwotoneRounded />}
+                    title="Категории"
+                    to="cats"
                   />
-                </Link>
+                )}
+                <BrutalItem
+                  icon={<IconHeadphonesTwotoneRounded />}
+                  title="Песни"
+                  to="coms"
+                />
                 {auth.level > 49 && (
                   <>
-                    <Link to="events">
-                      <BrutalItem
-                        icon={<IconCalendar02TwotoneRounded />}
-                        title="События"
-                      />
-                    </Link>
-                    <Link to="chord">
-                      <BrutalItem
-                        icon={<IconArrangeTwotoneRounded />}
-                        title="Редактор аккордов"
-                      />
-                    </Link>
+                    <BrutalItem
+                      icon={<IconCalendar02TwotoneRounded />}
+                      title="События"
+                      to="events"
+                    />
+                    <BrutalItem
+                      icon={<IconArrangeTwotoneRounded />}
+                      title="Редактор аккордов"
+                      to="chord"
+                    />
                     {auth.level > 79 && (
                       <>
-                        <Link to="mp3Rules">
-                          <BrutalItem
-                            icon={<IconMusicNote01TwotoneRounded />}
-                            title="Редактор MP3 правил"
-                          />
-                        </Link>
-                        <Link to="e-e">
-                          <BrutalItem
-                            icon={<IconTextTwotoneRounded />}
-                            title="Ё-Е правила"
-                          />
-                        </Link>
+                        <BrutalItem
+                          icon={<IconMusicNote01TwotoneRounded />}
+                          title="Редактор MP3 правил"
+                          to="mp3Rules"
+                        />
+                        <BrutalItem
+                          icon={<IconTextTwotoneRounded />}
+                          title="Ё-Е правила"
+                          to="e-e"
+                        />
                       </>
                     )}
                   </>
