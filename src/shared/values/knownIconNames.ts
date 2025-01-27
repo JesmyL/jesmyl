@@ -65,6 +65,7 @@ export const knownIconNames = [
   'CloudDownload',
   'CloudUpload',
   'Computer',
+  'ComputerPhoneSync',
   'ComputerSettings',
   'CongruentToSquare',
   'Copy01',

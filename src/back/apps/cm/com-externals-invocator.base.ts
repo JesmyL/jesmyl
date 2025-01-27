@@ -42,7 +42,7 @@ class CmComExternalsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmCo
       {
         setInScheduleEvent: (_, schw) =>
           `Обновлён список песен в расписании ` +
-          `"${schedulesFileStore.getValue().find(sch => sch.w === schw)?.title ?? '??'}`,
+          `"${schedulesFileStore.getValue().find(sch => sch.w === schw)?.title ?? '??'}"`,
 
         getScheduleEventHistory: () => ``,
       },

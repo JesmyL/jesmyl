@@ -64,6 +64,7 @@ import { iconPackOfCloud } from './icons/cloud';
 import { iconPackOfCloudDownload } from './icons/cloud-download';
 import { iconPackOfCloudUpload } from './icons/cloud-upload';
 import { iconPackOfComputer } from './icons/computer';
+import { iconPackOfComputerPhoneSync } from './icons/computer-phone-sync';
 import { iconPackOfComputerSettings } from './icons/computer-settings';
 import { iconPackOfCongruentToSquare } from './icons/congruent-to-square';
 import { iconPackOfCopy01 } from './icons/copy-01';
@@ -272,6 +273,7 @@ export const theIconKnownPack: Record<KnownIconNameForPack, TheIconSelfPack> = {
   CloudDownload: iconPackOfCloudDownload,
   CloudUpload: iconPackOfCloudUpload,
   Computer: iconPackOfComputer,
+  ComputerPhoneSync: iconPackOfComputerPhoneSync,
   ComputerSettings: iconPackOfComputerSettings,
   CongruentToSquare: iconPackOfCongruentToSquare,
   Copy01: iconPackOfCopy01,
