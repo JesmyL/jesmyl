@@ -91,15 +91,18 @@ export class DexieDB<Store> {
     this.db.version(version).stores(stores);
 
     if ('lastModifiedAt' in this.defaults) {
-      let lastModifiedLocal: null | number = null;
-      this.updateLastModifiedAt = (async (modifiedAt: number) => {
-        lastModifiedLocal ??= await (this.get as any).lastModifiedAt();
+      (async () => {
+        let lastModifiedLocal: number = await (this.get as any).lastModifiedAt();
+        let timeout: TimeOut;
 
-        if (lastModifiedLocal! >= modifiedAt) return;
-        lastModifiedLocal = modifiedAt;
+        this.updateLastModifiedAt = (async (modifiedAt: number) => {
+          if (lastModifiedLocal >= modifiedAt) return;
+          lastModifiedLocal = modifiedAt;
 
-        (this.set as any).lastModifiedAt(modifiedAt);
-      }) as never;
+          clearTimeout(timeout);
+          timeout = setTimeout(() => (this.set as any).lastModifiedAt(modifiedAt), 100);
+        }) as never;
+      })();
     }
   }
 
