@@ -9,6 +9,7 @@ import TelegramBot from 'node-telegram-bot-api';
 import {
   IndexValues,
   IScheduleWidget,
+  IScheduleWidgetUser,
   LocalSokiAuth,
   makeTwiceKnownName,
   NounPronsType,
@@ -73,22 +74,27 @@ class IndexBasicsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexBa
           ({ client, auth }) =>
           async lastModfiedMs => {
             const isNoAuth = auth == null;
+            const someScheduleUser = (user: IScheduleWidgetUser) => user.login === auth!.login;
+
             const schedules = schedulesFileStore
               .getValue()
               .map((sch): IScheduleWidget | null => {
                 const removedSch = { w: sch.w, isRemoved: 1 } as IScheduleWidget;
 
-                if (scheduleWidgetRegTypeRights.checkIsHasRights(sch.ctrl.type, ScheduleWidgetRegType.Public))
+                if (scheduleWidgetRegTypeRights.checkIsHasRights(sch.ctrl.type, ScheduleWidgetRegType.Public)) {
+                  if (sch.m <= lastModfiedMs) return null;
                   return sch;
+                }
                 if (isNoAuth) return removedSch;
-                if (!sch.ctrl.users.some(user => user.login === auth.login)) return removedSch;
+                if (!sch.ctrl.users.some(someScheduleUser)) return removedSch;
+
                 if (sch.m <= lastModfiedMs) return null;
 
                 return sch;
               })
               .filter(itNNull);
 
-            schServerInvocatorShareMethods.refreshSchedules(client, schedules);
+            if (schedules.length) schServerInvocatorShareMethods.refreshSchedules(client, schedules);
 
             if (appVersionFileStore.fileModifiedAt() > lastModfiedMs) {
               const modifiedAt = appVersionFileStore.fileModifiedAt();
