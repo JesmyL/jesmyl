@@ -1,10 +1,15 @@
 import { EventerListenScope, smylib } from 'shared/utils';
 import { isDevelopmentMode } from './environments';
-import { SokiInvokerTranferDto } from './soki';
+import { InvocatorBaseEvent, SokiInvokerTranferDto } from './soki.model';
 
-export const makeSokiInvocatorBase = <ClassNamePostfix extends string, ToolParam = und, OnEachesRet = void>(
+export const makeSokiInvocatorBase = <
+  Event extends InvocatorBaseEvent,
+  ClassNamePostfix extends string,
+  ToolParam = und,
+  OnEachesRet = void,
+>(
   classNamePostfix: ClassNamePostfix,
-  eventerValue: EventerListenScope<SokiInvokerTranferDto<ToolParam>>,
+  eventerValue: EventerListenScope<SokiInvokerTranferDto<Event, ToolParam>>,
   onEachInvoke?: (onEachesRet: OnEachesRet, data: { tool: ToolParam; name: string; method: string }) => void,
 ) => {
   type Methods = Record<string, (...args: any[]) => any>;
@@ -32,9 +37,9 @@ export const makeSokiInvocatorBase = <ClassNamePostfix extends string, ToolParam
         onEachInvoke(retValue, { tool, method, name });
       }
 
-      sendResponse({ invokedResult, requestId }, tool);
+      sendResponse({ invokedResult, requestId } as never, tool);
     } catch (error) {
-      sendResponse({ errorMessage: '' + error, requestId }, tool);
+      sendResponse({ errorMessage: '' + error, requestId } as never, tool);
     }
   });
 

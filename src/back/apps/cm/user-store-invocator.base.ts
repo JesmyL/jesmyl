@@ -5,39 +5,11 @@ import { CmComWid, ICmComComment } from 'shared/api';
 import { CmUserStoreSokiInvocatorModel } from 'shared/api/invocators/cm/user-store-invocators.model';
 import { cmServerInvocatorShareMethods } from './invocator.shares';
 
-import { smylib, SMyLib } from 'shared/utils';
-import * as susJSON from '../index/+case/serverUserStore.json';
-
-const sus = { ...susJSON };
-delete (sus as any).default;
-
 type TCommentsStore = Record<string, Record<CmComWid, ICmComComment>>;
 type TFavoriteComwsStore = Partial<Record<string, { comws: CmComWid[]; m: number }>>;
 
 export const comCommentsFileStore = new FileStore<TCommentsStore>('/apps/cm/comComments.json', {});
 export const favoriteComwsFileStore = new FileStore<TFavoriteComwsStore>('/apps/cm/favoriteComws.json', {});
-
-const comments = comCommentsFileStore.getValueWithAutoSave();
-const favorites = favoriteComwsFileStore.getValueWithAutoSave();
-const prefix = 'cm/comComment::';
-
-SMyLib.entries(sus).forEach(([login, value]) => {
-  const comm = (comments[login] ??= {} as Record<CmComWid, ICmComComment>);
-
-  SMyLib.entries(value).forEach(([key, [m, comment]]) => {
-    if (key === ('cm/marks' as never) && smylib.isArr(comment)) {
-      if (comment.length) favorites[login] = { comws: comment, m };
-      else delete favorites[login];
-    }
-
-    if (!key.startsWith(prefix)) return;
-    const comw = key.slice(prefix.length) as never as CmComWid;
-
-    comm[comw] = { comment: comment as never, comw, m };
-  });
-
-  if (!smylib.keys(comm).length) delete comments[login];
-});
 
 class CmUserStoreSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmUserStoreSokiInvocatorModel> {
   constructor() {

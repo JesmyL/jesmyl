@@ -5,5 +5,5 @@ export * from './complect/noun-pronoun';
 export * from './complect/schedule-widget';
 export * from './complect/SecretChat';
 export * from './complect/server-store';
-export * from './complect/soki';
+export * from './complect/soki.model';
 export * from './complect/wide';

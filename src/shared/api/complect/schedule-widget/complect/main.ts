@@ -1,4 +1,4 @@
-import { SokiAppName, SokiAuthLogin } from '../../soki';
+import { SokiAppName, SokiAuthLogin } from '../../soki.model';
 import { ScheduleWidgetRegType, ScheduleWidgetUserRoleRight } from './rights';
 
 export enum IScheduleWidgetWid {

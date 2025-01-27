@@ -1,6 +1,6 @@
 import { IndexSchWTranslationLiveDataValue } from 'front/components/index/Index.model';
 import { IScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
-import { SokiAuthLogin } from 'shared/api/complect/soki';
+import { SokiAuthLogin } from 'shared/api/complect/soki.model';
 
 export type SchLiveSokiInvocatorModel = {
   next: (schw: IScheduleWidgetWid, data: IndexSchWTranslationLiveDataValue) => void;

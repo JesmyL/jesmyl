@@ -1,28 +1,32 @@
 import { User } from 'node-telegram-bot-api';
-import WebSocket from 'ws';
 import { DeviceId } from '..';
 
 export const sokiAppNames = ['index', 'cm', 'tuner', 'admin', 'gamer', 'leader', 'bible', 'wed'] as const;
 export const sokiAppNamesSet = new Set(sokiAppNames);
 export type SokiAppName = (typeof sokiAppNames)[number];
 
-export interface SokiCapsule {
-  auth: LocalSokiAuth | null;
-  appName?: SokiAppName;
+export interface SokiVisit {
   deviceId: DeviceId;
   urls: string[];
   version: number;
-  client: WebSocket;
+  clientTm: number;
 }
 
-export type InvocatorEvent = {
+export type InvocatorBaseEvent = {
   requestId: string;
   invokedResult?: unknown;
-  token?: string;
   invoke?: SokiInvokerData;
-  errorMessage?: string;
-  ping?: 1;
+  errorMessage?: string | `#invalid_token`;
+};
+
+export type InvocatorServerEvent = InvocatorBaseEvent & {
   pong?: 1;
+};
+
+export type InvocatorClientEvent = InvocatorBaseEvent & {
+  token?: string | nil;
+  visit?: SokiVisit;
+  ping?: 1;
 };
 
 export interface TelegramNativeAuthUserData extends OmitOwn<User, 'language_code' | 'is_bot'> {
@@ -38,10 +42,10 @@ export type SokiInvokerData = {
   token?: string | nil;
 };
 
-export type SokiInvokerTranferDto<Tool = und> = {
+export type SokiInvokerTranferDto<Event extends InvocatorBaseEvent, Tool = und> = {
   requestId: string;
   invoke: SokiInvokerData;
-  sendResponse: (event: InvocatorEvent, tool: Tool) => void;
+  sendResponse: (event: Event, tool: Tool) => void;
   tool: Tool;
 };
 
@@ -77,7 +81,7 @@ export interface BaseSokiAuth {
   fio: string;
   nick: string;
   login: SokiAuthLogin;
-  tgId?: number;
+  tgId: number;
   tgAva?: string;
 }
 

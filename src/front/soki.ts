@@ -1,39 +1,25 @@
-import { environment, InvocatorEvent } from 'shared/api';
-import { emptyFunc, Eventer, makeRegExp } from 'shared/utils';
+import { environment, InvocatorClientEvent, InvocatorServerEvent } from 'shared/api';
+import { Eventer, makeRegExp } from 'shared/utils';
+import { indexIDB } from './components/index/db/index-idb';
 import { onSokiClientEventerInvocatorInvoke } from './eventers';
-
-export type ResponseWaiterCallback = (
-  ok: ResponseWaiter['ok'],
-  ko?: ResponseWaiter['ko'],
-  final?: ResponseWaiter['final'],
-) => void;
-const info = console.info;
-
-interface ResponseWaiter {
-  requestId: string;
-  ok: (response: InvocatorEvent) => void;
-  ko?: (errorMessage: string) => boolean | void;
-  final?: () => void;
-}
 
 export class SokiTrip {
   private ws?: WebSocket;
 
   private isConnected = false;
   private connectionState = Eventer.createValue<boolean>();
-  private requests = {} as Record<string, (event: InvocatorEvent) => void>;
+  private requests = {} as Record<string, (event: InvocatorClientEvent) => void>;
 
   private isOpened = false;
   private onOpenEvent = Eventer.createValue<boolean>();
 
-  setIsConnected(value: boolean) {
+  private setIsConnected(value: boolean) {
     this.isConnected = value;
     this.connectionState.invoke(value);
   }
 
-  onConnectionState(cb: (is: boolean) => void) {
-    return this.connectionState.listen(cb, this.isConnected);
-  }
+  onThrowErrorEvent = Eventer.createValue<string>();
+  onConnectionState = (cb: (is: boolean) => void) => this.connectionState.listen(cb, this.isConnected);
 
   start() {
     this.ws = new WebSocket(`wss://${environment.dns}/websocket/`);
@@ -42,14 +28,32 @@ export class SokiTrip {
       setTimeout(() => this.start(), 500);
       this.isOpened = false;
     };
-    this.ws.onopen = () => {
-      this.onOpenEvent.invoke(true);
-      this.isOpened = true;
+
+    this.ws.onopen = async () => {
+      try {
+        await this.send({
+          token: localStorage.token || null,
+          visit: {
+            deviceId: await indexIDB.get.deviceId(),
+            version: await indexIDB.get.appVersion(),
+            urls: this.urls.length ? this.urls : [this.getCurrentUrl()],
+            clientTm: Date.now(),
+          },
+        });
+
+        this.onOpenEvent.invoke(true);
+        this.isOpened = true;
+      } catch (errorMessage) {
+        if (errorMessage === '#invalid_token') {
+          indexIDB.remove.auth();
+          localStorage.token = '';
+        }
+      }
     };
 
     this.ws.onmessage = async ({ data }: { data: string }) => {
       try {
-        const event: InvocatorEvent = JSON.parse(data);
+        const event: InvocatorServerEvent = JSON.parse(data);
 
         if (event.pong) {
           this.setIsConnected(true);
@@ -57,15 +61,15 @@ export class SokiTrip {
           return;
         }
 
-        info(event);
+        console.info(event);
 
         this.requests[event.requestId]?.(event);
         delete this.requests[event.requestId];
 
-        if (event.invoke != null) {
+        if (event.invoke !== undefined) {
           onSokiClientEventerInvocatorInvoke.invoke({
             invoke: event.invoke,
-            sendResponse: event => this.send(event, emptyFunc),
+            sendResponse: event => this.send(event),
             tool: undefined,
             requestId: event.requestId,
           });
@@ -76,21 +80,16 @@ export class SokiTrip {
     return this;
   }
 
-  getCurrentUrl() {
-    return window.location.href.replace(makeRegExp('/^https?:/'), 'https:');
-  }
-  urls: string[] = [];
+  private urls: string[] = [];
+  private getCurrentUrl = () => window.location.href.replace(makeRegExp('/^https?:/'), 'https:');
 
-  addUrl() {
+  pushCurrentUrl() {
     this.urls.push(this.getCurrentUrl());
   }
 
-  listenOnOpenEvent(cb: () => void) {
-    if (this.isOpened) cb();
-    return this.onOpenEvent.listen(cb);
-  }
+  listenOnOpenEvent = (cb: () => void) => this.onOpenEvent.listen(cb, this.isOpened);
 
-  private async sendForce(event: InvocatorEvent) {
+  private async sendForce(event: InvocatorClientEvent) {
     let tries = 20;
 
     const trySend = async () => {
@@ -107,14 +106,21 @@ export class SokiTrip {
     trySend();
   }
 
-  send = (event: OmitOwn<InvocatorEvent, 'requestId'>, cb: (event: InvocatorEvent) => void) => {
+  send = <InvokedResult = unknown>(event: OmitOwn<InvocatorClientEvent, 'requestId'>) => {
     const requestId = '' + Date.now() + Math.random();
     const fullEvent = { ...event, requestId };
 
-    this.requests[requestId] = cb;
-
     if (this.ws && this.ws.readyState === this.ws.OPEN) this.sendForce(fullEvent);
     else this.onOpenEvent.listenFirst(() => this.sendForce(fullEvent));
+
+    const result = Promise.withResolvers<InvokedResult>();
+
+    this.requests[requestId] = event => {
+      if (event.errorMessage) result.reject(event.errorMessage);
+      else result.resolve(event.invokedResult as never);
+    };
+
+    return result.promise;
   };
 
   private pingTimeout: TimeOut;
@@ -127,7 +133,7 @@ export class SokiTrip {
 
     clearTimeout(this.pingTimeout);
     this.pingTimeout = setTimeout(() => {
-      this.send({ ping: 1 }, emptyFunc);
+      this.send({ ping: 1 });
       this.pingTimeout = undefined;
     }, 0);
   };

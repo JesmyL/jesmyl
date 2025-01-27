@@ -1,5 +1,5 @@
 import { DeviceId } from 'shared/api/complect/enums';
-import { LocalSokiAuth, TelegramNativeAuthUserData } from 'shared/api/complect/soki';
+import { LocalSokiAuth, TelegramNativeAuthUserData } from 'shared/api/complect/soki.model';
 
 export type IndexBasicsSokiInvocatorModel = {
   getFreshes: (lastModfiedMs: number) => void;

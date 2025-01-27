@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { TelegramNativeAuthUserData } from 'shared/api';
 import styled from 'styled-components';
 import { Script } from '../../../../complect/tags/Script';
@@ -14,6 +15,7 @@ interface Props {
 export const TgNativeAuth = ({ showToastRef }: Props) => {
   const tgNativeRef = useRef<HTMLDivElement | null>(null);
   const [isScriptLoaded, setIsScriptLoaded] = useState<unknown>(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!isScriptLoaded || tgNativeRef.current === null || tgNativeRef.current.childElementCount !== 0) return;
@@ -23,6 +25,7 @@ export const TgNativeAuth = ({ showToastRef }: Props) => {
       const { token, auth } = await indexBasicsSokiInvocatorClient.authMeByTelegramNativeButton(null, user);
       indexIDB.set.auth(auth);
       localStorage.token = token || '';
+      navigate('..');
     };
 
     if (tgAuthIframe === null) return;
@@ -32,7 +35,7 @@ export const TgNativeAuth = ({ showToastRef }: Props) => {
       document.body.appendChild(tgAuthIframe);
       delete (window as any)[funcName];
     };
-  }, [isScriptLoaded, showToastRef]);
+  }, [isScriptLoaded, navigate, showToastRef]);
 
   return (
     <>

@@ -1,5 +1,5 @@
 import { isDevelopmentMode } from './environments';
-import { SokiInvokerData } from './soki';
+import { SokiInvokerData } from './soki.model';
 
 const registeredClasses = new Set<string>();
 

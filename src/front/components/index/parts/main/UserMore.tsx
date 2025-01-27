@@ -2,6 +2,7 @@ import { BottomPopupItem } from '../../../../complect/absolute-popup/bottom-popu
 import { useConfirm } from '../../../../complect/modal/confirm/useConfirm';
 import { IconUserStrokeRounded } from '../../../../complect/the-icon/icons/user';
 import { useSetAuth } from '../../atoms';
+import { indexIDB } from '../../db/index-idb';
 
 export const UserMore = ({ onClose }: { onClose: (isOpen: false) => void }) => {
   const setAuth = useSetAuth();
@@ -18,7 +19,7 @@ export const UserMore = ({ onClose }: { onClose: (isOpen: false) => void }) => {
           event.stopPropagation();
 
           if (await confirm('Произвести выход из системы?', 'Разлогиниться')) {
-            setAuth({ level: 0 });
+            await indexIDB.remove.auth();
             localStorage.token = '';
             window.location.reload();
             onClose(false);

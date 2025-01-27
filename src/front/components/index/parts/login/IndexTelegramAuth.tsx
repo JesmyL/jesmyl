@@ -123,19 +123,19 @@ export default function IndexTelegramAuth({ onLoginAuth }: { onLoginAuth: () => 
                     title="Авторизоваться"
                     className="send-button"
                     disabled={isLoading || authCode.length < 3}
-                    // onSuccess={onAuthSuccessRef.current}
-                    onFailure={showToast}
+                    onSuccess={async ({ auth, token }) => {
+                      setIsLoading(false);
+                      await indexIDB.set.auth(auth);
+                      localStorage.token = token;
+                      navigate('..');
+                    }}
+                    onFailure={errorMessage => {
+                      setIsLoading(false);
+                      showToast(errorMessage);
+                    }}
                     onSend={async () => {
                       setIsLoading(true);
-                      const { token, auth } = await indexBasicsSokiInvocatorClient.authMeByTelegramBotNumber(
-                        null,
-                        +authCode,
-                      );
-
-                      localStorage.token = token;
-                      indexIDB.set.auth(auth);
-                      setIsLoading(false);
-                      navigate('..');
+                      return await indexBasicsSokiInvocatorClient.authMeByTelegramBotNumber(null, +authCode);
                     }}
                   />
                 </>
