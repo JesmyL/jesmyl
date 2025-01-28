@@ -10,7 +10,7 @@ const auth = ({ auth, token }: { auth: LocalSokiAuth; token: string }) => {
 
 class IndexBasicsSokiInvocatorClient extends SokiInvocatorClient<IndexBasicsSokiInvocatorModel> {}
 export const indexBasicsSokiInvocatorClient = new IndexBasicsSokiInvocatorClient('IndexBasicsSokiInvocatorClient', {
-  getFreshes: true,
+  requestFreshes: true,
   getDeviceId: true,
   authMeByTelegramNativeButton: auth,
   authMeByTelegramBotNumber: auth,

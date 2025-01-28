@@ -75,6 +75,12 @@ export type ICmComComment = {
   m: number;
 };
 
+export type TAboutComFavoriteItem = {
+  m: number;
+  comws?: CmComWid[];
+  tools?: MigratableComToolName[];
+};
+
 export interface IExportableCat {
   w: CmCatWid; // writed time
   m: number; // modified time

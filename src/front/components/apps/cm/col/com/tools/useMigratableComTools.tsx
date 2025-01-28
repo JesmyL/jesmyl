@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components';
 import propsOfClicker from '../../../../../../complect/clicker/propsOfClicker';
 import { contextCreator } from '../../../../../../complect/contextCreator';
 import { cmIDB } from '../../../_db/cm-idb';
+import { cmUserStoreSokiInvocatorClient } from '../../../invocators/user-store-invocator.methods';
 import { Com } from '../Com';
 import { useCcom } from '../useCcom';
 import { CmCatsBindsComTool } from './complect/CatsBinds';
@@ -70,13 +71,21 @@ const toolsDict: Record<MigratableComToolName, React.ReactNode> = {
 };
 const toolKeys = MyLib.keys(toolsDict);
 
+let saveTimeout: TimeOut;
 export const useMigratableListComTools = () => {
   const ccom = useCcom();
   const [comTopTools, setComTopTools] = cmIDB.use.comTopTools();
 
   mapToolsSelf.comTopTools = comTopTools;
   mapToolsSelf.fun = (tool: MigratableComToolName) => {
-    setComTopTools(tools => (tools.indexOf(tool) < 0 ? [...tools, tool] : tools.filter(currTool => tool !== currTool)));
+    const tools =
+      comTopTools.indexOf(tool) < 0 ? [...comTopTools, tool] : comTopTools.filter(currTool => tool !== currTool);
+    setComTopTools(tools);
+
+    clearTimeout(saveTimeout);
+    saveTimeout = setTimeout(() => {
+      cmUserStoreSokiInvocatorClient.setAboutComFavorites(null, { tools });
+    }, 1000);
   };
 
   return (

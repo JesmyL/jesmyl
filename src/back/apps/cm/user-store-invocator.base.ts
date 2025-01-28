@@ -1,38 +1,40 @@
 import { FileStore } from 'back/complect/FileStore';
 import { SokiServerClientSelector } from 'back/complect/soki/model';
 import { SokiInvocatorBaseServer, SokiServerInvocatorTool } from 'back/SokiInvocatorBase.server';
-import { CmComWid, ICmComComment } from 'shared/api';
+import { CmComWid, ICmComComment, TAboutComFavoriteItem } from 'shared/api';
 import { CmUserStoreSokiInvocatorModel } from 'shared/api/invocators/cm/user-store-invocators.model';
 import { cmServerInvocatorShareMethods } from './invocator.shares';
 
 type TCommentsStore = Record<string, Record<CmComWid, ICmComComment>>;
-type TFavoriteComwsStore = Partial<Record<string, { comws: CmComWid[]; m: number }>>;
+type TUserFavoritesStore = Partial<Record<string, TAboutComFavoriteItem>>;
 
 export const comCommentsFileStore = new FileStore<TCommentsStore>('/apps/cm/comComments.json', {});
-export const favoriteComwsFileStore = new FileStore<TFavoriteComwsStore>('/apps/cm/favoriteComws.json', {});
+export const aboutComFavoritesFileStore = new FileStore<TUserFavoritesStore>('/apps/cm/aboutComFavorites.json', {});
 
 class CmUserStoreSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmUserStoreSokiInvocatorModel> {
   constructor() {
     super('CmUserStoreSokiInvocatorBaseServer', {
       setComComment: valueSendBuilder((authLogin, clientSelector, comw, comment) => {
         const comments = comCommentsFileStore.getValueWithAutoSave();
-        const commentBox = { comment, comw, m: Date.now() + Math.random() };
+        const m = Date.now() + Math.random();
+        const commentBox = { comment, comw, m };
 
         comments[authLogin] ??= {} as never;
         comments[authLogin][comw] = commentBox;
 
-        cmServerInvocatorShareMethods.refreshComComments(clientSelector, [commentBox]);
+        cmServerInvocatorShareMethods.refreshComComments(clientSelector, [commentBox], m);
       }),
 
-      setComFavorites: valueSendBuilder((authLogin, clientSelector, list) => {
-        const favorites = favoriteComwsFileStore.getValueWithAutoSave();
+      setAboutComFavorites: valueSendBuilder((authLogin, clientSelector, userFavorites) => {
+        const favorites = aboutComFavoritesFileStore.getValueWithAutoSave();
 
-        favorites[authLogin] ??= {} as never;
-        favorites[authLogin].comws = list;
         const modifiedAt = Date.now() + Math.random();
+        favorites[authLogin] ??= { m: modifiedAt };
         favorites[authLogin].m = modifiedAt;
+        if (userFavorites.comws != null) favorites[authLogin].comws = userFavorites.comws;
+        if (userFavorites.tools != null) favorites[authLogin].tools = userFavorites.tools;
 
-        cmServerInvocatorShareMethods.refreshComFavorites(clientSelector, list, modifiedAt);
+        cmServerInvocatorShareMethods.refreshAboutComFavorites(clientSelector, favorites[authLogin]);
       }),
     });
   }

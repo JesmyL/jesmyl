@@ -2,7 +2,7 @@
 import { startCrTgAlarm } from 'back/apps/index/crTgAlarm';
 import { invitesTgBotListener } from 'back/sides/telegram-bot/invites/invites.bot';
 import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
-import jwt from 'jsonwebtoken';
+import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 import { InvocatorClientEvent, InvocatorServerEvent, LocalSokiAuth, SokiVisit } from 'shared/api';
 import WebSocket, { WebSocketServer } from 'ws';
 import { setSharedPolyfills } from '../../../shared/utils/complect/polyfills';
@@ -69,9 +69,13 @@ export class SokiServer {
             return;
           }
 
-          if (!jwt.verify(event.token, tokenSecretFileStore.getValue().token)) {
-            this.send({ errorMessage: '#invalid_token', requestId: event.requestId }, client);
-            return;
+          try {
+            jwt.verify(event.token, tokenSecretFileStore.getValue().token);
+          } catch (error) {
+            if (error instanceof JsonWebTokenError) {
+              this.send({ errorMessage: '#invalid_token', requestId: event.requestId }, client);
+              return;
+            }
           }
 
           const auth = jwt.decode(event.token) as LocalSokiAuth;

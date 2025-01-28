@@ -12,11 +12,11 @@ export const useFavoriteComs = () => {
 
   const ret = {
     markedComs: favoriteComs,
-    setMarks: (list: CmComWid[]) => {
-      cmIDB.set.favoriteComs(list);
+    setMarks: (comws: CmComWid[]) => {
+      cmIDB.set.favoriteComs(comws);
       clearTimeout(saveTimeout);
       saveTimeout = setTimeout(() => {
-        cmUserStoreSokiInvocatorClient.setComFavorites(null, list);
+        cmUserStoreSokiInvocatorClient.setAboutComFavorites(null, { comws });
       }, 1000);
     },
     toggleMarked: (comw: number) => {

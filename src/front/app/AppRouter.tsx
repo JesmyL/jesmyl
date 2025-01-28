@@ -76,7 +76,7 @@ indexSokiInvocatorBaseClient.$$register();
 
 soki.listenOnOpenEvent(async () => {
   const lastModified = await indexIDB.get.lastModifiedAt();
-  indexBasicsSokiInvocatorClient.getFreshes(null, lastModified);
+  indexBasicsSokiInvocatorClient.requestFreshes(null, lastModified);
 
   const localDeviceId = await indexIDB.get.deviceId();
   if (localDeviceId === DeviceId.def) {

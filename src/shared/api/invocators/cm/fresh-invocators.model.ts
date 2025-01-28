@@ -1,3 +1,3 @@
 export type CmFreshSokiInvocatorModel = {
-  requestFreshes: (lastModfiedMs: number) => void;
+  requestFreshes: (lastModfiedAt: number) => void;
 };

@@ -11,12 +11,10 @@ class CmSokiInvocatorBaseClient extends SokiInvocatorBaseClient<CmSokiInvocatorS
         cmIDB.updateLastModifiedAt(com.m ?? com.w);
       },
 
-      refreshComList: () => async icoms => {
+      refreshComList: () => async (icoms, modifiedAt) => {
         await cmIDB.db.coms.bulkPut(icoms);
         cmIDB.db.coms.where({ isRemoved: 1 }).delete();
-        const localIcoms = await cmIDB.db.coms.toArray();
-        const max = localIcoms.reduce((max, com) => Math.max(max, com.m ?? com.w), 0);
-        cmIDB.updateLastModifiedAt(max);
+        cmIDB.updateLastModifiedAt(modifiedAt);
       },
 
       editedCat: () => async cat => {
@@ -25,12 +23,10 @@ class CmSokiInvocatorBaseClient extends SokiInvocatorBaseClient<CmSokiInvocatorS
         cmIDB.updateLastModifiedAt(cat.m ?? cat.w);
       },
 
-      refreshCatList: () => async icats => {
+      refreshCatList: () => async (icats, modifiedAt) => {
         await cmIDB.db.cats.bulkPut(icats);
         cmIDB.db.cats.where({ isRemoved: 1 }).delete();
-        const localIcats = await cmIDB.db.cats.toArray();
-        const max = localIcats.reduce((max, com) => Math.max(max, com.m ?? com.w), 0);
-        cmIDB.updateLastModifiedAt(max);
+        cmIDB.updateLastModifiedAt(modifiedAt);
       },
 
       editedChords:
@@ -47,21 +43,19 @@ class CmSokiInvocatorBaseClient extends SokiInvocatorBaseClient<CmSokiInvocatorS
           cmIDB.updateLastModifiedAt(modifiedAt);
         },
 
-      refreshComComments: () => async comments => {
+      refreshComComments: () => async (comments, modifiedAt) => {
         cmIDB.db.comComments.bulkPut(comments);
-        const modifiedAt = comments.reduce((max, comment) => Math.max(max, comment.m), 0);
         cmIDB.updateLastModifiedAt(modifiedAt);
       },
 
-      refreshComFavorites: () => async (list, modifiedAt) => {
-        cmIDB.set.favoriteComs(list);
-        cmIDB.updateLastModifiedAt(modifiedAt);
+      refreshAboutComFavorites: () => async favorites => {
+        if (favorites.comws != null) cmIDB.set.favoriteComs(favorites.comws);
+        if (favorites.tools != null) cmIDB.set.comTopTools(favorites.tools);
+        cmIDB.updateLastModifiedAt(favorites.m);
       },
 
-      refreshScheduleEventComPacks: () => async list => {
+      refreshScheduleEventComPacks: () => async (list, modifiedAt) => {
         cmIDB.db.scheduleComPacks.bulkPut(list);
-
-        const modifiedAt = list.reduce((max, item) => Math.max(max, item.m), 0);
         cmIDB.updateLastModifiedAt(modifiedAt);
       },
     });

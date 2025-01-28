@@ -70,9 +70,9 @@ class IndexBasicsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexBa
     super(
       'IndexBasicsSokiInvocatorBaseServer',
       {
-        getFreshes:
+        requestFreshes:
           ({ client, auth }) =>
-          async lastModfiedMs => {
+          async lastModfiedAt => {
             const isNoAuth = auth == null;
             const someScheduleUser = (user: IScheduleWidgetUser) => user.login === auth!.login;
 
@@ -82,13 +82,13 @@ class IndexBasicsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexBa
                 const removedSch = { w: sch.w, isRemoved: 1 } as IScheduleWidget;
 
                 if (scheduleWidgetRegTypeRights.checkIsHasRights(sch.ctrl.type, ScheduleWidgetRegType.Public)) {
-                  if (sch.m <= lastModfiedMs) return null;
+                  if (sch.m <= lastModfiedAt) return null;
                   return sch;
                 }
                 if (isNoAuth) return removedSch;
                 if (!sch.ctrl.users.some(someScheduleUser)) return removedSch;
 
-                if (sch.m <= lastModfiedMs) return null;
+                if (sch.m <= lastModfiedAt) return null;
 
                 return sch;
               })
@@ -96,12 +96,12 @@ class IndexBasicsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexBa
 
             if (schedules.length) schServerInvocatorShareMethods.refreshSchedules(client, schedules);
 
-            if (appVersionFileStore.fileModifiedAt() > lastModfiedMs) {
+            if (appVersionFileStore.fileModifiedAt() > lastModfiedAt) {
               const modifiedAt = appVersionFileStore.fileModifiedAt();
               indexServerInvocatorShareMethods.appVersion(null, appVersionFileStore.getValue().num, modifiedAt);
             }
 
-            if (valuesFileStore.fileModifiedAt() > lastModfiedMs) {
+            if (valuesFileStore.fileModifiedAt() > lastModfiedAt) {
               const modifiedAt = valuesFileStore.fileModifiedAt();
               indexServerInvocatorShareMethods.indexValues(null, valuesFileStore.getValue(), modifiedAt);
             }
@@ -147,7 +147,7 @@ class IndexBasicsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexBa
           `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
 
         getDeviceId: deviceId => `Запрос DeviceId - ${deviceId}`,
-        getFreshes: () => ``,
+        requestFreshes: () => ``,
       },
     );
   }

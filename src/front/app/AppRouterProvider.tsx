@@ -15,7 +15,10 @@ const AppRouterProvider = () => {
   const setAppName = useAtomSet(appNameAtom);
   const [toastNode, toast] = useToast();
 
-  useEffect(() => soki.onThrowErrorEvent.listen(errorMessage => toast(errorMessage, { mood: 'ko' })), [toast]);
+  useEffect(
+    () => soki.onTokenInvalidEvent.listen(() => toast('Авторизация не действительна', { mood: 'ko' })),
+    [toast],
+  );
 
   useEffect(() => {
     soki.pushCurrentUrl();

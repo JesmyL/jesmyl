@@ -18,7 +18,7 @@ export class SokiTrip {
     this.connectionState.invoke(value);
   }
 
-  onThrowErrorEvent = Eventer.createValue<string>();
+  onTokenInvalidEvent = Eventer.createValue<void>();
   onConnectionState = (cb: (is: boolean) => void) => this.connectionState.listen(cb, this.isConnected);
 
   start() {
@@ -47,6 +47,8 @@ export class SokiTrip {
         if (errorMessage === '#invalid_token') {
           indexIDB.remove.auth();
           localStorage.token = '';
+
+          this.onTokenInvalidEvent.invoke();
         }
       }
     };
@@ -87,7 +89,10 @@ export class SokiTrip {
     this.urls.push(this.getCurrentUrl());
   }
 
-  listenOnOpenEvent = (cb: () => void) => this.onOpenEvent.listen(cb, this.isOpened);
+  listenOnOpenEvent = (cb: () => void) => {
+    if (this.isOpened) cb();
+    this.onOpenEvent.listen(cb);
+  };
 
   private async sendForce(event: InvocatorClientEvent) {
     let tries = 20;
