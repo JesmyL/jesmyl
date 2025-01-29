@@ -2,7 +2,8 @@ import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { IScheduleWidgetRole, ScheduleRoleScopeProps } from 'shared/api';
 import { SchRolesSokiInvocatorMethods } from 'shared/api/invocators/schedules/invocators.model';
 import { smylib } from 'shared/utils';
-import { modifySchedule, scheduleTitleInBrackets } from './general-invocators.base';
+import { modifySchedule } from '../schedule-modificators';
+import { scheduleTitleInBrackets } from './general-invocators.base';
 
 class SchRolesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchRolesSokiInvocatorMethods> {
   constructor() {
@@ -10,12 +11,13 @@ class SchRolesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchRolesSo
       'SchRolesSokiInvocatorBaseServer',
       {
         createRole: () => props =>
-          modifySchedule(props, sch =>
+          modifySchedule(false, props, sch =>
             sch.ctrl.roles.push({ mi: smylib.takeNextMi(sch.ctrl.roles, 0), title: 'Помощьник' }),
           ),
 
-        setRoleCategoryTitle: () => (props, cati, value) => modifySchedule(props, sch => (sch.ctrl.cats[cati] = value)),
-        addRoleCategory: () => props => modifySchedule(props, sch => sch.ctrl.cats.push('')),
+        setRoleCategoryTitle: () => (props, cati, value) =>
+          modifySchedule(false, props, sch => (sch.ctrl.cats[cati] = value)),
+        addRoleCategory: () => props => modifySchedule(false, props, sch => sch.ctrl.cats.push('')),
 
         setRoleIcon: () => this.modifyRole((role, value) => (role.icon = value)),
         setRoleTitle: () => this.modifyRole((role, value) => (role.title = value)),
@@ -45,7 +47,7 @@ class SchRolesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchRolesSo
   private modifyRole =
     <Value>(modifier: (role: IScheduleWidgetRole, value: Value) => void) =>
     (props: ScheduleRoleScopeProps, value: Value) =>
-      modifySchedule(props, sch => {
+      modifySchedule(false, props, sch => {
         const role = sch.ctrl.roles.find(role => role.mi === props.roleMi);
         if (role == null) throw new Error('role not found');
         modifier(role, value);

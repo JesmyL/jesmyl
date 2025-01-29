@@ -2,6 +2,7 @@
 import { startCrTgAlarm } from 'back/apps/index/crTgAlarm';
 import { invitesTgBotListener } from 'back/sides/telegram-bot/invites/invites.bot';
 import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
+import { SokiServerInvocatorTool } from 'back/SokiInvocatorBase.server';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 import { InvocatorClientEvent, InvocatorServerEvent, LocalSokiAuth, SokiVisit } from 'shared/api';
 import WebSocket, { WebSocketServer } from 'ws';
@@ -18,20 +19,6 @@ export const tokenSecretFileStore = new FileStore<{ token: string }>('/.tokenSec
 
 setSharedPolyfills();
 ErrorCatcher.logAllErrors();
-
-const visitStringified = (visit: SokiVisit | nil) => {
-  if (visit == null) return '';
-  return `${visit.urls[0]}\n\n<blockquote expandable>${JSON.stringify(visit, null, 1)}\nРазница: ${
-    Date.now() - visit.clientTm
-  }мс</blockquote>`;
-};
-
-const authStringified = (auth: LocalSokiAuth | nil) => {
-  return (
-    `${auth ? `${auth.fio} t.me/${auth.nick}` : 'Неизвестный'}\n\n` +
-    `<blockquote expandable>${auth ? JSON.stringify(auth, null, 1) : ''}</blockquote>`
-  );
-};
 
 export class SokiServer {
   private clients = new Set<WebSocket>();
@@ -63,7 +50,7 @@ export class SokiServer {
               this.visits.set(client, event.visit);
 
               if (!event.visit.urls[0]?.includes('localhost'))
-                tglogger.visit(`Не авторизованный\n\n${visitStringified(event.visit)}\n\n`);
+                tglogger.visit(`Не авторизованный\n\n${this.visitStringified(event.visit)}\n\n`);
             }
 
             return;
@@ -84,7 +71,7 @@ export class SokiServer {
             this.visits.set(client, event.visit);
 
             if (!event.visit.urls[0]?.includes('localhost'))
-              tglogger.visit(`${authStringified(auth)}\n\n${visitStringified(event.visit)}\n\n`);
+              tglogger.visit(`${this.authStringified(auth)}\n\n${this.visitStringified(event.visit)}\n\n`);
           }
 
           if (auth) this.auths.set(client, auth);
@@ -98,24 +85,26 @@ export class SokiServer {
         if (event.errorMessage !== undefined) {
           const visit = this.visits.get(client);
           if (!visit?.urls[0]?.includes('localhost'))
-            tglogger.userErrors(`${event.errorMessage}\n\n${authStringified(auth)}\n\n${visitStringified(visit)}`);
+            tglogger.userErrors(
+              `${event.errorMessage}\n\n${this.authStringified(auth)}\n\n${this.visitStringified(visit)}`,
+            );
         }
 
-        if (event.invoke !== undefined) {
-          onSokiServerEventerInvocatorInvoke.invoke({
-            invoke: event.invoke,
-            sendResponse: (event, tool) => this.send(event, tool.client),
-            tool: { client, auth },
-            requestId: event.requestId,
-          });
+        if (event.invoke === undefined) return;
 
-          return;
-        }
+        onSokiServerEventerInvocatorInvoke.invoke({
+          invoke: event.invoke,
+          sendResponse: this.sendInvokeEvent,
+          tool: { client, auth },
+          requestId: event.requestId,
+        });
       });
     });
 
     console.info('SokiServer started!!!');
   }
+
+  sendInvokeEvent = (event: InvocatorServerEvent, tool: SokiServerInvocatorTool) => this.send(event, tool.client);
 
   send(event: InvocatorServerEvent, clientScalar: SokiServerClientSelector) {
     if (clientScalar instanceof WebSocket) {
@@ -132,6 +121,21 @@ export class SokiServer {
         client.send(stringEvent);
       });
   }
+
+  private visitStringified = (visit: SokiVisit | nil) => {
+    if (visit == null) return '';
+    return (
+      `${visit.urls[0]}\n\n<blockquote expandable>${JSON.stringify(visit, null, 1)}\n` +
+      `Разница: ${Date.now() - visit.clientTm}мс</blockquote>`
+    );
+  };
+
+  private authStringified = (auth: LocalSokiAuth | nil) => {
+    return (
+      `${auth ? `${auth.fio} t.me/${auth.nick}` : 'Неизвестный'}\n\n` +
+      `<blockquote expandable>${auth ? JSON.stringify(auth, null, 1) : ''}</blockquote>`
+    );
+  };
 }
 
 const sokiServer = new SokiServer();

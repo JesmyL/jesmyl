@@ -8,7 +8,8 @@ import {
 } from 'shared/api';
 import { SchUsersSokiInvocatorMethods } from 'shared/api/invocators/schedules/invocators.model';
 import { smylib } from 'shared/utils';
-import { modifySchedule, scheduleTitleInBrackets } from './general-invocators.base';
+import { modifySchedule } from '../schedule-modificators';
+import { scheduleTitleInBrackets } from './general-invocators.base';
 
 class SchUsersSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchUsersSokiInvocatorMethods> {
   constructor() {
@@ -16,14 +17,14 @@ class SchUsersSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchUsersSo
       'SchUsersSokiInvocatorBaseServer',
       {
         addUsersByExcel: () => (props, users) =>
-          modifySchedule(props, sch => {
+          modifySchedule(false, props, sch => {
             let lastUserMi = smylib.takeNextMi(sch.ctrl.users, IScheduleWidgetUserMi.def);
             users.forEach(user => sch.ctrl.users.push({ ...user, mi: ++lastUserMi }));
           }),
         addMe:
           ({ auth }) =>
           props =>
-            modifySchedule(props, sch => {
+            modifySchedule(false, props, sch => {
               if (auth == null) throw new Error('Необходимо авторизоваться');
               if (sch.ctrl.users.some(user => user.login === auth.login)) throw new Error('user exists');
               const authClone = { ...(auth as any), mi: smylib.takeNextMi(sch.ctrl.users, IScheduleWidgetUserMi.def) };
@@ -80,7 +81,7 @@ class SchUsersSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchUsersSo
   }
 
   private modifyUser = (props: ScheduleUserScopeProps, modifier: (user: IScheduleWidgetUser) => void) =>
-    modifySchedule(props, sch => {
+    modifySchedule(false, props, sch => {
       const user = sch.ctrl.users.find(user => user.mi === props.userMi);
       if (user === undefined) throw new Error('User not found');
       modifier(user);

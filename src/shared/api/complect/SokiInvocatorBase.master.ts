@@ -1,6 +1,7 @@
 import { EventerListenScope, smylib } from 'shared/utils';
 import { isDevelopmentMode } from './environments';
-import { InvocatorBaseEvent, SokiInvokerTranferDto } from './soki.model';
+import { SokiInvokerTranferDto } from './invocator.master.model';
+import { InvocatorBaseEvent } from './soki.model';
 
 export const makeSokiInvocatorBase = <
   Event extends InvocatorBaseEvent,

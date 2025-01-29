@@ -10,7 +10,8 @@ import {
 } from 'shared/api';
 import { SchAttachmentTypesSokiInvocatorMethods } from 'shared/api/invocators/schedules/invocators.model';
 import { smylib } from 'shared/utils';
-import { modifySchedule, scheduleTitleInBrackets } from './general-invocators.base';
+import { modifySchedule } from '../schedule-modificators';
+import { scheduleTitleInBrackets } from './general-invocators.base';
 
 const newTatt = () =>
   ({
@@ -28,7 +29,7 @@ class SchAttachmentTypesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<
       'SchAttachmentTypesSokiInvocatorBaseServer',
       {
         create: () => props =>
-          modifySchedule(props, sch =>
+          modifySchedule(false, props, sch =>
             sch.tatts.push({
               ...newTatt(),
               mi: smylib.takeNextMi(sch.tatts, IScheduleWidgetAttachmentTypeMi.def),
@@ -124,7 +125,7 @@ class SchAttachmentTypesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<
     props: ScheduleAttachmentTypeScopeProps,
     modifier: (tatt: ScheduleWidgetAppAttCustomized) => void,
   ) =>
-    modifySchedule(props, sch => {
+    modifySchedule(false, props, sch => {
       const tatt = sch.tatts.find(tatt => tatt.mi === props.tattMi);
       if (tatt == null) throw new Error('attachment type not found');
       modifier(tatt);

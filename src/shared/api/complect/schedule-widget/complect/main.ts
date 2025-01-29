@@ -39,10 +39,6 @@ export type ScheduleWidgetPhotoKey =
   | `tg.${IScheduleWidgetUserTgId}`
   | `login.${SokiAuthLogin}`;
 
-export interface ScheduleStorage {
-  list: IScheduleWidget[];
-}
-
 export interface IScheduleWidgetLists {
   cats: IScheduleWidgetListCat[];
   units: IScheduleWidgetListUnit[];

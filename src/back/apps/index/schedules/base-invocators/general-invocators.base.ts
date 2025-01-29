@@ -14,13 +14,15 @@ import {
 } from 'shared/api';
 import { SchGeneralSokiInvocatorModel } from 'shared/api/invocators/schedules/invocators.model';
 import { emptyArray, smylib } from 'shared/utils';
+import { schedulesFileStore } from '../file-stores';
 import { schServerInvocatorShareMethods } from '../invocators.shares';
 import { schLiveSokiInvocatorServer } from '../live-invocators';
+import { modifySchedule } from '../schedule-modificators';
+import { onScheduleUserTgInformSetEvent } from '../specific-modify-events';
 import { schAttachmentTypesSokiInvocatorBaseServer } from './attachment-types-invocators.base';
 import { schDayEventsSokiInvocatorBaseServer } from './day-events-invocators.base';
 import { schDaysSokiInvocatorBaseServer } from './days-invocators.base';
 import { schEventTypesSokiInvocatorBaseServer } from './event-types-invocators.base';
-import { schedulesFileStore } from './file-stores';
 import { schGamesSokiInvocatorBaseServer } from './games-invocators.base';
 import { schListsSokiInvocatorBaseServer } from './lists-invocators.base';
 import { schPhotosSokiInvocatorBaseServer } from './photos-invocators.base';
@@ -76,6 +78,16 @@ export const newSchedule: IScheduleWidget = {
   },
 };
 
+onScheduleUserTgInformSetEvent.listen(({ isNotInform, schProps, userLogin }) => {
+  return modifySchedule(false, schProps, sch => {
+    if (userLogin == null) throw new Error('Не авторизован');
+
+    const user = sch.ctrl.users.find(user => user.login === userLogin);
+    if (user == null) throw new Error('user not found');
+    user.tgInform = isNotInform;
+  });
+});
+
 class SchGeneralSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGeneralSokiInvocatorModel> {
   constructor() {
     super(
@@ -117,36 +129,30 @@ class SchGeneralSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGener
         rename: () => this.updateScheduleValue('title'),
         setTopic: () => this.updateScheduleValue('topic'),
         setDescription: () => this.updateScheduleValue('dsc'),
-        setFirstDayAsTech: () => this.updateScheduleValue('withTech'),
-        setTgChatRequisites: () => this.updateScheduleValue('tgChatReqs'),
-        setTgInformTime: () => this.updateScheduleValue('tgInformTime'),
+        setFirstDayAsTech: () => this.updateScheduleValue('withTech', true),
+        setTgChatRequisites: () => this.updateScheduleValue('tgChatReqs', true),
+        setTgInformTime: () => this.updateScheduleValue('tgInformTime', true),
 
         setStartTime: () => (props: ScheduleScopeProps, value) =>
-          modifySchedule(props, sch => {
+          modifySchedule(true, props, sch => {
             sch.prevStart = sch.start;
             sch.start = value;
           }),
 
         setIsTgInformMe:
           ({ auth }) =>
-          (props, isNotInform) =>
-            modifySchedule(props, sch => {
-              if (auth == null) throw new Error('Не авторизован');
-              const login = auth.login;
-              const user = sch.ctrl.users.find(user => user.login === login);
-              if (user == null) throw new Error('user not found');
-              user.tgInform = isNotInform;
-            }),
+          (schProps, isNotInform) =>
+            onScheduleUserTgInformSetEvent.invoke({ schProps, isNotInform, userLogin: auth?.login }),
 
         toggleIsTgInform: () => props =>
-          modifySchedule(props, sch => (sch.tgInform = sch.tgInform === 0 ? undefined : 0)),
+          modifySchedule(true, props, sch => (sch.tgInform = sch.tgInform === 0 ? undefined : 0)),
 
-        remove: () => props => modifySchedule(props, sch => (sch.isRemoved = 1)),
+        remove: () => props => modifySchedule(true, props, sch => (sch.isRemoved = 1)),
         copySchedule: () => (props, copiedSchedule) =>
-          modifySchedule(props, sch => Object.assign(sch, copiedSchedule, { title: sch.title })),
+          modifySchedule(false, props, sch => Object.assign(sch, copiedSchedule, { title: sch.title })),
 
-        setScheduleRegisterType: () => (props, value) => modifySchedule(props, sch => (sch.ctrl.type = value)),
-        setDefaultUserRights: () => (props, value) => modifySchedule(props, sch => (sch.ctrl.defu = value)),
+        setScheduleRegisterType: () => (props, value) => modifySchedule(false, props, sch => (sch.ctrl.type = value)),
+        setDefaultUserRights: () => (props, value) => modifySchedule(false, props, sch => (sch.ctrl.defu = value)),
       },
       {
         create: sch => `Создано новое расписание ${scheduleTitleInBrackets(sch)}`,
@@ -232,22 +238,10 @@ class SchGeneralSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGener
   }
 
   private updateScheduleValue =
-    <Key extends keyof IScheduleWidget>(key: Key) =>
+    <Key extends keyof IScheduleWidget>(key: Key, isNeedRefreshTgInformTime?: boolean) =>
     (props: ScheduleScopeProps, value: IScheduleWidget[Key]) =>
-      modifySchedule(props, sch => (sch[key] = value));
+      modifySchedule(isNeedRefreshTgInformTime || false, props, sch => (sch[key] = value));
 }
-
-export const modifySchedule = async ({ schw }: ScheduleScopeProps, modifier: (sch: IScheduleWidget) => void) => {
-  const sch = schedulesFileStore.getValue().find(sch => sch.w === schw);
-  if (sch === undefined) throw new Error('schedule not found');
-
-  modifier(sch);
-  sch.m = Date.now() + Math.random();
-  schedulesFileStore.saveValue();
-  schServerInvocatorShareMethods.editedSchedule(null, sch);
-
-  return sch;
-};
 
 export const scheduleTitleInBrackets = (schScalar: IScheduleWidget | IScheduleWidgetWid) => {
   if (smylib.isNum(schScalar)) {

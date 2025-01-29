@@ -1,7 +1,7 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { CmComExternalsSokiInvocatorModel } from 'shared/api/invocators/cm/com-externals-invocators.model';
 import { smylib } from 'shared/utils';
-import { schedulesFileStore } from '../index/schedules/base-invocators/file-stores';
+import { schedulesFileStore } from '../index/schedules/file-stores';
 import { eventPackHistoryFileStore, eventPacksFileStore } from './file-stores';
 import { cmServerInvocatorShareMethods } from './invocator.shares';
 

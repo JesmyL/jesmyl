@@ -1,12 +1,6 @@
 import fs from 'fs';
 // export * from './src/back/apps/bible/kas';
 
-// const dir = `./src/back/apps/cm/+case/`;
-
-// const cols = JSON.parse('' + fs.readFileSync(`${dir}cols.json`));
-
-// fs.writeFileSync(`${dir}cols1.json`, JSON.stringify(cols, null, '  '));
-
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////
 ////////////////////////////////////////////////////

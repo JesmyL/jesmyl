@@ -11,7 +11,8 @@ import {
 import { SchGamesSokiInvocatorMethods } from 'shared/api/invocators/schedules/invocators.model';
 import { smylib } from 'shared/utils';
 import { nounPronsWordsFileStore } from '../../basics-invocator.base';
-import { modifySchedule, scheduleTitleInBrackets } from './general-invocators.base';
+import { modifySchedule } from '../schedule-modificators';
+import { scheduleTitleInBrackets } from './general-invocators.base';
 
 class SchGamesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGamesSokiInvocatorMethods> {
   constructor() {
@@ -19,7 +20,7 @@ class SchGamesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGamesSo
       'SchGamesSokiInvocatorBaseServer',
       {
         addGame: () => props =>
-          modifySchedule(props, sch => {
+          modifySchedule(false, props, sch => {
             sch.games ??= { criterias: [], list: [] };
             sch.games.list.push({
               title: `Игра ${sch.games.list.length + 1}`,
@@ -47,7 +48,7 @@ class SchGamesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGamesSo
         setTitle: () => this.modifyGame((game, value) => (game.title = value)),
 
         addCriteria: () => props =>
-          modifySchedule(props, sch => {
+          modifySchedule(false, props, sch => {
             sch.games ??= { criterias: [], list: [] };
             sch.games.criterias.push({ title: `Критерий ${sch.games.criterias.length + 1}`, sorts: {} as never });
           }),
@@ -57,7 +58,7 @@ class SchGamesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGamesSo
           this.modifyCriteria((criteria, value) => (criteria.sorts = { ...criteria.sorts, ...value })),
 
         toggleStrikedUser: () => (props, userMi) =>
-          modifySchedule(props, sch => {
+          modifySchedule(false, props, sch => {
             sch.games ??= { criterias: [], list: [] };
             const userSet = new Set((sch.games.strikedUsers ??= []));
 
@@ -89,7 +90,7 @@ class SchGamesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGamesSo
   private modifyGame =
     <Value>(modifier: (game: IScheduleWidgetTeamGame, value: Value) => void) =>
     (props: ScheduleGameScopeProps, value: Value) =>
-      modifySchedule(props, sch => {
+      modifySchedule(false, props, sch => {
         const game = sch.games?.list.find(game => game.mi === props.gameMi);
         if (game == null) throw new Error('game not found');
         modifier(game, value);
@@ -98,7 +99,7 @@ class SchGamesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGamesSo
   private modifyCriteria =
     <Value>(modifier: (criteria: IScheduleWidgetTeamCriteria, value: Value) => void) =>
     (props: ScheduleGameCriteriaScopeProps, value: Value) =>
-      modifySchedule(props, sch => {
+      modifySchedule(false, props, sch => {
         const criteria = sch.games?.criterias[props.criteriai];
         if (criteria == null) throw new Error('criteria not found');
         modifier(criteria, value);

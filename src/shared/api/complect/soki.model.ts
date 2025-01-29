@@ -1,5 +1,6 @@
 import { User } from 'node-telegram-bot-api';
 import { DeviceId } from '..';
+import { SokiInvokerData } from './invocator.master.model';
 
 export const sokiAppNames = ['index', 'cm', 'tuner', 'admin', 'gamer', 'leader', 'bible', 'wed'] as const;
 export const sokiAppNamesSet = new Set(sokiAppNames);
@@ -34,20 +35,6 @@ export interface TelegramNativeAuthUserData extends OmitOwn<User, 'language_code
   photo_url?: string | null;
   hash?: string;
 }
-
-export type SokiInvokerData = {
-  name: string;
-  method: string;
-  params: unknown[];
-  token?: string | nil;
-};
-
-export type SokiInvokerTranferDto<Event extends InvocatorBaseEvent, Tool = und> = {
-  requestId: string;
-  invoke: SokiInvokerData;
-  sendResponse: (event: Event, tool: Tool) => void;
-  tool: Tool;
-};
 
 export interface SokiVisitor {
   fio: string;

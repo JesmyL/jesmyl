@@ -2,28 +2,34 @@ import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { SchEventTypesSokiInvocatorMethods } from 'shared/api/invocators/schedules/invocators.model';
 import { smylib } from 'shared/utils';
 import { attTranslatorTypes } from '../attTranslatorType';
-import { modifySchedule, scheduleTitleInBrackets } from './general-invocators.base';
+import { modifySchedule } from '../schedule-modificators';
+import { onScheduleEventTypesAddManyEvent } from '../specific-modify-events';
+import { scheduleTitleInBrackets } from './general-invocators.base';
+
+onScheduleEventTypesAddManyEvent.listen(({ schProps, typeList }) => {
+  return modifySchedule(false, schProps, sch => (sch.types = sch.types.concat(typeList)));
+});
 
 class SchEventTypesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchEventTypesSokiInvocatorMethods> {
   constructor() {
     super(
       'SchEventTypesSokiInvocatorBaseServer',
       {
-        create: () => (props, title, tm) => modifySchedule(props, sch => sch.types.push({ title, tm })),
+        create: () => (props, title, tm) => modifySchedule(false, props, sch => sch.types.push({ title, tm })),
         setTitle: () => (props, title) =>
-          modifySchedule(props, sch => {
+          modifySchedule(false, props, sch => {
             sch.types[props.typei] ??= { title };
             sch.types[props.typei].title = title;
           }),
 
         setTm: () => (props, tm) =>
-          modifySchedule(props, sch => {
+          modifySchedule(true, props, sch => {
             sch.types[props.typei] ??= { title: '?', tm };
             sch.types[props.typei].tm = tm;
           }),
 
         bindAttImagine: () => (props, defaultValue) =>
-          modifySchedule(props, sch => {
+          modifySchedule(false, props, sch => {
             sch.types[props.typei] ??= { title: '?', atts: {} };
             const type = sch.types[props.typei];
             type.atts ??= {};
@@ -31,7 +37,7 @@ class SchEventTypesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchEv
           }),
 
         removeAttImagine: () => props =>
-          modifySchedule(props, sch => {
+          modifySchedule(false, props, sch => {
             if (sch.types[props.typei] == null) return;
             const type = sch.types[props.typei];
             if (type.atts == null) return;
@@ -40,14 +46,14 @@ class SchEventTypesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchEv
           }),
 
         setAttImaginePeriod: () => (props, value) =>
-          modifySchedule(props, sch => {
+          modifySchedule(false, props, sch => {
             if (sch.types[props.typei] == null) return;
             const type = sch.types[props.typei];
             if (type.atts == null) return;
             type.atts[props.attKey][0] = value;
           }),
 
-        putMany: () => (props, typeList) => modifySchedule(props, sch => (sch.types = sch.types.concat(typeList))),
+        putMany: () => (schProps, typeList) => onScheduleEventTypesAddManyEvent.invoke({ schProps, typeList }),
       },
       {
         create: (sch, _, title, tm) =>

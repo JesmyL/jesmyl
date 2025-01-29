@@ -1,9 +1,26 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { mylib } from 'front/utils';
-import { IScheduleWidget, IScheduleWidgetDay, IScheduleWidgetDayEventMi, ScheduleDayScopeProps } from 'shared/api';
+import { IScheduleWidgetDayEventMi } from 'shared/api';
 import { SchDaysSokiInvocatorMethods } from 'shared/api/invocators/schedules/invocators.model';
 import { makeRegExp, smylib } from 'shared/utils';
-import { modifySchedule, scheduleTitleInBrackets } from './general-invocators.base';
+import { modifySchedule, modifyScheduleDay } from '../schedule-modificators';
+import { onScheduleDayBeginTimeSetEvent, onScheduleDayEventListSetEvent } from '../specific-modify-events';
+import { scheduleTitleInBrackets } from './general-invocators.base';
+
+onScheduleDayEventListSetEvent.listen(({ list, dayProps }) => {
+  return modifyScheduleDay(true, day => {
+    let miniMi = 0;
+    day.list = list.map(event => ({ ...event, mi: miniMi++ }));
+  })(dayProps);
+});
+
+onScheduleDayBeginTimeSetEvent.listen(({ dayProps, strWup }) => {
+  return modifyScheduleDay(true, day => {
+    const wup = +strWup.replace(makeRegExp('/:/'), '.');
+    if (isNaN(wup)) throw new Error(`time ${strWup} is invalid`);
+    day.wup = wup;
+  })(dayProps);
+});
 
 class SchDaysSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchDaysSokiInvocatorMethods> {
   constructor() {
@@ -11,7 +28,7 @@ class SchDaysSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchDaysSoki
       'SchDaysSokiInvocatorBaseServer',
       {
         addDay: () => props =>
-          modifySchedule(props, sch =>
+          modifySchedule(true, props, sch =>
             sch.days.push({
               list: [],
               mi: smylib.takeNextMi(sch.days, 0),
@@ -19,29 +36,14 @@ class SchDaysSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchDaysSoki
             }),
           ),
 
-        setBeginTime: () =>
-          modifyScheduleDay((day, _, value) => {
-            const wup = +value.replace(makeRegExp('/:/'), '.');
-            if (isNaN(wup)) throw new Error(`time ${value} is invalid`);
-            day.wup = wup;
-          }),
+        setBeginTime: () => async (dayProps, strTm) =>
+          onScheduleDayBeginTimeSetEvent.invoke({ dayProps, strWup: strTm }),
+        setEventList: () => async (dayProps, list) => onScheduleDayEventListSetEvent.invoke({ dayProps, list }),
 
-        setEventList: () =>
-          modifyScheduleDay((day, _, events) => {
-            let miniMi = 0;
-
-            day.list = events.map(event => {
-              return {
-                ...event,
-                mi: miniMi++,
-              };
-            });
-          }),
-
-        setTopic: () => modifyScheduleDay((day, _, value) => (day.topic = value)),
-        setDescription: () => modifyScheduleDay((day, _, value) => (day.dsc = value)),
+        setTopic: () => modifyScheduleDay(false, (day, _, value) => (day.topic = value)),
+        setDescription: () => modifyScheduleDay(false, (day, _, value) => (day.dsc = value)),
         addEvent: () =>
-          modifyScheduleDay((day, _, type) =>
+          modifyScheduleDay(true, (day, _, type) =>
             day.list.push({
               type,
               mi: mylib.takeNextMi(day.list, IScheduleWidgetDayEventMi.def),
@@ -49,14 +51,14 @@ class SchDaysSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchDaysSoki
           ),
 
         removeEvent: () =>
-          modifyScheduleDay((day, _, eventMi) => {
+          modifyScheduleDay(true, (day, _, eventMi) => {
             const eventi = day.list.findIndex(event => event.mi === eventMi);
             if (eventi < 0) throw new Error('event not found');
             day.list.splice(eventi, 1);
           }),
 
         moveEvent: () =>
-          modifyScheduleDay((day, _, eventMi, beforei) => {
+          modifyScheduleDay(true, (day, _, eventMi, beforei) => {
             const eventi = day.list.findIndex(event => event.mi === eventMi);
             if (eventi < 0) throw new Error('event not found');
 
@@ -77,22 +79,11 @@ class SchDaysSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchDaysSoki
           `В расписании ${scheduleTitleInBrackets(sch)}, в ${props.dayi + 1} ` +
           `дне добавлено событие ${sch.types[type]?.title}`,
         removeEvent: (sch, props, _, eventTypeTitle) =>
-          `В расписании ${scheduleTitleInBrackets(sch)}, из ${props.dayi + 1} ` +
-          `дня удалено событие ${eventTypeTitle}`,
+          `В расписании ${scheduleTitleInBrackets(sch)}, из ${props.dayi + 1} дня удалено событие ${eventTypeTitle}`,
         moveEvent: (sch, props) =>
           `В расписании ${scheduleTitleInBrackets(sch)}, в ${props.dayi + 1} дне перемещено событие`,
       },
     );
   }
 }
-
-export const modifyScheduleDay =
-  <Values extends unknown[]>(modifier: (day: IScheduleWidgetDay, sch: IScheduleWidget, ...values: Values) => void) =>
-  (props: ScheduleDayScopeProps, ...values: Values) =>
-    modifySchedule(props, sch => {
-      const day = sch.days[props.dayi];
-      if (day == null) throw new Error('day not found');
-      modifier(day, sch, ...values);
-    });
-
 export const schDaysSokiInvocatorBaseServer = new SchDaysSokiInvocatorBaseServer();

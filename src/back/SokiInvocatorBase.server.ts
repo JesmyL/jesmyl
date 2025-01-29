@@ -21,7 +21,7 @@ export const SokiInvocatorBaseServer = makeSokiInvocatorBase<
 
   jesmylChangesBot.postMessage(
     `${tool.auth ? `${tool.auth.fio} ${tool.auth.nick ? `t.me/${tool.auth.nick}` : ''}` : ''}` +
-      `\n${name}.${method}\n\n<b>${title}</b>` +
+      `\n<code>${name}.${method}</code>\n\n<b>${title}</b>` +
       `\n\n<blockquote expandable>${JSON.stringify(tool.auth, null, 1)}</blockquote>`,
     { parse_mode: 'HTML' },
   );

@@ -7,7 +7,8 @@ import {
 } from 'shared/api';
 import { SchListsSokiInvocatorMethods } from 'shared/api/invocators/schedules/invocators.model';
 import { smylib } from 'shared/utils';
-import { modifySchedule, scheduleTitleInBrackets } from './general-invocators.base';
+import { modifySchedule } from '../schedule-modificators';
+import { scheduleTitleInBrackets } from './general-invocators.base';
 
 class SchListsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchListsSokiInvocatorMethods> {
   constructor() {
@@ -15,7 +16,7 @@ class SchListsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchListsSo
       'SchListsSokiInvocatorBaseServer',
       {
         createCategory: () => props =>
-          modifySchedule(props, sch =>
+          modifySchedule(false, props, sch =>
             sch.lists.cats.push({
               title: '',
               icon: 'CheckList',
@@ -24,7 +25,7 @@ class SchListsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchListsSo
           ),
 
         createUnit: () => (props, cati) =>
-          modifySchedule(props, sch => {
+          modifySchedule(false, props, sch => {
             const mi = smylib.takeNextMi(sch.lists.units, 0);
 
             sch.lists.units.push({
@@ -81,7 +82,7 @@ class SchListsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchListsSo
   private modifyCategory =
     <Value>(modifier: (cat: IScheduleWidgetListCat, value: Value) => void) =>
     (props: ScheduleListCategoryScopeProps, value: Value) =>
-      modifySchedule(props, sch => {
+      modifySchedule(false, props, sch => {
         const cat = sch.lists.cats[props.cati];
         if (cat == null) throw new Error('category not found');
         modifier(cat, value);
@@ -90,7 +91,7 @@ class SchListsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchListsSo
   private modifyUnit =
     <Value>(modifier: (unit: IScheduleWidgetListUnit, value: Value) => void) =>
     (props: ScheduleUnitScopeProps, value: Value) =>
-      modifySchedule(props, sch => {
+      modifySchedule(false, props, sch => {
         const unit = sch.lists.units.find(unit => unit.mi === props.unitMi);
         if (unit == null) throw new Error('The list unit not found');
         modifier(unit, value);

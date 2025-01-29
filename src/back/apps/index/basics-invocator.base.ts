@@ -20,8 +20,8 @@ import {
 import { IndexBasicsSokiInvocatorModel } from 'shared/api/invocators/index/basics-invocators.model';
 import { itNNull, smylib } from 'shared/utils';
 import { indexServerInvocatorShareMethods } from './invocators.shares';
-import { schedulesFileStore } from './schedules/base-invocators/file-stores';
 import { schGeneralSokiInvocatorBaseServer } from './schedules/base-invocators/general-invocators.base';
+import { schedulesFileStore } from './schedules/file-stores';
 import { schServerInvocatorShareMethods } from './schedules/invocators.shares';
 
 const deviceIdPostfixSymbols = '!@#$%^&*;.,?/|\\+=-'.split('');
@@ -62,7 +62,7 @@ valuesFileStore.watchFile((value, state) => {
 
 const authByTgUser = () => async (user: TelegramNativeAuthUserData) => {
   const auth = await makeAuthFromUser(user);
-  return { token: jwt.sign(auth, tokenSecretFileStore.getValue().token), auth };
+  return { token: jwt.sign(auth, tokenSecretFileStore.getValue().token, { expiresIn: '100 D' }), auth };
 };
 
 class IndexBasicsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexBasicsSokiInvocatorModel> {
@@ -125,8 +125,7 @@ class IndexBasicsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexBa
         authMeByTelegramBotNumber: () => async secretNumber => {
           const user = supportTelegramAuthorizations[secretNumber]?.().from;
           if (user == null) throw new Error('code is invalid');
-          const auth = await makeAuthFromUser(user);
-          return { token: jwt.sign(auth, tokenSecretFileStore.getValue().token), auth };
+          return authByTgUser()(user);
         },
       },
       {
