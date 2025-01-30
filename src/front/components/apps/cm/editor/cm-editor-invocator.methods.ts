@@ -51,6 +51,7 @@ export const cmComExternalsClientInvocatorMethods = new CmComExternalsSokiInvoca
   {
     setInScheduleEvent: true,
     getScheduleEventHistory: true,
+    removeScheduleEventHistoryItem: true,
   },
 );
 

@@ -5,23 +5,27 @@ import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
 import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
 import { IconSentStrokeRounded } from 'front/complect/the-icon/icons/sent';
 import { IconWorkHistoryStrokeRounded } from 'front/complect/the-icon/icons/work-history';
+import { useAuth } from 'front/components/index/atoms';
 import { mylib } from 'front/utils';
 import { useState } from 'react';
-import { CmComWid, ScheduleComPackHistoryItem } from 'shared/api';
+import { CmComWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import useSelectedComs from '../../base/useSelectedComs';
 import { ComFaceList } from '../../col/com/face/list/ComFaceList';
 import { cmComExternalsClientInvocatorMethods } from '../../editor/cm-editor-invocator.methods';
 import { MoveSelectedComButton } from '../selected-coms/MoveSelectedComButton';
+import { CmMeetingEventEditsHistoryModal } from './EventEditsHistoryModal';
 import { useMeetingPathParts } from './useMeetingPathParts';
 
-export const SendMySelectedsButton = ({ packComws }: { packComws: CmComWid[] }) => {
+export const CmMeetingEventEdits = ({ packComws }: { packComws: CmComWid[] }) => {
+  const auth = useAuth();
   const { selectedComs, selectedComws } = useSelectedComs();
   const { dayi, eventMi, schw } = useMeetingPathParts();
-  const [historyPacks, setHistoryPacks] = useState<ScheduleComPackHistoryItem[] | null>(null);
+  const [isOpenHistoryModal, setIsOpenHistoryModal] = useState<unknown>(false);
   const [isOpenSendModal, setIsOpenSendModal] = useState<unknown>(false);
 
-  if (mylib.isNaN(schw) || mylib.isNaN(dayi) || mylib.isNaN(eventMi)) return null;
+  if (auth.fio == null || mylib.isNaN(schw) || mylib.isNaN(dayi) || mylib.isNaN(eventMi)) return null;
+  const fio = auth.fio;
 
   return (
     <>
@@ -29,32 +33,9 @@ export const SendMySelectedsButton = ({ packComws }: { packComws: CmComWid[] }) 
         <IconSentStrokeRounded onClick={setIsOpenSendModal} />
       )}
 
-      <EvaSendButton
-        Icon={IconWorkHistoryStrokeRounded}
-        onSend={async () => {
-          const packs = await cmComExternalsClientInvocatorMethods.getScheduleEventHistory(null, schw, dayi);
-          setHistoryPacks(packs);
-        }}
-      />
+      <IconWorkHistoryStrokeRounded onClick={setIsOpenHistoryModal} />
 
-      {historyPacks && (
-        <Modal onClose={() => setHistoryPacks(null)}>
-          <ModalHeader>История</ModalHeader>
-          <ModalBody>
-            {historyPacks.map(pack => {
-              return (
-                <div key={pack.w}>
-                  <h3>{new Date(pack.w).toLocaleString('ru')}</h3>
-                  <ComFaceList
-                    list={pack.s}
-                    importantOnClick={emptyFunc}
-                  />
-                </div>
-              );
-            })}
-          </ModalBody>
-        </Modal>
-      )}
+      {isOpenHistoryModal && <CmMeetingEventEditsHistoryModal onClose={setIsOpenHistoryModal} />}
 
       {isOpenSendModal && (
         <Modal onClose={setIsOpenSendModal}>
@@ -72,7 +53,7 @@ export const SendMySelectedsButton = ({ packComws }: { packComws: CmComWid[] }) 
               className="margin-gap"
               prefix="Отправить"
               onSend={() =>
-                cmComExternalsClientInvocatorMethods.setInScheduleEvent(null, schw, dayi, eventMi, selectedComws)
+                cmComExternalsClientInvocatorMethods.setInScheduleEvent(null, schw, dayi, eventMi, selectedComws, fio)
               }
               onSuccess={() => setIsOpenSendModal(false)}
             />

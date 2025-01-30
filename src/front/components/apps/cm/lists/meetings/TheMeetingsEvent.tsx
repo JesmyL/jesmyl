@@ -9,7 +9,7 @@ import { Link, Route, Routes } from 'react-router-dom';
 import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
 import { CmComListContext } from '../../base/translations/context';
 import { cmCompositionRoute } from '../../routing/cmRoutingApp';
-import { SendMySelectedsButton } from './SendMySelectedsButton';
+import { CmMeetingEventEdits } from './EventEdits';
 import useMeetingComFaceList from './useMeetingComFaceList';
 import { useMeetingPathParts } from './useMeetingPathParts';
 
@@ -44,7 +44,7 @@ export default function TheMeetingsEvent() {
                     <IconComputerStrokeRounded className="margin-gap-v" />
                   </Link>
                 )}
-                {auth.level < 50 || <SendMySelectedsButton packComws={packComws} />}
+                {auth.level < 50 || <CmMeetingEventEdits packComws={packComws} />}
               </div>
             }
             content={comFaceListNode}

@@ -10,7 +10,7 @@ class CmComExternalsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmCo
     super(
       'CmComExternalsSokiInvocatorBaseServer',
       {
-        setInScheduleEvent: () => async (schw, dayi, eventMi, list) => {
+        setInScheduleEvent: () => async (schw, dayi, eventMi, list, fio) => {
           const packs = eventPacksFileStore.getValueWithAutoSave();
           const history = eventPackHistoryFileStore.getValueWithAutoSave();
 
@@ -30,7 +30,7 @@ class CmComExternalsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmCo
             if (prevPachi > -1) dayHistory.splice(prevPachi, 1);
           }
 
-          dayHistory.unshift({ s: list, w: m, e: eventMi });
+          dayHistory.unshift({ s: list, w: m, e: eventMi, fio });
 
           cmServerInvocatorShareMethods.refreshScheduleEventComPacks(null, [packs[schw]], m);
         },
@@ -40,11 +40,26 @@ class CmComExternalsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmCo
 
           return history[schw]?.[dayi] ?? [];
         },
+
+        removeScheduleEventHistoryItem: () => async (schw, dayi, writedAt) => {
+          const history = eventPackHistoryFileStore.getValue();
+          const itemi = history[schw]?.[dayi]?.findIndex(item => item.w === writedAt);
+
+          if (itemi == null || itemi < 0) throw new Error('item not found');
+
+          history[schw]?.[dayi]?.splice(itemi, 1);
+
+          return history[schw]?.[dayi] ?? [];
+        },
       },
 
       {
         setInScheduleEvent: (_, schw) =>
           `Обновлён список песен в расписании ` +
+          `"${schedulesFileStore.getValue().find(sch => sch.w === schw)?.title ?? '??'}"`,
+
+        removeScheduleEventHistoryItem: (_, schw) =>
+          `Удалена пачка песен из истории события в расписании ` +
           `"${schedulesFileStore.getValue().find(sch => sch.w === schw)?.title ?? '??'}"`,
 
         getScheduleEventHistory: () => ``,

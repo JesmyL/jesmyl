@@ -7,6 +7,7 @@ export type ScheduleComPackHistoryItem = {
   w: number | num;
   s: CmComWid[];
   e: IScheduleWidgetDayEventMi;
+  fio: string;
 };
 
 export type ScheduleComPack = {

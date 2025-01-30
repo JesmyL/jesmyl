@@ -7,7 +7,14 @@ export type CmComExternalsSokiInvocatorModel = {
     dayi: number,
     eventMi: IScheduleWidgetDayEventMi,
     list: CmComWid[],
+    fio: string,
   ) => void;
 
   getScheduleEventHistory: (schw: IScheduleWidgetWid, dayi: number) => ScheduleComPackHistoryItem[];
+
+  removeScheduleEventHistoryItem: (
+    schw: IScheduleWidgetWid,
+    dayi: number,
+    writedAt: number,
+  ) => ScheduleComPackHistoryItem[];
 };
