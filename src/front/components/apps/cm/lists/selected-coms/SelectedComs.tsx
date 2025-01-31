@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { BottomPopup } from '../../../../../complect/absolute-popup/bottom-popup/BottomPopup';
 import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
-import CmTranslationComListContextInSelected from '../../base/translations/InSelected';
+import { CmTranslationComListContextInSelected } from '../../base/translations/InSelected';
 import useSelectedComs from '../../base/useSelectedComs';
 import { ComFaceList } from '../../col/com/face/list/ComFaceList';
 import { cmCompositionRoute } from '../../routing/cmRoutingApp';

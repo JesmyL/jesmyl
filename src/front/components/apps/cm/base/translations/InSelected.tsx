@@ -1,10 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import useSelectedComs from '../useSelectedComs';
 import { CmComListContext, CmComListContextValue } from './context';
 
-export const CmTranslationComListContextInSelected = function InSelected({ children }: { children: React.ReactNode }) {
-  const currentList = useSelectedComs().selectedComs;
-  const [list] = useState(currentList);
+export const CmTranslationComListContextInSelected = ({ children }: { children: React.ReactNode }) => {
+  const list = useSelectedComs().selectedComs;
 
   const value = useMemo((): CmComListContextValue => {
     return {
@@ -15,5 +14,3 @@ export const CmTranslationComListContextInSelected = function InSelected({ child
 
   return <CmComListContext.Provider value={value}>{children}</CmComListContext.Provider>;
 };
-
-export default CmTranslationComListContextInSelected;
