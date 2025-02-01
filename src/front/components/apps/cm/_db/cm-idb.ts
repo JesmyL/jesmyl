@@ -4,6 +4,7 @@ import {
   ICmComComment,
   IExportableCat,
   IExportableCom,
+  IFixedCom,
   MigratableComToolName,
   ScheduleComPack,
 } from 'shared/api';
@@ -23,6 +24,7 @@ export interface CmIDBStorage {
 
   comComments: ICmComComment[];
   coms: IExportableCom[];
+  fixedComs: IFixedCom[];
   cats: IExportableCat[];
 
   scheduleComPacks: ScheduleComPack[];
@@ -73,6 +75,9 @@ class CmIDB extends DexieDB<CmIDBStorage> {
       coms: {
         w: '++',
         isRemoved: true,
+      },
+      fixedComs: {
+        w: '++',
       },
       cats: {
         w: '++',

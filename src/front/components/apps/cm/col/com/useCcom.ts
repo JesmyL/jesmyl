@@ -1,10 +1,10 @@
+import { useLiveQuery } from 'dexie-react-hooks';
 import { mylib } from 'front/utils';
 import { useEffect, useMemo } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { CmComWid } from '../../../../../../shared/api/complect/apps/cm/complect/enums';
 import { atom, useAtomSet, useAtomValue } from '../../../../../complect/atoms';
-import { useNumComUpdates } from '../../atoms';
-import { useComs } from '../../cols/useCols';
+import { cmIDB } from '../../_db/cm-idb';
 import { Com } from './Com';
 
 export const useCcomw = (): CmComWid | NaN => {
@@ -14,21 +14,29 @@ export const useCcomw = (): CmComWid | NaN => {
 };
 
 export function useCcom(topComw?: number): Com | und {
-  useNumComUpdates();
-  const coms = useComs();
   const ccomw = useCcomw();
   const comw = topComw ?? ccomw;
+  const icom = useLiveQuery(() => cmIDB.tb.coms.get(comw), [comw]);
 
-  return useMemo(() => coms.find(com => com.wid === comw), [coms, comw]);
+  return useMemo(() => icom && new Com(icom), [icom]);
+}
+
+export function useFixedCcom(topComw?: number): Com | und {
+  const ccomw = useCcomw();
+  const comw = topComw ?? ccomw;
+  const icom = useLiveQuery(() => cmIDB.tb.coms.get(comw), [comw]);
+  const ifixedCom = useLiveQuery(() => cmIDB.tb.fixedComs.get(+comw), [comw]);
+
+  return useMemo(() => icom && new Com({ ...icom, ...ifixedCom }), [icom, ifixedCom]);
 }
 
 export const ccomwAtom = atom<CmComWid | und>(undefined);
 
 export function useCom(): Com | und {
-  const coms = useComs();
   const comw = useAtomValue(ccomwAtom);
+  const icom = useLiveQuery(() => cmIDB.tb.coms.get(comw), [comw]);
 
-  return useMemo(() => coms.find(com => com.wid === comw), [coms, comw]);
+  return useMemo(() => icom && new Com(icom), [icom]);
 }
 
 export const useTakeActualComw = (): number | NaN => {

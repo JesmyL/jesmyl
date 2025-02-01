@@ -25,12 +25,12 @@ import { useCheckIsComCommentIncludesBibleAddress } from './complect/comment-par
 import ComPlayer from './player/ComPlayer';
 import { ComTools } from './tools/ComTools';
 import { useMigratableTopComTools } from './tools/useMigratableComTools';
-import { useCcom, useTakeActualComw } from './useCcom';
+import { useFixedCcom, useTakeActualComw } from './useCcom';
 import { CmComCatMentions } from './useGetCatMentions';
 
 export default function TheComposition() {
   const [chordVisibleVariant] = useChordVisibleVariant();
-  const ccom = useCcom();
+  const ccom = useFixedCcom();
   const { addLaterComw, laterComws } = useLaterComList();
   const [isOpenTools, setIsOpenTools] = useState(false);
   const comToolsNode = useMigratableTopComTools();

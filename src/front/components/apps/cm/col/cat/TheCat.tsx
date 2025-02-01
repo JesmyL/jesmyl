@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import LoadIndicatedContent from '../../../../../complect/load-indicated-content/LoadIndicatedContent';
 import PhaseContainerConfigurer, {
   StyledPhaseContainerConfigurerContent,
+  StyledPhaseContainerConfigurerHead,
 } from '../../../../../complect/phase-container/PhaseContainerConfigurer';
 import { cmIDB } from '../../_db/cm-idb';
 import { SetComListLimitsExtracterContext } from '../../base/SetComListLimitsExtracterContext';
@@ -48,7 +49,7 @@ export default function TheCat({ all }: { all?: boolean; catWid?: number }) {
         index
         element={
           <LoadIndicatedContent isLoading={!cat}>
-            <CatPhaseContainer
+            <StyledCatPhaseContainer
               className="cat-content"
               withoutBackButton={all}
               headClass="flex between full-width"
@@ -111,9 +112,13 @@ export default function TheCat({ all }: { all?: boolean; catWid?: number }) {
   );
 }
 
-const CatPhaseContainer = styled(PhaseContainerConfigurer)`
+const StyledCatPhaseContainer = styled(PhaseContainerConfigurer)`
   .list-title {
     cursor: ns-resize;
+  }
+
+  ${StyledPhaseContainerConfigurerHead} {
+    width: 100%;
   }
 
   ${StyledPhaseContainerConfigurerContent} {

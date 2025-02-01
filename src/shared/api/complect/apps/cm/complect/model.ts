@@ -49,6 +49,10 @@ export interface IExportableOrder extends InheritancableOrder {
   inh?: Inheritancables; //
 }
 
+export type IFixedCom = { w: CmComWid } & Partial<{
+  ton: number;
+}>;
+
 export interface IExportableCom {
   n: string;
   w: CmComWid;

@@ -2,6 +2,7 @@ import { cmComLanguages } from 'back/apps/cm/complect/values';
 import { mylib } from 'front/utils';
 import { IExportableCom, IExportableOrder } from 'shared/api/complect/apps/cm';
 import { itIt, makeRegExp } from 'shared/utils';
+import { cmIDB } from '../../_db/cm-idb';
 import { BaseNamed } from '../../base/BaseNamed';
 import { Cat } from '../cat/Cat';
 import { blockStyles } from './block-styles/BlockStyles';
@@ -20,8 +21,6 @@ import { IExportableOrderMe, OrderTopHeaderBag } from './order/Order.model';
 export class Com extends BaseNamed<IExportableCom> {
   initial: Record<string, any>;
   ton?: number;
-  tonc?: string;
-  firstChord?: string;
   initialName: string;
   excludedModulations: number[] = [];
 
@@ -116,6 +115,10 @@ export class Com extends BaseNamed<IExportableCom> {
     this.initialTransPosition = val;
   }
 
+  get firstChord(): string {
+    return this.chordLabels?.[0]?.[0]?.[0];
+  }
+
   getFirstSimpleChord() {
     return (this.orders?.[0]?.chords ?? this.chords?.[0])?.match(makeRegExp('/[A-H]#?/'))?.[0];
   }
@@ -168,20 +171,18 @@ export class Com extends BaseNamed<IExportableCom> {
     return this.chords?.map((cblock: string) => this.transBlock(cblock, delta));
   }
 
-  setChordsInitialTon() {
-    delete this.ton;
-    delete this.tonc;
-    this.transPosition = this.initialTransPos;
-    this.updateChordLabels();
+  async setChordsInitialTon() {
+    const fixed = { ...(await cmIDB.tb.fixedComs.get(this.wid)) };
+    delete fixed.ton;
+    await cmIDB.tb.fixedComs.put(fixed);
   }
 
-  transpose(delta: number) {
+  async transpose(delta: number) {
     if (this.transPosition !== undefined) this.transPosition -= -delta;
     else this.transPosition = delta;
 
-    this.ton = this.transPosition;
-    this.tonc = this.tonc ?? this.chordLabels[0][0][0];
-    this.updateChordLabels();
+    const isUpdated = await cmIDB.tb.fixedComs.update(this.wid, { ton: (this.ton ?? 1) + delta });
+    if (!isUpdated) await cmIDB.tb.fixedComs.put({ w: this.wid, ton: (this.ton ?? 1) + delta });
   }
 
   getOrderedTexts(isIncluseEndstars = true, kind: number | und) {
@@ -318,7 +319,7 @@ export class Com extends BaseNamed<IExportableCom> {
     return inCats.concat(natives);
   }
 
-  updateChordLabels() {
+  private updateChordLabels() {
     this._chordLabels = [];
     this._usedChords = {};
     let currTransPosition = this.transPosition;
@@ -346,8 +347,6 @@ export class Com extends BaseNamed<IExportableCom> {
         });
       });
     });
-
-    this.tonc = this.firstChord = firstChord;
   }
 
   static withBemoles(chords?: string, isSet: num = 0) {
