@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
-import { ScreenTranslateConfigurationBackground } from '../../../../../../+complect/translations/complect/Background';
-import { ScreenTranslateConfigurationColor } from '../../../../../../+complect/translations/complect/Color';
-import { ScreenTranslateConfigurationFontFamily } from '../../../../../../+complect/translations/complect/FontFamily';
-import { ScreenTranslateConfigurationFontWeight } from '../../../../../../+complect/translations/complect/FontWeight';
 import { ScreenTranslateConfigurationNameChanger } from '../../../../../../+complect/translations/complect/NameChanger';
-import { ScreenTranslateConfigurationTextAlign } from '../../../../../../+complect/translations/complect/TextAlign';
+import { BackgroundConfigurator } from '../../../../../../../../complect/configurators/Background';
+import { ColorConfigurator } from '../../../../../../../../complect/configurators/Color';
+import { FontFamilyConfigurator } from '../../../../../../../../complect/configurators/FontFamily';
+import { FontWeightConfigurator } from '../../../../../../../../complect/configurators/FontWeight';
+import { ScreenTranslateConfigurationTextAlign } from '../../../../../../../../complect/configurators/TextAlign';
 import { ExpandableContent } from '../../../../../../../../complect/expand/ExpandableContent';
 import IconButton from '../../../../../../../../complect/the-icon/IconButton';
 import { IconCancel01StrokeRounded } from '../../../../../../../../complect/the-icon/icons/cancel-01';
@@ -53,11 +53,11 @@ export const CmTranslateCurrentScreenConfigurations = ({ currentConfig }: Props)
           updateConfig={updateConfig}
         />
 
-        <ScreenTranslateConfigurationColor
+        <ColorConfigurator
           config={currentConfig}
           updateConfig={update}
         />
-        <ScreenTranslateConfigurationFontWeight
+        <FontWeightConfigurator
           config={currentConfig}
           updateConfig={update}
         />
@@ -65,11 +65,11 @@ export const CmTranslateCurrentScreenConfigurations = ({ currentConfig }: Props)
           config={currentConfig}
           updateConfig={update}
         />
-        <ScreenTranslateConfigurationFontFamily
+        <FontFamilyConfigurator
           config={currentConfig}
           updateConfig={update}
         />
-        <ScreenTranslateConfigurationBackground
+        <BackgroundConfigurator
           config={currentConfig}
           updateConfig={update}
         />
@@ -84,11 +84,11 @@ export const CmTranslateCurrentScreenConfigurations = ({ currentConfig }: Props)
                   confirm="Убрать текст следующего блока?"
                   onClick={() => putSubConfigUpdate(null)}
                 />
-                <ScreenTranslateConfigurationColor
+                <ColorConfigurator
                   config={currentConfig.subs.next}
                   updateConfig={putSubConfigUpdate}
                 />
-                <ScreenTranslateConfigurationFontWeight
+                <FontWeightConfigurator
                   config={currentConfig.subs.next}
                   updateConfig={putSubConfigUpdate}
                 />
@@ -96,7 +96,7 @@ export const CmTranslateCurrentScreenConfigurations = ({ currentConfig }: Props)
                   config={currentConfig.subs.next}
                   updateConfig={putSubConfigUpdate}
                 />
-                <ScreenTranslateConfigurationFontFamily
+                <FontFamilyConfigurator
                   config={currentConfig.subs.next}
                   updateConfig={putSubConfigUpdate}
                 />

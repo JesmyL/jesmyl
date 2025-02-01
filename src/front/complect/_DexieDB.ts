@@ -17,6 +17,10 @@ export class DexieDB<Store> {
       [K in keyof Store]: Store[K] extends unknown[] ? EntityTable<Store[K][number], keyof Store[K][number]> : never;
     }>;
 
+  tb: Required<{
+    [K in keyof Store]: Store[K] extends unknown[] ? EntityTable<Store[K][number], keyof Store[K][number]> : never;
+  }>;
+
   private selectors = {} as { [K in keyof Required<Store>]: K };
 
   hook: TableHooks<any> = ((...args: []) => (this.getKeyvalues() as any).hook(...args)) as never;
@@ -42,7 +46,7 @@ export class DexieDB<Store> {
     }>,
     version = 1,
   ) {
-    this.db = new Dexie(storageName) as never;
+    this.tb = this.db = new Dexie(storageName) as never;
 
     const stores = {} as Record<keyof Store, string>;
 

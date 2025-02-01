@@ -1,13 +1,13 @@
 import { useCallback } from 'react';
-import { ScreenTranslateConfigurationBackground } from '../../+complect/translations/complect/Background';
-import { ScreenTranslateConfigurationColor } from '../../+complect/translations/complect/Color';
-import { ScreenTranslateConfigurationDisplay } from '../../+complect/translations/complect/Display';
-import { ScreenTranslateConfigurationFontFamily } from '../../+complect/translations/complect/FontFamily';
-import { ScreenTranslateConfigurationFontStyle } from '../../+complect/translations/complect/FontStyle';
-import { ScreenTranslateConfigurationFontWeight } from '../../+complect/translations/complect/FontWeight';
 import { ScreenTranslateConfigurationNameChanger } from '../../+complect/translations/complect/NameChanger';
-import { ScreenTranslateConfigurationOpacity } from '../../+complect/translations/complect/Opacity';
-import { ScreenTranslateConfigurationTextAlign } from '../../+complect/translations/complect/TextAlign';
+import { BackgroundConfigurator } from '../../../../complect/configurators/Background';
+import { ColorConfigurator } from '../../../../complect/configurators/Color';
+import { DisplayConfigurator } from '../../../../complect/configurators/Display';
+import { FontFamilyConfigurator } from '../../../../complect/configurators/FontFamily';
+import { FontStyleConfigurator } from '../../../../complect/configurators/FontStyle';
+import { FontWeightConfigurator } from '../../../../complect/configurators/FontWeight';
+import { OpacityConfigurator } from '../../../../complect/configurators/Opacity';
+import { ScreenTranslateConfigurationTextAlign } from '../../../../complect/configurators/TextAlign';
 import { ExpandableContent } from '../../../../complect/expand/ExpandableContent';
 import { useActualRef } from '../../../../complect/useActualRef';
 import { useDebounceAction } from '../../../../complect/useDebounceAction';
@@ -34,15 +34,15 @@ export default function BibleTranslateCurrentScreenConfigurations({ currentConfi
   return (
     <>
       <ScreenTranslateConfigurationNameChanger />
-      <ScreenTranslateConfigurationColor
+      <ColorConfigurator
         config={currentConfig}
         updateConfig={update}
       />
-      <ScreenTranslateConfigurationFontStyle
+      <FontStyleConfigurator
         config={currentConfig}
         updateConfig={updateConfig}
       />
-      <ScreenTranslateConfigurationFontWeight
+      <FontWeightConfigurator
         config={currentConfig}
         updateConfig={updateConfig}
       />
@@ -50,30 +50,30 @@ export default function BibleTranslateCurrentScreenConfigurations({ currentConfi
         config={currentConfig}
         updateConfig={updateConfig}
       />
-      <ScreenTranslateConfigurationFontFamily
+      <FontFamilyConfigurator
         config={currentConfig}
         updateConfig={updateConfig}
       />
-      <ScreenTranslateConfigurationBackground
+      <BackgroundConfigurator
         config={currentConfig}
         updateConfig={update}
       />
       {currentConfig.insertedtext && (
         <ExpandableContent title="Вставка">
           <div className="margin-gap-l">
-            <ScreenTranslateConfigurationColor
+            <ColorConfigurator
               config={currentConfig.insertedtext}
               updateConfig={putUpdateConfigInner('insertedtext')}
             />
-            <ScreenTranslateConfigurationFontStyle
+            <FontStyleConfigurator
               config={currentConfig.insertedtext}
               updateConfig={putUpdateConfigInner('insertedtext')}
             />
-            <ScreenTranslateConfigurationOpacity
+            <OpacityConfigurator
               config={currentConfig.insertedtext}
               updateConfig={putUpdateConfigInner('insertedtext')}
             />
-            <ScreenTranslateConfigurationDisplay
+            <DisplayConfigurator
               config={currentConfig.insertedtext}
               updateConfig={putUpdateConfigInner('insertedtext')}
             />
@@ -83,19 +83,19 @@ export default function BibleTranslateCurrentScreenConfigurations({ currentConfi
       {currentConfig.textinbrackets && (
         <ExpandableContent title="Текст в [скобках]">
           <div className="margin-gap-l">
-            <ScreenTranslateConfigurationColor
+            <ColorConfigurator
               config={currentConfig.textinbrackets}
               updateConfig={putUpdateConfigInner('textinbrackets')}
             />
-            <ScreenTranslateConfigurationFontStyle
+            <FontStyleConfigurator
               config={currentConfig.textinbrackets}
               updateConfig={putUpdateConfigInner('textinbrackets')}
             />
-            <ScreenTranslateConfigurationOpacity
+            <OpacityConfigurator
               config={currentConfig.textinbrackets}
               updateConfig={putUpdateConfigInner('textinbrackets')}
             />
-            <ScreenTranslateConfigurationDisplay
+            <DisplayConfigurator
               config={currentConfig.textinbrackets}
               updateConfig={putUpdateConfigInner('textinbrackets')}
             />
@@ -104,15 +104,15 @@ export default function BibleTranslateCurrentScreenConfigurations({ currentConfi
       )}
       <ExpandableContent title="Ссылка">
         <div className="margin-gap-l">
-          <ScreenTranslateConfigurationColor
+          <ColorConfigurator
             config={currentConfig.address}
             updateConfig={putUpdateConfigInner('address')}
           />
-          <ScreenTranslateConfigurationFontStyle
+          <FontStyleConfigurator
             config={currentConfig.address}
             updateConfig={putUpdateConfigInner('address')}
           />
-          <ScreenTranslateConfigurationBackground
+          <BackgroundConfigurator
             config={currentConfig.address}
             updateConfig={putUpdateConfigInner('address')}
           />
@@ -120,7 +120,7 @@ export default function BibleTranslateCurrentScreenConfigurations({ currentConfi
             config={currentConfig.address}
             updateConfig={putUpdateConfigInner('address')}
           />
-          <ScreenTranslateConfigurationFontFamily
+          <FontFamilyConfigurator
             config={currentConfig.address}
             updateConfig={putUpdateConfigInner('address')}
           />

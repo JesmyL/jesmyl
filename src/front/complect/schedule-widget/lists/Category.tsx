@@ -5,11 +5,11 @@ import { makeRegExp } from 'shared/utils';
 import { IconEdit02StrokeRounded } from '../../../complect/the-icon/icons/edit-02';
 import { IconPlusSignStrokeRounded } from '../../../complect/the-icon/icons/plus-sign';
 import { IconSchoolReportCardStrokeRounded } from '../../../complect/the-icon/icons/school-report-card';
+import IconConfigurator from '../../configurators/Icon';
 import { ExpandableContent } from '../../expand/ExpandableContent';
 import useModal from '../../modal/useModal';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
 import TheIcon from '../../the-icon/TheIcon';
-import ScheduleWidgetIconChange from '../complect/IconChange';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
@@ -31,7 +31,7 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
         {header(<div className="flex flex-gap">{title}</div>)}
         {body(
           <>
-            <ScheduleWidgetIconChange
+            <IconConfigurator
               header={`Иконка для списка ${cat.title}`}
               icon={cat.icon}
               used={[cat.icon]}

@@ -5,13 +5,11 @@ import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
 import { theIconKnownPack } from 'front/complect/the-icon/pack';
 import { MyLib } from 'front/utils';
 import { ReactNode, useState } from 'react';
-import { IconHelpSquareStrokeRounded } from '../../../complect/the-icon/icons/help-square';
-import IconButton from '../../the-icon/IconButton';
-import { theIconFromPack } from '../../the-icon/TheIcon';
+import IconButton from '../the-icon/IconButton';
+import { IconHelpSquareStrokeRounded } from '../the-icon/icons/help-square';
+import { theIconFromPack } from '../the-icon/TheIcon';
 
-// const icons = evaPackNames.filter(name => name.endsWith('-outline'));
-
-export default function ScheduleWidgetIconChange(props: {
+export default function IconConfigurator(props: {
   icon: KnownIconName;
   header: ReactNode;
   used?: (KnownIconName | und)[];

@@ -6,6 +6,7 @@ import { AppName, appNames } from '../../../../app/App.model';
 import { routingApps } from '../../../../app/routing-apps';
 import { useAtomValue } from '../../../../complect/atoms';
 import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
+import { FontFamilySelector } from '../../../../complect/configurators/selectors/FontFamilySelector';
 import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
 import IconButton from '../../../../complect/the-icon/IconButton';
 import IconCheckbox from '../../../../complect/the-icon/IconCheckbox';
@@ -19,7 +20,6 @@ import { IconTextStrokeRounded } from '../../../../complect/the-icon/icons/text'
 import { statisticAtom, useAppFontFamily, useAuth } from '../../atoms';
 import { indexSimpleValIsPlayAnimations, indexSimpleValIsUseNativeKeyboard } from '../../complect/index.simpleValues';
 import useConnectionState from '../../useConnectionState';
-import { FontFamilySelector } from '../actions/files/complect/FontFamilySelector';
 import { Visitor } from './Visitor';
 import { Visits } from './Visits';
 

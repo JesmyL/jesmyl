@@ -15,10 +15,10 @@ import { IconUserStrokeRounded } from '../../../../complect/the-icon/icons/user'
 import { IconUserAdd01StrokeRounded } from '../../../../complect/the-icon/icons/user-add-01';
 import { IconUserRemove01StrokeRounded } from '../../../../complect/the-icon/icons/user-remove-01';
 import { useAuth } from '../../../../components/index/atoms';
+import IconConfigurator from '../../../configurators/Icon';
 import StrongEditableField from '../../../strong-control/field/StrongEditableField';
 import IconButton from '../../../the-icon/IconButton';
 import useIsRedactArea from '../../../useIsRedactArea';
-import ScheduleWidgetIconChange from '../../complect/IconChange';
 import { useScheduleScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
 import { schRolesSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { extractScheduleWidgetRoleUser, useScheduleWidgetRightsContext } from '../../useScheduleWidget';
@@ -169,7 +169,7 @@ export default function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole
               postfix={roleUser && ' - ' + (roleUser.fio || roleUser.nick)}
               onSend={value => schRolesSokiInvocatorClient.setRoleTitle(null, roleScopeProps, value, role.title)}
             />
-            <ScheduleWidgetIconChange
+            <IconConfigurator
               header={`Иконка для роли ${role.title}`}
               icon={role.icon ?? 'Github01'}
               used={rights.schedule.ctrl.roles.map(role => role.icon)}

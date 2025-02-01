@@ -1,7 +1,7 @@
 import { MyLib } from 'front/utils';
 import { useEffect, useState } from 'react';
-import Dropdown from '../../../../../../complect/dropdown/Dropdown';
-import { DropdownItem } from '../../../../../../complect/dropdown/Dropdown.model';
+import Dropdown from '../../dropdown/Dropdown';
+import { DropdownItem } from '../../dropdown/Dropdown.model';
 import { filesStorage } from '../utils/storage';
 
 interface Props {

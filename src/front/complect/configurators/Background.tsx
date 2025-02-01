@@ -1,13 +1,13 @@
-import IconCheckbox from '../../../../../complect/the-icon/IconCheckbox';
-import { BackgroundSelector } from '../../../../index/parts/actions/files/complect/BackgroundSelector';
-import { ScreenTranslationBackgroundConfigs, ScreenTranslationPartialConfigProps } from './model';
+import IconCheckbox from '../the-icon/IconCheckbox';
+import { BackgroundConfigProps, ConfiguratorEditProps } from './model';
+import { BackgroundSelector } from './selectors/BackgroundSelector';
 
-type Props = ScreenTranslationPartialConfigProps<ScreenTranslationBackgroundConfigs>;
+type Props = ConfiguratorEditProps<BackgroundConfigProps>;
 
-export const ScreenTranslateConfigurationBackground = ({ config, updateConfig, title = 'Фон' }: Props) => {
+export const BackgroundConfigurator = ({ config, updateConfig, title = 'Фон' }: Props) => {
   return (
     <>
-      <div className="flex flex-gap">
+      <div className="flex flex-gap margin-gap-v">
         {title}
         <IconCheckbox
           checked={config.isWithBackground}

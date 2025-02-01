@@ -18,6 +18,7 @@ import { IconFile01StrokeRounded } from '../../../../complect/the-icon/icons/fil
 import { IconPencilEdit01StrokeRounded } from '../../../../complect/the-icon/icons/pencil-edit-01';
 import { IconPlusSignStrokeRounded } from '../../../../complect/the-icon/icons/plus-sign';
 import { IconSquareStrokeRounded } from '../../../../complect/the-icon/icons/square';
+import IconConfigurator from '../../../configurators/Icon';
 import Modal from '../../../modal/Modal/Modal';
 import { ModalBody } from '../../../modal/Modal/ModalBody';
 import { ModalHeader } from '../../../modal/Modal/ModalHeader';
@@ -25,7 +26,6 @@ import StrongEditableField from '../../../strong-control/field/StrongEditableFie
 import IconButton from '../../../the-icon/IconButton';
 import { theIconFromPack } from '../../../the-icon/TheIcon';
 import { TheIconType } from '../../../the-icon/model';
-import ScheduleWidgetIconChange from '../../complect/IconChange';
 import { useScheduleScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
 import ScheduleWidgetRightControlList from '../../control/RightControlList';
 import { schAttachmentTypesSokiInvocatorClient } from '../../invocators/invocators.methods';
@@ -102,7 +102,7 @@ export default function ScheduleWidgetCustomAtt(props: {
             </div>
           ))}
         {props.isRedact && (
-          <ScheduleWidgetIconChange
+          <IconConfigurator
             icon={props.tatt.icon}
             header={<>Иконка для вложения {props.tatt.title}</>}
             onSend={icon =>

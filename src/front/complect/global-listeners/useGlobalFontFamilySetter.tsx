@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useAppFontFamily } from '../../components/index/atoms';
-import { applyFontFamilyFromMyFiles } from '../../components/index/parts/actions/files/utils/set-font-family-effect';
+import { applyFontFamilyFromMyFiles } from '../configurators/utils/set-font-family-effect';
 
 export const useGlobalFontFamilySetter = () => {
   const [appFontFamily] = useAppFontFamily();

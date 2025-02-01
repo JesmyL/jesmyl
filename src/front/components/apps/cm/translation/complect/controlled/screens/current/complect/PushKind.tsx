@@ -1,8 +1,8 @@
-import { ScreenTranslationPartialConfigProps } from '../../../../../../../+complect/translations/complect/model';
+import { ConfiguratorEditProps } from 'front/complect/configurators/model';
 import Dropdown from '../../../../../../../../../complect/dropdown/Dropdown';
 import { translationPushKinds } from '../../../../../../col/com/Com.complect';
 
-type Props = ScreenTranslationPartialConfigProps<{ pushKind?: number }>;
+type Props = ConfiguratorEditProps<{ pushKind?: number }>;
 
 const ExtractTitels = ({ title }: { title: string }, id: number) => ({ title, id });
 

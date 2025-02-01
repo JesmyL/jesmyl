@@ -1,11 +1,11 @@
-import IconCheckbox from '../../../../../complect/the-icon/IconCheckbox';
-import { ScreenTranslationPartialConfigProps } from './model';
+import IconCheckbox from '../the-icon/IconCheckbox';
+import { ConfiguratorEditProps } from './model';
 
 export type ScreenTranslateConfigTypeDisplay = 'none' | 'initial';
 
-type Props = ScreenTranslationPartialConfigProps<{ display?: ScreenTranslateConfigTypeDisplay }>;
+type Props = ConfiguratorEditProps<{ display?: ScreenTranslateConfigTypeDisplay }>;
 
-export const ScreenTranslateConfigurationDisplay = ({ config, updateConfig }: Props) => {
+export const DisplayConfigurator = ({ config, updateConfig }: Props) => {
   return (
     <>
       <div className="flex flex-gap flex-max">

@@ -1,17 +1,17 @@
+import { BackgroundConfigProps } from 'front/complect/configurators/model';
 import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
 import {
   defaultScreenTranslationBackgroundConfig,
   defaultScreenTranslationPositionConfig,
   defaultScreenTranslationTextConfig,
 } from '../../../../../+complect/translations/complect/defaults';
-import { ScreenTranslationBackgroundConfigs } from '../../../../../+complect/translations/complect/model';
 import {
   useMakeScreenTranslationConfigsFillPack,
   useScreenTranslationCurrentConfigi,
 } from '../../../../../+complect/translations/hooks/configs';
 import { CmTranslationScreenConfig } from '../model';
 
-export const defaultCmConfig: CmTranslationScreenConfig & ScreenTranslationBackgroundConfigs = {
+export const defaultCmConfig: CmTranslationScreenConfig & BackgroundConfigProps = {
   ...defaultScreenTranslationPositionConfig,
   ...defaultScreenTranslationTextConfig,
   ...defaultScreenTranslationBackgroundConfig,

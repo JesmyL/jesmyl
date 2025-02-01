@@ -1,3 +1,4 @@
+import { useAtomValue } from 'front/complect/atoms';
 import styled from 'styled-components';
 import { BibleTranslationScreenTextsContext } from '../../bible/texts/AddressContentContext';
 import BibleTranslatesContextProvider from '../../bible/translates/TranslatesContext';
@@ -6,19 +7,22 @@ import { CmTranslationCurrentScreen } from '../../cm/translation/complect/contro
 import { useCurrentForceViweAppContext } from './Translation.contexts';
 import { TranslationTextScreen } from './TranslationTextScreen';
 import { TranslationScreenProps } from './Translations.model';
+import { AlertLineSlideText } from './controls/alert-line/AlertLineSlideText';
 import { useCurrentTranslationTextAppValue } from './hooks/current-app';
-import { useTranslationInitialSlideValue } from './initial-slide-context';
+import { isShowTranslatedTextAtom, useTranslationInitialSlideValue } from './initial-slide-context';
 
 export const TranslationScreen = (props: TranslationScreenProps) => {
   const app = useCurrentTranslationTextAppValue();
   const forceViewApp = useCurrentForceViweAppContext();
   const initialSlide = useTranslationInitialSlideValue();
+  const isShowTranslatedText = useAtomValue(isShowTranslatedTextAtom);
 
   return (
     <>
       {initialSlide && (
         <>
           <StyledInitialSlide
+            key="StyledInitialSlide"
             className="full-size"
             hidden={props.isPreview}
           >
@@ -29,17 +33,21 @@ export const TranslationScreen = (props: TranslationScreenProps) => {
         </>
       )}
 
-      <TranslationTextScreen>
-        {(forceViewApp ?? props.forceViewApp ?? app) === 'cm' ? (
-          <CmTranslationCurrentScreen {...props} />
-        ) : (
-          <BibleTranslatesContextProvider>
-            <BibleTranslationScreenTextsContext isPreview={props.isPreview}>
-              <BibleTranslationCurrentScreen {...props} />
-            </BibleTranslationScreenTextsContext>
-          </BibleTranslatesContextProvider>
-        )}
-      </TranslationTextScreen>
+      <div className={isShowTranslatedText ? '' : 'hidden'}>
+        <TranslationTextScreen key="TranslationTextScreen">
+          {(forceViewApp ?? props.forceViewApp ?? app) === 'cm' ? (
+            <CmTranslationCurrentScreen {...props} />
+          ) : (
+            <BibleTranslatesContextProvider>
+              <BibleTranslationScreenTextsContext isPreview={props.isPreview}>
+                <BibleTranslationCurrentScreen {...props} />
+              </BibleTranslationScreenTextsContext>
+            </BibleTranslatesContextProvider>
+          )}
+        </TranslationTextScreen>
+      </div>
+
+      {props.isPreview || <AlertLineSlideText />}
     </>
   );
 };
@@ -55,7 +63,10 @@ const StyledInfo = styled.div`
 `;
 
 const info = (
-  <StyledInfo className="full-size flex center text-center">
+  <StyledInfo
+    key="StyledInitialSlide-info"
+    className="full-size flex center text-center"
+  >
     Начальный слайд закрывается
     <br />
     по клавише Backspace

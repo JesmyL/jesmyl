@@ -1,5 +1,6 @@
 import { atom, useAtomSet, useAtomValue } from '../../../../complect/atoms';
 
+export const isShowTranslatedTextAtom = atom(true);
 const isShowAtom = atom(true);
 const initialSlideAtom = atom<React.ReactNode>(null);
 
@@ -16,3 +17,6 @@ export const useTranslationInitialSlideValue = () => {
 
   return null;
 };
+
+export const translationShowAlertLineConfigIdAtom = atom<number | null>(null);
+export const translationAlertLineTextAtom = atom<string | null>(null, 'complect', 'alertLine');

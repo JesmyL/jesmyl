@@ -48,6 +48,12 @@ export const setTimeoutPipe = <Args extends any[]>(cb: (...args: Args) => void, 
   return new EffectPipeMember(() => clearTimeout(timeout));
 };
 
+export const setIntervalPipe = <Args extends any[]>(cb: (...args: Args) => void, time: number, ...args: Args) => {
+  const interval = setInterval(cb, time, ...args);
+
+  return new EffectPipeMember(() => clearInterval(interval));
+};
+
 export const clearTimeoutPipe = (timeout: TimeOut) => new EffectPipeMember(() => clearTimeout(timeout));
 
 export const hookEffectPipe = () => {

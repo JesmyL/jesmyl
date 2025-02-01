@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import { ScreenTranslationPartialConfigProps } from './model';
+import { ConfiguratorEditProps } from './model';
 
-type Props = ScreenTranslationPartialConfigProps<{ opacity?: number }>;
+type Props = ConfiguratorEditProps<{ opacity?: number }>;
 
-export const ScreenTranslateConfigurationOpacity = ({ config, updateConfig }: Props) => {
+export const OpacityConfigurator = ({ config, updateConfig }: Props) => {
   const [opacity, setValue] = useState(config.opacity ?? 1);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -1,5 +1,6 @@
 import { atom, useAtom, useAtomSet, useAtomToggle, useAtomValue } from '../../../../complect/atoms';
-import { ScreenTranslationConfig } from './model';
+import { defaultScreenTranslationBackgroundConfig } from './complect/defaults';
+import { AlertLineConfig, ScreenTranslationConfig } from './model';
 
 const isCanShowTextTranslationAtom = atom(false);
 export const useIsCanShowTextTranslation = () => useAtom(isCanShowTextTranslationAtom);
@@ -16,6 +17,17 @@ export const useToggleIsScreenTranslationTextVisible = () => useAtomToggle(isTra
 export const defaultComplectConfig: ScreenTranslationConfig = {
   title: 'Трансляция',
   proportion: 1,
+};
+
+export const defaultAlertLineConfig: OmitOwn<AlertLineConfig, 'id'> = {
+  title: 'Срочно!',
+  icon: 'Alert01',
+  fontSize: 30,
+  top: 70,
+  speed: 30,
+  text: '',
+  color: '#ec6969',
+  ...defaultScreenTranslationBackgroundConfig,
 };
 
 const screenTranslationConfigsAtom = atom([defaultComplectConfig], 'complect', 'screenTranslationConfigs');
