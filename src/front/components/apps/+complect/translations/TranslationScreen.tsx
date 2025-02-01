@@ -1,5 +1,5 @@
 import { useAtomValue } from 'front/complect/atoms';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { BibleTranslationScreenTextsContext } from '../../bible/texts/AddressContentContext';
 import BibleTranslatesContextProvider from '../../bible/translates/TranslatesContext';
 import BibleTranslationCurrentScreen from '../../bible/translations/screen/BibleTranslationCurrentScreen';
@@ -33,7 +33,10 @@ export const TranslationScreen = (props: TranslationScreenProps) => {
         </>
       )}
 
-      <div className={isShowTranslatedText ? '' : 'hidden'}>
+      <StyledNextSiblingVisibiliter
+        className="full-size"
+        $isShowTranslatedText={isShowTranslatedText && !initialSlide}
+      >
         <TranslationTextScreen key="TranslationTextScreen">
           {(forceViewApp ?? props.forceViewApp ?? app) === 'cm' ? (
             <CmTranslationCurrentScreen {...props} />
@@ -45,12 +48,23 @@ export const TranslationScreen = (props: TranslationScreenProps) => {
             </BibleTranslatesContextProvider>
           )}
         </TranslationTextScreen>
-      </div>
+      </StyledNextSiblingVisibiliter>
 
       {props.isPreview || <AlertLineSlideText />}
     </>
   );
 };
+
+const StyledNextSiblingVisibiliter = styled.div<{ $isShowTranslatedText: boolean }>`
+  ${props =>
+    !props.$isShowTranslatedText &&
+    css`
+      *,
+      * * {
+        color: transparent !important;
+      }
+    `}
+`;
 
 const StyledInitialSlide = styled.div`
   background-color: black;
