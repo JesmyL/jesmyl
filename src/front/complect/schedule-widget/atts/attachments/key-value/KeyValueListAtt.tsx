@@ -1,5 +1,6 @@
 import { schDayEventsSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
 import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import { IconArrowDataTransferVerticalStrokeRounded } from 'front/complect/the-icon/icons/arrow-data-transfer-vertical';
 import { mylib } from 'front/utils';
 import Markdown from 'markdown-to-jsx';
 import { ReactNode } from 'react';
@@ -26,7 +27,6 @@ import { IconLeftToRightListDashStrokeRounded } from '../../../../../complect/th
 import { IconPlusSignStrokeRounded } from '../../../../../complect/the-icon/icons/plus-sign';
 import { IconSquareStrokeRounded } from '../../../../../complect/the-icon/icons/square';
 import { IconTextStrokeRounded } from '../../../../../complect/the-icon/icons/text';
-import { MoveListItemArrowIcon } from '../../../../MoveListItemArrowIcon';
 import StrongEditableField from '../../../../strong-control/field/StrongEditableField';
 import { IconBasketball01StrokeRounded } from '../../../../the-icon/icons/basketball-01';
 import ScheduleWidgetRoleFace from '../../../control/roles/RoleFace';
@@ -468,10 +468,10 @@ export default function ScheduleKeyValueListAtt({
               </div>
               {isRedact && customAttUseRights.checkIsCan(userR, att.U) && (
                 <div className={'flex flex-gap' + (mylib.isStr(value) ? ' margin-giant-gap-r' : '')}>
-                  {itema.length > 1 && (
+                  {itema.length > 1 && itemi > 0 && (
                     <EvaSendButton
                       className="relative z-index:15 color--7"
-                      Icon={MoveListItemArrowIcon(itemi)}
+                      Icon={IconArrowDataTransferVerticalStrokeRounded}
                       onSend={() =>
                         schDayEventsSokiInvocatorClient.moveKeyValueAttachment(null, dayEventAttScopeProps, itemMi)
                       }
@@ -518,10 +518,10 @@ export default function ScheduleKeyValueListAtt({
                         {customAttUseRights.checkIsCan(userR, att.U) && (
                           <div className="flex flex-gap">
                             <span className="flex self-start">{vali + 1}.</span>
-                            {vala.length > 1 && (
+                            {vala.length > 1 && vali > 0 && (
                               <EvaSendButton
                                 className="relative z-index:15 color--7"
-                                Icon={MoveListItemArrowIcon(vali)}
+                                Icon={IconArrowDataTransferVerticalStrokeRounded}
                                 onSend={() =>
                                   schDayEventsSokiInvocatorClient.moveKeyValueAttachmentListItem(
                                     null,

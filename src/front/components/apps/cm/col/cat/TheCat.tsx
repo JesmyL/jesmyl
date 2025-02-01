@@ -5,7 +5,9 @@ import { Route, Routes } from 'react-router-dom';
 import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
 import LoadIndicatedContent from '../../../../../complect/load-indicated-content/LoadIndicatedContent';
-import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
+import PhaseContainerConfigurer, {
+  StyledPhaseContainerConfigurerContent,
+} from '../../../../../complect/phase-container/PhaseContainerConfigurer';
 import { cmIDB } from '../../_db/cm-idb';
 import { SetComListLimitsExtracterContext } from '../../base/SetComListLimitsExtracterContext';
 import CmTranslationComListContextInCat from '../../base/translations/InCat';
@@ -19,7 +21,7 @@ import { useCcat } from './useCcat';
 
 export default function TheCat({ all }: { all?: boolean; catWid?: number }) {
   const cat = useCcat(all);
-  const { laterComs } = useLaterComList();
+  const { laterComws } = useLaterComList();
   const term = useAtomValue(categoryTermAtom);
   const [searchedComs, setSearchedComs] = useState<Com[]>([]);
   const setComListLimitsExtracterRef = useRef<(start: number | nil, finish: number | nil) => void>(emptyFunc);
@@ -64,13 +66,18 @@ export default function TheCat({ all }: { all?: boolean; catWid?: number }) {
               content={
                 cat && (
                   <>
-                    <div className={`later-com-list ${all && !term && laterComs?.length ? '' : 'hidden'}`}>
-                      <div className="list-title sticky">Последние:</div>
-                      <ComFaceList
-                        list={laterComs}
-                        isPutCcomFaceOff
-                      />
-                    </div>
+                    {all && !term && !!laterComws?.length && (
+                      <div
+                        key="later-com-list"
+                        className="later-com-list"
+                      >
+                        <div className="list-title sticky">Последние:</div>
+                        <ComFaceList
+                          list={laterComws}
+                          isPutCcomFaceOff
+                        />
+                      </div>
+                    )}
                     <div
                       className="flex between sticky list-title"
                       ref={categoryTitleRef}
@@ -109,7 +116,7 @@ const CatPhaseContainer = styled(PhaseContainerConfigurer)`
     cursor: ns-resize;
   }
 
-  > .content {
+  ${StyledPhaseContainerConfigurerContent} {
     padding-top: 0;
   }
 

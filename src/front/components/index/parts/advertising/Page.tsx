@@ -2,7 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { atom, useAtom } from '../../../../complect/atoms';
 import Dropdown from '../../../../complect/dropdown/Dropdown';
-import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
+import PhaseContainerConfigurer, {
+  StyledPhaseContainerConfigurerContent,
+} from '../../../../complect/phase-container/PhaseContainerConfigurer';
 import IconCheckbox from '../../../../complect/the-icon/IconCheckbox';
 import { useAuth } from '../../atoms';
 
@@ -114,7 +116,7 @@ export default function IndexAdvertisingPage() {
 }
 
 const StyledContainer = styled(PhaseContainerConfigurer)`
-  .content {
+  ${StyledPhaseContainerConfigurerContent} {
     scroll-behavior: smooth;
   }
 `;

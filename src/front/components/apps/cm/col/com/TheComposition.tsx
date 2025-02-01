@@ -1,10 +1,14 @@
+import { hookEffectPipe, setTimeoutPipe } from 'front/complect/hookEffectPipe';
 import { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { BottomPopup } from '../../../../../complect/absolute-popup/bottom-popup/BottomPopup';
 import { useAtom, useAtomValue } from '../../../../../complect/atoms';
 import { FullContent } from '../../../../../complect/fullscreen-content/FullContent';
 import { Metronome } from '../../../../../complect/metronome/Metronome';
-import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
+import PhaseContainerConfigurer, {
+  StyledPhaseContainerConfigurerHead,
+  StyledPhaseContainerConfigurerHeadTitle,
+} from '../../../../../complect/phase-container/PhaseContainerConfigurer';
 import { DocTitle } from '../../../../../complect/tags/DocTitle';
 import BibleTranslatesContextProvider from '../../../bible/translates/TranslatesContext';
 import { cmIDB } from '../../_db/cm-idb';
@@ -27,30 +31,33 @@ import { CmComCatMentions } from './useGetCatMentions';
 export default function TheComposition() {
   const [chordVisibleVariant] = useChordVisibleVariant();
   const ccom = useCcom();
-  const { addLaterComw } = useLaterComList();
+  const { addLaterComw, laterComws } = useLaterComList();
   const [isOpenTools, setIsOpenTools] = useState(false);
   const comToolsNode = useMigratableTopComTools();
   const { list } = useCmComListContext();
   const playerHideMode = cmIDB.useValue.playerHideMode();
   const isMetronomeHide = cmIDB.useValue.metronome().isHide;
-  const comAudio = ccom?.audio.trim();
+
   const [isOpenChordImages, setIsOpenChordImages] = useAtom(isOpenChordImagesAtom);
   const isShowCatBinds = useAtomValue(cmIsShowCatBindsInCompositionAtom);
 
   useTakeActualComw();
 
   useEffect(() => {
-    const add = setTimeout(() => addLaterComw(ccom?.wid ?? 0), 3000);
-    return () => clearTimeout(add);
+    return hookEffectPipe()
+      .pipe(setTimeoutPipe(() => addLaterComw(ccom?.wid ?? 0), 3000))
+      .effect();
   }, [addLaterComw, ccom?.wid]);
 
-  const comListElem = useRef<HTMLDivElement>(null);
+  const comListRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
-    if (comListElem.current) comListElem.current.scrollTop = 0;
+    if (comListRef.current) comListRef.current.scrollTop = 0;
   }, [ccom?.wid]);
   const isComCommentIncludesBibleAddress = useCheckIsComCommentIncludesBibleAddress(ccom);
 
   if (ccom == null) return <ComNotFoundPage />;
+
+  const comAudio = ccom.audio.trim();
 
   let controlledComNode = (
     <TheControlledCom
@@ -66,19 +73,19 @@ export default function TheComposition() {
     );
 
   return (
-    <ComContainer
+    <StyledComContainer
+      $isInLaterList={laterComws.includes(ccom.wid)}
       className={
-        'composition-container' +
         (playerHideMode && comAudio ? ` with-open-player ${playerHideMode}` : '') +
         (isMetronomeHide ? ' hide-metronome' : '')
       }
       headTitle={<CmComNumber comw={ccom.wid} />}
       onMoreClick={setIsOpenTools}
       contentClass="composition-content padding-gap"
-      contentRef={comListElem}
+      contentRef={comListRef}
       withoutBackSwipe
       rememberProps={['comw']}
-      head={<div className="com-actions-pannel flex flex-gap">{comToolsNode}</div>}
+      head={<div className="flex flex-gap">{comToolsNode}</div>}
       content={
         <>
           {isOpenChordImages && (
@@ -115,7 +122,30 @@ export default function TheComposition() {
   );
 }
 
-const ComContainer = styled(PhaseContainerConfigurer)`
+const StyledComContainer = styled(PhaseContainerConfigurer)<{ $isInLaterList: boolean }>`
+  ${props =>
+    props.$isInLaterList &&
+    css`
+      ${StyledPhaseContainerConfigurerHeadTitle} {
+        font-weight: bold;
+      }
+    `}
+
+  ${StyledPhaseContainerConfigurerHead} {
+    display: flex;
+    gap: 10px;
+    padding-left: 10px;
+    max-width: calc(100vw - 130px);
+    height: 40px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
   .composition-content {
     padding-top: 150px;
     transition: padding-top 0.2s;
@@ -146,19 +176,6 @@ const ComContainer = styled(PhaseContainerConfigurer)`
     .composition-player {
       opacity: 1;
       pointer-events: all;
-    }
-  }
-
-  .com-actions-pannel {
-    padding-left: 10px;
-    max-width: calc(100vw - 130px);
-    height: 40px;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    white-space: nowrap;
-
-    &::-webkit-scrollbar {
-      display: none;
     }
   }
 `;
