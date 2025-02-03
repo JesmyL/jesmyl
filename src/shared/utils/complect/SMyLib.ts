@@ -61,33 +61,6 @@ export class SMyLib {
     return Object.values(it) as never;
   }
 
-  func(...funcs: any[]) {
-    const self = this;
-    const call = (...args: any[]) => {
-      const func = funcs.find(this.isFunc);
-      return func && func.apply(this, ...args);
-    };
-
-    return {
-      call(...args: any[]) {
-        return call(args);
-      },
-      invoke(func: Function) {
-        return call([].concat(self.isFunc(func) ? func() : []));
-      },
-    };
-  }
-
-  execIfFunc(funcScalar: unknown, ...args: unknown[]) {
-    if (!this.isFunc(funcScalar)) return funcScalar;
-
-    return funcScalar(...args);
-  }
-
-  private static sortReverse = <Item>(a: Item, b: Item) => (a > b ? -1 : a < b ? 1 : 0);
-
-  static reverseSort = <Item>(items: Item[]) => items.sort(this.sortReverse);
-
   mapFilter = <Item, Val>(
     items: Item[],
     cb: (item: Item, index: number, items: Item[]) => Val | undefined,
@@ -207,16 +180,6 @@ export class SMyLib {
 
   md5(content: string) {
     return md5(content);
-  }
-
-  overlap<T extends object>(...args: any[]): T {
-    if (args.length === 0) return null as never;
-    const zero = args[0] ?? {};
-
-    args.forEach(arg =>
-      arg == null ? null : this.keys(arg).forEach(arn => arg[arn] !== undefined && (zero[arn] = arg[arn])),
-    );
-    return zero;
   }
 
   declension(num: number, one?: string, two?: string, five?: string) {
