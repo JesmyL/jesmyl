@@ -84,7 +84,16 @@ export const cmFreshServerInvocatorBase = new CmFreshSokiInvocatorBaseServer('Cm
         }
 
         if (auth.login != null) {
-          const favoriteItem = aboutComFavoritesFileStore.getValue()[auth.login];
+          const login = auth.login;
+
+          sendFreshModifiedableList(
+            lastModfiedAt,
+            comCommentsFileStore,
+            () => mylib.values(comCommentsFileStore.getValue()[login]),
+            (comments, modifiedAt) => cmServerInvocatorShareMethods.refreshComComments(client, comments, modifiedAt),
+          );
+
+          const favoriteItem = aboutComFavoritesFileStore.getValue()[login];
           if (favoriteItem != null && favoriteItem.m > lastModfiedAt)
             cmServerInvocatorShareMethods.refreshAboutComFavorites(client, favoriteItem);
         }
