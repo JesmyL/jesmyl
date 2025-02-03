@@ -6,7 +6,9 @@ import { cmIDB } from './_db/cm-idb';
 import { cmFreshesSokiInvocatorClient } from './invocators/fresh-invocator.methods';
 import { cmUserStoreSokiInvocatorClient } from './invocators/user-store-invocator.methods';
 
-export const useComComment = (comw: CmComWid) => useLiveQuery(() => cmIDB.tb.comComments.get(comw), [comw])?.comment;
+export const useComCommentText = (comw: CmComWid) =>
+  useLiveQuery(() => cmIDB.tb.comComments.get(comw), [comw])?.comment;
+export const useComComment = (comw: CmComWid) => useLiveQuery(() => cmIDB.tb.comComments.get(comw), [comw]);
 
 export const onLocalComCommentsSendEvent = Eventer.createValue();
 

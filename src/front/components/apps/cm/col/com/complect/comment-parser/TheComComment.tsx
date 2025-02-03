@@ -13,6 +13,7 @@ import { ModalHeader } from '../../../../../../../complect/modal/Modal/ModalHead
 import IconButton from '../../../../../../../complect/the-icon/IconButton';
 import { IconCheckmarkCircle02StrokeRounded } from '../../../../../../../complect/the-icon/icons/checkmark-circle-02';
 import { IconEdit01StrokeRounded } from '../../../../../../../complect/the-icon/icons/edit-01';
+import { IconFileValidationStrokeRounded } from '../../../../../../../complect/the-icon/icons/file-validation';
 import { IconMessageQuestionStrokeRounded } from '../../../../../../../complect/the-icon/icons/message-question';
 import { IconNote03StrokeRounded } from '../../../../../../../complect/the-icon/icons/note-03';
 import { updateComComment, useComComment } from '../../../../com-comments-manager';
@@ -26,7 +27,8 @@ interface Props {
 const HashSwitcherIcon = IconNote03StrokeRounded;
 
 export const TheComComment = ({ comw }: Props) => {
-  const comment = useComComment(comw) ?? '';
+  const comComment = useComComment(comw);
+  const comment = comComment?.comment ?? '';
   const [isShowConHashComments, setIsShowConHashComments] = cmIDB.use.isShowComHashComments();
   const [isShowInfoModal, setIsShowInfoModal] = useState(false);
   const [isRedact, setIsRedact] = useAtom(isComCommentRedactAtom);
@@ -86,7 +88,11 @@ export const TheComComment = ({ comw }: Props) => {
             className="flex full-width between color--7 margin-gap-v"
             onClick={() => setIsRedact(isNIs)}
           />
-          <TheIconLoading isLoading={isLoading} />
+          {comComment?.isSavedLocal ? (
+            <IconFileValidationStrokeRounded className="color--ok" />
+          ) : (
+            <TheIconLoading isLoading={isLoading} />
+          )}
         </span>
         <div className="flex flex-gap">
           <HashSwitcherIcon

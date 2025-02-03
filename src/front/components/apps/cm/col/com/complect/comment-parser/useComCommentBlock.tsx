@@ -1,7 +1,7 @@
 import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
 import { useEffect, useMemo } from 'react';
 import { useAtom } from '../../../../../../../complect/atoms';
-import { useComComment } from '../../../../com-comments-manager';
+import { useComCommentText } from '../../../../com-comments-manager';
 import { Com } from '../../Com';
 import { ComBlockCommentMakerCleans } from './Cleans';
 import { isComCommentRedactAtom } from './complect';
@@ -10,7 +10,7 @@ import { useComBlockCommentUpdateBlockNames } from './useComBlockCommentUpdateBl
 
 export const useComCommentBlockCss = (com: Com) => {
   const [isRedact, setIsRedact] = useAtom(isComCommentRedactAtom);
-  const comment = useComComment(com.wid);
+  const comment = useComCommentText(com.wid);
 
   const visibleOrders = useMemo(() => {
     return com.orders?.filter(ComBlockCommentMakerCleans.withHeaderTextOrderFilter);
