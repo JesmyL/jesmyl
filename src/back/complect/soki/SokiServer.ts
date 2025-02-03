@@ -4,7 +4,8 @@ import { invitesTgBotListener } from 'back/sides/telegram-bot/invites/invites.bo
 import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { SokiServerInvocatorTool } from 'back/SokiInvocatorBase.server';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
-import { InvocatorClientEvent, InvocatorServerEvent, LocalSokiAuth, SokiVisit } from 'shared/api';
+import { InvocatorClientEvent, InvocatorServerEvent, LocalSokiAuth, SokiAuthLogin, SokiVisit } from 'shared/api';
+import { smylib } from 'shared/utils';
 import WebSocket, { WebSocketServer } from 'ws';
 import { setSharedPolyfills } from '../../../shared/utils/complect/polyfills';
 import { scheduleWidgetMessageCatcher } from '../../apps/index/schedules/tg-bot-inform/message-catchers';
@@ -23,15 +24,21 @@ ErrorCatcher.logAllErrors();
 export class SokiServer {
   private clients = new Set<WebSocket>();
   private auths = new Map<WebSocket, LocalSokiAuth>();
+  private clientsByLogin = new Map<SokiAuthLogin, Set<WebSocket>>();
   private visits = new Map<WebSocket, SokiVisit>();
 
   start() {
     new WebSocketServer({ port: 4446 }).on('connection', (client: WebSocket) => {
       this.clients.add(client);
       client.on('close', () => {
+        const auth = this.auths.get(client);
+
         this.clients.delete(client);
-        this.auths.delete(client);
         this.visits.delete(client);
+        this.auths.delete(client);
+
+        if (auth?.login === undefined) return;
+        this.clientsByLogin.get(auth.login)?.delete(client);
       });
 
       client.on('message', async (data: WebSocket.RawData) => {
@@ -74,7 +81,14 @@ export class SokiServer {
               tglogger.visit(`${this.authStringified(auth)}\n\n${this.visitStringified(event.visit)}\n\n`);
           }
 
-          if (auth) this.auths.set(client, auth);
+          if (auth) {
+            this.auths.set(client, auth);
+
+            if (auth.login) {
+              if (!this.clientsByLogin.has(auth.login)) this.clientsByLogin.set(auth.login, new Set());
+              this.clientsByLogin.get(auth.login)?.add(client);
+            }
+          }
 
           this.send({ requestId: event.requestId }, client);
           return;
@@ -118,8 +132,15 @@ export class SokiServer {
     }
 
     const stringEvent = JSON.stringify(event);
-    this.clients.forEach(client => {
-      if (clientSelector(client, this.auths.get(client))) client.send(stringEvent);
+    if (smylib.isFunc(clientSelector)) {
+      this.clients.forEach(client => {
+        if (clientSelector(client, this.auths.get(client))) client.send(stringEvent);
+      });
+      return;
+    }
+
+    this.clientsByLogin.get(clientSelector.login)?.forEach(client => {
+      if (clientSelector.ignoreClient !== client) client.send(stringEvent);
     });
   }
 

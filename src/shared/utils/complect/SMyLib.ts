@@ -51,12 +51,12 @@ export class SMyLib {
     return Object.keys(it) as never;
   }
 
-  keys<T extends object | nil>(it: T): (keyof Required<T>)[] {
+  keys<T extends object | nil>(it: T): (keyof T)[] {
     if (it == null) return [];
     return Object.keys(it) as never;
   }
 
-  values<T extends object | nil>(it: T): Required<T>[keyof T][] {
+  values<T extends object | nil>(it: T): T[keyof T][] {
     if (it == null) return [];
     return Object.values(it) as never;
   }

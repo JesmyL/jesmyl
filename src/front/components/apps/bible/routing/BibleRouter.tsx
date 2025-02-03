@@ -1,13 +1,11 @@
-import { soki } from 'front/soki';
 import { Route, Routes } from 'react-router-dom';
 import { CurrentForceViweAppContext } from '../../+complect/translations/Translation.contexts';
-import { bibleIDB, bibleTranslatesIDB } from '../_db/bibleIDB';
-import { bibleSokiInvocatorBaseClient, bibleSokiInvocatorClient } from '../invoctors/invocator';
 import BibleReaderCurrentBookPage from '../reader/book/CurrentBookPage';
 import BibleReaderSearchPage from '../reader/search/SearchPage';
 import BibleTranslatesContextProvider from '../translates/TranslatesContext';
 import BibleTranslationControlled from '../translations/BibleTranslationControlled';
 import { BibleFooter } from './BibleFooter';
+import { bibleInitialInvokes } from './bible-initial-invokes';
 
 export default function BibleRouter({ mainNode }: { mainNode: React.ReactNode }) {
   return (
@@ -42,11 +40,4 @@ export default function BibleRouter({ mainNode }: { mainNode: React.ReactNode })
   );
 }
 
-bibleSokiInvocatorBaseClient.$$register();
-
-soki.listenOnOpenEvent(async () => {
-  const myTranslates = await bibleIDB.get.myTranslates();
-  const lastModifiedAt = await bibleTranslatesIDB.get.lastModifiedAt();
-
-  bibleSokiInvocatorClient.requestFreshes(null, lastModifiedAt, myTranslates);
-});
+bibleInitialInvokes();

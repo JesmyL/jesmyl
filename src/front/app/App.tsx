@@ -1,6 +1,5 @@
 import { LinkAppActionFabric } from 'front/complect/link-app-actions';
 import { schLinkAction } from 'front/complect/schedule-widget/links';
-import { cmSokiInvocatorBaseClient } from 'front/components/apps/cm/invocators/invocator.shares.base';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './App.scss';
@@ -37,5 +36,3 @@ const FirstNaver = ({ onSet }: { onSet: (is: false) => void }) => {
 };
 
 export default App;
-
-cmSokiInvocatorBaseClient.$$register();

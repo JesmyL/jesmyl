@@ -1,15 +1,13 @@
 import { useAuth } from 'front/components/index/atoms';
-import { soki } from 'front/soki';
 import React, { memo, Suspense, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { CmComWid } from 'shared/api';
-import { cmIDB } from '../_db/cm-idb';
 import { cmAppActions } from '../app-actions/cm-app-actions';
 import { CmSharedComListActionInterpretator } from '../app-actions/SharedComList';
 import TheCat from '../col/cat/TheCat';
 import { useTakeActualComw } from '../col/com/useCcom';
-import { cmFreshesSokiInvocatorClient } from '../invocators/fresh-invocator.methods';
 import Lists from '../lists/Lists';
+import { cmInitialInvokes } from './cm-initial-invokes';
 import { CmFooter } from './CmFooter';
 
 const Editor = React.lazy(() => import('../editor/Editor'));
@@ -80,7 +78,4 @@ export const RenderEditorOnce = memo(() => {
   );
 });
 
-soki.listenOnOpenEvent(async () => {
-  const lastModified = await cmIDB.get.lastModifiedAt();
-  await cmFreshesSokiInvocatorClient.requestFreshes(null, lastModified);
-});
+cmInitialInvokes();

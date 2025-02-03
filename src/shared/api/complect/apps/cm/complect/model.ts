@@ -77,6 +77,7 @@ export type ICmComComment = {
   comw: CmComWid;
   comment: string;
   m: number;
+  isSavedLocal?: 1;
 };
 
 export type TAboutComFavoriteItem = {

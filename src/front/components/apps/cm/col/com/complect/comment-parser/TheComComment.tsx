@@ -84,7 +84,7 @@ export const TheComComment = ({ comw }: Props) => {
           <IconButton
             Icon={isRedact ? IconCheckmarkCircle02StrokeRounded : IconEdit01StrokeRounded}
             className="flex full-width between color--7 margin-gap-v"
-            onClick={() => setIsRedact(!isRedact)}
+            onClick={() => setIsRedact(isNIs)}
           />
           <TheIconLoading isLoading={isLoading} />
         </span>

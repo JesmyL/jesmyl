@@ -5,6 +5,7 @@ class CmFreshSokiInvocatorClient extends SokiInvocatorClient<CmFreshSokiInvocato
   constructor() {
     super('CmFreshSokiInvocatorClient', {
       requestFreshes: true,
+      exchangeFreshComComments: true,
     });
   }
 }

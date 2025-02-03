@@ -1,5 +1,6 @@
 import { updateComComment } from 'front/components/apps/cm/com-comments-manager';
 import { useEffect } from 'react';
+import { emptyFunc } from 'shared/utils';
 import { hookEffectPipe, setTimeoutPipe } from '../../../../../../../complect/hookEffectPipe';
 import { Com } from '../../Com';
 import { Order } from '../../order/Order';
@@ -90,7 +91,7 @@ export const useComBlockCommentUpdateBlockNames = (
           )
             return;
 
-          updateComComment(com.wid, isRedact ? newComment : newComment.trim());
+          updateComComment(com.wid, isRedact ? newComment : newComment.trim(), emptyFunc);
         }, 500),
       )
       .effect();

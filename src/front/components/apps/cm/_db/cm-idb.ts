@@ -85,6 +85,7 @@ class CmIDB extends DexieDB<CmIDBStorage> {
       },
       comComments: {
         comw: '++',
+        isSavedLocal: true,
       },
       scheduleComPacks: {
         schw: '++',

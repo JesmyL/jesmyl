@@ -10,6 +10,7 @@ import JesmylLogo from '../complect/jesmyl-logo/JesmylLogo';
 import { KEYBOARD_FLASH } from '../complect/keyboard/KeyboardInput';
 import { useCurrentApp } from '../components/index/atoms';
 import './App.scss';
+import { appInitialInvokes } from './app-initial-invokes';
 
 const emptyArr: [] = [];
 const emptyDict = {};
@@ -57,10 +58,11 @@ export default function AppComponent() {
         <div className={`application-container app_${currentApp}${isFullscreen ? ' fullscreen-mode' : ''}`}>
           {fullscreenIcon}
           <Outlet />
-          {/* <IndexAdvertisingReminder /> */}
         </div>
         <KEYBOARD_FLASH {...keyboardProps} />
       </div>
     </SetAppRootAnchorNodesContext.Provider>
   );
 }
+
+appInitialInvokes();

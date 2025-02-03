@@ -12,13 +12,14 @@ export class SokiTrip {
   private requests = {} as Record<string, (event: InvocatorClientEvent) => void>;
 
   private isOpened = false;
-  private onOpenEvent = Eventer.createValue<boolean>();
 
   private setIsConnected(value: boolean) {
     this.isConnected = value;
     this.connectionState.invoke(value);
   }
 
+  onConnectionOpenEvent = Eventer.createValue<boolean>();
+  onAuthorizeEvent = Eventer.createValue<void>();
   onTokenInvalidEvent = Eventer.createValue<void>();
   onConnectionState = (cb: (is: boolean) => void) => this.connectionState.listen(cb, this.isConnected);
 
@@ -43,7 +44,7 @@ export class SokiTrip {
         });
 
         this.urls = [];
-        this.onOpenEvent.invoke(true);
+        this.onConnectionOpenEvent.invoke(true);
         this.isOpened = true;
       } catch (errorMessage) {
         if (errorMessage === '#invalid_token') {
@@ -91,9 +92,9 @@ export class SokiTrip {
     this.urls.push(this.getCurrentUrl());
   }
 
-  listenOnOpenEvent = (cb: () => void) => {
+  listenOnConnectionOpenEvent = (cb: () => void) => {
     if (this.isOpened) cb();
-    this.onOpenEvent.listen(cb);
+    this.onConnectionOpenEvent.listen(cb);
   };
 
   private async sendForce(event: InvocatorClientEvent) {
@@ -118,7 +119,7 @@ export class SokiTrip {
     const fullEvent = { ...event, requestId };
 
     if (this.ws && this.ws.readyState === this.ws.OPEN) this.sendForce(fullEvent);
-    else this.onOpenEvent.listenFirst(() => this.sendForce(fullEvent));
+    else this.onConnectionOpenEvent.listenFirst(() => this.sendForce(fullEvent));
 
     const result = Promise.withResolvers<InvokedResult>();
 

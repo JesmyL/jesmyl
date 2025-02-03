@@ -5,7 +5,7 @@ import { CmComWid, ICmComComment, TAboutComFavoriteItem } from 'shared/api';
 import { CmUserStoreSokiInvocatorModel } from 'shared/api/invocators/cm/user-store-invocators.model';
 import { cmServerInvocatorShareMethods } from './invocator.shares';
 
-type TCommentsStore = Record<string, Record<CmComWid, ICmComComment>>;
+type TCommentsStore = PRecord<string, PRecord<CmComWid, ICmComComment>>;
 type TUserFavoritesStore = Partial<Record<string, TAboutComFavoriteItem>>;
 
 export const comCommentsFileStore = new FileStore<TCommentsStore>('/apps/cm/comComments.json', {});
