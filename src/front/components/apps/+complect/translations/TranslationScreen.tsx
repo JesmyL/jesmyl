@@ -4,15 +4,15 @@ import { BibleTranslationScreenTextsContext } from '../../bible/texts/AddressCon
 import BibleTranslatesContextProvider from '../../bible/translates/TranslatesContext';
 import BibleTranslationCurrentScreen from '../../bible/translations/screen/BibleTranslationCurrentScreen';
 import { CmTranslationCurrentScreen } from '../../cm/translation/complect/controlled/screen/CmTranslationCurrentScreen';
+import { complectIDB } from '../_idb/complectIDB';
 import { useCurrentForceViweAppContext } from './Translation.contexts';
 import { TranslationTextScreen } from './TranslationTextScreen';
 import { TranslationScreenProps } from './Translations.model';
 import { AlertLineSlideText } from './controls/alert-line/AlertLineSlideText';
-import { useCurrentTranslationTextAppValue } from './hooks/current-app';
 import { isShowTranslatedTextAtom, useTranslationInitialSlideValue } from './initial-slide-context';
 
 export const TranslationScreen = (props: TranslationScreenProps) => {
-  const app = useCurrentTranslationTextAppValue();
+  const app = complectIDB.useValue.currentTranslationTextApp();
   const forceViewApp = useCurrentForceViweAppContext();
   const initialSlide = useTranslationInitialSlideValue();
   const isShowTranslatedText = useAtomValue(isShowTranslatedTextAtom);

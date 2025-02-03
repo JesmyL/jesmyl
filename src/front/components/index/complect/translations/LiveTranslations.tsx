@@ -1,9 +1,9 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import { addEventListenerPipe, hookEffectPipe } from 'front/complect/hookEffectPipe';
+import { complectIDB } from 'front/components/apps/+complect/_idb/complectIDB';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { itNNull } from 'shared/utils';
-import { useCurrentTranslationTextAppValue } from '../../../apps/+complect/translations/hooks/current-app';
 import { useScreenTranslationWindows } from '../../../apps/+complect/translations/hooks/windows';
 import { useTranslationInitialSlideSet } from '../../../apps/+complect/translations/initial-slide-context';
 import BibleTranslatesContextProvider from '../../../apps/bible/translates/TranslatesContext';
@@ -17,7 +17,7 @@ import { schLiveSokiInvocatorClient } from './live-invocator';
 export const IndexScheduleWidgetTranslations = () => {
   const auth = useAuth();
   const windows = useScreenTranslationWindows();
-  const isCm = useCurrentTranslationTextAppValue() === 'cm';
+  const isCm = complectIDB.useValue.currentTranslationTextApp() === 'cm';
   const [isCantTranslateLive, setIsCantTranslateLive] = useState(true);
   const schw = +useParams().schw!;
   const schedule = useLiveQuery(() => indexIDB.db.schs.get(schw), [schw]);

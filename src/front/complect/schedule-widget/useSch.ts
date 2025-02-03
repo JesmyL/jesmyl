@@ -1,8 +1,8 @@
+import { indexIDB } from 'front/components/index/db/index-idb';
 import { mylib } from 'front/utils';
 import { useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { IScheduleWidgetWid } from 'shared/api';
-import { atom, useAtomSet, useAtomValue } from '../atoms';
 
 export const useCschw = (): IScheduleWidgetWid | NaN => {
   const paramSchw = +useParams().schw!;
@@ -13,15 +13,11 @@ export const useCschw = (): IScheduleWidgetWid | NaN => {
   return schw;
 };
 
-const lastSchwAtom = atom(NaN, 'index', 'lastSchw');
-
 export const useFixActualSchw = (schw: IScheduleWidgetWid | NaN) => {
-  const set = useAtomSet(lastSchwAtom);
-
   useEffect(() => {
     if (mylib.isNaN(schw)) return;
-    set(schw);
-  }, [schw, set]);
+    indexIDB.set.lastScheduleWid(schw);
+  }, [schw]);
 };
 
-export const useActualSchw = (): IScheduleWidgetWid | NaN => useAtomValue(lastSchwAtom);
+export const useActualSchw = (): IScheduleWidgetWid | NaN => indexIDB.useValue.lastScheduleWid();

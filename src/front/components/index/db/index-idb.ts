@@ -1,6 +1,6 @@
 import { AppName } from 'front/app/App.model';
 import { DexieDB } from 'front/complect/_DexieDB';
-import { DeviceId, IndexValues, IScheduleWidget, ScheduleWidgetPhotoKey } from 'shared/api';
+import { DeviceId, IndexValues, IScheduleWidget, IScheduleWidgetWid, ScheduleWidgetPhotoKey } from 'shared/api';
 import { FileAssociations } from '../parts/actions/files/complect/MyFilesTypeBox';
 
 interface Storage {
@@ -14,6 +14,7 @@ interface Storage {
   fileAssociations?: FileAssociations;
 
   schs: IScheduleWidget[];
+  lastScheduleWid: IScheduleWidgetWid | NaN;
   schedulePhotos: { key: ScheduleWidgetPhotoKey; src: string }[];
 }
 
@@ -27,6 +28,7 @@ class IndexIDB extends DexieDB<Storage> {
       currentApp: { $byDefault: 'cm' },
       fileAssociations: { $byDefault: {} as never },
       deviceId: { $byDefault: DeviceId.def },
+      lastScheduleWid: { $byDefault: NaN },
 
       schs: {
         w: '++',

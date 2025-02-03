@@ -18,7 +18,6 @@ import { checkIsThereNewSW } from '../../../../serviceWorkerRegistration';
 import { useAuth, useCurrentApp } from '../../atoms';
 import useConnectionState from '../../useConnectionState';
 import IndexActions from '../actions/Actions';
-import IndexAdvertisingPage from '../advertising/Page';
 import IndexAbout from '../IndexAbout';
 import { IndexTelegramInlineAuthButton } from '../login/IndexTelegramInlineAuthButton';
 import IndexSettings from '../settings/Settings';
@@ -156,11 +155,6 @@ export default function IndexMain() {
       <Route
         path="settings/*"
         element={<IndexSettings />}
-      />
-
-      <Route
-        path="advertising"
-        element={<IndexAdvertisingPage />}
       />
 
       {scheduleWidgetListPageRoute}

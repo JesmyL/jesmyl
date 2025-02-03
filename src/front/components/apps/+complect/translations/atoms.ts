@@ -1,4 +1,5 @@
 import { atom, useAtom, useAtomSet, useAtomToggle, useAtomValue } from '../../../../complect/atoms';
+import { complectIDB } from '../_idb/complectIDB';
 import { defaultScreenTranslationBackgroundConfig } from './complect/defaults';
 import { AlertLineConfig, ScreenTranslationConfig } from './model';
 
@@ -30,7 +31,5 @@ export const defaultAlertLineConfig: OmitOwn<AlertLineConfig, 'id'> = {
   ...defaultScreenTranslationBackgroundConfig,
 };
 
-const screenTranslationConfigsAtom = atom([defaultComplectConfig], 'complect', 'screenTranslationConfigs');
-
-export const useScreenTranslationConfigsSet = () => useAtomSet(screenTranslationConfigsAtom);
-export const useScreenTranslationConfigsValue = () => useAtomValue(screenTranslationConfigsAtom);
+export const useScreenTranslationConfigsSet = () => complectIDB.useSet.screenTranslationConfigs();
+export const useScreenTranslationConfigsValue = () => complectIDB.useValue.screenTranslationConfigs();

@@ -1,5 +1,6 @@
+import { complectIDB } from 'front/components/apps/+complect/_idb/complectIDB';
 import { useEffect } from 'react';
-import { atom, useAtomToggle, useAtomValue } from '../atoms';
+import { isNIs } from 'shared/utils';
 import { addEventListenerPipe, hookEffectPipe } from '../hookEffectPipe';
 
 const classList = document.body.classList;
@@ -7,11 +8,8 @@ const minTouches = 3;
 const maxTouches = 3;
 const className = 'reverse-theme';
 
-const isReverseThemeAtom = atom(false, 'complect', className);
-
 export const useFingersActions = () => {
-  const toggleIsThemeReverse = useAtomToggle(isReverseThemeAtom);
-  const isThemeReverse = useAtomValue(isReverseThemeAtom);
+  const isThemeReverse = complectIDB.useValue.isReverseTheme();
 
   useEffect(() => {
     if (isThemeReverse) classList.add(className);
@@ -25,7 +23,7 @@ export const useFingersActions = () => {
           if (event.touches.length === 4) {
             timeout = setTimeout(() => window.navigator.clipboard.writeText(window.location.href), 500);
           } else if (event.touches.length >= minTouches && event.touches.length <= maxTouches) {
-            timeout = setTimeout(toggleIsThemeReverse, 500);
+            timeout = setTimeout(complectIDB.set.isReverseTheme, 500, isNIs);
           } else {
             clearTimeout(timeout);
           }
@@ -34,9 +32,10 @@ export const useFingersActions = () => {
           if (event.touches.length < minTouches || event.touches.length > maxTouches) clearTimeout(timeout);
         }),
         addEventListenerPipe(document.body, 'keyup', event => {
-          if (event.code === 'Space' && event.ctrlKey && event.altKey && event.shiftKey) toggleIsThemeReverse();
+          if (event.code === 'Space' && event.ctrlKey && event.altKey && event.shiftKey)
+            complectIDB.set.isReverseTheme(isNIs);
         }),
       )
       .effect();
-  }, [isThemeReverse, toggleIsThemeReverse]);
+  }, [isThemeReverse]);
 };

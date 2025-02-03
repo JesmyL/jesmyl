@@ -46,16 +46,10 @@ class CmSokiInvocatorBaseClient extends SokiInvocatorBaseClient<CmSokiInvocatorS
       refreshComComments: () => async (comments, modifiedAt) => {
         comments.forEach(async comment => {
           const localComment = await cmIDB.tb.comComments.get(comment.comw);
-          if (localComment == null) {
-            cmIDB.tb.comComments.put(comment);
-            return;
-          }
-
-          if (localComment.isSavedLocal) return;
-
+          if (localComment?.isSavedLocal) return;
           cmIDB.tb.comComments.put(comment);
         });
-        cmIDB.tb.comComments.bulkPut(comments);
+
         cmIDB.updateLastModifiedAt(modifiedAt);
       },
 

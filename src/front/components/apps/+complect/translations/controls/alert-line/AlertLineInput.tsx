@@ -7,13 +7,13 @@ import { IconSettings01StrokeRounded } from 'front/complect/the-icon/icons/setti
 import { propagationStopper } from 'front/complect/utils/utils';
 import { useState } from 'react';
 import { complectIDB } from '../../../_idb/complectIDB';
-import { translationAlertLineTextAtom, translationShowAlertLineConfigIdAtom } from '../../initial-slide-context';
+import { translationShowAlertLineConfigIdAtom } from '../../initial-slide-context';
 import { AlertLineConfigIcon } from './AlertLineConfigIcon';
 import { AlertLineSettingsModalInner } from './AlertLineSettings';
 
 export const AlertLineInput = () => {
   const configs = useLiveQuery(() => complectIDB.tb.alertLineConfigs.toArray());
-  const [alertLine, setAlertLine] = useAtom(translationAlertLineTextAtom);
+  const [alertLine, setAlertLine] = complectIDB.use.translationAlertLine();
   const [showAlertConfigId, setShowAlertConfigId] = useAtom(translationShowAlertLineConfigIdAtom);
   const [isOpenSettingsModal, setIsOpenSettingsModal] = useState<unknown>(false);
 

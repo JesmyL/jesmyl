@@ -2,10 +2,10 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { useAtomValue } from 'front/complect/atoms';
 import styled, { css, keyframes } from 'styled-components';
 import { complectIDB } from '../../../_idb/complectIDB';
-import { translationAlertLineTextAtom, translationShowAlertLineConfigIdAtom } from '../../initial-slide-context';
+import { translationShowAlertLineConfigIdAtom } from '../../initial-slide-context';
 
 export const AlertLineSlideText = () => {
-  const alertLineText = useAtomValue(translationAlertLineTextAtom);
+  const alertLineText = complectIDB.useValue.translationAlertLine();
   const showAlertConfigId = useAtomValue(translationShowAlertLineConfigIdAtom);
   const config = useLiveQuery(() => complectIDB.tb.alertLineConfigs.get(showAlertConfigId ?? -1), [showAlertConfigId]);
 

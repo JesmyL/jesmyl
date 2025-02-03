@@ -19,4 +19,3 @@ export const useTranslationInitialSlideValue = () => {
 };
 
 export const translationShowAlertLineConfigIdAtom = atom<number | null>(null);
-export const translationAlertLineTextAtom = atom<string | null>(null, 'complect', 'alertLine');
