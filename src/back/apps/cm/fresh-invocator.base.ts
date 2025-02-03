@@ -3,11 +3,19 @@ import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { mylib } from 'front/utils';
 import { ICmComComment, IExportableCat, IExportableCom } from 'shared/api';
 import { CmFreshSokiInvocatorModel } from 'shared/api/invocators/cm/fresh-invocators.model';
-import { chordPackFileStore, eePackFileStore } from './editor-invocator.base';
+import { cmCatServerInvocatorBase } from './cat-invocator.base';
+import { cmComExternalsSokiInvocatorBaseServer } from './com-externals-invocator.base';
+import { cmComServerInvocatorBase } from './com-invocator.base';
+import { cmComOrderServerInvocatorBase } from './com-order-invocator.base';
+import { chordPackFileStore, cmEditorSokiInvocatorBaseServer, eePackFileStore } from './editor-invocator.base';
 import { cmEditorServerInvocatorShareMethods } from './editor-invocator.shares';
 import { eventPacksFileStore } from './file-stores';
 import { cmServerInvocatorShareMethods } from './invocator.shares';
-import { aboutComFavoritesFileStore, comCommentsFileStore } from './user-store-invocator.base';
+import {
+  aboutComFavoritesFileStore,
+  cmUserStoreSokiInvocatorBaseServer,
+  comCommentsFileStore,
+} from './user-store-invocator.base';
 
 export const comsFileStore = new FileStore<IExportableCom[]>('/apps/cm/coms.json', []);
 export const catsFileStore = new FileStore<IExportableCat[]>('/apps/cm/cats.json', []);
@@ -128,3 +136,10 @@ export const cmFreshServerInvocatorBase = new CmFreshSokiInvocatorBaseServer('Cm
       return resultComments;
     },
 });
+
+cmComServerInvocatorBase.$$register();
+cmComExternalsSokiInvocatorBaseServer.$$register();
+cmCatServerInvocatorBase.$$register();
+cmComOrderServerInvocatorBase.$$register();
+cmEditorSokiInvocatorBaseServer.$$register();
+cmUserStoreSokiInvocatorBaseServer.$$register();
