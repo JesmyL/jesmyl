@@ -4,10 +4,10 @@ import sokiServer from './complect/soki/SokiServer';
 
 export const SokiInvocatorServer = makeSokiInvocator<'SokiInvocatorServer', SokiServerClientSelector>(
   'SokiInvocatorServer',
-  (invoke, client) => {
+  (invoke, clientSelector) => {
     const { promise, reject, resolve } = Promise.withResolvers();
     try {
-      sokiServer.send({ invoke, requestId: '' + Date.now() + Math.random() }, client);
+      sokiServer.send({ invoke, requestId: '' + Date.now() + Math.random() }, clientSelector);
       resolve(undefined);
     } catch (e) {
       reject('' + e);

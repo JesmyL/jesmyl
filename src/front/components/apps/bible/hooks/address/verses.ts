@@ -5,7 +5,7 @@ import { useBibleTranslatesContext } from '../../translates/TranslatesContext';
 import { useBibleShowTranslatesValue } from '../../translates/hooks';
 import { useBibleVersei } from '../../translations/lists/atoms';
 import { useBibleTranslationSlideSyncContentSetter } from '../slide-sync';
-import { useBibleTranslationJoinAddress, useBibleTranslationJoinAddressSetter } from './address';
+import { useBibleTranslationJoinAddress } from './address';
 import { useBibleAddressBooki } from './books';
 import { useBibleAddressChapteri } from './chapters';
 
@@ -40,22 +40,21 @@ export const usePutBibleAddressVerseiSetter = () => {
   const currentBooki = useBibleAddressBooki();
   const currentJoinAddress = useBibleTranslationJoinAddress();
   const syncSlide = useBibleTranslationSlideSyncContentSetter();
-  const setJoin = useBibleTranslationJoinAddressSetter();
 
   return useCallback(
     (versei: BibleVersei, isDblClick: boolean): (() => void) | null => {
       if (isDblClick) syncSlide();
-      else setJoin(null);
+      else bibleIDB.set.joinAddress(null);
 
       bibleIDB.set.versei(versei);
 
       return () => {
         if (currentJoinAddress?.[currentBooki]?.[currentChapteri]?.includes(versei)) {
-          setJoin(currentJoinAddress);
+          bibleIDB.set.joinAddress(currentJoinAddress);
         }
       };
     },
-    [currentBooki, currentChapteri, currentJoinAddress, setJoin, syncSlide],
+    [currentBooki, currentChapteri, currentJoinAddress, syncSlide],
   );
 };
 

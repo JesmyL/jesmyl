@@ -1,3 +1,4 @@
+import { propagationStopper } from '../utils/utils';
 import { ConfiguratorEditProps } from './model';
 
 type Props = ConfiguratorEditProps<{ fontSize?: number }>;
@@ -11,6 +12,7 @@ export const FontSizeConfigurator = ({ config, updateConfig }: Props) => {
         value={config.fontSize}
         type="number"
         onChange={event => updateConfig({ ...config, fontSize: +event.currentTarget?.value || 10 })}
+        onKeyDown={propagationStopper}
       />
     </div>
   );

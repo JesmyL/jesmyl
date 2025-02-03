@@ -26,12 +26,12 @@ declare global {
   type NaNumber = number | NotANumber;
 
   type EventStopper<With = {}> = { stopPropagation(): void } & With;
-  type CallbackStopper = (event: EventStopper) => void;
+  type PropagationStopper = (event: EventStopper) => void;
 
   type EventPreventer<With = {}> = { preventDefault(): void } & With;
-  type CallbackPreventer = (event: EventPreventer) => void;
+  type DefaultPreventer = (event: EventPreventer) => void;
 
-  type CallbackPreventerAndStopper = (event: EventPreventer & EventStopper) => void;
+  type PreventerAndStopperCallback = (event: EventPreventer & EventStopper) => void;
 
   type NonUndefined<T> = T extends undefined ? never : T;
   type NonNull<T> = T extends null ? never : T;

@@ -8,12 +8,11 @@ import { bibleAllTranslates } from './complect';
 import { useBibleMyTranslates, useBibleShowTranslatesValue } from './hooks';
 
 interface ChapterCombine {
-  chapters?: (string[][] | null)[];
-  lowerChapters?: string[][][];
-  htmlChapters?: ({ __html: string }[][] | und)[];
+  lowerChapters?: (string[][] | und)[];
+  chapters?: ((string[] | und)[] | nil)[];
 }
 
-const mapChapters = (tName: BibleTranslateName, { chapters }: { chapters: (string[][] | null)[] }) => {
+const mapChapters = (tName: BibleTranslateName, { chapters }: { chapters: (string[][] | nil)[] }) => {
   const lowerChapters: string[][][] = [];
 
   for (const book of chapters) {
@@ -27,12 +26,9 @@ const mapChapters = (tName: BibleTranslateName, { chapters }: { chapters: (strin
     }
   }
 
-  const htmlChapters = chapters.map(book => book?.map(chapter => chapter.map(__html => ({ __html }))));
-
   localTranslates[tName] = {
-    chapters,
     lowerChapters,
-    htmlChapters,
+    chapters,
   };
 };
 
@@ -49,8 +45,8 @@ bibleTranslatesIDB.hook('creating', (tName, obj) => {
 
 export const bibleLowerBooks = bibleTitles.titles.map(book => book.map(title => title.toLowerCase()));
 
-export type BibleBookTranslates = Partial<Record<BibleTranslateName, ChapterCombine>>;
-const loadings: Partial<Record<BibleTranslateName, boolean>> = {};
+export type BibleBookTranslates = PRecord<BibleTranslateName, ChapterCombine>;
+const loadings: PRecord<BibleTranslateName, boolean> = {};
 let localTranslates: BibleBookTranslates = {};
 
 const Context = React.createContext<BibleBookTranslates>({});

@@ -1,5 +1,6 @@
 import { environment, InvocatorClientEvent, InvocatorServerEvent } from 'shared/api';
 import { Eventer, makeRegExp } from 'shared/utils';
+import { authIDB } from './components/index/db/auth-idb';
 import { indexIDB } from './components/index/db/index-idb';
 import { onSokiClientEventerInvocatorInvoke } from './eventers';
 
@@ -32,7 +33,7 @@ export class SokiTrip {
     this.ws.onopen = async () => {
       try {
         await this.send({
-          token: localStorage.token || null,
+          token: await authIDB.get.token(),
           visit: {
             deviceId: await indexIDB.get.deviceId(),
             version: await indexIDB.get.appVersion(),
@@ -45,8 +46,8 @@ export class SokiTrip {
         this.isOpened = true;
       } catch (errorMessage) {
         if (errorMessage === '#invalid_token') {
-          indexIDB.remove.auth();
-          localStorage.token = '';
+          authIDB.remove.auth();
+          authIDB.remove.token();
 
           this.onTokenInvalidEvent.invoke();
         }

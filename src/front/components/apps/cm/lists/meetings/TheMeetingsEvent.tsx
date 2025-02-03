@@ -39,11 +39,11 @@ export default function TheMeetingsEvent() {
               <div className="flex flex-gap margin-gap-h">
                 {isMobileDevice ? (
                   <ScheduleWidgetWatchLiveTranslationButton schw={schedule.w} />
-                ) : (
+                ) : auth.level ? (
                   <Link to="tran">
                     <IconComputerStrokeRounded className="margin-gap-v" />
                   </Link>
-                )}
+                ) : null}
                 {auth.level < 50 || <CmMeetingEventEdits packComws={packComws} />}
               </div>
             }

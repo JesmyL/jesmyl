@@ -172,7 +172,7 @@ export class Com extends BaseNamed<IExportableCom> {
   }
 
   async setChordsInitialTon() {
-    const fixed = { ...(await cmIDB.tb.fixedComs.get(this.wid)) };
+    const fixed = { ...(mylib.isNNlOrUnd(this.wid) && (await cmIDB.tb.fixedComs.get(this.wid))) };
     delete fixed.ton;
     await cmIDB.tb.fixedComs.put(fixed);
   }

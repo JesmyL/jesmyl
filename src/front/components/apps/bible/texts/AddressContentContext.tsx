@@ -41,8 +41,7 @@ export const BibleTranslationScreenTextsContext = (props: { children?: React.Rea
   const singleAddress = useBibleSimpleAddressText(booki, chapteri, versei);
   const syncNum = useBibleSlideSyncValue();
 
-  const joinCode = useBibleTranslationJoinAddress();
-  const joinAddress = useBibleJoinedAddressText(joinCode);
+  const joinAddress = useBibleJoinedAddressText(actualJoinAddress);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const cachableJoinAddress = useMemo(() => actualJoinAddress, [syncNum]);
@@ -54,7 +53,7 @@ export const BibleTranslationScreenTextsContext = (props: { children?: React.Rea
     () => ({
       cachedJoinAddress: joinAddress,
       cachedSingleAddress: singleAddress,
-      cachedJoinCode: joinCode,
+      cachedJoinCode: actualJoinAddress,
       joinedCachedText: joinedText,
       cachedText: text,
     }),
@@ -63,7 +62,7 @@ export const BibleTranslationScreenTextsContext = (props: { children?: React.Rea
   );
 
   const address =
-    (props.isPreview ? joinCode : cachedJoinCode) == null
+    (props.isPreview ? actualJoinAddress : cachedJoinCode) == null
       ? props.isPreview
         ? singleAddress
         : cachedSingleAddress

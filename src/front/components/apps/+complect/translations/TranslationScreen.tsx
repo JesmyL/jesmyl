@@ -34,6 +34,7 @@ export const TranslationScreen = (props: TranslationScreenProps) => {
       )}
 
       <StyledNextSiblingVisibiliter
+        key="StyledNextSiblingVisibiliter"
         className="full-size"
         $isShowTranslatedText={isShowTranslatedText && !initialSlide}
       >
@@ -56,6 +57,8 @@ export const TranslationScreen = (props: TranslationScreenProps) => {
 };
 
 const StyledNextSiblingVisibiliter = styled.div<{ $isShowTranslatedText: boolean }>`
+  background-color: black;
+
   ${props =>
     !props.$isShowTranslatedText &&
     css`

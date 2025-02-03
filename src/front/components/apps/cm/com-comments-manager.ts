@@ -1,5 +1,5 @@
 import { useLiveQuery } from 'dexie-react-hooks';
-import { indexIDB } from 'front/components/index/db/index-idb';
+import { authIDB } from 'front/components/index/db/auth-idb';
 import { CmComWid } from '../../../../shared/api/complect/apps/cm/complect/enums';
 import { cmIDB } from './_db/cm-idb';
 import { cmUserStoreSokiInvocatorClient } from './invocators/user-store-invocator.methods';
@@ -7,7 +7,7 @@ import { cmUserStoreSokiInvocatorClient } from './invocators/user-store-invocato
 export const useComComment = (comw: CmComWid) => useLiveQuery(() => cmIDB.db.comComments.get(comw), [comw])?.comment;
 
 let trySend = async (comw: CmComWid, comment: string, setIsLoading?: (is: boolean) => void) => {
-  const auth = await indexIDB.get.auth();
+  const auth = await authIDB.get.auth();
   if (auth?.login == null) {
     trySend = () => Promise.resolve();
     return;

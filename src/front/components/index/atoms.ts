@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { SokiAuthLogin, SokiStatistic } from 'shared/api';
 import { AppName } from '../../app/App.model';
 import { atom } from '../../complect/atoms';
+import { authIDB } from './db/auth-idb';
 import { indexIDB } from './db/index-idb';
 import { IndexSchWTranslationLiveDataValue } from './Index.model';
 
@@ -15,7 +16,7 @@ export const useIndexSchedules = () => useLiveQuery(() => indexIDB.db.schs.toArr
 export const useIndexFileAssociations = () => indexIDB.useValue.fileAssociations();
 export const useIndexValues = () => indexIDB.useValue.values();
 
-export const useAuth = () => indexIDB.useValue.auth();
+export const useAuth = () => authIDB.useValue.auth();
 
 export const useAppFontFamily = () => indexIDB.use.appFontFamily();
 

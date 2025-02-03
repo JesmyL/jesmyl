@@ -10,6 +10,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
   rightNode?: React.ReactNode;
   iconWrapperClassName?: string;
   path?: string;
+  onIconClick?: PreventerAndStopperCallback;
 }
 
 export const BottomPopupItem = ({
@@ -20,6 +21,7 @@ export const BottomPopupItem = ({
   iconWrapperClassName,
   path,
   onClick,
+  onIconClick,
   ...attrs
 }: Props) => {
   const node = (
@@ -29,7 +31,10 @@ export const BottomPopupItem = ({
       className={'pointer ' + (attrs.className || '')}
     >
       <div className="flex flex-gap">
-        <div className={`icon-box ${iconWrapperClassName || ''}`}>
+        <div
+          className={`icon-box ${iconWrapperClassName || ''}`}
+          onClick={onIconClick}
+        >
           <Icon className="abs-icon" />
         </div>
         {(titleNode || title) && <div className="title">{titleNode ?? title}</div>}

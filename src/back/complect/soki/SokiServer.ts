@@ -106,20 +106,21 @@ export class SokiServer {
 
   sendInvokeEvent = (event: InvocatorServerEvent, tool: SokiServerInvocatorTool) => this.send(event, tool.client);
 
-  send(event: InvocatorServerEvent, clientScalar: SokiServerClientSelector) {
-    if (clientScalar instanceof WebSocket) {
-      clientScalar.send(JSON.stringify(event));
+  send(event: InvocatorServerEvent, clientSelector: SokiServerClientSelector) {
+    if (clientSelector instanceof WebSocket) {
+      clientSelector.send(JSON.stringify(event));
+      return;
+    }
+
+    if (clientSelector === null) {
+      this.clients.forEach(sendToEachClient, JSON.stringify(event));
       return;
     }
 
     const stringEvent = JSON.stringify(event);
-
-    if (clientScalar === null) this.clients.forEach(client => client.send(stringEvent));
-    else
-      this.clients.forEach(client => {
-        if (clientScalar(client, this.auths.get(client))) return;
-        client.send(stringEvent);
-      });
+    this.clients.forEach(client => {
+      if (clientSelector(client, this.auths.get(client))) client.send(stringEvent);
+    });
   }
 
   private visitStringified = (visit: SokiVisit | nil) => {
@@ -136,6 +137,10 @@ export class SokiServer {
       `<blockquote expandable>${auth ? JSON.stringify(auth, null, 1) : ''}</blockquote>`
     );
   };
+}
+
+function sendToEachClient(this: string, client: WebSocket) {
+  client.send(this);
 }
 
 const sokiServer = new SokiServer();

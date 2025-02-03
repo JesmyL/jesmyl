@@ -16,7 +16,7 @@ export const useCcomw = (): CmComWid | NaN => {
 export function useCcom(topComw?: number): Com | und {
   const ccomw = useCcomw();
   const comw = topComw ?? ccomw;
-  const icom = useLiveQuery(() => cmIDB.tb.coms.get(comw), [comw]);
+  const icom = useLiveQuery(() => mylib.isNNlOrUnd(comw) && cmIDB.tb.coms.get(comw), [comw]);
 
   return useMemo(() => icom && new Com(icom), [icom]);
 }
@@ -24,8 +24,8 @@ export function useCcom(topComw?: number): Com | und {
 export function useFixedCcom(topComw?: number): Com | und {
   const ccomw = useCcomw();
   const comw = topComw ?? ccomw;
-  const icom = useLiveQuery(() => cmIDB.tb.coms.get(comw), [comw]);
-  const ifixedCom = useLiveQuery(() => cmIDB.tb.fixedComs.get(+comw), [comw]);
+  const icom = useLiveQuery(() => mylib.isNNlOrUnd(comw) && cmIDB.tb.coms.get(comw), [comw]);
+  const ifixedCom = useLiveQuery(() => mylib.isNNlOrUnd(comw) && cmIDB.tb.fixedComs.get(+comw), [comw]);
 
   return useMemo(() => icom && new Com({ ...icom, ...ifixedCom }), [icom, ifixedCom]);
 }
@@ -34,7 +34,7 @@ export const ccomwAtom = atom<CmComWid | und>(undefined);
 
 export function useCom(): Com | und {
   const comw = useAtomValue(ccomwAtom);
-  const icom = useLiveQuery(() => cmIDB.tb.coms.get(comw), [comw]);
+  const icom = useLiveQuery(() => mylib.isNNlOrUnd(comw) && cmIDB.tb.coms.get(comw), [comw]);
 
   return useMemo(() => icom && new Com(icom), [icom]);
 }

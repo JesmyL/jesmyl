@@ -27,58 +27,38 @@ export class SMyLib {
     return { inSec, inMin, inHour, inDay, inMonth, inYear };
   }
 
-  isObj(obj: any): obj is Record<string, any> {
-    return obj instanceof Object && !(obj instanceof Array);
-  }
-  isobj(obj: any): obj is Record<string | number, any> | any[] {
-    return typeof obj === 'object' && obj != null;
-  }
-  isArr<Item = any>(obj: any): obj is Item[] {
-    return obj instanceof Array;
-  }
-  isNum(obj: any): obj is number {
-    return typeof obj === 'number' && !isNaN(obj);
-  }
-  isnum(obj: any): obj is number {
-    return parseFloat(obj) == obj;
-  }
-  isStr(obj: any): obj is string {
-    return typeof obj === 'string';
-  }
-  isFunc(obj: any): obj is Function {
-    return typeof obj === 'function';
-  }
-  isRegExp(obj: any): obj is RegExp {
-    return obj instanceof RegExp;
-  }
-  isAFunc(obj: any): obj is Function {
-    return this.isFunc(obj) && obj[Symbol.toStringTag] === 'AsyncFunction';
-  }
-  isUnd(obj: any): obj is undefined {
-    return obj === undefined;
-  }
-  isBool(obj: any): obj is boolean {
-    return typeof obj === 'boolean';
-  }
-  isNull(obj: any): obj is null {
-    return obj === null;
-  }
-  isNil(obj: any): obj is null | undefined {
-    return obj === null || obj === undefined;
-  }
-  isNaN(obj: any): obj is NaN {
-    return typeof obj === 'number' && isNaN(obj);
+  isObj = (it: any): it is Record<string, any> => it instanceof Object && !(it instanceof Array);
+  isobj = (it: any): it is Record<string | number, any> | any[] => typeof it === 'object' && it != null;
+  isArr = <Item = any>(it: any): it is Item[] => it instanceof Array;
+  isNum = (it: any): it is number => typeof it === 'number' && !isNaN(it);
+  isnum = (it: any): it is number => parseFloat(it) == it;
+  isStr = (it: any): it is string => typeof it === 'string';
+  isFunc = (it: any): it is Function => typeof it === 'function';
+  isRegExp = (it: any): it is RegExp => it instanceof RegExp;
+  isAFunc = (it: any): it is Function => this.isFunc(it) && it[Symbol.toStringTag] === 'AsyncFunction';
+  isUnd = (it: any): it is undefined => it === undefined;
+  isBool = (it: any): it is boolean => typeof it === 'boolean';
+  isNull = (it: any): it is null => it === null;
+  isNil = (it: any): it is null | undefined => it === null || it === undefined;
+  isNaN = (it: any): it is NaN => typeof it === 'number' && isNaN(it);
+  isNl = (it: unknown) => this.isNaN(it) || this.isNil(it);
+  isNNlOrUnd = (it: unknown) => (this.isNl(it) ? undefined : true);
+
+  static entries = <T>(it: T): [keyof T, T[keyof T]][] => (it == null ? [] : Object.entries(it)) as never;
+
+  static keys<T, Key extends T extends Record<infer Key, any> | PRecord<infer Key, any> ? Key : string>(it: T): Key[] {
+    if (it == null) return [];
+    return Object.keys(it) as never;
   }
 
-  static entries<T>(obj: T): [keyof T, T[keyof T]][] {
-    return (obj == null ? [] : Object.entries(obj ?? {})) as never;
+  keys<T extends object | nil>(it: T): (keyof Required<T>)[] {
+    if (it == null) return [];
+    return Object.keys(it) as never;
   }
 
-  static keys<T, Key extends T extends Record<infer Key, any> | Partial<Record<infer Key, any>> ? Key : string>(
-    obj: T,
-  ): Key[] {
-    if (obj == null) return [];
-    return Object.keys(obj as never) as never;
+  values<T extends object | nil>(it: T): Required<T>[keyof T][] {
+    if (it == null) return [];
+    return Object.values(it) as never;
   }
 
   func(...funcs: any[]) {
@@ -237,14 +217,6 @@ export class SMyLib {
       arg == null ? null : this.keys(arg).forEach(arn => arg[arn] !== undefined && (zero[arn] = arg[arn])),
     );
     return zero;
-  }
-
-  keys<T extends object>(o: T): (keyof T)[] {
-    return Object.keys(o) as never;
-  }
-
-  values<T extends object>(o: T): T[keyof T][] {
-    return Object.values(o) as never;
   }
 
   declension(num: number, one?: string, two?: string, five?: string) {
@@ -425,92 +397,6 @@ export class SMyLib {
         (str || '').split(makeRegExp('/(\\\\?\\$\\w+!{0,2}\\?{0,2};?|\\\\?{{|\\\\?}{|\\\\?}})/')).filter(s => s),
       )?.join('') || ''
     );
-  }
-
-  newInstance<T>(val: T): T {
-    if (this.isArr(val)) return [] as never;
-    else if (this.isObj(val)) return {} as never;
-
-    return val;
-  }
-
-  checkIsCorrectArgs(action: string, realArgs: Record<string, any>, typeArgs: Record<string, any>) {
-    const args = { ...realArgs };
-    const ruleEntries = SMyLib.entries(typeArgs);
-
-    if (!ruleEntries.length) return null;
-    const errors: string[] = [];
-
-    const add = (message: string) => {
-      errors.push(message);
-      if (message) console.error(message);
-      return errors;
-    };
-
-    const argsEntries = SMyLib.entries(args);
-    if (!argsEntries.length) {
-      return add('Нет необходимых аргументов для данного исполнения');
-    }
-
-    for (const [key, type] of ruleEntries) {
-      if (key === '$$vars') continue;
-      const argEntry = argsEntries.find(([argn]) => argn === key);
-      if (!argEntry) {
-        if (this.isRequiredType(type)) add(`Не указан параметр "${key}" для исполнения "${action}"`);
-        continue;
-      }
-      const [, value] = argEntry;
-      if (!this.isCorrectType(value, type))
-        add(
-          `Неверный тип параметра "${key}" (${value}) в исполнении "${action}". Ожидалось "${
-            this.isArr(type) ? type.join(' | ') : type
-          }"`,
-        );
-    }
-
-    return errors;
-  }
-
-  isRequiredType(typer: string | any[]) {
-    const check = (type: string | any) => {
-      if (typeof type === 'string') return type !== type.toLowerCase();
-      else if (type == null) return false;
-      else if (Array.isArray(type)) return !type.some((type): boolean => !check(type));
-      else return true;
-    };
-    return check(typer);
-  }
-
-  isCorrectType(value: any, typer: string | any[]): boolean {
-    if (this.isStr(typer)) {
-      if (typer[0] === '#') {
-        const explodes = this.explode(':', typer as string, 2);
-        const type = explodes[0].slice(1);
-        const lower = type.toLowerCase();
-
-        if (lower === type && value == null) return true;
-
-        let isCorrect = false;
-
-        if (lower === 'list') isCorrect = this.isArr(value);
-        else if (lower === 'dict') isCorrect = this.isObj(value);
-        else if (lower === 'object') isCorrect = this.isobj(value);
-        else if (lower === 'string') isCorrect = this.isStr(value);
-        else if (lower === 'numeric') isCorrect = this.isnum(value);
-        else if (lower === 'number') isCorrect = this.isNum(value);
-        else if (lower === 'num') isCorrect = value === 0 || value === 1;
-        else if (lower === 'boolean') isCorrect = this.isBool(value);
-        else if (lower === 'simple') isCorrect = this.isStr(value) || this.isNum(value);
-        else if (lower === 'primitive') isCorrect = this.isBool(value) || this.isStr(value) || this.isNum(value);
-        else if (lower === 'any') isCorrect = true;
-
-        return isCorrect;
-      } else return value === typer;
-    } else if (this.isArr(typer)) {
-      return (typer as any[]).some(tup => this.isCorrectType(value, tup));
-    }
-
-    return value === typer;
   }
 
   toSorted<Item>(items: Item[], compareFunction?: (a: Item, b: Item) => number) {

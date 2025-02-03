@@ -1,11 +1,10 @@
 import { AppName } from 'front/app/App.model';
 import { DexieDB } from 'front/complect/_DexieDB';
-import { DeviceId, IndexValues, IScheduleWidget, LocalSokiAuth, ScheduleWidgetPhotoKey } from 'shared/api';
+import { DeviceId, IndexValues, IScheduleWidget, ScheduleWidgetPhotoKey } from 'shared/api';
 import { FileAssociations } from '../parts/actions/files/complect/MyFilesTypeBox';
 
 interface Storage {
   lastModifiedAt: number;
-  auth: LocalSokiAuth;
   values: IndexValues;
   appFontFamily: string | null;
   deviceId: DeviceId;
@@ -22,7 +21,6 @@ class IndexIDB extends DexieDB<Storage> {
   constructor() {
     super('index', {
       lastModifiedAt: { $byDefault: 0 },
-      auth: { $byDefault: { level: 0 } },
       values: { $byDefault: {} },
       appFontFamily: { $byDefault: null },
       appVersion: { $byDefault: 0 },

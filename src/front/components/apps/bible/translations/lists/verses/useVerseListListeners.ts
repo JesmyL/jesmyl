@@ -1,20 +1,19 @@
 import { mylib } from 'front/utils';
 import { useEffect } from 'react';
 import { bibleIDB } from '../../../_db/bibleIDB';
-import { useBibleTranslationJoinAddress, useBibleTranslationJoinAddressSetter } from '../../../hooks/address/address';
+import { useBibleTranslationJoinAddress } from '../../../hooks/address/address';
 import { useBibleAddressVersei } from '../../../hooks/address/verses';
 import { useBibleTranslationSlideSyncContentSetter } from '../../../hooks/slide-sync';
 import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress } from '../../../model';
 import { verseiIdPrefix } from './VerseList';
 
 export const useVerseListListeners = (
-  verseListNodeRef: { current: HTMLDivElement | null },
+  verseListNodeRef: { current: HTMLOListElement | null },
   currentBooki: BibleBooki,
   currentChapteri: BibleChapteri,
 ) => {
   const currentJoinAddress = useBibleTranslationJoinAddress();
   const syncSlide = useBibleTranslationSlideSyncContentSetter();
-  const setJoin = useBibleTranslationJoinAddressSetter();
   const currentVersei = useBibleAddressVersei();
   const currentJoin = currentJoinAddress?.[currentBooki]?.[currentChapteri];
 
@@ -39,7 +38,7 @@ export const useVerseListListeners = (
         clearTimeout(clickTimeout);
         if (isDblClick) {
           if (!currentJoin?.includes(versei)) {
-            setJoin(null);
+            bibleIDB.set.joinAddress(null);
             bibleIDB.set.versei(versei);
           }
           syncSlide();
@@ -51,7 +50,7 @@ export const useVerseListListeners = (
 
         clickTimeout = setTimeout(() => {
           if (!ctrlKey && !shiftKey) {
-            setJoin(null);
+            bibleIDB.set.joinAddress(null);
             bibleIDB.set.versei(versei);
 
             return;
@@ -107,19 +106,10 @@ export const useVerseListListeners = (
             }
           }
 
-          setJoin(newJoin);
+          bibleIDB.set.joinAddress(newJoin);
         }, 150);
       })
       .clearTimeout(clickTimeout)
       .effect();
-  }, [
-    currentBooki,
-    currentChapteri,
-    currentJoin,
-    currentJoinAddress,
-    currentVersei,
-    setJoin,
-    syncSlide,
-    verseListNodeRef,
-  ]);
+  }, [currentBooki, currentChapteri, currentJoin, currentJoinAddress, currentVersei, syncSlide, verseListNodeRef]);
 };

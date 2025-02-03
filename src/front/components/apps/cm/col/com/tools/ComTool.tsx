@@ -1,14 +1,15 @@
-import { HTMLAttributes } from 'react';
 import { Link } from 'react-router-dom';
 import { BottomPopupItem } from '../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
 import { contextCreator } from '../../../../../../complect/contextCreator';
 
 export const [IsComToolIconItemsContext, useIsComToolIconItemsContext] = contextCreator(false);
-export const [ComToolItemAttrsContext, useComToolItemAttrsContext] = contextCreator<
-  HTMLAttributes<HTMLDivElement> | und
->(undefined);
+export const [ComToolItemAttrsContext, useComToolItemAttrsContext] = contextCreator<{
+  onIconClick?: PreventerAndStopperCallback;
+}>({});
 
-export const ComTool = ({ path, ...props }: Parameters<typeof BottomPopupItem>[0]) => {
+type Props = Parameters<typeof BottomPopupItem>[0];
+
+export const ComTool = ({ path, ...props }: Props) => {
   const itemNode = useIsComToolIconItemsContext() ? (
     <props.Icon
       className="pointer"
@@ -21,7 +22,7 @@ export const ComTool = ({ path, ...props }: Parameters<typeof BottomPopupItem>[0
   return path ? <Link to={path}>{itemNode}</Link> : itemNode;
 };
 
-const Bottom = (props: Parameters<typeof BottomPopupItem>[0]) => {
+const Bottom = (props: Props) => {
   return (
     <BottomPopupItem
       {...useComToolItemAttrsContext()}

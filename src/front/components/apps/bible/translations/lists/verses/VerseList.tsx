@@ -12,7 +12,7 @@ export const verseiIdPrefix = 'bible-versei-';
 const fastVerses = new JStorageSetOrArrayVal<string[]>('bible', 'fastVerses', []);
 
 export default function BibleVerseList(): JSX.Element {
-  const verseListRef = useRef<HTMLDivElement>(null);
+  const verseListRef = useRef<HTMLOListElement>(null);
 
   const currentBooki = useBibleAddressBooki();
   const currentChapteri = useBibleAddressChapteri();
@@ -29,22 +29,22 @@ export default function BibleVerseList(): JSX.Element {
   useVerseListListeners(verseListRef, currentBooki, currentChapteri);
 
   return (
-    <Container ref={verseListRef}>
-      {(verses ?? fastVerses.get())?.map((verse, versei) => {
+    <StyledContainer ref={verseListRef}>
+      {(verses ?? fastVerses.get())?.map((__html, versei) => {
         return (
-          <Face
+          <StyledFace
             key={versei}
             id={verseiIdPrefix + versei}
             className="bible-list-face pointer"
-            dangerouslySetInnerHTML={{ __html: `${versei + 1}. ${verse}` }}
+            dangerouslySetInnerHTML={{ __html }}
           />
         );
       })}
-    </Container>
+    </StyledContainer>
   );
 }
 
-const Face = styled.div`
+const StyledFace = styled.li`
   max-width: 100%;
   transition-property: background-color, color;
   transition-duration: 0.5s;
@@ -69,10 +69,11 @@ const Face = styled.div`
   }
 `;
 
-const Container = styled.div`
+const StyledContainer = styled.ol`
   overflow-y: auto;
   overflow-x: hidden;
   width: calc(100vw - 300px - 2.5em - 7em);
+  list-style-position: inside;
 
   insertedtext,
   textinbrackets {

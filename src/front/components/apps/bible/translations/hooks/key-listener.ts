@@ -2,11 +2,7 @@ import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { useActualRef } from '../../../../../complect/useActualRef';
 import { bibleIDB } from '../../_db/bibleIDB';
-import {
-  useBibleTranslationAddressIndexesSetter,
-  useBibleTranslationJoinAddress,
-  useBibleTranslationJoinAddressSetter,
-} from '../../hooks/address/address';
+import { useBibleTranslationAddressIndexesSetter, useBibleTranslationJoinAddress } from '../../hooks/address/address';
 import { useBibleAddressBooki } from '../../hooks/address/books';
 import { useBibleAddressChapteri } from '../../hooks/address/chapters';
 import { useBibleTranslationSlideSyncContentSetter } from '../../hooks/slide-sync';
@@ -21,11 +17,10 @@ export const useBibleScreenTranslationKeyListener = (versei: BibleVersei, win?: 
   const currentBooki = useBibleAddressBooki();
   const currentChapteri = useBibleAddressChapteri();
   const showTranslates = useBibleShowTranslatesValue();
-  const chapters = useBibleTranslatesContext()[showTranslates[0]]?.chapters;
+  const htmlChapters = useBibleTranslatesContext()[showTranslates[0]]?.chapters;
   const joinAddress = useBibleTranslationJoinAddress();
   const currentJoinAddress = useBibleTranslationJoinAddress();
   const syncSlide = useBibleTranslationSlideSyncContentSetter();
-  const setJoin = useBibleTranslationJoinAddressSetter();
   const addToPlan = useBibleTranslationAddToPlan();
   const setAddress = useBibleTranslationAddressIndexesSetter();
   const actualAddressRef = useActualRef<BibleTranslationAddress>(
@@ -83,7 +78,7 @@ export const useBibleScreenTranslationKeyListener = (versei: BibleVersei, win?: 
 
         const limitStepJump = (dir: 1 | -1) => {
           if (event.shiftKey || currentJoinAddress == null) {
-            const chapter = chapters?.[currentBooki]?.[currentChapteri];
+            const chapter = htmlChapters?.[currentBooki]?.[currentChapteri];
 
             bibleIDB.set.versei(versei =>
               dir < 0
@@ -111,7 +106,7 @@ export const useBibleScreenTranslationKeyListener = (versei: BibleVersei, win?: 
           const versei = Math[mathMethod](...verses) + dir;
 
           setAddress(booki, chapteri, versei)();
-          setJoin(null);
+          bibleIDB.set.joinAddress(null);
         };
 
         switch (event.code) {
@@ -139,7 +134,7 @@ export const useBibleScreenTranslationKeyListener = (versei: BibleVersei, win?: 
         verses.add(versei);
 
         if (event.code === 'ArrowDown' || event.code === 'ArrowRight') {
-          const chapter = chapters?.[currentBooki]?.[currentChapteri];
+          const chapter = htmlChapters?.[currentBooki]?.[currentChapteri];
 
           if (chapter !== undefined && versei < chapter.length - 1) verses.add(versei + 1);
         } else if (versei > 0) verses.delete(versei);
@@ -152,8 +147,8 @@ export const useBibleScreenTranslationKeyListener = (versei: BibleVersei, win?: 
         if (verses.size === 0) delete newJoin[currentBooki]?.[currentChapteri];
         if (mylib.keys(newJoin[currentBooki]).length === 0) delete newJoin[currentBooki];
 
-        setJoin(mylib.keys(newJoin).length === 0 ? null : newJoin);
+        bibleIDB.set.joinAddress(mylib.keys(newJoin).length === 0 ? null : newJoin);
       })
       .effect();
-  }, [chapters, currentBooki, currentChapteri, currentJoinAddress, setAddress, setJoin, syncSlide, versei, win]);
+  }, [htmlChapters, currentBooki, currentChapteri, currentJoinAddress, setAddress, syncSlide, versei, win]);
 };

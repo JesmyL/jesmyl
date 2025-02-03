@@ -7,7 +7,7 @@ export interface ScreenTranslationsFaceProps {
   configi: number;
   config: ScreenTranslationConfig;
   putOnClick: (configi: number) => (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-  putOnClose?: (configi: number) => CallbackStopper;
+  putOnClose?: (configi: number) => PropagationStopper;
   className: string;
 }
 

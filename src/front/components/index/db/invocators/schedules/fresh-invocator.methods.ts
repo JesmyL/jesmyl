@@ -1,11 +1,11 @@
 import { SokiInvocatorClient } from 'front/SokiInvocator.client';
 import { LocalSokiAuth } from 'shared/api';
 import { IndexBasicsSokiInvocatorModel } from 'shared/api/invocators/index/basics-invocators.model';
-import { indexIDB } from '../../index-idb';
+import { authIDB } from '../../auth-idb';
 
 const auth = ({ auth, token }: { auth: LocalSokiAuth; token: string }) => {
-  indexIDB.set.auth(auth);
-  localStorage.token = token || '';
+  authIDB.set.auth(auth);
+  authIDB.set.token(token);
 };
 
 class IndexBasicsSokiInvocatorClient extends SokiInvocatorClient<IndexBasicsSokiInvocatorModel> {}

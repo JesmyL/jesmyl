@@ -1,20 +1,19 @@
 import { useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { addEventListenerPipe, hookEffectPipe } from '../../../../../../complect/hookEffectPipe';
-import { ActualRef } from '../../../../../../complect/useActualRef';
+import { bibleIDB } from '../../../_db/bibleIDB';
 import { BibleSearchZone } from '../../../model';
 import { useBibleTranslationSearchResultSelectedSet } from '../hooks/results';
-import { useBibleSearchZone } from '../selectors';
 import BibleSearchPanelSearchTextInput from './SearchTextInput';
-import BibleSearchPanelAddressInput from './address/AddressInput';
+import { BibleSearchPanelAddressInput } from './address/AddressInput';
 
 interface Props {
   inputRef: React.RefObject<HTMLInputElement>;
-  putOnSearchZoneRef: ActualRef<(zone: BibleSearchZone) => void>;
+  setSearchZone: (zone: BibleSearchZone, inputRef: React.RefObject<HTMLInputElement>) => void;
 }
 
-export default function BibleSearchInputPanel({ inputRef, putOnSearchZoneRef }: Props) {
-  const [searchZone] = useBibleSearchZone();
+export default function BibleSearchInputPanel({ inputRef, setSearchZone }: Props) {
+  const searchZone = bibleIDB.useValue.searchZone();
   const setResultSelected = useBibleTranslationSearchResultSelectedSet();
 
   useEffect(() => {
@@ -47,21 +46,21 @@ export default function BibleSearchInputPanel({ inputRef, putOnSearchZoneRef }: 
       <SwitchButton
         className="pointer"
         $active={searchZone === 'global'}
-        onClick={() => putOnSearchZoneRef.current('global')}
+        onClick={() => setSearchZone('global', inputRef)}
       >
         текст
       </SwitchButton>
       <SwitchButton
         className="pointer"
         $active={searchZone === 'inner'}
-        onClick={() => putOnSearchZoneRef.current('inner')}
+        onClick={() => setSearchZone('inner', inputRef)}
       >
         глава
       </SwitchButton>
       <SwitchButton
         className="pointer"
         $active={searchZone === 'address'}
-        onClick={() => putOnSearchZoneRef.current('address')}
+        onClick={() => setSearchZone('address', inputRef)}
       >
         ссылка
       </SwitchButton>

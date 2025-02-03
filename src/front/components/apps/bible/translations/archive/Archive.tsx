@@ -2,11 +2,8 @@ import { mylib } from 'front/utils';
 import { memo } from 'react';
 import IconButton from '../../../../../complect/the-icon/IconButton';
 import { IconDelete01StrokeRounded } from '../../../../../complect/the-icon/icons/delete-01';
-import {
-  useBibleTranslationJoinAddressSetter,
-  useGetterJoinedAddressMaxValues,
-  useSetBibleAddressIndexes,
-} from '../../hooks/address/address';
+import { bibleIDB } from '../../_db/bibleIDB';
+import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '../../hooks/address/address';
 import { BibleTranslationAddress } from '../../model';
 import BibleTranslationArchiveJoinedAddressText from './JoinedAddress';
 import BibleTranslationArchiveJoinedContentText from './JoinedContentText';
@@ -23,7 +20,6 @@ const itemClassName = 'nowrap pointer margin-gap-b';
 
 export default memo(function BibleTranslationArchive({ title, list, onRemove }: Props): JSX.Element {
   const setAddress = useSetBibleAddressIndexes();
-  const setJoinAddress = useBibleTranslationJoinAddressSetter();
   const getJoinAddressMaxes = useGetterJoinedAddressMaxValues();
 
   return (
@@ -45,7 +41,7 @@ export default memo(function BibleTranslationArchive({ title, list, onRemove }: 
               id={'archive-itemi-' + itemi}
               className={itemClassName}
               onClick={() => {
-                setJoinAddress(null);
+                bibleIDB.set.joinAddress(null);
                 setAddress(...item);
               }}
             >
@@ -63,7 +59,7 @@ export default memo(function BibleTranslationArchive({ title, list, onRemove }: 
             id={'archive-itemi-' + itemi}
             className={itemClassName}
             onClick={() => {
-              setJoinAddress(item);
+              bibleIDB.set.joinAddress(item);
               setAddress(...getJoinAddressMaxes(item));
             }}
           >

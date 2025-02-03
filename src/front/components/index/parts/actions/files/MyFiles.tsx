@@ -5,7 +5,7 @@ import { useIndexFileAssociations } from '../../../atoms';
 import { MyFilesTypeBox } from './complect/MyFilesTypeBox';
 import { useAddMyFileOnDrop, useAddMyFileOnFileChange } from './hooks/on-add-file';
 
-const onDragOver: CallbackPreventer = event => event.preventDefault();
+const onDragOver: DefaultPreventer = event => event.preventDefault();
 const forceUpdater = (it: number) => it + 1;
 
 export default function IndexMyFiles() {

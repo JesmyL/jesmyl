@@ -70,7 +70,7 @@ export const useBibleJoinedSlideText = (
 
   if (joinAddress == null) return '';
 
-  const pasteText = (chapters: (string[][] | null)[] | und) => {
+  const pasteText = (chapters: ((string[] | und)[] | nil)[] | und) => {
     if (chapters === undefined) return '';
 
     return MyLib.entries(joinAddress)

@@ -19,7 +19,7 @@ export const AlertLineSlideText = () => {
   return (
     <StyledAlertLineContainer style={styles}>
       <StyledAlertLine
-        style={{ top: `${top}%`, background, backgroundColor }}
+        style={{ top: `${top}%`, ...(isWithBackground ? { background, backgroundColor } : {}) }}
         $speed={config.speed}
       >
         <StyledItem>{text}</StyledItem>
@@ -52,7 +52,7 @@ const StyledAlertLine = styled.div<{ $speed: number }>`
 
 const StyledItem = styled.div`
   min-width: 100vw;
-  padding: 0.5em 0.75em;
+  padding: 0.05em 0.75em;
   white-space: nowrap;
   animation: ${anim} var(--animation-time) linear infinite;
   -webkit-backface-visibility: hidden; /* Фикс возможного глюка с морганием в Сафари */

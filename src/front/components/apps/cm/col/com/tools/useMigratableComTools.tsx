@@ -2,7 +2,6 @@ import { MyLib } from 'front/utils';
 import React from 'react';
 import { MigratableComToolName } from 'shared/api';
 import styled, { css } from 'styled-components';
-import propsOfClicker from '../../../../../../complect/clicker/propsOfClicker';
 import { contextCreator } from '../../../../../../complect/contextCreator';
 import { cmIDB } from '../../../_db/cm-idb';
 import { cmUserStoreSokiInvocatorClient } from '../../../invocators/user-store-invocator.methods';
@@ -41,12 +40,13 @@ function mapTools(this: und | typeof mapToolsSelf, key: MigratableComToolName) {
       $active={this.comTopTools.includes(key)}
     >
       <ComToolItemAttrsContext.Provider
-        value={propsOfClicker({
-          onCtxMenu: event => {
+        value={{
+          onIconClick: event => {
+            event.stopPropagation();
             event.preventDefault();
             this.fun(key);
           },
-        })}
+        }}
       >
         {toolsDict[key]}
       </ComToolItemAttrsContext.Provider>

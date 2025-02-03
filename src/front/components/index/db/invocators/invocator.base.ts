@@ -5,14 +5,8 @@ import { IndexSokiInvocatorSharesModel } from 'shared/api/invocators/index/invoc
 
 class IndexSokiInvocatorBaseClient extends SokiInvocatorBaseClient<IndexSokiInvocatorSharesModel> {}
 export const indexSokiInvocatorBaseClient = new IndexSokiInvocatorBaseClient('IndexSokiInvocatorBaseClient', {
-  appVersion: () => async (appVersion, modifiedAt) => {
-    indexIDB.set.appVersion(appVersion);
-    indexIDB.updateLastModifiedAt(modifiedAt);
-  },
-  indexValues: () => async (value, modifiedAt) => {
-    indexIDB.set.values(value);
-    indexIDB.updateLastModifiedAt(modifiedAt);
-  },
+  appVersion: () => async appVersion => indexIDB.set.appVersion(appVersion),
+  indexValues: () => async value => indexIDB.set.values(value),
 });
 
 schSokiInvocatorBaseClient.$$register();

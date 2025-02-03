@@ -7,6 +7,8 @@ import IconConfigurator from 'front/complect/configurators/Icon';
 import { addEventListenerPipe, hookEffectPipe } from 'front/complect/hookEffectPipe';
 import KeyboardInput from 'front/complect/keyboard/KeyboardInput';
 import { useDebounceAction } from 'front/complect/useDebounceAction';
+import { propagationStopper } from 'front/complect/utils/utils';
+import { mylib } from 'front/utils';
 import { useDeferredValue, useEffect, useRef, useState } from 'react';
 import { BackgroundConfigurator } from '../../../../../../complect/configurators/Background';
 import { ColorConfigurator } from '../../../../../../complect/configurators/Color';
@@ -15,7 +17,10 @@ import { AlertLineConfig } from '../../model';
 import { AlertLineConfigIcon } from './AlertLineConfigIcon';
 
 export const AlertLineConfigSettingsInner = ({ configId }: { configId: number }) => {
-  const config = useLiveQuery(() => complectIDB.tb.alertLineConfigs.get(configId), [configId]);
+  const config = useLiveQuery(
+    () => mylib.isNNlOrUnd(configId) && complectIDB.tb.alertLineConfigs.get(configId),
+    [configId],
+  );
 
   return (
     config && (
@@ -70,18 +75,27 @@ const AlertLineConfigSettingsInnerWithConfig = ({
       </h2>
       <h2>Положение строки - вверх/вниз/+CTRL</h2>
       <div className="flex flex-gap nowrap">
-        Альтернативный текст:
+        Нвазвание:
         <KeyboardInput
-          value={config.text}
-          onChange={text => update({ text })}
+          value={config.title}
+          onChange={title => update({ title })}
         />
       </div>
+
       <IconConfigurator
         header=""
         icon={config.icon}
         used={[config.icon]}
         onSend={async icon => update({ ...config, icon })}
       />
+
+      <div className="flex flex-gap nowrap">
+        Альтернативный текст:
+        <KeyboardInput
+          value={config.text}
+          onChange={text => update({ text })}
+        />
+      </div>
       <ColorConfigurator
         config={config}
         updateConfig={update}
@@ -112,6 +126,7 @@ const AlertLineConfigSettingsInnerWithConfig = ({
           value={'' + config.speed}
           type="number"
           onChange={speed => update({ speed: +speed })}
+          onKeyDown={propagationStopper}
         />
       </div>
     </>

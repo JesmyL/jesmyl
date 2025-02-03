@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
-import { makeRegExp } from 'shared/utils';
+import { emptyArray, makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
-import { useDebounceValue } from '../../../../../complect/useDebounceValue';
-import { useBibleTranslationJoinAddressSetter } from '../../hooks/address/address';
+import { bibleIDB } from '../../_db/bibleIDB';
 import { useBibleAddressBooki } from '../../hooks/address/books';
 import { useBibleAddressChapteri } from '../../hooks/address/chapters';
 import { BibleBooki, BibleChapteri, BibleTranslationSingleAddress, BibleVersei } from '../../model';
@@ -10,7 +9,6 @@ import { useBibleTranslatesContext } from '../../translates/TranslatesContext';
 import { useBibleShowTranslatesValue } from '../../translates/hooks';
 import BibleSearchResultVerse from './ResultVerse';
 import { useBibleTranslationSearchResultList, useBibleTranslationSearchResultSelectedValue } from './hooks/results';
-import { useBibleSearchTerm, useBibleSearchZone } from './selectors';
 
 interface Props {
   inputRef: React.RefObject<HTMLInputElement>;
@@ -29,15 +27,14 @@ const maxItems = 49;
 const sortStringsByLength = (a: string, b: string) => b.length - a.length;
 
 export default function BibleSearchResults({ inputRef, height = '100px', innerZone, onClick: userOnClick }: Props) {
-  const [searchZone] = useBibleSearchZone();
-  const searchTerm = useDebounceValue(useBibleSearchTerm()[0]);
+  const searchZone = bibleIDB.useValue.searchZone();
+  const searchTerm = bibleIDB.useValue.searchTerm();
   const showTranslates = useBibleShowTranslatesValue();
   const lowerChapters = useBibleTranslatesContext()[showTranslates[0]]?.lowerChapters;
   const [list, setList] = useState<JSX.Element[]>([]);
   const resultSelected = useBibleTranslationSearchResultSelectedValue();
   const [resultList, setResultList] = useBibleTranslationSearchResultList();
   const onClick = useCallback(() => inputRef.current?.focus(), [inputRef]);
-  const setJoin = useBibleTranslationJoinAddressSetter();
 
   let currentBooki = useBibleAddressBooki();
   let currentChapteri = useBibleAddressChapteri();
@@ -77,6 +74,7 @@ export default function BibleSearchResults({ inputRef, height = '100px', innerZo
     if (searchZone === 'global')
       bibleSearchLoop: for (let booki = 0; booki < lowerChapters.length; booki++) {
         const book = lowerChapters[booki];
+        if (book == null) continue;
 
         for (let chapteri = 0; chapteri < book.length; chapteri++) {
           searchInChapter(booki, chapteri, book[chapteri]);
@@ -86,12 +84,13 @@ export default function BibleSearchResults({ inputRef, height = '100px', innerZo
     else {
       if (innerZone === 'book') {
         const book = lowerChapters[currentBooki];
-
-        for (let chapteri = 0; chapteri < book.length; chapteri++) {
-          searchInChapter(currentBooki, chapteri, book[chapteri]);
-          if (lastFounds.length > maxItems) break;
-        }
-      } else searchInChapter(currentBooki, currentChapteri, lowerChapters[currentBooki][currentChapteri]);
+        if (book != null)
+          for (let chapteri = 0; chapteri < book.length; chapteri++) {
+            searchInChapter(currentBooki, chapteri, book[chapteri]);
+            if (lastFounds.length > maxItems) break;
+          }
+      } else
+        searchInChapter(currentBooki, currentChapteri, lowerChapters[currentBooki]?.[currentChapteri] ?? emptyArray);
     }
 
     const list = founds
@@ -120,13 +119,13 @@ export default function BibleSearchResults({ inputRef, height = '100px', innerZo
     if (resultSelected === null || resultList[resultSelected] == null) return;
     const [booki, chapteri, versei] = resultList[resultSelected];
     const node = document.getElementById(`bible-search-result-${booki}-${chapteri}-${versei}`);
-    setJoin(null);
+    bibleIDB.set.joinAddress(null);
     if (node === null) return;
     node.scrollIntoView({ block: 'nearest' });
 
     node.classList.add('selected');
     return () => node.classList.remove('selected');
-  }, [resultList, resultSelected, setJoin]);
+  }, [resultList, resultSelected]);
 
   return (
     <List
