@@ -2,7 +2,6 @@ import { ServerStoreContent } from 'shared/api';
 
 export * from './AnAtom';
 export * from './Atom';
-export * from './Molecule';
 
 export interface IMoleculeFractionalStore<Value> {
   contentValuePrefix: `${string}/${string}::`;
