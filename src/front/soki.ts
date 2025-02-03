@@ -42,6 +42,7 @@ export class SokiTrip {
           },
         });
 
+        this.urls = [];
         this.onOpenEvent.invoke(true);
         this.isOpened = true;
       } catch (errorMessage) {
