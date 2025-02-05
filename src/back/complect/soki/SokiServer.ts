@@ -5,7 +5,7 @@ import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { SokiServerInvocatorTool } from 'back/SokiInvocatorBase.server';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 import { InvocatorClientEvent, InvocatorServerEvent, LocalSokiAuth, SokiAuthLogin, SokiVisit } from 'shared/api';
-import { smylib } from 'shared/utils';
+import { makeRegExp, smylib } from 'shared/utils';
 import WebSocket, { WebSocketServer } from 'ws';
 import { setSharedPolyfills } from '../../../shared/utils/complect/polyfills';
 import { scheduleWidgetMessageCatcher } from '../../apps/index/schedules/tg-bot-inform/message-catchers';
@@ -56,7 +56,7 @@ export class SokiServer {
             if (event.visit !== undefined) {
               this.visits.set(client, event.visit);
 
-              if (!event.visit.urls[0]?.includes('localhost'))
+              if (!this.isLocalhost(event.visit.urls[0]))
                 tglogger.visit(`Не авторизованный\n\n${this.visitStringified(event.visit)}\n\n`);
             }
 
@@ -77,7 +77,7 @@ export class SokiServer {
           if (event.visit !== undefined) {
             this.visits.set(client, event.visit);
 
-            if (!event.visit.urls[0]?.includes('localhost'))
+            if (!this.isLocalhost(event.visit.urls[0]))
               tglogger.visit(`${this.authStringified(auth)}\n\n${this.visitStringified(event.visit)}\n\n`);
           }
 
@@ -98,7 +98,7 @@ export class SokiServer {
 
         if (event.errorMessage !== undefined) {
           const visit = this.visits.get(client);
-          if (!visit?.urls[0]?.includes('localhost'))
+          if (!this.isLocalhost(visit?.urls[0]))
             tglogger.userErrors(
               `${event.errorMessage}\n\n${this.authStringified(auth)}\n\n${this.visitStringified(visit)}`,
             );
@@ -117,8 +117,6 @@ export class SokiServer {
 
     console.info('SokiServer started!!!');
   }
-
-  sendInvokeEvent = (event: InvocatorServerEvent, tool: SokiServerInvocatorTool) => this.send(event, tool.client);
 
   send(event: InvocatorServerEvent, clientSelector: SokiServerClientSelector) {
     if (clientSelector instanceof WebSocket) {
@@ -158,6 +156,14 @@ export class SokiServer {
       `<blockquote expandable>${auth ? JSON.stringify(auth, null, 1) : ''}</blockquote>`
     );
   };
+
+  private sendInvokeEvent = (event: InvocatorServerEvent, tool: SokiServerInvocatorTool) =>
+    this.send(event, tool.client);
+
+  private isLocalhost = (url: string | nil) =>
+    !url ||
+    url.includes('localhost') ||
+    url.split(makeRegExp('/^[^?]+?\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}:\\d{3,5}/')).length > 1;
 }
 
 function sendToEachClient(this: string, client: WebSocket) {
