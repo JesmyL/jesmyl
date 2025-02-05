@@ -1,11 +1,11 @@
 import { FileStore } from 'back/complect/FileStore';
 import { SokiServerClientSelector } from 'back/complect/soki/model';
 import { SokiInvocatorBaseServer, SokiServerInvocatorTool } from 'back/SokiInvocatorBase.server';
-import { CmComWid, ICmComComment, TAboutComFavoriteItem } from 'shared/api';
+import { CmComWidStr, ICmComComment, TAboutComFavoriteItem } from 'shared/api';
 import { CmUserStoreSokiInvocatorModel } from 'shared/api/invocators/cm/user-store-invocators.model';
 import { cmServerInvocatorShareMethods } from './invocator.shares';
 
-type TCommentsStore = PRecord<string, PRecord<CmComWid, ICmComComment>>;
+type TCommentsStore = PRecord<string, PRecord<CmComWidStr, ICmComComment>>;
 type TUserFavoritesStore = Partial<Record<string, TAboutComFavoriteItem>>;
 
 export const comCommentsFileStore = new FileStore<TCommentsStore>('/apps/cm/comComments.json', {});

@@ -1,4 +1,4 @@
 import { atom } from 'front/complect/atoms';
-import { CmComWid } from 'shared/api';
+import { CmComWidStr } from 'shared/api';
 
-export const removedCompositionsAtom = atom({} as Record<CmComWid, string>);
+export const removedCompositionsAtom = atom({} as Record<CmComWidStr, string>);

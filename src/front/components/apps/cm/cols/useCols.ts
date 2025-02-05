@@ -1,6 +1,6 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
-import { CmComWid } from 'shared/api';
+import { CmComWid, CmComWidStr } from 'shared/api';
 import { cmIDB } from '../_db/cm-idb';
 import { Cat } from '../col/cat/Cat';
 import { Com } from '../col/com/Com';
@@ -15,7 +15,7 @@ export const useComs = (comwsLine?: CmComWid[]) => {
     if (icoms == null) return [];
 
     if (comwsLine) {
-      const indexes = {} as Record<CmComWid, number>;
+      const indexes = {} as Record<CmComWidStr, number>;
       comwsLine.forEach((comw, comwi) => (indexes[comw] = comwi));
       icoms?.sort();
       icoms.sort((a, b) => indexes[a.w] - indexes[b.w]);

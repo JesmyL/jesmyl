@@ -1,4 +1,4 @@
-import { CmCatWid, CmComMod, CmComOrderWid, CmComWid, CmMeetingEventWid } from './enums';
+import { CmCatWid, CmComMod, CmComOrderWid, CmComWid, CmComWidStr, CmMeetingEventWid } from './enums';
 
 export interface CmMp3Rule {
   w: number;
@@ -91,7 +91,7 @@ export interface IExportableCat {
   m: number; // modified time
   n: string; // name
   s?: CmComWid[]; // comWid stack
-  d?: Partial<Record<CmComWid, number>>; // dictionary of numbers
+  d?: PRecord<CmComWidStr, number>; // dictionary of numbers
   k: string; // kind of cat
 
   isRemoved?: 1;

@@ -1,24 +1,26 @@
-export enum CmComWid {
+export const enum CmComWid {
   def = -1,
 }
 
-export enum CmComMod {
+export type CmComWidStr = `${CmComWid}`;
+
+export const enum CmComMod {
   def = -1,
 }
 
-export enum CmComOrderWid {
+export const enum CmComOrderWid {
   def = -1,
 }
 
-export enum CmCatWid {
+export const enum CmCatWid {
   def = -1,
   zero = 0,
 }
 
-export enum CmMeetingWid {
+export const enum CmMeetingWid {
   def = -1,
 }
 
-export enum CmMeetingEventWid {
+export const enum CmMeetingEventWid {
   def = -1,
 }
