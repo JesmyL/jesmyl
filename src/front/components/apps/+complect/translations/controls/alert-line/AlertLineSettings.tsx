@@ -5,11 +5,12 @@ import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
 import IconButton from 'front/complect/the-icon/IconButton';
 import { IconEdit02StrokeRounded } from 'front/complect/the-icon/icons/edit-02';
 import { IconPlusSignStrokeRounded } from 'front/complect/the-icon/icons/plus-sign';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { complectIDB } from '../../../_idb/complectIDB';
 import { defaultAlertLineConfig } from '../../atoms';
-import { AlertLineConfigIcon } from './AlertLineConfigIcon';
 import { AlertLineConfigSettingsInner } from './AlertLineConfigSettings';
+
+const LazyAlertLineConfigIcon = React.lazy(() => import('./AlertLineConfigIcon'));
 
 export const AlertLineSettingsModalInner = () => {
   const configs = useLiveQuery(() => complectIDB.tb.alertLineConfigs.toArray());
@@ -27,7 +28,7 @@ export const AlertLineSettingsModalInner = () => {
               className="margin-gap-v pointer"
               prefix={
                 <span className="flex flex-gap center">
-                  <AlertLineConfigIcon config={config} />
+                  <LazyAlertLineConfigIcon config={config} />
                   {config.title}
                 </span>
               }

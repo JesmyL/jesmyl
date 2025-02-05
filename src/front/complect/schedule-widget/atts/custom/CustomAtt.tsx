@@ -1,5 +1,5 @@
 import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
-import { ReactNode, useMemo, useState } from 'react';
+import React, { ReactNode, useMemo, useState } from 'react';
 import {
   CustomAttUseRights,
   customAttUseRights,
@@ -18,7 +18,6 @@ import { IconFile01StrokeRounded } from '../../../../complect/the-icon/icons/fil
 import { IconPencilEdit01StrokeRounded } from '../../../../complect/the-icon/icons/pencil-edit-01';
 import { IconPlusSignStrokeRounded } from '../../../../complect/the-icon/icons/plus-sign';
 import { IconSquareStrokeRounded } from '../../../../complect/the-icon/icons/square';
-import IconConfigurator from '../../../configurators/Icon';
 import Modal from '../../../modal/Modal/Modal';
 import { ModalBody } from '../../../modal/Modal/ModalBody';
 import { ModalHeader } from '../../../modal/Modal/ModalHeader';
@@ -32,6 +31,8 @@ import { schAttachmentTypesSokiInvocatorClient } from '../../invocators/invocato
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetCustomAttTitles from './CustomAttTitles';
 import { ScheduleWidgetCustomAttLocalImagineSelector } from './LocalImagine';
+
+const LazyIconConfigurator = React.lazy(() => import('../../../configurators/Icon'));
 
 enum WhoCan {
   Read,
@@ -102,7 +103,7 @@ export default function ScheduleWidgetCustomAtt(props: {
             </div>
           ))}
         {props.isRedact && (
-          <IconConfigurator
+          <LazyIconConfigurator
             icon={props.tatt.icon}
             header={<>Иконка для вложения {props.tatt.title}</>}
             onSend={icon =>

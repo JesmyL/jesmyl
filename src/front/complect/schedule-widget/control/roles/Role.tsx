@@ -3,7 +3,7 @@ import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
 import { ModalFooter } from 'front/complect/modal/Modal/ModalFooter';
 import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
 import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { IScheduleWidgetRole, ScheduleRoleScopeProps, scheduleWidgetUserRights } from 'shared/api';
 import { IconArrowReloadHorizontalStrokeRounded } from '../../../../complect/the-icon/icons/arrow-reload-horizontal';
 import { IconEdit01StrokeRounded } from '../../../../complect/the-icon/icons/edit-01';
@@ -15,7 +15,6 @@ import { IconUserStrokeRounded } from '../../../../complect/the-icon/icons/user'
 import { IconUserAdd01StrokeRounded } from '../../../../complect/the-icon/icons/user-add-01';
 import { IconUserRemove01StrokeRounded } from '../../../../complect/the-icon/icons/user-remove-01';
 import { useAuth } from '../../../../components/index/atoms';
-import IconConfigurator from '../../../configurators/Icon';
 import StrongEditableField from '../../../strong-control/field/StrongEditableField';
 import IconButton from '../../../the-icon/IconButton';
 import useIsRedactArea from '../../../useIsRedactArea';
@@ -25,6 +24,7 @@ import { extractScheduleWidgetRoleUser, useScheduleWidgetRightsContext } from '.
 import ScheduleWidgetRoleFace from './RoleFace';
 
 const mainRoleRights = scheduleWidgetUserRights.getAllRights();
+const LazyIconConfigurator = React.lazy(() => import('../../../configurators/Icon'));
 
 export default function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
   const rights = useScheduleWidgetRightsContext();
@@ -169,7 +169,7 @@ export default function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole
               postfix={roleUser && ' - ' + (roleUser.fio || roleUser.nick)}
               onSend={value => schRolesSokiInvocatorClient.setRoleTitle(null, roleScopeProps, value, role.title)}
             />
-            <IconConfigurator
+            <LazyIconConfigurator
               header={`Иконка для роли ${role.title}`}
               icon={role.icon ?? 'Github01'}
               used={rights.schedule.ctrl.roles.map(role => role.icon)}

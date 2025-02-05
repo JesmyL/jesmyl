@@ -3,18 +3,19 @@ import { FontFamilyConfigurator } from 'front/complect/configurators/FontFamily'
 import { FontSizeConfigurator } from 'front/complect/configurators/FontSize';
 import { FontStyleConfigurator } from 'front/complect/configurators/FontStyle';
 import { FontWeightConfigurator } from 'front/complect/configurators/FontWeight';
-import IconConfigurator from 'front/complect/configurators/Icon';
 import { addEventListenerPipe, hookEffectPipe } from 'front/complect/hookEffectPipe';
 import KeyboardInput from 'front/complect/keyboard/KeyboardInput';
 import { useDebounceAction } from 'front/complect/useDebounceAction';
 import { propagationStopper } from 'front/complect/utils/utils';
 import { mylib } from 'front/utils';
-import { useDeferredValue, useEffect, useRef, useState } from 'react';
+import React, { useDeferredValue, useEffect, useRef, useState } from 'react';
 import { BackgroundConfigurator } from '../../../../../../complect/configurators/Background';
 import { ColorConfigurator } from '../../../../../../complect/configurators/Color';
 import { complectIDB } from '../../../_idb/complectIDB';
 import { AlertLineConfig } from '../../model';
-import { AlertLineConfigIcon } from './AlertLineConfigIcon';
+
+const LazyAlertLineConfigIcon = React.lazy(() => import('./AlertLineConfigIcon'));
+const LazyIconConfigurator = React.lazy(() => import('front/complect/configurators/Icon'));
 
 export const AlertLineConfigSettingsInner = ({ configId }: { configId: number }) => {
   const config = useLiveQuery(
@@ -70,7 +71,7 @@ const AlertLineConfigSettingsInnerWithConfig = ({
   return (
     <>
       <h2 className="flex flex-gap">
-        <AlertLineConfigIcon config={config} />
+        <LazyAlertLineConfigIcon config={config} />
         {config.title}
       </h2>
       <h2>Положение строки - вверх/вниз/+CTRL</h2>
@@ -82,7 +83,7 @@ const AlertLineConfigSettingsInnerWithConfig = ({
         />
       </div>
 
-      <IconConfigurator
+      <LazyIconConfigurator
         header=""
         icon={config.icon}
         used={[config.icon]}

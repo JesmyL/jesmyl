@@ -5,11 +5,12 @@ import Modal from 'front/complect/modal/Modal/Modal';
 import IconButton from 'front/complect/the-icon/IconButton';
 import { IconSettings01StrokeRounded } from 'front/complect/the-icon/icons/settings-01';
 import { propagationStopper } from 'front/complect/utils/utils';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { complectIDB } from '../../../_idb/complectIDB';
 import { translationShowAlertLineConfigIdAtom } from '../../initial-slide-context';
-import { AlertLineConfigIcon } from './AlertLineConfigIcon';
 import { AlertLineSettingsModalInner } from './AlertLineSettings';
+
+const LazyAlertLineConfigIcon = React.lazy(() => import('./AlertLineConfigIcon'));
 
 export const AlertLineInput = () => {
   const configs = useLiveQuery(() => complectIDB.tb.alertLineConfigs.toArray());
@@ -33,7 +34,7 @@ export const AlertLineInput = () => {
         />
 
         {configs?.map(config => (
-          <AlertLineConfigIcon
+          <LazyAlertLineConfigIcon
             key={config.id}
             config={config}
             isSelected={showAlertConfigId === config.id}

@@ -9,7 +9,7 @@ type Props = {
   isSelected?: boolean;
 };
 
-export const AlertLineConfigIcon = ({ config, isSelected, onClick }: Props) => {
+export default function AlertLineConfigIcon({ config, isSelected, onClick }: Props) {
   const Icon = theIconKnownPack[config.icon].StrokeRounded;
   const background = useScreenTranslationBackgroundStyles(config);
 
@@ -24,7 +24,7 @@ export const AlertLineConfigIcon = ({ config, isSelected, onClick }: Props) => {
       <Icon />
     </StypedIconContainer>
   );
-};
+}
 
 const StypedIconContainer = styled.div<{ $color: string; $background: string | und; $isSelected: boolean | und }>`
   padding: 2px 5px;

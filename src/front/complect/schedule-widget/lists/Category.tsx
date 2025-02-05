@@ -1,11 +1,10 @@
 import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { IScheduleWidgetListCat } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import { IconEdit02StrokeRounded } from '../../../complect/the-icon/icons/edit-02';
 import { IconPlusSignStrokeRounded } from '../../../complect/the-icon/icons/plus-sign';
 import { IconSchoolReportCardStrokeRounded } from '../../../complect/the-icon/icons/school-report-card';
-import IconConfigurator from '../../configurators/Icon';
 import { ExpandableContent } from '../../expand/ExpandableContent';
 import useModal from '../../modal/useModal';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
@@ -14,6 +13,8 @@ import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-p
 import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetListUnit from './Unit';
+
+const LazyIconConfigurator = React.lazy(() => import('../../configurators/Icon'));
 
 const reg = makeRegExp('/([а-яё]?[йуеъыаоэяиью]+[а-яё]).+/i');
 const cutTitle = (title: string) => title.replace(reg, '$1.');
@@ -31,7 +32,7 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
         {header(<div className="flex flex-gap">{title}</div>)}
         {body(
           <>
-            <IconConfigurator
+            <LazyIconConfigurator
               header={`Иконка для списка ${cat.title}`}
               icon={cat.icon}
               used={[cat.icon]}
