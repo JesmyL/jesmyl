@@ -25,7 +25,7 @@ export const makeSokiInvocator = <ClassNamePostfix extends string, ToolParam = n
   ) => RegisteredMethods<M>;
 
   return function (this: unknown, className: ClassName, listeners: Methods) {
-    const self = this as any;
+    const self = this as Methods;
 
     if (isDevelopmentMode) {
       if (self.constructor.name !== className) throw new Error(`constructor name and className must equal`);

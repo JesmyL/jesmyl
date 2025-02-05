@@ -62,7 +62,7 @@ export const makeSokiInvocatorBase = <
     methods: Invocator<any>,
     onEachInvocations: OnEachOnvocations<any>,
   ) {
-    const self = this as any;
+    const self = this as Methods;
 
     if (isDevelopmentMode) {
       if (self.constructor.name !== className)

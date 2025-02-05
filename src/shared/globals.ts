@@ -9,8 +9,6 @@ declare global {
   type str = '' | '1';
   type nil = null | undefined;
   type und = undefined;
-  type ArrayMapCb<T> = (box: T, boxi: number, boxa: T[]) => T;
-  type ArrayCb<T> = (box: T, boxi: number, boxa: T[]) => any;
   type TimeOut = ReturnType<typeof setTimeout> | und | number;
   type intStr = `${'-' | ''}${number}`;
   type doubleStr = `${'-' | ''}${intStr}.${number}`;
@@ -25,13 +23,13 @@ declare global {
   type NaN = NotANumber;
   type NaNumber = number | NotANumber;
 
-  type EventStopper<With = {}> = { stopPropagation(): void } & With;
-  type PropagationStopper = (event: EventStopper) => void;
+  type PropagationStopperEvent<With = {}> = { stopPropagation(): void } & With;
+  type PropagationStopper = (event: PropagationStopperEvent) => void;
 
-  type EventPreventer<With = {}> = { preventDefault(): void } & With;
-  type DefaultPreventer = (event: EventPreventer) => void;
+  type DefaultPreventerEvent<With = {}> = { preventDefault(): void } & With;
+  type DefaultPreventer = (event: DefaultPreventerEvent) => void;
 
-  type PreventerAndStopperCallback = (event: EventPreventer & EventStopper) => void;
+  type PreventerAndStopperCallback = (event: DefaultPreventerEvent & PropagationStopperEvent) => void;
 
   type NonUndefined<T> = T extends undefined ? never : T;
   type NonNull<T> = T extends null ? never : T;

@@ -44,7 +44,13 @@ const makeAuthFromUser = async (user: OmitOwn<TelegramBot.User, 'is_bot'>) => {
   const admin = (await supportTelegramBot.getAdmins())[user.id];
 
   return {
-    level: admin ? (admin.status === 'creator' ? 100 : +(admin as any).custom_title) : 3,
+    level: admin
+      ? admin.status === 'creator'
+        ? 100
+        : 'custom_title' in admin && smylib.isStr(admin.custom_title)
+          ? +admin.custom_title || 3
+          : 3
+      : 3,
     nick: user.username,
     tgId: user.id,
     login: JesmylTelegramBot.makeLoginFromId(user.id),
@@ -97,13 +103,11 @@ class IndexBasicsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexBa
             if (schedules.length) schServerInvocatorShareMethods.refreshSchedules(client, schedules);
 
             if (appVersionFileStore.fileModifiedAt() > lastModfiedAt) {
-              const modifiedAt = appVersionFileStore.fileModifiedAt();
-              indexServerInvocatorShareMethods.appVersion(null, appVersionFileStore.getValue().num, modifiedAt);
+              indexServerInvocatorShareMethods.appVersion(null, appVersionFileStore.getValue().num, 0);
             }
 
             if (valuesFileStore.fileModifiedAt() > lastModfiedAt) {
-              const modifiedAt = valuesFileStore.fileModifiedAt();
-              indexServerInvocatorShareMethods.indexValues(null, valuesFileStore.getValue(), modifiedAt);
+              indexServerInvocatorShareMethods.indexValues(null, valuesFileStore.getValue(), 0);
             }
           },
         getDeviceId: () => async () => {

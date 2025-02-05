@@ -25,7 +25,7 @@ export const setSharedPolyfills = () => {
       });
   };
 
-  setArrayProtoMethod('flat', function <Item>(this: any, depth?: number) {
+  setArrayProtoMethod('flat', function <Item>(this: unknown, depth?: number) {
     // eslint-disable-next-line strict
     'use strict';
     if (depth === undefined) depth = 1;
@@ -35,14 +35,14 @@ export const setSharedPolyfills = () => {
         return acc.concat(Array.isArray(val) ? flatten(val, depth - 1) : val);
       }, []);
     };
-    return flatten(this, depth);
+    return flatten(this as [], depth);
   });
 
-  setArrayProtoMethod('at', function (this: Array<any>, pos) {
+  setArrayProtoMethod('at', function (this: unknown[], pos) {
     return pos < 0 ? this[this.length + pos] : this[pos];
   });
 
-  setArrayProtoMethod('merge', function (this: Array<any>, array) {
+  setArrayProtoMethod('merge', function (this: unknown[], array) {
     if (array !== undefined) for (let i = 0; i < array.length; i++) this.push(array[i]);
 
     return this;
@@ -55,7 +55,11 @@ export const setSharedPolyfills = () => {
     return res;
   });
 
-  (globalThis as any).setTimeoutEffect = (handler: (...args: any[]) => void, timeout: number, ...args: any[]) => {
+  (globalThis as { setTimeoutEffect: unknown }).setTimeoutEffect = (
+    handler: (...args: unknown[]) => void,
+    timeout: number,
+    ...args: unknown[]
+  ) => {
     const timer = setTimeout(handler, timeout, ...args);
 
     return () => clearTimeout(timer);
@@ -75,13 +79,13 @@ export const setSharedPolyfills = () => {
     return smylib.sort(this, compareFunction);
   };
 
-  (BigInt.prototype as any).toJSON = function () {
+  (BigInt.prototype as never as { toJSON: unknown }).toJSON = function () {
     return +('' + this);
   };
 };
 
 declare global {
-  function setTimeoutEffect<Args extends any[]>(
+  function setTimeoutEffect<Args extends unknown[]>(
     handler: (...args: Args) => void,
     timeout?: number,
     ...args: Args

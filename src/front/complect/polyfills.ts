@@ -3,14 +3,14 @@ import { setSharedPolyfills } from 'shared/utils';
 export const setPolyfills = () => {
   setSharedPolyfills();
 
-  const remListens = (param: any[]) => {
+  const remListens = (param: unknown[]) => {
     const [element, ...otherProps] = param;
-    element.removeEventListener(...otherProps);
+    (element as { removeEventListener(...args: unknown[]): void }).removeEventListener(...otherProps);
   };
 
   const invokeEach = (cb: () => void) => cb();
 
-  (globalThis as any).hookEffectLine = () => {
+  (globalThis as { hookEffectLine: unknown }).hookEffectLine = () => {
     const timeoutsSet = new Set<TimeOut>();
     const eventListeners = new Set<Parameters<EffectListener>>();
     const debounceTimers: TimeOut[] = [];
@@ -39,7 +39,7 @@ export const setPolyfills = () => {
         return setter;
       },
 
-      setTimeout: (cb: () => {}, time?: number, ...args: any[]) => {
+      setTimeout: (cb: () => {}, time?: number, ...args: unknown[]) => {
         timeoutsSet.add(setTimeout(cb, time, ...args));
 
         return setter;
@@ -89,13 +89,20 @@ type DebouncedEffectListener = <
 type HookEffectLineReturn = {
   addEventListener: EffectListener;
   addEventDebouncedListener: DebouncedEffectListener;
-  setTimeout: <Args extends any[]>(cb: (...args: Args) => void, time?: number, ...args: Args) => HookEffectLineReturn;
+  setTimeout: <Args extends unknown[]>(
+    cb: (...args: Args) => void,
+    time?: number,
+    ...args: Args
+  ) => HookEffectLineReturn;
   clearTimeout: (timeout: TimeOut) => HookEffectLineReturn;
   effect: (...onUnmounts: (() => void)[]) => () => void;
 };
 
-const prev: Record<string, any> = {};
-(globalThis as any).inspectComponentProps = (curr: Record<string, any>, print?: boolean) => {
+const prev: Record<string, unknown> = {};
+(globalThis as { inspectComponentProps: unknown }).inspectComponentProps = (
+  curr: Record<string, unknown>,
+  print?: boolean,
+) => {
   for (const c in curr) {
     console[curr[c] === prev[c] ? 'warn' : 'error'](
       '>>>>',
@@ -108,12 +115,12 @@ const prev: Record<string, any> = {};
 };
 
 declare global {
-  function setTimeoutEffect<Args extends any[]>(
+  function setTimeoutEffect<Args extends unknown[]>(
     handler: (...args: Args) => void,
     timeout?: number,
     ...args: Args
   ): () => void;
-  function inspectComponentProps(curr: Record<string, any>, print?: boolean): void;
+  function inspectComponentProps(curr: Record<string, unknown>, print?: boolean): void;
 
   function hookEffectLine(): HookEffectLineReturn;
 

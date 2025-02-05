@@ -100,8 +100,8 @@ export default function ComRepeats() {
 
                       setIsChordBlock(true);
                       setPos({
-                        '--x': (event.target as any).offsetLeft,
-                        '--y': (event.target as any).offsetTop + 100,
+                        '--x': event.currentTarget.offsetLeft,
+                        '--y': event.currentTarget.offsetTop + 100,
                       });
                     } else {
                       setIsChordBlock(false);
@@ -217,8 +217,8 @@ export default function ComRepeats() {
                       if (start == null || isChordBlock) {
                         setStart({ ...props, orderUnit: ord, wordi: +wordi });
                         setPos({
-                          '--x': (event.target as any).offsetLeft,
-                          '--y': (event.target as any).offsetTop,
+                          '--x': event.currentTarget.offsetLeft,
+                          '--y': event.currentTarget.offsetTop,
                         });
                         setIsChordBlock(false);
                       } else {

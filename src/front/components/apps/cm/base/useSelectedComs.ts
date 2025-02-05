@@ -21,10 +21,8 @@ export default function useSelectedComs() {
     } catch (error) {}
 
     setSearchParams(prev => {
-      const news = { ...prev };
-
-      delete (news as any)['scomws'];
-
+      const news = new URLSearchParams(prev);
+      news.delete('scomws');
       return news;
     });
   }, [searchParams, setSearchParams, setSelectedComws]);

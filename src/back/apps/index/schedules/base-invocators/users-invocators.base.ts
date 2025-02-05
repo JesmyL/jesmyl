@@ -27,7 +27,10 @@ class SchUsersSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchUsersSo
             modifySchedule(false, props, sch => {
               if (auth == null) throw new Error('Необходимо авторизоваться');
               if (sch.ctrl.users.some(user => user.login === auth.login)) throw new Error('user exists');
-              const authClone = { ...(auth as any), mi: smylib.takeNextMi(sch.ctrl.users, IScheduleWidgetUserMi.def) };
+              const authClone: IScheduleWidgetUser & { level?: number } = {
+                ...auth,
+                mi: smylib.takeNextMi(sch.ctrl.users, IScheduleWidgetUserMi.def),
+              };
 
               delete authClone.level;
 

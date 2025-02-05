@@ -23,7 +23,8 @@ export class DexieDB<Store> {
 
   private selectors = {} as { [K in keyof Required<Store>]: K };
 
-  hook: TableHooks<any> = ((...args: []) => (this.getKeyvalues() as any).hook(...args)) as never;
+  hook: TableHooks<any> = ((...args: []) =>
+    (this.getKeyvalues() as { hook(...args: unknown[]): unknown }).hook(...args)) as never;
 
   set = {} as { [K in keyof Required<Store>]: ValueSetter<Store, K, Promise<void>> };
   get = {} as { [K in keyof Required<Store>]: () => Promise<Store[K]> };
@@ -53,19 +54,19 @@ export class DexieDB<Store> {
     smylib.keys(defaults).forEach(key => {
       if (byDefaultField in defaults[key]) {
         this.selectors[key] = key;
-        this.get[key] = async () => {
-          const store = (await this.getKeyvalues().get({ key })) as any;
+        this.get[key] = (async () => {
+          const store = await this.getKeyvalues().get({ key });
           if (store === undefined) return this.defaults[key][byDefaultField];
           return store.val;
-        };
+        }) as never;
 
         this.remove[key] = () => this.getKeyvalues().where({ key }).delete();
 
         this.set[key] = async value => {
           if (smylib.isFunc(value)) {
-            return await this.getKeyvalues().put({ val: value(await this.get[key]()), key });
+            return await this.getKeyvalues().put({ val: value(await this.get[key]()), key } as never);
           } else {
-            return await this.getKeyvalues().put({ val: value, key });
+            return await this.getKeyvalues().put({ val: value, key } as never);
           }
         };
 
@@ -96,7 +97,9 @@ export class DexieDB<Store> {
 
     if ('lastModifiedAt' in this.defaults) {
       (async () => {
-        let lastModifiedLocal: number = await (this.get as any).lastModifiedAt();
+        type WithLastModifiedAt = { lastModifiedAt(set?: number): Promise<number> };
+
+        let lastModifiedLocal: number = await (this.get as WithLastModifiedAt).lastModifiedAt();
         let timeout: TimeOut;
 
         this.updateLastModifiedAt = (async (modifiedAt: number) => {
@@ -104,13 +107,14 @@ export class DexieDB<Store> {
           lastModifiedLocal = modifiedAt;
 
           clearTimeout(timeout);
-          timeout = setTimeout(() => (this.set as any).lastModifiedAt(modifiedAt), 100);
+          timeout = setTimeout(() => (this.set as WithLastModifiedAt).lastModifiedAt(modifiedAt), 100);
         }) as never;
       })();
     }
   }
 
-  private getKeyvalues = () => this.db[keyvalues as never] as EntityTable<unknown>;
+  private getKeyvalues = () =>
+    this.db[keyvalues as never] as EntityTable<{ val: Store[keyof Store]; key: keyof Store }>;
 }
 
 const justUseLiveQuery = useLiveQuery;

@@ -10,6 +10,7 @@ const funcName = 'onTelegramNativeAuth';
 interface Props {
   showToastRef: { current: () => void };
 }
+const win: Record<string, unknown> = window as never;
 
 export const TgNativeAuth = ({ showToastRef }: Props) => {
   const tgNativeRef = useRef<HTMLDivElement | null>(null);
@@ -20,7 +21,7 @@ export const TgNativeAuth = ({ showToastRef }: Props) => {
     if (!isScriptLoaded || tgNativeRef.current === null || tgNativeRef.current.childElementCount !== 0) return;
     const tgAuthIframe = document.querySelector('#telegram-login-jesmylbot');
 
-    (window as any)[funcName] = async (user: TelegramNativeAuthUserData) => {
+    win[funcName] = async (user: TelegramNativeAuthUserData) => {
       await indexBasicsSokiInvocatorClient.authMeByTelegramNativeButton(null, user);
       navigate('..');
     };
@@ -30,7 +31,7 @@ export const TgNativeAuth = ({ showToastRef }: Props) => {
 
     return () => {
       document.body.appendChild(tgAuthIframe);
-      delete (window as any)[funcName];
+      delete win[funcName];
     };
   }, [isScriptLoaded, navigate, showToastRef]);
 

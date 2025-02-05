@@ -91,7 +91,7 @@ export class Com extends BaseNamed<IExportableCom> {
   }
 
   get initialTransPosition() {
-    return mylib.def(this.initial.p, this.getBasic('p'));
+    return this.initial.p ?? this.getBasic('p');
   }
   set initialTransPosition(val) {
     if (this.initial.p == null) this.initial.p = mylib.typ(0, val);
@@ -99,7 +99,7 @@ export class Com extends BaseNamed<IExportableCom> {
   }
 
   get initialTransPos() {
-    return mylib.def(this.initial.pos, this.initial.p, this.getBasic('p'));
+    return this.initial.pos ?? this.initial.p ?? this.getBasic('p');
   }
   set initialTransPos(val) {
     if (this.initial.pos == null) this.initial.pos = mylib.typ(0, val);
@@ -126,7 +126,7 @@ export class Com extends BaseNamed<IExportableCom> {
   pullTransPosition(obj: IExportableCom) {
     if (obj) {
       if (obj.ton != null) this.initialTransPosition = obj.p;
-      this.transPosition = mylib.def(obj.ton, obj.p);
+      this.transPosition = obj.ton ?? obj.p;
     }
   }
 

@@ -5,7 +5,7 @@ export const useCloseTranslation = () => {
   const navigate = useNavigate();
 
   return useCallback(
-    (event?: EventStopper) => {
+    (event?: PropagationStopperEvent) => {
       event?.stopPropagation();
       navigate('..');
       if (document.fullscreenElement) document.exitFullscreen();

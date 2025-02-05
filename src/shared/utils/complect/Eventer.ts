@@ -5,7 +5,6 @@ export interface EventerCallbackEvent<Value, StopValue> {
   preventDefault: () => void;
   preventedDefault: boolean;
   mute: () => void;
-  passValue?: any;
 }
 
 export type EventerCallback<Value, Return = void, StopValue = any> = (

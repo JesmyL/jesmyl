@@ -1,8 +1,7 @@
-import { FC } from 'react';
+import { mylib } from 'front/utils';
 import useSelectedComs from '../../../../base/useSelectedComs';
 import { Com } from '../../Com';
 import { useCcomw } from '../../useCcom';
-import { ListComFaceForSelectionsProps } from '../ComFace.model';
 import { ComFaceListComList } from './_ComList';
 import { ComFaceListWidList } from './_WidList';
 import { IComFaceList } from './model';
@@ -14,30 +13,27 @@ interface Props extends IComFaceList {
 }
 
 export const ComFaceList = (props: Props) => {
-  return (
-    props.list && (
-      <ComFaceListWrapper
-        Component={props.list[0] instanceof Com ? ComFaceListComList : ComFaceListWidList}
-        {...(props as any)}
-      />
-    )
-  );
-};
-
-interface WrapperProps extends IComFaceList {
-  Component: FC<IComFaceList & ListComFaceForSelectionsProps>;
-  ccom: Com | und;
-  className?: string;
-}
-
-const ComFaceListWrapper = ({ Component, ...props }: WrapperProps) => {
   const ccomw = useCcomw();
   const { selectedComPosition, toggleSelectedCom } = useSelectedComs();
 
+  if (props.list == null) return null;
+
+  if (mylib.isNum(props.list[0]))
+    return (
+      <ComFaceListWidList
+        {...props}
+        list={props.list as []}
+        ccomw={ccomw}
+        selectedComPosition={selectedComPosition}
+        toggleSelectedCom={toggleSelectedCom}
+      />
+    );
+
   return (
-    <Component
+    <ComFaceListComList
       {...props}
       ccomw={ccomw}
+      list={props.list as []}
       selectedComPosition={selectedComPosition}
       toggleSelectedCom={toggleSelectedCom}
     />

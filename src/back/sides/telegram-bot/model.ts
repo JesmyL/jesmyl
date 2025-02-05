@@ -12,17 +12,17 @@ export type JTgBotCallbackQuery = (
   query: CallbackQuery,
   answer: (options: string | FreeAnswerCallbackQueryOptions) => 'answered',
 ) => string | void | undefined | Promise<FreeAnswerCallbackQueryOptions | undefined | void | string>;
-export type JTgBotChatMessageCallbackWithoutBot = (message: TgBot.Message, metadata: TgBot.Metadata) => any;
+export type JTgBotChatMessageCallbackWithoutBot = (message: TgBot.Message, metadata: TgBot.Metadata) => unknown;
 export type JTgBotChatMessageCallback = (
   bot: JesmylTelegramBot,
   message: TgBot.Message,
   metadata: TgBot.Metadata,
-) => any;
+) => unknown;
 export type JTgBotPersonalMessageCallback = (
   bot: JesmylTelegramBotWrapper,
   message: TgBot.Message,
   metadata: TgBot.Metadata,
-) => any;
+) => unknown;
 
 export type TgBotWrapperMessageCatcher = (message: TgBot.Message, bot: TgBot) => void;
 

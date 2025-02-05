@@ -1,4 +1,4 @@
-import { Link, LinkProps, NavLinkProps, SetURLSearchParams, useParams, useSearchParams } from 'react-router-dom';
+import { Link, LinkProps, SetURLSearchParams, useParams, useSearchParams } from 'react-router-dom';
 import { itNNull } from 'shared/utils';
 
 const mapParamsSelf = {} as {
@@ -36,16 +36,13 @@ interface Props {
   to: string;
 }
 
-export const LinkWithSearchRemember = <IsNavLink extends boolean | und>({
-  rememberProps,
-  ...props
-}: Props & (IsNavLink extends true ? NavLinkProps : LinkProps)) => {
+export const LinkWithSearchRemember = ({ rememberProps, ...props }: Props & LinkProps) => {
   return rememberProps !== undefined ? (
     <LinkWith
       rememberProps={rememberProps}
-      {...(props as any)}
+      {...props}
     />
   ) : (
-    <Link {...(props as any)} />
+    <Link {...props} />
   );
 };

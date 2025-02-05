@@ -1,6 +1,7 @@
 /* eslint-disable eqeqeq */
 import md5 from 'md5';
 import { makeRegExp } from './makeRegExp';
+import { itIt, itNIt } from './utils';
 
 export type StringTemplaterArgs<Adds = {}> = {
   ink: (num: number, post: string, pre: string) => string;
@@ -27,26 +28,29 @@ export class SMyLib {
     return { inSec, inMin, inHour, inDay, inMonth, inYear };
   }
 
-  isObj = (it: any): it is Record<string, any> => it instanceof Object && !(it instanceof Array);
-  isobj = (it: any): it is Record<string | number, any> | any[] => typeof it === 'object' && it != null;
+  isObj = (it: unknown): it is Record<string, unknown> => it instanceof Object && !(it instanceof Array);
+  isobj = (it: unknown): it is Record<string | number, unknown> | unknown[] => typeof it === 'object' && it != null;
   isArr = <Item = any>(it: any): it is Item[] => it instanceof Array;
-  isNum = (it: any): it is number => typeof it === 'number' && !isNaN(it);
-  isnum = (it: any): it is number => parseFloat(it) == it;
-  isStr = (it: any): it is string => typeof it === 'string';
-  isFunc = (it: any): it is Function => typeof it === 'function';
-  isRegExp = (it: any): it is RegExp => it instanceof RegExp;
-  isAFunc = (it: any): it is Function => this.isFunc(it) && it[Symbol.toStringTag] === 'AsyncFunction';
-  isUnd = (it: any): it is undefined => it === undefined;
-  isBool = (it: any): it is boolean => typeof it === 'boolean';
-  isNull = (it: any): it is null => it === null;
-  isNil = (it: any): it is null | undefined => it === null || it === undefined;
-  isNaN = (it: any): it is NaN => typeof it === 'number' && isNaN(it);
+  isNum = (it: unknown): it is number => typeof it === 'number' && !isNaN(it);
+  isnum = (it: number | string): it is number => parseFloat(it as string) == it;
+  isStr = (it: unknown): it is string => typeof it === 'string';
+  isFunc = <Fun extends Function>(it: unknown | Fun): it is Fun => typeof it === 'function';
+  isRegExp = (it: unknown): it is RegExp => it instanceof RegExp;
+  isAFunc = (it: Function | unknown): it is Function =>
+    this.isFunc(it) && (it as never as { [Symbol.toStringTag]: unknown })[Symbol.toStringTag] === 'AsyncFunction';
+  isUnd = (it: unknown): it is undefined => it === undefined;
+  isBool = (it: unknown): it is boolean => typeof it === 'boolean';
+  isNull = (it: unknown): it is null => it === null;
+  isNil = (it: unknown): it is null | undefined => it === null || it === undefined;
+  isNaN = (it: unknown): it is NaN => typeof it === 'number' && isNaN(it);
   isNl = (it: unknown) => this.isNaN(it) || this.isNil(it);
   isNNlOrUnd = (it: unknown) => (this.isNl(it) ? undefined : true);
 
   static entries = <T>(it: T): [keyof T, T[keyof T]][] => (it == null ? [] : Object.entries(it)) as never;
 
-  static keys<T, Key extends T extends Record<infer Key, any> | PRecord<infer Key, any> ? Key : string>(it: T): Key[] {
+  static keys<T, Key extends T extends Record<infer Key, unknown> | PRecord<infer Key, unknown> ? Key : string>(
+    it: T,
+  ): Key[] {
     if (it == null) return [];
     return Object.keys(it) as never;
   }
@@ -87,10 +91,10 @@ export class SMyLib {
   randomOf = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
   randomIndex = (arr: unknown[] | string, sliceEnd?: number) =>
     this.randomOf(0, arr.length - 1 + (sliceEnd === undefined ? 0 : sliceEnd));
-  randomItem = <Item extends any[] | string, RetItem extends Item extends (infer It)[] ? It : string>(
+  randomItem = <Item extends unknown[] | string, RetItem extends Item extends (infer It)[] ? It : string>(
     arr: Item,
     sliceEnd?: number,
-  ): RetItem => arr[this.randomIndex(arr, sliceEnd)];
+  ): RetItem => arr[this.randomIndex(arr, sliceEnd)] as RetItem;
 
   explode(separator: string, string: string, lim?: number) {
     const limit = lim && Math.abs(lim);
@@ -104,12 +108,16 @@ export class SMyLib {
     }, []);
   }
 
-  clone<Val extends any>(what: Val): Val {
+  clone<Val>(what: Val): Val {
     if (what === null || what === undefined) return what;
-    else if ((what as Array<unknown>).constructor === Array || (what as Object).constructor === Object) {
-      const newObj: any = this.isArr(what) ? [] : {};
+    else if (what.constructor === Object) {
+      const newObj: Record<string, unknown> = {};
       for (const whatn in what) newObj[whatn] = this.clone(what[whatn as never]);
-      return newObj;
+      return newObj as Val;
+    } else if (this.isArr(what)) {
+      const newObj: unknown[] = [];
+      for (const whatn in what) newObj[whatn] = this.clone(what[whatn as never]);
+      return newObj as Val;
     }
     return what;
   }
@@ -170,7 +178,7 @@ export class SMyLib {
     return true;
   }
 
-  typeOf(obj: any): string | null {
+  typeOf(obj: unknown): string | null {
     return (
       (['isStr', 'isNum', 'isBool', 'isArr', 'isNull', 'isUnd', 'isFunc', 'isObj', 'isNan'] as (keyof SMyLib)[]).find(
         (type: keyof SMyLib) => (this[type] as Function)(obj),
@@ -195,8 +203,8 @@ export class SMyLib {
 
   stringTemplaterFunctions = {
     ink: (num: number, post = '', pre = '') => (num == null ? null : `${pre}${num - -1}${post}`),
-    switch: (...args: any[]) => {
-      let val: any, found: any;
+    switch: (...args: []) => {
+      let val: unknown, found: unknown;
 
       const ret = args.find((arg, argi) => {
         if (!argi) {
@@ -215,8 +223,8 @@ export class SMyLib {
     keys: this.keys,
     join: (by: string, ...arr: []) => arr.join(by),
     count: (obj: object) => this.keys(obj).length,
-    isEq: (...args: any[]) => {
-      let val: any;
+    isEq: (...args: unknown[]) => {
+      let val: unknown;
 
       return !args.some((arg, argi) => {
         if (argi) return !this.isEq(arg, val);
@@ -224,21 +232,21 @@ export class SMyLib {
         return false;
       });
     },
-    isGt: (first: any, second: any) => first > second,
-    isGte: (first: any, second: any) => first >= second,
-    isLt: (first: any, second: any) => first < second,
-    isLte: (first: any, second: any) => first <= second,
-    or: (...args: any[]) => args.some(arg => arg),
-    and: (...args: any[]) => !args.some(arg => !arg),
-    if: (condition: any, ifTrue: any, ifFalse: any) => (condition ? ifTrue : ifFalse),
+    isGt: (first: number | string, second: number | string) => first > second,
+    isGte: (first: number | string, second: number | string) => first >= second,
+    isLt: (first: number | string, second: number | string) => first < second,
+    isLte: (first: number | string, second: number | string) => first <= second,
+    or: (...args: []) => args.some(itIt),
+    and: (...args: []) => !args.some(itNIt),
+    if: (condition: unknown, ifTrue: unknown, ifFalse: unknown) => (condition ? ifTrue : ifFalse),
   };
 
-  stringTemplater<Args>(str: string, topArgs: Args, onUnknownArg?: (argName: string) => any) {
+  stringTemplater<Args>(str: string, topArgs: Args, onUnknownArg?: (argName: string) => unknown) {
     const dob = '{{';
     const ocb = '}{';
     const dcb = '}}';
     const noObj = {};
-    const norm = (val: any, op?: string) =>
+    const norm = (val: unknown, op?: string) =>
       op === '?'
         ? val
           ? val
@@ -256,21 +264,21 @@ export class SMyLib {
               : val;
     let lim = 1000;
 
-    const inline = (parts: string[]) => {
+    const inline = (parts: unknown[]) => {
       lim--;
       if (lim < 0) return;
-      let line: any[] = [];
+      let line: unknown[] = [];
 
-      const addNorm = (val: any, op?: string) => {
+      const addNorm = (val: unknown, op?: string) => {
         const value = norm(val, op);
         line = line.concat(value == noObj || value == null ? '' : value);
       };
 
-      const getDiapason = (diapason: string[], district: number | null, structItems = false) => {
+      const getDiapason = (diapason: unknown[], district: number | null, structItems = false) => {
         let ballance: number = null as never;
         let distBallance = 0;
-        let struct: any[] = [];
-        const dists: any[] = [];
+        let struct: unknown[] = [];
+        const dists: unknown[] = [];
 
         const diap = (diapason[0] === dob ? diapason : []).filter(txt => {
           if (ballance === 0) return false;
@@ -304,11 +312,11 @@ export class SMyLib {
       parts.forEach((part, parti, parta) => {
         if (parti && parti <= escLim) return;
 
-        const invokeFunc = (func: (...val: any) => void) => {
+        const invokeFunc = (func: Function) => {
           const diapason = getDiapason(parta.slice(parti + 1), null, true);
           escLim += diapason.len;
 
-          const nrm = inline(diapason.list) as any[];
+          const nrm = inline(diapason.list) as [];
           addNorm(func.apply(this, nrm));
         };
 
@@ -316,10 +324,10 @@ export class SMyLib {
         } else if (part === dcb || part === ocb) escLim++;
         else if (this.isStr(part)) {
           const match = part.match(makeRegExp('/^\\$(\\w+)(!{1,2}|\\?{1,2})?(;?)/'));
-          const [, topArgName, op, semicolon] = (match || []) as [any, keyof StringTemplaterArgs, string, string];
+          const [, topArgName, op, semicolon] = (match || []) as [unknown, keyof StringTemplaterArgs, string, string];
 
           if (topArgName != null) {
-            let val = topArgs[topArgName as keyof Args] as any;
+            let val = topArgs[topArgName as keyof Args] as unknown;
             if (val === undefined) {
               val = this.stringTemplaterFunctions[topArgName];
               if (val === undefined && onUnknownArg) val = onUnknownArg(topArgName);

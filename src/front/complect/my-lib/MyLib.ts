@@ -33,16 +33,6 @@ export class MyLib extends SMyLib {
   dayFullTitles = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота'];
   dayShortTitles = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
 
-  constructor() {
-    super();
-    if (typeof window !== 'undefined') (window as any).MyLib = this;
-  }
-
-  def(...args: any[]): any {
-    const res = args.find(some => some != null);
-    return res == null ? args[args.length - 1] : res;
-  }
-
   typ<T>(...args: (T | null | undefined)[]): T {
     if (args[0] == null || args.length < 2) return args[0] as T;
 
@@ -51,7 +41,7 @@ export class MyLib extends SMyLib {
     return arg == null ? args[0] : arg;
   }
 
-  findLastIndex<Value>(arr?: Value[], cb: (val: Value, index: number, array: Value[]) => any = () => false) {
+  findLastIndex<Value>(arr?: Value[], cb: (val: Value, index: number, array: Value[]) => unknown = () => false) {
     if (!Array.isArray(arr)) return null;
     if (!this.isFunc(cb)) return arr.length - 1;
 
@@ -144,16 +134,17 @@ export class MyLib extends SMyLib {
             return true;
           };
 
-          const search = (track: Trace[] | Trace, target: any, level: number) => {
+          const search = (track: Trace[] | Trace, target: unknown, level: number) => {
             let searched;
             ([] as Trace[]).concat(track).reduce((target, trace, tracei, tracea) => {
               if (!target) return null;
-              if (trace === this.c.INDEX) {
-                searched = target.some((o: any) => search(track.slice(tracei + 1), o, (level + tracei) * 10));
+              if (trace === this.c.INDEX && this.isArr(target)) {
+                searched = target.some((o: unknown) => search(track.slice(tracei + 1), o, (level + tracei) * 10));
                 return null;
               }
-              if (tracei >= tracea.length - 1) searched = searchInPlace(target[trace as string], level);
-              return target[trace as string];
+              if (tracei >= tracea.length - 1)
+                searched = searchInPlace((target as never as Record<string, string>)[trace as string], level);
+              return (target as never as Record<string, string>)[trace as string];
             }, target);
             return searched;
           };
@@ -242,17 +233,6 @@ export class MyLib extends SMyLib {
     return '';
   }
 
-  getAllProperties(obj: any) {
-    const allProps: string[] = [];
-    let curr = obj;
-    do {
-      Object.getOwnPropertyNames(curr).forEach(prop => {
-        if (allProps.indexOf(prop) === -1) allProps.push(prop);
-      });
-    } while ((curr = Object.getPrototypeOf(curr)));
-    return allProps;
-  }
-
   insertAfter(elem: HTMLElement, refElem: HTMLElement) {
     return refElem.parentNode?.insertBefore(elem, refElem.nextSibling);
   }
@@ -278,7 +258,7 @@ export class MyLib extends SMyLib {
 
     const attrName = 'animation.ts';
     const attrVal = (Date.now() + Math.random()).toString();
-    const is = (pos: RegExp) => ~(position || 'center').search(pos);
+    const is = (pos: RegExp | string) => ~(position || 'center').search(pos);
     const isStatic = getComputedStyle(parent).position === 'static';
     const prevPosition = parent.style.position;
 
@@ -326,9 +306,9 @@ export class MyLib extends SMyLib {
     };
 
     [
-      [/left/i, /right/i, /top/i, /bottom/i, /center +-/i, 'h'],
-      [/top/i, /bottom/i, /left/i, /right/i, /- +center/i, 'v'],
-    ].forEach(([sReg, eReg, nsReg, neReg, ncReg, dir]: any[]) => {
+      [/left/i, /right/i, /top/i, /bottom/i, /center +-/i, 'h'] as const,
+      [/top/i, /bottom/i, /left/i, /right/i, /- +center/i, 'v'] as const,
+    ].forEach(([sReg, eReg, nsReg, neReg, ncReg, dir]) => {
       if (is(sReg)) scroll('s', dir);
       else if (is(eReg)) scroll('e', dir);
       else if (is(nsReg) || is(neReg) ? is(makeRegExp('/center/i')) : is(makeRegExp('/center/i')) && !is(ncReg))
@@ -524,4 +504,9 @@ export class MyLib extends SMyLib {
 
 export const mylib = new MyLib();
 
-if (typeof window !== 'undefined') (window as any).mylib = mylib;
+if (typeof window !== 'undefined') {
+  const win: { MyLib: unknown; mylib: unknown } = window as never;
+
+  win.MyLib = MyLib;
+  win.mylib = mylib;
+}

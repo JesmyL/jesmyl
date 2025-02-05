@@ -14,7 +14,7 @@ interface Props {
   bpm?: number;
 }
 
-const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+const AudioContext = window.AudioContext || ('webkitAudioContext' in window && window.webkitAudioContext);
 var context = new AudioContext();
 let lastTs: number;
 
@@ -94,12 +94,12 @@ export const Metronome = ({ meterSize = 4, bpm = 120 }: Props) => {
 
     const onSecondaryRangeChange = ((event: ChangeEvent<HTMLInputElement>) => {
       if (event.currentTarget) secondaryPitch = +event.currentTarget.value;
-    }) as any;
+    }) as never;
     secondaryRangeNode.addEventListener('input', onSecondaryRangeChange);
 
     const onAccentRangeChange = ((event: ChangeEvent<HTMLInputElement>) => {
       if (event.currentTarget) accentPitch = +event.currentTarget.value;
-    }) as any;
+    }) as never;
     accentRangeNode.addEventListener('input', onAccentRangeChange);
 
     return () => {

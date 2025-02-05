@@ -26,7 +26,7 @@ export default function propsOfClicker({
       action(event);
       setTimeout(reset, 100);
     },
-    onTouchStart: (event: any) => {
+    onTouchStart: (event: React.TouchEvent<HTMLDivElement> & { clientX?: unknown; clientY?: unknown }) => {
       if (isContextMenuClicked) return;
       isContextMenuClicked = true;
       event.clientX = event.touches[0].clientX;
