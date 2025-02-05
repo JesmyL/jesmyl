@@ -138,9 +138,9 @@ export default function IndexTelegramAuth({ onLoginAuth }: { onLoginAuth: () => 
                 </>
               )}
             </div>
-            <div className="flex pointer color--3">
+            {/* <div className="flex pointer color--3">
               <span onClick={onLoginAuth}>Ввести логин/пароль</span>
-            </div>
+            </div> */}
           </div>
         </>
       }
