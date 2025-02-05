@@ -2,8 +2,10 @@ import { BottomPopup } from 'front/complect/absolute-popup/bottom-popup/BottomPo
 import { useAtom } from 'front/complect/atoms';
 import { useIsNumberSearch } from 'front/complect/DebouncedSearchInput';
 import { hookEffectPipe, setTimeoutPipe } from 'front/complect/hookEffectPipe';
+import { StyledPhaseContainerConfigurerHead } from 'front/complect/phase-container/PhaseContainerConfigurer';
 import { useEffect, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import styled from 'styled-components';
 import { Cat } from '../../../col/cat/Cat';
 import { CatSpecialSearches } from '../../../col/cat/Cat.complect';
 import { TheCatSpecialSearches } from '../../../col/cat/SpecialSearches';
@@ -68,7 +70,7 @@ export default function EditCompositions() {
         index
         element={
           <>
-            <PhaseCmEditorContainer
+            <StyledPhaseCmEditorContainer
               className="edit-compositions"
               headClass="flex between full-width"
               head={
@@ -119,3 +121,9 @@ export default function EditCompositions() {
     </Routes>
   );
 }
+
+const StyledPhaseCmEditorContainer = styled(PhaseCmEditorContainer)`
+  ${StyledPhaseContainerConfigurerHead} {
+    width: 100%;
+  }
+`;
