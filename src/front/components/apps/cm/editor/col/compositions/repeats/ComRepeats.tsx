@@ -53,7 +53,9 @@ export default function ComRepeats() {
         ord.me.header(),
         ccom.wid,
         (keys.length ? (keys.length === 1 && keys[0] === '.' ? repeats['.'] : repeats) : 0) ?? 0,
-        ord.repeatedText(repeats).replace(makeRegExp('/&nbsp;/g'), ' '),
+        ord.text
+          ? ord.repeatedText(repeats).replace(makeRegExp('/&nbsp;/g'), ' ')
+          : ord.me.header({ repeats: ord.repeatsTitle }),
       );
     },
     [ccom],
