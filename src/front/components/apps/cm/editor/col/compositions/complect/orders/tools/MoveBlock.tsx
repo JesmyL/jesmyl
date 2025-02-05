@@ -12,6 +12,7 @@ export const OrdersRedactorOrderToolsMoveBlock = (props: OrdersRedactorOrderTool
       onClick={async () => {
         props.onClose(false);
         let isFoundTargetOrd = !props.ord.isAnchor;
+        let isFoundFirstAnchorOrd = false;
 
         props.setClickBetweenOrds({
           buttonTitle: (
@@ -21,6 +22,13 @@ export const OrdersRedactorOrderToolsMoveBlock = (props: OrdersRedactorOrderTool
             </span>
           ),
           checkIsShowButton: (ordAbove, ordBelow) => {
+            if (ordBelow?.me.isAnchorInherit) return false;
+
+            if (isFoundFirstAnchorOrd || ordAbove?.me.targetOrd?.wid === props.ord.wid) {
+              isFoundFirstAnchorOrd = ordBelow != null;
+              return false;
+            }
+
             let isFoundTargetOrdPrev: boolean = true;
 
             if (props.ord.isAnchor) {
