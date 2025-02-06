@@ -9,7 +9,7 @@ import { makeRegExp, smylib } from 'shared/utils';
 import WebSocket, { WebSocketServer } from 'ws';
 import { setSharedPolyfills } from '../../../shared/utils/complect/polyfills';
 import { scheduleWidgetMessageCatcher } from '../../apps/index/schedules/tg-bot-inform/message-catchers';
-import { baseMessagesCatcher } from '../../sides/telegram-bot/message-catchers';
+import { baseMessagesCatcher } from '../../sides/telegram-bot/complect/message-catchers';
 import { ErrorCatcher } from '../ErrorCatcher';
 import { FileStore } from '../FileStore';
 import { onSokiServerEventerInvocatorInvoke } from './eventers';

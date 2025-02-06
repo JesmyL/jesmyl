@@ -1,8 +1,8 @@
 import { addEventListenerPipe, hookEffectPipe } from 'front/complect/hookEffectPipe';
 import { TheIconLoading } from 'front/complect/the-icon/IconLoading';
 import { IconAlert02StrokeRounded } from 'front/complect/the-icon/icons/alert-02';
+import { TheIconProps } from 'front/complect/the-icon/model';
 import { useActualRef } from 'front/complect/useActualRef';
-import { TheIconProps } from 'front/model';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { CorrectsBox } from '../editor/corrects-box/CorrectsBox';

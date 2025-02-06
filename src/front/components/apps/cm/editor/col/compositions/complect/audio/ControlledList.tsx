@@ -1,5 +1,5 @@
 import { TheIconLoading } from 'front/complect/the-icon/IconLoading';
-import { TheIconProps } from 'front/model';
+import { TheIconProps } from 'front/complect/the-icon/model';
 import { useState } from 'react';
 import ComPlayer from '../../../../../col/com/player/ComPlayer';
 

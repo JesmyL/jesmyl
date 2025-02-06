@@ -3,7 +3,7 @@ import { makeSokiInvocatorBase } from 'shared/api/complect/SokiInvocatorBase.mas
 import { smylib } from 'shared/utils';
 import { WebSocket } from 'ws';
 import { onSokiServerEventerInvocatorInvoke } from './complect/soki/eventers';
-import { jesmylChangesBot } from './sides/telegram-bot/jesmylChangesBot';
+import { jesmylChangesBot } from './sides/telegram-bot/control/jesmylChangesBot';
 
 export type SokiServerInvocatorTool = { client: WebSocket; auth: LocalSokiAuth | und };
 

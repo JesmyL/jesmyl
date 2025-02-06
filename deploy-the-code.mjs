@@ -63,7 +63,7 @@ export const deployTheCode = async (front, back) => {
       platform: 'node',
       format: 'cjs',
       keepNames: true,
-      // minifyWhitespace: true,
+      minifyWhitespace: true,
       // minifyIdentifiers: true,
       treeShaking: true,
 

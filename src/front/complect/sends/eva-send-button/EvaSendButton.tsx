@@ -1,5 +1,5 @@
 import IconButton from 'front/complect/the-icon/IconButton';
-import { TheIconType } from 'front/model';
+import { TheIconType } from 'front/complect/the-icon/model';
 import useToast from '../../modal/useToast';
 import { SendButtonContentMaker } from '../send-button-content-maker/maker';
 import { SendButtonContentMakerProps } from '../send-button-content-maker/maker.model';
