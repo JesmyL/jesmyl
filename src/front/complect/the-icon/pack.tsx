@@ -5,6 +5,7 @@ import { iconPackOfAlien02 } from './icons/alien-02';
 import { iconPackOfAnonymous } from './icons/anonymous';
 import { iconPackOfApproximatelyEqualSquare } from './icons/approximately-equal-square';
 import { iconPackOfArrange } from './icons/arrange';
+import { iconPackOfArrowDataTransferDiagonal } from './icons/arrow-data-transfer-diagonal';
 import { iconPackOfArrowDataTransferVertical } from './icons/arrow-data-transfer-vertical';
 import { iconPackOfArrowDown01 } from './icons/arrow-down-01';
 import { iconPackOfArrowDown02 } from './icons/arrow-down-02';
@@ -63,6 +64,7 @@ import { iconPackOfCloud } from './icons/cloud';
 import { iconPackOfCloudDownload } from './icons/cloud-download';
 import { iconPackOfCloudUpload } from './icons/cloud-upload';
 import { iconPackOfComputer } from './icons/computer';
+import { iconPackOfComputerPhoneSync } from './icons/computer-phone-sync';
 import { iconPackOfComputerSettings } from './icons/computer-settings';
 import { iconPackOfCongruentToSquare } from './icons/congruent-to-square';
 import { iconPackOfCopy01 } from './icons/copy-01';
@@ -86,6 +88,7 @@ import { iconPackOfFile02 } from './icons/file-02';
 import { iconPackOfFileImport } from './icons/file-import';
 import { iconPackOfFileMusic } from './icons/file-music';
 import { iconPackOfFileNotFound } from './icons/file-not-found';
+import { iconPackOfFileValidation } from './icons/file-validation';
 import { iconPackOfFlag03 } from './icons/flag-03';
 import { iconPackOfFlash } from './icons/flash';
 import { iconPackOfFlashOff } from './icons/flash-off';
@@ -117,12 +120,14 @@ import { iconPackOfLink02 } from './icons/link-02';
 import { iconPackOfLinkBackward } from './icons/link-backward';
 import { iconPackOfLinkForward } from './icons/link-forward';
 import { iconPackOfLinkSquare01 } from './icons/link-square-01';
+import { iconPackOfListView } from './icons/list-view';
 import { iconPackOfLoading03 } from './icons/loading-03';
 import { iconPackOfLocationUser03 } from './icons/location-user-03';
 import { iconPackOfMailRemove01 } from './icons/mail-remove-01';
 import { iconPackOfMailValidation01 } from './icons/mail-validation-01';
 import { iconPackOfMapsLocation02 } from './icons/maps-location-02';
 import { iconPackOfMapsOff } from './icons/maps-off';
+import { iconPackOfMapsRefresh } from './icons/maps-refresh';
 import { iconPackOfMenu01 } from './icons/menu-01';
 import { iconPackOfMessage01 } from './icons/message-01';
 import { iconPackOfMessageAdd01 } from './icons/message-add-01';
@@ -155,6 +160,7 @@ import { iconPackOfQrCode01 } from './icons/qr-code-01';
 import { iconPackOfRecord } from './icons/record';
 import { iconPackOfRefresh } from './icons/refresh';
 import { iconPackOfRemoveCircleHalfDot } from './icons/remove-circle-half-dot';
+import { iconPackOfRowDelete } from './icons/row-delete';
 import { iconPackOfRssError } from './icons/rss-error';
 import { iconPackOfSchoolReportCard } from './icons/school-report-card';
 import { iconPackOfScissor01 } from './icons/scissor-01';
@@ -177,6 +183,7 @@ import { iconPackOfTask01 } from './icons/task-01';
 import { iconPackOfTeacher } from './icons/teacher';
 import { iconPackOfTelegram } from './icons/telegram';
 import { iconPackOfText } from './icons/text';
+import { iconPackOfTextAlignLeft } from './icons/text-align-left';
 import { iconPackOfTextFont } from './icons/text-font';
 import { iconPackOfTickDouble02 } from './icons/tick-double-02';
 import { iconPackOfToggleOff } from './icons/toggle-off';
@@ -197,6 +204,7 @@ import { iconPackOfViewOff } from './icons/view-off';
 import { iconPackOfViewOffSlash } from './icons/view-off-slash';
 import { iconPackOfVoiceId } from './icons/voice-id';
 import { iconPackOfWechat } from './icons/wechat';
+import { iconPackOfWorkHistory } from './icons/work-history';
 import { TheIconSelfPack } from './model';
 
 export const theIconKnownPack: Record<KnownIconNameForPack, TheIconSelfPack> = {
@@ -207,6 +215,7 @@ export const theIconKnownPack: Record<KnownIconNameForPack, TheIconSelfPack> = {
   Anonymous: iconPackOfAnonymous,
   ApproximatelyEqualSquare: iconPackOfApproximatelyEqualSquare,
   Arrange: iconPackOfArrange,
+  ArrowDataTransferDiagonal: iconPackOfArrowDataTransferDiagonal,
   ArrowDataTransferVertical: iconPackOfArrowDataTransferVertical,
   ArrowDown01: iconPackOfArrowDown01,
   ArrowDown02: iconPackOfArrowDown02,
@@ -265,6 +274,7 @@ export const theIconKnownPack: Record<KnownIconNameForPack, TheIconSelfPack> = {
   CloudDownload: iconPackOfCloudDownload,
   CloudUpload: iconPackOfCloudUpload,
   Computer: iconPackOfComputer,
+  ComputerPhoneSync: iconPackOfComputerPhoneSync,
   ComputerSettings: iconPackOfComputerSettings,
   CongruentToSquare: iconPackOfCongruentToSquare,
   Copy01: iconPackOfCopy01,
@@ -288,6 +298,7 @@ export const theIconKnownPack: Record<KnownIconNameForPack, TheIconSelfPack> = {
   FileImport: iconPackOfFileImport,
   FileMusic: iconPackOfFileMusic,
   FileNotFound: iconPackOfFileNotFound,
+  FileValidation: iconPackOfFileValidation,
   Flag03: iconPackOfFlag03,
   Flash: iconPackOfFlash,
   FlashOff: iconPackOfFlashOff,
@@ -319,12 +330,14 @@ export const theIconKnownPack: Record<KnownIconNameForPack, TheIconSelfPack> = {
   LinkBackward: iconPackOfLinkBackward,
   LinkForward: iconPackOfLinkForward,
   LinkSquare01: iconPackOfLinkSquare01,
+  ListView: iconPackOfListView,
   Loading03: iconPackOfLoading03,
   LocationUser03: iconPackOfLocationUser03,
   MailRemove01: iconPackOfMailRemove01,
   MailValidation01: iconPackOfMailValidation01,
   MapsLocation02: iconPackOfMapsLocation02,
   MapsOff: iconPackOfMapsOff,
+  MapsRefresh: iconPackOfMapsRefresh,
   Menu01: iconPackOfMenu01,
   Message01: iconPackOfMessage01,
   MessageAdd01: iconPackOfMessageAdd01,
@@ -357,6 +370,7 @@ export const theIconKnownPack: Record<KnownIconNameForPack, TheIconSelfPack> = {
   Record: iconPackOfRecord,
   Refresh: iconPackOfRefresh,
   RemoveCircleHalfDot: iconPackOfRemoveCircleHalfDot,
+  RowDelete: iconPackOfRowDelete,
   RssError: iconPackOfRssError,
   SchoolReportCard: iconPackOfSchoolReportCard,
   Scissor01: iconPackOfScissor01,
@@ -379,6 +393,7 @@ export const theIconKnownPack: Record<KnownIconNameForPack, TheIconSelfPack> = {
   Teacher: iconPackOfTeacher,
   Telegram: iconPackOfTelegram,
   Text: iconPackOfText,
+  TextAlignLeft: iconPackOfTextAlignLeft,
   TextFont: iconPackOfTextFont,
   TickDouble02: iconPackOfTickDouble02,
   ToggleOff: iconPackOfToggleOff,
@@ -399,4 +414,5 @@ export const theIconKnownPack: Record<KnownIconNameForPack, TheIconSelfPack> = {
   ViewOffSlash: iconPackOfViewOffSlash,
   VoiceId: iconPackOfVoiceId,
   Wechat: iconPackOfWechat,
+  WorkHistory: iconPackOfWorkHistory,
 };

@@ -34,7 +34,7 @@ export default function useFullContent<PassValue>(
 
   useEffect(() => {
     if (mode) {
-      const close: CallbackStopper = event => {
+      const close: PropagationStopper = event => {
         event.stopPropagation();
         onClose();
       };

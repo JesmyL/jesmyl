@@ -1,17 +1,14 @@
 import { mylib } from 'front/utils';
 import { IScheduleWidget, ScheduleWidgetCleans } from 'shared/api';
-import { ScheduleWidgetRights, useScheduleWidgetRights } from '../useScheduleWidget';
+import { useScheduleWidgetRights } from '../useScheduleWidget';
 
-export default function ScheduleWidgetStartTimeText({
-  schedule,
-  date: topDate,
-  rights: topRights,
-}: {
+interface Props {
   schedule?: IScheduleWidget;
   date?: Date;
-  rights?: ScheduleWidgetRights;
-}) {
-  const rights = useScheduleWidgetRights(schedule, topRights);
+}
+
+export default function ScheduleWidgetStartTimeText({ schedule, date: topDate }: Props) {
+  const rights = useScheduleWidgetRights(schedule);
 
   if (!schedule) return null;
   const date = topDate ?? new Date(schedule.start);

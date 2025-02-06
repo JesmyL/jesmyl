@@ -1,12 +1,11 @@
 import { ReactNode } from 'react';
-import { SokiServerEvent } from 'shared/api';
 
 export interface DropdownProps<Id, Item extends DropdownItem<Id>> {
   items: (Item | null)[];
   placeholder?: string;
   id?: Id;
-  onSelect?: (item: Item) => und | void | null | Promise<SokiServerEvent | null>;
-  onSelectId?: (item: Id) => und | void | null | Promise<SokiServerEvent | null>;
+  onSelect?: (item: Item) => und | void | null | Promise<unknown>;
+  onSelectId?: (item: Id) => und | void | null | Promise<unknown>;
   className?: string;
   undTitle?: string;
   nullTitle?: string;

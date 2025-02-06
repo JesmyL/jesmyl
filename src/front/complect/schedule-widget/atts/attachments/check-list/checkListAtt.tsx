@@ -1,9 +1,13 @@
 import { ScheduleWidgetAppAtts } from 'front/complect/schedule-widget/ScheduleWidget.model';
+import {
+  ScheduleWidgetAppAttCheckListValueItem,
+  scheduleWidgetUserRights,
+  ScheduleWidgetUserRoleRight,
+} from 'shared/api';
 import ScheduleCheckListAtt from './TheCheckListAtt';
-import { scheduleWidgetUserRights, ScheduleWidgetUserRoleRight } from 'shared/api';
 
 export interface ScheduleChListAtt {
-  list: [num, string][];
+  list: ScheduleWidgetAppAttCheckListValueItem[];
 }
 
 export const checkListAtt: ScheduleWidgetAppAtts<'SCH', ScheduleChListAtt> = {
@@ -12,11 +16,11 @@ export const checkListAtt: ScheduleWidgetAppAtts<'SCH', ScheduleChListAtt> = {
     description: 'Пункты с галочками',
     icon: 'CheckList',
     initVal: { list: [] },
-    result: (value, scope, isRedact) => (
+    result: (value, scheduleDayEventAttachmentScopeProps, isRedact) => (
       <ScheduleCheckListAtt
         isRedact={isRedact}
         value={value}
-        scope={scope}
+        scheduleDayEventAttachmentScopeProps={scheduleDayEventAttachmentScopeProps}
       />
     ),
     R: scheduleWidgetUserRights.includeRights(ScheduleWidgetUserRoleRight.Redact),

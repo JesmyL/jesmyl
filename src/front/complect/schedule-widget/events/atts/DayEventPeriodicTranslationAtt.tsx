@@ -1,10 +1,16 @@
 import { mylib, MyLib } from 'front/utils';
 import React, { ReactNode } from 'react';
-import { IScheduleWidget, IScheduleWidgetDay, ScheduleWidgetAttKey, ScheduleWidgetAttRef } from 'shared/api';
+import {
+  IScheduleWidget,
+  IScheduleWidgetDay,
+  ScheduleDayEventAttachmentScopeProps,
+  ScheduleWidgetAttKey,
+  ScheduleWidgetAttRef,
+} from 'shared/api';
 import { emptyFunc } from 'shared/utils';
+import { AttTranslatorType, attTranslatorTypes } from '../../../../../back/apps/index/schedules/attTranslatorType';
 import { ScheduleWidgetAppAtt } from '../../ScheduleWidget.model';
 import ScheduleWidgetTopicTitle from '../../complect/TopicTitle';
-import { AttTranslatorType, attTranslatorTypes } from '../../complect/attTranslatorType';
 
 export default function ScheduleWidgetDayEventPeriodicTranslation(props: {
   day: IScheduleWidgetDay;
@@ -13,8 +19,9 @@ export default function ScheduleWidgetDayEventPeriodicTranslation(props: {
   att: ScheduleWidgetAttRef;
   schedule: IScheduleWidget;
   appAtt: ScheduleWidgetAppAtt;
+  dayEventAttScopeProps: ScheduleDayEventAttachmentScopeProps;
 }) {
-  const [attTranslatorType] = props.att as [AttTranslatorType, 0];
+  const [attTranslatorType] = props.att;
   const periodTitle = attTranslatorTypes.find(({ id }) => attTranslatorType === id)?.title;
   const nodes: ReactNode[][] = [];
   const types = props.schedule.types ?? [];
@@ -99,7 +106,13 @@ export default function ScheduleWidgetDayEventPeriodicTranslation(props: {
                 />
                 <div className="margin-gap-l">
                   {blockText ||
-                    props.appAtt.result?.(att ?? props.appAtt.initVal, '', false, emptyFunc, props.schedule)}
+                    props.appAtt.result?.(
+                      att ?? props.appAtt.initVal,
+                      props.dayEventAttScopeProps,
+                      false,
+                      emptyFunc,
+                      props.schedule,
+                    )}
                 </div>
               </>,
             );

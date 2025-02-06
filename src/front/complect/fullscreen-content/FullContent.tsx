@@ -82,7 +82,7 @@ export function FullContent({ onClose, closable, children, className, asRootAnch
 
 const Swiped = ({ close, ...props }: { close: () => void } & HTMLAttributes<HTMLDivElement>) => {
   useEffect(() => {
-    const closeAction: CallbackStopper = event => {
+    const closeAction: PropagationStopper = event => {
       event.stopPropagation();
       close();
     };

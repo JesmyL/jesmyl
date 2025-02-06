@@ -1,4 +1,6 @@
+import { updateComComment } from 'front/components/apps/cm/com-comments-manager';
 import { useEffect } from 'react';
+import { emptyFunc } from 'shared/utils';
 import { hookEffectPipe, setTimeoutPipe } from '../../../../../../../complect/hookEffectPipe';
 import { Com } from '../../Com';
 import { Order } from '../../order/Order';
@@ -9,13 +11,12 @@ export const useComBlockCommentUpdateBlockNames = (
   visibleOrders: Order[] | undefined,
   isRedact: boolean,
   comComment: string | nil,
-  setComment: (set: string | und | ((comment: string | und) => string)) => void,
 ) => {
   useEffect(() => {
     return hookEffectPipe()
       .pipe(
         setTimeoutPipe(() => {
-          if (!com || !comComment || visibleOrders == null) return;
+          if (!com?.wid || !comComment || visibleOrders == null) return;
 
           const initialOrders = com?.orders;
 
@@ -90,9 +91,9 @@ export const useComBlockCommentUpdateBlockNames = (
           )
             return;
 
-          setComment(isRedact ? newComment : newComment.trim());
+          updateComComment(com.wid, isRedact ? newComment : newComment.trim(), emptyFunc);
         }, 500),
       )
       .effect();
-  }, [visibleOrders, com, comComment, isRedact, setComment]);
+  }, [visibleOrders, com?.wid, comComment, isRedact, com?.orders]);
 };

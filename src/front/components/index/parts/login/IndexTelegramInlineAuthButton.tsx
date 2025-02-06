@@ -1,16 +1,12 @@
-import { mylib } from 'front/utils';
+import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
 import { Link } from 'react-router-dom';
 import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
 import { TelegramWebAppApiOr } from '../../../../complect/tg-app/getTgApi';
-import IconButton from '../../../../complect/the-icon/IconButton';
 import { IconAuthorizedStrokeRounded } from '../../../../complect/the-icon/icons/authorized';
 import { IconTelegramStrokeRounded } from '../../../../complect/the-icon/icons/telegram';
-import { soki } from '../../../../soki';
-import { useSetAuth } from '../../molecules';
+import { indexBasicsSokiInvocatorClient } from '../../db/invocators/schedules/fresh-invocator.methods';
 
 export const IndexTelegramInlineAuthButton = () => {
-  const setAuth = useSetAuth();
-
   return (
     <TelegramWebAppApiOr>
       {api => {
@@ -23,22 +19,13 @@ export const IndexTelegramInlineAuthButton = () => {
               icon={<IconAuthorizedStrokeRounded />}
               title="Авторизоваться"
               box={
-                api?.initData && (
-                  <IconButton
+                api?.initDataUnsafe?.user && (
+                  <EvaSendButton
                     Icon={IconTelegramStrokeRounded}
                     className="color--ok"
-                    onClick={event => {
-                      event.preventDefault();
-
-                      soki
-                        .send({ tgNativeAuthorization: api.initDataUnsafe.user }, 'index')
-                        .on(({ tgAuthorization }) => {
-                          if (!tgAuthorization || !tgAuthorization.ok || mylib.isStr(tgAuthorization.value)) return;
-
-                          setAuth(tgAuthorization.value);
-                          soki.sendConnectionHandshake();
-                        });
-                    }}
+                    onSend={async () =>
+                      await indexBasicsSokiInvocatorClient.authMeByTelegramMiniButton(null, api.initDataUnsafe.user)
+                    }
                   />
                 )
               }

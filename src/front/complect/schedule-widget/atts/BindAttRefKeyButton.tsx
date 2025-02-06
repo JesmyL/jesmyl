@@ -1,5 +1,8 @@
+import Modal from 'front/complect/modal/Modal/Modal';
+import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
+import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
 import { mylib } from 'front/utils';
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import {
   IScheduleWidget,
   ScheduleWidgetAttKey,
@@ -7,35 +10,50 @@ import {
   ScheduleWidgetDayEventAttValues,
 } from 'shared/api';
 import { IconLink01StrokeRounded } from '../../../complect/the-icon/icons/link-01';
-import useModal from '../../modal/useModal';
 import StrongDiv from '../../strong-control/StrongDiv';
 import IconButton from '../../the-icon/IconButton';
 import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
 import ScheduleWidgetAttFace from './AttFace';
 
-export default function ScheduleWidgetBindAttRefKeyButton({
-  atts,
-  forTitle,
-  attScope,
-  attKey,
-  refs,
-  tatt,
-  schedule,
-}: {
+type Props = {
   forTitle: ReactNode;
   atts?: ScheduleWidgetDayEventAttValues;
   attKey: ScheduleWidgetAttKey;
   refs: ScheduleWidgetAttRef[];
-  attScope: string;
   tatt: ScheduleWidgetAppAtt;
   schedule: IScheduleWidget;
-}) {
-  const [modalNode, screen] = useModal(({ header, body }, closeModal) => {
-    return (
-      <>
-        {header(<>{forTitle} - Сослаться на вложение</>)}
-        {body(
-          <>
+  onRemoveAttSend: (attKey: ScheduleWidgetAttKey) => Promise<unknown>;
+  onSend: (attRef: ScheduleWidgetAttRef) => Promise<unknown>;
+};
+
+export default function ScheduleWidgetBindAttRefKeyButton({
+  atts,
+  forTitle,
+  attKey,
+  refs,
+  tatt,
+  schedule,
+  onRemoveAttSend,
+  onSend,
+}: Props) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  return (
+    <>
+      <IconButton
+        Icon={IconLink01StrokeRounded}
+        disabled={!!atts?.[attKey]}
+        className="absolute pos-top pos-right padding-gap"
+        onClick={event => {
+          event.stopPropagation();
+          setIsModalOpen(true);
+        }}
+      />
+      {isModalOpen && (
+        <Modal onClose={setIsModalOpen}>
+          <ModalHeader>{forTitle} - сослаться на вложение</ModalHeader>
+
+          <ModalBody>
             {refs.map(attRef => {
               if (!schedule.days) return null;
               const [dayi, eventMi] = attRef;
@@ -50,18 +68,9 @@ export default function ScheduleWidgetBindAttRefKeyButton({
               return (
                 <StrongDiv
                   key={attKey + dayi + eventMi}
-                  scope={attScope}
-                  fieldName=""
-                  cud="U"
                   className="margin-big-gap-v"
-                  mapExecArgs={args => {
-                    if (atts?.[attKey]) return;
-                    return {
-                      ...args,
-                      value: attRef,
-                    };
-                  }}
-                  onClick={closeModal}
+                  onSuccess={() => setIsModalOpen(false)}
+                  onSend={() => onSend(attRef)}
                 >
                   <div className="color--7">
                     {dayi + 1} день, {mylib.dayFullTitles[dayDate.getDay()]} - {schedule.types[event.type].title}
@@ -70,36 +79,20 @@ export default function ScheduleWidgetBindAttRefKeyButton({
                     className={'flex flex-gap bgcolor--1 padding-gap pointer' + (atts?.[attKey] ? ' disabled ' : '')}
                   >
                     <ScheduleWidgetAttFace
-                      scope=""
-                      scheduleScope=""
                       tatt={tatt}
                       typeTitle={forTitle}
                       attKey={attKey}
                       isLink
+                      onRemoveAttSend={onRemoveAttSend}
                     />
                     <div className="fade-05">{tatt.description}</div>
                   </div>
                 </StrongDiv>
               );
             })}
-          </>,
-        )}
-      </>
-    );
-  });
-
-  return (
-    <>
-      {modalNode}
-      <IconButton
-        Icon={IconLink01StrokeRounded}
-        disabled={!!atts?.[attKey]}
-        className="absolute pos-top pos-right padding-gap"
-        onClick={event => {
-          event.stopPropagation();
-          screen();
-        }}
-      />
+          </ModalBody>
+        </Modal>
+      )}
     </>
   );
 }

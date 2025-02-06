@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { emptyFunc } from 'shared/utils';
 import { ScheduleWidgetLiveTranslation } from '../../../../complect/schedule-widget/live-translations/Live';
-import { useIndexSchedules } from '../../../index/molecules';
+import { useIndexSchedules } from '../../../index/atoms';
 import { useIsCanShowTextTranslation } from './atoms';
 
 interface Props {
@@ -18,14 +18,14 @@ export const TranslationTextScreen = ({ children }: Props) => {
 const Screen = ({ children }: Props) => {
   const schw = +useParams().schw!;
   const schedules = useIndexSchedules();
-  const schedule = schedules.list.find(sch => sch.w === schw);
+  const schedule = schedules?.find(sch => sch.w === schw);
 
   if (schedule === undefined) return <>{children}</>;
 
   return (
     <ScheduleWidgetLiveTranslation
       onClose={emptyFunc}
-      schedule={schedule}
+      schw={schedule.w}
       isShowMarkdownOnly
     />
   );

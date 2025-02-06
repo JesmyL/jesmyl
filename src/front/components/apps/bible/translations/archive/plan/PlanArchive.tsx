@@ -1,11 +1,8 @@
 import { mylib } from 'front/utils';
 import { memo, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import {
-  useBibleTranslationJoinAddressSetter,
-  useGetterJoinedAddressMaxValues,
-  useSetBibleAddressIndexes,
-} from '../../../hooks/address/address';
+import { bibleIDB } from '../../../_db/bibleIDB';
+import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '../../../hooks/address/address';
 import BibleTranslationArchive from '../Archive';
 import { useBibleClearTranslationPlanSetter, useBibleTranslationPlan } from './hooks/plan';
 
@@ -15,7 +12,6 @@ export default memo(function BibleTranslationPlanArchive(): JSX.Element {
   const [selectedItemi, setSelectedItemi] = useState<number | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const setAddress = useSetBibleAddressIndexes();
-  const setJoinAddress = useBibleTranslationJoinAddressSetter();
   const getJoinAddressMaxes = useGetterJoinedAddressMaxValues();
 
   useEffect(() => {
@@ -51,9 +47,9 @@ export default memo(function BibleTranslationPlanArchive(): JSX.Element {
               const item = plan[selectedItemi];
               if (mylib.isArr(item)) {
                 setAddress(...item);
-                setJoinAddress(null);
+                bibleIDB.set.joinAddress(null);
               } else {
-                setJoinAddress(item);
+                bibleIDB.set.joinAddress(item);
                 setAddress(...getJoinAddressMaxes(item));
               }
 
@@ -68,7 +64,7 @@ export default memo(function BibleTranslationPlanArchive(): JSX.Element {
       })
       .addEventListener(inputNode, 'blur', () => setSelectedItemi(null))
       .effect();
-  }, [getJoinAddressMaxes, plan, plan.length, selectedItemi, setAddress, setJoinAddress]);
+  }, [getJoinAddressMaxes, plan, selectedItemi, setAddress]);
 
   useEffect(() => {
     if (selectedItemi === null) return;

@@ -1,7 +1,5 @@
-import { mylib } from 'front/utils';
-import { IExportableOrder, IExportableOrderFieldValues, InheritancableOrder, OrderRepeats } from 'shared/api';
-import { FreeExecDict, FreeExecDictUniq } from '../../../../../../../../complect/exer/Exer.model';
-import { cmExer } from '../../../../../CmExer';
+import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
+import { InheritancableOrder, OrderRepeats } from 'shared/api';
 import { Order } from '../../../../../col/com/order/Order';
 import { EditableOrderRegion, IExportableOrderMe } from '../../../../../col/com/order/Order.model';
 import { EditableCom } from '../../com/EditableCom';
@@ -15,10 +13,6 @@ export class EditableOrder extends Order {
     this.com = com;
   }
 
-  get antiIsVisible() {
-    return this.isVisible ? 0 : 1;
-  }
-
   comOrders() {
     return this.com.orders;
   }
@@ -27,79 +21,6 @@ export class EditableOrder extends Order {
     if (this._regions === undefined) this.setRegions();
 
     return this._regions;
-  }
-
-  setField<K extends keyof IExportableOrder>(
-    fieldn: keyof IExportableOrder,
-    value: IExportableOrder[K],
-    args?: Record<string, any>,
-    onFinish?: () => void,
-    refresh = true,
-    onSet?: () => void | null,
-  ) {
-    const setExec = (action: string, additionalArgs: {}, onSet?: () => void) => {
-      this.exec({
-        prev: (
-          {
-            s: this.type,
-            c: this.chordsi,
-            t: this.texti,
-            o: this.isOpened,
-            r: this.repeats,
-            v: this.isVisible ? 1 : 0,
-            e: this.isEmptyHeader,
-          } as never
-        )[fieldn],
-        value,
-        uniq: this.me.viewIndex,
-        method: 'set',
-        action,
-        onSet,
-        args: mylib.overlap({ fieldn }, args, additionalArgs),
-      });
-    };
-
-    if (this.me.isAnchorInherit) {
-      const wid = this.me.leadOrd?.wid;
-
-      setExec('setAnchorInheritValue', { inhIndex: this.me.anchorInheritIndex, wid, value }, onSet);
-    } else {
-      const action = (
-        {
-          s: 'comSetOrderType',
-          c: 'comSetOrderStringBlock',
-          t: 'comSetOrderStringBlock',
-          o: 'comSetOrderOpenedBlock',
-          r: 'comSetOrderRepeatBlock',
-          v: 'comSetOrderVisibleSign',
-          e: 'comSetOrderEmptiedVal',
-        } as Record<keyof Partial<IExportableOrder>, string>
-      )[fieldn];
-
-      setExec(action, { value: value ?? null }, onSet);
-    }
-
-    if (this.me.source) {
-      const inhFieldn = fieldn as keyof InheritancableOrder;
-
-      if (this.me.isAnchorInherit) {
-        const src = this.me.leadOrd?.me.source;
-        if (src && !src.top.inh) src.top.inh = {} as never;
-        const inh = src?.top.inh;
-
-        if (inh && this.me.anchorInheritIndex != null) {
-          if (!inh[inhFieldn]) inh[inhFieldn] = {};
-          const inhScope = inh[inhFieldn];
-          if (inhScope) inhScope[this.me.anchorInheritIndex] = value as never;
-        }
-      } else this.me.source.top[inhFieldn] = value as never;
-      this.setExportable(inhFieldn, value as never);
-    }
-
-    if (refresh) {
-      this.com.afterOrderChange();
-      onFinish?.();
-    }
   }
 
   setRepeats(_val?: OrderRepeats | null) {}
@@ -111,33 +32,6 @@ export class EditableOrder extends Order {
     this.setExportable('f', val);
   }
 
-  setFieldValue<Key extends keyof IExportableOrderFieldValues>(fieldn: Key, value: IExportableOrderFieldValues[Key]) {
-    this.exec({
-      prev: this.fieldValues[fieldn],
-      value,
-      method: 'set',
-      action: 'comSetOrderFieldValue',
-      args: {
-        value,
-        fieldn,
-      },
-    });
-
-    this.fieldValues[fieldn] = value;
-  }
-
-  scope(action: string, uniq?: FreeExecDictUniq, wid?: number | null) {
-    return [
-      this.com.scope(),
-      '->',
-      mylib.def(wid, this.wid),
-      '.',
-      mylib.typ('[action]', action),
-      ':',
-      ([] as (string | number)[]).concat(mylib.def(uniq, '[uniq]') || []).join(','),
-    ].join('');
-  }
-
   isWithHead() {
     return (
       !this.me.isInherit &&
@@ -147,25 +41,6 @@ export class EditableOrder extends Order {
     );
   }
 
-  exec<Value>(bag: FreeExecDict<Value>) {
-    const { scope, args: { wid } = {} } = bag;
-
-    cmExer.set({
-      ...bag,
-      scope: this.scope(bag.action, bag.uniq, wid),
-      args: {
-        ordw: mylib.def(wid, this.wid),
-        comw: this.com.wid,
-        name: this.com.name,
-        blockn: this.me.header(null, true),
-        isAnchor: this.isAnchor,
-        ...bag.args,
-      },
-      generalId: this.com.wid,
-      ...(scope ? { scope } : null),
-    });
-  }
-
   isInheritValue<Key extends keyof InheritancableOrder>(key: Key) {
     return this.me.isAnchorInherit
       ? this.me.anchorInheritIndex != null &&
@@ -173,15 +48,8 @@ export class EditableOrder extends Order {
       : this.me.isAnchor && this.me.source?.top[key] == null;
   }
 
-  get unique() {
-    return this.me.source?.top.u ?? this.top.u;
-  }
-  set unique(val) {
-    this.me.source && (this.me.source.top.u = val);
-  }
-
   async setChordPosition(linei: number, pos: number) {
-    const prev = mylib.clone(this.positions?.[linei] || []).sort((a: number, b: number) => a - b);
+    const prev = [...(this.positions?.[linei] || [])].sort((a: number, b: number) => a - b);
     const line = this.positions?.[linei] || [];
     const posi = line.indexOf(pos);
     const textLines = (this.text || '').split('\n');
@@ -200,44 +68,37 @@ export class EditableOrder extends Order {
       if (vowel && vowel.length === 1) lineSplitted[vowels[pos]] = `[${vowel}]`;
     });
 
-    this.exec({
-      uniq: linei,
-      prev,
-      value: line,
-      method: 'set',
-      action: 'comSetOrderChordPositionLine',
-      args: {
-        linei,
-        value: line,
-        ordw: this.getTargetFirst('w'),
-      },
-      onSet: exec => {
-        const lineSplitted = textLine.split('');
-        const prev = exec.args?.prev || [];
+    prev.concat(positions).forEach((pos: number) => {
+      const vowel = lineSplitted[vowels[pos]];
+      if (!vowel || vowel.length !== 1) return;
 
-        prev.concat(positions).forEach((pos: number) => {
-          const vowel = lineSplitted[vowels[pos]];
-          if (!vowel || vowel.length !== 1) return;
+      const inPos = positions.indexOf(pos) > -1;
+      const inPrev = prev.indexOf(pos) > -1;
+      const [lbr, rbr] = inPos && inPrev ? ['[', ']'] : !inPrev && inPos ? ['{', '}'] : ['<', '>'];
 
-          const inPos = positions.indexOf(pos) > -1;
-          const inPrev = prev.indexOf(pos) > -1;
-          const [lbr, rbr] = inPos && inPrev ? ['[', ']'] : !inPrev && inPos ? ['{', '}'] : ['<', '>'];
-
-          lineSplitted[vowels[pos]] = lbr + vowel + rbr;
-        });
-
-        const preInPos = line.indexOf(-1) > -1;
-        const preInPrev = prev.indexOf(-1) > -1;
-        const postInPos = line.indexOf(-2) > -1;
-        const postInPrev = prev.indexOf(-2) > -1;
-        const preLabel =
-          preInPos && preInPrev ? ['●'] : preInPos && !preInPrev ? ['★'] : !preInPos && preInPrev ? ['☆'] : [];
-        const postLabel =
-          postInPos && postInPrev ? ['●'] : postInPos && !postInPrev ? ['★'] : !postInPos && postInPrev ? ['☆'] : [];
-
-        if (exec.args) exec.args.lineTitle = preLabel.concat(lineSplitted).concat(postLabel).join('');
-      },
+      lineSplitted[vowels[pos]] = lbr + vowel + rbr;
     });
+
+    const preInPos = line.indexOf(-1) > -1;
+    const preInPrev = prev.indexOf(-1) > -1;
+    const postInPos = line.indexOf(-2) > -1;
+    const postInPrev = prev.indexOf(-2) > -1;
+    const preLabel =
+      preInPos && preInPrev ? ['●'] : preInPos && !preInPrev ? ['★'] : !preInPos && preInPrev ? ['☆'] : [];
+    const postLabel =
+      postInPos && postInPrev ? ['●'] : postInPos && !postInPrev ? ['★'] : !postInPos && postInPrev ? ['☆'] : [];
+
+    const lineChangesText = preLabel.concat(lineSplitted).concat(postLabel).join('');
+
+    return cmComOrderClientInvocatorMethods.setPositionsLine(
+      null,
+      this.com.wid,
+      this.me.header(),
+      this.getTargetFirst('w'),
+      linei,
+      line,
+      lineChangesText,
+    );
   }
 
   cutChordPositions(line: string, linei: number) {
@@ -249,25 +110,5 @@ export class EditableOrder extends Order {
       }
       return stub;
     }, 0);
-  }
-
-  removeInheritance<Key extends keyof IExportableOrder>(key: Key) {
-    this.setField(key, null);
-  }
-
-  takeUniq() {
-    if (this.unique != null) return this.unique;
-    const value = this.com.ords.reduce((max, ord) => (ord.top.u != null && ord.top.u > max ? ord.top.u : max), -1) - -1;
-
-    this.exec({
-      method: 'set',
-      action: 'addOrderUnitUniq',
-      value,
-      args: { value },
-    });
-
-    this.unique = value;
-
-    return value;
   }
 }

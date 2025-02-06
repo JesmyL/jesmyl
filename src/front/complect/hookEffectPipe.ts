@@ -9,11 +9,12 @@ export const addEventListenerPipe = <
   EventName extends keyof HTMLElementEventMap,
   Event extends HTMLElementEventMap[EventName],
 >(
-  elem: HTMLElement | typeof globalThis | Window,
+  elem: HTMLElement | typeof globalThis | Window | null,
   eventName: EventName,
   callback: (event: Event) => void,
   turn?: boolean,
 ) => {
+  if (elem == null) return new EffectPipeMember(() => {});
   elem.addEventListener(eventName, callback as never, turn);
 
   return new EffectPipeMember(() => elem.removeEventListener(eventName, callback as never, turn));
@@ -45,6 +46,12 @@ export const setTimeoutPipe = <Args extends any[]>(cb: (...args: Args) => void, 
   const timeout = setTimeout(cb, time, ...args);
 
   return new EffectPipeMember(() => clearTimeout(timeout));
+};
+
+export const setIntervalPipe = <Args extends any[]>(cb: (...args: Args) => void, time: number, ...args: Args) => {
+  const interval = setInterval(cb, time, ...args);
+
+  return new EffectPipeMember(() => clearInterval(interval));
 };
 
 export const clearTimeoutPipe = (timeout: TimeOut) => new EffectPipeMember(() => clearTimeout(timeout));

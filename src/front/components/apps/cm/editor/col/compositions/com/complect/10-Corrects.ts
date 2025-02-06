@@ -2,6 +2,7 @@ import { mylib } from 'front/utils';
 import { makeRegExp } from 'shared/utils';
 import { CorrectsBox } from '../../../../corrects-box/CorrectsBox';
 import { correctNotSlavicNameReg_i, textedChordReg } from '../../../../Editor.complect';
+import { EditableCol } from '../../../EditableCol';
 import { EditableComBase } from './0-Base';
 
 export class EditableComCorrects extends EditableComBase {
@@ -18,15 +19,11 @@ export class EditableComCorrects extends EditableComBase {
       .replace(makeRegExp('/\\s*([,.;!?:])\\s*([^"])/g'), '$1 $2');
   }
 
-  correctRename(name: string) {
-    return mylib.isStr(name) ? this.rename(this.takeCorrectName(name)) : name;
-  }
-
   correctName(name: string) {
     return name.replace(correctNotSlavicNameReg_i, '');
   }
 
-  takeCorrectName(text: string) {
+  static takeCorrectName(text: string) {
     let name = '';
 
     text.split(makeRegExp('/\\n\\s*\\n/')).find(block => {
@@ -45,70 +42,57 @@ export class EditableComCorrects extends EditableComBase {
     return name.replace(makeRegExp('/[^а-я!]+$/i'), '');
   }
 
-  setBlockCorrects(coln: 'texts' | 'chords', coli: number, val: string, isSetAllText?: boolean) {
-    const corrects = this.blockCorrects(val, coln, coli, undefined, isSetAllText);
-    this.corrects[`${coln}-block-${coli}`] = corrects;
-    return corrects;
-  }
-
-  blockCorrects(
-    value: string | und,
-    coln: 'chords' | 'texts',
-    blocki?: number,
-    action?: string,
-    isSetAllText?: boolean,
-  ) {
-    const blockNum = blocki == null ? '' : `. (${blocki - -1}-й блок)`;
+  static textBlockIncorrectMessages(text: string | und, isSetAllText?: boolean) {
     const ret = (err: string | null) => new CorrectsBox(err ? [{ message: err, code: 0 }] : null);
 
-    if (coln === 'chords') {
-      const errors: string[] = [];
-      const text = (value || '')
-        .trim()
-        .split(makeRegExp('/([\\n\\s ]+)/'))
-        .map((chord, chordi) => {
-          if (!(chordi % 2) && !chord.match(textedChordReg)) {
-            errors.push(chord);
-            return `[${chord}]`;
-          }
-          return chord;
-        })
-        .join(' ');
-      const few = errors.length > 1;
+    let mistakes = '';
+
+    const textWithIncorrects = (text || '').replace(makeRegExp('/[^-ієїа-яё().,":;!?\\s\']+/gi'), all => {
+      mistakes += all;
+      return `[${all}]`;
+    });
+
+    if (textWithIncorrects !== text)
+      return ret(`Присутствуют недопустимые символы: ${mistakes}\n\n${textWithIncorrects}\n\n`);
+
+    const { level } = this.bracketsTransformed(text);
+
+    if (level) {
+      const pre = level < 0 ? 'открывающ' : 'закрывающ';
+      const text = mylib.declension(Math.abs(level), `${pre}уюся кавычку`, `${pre}ихся кавычки`, `${pre}ихся кавычек`);
 
       return ret(
-        errors.length
-          ? `Аккорд${few ? 'ы' : ''} "${errors.join('; ')}" не верно написан${
-              few ? 'ы' : ''
-            }${blockNum}:\n\n${text}\n\n`
-          : null,
+        `В тексте присутствует непарное количество ковычек.\nНеобходимо добавить ${Math.abs(level)} ${text}\n\n`,
       );
-    } else {
-      let isThereErrors;
-      let mistakes = '';
-      const text = (value || '').replace(makeRegExp('/[^-ієїа-яё().,":;!?\\s\']+/gi'), all => {
-        isThereErrors = true;
-        mistakes += all;
-        return `[${all}]`;
-      });
-      if (isThereErrors) return ret(`Присутствуют недопустимые символы${blockNum}: ${mistakes}\n\n${text}\n\n`);
-
-      const { level } = this.bracketsTransformed(value);
-      if (level) {
-        const pre = level < 0 ? 'открывающ' : 'закрывающ';
-        const text = mylib.declension(
-          Math.abs(level),
-          `${pre}уюся кавычку`,
-          `${pre}ихся кавычки`,
-          `${pre}ихся кавычек`,
-        );
-        return ret(
-          `В тексте присутствует непарное количество ковычек.\nНеобходимо добавить ${Math.abs(
-            level,
-          )} ${text}${blockNum}\n\n`,
-        );
-      }
-      return this.col.textCorrects(value, action, isSetAllText);
     }
+
+    return EditableCol.textCorrects(text, isSetAllText);
+  }
+
+  static chordsBlockIncorrectMessage(value: string | und) {
+    const incorrectChords: string[] = [];
+    const textWithIncorrects = (value || '')
+      .trim()
+      .split(makeRegExp('/([\\n\\s ]+)/'))
+      .map(chord => {
+        if (chord.trim() && !chord.match(textedChordReg)) {
+          incorrectChords.push(chord);
+          return `[${chord}]`;
+        }
+        return chord;
+      })
+      .join('');
+    const few = incorrectChords.length > 1;
+
+    if (!incorrectChords.length) return new CorrectsBox();
+
+    return new CorrectsBox([
+      {
+        message:
+          `Аккорд${few ? 'ы' : ''} "${incorrectChords.join('; ')}" не верно написан${few ? 'ы' : ''}:\n\n` +
+          `${textWithIncorrects}\n\n`,
+        code: 0,
+      },
+    ]);
   }
 }

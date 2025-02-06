@@ -1,9 +1,9 @@
+import { mylib } from 'front/utils';
 import { useMemo, useState } from 'react';
+import { IScheduleWidgetUser } from 'shared/api';
 import DebouncedSearchInput from '../../../DebouncedSearchInput';
 import { ModalBody } from '../../../modal/Modal/ModalBody';
 import { ModalHeader } from '../../../modal/Modal/ModalHeader';
-import { mylib } from 'front/utils';
-import { IScheduleWidgetUser } from 'shared/api';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetUserPhoto from '../users/UserPhoto';
 import ScheduleWidgetRemovableUserFace from './RemovableUserFace';
@@ -32,7 +32,10 @@ export const ScheduleWidgetPhotoGalery = () => {
           if (!checkIsUserPhotoable(user)) return null;
 
           return (
-            <div className="flex center column margin-big-gap-v">
+            <div
+              key={user.mi}
+              className="flex center column margin-big-gap-v"
+            >
               <ScheduleWidgetRemovableUserFace user={user} />
               <ScheduleWidgetUserPhoto user={user} />
             </div>

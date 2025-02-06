@@ -1,16 +1,31 @@
-import { useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import { BottomPopup } from '../../../../../complect/absolute-popup/bottom-popup/BottomPopup';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { isMobileDevice } from 'front/complect/device-differences';
+import { ScheduleWidgetWatchLiveTranslationButton } from 'front/complect/schedule-widget/live-translations/WatchLiveButton';
+import { IconComputerStrokeRounded } from 'front/complect/the-icon/icons/computer';
+import { useAuth } from 'front/components/index/atoms';
+import { IndexScheduleWidgetTranslations } from 'front/components/index/complect/translations/LiveTranslations';
+import { indexIDB } from 'front/components/index/db/index-idb';
+import { Link, Route, Routes } from 'react-router-dom';
 import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
-import CmTranslationComListContextInMeetings from '../../base/translations/InMeetings';
-import { ComFaceList } from '../../col/com/face/list/ComFaceList';
+import { CmComListContext } from '../../base/translations/context';
 import { cmCompositionRoute } from '../../routing/cmRoutingApp';
-import { LocalListToolsPopup } from '../popups/LocalListToolsPopup';
-import { useMeetings } from './useMeetings';
+import { CmMeetingEventEdits } from './EventEdits';
+import useMeetingComFaceList from './useMeetingComFaceList';
+import { useMeetingPathParts } from './useMeetingPathParts';
 
 export default function TheMeetingsEvent() {
-  const { currentEvent } = useMeetings();
-  const [isOpenList, setIsOpenList] = useState(false);
+  const scopeProps = useMeetingPathParts();
+  const { comFaceListNode, coms, packComws } = useMeetingComFaceList(
+    scopeProps.schw,
+    scopeProps.dayi,
+    scopeProps.eventMi,
+  );
+  const schedule = useLiveQuery(() => indexIDB.db.schs.get(scopeProps.schw), [scopeProps.schw]);
+  const auth = useAuth();
+
+  if (schedule == null) return;
+
+  const typei = schedule.days[scopeProps.dayi].list.find(event => event.mi === scopeProps.eventMi)?.type ?? -1;
 
   return (
     <Routes>
@@ -19,25 +34,32 @@ export default function TheMeetingsEvent() {
         element={
           <PhaseContainerConfigurer
             className="meeting-container"
-            headTitle={currentEvent?.name ?? 'Событие'}
-            onMoreClick={setIsOpenList}
-            content={
-              <>
-                {isOpenList && (
-                  <BottomPopup onClose={setIsOpenList}>
-                    <LocalListToolsPopup coms={currentEvent?.coms} />
-                  </BottomPopup>
-                )}
-                <ComFaceList list={currentEvent?.coms} />
-              </>
+            headTitle={`${schedule.title} - ${schedule.types[typei]?.title ?? ''}`}
+            head={
+              <div className="flex flex-gap margin-gap-h">
+                {isMobileDevice ? (
+                  <ScheduleWidgetWatchLiveTranslationButton schw={schedule.w} />
+                ) : auth.level ? (
+                  <Link to="tran">
+                    <IconComputerStrokeRounded className="margin-gap-v" />
+                  </Link>
+                ) : null}
+                {auth.level < 50 || <CmMeetingEventEdits packComws={packComws} />}
+              </div>
             }
+            content={comFaceListNode}
           />
         }
       />
 
       {cmCompositionRoute(children => (
-        <CmTranslationComListContextInMeetings>{children}</CmTranslationComListContextInMeetings>
+        <CmComListContext.Provider value={{ list: coms }}>{children}</CmComListContext.Provider>
       ))}
+
+      <Route
+        path="tran/*"
+        element={<IndexScheduleWidgetTranslations />}
+      />
     </Routes>
   );
 }

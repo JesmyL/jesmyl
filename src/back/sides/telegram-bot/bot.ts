@@ -1,6 +1,10 @@
+import { FileStore } from 'back/complect/FileStore';
 import { JesmylTelegramBotWrapper } from './tg-bot-wrapper';
 
-export const jesmylTgBot = new JesmylTelegramBotWrapper('6451511848:AAHy_Fp-jYIqa1XXDJCqxu1yu3gxBzRlpPA', {
+const botEnv = new FileStore('/.tgBotEnv', { token: '' });
+// botEnv.setValue({ token: '' });
+
+export const jesmylTgBot = new JesmylTelegramBotWrapper(botEnv.getValue().token, {
   polling: true,
 });
 

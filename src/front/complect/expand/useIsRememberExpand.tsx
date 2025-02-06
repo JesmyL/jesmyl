@@ -1,16 +1,14 @@
+import { complectIDB } from 'front/components/apps/+complect/_idb/complectIDB';
 import { ReactNode, useCallback } from 'react';
 import { IconArrowDown01StrokeRounded } from '../../complect/the-icon/icons/arrow-down-01';
 import { IconArrowUp01StrokeRounded } from '../../complect/the-icon/icons/arrow-up-01';
-import { atom, useAtom } from '../atoms';
-
-const expandsAtom = atom<Set<string>>(new Set(), 'complect', 'expandes');
 
 export const useIsRememberExpand = (
   scope: string,
   prefix?: ReactNode,
   postfix?: ReactNode | ((isExpand: boolean) => ReactNode),
 ): [ReactNode, boolean, (isExpand?: boolean) => void] => {
-  const [expandes, setExpandes] = useAtom(expandsAtom);
+  const [expandes, setExpandes] = complectIDB.use.expands();
   const isExpand = expandes.has(scope);
 
   const switchExpand: (isExpand?: boolean) => void = useCallback(

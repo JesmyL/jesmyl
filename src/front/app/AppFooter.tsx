@@ -1,12 +1,8 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { useAtomValue } from '../complect/atoms';
 import { isTouchDevice } from '../complect/device-differences';
 import { iconPackOfCircleArrowRight02 } from '../complect/the-icon/icons/circle-arrow-right-02';
-import { secretChatIconPack } from '../components/index/parts/main/secret-chat/complect';
-import { MarkUnreadSecretChatsPath } from '../components/index/parts/main/secret-chat/MarkUnreadSecretChatsPath';
-import { isSecretChatsShowInBottomMenuAtom } from '../components/index/parts/main/secret-chat/molecule';
 import { AppName } from './App.model';
 import AppFooterItem, {
   CurrentAppFooterItemAppNameContext,
@@ -20,7 +16,6 @@ export default function AppFooter({ children }: { children: React.ReactNode }) {
   const loc = useLocation();
 
   const [, appName, place] = loc.pathname.split('/', 3) as [string, AppName | und, string | und];
-  const isShowSecretChatsInBottom = useAtomValue(isSecretChatsShowInBottomMenuAtom);
 
   useEffect(() => {
     if ((isTouchDevice && loc.pathname.includes('@')) || !appName || !place) return;
@@ -34,35 +29,16 @@ export default function AppFooter({ children }: { children: React.ReactNode }) {
     localStorage.setItem(lastVisitedRouteLsName, url);
   }, [appName, loc.hash, loc.pathname, loc.search, place]);
 
-  const otherItem = (
-    <AppFooterItem
-      iconPack={iconPackOfCircleArrowRight02}
-      title="Другое"
-      to="!other"
-    />
-  );
-
   return (
     <CurrentAppFooterItemAppNameContext.Provider value={appName}>
       <CurrentAppFooterItemPlaceContext.Provider value={place}>
         <StyledFooter>
           {children}
-
-          {isShowSecretChatsInBottom && (
-            <MarkUnreadSecretChatsPath containerSelector=".icon-container">
-              <AppFooterItem
-                iconPack={secretChatIconPack}
-                title="Чаты"
-                to="!chats"
-              />
-            </MarkUnreadSecretChatsPath>
-          )}
-
-          {isShowSecretChatsInBottom ? (
-            otherItem
-          ) : (
-            <MarkUnreadSecretChatsPath containerSelector=".icon-container">{otherItem}</MarkUnreadSecretChatsPath>
-          )}
+          <AppFooterItem
+            iconPack={iconPackOfCircleArrowRight02}
+            title="Другое"
+            to="!other"
+          />
         </StyledFooter>
       </CurrentAppFooterItemPlaceContext.Provider>
     </CurrentAppFooterItemAppNameContext.Provider>

@@ -1,5 +1,6 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { addEventListenerPipe, hookEffectPipe } from '../../../../../../complect/hookEffectPipe';
+import { bibleIDB } from '../../../_db/bibleIDB';
 import { useSetBibleAddressIndexes } from '../../../hooks/address/address';
 import { useBibleTranslationSlideSyncContentSetter } from '../../../hooks/slide-sync';
 import {
@@ -7,20 +8,20 @@ import {
   useBibleTranslationSearchResultSelectedSet,
   useBibleTranslationSearchResultSelectedValue,
 } from '../hooks/results';
-import { useBibleSearchTerm } from '../selectors';
-import BibleSearchPanelInput from './Input';
+import { BibleSearchPanelInput } from './Input';
 
 interface Props {
   inputRef: React.RefObject<HTMLInputElement>;
 }
 
+const onChange = (event: React.ChangeEvent<HTMLInputElement>) => bibleIDB.set.searchTerm(event.target.value);
+
 export default function BibleSearchPanelSearchTextInput({ inputRef }: Props) {
-  const [searchTerm, setTerm] = useBibleSearchTerm();
+  const searchTerm = bibleIDB.useValue.searchTerm();
   const resultSelected = useBibleTranslationSearchResultSelectedValue();
   const setResultSelected = useBibleTranslationSearchResultSelectedSet();
   const syncSlide = useBibleTranslationSlideSyncContentSetter();
 
-  const onChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => setTerm(event.target.value), [setTerm]);
   const setAddress = useSetBibleAddressIndexes();
   const [resultList] = useBibleTranslationSearchResultList();
 

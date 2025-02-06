@@ -1,11 +1,10 @@
-import { useExerExec } from '../../../../../../../complect/exer/hooks/useExer';
+import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { translationPushKinds } from '../../../../col/com/Com.complect';
 import { useCmScreenTranslationCurrentConfig } from '../../../../translation/complect/controlled/hooks/configs';
 import { useEditableCcom } from '../useEditableCcom';
 
 export default function ComOnTranslations() {
   const ccom = useEditableCcom();
-  const exec = useExerExec();
   const currentConfig = useCmScreenTranslationCurrentConfig();
 
   if (!ccom) return null;
@@ -17,7 +16,9 @@ export default function ComOnTranslations() {
           <button
             key={kindi}
             disabled={ccom.translationPushKind === kindi}
-            onClick={() => exec(ccom.setTranslationPushKind(kindi))}
+            onClick={() => {
+              cmComClientInvocatorMethods.changePushKind(null, ccom.wid, kindi);
+            }}
           >
             {title}
           </button>

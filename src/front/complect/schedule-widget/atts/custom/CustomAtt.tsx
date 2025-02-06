@@ -1,8 +1,10 @@
-import { ReactNode, useState } from 'react';
+import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import React, { ReactNode, useMemo, useState } from 'react';
 import {
   CustomAttUseRights,
   customAttUseRights,
   customAttUseRightsTitles,
+  ScheduleAttachmentTypeScopeProps,
   ScheduleWidgetAppAttCustomized,
   scheduleWidgetUserRights,
 } from 'shared/api';
@@ -19,18 +21,18 @@ import { IconSquareStrokeRounded } from '../../../../complect/the-icon/icons/squ
 import Modal from '../../../modal/Modal/Modal';
 import { ModalBody } from '../../../modal/Modal/ModalBody';
 import { ModalHeader } from '../../../modal/Modal/ModalHeader';
-import { StrongComponentProps } from '../../../strong-control/Strong.model';
-import StrongEvaButton from '../../../strong-control/StrongEvaButton';
 import StrongEditableField from '../../../strong-control/field/StrongEditableField';
-import StrongClipboardPicker from '../../../strong-control/field/clipboard/Picker';
 import IconButton from '../../../the-icon/IconButton';
 import { theIconFromPack } from '../../../the-icon/TheIcon';
 import { TheIconType } from '../../../the-icon/model';
-import ScheduleWidgetIconChange from '../../complect/IconChange';
+import { useScheduleScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
 import ScheduleWidgetRightControlList from '../../control/RightControlList';
-import { takeStrongScopeMaker, useScheduleWidgetRightsContext } from '../../useScheduleWidget';
+import { schAttachmentTypesSokiInvocatorClient } from '../../invocators/invocators.methods';
+import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetCustomAttTitles from './CustomAttTitles';
 import { ScheduleWidgetCustomAttLocalImagineSelector } from './LocalImagine';
+
+const LazyIconConfigurator = React.lazy(() => import('../../../configurators/Icon'));
 
 enum WhoCan {
   Read,
@@ -51,15 +53,18 @@ const whoCanUnits: { action: string; rule: 'R' | 'U'; Icon: TheIconType }[] = [
   },
 ];
 
-export default function ScheduleWidgetCustomAtt(
-  props: StrongComponentProps<{
-    tatt: ScheduleWidgetAppAttCustomized;
-    isRedact?: boolean;
-    topContent?: ReactNode;
-  }>,
-) {
-  const selfScope = takeStrongScopeMaker(props.scope, ' tattMi/', props.tatt.mi);
+export default function ScheduleWidgetCustomAtt(props: {
+  tatt: ScheduleWidgetAppAttCustomized;
+  isRedact?: boolean;
+  topContent?: ReactNode;
+}) {
+  // const selfScope = takeStrongScopeMaker(props.scope, ' tattMi/', props.tatt.mi);
   const rights = useScheduleWidgetRightsContext();
+  const scheduleScopeProps = useScheduleScopePropsContext();
+  const attachmentTypeScopeProps: ScheduleAttachmentTypeScopeProps = useMemo(
+    () => ({ ...scheduleScopeProps, tattMi: props.tatt.mi }),
+    [props.tatt.mi, scheduleScopeProps],
+  );
   const usedLists = customAttUseRightsTitles
     .map(({ title, id, top }, _, arr) => {
       const child = arr.find(({ top }) => top === id);
@@ -98,25 +103,26 @@ export default function ScheduleWidgetCustomAtt(
             </div>
           ))}
         {props.isRedact && (
-          <ScheduleWidgetIconChange
-            scope={selfScope}
+          <LazyIconConfigurator
             icon={props.tatt.icon}
             header={<>Иконка для вложения {props.tatt.title}</>}
+            onSend={icon =>
+              schAttachmentTypesSokiInvocatorClient.setIcon(null, attachmentTypeScopeProps, icon, props.tatt.title)
+            }
           />
         )}
         <StrongEditableField
-          scope={selfScope}
-          fieldName="field"
           fieldKey="title"
           value={props.tatt}
           isRedact={props.isRedact}
           isImpossibleEmptyValue
           Icon={props.isRedact ? IconBookmark01StrokeRounded : theIconFromPack(props.tatt.icon)?.StrokeRounded}
           title="Название"
+          onSend={value =>
+            schAttachmentTypesSokiInvocatorClient.setTitle(null, attachmentTypeScopeProps, value, props.tatt.title)
+          }
         />
         <StrongEditableField
-          scope={selfScope}
-          fieldName="field"
           value={props.tatt}
           fieldKey="description"
           multiline
@@ -124,6 +130,14 @@ export default function ScheduleWidgetCustomAtt(
           Icon={IconFile01StrokeRounded}
           isImpossibleEmptyValue
           title="Описание вложения"
+          onSend={value =>
+            schAttachmentTypesSokiInvocatorClient.setDescription(
+              null,
+              attachmentTypeScopeProps,
+              value,
+              props.tatt.title,
+            )
+          }
         />
         {props.tatt.title && (
           <>
@@ -155,12 +169,7 @@ export default function ScheduleWidgetCustomAtt(
               })}
             </div>
 
-            {props.isRedact && (
-              <ScheduleWidgetCustomAttLocalImagineSelector
-                id={props.tatt.im}
-                scope={selfScope}
-              />
-            )}
+            {props.isRedact && <ScheduleWidgetCustomAttLocalImagineSelector id={props.tatt.im} />}
 
             {props.isRedact && !props.tatt.im ? (
               customAttUseRightsTitles.map(({ title, id, top }) => {
@@ -172,11 +181,7 @@ export default function ScheduleWidgetCustomAtt(
                         customAttUseRights.checkIsHasIndividualRights(props.tatt.use, CustomAttUseRights.Games)) &&
                       (id !== CustomAttUseRights.CheckUsers ||
                         customAttUseRights.checkIsHasIndividualRights(props.tatt.use, CustomAttUseRights.Users)) && (
-                        <StrongEvaButton
-                          scope={selfScope}
-                          fieldName="field"
-                          fieldKey="use"
-                          cud="U"
+                        <EvaSendButton
                           Icon={
                             customAttUseRights.checkIsHasIndividualRights(props.tatt.use, id)
                               ? IconCheckmarkSquare02StrokeRounded
@@ -192,12 +197,14 @@ export default function ScheduleWidgetCustomAtt(
                               : '')
                           }
                           postfix={(top ? '' : 'Использовать ') + title}
-                          mapExecArgs={args => {
-                            return {
-                              ...args,
-                              value: customAttUseRights.switchRights(props.tatt.use, id),
-                            };
-                          }}
+                          onSend={() =>
+                            schAttachmentTypesSokiInvocatorClient.setUse(
+                              null,
+                              attachmentTypeScopeProps,
+                              customAttUseRights.switchRights(props.tatt.use, id),
+                              props.tatt.title,
+                            )
+                          }
                         />
                       )}
 
@@ -205,14 +212,11 @@ export default function ScheduleWidgetCustomAtt(
                       customAttUseRights.checkIsHasIndividualRights(props.tatt.use, CustomAttUseRights.Roles) && (
                         <div className="margin-gap-v margin-big-gap-l">
                           {rights.schedule.ctrl.cats.map((cat, cati, cata) => {
+                            if (!cat) return null;
+
                             return (
-                              <StrongEvaButton
+                              <EvaSendButton
                                 key={cati}
-                                scope={selfScope}
-                                cud="U"
-                                fieldName="field"
-                                fieldKey="roles"
-                                fieldValue={cati}
                                 Icon={
                                   ScheduleWidgetRightsCtrl.checkIsHasIndividualRights(props.tatt.roles, cati)
                                     ? IconCheckmarkSquare02StrokeRounded
@@ -224,12 +228,14 @@ export default function ScheduleWidgetCustomAtt(
                                     : ''
                                 }
                                 postfix={cat}
-                                mapExecArgs={args => {
-                                  return {
-                                    ...args,
-                                    value: ScheduleWidgetRightsCtrl.switchRights(props.tatt.roles, cati, cata.length),
-                                  };
-                                }}
+                                onSend={() =>
+                                  schAttachmentTypesSokiInvocatorClient.setRolesUses(
+                                    null,
+                                    attachmentTypeScopeProps,
+                                    ScheduleWidgetRightsCtrl.switchRights(props.tatt.roles, cati, cata.length),
+                                    props.tatt.title,
+                                  )
+                                }
                               />
                             );
                           })}
@@ -240,29 +246,29 @@ export default function ScheduleWidgetCustomAtt(
                         <div className="margin-gap-v margin-big-gap-l">
                           {rights.schedule.lists.cats.map((cat, cati, cata) => {
                             return (
-                              <StrongEvaButton
+                              <EvaSendButton
                                 key={cati}
-                                scope={selfScope}
-                                cud="U"
-                                fieldName="field"
-                                fieldKey="list"
                                 Icon={
                                   ScheduleWidgetRightsCtrl.checkIsHasIndividualRights(props.tatt.list, cati)
                                     ? IconCheckmarkSquare02StrokeRounded
                                     : IconSquareStrokeRounded
                                 }
+                                disabled={!cat.title}
+                                disabledReason="Название пустое"
                                 className={
                                   ScheduleWidgetRightsCtrl.checkIsHasIndividualRights(props.tatt.list, cati)
                                     ? 'color--7'
                                     : ''
                                 }
                                 postfix={cat.title}
-                                mapExecArgs={args => {
-                                  return {
-                                    ...args,
-                                    value: ScheduleWidgetRightsCtrl.switchRights(props.tatt.list, cati, cata.length),
-                                  };
-                                }}
+                                onSend={() =>
+                                  schAttachmentTypesSokiInvocatorClient.setListsUses(
+                                    null,
+                                    attachmentTypeScopeProps,
+                                    ScheduleWidgetRightsCtrl.switchRights(props.tatt.list, cati, cata.length),
+                                    props.tatt.title,
+                                  )
+                                }
                               />
                             );
                           })}
@@ -272,13 +278,9 @@ export default function ScheduleWidgetCustomAtt(
                       customAttUseRights.checkIsHasIndividualRights(props.tatt.use, CustomAttUseRights.Titles) && (
                         <div className="margin-big-gap-l">
                           {props.tatt.titles?.map((title, titlei) => {
-                            const titleScope = takeStrongScopeMaker(selfScope, ' titlei/', titlei);
-
                             return (
                               <StrongEditableField
                                 key={titlei}
-                                scope={titleScope}
-                                fieldName=""
                                 isImpossibleEmptyValue
                                 value={title}
                                 isRedact={props.isRedact}
@@ -286,16 +288,33 @@ export default function ScheduleWidgetCustomAtt(
                                   props.tatt.use,
                                   CustomAttUseRights.CheckTitles,
                                 )}
+                                onSend={value =>
+                                  schAttachmentTypesSokiInvocatorClient.setTitleValue(
+                                    null,
+                                    attachmentTypeScopeProps,
+                                    titlei,
+                                    value,
+                                    props.tatt.title,
+                                    title,
+                                  )
+                                }
                               />
                             );
                           })}
-                          {!props.tatt.titles?.some(itNIt) && (
-                            <StrongEvaButton
-                              scope={selfScope}
-                              fieldName="titles"
-                              Icon={IconPlusSignStrokeRounded}
-                            />
-                          )}
+
+                          <EvaSendButton
+                            Icon={IconPlusSignStrokeRounded}
+                            disabled={props.tatt.titles?.some(itNIt)}
+                            disabledReason="Есть пустые заголовки"
+                            onSend={() =>
+                              schAttachmentTypesSokiInvocatorClient.createTitleValue(
+                                null,
+                                attachmentTypeScopeProps,
+                                props.tatt.title,
+                                props.tatt.titles?.length ?? 0,
+                              )
+                            }
+                          />
                         </div>
                       )}
                   </div>
@@ -325,13 +344,19 @@ export default function ScheduleWidgetCustomAtt(
           </ModalHeader>
           <ModalBody>
             <ScheduleWidgetRightControlList
-              scope={selfScope}
-              fieldName="field"
-              fieldKey={whoCan.rule}
               rightCtrl={scheduleWidgetUserRights}
               R={props.tatt[whoCan.rule]}
               isReverse
               isDisabled={type => myBalance < scheduleWidgetUserRights.rightLevel(type.id) + 2}
+              onSend={value =>
+                schAttachmentTypesSokiInvocatorClient.setWhoCanLevel(
+                  null,
+                  attachmentTypeScopeProps,
+                  whoCan.rule,
+                  value,
+                  props.tatt.title,
+                )
+              }
             />
             <h3>... или участники</h3>
             {rights.schedule.ctrl.users.map(user => {
@@ -339,13 +364,8 @@ export default function ScheduleWidgetCustomAtt(
                 !!user.R && scheduleWidgetUserRights.checkInvertIsCan(user.R, props.tatt[whoCan.rule]);
 
               return (
-                <StrongEvaButton
+                <EvaSendButton
                   key={user.mi}
-                  scope={selfScope}
-                  fieldName="accessList"
-                  fieldKey={`${whoCan.rule}s`}
-                  fieldValue={user.mi}
-                  cud="U"
                   className="margin-gap-v flex-max"
                   disabled={!user.R || isForceChecked}
                   postfix={user.fio}
@@ -353,6 +373,16 @@ export default function ScheduleWidgetCustomAtt(
                     isForceChecked || (whoCan.rule === 'U' ? canUpdateUsers : canReadUsers).includes(user.mi)
                       ? IconCheckmarkSquare02StrokeRounded
                       : IconSquareStrokeRounded
+                  }
+                  onSend={() =>
+                    schAttachmentTypesSokiInvocatorClient.toggleUserWhoCan(
+                      null,
+                      attachmentTypeScopeProps,
+                      `${whoCan.rule}s`,
+                      user.mi,
+                      props.tatt.title,
+                      user.fio ?? user.nick ?? '??',
+                    )
                   }
                 />
               );
@@ -368,7 +398,6 @@ export default function ScheduleWidgetCustomAtt(
               <span>
                 <span className="color--7">{props.tatt.title} </span>- Редактирование вложения
               </span>
-              <StrongClipboardPicker />
             </span>
           </ModalHeader>
           <ModalBody>

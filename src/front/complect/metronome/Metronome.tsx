@@ -1,36 +1,29 @@
+import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import { cmMolecule } from '../../components/apps/cm/molecules';
-import { useAtom } from '../atoms';
 import { isTouchDevice } from '../device-differences';
 import KeyboardInput from '../keyboard/KeyboardInput';
 import { IconMinusSignCircleBulkRounded } from '../the-icon/icons/minus-sign-circle';
 import { IconPauseSolidRounded } from '../the-icon/icons/pause';
 import { IconPlaySolidRounded } from '../the-icon/icons/play';
 import { IconPlusSignCircleBulkRounded } from '../the-icon/icons/plus-sign-circle';
-import { ActualRef, useActualRef } from '../useActualRef';
+import { useActualRef } from '../useActualRef';
 
 interface Props {
   meterSize: 3 | 4 | und;
   bpm?: number;
 }
 
-const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+const AudioContext = window.AudioContext || ('webkitAudioContext' in window && window.webkitAudioContext);
 var context = new AudioContext();
 let lastTs: number;
-
-const metronomeAccentesAtom = cmMolecule.select(s => s.metronomeAccentes);
-const metronomeMainSoundAtom = cmMolecule.select(s => s.metronomeMainSound);
-const metronomeSecondarySoundAtom = cmMolecule.select(s => s.metronomeSecondarySound);
 
 export const Metronome = ({ meterSize = 4, bpm = 120 }: Props) => {
   const [userBpm, setUserBpm] = useState(bpm);
   const [userMeterSize, setUserMeterSize] = useState(meterSize);
   const currentDotMemo = useMemo(() => ({ current: 0 }), []);
-  const [accentes, setAccentes] = useAtom(metronomeAccentesAtom);
-  const accentesRef: ActualRef<string> = useActualRef(accentes);
-  const [mainSound, setMainSound] = useAtom(metronomeMainSoundAtom);
-  const [secondarySound, setSecondarySound] = useAtom(metronomeSecondarySoundAtom);
+  const [metronomeValues, setMetronomeValues] = cmIDB.use.metronome();
+  const accentesRef = useActualRef(metronomeValues);
   const actualUserMeterSize = useActualRef(userMeterSize);
   const actualUserBpm = useActualRef(userBpm);
 
@@ -78,7 +71,7 @@ export const Metronome = ({ meterSize = 4, bpm = 120 }: Props) => {
       if (curTime < context.currentTime + 0.1) {
         var note = context.createOscillator();
 
-        if (accentesRef.current[currentDotMemo.current] === '1') note.frequency.value = accentPitch;
+        if (accentesRef.current.accentes[currentDotMemo.current] === '1') note.frequency.value = accentPitch;
         else note.frequency.value = secondaryPitch;
 
         note.connect(context.destination);
@@ -101,12 +94,12 @@ export const Metronome = ({ meterSize = 4, bpm = 120 }: Props) => {
 
     const onSecondaryRangeChange = ((event: ChangeEvent<HTMLInputElement>) => {
       if (event.currentTarget) secondaryPitch = +event.currentTarget.value;
-    }) as any;
+    }) as never;
     secondaryRangeNode.addEventListener('input', onSecondaryRangeChange);
 
     const onAccentRangeChange = ((event: ChangeEvent<HTMLInputElement>) => {
       if (event.currentTarget) accentPitch = +event.currentTarget.value;
-    }) as any;
+    }) as never;
     accentRangeNode.addEventListener('input', onAccentRangeChange);
 
     return () => {
@@ -156,14 +149,15 @@ export const Metronome = ({ meterSize = 4, bpm = 120 }: Props) => {
             return (
               <i
                 key={doti}
-                className={`strong-size${accentesRef.current[doti] === '1' ? ' accent' : ''}`}
+                className={`strong-size${accentesRef.current.accentes[doti] === '1' ? ' accent' : ''}`}
                 onClick={() =>
-                  setAccentes(
-                    accentesRef.current
+                  setMetronomeValues(prev => ({
+                    ...prev,
+                    accentes: accentesRef.current.accentes
                       .split('')
                       .map((num, numi) => (numi === doti ? (num === '1' ? '0' : '1') : num))
                       .join(''),
-                  )
+                  }))
                 }
               />
             );
@@ -178,11 +172,14 @@ export const Metronome = ({ meterSize = 4, bpm = 120 }: Props) => {
           type="range"
           min="0"
           max="500"
-          defaultValue={mainSound}
+          defaultValue={metronomeValues.mainSound}
           onChange={event => {
             const value = event.currentTarget.value;
             clearTimeout(changeMainSoundTimeout);
-            changeMainSoundTimeout = setTimeout(() => setMainSound(`${+value}`), 300);
+            changeMainSoundTimeout = setTimeout(
+              () => setMetronomeValues(prev => ({ ...prev, mainSound: `${+value}` })),
+              300,
+            );
           }}
         />
         <input
@@ -191,11 +188,14 @@ export const Metronome = ({ meterSize = 4, bpm = 120 }: Props) => {
           type="range"
           min="0"
           max="500"
-          defaultValue={secondarySound}
+          defaultValue={metronomeValues.secondarySound}
           onChange={event => {
             const value = event.currentTarget.value;
             clearTimeout(changeSecondarySoundTimeout);
-            changeSecondarySoundTimeout = setTimeout(() => setSecondarySound(`${+value}`), 300);
+            changeSecondarySoundTimeout = setTimeout(
+              () => setMetronomeValues(prev => ({ ...prev, secondarySound: `${+value}` })),
+              300,
+            );
           }}
         />
       </div>

@@ -2,7 +2,7 @@ import { mylib } from 'front/utils';
 import { useMemo } from 'react';
 import { MyFileType } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
-import { useIndexFileAssociations } from '../../../../molecules';
+import { useIndexFileAssociations } from '../../../../atoms';
 
 export const useAssociateTheFileType = () => {
   const associates = useIndexFileAssociations();

@@ -1,12 +1,13 @@
 /* eslint-disable no-throw-literal */
-import TelegramBot from 'node-telegram-bot-api';
-import { IScheduleWidget, IScheduleWidgetDay, ScheduleStorage, ScheduleWidgetCleans } from 'shared/api';
+import { IScheduleWidget, IScheduleWidgetDay, ScheduleWidgetCleans } from 'shared/api';
 import { itNNull, makeRegExp } from 'shared/utils';
-import { ExecutionDict } from '../../../../../shared/api/complect/executer/model';
-import { filer } from '../../../../complect/filer/Filer';
-import { SokiAuther } from '../../../../complect/soki/SokiAuther';
-import sokiServer from '../../../../complect/soki/SokiServer';
 import { jesmylTgBot } from '../../../../sides/telegram-bot/bot';
+import { schedulesFileStore } from '../file-stores';
+import {
+  onScheduleDayBeginTimeSetEvent,
+  onScheduleDayEventListSetEvent,
+  onScheduleEventTypesAddManyEvent,
+} from '../specific-modify-events';
 
 export const makeScheduleWidgetJoinTitle = (
   schedule: IScheduleWidget,
@@ -42,15 +43,8 @@ export const makeScheduleWidgetJoinTitle = (
   return titles.join(' / ');
 };
 
-const findAdminThis = {} as { from: TelegramBot.User };
-
-function findAdmin(this: typeof findAdminThis, member: TelegramBot.ChatMember) {
-  return member.user.id === this.from.id;
-}
-
-const getSchedules = (): ScheduleStorage => filer.contents.index?.schedules?.data;
 const getScheduleByRequisit = (requisit: `${number}/` | `/${string}`) =>
-  getSchedules().list.find(sch => sch.tgChatReqs?.includes(requisit));
+  schedulesFileStore.getValue().find(sch => sch.tgChatReqs?.includes(requisit));
 
 const getScheduleAndTodayiByRequisit = (requisit: `${number}/` | `/${string}`) => {
   const schedule = getScheduleByRequisit(requisit);
@@ -85,8 +79,7 @@ export const scheduleWidgetMessageCatcher = jesmylTgBot.catchMessages(async (mes
   )
     return;
 
-  findAdminThis.from = message.from;
-  if (!(await bot.getChatAdministrators(message.chat.id)).some(findAdmin, findAdminThis)) return;
+  if (!(await bot.getChatAdministrators(message.chat.id)).some(member => member.user.id === message.from!.id)) return;
 
   try {
     const { head, text } = ScheduleWidgetCleans.text2PreparedText(message.text);
@@ -124,8 +117,7 @@ jesmylTgBot.catchCallbackQuery(async (query, bot, answer) => {
   if (query.message === undefined || query.message.text === undefined || query.data !== parseCbData_) return ret('');
 
   try {
-    findAdminThis.from = query.from;
-    if (!(await bot.getChatAdministrators(query.message.chat.id)).some(findAdmin, findAdminThis))
+    if (!(await bot.getChatAdministrators(query.message.chat.id)).some(member => member.user.id === query.from.id))
       return ret('Обновлять расписание могут только админы этой группы');
   } catch (error) {
     return ret('Ошибка');
@@ -142,59 +134,18 @@ jesmylTgBot.catchCallbackQuery(async (query, bot, answer) => {
 
   if (!schedule.days[dayi]?.list.length) return ret('Для обновления расписания список событий должен быть пустым');
 
-  const { dayWup, list, newTatts } = ScheduleWidgetCleans.preparedText2DayList(query.message.text, schedule);
-
-  const addAttTypesExecs = [
-    {
-      action: 'addAttTypes',
-      args: {
-        schw: schedule.w,
-        value: newTatts,
-      },
-    },
-  ] satisfies ExecutionDict[];
-
-  const auth = await SokiAuther.getTgAuth(query.from.id);
-
-  if (addAttTypesExecs[0]?.args.value.length) {
-    try {
-      const { errorMessage } = await sokiServer.execExecs('index', addAttTypesExecs, auth, auth);
-      if (errorMessage) return ret(errorMessage);
-    } catch (error) {
-      return ret('' + error);
-    }
-  }
+  const { dayWup, list, newTypes } = ScheduleWidgetCleans.preparedText2DayList(query.message.text, schedule);
 
   if (true) {
     const schedule = getScheduleByRequisit(`/${query.chat_instance}`);
 
     if (schedule === undefined) return ret('Расписание не найдено');
 
-    const addEventsExecs = [
-      {
-        action: 'putDayEventList',
-        args: {
-          schw: schedule.w,
-          dayi,
-          value: list.filter(itNNull),
-        },
-      },
-      {
-        action: 'setDayWup',
-        args: {
-          schw: schedule.w,
-          dayi,
-          value: dayWup,
-        },
-      },
-    ];
+    const dayProps = { dayi, schw: schedule.w };
 
-    try {
-      const { errorMessage } = await sokiServer.execExecs('index', addEventsExecs, auth, auth);
-      if (errorMessage) return ret(errorMessage);
-    } catch (error) {
-      return ret('' + error);
-    }
+    onScheduleEventTypesAddManyEvent.invoke({ schProps: dayProps, typeList: newTypes });
+    onScheduleDayBeginTimeSetEvent.invoke({ dayProps, strWup: '' + dayWup });
+    onScheduleDayEventListSetEvent.invoke({ dayProps, list: list.filter(itNNull) });
   }
 
   if (query.message?.text !== undefined)

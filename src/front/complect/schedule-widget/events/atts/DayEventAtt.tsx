@@ -1,53 +1,42 @@
-import { makeRegExp } from 'shared/utils';
+import { mylib } from 'front/utils';
+import { useMemo } from 'react';
+import {
+  IScheduleWidget,
+  IScheduleWidgetDay,
+  ScheduleDayEventAttachmentScopeProps,
+  ScheduleDayEventScopeProps,
+  ScheduleWidgetAttKey,
+  ScheduleWidgetDayEventAttValue,
+} from 'shared/api';
 import { isNIs } from 'shared/utils';
 import { IconLink02StrokeRounded } from '../../../../complect/the-icon/icons/link-02';
 import { IconViewStrokeRounded } from '../../../../complect/the-icon/icons/view';
 import { useIsRememberExpand } from '../../../expand/useIsRememberExpand';
-import { mylib } from 'front/utils';
-import { StrongComponentProps } from '../../../strong-control/Strong.model';
-import { strongScopeKeyValueSeparator } from '../../../strong-control/useStrongControl';
 import TheIcon from '../../../the-icon/TheIcon';
 import useIsRedactArea from '../../../useIsRedactArea';
-import {
-  IScheduleWidget,
-  IScheduleWidgetDay,
-  IScheduleWidgetDayEvent,
-  ScheduleWidgetAttKey,
-  ScheduleWidgetDayEventAttValue,
-  ScheduleWidgetDayListItemTypeBox,
-} from 'shared/api';
 import ScheduleWidgetTopicTitle from '../../complect/TopicTitle';
-import {
-  ScheduleWidgetScopePhase,
-  takeStrongScopeMaker,
-  useScheduleWidgetAppAttsContext,
-} from '../../useScheduleWidget';
+import { useScheduleWidgetAppAttsContext } from '../../useScheduleWidget';
 import ScheduleWidgetDayEventPeriodicTranslation from './DayEventPeriodicTranslationAtt';
 
-const makeReg = (phase: ScheduleWidgetScopePhase) => {
-  return makeRegExp(`/(${phase}${strongScopeKeyValueSeparator})\\d+/`);
-};
-
-const dayPhaseMarkerReg = makeReg('dayi');
-const eventPhaseMarkerReg = makeReg('eventMi');
-
-type Props = StrongComponentProps<{
-  typeBox: ScheduleWidgetDayListItemTypeBox;
-  event: IScheduleWidgetDayEvent;
+type Props = {
   day: IScheduleWidgetDay;
   dayi: number;
   attKey: ScheduleWidgetAttKey;
   att: ScheduleWidgetDayEventAttValue;
-  isPast: boolean;
   schedule: IScheduleWidget;
   isCanRedact: boolean;
-}>;
+  dayEventScopeProps: ScheduleDayEventScopeProps;
+};
 
 export default function ScheduleWidgetDayEventAtt(props: Props) {
   const [appAtts] = useScheduleWidgetAppAttsContext();
   const appAtt = appAtts[props.attKey];
+  const dayEventAttScopeProps: ScheduleDayEventAttachmentScopeProps = useMemo(
+    () => ({ ...props.dayEventScopeProps, attKey: props.attKey }),
+    [props.attKey, props.dayEventScopeProps],
+  );
   const [attTitleNode, isExpand] = useIsRememberExpand(
-    props.scope,
+    JSON.stringify(dayEventAttScopeProps),
     <>
       <TheIcon name={appAtt.icon} />
       {appAtt.title}
@@ -61,10 +50,10 @@ export default function ScheduleWidgetDayEventAtt(props: Props) {
 
   let linkTitle = null;
   let attContent = null;
+  let isCanRedact = props.isCanRedact;
 
   try {
     let attValue = props.att;
-    let scope = props.scope;
 
     if (mylib.isArr(attValue)) {
       const [dayi, eventMi] = attValue;
@@ -72,7 +61,7 @@ export default function ScheduleWidgetDayEventAtt(props: Props) {
       const event = day?.list.find(event => event.mi === eventMi);
 
       if (attValue[0] < 0) {
-        props.isCanRedact = false;
+        isCanRedact = false;
         notateNode = <IconViewStrokeRounded className="color--3 icon-scale-05" />;
 
         attContent = isExpand && (
@@ -83,13 +72,12 @@ export default function ScheduleWidgetDayEventAtt(props: Props) {
             day={props.day}
             dayi={props.dayi}
             appAtt={appAtt}
+            dayEventAttScopeProps={dayEventAttScopeProps}
           />
         );
       } else notateNode = <IconLink02StrokeRounded className="color--3 icon-scale-05" />;
 
       if (props.schedule.days && day && event?.atts) {
-        scope = scope.replace(dayPhaseMarkerReg, `$1${dayi}`).replace(eventPhaseMarkerReg, `$1${event.mi}`);
-
         attValue = event.atts[props.attKey];
 
         if (props.schedule.types)
@@ -114,7 +102,7 @@ export default function ScheduleWidgetDayEventAtt(props: Props) {
           <div>
             {att.result?.(
               props.att?.[appAtt.im as never] ?? att.initVal,
-              takeStrongScopeMaker(scope, ' imAttKey/', appAtt.im),
+              dayEventAttScopeProps,
               isRedact,
               is => setIsSelfRedact(is ?? isNIs),
               props.schedule,
@@ -127,7 +115,7 @@ export default function ScheduleWidgetDayEventAtt(props: Props) {
         <div>
           {appAtt.result?.(
             attValue ?? appAtt.initVal,
-            scope,
+            dayEventAttScopeProps,
             isRedact,
             is => setIsSelfRedact(is ?? isNIs),
             props.schedule,
@@ -136,7 +124,8 @@ export default function ScheduleWidgetDayEventAtt(props: Props) {
       );
     }
   } catch (error) {
-    attContent = <div className="error-message">Контент не доступен</div>;
+    console.error(error);
+    attContent = <div className="color--ko">Контент не доступен</div>;
   }
 
   return (
@@ -144,7 +133,7 @@ export default function ScheduleWidgetDayEventAtt(props: Props) {
       <div className="flex flex-gap inline-block between color--7">
         {attTitleNode}
         <div className="flex">
-          {props.isCanRedact && isExpand && editIcon}
+          {isCanRedact && isExpand && editIcon}
           {notateNode}
         </div>
       </div>

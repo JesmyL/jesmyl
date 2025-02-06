@@ -1,10 +1,7 @@
-import { ScreenTranslateConfigTypeFontWeight } from './FontWeight';
-import {
-  ScreenTranslationBackgroundConfigs,
-  ScreenTranslationPositionConfig,
-  ScreenTranslationTextConfig,
-} from './model';
-import { ScreenTranslateCurrentConfigTypeTextAlign } from './TextAlign';
+import { BackgroundConfigProps } from 'front/complect/configurators/model';
+import { FontWeightType } from '../../../../../complect/configurators/FontWeight';
+import { TextAlignConfigurator } from '../../../../../complect/configurators/TextAlign';
+import { ScreenTranslationPositionConfig, ScreenTranslationTextConfig } from './model';
 
 export const defaultScreenTranslationPositionConfig: ScreenTranslationPositionConfig = {
   left: 5,
@@ -15,11 +12,11 @@ export const defaultScreenTranslationPositionConfig: ScreenTranslationPositionCo
 
 export const defaultScreenTranslationTextConfig: ScreenTranslationTextConfig = {
   color: '#ffffff',
-  fontWeight: ScreenTranslateConfigTypeFontWeight.Bold,
-  textAlign: ScreenTranslateCurrentConfigTypeTextAlign.Center,
+  fontWeight: FontWeightType.Bold,
+  textAlign: TextAlignConfigurator.Center,
 };
 
-export const defaultScreenTranslationBackgroundConfig: ScreenTranslationBackgroundConfigs = {
+export const defaultScreenTranslationBackgroundConfig: BackgroundConfigProps = {
   background: '',
   backgroundColor: '#000000',
   isWithBackground: false,

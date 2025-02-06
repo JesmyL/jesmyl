@@ -1,12 +1,12 @@
 import { mylib } from 'front/utils';
 import { useEffect, useReducer, useState } from 'react';
 import { MyFileType } from 'shared/api';
+import { filesStorage } from '../../../../../../complect/configurators/utils/storage';
 import IconButton from '../../../../../../complect/the-icon/IconButton';
 import TheIcon from '../../../../../../complect/the-icon/TheIcon';
 import { IconCancel01StrokeRounded } from '../../../../../../complect/the-icon/icons/cancel-01';
-import { useIndexFileAssociations } from '../../../../molecules';
+import { useIndexFileAssociations } from '../../../../atoms';
 import { useRemoveMyFile } from '../hooks/remove-file';
-import { filesStorage } from '../utils/storage';
 
 export type FileAssociations = Record<
   MyFileType,

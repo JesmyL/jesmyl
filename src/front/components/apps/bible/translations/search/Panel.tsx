@@ -1,32 +1,32 @@
 import { memo, useEffect, useRef } from 'react';
-import { useActualRef } from '../../../../../complect/useActualRef';
+import { bibleIDB } from '../../_db/bibleIDB';
 import { BibleSearchZone } from '../../model';
 import BibleSearchResults from './Results';
 import BibleSearchInputPanel from './input-panel/InputPanel';
-import { useBibleSearchZone } from './selectors';
+
+const setSearchZone = (zone: BibleSearchZone, inputRef: React.RefObject<HTMLInputElement>) => {
+  bibleIDB.set.searchZone(zone);
+  const select = () => inputRef.current?.select();
+  setTimeout(select, 10);
+  setTimeout(select, 50);
+  setTimeout(select, 100);
+};
 
 export default memo(function BibleSearchPanel(): JSX.Element {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const [searchZone, setZone] = useBibleSearchZone();
-
-  const putOnSearchZoneRef = useActualRef((zone: BibleSearchZone) => {
-    setZone(zone);
-    setTimeout(() => inputRef.current?.select(), 10);
-  });
-
   useEffect(() => {
     return hookEffectLine()
-      .addEventListener(window, 'keyup', event => {
+      .addEventListener(window, 'keydown', event => {
         switch (event.code) {
           case 'F2':
-            putOnSearchZoneRef.current('global');
+            setSearchZone('global', inputRef);
             break;
           case 'F3':
-            putOnSearchZoneRef.current('inner');
+            setSearchZone('inner', inputRef);
             break;
           case 'F4':
-            putOnSearchZoneRef.current('address');
+            setSearchZone('address', inputRef);
             break;
           case 'Enter':
           case 'Escape':
@@ -38,13 +38,13 @@ export default memo(function BibleSearchPanel(): JSX.Element {
         event.preventDefault();
       })
       .effect();
-  }, [putOnSearchZoneRef, searchZone]);
+  }, []);
 
   return (
     <div className="full-width">
       <BibleSearchInputPanel
         inputRef={inputRef}
-        putOnSearchZoneRef={putOnSearchZoneRef}
+        setSearchZone={setSearchZone}
       />
       <BibleSearchResults
         inputRef={inputRef}

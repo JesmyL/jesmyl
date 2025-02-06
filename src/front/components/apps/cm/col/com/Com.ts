@@ -1,6 +1,8 @@
+import { cmComLanguages } from 'back/apps/cm/complect/values';
 import { mylib } from 'front/utils';
 import { IExportableCom, IExportableOrder } from 'shared/api/complect/apps/cm';
 import { itIt, makeRegExp } from 'shared/utils';
+import { cmIDB } from '../../_db/cm-idb';
 import { BaseNamed } from '../../base/BaseNamed';
 import { Cat } from '../cat/Cat';
 import { blockStyles } from './block-styles/BlockStyles';
@@ -19,9 +21,6 @@ import { IExportableOrderMe, OrderTopHeaderBag } from './order/Order.model';
 export class Com extends BaseNamed<IExportableCom> {
   initial: Record<string, any>;
   ton?: number;
-  tonc?: string;
-  firstChord?: string;
-  number: string = '';
   initialName: string;
   excludedModulations: number[] = [];
 
@@ -30,10 +29,9 @@ export class Com extends BaseNamed<IExportableCom> {
   private _chordLabels?: string[][][];
   private _usedChords?: Record<string, string>;
 
-  constructor(top: IExportableCom, index: number) {
+  constructor(top: IExportableCom) {
     super(top);
     this.initialName = this.name;
-    this.number = `${index + (index > 402 ? 2 : 1)}`;
     this.ton = top.ton;
 
     this.initial = {};
@@ -93,7 +91,7 @@ export class Com extends BaseNamed<IExportableCom> {
   }
 
   get initialTransPosition() {
-    return mylib.def(this.initial.p, this.getBasic('p'));
+    return this.initial.p ?? this.getBasic('p');
   }
   set initialTransPosition(val) {
     if (this.initial.p == null) this.initial.p = mylib.typ(0, val);
@@ -101,7 +99,7 @@ export class Com extends BaseNamed<IExportableCom> {
   }
 
   get initialTransPos() {
-    return mylib.def(this.initial.pos, this.initial.p, this.getBasic('p'));
+    return this.initial.pos ?? this.initial.p ?? this.getBasic('p');
   }
   set initialTransPos(val) {
     if (this.initial.pos == null) this.initial.pos = mylib.typ(0, val);
@@ -117,6 +115,10 @@ export class Com extends BaseNamed<IExportableCom> {
     this.initialTransPosition = val;
   }
 
+  get firstChord(): string {
+    return this.chordLabels?.[0]?.[0]?.[0];
+  }
+
   getFirstSimpleChord() {
     return (this.orders?.[0]?.chords ?? this.chords?.[0])?.match(makeRegExp('/[A-H]#?/'))?.[0];
   }
@@ -124,7 +126,7 @@ export class Com extends BaseNamed<IExportableCom> {
   pullTransPosition(obj: IExportableCom) {
     if (obj) {
       if (obj.ton != null) this.initialTransPosition = obj.p;
-      this.transPosition = mylib.def(obj.ton, obj.p);
+      this.transPosition = obj.ton ?? obj.p;
     }
   }
 
@@ -143,7 +145,7 @@ export class Com extends BaseNamed<IExportableCom> {
     return Com.langs[this.langi || 0];
   }
   static get langs() {
-    return ['русский', 'украинский'];
+    return cmComLanguages;
   }
 
   getVowelPositions(textLine: string) {
@@ -165,24 +167,22 @@ export class Com extends BaseNamed<IExportableCom> {
     return cblock?.replace(gSimpleHashChordReg, chord => this.transChord(chord, delta));
   }
 
-  transBlocks(delta?: number) {
+  transposedBlocks(delta?: number) {
     return this.chords?.map((cblock: string) => this.transBlock(cblock, delta));
   }
 
-  setChordsInitialTon() {
-    delete this.ton;
-    delete this.tonc;
-    this.transPosition = this.initialTransPos;
-    this.updateChordLabels();
+  async setChordsInitialTon() {
+    const fixed = { ...(mylib.isNNlOrUnd(this.wid) && (await cmIDB.tb.fixedComs.get(this.wid))) };
+    delete fixed.ton;
+    await cmIDB.tb.fixedComs.put(fixed);
   }
 
-  transpose(delta: number) {
+  async transpose(delta: number) {
     if (this.transPosition !== undefined) this.transPosition -= -delta;
     else this.transPosition = delta;
 
-    this.ton = this.transPosition;
-    this.tonc = this.tonc ?? this.chordLabels[0][0][0];
-    this.updateChordLabels();
+    const isUpdated = await cmIDB.tb.fixedComs.update(this.wid, { ton: (this.ton ?? 1) + delta });
+    if (!isUpdated) await cmIDB.tb.fixedComs.put({ w: this.wid, ton: (this.ton ?? 1) + delta });
   }
 
   getOrderedTexts(isIncluseEndstars = true, kind: number | und) {
@@ -235,7 +235,7 @@ export class Com extends BaseNamed<IExportableCom> {
     return kinds.clearList();
   }
 
-  bracketsTransformed = (() => {
+  static bracketsTransformed = (() => {
     const brackets = [
       ['«', '»'],
       ['„', '“'],
@@ -319,7 +319,7 @@ export class Com extends BaseNamed<IExportableCom> {
     return inCats.concat(natives);
   }
 
-  updateChordLabels() {
+  private updateChordLabels() {
     this._chordLabels = [];
     this._usedChords = {};
     let currTransPosition = this.transPosition;
@@ -347,8 +347,6 @@ export class Com extends BaseNamed<IExportableCom> {
         });
       });
     });
-
-    this.tonc = this.firstChord = firstChord;
   }
 
   static withBemoles(chords?: string, isSet: num = 0) {
@@ -394,7 +392,7 @@ export class Com extends BaseNamed<IExportableCom> {
     const setMin = (src: IExportableOrderMe) => {
       const styleName = src.style?.key.trim();
       if (src.style?.isModulation) minimals = [];
-      src.top.m = minimals.some(([s, c]) => styleName === s && src.top.c === c) ? 0 : 1;
+      src.top.m = minimals.some(([s, c]) => styleName === s && src.top.c === c) ? undefined : 1;
       minimals.push([styleName, src.top.c]);
     };
 
@@ -425,7 +423,7 @@ export class Com extends BaseNamed<IExportableCom> {
         orders.push(this.orderConstructor({ header: this.emptyOrderHeader, top: {} } as IExportableOrderMe));
         continue;
       }
-      const targetOrd: Order | nil = ordMe.top.a == null ? null : orders.find(o => o.unique === ordMe.top.a);
+      const targetOrd: Order | nil = ordMe.top.a == null ? null : orders.find(o => o.wid === ordMe.top.a);
       const me = Order.getWithExtendableFields(targetOrd?.me, ordMe);
 
       const style = getStyle(me);
@@ -446,12 +444,12 @@ export class Com extends BaseNamed<IExportableCom> {
       me.style = style;
       me.source = ordMe;
       me.isNextInherit = !!getStyle(ords[topi + 1])?.isInherit;
-      me.isNextAnchorOrd = !!(ordMe.top.u != null && ords[topi + 1] && ords[topi + 1].top.a === ordMe.top.u);
+      me.isNextAnchorOrd = !!(ords[topi + 1] && ords[topi + 1].top.a === ordMe.top.w);
       me.isPrevTargetOrd = !!(targetOrd && ords[topi - 1] === targetOrd.me.source);
       me.targetOrd = targetOrd;
       me.watchOrd = targetOrd;
       me.isAnchor = ordMe.top.a != null;
-      me.isTarget = ordMe.top.u != null && ords.some(me => me.top.a === ordMe.top.u);
+      me.isTarget = ords.some(me => me.top.a === ordMe.top.w);
       me.viewIndex = viewIndex++;
       me.sourceIndex = ords.indexOf(ordMe);
 

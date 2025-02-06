@@ -2,11 +2,11 @@ import { Link, Route, Routes } from 'react-router-dom';
 import BrutalItem from '../../../../../../complect/brutal-item/BrutalItem';
 import { IconBookOpen01StrokeRounded } from '../../../../../../complect/the-icon/icons/book-open-01';
 import PhaseCmEditorContainer from '../../phase-editor-container/PhaseCmEditorContainer';
-import { useEditableCols } from '../useEditableCols';
+import { useEditableCats } from '../useEditableCols';
 import EditCategory from './EditCategory';
 
 export default function EditCategories() {
-  const cols = useEditableCols();
+  const cats = useEditableCats();
 
   return (
     <Routes>
@@ -18,7 +18,7 @@ export default function EditCategories() {
             headTitle="Категории"
             content={
               <>
-                {cols?.cats.map(cat => {
+                {cats?.map(cat => {
                   return (
                     <Link
                       key={cat.wid}

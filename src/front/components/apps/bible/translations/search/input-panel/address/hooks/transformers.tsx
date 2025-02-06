@@ -1,7 +1,8 @@
+import { bibleIDB } from 'front/components/apps/bible/_db/bibleIDB';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { emptyFunc, makeRegExp } from 'shared/utils';
 import { addEventListenerPipe, hookEffectPipe } from '../../../../../../../../complect/hookEffectPipe';
-import { useBibleTranslationJoinAddressSetter, useSetBibleAddressIndexes } from '../../../../../hooks/address/address';
+import { useSetBibleAddressIndexes } from '../../../../../hooks/address/address';
 import { useBibleBookList } from '../../../../../hooks/texts';
 import { BibleBooki, BibleChapteri, BibleVersei } from '../../../../../model';
 import { bibleLowerBooks, useBibleTranslatesContext } from '../../../../../translates/TranslatesContext';
@@ -15,11 +16,10 @@ const makePropsFromAddressArgs = (args: [string, ...(string | und)[]] | RegExpMa
 
 export const useBibleTransformAddressTermToAddress = (term: string, inputRef: React.RefObject<HTMLInputElement>) => {
   const books = useBibleBookList();
-  const { chapters } = useBibleTranslatesContext().rst ?? {};
+  const chapters = useBibleTranslatesContext().rst?.chapters;
   const [address, setAddress] = useState<ReactNode>(null);
   const onEnterPressRef = useRef(emptyFunc);
   const setAddressIndexes = useSetBibleAddressIndexes();
-  const setJoinAddress = useBibleTranslationJoinAddressSetter();
 
   useEffect(() => {
     if (inputRef.current === null) return;
@@ -114,11 +114,12 @@ export const useBibleTransformAddressTermToAddress = (term: string, inputRef: Re
       }
 
       onEnterPressRef.current = () => {
-        if (finishVerseNumber === undefined) setAddressIndexes(booki, chapterNumberi, verseNumber - 1);
-        else {
+        if (finishVerseNumber === undefined) {
+          setAddressIndexes(booki, chapterNumberi, verseNumber - 1);
+          bibleIDB.set.joinAddress(null);
+        } else {
           setAddressIndexes(booki, chapterNumberi, finishVerseNumber - 1);
-
-          setJoinAddress({
+          bibleIDB.set.joinAddress({
             [booki]: {
               [chapterNumberi]:
                 verseSeparator?.trim() === ','
@@ -145,7 +146,7 @@ export const useBibleTransformAddressTermToAddress = (term: string, inputRef: Re
     );
 
     setAddress(address);
-  }, [books, chapters, setAddressIndexes, setJoinAddress, term]);
+  }, [books, chapters, setAddressIndexes, setAddress, term]);
 
   return address;
 };

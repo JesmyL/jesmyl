@@ -27,7 +27,7 @@ function Content() {
   const currentVersei = useBibleAddressVersei();
   const bookTitles = useBibleBookList();
   const showTranslates = useBibleShowTranslatesValue();
-  const htmlChapters = useBibleTranslatesContext()[showTranslates[0]]?.htmlChapters;
+  const chapters = useBibleTranslatesContext()[showTranslates[0]]?.chapters;
   const [selectedBooki, setSelectedBooki] = useState(currentBooki);
   const [selectedChapteri, setSelectedChapteri] = useState(currentChapteri);
   const setAddress = useBibleSingleAddressSetter();
@@ -56,9 +56,9 @@ function Content() {
       head={<BibleModulesTranslations isHideEmptyBook />}
       content={
         <>
-          {htmlChapters && (
+          {chapters && (
             <BibleReaderBook
-              chapterList={htmlChapters[currentBooki]}
+              chapterList={chapters[currentBooki]}
               currentChapteri={currentChapteri}
               currentVersei={currentVersei}
               currentBooki={currentBooki}
@@ -91,7 +91,7 @@ function Content() {
 
           {isOpenChapterSelector && (
             <FullContent onClose={setIsOpenChapterSelector}>
-              {htmlChapters?.[selectedBooki]?.map((chapter, chapteri) => {
+              {chapters?.[selectedBooki]?.map((chapter, chapteri) => {
                 return (
                   <ItemFace
                     key={chapteri}
@@ -100,7 +100,7 @@ function Content() {
                       (chapteri === selectedChapteri ? ' bgcolor--7 color--1' : ' bgcolor--2 color--3') +
                       (chapteri === currentChapteri ? ' text-bold text-underline' : '')
                     }
-                    chapter-length={chapter.length}
+                    chapter-length={chapter?.length}
                     onClick={() => {
                       setSelectedChapteri(chapteri);
                       setIsOpenVerseSelector(true);
@@ -115,7 +115,7 @@ function Content() {
 
           {isOpenVerseSelector && (
             <FullContent onClose={setIsOpenVerseSelector}>
-              {htmlChapters?.[selectedBooki]?.[selectedChapteri].map((_, versei) => {
+              {chapters?.[selectedBooki]?.[selectedChapteri]?.map((_, versei) => {
                 return (
                   <ItemFace
                     key={versei}

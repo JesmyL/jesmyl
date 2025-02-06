@@ -1,12 +1,15 @@
+import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
-import { EditableCat } from '../categories/EditableCat';
-import { useEditableCcat } from '../categories/useEditableCcat';
+import { CmComWid } from 'shared/api';
+import { cmIDB } from '../../../_db/cm-idb';
 import { EditableCom } from './com/EditableCom';
 
-export function useEditableCcom(): EditableCom | und {
-  const zcat: EditableCat | und = useEditableCcat(0);
-  const ccomw = +useParams().comw!;
+export const useCcomw = () => +useParams().comw! as CmComWid | NaN;
 
-  return useMemo(() => zcat?.coms.find(com => com.wid === ccomw), [ccomw, zcat]);
+export function useEditableCcom(): EditableCom | und {
+  const ccomw = useCcomw();
+  const icom = useLiveQuery(() => cmIDB.db.coms.where({ w: ccomw }).first(), [ccomw]);
+
+  return useMemo(() => icom && new EditableCom(icom), [icom]);
 }

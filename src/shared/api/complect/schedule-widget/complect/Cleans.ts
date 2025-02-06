@@ -237,7 +237,7 @@ export class ScheduleWidgetCleans {
     });
 
     return {
-      newTatts: SMyLib.entries(tattTimes).map(([title, tm]) => ({ title, tm })),
+      newTypes: SMyLib.entries(tattTimes).map(([title, tm]) => ({ title, tm })),
       dayWup: ScheduleWidgetCleans.packDayWakeUpTime(lines[0].slice(0, 5)),
       list: lines.map(line => {
         const tattTitle = eventTitles[line];

@@ -1,13 +1,10 @@
 import { ScheduleWidgetAppAtts } from 'front/complect/schedule-widget/ScheduleWidget.model';
-import React, { Suspense } from 'react';
 import { Link, Route } from 'react-router-dom';
 import { CmComBindAttach, scheduleWidgetUserRights, ScheduleWidgetUserRoleRight } from 'shared/api';
-import { getObjectFromScope } from '../../../../complect/strong-control/useStrongControl';
 import IconButton from '../../../../complect/the-icon/IconButton';
 import { IconLinkSquare01SolidRounded } from '../../../../complect/the-icon/icons/link-square-01';
+import TheMeetingsEvent from '../lists/meetings/TheMeetingsEvent';
 import CmExternalComListAtt from './complect/CmExternalComListAtt';
-
-const TgDayEventComList = React.lazy(() => import('./complect/TgDayEventComList'));
 
 export const cmOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
   '[cm]:coms': {
@@ -17,10 +14,9 @@ export const cmOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
     initVal: {},
     R: ScheduleWidgetUserRoleRight.Free,
     U: scheduleWidgetUserRights.includeRights(ScheduleWidgetUserRoleRight.Redact),
-    result: (value, scope, isRedact, switchIsRedact) => {
-      const { dayi, eventMi, attKey } = getObjectFromScope(scope);
-      const [, , attMi] = attKey.split(':');
-      const listPath = `${dayi}/${eventMi}/${attMi || '-'}/com-list`;
+    result: (_value, scopeProps, _isRedact, _switchIsRedact) => {
+      const { dayi, eventMi } = scopeProps;
+      const listPath = `${dayi}/${eventMi}/-/com-list`;
 
       return (
         <>
@@ -32,10 +28,7 @@ export const cmOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
             />
           </Link>
           <CmExternalComListAtt
-            switchIsRedact={switchIsRedact}
-            isRedact={isRedact}
-            scope={scope}
-            value={value}
+            scopeProps={scopeProps}
             listPath={listPath}
           />
         </>
@@ -45,11 +38,7 @@ export const cmOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
       <>
         <Route
           path=":dayi/:eventMi/:attMi/com-list/*"
-          element={
-            <Suspense>
-              <TgDayEventComList />
-            </Suspense>
-          }
+          element={<TheMeetingsEvent />}
         />
       </>
     ),

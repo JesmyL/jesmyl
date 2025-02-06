@@ -30,7 +30,7 @@ let topForceUpdate: () => void = () => {};
 let topOnBlur: () => void = () => {};
 let topOnFocus: (currentInput: KeyboardInputStorage | nil) => void = () => {};
 
-const stopCb = (event: EventStopper) => event.stopPropagation();
+const stopCb = (event: PropagationStopperEvent) => event.stopPropagation();
 
 export default function KeyboardInput(props: KeyboardInputProps) {
   const input = useMemo(() => new KeyboardInputStorage(), []);
@@ -106,7 +106,9 @@ export default function KeyboardInput(props: KeyboardInputProps) {
 
     const nativeProps = {
       className: 'native-input input ',
-      onClick: (event: any) => {
+      onClick: (
+        event: React.MouseEvent<HTMLTextAreaElement, MouseEvent> | React.FocusEvent<HTMLTextAreaElement, Element>,
+      ) => {
         event.stopPropagation();
         otherProps.onClick?.({
           name: 'click',
@@ -118,13 +120,15 @@ export default function KeyboardInput(props: KeyboardInputProps) {
       },
       onInput:
         onInput &&
-        ((event: any) => {
-          invoke(onInput, event.target.value);
+        ((
+          event: React.MouseEvent<HTMLTextAreaElement, MouseEvent> | React.FocusEvent<HTMLTextAreaElement, Element>,
+        ) => {
+          invoke(onInput, event.currentTarget.value);
         }),
       onChange:
         onChange &&
-        ((event: any) => {
-          invoke(onChange, event.target.value);
+        ((event: React.MouseEvent<HTMLTextAreaElement, MouseEvent>) => {
+          invoke(onChange, event.currentTarget.value);
         }),
       onPaste:
         onPaste &&
@@ -135,7 +139,7 @@ export default function KeyboardInput(props: KeyboardInputProps) {
         }),
       onFocus:
         onFocus &&
-        ((event: any) => {
+        ((event: React.FocusEvent<HTMLTextAreaElement, Element>) => {
           onFocus({
             name: 'focus',
             blur: () => nativeRef.current?.blur(),

@@ -1,31 +1,31 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { IScheduleWidgetListCat, IScheduleWidgetListUnit, IScheduleWidgetUserCati } from 'shared/api';
 import styled from 'styled-components';
 import { IconEdit02StrokeRounded } from '../../../complect/the-icon/icons/edit-02';
 import { IconFile02StrokeRounded } from '../../../complect/the-icon/icons/file-02';
 import { ExpandableContent } from '../../expand/ExpandableContent';
 import Modal from '../../modal/Modal/Modal';
-import { StrongComponentProps } from '../../strong-control/Strong.model';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
 import IconButton from '../../the-icon/IconButton';
+import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import ScheduleWidgetUserList from '../control/users/UserList';
-import { takeStrongScopeMaker, useScheduleWidgetRightsContext } from '../useScheduleWidget';
-import ScheduleWidgetListUnitRedactor from './UnitRedactor';
+import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
+import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
+import { ScheduleWidgetListUnitRedactor } from './UnitRedactor';
 
-type Props = StrongComponentProps<{
-  scheduleScope: string;
+type Props = {
   unit: IScheduleWidgetListUnit;
   cat: IScheduleWidgetListCat;
   cati: IScheduleWidgetUserCati;
-  catScopePostfix: string;
   shortTitles: [string, string];
-}>;
+};
 
 export default function ScheduleWidgetListUnit(props: Props) {
-  const { scope, scheduleScope, unit, cat, cati } = props;
+  const { unit, cat, cati } = props;
   const rights = useScheduleWidgetRightsContext();
-  const unitScope = takeStrongScopeMaker(scope, ' unitMi/', unit.mi);
+  const scheduleScopeProps = useScheduleScopePropsContext();
   const title = <>{unit.title || <span className="text-italic">Без названия</span>}</>;
+  const unitScopeData = useMemo(() => ({ ...scheduleScopeProps, unitMi: unit.mi }), [scheduleScopeProps, unit.mi]);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -33,7 +33,10 @@ export default function ScheduleWidgetListUnit(props: Props) {
     <>
       {isModalOpen && (
         <Modal onClose={setIsModalOpen}>
-          <ScheduleWidgetListUnitRedactor {...props} />
+          <ScheduleWidgetListUnitRedactor
+            {...props}
+            unitScopeData={unitScopeData}
+          />
         </Modal>
       )}
       <div className="margin-big-gap-t">
@@ -54,8 +57,6 @@ export default function ScheduleWidgetListUnit(props: Props) {
         >
           {unit.dsc && (
             <StrongEditableField
-              scope={unitScope}
-              fieldName="field"
               Icon={IconFile02StrokeRounded}
               value={unit}
               title="Описание"
@@ -63,18 +64,17 @@ export default function ScheduleWidgetListUnit(props: Props) {
               multiline
               setSelfRedact
               isRedact
+              onSend={value => schListsSokiInvocatorClient.setUnitDescription(null, unitScopeData, value, cati)}
             />
           )}
 
           <div className="margin-big-gap-h">
             <ScheduleWidgetUserList
-              scope={scheduleScope}
               title={cat.titles[0]}
               filter={user => user.li?.[cati] === -unit.mi}
               isInitExpand
             />
             <ScheduleWidgetUserList
-              scope={scheduleScope}
               title={cat.titles[1]}
               filter={user => user.li?.[cati] === unit.mi}
             />

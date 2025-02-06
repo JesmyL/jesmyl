@@ -1,3 +1,4 @@
+import { propagationStopper } from 'front/complect/utils/utils';
 import { useScreenTranslationCurrentConfig, useScreenTranslationCurrentConfigi } from '../hooks/configs';
 import { useScreenTranslationWindows } from '../hooks/windows';
 import { useUpdateScreenTranslationConfig } from '../hooks/with-config';
@@ -16,6 +17,7 @@ export const ScreenTranslateConfigurationNameChanger = () => {
       <input
         value={config.title}
         className="bgcolor--2"
+        onKeyDown={propagationStopper}
         onChange={event => {
           const title = event.target.value;
           updateConfig(currentConfigi, { title });

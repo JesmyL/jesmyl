@@ -1,12 +1,8 @@
 import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
-import { useAtomSet } from '../../../../../complect/atoms';
 import { useActualRef } from '../../../../../complect/useActualRef';
-import {
-  useBibleTranslationAddressIndexesSetter,
-  useBibleTranslationJoinAddress,
-  useBibleTranslationJoinAddressSetter,
-} from '../../hooks/address/address';
+import { bibleIDB } from '../../_db/bibleIDB';
+import { useBibleTranslationAddressIndexesSetter, useBibleTranslationJoinAddress } from '../../hooks/address/address';
 import { useBibleAddressBooki } from '../../hooks/address/books';
 import { useBibleAddressChapteri } from '../../hooks/address/chapters';
 import { useBibleTranslationSlideSyncContentSetter } from '../../hooks/slide-sync';
@@ -14,7 +10,6 @@ import { BibleTranslationAddress, BibleTranslationJoinAddress, BibleVersei } fro
 import { useBibleTranslatesContext } from '../../translates/TranslatesContext';
 import { useBibleShowTranslatesValue } from '../../translates/hooks';
 import { useBibleTranslationAddToPlan } from '../archive/plan/hooks/plan';
-import { bibleVerseiAtom } from '../lists/atoms';
 
 export const useBibleScreenTranslationKeyListener = (versei: BibleVersei, win?: Window) => {
   const [numberCollection, setNumberCollection] = useState('');
@@ -22,14 +17,12 @@ export const useBibleScreenTranslationKeyListener = (versei: BibleVersei, win?: 
   const currentBooki = useBibleAddressBooki();
   const currentChapteri = useBibleAddressChapteri();
   const showTranslates = useBibleShowTranslatesValue();
-  const chapters = useBibleTranslatesContext()[showTranslates[0]]?.chapters;
+  const htmlChapters = useBibleTranslatesContext()[showTranslates[0]]?.chapters;
   const joinAddress = useBibleTranslationJoinAddress();
   const currentJoinAddress = useBibleTranslationJoinAddress();
   const syncSlide = useBibleTranslationSlideSyncContentSetter();
-  const setJoin = useBibleTranslationJoinAddressSetter();
   const addToPlan = useBibleTranslationAddToPlan();
   const setAddress = useBibleTranslationAddressIndexesSetter();
-  const setVersei = useAtomSet(bibleVerseiAtom);
   const actualAddressRef = useActualRef<BibleTranslationAddress>(
     joinAddress ?? [currentBooki, currentChapteri, versei],
   );
@@ -38,11 +31,11 @@ export const useBibleScreenTranslationKeyListener = (versei: BibleVersei, win?: 
     if (numberCollection === '') return;
     return hookEffectLine()
       .setTimeout(() => {
-        setVersei(+numberCollection - 1);
+        bibleIDB.set.versei(+numberCollection - 1);
         setNumberCollection('');
       }, 300)
       .effect();
-  }, [numberCollection, setVersei]);
+  }, [numberCollection]);
 
   useEffect(() => {
     return hookEffectLine()
@@ -85,9 +78,9 @@ export const useBibleScreenTranslationKeyListener = (versei: BibleVersei, win?: 
 
         const limitStepJump = (dir: 1 | -1) => {
           if (event.shiftKey || currentJoinAddress == null) {
-            const chapter = chapters?.[currentBooki]?.[currentChapteri];
+            const chapter = htmlChapters?.[currentBooki]?.[currentChapteri];
 
-            setVersei(versei =>
+            bibleIDB.set.versei(versei =>
               dir < 0
                 ? versei > 0
                   ? versei + dir
@@ -113,7 +106,7 @@ export const useBibleScreenTranslationKeyListener = (versei: BibleVersei, win?: 
           const versei = Math[mathMethod](...verses) + dir;
 
           setAddress(booki, chapteri, versei)();
-          setJoin(null);
+          bibleIDB.set.joinAddress(null);
         };
 
         switch (event.code) {
@@ -141,7 +134,7 @@ export const useBibleScreenTranslationKeyListener = (versei: BibleVersei, win?: 
         verses.add(versei);
 
         if (event.code === 'ArrowDown' || event.code === 'ArrowRight') {
-          const chapter = chapters?.[currentBooki]?.[currentChapteri];
+          const chapter = htmlChapters?.[currentBooki]?.[currentChapteri];
 
           if (chapter !== undefined && versei < chapter.length - 1) verses.add(versei + 1);
         } else if (versei > 0) verses.delete(versei);
@@ -154,19 +147,8 @@ export const useBibleScreenTranslationKeyListener = (versei: BibleVersei, win?: 
         if (verses.size === 0) delete newJoin[currentBooki]?.[currentChapteri];
         if (mylib.keys(newJoin[currentBooki]).length === 0) delete newJoin[currentBooki];
 
-        setJoin(mylib.keys(newJoin).length === 0 ? null : newJoin);
+        bibleIDB.set.joinAddress(mylib.keys(newJoin).length === 0 ? null : newJoin);
       })
       .effect();
-  }, [
-    chapters,
-    currentBooki,
-    currentChapteri,
-    currentJoinAddress,
-    setAddress,
-    setJoin,
-    setVersei,
-    syncSlide,
-    versei,
-    win,
-  ]);
+  }, [htmlChapters, currentBooki, currentChapteri, currentJoinAddress, setAddress, syncSlide, versei, win]);
 };

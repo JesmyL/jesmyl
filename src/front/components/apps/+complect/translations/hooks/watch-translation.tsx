@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { createGlobalStyle, css } from 'styled-components';
 import { renderComponentInNewWindow } from '../../../../..';
 import { cursors } from '../../../../../cursorsBase64';
-import { useScreenTranslationConfigsValue } from '../molecules';
+import { useScreenTranslationConfigsValue } from '../atoms';
 import { useCurrentForceViweAppContext } from '../Translation.contexts';
 import { TranslationScreen } from '../TranslationScreen';
 import { useGetScreenTranslationConfig } from './configs';

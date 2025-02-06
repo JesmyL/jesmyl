@@ -8,10 +8,9 @@ import { useGlobalFullscreenChanger } from '../complect/global-listeners/useGlob
 import { hookEffectPipe, setTimeoutPipe } from '../complect/hookEffectPipe';
 import JesmylLogo from '../complect/jesmyl-logo/JesmylLogo';
 import { KEYBOARD_FLASH } from '../complect/keyboard/KeyboardInput';
-import { useCurrentApp } from '../components/index/molecules';
-import { useSecretChatMessagesListen } from '../components/index/parts/main/secret-chat/useSecretChatMessagesListen';
-import { useIsReadyRouter } from '../components/router/atoms';
+import { useCurrentApp } from '../components/index/atoms';
 import './App.scss';
+import { appInitialInvokes } from './app-initial-invokes';
 
 const emptyArr: [] = [];
 const emptyDict = {};
@@ -26,18 +25,16 @@ export default function AppComponent() {
   const currentApp = useCurrentApp();
   const [keyboardOpen, setKeyboardOpen] = useState(false);
   const [isShowLogo, setIsShowLogo] = useState(true);
-  const [, setIsReady] = useIsReadyRouter();
   const [rootAnchorNodes, setRootAnchorNodes] = useState<Record<string, React.ReactNode>>(emptyDict);
 
   useFingersActions();
   useGlobalFontFamilySetter();
-  useSecretChatMessagesListen();
 
   const [isFullscreen, fullscreenIcon] = useGlobalFullscreenChanger();
 
   useEffect(() => {
     return hookEffectPipe()
-      .pipe(setTimeoutPipe(setIsShowLogo, 1200, false), setTimeoutPipe(setIsReady, 100, true))
+      .pipe(setTimeoutPipe(setIsShowLogo, 1200, false))
       .effect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, emptyArr);
@@ -61,10 +58,11 @@ export default function AppComponent() {
         <div className={`application-container app_${currentApp}${isFullscreen ? ' fullscreen-mode' : ''}`}>
           {fullscreenIcon}
           <Outlet />
-          {/* <IndexAdvertisingReminder /> */}
         </div>
         <KEYBOARD_FLASH {...keyboardProps} />
       </div>
     </SetAppRootAnchorNodesContext.Provider>
   );
 }
+
+appInitialInvokes();

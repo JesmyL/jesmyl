@@ -1,7 +1,10 @@
+import Modal from 'front/complect/modal/Modal/Modal';
+import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
+import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
+import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { mylib } from 'front/utils';
+import { useState } from 'react';
 import { BottomPopupItem } from '../../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
-import { useExerExec } from '../../../../../../../../../complect/exer/hooks/useExer';
-import useModal from '../../../../../../../../../complect/modal/useModal';
 import IconCheckbox from '../../../../../../../../../complect/the-icon/IconCheckbox';
 import { IconFlashStrokeRounded } from '../../../../../../../../../complect/the-icon/icons/flash';
 import { ChordVisibleVariant } from '../../../../../../Cm.model';
@@ -14,20 +17,26 @@ const intervals = '.'
   .map((_, i) => i + 1)
   .reverse();
 
-export const OrdersRedactorOrderToolsModulation = ({ ccom, ord, ordi, onClose }: OrdersRedactorOrderToolsProps) => {
-  const exec = useExerExec();
+export const OrdersRedactorOrderToolsModulation = ({ com, ord, ordi, onClose }: OrdersRedactorOrderToolsProps) => {
+  const [isModalOpen, setIsModalOpen] = useState<unknown>(false);
 
-  const [modalNode, openModal] = useModal(({ header, body }, close) => {
-    return (
-      <>
-        {header(<>Установка значения модуляции</>)}
-        {body(
-          <>
+  return (
+    <>
+      <BottomPopupItem
+        Icon={IconFlashStrokeRounded}
+        title="Значение модуляции"
+        onClick={setIsModalOpen}
+      />
+
+      {isModalOpen && (
+        <Modal onClose={setIsModalOpen}>
+          <ModalHeader>Установка значения модуляции</ModalHeader>
+          <ModalBody>
             <TheOrder
               orderUnit={ord}
               orderUniti={ordi}
               chordVisibleVariant={ChordVisibleVariant.Maximal}
-              com={ccom}
+              com={com}
             />
             {intervals.map(position => {
               return (
@@ -36,31 +45,26 @@ export const OrdersRedactorOrderToolsModulation = ({ ccom, ord, ordi, onClose }:
                   checked={ord.fieldValues.md === position}
                   disabled={ord.fieldValues.md === position}
                   className="margin-gap-t"
+                  onClick={() =>
+                    cmComOrderClientInvocatorMethods.setModulationValue(
+                      null,
+                      com.wid,
+                      ord.me.header(),
+                      ord.wid,
+                      position,
+                    )
+                  }
                   onChange={() => {
-                    ord.setFieldValue('md', position);
-                    ccom.resetChordLabels();
-                    exec();
-                    close();
+                    setIsModalOpen(false);
                     onClose(false);
                   }}
                   postfix={`Повышение на ${position} ${mylib.declension(position, 'полутон', 'полутона', 'полутонов')}`}
                 />
               );
             })}
-          </>,
-        )}
-      </>
-    );
-  });
-
-  return (
-    <>
-      {modalNode}
-      <BottomPopupItem
-        Icon={IconFlashStrokeRounded}
-        title="Значение модуляции"
-        onClick={openModal}
-      />
+          </ModalBody>
+        </Modal>
+      )}
     </>
   );
 };

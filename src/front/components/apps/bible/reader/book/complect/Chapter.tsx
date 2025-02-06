@@ -6,7 +6,7 @@ export default memo(function BibleReaderChapter({
   list,
   chapteri,
 }: {
-  list: { __html: string }[];
+  list: (string | und)[];
   chapteri: BibleChapteri;
 }): JSX.Element {
   return (
@@ -19,12 +19,14 @@ export default memo(function BibleReaderChapter({
       </h2>
       {list.map((verseHTML, versei) => {
         return (
-          <BibleReaderVerseText
-            key={versei}
-            versei={versei}
-            chapteri={chapteri}
-            html={verseHTML}
-          />
+          verseHTML && (
+            <BibleReaderVerseText
+              key={versei}
+              versei={versei}
+              chapteri={chapteri}
+              html={verseHTML}
+            />
+          )
         );
       })}
     </>

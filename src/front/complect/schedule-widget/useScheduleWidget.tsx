@@ -4,7 +4,6 @@ import {
   IScheduleWidget,
   IScheduleWidgetRole,
   IScheduleWidgetUser,
-  IScheduleWidgetWid,
   LocalSokiAuth,
   ScheduleWidgetRegType,
   scheduleWidgetRegTypeRights,
@@ -12,27 +11,11 @@ import {
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
 import { appAttsStore } from '../../components/complect/appScheduleAttrsStorage';
-import { useAuth, useIndexSchedules } from '../../components/index/molecules';
+import { useAuth } from '../../components/index/atoms';
 import { contextCreator } from '../contextCreator';
-import { strongScopeMakerBuilder } from '../strong-control/useStrongControl';
 import ScheduleKeyValueListAtt from './atts/attachments/key-value/KeyValueListAtt';
 import { scheduleOwnAtts } from './atts/attachments/ownAtts';
 import { ScheduleWidgetAppAtts, ScheduleWidgetAttRefs } from './ScheduleWidget.model';
-
-export default function useScheduleWidget(schedulew?: number, schedule?: IScheduleWidget) {
-  const schedules = useIndexSchedules();
-
-  const ret = {
-    schedule:
-      schedule === undefined
-        ? schedulew === undefined
-          ? undefined
-          : schedules.list.find(({ w }) => w === schedulew)
-        : schedule,
-  };
-
-  return ret;
-}
 
 export const [ScheduleWidgetAppAttsContext, useScheduleWidgetAppAttsContext] = contextCreator<
   [ScheduleWidgetAppAtts, ScheduleWidgetAttRefs]
@@ -40,6 +23,7 @@ export const [ScheduleWidgetAppAttsContext, useScheduleWidgetAppAttsContext] = c
 
 export const defaultScheduleWidget: IScheduleWidget = {
   w: 0 as never,
+  m: 0,
   start: 0,
   title: '',
   topic: '',
@@ -72,11 +56,8 @@ export interface ScheduleWidgetRights extends ScheduleWidgetUserRights, Schedule
   auth: LocalSokiAuth;
 }
 
-export type ScheduleWidgetUserRights = Record<
-  `isCan${Exclude<keyof typeof ScheduleWidgetUserRoleRight, 'Free'>}`,
-  boolean
->;
-export type ScheduleWidgetScheduleWidgetRegType = Record<`isSw${keyof typeof ScheduleWidgetRegType}`, boolean>;
+type ScheduleWidgetUserRights = Record<`isCan${Exclude<keyof typeof ScheduleWidgetUserRoleRight, 'Free'>}`, boolean>;
+type ScheduleWidgetScheduleWidgetRegType = Record<`isSw${keyof typeof ScheduleWidgetRegType}`, boolean>;
 
 export const defScheduleWidgetUserRights: ScheduleWidgetUserRights = {
   isCanTotalRedact: false,
@@ -171,33 +152,6 @@ export const useScheduleWidgetRights = (schedule: IScheduleWidget | nil, rights?
   }, [auth, schedule, rights]);
 };
 
-export const ScheduleWidgetAppAttRefsContext = React.createContext<ScheduleWidgetAttRefs>({});
-export const useScheduleWidgetAppAttRefsContext = () => useContext(ScheduleWidgetAppAttRefsContext);
-
-export const initialScheduleScope = 'schs';
-
-export type ScheduleWidgetScopePhase =
-  | 'schs'
-  | 'schw'
-  | 'typei'
-  | 'attKey'
-  | 'imAttKey'
-  | 'dayi'
-  | 'eventMi'
-  | 'titlei'
-  | 'tattMi'
-  | 'itemMi'
-  | 'roleMi'
-  | 'userMi'
-  | 'cati'
-  | 'criti'
-  | 'gameMi'
-  | 'unitMi';
-
-export const takeStrongScopeMaker = strongScopeMakerBuilder<ScheduleWidgetScopePhase>();
-export const takeScheduleStrongScopeMaker = (schedulew: IScheduleWidgetWid) =>
-  takeStrongScopeMaker(initialScheduleScope, ` schw/`, schedulew);
-
 export const extractScheduleWidgetRole = (schedule: IScheduleWidget, roleMi: number) => {
   return schedule.ctrl.roles.find(role => role.mi === roleMi);
 };
@@ -207,7 +161,7 @@ export const extractScheduleWidgetRoleUser = (
   roleMi: number,
   role?: IScheduleWidgetRole | nil,
 ) => {
-  const roleUserMi = (role ?? extractScheduleWidgetRole(schedule, roleMi))?.user;
+  const roleUserMi = (role ?? extractScheduleWidgetRole(schedule, roleMi))?.userMi;
   if (roleUserMi === undefined) return null;
   const roleUser = schedule.ctrl.users.find(user => user.mi === roleUserMi);
   if (roleUser === undefined) return null;
@@ -232,12 +186,12 @@ export const makeAttStorage = (schedule?: IScheduleWidget): [ScheduleWidgetAppAt
     atts[`[SCH]:custom:${att.mi}`] = {
       ...att,
       isCustomize: true,
-      result: (value, scope, isRedact) => (
+      result: (value, dayEventAttScopeProps, isRedact) => (
         <ScheduleKeyValueListAtt
           isRedact={isRedact}
           att={att}
-          scope={scope}
           value={value}
+          dayEventAttScopeProps={{ ...dayEventAttScopeProps, attTitle: att.title }}
         />
       ),
     };

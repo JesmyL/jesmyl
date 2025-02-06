@@ -1,8 +1,10 @@
 import { mylib, MyLib } from 'front/utils';
-import { ReactNode, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import {
   IScheduleWidget,
   ScheduleWidgetAttKey,
+  ScheduleWidgetAttOwnValue,
+  ScheduleWidgetAttRef,
   ScheduleWidgetDayEventAttValues,
   scheduleWidgetUserRights,
 } from 'shared/api';
@@ -12,42 +14,43 @@ import { IconPlusSignStrokeRounded } from '../../../complect/the-icon/icons/plus
 import Modal from '../../modal/Modal/Modal';
 import { ModalBody } from '../../modal/Modal/ModalBody';
 import { ModalFooter } from '../../modal/Modal/ModalFooter';
-import { StrongComponentProps } from '../../strong-control/Strong.model';
 import StrongDiv from '../../strong-control/StrongDiv';
 import IconButton from '../../the-icon/IconButton';
-import {
-  takeStrongScopeMaker,
-  useScheduleWidgetAppAttsContext,
-  useScheduleWidgetRightsContext,
-} from '../useScheduleWidget';
+import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
+import { useScheduleWidgetAppAttsContext, useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetAttFace from './AttFace';
-import ScheduleWidgetBindAttRefKeyButton from './BindAttRefKeyButton';
 import ScheduleWidgetCustomAttachments from './custom/CustomAttachments';
 
-export default function ScheduleWidgetBindAtts({
-  atts,
-  forTitle,
-  scope,
-  scheduleScope,
-  schedule,
-  mapExecArgs,
-  cantBindLinks,
-  topContent,
-  customAttTopContent,
-}: StrongComponentProps<{
-  scheduleScope: string;
+type Props = {
   forTitle: ReactNode;
   atts?: ScheduleWidgetDayEventAttValues;
   schedule: IScheduleWidget;
-  cantBindLinks?: boolean;
   topContent?: ReactNode;
-  customAttTopContent?: (scope: string, attKey: ScheduleWidgetAttKey) => ReactNode;
-}>) {
+  customAttTopContent?: (attKey: ScheduleWidgetAttKey) => ReactNode;
+  onAddAttSend: (attKey: ScheduleWidgetAttKey, value: ScheduleWidgetAttOwnValue) => Promise<unknown>;
+  onRemoveAttSend: (attKey: ScheduleWidgetAttKey) => Promise<unknown>;
+  inAttNodeAdds?: (
+    attKey: ScheduleWidgetAttKey,
+    tatt: ScheduleWidgetAppAtt,
+    refs: ScheduleWidgetAttRef[],
+  ) => React.ReactNode;
+};
+
+export const ScheduleWidgetBindAtts = ({
+  atts,
+  forTitle,
+  schedule,
+  topContent,
+  customAttTopContent,
+  onAddAttSend,
+  onRemoveAttSend,
+  inAttNodeAdds,
+}: Props) => {
   const [appAtts, attRefs] = useScheduleWidgetAppAttsContext();
   const appAttList = MyLib.entries(appAtts);
   const rights = useScheduleWidgetRightsContext();
   const myUserR = rights.myUser?.R ?? rights.schedule.ctrl.defu;
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState<unknown>(false);
 
   const attEntries = atts ? MyLib.entries(atts) : [];
 
@@ -55,7 +58,7 @@ export default function ScheduleWidgetBindAtts({
     <>
       {isModalOpen && (
         <Modal onClose={setIsModalOpen}>
-          <ModalFooter>{forTitle} - Вставить вложение</ModalFooter>
+          <ModalFooter>{forTitle}</ModalFooter>
 
           <ModalBody>
             {topContent}
@@ -66,59 +69,32 @@ export default function ScheduleWidgetBindAtts({
                 !scheduleWidgetUserRights.checkIsCan(myUserR, tatt.U)
               )
                 return null;
-              const attScope = takeStrongScopeMaker(scope, ' attKey/', attKey);
 
               return (
                 <StrongDiv
                   key={attKey}
-                  scope={attScope}
-                  fieldName=""
-                  cud="U"
                   className={
                     'relative flex flex-gap bgcolor--1 padding-gap margin-big-gap-v pointer' +
                     (atts?.[attKey] ? ' disabled ' : '')
                   }
-                  mapExecArgs={
-                    mapExecArgs ||
-                    (args => {
-                      if (atts?.[attKey]) return;
-                      return {
-                        ...args,
-                        value: tatt.initVal,
-                      };
-                    })
-                  }
-                  onClick={() => setIsModalOpen(true)}
+                  onSuccess={() => setIsModalOpen(true)}
+                  onSend={() => onAddAttSend(attKey, tatt.initVal)}
                 >
                   <ScheduleWidgetAttFace
-                    scope={scope}
-                    scheduleScope={scheduleScope}
                     tatt={tatt}
                     typeTitle={forTitle}
                     attKey={attKey}
+                    onRemoveAttSend={onRemoveAttSend}
                   />
                   <div className="fade-05 ">{tatt.description}</div>
-                  {!cantBindLinks && !!attRefs[attKey]?.length && (
-                    <ScheduleWidgetBindAttRefKeyButton
-                      refs={attRefs[attKey]}
-                      forTitle={forTitle}
-                      attScope={attScope}
-                      tatt={tatt}
-                      attKey={attKey}
-                      atts={atts}
-                      schedule={schedule}
-                    />
-                  )}
+                  {inAttNodeAdds?.(attKey, tatt, attRefs[attKey] ?? [])}
                 </StrongDiv>
               );
             })}
           </ModalBody>
 
           <ModalFooter>
-            <ScheduleWidgetCustomAttachments
-              scope={scheduleScope}
-              tatts={schedule.tatts}
-            />
+            <ScheduleWidgetCustomAttachments tatts={schedule.tatts} />
           </ModalFooter>
         </Modal>
       )}
@@ -127,37 +103,34 @@ export default function ScheduleWidgetBindAtts({
         Вложения
         <IconButton
           Icon={IconPlusSignStrokeRounded}
-          onClick={() => setIsModalOpen(true)}
+          onClick={setIsModalOpen}
         />
       </div>
-      <Secs className="flex flex-gap no-scrollbar">
+      <StyledBoxes className="flex flex-gap no-scrollbar">
         {attEntries?.length ? (
           attEntries.map(([attKey]) => {
-            const attScope = takeStrongScopeMaker(scope, ' attKey/', attKey);
-
             return (
               <ScheduleWidgetAttFace
                 isRedact
                 key={attKey}
-                scope={attScope}
-                scheduleScope={scheduleScope}
                 tatt={appAtts[attKey]}
                 attKey={attKey}
                 typeTitle={forTitle}
                 isLink={mylib.isArr(atts?.[attKey])}
                 customAttTopContent={customAttTopContent}
+                onRemoveAttSend={onRemoveAttSend}
               />
             );
           })
         ) : (
           <span className="color--7">Вложений нет</span>
         )}
-      </Secs>
+      </StyledBoxes>
     </>
   );
-}
+};
 
-const Secs = styled.div`
+const StyledBoxes = styled.div`
   padding-right: var(--margin-gap);
   width: 100%;
   overflow-x: auto;

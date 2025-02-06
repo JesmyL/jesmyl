@@ -3,6 +3,7 @@ import { SendButtonContentMakerProps } from './maker.model';
 
 interface PropsWithClick {
   onClick: CallbackWithDto;
+  isLoading?: boolean;
 }
 
 export const SendButtonContentMakerBody = <Value,>(props: SendButtonContentMakerProps<Value> & PropsWithClick) => {
@@ -11,7 +12,7 @@ export const SendButtonContentMakerBody = <Value,>(props: SendButtonContentMaker
   return (
     <>
       {props.anchorNodes}
-      {props.content?.(onClick, error, isLoading)}
+      {props.content?.(onClick, error, props.isLoading ?? isLoading)}
     </>
   );
 };

@@ -5,9 +5,9 @@ import { itNUnd } from 'shared/utils';
 import { CmComWid } from '../../../../../shared/api/complect/apps/cm/complect/enums';
 import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
 import { IconCancel01SolidRounded } from '../../../../complect/the-icon/icons/cancel-01';
-import { CmTranslationComListContext } from '../base/translations/context';
+import { CmComListContext } from '../base/translations/context';
 import { ComFaceList } from '../col/com/face/list/ComFaceList';
-import { useCols } from '../cols/useCols';
+import { useComs } from '../cols/useCols';
 import { cmCompositionRoute } from '../routing/cmRoutingApp';
 import './Lists.scss';
 
@@ -49,15 +49,15 @@ export default function ExternalList() {
 }
 
 const Context = ({ children, comws }: { children: React.ReactNode; comws: CmComWid[] | null }) => {
-  const cols = useCols();
+  const coms = useComs();
 
   const contextValue = useMemo(() => {
-    if (cols == null || comws == null) return null;
-    return { list: comws.map(comw => cols.coms.find(com => com.wid === comw)!).filter(itNUnd) };
-  }, [cols, comws]);
+    if (comws == null) return null;
+    return { list: comws.map(comw => coms.find(com => com.wid === comw)!).filter(itNUnd) };
+  }, [coms, comws]);
 
   return contextValue ? (
-    <CmTranslationComListContext.Provider value={contextValue}>{children}</CmTranslationComListContext.Provider>
+    <CmComListContext.Provider value={contextValue}>{children}</CmComListContext.Provider>
   ) : (
     children
   );

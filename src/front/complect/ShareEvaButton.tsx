@@ -37,7 +37,7 @@ export default function ShareEvaButton({
         onClick={event => {
           event.stopPropagation();
           const textToWrite = mylib.isStr(text) ? text : text?.();
-          if (!textToWrite && prepare === undefined) return null;
+          if (!textToWrite && prepare === undefined) return;
 
           const prepared =
             prepare === undefined
@@ -48,7 +48,7 @@ export default function ShareEvaButton({
                 }
               : prepare();
 
-          if (prepared === undefined) return null;
+          if (prepared === undefined) return;
 
           try {
             navigator.share({

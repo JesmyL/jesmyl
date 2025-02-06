@@ -1,5 +1,5 @@
-import { ScreenTranslationBackgroundConfigs } from '../model';
+import { BackgroundConfigProps } from 'front/complect/configurators/model';
 
-export const useScreenTranslationBackgroundStyles = (config: ScreenTranslationBackgroundConfigs | und) => {
+export const useScreenTranslationBackgroundStyles = (config: BackgroundConfigProps | und) => {
   return config !== undefined && config.isWithBackground ? config.background || config.backgroundColor : undefined;
 };

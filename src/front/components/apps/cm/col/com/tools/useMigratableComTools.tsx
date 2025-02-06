@@ -1,12 +1,11 @@
 import { MyLib } from 'front/utils';
 import React from 'react';
+import { MigratableComToolName } from 'shared/api';
 import styled, { css } from 'styled-components';
-import { useAtom, useAtomValue } from '../../../../../../complect/atoms';
-import propsOfClicker from '../../../../../../complect/clicker/propsOfClicker';
 import { contextCreator } from '../../../../../../complect/contextCreator';
-import { cmMolecule } from '../../../molecules';
+import { cmIDB } from '../../../_db/cm-idb';
+import { cmUserStoreSokiInvocatorClient } from '../../../invocators/user-store-invocator.methods';
 import { Com } from '../Com';
-import { MigratableComToolName } from '../Com.model';
 import { useCcom } from '../useCcom';
 import { CmCatsBindsComTool } from './complect/CatsBinds';
 import { ChordImagesTool } from './complect/ChordImagesTool';
@@ -22,8 +21,6 @@ import { TranslationTool } from './complect/TranslationTool';
 import { ComToolItemAttrsContext, IsComToolIconItemsContext } from './ComTool';
 
 const RedactComTool = React.lazy(() => import('./complect/RedactComTool'));
-
-const comTopToolsAtom = cmMolecule.select(s => s.comTopTools);
 
 const [ComToolsCcomContext, useComToolsCcomContext] = contextCreator<Com | und>(undefined);
 
@@ -43,12 +40,13 @@ function mapTools(this: und | typeof mapToolsSelf, key: MigratableComToolName) {
       $active={this.comTopTools.includes(key)}
     >
       <ComToolItemAttrsContext.Provider
-        value={propsOfClicker({
-          onCtxMenu: event => {
+        value={{
+          onIconClick: event => {
+            event.stopPropagation();
             event.preventDefault();
             this.fun(key);
           },
-        })}
+        }}
       >
         {toolsDict[key]}
       </ComToolItemAttrsContext.Provider>
@@ -73,13 +71,21 @@ const toolsDict: Record<MigratableComToolName, React.ReactNode> = {
 };
 const toolKeys = MyLib.keys(toolsDict);
 
+let saveTimeout: TimeOut;
 export const useMigratableListComTools = () => {
   const ccom = useCcom();
-  const [comTopTools, setComTopTools] = useAtom(comTopToolsAtom);
+  const [comTopTools, setComTopTools] = cmIDB.use.comTopTools();
 
   mapToolsSelf.comTopTools = comTopTools;
   mapToolsSelf.fun = (tool: MigratableComToolName) => {
-    setComTopTools(tools => (tools.indexOf(tool) < 0 ? [...tools, tool] : tools.filter(currTool => tool !== currTool)));
+    const tools =
+      comTopTools.indexOf(tool) < 0 ? [...comTopTools, tool] : comTopTools.filter(currTool => tool !== currTool);
+    setComTopTools(tools);
+
+    clearTimeout(saveTimeout);
+    saveTimeout = setTimeout(() => {
+      cmUserStoreSokiInvocatorClient.setAboutComFavorites(null, { tools });
+    }, 1000);
   };
 
   return (
@@ -89,7 +95,7 @@ export const useMigratableListComTools = () => {
 
 export const useMigratableTopComTools = () => {
   const ccom = useCcom();
-  const comTopTools = useAtomValue(comTopToolsAtom);
+  const comTopTools = cmIDB.useValue.comTopTools();
 
   return (
     <ComToolsCcomContext.Provider value={ccom}>

@@ -1,16 +1,13 @@
 import { HTMLAttributes, PropsWithChildren, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { useAtom } from '../../../../complect/atoms';
 import { IconMinusSignStrokeRounded } from '../../../../complect/the-icon/icons/minus-sign';
 import { IconPlusSignStrokeRounded } from '../../../../complect/the-icon/icons/plus-sign';
 import { useFullScreen } from '../../../../complect/useFullscreen';
-import { cmMolecule } from '../molecules';
-
-const speedRollKfAtom = cmMolecule.select(s => s.speedRollKf);
+import { cmIDB } from '../_db/cm-idb';
 
 export default function RollControled(props: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
   const [isFullscreen] = useFullScreen();
-  const [speedRollKf, setSpeedRollKf] = useAtom(speedRollKfAtom);
+  const [speedRollKf, setSpeedRollKf] = cmIDB.use.speedRollKf();
   const containerRef = useRef<HTMLDivElement>(null);
   const [isRolling, setIsRolling] = useState(false);
 

@@ -1,5 +1,3 @@
-import { ShortRealRule } from 'shared/api/complect/executer/model';
-
 export enum WedGuestConversation {
   Single,
   Join,
@@ -50,5 +48,4 @@ export interface WedGuest {
 
 export interface WedStorage {
   guests: WedGuest[];
-  rules: ShortRealRule[];
 }

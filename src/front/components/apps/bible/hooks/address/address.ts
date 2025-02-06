@@ -1,13 +1,11 @@
 import { mylib } from 'front/utils';
 import { useCallback } from 'react';
-import { useAtomSet, useAtomValue } from '../../../../../complect/atoms';
+import { bibleIDB } from '../../_db/bibleIDB';
 import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '../../model';
-import { bibleMolecule } from '../../molecules';
 import { useBibleSingleAddressSetter } from '../../translations/lists/atoms';
 import { useBibleTranslationSearchResultSelectedSet } from '../../translations/search/hooks/results';
 
 export const useBibleTranslationAddressIndexesSetter = () => {
-  const setJoin = useBibleTranslationJoinAddressSetter();
   const setAddress = useBibleSingleAddressSetter();
   const setResultSelected = useBibleTranslationSearchResultSelectedSet();
 
@@ -22,7 +20,7 @@ export const useBibleTranslationAddressIndexesSetter = () => {
       setAddress(booki, chapteri, versei);
       if (resultSelectedi !== undefined) {
         setResultSelected(resultSelectedi);
-        setJoin(null);
+        bibleIDB.set.joinAddress(null);
       }
 
       onClick?.(booki, chapteri, versei);
@@ -31,7 +29,6 @@ export const useBibleTranslationAddressIndexesSetter = () => {
 };
 
 export const useSetBibleAddressIndexes = () => {
-  const setJoin = useBibleTranslationJoinAddressSetter();
   const setAddress = useBibleSingleAddressSetter();
   const setResultSelected = useBibleTranslationSearchResultSelectedSet();
 
@@ -41,30 +38,26 @@ export const useSetBibleAddressIndexes = () => {
 
       if (resultSelectedi !== undefined) {
         setResultSelected(resultSelectedi);
-        setJoin(null);
+        bibleIDB.set.joinAddress(null);
       }
     },
-    [setAddress, setJoin, setResultSelected],
+    [setAddress, setResultSelected],
   );
 };
 
 export const useSetBibleAddressWithForceJoinReset = () => {
-  const setJoin = useBibleTranslationJoinAddressSetter();
   const setAddress = useBibleSingleAddressSetter();
 
   return useCallback(
     (booki?: BibleBooki, chapteri?: BibleChapteri, versei?: BibleVersei) => {
-      setJoin(null);
+      bibleIDB.set.joinAddress(null);
       setAddress(booki, chapteri, versei);
     },
-    [setAddress, setJoin],
+    [setAddress],
   );
 };
 
-const joinAddressAtom = bibleMolecule.select(s => s.joinAddress);
-
-export const useBibleTranslationJoinAddress = () => useAtomValue(joinAddressAtom);
-export const useBibleTranslationJoinAddressSetter = () => useAtomSet(joinAddressAtom);
+export const useBibleTranslationJoinAddress = () => bibleIDB.useValue.joinAddress();
 
 export const useGetterJoinedAddressMaxValues = () =>
   useCallback((joinAddress: BibleTranslationJoinAddress) => {

@@ -1,5 +1,3 @@
-import { memo } from 'react';
-
 interface Props {
   inputRef: React.RefObject<HTMLInputElement>;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -11,7 +9,7 @@ const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
   if (event.code === 'Escape') event.currentTarget.blur();
 };
 
-export default memo(function BibleSearchPanelInput({ inputRef, term, onChange }: Props) {
+export const BibleSearchPanelInput = ({ inputRef, term, onChange }: Props) => {
   return (
     <>
       <input
@@ -23,4 +21,4 @@ export default memo(function BibleSearchPanelInput({ inputRef, term, onChange }:
       />
     </>
   );
-});
+};

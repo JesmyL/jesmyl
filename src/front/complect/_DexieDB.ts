@@ -1,91 +1,121 @@
-import Dexie, { EntityTable } from 'dexie';
-import { SMyLib, smylib } from '../../shared/utils';
+import Dexie, { EntityTable, TableHooks } from 'dexie';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { useCallback } from 'react';
+import { emptyArray, SMyLib, smylib } from '../../shared/utils';
 
 const keyvalues = '%keyvalues%';
+const byDefaultField = '$byDefault';
+type ByDefaultField = typeof byDefaultField;
+
+type ValueSetter<Store, K extends keyof Store, RetVal = void> = (
+  value: Store[K] | ((val: Store[K]) => Store[K]),
+) => RetVal;
 
 export class DexieDB<Store> {
   db: Dexie &
     Required<{
-      [K in keyof Store]: Store[K] extends any[]
-        ? EntityTable<Store[K][number], keyof Store[K][number]>
-        : EntityTable<Store[K], keyof Store[K]>;
+      [K in keyof Store]: Store[K] extends unknown[] ? EntityTable<Store[K][number], keyof Store[K][number]> : never;
     }>;
 
-  private tryIsSimpleValue: <Key extends keyof Store>(key: Key) => void;
+  tb: Required<{
+    [K in keyof Store]: Store[K] extends unknown[] ? EntityTable<Store[K][number], keyof Store[K][number]> : never;
+  }>;
+
+  private selectors = {} as { [K in keyof Required<Store>]: K };
+
+  hook: TableHooks<any> = ((...args: []) =>
+    (this.getKeyvalues() as { hook(...args: unknown[]): unknown }).hook(...args)) as never;
+
+  set = {} as { [K in keyof Required<Store>]: ValueSetter<Store, K, Promise<void>> };
+  get = {} as { [K in keyof Required<Store>]: () => Promise<Store[K]> };
+  remove = {} as { [K in keyof Required<Store>]: () => Promise<number> };
+
+  use = {} as { [K in keyof Required<Store>]: () => [Store[K], ValueSetter<Store, K>] };
+  useSet = {} as { [K in keyof Required<Store>]: () => ValueSetter<Store, K> };
+  useValue = {} as { [K in keyof Required<Store>]: () => Store[K] };
+
+  updateLastModifiedAt!: Store extends { lastModifiedAt: number } ? (modifiedAt: number) => Promise<void> : never;
 
   constructor(
-    isDev: boolean,
     storageName: string,
-    defaults: Required<{
+    private defaults: Required<{
       [K in keyof Store]: Store[K] extends any[]
-        ? keyof Store[K][number] extends string
-          ? Partial<Record<'_', '++'> & Record<keyof Store[K][number], true | '++'>>
-          : never
-        : number;
+        ?
+            | Omit<Partial<Record<'_', '++'> & Record<keyof Store[K][number], true | '++'>>, ByDefaultField>
+            | Record<ByDefaultField, Store[K]>
+        : Record<ByDefaultField, Store[K]>;
     }>,
     version = 1,
   ) {
-    if (isDev) {
-      const uniqueIndexKeyMap = new Map<number, string>();
+    this.tb = this.db = new Dexie(storageName) as never;
 
-      SMyLib.keys(defaults).forEach(key => {
-        if (!smylib.isNum(defaults[key])) return;
-        const prevKey = uniqueIndexKeyMap.get(defaults[key]);
-        if (prevKey !== undefined) throw new Error(`"${key as never}" and "${prevKey}" has same key ${defaults[key]}`);
-        uniqueIndexKeyMap.set(defaults[key], key as never);
-      });
+    const stores = {} as Record<keyof Store, string>;
 
-      this.tryIsSimpleValue = key => {
-        if (smylib.isNum(defaults[key])) return;
-        throw new Error(`${key as never} is not simple object value`);
-      };
-    } else this.tryIsSimpleValue = () => {};
+    smylib.keys(defaults).forEach(key => {
+      if (byDefaultField in defaults[key]) {
+        this.selectors[key] = key;
+        this.get[key] = (async () => {
+          const store = await this.getKeyvalues().get({ key });
+          if (store === undefined) return this.defaults[key][byDefaultField];
+          return store.val;
+        }) as never;
 
-    this.db = new Dexie(storageName) as never;
+        this.remove[key] = () => this.getKeyvalues().where({ key }).delete();
 
-    const stores = {} as Record<string, string>;
+        this.set[key] = async value => {
+          if (smylib.isFunc(value)) {
+            return await this.getKeyvalues().put({ val: value(await this.get[key]()), key } as never);
+          } else {
+            return await this.getKeyvalues().put({ val: value, key } as never);
+          }
+        };
 
-    Object.keys(defaults).forEach(key => {
-      if (smylib.isNum(defaults[key as never])) return;
+        this.use[key] = () => [this.useValue[key](), this.useSet[key]()];
 
-      stores[key] = SMyLib.entries(defaults[key as never])
-        .map(([key, val]) => `${val === '++' ? '++' : ''}${key as never}`)
+        this.useSet[key] = () => justUseCallback((value: unknown) => this.set[key](value as never), emptyArray);
+
+        const defaultValue = this.defaults[key][byDefaultField];
+
+        this.useValue[key] = () => {
+          return (
+            justUseLiveQuery(() => this.getKeyvalues().get({ key }) as never as { val: never })?.val ??
+            (defaultValue as never)
+          );
+        };
+
+        return;
+      }
+
+      stores[key] = SMyLib.entries(defaults[key])
+        .map(([key, val]) => `${val === '++' ? val : ''}${key as never}`)
         .join(', ');
     });
 
-    stores[keyvalues] = '++key';
+    stores[keyvalues as keyof Store] = '++key';
 
     this.db.version(version).stores(stores);
-  }
 
-  private getKeyvalues() {
-    return this.db[keyvalues as never] as EntityTable<unknown>;
-  }
+    if ('lastModifiedAt' in this.defaults) {
+      (async () => {
+        type WithLastModifiedAt = { lastModifiedAt(set?: number): Promise<number> };
 
-  async getSingleValue<Key extends keyof Store>(key: Key) {
-    this.tryIsSimpleValue(key);
+        let lastModifiedLocal: number = await (this.get as WithLastModifiedAt).lastModifiedAt();
+        let timeout: TimeOut;
 
-    return ((await this.getKeyvalues().get({ key })) as any)!?.val;
-  }
+        this.updateLastModifiedAt = (async (modifiedAt: number) => {
+          if (lastModifiedLocal >= modifiedAt) return;
+          lastModifiedLocal = modifiedAt;
 
-  async setSingleValue<Key extends keyof Store, Value extends Store[Key] extends any[] ? never : Store[Key]>(
-    key: Key,
-    value: Value | ((value: Value) => Value),
-  ) {
-    this.tryIsSimpleValue(key);
-
-    if (smylib.isFunc(value)) {
-      return await this.getKeyvalues().put({
-        key,
-        val: value((await this.getSingleValue(key)) as never),
-      } as never);
-    } else {
-      return await this.getKeyvalues().put({ key, val: value } as never);
+          clearTimeout(timeout);
+          timeout = setTimeout(() => (this.set as WithLastModifiedAt).lastModifiedAt(modifiedAt), 100);
+        }) as never;
+      })();
     }
   }
 
-  async remSingleValue<Key extends keyof Store>(key: Key) {
-    this.tryIsSimpleValue(key);
-    return await this.getKeyvalues().where({ key }).delete();
-  }
+  private getKeyvalues = () =>
+    this.db[keyvalues as never] as EntityTable<{ val: Store[keyof Store]; key: keyof Store }>;
 }
+
+const justUseLiveQuery = useLiveQuery;
+const justUseCallback = useCallback;

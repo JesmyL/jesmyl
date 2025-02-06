@@ -9,7 +9,7 @@ export const ComListQrShare = ({ onClose, coms }: { onClose: (isOpen: false) => 
     <QrCodeFullScreen
       onClose={onClose}
       text={comwListLink}
-      copyText={`${comwListLink}\n\n${coms.map(com => `${com.number}. ${com.name}`).join('\n')}`}
+      copyText={`${comwListLink}\n\n${coms.map(com => com.name).join('\n')}`}
     />
   );
 };

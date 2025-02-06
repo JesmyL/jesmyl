@@ -1,7 +1,6 @@
-import { mylib, MyLib } from 'front/utils';
+import { MyLib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LocalSokiAuth } from 'shared/api';
 import { itNNil } from 'shared/utils';
 import styled from 'styled-components';
 import TheButton from '../../../../complect/Button';
@@ -9,14 +8,11 @@ import JesmylLogo from '../../../../complect/jesmyl-logo/JesmylLogo';
 import KeyboardInput from '../../../../complect/keyboard/KeyboardInput';
 import LoadIndicatedContent from '../../../../complect/load-indicated-content/LoadIndicatedContent';
 import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
-import { soki } from '../../../../soki';
-import { AuthMode, ClientAuthorizationData, ClientRegisterData, ServerAuthorizeInSystem } from '../../Index.model';
-import { removePullRequisites, useSetAuth } from '../../molecules';
+import { AuthMode } from '../../Index.model';
 import useConnectionState from '../../useConnectionState';
 import { useAuthErrors } from './atoms';
 
 export default function IndexLoginAuth() {
-  const setAuth = useSetAuth();
   const [nick, setNick] = useState('');
   const [passw, setPassword] = useState('');
   const [rpassw, setRPassword] = useState('');
@@ -28,44 +24,45 @@ export default function IndexLoginAuth() {
   const navigate = useNavigate();
   const error = (message: string | nil) => message && <div className="login-error-message">{message}</div>;
 
-  const sendData = <AuthType extends keyof ServerAuthorizeInSystem>(
-    type: AuthType,
-    data: ServerAuthorizeInSystem[typeof type],
-  ) => {
-    return soki.send(
-      {
-        authorization: {
-          type,
-          value: data as never,
-        },
-      },
-      'index',
-    );
-  };
+  // const sendData = <AuthType extends keyof ServerAuthorizeInSystem>(
+  //   type: AuthType,
+  //   data: ServerAuthorizeInSystem[typeof type],
+  // ) => {
+  //   return soki.send(
+  //     {
+  //       authorization: {
+  //         type,
+  //         value: data as never,
+  //       },
+  //     },
+  //     'index',
+  //   );
+  // };
 
-  const loginInSystem = (state: ClientAuthorizationData) => {
-    return sendData('login', {
-      login: mylib.md5(state.nick.trim()),
-      passw: mylib.md5(state.passw),
-    });
-  };
+  // const loginInSystem = (state: ClientAuthorizationData) => {
+  //   return sendData('login', {
+  //     login: mylib.md5(state.nick.trim()) as never,
+  //     passw: mylib.md5(state.passw),
+  //   });
+  // };
 
-  const setAuthData = async (auth: LocalSokiAuth) => {
-    setAuth(auth);
-    soki.sendConnectionHandshake();
-  };
+  // const setAuthData = async (auth: LocalSokiAuth) => {
+  //   setAuth(auth);
+  //   soki.sendConnectionHandshake();
+  //   soki.onUserAuthorize.invoke(true);
+  // };
 
-  const registerInSystem = (state: OmitOwn<ClientRegisterData, 'login'>) => {
-    const nick = state.nick.trim();
+  // const registerInSystem = (state: OmitOwn<ClientRegisterData, 'login'>) => {
+  //   const nick = state.nick.trim();
 
-    return sendData('register', {
-      login: mylib.md5(nick),
-      passw: mylib.md5(state.passw),
-      fio: nick,
-      nick,
-      rpassw: mylib.md5(state.rpassw),
-    });
-  };
+  //   return sendData('register', {
+  //     login: mylib.md5(nick) as never,
+  //     passw: mylib.md5(state.passw),
+  //     fio: nick,
+  //     nick,
+  //     rpassw: mylib.md5(state.rpassw),
+  //   });
+  // };
 
   useEffect(() => {
     setErrors({
@@ -147,33 +144,32 @@ export default function IndexLoginAuth() {
             <TheButton
               className="send-button pointer"
               disabled={MyLib.values(errors).filter(itNNil).length > 0}
-              onClick={async () => {
-                if (mode === 'check') return;
-                setIsInProscess(0);
-                (mode === 'login'
-                  ? loginInSystem({ nick, passw })
-                  : registerInSystem({ nick, passw, rpassw, fio: nick })
-                ).on(
-                  ({ authorization }) => {
-                    if (authorization && authorization.ok !== false) {
-                      setIsInProscess(1);
-                      removePullRequisites();
-                      setAuthData(authorization.value);
-                    } else {
-                      setErrors({
-                        login: authorization?.value || 'Неизвестная ошибка',
-                      });
-                      setIsInProscess(2);
-                    }
-                  },
-                  errorMessage => {
-                    setErrors({
-                      login: errorMessage,
-                    });
-                    setIsInProscess(2);
-                  },
-                );
-              }}
+              // onClick={async () => {
+              //   if (mode === 'check') return;
+              //   setIsInProscess(0);
+              //   (mode === 'login'
+              //     ? loginInSystem({ nick, passw })
+              //     : registerInSystem({ nick, passw, rpassw, fio: nick })
+              //   ).on(
+              //     ({ authorization }) => {
+              //       if (authorization && authorization.ok !== false) {
+              //         setIsInProscess(1);
+              //         setAuthData(authorization.value);
+              //       } else {
+              //         setErrors({
+              //           login: authorization?.value || 'Неизвестная ошибка',
+              //         });
+              //         setIsInProscess(2);
+              //       }
+              //     },
+              //     errorMessage => {
+              //       setErrors({
+              //         login: errorMessage,
+              //       });
+              //       setIsInProscess(2);
+              //     },
+              //   );
+              // }}
             >
               {mode === 'register' ? 'Создать профиль' : 'Войти'}
             </TheButton>

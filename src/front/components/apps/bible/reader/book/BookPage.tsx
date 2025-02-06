@@ -6,7 +6,7 @@ import { useBibleSingleAddressSetter } from '../../translations/lists/atoms';
 import BibleReaderChapter from './complect/Chapter';
 
 interface Props {
-  chapterList: { __html: string }[][] | und;
+  chapterList: (string[] | und)[] | nil;
   currentBooki: BibleBooki;
   currentChapteri?: BibleChapteri;
   currentVersei?: BibleVersei;
@@ -64,11 +64,13 @@ export default function BibleReaderBook({
       <List ref={listRef}>
         {chapterList?.map((chapterList, chapteri) => {
           return (
-            <BibleReaderChapter
-              key={chapteri}
-              chapteri={chapteri}
-              list={chapterList}
-            />
+            chapterList && (
+              <BibleReaderChapter
+                key={chapteri}
+                chapteri={chapteri}
+                list={chapterList}
+              />
+            )
           );
         })}
         <BottomBox />

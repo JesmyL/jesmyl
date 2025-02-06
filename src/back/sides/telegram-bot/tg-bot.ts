@@ -1,4 +1,3 @@
-import { SokiAutherUtils } from 'back/complect/soki/utils';
 import TgBot, {
   ChatMember,
   InlineKeyboardButton,
@@ -6,7 +5,8 @@ import TgBot, {
   SendMessageOptions,
   User,
 } from 'node-telegram-bot-api';
-import { makeRegExp } from 'shared/utils';
+import { SokiAuthLogin } from 'shared/api';
+import { emptyFunc, makeRegExp, smylib } from 'shared/utils';
 import { Stream } from 'stream';
 import { TgLogger } from './log/log-bot';
 import { JTgBotCallbackQuery, JTgBotChatMessageCallback } from './model';
@@ -94,7 +94,7 @@ export class JesmylTelegramBot {
     return (id: number, addTPrefix?: boolean) => (addTPrefix === false ? '' : 't:') + ('' + id).replace(reg, callback);
   })();
 
-  static makeLoginFromId = SokiAutherUtils.makeLoginFromId;
+  static makeLoginFromId = (id: number): SokiAuthLogin => ('T' + smylib.md5('' + id).slice(1)) as never;
 
   makeSendMessageOptions(keyboard: (InlineKeyboardButton & { cb: JTgBotCallbackQuery })[][], keyPrefix?: string) {
     return this._bot.makeOptionsKeyboard(this, keyboard, false, keyPrefix);
@@ -171,7 +171,7 @@ export class JesmylTelegramBot {
       return this.admins;
     };
 
-    return new Promise<Record<number, ChatMember>>((res, rej) => {
+    return new Promise<PRecord<number, ChatMember>>((res, rej) => {
       if (this.admins[0] === undefined) {
         res(this.admins);
         return;
@@ -197,7 +197,7 @@ export class JesmylTelegramBot {
   }
 
   getUserData(id: number) {
-    return this._bot.bot.getChatMember(this.chatId, id).catch(() => {});
+    return this._bot.bot.getChatMember(this.chatId, id).catch(emptyFunc);
   }
 
   async tryIsUserMember(id: number) {

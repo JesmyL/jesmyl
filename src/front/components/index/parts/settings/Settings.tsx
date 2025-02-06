@@ -1,11 +1,12 @@
 import { MyLib, mylib } from 'front/utils';
-import React, { Suspense, useEffect, useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import { itIt } from 'shared/utils';
 import { AppName, appNames } from '../../../../app/App.model';
 import { routingApps } from '../../../../app/routing-apps';
 import { useAtomValue } from '../../../../complect/atoms';
 import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
+import { FontFamilySelector } from '../../../../complect/configurators/selectors/FontFamilySelector';
 import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
 import IconButton from '../../../../complect/the-icon/IconButton';
 import IconCheckbox from '../../../../complect/the-icon/IconCheckbox';
@@ -16,11 +17,9 @@ import { IconPaintBoardStrokeRounded } from '../../../../complect/the-icon/icons
 import { IconRssErrorStrokeRounded } from '../../../../complect/the-icon/icons/rss-error';
 import { IconSourceCodeCircleStrokeRounded } from '../../../../complect/the-icon/icons/source-code-circle';
 import { IconTextStrokeRounded } from '../../../../complect/the-icon/icons/text';
-import { soki } from '../../../../soki';
+import { statisticAtom, useAppFontFamily, useAuth } from '../../atoms';
 import { indexSimpleValIsPlayAnimations, indexSimpleValIsUseNativeKeyboard } from '../../complect/index.simpleValues';
-import { indexMolecule, useAppFontFamilyAtom, useAuth } from '../../molecules';
 import useConnectionState from '../../useConnectionState';
-import { FontFamilySelector } from '../actions/files/complect/FontFamilySelector';
 import { Visitor } from './Visitor';
 import { Visits } from './Visits';
 
@@ -40,22 +39,13 @@ const styles = {
 };
 
 const visitorsDeclension = (num: number) => `${num} ${mylib.declension(num, 'челикс', 'челикса', 'челиксов')}`;
-const statisticAtom = indexMolecule.select(s => s.statistic);
 
 export default function IndexSettings() {
   const auth = useAuth();
   const statistic = useAtomValue(statisticAtom);
   const [expands, setExpands] = useState<(AppName | '')[]>([]);
-  const [appFontFamily, setAppFontFamily] = useAppFontFamilyAtom();
+  const [appFontFamily, setAppFontFamily] = useAppFontFamily();
   const connectionNode = useConnectionState('margin-gap');
-  // const [isShowSecretChatsInBottom, setIsShowSecretChatsInBottom] = useAtom(isSecretChatsShowInBottomMenuAtom);
-
-  useEffect(() => {
-    soki.send({ subscribe: 'statistic' }, 'index');
-    return () => {
-      soki.send({ unsubscribe: 'statistic' }, 'index');
-    };
-  }, []);
 
   const settingsList = [
     auth.level === 100 && (
@@ -66,16 +56,6 @@ export default function IndexSettings() {
         />
       </Link>
     ),
-    // <BrutalItem
-    //   icon={<SecretChatsIcon />}
-    //   title="Секретные чаты в нижнем меню"
-    //   box={
-    //     <IconCheckbox
-    //       checked={isShowSecretChatsInBottom}
-    //       onChange={setIsShowSecretChatsInBottom}
-    //     />
-    //   }
-    // />,
     <BrutalItem
       icon={<IconKeyboardStrokeRounded />}
       title="Фирменная клавиатура"

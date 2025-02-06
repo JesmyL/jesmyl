@@ -1,6 +1,5 @@
 import { LinkAppActionFabric } from 'front/complect/link-app-actions';
 import { schLinkAction } from 'front/complect/schedule-widget/links';
-import { listenSokiEventsForIndex } from 'front/components/index/complect/listenSokiEventsForIndex';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './App.scss';
@@ -17,8 +16,6 @@ function App() {
     </>
   );
 }
-
-listenSokiEventsForIndex();
 
 const FirstNaver = ({ onSet }: { onSet: (is: false) => void }) => {
   const navigate = useNavigate();

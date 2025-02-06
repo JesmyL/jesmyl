@@ -1,33 +1,25 @@
-import { BackgroundNameType } from '../../../../index/parts/actions/files/complect/BackgroundSelector';
-import { ScreenTranslateConfigTypeDisplay } from './Display';
-import { ScreenTranslateCurrentConfigTypeFontStyle } from './FontStyle';
-import { ScreenTranslateConfigTypeFontWeight } from './FontWeight';
-import { ScreenTranslateCurrentConfigTypeTextAlign } from './TextAlign';
+import { ScreenTranslateConfigTypeDisplay } from '../../../../../complect/configurators/Display';
+import { FontStyleType } from '../../../../../complect/configurators/FontStyle';
+import { FontWeightType } from '../../../../../complect/configurators/FontWeight';
+import { TextAlignConfigurator } from '../../../../../complect/configurators/TextAlign';
 
-export type ScreenTranslationPartialConfigProps<Config> = {
-  config: Config;
-  updateConfig: (config: Partial<Config>) => void;
-  title?: string;
-};
-
-export interface ScreenTranslationBackgroundConfigs {
-  backgroundInteractive?: BackgroundNameType;
-  background: string;
-  isWithBackground: boolean;
-  backgroundColor: string;
-}
+// export type ScreenTranslationPartialConfigProps<Config> = {
+//   config: Config;
+//   updateConfig: (config: Partial<Config>) => void;
+//   title?: string;
+// };
 
 export interface ScreenTranslationSimpleTextConfig {
   color: string;
   display?: ScreenTranslateConfigTypeDisplay;
   opacity?: number;
-  fontStyle?: ScreenTranslateCurrentConfigTypeFontStyle;
+  fontStyle?: FontStyleType;
 }
 
 export interface ScreenTranslationTextConfig extends ScreenTranslationSimpleTextConfig {
   fontFamily?: string;
-  fontWeight: ScreenTranslateConfigTypeFontWeight;
-  textAlign: ScreenTranslateCurrentConfigTypeTextAlign;
+  fontWeight: FontWeightType;
+  textAlign: TextAlignConfigurator;
 }
 
 export interface ScreenTranslationPositionConfig {

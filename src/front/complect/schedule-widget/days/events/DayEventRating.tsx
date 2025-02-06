@@ -1,26 +1,25 @@
+import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
 import { MyLib } from 'front/utils';
 import { ReactNode } from 'react';
-import { IScheduleWidgetDayEvent } from 'shared/api';
-import { itNNull } from 'shared/utils';
+import { IScheduleWidgetDayEvent, ScheduleDayEventScopeProps } from 'shared/api';
+import { emptyAsyncFunc, itNNull } from 'shared/utils';
 import styled from 'styled-components';
 import { IconFavouriteStrokeRounded } from '../../../../complect/the-icon/icons/favourite';
 import { IconHeartbreakStrokeRounded } from '../../../../complect/the-icon/icons/heartbreak';
 import { IconHelpCircleStrokeRounded } from '../../../../complect/the-icon/icons/help-circle';
 import { IconMessage01StrokeRounded } from '../../../../complect/the-icon/icons/message-01';
 import useIsExpand from '../../../expand/useIsExpand';
-import { StrongComponentProps } from '../../../strong-control/Strong.model';
-import StrongEvaButton from '../../../strong-control/StrongEvaButton';
 import StrongEditableField from '../../../strong-control/field/StrongEditableField';
-import { takeStrongScopeMaker, useScheduleWidgetRightsContext } from '../../useScheduleWidget';
+import { schDayEventsSokiInvocatorClient } from '../../invocators/invocators.methods';
+import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 
-const ratePoints = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5];
+const ratePoints = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5] as const;
 const defRate: [number, string] = [0, ''];
 
-export default function ScheduleWidgetDayEventRating(
-  props: StrongComponentProps & {
-    event: IScheduleWidgetDayEvent;
-  },
-) {
+export default function ScheduleWidgetDayEventRating(props: {
+  event: IScheduleWidgetDayEvent;
+  dayEventScopeProps: ScheduleDayEventScopeProps;
+}) {
   const rights = useScheduleWidgetRightsContext();
 
   const ratingSum =
@@ -36,17 +35,18 @@ export default function ScheduleWidgetDayEventRating(
   );
   const [otherRatesTitleNode, isOtherRatesTitleExpand] = useIsExpand(false, <>Другие оценки</>);
 
+  const myUser = rights.myUser;
+
+  if (myUser == null) return;
+
   let myRate = defRate;
-  let rateScope = '';
   let ratingNode = null;
 
   if (isExpand) {
-    myRate = (rights.myUser && props.event.rate?.[rights.myUser?.mi]) ?? defRate;
-    if (rights.myUser) rateScope = takeStrongScopeMaker(props.scope, ' userMi/', rights.myUser.mi);
+    myRate = props.event.rate?.[myUser.mi] ?? defRate;
 
-    if (rights.isCanTotalRedact && rights.myUser) {
+    if (rights.isCanTotalRedact) {
       let usersRateNode: ReactNode[] | null = null;
-      const myUser = rights.myUser;
       const rates = props.event.rate;
 
       if (isOtherRatesTitleExpand && rates) {
@@ -71,10 +71,9 @@ export default function ScheduleWidgetDayEventRating(
                 </div>
                 {rate[1] && (
                   <StrongEditableField
-                    scope={rateScope}
-                    fieldName="description"
                     value={rate[1]}
                     multiline
+                    onSend={emptyAsyncFunc}
                   />
                 )}
               </div>
@@ -108,13 +107,8 @@ export default function ScheduleWidgetDayEventRating(
                 ratePoint === 0 ? myRate[0] === 0 : ratePoint < 0 ? myRate[0] <= ratePoint : myRate[0] >= ratePoint;
 
               return (
-                <StrongEvaButton
+                <EvaSendButton
                   key={ratePoint}
-                  scope={rateScope}
-                  fieldName="rate"
-                  isCanSend={ratePoint !== myRate[0]}
-                  fieldValue={ratePoint}
-                  cud="U"
                   className={
                     (ratePoint < 0 ? 'color--ko' : ratePoint > 0 ? 'color--ok' : 'color--3') +
                     (isFill ? '' : ' fade-05')
@@ -126,6 +120,16 @@ export default function ScheduleWidgetDayEventRating(
                         ? IconHelpCircleStrokeRounded
                         : IconFavouriteStrokeRounded
                   }
+                  onSend={async () =>
+                    ratePoint !== myRate[0] &&
+                    schDayEventsSokiInvocatorClient.setRatePoint(
+                      null,
+                      props.dayEventScopeProps,
+                      myUser.mi,
+                      ratePoint,
+                      myUser.fio ?? myUser.nick ?? '??',
+                    )
+                  }
                 />
               );
             })}
@@ -136,8 +140,6 @@ export default function ScheduleWidgetDayEventRating(
             </StyledReitingDisplay>
           </div>
           <StrongEditableField
-            scope={rateScope}
-            fieldName="description"
             Icon={IconMessage01StrokeRounded}
             value={myRate[1]}
             title="Комментарий"
@@ -145,6 +147,15 @@ export default function ScheduleWidgetDayEventRating(
             isRedact
             setSelfRedact
             multiline
+            onSend={value =>
+              schDayEventsSokiInvocatorClient.setRateComment(
+                null,
+                props.dayEventScopeProps,
+                myUser.mi,
+                value,
+                myUser.fio ?? myUser.nick ?? '??',
+              )
+            }
           />
           {ratingNode}
         </div>

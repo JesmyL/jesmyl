@@ -1,6 +1,9 @@
 import Correct from './Correct';
 import { ICorrect, ICorrectsBoxes } from './CorrectsBox.model';
 
+type ArrayMapCb<T> = (box: T, boxi: number, boxa: T[]) => T;
+type ArrayCb<T> = (box: T, boxi: number, boxa: T[]) => unknown;
+
 export class CorrectsBox {
   errors: Correct[] | null;
   warnings: Correct[] | null;

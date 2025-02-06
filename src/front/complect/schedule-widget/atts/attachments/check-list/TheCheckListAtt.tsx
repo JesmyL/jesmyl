@@ -1,58 +1,77 @@
-import StrongEditableField from '../../../../strong-control/field/StrongEditableField';
-import StrongEvaButton from '../../../../strong-control/StrongEvaButton';
+import { schDayEventsSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
+import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import { ScheduleDayEventAttachmentScopeProps } from 'shared/api';
 import { IconCheckmarkSquare02StrokeRounded } from '../../../../../complect/the-icon/icons/checkmark-square-02';
 import { IconPlusSignStrokeRounded } from '../../../../../complect/the-icon/icons/plus-sign';
 import { IconSquareStrokeRounded } from '../../../../../complect/the-icon/icons/square';
-import { takeStrongScopeMaker } from '../../../useScheduleWidget';
+import StrongEditableField from '../../../../strong-control/field/StrongEditableField';
 import { ScheduleChListAtt } from './checkListAtt';
 
 export default function ScheduleCheckListAtt({
   value,
-  scope,
   isRedact,
+  scheduleDayEventAttachmentScopeProps,
 }: {
   value: ScheduleChListAtt;
-  scope: string;
   isRedact: boolean;
+  scheduleDayEventAttachmentScopeProps: ScheduleDayEventAttachmentScopeProps;
 }) {
-  const attScope = scope + ' checkList';
-
   return (
     <>
-      {value.list.map(([isDone, title], itemMi) => {
+      {value.list.map(([isDone, title, itemMi]) => {
         if (!isRedact && !title) return null;
-        const itemScope = takeStrongScopeMaker(attScope, ' itemMi/', itemMi);
+
         return (
           <div
             key={itemMi}
             className="flex flex-gap full-width margin-big-gap-b"
           >
-            <StrongEvaButton
-              scope={itemScope}
-              fieldName="check"
-              fieldValue={isDone ? 0 : 1}
+            <EvaSendButton
               className={'self-start relative z-index:15 color--3 ' + (isDone ? 'fade-05' : '')}
-              cud="U"
-              isCanSend={!!scope}
               Icon={isDone ? IconCheckmarkSquare02StrokeRounded : IconSquareStrokeRounded}
+              onSend={() =>
+                schDayEventsSokiInvocatorClient.updateCheckListAttachmentValue(
+                  null,
+                  scheduleDayEventAttachmentScopeProps,
+                  itemMi,
+                  isDone ? 0 : 1,
+                  null,
+                )
+              }
             />
             <StrongEditableField
-              scope={itemScope}
-              fieldName="title"
               className="full-width"
               value={title}
               isRedact={isRedact}
               textClassName={'mood-for-2 relative z-index:5 color--3 ' + (isDone ? 'fade-05' : '')}
+              onSend={async value =>
+                schDayEventsSokiInvocatorClient.updateCheckListAttachmentValue(
+                  null,
+                  scheduleDayEventAttachmentScopeProps,
+                  itemMi,
+                  null,
+                  value,
+                )
+              }
             />
           </div>
         );
       })}
-      {isRedact && !value.list.some(li => !li[1]) && (
-        <StrongEvaButton
-          scope={attScope}
-          fieldName=""
+      {isRedact && (
+        <EvaSendButton
           Icon={IconPlusSignStrokeRounded}
           prefix="Пункт"
+          disabled={value.list.some(li => !li[1])}
+          disabledReason="Есть пустые пункты"
+          onSend={() =>
+            schDayEventsSokiInvocatorClient.updateCheckListAttachmentValue(
+              null,
+              scheduleDayEventAttachmentScopeProps,
+              null,
+              0,
+              '',
+            )
+          }
         />
       )}
     </>

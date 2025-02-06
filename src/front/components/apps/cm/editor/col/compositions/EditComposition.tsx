@@ -1,38 +1,73 @@
-import { useState } from 'react';
+import { useAtomValue } from 'front/complect/atoms';
+import { hookEffectPipe, setTimeoutPipe } from 'front/complect/hookEffectPipe';
+import { mylib } from 'front/utils';
+import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import { useCheckIsAccessed } from '../../../../../../complect/exer/hooks/check-is-accessed';
-import { useExerExec } from '../../../../../../complect/exer/hooks/useExer';
 import IconButton from '../../../../../../complect/the-icon/IconButton';
+import { IconMapsRefreshStrokeRounded } from '../../../../../../complect/the-icon/icons/maps-refresh';
 import {
   IconMusicNote03SolidRounded,
   IconMusicNote03StrokeRounded,
 } from '../../../../../../complect/the-icon/icons/music-note-03';
-import { useAuth } from '../../../../../index/molecules';
 import useConnectionState from '../../../../../index/useConnectionState';
+import { CmComNumber } from '../../../col/com/complect/ComNumber';
 import ComPlayer from '../../../col/com/player/ComPlayer';
+import { cmComClientInvocatorMethods } from '../../cm-editor-invocator.methods';
 import { editCompositionNavs } from '../../editorNav';
 import PhaseCmEditorContainer from '../../phase-editor-container/PhaseCmEditorContainer';
-import { useEditableCcom } from './useEditableCcom';
+import { removedCompositionsAtom } from './atoms';
+import { useCcomw, useEditableCcom } from './useEditableCcom';
 
 export default function EditComposition() {
   const ccom = useEditableCcom();
-  const exec = useExerExec();
+  const ccomw = useCcomw();
+  const removedComs = useAtomValue(removedCompositionsAtom);
   const [isOpenPlayer, setIsOpenPlayer] = useState(false);
-  const auth = useAuth();
-  const checkIsAccessed = useCheckIsAccessed(auth);
+  // const auth = useAuth();
   const connectionNode = useConnectionState('margin-gap');
   const navigate = useNavigate();
 
+  useEffect(() => {
+    return hookEffectPipe()
+      .pipe(
+        setTimeoutPipe(() => {
+          if (!ccom && (mylib.isNaN(ccomw) || removedComs[ccomw] == null)) navigate('..');
+        }, 500),
+      )
+      .effect();
+  }, [ccom, ccomw, navigate, removedComs]);
+
   if (!ccom) {
-    setTimeout(navigate, 0, '..');
-    return null;
+    if (mylib.isNaN(ccomw) || removedComs[ccomw] == null) return null;
+
+    return (
+      <PhaseCmEditorContainer
+        className="edit-composition"
+        headTitle={removedComs[ccomw]}
+        content={
+          <div className="flex column">
+            <h2 className="color--ko">Песня удалена</h2>
+            <IconButton
+              Icon={IconMapsRefreshStrokeRounded}
+              postfix="Восстановить"
+              className="color--ok"
+              onClick={() => cmComClientInvocatorMethods.bringBackToLife(null, ccomw)}
+            />
+          </div>
+        }
+      />
+    );
   }
 
   return (
     <StyledContainer
       className="edit-composition"
-      headTitle={`#${ccom.number} ${ccom.initialName || ccom.name}`}
+      headTitle={
+        <>
+          #{<CmComNumber comw={ccom.wid} />} {ccom.initialName || ccom.name}
+        </>
+      }
       rememberProps={['comw']}
       head={
         <>
@@ -45,54 +80,39 @@ export default function EditComposition() {
         </>
       }
       content={
-        ccom.col.removed ? (
-          <div className="flex column">
-            <h2 className="error-message">Песня удалена</h2>
-            <div
-              className="pointer"
-              onClick={() => exec(ccom.comeBack())}
-            >
-              Восстановить
-            </div>
-          </div>
-        ) : (
-          <>
-            <div className="flex around sticky nav-panel">
-              {editCompositionNavs.map(({ data: { iconPack, iconText } = {}, phase: [phase], accessLevel }) => {
-                if (accessLevel != null && !checkIsAccessed(accessLevel)) return null;
-                return (
-                  <NavLink
-                    key={phase}
-                    to={phase}
-                    className="pointer"
-                    end
-                  >
-                    {({ isActive }) =>
-                      iconPack ? (
-                        isActive ? (
-                          <iconPack.StrokeRounded className="color--7" />
-                        ) : (
-                          <iconPack.BulkRounded />
-                        )
+        <>
+          <div className="flex around sticky nav-panel">
+            {editCompositionNavs.map(({ data: { iconPack } = {}, phase: [phase] }) => {
+              return (
+                <NavLink
+                  key={phase}
+                  to={phase}
+                  className="pointer"
+                  end
+                >
+                  {({ isActive }) =>
+                    iconPack ? (
+                      isActive ? (
+                        <iconPack.StrokeRounded className="color--7" />
                       ) : (
-                        iconText
+                        <iconPack.BulkRounded />
                       )
-                    }
-                  </NavLink>
-                );
-              })}
+                    ) : null
+                  }
+                </NavLink>
+              );
+            })}
+          </div>
+          {isOpenPlayer && ccom.audio && (
+            <div className="sticky com-player">
+              <ComPlayer
+                src={ccom.audio}
+                split
+              />
             </div>
-            {isOpenPlayer && ccom.audio && (
-              <div className="sticky com-player">
-                <ComPlayer
-                  src={ccom.audio}
-                  split
-                />
-              </div>
-            )}
-            <Outlet />
-          </>
-        )
+          )}
+          <Outlet />
+        </>
       }
     />
   );

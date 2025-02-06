@@ -1,25 +1,33 @@
+import { useConfirm } from 'front/complect/modal/confirm/useConfirm';
+import { StyledLoadingSpinner } from 'front/complect/the-icon/IconLoading';
+import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
+import { useState } from 'react';
 import { BottomPopupItem } from '../../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
-import { useExerExec } from '../../../../../../../../../complect/exer/hooks/useExer';
 import { IconViewStrokeRounded } from '../../../../../../../../../complect/the-icon/icons/view';
 import { IconViewOffStrokeRounded } from '../../../../../../../../../complect/the-icon/icons/view-off';
 import { OrdersRedactorOrderToolsProps } from '../OrdersRedactorOrderTools';
 
-export const OrdersRedactorOrderToolsVisibility = ({ onClose, ord, blockHeader }: OrdersRedactorOrderToolsProps) => {
-  const exec = useExerExec();
+export const OrdersRedactorOrderToolsVisibility = ({ onClose, ord }: OrdersRedactorOrderToolsProps) => {
+  const [confirmNode, confirm] = useConfirm();
+  const [isLoading, setIsLoading] = useState(false);
+  const Icon = isLoading ? StyledLoadingSpinner : ord.isVisible ? IconViewOffStrokeRounded : IconViewStrokeRounded;
 
   return (
-    <BottomPopupItem
-      Icon={ord.isVisible ? IconViewOffStrokeRounded : IconViewStrokeRounded}
-      title={ord.isVisible ? 'Скрыть блок' : 'Показать блок'}
-      onClick={async () => {
-        onClose(false);
-        exec(
-          ord.setField('v', ord.antiIsVisible, {
-            b: blockHeader,
-            def: 1,
-          }),
-        );
-      }}
-    />
+    <>
+      {confirmNode}
+      <BottomPopupItem
+        Icon={Icon}
+        title={ord.isVisible ? 'Скрыть блок' : 'Показать блок'}
+        onClick={async () => {
+          if (await confirm(`Скрыть блок ${ord.me.header()}?`)) {
+            setIsLoading(true);
+            await cmComOrderClientInvocatorMethods.toggleVisibility(null, ord.wid, ord.me.header(), ord.com.wid);
+            setIsLoading(false);
+          }
+
+          onClose(false);
+        }}
+      />
+    </>
   );
 };

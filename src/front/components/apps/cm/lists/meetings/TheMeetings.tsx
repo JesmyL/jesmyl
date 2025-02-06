@@ -1,58 +1,43 @@
+import { useLiveQuery } from 'dexie-react-hooks';
+import { indexIDB } from 'front/components/index/db/index-idb';
 import { Route, Routes } from 'react-router-dom';
-import { useBottomPopup } from '../../../../../complect/absolute-popup/bottom-popup/useBottomPopup';
-import useFullContent from '../../../../../complect/fullscreen-content/useFullContent';
 import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
-import IconButton from '../../../../../complect/the-icon/IconButton';
-import { IconLeftToRightListBulletStrokeRounded } from '../../../../../complect/the-icon/icons/left-to-right-list-bullet';
-import MeetingEventExpandList from './MeetingEventExpandList';
-import MeetingsInner from './MeetingsInner';
+import { MeetingSchPackFace } from './MeetingSchPackFace';
 import TheMeetingsEvent from './TheMeetingsEvent';
-import { useMeetings } from './useMeetings';
 
-export default function TheMeetings() {
-  const { meetings } = useMeetings();
-  const [fullNode, openFullContent] = useFullContent(() => <MeetingEventExpandList />);
-
-  const [popupNode, openPopup] = useBottomPopup(
-    (isOpen, close) =>
-      isOpen && (
-        <IconButton
-          Icon={IconLeftToRightListBulletStrokeRounded}
-          postfix="Посмотреть заголовки"
-          onClick={() => {
-            openFullContent();
-            close();
-          }}
-        />
-      ),
-  );
-
-  if (!meetings) return null;
-
+export const TheMeetings = () => {
   return (
     <Routes>
       <Route
         index
-        element={
-          <PhaseContainerConfigurer
-            className="meetings-container"
-            headTitle="События"
-            onMoreClick={openPopup}
-            content={
-              <>
-                {popupNode}
-                {fullNode}
-                <MeetingsInner meetings={meetings} />
-              </>
-            }
-          />
-        }
+        element={<Page />}
       />
 
       <Route
-        path=":eventw/*"
+        path=":schw/:dayi/:eventMi/*"
         element={<TheMeetingsEvent />}
       />
     </Routes>
   );
-}
+};
+
+const Page = () => {
+  const schedules = useLiveQuery(() => indexIDB.db.schs.toArray());
+
+  return (
+    <PhaseContainerConfigurer
+      className="meetings-container"
+      headTitle="События"
+      content={
+        <>
+          {schedules?.map(schedule => (
+            <MeetingSchPackFace
+              key={schedule.w}
+              schedule={schedule}
+            />
+          ))}
+        </>
+      }
+    />
+  );
+};

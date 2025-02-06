@@ -1,12 +1,12 @@
 import { appAttsStore } from 'front/components/complect/appScheduleAttrsStorage';
-import { MyLib, mylib } from 'front/utils';
+import { indexBasicsSokiInvocatorClient } from 'front/components/index/db/invocators/schedules/fresh-invocator.methods';
+import { MyLib } from 'front/utils';
 import React, { useEffect } from 'react';
 import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import { ScheduleWidgetAppAttBasic } from 'shared/api';
 import styled from 'styled-components';
 import { useInitSoki } from '../../../app/useInitSoki';
-import { removePullRequisites, useAuthState } from '../../../components/index/molecules';
-import { soki } from '../../../soki';
+import { useAuth } from '../../../components/index/atoms';
 import { TelegramWebAppApiOr } from '../../tg-app/getTgApi';
 import { TelegramWebApp, TelegramWebAppInitData } from '../../tg-app/model';
 import { TheIconLoading } from '../../the-icon/IconLoading';
@@ -66,7 +66,7 @@ type Props = {
 };
 
 const Child = ({ api, initData }: Props) => {
-  const [auth, setAuth] = useAuthState();
+  const auth = useAuth();
   const navigate = useNavigate();
   const params = useParams();
   const { schedule, error, isLoading } = useGetScheduleOrPull(initData.chat_instance);
@@ -82,17 +82,10 @@ const Child = ({ api, initData }: Props) => {
     return hookEffectLine()
       .setTimeout(() => {
         if (auth.level) return;
-
-        soki.send({ tgNativeAuthorization: initData.user }, 'index').on(({ tgAuthorization }) => {
-          if (!tgAuthorization || !tgAuthorization.ok || mylib.isStr(tgAuthorization.value)) return;
-
-          setAuth(tgAuthorization.value);
-          removePullRequisites();
-          soki.sendConnectionHandshake();
-        });
+        indexBasicsSokiInvocatorClient.authMeByTelegramInScheduleDay(null, initData.user);
       }, 300)
       .effect();
-  }, [auth.level, initData.user, setAuth]);
+  }, [auth.level, initData.user]);
 
   return (
     <StyledBox>

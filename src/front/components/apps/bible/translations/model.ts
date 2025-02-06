@@ -1,11 +1,11 @@
+import { BackgroundConfigProps } from 'front/complect/configurators/model';
 import {
-  ScreenTranslationBackgroundConfigs,
   ScreenTranslationPositionConfig,
   ScreenTranslationSimpleTextConfig,
   ScreenTranslationTextConfig,
 } from '../../+complect/translations/complect/model';
 
-export interface BibleTranslationScreenConfig extends ScreenTranslationBackgroundConfigs, ScreenTranslationTextConfig {
+export interface BibleTranslationScreenConfig extends BackgroundConfigProps, ScreenTranslationTextConfig {
   addressPanel: ScreenTranslationPositionConfig;
 
   screen: ScreenTranslationPositionConfig;
@@ -15,7 +15,7 @@ export interface BibleTranslationScreenConfig extends ScreenTranslationBackgroun
 
   address: {
     isOnBottom: boolean;
-  } & ScreenTranslationBackgroundConfigs &
+  } & BackgroundConfigProps &
     ScreenTranslationPositionConfig &
     ScreenTranslationTextConfig;
 }

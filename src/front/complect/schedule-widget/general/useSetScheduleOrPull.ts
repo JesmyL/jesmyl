@@ -2,8 +2,7 @@ import { atom, useAtom } from 'front/complect/atoms';
 import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetWid } from 'shared/api';
-import { useIndexSchedules } from '../../../components/index/molecules';
-import serviceMaster from '../../service/serviceMaster';
+import { useIndexSchedules } from '../../../components/index/atoms';
 
 const scheduleAtom = atom<IScheduleWidget | null>(null);
 
@@ -20,7 +19,7 @@ export const useGetScheduleOrPull = (scheduleInstance: string | IScheduleWidgetW
       ? (sch: IScheduleWidget) => sch.tgChatReqs?.endsWith(scheduleInstance)
       : (sch: IScheduleWidget) => sch.w === scheduleInstance;
 
-    const schedule = schedules.list.find(find);
+    const schedule = schedules?.find(find);
 
     if (schedule !== undefined) {
       setSchedule(schedule);
@@ -33,7 +32,7 @@ export const useGetScheduleOrPull = (scheduleInstance: string | IScheduleWidgetW
         setIsLoading(true);
 
         try {
-          setSchedule(await serviceMaster('index')('takeDaySchedule', scheduleInstance));
+          // setSchedule(await serviceMaster('index')('takeDaySchedule', scheduleInstance));
         } catch (error) {
           setError('' + error);
         }
@@ -41,7 +40,7 @@ export const useGetScheduleOrPull = (scheduleInstance: string | IScheduleWidgetW
         setIsLoading(false);
       }, 600)
       .effect();
-  }, [scheduleInstance, schedules.list, setSchedule]);
+  }, [scheduleInstance, schedules, setSchedule]);
 
   return { schedule, isLoading, error } as const;
 };

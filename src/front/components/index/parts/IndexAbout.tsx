@@ -1,15 +1,13 @@
 import { itIt } from 'shared/utils';
 import { jversion } from 'shared/values';
-import { useAtomValue } from '../../../complect/atoms';
 import QRCode from '../../../complect/qr-code/QRCode';
 import { IconDelete01StrokeRounded } from '../../../complect/the-icon/icons/delete-01';
 import { IconTelegramStrokeRounded } from '../../../complect/the-icon/icons/telegram';
-import { indexMolecule, useIndexValues } from '../molecules';
-
-const appVersionAtom = indexMolecule.select(s => s.appVersion);
+import { useIndexValues } from '../atoms';
+import { indexIDB } from '../db/index-idb';
 
 export default function IndexAbout() {
-  const appVersion = useAtomValue(appVersionAtom);
+  const appVersion = indexIDB.useValue.appVersion();
   const values = useIndexValues();
 
   return (

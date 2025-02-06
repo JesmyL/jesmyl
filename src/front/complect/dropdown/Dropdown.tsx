@@ -33,7 +33,7 @@ export default function Dropdown<Id, Item extends DropdownItem<Id> = DropdownIte
   return (
     <Selector
       className={
-        'dropdown-selector flex between pointer' +
+        'dropdown-selector flex between pointer ' +
         (props.className || '') +
         (isDropped ? ' dropped' : '') +
         (props.disabled ? ' disabled' : '')
@@ -84,7 +84,7 @@ export default function Dropdown<Id, Item extends DropdownItem<Id> = DropdownIte
 
             return (
               <div
-                key={`dropdown-item ${item.id}`}
+                key={`dropdown-item ${JSON.stringify(item.id)}`}
                 className={
                   'list-item ' +
                   (item.disabled ? ' disabled ' : '') +

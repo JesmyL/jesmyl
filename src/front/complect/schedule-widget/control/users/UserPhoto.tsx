@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { indexIDB } from 'front/components/index/db/index-idb';
 import { IScheduleWidgetUser } from 'shared/api';
-import { getScheduleWidgetUserPhotoStorageKey, scheduleWidgetPhotosStorage } from '../../storage';
+import styled from 'styled-components';
+import { getScheduleWidgetUserPhotoStorageKey } from '../../storage';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 
 interface Props {
@@ -13,23 +14,17 @@ interface Props {
 
 export default function ScheduleWidgetUserPhoto({ user, justRenderItOnEmpty, className, or }: Props) {
   const rights = useScheduleWidgetRightsContext();
-  const [src, setSrc] = useState('');
-
-  useEffect(() => {
-    const key = getScheduleWidgetUserPhotoStorageKey(user, rights.schedule);
-
-    (async () => setSrc((await scheduleWidgetPhotosStorage.get(key)) || ''))();
-
-    return scheduleWidgetPhotosStorage.on(key, setSrc, '');
-  }, [rights.schedule, user]);
+  const src = useLiveQuery(() =>
+    indexIDB.db.schedulePhotos.get(getScheduleWidgetUserPhotoStorageKey(user, rights.schedule)),
+  )?.src;
 
   if (justRenderItOnEmpty !== undefined) {
-    return <>{src === '' ? justRenderItOnEmpty : or}</>;
+    return <>{!src ? justRenderItOnEmpty : or}</>;
   }
 
   return (
     <>
-      {src !== '' ? (
+      {src ? (
         <StyledImg
           src={src}
           alt=""

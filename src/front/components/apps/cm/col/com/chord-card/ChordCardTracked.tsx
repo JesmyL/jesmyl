@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { ChordTrack } from './ChordCard.model';
+import { ChordTrack } from '../../../../../../../shared/api/complect/apps/cm/complect/chord-card';
 import './ChordCard.scss';
 
 const stringsCount = 6;

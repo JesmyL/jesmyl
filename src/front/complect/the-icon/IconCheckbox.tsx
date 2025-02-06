@@ -2,11 +2,13 @@ import { ReactNode, useEffect, useState } from 'react';
 import { IconCheckmarkSquare04StrokeRounded } from '../../complect/the-icon/icons/checkmark-square-04';
 import { IconSquareStrokeRounded } from '../../complect/the-icon/icons/square';
 import { JStorageBooleanVal } from '../JSimpleStorage/exports/Boolean';
+import { StyledLoadingSpinner } from './IconLoading';
 import { TheIconType } from './model';
 
 interface Props {
   checked?: boolean;
   onChange?: (is: boolean) => void;
+  onClick?: () => Promise<unknown>;
   disabled?: boolean;
   prefix?: null | ReactNode;
   postfix?: null | ReactNode;
@@ -16,25 +18,42 @@ interface Props {
 }
 
 export default function IconCheckbox(props: Props) {
-  const isClickable = !props.disabled ? true : undefined;
+  const isClickable = !props.disabled;
   const className = `${props.className || ''}${isClickable ? ' pointer' : ''}${props.disabled ? ' disabled' : ''}`;
+  const [isLoading, setIsLoading] = useState(false);
 
-  const renderNode = (Icon: TheIconType) =>
-    props.prefix === undefined && props.postfix === undefined ? (
+  const onClick = isClickable
+    ? props.onClick
+      ? async () => {
+          try {
+            setIsLoading(true);
+            await props.onClick!();
+            props.onChange!(!props.checked);
+            setIsLoading(false);
+          } catch (error) {}
+        }
+      : () => props.onChange!(!props.checked)
+    : undefined;
+
+  const renderNode = (Icon: TheIconType) => {
+    if (isLoading) Icon = StyledLoadingSpinner;
+
+    return props.prefix === undefined && props.postfix === undefined ? (
       <Icon
         className={className}
-        onClick={isClickable && props.onChange && (() => props.onChange!(!props.checked))}
+        onClick={onClick}
       />
     ) : (
       <span
         className={`flex flex-gap ${className || 'flex-max'}`}
-        onClick={isClickable && props.onChange && (() => props.onChange!(!props.checked))}
+        onClick={onClick}
       >
         {props.prefix}
         <Icon />
         {props.postfix}
       </span>
     );
+  };
 
   if (props.simpleValuer !== undefined)
     return (

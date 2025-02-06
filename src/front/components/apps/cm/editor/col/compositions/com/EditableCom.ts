@@ -1,12 +1,11 @@
-import { mylib } from 'front/utils';
-import { IExportableCom } from 'shared/api';
+import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { makeRegExp } from 'shared/utils';
 import { chordDiezEquivalent, gSimpleBemoleChordReg } from '../../../../col/com/Com.complect';
 import { IExportableOrderMe } from '../../../../col/com/order/Order.model';
 import { EditableOrder } from '../complect/orders/EditableOrder';
-import { EditableComCutBlock } from './complect/40-CutBlock';
+import { EditableComParseBlocks } from './complect/31-ParseBlocks';
 
-export class EditableCom extends EditableComCutBlock {
+export class EditableCom extends EditableComParseBlocks {
   orderConstructor(me: IExportableOrderMe) {
     return new EditableOrder(me, this);
   }
@@ -18,62 +17,6 @@ export class EditableCom extends EditableComCutBlock {
     this.col.setExportable('n', value);
   }
 
-  scope(action?: string, uniq?: string | number) {
-    return [this.wid, '.', mylib.typ('[action]', action), ':', [].concat(mylib.def(uniq, ['[uniq]'])).join(',')].join(
-      '',
-    );
-  }
-
-  setField<Fieldn extends keyof IExportableCom>(
-    fieldn: Fieldn,
-    value: IExportableCom[Fieldn],
-    defVal?: IExportableCom[Fieldn],
-  ) {
-    this.col.setFieldCol<keyof IExportableCom, 'com'>(
-      fieldn,
-      value,
-      {
-        b: 'comSetDefaultBemolType',
-        a: '',
-        c: '',
-        k: '',
-        l: '',
-        n: '',
-        o: '',
-        p: '',
-        t: '',
-        ton: '',
-        w: '',
-        m: '',
-        bpm: 'setComBeatsPerMinute',
-        s: 'setComMeterSize',
-      },
-      'com',
-      defVal,
-    );
-    if (fieldn === 'b') this.isBemoled = value as num;
-  }
-
-  switchLang() {
-    const prev = this.langi;
-    const value = (this.langi = this.langi ? 0 : 1);
-
-    this.exec({
-      action: 'comSetLangi',
-      prev,
-      method: 'set',
-      value,
-      uniq: this.wid,
-      args: {
-        value,
-      },
-    });
-  }
-
-  comeBack() {
-    this.col.comeBackCol('com');
-  }
-
   replaceBemoles(coli: number) {
     if (this.chords === undefined) return;
 
@@ -81,23 +24,8 @@ export class EditableCom extends EditableComCutBlock {
     if (!col) return;
 
     const val = col.replace(gSimpleBemoleChordReg, chord => chordDiezEquivalent[chord] || chord);
-    this.changeBlock('chords', coli, val);
-  }
 
-  setTransPosition(value: number | und) {
-    this.exec({
-      prev: this.transPosition,
-      value,
-      method: 'set',
-      action: 'comSetTransPosition',
-      args: {
-        value,
-      },
-    });
-
-    this.transPosition = value;
-
-    this.resetChordLabels();
+    cmComClientInvocatorMethods.changeChordBlock(null, coli, this.wid, val);
   }
 
   getRegionNextLetter() {
@@ -116,34 +44,5 @@ export class EditableCom extends EditableComCutBlock {
         .find(num => chars.indexOf(num) < 0);
 
     return next && String.fromCharCode(next);
-  }
-
-  setTranslationPushKind(value: number) {
-    this.exec({
-      action: 'comSetTranslationPushKind',
-      method: 'set',
-      prev: this.translationPushKind,
-      value,
-      args: { value },
-    });
-
-    this.translationPushKind = value;
-  }
-
-  setAudio(val: string) {
-    const prev = this.audio.trim();
-    const value = val.trim().replace(makeRegExp('/\\n{2,}/'), '\n');
-    this.exec({
-      action: 'comSetAudio',
-      method: 'set',
-      prev,
-      value,
-      args: {
-        prev,
-        value,
-        comw: this.wid,
-        name: this.name,
-      },
-    });
   }
 }

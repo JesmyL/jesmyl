@@ -1,12 +1,13 @@
+import { IconCancel01StrokeRounded } from 'front/complect/the-icon/icons/cancel-01';
+import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { OrderRepeats } from 'shared/api';
+import { makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
-import { useExerExec } from '../../../../../../../complect/exer/hooks/useExer';
 import { useConfirm } from '../../../../../../../complect/modal/confirm/useConfirm';
-import { IconCancel01StrokeRounded } from '../../../../../../../complect/the-icon/icons/cancel-01';
 import { IconFlag03StrokeRounded } from '../../../../../../../complect/the-icon/icons/flag-03';
 import { IconLinkBackwardStrokeRounded } from '../../../../../../../complect/the-icon/icons/link-backward';
-import { IconPinStrokeRounded } from '../../../../../../../complect/the-icon/icons/pin';
+import { IconRowDeleteStrokeRounded } from '../../../../../../../complect/the-icon/icons/row-delete';
 import { ChordVisibleVariant } from '../../../../Cm.model';
 import ComLine from '../../../../col/com/line/ComLine';
 import TheOrder from '../../../../col/com/order/TheOrder';
@@ -19,10 +20,9 @@ const flashCounts = [2, 3, 4, 5];
 const defaultPos = {
   '--x': 0,
   '--y': 0,
-} as const;
+};
 
 export default function ComRepeats() {
-  const exec = useExerExec();
   const [start, setStart] = useState<IEditableComLineProps | null>(null);
   const [pos, setPos] = useState(defaultPos);
   const [isChordBlock, setIsChordBlock] = useState(false);
@@ -31,7 +31,6 @@ export default function ComRepeats() {
   const [confirmNode, confirm] = useConfirm();
 
   const ccom = useEditableCcom();
-  const coln = 'r';
   const { textLinei: startLinei, wordi: startWordi, orderUnit: startOrd } = start || {};
   let startedFlashes = 0;
   let beforeFlashes = 0;
@@ -40,7 +39,7 @@ export default function ComRepeats() {
 
   const setField = useCallback(
     (ord?: EditableOrder | null, repeateds?: OrderRepeats | nil, prevs?: OrderRepeats | nil) => {
-      if (!ord) return;
+      if (!ord || !ccom) return;
 
       const reps = typeof prevs === 'number' ? { '.': prevs } : prevs || {};
       const repds = typeof repeateds === 'number' ? { '.': repeateds } : repeateds || {};
@@ -48,11 +47,18 @@ export default function ComRepeats() {
       const keys = Object.keys(repeats);
       if (repeats['.'] === 0) delete repeats['.'];
 
-      exec(
-        ord.setField(coln, (keys.length ? (keys.length === 1 && keys[0] === '.' ? repeats['.'] : repeats) : 0) ?? 0),
+      cmComOrderClientInvocatorMethods.setRepeats(
+        null,
+        ord.wid,
+        ord.me.header(),
+        ccom.wid,
+        (keys.length ? (keys.length === 1 && keys[0] === '.' ? repeats['.'] : repeats) : 0) ?? 0,
+        ord.text
+          ? ord.repeatedText(repeats).replace(makeRegExp('/&nbsp;/g'), ' ')
+          : ord.me.header({ repeats: ord.repeatsTitle }),
       );
     },
-    [exec],
+    [ccom],
   );
 
   const reset = useCallback(() => {
@@ -96,8 +102,8 @@ export default function ComRepeats() {
 
                       setIsChordBlock(true);
                       setPos({
-                        '--x': (event.target as any).offsetLeft,
-                        '--y': (event.target as any).offsetTop,
+                        '--x': event.currentTarget.offsetLeft,
+                        '--y': event.currentTarget.offsetTop + 100,
                       });
                     } else {
                       setIsChordBlock(false);
@@ -123,12 +129,19 @@ export default function ComRepeats() {
                             ord.me.watchOrd?.element?.scrollIntoView();
                           }}
                         />
-                        <IconPinStrokeRounded
+                        <IconRowDeleteStrokeRounded
                           className={`vertical-middle pointer ${ord.isInheritValue('r') ? 'disabled' : ''}`}
-                          onClick={() => {
-                            confirm('Очистить собственные правила повторения?').then(isClear => {
-                              if (isClear) exec(ord.removeInheritance('r'));
-                            });
+                          onClick={async () => {
+                            const isClear = await confirm('Очистить собственные правила повторения?');
+
+                            if (isClear)
+                              cmComOrderClientInvocatorMethods.clearOwnRepeats(
+                                null,
+                                ord.wid,
+                                ord.me.header(),
+                                ccom.wid,
+                                undefined,
+                              );
                           }}
                         />
                       </>
@@ -206,8 +219,8 @@ export default function ComRepeats() {
                       if (start == null || isChordBlock) {
                         setStart({ ...props, orderUnit: ord, wordi: +wordi });
                         setPos({
-                          '--x': (event.target as any).offsetLeft,
-                          '--y': (event.target as any).offsetTop,
+                          '--x': event.currentTarget.offsetLeft,
+                          '--y': event.currentTarget.offsetTop,
                         });
                         setIsChordBlock(false);
                       } else {
@@ -235,7 +248,6 @@ export default function ComRepeats() {
                         startOrd?.resetRegions();
 
                         reset();
-                        exec();
                       }
                     }}
                   />
@@ -254,7 +266,7 @@ export default function ComRepeats() {
 
                 return (
                   <div
-                    className={`float-button-panel${start && ord === start.orderUnit ? '' : ' hidden'}`}
+                    className={`float-button-panel z-index:300${start && ord === start.orderUnit ? '' : ' hidden'}`}
                     style={pos as CSSProperties}
                   >
                     <div
@@ -328,7 +340,7 @@ const Content = styled.div`
   }
 
   .float-button-panel {
-    --size: 1.2em;
+    --size: ${window.innerWidth / 2 / 7}px;
 
     position: absolute;
     display: flex;
@@ -348,6 +360,7 @@ const Content = styled.div`
       opacity: 1;
       margin-left: 0.2em;
       border-radius: 0.3em;
+      padding: 5px;
 
       width: var(--size);
       height: var(--size);

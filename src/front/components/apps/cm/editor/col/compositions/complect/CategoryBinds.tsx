@@ -1,63 +1,74 @@
-import { makeRegExp } from 'shared/utils';
-import { useExerExec } from '../../../../../../../complect/exer/hooks/useExer';
-import KeyboardInput from '../../../../../../../complect/keyboard/KeyboardInput';
+import { useLiveQuery } from 'dexie-react-hooks';
+import IconButton from 'front/complect/the-icon/IconButton';
+import IconCheckbox from 'front/complect/the-icon/IconCheckbox';
+import { IconBookOpen02StrokeRounded } from 'front/complect/the-icon/icons/book-open-02';
+import { IconCancel01StrokeRounded } from 'front/complect/the-icon/icons/cancel-01';
+import { IconListViewStrokeRounded } from 'front/complect/the-icon/icons/list-view';
+import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
+import { InputWithLoadingIcon } from 'front/components/apps/cm/base/InputWithLoadingIcon';
+import { cmCatClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
+import { useMemo } from 'react';
+import { emptyFunc, makeRegExp } from 'shared/utils';
 import EditContainerCorrectsInformer from '../../../edit-container-corrects-informer/EditContainerCorrectsInformer';
-import { useEditableCols } from '../../useEditableCols';
+import { EditableCat } from '../../categories/EditableCat';
 import { useEditableCcom } from '../useEditableCcom';
 
 export default function CategoryBinds() {
-  const cols = useEditableCols();
   const ccom = useEditableCcom();
-  const exec = useExerExec();
+  const icats = useLiveQuery(() => cmIDB.db.cats.toArray());
+  const cats = useMemo(() => icats?.map(icat => new EditableCat(icat, [])), [icats]);
 
-  if (!ccom) return null;
+  if (!ccom || cats == null) return null;
 
   return (
     <>
       <div className="cat-list-title">Сборники</div>
-      {cols?.cats.map(cat => {
+      {cats.map(cat => {
         return cat.kind !== 'dict' ? null : (
           <EditContainerCorrectsInformer
             key={cat.wid}
-            corrects={ccom?.corrects[`setCatNativeNum:${cat.wid}`]}
+            corrects={ccom.corrects[`setCatNativeNum:${cat.wid}`]}
           >
-            <span>{cat.name} </span>
-            <KeyboardInput
-              value={`${cat.dict?.[ccom.wid] || ''}`}
+            <InputWithLoadingIcon
+              Icon={IconBookOpen02StrokeRounded}
+              label={cat.name}
               type="number"
+              defaultValue={`${cat.dict?.[ccom.wid] || ''}`}
               onChange={value => {
                 if (!+value) {
-                  if (cat.dict?.[ccom.wid]) exec(cat.removeNativeNumber(ccom, exec));
-                  return;
+                  return cmCatClientInvocatorMethods.removeNativeComNum(null, ccom.wid, cat.wid);
                 }
-                if (value.match(makeRegExp('/\\D/'))) return;
-                exec(cat.setNativeNumber(ccom, value));
+
+                if (value.match(makeRegExp('/\\D/'))) return Promise.reject();
+
+                return cmCatClientInvocatorMethods.setNativeComNum(null, ccom.wid, cat.wid, +value);
               }}
+              onInput={emptyFunc}
             />
-            {cat.dict?.[ccom.wid] != null ? (
-              <span
-                className="pointer color--ko"
-                onClick={() => exec(cat.removeNativeNumber(ccom, exec))}
-              >
-                {isNaN(cat.dict?.[ccom.wid]!) ? 'Корректно очистить' : 'Удалить'}
-              </span>
-            ) : null}
+            {cat.dict?.[ccom.wid] != null && (
+              <IconButton
+                Icon={IconCancel01StrokeRounded}
+                postfix={isNaN(cat.dict?.[ccom.wid]!) ? 'Корректно очистить' : 'Удалить'}
+                confirm={`Очистить номер из сборника ${cat.name}?`}
+                className="pointer color--ko margin-big-gap-l margin-gap-b"
+                onClick={() => cmCatClientInvocatorMethods.removeNativeComNum(null, ccom.wid, cat.wid)}
+              />
+            )}
           </EditContainerCorrectsInformer>
         );
       })}
       <div className="cat-list-title">Списки</div>
-      {cols?.cats.map(cat => {
+      {cats.map(cat => {
         return cat.kind !== 'list' ? null : (
           <EditContainerCorrectsInformer
             key={cat.wid}
-            corrects={ccom?.corrects[`setCatNativeNum:${cat.wid}`]}
+            corrects={ccom.corrects[`setCatNativeNum:${cat.wid}`]}
+            className="flex flex-gap flex-max pointer"
+            onClick={() => cmCatClientInvocatorMethods.toggleComExistence(null, ccom.wid, cat.wid)}
           >
+            <IconListViewStrokeRounded />
             <span>{cat.name} </span>
-            <input
-              type="checkbox"
-              checked={cat.stack.some(comw => ccom.wid === comw)}
-              onChange={() => exec(cat?.toggleComExistence(ccom, exec))}
-            />
+            <IconCheckbox checked={cat.stack?.some(comw => ccom.wid === comw)} />
           </EditContainerCorrectsInformer>
         );
       })}

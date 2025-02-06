@@ -18,6 +18,7 @@ export const ScheduleWidgetTeamGameTranslateTeamsButton = function TranslateTeam
   const grid: string = useMemo(() => {
     let grid = `| |\n| :-: |\n| <h1>Игра <span className="color--7">${game.title}</span></h1> |\n\n`;
     const scheduleUsers = rights.schedule.ctrl.users;
+    let limit = 1000000;
 
     for (let rowi = 0; rowi < game.teams.length; rowi += cols) {
       if (rowi === 0) {
@@ -46,6 +47,7 @@ export const ScheduleWidgetTeamGameTranslateTeamsButton = function TranslateTeam
         let noUsersCount = cols;
 
         for (let coli = 0; coli < cols; coli++) {
+          if (--limit < 0) break addUsers;
           const teamUser = game.teams[rowi + coli]?.users[useri];
           const leftBorder = coli === 0 ? '|' : '';
 

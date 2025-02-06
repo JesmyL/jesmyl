@@ -8,15 +8,15 @@ import { IconCheckmarkBadge01StrokeRounded } from '../../../../complect/the-icon
 import { IconStarStrokeRounded } from '../../../../complect/the-icon/icons/star';
 import useSelectedComs from '../base/useSelectedComs';
 import TheCat from '../col/cat/TheCat';
-import { useCols } from '../cols/useCols';
+import { useCats } from '../cols/useCols';
 import ExternalList from './ExternalList';
 import './Lists.scss';
-import Marks from './marks/Marks';
-import TheMeetings from './meetings/TheMeetings';
+import FavoriteComs from './favorites/FavoriteComs';
+import { TheMeetings } from './meetings/TheMeetings';
 import SelectedComs from './selected-coms/SelectedComs';
 
 export default function Lists() {
-  const cols = useCols();
+  const cats = useCats();
   const { selectedComws } = useSelectedComs();
 
   return (
@@ -32,7 +32,7 @@ export default function Lists() {
             content={
               <>
                 <Link
-                  to="marks"
+                  to="fav"
                   className="full-width"
                 >
                   <BrutalItem
@@ -62,7 +62,7 @@ export default function Lists() {
                 ) : null}
                 <BrutalScreen>
                   <div className="title sticky bg-inherit">Тематические:</div>
-                  {cols?.cats.map(cat => {
+                  {cats.map(cat => {
                     return !cat.wid ? null : (
                       <Link
                         key={cat.wid}
@@ -85,8 +85,8 @@ export default function Lists() {
         element={<TheMeetings />}
       />
       <Route
-        path="marks/*"
-        element={<Marks />}
+        path="fav/*"
+        element={<FavoriteComs />}
       />
       <Route
         path="selected/*"

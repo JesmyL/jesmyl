@@ -1,30 +1,35 @@
+import { schGamesSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
+import SendButton from 'front/complect/sends/send-button/SendButton';
 import { useCallback, useState } from 'react';
-import { IScheduleWidgetTeamCriteria, IScheduleWidgetUser } from 'shared/api';
-import { StrongComponentProps } from '../../../../../strong-control/Strong.model';
-import StrongButton from '../../../../../strong-control/StrongButton';
+import {
+  IScheduleWidgetTeamCriteria,
+  IScheduleWidgetUser,
+  IScheduleWidgetUserMi,
+  ScheduleGameCriteriaScopeProps,
+} from 'shared/api';
 import { ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes } from './SortBoxes';
 
 interface Props {
   criteria: IScheduleWidgetTeamCriteria;
   uncriteriedUsers: IScheduleWidgetUser[];
   usersForSort: IScheduleWidgetUser[];
-  close: () => void;
-  singleInsertUser?: IScheduleWidgetUser;
+  onClose: (isOpen: false) => void;
+  singleInsertUser?: IScheduleWidgetUser | nil;
+  criteriaScopeProps: ScheduleGameCriteriaScopeProps;
 }
 
 export default function ScheduleWidgetTeamsCriteriaSorterScreen({
-  scope,
   criteria,
   uncriteriedUsers,
   usersForSort,
-  close,
+  onClose,
   singleInsertUser,
-}: StrongComponentProps & Props) {
+  criteriaScopeProps,
+}: Props) {
   const [sortedUsers, setSortedUsers] = useState(() => {
     const users = [...usersForSort]
       .filter(
-        user =>
-          criteria.sorts[user.mi] !== undefined && (singleInsertUser === undefined || singleInsertUser.mi !== user.mi),
+        user => criteria.sorts[user.mi] !== undefined && (singleInsertUser == null || singleInsertUser.mi !== user.mi),
       )
       .sort((a, b) => criteria.sorts[a.mi] - criteria.sorts[b.mi]);
 
@@ -36,7 +41,7 @@ export default function ScheduleWidgetTeamsCriteriaSorterScreen({
   const [isStop, setIsStop] = useState(false);
 
   const stopOnSingleInsert = useCallback(() => {
-    if (singleInsertUser === undefined) return;
+    if (singleInsertUser == null) return;
     setIsStop(true);
   }, [singleInsertUser]);
 
@@ -69,21 +74,18 @@ export default function ScheduleWidgetTeamsCriteriaSorterScreen({
         />
       )}
       <div className="full-width flex center">
-        <StrongButton
-          scope={scope}
-          fieldName="sorts"
-          cud="U"
+        <SendButton
           title="Отправить"
-          onSuccess={close}
-          mapExecArgs={args => {
-            const value: Record<number, number> = {};
+          onSuccess={() => onClose(false)}
+          onSend={() => {
+            const value = {} as Record<IScheduleWidgetUserMi, number>;
 
             sortedUsers.forEach((user, useri) => {
               if (criteria.sorts[user.mi] === useri) return;
               value[user.mi] = useri;
             });
 
-            return { ...args, value };
+            return schGamesSokiInvocatorClient.setSortedDict(null, criteriaScopeProps, value, criteria.title);
           }}
         />
       </div>

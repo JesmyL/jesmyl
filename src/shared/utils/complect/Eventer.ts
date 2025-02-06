@@ -5,7 +5,6 @@ export interface EventerCallbackEvent<Value, StopValue> {
   preventDefault: () => void;
   preventedDefault: boolean;
   mute: () => void;
-  passValue?: any;
 }
 
 export type EventerCallback<Value, Return = void, StopValue = any> = (
@@ -18,11 +17,11 @@ export type EventerValueListeners<Value, Return = void> =
   | EventerValueCallback<Value, Return>[]
   | Set<EventerValueCallback<Value, Return>>;
 
-export type EventerListenScope<Value = void> = {
-  listen: (cb: EventerValueCallback<Value>, initValue?: Value) => () => void;
+export type EventerListenScope<Value = void, Return = void> = {
+  listen: (cb: EventerValueCallback<Value, Return>, initValue?: Value) => () => void;
   listenFirst: (cb: EventerValueCallback<Value>) => () => void;
   mute: (cb: EventerValueCallback<Value>) => void;
-  invoke: (value: Value) => Value;
+  invoke: (value: Value) => Return;
 };
 
 export class Eventer {
@@ -129,20 +128,30 @@ export class Eventer {
     listeners: Lis,
     value: Value,
     onEachInvoke?: (ret: Return) => void,
-  ): Value => {
+  ): Return => {
+    let ret: Return = undefined!;
+
     if (Array.isArray(listeners))
       if (onEachInvoke === undefined) {
         for (let i = listeners.length - 1; i > -1; i--) listeners[i](value);
       } else {
-        for (let i = listeners.length - 1; i > -1; i--) onEachInvoke(listeners[i](value));
+        for (let i = listeners.length - 1; i > -1; i--) {
+          const result = listeners[i](value);
+          if (result !== undefined) ret = result;
+          onEachInvoke(result);
+        }
       }
-    else listeners.forEach(cb => cb(value));
+    else
+      listeners.forEach(cb => {
+        const result = cb(value);
+        if (result !== undefined) ret = result;
+      });
 
-    return value;
+    return ret;
   };
 
-  static createValue<Value = void>(): EventerListenScope<Value> {
-    const listeners: EventerValueListeners<Value> = new Set();
+  static createValue<Value = void, Return = void>(): EventerListenScope<Value, Return> {
+    const listeners: EventerValueListeners<Value, Return> = new Set();
 
     return {
       listen: (cb, initValue) => this.listenValue(listeners, cb, initValue),

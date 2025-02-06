@@ -1,12 +1,9 @@
+import { cmOtherClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useEffect, useState } from 'react';
 import { CmMp3ContainsPageResult } from 'shared/api';
-import { useAtomValue } from '../../../../../../../../complect/atoms';
 import KeyboardInput from '../../../../../../../../complect/keyboard/KeyboardInput';
 import SendButton from '../../../../../../../../complect/sends/send-button/SendButton';
-import serviceMaster from '../../../../../../../../complect/service/serviceMaster';
-import { cmMolecule } from '../../../../../molecules';
-
-const mp3RulesAtom = cmMolecule.select(s => s.mp3Rules);
+import { useCmMp3Rules } from '../../../../mp3-rule-redactor/useCmMp3Rules';
 
 export default function ObserveUrlResource({
   onSuccess,
@@ -15,11 +12,9 @@ export default function ObserveUrlResource({
   onSuccess: (val: CmMp3ContainsPageResult) => void;
   availableWithTextQuery?: boolean;
 }) {
-  const sendService = serviceMaster('cm');
   const [url, setUrl] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
-  const mp3Rules = useAtomValue(mp3RulesAtom);
+  const mp3Rules = useCmMp3Rules();
 
   useEffect(() => {
     try {
@@ -65,7 +60,7 @@ export default function ObserveUrlResource({
           title="Обзор URL"
           disabled={!url || !!errorMessage}
           onSuccess={onSuccess}
-          onSend={() => sendService<CmMp3ContainsPageResult>('getResourceData', url)}
+          onSend={() => cmOtherClientInvocatorMethods.getResourceHTMLString(null, url)}
         />
       </div>
       {errorMessage && <div className="error-message">{errorMessage}</div>}

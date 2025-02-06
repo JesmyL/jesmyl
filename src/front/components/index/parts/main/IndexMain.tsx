@@ -1,6 +1,6 @@
 import { IconComputerSettingsStrokeRounded } from 'front/complect/the-icon/icons/computer-settings';
 import React, { Suspense, useState } from 'react';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { itNNull } from 'shared/utils';
 import { appNames } from '../../../../app/App.model';
 import { routingApps } from '../../../../app/routing-apps';
@@ -15,16 +15,14 @@ import { IconInformationCircleStrokeRounded } from '../../../../complect/the-ico
 import { IconRefreshStrokeRounded } from '../../../../complect/the-icon/icons/refresh';
 import { IconSettings02StrokeRounded } from '../../../../complect/the-icon/icons/settings-02';
 import { checkIsThereNewSW } from '../../../../serviceWorkerRegistration';
-import { useAuth, useCurrentApp } from '../../molecules';
+import { useAuth, useCurrentApp } from '../../atoms';
 import useConnectionState from '../../useConnectionState';
 import IndexActions from '../actions/Actions';
-import IndexAdvertisingPage from '../advertising/Page';
 import IndexAbout from '../IndexAbout';
 import { IndexTelegramInlineAuthButton } from '../login/IndexTelegramInlineAuthButton';
 import IndexSettings from '../settings/Settings';
 import { AppFace } from './AppFace';
 import { IndexProfileInfo } from './ProfileInfo';
-import { IndexSecretChats } from './secret-chat/SecretChats';
 import { UserMore } from './UserMore';
 
 const IndexAuthorization = React.lazy(() => import('../login/IndexAuthorization'));
@@ -34,7 +32,6 @@ export default function IndexMain() {
 
   const [isUserMoreOpen, setIsUserMoreOpen] = useState<unknown>(false);
   const [isAboutOpen, setIsAboutOpen] = useState<unknown>(false);
-  // const isShowSecretChatsInBottom = useAtomValue(isSecretChatsShowInBottomMenuAtom);
 
   const auth = useAuth();
   const connectionNode = useConnectionState();
@@ -75,13 +72,6 @@ export default function IndexMain() {
                         onClick={setIsUserMoreOpen}
                       />
                     )}
-                    {/* {!isShowSecretChatsInBottom && (
-                      <MarkUnreadSecretChatsPath containerSelector="a">
-                        <Link to="chats">
-                          <SecretChatsIcon />
-                        </Link>
-                      </MarkUnreadSecretChatsPath>
-                    )} */}
                   </div>
                 </div>
               }
@@ -90,33 +80,16 @@ export default function IndexMain() {
                 <>
                   <ScheduleWidgetAlarm isForceShow={auth.level >= 50} />
                   {!auth.nick && <IndexTelegramInlineAuthButton />}
-                  <Link
+                  <BrutalItem
+                    icon={<IconSettings02StrokeRounded />}
+                    title="Настройки"
                     to="settings"
-                    className="full-width"
-                  >
-                    <BrutalItem
-                      icon={<IconSettings02StrokeRounded />}
-                      title="Настройки"
-                    />
-                  </Link>
-                  {/* <Link
-                    to="advertising"
-                    className="full-width"
-                  >
-                    <BrutalItem
-                      icon={<IconCloudStrokeRounded />}
-                      title="Посмотреть стороннюю рекламу"
-                    />
-                  </Link> */}
-                  <Link
+                  />
+                  <BrutalItem
                     to="./actions"
-                    className="full-width"
-                  >
-                    <BrutalItem
-                      icon={<IconComputerSettingsStrokeRounded />}
-                      title="Взаимодействие"
-                    />
-                  </Link>
+                    icon={<IconComputerSettingsStrokeRounded />}
+                    title="Взаимодействие"
+                  />
                   <BrutalItem
                     icon={<IconInformationCircleStrokeRounded />}
                     title="О приложении"
@@ -182,16 +155,6 @@ export default function IndexMain() {
       <Route
         path="settings/*"
         element={<IndexSettings />}
-      />
-
-      <Route
-        path="chats/*"
-        element={<IndexSecretChats />}
-      />
-
-      <Route
-        path="advertising"
-        element={<IndexAdvertisingPage />}
       />
 
       {scheduleWidgetListPageRoute}

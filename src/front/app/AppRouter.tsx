@@ -2,11 +2,9 @@ import React, { Suspense, useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { atom, useAtomValue } from '../complect/atoms';
 import { AppName } from './App.model';
-import { scheduleWidgetActionsRouteName } from './AppServiceActions';
 
 const AppComponent = React.lazy(() => import('./AppComponent'));
 const AppRouterProvider = React.lazy(() => import('./AppRouterProvider'));
-const AppServiceActions = React.lazy(() => import('./AppServiceActions'));
 const Wedding = React.lazy(() => import('../components/apps/wedding/Wedding'));
 const ScheduleWidgetTgDayView = React.lazy(() => import('../complect/schedule-widget/general/TgDayView'));
 
@@ -35,10 +33,6 @@ const AppRouter = () => {
           }
         />
       </Route>
-      <Route
-        path={scheduleWidgetActionsRouteName}
-        element={<AppServiceActions />}
-      />
       <Route
         path="wedding/:weddn/*"
         element={<Wedding />}

@@ -10,7 +10,7 @@ export const useDebounceAction = <Callback extends (...args: any[]) => void>(
   return useMemo(() => {
     let debounceTimeOut: TimeOut;
 
-    return (...args: any[]) => {
+    return (...args: []) => {
       clearTimeout(debounceTimeOut);
       debounceTimeOut = setTimeout(callbackRef.current as never, debounceTime, ...args);
     };

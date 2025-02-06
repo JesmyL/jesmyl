@@ -1,13 +1,10 @@
-import { useAtom } from '../../../../../../../complect/atoms';
+import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
 import { IconMenu01StrokeRounded } from '../../../../../../../complect/the-icon/icons/menu-01';
 import { IconMinusSignStrokeRounded } from '../../../../../../../complect/the-icon/icons/minus-sign';
-import { cmMolecule } from '../../../../molecules';
 import { ComTool } from '../ComTool';
 
-const isMiniAnchorAtom = cmMolecule.select(s => s.isMiniAnchor);
-
 export const MiniAnchorSwitchTool = () => {
-  const [isMiniAnchor, setIsMiniAnchor] = useAtom(isMiniAnchorAtom);
+  const [isMiniAnchor, setIsMiniAnchor] = cmIDB.use.isMiniAnchor();
 
   return (
     <ComTool

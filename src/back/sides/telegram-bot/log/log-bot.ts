@@ -28,6 +28,7 @@ export class TgLogger {
     test: 1453,
     visit: 3343,
     changes: 3383,
+    userErrors: 94330,
   };
 
   constructor(bot: JesmylTelegramBot) {
@@ -59,6 +60,10 @@ export class TgLogger {
     return this.bot.postMessage(text, this.replyToScope('visit'));
   }
 
+  userErrors(text: string) {
+    return this.bot.postMessage(text, this.replyToScope('userErrors'));
+  }
+
   changes(text: string) {
     return this.bot.postMessage(text, this.replyToScope('changes'));
   }
@@ -75,7 +80,7 @@ export class TgLogger {
     this.bot.postMessage(text, this.replyToScope('codeRequest'));
   }
 
-  jsonCode(data: any) {
+  jsonCode(data: unknown) {
     try {
       this.bot.postMessage('<code>' + JSON.stringify(data, null, 1) + '</code>', this.replyToScope('jsonCode'));
     } catch (error) {}

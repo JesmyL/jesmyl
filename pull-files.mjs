@@ -10,14 +10,7 @@ import { exec } from 'child_process';
     );
   };
 
-  const paths = [
-    ['', 'package'],
-    ['apps/index', 'schedules'],
-    ['', 'bonjour', null],
-    ['apps/cm'],
-    // ['apps/leader', 'people'],
-    // ['apps/leader', 'contexts'],
-  ];
+  const paths = [['', 'package'], ['apps/index', 'schedules'], ['', 'bonjour', null], ['apps/cm']];
 
   const joinPath = listPaths => listPaths.filter(i => i).join('/');
   const jsonExt = '.json';

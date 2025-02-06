@@ -1,7 +1,5 @@
-import { mylib } from 'front/utils';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SokiServerEvent } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import JesmylLogo from '../../../../complect/jesmyl-logo/JesmylLogo';
 import KeyboardInput from '../../../../complect/keyboard/KeyboardInput';
@@ -9,8 +7,8 @@ import useToast from '../../../../complect/modal/useToast';
 import SendButton from '../../../../complect/sends/send-button/SendButton';
 import { IconTelegramStrokeRounded } from '../../../../complect/the-icon/icons/telegram';
 import { useActualRef } from '../../../../complect/useActualRef';
-import { soki } from '../../../../soki';
-import { useIndexValues, useSetAuth } from '../../molecules';
+import { useIndexValues } from '../../atoms';
+import { indexBasicsSokiInvocatorClient } from '../../db/invocators/schedules/fresh-invocator.methods';
 import useConnectionState from '../../useConnectionState';
 import { LoginIndex } from './IndexLoginAuth';
 import { TgNativeAuth } from './TgNativeAuth';
@@ -20,7 +18,6 @@ export default function IndexTelegramAuth({ onLoginAuth }: { onLoginAuth: () => 
   const [authCode, setAuthCode] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSendTgCode, setIsSendTgCode] = useState(false);
-  const setAuth = useSetAuth();
   const values = useIndexValues();
 
   const connectionNode = useConnectionState();
@@ -28,23 +25,6 @@ export default function IndexTelegramAuth({ onLoginAuth }: { onLoginAuth: () => 
   const navigate = useNavigate();
   const error = (message: string | nil) => message && <div className="login-error-message">{message}</div>;
   const [toastNode, showToast] = useToast({ mood: 'ko' });
-
-  const onAuthSend = (codeStr?: string) => {
-    setIsLoading(true);
-
-    return new Promise<SokiServerEvent>((res, rej) =>
-      soki
-        .send({ tgAuthorization: codeStr === undefined ? +authCode : +codeStr }, 'index')
-        .on(res, rej, () => setIsLoading(false)),
-    );
-  };
-
-  const onAuthSuccessRef = useActualRef(({ tgAuthorization }: SokiServerEvent) => {
-    if (!tgAuthorization || !tgAuthorization.ok || mylib.isStr(tgAuthorization.value)) return;
-    setAuth(tgAuthorization.value);
-    soki.sendConnectionHandshake();
-    navigate('..');
-  });
 
   const showToastRef = useActualRef(showToast);
 
@@ -102,10 +82,7 @@ export default function IndexTelegramAuth({ onLoginAuth }: { onLoginAuth: () => 
                   {!isSendTgCode && (
                     <li>
                       <div className="flex flex-gap">
-                        <TgNativeAuth
-                          onAuthSuccessRef={onAuthSuccessRef}
-                          showToastRef={showToastRef}
-                        />
+                        <TgNativeAuth showToastRef={showToastRef} />
                         или
                         <span
                           className="color--7 pointer"
@@ -134,9 +111,6 @@ export default function IndexTelegramAuth({ onLoginAuth }: { onLoginAuth: () => 
 
                             if (makeRegExp('/^\\d{5,6}$/').test(codeStr)) {
                               setAuthCode(codeStr);
-                              onAuthSend(codeStr)
-                                .catch(showToast)
-                                .then(event => event && onAuthSuccessRef.current(event));
                               event.value(codeStr);
                             }
                           } catch (error) {}
@@ -148,16 +122,25 @@ export default function IndexTelegramAuth({ onLoginAuth }: { onLoginAuth: () => 
                     title="Авторизоваться"
                     className="send-button"
                     disabled={isLoading || authCode.length < 3}
-                    onSuccess={onAuthSuccessRef.current}
-                    onFailure={showToast}
-                    onSend={onAuthSend}
+                    onSuccess={async () => {
+                      setIsLoading(false);
+                      navigate('..');
+                    }}
+                    onFailure={errorMessage => {
+                      setIsLoading(false);
+                      showToast(errorMessage);
+                    }}
+                    onSend={async () => {
+                      setIsLoading(true);
+                      return await indexBasicsSokiInvocatorClient.authMeByTelegramBotNumber(null, +authCode);
+                    }}
                   />
                 </>
               )}
             </div>
-            <div className="flex pointer color--3">
+            {/* <div className="flex pointer color--3">
               <span onClick={onLoginAuth}>Ввести логин/пароль</span>
-            </div>
+            </div> */}
           </div>
         </>
       }

@@ -1,15 +1,13 @@
 import { useCallback } from 'react';
-import { useAtom, useAtomValue } from '../../../../../complect/atoms';
-import { complectMolecule } from '../molecules';
+import { complectIDB } from '../../_idb/complectIDB';
 import { TranslationViewApp } from '../Translations.model';
 
-const cttaAtom = complectMolecule.select(s => s.currentTranslationTextApp);
-
-export const useCurrentTranslationTextApp = () => useAtom(cttaAtom);
-export const useCurrentTranslationTextAppValue = () => useAtomValue(cttaAtom);
-
 export const useSwitchCurrentTranslationTextApp = () => {
-  const [app, set] = useCurrentTranslationTextApp();
+  const app = complectIDB.useValue.currentTranslationTextApp();
 
-  return useCallback((setApp?: TranslationViewApp) => set(setApp ?? (app === 'cm' ? 'bible' : 'cm')), [app, set]);
+  return useCallback(
+    (setApp?: TranslationViewApp) =>
+      complectIDB.set.currentTranslationTextApp(setApp ?? (app === 'cm' ? 'bible' : 'cm')),
+    [app],
+  );
 };

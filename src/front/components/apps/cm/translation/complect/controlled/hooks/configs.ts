@@ -1,18 +1,17 @@
+import { BackgroundConfigProps } from 'front/complect/configurators/model';
+import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
 import {
   defaultScreenTranslationBackgroundConfig,
   defaultScreenTranslationPositionConfig,
   defaultScreenTranslationTextConfig,
 } from '../../../../../+complect/translations/complect/defaults';
-import { ScreenTranslationBackgroundConfigs } from '../../../../../+complect/translations/complect/model';
 import {
   useMakeScreenTranslationConfigsFillPack,
   useScreenTranslationCurrentConfigi,
 } from '../../../../../+complect/translations/hooks/configs';
-import { useAtomValue } from '../../../../../../../complect/atoms';
-import { cmTranslationScreenConfigsAtom } from '../../../../molecules';
 import { CmTranslationScreenConfig } from '../model';
 
-export const defaultCmConfig: CmTranslationScreenConfig & ScreenTranslationBackgroundConfigs = {
+export const defaultCmConfig: CmTranslationScreenConfig & BackgroundConfigProps = {
   ...defaultScreenTranslationPositionConfig,
   ...defaultScreenTranslationTextConfig,
   ...defaultScreenTranslationBackgroundConfig,
@@ -20,7 +19,7 @@ export const defaultCmConfig: CmTranslationScreenConfig & ScreenTranslationBackg
 };
 
 export const useCmScreenTranslationConfigs = () =>
-  useMakeScreenTranslationConfigsFillPack(useAtomValue(cmTranslationScreenConfigsAtom), defaultCmConfig);
+  useMakeScreenTranslationConfigsFillPack(cmIDB.useValue.translationScreenConfigs(), defaultCmConfig);
 
 export const useCmScreenTranslationConfig = (configi: number | und): CmTranslationScreenConfig | und => {
   const configs = useCmScreenTranslationConfigs();

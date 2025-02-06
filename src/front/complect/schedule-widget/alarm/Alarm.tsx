@@ -1,4 +1,4 @@
-import { useIndexSchedules } from '../../../components/index/molecules';
+import { useIndexSchedules } from '../../../components/index/atoms';
 import { useActualSchw } from '../useSch';
 import ScheduleWidgetAlarmContent from './AlarmContent';
 
@@ -8,7 +8,7 @@ export default function ScheduleWidgetAlarm({ isForceShow }: { isForceShow?: boo
 
   return (
     <>
-      {(isForceShow || schedules.list.some(schedule => schedule.start)) && (
+      {(isForceShow || schedules?.some(schedule => schedule.start)) && (
         <ScheduleWidgetAlarmContent observeSchw={schw} />
       )}
     </>

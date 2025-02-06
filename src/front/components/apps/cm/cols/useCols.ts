@@ -1,21 +1,34 @@
-import { mylib } from 'front/utils';
-import { IExportableCols } from 'shared/api';
-import { useAtomValue } from '../../../../complect/atoms';
-import { cmMolecule } from '../molecules';
-import { Cols } from './Cols';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { useMemo } from 'react';
+import { CmComWid, CmComWidStr } from 'shared/api';
+import { cmIDB } from '../_db/cm-idb';
+import { Cat } from '../col/cat/Cat';
+import { Com } from '../col/com/Com';
 
-let localCols: Cols | und;
-let localICols: IExportableCols | und;
+export const useComs = (comwsLine?: CmComWid[]) => {
+  const icoms = useLiveQuery(
+    () => (comwsLine == null ? cmIDB.db.coms.toArray() : cmIDB.db.coms.where('w').anyOf(comwsLine).toArray()),
+    [comwsLine],
+  );
 
-const colsAtom = cmMolecule.select(s => s.cols);
+  return useMemo(() => {
+    if (icoms == null) return [];
 
-export function useCols(): Cols | und {
-  const cols = useAtomValue(colsAtom);
+    if (comwsLine) {
+      const indexes = {} as Record<CmComWidStr, number>;
+      comwsLine.forEach((comw, comwi) => (indexes[comw] = comwi));
+      icoms?.sort();
+      icoms.sort((a, b) => indexes[a.w] - indexes[b.w]);
+    }
 
-  if (cols == null) return;
-  if (localCols && localICols === cols) return localCols;
+    const coms = icoms.map(icom => new Com(icom));
 
-  localCols = cols && new Cols(mylib.clone(cols), localCols?.coms);
-  localICols = cols;
-  return localCols;
-}
+    return coms;
+  }, [comwsLine, icoms]);
+};
+
+export const useCats = () => {
+  const icats = useLiveQuery(() => cmIDB.db.cats.toArray());
+
+  return icats?.map(icat => new Cat(icat, [])) ?? [];
+};

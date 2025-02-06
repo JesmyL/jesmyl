@@ -7,6 +7,8 @@ export interface IExportableStyleProp {
   isModulation?: boolean;
   forChordedBlock?: number;
   isHeaderNoneForce?: boolean;
+  isBlockForTextableOnly?: boolean;
+  isBlockForChordedOnly?: boolean;
 }
 
 export interface IExportableSetts {

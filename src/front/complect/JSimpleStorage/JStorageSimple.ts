@@ -2,7 +2,7 @@ import { Eventer, EventerValueCallback, EventerValueListeners } from 'shared/uti
 
 const keysSet = new Set();
 
-type simpleValue = boolean | number | string;
+type simpleValue = boolean | number | string | nil;
 
 type AnyValue = simpleValue | simpleValue[] | Record<string | number, simpleValue>;
 export type AnySimpleValue = AnyValue | AnyValue[] | Record<string | number, AnyValue>;

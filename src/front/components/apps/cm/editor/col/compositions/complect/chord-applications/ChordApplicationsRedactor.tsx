@@ -1,5 +1,7 @@
+import { StyledLoadingSpinner } from 'front/complect/the-icon/IconLoading';
+import { useState } from 'react';
+import { CmComOrderWid } from 'shared/api';
 import styled, { css } from 'styled-components';
-import { useExerExec } from '../../../../../../../../complect/exer/hooks/useExer';
 import { styledHoverBind } from '../../../../../../../../complect/utils/styled-components';
 import { ChordVisibleVariant } from '../../../../../Cm.model';
 import ComLine from '../../../../../col/com/line/ComLine';
@@ -8,7 +10,13 @@ import { useEditableCcom } from '../../useEditableCcom';
 
 export default function ChordApplicationsRedactor() {
   const ccom = useEditableCcom();
-  const exec = useExerExec();
+  const [ordAwaits, setOrdAwaits] = useState({} as Record<CmComOrderWid, number>);
+
+  const manageLineSend = async (ordw: CmComOrderWid, action: Promise<unknown>) => {
+    setOrdAwaits(prev => ({ ...prev, [ordw]: (prev[ordw] ?? 0) + 1 }));
+    await action;
+    setOrdAwaits(prev => ({ ...prev, [ordw]: prev[ordw] - 1 }));
+  };
 
   return (
     <Content className="chord-application-redactor">
@@ -23,6 +31,14 @@ export default function ChordApplicationsRedactor() {
             chordVisibleVariant={ChordVisibleVariant.Maximal}
             com={ccom}
             orderUniti={ordi}
+            asHeaderComponent={({ headerNode }) => {
+              return (
+                <div className="flex flex-gap">
+                  {headerNode}
+                  {!ordAwaits[ord.wid] || <StyledLoadingSpinner />}
+                </div>
+              );
+            }}
             asLineComponent={props => {
               const { com, textLine, textLinei } = props;
               const linePoss = ord.positions?.[textLinei] ?? [];
@@ -32,7 +48,9 @@ export default function ChordApplicationsRedactor() {
                 <div>
                   <div
                     className={`pre binder pointer${linePoss?.includes(-1) ? ' active' : ''}`}
-                    onClick={() => exec(ord?.setChordPosition(textLinei, -1))}
+                    onClick={async () => {
+                      manageLineSend(ord.wid, ord.setChordPosition(textLinei, -1));
+                    }}
                   />
                   <ComLine
                     key={textLinei}
@@ -42,7 +60,7 @@ export default function ChordApplicationsRedactor() {
                     com={com}
                     orderUniti={ordi}
                     isJoinLetters={false}
-                    onClick={event => {
+                    onClick={async event => {
                       const clicked = event.nativeEvent
                         .composedPath()
                         .find(span => (span as HTMLSpanElement)?.classList?.contains('com-letter')) as HTMLSpanElement;
@@ -52,19 +70,21 @@ export default function ChordApplicationsRedactor() {
                           .find(className => className.startsWith('letteri_'))
                           ?.split('_') || [];
 
-                      if (letteri != null) exec(ord?.setChordPosition(textLinei, +letteri));
+                      if (letteri != null) {
+                        manageLineSend(ord.wid, ord.setChordPosition(textLinei, +letteri));
+                      }
                     }}
                   />
                   <div
                     className={'post binder pointer' + (linePoss?.includes(-2) ? ' active' : '')}
-                    onClick={() => {
-                      exec(ord?.setChordPosition(textLinei, -2));
+                    onClick={async () => {
+                      manageLineSend(ord.wid, ord.setChordPosition(textLinei, -2));
                     }}
                   />
                   <span
                     className={'margin-gap-h' + (diffCount < 0 ? ' pointer error-message' : '')}
                     onClick={() => {
-                      exec(ord?.cutChordPositions(textLine, textLinei));
+                      ord.cutChordPositions(textLine, textLinei);
                     }}
                   >
                     {diffCount || ''}

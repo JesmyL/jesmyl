@@ -1,16 +1,16 @@
 import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { CmComWid } from 'shared/api';
 import styled, { css, RuleSet } from 'styled-components';
-import { useAtomValue } from '../../../../../complect/atoms';
 import { backSwipableContainerMaker } from '../../../../../complect/backSwipableContainerMaker';
 import { addEventListenerPipe, hookEffectPipe } from '../../../../../complect/hookEffectPipe';
 import { ChordVisibleVariant } from '../../Cm.model';
+import { cmIDB } from '../../_db/cm-idb';
 import RollControled from '../../base/RolledContent';
-import { cmComFontSizeAtom, cmMolecule } from '../../molecules';
 import { Com } from './Com';
 import './Com.scss';
-import TheCom from './TheCom';
-import TheComComment from './complect/comment-parser/TheComComment';
+import { TheCom } from './TheCom';
+import { TheComComment } from './complect/comment-parser/TheComComment';
 import { useComCommentBlockCss } from './complect/comment-parser/useComCommentBlock';
 
 let onPrevCom: () => void;
@@ -20,46 +20,44 @@ const swiper = backSwipableContainerMaker(
   () => onNextCom(),
 );
 
-const isMiniAnchorAtom = cmMolecule.select(s => s.isMiniAnchor);
-
 export default function TheControlledCom({
   com,
-  comList,
+  comwList,
   chordVisibleVariant,
   onComSet,
 }: {
   com: Com;
-  comList?: Com[] | nil;
+  comwList?: CmComWid[] | nil;
   chordVisibleVariant: ChordVisibleVariant;
-  onComSet?: (com: Com) => void;
+  onComSet?: (comw: CmComWid) => void;
 }) {
-  const fontSize = useAtomValue(cmComFontSizeAtom);
-  const isMiniAnchor = useAtomValue(isMiniAnchorAtom);
+  const fontSize = cmIDB.useValue.comFontSize();
+  const isMiniAnchor = cmIDB.useValue.isMiniAnchor();
   const listRef = useRef<HTMLDivElement>(null);
   const [, setSearchParams] = useSearchParams();
   const commentCss = useComCommentBlockCss(com);
 
   onNextCom = () => {
-    if (!comList?.length) return;
-    const comi = comList.findIndex(({ wid }) => wid === com.wid);
-    if (comi < comList.length - 1) {
-      onComSet?.(comList[comi + 1]);
-      setSearchParams({ comw: '' + comList[comi + 1].wid });
+    if (!comwList?.length) return;
+    const comi = comwList.findIndex(wid => wid === com.wid);
+    if (comi < comwList.length - 1) {
+      onComSet?.(comwList[comi + 1]);
+      setSearchParams({ comw: '' + comwList[comi + 1] });
     } else {
-      onComSet?.(comList[0]);
-      setSearchParams({ comw: '' + comList[0].wid });
+      onComSet?.(comwList[0]);
+      setSearchParams({ comw: '' + comwList[0] });
     }
   };
 
   onPrevCom = () => {
-    if (!comList) return;
-    const comi = comList.findIndex(({ wid }) => wid === com.wid);
+    if (!comwList?.length) return;
+    const comi = comwList.findIndex(wid => wid === com.wid);
     if (comi > 0) {
-      onComSet?.(comList[comi - 1]);
-      setSearchParams({ comw: '' + comList[comi - 1].wid });
+      onComSet?.(comwList[comi - 1]);
+      setSearchParams({ comw: '' + comwList[comi - 1] });
     } else {
-      onComSet?.(comList[comList.length - 1]);
-      setSearchParams({ comw: '' + comList[comList.length - 1].wid });
+      onComSet?.(comwList[comwList.length - 1]);
+      setSearchParams({ comw: '' + comwList[comwList.length - 1] });
     }
   };
 

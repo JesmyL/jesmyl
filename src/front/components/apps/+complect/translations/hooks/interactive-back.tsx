@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { CSSProperties } from 'styled-components';
-import { BackgroundNameType } from '../../../../index/parts/actions/files/complect/BackgroundSelector';
-import { takeInteractiveFileBackground } from '../../../../index/parts/actions/files/utils/take-interactive-file-background';
+import { BackgroundNameType } from '../../../../../complect/configurators/selectors/BackgroundSelector';
+import { takeInteractiveFileBackground } from '../../../../../complect/configurators/utils/take-interactive-file-background';
 
 const style: CSSProperties = {
   position: 'absolute',

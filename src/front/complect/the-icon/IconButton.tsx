@@ -1,4 +1,4 @@
-import { FunctionComponent, HTMLAttributes, ReactNode } from 'react';
+import { FunctionComponent, HTMLAttributes, ReactNode, useState } from 'react';
 import styled from 'styled-components';
 import { ConfirmContent } from '../modal/confirm/ConfirmContent';
 import useToast from '../modal/useToast';
@@ -10,13 +10,13 @@ interface Props {
   Icon: TheIconType;
   disabled?: boolean;
   disabledReason?: (() => ReactNode) | ReactNode;
-  confirm?: string;
+  confirm?: React.ReactNode;
   prefix?: ReactNode;
   postfix?: ReactNode;
   className?: string;
   iconClassName?: string;
   isLoading?: boolean;
-  onClick?: (event: React.MouseEvent<HTMLOrSVGElement, MouseEvent> | KeyboardEvent) => void;
+  onClick?: (event: React.MouseEvent<HTMLOrSVGElement, MouseEvent> | KeyboardEvent) => Promise<unknown> | unknown;
 }
 
 const IconButton = <P extends Props = Props>(
@@ -28,16 +28,28 @@ const IconButton = <P extends Props = Props>(
     P,
 ) => {
   const isClickable = !props.disabled && props.onClick ? true : undefined;
-  const className = `${props.className || ''}${isClickable || props.disabledReason ? ' pointer' : ''}${
-    props.disabled ? ' disabled' + (props.disabledReason ? ' clickable' : '') : ''
-  }`;
+  const className =
+    `${props.className || ''}${isClickable || props.disabledReason ? ' pointer' : ''}` +
+    `${props.disabled ? ' disabled' + (props.disabledReason ? ' clickable' : '') : ''}`;
+  const [isLoading, setIsLoading] = useState(false);
 
-  const Icon = props.isLoading ? StyledLoadingSpinner : props.Icon;
+  const Icon = props.isLoading || isLoading ? StyledLoadingSpinner : props.Icon;
 
   return (
     <ConfirmContent
-      confirm={props.confirm}
+      confirm={props.confirm === true ? props.postfix || props.prefix : props.confirm}
       content={onConfirm => {
+        const onClick =
+          props.onClick &&
+          (async (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+            event.stopPropagation();
+            if (await onConfirm()) {
+              setIsLoading(true);
+              await props.onClick!(event);
+              setIsLoading(false);
+            }
+          });
+
         return (
           <>
             {props.prefix === undefined && props.postfix === undefined ? (
@@ -46,29 +58,15 @@ const IconButton = <P extends Props = Props>(
                 className={className}
                 disabledReason={props.disabledReason}
                 disabled={props.disabled}
-                onClick={
-                  onConfirm &&
-                  props.onClick &&
-                  (async event => {
-                    event.stopPropagation();
-                    if (await onConfirm()) props.onClick!(event);
-                  })
-                }
+                onClick={onClick}
               />
             ) : (
               <DisabledReasonContained
                 Comp={Span}
-                className={`flex flex-gap ${className || 'flex-max'}`}
+                className={`flex flex-gap flex-max ${className || ''}`}
                 disabledReason={props.disabledReason}
                 disabled={props.disabled}
-                onClick={
-                  onConfirm &&
-                  props.onClick &&
-                  (async event => {
-                    event.stopPropagation();
-                    if (await onConfirm()) props.onClick!(event);
-                  })
-                }
+                onClick={onClick}
               >
                 {props.prefix}
                 <Icon className={props.iconClassName} />

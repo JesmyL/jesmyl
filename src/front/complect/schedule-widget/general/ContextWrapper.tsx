@@ -1,7 +1,5 @@
 import { ReactNode, useMemo } from 'react';
 import { IScheduleWidget } from 'shared/api';
-import { indexExer } from '../../../components/index/IndexExer';
-import { useStrongExerContent } from '../../strong-control/useStrongControl';
 import {
   ScheduleWidgetAppAttsContext,
   ScheduleWidgetRights,
@@ -20,14 +18,13 @@ export default function ScheduleWidgetContextWrapper({
   children: ReactNode;
 }) {
   const rights = useScheduleWidgetRights(schedule, topRights);
-  const content = useStrongExerContent(indexExer);
   const atts = useMemo(() => makeAttStorage(schedule), [schedule]);
 
   if (!schedule) return null;
 
-  return content(
+  return (
     <ScheduleWidgetAppAttsContext.Provider value={atts}>
       <ScheduleWidgetRightsContext.Provider value={rights}>{children}</ScheduleWidgetRightsContext.Provider>
-    </ScheduleWidgetAppAttsContext.Provider>,
+    </ScheduleWidgetAppAttsContext.Provider>
   );
 }

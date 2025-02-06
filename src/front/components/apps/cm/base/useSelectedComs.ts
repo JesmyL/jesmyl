@@ -1,23 +1,13 @@
 import { mylib } from 'front/utils';
 import { useCallback, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { CmComWid } from '../../../../../shared/api/complect/apps/cm/complect/enums';
-import { atom, useAtom } from '../../../../complect/atoms';
-import { Com } from '../col/com/Com';
-import { useCols } from '../cols/useCols';
-
-const scomwsAtom = atom<CmComWid[]>([], 'cm', 'scomws');
+import { cmIDB } from '../_db/cm-idb';
+import { useComs } from '../cols/useCols';
 
 export default function useSelectedComs() {
-  const cols = useCols();
   const [searchParams, setSearchParams] = useSearchParams();
-
-  const [selectedComws, setSelectedComws] = useAtom(scomwsAtom);
-  const takeSelectedComs = useCallback(() => {
-    return (
-      (cols && (selectedComws.map(comw => cols.coms.find(com => com.wid === comw)).filter(com => com) as Com[])) || []
-    );
-  }, [cols, selectedComws]);
+  const [selectedComws, setSelectedComws] = cmIDB.use.selectedComws();
+  const selectedComs = useComs(selectedComws);
 
   useEffect(() => {
     const scomws = searchParams.get('scomws');
@@ -31,10 +21,8 @@ export default function useSelectedComs() {
     } catch (error) {}
 
     setSearchParams(prev => {
-      const news = { ...prev };
-
-      delete (news as any)['scomws'];
-
+      const news = new URLSearchParams(prev);
+      news.delete('scomws');
       return news;
     });
   }, [searchParams, setSearchParams, setSelectedComws]);
@@ -57,7 +45,7 @@ export default function useSelectedComs() {
 
   return {
     selectedComws,
-    takeSelectedComs,
+    selectedComs,
     selectedComPosition,
     updateSelectedComws,
     clearSelectedComws: () => updateSelectedComws([]),

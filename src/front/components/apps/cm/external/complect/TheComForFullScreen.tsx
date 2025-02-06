@@ -1,18 +1,19 @@
 import { useEffect, useRef } from 'react';
+import { CmComWid } from 'shared/api';
 import { ChordVisibleVariant } from '../../Cm.model';
 import { Com } from '../../col/com/Com';
 import TheControlledCom from '../../col/com/TheControlledCom';
 
 export default function TheComForFullScreen({
   com,
-  comList,
+  comwList,
   chordVisibleVariant,
   onComSet,
 }: {
   com?: Com;
-  comList?: Com[] | nil;
+  comwList?: CmComWid[] | nil;
   chordVisibleVariant: ChordVisibleVariant;
-  onComSet: (com: Com) => void;
+  onComSet: (comw: CmComWid) => void;
 }) {
   const comListElem = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -29,7 +30,7 @@ export default function TheComForFullScreen({
       <TheControlledCom
         com={com}
         chordVisibleVariant={chordVisibleVariant}
-        comList={comList}
+        comwList={comwList}
         onComSet={onComSet}
       />
     </div>

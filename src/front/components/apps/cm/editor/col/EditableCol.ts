@@ -1,119 +1,16 @@
 import { mylib } from 'front/utils';
 import { makeRegExp } from 'shared/utils';
-import { ExecArgs, FreeExecDict } from '../../../../../complect/exer/Exer.model';
 import { BaseNamed, BaseNamedExportables } from '../../base/BaseNamed';
 import { eeStorage } from '../../base/ee-storage/EeStorage';
-import { cmExer } from '../../CmExer';
-import { IEditableCol, IExportableCol } from '../../cols/Cols.model';
+import { IEditableCol } from '../../cols/Cols.model';
 import { CorrectsBox } from '../corrects-box/CorrectsBox';
 import { ICorrect } from '../corrects-box/CorrectsBox.model';
 import { correctNotSlavicNameReg_i } from '../Editor.complect';
 
 export class EditableCol<Col extends BaseNamedExportables> extends BaseNamed<Col> {
-  removed = false;
   incorrectName = false;
-  corrects: Record<string, CorrectsBox | nil> = {};
 
-  renameCol<Coln extends keyof IExportableCol>(
-    name: string,
-    coln: Coln,
-    onFix?: (correct: string) => void,
-    isSetAllText?: boolean,
-  ) {
-    const action = `${coln}Rename`;
-    const prev = this.name;
-    const corrects = this.nameCorrects(name, coln, onFix, `${action}:${this.wid}`, isSetAllText);
-
-    this.name = name;
-
-    const exec = this.execCol(
-      {
-        action,
-        prev,
-        method: 'set',
-        value: name,
-        args: { value: name },
-        corrects,
-      },
-      coln,
-    );
-
-    this.corrects.name = exec?.corrects ?? corrects;
-  }
-
-  removeCol<Coln extends keyof IExportableCol>(coln: Coln, isRemoved = true) {
-    this.execCol(
-      {
-        action: `${coln}Del`,
-        method: 'remove',
-      },
-      coln,
-    );
-    return (this.removed = isRemoved);
-  }
-
-  comeBackCol<Coln extends keyof IExportableCol>(coln: Coln) {
-    this.execCol(
-      {
-        action: `${coln}ComeBack`,
-        method: 'set',
-        anti: ({ action, args }) => {
-          if (action === `${coln}Del` && args?.[`${coln}w`] === this.wid) return strategy => strategy.RemoveNew;
-        },
-      },
-      coln,
-    );
-
-    this.removed = false;
-  }
-
-  execCol<Value, Coln extends keyof IExportableCol>(bag: FreeExecDict<Value>, coln: Coln) {
-    return cmExer.set<Value>({
-      ...bag,
-      scope: this.scope(bag.action, bag.uniq),
-      args: {
-        prev: bag.prev,
-        name: this.name,
-        ...bag.args,
-        [`${coln}w`]: this.wid,
-      },
-      generalId: this.wid,
-    });
-  }
-
-  scope(action?: string, uniq?: number | string | (number | string)[]) {
-    return [this.wid, '.', mylib.typ('[no-action]', action), ':', [mylib.def(uniq, '[no-uniq]')].flat().join(',')].join(
-      '',
-    );
-  }
-
-  setFieldCol<Fieldn extends keyof Col, Coln extends keyof IExportableCol>(
-    fieldn: Fieldn,
-    value: Col[Fieldn],
-    actions: Record<Fieldn, string>,
-    coln: Coln,
-    defVal?: Col[Fieldn],
-  ) {
-    this.execCol(
-      {
-        prev: mylib.def(this.getBasic(fieldn), defVal),
-        value,
-        method: 'set',
-        action: actions[fieldn],
-        args: {
-          n: this.name,
-          value,
-        } as ExecArgs<Col[Fieldn]>,
-      },
-      coln,
-    );
-
-    this.setExportable(fieldn, value);
-
-    return this;
-  }
-
-  nameCorrects<Coln extends keyof IEditableCol>(
+  static nameCorrects<Coln extends keyof IEditableCol>(
     name = this.name,
     coln: Coln,
     onIncorrectsFix?: (correct: string) => void,
@@ -124,7 +21,7 @@ export class EditableCol<Col extends BaseNamedExportables> extends BaseNamed<Col
     const msg = (msg?: string) =>
       msg && `"${name}" - не корректное имя для ${coln === 'cat' ? 'категории' : 'песни'}. ${msg}`;
     const ret = (err?: string, onFix?: () => void) =>
-      this.textCorrects(name, undefined, isSetAllText).merge({
+      this.textCorrects(name, isSetAllText).merge({
         errors: err ? [{ message: err, onFix, uniq }] : null,
       });
 
@@ -149,7 +46,7 @@ export class EditableCol<Col extends BaseNamedExportables> extends BaseNamed<Col
     return mylib.isStr(name) ? name.replace(correctNotSlavicNameReg_i, '') : name;
   }
 
-  textCorrects(text: string | nil, correctsScope?: string, isSetAllText = false) {
+  static textCorrects(text: string | nil, isSetAllText = false) {
     if (typeof text !== 'string') return new CorrectsBox().setIncorrectType('[got not string]');
     const errors: ICorrect[] = [];
     const warnings: ICorrect[] = [];
@@ -163,9 +60,9 @@ export class EditableCol<Col extends BaseNamedExportables> extends BaseNamed<Col
 
       if (eeStorage.get(word) == null) {
         unknowns.push({
-          message: `Слово '${realWord}' ещё не встречалось среди существующих песен. Проверь, пожалуйста, правильность написания букв ё/е, встречающихся в нём${
-            isSetAllText ? `.\n\nУпоминание:\n${text}` : ''
-          }`,
+          message:
+            `Слово '${realWord}' ещё не встречалось среди существующих песен. Проверь, пожалуйста, ` +
+            `правильность написания букв ё/е, встречающихся в нём${isSetAllText ? `.\n\nУпоминание:\n${text}` : ''}`,
           code: 2,
         });
         return;
@@ -194,8 +91,6 @@ export class EditableCol<Col extends BaseNamedExportables> extends BaseNamed<Col
       });
     });
 
-    const corrects = new CorrectsBox(errors, warnings, unknowns);
-    if (correctsScope) this.corrects[correctsScope] = corrects;
-    return corrects;
+    return new CorrectsBox(errors, warnings, unknowns);
   }
 }

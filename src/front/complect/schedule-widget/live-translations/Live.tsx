@@ -1,100 +1,111 @@
-import { mylib } from 'front/utils';
+import { useAtomValue } from 'front/complect/atoms';
+import Modal from 'front/complect/modal/Modal/Modal';
+import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
+import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
+import IconButton from 'front/complect/the-icon/IconButton';
+import { TheIconLoading } from 'front/complect/the-icon/IconLoading';
+import {
+  schLiveSokiInvocatorBaseClient,
+  schLiveSokiInvocatorClient,
+} from 'front/components/index/complect/translations/live-invocator';
+import { soki } from 'front/soki';
 import { useEffect, useState } from 'react';
-import { IScheduleWidget } from 'shared/api';
+import { IScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
 import { IconComputerStrokeRounded } from '../../../complect/the-icon/icons/computer';
 import { ScreenTranslationControlPanelShowMdButton } from '../../../components/apps/+complect/translations/controls/ShowMdButton';
 import BibleTranslationSlide from '../../../components/apps/bible/translations/BibleTranslationSlide';
-import BibleTranslationSlideMiniInfo from '../../../components/apps/bible/translations/BibleTranslationSlideMiniInfo';
-import { CmTranslationSlideMiniInfo } from '../../../components/apps/cm/translation/complect/live/MiniInfo';
 import { CmLiveTranslationScreen } from '../../../components/apps/cm/translation/complect/live/Screen';
-import { IndexStateSchLiveData, ScheduleWidgetTranslationLiveDataKey } from '../../../components/index/Index.model';
-import { useAuth, useIndexLiveData } from '../../../components/index/molecules';
-import { soki } from '../../../soki';
-import BrutalItem from '../../brutal-item/BrutalItem';
+import { liveDataAtom, liveDataStreamersAtom } from '../../../components/index/atoms';
 import { ScheduleWidgetMarkdownLiveTranslation } from './MarkdownLive';
 
 interface Props {
   onClose: (isOpen: boolean) => void;
-  schedule: IScheduleWidget;
+  schw: IScheduleWidgetWid;
   isShowMarkdownOnly?: boolean;
 }
 
-export const ScheduleWidgetLiveTranslation = ({ onClose, schedule, isShowMarkdownOnly }: Props) => {
-  const liveData = useIndexLiveData() as IndexStateSchLiveData;
-  const [subscribeData, setSubscribeData] = useState<ScheduleWidgetTranslationLiveDataKey | und>();
-  const [messageNode, setMessageNode] = useState<JSX.Element | null>(null);
-  const auth = useAuth();
+export const ScheduleWidgetLiveTranslation = ({ onClose, schw, isShowMarkdownOnly }: Props) => {
+  const liveData = useAtomValue(liveDataAtom);
+  const [streamerLogin, setStreamerLogin] = useState<SokiAuthLogin | null>(null);
+  const streamers = useAtomValue(liveDataStreamersAtom);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (subscribeData !== undefined) return;
-    const schedulePrefix: ScheduleWidgetTranslationLiveDataKey<'', und> = `index-sch-${schedule.w}:`;
-    const dataNames = mylib.keys(liveData).filter(name => name.startsWith(schedulePrefix));
+    if (streamerLogin != null) {
+      schLiveSokiInvocatorClient.watch(null, schw, streamerLogin);
 
-    if (dataNames.length === 0) {
-      setMessageNode(<div className="flex center full-size">Трансляций нет</div>);
-      return;
+      const unsubscribe = soki.onConnectionState(isConnected => {
+        if (!isConnected) return;
+
+        schLiveSokiInvocatorClient.watch(null, schw, streamerLogin);
+      });
+
+      return () => {
+        unsubscribe();
+        schLiveSokiInvocatorClient.unwatch(null, schw, streamerLogin);
+      };
     }
 
-    if (dataNames.length === 1) {
-      setMessageNode(null);
-      setSubscribeData(dataNames[0]);
-      return;
-    }
+    (async () => {
+      setIsLoading(true);
+      await schLiveSokiInvocatorClient.requestStreamers(null, schw);
+      setTimeout(setIsLoading, 1000, false);
+    })();
+  }, [schw, streamerLogin]);
 
-    setMessageNode(
-      <div className="flex center column full-height margin-gap-h">
-        <div className="margin-gap-v">Сейчас трансляцию ведут несколько человек:</div>
-        {dataNames.map(translationId => {
-          const translation = liveData[translationId];
+  useEffect(() => {
+    if (streamerLogin != null || streamers == null) return;
+    if (streamers.length === 1) setStreamerLogin(streamers[0].login);
+  }, [streamerLogin, streamers]);
 
-          return (
-            <BrutalItem
-              key={translationId}
-              icon={<IconComputerStrokeRounded />}
-              title={translation.fio}
-              onClick={() => {
-                setMessageNode(null);
-                setSubscribeData(translationId);
-              }}
-              box={
-                translation.cm !== undefined ? (
-                  <CmTranslationSlideMiniInfo {...translation.cm} />
-                ) : translation.bible !== undefined ? (
-                  <BibleTranslationSlideMiniInfo {...translation.bible} />
-                ) : (
-                  <>Текст</>
-                )
-              }
-            />
-          );
-        })}
-      </div>,
+  if (streamers && !streamerLogin) {
+    return (
+      <Modal onClose={() => onClose(false)}>
+        <ModalHeader>Выбери стримера</ModalHeader>
+        <ModalBody>
+          {streamers.map(({ fio, login }) => {
+            return (
+              <div key={login}>
+                <IconButton
+                  Icon={IconComputerStrokeRounded}
+                  postfix={fio}
+                  onClick={() => setStreamerLogin(login)}
+                />
+              </div>
+            );
+          })}
+        </ModalBody>
+      </Modal>
     );
-  }, [auth.login, liveData, onClose, schedule.w, subscribeData]);
+  }
 
-  useEffect(() => {
-    soki.send({ subscribe: 'liveData', subscribeData }, 'index');
+  if (isLoading)
+    return (
+      <div className="flex center full-size">
+        <TheIconLoading />
+      </div>
+    );
 
-    return () => {
-      soki.send({ unsubscribe: 'liveData' }, 'index');
-    };
-  }, [schedule.w, subscribeData]);
+  if (liveData == null) {
+    if (streamerLogin == null) return <div className="flex center full-size">Трансляция не началась</div>;
+    return <div className="flex center full-size">Трансляция завершена</div>;
+  }
 
-  if (messageNode !== null) return messageNode;
-  if (subscribeData === undefined) return;
-
-  const translation = liveData[subscribeData];
-  if (translation == null) return <div className="flex center full-size">Трансляция завершена</div>;
-
-  return translation.markdown ? (
-    <ScheduleWidgetMarkdownLiveTranslation md={translation.markdown} />
-  ) : isShowMarkdownOnly ? (
-    <div className="full-size flex center">
-      <ScreenTranslationControlPanelShowMdButton />
-    </div>
-  ) : translation.cm !== undefined ? (
-    <CmLiveTranslationScreen {...translation.cm} />
-  ) : translation.bible !== undefined ? (
-    <BibleTranslationSlide {...translation.bible} />
-  ) : null;
+  return (
+    <>
+      {liveData.markdown ? (
+        <ScheduleWidgetMarkdownLiveTranslation md={liveData.markdown} />
+      ) : isShowMarkdownOnly ? (
+        <div className="full-size flex center">
+          <ScreenTranslationControlPanelShowMdButton />
+        </div>
+      ) : liveData.cm !== undefined ? (
+        <CmLiveTranslationScreen {...liveData.cm} />
+      ) : liveData.bible !== undefined ? (
+        <BibleTranslationSlide {...liveData.bible} />
+      ) : null}
+    </>
+  );
 };
+
+schLiveSokiInvocatorBaseClient.$$register();

@@ -1,9 +1,10 @@
+import { useAtomSet } from 'front/complect/atoms';
 import { useEffect } from 'react';
-import { itNNull } from 'shared/utils';
+import { isNIs, itNNull } from 'shared/utils';
 import { useActualRef } from '../../../../../../../complect/useActualRef';
 import { useToggleIsScreenTranslationTextVisible } from '../../../atoms';
 import { TranslationWindow } from '../../../hooks/windows';
-import { useTranslationIsInitialSlideShowSet } from '../../../initial-slide-context';
+import { isShowTranslatedTextAtom, useTranslationIsInitialSlideShowSet } from '../../../initial-slide-context';
 import { ScreenTranslationConfig } from '../../../model';
 
 const invokeEach = (cb: () => void) => cb();
@@ -17,7 +18,8 @@ export const useScreenTranslationFaceLineListeners = (
 ) => {
   const switchIsVisible = useToggleIsScreenTranslationTextVisible();
   const currentConfigiRef = useActualRef(currentConfigi);
-  const isInitialSlideShowSetRef = useActualRef(useTranslationIsInitialSlideShowSet());
+  const isInitialSlideShowSet = useTranslationIsInitialSlideShowSet();
+  const setIsShowTranslatedText = useAtomSet(isShowTranslatedTextAtom);
 
   useEffect(() => {
     const listeners = windows
@@ -56,8 +58,12 @@ export const useScreenTranslationFaceLineListeners = (
               parentWin.blur();
               break;
 
+            case 'Space':
+              setIsShowTranslatedText(isNIs);
+              break;
+
             case 'Backspace':
-              isInitialSlideShowSetRef.current(it => !it);
+              isInitialSlideShowSet(isNIs);
               break;
           }
         });
@@ -75,5 +81,5 @@ export const useScreenTranslationFaceLineListeners = (
       .filter(itNNull);
 
     return () => listeners.forEach(invokeEach);
-  }, [configs, currentConfigiRef, isInitialSlideShowSetRef, setCurrentConfigi, switchIsVisible, updateConfig, windows]);
+  }, [configs, currentConfigiRef, isInitialSlideShowSet, setCurrentConfigi, switchIsVisible, updateConfig, windows]);
 };

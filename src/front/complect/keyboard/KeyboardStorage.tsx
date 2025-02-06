@@ -17,7 +17,7 @@ const onTypeDifferent = (type?: KeyboardInputPropsType, callback?: (value: strin
   return (value: string, prev: string | null) => callback(value || '0', prev);
 };
 
-const stopCb = (event: EventStopper) => event.stopPropagation();
+const stopCb = (event: PropagationStopperEvent) => event.stopPropagation();
 
 export class KeyboardInputStorage extends KeyboardStorageCallbacks {
   isNeedValuesInitialize = true;

@@ -1,11 +1,8 @@
+import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { mylib } from 'front/utils';
 import { useState } from 'react';
-import { useExerExec } from '../../../../../../../../complect/exer/hooks/useExer';
 import useModal from '../../../../../../../../complect/modal/useModal';
-import IconButton from '../../../../../../../../complect/the-icon/IconButton';
 import IconCheckbox from '../../../../../../../../complect/the-icon/IconCheckbox';
-import { IconCancel01StrokeRounded } from '../../../../../../../../complect/the-icon/icons/cancel-01';
-import { IconCheckmarkCircle02StrokeRounded } from '../../../../../../../../complect/the-icon/icons/checkmark-circle-02';
 import { IconNotification01StrokeRounded } from '../../../../../../../../complect/the-icon/icons/notification-01';
 import { ChordVisibleVariant } from '../../../../../Cm.model';
 import ComOrders from '../../../../../col/com/orders/ComOrders';
@@ -18,10 +15,9 @@ const dotts = '.'
   .reverse();
 
 export const EditableCompositionMainTon = ({ ccom }: { ccom: EditableCom }) => {
-  const exec = useExerExec();
   const [initialPosition] = useState(ccom.transPosition);
 
-  const [modalNode, openModal] = useModal(({ header, body, footer }, close) => {
+  const [modalNode, openModal] = useModal(({ header, body }, close) => {
     return (
       <>
         {header(<>Тональность песни</>)}
@@ -38,7 +34,10 @@ export const EditableCompositionMainTon = ({ ccom }: { ccom: EditableCom }) => {
                   checked={position === ccom.transPosition}
                   disabled={position === ccom.transPosition}
                   className={'margin-gap-t ' + (position === initialPosition ? ' text-bold' : '')}
-                  onChange={() => exec(ccom.setTransPosition(position))}
+                  onChange={() => {
+                    cmComClientInvocatorMethods.changeTon(null, ccom.wid, position);
+                    close();
+                  }}
                   postfix={`На ${position} ${mylib.declension(
                     position,
                     'полутон',
@@ -50,26 +49,6 @@ export const EditableCompositionMainTon = ({ ccom }: { ccom: EditableCom }) => {
             })}
           </>,
         )}
-        <>
-          {footer(
-            <div className="flex flex-big-gap">
-              <IconButton
-                Icon={IconCheckmarkCircle02StrokeRounded}
-                postfix="Подтвердить"
-                onClick={close}
-              />
-              <IconButton
-                Icon={IconCancel01StrokeRounded}
-                postfix="Отмена"
-                className="color--ko"
-                onClick={() => {
-                  exec(ccom.setTransPosition(initialPosition));
-                  close();
-                }}
-              />
-            </div>,
-          )}
-        </>
       </>
     );
   });

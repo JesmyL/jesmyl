@@ -14,7 +14,7 @@ interface Props {
   uncriteriedUsers: IScheduleWidgetUser[];
   usersForSort: IScheduleWidgetUser[];
   stopOnSingleInsert: () => void;
-  singleInsertUser?: IScheduleWidgetUser;
+  singleInsertUser?: IScheduleWidgetUser | nil;
   sortedUsers: IScheduleWidgetUser[];
   setSortedUsers: (users: IScheduleWidgetUser[]) => void;
 
@@ -149,7 +149,7 @@ export const ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes = function SortBox
             confirm={`${currUser.fio} - неизвестный участник?`}
             className={sortedUsers.length > 1 ? 'fade-00' : undefined}
           />
-          Выбери кто сильней
+          У кого преимущество?
           <IconButton
             Icon={IconMessageQuestionStrokeRounded}
             onClick={() => setUnknownUsers([...unknownUsers, insertUser.mi])}

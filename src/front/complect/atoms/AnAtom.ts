@@ -1,15 +1,7 @@
 import { mylib } from 'front/utils';
 import { emptyFunc } from 'shared/utils';
-import { JStorage } from '../JStorage';
 
-const storages: Record<string, JStorage<any>> = {};
-const registered = new Set<StringBySlash>();
-
-export class Atom<
-  Value,
-  Key extends string = string,
-  Sunscriber extends (value: Value) => void = (value: Value) => void,
-> {
+export class Atom<Value, Sunscriber extends (value: Value) => void = (value: Value) => void> {
   private value: Value;
   private subs = new Set<Sunscriber>();
   private save: (val: Value) => void = emptyFunc;
@@ -20,7 +12,7 @@ export class Atom<
   rem: () => void;
   getStorageValue: () => Promise<Value>;
 
-  constructor(value: Value, storageName?: string, key?: Key, valuesStorage?: Record<string, unknown>) {
+  constructor(value: Value) {
     this.value = value;
 
     this.rem =
@@ -32,33 +24,6 @@ export class Atom<
         : emptyFunc;
 
     this.getStorageValue = async () => this.value;
-
-    if (!storageName || !key) return;
-
-    if (valuesStorage !== undefined) this.setInTopStorage = value => (valuesStorage[key] = value);
-
-    const name = `${storageName}/${key}` as const;
-
-    if (registered.has(name)) throw Error(`Атом ${name} уже зарегистрирован`);
-    registered.add(name);
-
-    const storage = (storages[storageName] ??= new JStorage(storageName));
-
-    this.save = val => storage.set(key, val);
-
-    this.getStorageValue = async () => {
-      const val = await storage.get(key);
-      return val === undefined ? this.value : val;
-    };
-
-    (async () => {
-      const value = await storage.get(key);
-
-      if (value === undefined || (mylib.isNum(value) && isNaN(value))) return;
-      this.justSet(value);
-      if (this.subs.size === 0) setTimeout(this.justSet, 100, value);
-      this.onValueChange?.(value);
-    })();
   }
 
   get = () => this.value;

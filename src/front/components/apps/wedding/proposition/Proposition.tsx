@@ -3,9 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { WedGuest, WedGuestWillBe } from '../../../../../shared/api/complect/apps/wed/complect/model';
 import useToast from '../../../../complect/modal/useToast';
-import serviceMaster from '../../../../complect/service/serviceMaster';
 import { WedCleans } from '../Cleans';
-import { wedExer } from '../exer';
 import { GuestConversation } from '../guest/complect/GuestConversation';
 
 const weddingText = Array(10)
@@ -23,24 +21,22 @@ const myAnswerSetter = (
   return async () => {
     setIsAnswerLoading(true);
 
-    wedExer.send([
-      {
-        action: 'setGuestAnswer',
-        args: {
-          guestMi: guest.mi,
-          text: guest.t?.trim(),
-          will,
-          guestName: WedCleans.makeGuestFullName(guest),
-        },
-      },
-    ]);
+    // wedExer.send([
+    //   {
+    //     action: 'setGuestAnswer',
+    //     args: {
+    //       guestMi: guest.mi,
+    //       text: guest.t?.trim(),
+    //       will,
+    //       guestName: WedCleans.makeGuestFullName(guest),
+    //     },
+    //   },
+    // ]);
     setTimeout(async () => {
-      const person = await serviceMaster('wed')<WedGuest>('getGuest', guest.mi);
-
-      if (person?.mi == null) setGuest({ ...guest, w: will });
-      else setGuest(person);
-
-      setIsAnswerLoading(false);
+      // const person = await serviceMaster('wed')<WedGuest>('getGuest', guest.mi);
+      // if (person?.mi == null) setGuest({ ...guest, w: will });
+      // else setGuest(person);
+      // setIsAnswerLoading(false);
     }, 1000);
   };
 };
@@ -72,13 +68,12 @@ export default function WeddingProposition() {
     return hookEffectLine()
       .setTimeout(async () => {
         try {
-          const person = await serviceMaster('wed')<WedGuest>('getGuest', guestMi);
-          if (person?.mi == null) {
-            toast('Ссылка не действительна', { mood: 'ko', showTime: 20000 });
-            return;
-          }
-
-          setGuest(person);
+          // const person = await serviceMaster('wed')<WedGuest>('getGuest', guestMi);
+          // if (person?.mi == null) {
+          //   toast('Ссылка не действительна', { mood: 'ko', showTime: 20000 });
+          //   return;
+          // }
+          // setGuest(person);
         } catch (error) {
           toast('' + error, { mood: 'ko' });
         }

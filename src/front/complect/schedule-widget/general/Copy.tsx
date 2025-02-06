@@ -1,62 +1,50 @@
-import { mylib, MyLib } from 'front/utils';
+import Modal from 'front/complect/modal/Modal/Modal';
+import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
+import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
+import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import { MyLib, mylib } from 'front/utils';
 import { useState } from 'react';
-import { CustomAttUseTaleId, IScheduleWidget, ScheduleWidgetCleans, ScheduleWidgetDayEventAttValues } from 'shared/api';
+import {
+  CustomAttUseTaleId,
+  IScheduleWidget,
+  IScheduleWidgetWid,
+  ScheduleWidgetCleans,
+  ScheduleWidgetDayEventAttValues,
+} from 'shared/api';
 import { itNNull } from 'shared/utils';
 import { IconCopy02StrokeRounded } from '../../../complect/the-icon/icons/copy-02';
-import { useAuth, useIndexSchedules } from '../../../components/index/molecules';
-import useModal from '../../modal/useModal';
-import StrongEvaButton from '../../strong-control/StrongEvaButton';
+import { useAuth, useIndexSchedules } from '../../../components/index/atoms';
 import IconButton from '../../the-icon/IconButton';
 import ScheduleWidgetTopicTitle from '../complect/TopicTitle';
-import { takeScheduleStrongScopeMaker } from '../useScheduleWidget';
+import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
+import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 
-export function ScheduleWidgetCopy(props: { schw: number }) {
+export function ScheduleWidgetCopy(props: { schw: IScheduleWidgetWid }) {
   const [schw, setSchw] = useState(0);
   const schedules = useIndexSchedules();
-  const schedule = schw === 0 ? undefined : schedules.list.find(sch => sch.w === schw);
+  const rights = useScheduleWidgetRightsContext();
+  const schedule = schw === 0 ? undefined : schedules?.find(sch => sch.w === schw);
   const auth = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [modalNode, openModal] = useModal(({ header, body }, closeModal) => {
-    if (schedule === undefined)
-      return (
-        <>
-          {header(<>Какое расписание копировать?</>)}
-          {body(
-            <>
-              {schedules.list.map(schedule => {
-                if (props.schw === schedule.w) return null;
+  return (
+    <>
+      <IconButton
+        Icon={IconCopy02StrokeRounded}
+        postfix="Скопировать расписание"
+        onClick={() => setIsModalOpen(true)}
+      />
 
-                return (
-                  <div
-                    key={schedule.w}
-                    className="pointer margin-gap-v"
-                    onClick={() => setSchw(schedule.w)}
-                  >
-                    <ScheduleWidgetTopicTitle
-                      titleBox={schedule}
-                      topicBox={schedule}
-                    />
-                  </div>
-                );
-              })}
-            </>,
-          )}
-        </>
-      );
-    else {
-      const scope = takeScheduleStrongScopeMaker(props.schw);
-      return (
-        <>
-          {header(<>Копируем {schedule.title}</>)}
-          {body(
-            <>
-              <StrongEvaButton
-                scope={scope}
-                fieldName="copy"
+      {isModalOpen &&
+        (schedule ? (
+          <Modal onClose={setIsModalOpen}>
+            <ModalHeader>Копируем {schedule.title}</ModalHeader>
+            <ModalBody>
+              <EvaSendButton
                 Icon={IconCopy02StrokeRounded}
-                postfix="Скопировать"
-                onSuccess={closeModal}
-                mapExecArgs={args => {
+                postfix={`Скопировать ${schedule.title} в ${rights.schedule.title}`}
+                onSuccess={() => setIsModalOpen(false)}
+                onSend={() => {
                   const myUser = schedule.ctrl.users.find(user => user.login === auth.login);
                   if (auth == null || myUser == null) return;
 
@@ -122,27 +110,34 @@ export function ScheduleWidgetCopy(props: { schw: number }) {
                     }),
                   };
 
-                  return {
-                    ...args,
-                    value,
-                  };
+                  return schGeneralSokiInvocatorClient.copySchedule(null, { schw: props.schw }, value);
                 }}
               />
-            </>,
-          )}
-        </>
-      );
-    }
-  });
+            </ModalBody>
+          </Modal>
+        ) : (
+          <Modal onClose={setIsModalOpen}>
+            <ModalHeader>Какое расписание копировать?</ModalHeader>
+            <ModalBody>
+              {schedules?.map(schedule => {
+                if (props.schw === schedule.w) return null;
 
-  return (
-    <>
-      {modalNode}
-      <IconButton
-        Icon={IconCopy02StrokeRounded}
-        postfix="Скопировать расписание"
-        onClick={openModal}
-      />
+                return (
+                  <div
+                    key={schedule.w}
+                    className="pointer margin-gap-v"
+                    onClick={() => setSchw(schedule.w)}
+                  >
+                    <ScheduleWidgetTopicTitle
+                      titleBox={schedule}
+                      topicBox={schedule}
+                    />
+                  </div>
+                );
+              })}
+            </ModalBody>
+          </Modal>
+        ))}
     </>
   );
 }

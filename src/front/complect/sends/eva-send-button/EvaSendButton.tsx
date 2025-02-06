@@ -1,9 +1,18 @@
+import IconButton from 'front/complect/the-icon/IconButton';
+import { TheIconType } from 'front/complect/the-icon/model';
 import useToast from '../../modal/useToast';
-import { TheIconLoading } from '../../the-icon/IconLoading';
 import { SendButtonContentMaker } from '../send-button-content-maker/maker';
-import { EvaSendButtonProps } from './EvaSendButton.model';
+import { SendButtonContentMakerProps } from '../send-button-content-maker/maker.model';
 
-export default function EvaSendButton<Value>(props: EvaSendButtonProps<Value>) {
+interface Props<Value> extends SendButtonContentMakerProps<Value> {
+  Icon: TheIconType;
+  className?: string;
+  prefix?: null | React.ReactNode;
+  postfix?: null | React.ReactNode;
+  disabledReason?: string;
+}
+
+export default function EvaSendButton<Value>(props: Props<Value>) {
   const [toastNode, toast] = useToast();
 
   return (
@@ -15,25 +24,29 @@ export default function EvaSendButton<Value>(props: EvaSendButtonProps<Value>) {
         toast(error, { mood: 'ko' });
       }}
       content={(onClick, error, isLoading) => {
-        const sysClassName = (props.disabled ? ' disabled ' : ' pointer ') + (error ? ' color--ko ' : '');
+        const sysClassName = error ? ' color--ko ' : '';
 
         return props.prefix === undefined && props.postfix === undefined ? (
-          <TheIconLoading
+          <IconButton
             isLoading={isLoading}
-            className={sysClassName + (isLoading ? ' rotate ' : '') + (props.className || '')}
-            onClick={onClick}
+            className={sysClassName + (props.className || '')}
+            onClick={props.disabled ? undefined : onClick}
             Icon={props.Icon}
+            disabled={props.disabled}
+            disabledReason={props.disabledReason}
           />
         ) : (
           <span
             className={'flex flex-gap ' + (sysClassName || 'flex-max ') + (props.className || '')}
-            onClick={onClick}
+            onClick={props.disabled ? undefined : onClick}
           >
             {props.prefix}
-            <TheIconLoading
+            <IconButton
               isLoading={isLoading}
               className={sysClassName}
               Icon={props.Icon}
+              disabled={props.disabled}
+              disabledReason={props.disabledReason}
             />
             {props.postfix}
           </span>

@@ -1,34 +1,30 @@
+import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
 import { ScheduleWidgetRightTexts, ScheduleWidgetRightsCtrl } from 'shared/api';
 import styled from 'styled-components';
 import { IconToggleOffStrokeRounded } from '../../../complect/the-icon/icons/toggle-off';
 import { IconToggleOnStrokeRounded } from '../../../complect/the-icon/icons/toggle-on';
-import { StrongControlProps } from '../../strong-control/Strong.model';
-import StrongEvaButton from '../../strong-control/StrongEvaButton';
 
 export default function ScheduleWidgetRightControlList({
   R,
-  scope,
   rightCtrl,
-  fieldName,
-  fieldKey,
   className,
   isCantEdit,
   isDescriptionsCollect,
-  onUpdate,
   isHidden,
   isReverse,
   isDisabled,
-}: StrongControlProps<{
+  onSend,
+}: {
   R?: number;
   className?: string;
   isCantEdit?: boolean;
   rightCtrl: ScheduleWidgetRightsCtrl;
   isDescriptionsCollect?: boolean;
-  onUpdate?: (newR: number) => void;
+  onSend: (newR: number) => Promise<unknown>;
   isHidden?: (type: ScheduleWidgetRightTexts<number>, typei: number) => boolean;
   isReverse?: boolean;
   isDisabled?: (type: ScheduleWidgetRightTexts<number>, typei: number) => boolean;
-}>) {
+}) {
   let isCan = true;
 
   return (
@@ -54,24 +50,11 @@ export default function ScheduleWidgetRightControlList({
               )}
             </div>
 
-            <StrongEvaButton
-              scope={scope}
-              fieldName={fieldName}
-              fieldKey={fieldKey}
-              cud="U"
+            <EvaSendButton
               disabled={isCantEdit || !isCan || type.always || !!isDisabled?.(type, typei)}
               className={(isReverse ? !isHas : isHas) ? 'color--ok' : 'color--3'}
               Icon={(isReverse ? !isHas : isHas) ? IconToggleOnStrokeRounded : IconToggleOffStrokeRounded}
-              mapExecArgs={args => {
-                if (onUpdate !== undefined) {
-                  onUpdate(rightCtrl.switchRights(R, type.id));
-                  return;
-                }
-                return {
-                  ...args,
-                  value: rightCtrl.switchRights(R, type.id),
-                };
-              }}
+              onSend={() => onSend(rightCtrl.switchRights(R, type.id))}
             />
           </div>
         );

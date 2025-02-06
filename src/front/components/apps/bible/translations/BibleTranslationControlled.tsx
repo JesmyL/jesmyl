@@ -2,14 +2,13 @@ import { ReactNode, useEffect } from 'react';
 import styled from 'styled-components';
 import { ScreenTranslationControlPanel } from '../../+complect/translations/controls/ControllPanel';
 import { useInitSoki } from '../../../../app/useInitSoki';
-import { useAtomInkrement } from '../../../../complect/atoms';
 import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
+import { bibleIDB } from '../_db/bibleIDB';
 import { useBibleSlideSyncInkrementer } from '../hooks/slide-sync';
 import { useLoadBibleChaptersCombine } from '../hooks/texts';
 import { BibleModulesTranslations } from '../translates/Translations';
 import BibleTranslationControlledBottomPanel from './BottomPanel';
 import { BibleTranslationControlledTopPanel } from './TopPanel';
-import { bibleVerseiAtom } from './lists/atoms';
 import BibleSearchPanel from './search/Panel';
 
 interface Props {
@@ -20,7 +19,6 @@ interface Props {
 export default function BibleTranslationControlled({ head, headTitle }: Props): JSX.Element {
   useLoadBibleChaptersCombine();
   const inkSync = useBibleSlideSyncInkrementer();
-  const switchVersei = useAtomInkrement(bibleVerseiAtom);
   useInitSoki('bible');
 
   useEffect(() => inkSync(1), [inkSync]);
@@ -53,8 +51,8 @@ export default function BibleTranslationControlled({ head, headTitle }: Props): 
           <BibleTranslationControlledTopPanel />
           <BibleModulesTranslations />
           <ScreenTranslationControlPanel
-            onPrev={() => switchVersei(-1)}
-            onNext={() => switchVersei(1)}
+            onPrev={() => bibleIDB.set.versei(v => v - 1)}
+            onNext={() => bibleIDB.set.versei(v => v + 1)}
           />
           <BibleSearchPanel />
           <BibleTranslationControlledBottomPanel />

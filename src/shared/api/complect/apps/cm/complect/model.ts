@@ -1,4 +1,4 @@
-import { CmCatWid, CmComMod, CmComOrderWid, CmComWid, CmMeetingEventWid } from './enums';
+import { CmCatWid, CmComMod, CmComOrderWid, CmComWid, CmComWidStr, CmMeetingEventWid } from './enums';
 
 export interface CmMp3Rule {
   w: number;
@@ -38,17 +38,20 @@ type Inheritancables<K extends keyof InheritancableOrder = keyof InheritancableO
 
 export interface IExportableOrder extends InheritancableOrder {
   w: CmComOrderWid; // Уникальный айди
-  a?: number; // Ссылка на блок
+  a?: CmComOrderWid; // Ссылка на блок
+  t?: number; // Текстовый блок
   c?: number; // Блок аккордов
-  e?: num; // Без названия
+  e?: 1; // Без названия
   f?: IExportableOrderFieldValues; // Особые значения
-  m?: num; // Минималка
-  o?: num; // Открыто в полном режиме
+  m?: 1; // Минималка
+  o?: 1; // Открыто в полном режиме
   s?: string; // Тип блока
-  t?: number | null; // Текстовый блок
-  u?: number; // Целевой айди
   inh?: Inheritancables; //
 }
+
+export type IFixedCom = { w: CmComWid } & Partial<{
+  ton: number;
+}>;
 
 export interface IExportableCom {
   n: string;
@@ -66,18 +69,52 @@ export interface IExportableCom {
   s?: 3 | 4; // размерность песни
 
   ton?: number;
+
+  isRemoved?: 1;
 }
 
+export type ICmComComment = {
+  comw: CmComWid;
+  comment: string;
+  m: number;
+  isSavedLocal?: 1;
+};
+
+export type TAboutComFavoriteItem = {
+  m: number;
+  comws?: CmComWid[];
+  tools?: MigratableComToolName[];
+};
+
 export interface IExportableCat {
-  n: string;
-  s?: CmComWid[];
-  d?: Partial<Record<CmComWid, number>>;
-  t?: string[] | null;
-  k: string;
-  w: CmCatWid;
+  w: CmCatWid; // writed time
+  m: number; // modified time
+  n: string; // name
+  s?: CmComWid[]; // comWid stack
+  d?: PRecord<CmComWidStr, number>; // dictionary of numbers
+  k: string; // kind of cat
+
+  isRemoved?: 1;
 }
 
 export interface IExportableCols {
   coms: IExportableCom[];
   cats: IExportableCat[];
 }
+
+export type MigratableEditableComToolName = 'edit-com';
+
+export type MigratableComToolName = MenuComToolNameList | MigratableEditableComToolName;
+
+export type MenuComToolNameList =
+  | 'fullscreen-mode'
+  | 'mark-com'
+  | 'show-translation'
+  | 'chords-variant'
+  | 'chord-images'
+  | 'selected-toggle'
+  | 'is-mini-anchor'
+  | 'open-player'
+  | 'hide-metronome'
+  | 'qr-share'
+  | 'cats-binds';

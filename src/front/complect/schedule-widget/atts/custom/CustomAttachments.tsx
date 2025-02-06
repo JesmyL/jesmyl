@@ -1,67 +1,23 @@
-import {
-  ScheduleWidgetAppAttCustomizable,
-  ScheduleWidgetAppAttCustomized,
-  scheduleWidgetUserRights,
-  ScheduleWidgetUserRoleRight,
-} from 'shared/api';
+import Modal from 'front/complect/modal/Modal/Modal';
+import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
+import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
+import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import { useState } from 'react';
+import { ScheduleWidgetAppAttCustomized } from 'shared/api';
 import { IconArrowRight01StrokeRounded } from '../../../../complect/the-icon/icons/arrow-right-01';
 import { IconAttachment02StrokeRounded } from '../../../../complect/the-icon/icons/attachment-02';
 import { IconPlusSignStrokeRounded } from '../../../../complect/the-icon/icons/plus-sign';
-import useModal from '../../../modal/useModal';
-import { StrongComponentProps } from '../../../strong-control/Strong.model';
-import StrongEvaButton from '../../../strong-control/StrongEvaButton';
 import IconButton from '../../../the-icon/IconButton';
+import { useScheduleScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
+import { schAttachmentTypesSokiInvocatorClient } from '../../invocators/invocators.methods';
 import ScheduleWidgetCustomAtt from './CustomAtt';
 
-const newTatt: ScheduleWidgetAppAttCustomizable = {
-  description: '',
-  icon: 'Attachment',
-  initVal: {},
-  title: '',
-  R: scheduleWidgetUserRights.includeRights(ScheduleWidgetUserRoleRight.Redact),
-  U: scheduleWidgetUserRights.includeRights(ScheduleWidgetUserRoleRight.Redact),
-};
-
-export default function ScheduleWidgetCustomAttachments(
-  props: StrongComponentProps<{
-    tatts: ScheduleWidgetAppAttCustomized[];
-  }>,
-) {
-  const [modalNode, screen] = useModal(({ header, body }) => {
-    return (
-      <>
-        {header(
-          <div className="flex full-width between">
-            Шаблоны вложений
-            {!props.tatts.some(att => !att.title || !att.description) && (
-              <StrongEvaButton
-                scope={props.scope}
-                fieldName="tatts"
-                fieldValue={newTatt}
-                Icon={IconPlusSignStrokeRounded}
-                confirm="Создать шаблон вложения?"
-              />
-            )}
-          </div>,
-        )}
-        {body(
-          props.tatts.map(tatt => {
-            return (
-              <ScheduleWidgetCustomAtt
-                key={tatt.mi}
-                scope={props.scope}
-                tatt={tatt}
-              />
-            );
-          }),
-        )}
-      </>
-    );
-  });
+export default function ScheduleWidgetCustomAttachments(props: { tatts: ScheduleWidgetAppAttCustomized[] }) {
+  const [isModalOpen, setIsModalOpen] = useState<unknown>(false);
+  const scheduleScopeProps = useScheduleScopePropsContext();
 
   return (
     <div>
-      {modalNode}
       <IconButton
         Icon={IconAttachment02StrokeRounded}
         postfix={
@@ -70,9 +26,36 @@ export default function ScheduleWidgetCustomAttachments(
             <IconArrowRight01StrokeRounded />
           </>
         }
-        onClick={screen}
+        onClick={setIsModalOpen}
         className="flex-max margin-gap-v"
       />
+
+      {!isModalOpen || (
+        <Modal onClose={setIsModalOpen}>
+          <ModalHeader>
+            <div className="flex full-width between">
+              Шаблоны вложений
+              <EvaSendButton
+                Icon={IconPlusSignStrokeRounded}
+                confirm="Создать шаблон вложения?"
+                disabled={props.tatts.some(att => !att.title || !att.description)}
+                disabledReason="Есть шаблоны вложений без названия или описания"
+                onSend={() => schAttachmentTypesSokiInvocatorClient.create(null, scheduleScopeProps)}
+              />
+            </div>
+          </ModalHeader>
+          <ModalBody>
+            {props.tatts.map(tatt => {
+              return (
+                <ScheduleWidgetCustomAtt
+                  key={tatt.mi}
+                  tatt={tatt}
+                />
+              );
+            })}
+          </ModalBody>
+        </Modal>
+      )}
     </div>
   );
 }

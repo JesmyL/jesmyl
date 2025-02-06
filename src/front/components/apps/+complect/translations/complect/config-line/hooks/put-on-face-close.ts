@@ -16,7 +16,7 @@ export const useScreenTranslationPutOnFaceClose = <Config>(
   const removeConfig = useRemoveScreenTranslationConfig();
 
   return useCallback(
-    (configi: number): CallbackStopper => {
+    (configi: number): PropagationStopper => {
       return event => {
         event.stopPropagation();
         removeConfig(configi);

@@ -1,16 +1,18 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { BibleTranslateName } from 'shared/api';
+import { Eventer } from 'shared/utils';
+import { bibleTranslatesIDB } from '../_db/bibleIDB';
 import { bibleTitles } from '../hooks/bibleTitlesJson';
-import { bibleMolecule } from '../molecules';
-import { BibleTranslateName } from './complect';
+import { BibleTranslate } from '../model';
+import { bibleAllTranslates } from './complect';
 import { useBibleMyTranslates, useBibleShowTranslatesValue } from './hooks';
 
 interface ChapterCombine {
-  chapters?: (string[][] | null)[];
-  lowerChapters?: string[][][];
-  htmlChapters?: ({ __html: string }[][] | und)[];
+  lowerChapters?: (string[][] | und)[];
+  chapters?: ((string[] | und)[] | nil)[];
 }
 
-const mapChapters = (tName: BibleTranslateName, { chapters }: { chapters: (string[][] | null)[] }) => {
+const mapChapters = (tName: BibleTranslateName, { chapters }: { chapters: (string[][] | nil)[] }) => {
   const lowerChapters: string[][][] = [];
 
   for (const book of chapters) {
@@ -24,19 +26,27 @@ const mapChapters = (tName: BibleTranslateName, { chapters }: { chapters: (strin
     }
   }
 
-  const htmlChapters = chapters.map(book => book?.map(chapter => chapter.map(__html => ({ __html }))));
-
   localTranslates[tName] = {
-    chapters,
     lowerChapters,
-    htmlChapters,
+    chapters,
   };
 };
 
+const onTranslateSetEvents = Eventer.createValue<{ tName: BibleTranslateName; value: BibleTranslate }>();
+const tNames = new Set(bibleAllTranslates);
+
+bibleTranslatesIDB.hook('updating', (_, tName, obj) => {
+  if (tNames.has(tName as never)) onTranslateSetEvents.invoke({ tName: tName as never, value: obj.val });
+});
+
+bibleTranslatesIDB.hook('creating', (tName, obj) => {
+  if (tNames.has(tName as never)) onTranslateSetEvents.invoke({ tName: tName as never, value: obj.val });
+});
+
 export const bibleLowerBooks = bibleTitles.titles.map(book => book.map(title => title.toLowerCase()));
 
-export type BibleBookTranslates = Partial<Record<BibleTranslateName, ChapterCombine>>;
-const loadings: Partial<Record<BibleTranslateName, boolean>> = {};
+export type BibleBookTranslates = PRecord<BibleTranslateName, ChapterCombine>;
+const loadings: PRecord<BibleTranslateName, boolean> = {};
 let localTranslates: BibleBookTranslates = {};
 
 const Context = React.createContext<BibleBookTranslates>({});
@@ -78,11 +88,9 @@ export default function BibleTranslatesContextProvider({ children, isSetAllTrans
             }
 
             loadings[tName] = true;
-            const tAtom = bibleMolecule.take(tName);
 
             subscribes.push(
-              tAtom.subscribe(value => {
-                if (value === null) return;
+              onTranslateSetEvents.listen(({ tName, value }) => {
                 mapChapters(tName, value);
                 setTranslates({ ...localTranslates });
               }),
@@ -90,7 +98,7 @@ export default function BibleTranslatesContextProvider({ children, isSetAllTrans
 
             (async () => {
               try {
-                const content = await tAtom.getStorageValue();
+                const content = await bibleTranslatesIDB.get[tName]();
                 content && mapChapters(tName, content);
                 loadings[tName] = false;
 

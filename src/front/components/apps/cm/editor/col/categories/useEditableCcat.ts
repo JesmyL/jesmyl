@@ -1,17 +1,16 @@
+import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
-import { useParams } from 'react-router-dom';
-import { EditableCols } from '../EditableCols';
-import { useEditableCols } from '../useEditableCols';
+import { cmIDB } from '../../../_db/cm-idb';
+import { useIccat } from '../../../col/cat/useCcat';
+import { EditableCom } from '../compositions/com/EditableCom';
 import { EditableCat } from './EditableCat';
 
 export function useEditableCcat(catw?: number): EditableCat | und {
-  const cols: EditableCols | und = useEditableCols();
-  const ccatw = +useParams().catw!;
+  const icat = useIccat(catw);
+  const icoms = useLiveQuery(() => cmIDB.db.coms.toArray());
 
-  return useMemo(() => {
-    if (cols) {
-      if (catw != null) return cols.cats.find(cat => cat.wid === catw);
-      else return ccatw === undefined ? undefined : cols.cats.find(cat => cat.wid === ccatw);
-    }
-  }, [ccatw, cols, catw]);
+  return useMemo(
+    () => icat && new EditableCat(icat, icoms?.map((icom, icomi) => new EditableCom(icom)) ?? []),
+    [icat, icoms],
+  );
 }

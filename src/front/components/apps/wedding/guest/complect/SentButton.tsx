@@ -2,8 +2,6 @@ import { WedGuest, WedGuestPropositionSent } from '../../../../../../shared/api/
 import EvaSendButton from '../../../../../complect/sends/eva-send-button/EvaSendButton';
 import { IconMailRemove01StrokeRounded } from '../../../../../complect/the-icon/icons/mail-remove-01';
 import { IconMailValidation01StrokeRounded } from '../../../../../complect/the-icon/icons/mail-validation-01';
-import { WedCleans } from '../../Cleans';
-import { wedExer } from '../../exer';
 
 export const WedGuestPropositionSentButton = ({
   guest,
@@ -23,18 +21,18 @@ export const WedGuestPropositionSentButton = ({
           </>
         }
         postfix="Пригласительное отправлено"
-        onSend={() =>
-          wedExer.send([
-            {
-              action: 'setPropositionSentMark',
-              args: {
-                guestMi: guest.mi,
-                value: WedGuestPropositionSent.No,
-                guestName: WedCleans.makeGuestFullName(guest),
-              },
-            },
-          ])
-        }
+        // onSend={() =>
+        //   wedExer.send([
+        //     {
+        //       action: 'setPropositionSentMark',
+        //       args: {
+        //         guestMi: guest.mi,
+        //         value: WedGuestPropositionSent.No,
+        //         guestName: WedCleans.makeGuestFullName(guest),
+        //       },
+        //     },
+        //   ])
+        // }
         onSuccess={() => onSend(WedGuestPropositionSent.No)}
       />
     );
@@ -44,18 +42,18 @@ export const WedGuestPropositionSentButton = ({
       Icon={IconMailRemove01StrokeRounded}
       className="color--ko margin-gap-v"
       postfix="Пригласительное не было отправлено"
-      onSend={() =>
-        wedExer.send([
-          {
-            action: 'setPropositionSentMark',
-            args: {
-              guestMi: guest.mi,
-              value: WedGuestPropositionSent.Yes,
-              guestName: WedCleans.makeGuestFullName(guest),
-            },
-          },
-        ])
-      }
+      // onSend={() =>
+      //   wedExer.send([
+      //     {
+      //       action: 'setPropositionSentMark',
+      //       args: {
+      //         guestMi: guest.mi,
+      //         value: WedGuestPropositionSent.Yes,
+      //         guestName: WedCleans.makeGuestFullName(guest),
+      //       },
+      //     },
+      //   ])
+      // }
       onSuccess={() => onSend(WedGuestPropositionSent.Yes)}
     />
   );

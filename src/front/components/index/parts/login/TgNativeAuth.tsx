@@ -1,26 +1,29 @@
 import { useEffect, useRef, useState } from 'react';
-import { SokiServerEvent, TelegramNativeAuthUserData } from 'shared/api';
+import { useNavigate } from 'react-router-dom';
+import { TelegramNativeAuthUserData } from 'shared/api';
 import styled from 'styled-components';
 import { Script } from '../../../../complect/tags/Script';
-import { soki } from '../../../../soki';
+import { indexBasicsSokiInvocatorClient } from '../../db/invocators/schedules/fresh-invocator.methods';
 
 const funcName = 'onTelegramNativeAuth';
 
 interface Props {
-  onAuthSuccessRef: { current: (event: SokiServerEvent) => void };
   showToastRef: { current: () => void };
 }
+const win: Record<string, unknown> = window as never;
 
-export const TgNativeAuth = ({ onAuthSuccessRef, showToastRef }: Props) => {
+export const TgNativeAuth = ({ showToastRef }: Props) => {
   const tgNativeRef = useRef<HTMLDivElement | null>(null);
   const [isScriptLoaded, setIsScriptLoaded] = useState<unknown>(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!isScriptLoaded || tgNativeRef.current === null || tgNativeRef.current.childElementCount !== 0) return;
     const tgAuthIframe = document.querySelector('#telegram-login-jesmylbot');
 
-    (window as any)[funcName] = (user: TelegramNativeAuthUserData) => {
-      soki.send({ tgNativeAuthorization: user }, 'index').on(onAuthSuccessRef.current, showToastRef.current);
+    win[funcName] = async (user: TelegramNativeAuthUserData) => {
+      await indexBasicsSokiInvocatorClient.authMeByTelegramNativeButton(null, user);
+      navigate('..');
     };
 
     if (tgAuthIframe === null) return;
@@ -28,9 +31,9 @@ export const TgNativeAuth = ({ onAuthSuccessRef, showToastRef }: Props) => {
 
     return () => {
       document.body.appendChild(tgAuthIframe);
-      delete (window as any)[funcName];
+      delete win[funcName];
     };
-  }, [isScriptLoaded, onAuthSuccessRef, showToastRef]);
+  }, [isScriptLoaded, navigate, showToastRef]);
 
   return (
     <>

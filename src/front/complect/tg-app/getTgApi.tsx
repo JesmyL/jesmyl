@@ -9,7 +9,7 @@ export const getTgApi = async () => {
 
   return new Promise<TelegramWebApp>((resolve, reject) => {
     const get = (tries: number) => {
-      tgApi = (window as any)?.Telegram?.WebApp;
+      tgApi = (window as never as { Telegram?: { WebApp?: TelegramWebApp } })?.Telegram?.WebApp;
 
       if (tgApi != null) {
         resolve(tgApi);

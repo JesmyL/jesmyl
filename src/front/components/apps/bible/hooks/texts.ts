@@ -1,6 +1,4 @@
-import { soki } from 'front/soki';
 import { MyLib } from 'front/utils';
-import { useEffect } from 'react';
 import { itIt } from 'shared/utils';
 import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '../model';
 import { useBibleTranslatesContext } from '../translates/TranslatesContext';
@@ -15,13 +13,13 @@ const numSortFunc = (a: number, b: number) => a - b;
 export const useLoadBibleChaptersCombine = () => {
   const combine = useBibleTranslatesContext().rst;
 
-  useEffect(() => {
-    if (combine?.chapters != null) return;
+  // useEffect(() => {
+  //   if (combine?.chapters != null) return;
 
-    const timeout = setTimeout(() => soki.makeInitialRequests('bible'), 1000);
+  //   const timeout = setTimeout(() => soki.makeInitialRequests('bible'), 1000);
 
-    return () => clearTimeout(timeout);
-  }, [combine?.chapters]);
+  //   return () => clearTimeout(timeout);
+  // }, [combine?.chapters]);
 
   return combine;
 };
@@ -72,7 +70,7 @@ export const useBibleJoinedSlideText = (
 
   if (joinAddress == null) return '';
 
-  const pasteText = (chapters: (string[][] | null)[] | und) => {
+  const pasteText = (chapters: ((string[] | und)[] | nil)[] | und) => {
     if (chapters === undefined) return '';
 
     return MyLib.entries(joinAddress)

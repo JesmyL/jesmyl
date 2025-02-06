@@ -1,23 +1,23 @@
 import { memo, useCallback } from 'react';
 import IconButton from '../../../../complect/the-icon/IconButton';
 import { IconBook02StrokeRounded } from '../../../../complect/the-icon/icons/book-02';
-import { soki } from '../../../../soki';
 import { useSwitchCurrentTranslationTextApp } from '../../../apps/+complect/translations/hooks/current-app';
 import BibleLiveTranslation from '../../../apps/bible/translations/BibleLiveTranslation';
 import BibleTranslationControlled from '../../../apps/bible/translations/BibleTranslationControlled';
 import { IndexSchWTranslationLiveDataValue } from '../../Index.model';
+import { schLiveSokiInvocatorClient } from './live-invocator';
 import { LiveTranslationAppProps } from './model';
 
 export const IndexScheduleWidgetBibleTranslationsControlled: React.FC<LiveTranslationAppProps> = memo(function BibleTr({
   isCantTranslateLive,
-  subscribeData,
   fio,
   headTitle,
+  schedule,
 }) {
   const switchCurrApp = useSwitchCurrentTranslationTextApp();
   const onSend = useCallback(
-    (liveData: IndexSchWTranslationLiveDataValue) => soki.send({ liveData, subscribeData }, 'index'),
-    [subscribeData],
+    (liveData: IndexSchWTranslationLiveDataValue) => schLiveSokiInvocatorClient.next(null, schedule.w, liveData),
+    [schedule.w],
   );
 
   return (

@@ -1,14 +1,18 @@
+import { schDayEventsSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
+import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import { IconArrowDataTransferVerticalStrokeRounded } from 'front/complect/the-icon/icons/arrow-data-transfer-vertical';
 import { mylib } from 'front/utils';
 import Markdown from 'markdown-to-jsx';
 import { ReactNode } from 'react';
 import {
-  CustomAttUseRights,
   customAttUseRights,
+  CustomAttUseRights,
   CustomAttUseTaleId,
   IScheduleWidgetListUnit,
   IScheduleWidgetRole,
   IScheduleWidgetTeamGame,
   IScheduleWidgetUser,
+  ScheduleDayEventAttachmentScopeProps,
   ScheduleWidgetAppAttCustomizableValue,
   ScheduleWidgetAppAttCustomizableValueItem,
   ScheduleWidgetAppAttCustomized,
@@ -23,8 +27,6 @@ import { IconLeftToRightListDashStrokeRounded } from '../../../../../complect/th
 import { IconPlusSignStrokeRounded } from '../../../../../complect/the-icon/icons/plus-sign';
 import { IconSquareStrokeRounded } from '../../../../../complect/the-icon/icons/square';
 import { IconTextStrokeRounded } from '../../../../../complect/the-icon/icons/text';
-import { MoveListItemArrowIcon } from '../../../../MoveListItemArrowIcon';
-import StrongEvaButton from '../../../../strong-control/StrongEvaButton';
 import StrongEditableField from '../../../../strong-control/field/StrongEditableField';
 import { IconBasketball01StrokeRounded } from '../../../../the-icon/icons/basketball-01';
 import ScheduleWidgetRoleFace from '../../../control/roles/RoleFace';
@@ -32,7 +34,6 @@ import ScheduleWidgetListUnitFace from '../../../lists/UnitFace';
 import {
   extractScheduleWidgetRole,
   extractScheduleWidgetRoleUser,
-  takeStrongScopeMaker,
   useScheduleWidgetRightsContext,
 } from '../../../useScheduleWidget';
 import ScheduleKeyValueListAttArrayItemKeyChange from './ArrayItemSignChange';
@@ -42,19 +43,18 @@ import ScheduleKeyValueListAttStatistic from './Statistic';
 
 export default function ScheduleKeyValueListAtt({
   value: attValue,
-  scope,
   att,
   isRedact,
+  dayEventAttScopeProps,
 }: {
   value: ScheduleWidgetAppAttCustomizableValue;
-  scope: string;
   att: ScheduleWidgetAppAttCustomized;
   isRedact: boolean;
+  dayEventAttScopeProps: ScheduleDayEventAttachmentScopeProps;
 }) {
-  const attScope = scope + ' keyValue';
   const rights = useScheduleWidgetRightsContext();
 
-  let subItems: ((item: ScheduleWidgetAppAttCustomizableValueItem, itemScope: string) => ReactNode) | null = null;
+  let subItems: ((item: ScheduleWidgetAppAttCustomizableValueItem) => ReactNode) | null = null;
 
   let insertionNode = null;
   let checkboxes: ReactNode = null;
@@ -80,12 +80,9 @@ export default function ScheduleKeyValueListAtt({
       <div className="flex flex-gap margin-gap-v">
         <IconCheckmarkSquare02StrokeRounded />
         <span className="text-italic">Пункт</span>
-        <StrongEvaButton
-          scope={attScope}
-          fieldName=""
-          fieldKey={false}
-          fieldValue=""
+        <EvaSendButton
           Icon={IconPlusSignStrokeRounded}
+          onSend={() => schDayEventsSokiInvocatorClient.putKeyValueAttachment(null, dayEventAttScopeProps, false, '')}
         />
       </div>
     );
@@ -104,12 +101,11 @@ export default function ScheduleKeyValueListAtt({
             >
               <IconCheckmarkSquare02StrokeRounded />
               {title}
-              <StrongEvaButton
+              <EvaSendButton
                 Icon={IconPlusSignStrokeRounded}
-                scope={attScope}
-                fieldName=""
-                fieldKey={false}
-                fieldValue={title}
+                onSend={() =>
+                  schDayEventsSokiInvocatorClient.putKeyValueAttachment(null, dayEventAttScopeProps, false, title)
+                }
               />
             </div>
           ) : (
@@ -118,12 +114,11 @@ export default function ScheduleKeyValueListAtt({
               className="flex flex-gap"
             >
               {title}
-              <StrongEvaButton
+              <EvaSendButton
                 Icon={IconPlusSignStrokeRounded}
-                scope={attScope}
-                fieldName=""
-                fieldKey={title}
-                fieldValue="+"
+                onSend={() =>
+                  schDayEventsSokiInvocatorClient.putKeyValueAttachment(null, dayEventAttScopeProps, title, '+')
+                }
               />
             </div>
           );
@@ -139,7 +134,7 @@ export default function ScheduleKeyValueListAtt({
     if (customAttUseRights.checkIsHasIndividualRights(att.use, CustomAttUseRights.Games)) {
       exclusiveGames = rights.schedule.games?.list.filter(filterExclusive(CustomAttUseTaleId.Games));
 
-      subItems = ([key, value], itemScope) => {
+      subItems = ([key, value, itemMi]) => {
         if (!mylib.isNum(key) || !mylib.isArr(value) || rights.schedule.games == null) return;
         const gameMi = key - CustomAttUseTaleId.Games;
 
@@ -153,18 +148,21 @@ export default function ScheduleKeyValueListAtt({
 
               return (
                 <div key={team.mi}>
-                  <StrongEvaButton
+                  <EvaSendButton
                     Icon={IconPlusSignStrokeRounded}
-                    scope={itemScope}
-                    fieldName="value list"
-                    fieldValue={
-                      `####${team.title.toUpperCase()}\n\n+ ` +
-                      team.users
-                        .map(({ mi }) => rights.schedule.ctrl.users.find(user => user.mi === mi)?.fio ?? '')
-                        .filter(itIt)
-                        .join('\n+ ')
-                    }
                     prefix={team.title}
+                    onSend={() => {
+                      return schDayEventsSokiInvocatorClient.addKeyValueAttachmentListItem(
+                        null,
+                        dayEventAttScopeProps,
+                        itemMi,
+                        `####${team.title.toUpperCase()}\n\n+ ` +
+                          team.users
+                            .map(({ mi }) => rights.schedule.ctrl.users.find(user => user.mi === mi)?.fio ?? '')
+                            .filter(itIt)
+                            .join('\n+ '),
+                      );
+                    }}
                   />
                 </div>
               );
@@ -185,24 +183,32 @@ export default function ScheduleKeyValueListAtt({
                   <IconCheckmarkSquare02StrokeRounded />
                   <IconBasketball01StrokeRounded />
                   {game.title}
-                  <StrongEvaButton
+                  <EvaSendButton
                     Icon={IconPlusSignStrokeRounded}
-                    scope={attScope}
-                    fieldName=""
-                    fieldKey={false}
-                    fieldValue={game.mi + CustomAttUseTaleId.Games}
+                    onSend={() =>
+                      schDayEventsSokiInvocatorClient.putKeyValueAttachment(
+                        null,
+                        dayEventAttScopeProps,
+                        false,
+                        game.mi + CustomAttUseTaleId.Games,
+                      )
+                    }
                   />
                 </>
               ) : (
                 <>
                   <IconBasketball01StrokeRounded />
                   {game.title}
-                  <StrongEvaButton
+                  <EvaSendButton
                     Icon={IconPlusSignStrokeRounded}
-                    scope={attScope}
-                    fieldName=""
-                    fieldKey={game.mi + CustomAttUseTaleId.Games}
-                    fieldValue={[]}
+                    onSend={() =>
+                      schDayEventsSokiInvocatorClient.putKeyValueAttachment(
+                        null,
+                        dayEventAttScopeProps,
+                        game.mi + CustomAttUseTaleId.Games,
+                        [],
+                      )
+                    }
                   />
                 </>
               )}
@@ -214,7 +220,7 @@ export default function ScheduleKeyValueListAtt({
 
     if (customAttUseRights.checkIsHasIndividualRights(att.use, CustomAttUseRights.Roles)) {
       dropdownRoles = rights.schedule.ctrl.roles.filter(role =>
-        ScheduleWidgetRightsCtrl.checkIsHasIndividualRights(att.roles, role.cat || 0),
+        ScheduleWidgetRightsCtrl.checkIsHasIndividualRights(att.roles, role.cati || 0),
       );
       exclusiveRoles = dropdownRoles.filter(filterExclusive(CustomAttUseTaleId.Roles));
 
@@ -227,12 +233,11 @@ export default function ScheduleKeyValueListAtt({
             role={role}
             schedule={rights.schedule}
           />
-          <StrongEvaButton
+          <EvaSendButton
             Icon={IconPlusSignStrokeRounded}
-            scope={attScope}
-            fieldName=""
-            fieldKey={role.mi}
-            fieldValue="+"
+            onSend={() =>
+              schDayEventsSokiInvocatorClient.putKeyValueAttachment(null, dayEventAttScopeProps, role.mi, '+')
+            }
           />
         </div>
       ));
@@ -240,7 +245,7 @@ export default function ScheduleKeyValueListAtt({
 
     if (customAttUseRights.checkIsHasIndividualRights(att.use, CustomAttUseRights.Lists)) {
       dropdownLists = rights.schedule.lists.units.filter(unit =>
-        ScheduleWidgetRightsCtrl.checkIsHasIndividualRights(att.list, unit.cat),
+        ScheduleWidgetRightsCtrl.checkIsHasIndividualRights(att.list, unit.cati),
       );
       exclusiveLists = dropdownLists.filter(filterExclusive(CustomAttUseTaleId.Lists));
 
@@ -249,12 +254,16 @@ export default function ScheduleKeyValueListAtt({
           key={unit.mi}
           unit={unit}
           postfix={
-            <StrongEvaButton
+            <EvaSendButton
               Icon={IconPlusSignStrokeRounded}
-              scope={attScope}
-              fieldName=""
-              fieldKey={unit.mi + CustomAttUseTaleId.Lists}
-              fieldValue="+"
+              onSend={() =>
+                schDayEventsSokiInvocatorClient.putKeyValueAttachment(
+                  null,
+                  dayEventAttScopeProps,
+                  unit.mi + CustomAttUseTaleId.Lists,
+                  '+',
+                )
+              }
             />
           }
         />
@@ -283,12 +292,16 @@ export default function ScheduleKeyValueListAtt({
           >
             <IconCheckmarkSquare02StrokeRounded />
             {user.fio || user.nick}
-            <StrongEvaButton
+            <EvaSendButton
               Icon={IconPlusSignStrokeRounded}
-              scope={attScope}
-              fieldName=""
-              fieldKey={false}
-              fieldValue={user.mi + CustomAttUseTaleId.Users}
+              onSend={() =>
+                schDayEventsSokiInvocatorClient.putKeyValueAttachment(
+                  null,
+                  dayEventAttScopeProps,
+                  false,
+                  user.mi + CustomAttUseTaleId.Users,
+                )
+              }
             />
           </div>
         ) : (
@@ -297,12 +310,16 @@ export default function ScheduleKeyValueListAtt({
             className="flex flex-gap"
           >
             {user.fio || user.nick}
-            <StrongEvaButton
+            <EvaSendButton
               Icon={IconPlusSignStrokeRounded}
-              scope={attScope}
-              fieldName=""
-              fieldKey={user.mi + CustomAttUseTaleId.Users}
-              fieldValue="+"
+              onSend={() =>
+                schDayEventsSokiInvocatorClient.putKeyValueAttachment(
+                  null,
+                  dayEventAttScopeProps,
+                  user.mi + CustomAttUseTaleId.Users,
+                  '+',
+                )
+              }
             />
           </div>
         ),
@@ -313,12 +330,11 @@ export default function ScheduleKeyValueListAtt({
       <div className="flex flex-gap margin-big-gap-v">
         <IconTextStrokeRounded />
         Пункт
-        <StrongEvaButton
+        <EvaSendButton
           Icon={IconPlusSignStrokeRounded}
-          scope={attScope}
-          fieldName=""
-          fieldKey="Пункт"
-          fieldValue="+"
+          onSend={() =>
+            schDayEventsSokiInvocatorClient.putKeyValueAttachment(null, dayEventAttScopeProps, 'Пункт', '+')
+          }
         />
       </div>
     );
@@ -345,7 +361,6 @@ export default function ScheduleKeyValueListAtt({
       {attValue.values?.map(([key, value, itemMi], itemi, itema) => {
         if (!isRedact && !value) return null;
 
-        const itemScope = takeStrongScopeMaker(attScope, ' itemMi/', itemMi);
         let role: IScheduleWidgetRole | und = undefined;
         let generalNode = null;
 
@@ -365,7 +380,7 @@ export default function ScheduleKeyValueListAtt({
             else if (rights.myUser?.li) {
               const id = Math.trunc(key);
               const unit = rights.schedule.lists.units.find(unit => unit.mi === id);
-              if (unit) setSelfRedact = rights.myUser.li[unit.cat] !== -unit.mi;
+              if (unit) setSelfRedact = rights.myUser.li[unit.cati] !== -unit.mi;
             }
         }
 
@@ -387,26 +402,36 @@ export default function ScheduleKeyValueListAtt({
                   generalNode
                 ) : mylib.isBool(key) ? (
                   <div className={'flex flex-gap color--3' + (key ? ' fade-05' : '')}>
-                    <StrongEvaButton
-                      scope={itemScope}
-                      fieldName="key"
-                      fieldValue={!key}
+                    <EvaSendButton
                       className="self-start relative z-index:15"
-                      cud="U"
                       Icon={key ? IconCheckmarkSquare02StrokeRounded : IconSquareStrokeRounded}
-                      isCanSend={!!scope && customAttUseRights.checkIsCan(userR, att.U)}
+                      disabled={!customAttUseRights.checkIsCan(userR, att.U)}
+                      onSend={() =>
+                        schDayEventsSokiInvocatorClient.setKeyValueAttachmentKey(
+                          null,
+                          dayEventAttScopeProps,
+                          itemMi,
+                          !key,
+                        )
+                      }
                     />
                     {mylib.isNum(value) && <KeyValueListAttNumberMember value={value} />}
                   </div>
                 ) : (
                   mylib.isStr(key) && (
                     <StrongEditableField
-                      scope={itemScope}
-                      fieldName="key"
                       className="margin-gap-l mood-for-2 relative z-index:5"
                       value={key}
                       isRedact={isRedact}
                       setSelfRedact
+                      onSend={value =>
+                        schDayEventsSokiInvocatorClient.setKeyValueAttachmentKey(
+                          null,
+                          dayEventAttScopeProps,
+                          itemMi,
+                          value,
+                        )
+                      }
                     />
                   )
                 )}
@@ -416,17 +441,21 @@ export default function ScheduleKeyValueListAtt({
                       !mylib.isBool(key) &&
                       !mylib.isNil(value) &&
                       (value === '+' || value.length < 1) && (
-                        <StrongEvaButton
-                          scope={itemScope}
-                          cud="U"
-                          fieldName="value"
-                          fieldValue={mylib.isArr(value) ? '+' : []}
+                        <EvaSendButton
                           Icon={mylib.isArr(value) ? IconTextStrokeRounded : IconLeftToRightListDashStrokeRounded}
+                          onSend={() =>
+                            schDayEventsSokiInvocatorClient.setKeyValueAttachmentValue(
+                              null,
+                              dayEventAttScopeProps,
+                              itemMi,
+                              mylib.isArr(value) ? '+' : [],
+                            )
+                          }
                         />
                       )}
                     {mylib.isNum(key) && (
                       <ScheduleKeyValueListAttArrayItemKeyChange
-                        scope={itemScope}
+                        dayEventAttScopeProps={dayEventAttScopeProps}
                         theKey={key}
                         users={exclusiveUsers}
                         lists={exclusiveLists}
@@ -437,27 +466,24 @@ export default function ScheduleKeyValueListAtt({
                   </>
                 )}
               </div>
-              {isRedact && !!scope && customAttUseRights.checkIsCan(userR, att.U) && (
+              {isRedact && customAttUseRights.checkIsCan(userR, att.U) && (
                 <div className={'flex flex-gap' + (mylib.isStr(value) ? ' margin-giant-gap-r' : '')}>
-                  {itema.length > 1 && (
-                    <StrongEvaButton
-                      scope={attScope}
-                      fieldName="move"
-                      fieldValue={itemi === 0 ? 2 : itemi - 1}
-                      fieldKey={itemMi}
+                  {itema.length > 1 && itemi > 0 && (
+                    <EvaSendButton
                       className="relative z-index:15 color--7"
-                      cud="U"
-                      Icon={MoveListItemArrowIcon(itemi)}
+                      Icon={IconArrowDataTransferVerticalStrokeRounded}
+                      onSend={() =>
+                        schDayEventsSokiInvocatorClient.moveKeyValueAttachment(null, dayEventAttScopeProps, itemMi)
+                      }
                     />
                   )}
-                  <StrongEvaButton
-                    scope={attScope}
-                    fieldName=""
-                    fieldKey={itemMi}
+                  <EvaSendButton
                     className="relative z-index:15 color--ko"
-                    cud="D"
                     confirm="Удалить пункт?"
                     Icon={IconDelete02StrokeRounded}
+                    onSend={() =>
+                      schDayEventsSokiInvocatorClient.putKeyValueAttachment(null, dayEventAttScopeProps, itemMi, null)
+                    }
                   />
                 </div>
               )}
@@ -467,8 +493,6 @@ export default function ScheduleKeyValueListAtt({
               (mylib.isStr(value) ? (
                 <StrongField
                   $indent={!isRedact && mylib.isBool(key)}
-                  scope={itemScope}
-                  fieldName="value"
                   className={
                     'margin-gap-l mood-for-2 relative z-index:5 ' +
                     (mylib.isBool(key) ? (key ? 'color--3 fade-05' : 'color--3') : '')
@@ -477,40 +501,49 @@ export default function ScheduleKeyValueListAtt({
                   multiline
                   isRedact={isRedact}
                   setSelfRedact={setSelfRedact}
+                  onSend={value =>
+                    schDayEventsSokiInvocatorClient.setKeyValueAttachmentValue(
+                      null,
+                      dayEventAttScopeProps,
+                      itemMi,
+                      value,
+                    )
+                  }
                 />
               ) : isRedact ? (
                 <div>
                   {value?.map((val, vali, vala) => {
                     return (
                       <div key={vali}>
-                        {!!scope && customAttUseRights.checkIsCan(userR, att.U) && (
+                        {customAttUseRights.checkIsCan(userR, att.U) && (
                           <div className="flex flex-gap">
                             <span className="flex self-start">{vali + 1}.</span>
-                            {vala.length > 1 && (
-                              <StrongEvaButton
-                                scope={itemScope}
-                                fieldName="value list move"
-                                fieldValue={vali === 0 ? 2 : vali - 1}
-                                fieldKey={vali}
+                            {vala.length > 1 && vali > 0 && (
+                              <EvaSendButton
                                 className="relative z-index:15 color--7"
-                                cud="U"
-                                Icon={MoveListItemArrowIcon(vali)}
-                                mapExecArgs={args => {
-                                  return {
-                                    ...args,
-                                    find: ['.', '===', val],
-                                  };
-                                }}
+                                Icon={IconArrowDataTransferVerticalStrokeRounded}
+                                onSend={() =>
+                                  schDayEventsSokiInvocatorClient.moveKeyValueAttachmentListItem(
+                                    null,
+                                    dayEventAttScopeProps,
+                                    itemMi,
+                                    val,
+                                  )
+                                }
                               />
                             )}
-                            <StrongEvaButton
-                              scope={itemScope}
-                              fieldName="value list"
-                              fieldKey={['.', '===', val]}
+                            <EvaSendButton
                               className="relative z-index:15 color--ko"
-                              cud="D"
                               confirm="Удалить пункт?"
                               Icon={IconDelete02StrokeRounded}
+                              onSend={() =>
+                                schDayEventsSokiInvocatorClient.removeKeyValueAttachmentListItemValue(
+                                  null,
+                                  dayEventAttScopeProps,
+                                  itemMi,
+                                  val,
+                                )
+                              }
                             />
                           </div>
                         )}
@@ -521,19 +554,20 @@ export default function ScheduleKeyValueListAtt({
                             </div>
                           ) : (
                             <StrongEditableField
-                              scope={itemScope}
-                              fieldName="value list key"
                               value={val}
                               className="mood-for-2 margin-gap-v"
                               isRedact
                               multiline
-                              mapExecArgs={(args, val) => {
-                                while (value.includes(val)) val += '1';
-                                return {
-                                  ...args,
-                                  key: vali,
-                                  value: val,
-                                };
+                              onSend={val => {
+                                while (value?.includes(val)) val += '1';
+
+                                return schDayEventsSokiInvocatorClient.setKeyValueAttachmentListItemValue(
+                                  null,
+                                  dayEventAttScopeProps,
+                                  itemMi,
+                                  vali,
+                                  val,
+                                );
                               }}
                             />
                           )}
@@ -543,33 +577,40 @@ export default function ScheduleKeyValueListAtt({
                   })}
                   {value && (
                     <ScheduleKeyValueListAttLiItemDropdown
-                      scope={itemScope}
                       value={value}
                       topValues={attValue.values!}
                       users={dropdownUsers}
                       titles={dropdownTitles}
                       lists={dropdownLists}
                       roles={dropdownRoles}
+                      onSend={value =>
+                        schDayEventsSokiInvocatorClient.addKeyValueAttachmentListItem(
+                          null,
+                          dayEventAttScopeProps,
+                          itemMi,
+                          value,
+                        )
+                      }
                     />
                   )}
 
-                  {subItems?.([key, value, itemMi], itemScope)}
+                  {subItems?.([key, value, itemMi])}
 
                   <StrongEditableField
-                    scope={itemScope}
-                    fieldName="value list"
-                    cud="C"
                     className="mood-for-2 relative z-index:5 margin-gap-t"
                     placeholder="Новый подпункт"
                     isRedact={isRedact}
                     setSelfRedact={setSelfRedact}
                     multiline
-                    mapExecArgs={(args, val) => {
-                      while ((value as string[]).includes(val)) val += '1';
-                      return {
-                        ...args,
-                        value: val,
-                      };
+                    onSend={val => {
+                      while (value?.includes(val)) val += '1';
+
+                      return schDayEventsSokiInvocatorClient.addKeyValueAttachmentListItem(
+                        null,
+                        dayEventAttScopeProps,
+                        itemMi,
+                        val,
+                      );
                     }}
                   />
                 </div>

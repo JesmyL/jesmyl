@@ -12,7 +12,7 @@ const wordRegEnds: Record<string, Record<string, EndVariantsDict>> = {
       // отвернувшийся
       pronoun: 'еся', // отвернувшиеся
     },
-    ичий: {
+    ичий$: {
       // птичий
       pronoun: 'ичьи', // птичьи
     },
@@ -30,11 +30,11 @@ const wordRegEnds: Record<string, Record<string, EndVariantsDict>> = {
     },
   },
   '([аяь])$|(.):$': {
-    ичий: {
+    ичий$: {
       // охотничий
       pronoun: 'ичья', // охотничья
     },
-    '([жшчщ])[иоы]й': {
+    '([жшчщ])[иоы]й$': {
       // большой
       pronoun: '$1ая', // большая
     },
@@ -52,11 +52,11 @@ const wordRegEnds: Record<string, Record<string, EndVariantsDict>> = {
       // ранний
       pronoun: 'нее', // раннее
     },
-    ичий: {
+    ичий$: {
       // птичий
       pronoun: 'ичье', // птичье
     },
-    '([жчщ])[иоы]й': {
+    '([жчщ])[иоы]й$': {
       // большой поющий
       pronoun: '$1ее', // большее поющее
     },
@@ -75,26 +75,38 @@ const regEnds: [RegExp, [RegExp, EndVariantsDict][]][] = SMyLib.entries(wordRegE
 const allAll = (all: string) => all;
 
 const fixNoun = (() => {
-  const reg = makeRegExp('/[^- а-яё\\d"]/gi');
-  return (noun: string) => noun.replace(reg, '') + (noun.startsWith('"') ? '"' : '');
+  const reg = makeRegExp('/[^-а-яё\\d"]/gi');
+  return (noun: string) => noun.replace(reg, '').replace(makeRegExp('/ /g'), '_') + (noun.startsWith('"') ? '"' : '');
 })();
 
+const fixPronoun = (() => {
+  return (noun: string) =>
+    noun.split('<').reverse().join('').replace(makeRegExp('/ /g'), '_') + (noun.startsWith('"') ? '"' : '');
+})();
+
+const boolItems = [true, false, false, false, false, false, false, false, false, false];
+
 export const makeTwiceKnownName = (pronoun: string, noun: string): [string, string] => {
+  const isReverse = smylib.randomItem(boolItems);
+
   for (let i = 0; i < regEnds.length; i++) {
     const match = regEnds[i][0].exec(noun);
     if (match) {
       const regEnd = regEnds[i][1];
+      const invoke = (funcOrString: string | ((...match: string[]) => void)) => {
+        return smylib.isFunc(funcOrString) ? funcOrString(...match) : funcOrString || allAll;
+      };
 
       for (let j = 0; j < regEnd.length; j++) {
         if (regEnd[j][0].exec(pronoun)) {
-          const invoke = (funcOrString: string | ((...match: string[]) => void)) => {
-            return smylib.isFunc(funcOrString) ? funcOrString(...match) : funcOrString || allAll;
-          };
+          const p = fixPronoun(pronoun.replace(regEnd[j][0], invoke(regEnd[j][1].pronoun) as never));
+          const n = fixNoun(noun);
 
-          return [pronoun.replace(regEnd[j][0], invoke(regEnd[j][1].pronoun) as never), fixNoun(noun)];
+          return isReverse ? [n, p] : [p, n];
         }
       }
     }
   }
-  return [pronoun, fixNoun(noun)];
+
+  return isReverse ? [fixNoun(noun), fixPronoun(pronoun)] : [fixPronoun(pronoun), fixNoun(noun)];
 };

@@ -1,10 +1,11 @@
+import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/scope-props-contexts';
+import { schUsersSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
+import SendButton from 'front/complect/sends/send-button/SendButton';
+import { mylib } from 'front/utils';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Dropdown from '../../../../dropdown/Dropdown';
 import useToast from '../../../../modal/useToast';
-import { MyLib, mylib } from 'front/utils';
 import { excel2jsonParserBox } from '../../../../parseExcel2Json';
-import { StrongComponentProps } from '../../../../strong-control/Strong.model';
-import StrongButton from '../../../../strong-control/StrongButton';
 import { IconCancel01StrokeRounded } from '../../../../the-icon/icons/cancel-01';
 import { IconLinkBackwardStrokeRounded } from '../../../../the-icon/icons/link-backward';
 import { useScheduleWidgetRightsContext } from '../../../useScheduleWidget';
@@ -15,12 +16,13 @@ interface Props {
 
 const defExcludedFios = new Set<string>();
 
-export function ScheduleWidgetUserAddByExcelContent({ scope, close }: StrongComponentProps & Props) {
+export function ScheduleWidgetUserAddByExcelContent({ close }: Props) {
   const rights = useScheduleWidgetRightsContext();
   const userFios = useMemo(
     () => rights.schedule.ctrl.users.reduce((set, user) => (user.fio ? set.add(user.fio) : set), new Set<string>()),
     [rights.schedule.ctrl.users],
   );
+  const scheduleScopeProps = useScheduleScopePropsContext();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [toastNode, toast] = useToast();
@@ -160,14 +162,11 @@ export function ScheduleWidgetUserAddByExcelContent({ scope, close }: StrongComp
         </div>
       </div>
       <div className="flex center margin-big-gap">
-        <StrongButton
-          fieldName="addUsers"
-          cud="U"
-          fieldValue={resultUsers}
-          scope={scope}
+        <SendButton
           disabled={!resultUsers?.length}
           title="Загрузить список"
-          onSuccess={() => close()}
+          onSuccess={close}
+          onSend={() => schUsersSokiInvocatorClient.addUsersByExcel(null, scheduleScopeProps, resultUsers ?? [])}
         />
       </div>
       {!existsUsers?.length || (

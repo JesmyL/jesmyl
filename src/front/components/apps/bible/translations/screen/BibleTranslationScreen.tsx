@@ -1,4 +1,4 @@
-import { memo, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { TranslationScreenProps } from '../../../+complect/translations/Translations.model';
 import { useSetScreenTranslationInteractiveBackground } from '../../../+complect/translations/hooks/interactive-back';
 import { useApplyScreenFontFamilyEffect } from '../../../+complect/translations/hooks/set-font-family';
@@ -19,7 +19,7 @@ interface Props extends TranslationScreenProps {
   isVisible: boolean;
 }
 
-export const BibleTranslationScreen = memo(function BibleTranslationScreen(props: Props) {
+export const BibleTranslationScreen = (props: Props) => {
   const [isChangeAddressPanelHeight, setIsChangeAddressPanelHeight] = useState(true);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -91,4 +91,4 @@ export const BibleTranslationScreen = memo(function BibleTranslationScreen(props
       />
     </div>
   );
-});
+};
