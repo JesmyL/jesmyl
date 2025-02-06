@@ -1,27 +1,19 @@
-import { MyLib, mylib } from 'front/utils';
-import React, { Suspense, useState } from 'react';
+import { MyLib } from 'front/utils';
+import React, { Suspense } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import { itIt } from 'shared/utils';
-import { AppName, appNames } from '../../../../app/App.model';
-import { routingApps } from '../../../../app/routing-apps';
-import { useAtomValue } from '../../../../complect/atoms';
 import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
 import { FontFamilySelector } from '../../../../complect/configurators/selectors/FontFamilySelector';
 import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
-import IconButton from '../../../../complect/the-icon/IconButton';
 import IconCheckbox from '../../../../complect/the-icon/IconCheckbox';
-import { IconArrowDownDoubleStrokeRounded } from '../../../../complect/the-icon/icons/arrow-down-double';
-import { IconArrowUpDoubleStrokeRounded } from '../../../../complect/the-icon/icons/arrow-up-double';
 import { IconKeyboardStrokeRounded } from '../../../../complect/the-icon/icons/keyboard';
 import { IconPaintBoardStrokeRounded } from '../../../../complect/the-icon/icons/paint-board';
 import { IconRssErrorStrokeRounded } from '../../../../complect/the-icon/icons/rss-error';
 import { IconSourceCodeCircleStrokeRounded } from '../../../../complect/the-icon/icons/source-code-circle';
 import { IconTextStrokeRounded } from '../../../../complect/the-icon/icons/text';
-import { statisticAtom, useAppFontFamily, useAuth } from '../../atoms';
+import { useAppFontFamily, useAuth } from '../../atoms';
 import { indexSimpleValIsPlayAnimations, indexSimpleValIsUseNativeKeyboard } from '../../complect/index.simpleValues';
 import useConnectionState from '../../useConnectionState';
-import { Visitor } from './Visitor';
-import { Visits } from './Visits';
 
 const IndexConsole = React.lazy(() => import('./Console'));
 
@@ -38,12 +30,8 @@ const styles = {
   display: null,
 };
 
-const visitorsDeclension = (num: number) => `${num} ${mylib.declension(num, 'челикс', 'челикса', 'челиксов')}`;
-
 export default function IndexSettings() {
   const auth = useAuth();
-  const statistic = useAtomValue(statisticAtom);
-  const [expands, setExpands] = useState<(AppName | '')[]>([]);
   const [appFontFamily, setAppFontFamily] = useAppFontFamily();
   const connectionNode = useConnectionState('margin-gap');
 
@@ -118,88 +106,6 @@ export default function IndexSettings() {
                   })
                 ) : (
                   <div className="text-center">Раздел пуст</div>
-                )}
-                {auth && (
-                  <>
-                    <h2>Статистика:</h2>
-                    {statistic ? (
-                      <>
-                        <div className="margin-gap-v">
-                          <div>
-                            <span className="color--7">В сети</span> {visitorsDeclension(statistic.online)}
-                          </div>
-                          <div>
-                            <span className="color--7">Авторизованых </span>
-                            {statistic.authed ? visitorsDeclension(statistic.authed) : ' нет'}
-                          </div>
-                          <div className="flex flex-gap">
-                            <span className="color--7">Посещений за день </span>
-                            {statistic.visits.length ? statistic.visits.length : ' нет'}
-                            {(auth.level >= 80 || expands.includes('')) && (
-                              <IconButton
-                                Icon={
-                                  expands.includes('')
-                                    ? IconArrowUpDoubleStrokeRounded
-                                    : IconArrowDownDoubleStrokeRounded
-                                }
-                                onClick={() =>
-                                  setExpands(
-                                    expands.includes('') ? expands.filter(name => name !== '') : [...expands, ''],
-                                  )
-                                }
-                              />
-                            )}
-                          </div>
-                        </div>
-                        {expands.includes('') && <Visits statistic={statistic} />}
-                        {appNames.map(appName => {
-                          const app = routingApps[appName];
-                          if (appName === 'index' || app === undefined || app.level > auth.level) return null;
-                          const visitorCount = statistic.usages[appName]?.length || 0;
-
-                          return (
-                            <div key={appName}>
-                              <div className="flex flex-gap">
-                                В "{app?.title}"
-                                {visitorCount ? (
-                                  <span className="color--7">{visitorsDeclension(visitorCount)}</span>
-                                ) : (
-                                  <span className="color--3">Никого</span>
-                                )}
-                                {((!!visitorCount && auth.level >= 80) || expands.includes(appName)) && (
-                                  <IconButton
-                                    Icon={
-                                      expands.includes(appName)
-                                        ? IconArrowUpDoubleStrokeRounded
-                                        : IconArrowDownDoubleStrokeRounded
-                                    }
-                                    onClick={() =>
-                                      setExpands(
-                                        expands.includes(appName)
-                                          ? expands.filter(name => name !== appName)
-                                          : [...expands, appName],
-                                      )
-                                    }
-                                  />
-                                )}
-                              </div>
-                              <div className="margin-big-gap-l">
-                                {expands.includes(appName) &&
-                                  statistic.usages[appName]?.map((usage, usagei) => (
-                                    <Visitor
-                                      key={usagei}
-                                      visitor={usage}
-                                    />
-                                  ))}
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </>
-                    ) : (
-                      'Нет данных'
-                    )}
-                  </>
                 )}
               </>
             }
