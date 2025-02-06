@@ -19,9 +19,39 @@ export class SokiTrip {
   }
 
   onConnectionOpenEvent = Eventer.createValue<boolean>();
+  onBeforeAuthorizeEvent = Eventer.createValue<void>();
   onAuthorizeEvent = Eventer.createValue<void>();
   onTokenInvalidEvent = Eventer.createValue<void>();
   onConnectionState = (cb: (is: boolean) => void) => this.connectionState.listen(cb, this.isConnected);
+
+  constructor() {
+    this.onBeforeAuthorizeEvent.listen(() => this.sendRegistrationToken());
+  }
+
+  private sendRegistrationToken = async () => {
+    try {
+      await this.send({
+        token: await authIDB.get.token(),
+        visit: {
+          deviceId: await indexIDB.get.deviceId(),
+          version: await indexIDB.get.appVersion(),
+          urls: this.urls.length ? this.urls : [this.getCurrentUrl()],
+          clientTm: Date.now(),
+        },
+      });
+
+      this.urls = [];
+      this.onConnectionOpenEvent.invoke(true);
+      this.isOpened = true;
+    } catch (errorMessage) {
+      if (errorMessage === '#invalid_token') {
+        authIDB.remove.auth();
+        authIDB.remove.token();
+
+        this.onTokenInvalidEvent.invoke();
+      }
+    }
+  };
 
   start() {
     this.ws = new WebSocket(`wss://${environment.dns}/websocket/`);
@@ -31,30 +61,7 @@ export class SokiTrip {
       this.isOpened = false;
     };
 
-    this.ws.onopen = async () => {
-      try {
-        await this.send({
-          token: await authIDB.get.token(),
-          visit: {
-            deviceId: await indexIDB.get.deviceId(),
-            version: await indexIDB.get.appVersion(),
-            urls: this.urls.length ? this.urls : [this.getCurrentUrl()],
-            clientTm: Date.now(),
-          },
-        });
-
-        this.urls = [];
-        this.onConnectionOpenEvent.invoke(true);
-        this.isOpened = true;
-      } catch (errorMessage) {
-        if (errorMessage === '#invalid_token') {
-          authIDB.remove.auth();
-          authIDB.remove.token();
-
-          this.onTokenInvalidEvent.invoke();
-        }
-      }
-    };
+    this.ws.onopen = this.sendRegistrationToken;
 
     this.ws.onmessage = async ({ data }: { data: string }) => {
       try {

@@ -7,12 +7,19 @@ import { cmSokiInvocatorBaseClient } from '../invocators/invocator.shares.base';
 export const cmInitialInvokes = () => {
   cmSokiInvocatorBaseClient.$$register();
 
-  soki.listenOnConnectionOpenEvent(async () => {
-    const lastModified = await cmIDB.get.lastModifiedAt();
+  const getFreshes = async (lastModified: number) => {
     await cmFreshesSokiInvocatorClient.requestFreshes(null, lastModified);
 
     onLocalComCommentsSendEvent.invoke();
+  };
+
+  soki.listenOnConnectionOpenEvent(async () => {
+    const lastModified = await cmIDB.get.lastModifiedAt();
+    getFreshes(lastModified);
   });
 
-  soki.onAuthorizeEvent.listen(() => cmIDB.updateLastModifiedAt(0));
+  soki.onAuthorizeEvent.listen(async () => {
+    await cmIDB.updateLastModifiedAt(0);
+    await getFreshes(0);
+  });
 };

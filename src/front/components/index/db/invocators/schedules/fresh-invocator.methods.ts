@@ -4,19 +4,21 @@ import { LocalSokiAuth } from 'shared/api';
 import { IndexBasicsSokiInvocatorModel } from 'shared/api/invocators/index/basics-invocators.model';
 import { authIDB } from '../../auth-idb';
 
-const auth = ({ auth, token }: { auth: LocalSokiAuth; token: string }) => {
-  authIDB.set.auth(auth);
-  authIDB.set.token(token);
-  soki.onConnectionOpenEvent.invoke(true);
-  soki.onAuthorizeEvent.invoke();
+const tgAuthorize = async ({ auth, token }: { auth: LocalSokiAuth; token: string }) => {
+  await authIDB.set.auth(auth);
+  await authIDB.set.token(token);
+
+  soki.onBeforeAuthorizeEvent.invoke();
+  setTimeout(() => soki.onAuthorizeEvent.invoke(), 100);
 };
 
 class IndexBasicsSokiInvocatorClient extends SokiInvocatorClient<IndexBasicsSokiInvocatorModel> {}
 export const indexBasicsSokiInvocatorClient = new IndexBasicsSokiInvocatorClient('IndexBasicsSokiInvocatorClient', {
   requestFreshes: true,
   getDeviceId: true,
-  authMeByTelegramNativeButton: auth,
-  authMeByTelegramBotNumber: auth,
-  authMeByTelegramMiniButton: auth,
-  authMeByTelegramInScheduleDay: auth,
+
+  authMeByTelegramNativeButton: tgAuthorize,
+  authMeByTelegramBotNumber: tgAuthorize,
+  authMeByTelegramMiniButton: tgAuthorize,
+  authMeByTelegramInScheduleDay: tgAuthorize,
 });

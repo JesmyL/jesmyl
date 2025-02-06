@@ -7,8 +7,7 @@ import { DeviceId } from 'shared/api';
 export const appInitialInvokes = () => {
   indexSokiInvocatorBaseClient.$$register();
 
-  soki.listenOnConnectionOpenEvent(async () => {
-    const lastModified = await indexIDB.get.lastModifiedAt();
+  const getFreshes = async (lastModified: number) => {
     indexBasicsSokiInvocatorClient.requestFreshes(null, lastModified);
 
     const localDeviceId = await indexIDB.get.deviceId();
@@ -16,7 +15,15 @@ export const appInitialInvokes = () => {
       const deviceId = await indexBasicsSokiInvocatorClient.getDeviceId(null);
       indexIDB.set.deviceId(deviceId);
     }
+  };
+
+  soki.listenOnConnectionOpenEvent(async () => {
+    const lastModified = await indexIDB.get.lastModifiedAt();
+    getFreshes(lastModified);
   });
 
-  soki.onAuthorizeEvent.listen(() => indexIDB.updateLastModifiedAt(0));
+  soki.onAuthorizeEvent.listen(async () => {
+    await indexIDB.updateLastModifiedAt(0);
+    await getFreshes(0);
+  });
 };
