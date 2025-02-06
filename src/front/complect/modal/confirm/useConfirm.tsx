@@ -9,7 +9,7 @@ export const useConfirm = () => {
   const [bodyContent, setBodyContent] = useState<ReactNode>();
   const [headerContent, setHeaderContent] = useState<ReactNode>('Подтверди');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [confirmationResolvers, setConfirmationResolvers] = useState(Promise.withResolvers<boolean>());
+  const [confirmationResolvers, setConfirmationResolvers] = useState(() => Promise.withResolvers<boolean>());
 
   useEffect(() => {
     if (!isModalOpen) return;
