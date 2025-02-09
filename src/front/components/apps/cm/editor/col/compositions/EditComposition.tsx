@@ -17,6 +17,7 @@ import { cmComClientInvocatorMethods } from '../../cm-editor-invocator.methods';
 import { editCompositionNavs } from '../../editorNav';
 import PhaseCmEditorContainer from '../../phase-editor-container/PhaseCmEditorContainer';
 import { removedCompositionsAtom } from './atoms';
+import EditCompositionBusyInfo, { StyledIsThereOtherFirstRedactorUserDetect } from './EditCompositionBusyInfo';
 import { useCcomw, useEditableCcom } from './useEditableCcom';
 
 export default function EditComposition() {
@@ -24,7 +25,6 @@ export default function EditComposition() {
   const ccomw = useCcomw();
   const removedComs = useAtomValue(removedCompositionsAtom);
   const [isOpenPlayer, setIsOpenPlayer] = useState(false);
-  // const auth = useAuth();
   const connectionNode = useConnectionState('margin-gap');
   const navigate = useNavigate();
 
@@ -81,12 +81,14 @@ export default function EditComposition() {
       }
       content={
         <>
+          {mylib.isNaN(ccomw) || <EditCompositionBusyInfo comw={ccomw} />}
+
           <div className="flex around sticky nav-panel">
-            {editCompositionNavs.map(({ data: { iconPack } = {}, phase: [phase] }) => {
+            {editCompositionNavs.map(({ iconPack, path }) => {
               return (
                 <NavLink
-                  key={phase}
-                  to={phase}
+                  key={path}
+                  to={path}
                   className="pointer"
                   end
                 >
@@ -103,6 +105,7 @@ export default function EditComposition() {
               );
             })}
           </div>
+
           {isOpenPlayer && ccom.audio && (
             <div className="sticky com-player">
               <ComPlayer
@@ -111,14 +114,22 @@ export default function EditComposition() {
               />
             </div>
           )}
-          <Outlet />
+          <StyledOutlet>
+            <Outlet />
+          </StyledOutlet>
         </>
       }
     />
   );
 }
 
+const StyledOutlet = styled.div``;
+
 const StyledContainer = styled(PhaseCmEditorContainer)`
+  &:has(${StyledIsThereOtherFirstRedactorUserDetect}) ${StyledOutlet} {
+    opacity: 0.3;
+  }
+
   .cat-list-title {
     background-color: var(--color--2);
   }

@@ -9,7 +9,7 @@ import Dropdown from '../../../../../complect/dropdown/Dropdown';
 import { DropdownItem } from '../../../../../complect/dropdown/Dropdown.model';
 import IconCheckbox from '../../../../../complect/the-icon/IconCheckbox';
 import { eeStorage } from '../../base/ee-storage/EeStorage';
-import { cmOtherClientInvocatorMethods } from '../cm-editor-invocator.methods';
+import { cmEditorClientInvocatorMethods } from '../cm-editor-invocator.methods';
 import PhaseCmEditorContainer from '../phase-editor-container/PhaseCmEditorContainer';
 import { EERulesListComputer } from './EERulesListComputer';
 import { EERulesWord } from './EERulesWord';
@@ -52,7 +52,7 @@ export default function EERules() {
             `Отправить ${words.length} ${mylib.declension(words.length, 'слово', 'слова', 'слов')}: ` +
             `${words.join(', ')}`
           }
-          onSend={() => cmOtherClientInvocatorMethods.setEEWords(null, editedWords)}
+          onSend={() => cmEditorClientInvocatorMethods.setEEWords(null, editedWords)}
           onSuccess={() => setEditedWords({})}
         />
       }

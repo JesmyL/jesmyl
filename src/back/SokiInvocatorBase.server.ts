@@ -1,11 +1,11 @@
-import { InvocatorServerEvent, LocalSokiAuth } from 'shared/api';
+import { InvocatorServerEvent, LocalSokiAuth, SokiVisit } from 'shared/api';
 import { makeSokiInvocatorBase } from 'shared/api/complect/SokiInvocatorBase.master';
 import { smylib } from 'shared/utils';
 import { WebSocket } from 'ws';
 import { onSokiServerEventerInvocatorInvoke } from './complect/soki/eventers';
 import { jesmylChangesBot } from './sides/telegram-bot/control/jesmylChangesBot';
 
-export type SokiServerInvocatorTool = { client: WebSocket; auth: LocalSokiAuth | und };
+export type SokiServerInvocatorTool = { client: WebSocket; auth: LocalSokiAuth | und; visit: SokiVisit | und };
 
 export const SokiInvocatorBaseServer = makeSokiInvocatorBase<
   InvocatorServerEvent,

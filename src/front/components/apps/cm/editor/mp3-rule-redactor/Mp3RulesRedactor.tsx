@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { CmMp3Rule } from 'shared/api';
 import { IconPlusSignCircleStrokeRounded } from '../../../../../complect/the-icon/icons/plus-sign-circle';
-import { cmOtherClientInvocatorMethods } from '../cm-editor-invocator.methods';
+import { cmEditorClientInvocatorMethods } from '../cm-editor-invocator.methods';
 import PhaseCmEditorContainer from '../phase-editor-container/PhaseCmEditorContainer';
 import Mp3RuleEditor from './Mp3RuleEditor';
 import { useCmMp3Rules } from './useCmMp3Rules';
@@ -30,7 +30,7 @@ export default function Mp3RulesRedactor() {
                     newRedacts.splice(index, 1, newRule);
                     updateRedactRules(newRedacts);
 
-                    cmOtherClientInvocatorMethods.setMp3Rule(null, newRule);
+                    cmEditorClientInvocatorMethods.setMp3Rule(null, newRule);
                   }
                 }}
               />
@@ -56,7 +56,7 @@ export default function Mp3RulesRedactor() {
                 updateNewRules([...newRules, rule]);
                 setIsOpenNewRule(false);
 
-                cmOtherClientInvocatorMethods.addMp3Rule(null, rule);
+                cmEditorClientInvocatorMethods.addMp3Rule(null, rule);
               }}
             />
           )}

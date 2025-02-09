@@ -95,9 +95,9 @@ export class SokiServer {
         }
 
         const auth = this.auths.get(client);
+        const visit = this.visits.get(client);
 
         if (event.errorMessage !== undefined) {
-          const visit = this.visits.get(client);
           if (!this.isLocalhost(visit?.urls[0]))
             tglogger.userErrors(
               `${event.errorMessage}\n\n${this.authStringified(auth)}\n\n${this.visitStringified(visit)}`,
@@ -109,7 +109,7 @@ export class SokiServer {
         onSokiServerEventerInvocatorInvoke.invoke({
           invoke: event.invoke,
           sendResponse: this.sendInvokeEvent,
-          tool: { client, auth },
+          tool: { client, auth, visit },
           requestId: event.requestId,
         });
       });
@@ -134,6 +134,12 @@ export class SokiServer {
       this.clients.forEach(client => {
         if (clientSelector(client, this.auths.get(client))) client.send(stringEvent);
       });
+      return;
+    }
+
+    if ('forEach' in clientSelector) {
+      if (!smylib.isFunc(clientSelector.forEach)) return;
+      clientSelector.forEach(client => client.send(stringEvent));
       return;
     }
 

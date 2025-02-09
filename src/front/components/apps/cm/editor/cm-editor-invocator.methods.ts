@@ -76,11 +76,13 @@ export const cmComOrderClientInvocatorMethods = new CmComOrderSokiInvocatorClien
 });
 
 class CmEditorSokiInvocatorClient extends SokiInvocatorClient<CmEditorSokiInvocatorModel> {}
-export const cmOtherClientInvocatorMethods = new CmEditorSokiInvocatorClient('CmEditorSokiInvocatorClient', {
+export const cmEditorClientInvocatorMethods = new CmEditorSokiInvocatorClient('CmEditorSokiInvocatorClient', {
   setChords: true,
   setEEWords: true,
   getMp3RulesList: true,
   setMp3Rule: true,
   addMp3Rule: true,
   getResourceHTMLString: true,
+  watchComBusies: true,
+  unwatchComBusies: true,
 });

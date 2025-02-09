@@ -28,11 +28,11 @@ export default function IconCheckbox(props: Props) {
           try {
             setIsLoading(true);
             await props.onClick!();
-            props.onChange!(!props.checked);
+            props.onChange?.(!props.checked);
             setIsLoading(false);
           } catch (error) {}
         }
-      : () => props.onChange!(!props.checked)
+      : () => props.onChange?.(!props.checked)
     : undefined;
 
   const renderNode = (Icon: TheIconType) => {

@@ -110,11 +110,11 @@ export default function EditCompositions() {
         path=":comw"
         element={<EditComposition />}
       >
-        {editCompositionNavs.map(({ path, element }) => (
+        {editCompositionNavs.map(({ path, Component }) => (
           <Route
             key={path}
             path={path}
-            element={element}
+            element={<Component />}
           />
         ))}
       </Route>

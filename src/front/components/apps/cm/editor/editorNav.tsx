@@ -21,83 +21,53 @@ import ComRepeats from './col/compositions/repeats/ComRepeats';
 
 export const editCompositionNavs = [
   {
-    phase: [''],
     path: '',
-    element: <EditableCompositionWatch />,
-    data: {
-      iconPack: iconPackOfView,
-    },
+    Component: EditableCompositionWatch,
+    iconPack: iconPackOfView,
   },
   {
-    phase: ['aps'],
     path: 'aps',
-    element: <ChordApplicationsRedactor />,
-    data: {
-      iconPack: iconPackOfUmbrella,
-    },
+    Component: ChordApplicationsRedactor,
+    iconPack: iconPackOfUmbrella,
   },
   {
-    phase: ['ord'],
     path: 'ord',
-    element: <OrdersRedactor />,
-    data: {
-      iconPack: iconPackOfDistributeVerticalTop,
-    },
+    Component: OrdersRedactor,
+    iconPack: iconPackOfDistributeVerticalTop,
   },
   {
-    phase: ['txt'],
     path: 'txt',
-    element: <CmTextBlocksRedactor />,
-    data: {
-      iconPack: iconPackOfTextVerticalAlignment,
-    },
+    Component: CmTextBlocksRedactor,
+    iconPack: iconPackOfTextVerticalAlignment,
   },
   {
-    phase: ['ch'],
     path: 'ch',
-    element: <CmChordsBlocksRedactor />,
-    data: {
-      iconPack: iconPackOfPlaylist03,
-    },
+    Component: CmChordsBlocksRedactor,
+    iconPack: iconPackOfPlaylist03,
   },
   {
-    phase: ['audio'],
     path: 'audio',
-    element: <ComAudioTab />,
-    data: {
-      iconPack: iconPackOfVoice,
-    },
+    Component: ComAudioTab,
+    iconPack: iconPackOfVoice,
   },
   {
-    phase: ['cat'],
     path: 'cat',
-    element: <CategoryBinds />,
-    data: {
-      iconPack: iconPackOfBookOpen02,
-    },
+    Component: CategoryBinds,
+    iconPack: iconPackOfBookOpen02,
   },
   {
-    phase: ['rep'],
     path: 'rep',
-    element: <ComRepeats />,
-    data: {
-      iconPack: iconPackOfLayers01,
-    },
+    Component: ComRepeats,
+    iconPack: iconPackOfLayers01,
   },
   {
-    phase: ['tr'],
     path: 'tr',
-    element: <ComOnTranslations />,
-    data: {
-      iconPack: iconPackOfComputer,
-    },
+    Component: ComOnTranslations,
+    iconPack: iconPackOfComputer,
   },
   {
-    phase: ['main'],
     path: 'main',
-    element: <EditableCompositionMain />,
-    data: {
-      iconPack: iconPackOfSchoolReportCard,
-    },
+    Component: EditableCompositionMain,
+    iconPack: iconPackOfSchoolReportCard,
   },
 ] as const;

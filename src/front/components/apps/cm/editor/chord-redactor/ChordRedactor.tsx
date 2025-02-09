@@ -11,7 +11,7 @@ import { IconPlusSignCircleStrokeRounded } from '../../../../../complect/the-ico
 import { cmIDB } from '../../_db/cm-idb';
 import { useToNewChordSearches } from '../../col/com/chord-card/chord-redactor-searches';
 import ChordCard from '../../col/com/chord-card/ChordCard';
-import { cmOtherClientInvocatorMethods } from '../cm-editor-invocator.methods';
+import { cmEditorClientInvocatorMethods } from '../cm-editor-invocator.methods';
 import { correctChordNameReg } from '../Editor.complect';
 import PhaseCmEditorContainer from '../phase-editor-container/PhaseCmEditorContainer';
 import ChordRedactableTrack from './ChordRedactableTrack';
@@ -131,7 +131,7 @@ export default function ChordRedactor() {
           className="margin-gap"
           confirm={`Отправить аккорды ${mylib.keys(chordsToSend).join('; ')} ?`}
           onClick={async () => {
-            await cmOtherClientInvocatorMethods.setChords(null, chordsToSend);
+            await cmEditorClientInvocatorMethods.setChords(null, chordsToSend);
             setChordsToSend({});
             updateRedactableChords({});
           }}
