@@ -1,4 +1,4 @@
-import { smylib } from 'shared/utils';
+import { emptyFunc, smylib } from 'shared/utils';
 
 export const setSharedPolyfills = () => {
   const setArrayProtoMethod = <Name extends keyof typeof Array.prototype>(
@@ -23,6 +23,18 @@ export const setSharedPolyfills = () => {
         value,
         enumerable: false,
       });
+  };
+
+  Promise.withResolvers ??= <T>(): PromiseWithResolvers<T> => {
+    let resolve: (value: T | PromiseLike<T>) => void = emptyFunc;
+    let reject: (reason?: any) => void = emptyFunc;
+
+    const promise = new Promise<T>((res, rej) => {
+      resolve = res;
+      reject = rej;
+    });
+
+    return { promise, reject, resolve };
   };
 
   setArrayProtoMethod('flat', function <Item>(this: unknown, depth?: number) {

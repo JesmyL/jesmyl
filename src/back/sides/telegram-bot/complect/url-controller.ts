@@ -156,9 +156,7 @@ export const tgBotUrlController = async (
     } catch (error) {
       const deleteTime = 30;
       const sentMessage = await bot.postMessage(
-        `${alertMessage}
-  
-<b>Это сообщение будет удалено через ${deleteTime} секунд</b>`,
+        `${alertMessage}\n\n<b>Это сообщение будет удалено через ${deleteTime} секунд</b>`,
       );
 
       setTimeout(() => bot.deleteMessage(sentMessage.message_id), deleteTime * 1000);

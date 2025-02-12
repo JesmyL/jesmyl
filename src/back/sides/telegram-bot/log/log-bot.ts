@@ -82,7 +82,7 @@ export class TgLogger {
 
   jsonCode(data: unknown) {
     try {
-      this.bot.postMessage('<code>' + JSON.stringify(data, null, 1) + '</code>', this.replyToScope('jsonCode'));
+      this.bot.postMessage(`<code>${JSON.stringify(data, null, 1)}</code>`, this.replyToScope('jsonCode'));
     } catch (error) {}
   }
 }

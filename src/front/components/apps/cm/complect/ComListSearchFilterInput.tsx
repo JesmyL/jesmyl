@@ -50,7 +50,7 @@ export const CmComListSearchFilterInput = <ComConstructor extends Com>({
   return (
     <DebouncedSearchInput
       placeholder="Песни"
-      className="debounced-searcher round-styled"
+      className="com-search debounced-searcher round-styled"
       debounce={500}
       initialTerm={term}
       onSearch={setTerm}

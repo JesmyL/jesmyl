@@ -185,7 +185,7 @@ export class JesmylTelegramBot {
   }
 
   postMessage(text: string, options?: TgBot.SendMessageOptions, chatId?: number) {
-    const message = text.replace(makeRegExp('/<(anonymous>)/g'), '&lt;$1');
+    const message = text.replace(makeRegExp('/<((anonymous|computed)>)/g'), '&lt;$1');
     const messageOptions = {
       parse_mode: 'HTML',
       ...options,

@@ -85,7 +85,7 @@ export const TheComComment = ({ comw }: Props) => {
           Заметки
           <IconButton
             Icon={isRedact ? IconCheckmarkCircle02StrokeRounded : IconEdit01StrokeRounded}
-            className="flex full-width between color--7 margin-gap-v"
+            className="com-notes-edit-button flex full-width between color--7 margin-gap-v"
             onClick={() => setIsRedact(isNIs)}
           />
           {comComment?.isSavedLocal ? (
@@ -121,7 +121,7 @@ export const TheComComment = ({ comw }: Props) => {
       )}
       {isRedact ? (
         <StyledInput
-          className="full-width bgcolor--2"
+          className="com-comment-input full-width bgcolor--2"
           ref={inputRef}
         />
       ) : (

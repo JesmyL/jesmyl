@@ -8,13 +8,16 @@ export const appInitialInvokes = () => {
   indexSokiInvocatorBaseClient.$$register();
 
   const getFreshes = async (lastModified: number) => {
-    indexBasicsSokiInvocatorClient.requestFreshes(null, lastModified);
-
     const localDeviceId = await indexIDB.get.deviceId();
-    if (localDeviceId === DeviceId.def) {
-      const deviceId = await indexBasicsSokiInvocatorClient.getDeviceId(null);
-      indexIDB.set.deviceId(deviceId);
-    }
+
+    try {
+      if (localDeviceId === DeviceId.def) {
+        const deviceId = await indexBasicsSokiInvocatorClient.getDeviceId(null);
+        indexIDB.set.deviceId(deviceId);
+      }
+    } catch (e) {}
+
+    await indexBasicsSokiInvocatorClient.requestFreshes(null, lastModified);
   };
 
   soki.listenOnConnectionOpenEvent(async () => {
@@ -22,8 +25,5 @@ export const appInitialInvokes = () => {
     getFreshes(lastModified);
   });
 
-  soki.onAuthorizeEvent.listen(async () => {
-    await indexIDB.updateLastModifiedAt(0);
-    await getFreshes(0);
-  });
+  soki.onAuthorizeEvent.listen(() => getFreshes(0));
 };

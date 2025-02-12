@@ -6,6 +6,8 @@ export type SokiServerClientSelector =
   | WebSocket[]
   | MapIterator<WebSocket>
   | SetIterator<WebSocket>
+  | Set<WebSocket>
+  | Map<unknown, WebSocket>
   | null
   | ((client: WebSocket, auth: LocalSokiAuth | und) => boolean)
   | { login: SokiAuthLogin; ignoreClient?: WebSocket };
