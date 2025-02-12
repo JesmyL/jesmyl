@@ -5,6 +5,8 @@
 /.pnp
 .pnp.js
 /src/back/back.index.js
+/src/back/.env.mode
+/src/back/file-stores
 
 # testing
 /coverage

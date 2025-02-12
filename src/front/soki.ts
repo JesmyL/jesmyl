@@ -1,7 +1,8 @@
-import { environment, InvocatorClientEvent, InvocatorServerEvent } from 'shared/api';
+import { InvocatorClientEvent, InvocatorServerEvent } from 'shared/api';
 import { Eventer, makeRegExp } from 'shared/utils';
 import { authIDB } from './components/index/db/auth-idb';
 import { indexIDB } from './components/index/db/index-idb';
+import { environment } from './environments';
 import { onSokiClientEventerInvocatorInvoke } from './eventers';
 
 export class SokiTrip {
@@ -54,7 +55,7 @@ export class SokiTrip {
   };
 
   start() {
-    this.ws = new WebSocket(`wss://${environment.dns}/websocket/`);
+    this.ws = new WebSocket(environment.sokiLink);
 
     this.ws.onclose = () => {
       setTimeout(() => this.start(), 500);

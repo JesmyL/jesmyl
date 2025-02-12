@@ -1,5 +1,4 @@
 import { EventerListenScope, smylib } from 'shared/utils';
-import { isDevelopmentMode } from './environments';
 import { SokiInvokerTranferDto } from './invocator.master.model';
 import { InvocatorBaseEvent } from './soki.model';
 
@@ -9,6 +8,7 @@ export const makeSokiInvocatorBase = <
   ToolParam = und,
   OnEachesRet = void,
 >(
+  isNeedCheckClassName: boolean,
   classNamePostfix: ClassNamePostfix,
   eventerValue: EventerListenScope<SokiInvokerTranferDto<Event, ToolParam>>,
   onEachInvoke?: (onEachesRet: OnEachesRet, data: { tool: ToolParam; name: string; method: string }) => void,
@@ -64,7 +64,7 @@ export const makeSokiInvocatorBase = <
   ) {
     const self = this as Methods;
 
-    if (isDevelopmentMode) {
+    if (isNeedCheckClassName) {
       if (self.constructor.name !== className)
         throw new Error(`${self.constructor.name} error. constructor name and className must equal`);
     }

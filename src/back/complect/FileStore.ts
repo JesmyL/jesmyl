@@ -1,7 +1,10 @@
+import { backConfig } from 'back/config/backConfig';
 import fs, { StatsListener } from 'fs';
 import { itIt } from 'shared/utils';
 
 const registeredPaths = new Set<string>();
+
+const initialFileDir = `${__dirname}${backConfig.fileStoreDir}`;
 
 export class FileStore<Value> {
   private value: Value;
@@ -11,30 +14,30 @@ export class FileStore<Value> {
     path: `/${string}`,
     private defaultValue: Value,
   ) {
-    this.filePath = `${__dirname}${path}`;
+    this.filePath = `${initialFileDir}${path}`;
     this.value = this.readValue(defaultValue);
     if (registeredPaths.has(path)) throw new Error(`The path ${path} was registered again`);
     registeredPaths.add(path);
   }
 
-  private readValue(defaultValue: Value, filePath = this.filePath) {
+  private readValue(defaultValue: Value) {
     try {
-      return JSON.parse('' + fs.readFileSync(filePath));
+      return JSON.parse('' + fs.readFileSync(this.filePath));
     } catch (error) {
       return defaultValue;
     }
   }
 
-  private writeValue(value: Value, filePath = this.filePath) {
+  private writeValue(value: Value) {
     try {
-      fs.writeFileSync(filePath, JSON.stringify(value));
+      fs.writeFileSync(this.filePath, JSON.stringify(value));
       return true;
     } catch (error) {
       try {
-        let prev = '/';
+        const splits = this.filePath.split('/');
+        let prev = splits[0] === '' ? '/' : '';
 
-        filePath
-          .split('/')
+        splits
           .filter(itIt)
           .slice(0, -1)
           .forEach(pathPart => {
@@ -43,7 +46,7 @@ export class FileStore<Value> {
             prev = `${path}/`;
           });
 
-        fs.writeFileSync(filePath, JSON.stringify(value));
+        fs.writeFileSync(this.filePath, JSON.stringify(value));
 
         return true;
       } catch (error) {

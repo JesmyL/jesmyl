@@ -1,6 +1,6 @@
 export * from './complect/apps';
 export * from './complect/enums';
-export * from './complect/environments';
+export * from './complect/hosts';
 export * from './complect/invocator.master.model';
 export * from './complect/noun-pronoun';
 export * from './complect/schedule-widget';

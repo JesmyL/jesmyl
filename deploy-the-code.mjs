@@ -1,6 +1,6 @@
 import { exec } from 'child_process';
-import { build } from 'esbuild';
 import file_system from 'fs';
+import { buildBackIndexFile } from './build-back-index.mjs';
 
 /**
  *
@@ -52,26 +52,9 @@ export const deployTheCode = async (front, back) => {
   }
 
   if (~process.argv.indexOf('--back')) {
-    const filePath = 'src/back/back.index';
     console.info('back.index file build is running...');
 
-    await build({
-      entryPoints: [`${filePath}.ts`],
-      outfile: `${filePath}.js`,
-      bundle: true,
-      minify: false,
-      platform: 'node',
-      format: 'cjs',
-      keepNames: true,
-      minifyWhitespace: true,
-      // minifyIdentifiers: true,
-      treeShaking: true,
-
-      charset: 'utf8',
-      external: ['node-schedule', 'ws', '@prisma/client', '.prisma/client', 'MyLib'],
-      // drop: ['console', 'debugger'],
-      dropLabels: ['DEV', 'TEST'],
-    });
+    const filePath = await buildBackIndexFile();
 
     console.info('...sending back files on server');
 

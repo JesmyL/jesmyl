@@ -13,7 +13,8 @@ import { FreeAnswerCallbackQueryOptions, JesmylTelegramBot } from './tg-bot';
 
 export class JesmylTelegramBotWrapper {
   bot: TgBot;
-  private fromOptionsOnCallbackQueryCallback: Record<string, JTgBotCallbackQueryWithoutBot> = {};
+  private fromOptionsOnCallbackQueryCallback: Record<string, { cb: JTgBotCallbackQueryWithoutBot; chatId: number }> =
+    {};
   private chatCallbackQueryCallbacks: Record<string, JTgBotCallbackQueryWithoutBot> = {};
   private chatMessagesCallbacks: Record<string, JTgBotChatMessageCallbackWithoutBot[]> = {};
   private personalMessageListeners: EventerListeners<TgBot.Message> = [];
@@ -74,7 +75,11 @@ export class JesmylTelegramBotWrapper {
       }
 
       if (query.data && this.fromOptionsOnCallbackQueryCallback[query.data] !== undefined) {
-        const answerResult = await this.fromOptionsOnCallbackQueryCallback[query.data](query, answer);
+        const { cb, chatId } = this.fromOptionsOnCallbackQueryCallback[query.data];
+
+        if (query.message?.chat.id !== chatId) return;
+
+        const answerResult = await cb(query, answer);
         if (answerResult !== undefined) {
           answer(answerResult);
           return;
@@ -162,7 +167,10 @@ export class JesmylTelegramBotWrapper {
 
       const cb = key.cb;
 
-      this.fromOptionsOnCallbackQueryCallback[cbData] = (message, answer) => cb(bot, message, answer);
+      this.fromOptionsOnCallbackQueryCallback[cbData] = {
+        cb: (message, answer) => cb(bot, message, answer),
+        chatId: bot.chatId,
+      };
     });
 
     return {

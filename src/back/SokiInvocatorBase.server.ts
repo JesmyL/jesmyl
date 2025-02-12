@@ -12,7 +12,7 @@ export const SokiInvocatorBaseServer = makeSokiInvocatorBase<
   'SokiInvocatorBaseServer',
   SokiServerInvocatorTool,
   string | ((tool: SokiServerInvocatorTool) => string)
->('SokiInvocatorBaseServer', onSokiServerEventerInvocatorInvoke, (titleScalar, { tool, method, name }) => {
+>(false, 'SokiInvocatorBaseServer', onSokiServerEventerInvocatorInvoke, (titleScalar, { tool, method, name }) => {
   if (titleScalar === '') return;
 
   const title = smylib.isFunc(titleScalar) ? titleScalar(tool) : titleScalar;
