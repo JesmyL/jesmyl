@@ -20,6 +20,7 @@ export const EditCompositionsMore = ({ onClose }: { onClose(is: false): void }) 
         </FullContent>
       )}
       <BottomPopupItem
+        id="create-com-button"
         Icon={IconPlusSignCircleStrokeRounded}
         title="Новая песня"
         onClick={event => {

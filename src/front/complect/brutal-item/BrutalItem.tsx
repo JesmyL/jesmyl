@@ -2,21 +2,16 @@ import { ReactNode } from 'react';
 import { Link, To } from 'react-router-dom';
 import styled from 'styled-components';
 
-export default function BrutalItem({
-  onClick,
-  icon,
-  title,
-  box,
-  description,
-  to,
-}: {
+type Props = {
   icon: JSX.Element;
   title: string;
   box?: ReactNode;
   description?: ReactNode;
   to?: To;
   onClick?: (event: unknown) => void;
-}) {
+};
+
+export default function BrutalItem({ onClick, icon, title, box, description, to }: Props) {
   const inner = (
     <Item className="pointer flex between relative">
       <div className="nowrap over-hidden flex center">
@@ -38,6 +33,7 @@ export default function BrutalItem({
 
   return to ? (
     <Link
+      id={`edit-${to}`}
       to={to}
       className="full-width"
     >
@@ -45,6 +41,7 @@ export default function BrutalItem({
     </Link>
   ) : (
     <div
+      id={`edit-${to}`}
       className="flex between relative full-width"
       onClick={onClick}
     >

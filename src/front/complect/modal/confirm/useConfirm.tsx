@@ -30,6 +30,7 @@ export const useConfirm = () => {
           <ModalFooter>
             <span className="flex flex-big-gap">
               <span
+                id="confirm-button-YES"
                 className="pointer"
                 onClick={() => {
                   confirmationResolvers.resolve(true);
@@ -39,6 +40,7 @@ export const useConfirm = () => {
                 Да
               </span>
               <span
+                id="confirm-button-NO"
                 className="pointer"
                 onClick={() => {
                   confirmationResolvers.resolve(false);

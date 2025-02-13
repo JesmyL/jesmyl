@@ -48,12 +48,14 @@ export default function PhaseContainerConfigurer(props: PhaseContainerConfigurer
           <StyledPhaseContainerConfigurerHead>{props.head}</StyledPhaseContainerConfigurerHead>
           {props.onMoreClick && (
             <IconMoreVerticalCircle01StrokeRounded
+              id="phase-container-header-more-button"
               className="action-button"
               onClick={() => props.onMoreClick?.(true)}
             />
           )}
         </StyledPhaseContainerConfigurerHeadWithMoreIcon>
       </StyledPhaseContainerConfigurerHeader>
+
       <StyledPhaseContainerConfigurerContent
         className={`content ${props.contentClass || ' padding-gap'}`}
         ref={props.contentRef}

@@ -43,8 +43,6 @@ export const useListInfiniteScrollController = <Item>(
   const limitEventer = useOnScrolledToLimitEventer(listRef);
 
   useEffect(() => {
-    if (listRef.current === null) return;
-
     return limitEventer.listen(border => {
       if (border === 'start')
         setLimits(limits => ({
@@ -53,7 +51,7 @@ export const useListInfiniteScrollController = <Item>(
         }));
       else setLimits(limits => ({ ...limits, finish: limits.finish + addItemsCount }));
     });
-  }, [addItemsCount, limitEventer, listRef]);
+  }, [addItemsCount, limitEventer]);
 
   return {
     limits,

@@ -4,7 +4,6 @@ import { Route, Routes } from 'react-router-dom';
 import { itNNull } from 'shared/utils';
 import { appNames } from '../../../../app/App.model';
 import { routingApps } from '../../../../app/routing-apps';
-import { BottomPopup } from '../../../../complect/absolute-popup/bottom-popup/BottomPopup';
 import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
 import BrutalScreen from '../../../../complect/brutal-screen/BrutalScreen';
 import { FullContent } from '../../../../complect/fullscreen-content/FullContent';
@@ -23,14 +22,12 @@ import { IndexTelegramInlineAuthButton } from '../login/IndexTelegramInlineAuthB
 import IndexSettings from '../settings/Settings';
 import { AppFace } from './AppFace';
 import { IndexProfileInfo } from './ProfileInfo';
-import { UserMore } from './UserMore';
 
 const IndexAuthorization = React.lazy(() => import('../login/IndexAuthorization'));
 
 export default function IndexMain() {
   const currentAppName = useCurrentApp();
 
-  const [isUserMoreOpen, setIsUserMoreOpen] = useState<unknown>(false);
   const [isAboutOpen, setIsAboutOpen] = useState<unknown>(false);
 
   const auth = useAuth();
@@ -66,12 +63,7 @@ export default function IndexMain() {
                   {connectionNode}
 
                   <div className="margin-gap-h pointer flex flex-gap">
-                    {auth.level > 0 && (
-                      <IndexProfileInfo
-                        auth={auth}
-                        onClick={setIsUserMoreOpen}
-                      />
-                    )}
+                    {auth.login && <IndexProfileInfo auth={auth} />}
                   </div>
                 </div>
               }
@@ -113,12 +105,6 @@ export default function IndexMain() {
                       <div className="title">Другие программы</div>
                       {appList}
                     </BrutalScreen>
-                  )}
-
-                  {isUserMoreOpen && (
-                    <BottomPopup onClose={setIsUserMoreOpen}>
-                      <UserMore onClose={setIsUserMoreOpen} />
-                    </BottomPopup>
                   )}
 
                   {isAboutOpen && (

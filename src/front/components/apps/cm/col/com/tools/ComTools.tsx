@@ -24,19 +24,21 @@ export const ComTools = () => {
   return (
     <>
       <BottomPopupItem
+        id="transpose-tool"
         Icon={IconSlidersHorizontalStrokeRounded}
         className={chordVisibleVariant === ChordVisibleVariant.None ? 'disabled' : undefined}
         title="Тональность"
         rightNode={
           <>
             <IconMinusSignStrokeRounded
+              className="minus"
               onClick={event => {
                 event.stopPropagation();
                 ccom.transpose(-1);
               }}
             />
             <div
-              className={ifixedCom?.ton == null ? undefined : 'color--7'}
+              className={'center' + (ifixedCom?.ton == null ? '' : ' color--7')}
               onClick={event => {
                 event.stopPropagation();
                 ccom.setChordsInitialTon();
@@ -45,6 +47,7 @@ export const ComTools = () => {
               {ccom.firstChord}
             </div>
             <IconPlusSignStrokeRounded
+              className="plus"
               onClick={event => {
                 event.stopPropagation();
                 ccom.transpose(1);
@@ -55,11 +58,13 @@ export const ComTools = () => {
       />
 
       <BottomPopupItem
+        id="font-size-tool"
         Icon={IconTextFontStrokeRounded}
         title="Размер шрифта"
         rightNode={
           <>
             <IconButton
+              className="minus"
               Icon={IconMinusSignStrokeRounded}
               disabled={fontSize < 0}
               onClick={event => {
@@ -67,26 +72,17 @@ export const ComTools = () => {
                 setFontSize(fontSize - 1);
               }}
             />
-            {fontSize < 0 ? (
-              <div
-                onClick={event => {
-                  event.stopPropagation();
-                  setFontSize(-fontSize);
-                }}
-              >
-                auto
-              </div>
-            ) : (
-              <div
-                onClick={event => {
-                  event.stopPropagation();
-                  setFontSize(-fontSize);
-                }}
-              >
-                {fontSize}
-              </div>
-            )}
+            <div
+              className="center"
+              onClick={event => {
+                event.stopPropagation();
+                setFontSize(-fontSize);
+              }}
+            >
+              {fontSize < 0 ? 'auto' : fontSize}
+            </div>
             <IconButton
+              className="plus"
               Icon={IconPlusSignStrokeRounded}
               disabled={fontSize < 0}
               onClick={event => {

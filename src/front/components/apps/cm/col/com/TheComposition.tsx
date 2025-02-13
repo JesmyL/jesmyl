@@ -85,7 +85,14 @@ export default function TheComposition() {
       contentRef={comListRef}
       withoutBackSwipe
       rememberProps={['comw']}
-      head={<div className="flex flex-gap">{comToolsNode}</div>}
+      head={
+        <div
+          id="com-tools-top-panel"
+          className="flex flex-gap"
+        >
+          {comToolsNode}
+        </div>
+      }
       content={
         <>
           {isOpenChordImages && (
@@ -94,7 +101,10 @@ export default function TheComposition() {
             </FullContent>
           )}
           {isOpenTools && (
-            <BottomPopup onClose={setIsOpenTools}>
+            <BottomPopup
+              id="com-tools-bottom-popup"
+              onClose={setIsOpenTools}
+            >
               <ComTools />
             </BottomPopup>
           )}

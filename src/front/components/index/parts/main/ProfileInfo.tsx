@@ -1,23 +1,34 @@
+import { BottomPopup } from 'front/complect/absolute-popup/bottom-popup/BottomPopup';
 import { useState } from 'react';
 import { LocalSokiAuth } from 'shared/api';
 import styled from 'styled-components';
+import { UserMore } from './UserMore';
 
-export const IndexProfileInfo = ({ auth, onClick }: { auth: LocalSokiAuth; onClick: (event: unknown) => void }) => {
+export const IndexProfileInfo = ({ auth }: { auth: LocalSokiAuth }) => {
   const [isShowAva, setIsShowAva] = useState(true);
+  const [isUserMoreOpen, setIsUserMoreOpen] = useState<unknown>(false);
 
   return (
-    <div
-      className="flex center flex-gap"
-      onClick={onClick}
-    >
-      <Name className="ellipsis">{auth.fio}</Name>
-      {isShowAva && auth.tgAva && (
-        <Ava
-          src={auth.tgAva}
-          onError={() => setIsShowAva(false)}
-        />
+    <>
+      <div
+        id="profile-info"
+        className="flex center flex-gap"
+        onClick={setIsUserMoreOpen}
+      >
+        <Name className="ellipsis">{auth.fio}</Name>
+        {isShowAva && auth.tgAva && (
+          <Ava
+            src={auth.tgAva}
+            onError={() => setIsShowAva(false)}
+          />
+        )}
+      </div>
+      {isUserMoreOpen && (
+        <BottomPopup onClose={setIsUserMoreOpen}>
+          <UserMore onClose={setIsUserMoreOpen} />
+        </BottomPopup>
       )}
-    </div>
+    </>
   );
 };
 

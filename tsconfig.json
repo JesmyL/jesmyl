@@ -18,6 +18,6 @@
     "paths": {},
     "baseUrl": "src"
   },
-  "include": ["src", "src/back/complect/exert/exer", "src/shared/utils/complect"],
+  "include": ["src", "src/shared/utils/complect", "./node_modules/cypress", "cypress/**/*.ts"],
   "exclude": ["./src/front/complect/the-icon/icons"]
 }

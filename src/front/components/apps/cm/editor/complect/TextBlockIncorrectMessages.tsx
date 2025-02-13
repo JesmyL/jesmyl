@@ -1,12 +1,15 @@
 import styled, { css } from 'styled-components';
 import { CorrectsBox } from '../corrects-box/CorrectsBox';
 
+const classNamePostfix = '-correct-block';
+
 export const TextCorrectMessages = ({ corrects }: { corrects: CorrectsBox }) => {
   return (
     <>
       {corrects.errors?.map(({ message }, correcti) => {
         return (
           <StyledBox
+            className={`error${classNamePostfix}`}
             key={correcti}
             $isError
           >
@@ -17,6 +20,7 @@ export const TextCorrectMessages = ({ corrects }: { corrects: CorrectsBox }) => 
       {corrects.warnings?.map(({ message }, correcti) => {
         return (
           <StyledBox
+            className={`warning${classNamePostfix}`}
             key={correcti}
             $isWarning
           >
@@ -27,6 +31,7 @@ export const TextCorrectMessages = ({ corrects }: { corrects: CorrectsBox }) => 
       {corrects.unknowns?.map(({ message }, correcti) => {
         return (
           <StyledBox
+            className={`unknown${classNamePostfix}`}
             key={correcti}
             $isUnknown
           >

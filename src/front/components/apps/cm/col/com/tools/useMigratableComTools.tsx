@@ -18,7 +18,7 @@ import { OpenPlayerTool } from './complect/OpenPlayerTool';
 import { QrComShare } from './complect/QrComShare';
 import { SelectedToggleTool } from './complect/SelectedToggleTool';
 import { TranslationTool } from './complect/TranslationTool';
-import { ComToolItemAttrsContext, IsComToolIconItemsContext } from './ComTool';
+import { ComToolItemAttrsContext, ComToolNameContext, IsComToolIconItemsContext } from './ComTool';
 
 const RedactComTool = React.lazy(() => import('./complect/RedactComTool'));
 
@@ -32,24 +32,34 @@ const mapToolsSelf = {} as {
 };
 
 function mapTools(this: und | typeof mapToolsSelf, key: MigratableComToolName) {
-  if (this === undefined) return <React.Fragment key={key}>{toolsDict[key]}</React.Fragment>;
+  if (this === undefined)
+    return (
+      <ComToolNameContext.Provider
+        key={key}
+        value={`${key} tool-in-top`}
+      >
+        {toolsDict[key]}
+      </ComToolNameContext.Provider>
+    );
 
   return (
     <StyledItem
       key={key}
       $active={this.comTopTools.includes(key)}
     >
-      <ComToolItemAttrsContext.Provider
-        value={{
-          onIconClick: event => {
-            event.stopPropagation();
-            event.preventDefault();
-            this.fun(key);
-          },
-        }}
-      >
-        {toolsDict[key]}
-      </ComToolItemAttrsContext.Provider>
+      <ComToolNameContext.Provider value={key}>
+        <ComToolItemAttrsContext.Provider
+          value={{
+            onIconClick: event => {
+              event.stopPropagation();
+              event.preventDefault();
+              this.fun(key);
+            },
+          }}
+        >
+          {toolsDict[key]}
+        </ComToolItemAttrsContext.Provider>
+      </ComToolNameContext.Provider>
     </StyledItem>
   );
 }

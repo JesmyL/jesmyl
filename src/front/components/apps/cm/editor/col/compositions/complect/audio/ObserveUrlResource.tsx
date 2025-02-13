@@ -31,32 +31,13 @@ export default function ObserveUrlResource({
     <div>
       <div className="flex flex-between flex-gap">
         <KeyboardInput
-          className="half-width"
+          className="url-observer-input-wrapper half-width"
           placeholder="URL-адрес"
           value={url}
-          onFocus={async event => {
-            if (url) return;
-            try {
-              const val = await navigator.clipboard.readText();
-              if (val) {
-                try {
-                  const url = new URL(val);
-                  if (mp3Rules && !mp3Rules.some(u => new URL(u.url).host === url.host)) {
-                    setErrorMessage('Скопированный текст содержит неизвестный источник');
-                  } else {
-                    setUrl(url.toString());
-                    event.blur();
-                    setErrorMessage('');
-                  }
-                } catch (e) {
-                  setErrorMessage('Скопированный текст содержит невалидную ссылку');
-                }
-              }
-            } catch (error) {}
-          }}
           onInput={setUrl}
         />
         <SendButton
+          className="url-observer-send-button"
           title="Обзор URL"
           disabled={!url || !!errorMessage}
           onSuccess={onSuccess}

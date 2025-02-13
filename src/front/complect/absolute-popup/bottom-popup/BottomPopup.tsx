@@ -9,9 +9,10 @@ interface Props {
   children?: ReactNode;
   onClose: (is: false) => void;
   isPreventCloseOnClick?: boolean;
+  id?: string;
 }
 
-export const BottomPopup = ({ children, onClose, isPreventCloseOnClick }: Props) => {
+export const BottomPopup = ({ children, onClose, isPreventCloseOnClick, id }: Props) => {
   const popupContainer = useRef<HTMLDivElement>(null);
   const contentContainer = useRef<HTMLDivElement>(null);
   const overContentContainer = useRef<HTMLDivElement>(null);
@@ -42,6 +43,7 @@ export const BottomPopup = ({ children, onClose, isPreventCloseOnClick }: Props)
         <Portal>
           <Popup
             ref={popupContainer}
+            id={id}
             className={className}
             onClick={() => setTimeout(onClose, 200, false)}
           >

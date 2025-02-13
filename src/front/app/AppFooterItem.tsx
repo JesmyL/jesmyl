@@ -6,6 +6,7 @@ import { AppName } from './App.model';
 
 interface Props {
   to: string;
+  idPostfix: string;
   iconPack: TheIconSelfPack;
   title: string;
   search?: `?${string}`;
@@ -21,7 +22,7 @@ const footerItemPlaceLsPrefix = 'nav-link:';
 
 export { CurrentAppFooterItemAppNameContext, CurrentAppFooterItemPlaceContext, footerItemPlaceLsPrefix };
 
-export default function AppFooterItem({ to, iconPack, title, search, className, children }: Props) {
+export default function AppFooterItem({ to, iconPack, title, search, className, children, idPostfix: id }: Props) {
   const appName = useCurrentAppFooterItemAppNameContext();
   const place = useCurrentAppFooterItemPlaceContext();
   const isActive = to === place;
@@ -34,6 +35,7 @@ export default function AppFooterItem({ to, iconPack, title, search, className, 
 
   return (
     <StyledLink
+      id={`footer-button-${id}`}
       to={to}
       className={'pointer' + (isActive ? ' active' : '') + (className ? ' ' + className : '')}
     >

@@ -18,13 +18,13 @@ export const ComAudioControlledList = ({ srcs, onToggle, ActionIcon }: Props) =>
         return (
           <div
             key={src}
-            className="flex flex-gap margin-gap-v full-width"
+            className="com-audio-track flex flex-gap margin-gap-v full-width"
           >
             <ComPlayer src={src} />
             <TheIconLoading
               isLoading={tracksInProcess.includes(src)}
               Icon={ActionIcon}
-              className="pointer"
+              className="add-com-audio-button pointer"
               onClick={async () => {
                 setTracksInProcess(tracksInProcess.concat(src));
                 await onToggle(src);

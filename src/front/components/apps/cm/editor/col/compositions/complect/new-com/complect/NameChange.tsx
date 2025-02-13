@@ -14,7 +14,10 @@ export const NewComNameChange = ({
     <>
       <div className="flex full-width">
         <span className="margin-gap-h">Название </span>
-        <div className="full-width">
+        <div
+          id="new-com-input-wrapper"
+          className="full-width"
+        >
           <KeyboardInput
             className="full-width"
             value={name}

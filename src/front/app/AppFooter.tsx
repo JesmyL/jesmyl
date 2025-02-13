@@ -38,6 +38,7 @@ export default function AppFooter({ children }: { children: React.ReactNode }) {
             iconPack={iconPackOfCircleArrowRight02}
             title="Другое"
             to="!other"
+            idPostfix="other"
           />
         </StyledFooter>
       </CurrentAppFooterItemPlaceContext.Provider>

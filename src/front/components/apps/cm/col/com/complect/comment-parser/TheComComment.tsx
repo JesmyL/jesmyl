@@ -80,7 +80,10 @@ export const TheComComment = ({ comw }: Props) => {
 
   return (
     <>
-      <div className="flex full-width between">
+      <div
+        id="com-comment-panel"
+        className="flex full-width between"
+      >
         <span className="flex flex-gap">
           Заметки
           <IconButton

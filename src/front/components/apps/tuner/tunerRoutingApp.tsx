@@ -11,6 +11,7 @@ import TheTuner from './TheTuner';
 const footer = (
   <AppFooter>
     <AppFooterItem
+      idPostfix="main"
       to="i"
       title="Тюнер"
       iconPack={iconPackOfDashboardSpeed02}

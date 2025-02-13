@@ -15,18 +15,21 @@ export const CmFooter = () => {
   return (
     <AppFooter>
       <AppFooterItem
+        idPostfix="cm-all"
         to="i"
         title="Все"
         iconPack={iconPackOfLeftToRightListBullet}
         search={search}
       />
       <AppFooterItem
+        idPostfix="cm-lists"
         to="li"
         title="Списки"
         iconPack={iconPackOfPlaylist01}
       />
       {auth.level >= 50 && (
         <AppFooterItem
+          idPostfix="cm-edit"
           to="edit"
           title="Редактор"
           iconPack={iconPackOfEdit02}

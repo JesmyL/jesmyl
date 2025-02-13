@@ -8,16 +8,19 @@ export const BibleFooter = () => {
   return (
     <AppFooter>
       <AppFooterItem
+        idPostfix="main"
         to="i"
         title="Глава"
         iconPack={iconPackOfFile02}
       />
       <AppFooterItem
+        idPostfix="search"
         to="search"
         title="Поиск"
         iconPack={iconPackOfFileSearch}
       />
       <AppFooterItem
+        idPostfix="tran"
         to="tran"
         title="Трансляция"
         iconPack={iconPackOfComputer}

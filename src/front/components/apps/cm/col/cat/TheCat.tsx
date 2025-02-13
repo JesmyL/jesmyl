@@ -130,4 +130,8 @@ const StyledCatPhaseContainer = styled(PhaseContainerConfigurer)`
       display: none;
     }
   }
+
+  .com-list {
+    min-height: 110%;
+  }
 `;

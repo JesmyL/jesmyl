@@ -20,6 +20,7 @@ export default function SendButton<Value>(props: SendButtonProps<Value>) {
       content={(onClick, error, isLoading) => {
         return (
           <TheButton
+            id={props.id}
             className={
               (props.className || '') +
               ' margin-gap' +

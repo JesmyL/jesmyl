@@ -13,6 +13,7 @@ export const IndexTelegramInlineAuthButton = () => {
         return (
           <Link
             to="login"
+            id="authorize-button"
             className="full-width"
           >
             <BrutalItem

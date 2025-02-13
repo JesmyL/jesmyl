@@ -10,6 +10,7 @@ export const UserMore = ({ onClose }: { onClose: (isOpen: false) => void }) => {
     <>
       <>{confirmNode}</>
       <BottomPopupItem
+        id="log-out-button"
         title="Выйти из системы"
         Icon={IconUserStrokeRounded}
         onClick={async event => {

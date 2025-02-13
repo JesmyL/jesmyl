@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { makeRegExp } from 'shared/utils';
 import JesmylLogo from '../../../../complect/jesmyl-logo/JesmylLogo';
 import KeyboardInput from '../../../../complect/keyboard/KeyboardInput';
 import useToast from '../../../../complect/modal/useToast';
@@ -55,7 +54,7 @@ export default function IndexTelegramAuth({ onLoginAuth }: { onLoginAuth: () => 
                         href="https://t.me/jesmylbot"
                         className="children-middle"
                       >
-                        <IconTelegramStrokeRounded />
+                        <IconTelegramStrokeRounded className="margin-gap-r" />
                         jesmylbot
                       </a>
                     </span>
@@ -64,10 +63,11 @@ export default function IndexTelegramAuth({ onLoginAuth }: { onLoginAuth: () => 
                     Состоять в канале
                     <span className="margin-gap">
                       <a
+                        id="go-to-chanel-link"
                         href={values.chatUrl}
                         className="children-middle"
                       >
-                        <IconTelegramStrokeRounded />
+                        <IconTelegramStrokeRounded className="margin-gap-r" />
                         jesmyl space
                       </a>
                     </span>
@@ -85,6 +85,7 @@ export default function IndexTelegramAuth({ onLoginAuth }: { onLoginAuth: () => 
                         <TgNativeAuth showToastRef={showToastRef} />
                         или
                         <span
+                          id="input-the-tg-code-button"
                           className="color--7 pointer"
                           onClick={() => setIsSendTgCode(true)}
                         >
@@ -99,26 +100,19 @@ export default function IndexTelegramAuth({ onLoginAuth }: { onLoginAuth: () => 
                 <>
                   <div className="input-container flex">
                     {error(errors.login)}
-                    <div className="input-wrapper">
+                    <div
+                      id="tg-auth-code-input-wrapper"
+                      className="input-wrapper"
+                    >
                       <KeyboardInput
                         onChange={setAuthCode}
                         value={authCode}
                         placeholder="Одноразовый код"
-                        onFocus={async event => {
-                          try {
-                            const codeStr = await navigator.clipboard.readText();
-                            if (authCode === codeStr) return;
-
-                            if (makeRegExp('/^\\d{5,6}$/').test(codeStr)) {
-                              setAuthCode(codeStr);
-                              event.value(codeStr);
-                            }
-                          } catch (error) {}
-                        }}
                       />
                     </div>
                   </div>
                   <SendButton
+                    id="tg-auth-code-send-button"
                     title="Авторизоваться"
                     className="send-button"
                     disabled={isLoading || authCode.length < 3}

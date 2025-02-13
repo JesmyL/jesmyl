@@ -113,6 +113,7 @@ export default function NewComposition({ onClose }: { onClose: (is: false) => vo
         />
 
         <TheButton
+          id="new-com-parse-text-button"
           className="margin-big-gap-v"
           disabled={!value}
           onClick={() => {
@@ -147,7 +148,7 @@ export default function NewComposition({ onClose }: { onClose: (is: false) => vo
               <div>Нет треков</div>
             )}
 
-            <h2>Новые аудио</h2>
+            <h2 id="header-new-audio">Новые аудио</h2>
             <ComAudioControlledList
               srcs={hrefs}
               ActionIcon={IconPlusSignCircleStrokeRounded}
@@ -195,6 +196,7 @@ export default function NewComposition({ onClose }: { onClose: (is: false) => vo
         })}
 
         <SendButton
+          id="public-new-com-button"
           className="margin-giant-gap-b"
           title="Опубликовать песню"
           disabled={

@@ -48,8 +48,7 @@
     "tg-dev": "nodemon tg-bot.mjs",
     "format": "prettier --write \"**/src/**/*.{tsx,ts,scss,json}\"",
     "format-jsons": "prettier --write \"**/src/**/*.json\"",
-    "cy-test": "start-server-and-test start http://localhost:2468 cypress",
-    "cypress": "cypress open"
+    "cy-test": "cypress open"
   },
   "eslintConfig": {
     "extends": [
@@ -97,7 +96,6 @@
     "postcss": "^8.4.32",
     "prettier": "^3.1.1",
     "prisma": "^6.0.1",
-    "start-server-and-test": "^2.0.10",
     "ts-node": "^10.9.1",
     "typescript": "^5.6.3",
     "ws": "^8.18.0"
