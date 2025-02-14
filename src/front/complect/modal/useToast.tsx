@@ -48,7 +48,7 @@ export default function useToast(
         content,
       });
       clearTimeout(timerRef.current);
-      // timerRef.current = setTimeout(() => setConfig(prev => ({ ...prev, isOpen: false })), config?.showTime ?? 3000);
+      timerRef.current = setTimeout(() => setConfig(prev => ({ ...prev, isOpen: false })), config?.showTime ?? 3000);
     }, []),
   ];
 }
