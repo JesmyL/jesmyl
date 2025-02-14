@@ -4,10 +4,12 @@ import { ConfirmContent } from '../modal/confirm/ConfirmContent';
 import useToast from '../modal/useToast';
 import { mylib } from '../my-lib';
 import { StyledLoadingSpinner } from './IconLoading';
+import { LazyIcon } from './LazyIcon';
 import { TheIconType } from './model';
 
 interface Props {
   Icon: TheIconType;
+  icon?: KnownIconName;
   disabled?: boolean;
   disabledReason?: (() => ReactNode) | ReactNode;
   confirm?: React.ReactNode;
@@ -55,6 +57,7 @@ const IconButton = <P extends Props = Props>(
             {props.prefix === undefined && props.postfix === undefined ? (
               <DisabledReasonContained
                 Comp={Icon}
+                icon={props.icon}
                 className={className}
                 disabledReason={props.disabledReason}
                 disabled={props.disabled}
@@ -63,13 +66,21 @@ const IconButton = <P extends Props = Props>(
             ) : (
               <DisabledReasonContained
                 Comp={Span}
+                icon={props.icon}
                 className={`flex flex-gap flex-max ${className || ''}`}
                 disabledReason={props.disabledReason}
                 disabled={props.disabled}
                 onClick={onClick}
               >
                 {props.prefix}
-                <Icon className={props.iconClassName} />
+                {props.icon ? (
+                  <LazyIcon
+                    name={props.icon}
+                    className={props.iconClassName}
+                  />
+                ) : (
+                  <Icon className={props.iconClassName} />
+                )}
                 {props.postfix}
               </DisabledReasonContained>
             )}
@@ -86,9 +97,11 @@ const DisabledReasonContained = <Node extends HTMLElement>({
   Comp,
   disabledReason,
   disabled,
+  icon,
   ...props
 }: {
   Comp: FunctionComponent<HTMLAttributes<Node>>;
+  icon: KnownIconName | und;
   disabledReason?: (() => ReactNode) | ReactNode | und;
   disabled: boolean | und;
 } & HTMLAttributes<Node>) => {
@@ -97,6 +110,7 @@ const DisabledReasonContained = <Node extends HTMLElement>({
       Comp={Comp}
       disabledReason={disabledReason}
       disabled
+      icon={icon}
       {...props}
     />
   ) : (
@@ -108,9 +122,11 @@ const WithDisabledReason = <Node extends HTMLElement>({
   Comp,
   disabledReason,
   disabled,
+  icon,
   ...props
 }: {
   Comp: FunctionComponent<HTMLAttributes<Node>>;
+  icon: KnownIconName | und;
   disabledReason?: (() => ReactNode) | ReactNode;
   disabled: boolean | und;
 } & HTMLAttributes<Node>) => {
@@ -119,10 +135,14 @@ const WithDisabledReason = <Node extends HTMLElement>({
   return (
     <>
       {toastNode}
-      <Comp
-        {...props}
-        onClick={() => toast(mylib.isFunc(disabledReason) ? disabledReason() : disabledReason, { mood: 'ko' })}
-      />
+      {icon ? (
+        <LazyIcon name={icon} />
+      ) : (
+        <Comp
+          {...props}
+          onClick={() => toast(mylib.isFunc(disabledReason) ? disabledReason() : disabledReason, { mood: 'ko' })}
+        />
+      )}
     </>
   );
 };

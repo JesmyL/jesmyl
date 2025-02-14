@@ -3,7 +3,7 @@ import { useEffect, useReducer, useState } from 'react';
 import { MyFileType } from 'shared/api';
 import { filesStorage } from '../../../../../../complect/configurators/utils/storage';
 import IconButton from '../../../../../../complect/the-icon/IconButton';
-import TheIcon from '../../../../../../complect/the-icon/TheIcon';
+import { LazyIcon } from '../../../../../../complect/the-icon/LazyIcon';
 import { IconCancel01StrokeRounded } from '../../../../../../complect/the-icon/icons/cancel-01';
 import { useIndexFileAssociations } from '../../../../atoms';
 import { useRemoveMyFile } from '../hooks/remove-file';
@@ -35,7 +35,7 @@ export const MyFilesTypeBox = ({ type }: { type: MyFileType }) => {
   return (
     <>
       <div className="flex flex-gap margin-gap-t padding-gap bgcolor--2">
-        <TheIcon name={fileAssociations[type].icon} />
+        <LazyIcon name={fileAssociations[type].icon} />
         <span className="color--3">{fileAssociations[type].title} </span>
         {!fileAssociations[type].extensions.length || '(.' + fileAssociations[type].extensions.join(', .') + ')'}
       </div>

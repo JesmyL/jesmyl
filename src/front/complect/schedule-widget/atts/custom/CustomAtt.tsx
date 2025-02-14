@@ -10,7 +10,6 @@ import {
 } from 'shared/api';
 import { ScheduleWidgetRightsCtrl } from 'shared/api/complect/schedule-widget/complect/rights-constructor';
 import { itIt, itNIt } from 'shared/utils';
-import { IconBookmark01StrokeRounded } from '../../../../complect/the-icon/icons/bookmark-01';
 import { IconCheckmarkSquare02StrokeRounded } from '../../../../complect/the-icon/icons/checkmark-square-02';
 import { IconEdit01StrokeRounded } from '../../../../complect/the-icon/icons/edit-01';
 import { IconEyeStrokeRounded } from '../../../../complect/the-icon/icons/eye';
@@ -23,7 +22,6 @@ import { ModalBody } from '../../../modal/Modal/ModalBody';
 import { ModalHeader } from '../../../modal/Modal/ModalHeader';
 import StrongEditableField from '../../../strong-control/field/StrongEditableField';
 import IconButton from '../../../the-icon/IconButton';
-import { theIconFromPack } from '../../../the-icon/TheIcon';
 import { TheIconType } from '../../../the-icon/model';
 import { useScheduleScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
 import ScheduleWidgetRightControlList from '../../control/RightControlList';
@@ -116,7 +114,7 @@ export default function ScheduleWidgetCustomAtt(props: {
           value={props.tatt}
           isRedact={props.isRedact}
           isImpossibleEmptyValue
-          Icon={props.isRedact ? IconBookmark01StrokeRounded : theIconFromPack(props.tatt.icon)?.StrokeRounded}
+          icon={props.isRedact ? 'Bookmark01' : props.tatt.icon}
           title="Название"
           onSend={value =>
             schAttachmentTypesSokiInvocatorClient.setTitle(null, attachmentTypeScopeProps, value, props.tatt.title)

@@ -8,7 +8,7 @@ import { IconSchoolReportCardStrokeRounded } from '../../../complect/the-icon/ic
 import { ExpandableContent } from '../../expand/ExpandableContent';
 import useModal from '../../modal/useModal';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
-import TheIcon from '../../the-icon/TheIcon';
+import { LazyIcon } from '../../the-icon/LazyIcon';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
@@ -70,7 +70,7 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
       <ExpandableContent
         title={
           <>
-            <TheIcon name={cat.icon} /> {title}
+            <LazyIcon name={cat.icon} /> {title}
           </>
         }
         postfix={isExpand =>

@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { IconCancel01StrokeRounded } from '../../../complect/the-icon/icons/cancel-01';
 import { IconHelpCircleStrokeRounded } from '../../../complect/the-icon/icons/help-circle';
 import { IconLink02StrokeRounded } from '../../../complect/the-icon/icons/link-02';
-import TheIcon from '../../the-icon/TheIcon';
+import { LazyIcon } from '../../the-icon/LazyIcon';
 import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetCustomAtt from './custom/CustomAtt';
@@ -63,7 +63,7 @@ export default function ScheduleWidgetAttFace({
         )}
         {tatt ? (
           <>
-            <TheIcon name={tatt.icon} />
+            <LazyIcon name={tatt.icon} />
             <div className="ellipsis full-max-width">{tatt.title}</div>
           </>
         ) : (

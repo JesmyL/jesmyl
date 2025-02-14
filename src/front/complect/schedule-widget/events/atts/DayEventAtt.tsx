@@ -12,7 +12,7 @@ import { isNIs } from 'shared/utils';
 import { IconLink02StrokeRounded } from '../../../../complect/the-icon/icons/link-02';
 import { IconViewStrokeRounded } from '../../../../complect/the-icon/icons/view';
 import { useIsRememberExpand } from '../../../expand/useIsRememberExpand';
-import TheIcon from '../../../the-icon/TheIcon';
+import { LazyIcon } from '../../../the-icon/LazyIcon';
 import useIsRedactArea from '../../../useIsRedactArea';
 import ScheduleWidgetTopicTitle from '../../complect/TopicTitle';
 import { useScheduleWidgetAppAttsContext } from '../../useScheduleWidget';
@@ -38,7 +38,7 @@ export default function ScheduleWidgetDayEventAtt(props: Props) {
   const [attTitleNode, isExpand] = useIsRememberExpand(
     JSON.stringify(dayEventAttScopeProps),
     <>
-      <TheIcon name={appAtt.icon} />
+      <LazyIcon name={appAtt.icon} />
       {appAtt.title}
     </>,
   );

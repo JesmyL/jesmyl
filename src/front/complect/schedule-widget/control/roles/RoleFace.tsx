@@ -1,7 +1,7 @@
 import { IScheduleWidget, IScheduleWidgetRole } from 'shared/api';
 import { IconGithubStrokeRounded } from '../../../../complect/the-icon/icons/github';
 import { useAuth } from '../../../../components/index/atoms';
-import TheIcon from '../../../the-icon/TheIcon';
+import { LazyIcon } from '../../../the-icon/LazyIcon';
 import { extractScheduleWidgetRoleUser } from '../../useScheduleWidget';
 
 export default function ScheduleWidgetRoleFace({
@@ -17,7 +17,7 @@ export default function ScheduleWidgetRoleFace({
 
   return (
     <div className={'flex flex-gap' + (auth && roleUser && auth.login === roleUser.login ? ' color--7' : ' color--3')}>
-      {role.icon ? <TheIcon name={role.icon} /> : <IconGithubStrokeRounded />}
+      {role.icon ? <LazyIcon name={role.icon} /> : <IconGithubStrokeRounded />}
       <div className="face-title">
         {role.title}
         {' - '}

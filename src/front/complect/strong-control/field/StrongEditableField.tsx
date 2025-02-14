@@ -17,6 +17,7 @@ type Props<Key, Value> = {
   disabled?: boolean;
   type?: 'text' | 'number';
   Icon?: TheIconType;
+  icon?: KnownIconName;
   placeholder?: string;
   isRedact?: boolean;
   setSelfRedact?: boolean;

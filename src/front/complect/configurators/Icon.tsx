@@ -7,7 +7,6 @@ import { MyLib } from 'front/utils';
 import { ReactNode, useState } from 'react';
 import IconButton from '../the-icon/IconButton';
 import { IconHelpSquareStrokeRounded } from '../the-icon/icons/help-square';
-import { theIconFromPack } from '../the-icon/TheIcon';
 
 export default function IconConfigurator(props: {
   icon: KnownIconName;
@@ -20,7 +19,8 @@ export default function IconConfigurator(props: {
   return (
     <>
       <IconButton
-        Icon={theIconFromPack(props.icon)?.StrokeRounded ?? IconHelpSquareStrokeRounded}
+        Icon={IconHelpSquareStrokeRounded}
+        icon={props.icon ?? 'HelpSquare'}
         postfix="Изменить иконку"
         onClick={setIsOpenModal}
         className="flex-max margin-gap-v"

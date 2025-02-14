@@ -8,7 +8,7 @@ import {
 import { ModalBody } from '../../modal/Modal/ModalBody';
 import { ModalHeader } from '../../modal/Modal/ModalHeader';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
-import TheIcon from '../../the-icon/TheIcon';
+import { LazyIcon } from '../../the-icon/LazyIcon';
 import { IconBookmark03StrokeRounded } from '../../the-icon/icons/bookmark-03';
 import { IconCheckmarkSquare02StrokeRounded } from '../../the-icon/icons/checkmark-square-02';
 import { IconFile02StrokeRounded } from '../../the-icon/icons/file-02';
@@ -32,7 +32,7 @@ export const ScheduleWidgetListUnitRedactor = ({ unit, cat, cati, shortTitles, u
     <>
       <ModalHeader>
         <div className="flex flex-gap">
-          <TheIcon name={cat.icon} />
+          <LazyIcon name={cat.icon} />
           {title}
         </div>
       </ModalHeader>

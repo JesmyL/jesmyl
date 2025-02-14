@@ -1,6 +1,6 @@
 import { ReactNode, useState } from 'react';
 import { IScheduleWidgetListUnit } from 'shared/api';
-import TheIcon from '../../the-icon/TheIcon';
+import { LazyIcon } from '../../the-icon/LazyIcon';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 
 export default function ScheduleWidgetListUnitFace({
@@ -27,7 +27,7 @@ export default function ScheduleWidgetListUnitFace({
         className={'flex flex-gap pointer' + (rights.myUser?.li?.[unit.cati] === -unit.mi ? ' color--7' : ' color--3')}
         onClick={() => setIsShowMentors(!isShowMentors)}
       >
-        <TheIcon name={cat?.icon} />
+        <LazyIcon name={cat?.icon} />
         {isShowMentors ? (
           mentors.length ? (
             mentors.map(user => user.fio || user.nick).join(', ')

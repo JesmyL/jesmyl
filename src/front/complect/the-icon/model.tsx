@@ -12,6 +12,7 @@ export const theIconNamePostfixList = [
   'SolidSharp',
 ] as const;
 
-export type TheIconSelfPack = Record<(typeof theIconNamePostfixList)[number], TheIconType> & { name: string };
+export type TheIconSelfPack = Record<IconNamePostfix, TheIconType> & { name: string };
 
 export type TheIconProps = HTMLAttributes<HTMLOrSVGElement> & { withoutAnimation?: boolean };
+export type IconNamePostfix = (typeof theIconNamePostfixList)[number];
