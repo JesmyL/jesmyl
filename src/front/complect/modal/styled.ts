@@ -104,9 +104,7 @@ export const StyledModal = styled.div`
     background: var(--color--1);
   }
 
-  &.type_ {
-    &toast {
-      pointer-events: none;
-    }
+  &.type_toast {
+    pointer-events: none;
   }
 `;

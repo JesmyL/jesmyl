@@ -21,6 +21,8 @@ const defaultUseModalConfig: UseModalConfig = {
   isOpen: false,
 };
 
+const classNames = ['pointers-none'];
+
 export default function useToast(
   topConfig?: ToastModalConfig,
 ): [ReactNode, (content?: ReactNode, config?: ToastModalConfig) => void] {
@@ -29,7 +31,7 @@ export default function useToast(
 
   return [
     config.isOpen && (
-      <Portal>
+      <Portal classNames={classNames}>
         <StyledModal className="type_toast">
           <StyledModalScreenWrapper className="type_toast">
             <StyledModalScreen className={'type_toast mood mood_' + (topConfig ?? config).mood}>
@@ -46,7 +48,7 @@ export default function useToast(
         content,
       });
       clearTimeout(timerRef.current);
-      timerRef.current = setTimeout(() => setConfig(prev => ({ ...prev, isOpen: false })), config?.showTime ?? 3000);
+      // timerRef.current = setTimeout(() => setConfig(prev => ({ ...prev, isOpen: false })), config?.showTime ?? 3000);
     }, []),
   ];
 }
