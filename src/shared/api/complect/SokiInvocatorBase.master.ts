@@ -40,6 +40,7 @@ export const makeSokiInvocatorBase = <
 
       sendResponse({ invokedResult, requestId } as never, tool);
     } catch (error) {
+      console.error(error);
       sendResponse({ errorMessage: '' + error, requestId } as never, tool);
     }
   });
