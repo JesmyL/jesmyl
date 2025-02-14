@@ -16,7 +16,7 @@ export const useComCommentBlockCss = (com: Com) => {
     return com.orders?.filter(ComBlockCommentMakerCleans.withHeaderTextOrderFilter);
   }, [com.orders]);
 
-  const styles = useComBlockCommentCssStyles(com, visibleOrders, comment);
+  const styles = useComBlockCommentCssStyles(com.wid, visibleOrders, comment);
 
   useComBlockCommentUpdateBlockNames(com, visibleOrders, isRedact, comment);
 

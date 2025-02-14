@@ -1,3 +1,4 @@
+import { valuesFileStore } from 'back/apps/index/file-stores';
 import { backConfig } from 'back/config/backConfig';
 import { SendMessageOptions } from 'node-telegram-bot-api';
 import { hosts } from 'shared/api';
@@ -26,12 +27,12 @@ export const prodStartOptions: SendMessageOptions = prodTelegramBot.makeSendMess
   ],
 ]);
 
-const prodStartMessage = (botName: string) => `Это кнопка для входа
-
+const prodStartMessage = (botName: string) => `
 Привет!
 Теперь есть возможность авторизоваться в приложении <a href="${hosts.host}">JesmyL</a> через Телеграм-бота
+
 Для этого:
-  1. Нужно состоять в <a href="https://t.me/jesmyl_space">группе</a>
+  1. Нужно состоять в <a href="${valuesFileStore.getValue().chatUrl}">группе</a>
   2. Запусти <a href="https://t.me/${botName}">бота</a>
   3. Нажми "Авторизоваться" под этим сообщением или в закрепе
   4. Перейди в <a href="https://t.me/${botName}">бот</a> и следуй инструкции там.
@@ -50,9 +51,8 @@ prodTelegramBot.onChatMessages((bot, message) => {
   }
 });
 
-let iss = 'change message';
-
-if (!iss) prodTelegramBot.editMessageText(551, prodStartMessage(prodTelegramBot.botName), prodStartOptions);
+if (+!+'change message')
+  prodTelegramBot.editMessageText(551, prodStartMessage(prodTelegramBot.botName), prodStartOptions);
 
 gul94iTelegramBot.register();
 gul94iAdminTelegramBot.register();

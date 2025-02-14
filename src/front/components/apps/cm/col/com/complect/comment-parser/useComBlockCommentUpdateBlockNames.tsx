@@ -22,7 +22,7 @@ export const useComBlockCommentUpdateBlockNames = (
 
           if (initialOrders == null) return;
 
-          const newComment = comComment?.replace(ComBlockCommentMakerCleans.commentsParseReg, (...args) => {
+          const newComment = comComment?.replace(ComBlockCommentMakerCleans.commentsParseReg(), (...args) => {
             const cmt = ComBlockCommentMakerCleans.makePropsFromCommentsArgs(args);
             if (cmt.$blockHashPosition === undefined) return cmt.$all;
 

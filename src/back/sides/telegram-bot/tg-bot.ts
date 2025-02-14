@@ -164,25 +164,7 @@ export class JesmylTelegramBot {
     } catch (error) {}
   }
 
-  getAdmins() {
-    const updateAdmins = (adminList: ChatMember[]) => {
-      this.admins = {};
-      adminList.forEach(admin => (this.admins![admin.user.id] = admin));
-      return this.admins;
-    };
-
-    return new Promise<PRecord<number, ChatMember>>((res, rej) => {
-      if (this.admins[0] === undefined) {
-        res(this.admins);
-        return;
-      }
-
-      this._bot.bot
-        .getChatAdministrators(this.chatId)
-        .then(admins => res(updateAdmins(admins)))
-        .catch(rej);
-    });
-  }
+  getAdmins = () => this._bot.bot.getChatAdministrators(this.chatId);
 
   postMessage(text: string, options?: TgBot.SendMessageOptions, chatId?: number) {
     const message = text.replace(makeRegExp('/<((anonymous|computed)>)/g'), '&lt;$1');

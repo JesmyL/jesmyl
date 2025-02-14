@@ -335,6 +335,11 @@ export class MyLib extends SMyLib {
     return def as Def;
   }
 
+  setInputHeightByContent(inputNode: HTMLInputElement | HTMLTextAreaElement) {
+    inputNode.style.height = '1px';
+    inputNode.style.height = `${inputNode.scrollHeight}px`;
+  }
+
   groupByFieldsSoftly<Item, Fieldn extends keyof Item>(
     fieldns: (Fieldn | ((item: Item) => number))[],
     items: Item[],

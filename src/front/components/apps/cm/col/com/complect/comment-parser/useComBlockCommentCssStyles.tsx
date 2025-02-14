@@ -1,15 +1,15 @@
 import { MyLib } from 'front/utils';
 import { useEffect, useState } from 'react';
+import { CmComWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import { css, RuleSet } from 'styled-components';
 import { hookEffectPipe, setTimeoutPipe } from '../../../../../../../complect/hookEffectPipe';
 import { useDebounceValue } from '../../../../../../../complect/useDebounceValue';
 import { useBibleTranslatesContext } from '../../../../../bible/translates/TranslatesContext';
-import { Com } from '../../Com';
 import { Order } from '../../order/Order';
 import { ComBlockCommentMakerCleans } from './Cleans';
 
-export const useComBlockCommentCssStyles = (com: nil | Com, visibleOrders: Order[] | und, comment: string | nil) => {
+export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order[] | und, comment: string | nil) => {
   const comComment = useDebounceValue(comment, 400);
   const [fastStyles, setFastStyles] = useState<string | null>(null);
   const [styles, setStyles] = useState<RuleSet<object> | ''>('');
@@ -21,7 +21,7 @@ export const useComBlockCommentCssStyles = (com: nil | Com, visibleOrders: Order
     return hookEffectPipe()
       .pipe(setTimeoutPipe(setFastStyles, 600, null))
       .effect();
-  }, [com?.wid]);
+  }, [comw]);
 
   useEffect(() => {
     if (fastStyles !== null) {
@@ -33,7 +33,7 @@ export const useComBlockCommentCssStyles = (com: nil | Com, visibleOrders: Order
       let cssContentList: RuleSet<object>[] = [];
 
       if (comComment) {
-        const commentBlocks = Array.from(comComment.matchAll(ComBlockCommentMakerCleans.commentsParseReg));
+        const commentBlocks = Array.from(comComment.matchAll(ComBlockCommentMakerCleans.commentsParseReg()));
         const commentsDict: Record<string, string[]> = {};
 
         for (const commentBlock of commentBlocks) {
@@ -74,12 +74,10 @@ export const useComBlockCommentCssStyles = (com: nil | Com, visibleOrders: Order
           const commentStr = comment.join('\n');
 
           return css`
-            .styled-block:nth-child(${blockNumber} of :has(.styled-header)) {
-              .styled-header {
-                &::after {
-                  ${ComBlockCommentMakerCleans.makePseudoCommentContentCss(commentStr)}
-                  ${ComBlockCommentMakerCleans.makePseudoCommentContentAccentsCss(commentStr)}
-                }
+            ${ComBlockCommentMakerCleans.makeComOrderHeaderSelector(blockNumber)} {
+              &::after {
+                ${ComBlockCommentMakerCleans.makePseudoCommentContentCss(commentStr)}
+                ${ComBlockCommentMakerCleans.makePseudoCommentContentAccentsCss(commentStr)}
               }
             }
           `;
@@ -88,7 +86,7 @@ export const useComBlockCommentCssStyles = (com: nil | Com, visibleOrders: Order
 
       const numeredOrderHeaders = visibleOrders?.map((_ord, ordi) => {
         return css`
-          .styled-block:nth-child(${ordi + 1} of :has(.styled-header)) .styled-header {
+          ${ComBlockCommentMakerCleans.makeComOrderHeaderSelector(ordi + 1)} {
             &::before {
               content: '#${ordi + 1}';
             }

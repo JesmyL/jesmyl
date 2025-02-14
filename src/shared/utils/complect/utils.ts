@@ -113,3 +113,5 @@ export const retNull = () => null;
 export const itNNull = <It>(it: It) => it !== null;
 export const itNNil = <It>(it: It) => it != null;
 export const itNNaN = (it: number) => !isNaN(it);
+export const itInvokeIt = (it: () => unknown) => it();
+export const wait = (waitTime = 100) => new Promise(resolve => setTimeout(resolve, waitTime));

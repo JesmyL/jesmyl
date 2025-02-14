@@ -30,12 +30,16 @@ export const ComFaceList = (props: Props) => {
     );
 
   return (
-    <ComFaceListComList
-      {...props}
-      ccomw={ccomw}
-      list={props.list as []}
-      selectedComPosition={selectedComPosition}
-      toggleSelectedCom={toggleSelectedCom}
-    />
+    <>
+      {!props.list.length || (
+        <ComFaceListComList
+          {...props}
+          ccomw={ccomw}
+          list={props.list as []}
+          selectedComPosition={selectedComPosition}
+          toggleSelectedCom={toggleSelectedCom}
+        />
+      )}
+    </>
   );
 };

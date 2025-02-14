@@ -12,6 +12,7 @@ import './Com.scss';
 import { TheCom } from './TheCom';
 import { TheComComment } from './complect/comment-parser/TheComComment';
 import { useComCommentBlockCss } from './complect/comment-parser/useComCommentBlock';
+import { useComCommentBlockFastReactions } from './complect/comment-parser/useComCommentBlockFastReactions';
 
 let onPrevCom: () => void;
 let onNextCom: () => void;
@@ -36,6 +37,8 @@ export default function TheControlledCom({
   const listRef = useRef<HTMLDivElement>(null);
   const [, setSearchParams] = useSearchParams();
   const commentCss = useComCommentBlockCss(com);
+
+  useComCommentBlockFastReactions(com);
 
   onNextCom = () => {
     if (!comwList?.length) return;

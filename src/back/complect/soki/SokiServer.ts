@@ -1,6 +1,4 @@
 /* eslint-disable no-throw-literal */
-import { startCrTgAlarm } from 'back/apps/index/crTgAlarm';
-import { invitesTgBotListener } from 'back/sides/telegram-bot/invites/invites.bot';
 import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { SokiServerInvocatorTool } from 'back/SokiInvocatorBase.server';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
@@ -8,8 +6,6 @@ import { InvocatorClientEvent, InvocatorServerEvent, LocalSokiAuth, SokiAuthLogi
 import { makeRegExp, smylib } from 'shared/utils';
 import WebSocket, { WebSocketServer } from 'ws';
 import { setSharedPolyfills } from '../../../shared/utils/complect/polyfills';
-import { scheduleWidgetMessageCatcher } from '../../apps/index/schedules/tg-bot-inform/message-catchers';
-import { baseMessagesCatcher } from '../../sides/telegram-bot/complect/message-catchers';
 import { ErrorCatcher } from '../ErrorCatcher';
 import { FileStore } from '../FileStore';
 import { onSokiServerEventerInvocatorInvoke } from './eventers';
@@ -158,7 +154,7 @@ export class SokiServer {
 
   private authStringified = (auth: LocalSokiAuth | nil) => {
     return (
-      `${auth ? `${auth.fio} t.me/${auth.nick}` : 'Неизвестный'}\n\n` +
+      `${auth ? `${auth.fio}${auth.nick ? ` t.me/${auth.nick}` : ''}` : 'Неизвестный'}\n\n` +
       `<blockquote expandable>${auth ? JSON.stringify(auth, null, 1) : ''}</blockquote>`
     );
   };
@@ -176,12 +172,4 @@ function sendToEachClient(this: string, client: WebSocket) {
   client.send(this);
 }
 
-const sokiServer = new SokiServer();
-
-export default sokiServer;
-
-baseMessagesCatcher.register();
-scheduleWidgetMessageCatcher.register();
-
-startCrTgAlarm();
-invitesTgBotListener();
+export const sokiServer = new SokiServer();

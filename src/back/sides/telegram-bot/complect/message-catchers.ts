@@ -17,7 +17,8 @@ const initScheduleInformMarkup = {
 
 export const baseMessagesCatcher = jesmylTgBot.catchMessages(async (message, bot) => {
   if (!message.text?.startsWith('/start')) return;
-  if (!message.from || (await prodTelegramBot.getAdmins())[message.from.id] == null) return;
+  const id = message.from?.id;
+  if (id == null || (await prodTelegramBot.getAdmins()).find(admin => admin.user.id === id) == null) return;
 
   await bot.sendMessage(message.chat.id, `Дейстаия`, { reply_markup: initScheduleInformMarkup });
   await bot.deleteMessage(message.chat.id, message.message_id);

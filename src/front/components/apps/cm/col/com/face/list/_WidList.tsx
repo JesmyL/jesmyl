@@ -11,12 +11,18 @@ interface Props extends IComFaceList, ListComFaceForSelectionsProps {
 }
 
 export const ComFaceListWidList = ({ list, ...comProps }: Props) => {
-  const coms = useComs(list);
+  const listComs = useComs(list);
+  const filteredComs = listComs.filter(itNNil);
+  const coms = filteredComs.length === listComs.length ? listComs : filteredComs;
 
   return (
-    <ComFaceListComList
-      list={coms.filter(itNNil)}
-      {...comProps}
-    />
+    <>
+      {!coms.length || (
+        <ComFaceListComList
+          list={coms}
+          {...comProps}
+        />
+      )}
+    </>
   );
 };

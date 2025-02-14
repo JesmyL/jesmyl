@@ -2,6 +2,7 @@ import { addEventListenerPipe, hookEffectPipe } from 'front/complect/hookEffectP
 import { TheIconLoading } from 'front/complect/the-icon/IconLoading';
 import { propagationStopper } from 'front/complect/utils/utils';
 import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
+import { mylib } from 'front/utils';
 import { useEffect, useRef, useState } from 'react';
 import { isNIs } from 'shared/utils';
 import styled from 'styled-components';
@@ -37,9 +38,7 @@ export const TheComComment = ({ comw }: Props) => {
 
   const setInputHeight = () => {
     if (inputRef.current === null) return;
-    const textareaNode = inputRef.current;
-    textareaNode.style.height = '1px';
-    textareaNode.style.height = `${textareaNode.scrollHeight}px`;
+    mylib.setInputHeightByContent(inputRef.current);
   };
 
   useEffect(() => {

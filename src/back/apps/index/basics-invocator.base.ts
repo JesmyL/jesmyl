@@ -1,24 +1,23 @@
-import { FileStore } from 'back/complect/FileStore';
 import { tokenSecretFileStore } from 'back/complect/soki/SokiServer';
 import { supportTelegramAuthorizations } from 'back/sides/telegram-bot/prod/authorize';
+import { prodTelegramBot } from 'back/sides/telegram-bot/prod/prod-bot';
 import { supportTelegramBot } from 'back/sides/telegram-bot/support/support-bot';
 import { JesmylTelegramBot } from 'back/sides/telegram-bot/tg-bot';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import jwt from 'jsonwebtoken';
 import TelegramBot from 'node-telegram-bot-api';
 import {
-  IndexValues,
   IScheduleWidget,
   IScheduleWidgetUser,
   LocalSokiAuth,
   makeTwiceKnownName,
-  NounPronsType,
   ScheduleWidgetRegType,
   scheduleWidgetRegTypeRights,
   TelegramNativeAuthUserData,
 } from 'shared/api';
 import { IndexBasicsSokiInvocatorModel } from 'shared/api/invocators/index/basics-invocators.model';
 import { itNNull, smylib } from 'shared/utils';
+import { appVersionFileStore, nounPronsWordsFileStore, valuesFileStore } from './file-stores';
 import { indexServerInvocatorShareMethods } from './invocators.shares';
 import { schGeneralSokiInvocatorBaseServer } from './schedules/base-invocators/general-invocators.base';
 import { schedulesFileStore } from './schedules/file-stores';
@@ -26,22 +25,14 @@ import { schServerInvocatorShareMethods } from './schedules/invocators.shares';
 
 const deviceIdPostfixSymbols = '!@#$%^&*;.,?/|\\+=-'.split('');
 
-export const nounPronsWordsFileStore = new FileStore<NounPronsType>('/apps/index/nounPronsWords.json', {
-  nouns: {},
-  pronouns: {},
-});
-
-export const appVersionFileStore = new FileStore<{ num: number }>('/+version.json', { num: 0 });
-export const valuesFileStore = new FileStore<IndexValues>('/values', { chatUrl: '' });
-
 const makeAuthFromUser = async (user: OmitOwn<TelegramBot.User, 'is_bot'>) => {
   try {
-    await supportTelegramBot.tryIsUserMember(user.id);
+    await prodTelegramBot.tryIsUserMember(user.id);
   } catch (error) {
     throw new Error('Не состоит в канале');
   }
 
-  const admin = (await supportTelegramBot.getAdmins())[user.id];
+  const admin = (await supportTelegramBot.getAdmins()).find(admin => admin.user.id === user.id);
 
   return {
     level: admin

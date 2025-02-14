@@ -26,7 +26,7 @@ export const ComListControlledContainer = (props: Props) => {
           event.preventDefault();
 
           if (props.selectable === false) return;
-          let foundElementWithFaceItemClassName = event.nativeEvent.target as HTMLElement | null;
+          let foundElementWithFaceItemClassName = event.target as HTMLElement | null;
 
           while (foundElementWithFaceItemClassName) {
             if (foundElementWithFaceItemClassName.classList.contains('face-item')) break;

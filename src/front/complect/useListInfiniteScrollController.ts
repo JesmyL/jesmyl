@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useActualRef } from './useActualRef';
 import { useOnScrolledToLimitEventer } from './useOnScrolledToLimitEventer';
 
 export const useListInfiniteScrollController = <Item>(
@@ -10,10 +9,9 @@ export const useListInfiniteScrollController = <Item>(
   initItemsAfter = 40,
   addItemsCount = 30,
 ): ListSlicerLimitsControls => {
-  const findCurrentIndexRef = useActualRef(findCurrentIndex);
-
   const [limits, setLimits] = useState(() => {
-    let itemi = list.findIndex(findCurrentIndexRef.current);
+    let itemi = list.findIndex(findCurrentIndex);
+
     itemi = itemi < 0 ? 0 : itemi;
 
     const startLimitPlus = initItemsAfter - (list.length - itemi);

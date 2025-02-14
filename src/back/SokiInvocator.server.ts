@@ -1,6 +1,6 @@
 import { makeSokiInvocator } from 'shared/api/complect/SokiInvocator.master';
 import { SokiServerClientSelector } from './complect/soki/model';
-import sokiServer from './complect/soki/SokiServer';
+import { sokiServer } from './complect/soki/SokiServer';
 
 export const SokiInvocatorServer = makeSokiInvocator<'SokiInvocatorServer', SokiServerClientSelector>(
   false,

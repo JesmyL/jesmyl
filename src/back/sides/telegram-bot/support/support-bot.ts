@@ -20,7 +20,7 @@ supportTelegramBot.onChatMessages(async (bot, message) => {
   if (id == null) return;
 
   try {
-    const isCreator = (await bot.getAdmins())[id]?.status === 'creator';
+    const isCreator = (await bot.getAdmins()).find(admin => admin.user.id === id)?.status === 'creator';
 
     if (!isCreator) return;
   } catch (error) {

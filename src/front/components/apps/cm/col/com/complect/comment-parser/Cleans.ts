@@ -14,10 +14,13 @@ export class ComBlockCommentMakerCleans {
   private static numberAssociationLine = 'iwvthjkfsz';
 
   static spaceFreeText = (text: string) => text.replace(makeRegExp('/\\s+/g'), '');
+  static makeComOrderHeaderSelector = (blockNumber: number | string) =>
+    `.styled-block:nth-child(${blockNumber} of :has(.styled-header)) .styled-header`;
 
-  static commentsParseReg = makeRegExp(
-    `/(^|\\n)( *)(#{1,2})(\\d*)(_?([${this.numberAssociationLine}]*)(!?))? *(\\[(.+?)\\])?( *)([\\w\\W]+?)(?=\\n *#|$)/g`,
-  );
+  static commentsParseReg = (specialNumber: number | string = '\\d*') =>
+    makeRegExp(
+      `/(^|\\n)( *)(#{1,2})(${specialNumber})(_?([${this.numberAssociationLine}]*)(!?))? *(\\[(.+?)\\])?( *)([\\w\\W]+?)(?=\\n *#|$)/g`,
+    );
   static makePropsFromCommentsArgs = (args: [string, ...(string | und)[]]) => {
     const [
       $all,
