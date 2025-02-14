@@ -69,6 +69,7 @@ export default function EditComposition() {
         </>
       }
       rememberProps={['comw']}
+      withoutBackSwipe
       head={
         <>
           {connectionNode}
