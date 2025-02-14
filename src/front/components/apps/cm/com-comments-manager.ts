@@ -42,13 +42,16 @@ let trySend = async (comw: CmComWid, comment: string, setIsLoading: (is: boolean
 
       if (prevComment === comment) return;
 
-      if (!navigator.onLine) {
+      const onCantSend = async () => {
         setIsLoading(false);
         await cmIDB.tb.comComments.put({ isSavedLocal: 1, m: Date.now(), comment, comw });
 
         window.removeEventListener('online', sendLocalComments);
         window.addEventListener('online', sendLocalComments);
+      };
 
+      if (!navigator.onLine) {
+        await onCantSend();
         throw new Error('#offline');
       }
 
@@ -56,7 +59,9 @@ let trySend = async (comw: CmComWid, comment: string, setIsLoading: (is: boolean
 
       clearTimeout(updateComCommentTimeOut[comw]);
       updateComCommentTimeOut[comw] = setTimeout(async () => {
+        const timeOut = setTimeout(onCantSend, 5000);
         await cmUserStoreSokiInvocatorClient.setComComment(null, comw, comment);
+        clearTimeout(timeOut);
         setIsLoading(false);
       }, 1000);
     };
