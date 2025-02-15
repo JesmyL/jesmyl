@@ -1,11 +1,8 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { ReactNode, useEffect, useState } from 'react';
-import { IconAlert01StrokeRounded } from '../../../complect/the-icon/icons/alert-01';
-import { IconCloudUploadStrokeRounded } from '../../../complect/the-icon/icons/cloud-upload';
-import { IconLinkBackwardStrokeRounded } from '../../../complect/the-icon/icons/link-backward';
 import KeyboardInput from '../../keyboard/KeyboardInput';
 import useToast from '../../modal/useToast';
 import { TheIconLoading } from '../../the-icon/IconLoading';
-import { TheIconType } from '../../the-icon/model';
 import useIsRedactArea from '../../useIsRedactArea';
 import StrongEditableFieldMultiline from './StrongEditableFieldMultiline';
 
@@ -16,8 +13,7 @@ type Props<Key, Value> = {
   description?: ReactNode;
   disabled?: boolean;
   type?: 'text' | 'number';
-  Icon?: TheIconType;
-  icon?: KnownIconName;
+  icon?: TheIconKnownName;
   placeholder?: string;
   isRedact?: boolean;
   setSelfRedact?: boolean;
@@ -77,16 +73,23 @@ export default function StrongEditableField<Key extends string, Value extends st
   }, [isUserChange, value]);
 
   const indicatorNode = isError ? (
-    <IconAlert01StrokeRounded className="error-message" />
+    <LazyIcon
+      icon="Alert01"
+      className="error-message"
+    />
   ) : (
     <TheIconLoading isLoading={isLoading}>
       {stateValue !== value ? (
-        <IconLinkBackwardStrokeRounded
+        <LazyIcon
+          icon="LinkBackward"
           className="pointer"
           onPointerDown={() => setStateValue(value)}
         />
       ) : (
-        <IconCloudUploadStrokeRounded className="fade-05" />
+        <LazyIcon
+          icon="CloudUpload"
+          className="fade-05"
+        />
       )}
     </TheIconLoading>
   );
@@ -101,7 +104,7 @@ export default function StrongEditableField<Key extends string, Value extends st
         <>
           {(props.title || props.setSelfRedact) && (
             <div className="flex flex-gap">
-              {props.Icon && <props.Icon />}
+              {props.icon && <LazyIcon icon={props.icon} />}
               {props.title}
               {props.setSelfRedact && editIcon}
               {indicatorNode}
@@ -135,7 +138,12 @@ export default function StrongEditableField<Key extends string, Value extends st
           draggable={!!value}
           className="flex flex-gap"
         >
-          {props.Icon && <props.Icon className="color--7 self-start" />}
+          {props.icon && (
+            <LazyIcon
+              icon={props.icon}
+              className="color--7 self-start"
+            />
+          )}
           {value ? (
             props.multiline ? (
               <StrongEditableFieldMultiline value={value} />

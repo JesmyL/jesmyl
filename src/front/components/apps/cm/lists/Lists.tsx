@@ -1,11 +1,8 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { Link, Route, Routes } from 'react-router-dom';
 import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
 import BrutalScreen from '../../../../complect/brutal-screen/BrutalScreen';
 import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
-import { IconBookOpen02StrokeRounded } from '../../../../complect/the-icon/icons/book-open-02';
-import { IconCalendar02StrokeRounded } from '../../../../complect/the-icon/icons/calendar-02';
-import { IconCheckmarkBadge01StrokeRounded } from '../../../../complect/the-icon/icons/checkmark-badge-01';
-import { IconStarStrokeRounded } from '../../../../complect/the-icon/icons/star';
 import useSelectedComs from '../base/useSelectedComs';
 import TheCat from '../col/cat/TheCat';
 import { useCats } from '../cols/useCols';
@@ -36,7 +33,7 @@ export default function Lists() {
                   className="full-width"
                 >
                   <BrutalItem
-                    icon={<IconStarStrokeRounded />}
+                    iconNode={<LazyIcon icon="Star" />}
                     title="Избранное"
                   />
                 </Link>
@@ -45,7 +42,7 @@ export default function Lists() {
                   className="full-width"
                 >
                   <BrutalItem
-                    icon={<IconCalendar02StrokeRounded />}
+                    iconNode={<LazyIcon icon="Calendar02" />}
                     title="События"
                   />
                 </Link>
@@ -55,7 +52,7 @@ export default function Lists() {
                     className="full-width"
                   >
                     <BrutalItem
-                      icon={<IconCheckmarkBadge01StrokeRounded />}
+                      iconNode={<LazyIcon icon="CheckmarkBadge01" />}
                       title="Выбранное"
                     />
                   </Link>
@@ -69,7 +66,10 @@ export default function Lists() {
                         className="pointer item flex"
                         to={`cat/${cat.wid}`}
                       >
-                        <IconBookOpen02StrokeRounded className="margin-big-gap" />
+                        <LazyIcon
+                          icon="BookOpen02"
+                          className="margin-big-gap"
+                        />
                         <div>{cat.name}</div>
                       </Link>
                     );

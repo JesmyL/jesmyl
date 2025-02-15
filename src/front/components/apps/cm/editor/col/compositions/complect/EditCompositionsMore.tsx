@@ -1,7 +1,6 @@
 import { BottomPopupItem } from 'front/complect/absolute-popup/bottom-popup/BottomPopupItem';
 import { FullContent } from 'front/complect/fullscreen-content/FullContent';
 import { useState } from 'react';
-import { IconPlusSignCircleStrokeRounded } from '../../../../../../../complect/the-icon/icons/plus-sign-circle';
 import NewComposition from './new-com/NewComposition';
 
 export const EditCompositionsMore = ({ onClose }: { onClose(is: false): void }) => {
@@ -21,7 +20,7 @@ export const EditCompositionsMore = ({ onClose }: { onClose(is: false): void }) 
       )}
       <BottomPopupItem
         id="create-com-button"
-        Icon={IconPlusSignCircleStrokeRounded}
+        icon="PlusSignCircle"
         title="Новая песня"
         onClick={event => {
           event.stopPropagation();

@@ -1,9 +1,5 @@
 import { useAtom } from 'front/complect/atoms';
 import IconButton from 'front/complect/the-icon/IconButton';
-import { IconCancel01StrokeRounded } from 'front/complect/the-icon/icons/cancel-01';
-import { IconCancelCircleStrokeRounded } from 'front/complect/the-icon/icons/cancel-circle';
-import { IconMapsRefreshStrokeRounded } from 'front/complect/the-icon/icons/maps-refresh';
-import { IconTextFontStrokeRounded } from 'front/complect/the-icon/icons/text-font';
 import { mylib } from 'front/utils';
 import { useState } from 'react';
 import Dropdown from '../../../../../../complect/dropdown/Dropdown';
@@ -34,7 +30,7 @@ export default function EditCategory() {
           <div className="flex column">
             <h2 className="color--ko">Категория удалена</h2>
             <IconButton
-              Icon={IconMapsRefreshStrokeRounded}
+              icon="MapsRefresh"
               postfix="Восстановить"
               className="color--ok"
               onClick={() => cmCatClientInvocatorMethods.bringBackToLife(null, ccatw)}
@@ -52,7 +48,7 @@ export default function EditCategory() {
       content={
         <>
           <InputWithLoadingIcon
-            Icon={IconTextFontStrokeRounded}
+            icon="TextFont"
             defaultValue={ccat.name}
             label="Название"
             onChange={value => cmCatClientInvocatorMethods.rename(null, ccat.wid, value)}
@@ -71,7 +67,7 @@ export default function EditCategory() {
             </div>
             {ccat.kind !== 'list' && ccat.coms.length > 0 && (
               <IconButton
-                Icon={IconCancel01StrokeRounded}
+                icon="Cancel01"
                 postfix="Очистить список"
                 confirm="Список восстановить не получится"
                 onClick={() => cmCatClientInvocatorMethods.clearStack(null, ccat.wid)}
@@ -87,7 +83,7 @@ export default function EditCategory() {
 
           <div className="flex center margin-gap-v">
             <IconButton
-              Icon={IconCancelCircleStrokeRounded}
+              icon="CancelCircle"
               className="color--ko"
               postfix="Удалить категорию"
               confirm

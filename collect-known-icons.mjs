@@ -51,7 +51,7 @@ replaceFileContent('src/front/complect/the-icon/pack.tsx', content => {
   return `${importsNames.join('\n')}
 import { TheIconSelfPack } from './model';
 
-export const theIconKnownPack: Record<KnownIconNameForPack, TheIconSelfPack> = {
+export const theIconKnownPack: Record<TheIconKnownName, TheIconSelfPack> = {
 ${iconNames.map(iconName => `  ${iconName}: iconPackOf${iconName},`).join('\n')}
 };
 `;

@@ -4,7 +4,6 @@ import {
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
-import { IconUserStrokeRounded } from '../../../../complect/the-icon/icons/user';
 import StrongEditableField from '../../../strong-control/field/StrongEditableField';
 import { useScheduleUserScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
 import { schUsersSokiInvocatorClient } from '../../invocators/invocators.methods';
@@ -25,7 +24,7 @@ export function ScheduleWidgetUserEdit({ user }: { user: IScheduleWidgetUser }) 
         isRedact
         setSelfRedact
         title="Имя"
-        Icon={IconUserStrokeRounded}
+        icon="User"
         value={user.fio || user.nick}
         onSend={value => schUsersSokiInvocatorClient.setUserFio(null, scheduleUserScopeProps, value)}
       />

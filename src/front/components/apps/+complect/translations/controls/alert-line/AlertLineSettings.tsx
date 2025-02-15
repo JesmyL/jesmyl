@@ -3,8 +3,6 @@ import { FullContent } from 'front/complect/fullscreen-content/FullContent';
 import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
 import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
 import IconButton from 'front/complect/the-icon/IconButton';
-import { IconEdit02StrokeRounded } from 'front/complect/the-icon/icons/edit-02';
-import { IconPlusSignStrokeRounded } from 'front/complect/the-icon/icons/plus-sign';
 import React, { useState } from 'react';
 import { complectIDB } from '../../../_idb/complectIDB';
 import { defaultAlertLineConfig } from '../../atoms';
@@ -24,7 +22,7 @@ export const AlertLineSettingsModalInner = () => {
           return (
             <IconButton
               key={config.id}
-              Icon={IconEdit02StrokeRounded}
+              icon="Edit02"
               className="margin-gap-v pointer"
               prefix={
                 <span className="flex flex-gap center">
@@ -37,7 +35,7 @@ export const AlertLineSettingsModalInner = () => {
           );
         })}
         <IconButton
-          Icon={IconPlusSignStrokeRounded}
+          icon="PlusSign"
           postfix="Добавить шаблон"
           onClick={() => complectIDB.tb.alertLineConfigs.add(defaultAlertLineConfig)}
         />

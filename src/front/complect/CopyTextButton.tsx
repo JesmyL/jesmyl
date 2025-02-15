@@ -1,5 +1,4 @@
 import { ReactNode } from 'react';
-import { IconCopy01StrokeRounded } from '../complect/the-icon/icons/copy-01';
 import useModal from './modal/useModal';
 import useToast from './modal/useToast';
 import IconButton from './the-icon/IconButton';
@@ -56,7 +55,7 @@ export default function CopyTextButton({
         {description}
         {withoutIcon || (
           <IconButton
-            Icon={IconCopy01StrokeRounded}
+            icon="Copy01"
             disabled={disabled}
           />
         )}

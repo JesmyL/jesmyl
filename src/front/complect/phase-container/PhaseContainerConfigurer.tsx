@@ -1,10 +1,9 @@
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { emptyFunc } from 'shared/utils';
 import styled, { css } from 'styled-components';
-import { IconArrowLeft02StrokeRounded } from '../../complect/the-icon/icons/arrow-left-02';
-import { IconMoreVerticalCircle01StrokeRounded } from '../../complect/the-icon/icons/more-vertical-circle-01';
 import { backSwipableContainerMaker } from '../backSwipableContainerMaker';
 import { contextCreator } from '../contextCreator';
+import { LazyIcon } from '../the-icon/LazyIcon';
 import { LinkWithSearchRemember } from './LinkWithSearchRemember';
 import { PhaseContainerConfigurerProps } from './PhaseContainerConfigurer.model';
 
@@ -16,7 +15,6 @@ export const [PhaseContainerConfigurerWithoutFooterContext, usePhaseContainerCon
 
 export default function PhaseContainerConfigurer(props: PhaseContainerConfigurerProps) {
   navigate = useNavigate();
-  const Icon = props.BackButtonIcon ?? IconArrowLeft02StrokeRounded;
   const withoutFooter = usePhaseContainerConfigurerWithoutFooterContext();
 
   return (
@@ -40,14 +38,18 @@ export default function PhaseContainerConfigurer(props: PhaseContainerConfigurer
             rememberProps={props.rememberProps}
             className="flex"
           >
-            <Icon className="action-button" />
+            <LazyIcon
+              icon={props.backButtonIcon ?? 'ArrowLeft02'}
+              className="action-button"
+            />
             <StyledPhaseContainerConfigurerHeadTitle>{props.headTitle}</StyledPhaseContainerConfigurerHeadTitle>
           </LinkWithSearchRemember>
         )}
         <StyledPhaseContainerConfigurerHeadWithMoreIcon className={`head ${props.headClass || 'flex between'}`}>
           <StyledPhaseContainerConfigurerHead>{props.head}</StyledPhaseContainerConfigurerHead>
           {props.onMoreClick && (
-            <IconMoreVerticalCircle01StrokeRounded
+            <LazyIcon
+              icon="MoreVerticalCircle01"
               id="phase-container-header-more-button"
               className="action-button"
               onClick={() => props.onMoreClick?.(true)}

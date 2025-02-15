@@ -1,21 +1,19 @@
 import { mylib } from 'front/utils';
 import { FunctionComponent, HTMLAttributes, ReactNode, useState } from 'react';
-import { IconArrowDown01StrokeRounded } from '../../complect/the-icon/icons/arrow-down-01';
-import { IconArrowUp01StrokeRounded } from '../../complect/the-icon/icons/arrow-up-01';
-import { TheIconType } from '../the-icon/model';
+import { LazyIcon } from '../the-icon/LazyIcon';
 
 interface Props<Element extends HTMLElement> {
   children: ReactNode | ((isExpand: boolean) => ReactNode);
   title: ReactNode | ((isExpand: boolean) => ReactNode);
   postfix?: ReactNode | ((isExpand: boolean) => ReactNode);
-  Icon?: TheIconType;
+  icon?: TheIconKnownName;
   HeaderNode?: FunctionComponent<HTMLAttributes<Element>>;
 }
 
 export const ExpandableContent = <Element extends HTMLElement>({
   children,
   title,
-  Icon,
+  icon,
   postfix,
   HeaderNode,
 }: Props<Element>) => {
@@ -26,9 +24,9 @@ export const ExpandableContent = <Element extends HTMLElement>({
         className="flex flex-gap flex-max pointer text-bold"
         onClick={() => setIsExpand(!isExpand)}
       >
-        {Icon && <Icon />}
+        {icon && <LazyIcon icon={icon} />}
         {mylib.isFunc(title) ? title(isExpand) : title}
-        {isExpand ? <IconArrowUp01StrokeRounded /> : <IconArrowDown01StrokeRounded />}
+        {isExpand ? <LazyIcon icon="ArrowUp01" /> : <LazyIcon icon="ArrowDown01" />}
       </span>
       {mylib.isFunc(postfix) ? postfix(isExpand) : postfix}
     </>

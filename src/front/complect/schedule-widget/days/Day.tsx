@@ -1,4 +1,5 @@
 import { FullContent } from 'front/complect/fullscreen-content/FullContent';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { mylib, MyLib } from 'front/utils';
 import { useMemo, useState } from 'react';
 import {
@@ -11,11 +12,6 @@ import {
 } from 'shared/api';
 import { isNIs } from 'shared/utils';
 import styled from 'styled-components';
-import { IconBookmark03StrokeRounded } from '../../../complect/the-icon/icons/bookmark-03';
-import { IconFavouriteStrokeRounded } from '../../../complect/the-icon/icons/favourite';
-import { IconFile02StrokeRounded } from '../../../complect/the-icon/icons/file-02';
-import { IconViewStrokeRounded } from '../../../complect/the-icon/icons/view';
-import { IconViewOffSlashStrokeRounded } from '../../../complect/the-icon/icons/view-off-slash';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
 import IconButton from '../../the-icon/IconButton';
 import useIsRedactArea from '../../useIsRedactArea';
@@ -95,9 +91,9 @@ export const ScheduleWidgetDay = ({
             <>, {dayi + 1} день</>
           )}
           {isPrint && (
-            <IconButton
-              Icon={print.title ? IconViewStrokeRounded : IconViewOffSlashStrokeRounded}
-              className="not-printable"
+            <LazyIcon
+              icon={print.title ? 'View' : 'ViewOffSlash'}
+              className="pointer not-printable"
               onClick={event => {
                 event.stopPropagation();
                 setPrint(prev => ({ ...prev, title: !prev.title }));
@@ -108,8 +104,9 @@ export const ScheduleWidgetDay = ({
         <div className="edit-day-panel absolute pos-top pos-right margin-gap-t flex flex-gap">
           {isPastDay ? (
             <>
-              <IconButton
-                Icon={isShowDay ? IconViewOffSlashStrokeRounded : IconViewStrokeRounded}
+              <LazyIcon
+                className="pointer"
+                icon={isShowDay ? 'ViewOffSlash' : 'View'}
                 onClick={() => setIsShowDay(isNIs)}
               />
               {isShowDay && editIcon}
@@ -127,7 +124,7 @@ export const ScheduleWidgetDay = ({
                     value={day}
                     fieldKey="topic"
                     isRedact={isRedact}
-                    Icon={IconBookmark03StrokeRounded}
+                    icon="Bookmark03"
                     title="Тема дня"
                     onSend={value => schDaysSokiInvocatorClient.setTopic(null, dayScopeProps, value)}
                   />
@@ -139,7 +136,7 @@ export const ScheduleWidgetDay = ({
                     isRedact={isRedact}
                     multiline
                     textClassName=" "
-                    Icon={IconFile02StrokeRounded}
+                    icon="File02"
                     title="Описание дня"
                     onSend={value => schDaysSokiInvocatorClient.setDescription(null, dayScopeProps, value)}
                   />
@@ -153,7 +150,7 @@ export const ScheduleWidgetDay = ({
                   />
                 ) : (
                   <IconButton
-                    Icon={IconFavouriteStrokeRounded}
+                    icon="Favourite"
                     className={'flex-max ' + (dayRating < 0 ? 'color--ko' : dayRating > 0 ? 'color--ok' : 'color--3')}
                     postfix={'Рейтинг дня: ' + dayRating}
                   />

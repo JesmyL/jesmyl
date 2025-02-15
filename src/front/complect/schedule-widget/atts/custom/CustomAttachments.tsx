@@ -1,12 +1,10 @@
 import Modal from 'front/complect/modal/Modal/Modal';
 import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
 import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useState } from 'react';
 import { ScheduleWidgetAppAttCustomized } from 'shared/api';
-import { IconArrowRight01StrokeRounded } from '../../../../complect/the-icon/icons/arrow-right-01';
-import { IconAttachment02StrokeRounded } from '../../../../complect/the-icon/icons/attachment-02';
-import { IconPlusSignStrokeRounded } from '../../../../complect/the-icon/icons/plus-sign';
 import IconButton from '../../../the-icon/IconButton';
 import { useScheduleScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
 import { schAttachmentTypesSokiInvocatorClient } from '../../invocators/invocators.methods';
@@ -19,11 +17,11 @@ export default function ScheduleWidgetCustomAttachments(props: { tatts: Schedule
   return (
     <div>
       <IconButton
-        Icon={IconAttachment02StrokeRounded}
+        icon="Attachment02"
         postfix={
           <>
             Шаблоны вложений
-            <IconArrowRight01StrokeRounded />
+            <LazyIcon icon="ArrowRight01" />
           </>
         }
         onClick={setIsModalOpen}
@@ -35,8 +33,8 @@ export default function ScheduleWidgetCustomAttachments(props: { tatts: Schedule
           <ModalHeader>
             <div className="flex full-width between">
               Шаблоны вложений
-              <EvaSendButton
-                Icon={IconPlusSignStrokeRounded}
+              <TheIconSendButton
+                icon="PlusSign"
                 confirm="Создать шаблон вложения?"
                 disabled={props.tatts.some(att => !att.title || !att.description)}
                 disabledReason="Есть шаблоны вложений без названия или описания"

@@ -1,4 +1,5 @@
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import React, { ReactNode, useMemo, useState } from 'react';
 import {
   CustomAttUseRights,
@@ -10,19 +11,11 @@ import {
 } from 'shared/api';
 import { ScheduleWidgetRightsCtrl } from 'shared/api/complect/schedule-widget/complect/rights-constructor';
 import { itIt, itNIt } from 'shared/utils';
-import { IconCheckmarkSquare02StrokeRounded } from '../../../../complect/the-icon/icons/checkmark-square-02';
-import { IconEdit01StrokeRounded } from '../../../../complect/the-icon/icons/edit-01';
-import { IconEyeStrokeRounded } from '../../../../complect/the-icon/icons/eye';
-import { IconFile01StrokeRounded } from '../../../../complect/the-icon/icons/file-01';
-import { IconPencilEdit01StrokeRounded } from '../../../../complect/the-icon/icons/pencil-edit-01';
-import { IconPlusSignStrokeRounded } from '../../../../complect/the-icon/icons/plus-sign';
-import { IconSquareStrokeRounded } from '../../../../complect/the-icon/icons/square';
 import Modal from '../../../modal/Modal/Modal';
 import { ModalBody } from '../../../modal/Modal/ModalBody';
 import { ModalHeader } from '../../../modal/Modal/ModalHeader';
 import StrongEditableField from '../../../strong-control/field/StrongEditableField';
 import IconButton from '../../../the-icon/IconButton';
-import { TheIconType } from '../../../the-icon/model';
 import { useScheduleScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
 import ScheduleWidgetRightControlList from '../../control/RightControlList';
 import { schAttachmentTypesSokiInvocatorClient } from '../../invocators/invocators.methods';
@@ -38,16 +31,16 @@ enum WhoCan {
   No,
 }
 
-const whoCanUnits: { action: string; rule: 'R' | 'U'; Icon: TheIconType }[] = [
+const whoCanUnits: { action: string; rule: 'R' | 'U'; icon: TheIconKnownName }[] = [
   {
     action: 'видит',
     rule: 'R',
-    Icon: IconEyeStrokeRounded,
+    icon: 'Eye',
   },
   {
     action: 'редактирует',
     rule: 'U',
-    Icon: IconPencilEdit01StrokeRounded,
+    icon: 'PencilEdit01',
   },
 ];
 
@@ -94,8 +87,9 @@ export default function ScheduleWidgetCustomAtt(props: {
         {props.isRedact ||
           (isCanRedact && (
             <div className="flex flex-end full-width">
-              <IconButton
-                Icon={IconPencilEdit01StrokeRounded}
+              <LazyIcon
+                className="pointer"
+                icon="PencilEdit01"
                 onClick={setIsOpenAttRedactor}
               />
             </div>
@@ -125,7 +119,7 @@ export default function ScheduleWidgetCustomAtt(props: {
           fieldKey="description"
           multiline
           isRedact={props.isRedact}
-          Icon={IconFile01StrokeRounded}
+          icon="File01"
           isImpossibleEmptyValue
           title="Описание вложения"
           onSend={value =>
@@ -144,7 +138,7 @@ export default function ScheduleWidgetCustomAtt(props: {
                 return (
                   <IconButton
                     key={whoCan.rule}
-                    Icon={whoCan.Icon}
+                    icon={whoCan.icon}
                     className="flex-max margin-gap-v"
                     postfix={
                       <div className="full-width flex between">
@@ -155,8 +149,9 @@ export default function ScheduleWidgetCustomAtt(props: {
                           </span>
                         </span>
                         {props.isRedact && isCanRedact && (
-                          <IconButton
-                            Icon={IconEdit01StrokeRounded}
+                          <LazyIcon
+                            className="pointer"
+                            icon="Edit01"
                             onClick={() => setWhoCani(whoCani)}
                           />
                         )}
@@ -179,11 +174,11 @@ export default function ScheduleWidgetCustomAtt(props: {
                         customAttUseRights.checkIsHasIndividualRights(props.tatt.use, CustomAttUseRights.Games)) &&
                       (id !== CustomAttUseRights.CheckUsers ||
                         customAttUseRights.checkIsHasIndividualRights(props.tatt.use, CustomAttUseRights.Users)) && (
-                        <EvaSendButton
-                          Icon={
+                        <TheIconSendButton
+                          icon={
                             customAttUseRights.checkIsHasIndividualRights(props.tatt.use, id)
-                              ? IconCheckmarkSquare02StrokeRounded
-                              : IconSquareStrokeRounded
+                              ? 'CheckmarkSquare02'
+                              : 'Square'
                           }
                           className={
                             (top ? 'margin-big-gap-l ' : '') +
@@ -213,12 +208,12 @@ export default function ScheduleWidgetCustomAtt(props: {
                             if (!cat) return null;
 
                             return (
-                              <EvaSendButton
+                              <TheIconSendButton
                                 key={cati}
-                                Icon={
+                                icon={
                                   ScheduleWidgetRightsCtrl.checkIsHasIndividualRights(props.tatt.roles, cati)
-                                    ? IconCheckmarkSquare02StrokeRounded
-                                    : IconSquareStrokeRounded
+                                    ? 'CheckmarkSquare02'
+                                    : 'Square'
                                 }
                                 className={
                                   ScheduleWidgetRightsCtrl.checkIsHasIndividualRights(props.tatt.roles, cati)
@@ -244,12 +239,12 @@ export default function ScheduleWidgetCustomAtt(props: {
                         <div className="margin-gap-v margin-big-gap-l">
                           {rights.schedule.lists.cats.map((cat, cati, cata) => {
                             return (
-                              <EvaSendButton
+                              <TheIconSendButton
                                 key={cati}
-                                Icon={
+                                icon={
                                   ScheduleWidgetRightsCtrl.checkIsHasIndividualRights(props.tatt.list, cati)
-                                    ? IconCheckmarkSquare02StrokeRounded
-                                    : IconSquareStrokeRounded
+                                    ? 'CheckmarkSquare02'
+                                    : 'Square'
                                 }
                                 disabled={!cat.title}
                                 disabledReason="Название пустое"
@@ -300,8 +295,8 @@ export default function ScheduleWidgetCustomAtt(props: {
                             );
                           })}
 
-                          <EvaSendButton
-                            Icon={IconPlusSignStrokeRounded}
+                          <TheIconSendButton
+                            icon="PlusSign"
                             disabled={props.tatt.titles?.some(itNIt)}
                             disabledReason="Есть пустые заголовки"
                             onSend={() =>
@@ -362,15 +357,15 @@ export default function ScheduleWidgetCustomAtt(props: {
                 !!user.R && scheduleWidgetUserRights.checkInvertIsCan(user.R, props.tatt[whoCan.rule]);
 
               return (
-                <EvaSendButton
+                <TheIconSendButton
                   key={user.mi}
                   className="margin-gap-v flex-max"
                   disabled={!user.R || isForceChecked}
                   postfix={user.fio}
-                  Icon={
+                  icon={
                     isForceChecked || (whoCan.rule === 'U' ? canUpdateUsers : canReadUsers).includes(user.mi)
-                      ? IconCheckmarkSquare02StrokeRounded
-                      : IconSquareStrokeRounded
+                      ? 'CheckmarkSquare02'
+                      : 'Square'
                   }
                   onSend={() =>
                     schAttachmentTypesSokiInvocatorClient.toggleUserWhoCan(

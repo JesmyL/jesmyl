@@ -1,9 +1,9 @@
 import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/scope-props-contexts';
 import { schGamesSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useState } from 'react';
 import { ExpandableContent } from '../../../../../expand/ExpandableContent';
 import StrongEditableField from '../../../../../strong-control/field/StrongEditableField';
-import { IconPencilEdit01StrokeRounded } from '../../../../../the-icon/icons/pencil-edit-01';
 import { useSchWGameContext } from '../Games';
 import ScheduleWidgetTeamGameTeam from '../Team';
 import { ScheduleWidgetTeamGamePrintTeamsButton } from './PrintTeamsButton';
@@ -24,7 +24,8 @@ export default function ScheduleWidgetTeamGame() {
           schGamesSokiInvocatorClient.setTitle(null, { ...scheduleScopeProps, gameMi: game.mi }, value, game.title)
         }
       />
-      <IconPencilEdit01StrokeRounded
+      <LazyIcon
+        icon="PencilEdit01"
         onClick={event => {
           event.stopPropagation();
           setIsRenaming(is => !is);

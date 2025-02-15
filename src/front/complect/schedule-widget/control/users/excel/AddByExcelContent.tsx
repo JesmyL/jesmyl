@@ -1,13 +1,12 @@
 import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/scope-props-contexts';
 import { schUsersSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
 import SendButton from 'front/complect/sends/send-button/SendButton';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { mylib } from 'front/utils';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Dropdown from '../../../../dropdown/Dropdown';
 import useToast from '../../../../modal/useToast';
 import { excel2jsonParserBox } from '../../../../parseExcel2Json';
-import { IconCancel01StrokeRounded } from '../../../../the-icon/icons/cancel-01';
-import { IconLinkBackwardStrokeRounded } from '../../../../the-icon/icons/link-backward';
 import { useScheduleWidgetRightsContext } from '../../../useScheduleWidget';
 
 interface Props {
@@ -144,12 +143,14 @@ export function ScheduleWidgetUserAddByExcelContent({ close }: Props) {
                   >
                     <span className={'' + (excludedFios.has(user.fio) ? ' text-strike' : '')}>{user.fio}</span>
                     {excludedFios.has(user.fio) ? (
-                      <IconLinkBackwardStrokeRounded
+                      <LazyIcon
+                        icon="LinkBackward"
                         className="pointer color--ok"
                         onClick={() => excludedFios.delete(user.fio) && setExcludedFios(new Set(excludedFios))}
                       />
                     ) : (
-                      <IconCancel01StrokeRounded
+                      <LazyIcon
+                        icon="Cancel01"
                         className="pointer color--ko"
                         onClick={() => setExcludedFios(new Set(excludedFios.add(user.fio)))}
                       />

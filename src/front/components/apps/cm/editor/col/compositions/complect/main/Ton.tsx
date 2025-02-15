@@ -1,9 +1,9 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { mylib } from 'front/utils';
 import { useState } from 'react';
 import useModal from '../../../../../../../../complect/modal/useModal';
 import IconCheckbox from '../../../../../../../../complect/the-icon/IconCheckbox';
-import { IconNotification01StrokeRounded } from '../../../../../../../../complect/the-icon/icons/notification-01';
 import { ChordVisibleVariant } from '../../../../../Cm.model';
 import ComOrders from '../../../../../col/com/orders/ComOrders';
 import { EditableCom } from '../../com/EditableCom';
@@ -59,7 +59,7 @@ export const EditableCompositionMainTon = ({ ccom }: { ccom: EditableCom }) => {
       onClick={openModal}
     >
       {modalNode}
-      <IconNotification01StrokeRounded />
+      <LazyIcon icon="Notification01" />
       <div className="title half-width text-center">Изменить тональность</div>
       <div className="half-width text-center">{ccom.firstChord}</div>
     </div>

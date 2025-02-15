@@ -1,9 +1,6 @@
 import BrutalItem from 'front/complect/brutal-item/BrutalItem';
 import IconButton from 'front/complect/the-icon/IconButton';
-import { IconArrowDown01StrokeRounded } from 'front/complect/the-icon/icons/arrow-down-01';
-import { IconArrowRight02StrokeRounded } from 'front/complect/the-icon/icons/arrow-right-02';
-import { IconArrowUp01StrokeRounded } from 'front/complect/the-icon/icons/arrow-up-01';
-import { IconCalendar02StrokeRounded } from 'front/complect/the-icon/icons/calendar-02';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { mylib } from 'front/utils';
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -34,18 +31,18 @@ export const MeetingSchPackFace = ({ schedule }: { schedule: IScheduleWidget }) 
       {pathsKeys.length === 1 ? (
         <Link to={`${schedule.w}/${pathsKeys[0]}`}>
           <BrutalItem
-            icon={<IconCalendar02StrokeRounded />}
+            iconNode={<LazyIcon icon="Calendar02" />}
             title={schedule.title}
-            box={<IconArrowRight02StrokeRounded />}
+            box={<LazyIcon icon="ArrowRight02" />}
             description={paths[pathsKeys[0]]}
           />
         </Link>
       ) : (
         <BrutalItem
-          icon={<IconCalendar02StrokeRounded />}
+          iconNode={<LazyIcon icon="Calendar02" />}
           title={schedule.title}
           onClick={() => setIsOpenList(isNIs)}
-          box={isOpenList ? <IconArrowUp01StrokeRounded /> : <IconArrowDown01StrokeRounded />}
+          box={isOpenList ? <LazyIcon icon="ArrowUp01" /> : <LazyIcon icon="ArrowDown01" />}
         />
       )}
 
@@ -60,7 +57,7 @@ export const MeetingSchPackFace = ({ schedule }: { schedule: IScheduleWidget }) 
             >
               <IconButton
                 className="pointer margin-big-gap"
-                Icon={IconArrowRight02StrokeRounded}
+                icon="ArrowRight02"
                 prefix={`${parseInt(path) + 1}-й день ${title}`}
               />
             </Link>

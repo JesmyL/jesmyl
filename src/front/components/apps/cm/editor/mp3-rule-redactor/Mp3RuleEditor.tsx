@@ -2,8 +2,6 @@ import { ReactNode, useState } from 'react';
 import { CmMp3Rule } from 'shared/api';
 import KeyboardInput from '../../../../../complect/keyboard/KeyboardInput';
 import IconButton from '../../../../../complect/the-icon/IconButton';
-import { IconCheckmarkCircle02StrokeRounded } from '../../../../../complect/the-icon/icons/checkmark-circle-02';
-import { IconEdit02StrokeRounded } from '../../../../../complect/the-icon/icons/edit-02';
 import { useCmMp3Rules } from './useCmMp3Rules';
 
 export default function Mp3RuleEditor(
@@ -104,7 +102,7 @@ export default function Mp3RuleEditor(
         {props.button ||
           (isRedact ? (
             <IconButton
-              Icon={IconCheckmarkCircle02StrokeRounded}
+              icon="CheckmarkCircle02"
               className="color--ok margin-big-gap"
               disabled={!!errorMessage || !attr || !query}
               onClick={() => {
@@ -121,7 +119,7 @@ export default function Mp3RuleEditor(
             />
           ) : (
             <IconButton
-              Icon={IconEdit02StrokeRounded}
+              icon="Edit02"
               onClick={() => setIsRedact(true)}
             />
           ))}

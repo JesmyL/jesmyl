@@ -13,7 +13,7 @@ export type AlertLineConfig = BackgroundConfigProps & {
   text: string;
   top: number;
   speed: number;
-  icon: KnownIconNameForPack;
+  icon: TheIconKnownName;
   color: string;
   fontSize: number;
   fontFamily?: string;

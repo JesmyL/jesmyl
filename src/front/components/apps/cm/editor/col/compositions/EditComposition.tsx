@@ -1,15 +1,11 @@
 import { useAtomValue } from 'front/complect/atoms';
 import { hookEffectPipe, setTimeoutPipe } from 'front/complect/hookEffectPipe';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import IconButton from '../../../../../../complect/the-icon/IconButton';
-import { IconMapsRefreshStrokeRounded } from '../../../../../../complect/the-icon/icons/maps-refresh';
-import {
-  IconMusicNote03SolidRounded,
-  IconMusicNote03StrokeRounded,
-} from '../../../../../../complect/the-icon/icons/music-note-03';
 import useConnectionState from '../../../../../index/useConnectionState';
 import { CmComNumber } from '../../../col/com/complect/ComNumber';
 import ComPlayer from '../../../col/com/player/ComPlayer';
@@ -49,7 +45,7 @@ export default function EditComposition() {
           <div className="flex column">
             <h2 className="color--ko">Песня удалена</h2>
             <IconButton
-              Icon={IconMapsRefreshStrokeRounded}
+              icon="MapsRefresh"
               postfix="Восстановить"
               className="color--ok"
               onClick={() => cmComClientInvocatorMethods.bringBackToLife(null, ccomw)}
@@ -73,8 +69,9 @@ export default function EditComposition() {
       head={
         <>
           {connectionNode}
-          <IconButton
-            Icon={isOpenPlayer ? IconMusicNote03SolidRounded : IconMusicNote03StrokeRounded}
+          <LazyIcon
+            icon="MusicNote03"
+            kind={isOpenPlayer ? 'SolidRounded' : 'StrokeRounded'}
             className="margin-gap"
             onClick={() => setIsOpenPlayer(!isOpenPlayer)}
           />
@@ -85,7 +82,7 @@ export default function EditComposition() {
           {mylib.isNaN(ccomw) || <EditCompositionBusyInfo comw={ccomw} />}
 
           <div className="flex around sticky nav-panel">
-            {editCompositionNavs.map(({ iconPack, path }) => {
+            {editCompositionNavs.map(({ path, icon }) => {
               return (
                 <NavLink
                   key={path}
@@ -94,11 +91,18 @@ export default function EditComposition() {
                   end
                 >
                   {({ isActive }) =>
-                    iconPack ? (
+                    icon ? (
                       isActive ? (
-                        <iconPack.StrokeRounded className="color--7" />
+                        <LazyIcon
+                          icon={icon}
+                          kind="StrokeRounded"
+                          className="color--7"
+                        />
                       ) : (
-                        <iconPack.BulkRounded />
+                        <LazyIcon
+                          icon={icon}
+                          kind="BulkRounded"
+                        />
                       )
                     ) : null
                   }

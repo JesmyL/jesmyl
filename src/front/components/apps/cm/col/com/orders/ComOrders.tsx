@@ -1,8 +1,6 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { ReactNode, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import IconButton from '../../../../../../complect/the-icon/IconButton';
-import { IconViewStrokeRounded } from '../../../../../../complect/the-icon/icons/view';
-import { IconViewOffSlashStrokeRounded } from '../../../../../../complect/the-icon/icons/view-off-slash';
 import { useBibleScreenTranslationFontSizeAdapter } from '../../../../../../complect/useFontSizeAdapter';
 import { Com } from '../Com';
 import TheOrder from '../order/TheOrder';
@@ -43,7 +41,10 @@ export default function ComOrders(props: IComOrdersProps) {
                     updateExMods(com.toggleModulationInclusion(orderUnit));
                   }}
                 >
-                  <IconButton Icon={isExcludedModulation ? IconViewStrokeRounded : IconViewOffSlashStrokeRounded} />
+                  <LazyIcon
+                    className="pointer"
+                    icon={isExcludedModulation ? 'View' : 'ViewOffSlash'}
+                  />
                   {headerNode}
                 </span>
               ) : (

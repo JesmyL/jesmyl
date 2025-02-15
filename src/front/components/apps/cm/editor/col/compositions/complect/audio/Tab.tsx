@@ -1,10 +1,8 @@
-import { IconCancelCircleStrokeRounded } from 'front/complect/the-icon/icons/cancel-circle';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
 import { CmMp3Rule } from 'shared/api';
 import { itIt, makeRegExp } from 'shared/utils';
-import { IconGoogleStrokeRounded } from '../../../../../../../../complect/the-icon/icons/google';
-import { IconPlusSignCircleStrokeRounded } from '../../../../../../../../complect/the-icon/icons/plus-sign-circle';
 import { EditableCom } from '../../com/EditableCom';
 import { useEditableCcom } from '../../useEditableCcom';
 import { ComAudioControlledList } from './ControlledList';
@@ -53,7 +51,7 @@ export default function ComAudioTab({
       {ccom.audio ? (
         <ComAudioControlledList
           srcs={ccom.audio.split('\n').filter(itIt)}
-          ActionIcon={IconCancelCircleStrokeRounded}
+          icon="CancelCircle"
           onToggle={async src => {
             await removeSrc(src);
             setRemovedHrefs(removedHrefs.concat(src));
@@ -67,7 +65,7 @@ export default function ComAudioTab({
           <h2>Удалённые аудио</h2>
           <ComAudioControlledList
             srcs={removedHrefs}
-            ActionIcon={IconPlusSignCircleStrokeRounded}
+            icon="PlusSignCircle"
             onToggle={async src => {
               await addSrc(src);
               setRemovedHrefs(removedHrefs.filter(href => href !== src));
@@ -94,7 +92,7 @@ export default function ComAudioTab({
                     }
                   }}
                 >
-                  Найти песню в гугл <IconGoogleStrokeRounded />
+                  Найти песню в гугл <LazyIcon icon="Google" />
                 </span>
               </div>
               <ObserveUrlResource
@@ -107,7 +105,7 @@ export default function ComAudioTab({
           )}
           <ComAudioControlledList
             srcs={hrefs}
-            ActionIcon={IconPlusSignCircleStrokeRounded}
+            icon="PlusSignCircle"
             onToggle={async src => {
               await addSrc(src);
               setHrefs(hrefs.filter(href => href !== src));
@@ -115,7 +113,8 @@ export default function ComAudioTab({
           />
         </>
       ) : (
-        <IconPlusSignCircleStrokeRounded
+        <LazyIcon
+          icon="PlusSignCircle"
           className="color--ok margin-big-gap"
           onClick={() => setOpenAddBlock(true)}
         />

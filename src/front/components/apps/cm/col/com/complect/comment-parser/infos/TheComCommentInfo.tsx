@@ -1,17 +1,21 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useState } from 'react';
 import Modal from '../../../../../../../../complect/modal/Modal/Modal';
-import { TheIconProps } from '../../../../../../../../complect/the-icon/model';
 import { TheComCommentForExample } from './ForExample';
 import TheComCommentBibleTextsInfo from './TheComCommentBibleTextsInfo';
 
-export default function TheComCommentInfo({ HashSwitcherIcon }: { HashSwitcherIcon: React.FC<TheIconProps> }) {
+export default function TheComCommentInfo({ HashSwitcherIcon }: { HashSwitcherIcon: TheIconKnownName }) {
   const italicBlockNumber_ = <i>номер блока</i>;
   const [isOpenBibleInfo, setIsOpenBibleInfo] = useState<unknown>(false);
 
   return (
     <div className="">
       <p>
-        Если блоки не пронумерованы, жми <HashSwitcherIcon className="vertical-middle" />
+        Если блоки не пронумерованы, жми{' '}
+        <LazyIcon
+          icon={HashSwitcherIcon}
+          className="vertical-middle"
+        />
       </p>
 
       <p>

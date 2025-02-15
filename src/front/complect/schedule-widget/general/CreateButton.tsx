@@ -2,11 +2,9 @@ import Modal from 'front/complect/modal/Modal/Modal';
 import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
 import { ModalFooter } from 'front/complect/modal/Modal/ModalFooter';
 import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
 import SendButton from 'front/complect/sends/send-button/SendButton';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
 import { useState } from 'react';
-import { IconCancel01StrokeRounded } from '../../../complect/the-icon/icons/cancel-01';
-import { IconPlusSignStrokeRounded } from '../../../complect/the-icon/icons/plus-sign';
 import KeyboardInput from '../../keyboard/KeyboardInput';
 import IconButton from '../../the-icon/IconButton';
 import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
@@ -39,8 +37,8 @@ export default function ScheduleCreateWidgetButton() {
           </ModalBody>
           <ModalFooter>
             <div className="flex flex-gap">
-              <EvaSendButton
-                Icon={IconPlusSignStrokeRounded}
+              <TheIconSendButton
+                icon="PlusSign"
                 className="color--ok"
                 postfix="Создать"
                 disabled={!title}
@@ -57,7 +55,7 @@ export default function ScheduleCreateWidgetButton() {
                 }}
               />
               <IconButton
-                Icon={IconCancel01StrokeRounded}
+                icon="Cancel01"
                 postfix="Отменить"
                 className="color--ko"
                 onClick={() => {

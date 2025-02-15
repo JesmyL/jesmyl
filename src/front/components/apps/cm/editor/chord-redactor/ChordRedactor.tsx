@@ -1,5 +1,5 @@
 import IconButton from 'front/complect/the-icon/IconButton';
-import { IconSentStrokeRounded } from 'front/complect/the-icon/icons/sent';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { propagationStopper } from 'front/complect/utils/utils';
 import { MyLib, mylib } from 'front/utils';
 import { useEffect, useMemo, useState } from 'react';
@@ -7,7 +7,6 @@ import { ChordPack, ChordTrack } from '../../../../../../shared/api/complect/app
 import { atom, useAtom } from '../../../../../complect/atoms';
 import TheButton from '../../../../../complect/Button';
 import KeyboardInput from '../../../../../complect/keyboard/KeyboardInput';
-import { IconPlusSignCircleStrokeRounded } from '../../../../../complect/the-icon/icons/plus-sign-circle';
 import { cmIDB } from '../../_db/cm-idb';
 import { useToNewChordSearches } from '../../col/com/chord-card/chord-redactor-searches';
 import ChordCard from '../../col/com/chord-card/ChordCard';
@@ -125,7 +124,7 @@ export default function ChordRedactor() {
       headTitle="Редактор аккордов"
       head={
         <IconButton
-          Icon={IconSentStrokeRounded}
+          icon="Sent"
           disabled={!mylib.keys(chordsToSend).length}
           disabledReason="Изменений нет"
           className="margin-gap"
@@ -146,7 +145,10 @@ export default function ChordRedactor() {
           >
             <div className="chords-scroll">{chordNodes}</div>
             <div className="add-chord-button flex center">
-              <IconPlusSignCircleStrokeRounded onClick={() => setIsNewChord(true)} />
+              <LazyIcon
+                icon="PlusSignCircle"
+                onClick={() => setIsNewChord(true)}
+              />
             </div>
           </div>
           <div className="flex column center old-chord">

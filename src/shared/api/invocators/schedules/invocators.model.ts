@@ -69,7 +69,7 @@ export type SchListsSokiInvocatorMethods = {
   createCategory: (props: ScheduleScopeProps) => IScheduleWidget;
   createUnit: (props: ScheduleScopeProps, cati: number) => IScheduleWidget;
   setCategoryTitle: (props: ScheduleListCategoryScopeProps, value: string) => IScheduleWidget;
-  setCategoryIcon: (props: ScheduleListCategoryScopeProps, value: KnownIconName) => IScheduleWidget;
+  setCategoryIcon: (props: ScheduleListCategoryScopeProps, value: TheIconKnownName) => IScheduleWidget;
   setCategoryMembersTitle: (props: ScheduleListCategoryScopeProps, value: string) => IScheduleWidget;
   setCategoryMentorsTitle: (props: ScheduleListCategoryScopeProps, value: string) => IScheduleWidget;
 
@@ -79,7 +79,7 @@ export type SchListsSokiInvocatorMethods = {
 
 export type SchRolesSokiInvocatorMethods = {
   createRole: (props: ScheduleScopeProps) => IScheduleWidget;
-  setRoleIcon: (props: ScheduleRoleScopeProps, icon: KnownIconName, roleTitle: string) => IScheduleWidget;
+  setRoleIcon: (props: ScheduleRoleScopeProps, icon: TheIconKnownName, roleTitle: string) => IScheduleWidget;
   setRoleTitle: (props: ScheduleRoleScopeProps, title: string, prevTitle: string) => IScheduleWidget;
   addRoleCategory: (props: ScheduleScopeProps) => IScheduleWidget;
   setRoleCategoryTitle: (props: ScheduleScopeProps, cati: number, title: string, prevTitle: string) => IScheduleWidget;
@@ -242,7 +242,7 @@ export type SchAttachmentTypesSokiInvocatorMethods = {
   create: (props: ScheduleScopeProps) => IScheduleWidget;
   setTitle: (props: ScheduleAttachmentTypeScopeProps, value: string, prevTitle: string) => IScheduleWidget;
   setDescription: (props: ScheduleAttachmentTypeScopeProps, value: string, tattTitle: string) => IScheduleWidget;
-  setIcon: (props: ScheduleAttachmentTypeScopeProps, value: KnownIconName, tattTitle: string) => IScheduleWidget;
+  setIcon: (props: ScheduleAttachmentTypeScopeProps, value: TheIconKnownName, tattTitle: string) => IScheduleWidget;
   setUse: (props: ScheduleAttachmentTypeScopeProps, value: number, tattTitle: string) => IScheduleWidget;
   setRolesUses: (props: ScheduleAttachmentTypeScopeProps, value: number, tattTitle: string) => IScheduleWidget;
   setListsUses: (props: ScheduleAttachmentTypeScopeProps, value: number, tattTitle: string) => IScheduleWidget;

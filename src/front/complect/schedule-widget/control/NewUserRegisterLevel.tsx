@@ -2,7 +2,6 @@ import Modal from 'front/complect/modal/Modal/Modal';
 import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
 import { useState } from 'react';
 import { scheduleWidgetUserRights } from 'shared/api';
-import { IconArrowRight01StrokeRounded } from '../../../complect/the-icon/icons/arrow-right-01';
 import IconButton from '../../the-icon/IconButton';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
@@ -17,7 +16,7 @@ export default function ScheduleWidgetNewUserRegisterLevel() {
   return (
     <>
       <IconButton
-        Icon={IconArrowRight01StrokeRounded}
+        icon="ArrowRight01"
         className="margin-big-gap-v margin-gap-l"
         prefix="Права по умолчанию"
         onClick={setIsOpenModal}

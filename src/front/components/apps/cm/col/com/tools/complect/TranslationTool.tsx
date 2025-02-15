@@ -1,5 +1,4 @@
 import { useAtomSet } from '../../../../../../../complect/atoms';
-import { IconComputerStrokeRounded } from '../../../../../../../complect/the-icon/icons/computer';
 import { translationBlockAtom } from '../../../../atoms';
 import { useCcom } from '../../useCcom';
 import { ComTool } from '../ComTool';
@@ -12,7 +11,7 @@ export const TranslationTool = () => {
     ccom && (
       <ComTool
         title="Слайды"
-        Icon={IconComputerStrokeRounded}
+        icon="Computer"
         path={`../@tran?comw=${ccom.wid}`}
         onClick={() => setCurrTexti(0)}
       />

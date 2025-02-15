@@ -1,13 +1,9 @@
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useEffect, useMemo, useState } from 'react';
 import { indexScheduleGetDayEventTimes, IScheduleWidgetDay, ScheduleDayScopeProps } from 'shared/api';
 import { isNIs } from 'shared/utils';
 import styled from 'styled-components';
-import { IconArrowLeftDoubleStrokeRounded } from '../../../../complect/the-icon/icons/arrow-left-double';
-import { IconCropStrokeRounded } from '../../../../complect/the-icon/icons/crop';
-import { IconDelete01StrokeRounded } from '../../../../complect/the-icon/icons/delete-01';
-import { IconLeftToRightListBulletStrokeRounded } from '../../../../complect/the-icon/icons/left-to-right-list-bullet';
-import { IconPlusSignStrokeRounded } from '../../../../complect/the-icon/icons/plus-sign';
 import { useIsRememberExpand } from '../../../expand/useIsRememberExpand';
 import StrongDiv from '../../../strong-control/StrongDiv';
 import { TheIconLoading } from '../../../the-icon/IconLoading';
@@ -36,7 +32,10 @@ export default function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isFor
   const [listTitle, isExpand, switchIsExpand] = useIsRememberExpand(
     JSON.stringify(dayScopeProps),
     <>
-      <IconLeftToRightListBulletStrokeRounded className="color--7" />
+      <LazyIcon
+        icon="LeftToRightListBullet"
+        className="color--7"
+      />
       {' Распорядок'}
     </>,
     isExpand => (isExpand || isForceExpand) && editIcon,
@@ -104,7 +103,7 @@ export default function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isFor
                         <div className="nowrap">будет здесь</div>
                       </div>
                     )}
-                    <IconArrowLeftDoubleStrokeRounded />
+                    <LazyIcon icon="ArrowLeftDouble" />
                   </StrongDiv>
                 </div>
               );
@@ -165,11 +164,14 @@ export default function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isFor
                 {!isIndividualReplacement && isRedact && (
                   <>
                     <TheIconLoading isLoading={isReplacementInProcess && moveEventMi === event.mi}>
-                      <IconCropStrokeRounded onClick={() => setMoveEventMi(event.mi)} />
+                      <LazyIcon
+                        icon="Crop"
+                        onClick={() => setMoveEventMi(event.mi)}
+                      />
                     </TheIconLoading>
                     {rights.schedule.types && (
-                      <EvaSendButton
-                        Icon={IconDelete01StrokeRounded}
+                      <TheIconSendButton
+                        icon="Delete01"
                         confirm={
                           <ScheduleWidgetTopicTitle
                             prefix="Удалить"
@@ -202,7 +204,7 @@ export default function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isFor
           {isRedact && moveEventMi === null && (
             <ScheduleWidgetEventTypeList
               postfix="Добавить событие"
-              Icon={IconPlusSignStrokeRounded}
+              icon="PlusSign"
               schedule={rights.schedule}
               usedCounts={usedCounts}
               onItemSelectSend={typei => schDaysSokiInvocatorClient.addEvent(null, dayScopeProps, typei)}

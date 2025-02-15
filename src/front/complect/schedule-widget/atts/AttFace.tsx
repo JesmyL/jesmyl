@@ -1,13 +1,10 @@
 import Modal from 'front/complect/modal/Modal/Modal';
 import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
 import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
 import { ReactNode, useState } from 'react';
 import { ScheduleWidgetAttKey, scheduleWidgetUserRights } from 'shared/api';
 import styled from 'styled-components';
-import { IconCancel01StrokeRounded } from '../../../complect/the-icon/icons/cancel-01';
-import { IconHelpCircleStrokeRounded } from '../../../complect/the-icon/icons/help-circle';
-import { IconLink02StrokeRounded } from '../../../complect/the-icon/icons/link-02';
 import { LazyIcon } from '../../the-icon/LazyIcon';
 import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
@@ -46,10 +43,15 @@ export default function ScheduleWidgetAttFace({
         className={'relative flex center column' + (isCanRedact && tatt?.isCustomize ? ' color--7 pointer' : '')}
         onClick={isCanRedact && tatt?.isCustomize ? setIsModalOpen : undefined}
       >
-        {isLink && <IconLink02StrokeRounded className="absolute pos-left pos-top color--3 fade-05" />}
+        {isLink && (
+          <LazyIcon
+            icon="Link02"
+            className="absolute pos-left pos-top color--3 fade-05"
+          />
+        )}
         {isRedact && isCanRedact && (
-          <EvaSendButton
-            Icon={IconCancel01StrokeRounded}
+          <TheIconSendButton
+            icon="Cancel01"
             className="close-button"
             confirm={
               <>
@@ -63,12 +65,15 @@ export default function ScheduleWidgetAttFace({
         )}
         {tatt ? (
           <>
-            <LazyIcon name={tatt.icon} />
+            <LazyIcon icon={tatt.icon} />
             <div className="ellipsis full-max-width">{tatt.title}</div>
           </>
         ) : (
           <>
-            <IconHelpCircleStrokeRounded className="color--ko" />
+            <LazyIcon
+              icon="HelpCircle"
+              className="color--ko"
+            />
             <div className="color--ko">Не изв.</div>
           </>
         )}

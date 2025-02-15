@@ -1,3 +1,4 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { BottomPopupItem } from '../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
@@ -15,10 +16,16 @@ export const ComTool = memo(({ path, ...props }: Props) => {
   const toolName = useComToolNameContext();
 
   const itemNode = useIsComToolIconItemsContext() ? (
-    <props.Icon
-      className={`pointer com-tool com-tool-${toolName}`}
-      onClick={props.onClick}
-    />
+    props.icon ? (
+      <LazyIcon
+        icon={props.icon}
+        kind={props.iconKind}
+        className={`pointer com-tool com-tool-${toolName}`}
+        onClick={props.onClick}
+      />
+    ) : (
+      props.iconNode
+    )
   ) : (
     <Bottom
       {...props}

@@ -5,7 +5,6 @@ import Modal from '../../../../../../../../../complect/modal/Modal/Modal';
 import { ModalBody } from '../../../../../../../../../complect/modal/Modal/ModalBody';
 import { ModalHeader } from '../../../../../../../../../complect/modal/Modal/ModalHeader';
 import IconCheckbox from '../../../../../../../../../complect/the-icon/IconCheckbox';
-import { IconCubeStrokeRounded } from '../../../../../../../../../complect/the-icon/icons/cube';
 import { ChordVisibleVariant } from '../../../../../../Cm.model';
 import { blockStyles } from '../../../../../../col/com/block-styles/BlockStyles';
 import TheOrder from '../../../../../../col/com/order/TheOrder';
@@ -17,7 +16,7 @@ export const OrdersRedactorOrderToolsBlockType = ({ com, ord, ordi, onClose }: O
   return (
     <>
       <BottomPopupItem
-        Icon={IconCubeStrokeRounded}
+        icon="Cube"
         title="Тип блока"
         onClick={setIsModalOpen}
       />

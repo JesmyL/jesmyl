@@ -1,10 +1,8 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { FullContent } from '../../../../../fullscreen-content/FullContent';
 import IconButton from '../../../../../the-icon/IconButton';
-import { IconDashboardSquareAddStrokeRounded } from '../../../../../the-icon/icons/dashboard-square-add';
-import { IconDashboardSquareRemoveStrokeRounded } from '../../../../../the-icon/icons/dashboard-square-remove';
-import { IconPrinterStrokeRounded } from '../../../../../the-icon/icons/printer';
 import { useScheduleWidgetRightsContext } from '../../../../useScheduleWidget';
 import { useSchWGameContext } from '../Games';
 
@@ -21,12 +19,12 @@ export const ScheduleWidgetTeamGamePrintTeamsButton = function PrintTeamsButton(
         <StyledFull onClose={setIsOpenPrint}>
           <StyledButtons className="flex full-width around">
             <IconButton
-              Icon={IconDashboardSquareRemoveStrokeRounded}
+              icon="DashboardSquareRemove"
               disabled={cols < 2}
               onClick={() => setCols(cols - 1)}
             />
             <IconButton
-              Icon={IconDashboardSquareAddStrokeRounded}
+              icon="DashboardSquareAdd"
               disabled={game.teams.length <= cols}
               onClick={() => setCols(cols + 1)}
             />
@@ -48,7 +46,8 @@ export const ScheduleWidgetTeamGamePrintTeamsButton = function PrintTeamsButton(
           })}
         </StyledFull>
       )}
-      <IconPrinterStrokeRounded
+      <LazyIcon
+        icon="Printer"
         onClick={event => {
           event.stopPropagation();
           setIsOpenPrint(true);

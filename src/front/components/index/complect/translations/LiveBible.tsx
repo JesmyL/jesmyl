@@ -1,6 +1,5 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { memo, useCallback } from 'react';
-import IconButton from '../../../../complect/the-icon/IconButton';
-import { IconBook02StrokeRounded } from '../../../../complect/the-icon/icons/book-02';
 import { useSwitchCurrentTranslationTextApp } from '../../../apps/+complect/translations/hooks/current-app';
 import BibleLiveTranslation from '../../../apps/bible/translations/BibleLiveTranslation';
 import BibleTranslationControlled from '../../../apps/bible/translations/BibleTranslationControlled';
@@ -30,9 +29,9 @@ export const IndexScheduleWidgetBibleTranslationsControlled: React.FC<LiveTransl
       )}
       <BibleTranslationControlled
         head={
-          <IconButton
-            Icon={IconBook02StrokeRounded}
-            className="margin-gap-r"
+          <LazyIcon
+            icon="Book02"
+            className="pointer margin-gap-r"
             onClick={() => switchCurrApp()}
           />
         }

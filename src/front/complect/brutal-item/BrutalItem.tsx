@@ -3,7 +3,7 @@ import { Link, To } from 'react-router-dom';
 import styled from 'styled-components';
 
 type Props = {
-  icon: JSX.Element;
+  iconNode: JSX.Element;
   title: string;
   box?: ReactNode;
   description?: ReactNode;
@@ -11,11 +11,11 @@ type Props = {
   onClick?: (event: unknown) => void;
 };
 
-export default function BrutalItem({ onClick, icon, title, box, description, to }: Props) {
+export default function BrutalItem({ onClick, iconNode, title, box, description, to }: Props) {
   const inner = (
     <Item className="pointer flex between relative">
       <div className="nowrap over-hidden flex center">
-        <div className="margin-big-gap">{icon}</div>
+        <div className="margin-big-gap">{iconNode}</div>
         <div className="ellipsis inline-block">{title}</div>
       </div>
       {box && <div className="margin-big-gap flex">{box}</div>}

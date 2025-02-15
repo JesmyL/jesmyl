@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { addEventListenerPipe, hookEffectPipe } from '../hookEffectPipe';
-import { IconArrowShrink02StrokeRounded } from '../the-icon/icons/arrow-shrink-02';
+import { LazyIcon } from '../the-icon/LazyIcon';
 import { useFullScreen } from '../useFullscreen';
 
 export const useGlobalFullscreenChanger = () => {
@@ -18,7 +18,8 @@ export const useGlobalFullscreenChanger = () => {
 
   return [
     isFullscreen,
-    <IconArrowShrink02StrokeRounded
+    <LazyIcon
+      icon="ArrowShrink02"
       className="collapse-fullscreen-button pointer"
       onClick={() => switchFullscreen(false)}
     />,

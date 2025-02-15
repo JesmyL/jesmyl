@@ -1,25 +1,23 @@
 import Modal from 'front/complect/modal/Modal/Modal';
 import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
 import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
 import { theIconKnownPack } from 'front/complect/the-icon/pack';
 import { MyLib } from 'front/utils';
 import { ReactNode, useState } from 'react';
 import IconButton from '../the-icon/IconButton';
-import { IconHelpSquareStrokeRounded } from '../the-icon/icons/help-square';
 
 export default function IconConfigurator(props: {
-  icon: KnownIconName;
+  icon: TheIconKnownName;
   header: ReactNode;
-  used?: (KnownIconName | und)[];
-  onSend: (icon: KnownIconName) => Promise<unknown>;
+  used?: (TheIconKnownName | und)[];
+  onSend: (icon: TheIconKnownName) => Promise<unknown>;
 }) {
   const [isOpenModal, setIsOpenModal] = useState<unknown>(false);
 
   return (
     <>
       <IconButton
-        Icon={IconHelpSquareStrokeRounded}
         icon={props.icon ?? 'HelpSquare'}
         postfix="Изменить иконку"
         onClick={setIsOpenModal}
@@ -31,9 +29,9 @@ export default function IconConfigurator(props: {
           <ModalBody>
             {MyLib.keys(theIconKnownPack).map(icon => {
               return (
-                <EvaSendButton
+                <TheIconSendButton
                   key={icon}
-                  Icon={theIconKnownPack[icon].StrokeRounded}
+                  icon={icon}
                   className={'padding-big-gap' + (false ? ' color--7' : props.used?.includes(icon) ? ' fade-05' : '')}
                   onSuccess={() => setIsOpenModal(false)}
                   onSend={() => props.onSend(icon)}

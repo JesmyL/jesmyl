@@ -1,10 +1,6 @@
-import { IconComputerStrokeRounded } from 'front/complect/the-icon/icons/computer';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { memo } from 'react';
 import styled from 'styled-components';
-import { IconArrowLeft01StrokeRounded } from '../../../../../complect/the-icon/icons/arrow-left-01';
-import { IconArrowRight01StrokeRounded } from '../../../../../complect/the-icon/icons/arrow-right-01';
-import { IconPlayStrokeRounded } from '../../../../../complect/the-icon/icons/play';
-import { IconQrCodeSolidRounded, IconQrCodeStrokeRounded } from '../../../../../complect/the-icon/icons/qr-code';
 import { useScreenTranslationConfigsValue } from '../atoms';
 import { useWatchScreenTranslations } from '../hooks/watch-translation';
 import { useScreenTranslationCurrentWindow, useScreenTranslationWindows } from '../hooks/windows';
@@ -32,13 +28,13 @@ export const ScreenTranslationControlPanel = memo(function ControlPanel({ onNext
           className="pointer"
           onClick={onPrev}
         >
-          <IconArrowLeft01StrokeRounded />
+          <LazyIcon icon="ArrowLeft01" />
         </ControlButton>
         <ControlButton
           className="pointer"
           onClick={onNext}
         >
-          <IconArrowRight01StrokeRounded />
+          <LazyIcon icon="ArrowRight01" />
         </ControlButton>
         <ControlButton
           title={currWin ? undefined : 'Enter'}
@@ -46,7 +42,7 @@ export const ScreenTranslationControlPanel = memo(function ControlPanel({ onNext
           disabled={!configs.length}
           onClick={watchTranslation}
         >
-          {windows.length ? <IconComputerStrokeRounded /> : <IconPlayStrokeRounded />}
+          {windows.length ? <LazyIcon icon="Computer" /> : <LazyIcon icon="Play" />}
         </ControlButton>
         <ScreenTranslationControlPanelShowMdButton Parent={ControlButton} />
         <ControlButton
@@ -54,7 +50,14 @@ export const ScreenTranslationControlPanel = memo(function ControlPanel({ onNext
           title="Backspace"
           onClick={() => setIsInitialSlideShow(is => !is)}
         >
-          {isInitialSlideShow ? <IconQrCodeSolidRounded /> : <IconQrCodeStrokeRounded />}
+          {isInitialSlideShow ? (
+            <LazyIcon
+              icon="QrCode"
+              kind="SolidRounded"
+            />
+          ) : (
+            <LazyIcon icon="QrCode" />
+          )}
         </ControlButton>
       </div>
 

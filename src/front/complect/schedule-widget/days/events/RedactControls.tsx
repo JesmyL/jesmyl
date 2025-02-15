@@ -1,9 +1,5 @@
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
 import StrongEditableField from 'front/complect/strong-control/field/StrongEditableField';
-import { IconBookmark03StrokeRounded } from 'front/complect/the-icon/icons/bookmark-03';
-import { IconCheckmarkSquare02StrokeRounded } from 'front/complect/the-icon/icons/checkmark-square-02';
-import { IconClock01StrokeRounded } from 'front/complect/the-icon/icons/clock-01';
-import { IconSquareStrokeRounded } from 'front/complect/the-icon/icons/square';
 import { ScheduleDayEventScopeProps } from 'shared/api';
 import { schDayEventsSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { DayEventIsNeedTgInformButton } from './IsNeedTgInformButton';
@@ -29,8 +25,8 @@ export const DayEventRedactControls = ({
 }: Props) => {
   return (
     <>
-      <EvaSendButton
-        Icon={isSecret ? IconCheckmarkSquare02StrokeRounded : IconSquareStrokeRounded}
+      <TheIconSendButton
+        icon={isSecret ? 'CheckmarkSquare02' : 'Square'}
         confirm={
           <>
             Событие <span className="color--7">{eventTypeTitle} </span>
@@ -55,14 +51,14 @@ export const DayEventRedactControls = ({
         value={'' + eventTm}
         postfix=" мин"
         title="Продолжительность, мин"
-        Icon={IconClock01StrokeRounded}
+        icon="Clock01"
         onSend={value => schDayEventsSokiInvocatorClient.setTm(null, dayEventScopeProps, +value)}
       />
       <StrongEditableField
         isRedact
         value={eventTopic}
         title="Тема"
-        Icon={IconBookmark03StrokeRounded}
+        icon="Bookmark03"
         onSend={value => schDayEventsSokiInvocatorClient.setTopic(null, dayEventScopeProps, value)}
       />
     </>

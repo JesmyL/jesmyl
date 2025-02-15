@@ -34,7 +34,7 @@ export default function CmExternalComListAttRedactListOrder({ value, setCcomw }:
           //           beforei: comi - 1,
           //         }}
           //         cud="U"
-          //         Icon={IconArrowDataTransferVerticalStrokeRounded}
+          //         icon="ArrowDataTransferVertical"
           //         className="color--3 margin-giant-gap-b"
           //       />
           //     )}
@@ -44,7 +44,7 @@ export default function CmExternalComListAttRedactListOrder({ value, setCcomw }:
           //       fieldKey="comws"
           //       fieldValue={['.', '===', com.wid]}
           //       cud="D"
-          //       Icon={IconDelete01StrokeRounded}
+          //       icon="Delete01"
           //       onSuccess={
           //         removedComws.includes(com.wid) ? undefined : () => setRemovedComws(comws => [...comws, com.wid])
           //       }
@@ -68,7 +68,7 @@ export default function CmExternalComListAttRedactListOrder({ value, setCcomw }:
               //     fieldKey="comws"
               //     fieldValue={com.wid}
               //     cud="C"
-              //     Icon={IconLinkBackwardStrokeRounded}
+              //     icon="LinkBackward"
               //     className="color--ok"
               //     onSuccess={
               //       removedComws.includes(com.wid) ? undefined : () => setRemovedComws(comws => [...comws, com.wid])

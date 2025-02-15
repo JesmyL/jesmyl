@@ -1,6 +1,5 @@
 import { useSearchParams } from 'react-router-dom';
 import { IScheduleWidgetWid } from 'shared/api';
-import { IconComputerPhoneSyncStrokeRounded } from '../../../complect/the-icon/icons/computer-phone-sync';
 import { FullContent } from '../../fullscreen-content/FullContent';
 import IconButton from '../../the-icon/IconButton';
 import { ScheduleWidgetLiveTranslation } from './Live';
@@ -40,7 +39,7 @@ export const ScheduleWidgetWatchLiveTranslationButton = ({
         </FullContent>
       )}
       <IconButton
-        Icon={IconComputerPhoneSyncStrokeRounded}
+        icon="ComputerPhoneSync"
         onClick={setIsOpen}
         className="margin-gap-v"
         postfix={postfix}

@@ -2,9 +2,8 @@ import Modal from 'front/complect/modal/Modal/Modal';
 import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
 import { ModalFooter } from 'front/complect/modal/Modal/ModalFooter';
 import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
-import { IconSentStrokeRounded } from 'front/complect/the-icon/icons/sent';
-import { IconWorkHistoryStrokeRounded } from 'front/complect/the-icon/icons/work-history';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useAuth } from 'front/components/index/atoms';
 import { mylib } from 'front/utils';
 import { useState } from 'react';
@@ -30,10 +29,16 @@ export const CmMeetingEventEdits = ({ packComws }: { packComws: CmComWid[] }) =>
   return (
     <>
       {!selectedComs.length || mylib.isEq(selectedComws, packComws) || (
-        <IconSentStrokeRounded onClick={setIsOpenSendModal} />
+        <LazyIcon
+          icon="Sent"
+          onClick={setIsOpenSendModal}
+        />
       )}
 
-      <IconWorkHistoryStrokeRounded onClick={setIsOpenHistoryModal} />
+      <LazyIcon
+        icon="WorkHistory"
+        onClick={setIsOpenHistoryModal}
+      />
 
       {isOpenHistoryModal && <CmMeetingEventEditsHistoryModal onClose={setIsOpenHistoryModal} />}
 
@@ -48,8 +53,8 @@ export const CmMeetingEventEdits = ({ packComws }: { packComws: CmComWid[] }) =>
             />
           </ModalBody>
           <ModalFooter>
-            <EvaSendButton
-              Icon={IconSentStrokeRounded}
+            <TheIconSendButton
+              icon="Sent"
               className="margin-gap"
               prefix="Отправить"
               onSend={() =>

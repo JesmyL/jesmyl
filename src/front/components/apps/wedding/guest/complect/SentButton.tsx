@@ -1,7 +1,5 @@
 import { WedGuest, WedGuestPropositionSent } from '../../../../../../shared/api/complect/apps/wed/complect/model';
-import EvaSendButton from '../../../../../complect/sends/eva-send-button/EvaSendButton';
-import { IconMailRemove01StrokeRounded } from '../../../../../complect/the-icon/icons/mail-remove-01';
-import { IconMailValidation01StrokeRounded } from '../../../../../complect/the-icon/icons/mail-validation-01';
+import TheIconSendButton from '../../../../../complect/sends/the-icon-send-button/TheIconSendButton';
 
 export const WedGuestPropositionSentButton = ({
   guest,
@@ -12,8 +10,8 @@ export const WedGuestPropositionSentButton = ({
 }) => {
   if (guest.g)
     return (
-      <EvaSendButton
-        Icon={IconMailValidation01StrokeRounded}
+      <TheIconSendButton
+        icon="MailValidation01"
         className="color--ok margin-gap-v"
         confirm={
           <>
@@ -38,8 +36,8 @@ export const WedGuestPropositionSentButton = ({
     );
 
   return (
-    <EvaSendButton
-      Icon={IconMailRemove01StrokeRounded}
+    <TheIconSendButton
+      icon="MailRemove01"
       className="color--ko margin-gap-v"
       postfix="Пригласительное не было отправлено"
       // onSend={() =>

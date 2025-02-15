@@ -2,10 +2,6 @@ import { Route, Routes } from 'react-router-dom';
 import AppFooter from '../../../app/AppFooter';
 import AppFooterItem from '../../../app/AppFooterItem';
 import { RoutingAppConfig } from '../../../app/routing-apps';
-import {
-  IconDashboardSpeed02StrokeRounded,
-  iconPackOfDashboardSpeed02,
-} from '../../../complect/the-icon/icons/dashboard-speed-02';
 import TheTuner from './TheTuner';
 
 const footer = (
@@ -14,7 +10,7 @@ const footer = (
       idPostfix="main"
       to="i"
       title="Тюнер"
-      iconPack={iconPackOfDashboardSpeed02}
+      icon="DashboardSpeed02"
     />
   </AppFooter>
 );
@@ -36,7 +32,7 @@ export const tunerRoutingApp: RoutingAppConfig = {
     </>
   ),
   footer,
-  Icon: IconDashboardSpeed02StrokeRounded,
+  icon: 'DashboardSpeed02',
   level: 0,
   lazies: [<TheTuner />],
 };

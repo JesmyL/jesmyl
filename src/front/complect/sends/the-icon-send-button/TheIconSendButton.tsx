@@ -1,18 +1,17 @@
 import IconButton from 'front/complect/the-icon/IconButton';
-import { TheIconType } from 'front/complect/the-icon/model';
 import useToast from '../../modal/useToast';
 import { SendButtonContentMaker } from '../send-button-content-maker/maker';
 import { SendButtonContentMakerProps } from '../send-button-content-maker/maker.model';
 
 interface Props<Value> extends SendButtonContentMakerProps<Value> {
-  Icon: TheIconType;
+  icon: TheIconKnownName;
   className?: string;
   prefix?: null | React.ReactNode;
   postfix?: null | React.ReactNode;
   disabledReason?: string;
 }
 
-export default function EvaSendButton<Value>(props: Props<Value>) {
+export default function TheIconSendButton<Value>(props: Props<Value>) {
   const [toastNode, toast] = useToast();
 
   return (
@@ -31,7 +30,7 @@ export default function EvaSendButton<Value>(props: Props<Value>) {
             isLoading={isLoading}
             className={sysClassName + (props.className || '')}
             onClick={props.disabled ? undefined : onClick}
-            Icon={props.Icon}
+            icon={props.icon}
             disabled={props.disabled}
             disabledReason={props.disabledReason}
           />
@@ -44,7 +43,7 @@ export default function EvaSendButton<Value>(props: Props<Value>) {
             <IconButton
               isLoading={isLoading}
               className={sysClassName}
-              Icon={props.Icon}
+              icon={props.icon}
               disabled={props.disabled}
               disabledReason={props.disabledReason}
             />

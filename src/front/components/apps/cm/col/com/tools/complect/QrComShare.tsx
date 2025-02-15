@@ -1,5 +1,4 @@
 import { QrCodeFullScreen } from 'front/complect/qr-code/QrCodeFullScreen';
-import { IconQrCodeStrokeRounded } from 'front/complect/the-icon/icons/qr-code';
 import { cmAppActions } from 'front/components/apps/cm/app-actions/cm-app-actions';
 import { useState } from 'react';
 import { ComTool } from '../ComTool';
@@ -23,7 +22,7 @@ export const QrComShare = () => {
       )}
       <ComTool
         title="Поделиться по QR"
-        Icon={IconQrCodeStrokeRounded}
+        icon="QrCode"
         onClick={event => {
           event.stopPropagation();
           setIsOpenQr(true);

@@ -1,6 +1,6 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { Link, Route, Routes } from 'react-router-dom';
 import BrutalItem from '../../../../../../complect/brutal-item/BrutalItem';
-import { IconBookOpen01StrokeRounded } from '../../../../../../complect/the-icon/icons/book-open-01';
 import PhaseCmEditorContainer from '../../phase-editor-container/PhaseCmEditorContainer';
 import { useEditableCats } from '../useEditableCols';
 import EditCategory from './EditCategory';
@@ -26,7 +26,7 @@ export default function EditCategories() {
                       className="full-width"
                     >
                       <BrutalItem
-                        icon={<IconBookOpen01StrokeRounded />}
+                        iconNode={<LazyIcon icon="BookOpen01" />}
                         title={`${cat.name || ''}${cat.name !== cat.initialName ? ` (${cat.initialName})` : ''}`}
                       />
                     </Link>

@@ -1,12 +1,11 @@
 import { FullContent } from 'front/complect/fullscreen-content/FullContent';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { indexIDB } from 'front/components/index/db/index-idb';
 import { useEffect, useRef, useState } from 'react';
 import { IScheduleWidgetUser } from 'shared/api';
 import { isNIs } from 'shared/utils';
 import styled from 'styled-components';
 import IconButton from '../../../the-icon/IconButton';
-import { IconCamera01StrokeRounded } from '../../../the-icon/icons/camera-01';
-import { IconCheckmarkBadge01StrokeRounded } from '../../../the-icon/icons/checkmark-badge-01';
 import { getScheduleWidgetUserPhotoStorageKey } from '../../storage';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetUserPhoto from './UserPhoto';
@@ -28,8 +27,9 @@ export default function ScheduleWidgetUserTakePhoto({ user }: Props) {
           />
         </FullContent>
       )}
-      <IconButton
-        Icon={IconCamera01StrokeRounded}
+      <LazyIcon
+        className="pointer"
+        icon="Camera01"
         onClick={event => {
           event.stopPropagation();
           setIsFullNodeOpen(true);
@@ -125,7 +125,7 @@ function Camera({ close, user }: Props & { close: () => void }) {
         </div>
         <div className="flex half-width between">
           <StyledActionButton
-            Icon={IconCheckmarkBadge01StrokeRounded}
+            icon="CheckmarkBadge01"
             disabled={!src}
             onClick={async () => {
               stream?.getTracks().forEach(track => track.stop());
@@ -134,7 +134,7 @@ function Camera({ close, user }: Props & { close: () => void }) {
             }}
           />
           <StyledActionButton
-            Icon={IconCamera01StrokeRounded}
+            icon="Camera01"
             onClick={() => {
               if (videoRef.current === null || canvasRef.current === null || videoWrapperRef.current === null) return;
               const video = videoRef.current;

@@ -1,13 +1,12 @@
 import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/scope-props-contexts';
 import { schGamesSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
 import SendButton from 'front/complect/sends/send-button/SendButton';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { IScheduleWidgetExportableTeam, IScheduleWidgetUserMi } from 'shared/api';
 import Dropdown from '../../../../../dropdown/Dropdown';
 import KeyboardInput from '../../../../../keyboard/KeyboardInput';
-import { IconCheckmarkCircle02StrokeRounded } from '../../../../../the-icon/icons/checkmark-circle-02';
-import { IconCircleStrokeRounded } from '../../../../../the-icon/icons/circle';
 import { useScheduleWidgetRightsContext } from '../../../../useScheduleWidget';
 import ScheduleWidgetRemovableUserFace from '../../RemovableUserFace';
 import { useSchWGameContext } from '../Games';
@@ -117,7 +116,7 @@ export default function ScheduleWidgetTeamGameSetTeamsScreen() {
               className="pointer"
               onClick={() => setRetries(rate)}
             >
-              {retries === rate ? <IconCheckmarkCircle02StrokeRounded /> : <IconCircleStrokeRounded />}
+              {retries === rate ? <LazyIcon icon="CheckmarkCircle02" /> : <LazyIcon icon="Circle" />}
             </div>
           );
         })}

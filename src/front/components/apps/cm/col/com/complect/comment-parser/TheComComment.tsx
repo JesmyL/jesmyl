@@ -1,5 +1,6 @@
 import { addEventListenerPipe, hookEffectPipe } from 'front/complect/hookEffectPipe';
 import { TheIconLoading } from 'front/complect/the-icon/IconLoading';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { propagationStopper, propagationStopperAndDefaultPreventer } from 'front/complect/utils/utils';
 import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
 import { mylib } from 'front/utils';
@@ -11,12 +12,6 @@ import { useAtom } from '../../../../../../../complect/atoms';
 import Modal from '../../../../../../../complect/modal/Modal/Modal';
 import { ModalBody } from '../../../../../../../complect/modal/Modal/ModalBody';
 import { ModalHeader } from '../../../../../../../complect/modal/Modal/ModalHeader';
-import IconButton from '../../../../../../../complect/the-icon/IconButton';
-import { IconCheckmarkCircle02StrokeRounded } from '../../../../../../../complect/the-icon/icons/checkmark-circle-02';
-import { IconEdit01StrokeRounded } from '../../../../../../../complect/the-icon/icons/edit-01';
-import { IconFileValidationStrokeRounded } from '../../../../../../../complect/the-icon/icons/file-validation';
-import { IconMessageQuestionStrokeRounded } from '../../../../../../../complect/the-icon/icons/message-question';
-import { IconNote03StrokeRounded } from '../../../../../../../complect/the-icon/icons/note-03';
 import { updateComComment, useComComment } from '../../../../com-comments-manager';
 import { isComCommentRedactAtom } from './complect';
 import TheComCommentInfo from './infos/TheComCommentInfo';
@@ -25,7 +20,7 @@ interface Props {
   comw: CmComWid;
 }
 
-const HashSwitcherIcon = IconNote03StrokeRounded;
+const HashSwitcherIcon = 'Note03';
 
 export const TheComComment = ({ comw }: Props) => {
   const comComment = useComComment(comw);
@@ -85,27 +80,37 @@ export const TheComComment = ({ comw }: Props) => {
       >
         <span className="flex flex-gap">
           Заметки
-          <IconButton
-            Icon={isRedact ? IconCheckmarkCircle02StrokeRounded : IconEdit01StrokeRounded}
-            className="com-notes-edit-button flex full-width between color--7 margin-gap-v"
-            onClick={() => setIsRedact(isNIs)}
+          <LazyIcon
+            icon={isRedact ? 'CheckmarkCircle02' : 'Edit01'}
+            className="pointer com-notes-edit-button flex full-width between color--7 margin-gap-v"
+            onClick={event => {
+              propagationStopper(event);
+              setIsRedact(isNIs);
+            }}
           />
           {comComment?.isSavedLocal ? (
-            <IconFileValidationStrokeRounded className="color--ok" />
+            <LazyIcon
+              icon="FileValidation"
+              className="color--ok"
+            />
           ) : (
             <TheIconLoading isLoading={isLoading} />
           )}
         </span>
         <div className="flex flex-gap">
-          <HashSwitcherIcon
-            className={`flex full-width between color--7 margin-gap-v${isShowConHashComments ? '' : ' fade-05'}`}
+          <LazyIcon
+            icon={HashSwitcherIcon}
+            className={`pointer flex full-width between color--7 margin-gap-v${
+              isShowConHashComments ? '' : ' fade-05'
+            }`}
             onClick={event => {
               propagationStopper(event);
               setIsShowConHashComments(isNIs);
             }}
           />
-          <IconMessageQuestionStrokeRounded
-            className={`flex full-width between color--7 margin-gap-v`}
+          <LazyIcon
+            icon="MessageQuestion"
+            className="pointer flex full-width between color--7 margin-gap-v"
             onClick={event => {
               propagationStopper(event);
               setIsShowInfoModal(isNIs);

@@ -1,18 +1,39 @@
 import { HTMLAttributes } from 'react';
 import styled, { keyframes } from 'styled-components';
-import { IconLoading03SolidRounded } from './icons/loading-03';
-import { TheIconType } from './model';
+import { LazyIcon } from './LazyIcon';
 
 interface Props extends HTMLAttributes<HTMLOrSVGElement> {
   isLoading?: boolean;
-  Icon?: TheIconType;
+  icon?: TheIconKnownName;
 }
 
 export const TheIconLoading = (props: Props) => {
-  const { isLoading, Icon, ...attrs } = props;
-  if (!('isLoading' in props)) return <StyledLoadingSpinner {...attrs} />;
+  const { isLoading, icon, ...attrs } = props;
+  if (!('isLoading' in props))
+    return (
+      <StyledLoadingSpinner
+        icon="Loading03"
+        {...attrs}
+      />
+    );
 
-  return isLoading ? <StyledLoadingSpinner {...attrs} /> : <>{Icon ? <Icon {...attrs} /> : props.children}</>;
+  return isLoading ? (
+    <StyledLoadingSpinner
+      icon="Loading03"
+      {...attrs}
+    />
+  ) : (
+    <>
+      {icon ? (
+        <LazyIcon
+          icon={icon}
+          {...attrs}
+        />
+      ) : (
+        props.children
+      )}
+    </>
+  );
 };
 
 const rotate = keyframes`
@@ -25,6 +46,6 @@ const rotate = keyframes`
   }
 `;
 
-export const StyledLoadingSpinner = styled(IconLoading03SolidRounded)`
+export const StyledLoadingSpinner = styled(LazyIcon)<{ icon: 'Loading03' }>`
   animation: ${rotate} 1s linear infinite;
 `;

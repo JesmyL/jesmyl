@@ -1,7 +1,6 @@
 import { addEventListenerPipe, hookEffectPipe } from 'front/complect/hookEffectPipe';
 import { TheIconLoading } from 'front/complect/the-icon/IconLoading';
-import { IconAlert02StrokeRounded } from 'front/complect/the-icon/icons/alert-02';
-import { TheIconProps } from 'front/complect/the-icon/model';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useActualRef } from 'front/complect/useActualRef';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
@@ -13,7 +12,7 @@ type Props<ChangedValue> = {
   type?: React.InputHTMLAttributes<HTMLInputElement>['type'];
   defaultValue: string;
   label?: string;
-  Icon: React.FC<TheIconProps>;
+  icon: TheIconKnownName;
   multiline?: boolean;
   corrects?: CorrectsBox;
 };
@@ -23,7 +22,7 @@ export const InputWithLoadingIcon = <ChangedValue,>({
   onInput,
   type,
   defaultValue,
-  Icon,
+  icon,
   label,
   multiline,
   corrects,
@@ -69,10 +68,13 @@ export const InputWithLoadingIcon = <ChangedValue,>({
   return (
     <div className="full-width flex flex-gap margin-gap-v">
       {isThereErrors ? (
-        <IconAlert02StrokeRounded className="color--ko" />
+        <LazyIcon
+          icon="Alert02"
+          className="color--ko"
+        />
       ) : (
         <TheIconLoading
-          Icon={Icon}
+          icon={icon}
           isLoading={isLoading}
         />
       )}

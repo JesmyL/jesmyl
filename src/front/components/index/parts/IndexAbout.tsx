@@ -1,6 +1,6 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { jversion } from 'shared/values';
 import QRCode from '../../../complect/qr-code/QRCode';
-import { IconTelegramStrokeRounded } from '../../../complect/the-icon/icons/telegram';
 import { useIndexValues } from '../atoms';
 import { indexIDB } from '../db/index-idb';
 
@@ -18,7 +18,7 @@ export default function IndexAbout() {
           <div className="padding-giant-gap">
             <QRCode text={values.chatUrl} />
             <div className="flex center">
-              <IconTelegramStrokeRounded />
+              <LazyIcon icon="Telegram" />
               <a href={values.chatUrl}>@jesmyl space</a>
             </div>
           </div>
@@ -26,7 +26,7 @@ export default function IndexAbout() {
         <div className="padding-giant-gap">
           <QRCode text="https://t.me/danikpon" />
           <div className="flex center">
-            <IconTelegramStrokeRounded />
+            <LazyIcon icon="Telegram" />
             <a href="https://t.me/danikpon">дизайн (3</a>
           </div>
         </div>

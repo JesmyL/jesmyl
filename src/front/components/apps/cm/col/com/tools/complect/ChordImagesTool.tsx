@@ -1,6 +1,5 @@
 import { isOpenChordImagesAtom } from 'front/components/apps/cm/atoms';
 import { useAtomSet } from '../../../../../../../complect/atoms';
-import { IconImageCompositionOvalStrokeRounded } from '../../../../../../../complect/the-icon/icons/image-composition-oval';
 import { ComTool } from '../ComTool';
 
 export const ChordImagesTool = () => {
@@ -9,7 +8,7 @@ export const ChordImagesTool = () => {
   return (
     <ComTool
       title="Изображения аккордов"
-      Icon={IconImageCompositionOvalStrokeRounded}
+      icon="ImageCompositionOval"
       onClick={() => setIsOpen(true)}
     />
   );

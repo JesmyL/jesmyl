@@ -1,11 +1,6 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { Route, Routes } from 'react-router-dom';
 import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
-import { IconArrangeTwotoneRounded } from '../../../../complect/the-icon/icons/arrange';
-import { IconBookOpen01TwotoneRounded } from '../../../../complect/the-icon/icons/book-open-01';
-import { IconCalendar02TwotoneRounded } from '../../../../complect/the-icon/icons/calendar-02';
-import { IconHeadphonesTwotoneRounded } from '../../../../complect/the-icon/icons/headphones';
-import { IconMusicNote01TwotoneRounded } from '../../../../complect/the-icon/icons/music-note-01';
-import { IconTextTwotoneRounded } from '../../../../complect/the-icon/icons/text';
 import { useAuth } from '../../../index/atoms';
 import { TheMeetings } from '../lists/meetings/TheMeetings';
 import ChordRedactor from './chord-redactor/ChordRedactor';
@@ -33,37 +28,67 @@ export default function Editor() {
               <>
                 {auth.level === 100 && (
                   <BrutalItem
-                    icon={<IconBookOpen01TwotoneRounded />}
+                    iconNode={
+                      <LazyIcon
+                        icon="BookOpen01"
+                        kind="TwotoneRounded"
+                      />
+                    }
                     title="Категории"
                     to="cats"
                   />
                 )}
                 <BrutalItem
-                  icon={<IconHeadphonesTwotoneRounded />}
+                  iconNode={
+                    <LazyIcon
+                      icon="Headphones"
+                      kind="TwotoneRounded"
+                    />
+                  }
                   title="Песни"
                   to="coms"
                 />
                 {auth.level > 49 && (
                   <>
                     <BrutalItem
-                      icon={<IconCalendar02TwotoneRounded />}
+                      iconNode={
+                        <LazyIcon
+                          icon="Calendar02"
+                          kind="TwotoneRounded"
+                        />
+                      }
                       title="События"
                       to="events"
                     />
                     <BrutalItem
-                      icon={<IconArrangeTwotoneRounded />}
+                      iconNode={
+                        <LazyIcon
+                          icon="Arrange"
+                          kind="TwotoneRounded"
+                        />
+                      }
                       title="Редактор аккордов"
                       to="chord"
                     />
                     {auth.level > 79 && (
                       <>
                         <BrutalItem
-                          icon={<IconMusicNote01TwotoneRounded />}
+                          iconNode={
+                            <LazyIcon
+                              icon="MusicNote01"
+                              kind="TwotoneRounded"
+                            />
+                          }
                           title="Редактор MP3 правил"
                           to="mp3Rules"
                         />
                         <BrutalItem
-                          icon={<IconTextTwotoneRounded />}
+                          iconNode={
+                            <LazyIcon
+                              icon="Text"
+                              kind="TwotoneRounded"
+                            />
+                          }
                           title="Ё-Е правила"
                           to="e-e"
                         />

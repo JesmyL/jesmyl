@@ -1,4 +1,3 @@
-import { IconStarSolidRounded, IconStarStrokeRounded } from '../../../../../../../complect/the-icon/icons/star';
 import { useFavoriteComs } from '../../../../lists/favorites/useFavoriteComs';
 import { ComTool } from '../ComTool';
 import { useComToolsCcomContext } from '../useMigratableComTools';
@@ -11,7 +10,8 @@ export const MarkedComTool = () => {
     ccom && (
       <ComTool
         title={isMarked(ccom.wid) ? 'Удалить избранное' : 'Добавить избранное'}
-        Icon={isMarked(ccom.wid) ? IconStarSolidRounded : IconStarStrokeRounded}
+        icon="Star"
+        iconKind={isMarked(ccom.wid) ? 'SolidRounded' : 'StrokeRounded'}
         onClick={() => toggleMarked(ccom.wid)}
       />
     )

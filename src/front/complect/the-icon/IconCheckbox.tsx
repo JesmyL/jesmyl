@@ -1,9 +1,7 @@
 import { ReactNode, useEffect, useState } from 'react';
-import { IconCheckmarkSquare04StrokeRounded } from '../../complect/the-icon/icons/checkmark-square-04';
-import { IconSquareStrokeRounded } from '../../complect/the-icon/icons/square';
 import { JStorageBooleanVal } from '../JSimpleStorage/exports/Boolean';
 import { StyledLoadingSpinner } from './IconLoading';
-import { TheIconType } from './model';
+import { LazyIcon } from './LazyIcon';
 
 interface Props {
   checked?: boolean;
@@ -35,11 +33,19 @@ export default function IconCheckbox(props: Props) {
       : () => props.onChange?.(!props.checked)
     : undefined;
 
-  const renderNode = (Icon: TheIconType) => {
-    if (isLoading) Icon = StyledLoadingSpinner;
+  const renderNode = (icon: TheIconKnownName) => {
+    if (isLoading)
+      return (
+        <StyledLoadingSpinner
+          icon="Loading03"
+          className={className}
+          onClick={onClick}
+        />
+      );
 
     return props.prefix === undefined && props.postfix === undefined ? (
-      <Icon
+      <LazyIcon
+        icon={icon}
         className={className}
         onClick={onClick}
       />
@@ -49,7 +55,7 @@ export default function IconCheckbox(props: Props) {
         onClick={onClick}
       >
         {props.prefix}
-        <Icon />
+        <LazyIcon icon={icon} />
         {props.postfix}
       </span>
     );
@@ -61,15 +67,15 @@ export default function IconCheckbox(props: Props) {
         simpleValuer={props.simpleValuer}
         negativeValue={props.negativeValue}
       >
-        {Icon => renderNode(Icon)}
+        {icon => renderNode(icon)}
       </WithSimpleValuer>
     );
 
-  return renderNode(props.checked ? IconCheckmarkSquare04StrokeRounded : IconSquareStrokeRounded);
+  return renderNode(props.checked ? 'CheckmarkSquare04' : 'Square');
 }
 
 const WithSimpleValuer = (props: {
-  children: (Icon: TheIconType) => ReactNode;
+  children: (icon: TheIconKnownName) => ReactNode;
   simpleValuer: JStorageBooleanVal;
   negativeValue?: boolean;
 }) => {
@@ -77,11 +83,5 @@ const WithSimpleValuer = (props: {
 
   useEffect(() => props.simpleValuer.listen(setChecked), [props.simpleValuer]);
 
-  return (
-    <>
-      {props.children(
-        (props.negativeValue ? !checked : checked) ? IconCheckmarkSquare04StrokeRounded : IconSquareStrokeRounded,
-      )}
-    </>
-  );
+  return <>{props.children((props.negativeValue ? !checked : checked) ? 'CheckmarkSquare04' : 'Square')}</>;
 };

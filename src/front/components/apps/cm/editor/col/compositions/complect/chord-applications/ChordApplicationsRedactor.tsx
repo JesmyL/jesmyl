@@ -35,7 +35,7 @@ export default function ChordApplicationsRedactor() {
               return (
                 <div className="flex flex-gap">
                   {headerNode}
-                  {!ordAwaits[ord.wid] || <StyledLoadingSpinner />}
+                  {!ordAwaits[ord.wid] || <StyledLoadingSpinner icon="Loading03" />}
                 </div>
               );
             }}

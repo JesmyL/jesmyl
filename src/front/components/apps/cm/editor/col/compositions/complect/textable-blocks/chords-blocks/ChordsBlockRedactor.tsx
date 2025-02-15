@@ -1,12 +1,9 @@
 import IconButton from 'front/complect/the-icon/IconButton';
-import { IconCancel01StrokeRounded } from 'front/complect/the-icon/icons/cancel-01';
-import { IconGridStrokeRounded } from 'front/complect/the-icon/icons/grid';
-import { IconPlaylist03StrokeRounded } from 'front/complect/the-icon/icons/playlist-03';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { InputWithLoadingIcon } from 'front/components/apps/cm/base/InputWithLoadingIcon';
 import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
 import { makeRegExp } from 'shared/utils';
-import { IconPlusSignCircleStrokeRounded } from '../../../../../../../../../complect/the-icon/icons/plus-sign-circle';
 import { TextCorrectMessages } from '../../../../../complect/TextBlockIncorrectMessages';
 import { EditableCom } from '../../../com/EditableCom';
 import CmTextableBlockAnchorTitles from '../CmTextableBlockAnchorTitles';
@@ -27,7 +24,7 @@ export default function CmChordsBlockRedactor({
     <div className="margin-big-gap-v">
       {!texti && (
         <IconButton
-          Icon={IconPlusSignCircleStrokeRounded}
+          icon="PlusSignCircle"
           confirm="Вставить новый блок в самое начало?"
           onClick={() => cmComClientInvocatorMethods.insertChordBlock(null, '', ccom.wid, 0)}
         />
@@ -40,21 +37,22 @@ export default function CmChordsBlockRedactor({
 
         <span className="flex flex-gap">
           {makeRegExp('/[A-H]b/').exec(text) && (
-            <IconButton
-              Icon={IconGridStrokeRounded}
+            <LazyIcon
+              className="pointer"
+              icon="Grid"
               onClick={() => ccom.replaceBemoles(texti)}
             />
           )}
           <IconButton
-            Icon={IconCancel01StrokeRounded}
-            onClick={() => cmComClientInvocatorMethods.removeChordBlock(null, ccom.wid, text, texti)}
+            icon="Cancel01"
             confirm={`Удалить блок?\n\n${text}`}
+            onClick={() => cmComClientInvocatorMethods.removeChordBlock(null, ccom.wid, text, texti)}
           />
         </span>
       </div>
       <InputWithLoadingIcon
         multiline
-        Icon={IconPlaylist03StrokeRounded}
+        icon="Playlist03"
         label=""
         defaultValue={text}
         onChange={value => ccom.changeChordsBlock(texti, value)}
@@ -64,7 +62,7 @@ export default function CmChordsBlockRedactor({
       <TextCorrectMessages corrects={corrects} />
 
       <IconButton
-        Icon={IconPlusSignCircleStrokeRounded}
+        icon="PlusSignCircle"
         confirm="Вставить новый блок сюда?"
         onClick={() => cmComClientInvocatorMethods.insertChordBlock(null, '', ccom.wid, texti + 1)}
       />

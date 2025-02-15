@@ -1,10 +1,9 @@
 import { FullContent } from 'front/complect/fullscreen-content/FullContent';
 import { Script } from 'front/complect/tags/Script';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useEffect, useState } from 'react';
 import { excel2jsonParserBox } from '../../../../parseExcel2Json';
 import ContentOnLoad from '../../../../the-icon/ContentOnLoad';
-import IconButton from '../../../../the-icon/IconButton';
-import { IconFileImportStrokeRounded } from '../../../../the-icon/icons/file-import';
 import { ScheduleWidgetUserAddByExcelContent } from './AddByExcelContent';
 
 export function ScheduleWidgetUserAddByExcel() {
@@ -37,8 +36,9 @@ export function ScheduleWidgetUserAddByExcel() {
         src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"
       />
 
-      <IconButton
-        Icon={IconFileImportStrokeRounded}
+      <LazyIcon
+        className="pointer"
+        icon="FileImport"
         onClick={setIsOpenContent}
       />
       {isOpenContent && (

@@ -9,8 +9,6 @@ import {
   ScheduleWidgetDayEventAttValue,
 } from 'shared/api';
 import { isNIs } from 'shared/utils';
-import { IconLink02StrokeRounded } from '../../../../complect/the-icon/icons/link-02';
-import { IconViewStrokeRounded } from '../../../../complect/the-icon/icons/view';
 import { useIsRememberExpand } from '../../../expand/useIsRememberExpand';
 import { LazyIcon } from '../../../the-icon/LazyIcon';
 import useIsRedactArea from '../../../useIsRedactArea';
@@ -38,7 +36,7 @@ export default function ScheduleWidgetDayEventAtt(props: Props) {
   const [attTitleNode, isExpand] = useIsRememberExpand(
     JSON.stringify(dayEventAttScopeProps),
     <>
-      <LazyIcon name={appAtt.icon} />
+      <LazyIcon icon={appAtt.icon} />
       {appAtt.title}
     </>,
   );
@@ -62,7 +60,12 @@ export default function ScheduleWidgetDayEventAtt(props: Props) {
 
       if (attValue[0] < 0) {
         isCanRedact = false;
-        notateNode = <IconViewStrokeRounded className="color--3 icon-scale-05" />;
+        notateNode = (
+          <LazyIcon
+            icon="View"
+            className="color--3 icon-scale-05"
+          />
+        );
 
         attContent = isExpand && (
           <ScheduleWidgetDayEventPeriodicTranslation
@@ -75,7 +78,13 @@ export default function ScheduleWidgetDayEventAtt(props: Props) {
             dayEventAttScopeProps={dayEventAttScopeProps}
           />
         );
-      } else notateNode = <IconLink02StrokeRounded className="color--3 icon-scale-05" />;
+      } else
+        notateNode = (
+          <LazyIcon
+            icon="Link02"
+            className="color--3 icon-scale-05"
+          />
+        );
 
       if (props.schedule.days && day && event?.atts) {
         attValue = event.atts[props.attKey];
@@ -83,7 +92,10 @@ export default function ScheduleWidgetDayEventAtt(props: Props) {
         if (props.schedule.types)
           linkTitle = isExpand && (
             <div className="flex margin-big-gap-l margin-gap-b">
-              <IconLink02StrokeRounded className="color--3 icon-scale-05" />
+              <LazyIcon
+                icon="Link02"
+                className="color--3 icon-scale-05"
+              />
               <ScheduleWidgetTopicTitle
                 titleBox={props.schedule.types[event.type]}
                 topicBox={event}

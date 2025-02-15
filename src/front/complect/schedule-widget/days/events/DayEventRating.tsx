@@ -1,13 +1,10 @@
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { MyLib } from 'front/utils';
 import { ReactNode } from 'react';
 import { IScheduleWidgetDayEvent, ScheduleDayEventScopeProps } from 'shared/api';
 import { emptyAsyncFunc, itNNull } from 'shared/utils';
 import styled from 'styled-components';
-import { IconFavouriteStrokeRounded } from '../../../../complect/the-icon/icons/favourite';
-import { IconHeartbreakStrokeRounded } from '../../../../complect/the-icon/icons/heartbreak';
-import { IconHelpCircleStrokeRounded } from '../../../../complect/the-icon/icons/help-circle';
-import { IconMessage01StrokeRounded } from '../../../../complect/the-icon/icons/message-01';
 import useIsExpand from '../../../expand/useIsExpand';
 import StrongEditableField from '../../../strong-control/field/StrongEditableField';
 import { schDayEventsSokiInvocatorClient } from '../../invocators/invocators.methods';
@@ -28,7 +25,7 @@ export default function ScheduleWidgetDayEventRating(props: {
   const [titleNode, isExpand] = useIsExpand(
     false,
     <>
-      <IconFavouriteStrokeRounded />
+      <LazyIcon icon="Favourite" />
       Рейтинг события
       <StyledReitingDisplay>{ratingSum}</StyledReitingDisplay>
     </>,
@@ -107,19 +104,13 @@ export default function ScheduleWidgetDayEventRating(props: {
                 ratePoint === 0 ? myRate[0] === 0 : ratePoint < 0 ? myRate[0] <= ratePoint : myRate[0] >= ratePoint;
 
               return (
-                <EvaSendButton
+                <TheIconSendButton
                   key={ratePoint}
                   className={
                     (ratePoint < 0 ? 'color--ko' : ratePoint > 0 ? 'color--ok' : 'color--3') +
                     (isFill ? '' : ' fade-05')
                   }
-                  Icon={
-                    ratePoint < 0
-                      ? IconHeartbreakStrokeRounded
-                      : ratePoint === 0
-                        ? IconHelpCircleStrokeRounded
-                        : IconFavouriteStrokeRounded
-                  }
+                  icon={ratePoint < 0 ? 'Heartbreak' : ratePoint === 0 ? 'HelpCircle' : 'Favourite'}
                   onSend={async () =>
                     ratePoint !== myRate[0] &&
                     schDayEventsSokiInvocatorClient.setRatePoint(
@@ -140,7 +131,7 @@ export default function ScheduleWidgetDayEventRating(props: {
             </StyledReitingDisplay>
           </div>
           <StrongEditableField
-            Icon={IconMessage01StrokeRounded}
+            icon="Message01"
             value={myRate[1]}
             title="Комментарий"
             className="margin-gap-v"

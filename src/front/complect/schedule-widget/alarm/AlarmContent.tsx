@@ -1,3 +1,4 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { mylib } from 'front/utils';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -10,9 +11,6 @@ import {
 } from 'shared/api';
 import { itNNull } from 'shared/utils';
 import styled from 'styled-components';
-import { IconCalendar01StrokeRounded } from '../../../complect/the-icon/icons/calendar-01';
-import { IconLeftToRightListDashStrokeRounded } from '../../../complect/the-icon/icons/left-to-right-list-dash';
-import { IconSmileStrokeRounded } from '../../../complect/the-icon/icons/smile';
 import { useIndexSchedules } from '../../../components/index/atoms';
 import useFullContent, { FullContentValue } from '../../fullscreen-content/useFullContent';
 import ScheduleWidgetTopicTitle from '../complect/TopicTitle';
@@ -45,7 +43,7 @@ const makeNextDayFirstEventNode = (
       {scheduleTitle && <div className="color--7">{scheduleTitle}</div>}
       <div className="flex flex-gap">
         Это был последний день
-        <IconSmileStrokeRounded />
+        <LazyIcon icon="Smile" />
       </div>
     </div>
   );
@@ -379,7 +377,10 @@ export default function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJu
       >
         <Link to={observeSchedule === undefined ? '.' : `schs/${observeSchedule.sch.w}`}>
           <div className="flex">
-            <IconCalendar01StrokeRounded className="margin-big-gap" />
+            <LazyIcon
+              icon="Calendar01"
+              className="margin-big-gap"
+            />
             {node ??
               (observeSchedule !== undefined ? (
                 <div>
@@ -397,7 +398,10 @@ export default function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJu
         </Link>
 
         <Link to="schs">
-          <IconLeftToRightListDashStrokeRounded className="margin-gap" />
+          <LazyIcon
+            icon="LeftToRightListDash"
+            className="margin-gap"
+          />
         </Link>
       </Alarm>
     </>

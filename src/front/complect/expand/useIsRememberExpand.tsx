@@ -1,7 +1,6 @@
 import { complectIDB } from 'front/components/apps/+complect/_idb/complectIDB';
 import { ReactNode, useCallback } from 'react';
-import { IconArrowDown01StrokeRounded } from '../../complect/the-icon/icons/arrow-down-01';
-import { IconArrowUp01StrokeRounded } from '../../complect/the-icon/icons/arrow-up-01';
+import { LazyIcon } from '../the-icon/LazyIcon';
 
 export const useIsRememberExpand = (
   scope: string,
@@ -34,7 +33,7 @@ export const useIsRememberExpand = (
         onClick={() => switchExpand()}
       >
         {prefix}
-        {isExpand ? <IconArrowUp01StrokeRounded /> : <IconArrowDown01StrokeRounded />}
+        {isExpand ? <LazyIcon icon="ArrowUp01" /> : <LazyIcon icon="ArrowDown01" />}
       </span>
       {typeof postfix === 'function' ? postfix(isExpand) : postfix}
     </span>,

@@ -1,9 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { IconAlert01StrokeRounded } from '../../complect/the-icon/icons/alert-01';
-import { IconLoading03StrokeRounded } from '../../complect/the-icon/icons/loading-03';
 import useToast from '../modal/useToast';
 import { useOnSendPromiseCallback } from '../sends/useOnSendPromiseCallback';
+import { LazyIcon } from '../the-icon/LazyIcon';
 import { DropdownItem, DropdownProps } from './Dropdown.model';
 
 let lastDroppedCloser: () => void = () => {};
@@ -104,9 +103,17 @@ export default function Dropdown<Id, Item extends DropdownItem<Id> = DropdownIte
           })}
       </div>
       {error ? (
-        <IconAlert01StrokeRounded className="color--ko" />
+        <LazyIcon
+          icon="Alert01"
+          className="color--ko"
+        />
       ) : (
-        isLoading && <IconLoading03StrokeRounded className="rotate" />
+        isLoading && (
+          <LazyIcon
+            icon="Loading03"
+            className="rotate"
+          />
+        )
       )}
     </Selector>
   );

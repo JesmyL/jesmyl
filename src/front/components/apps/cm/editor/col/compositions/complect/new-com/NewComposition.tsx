@@ -1,7 +1,5 @@
 import TheButton from 'front/complect/Button';
 import SendButton from 'front/complect/sends/send-button/SendButton';
-import { IconCancelCircleStrokeRounded } from 'front/complect/the-icon/icons/cancel-circle';
-import { IconPlusSignCircleStrokeRounded } from 'front/complect/the-icon/icons/plus-sign-circle';
 import { propagationStopper } from 'front/complect/utils/utils';
 import { ChordVisibleVariant } from 'front/components/apps/cm/Cm.model';
 import { Com } from 'front/components/apps/cm/col/com/Com';
@@ -136,7 +134,7 @@ export default function NewComposition({ onClose }: { onClose: (is: false) => vo
             {newCom.a ? (
               <ComAudioControlledList
                 srcs={newCom.a.split('\n').filter(itIt)}
-                ActionIcon={IconCancelCircleStrokeRounded}
+                icon="CancelCircle"
                 onToggle={async src => {
                   const audio = Array.from(new Set(newCom.a?.split(/\n/).filter(s => s && s !== src))).join('\n');
                   setNewCom(prev => ({ ...prev, a: audio }));
@@ -151,7 +149,7 @@ export default function NewComposition({ onClose }: { onClose: (is: false) => vo
             <h2 id="header-new-audio">Новые аудио</h2>
             <ComAudioControlledList
               srcs={hrefs}
-              ActionIcon={IconPlusSignCircleStrokeRounded}
+              icon="PlusSignCircle"
               onToggle={async src => {
                 const audio = Array.from(new Set((newCom.a?.split(/\n/) ?? []).concat(src).filter(itIt))).join('\n');
                 setNewCom(prev => ({ ...prev, a: audio }));

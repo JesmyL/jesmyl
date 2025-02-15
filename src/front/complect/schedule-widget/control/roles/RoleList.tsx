@@ -1,9 +1,6 @@
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
 import { useMemo, useState } from 'react';
 import { IScheduleWidgetRole } from 'shared/api';
-import { IconArrowDownDoubleStrokeRounded } from '../../../../complect/the-icon/icons/arrow-down-double';
-import { IconArrowUpDoubleStrokeRounded } from '../../../../complect/the-icon/icons/arrow-up-double';
-import { IconPlusSignStrokeRounded } from '../../../../complect/the-icon/icons/plus-sign';
 import useIsExpand from '../../../expand/useIsExpand';
 import IconButton from '../../../the-icon/IconButton';
 import { useScheduleScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
@@ -22,8 +19,8 @@ export default function ScheduleWidgetRoleList() {
       isExpand &&
       rights.isCanTotalRedact &&
       !rights.schedule.ctrl?.roles.some(role => !role.title) && (
-        <EvaSendButton
-          Icon={IconPlusSignStrokeRounded}
+        <TheIconSendButton
+          icon="PlusSign"
           prefix="роль"
           confirm="Добавить новую роль?"
           onSend={() => schRolesSokiInvocatorClient.createRole(null, scheduleScopeProps)}
@@ -50,7 +47,7 @@ export default function ScheduleWidgetRoleList() {
           return (
             <div key={listi}>
               <IconButton
-                Icon={isExpand ? IconArrowUpDoubleStrokeRounded : IconArrowDownDoubleStrokeRounded}
+                icon={isExpand ? 'ArrowUpDouble' : 'ArrowDownDouble'}
                 prefix={rights.schedule.ctrl.cats[listi]}
                 className="flex-max color--4"
                 onClick={() => setCatExpands(isExpand ? catExpands.filter(it => it !== listi) : [...catExpands, listi])}

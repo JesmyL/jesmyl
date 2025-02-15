@@ -1,4 +1,4 @@
-import { IconComputerSettingsStrokeRounded } from 'front/complect/the-icon/icons/computer-settings';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import React, { Suspense, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { itNNull } from 'shared/utils';
@@ -10,9 +10,6 @@ import { FullContent } from '../../../../complect/fullscreen-content/FullContent
 import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
 import ScheduleWidgetAlarm from '../../../../complect/schedule-widget/alarm/Alarm';
 import { scheduleWidgetListPageRoute } from '../../../../complect/schedule-widget/general/ListPageRoute';
-import { IconInformationCircleStrokeRounded } from '../../../../complect/the-icon/icons/information-circle';
-import { IconRefreshStrokeRounded } from '../../../../complect/the-icon/icons/refresh';
-import { IconSettings02StrokeRounded } from '../../../../complect/the-icon/icons/settings-02';
 import { checkIsThereNewSW } from '../../../../serviceWorkerRegistration';
 import { useAuth, useCurrentApp } from '../../atoms';
 import useConnectionState from '../../useConnectionState';
@@ -73,23 +70,23 @@ export default function IndexMain() {
                   <ScheduleWidgetAlarm isForceShow={auth.level >= 50} />
                   {!auth.nick && <IndexTelegramInlineAuthButton />}
                   <BrutalItem
-                    icon={<IconSettings02StrokeRounded />}
+                    iconNode={<LazyIcon icon="Settings02" />}
                     title="Настройки"
                     to="settings"
                   />
                   <BrutalItem
                     to="./actions"
-                    icon={<IconComputerSettingsStrokeRounded />}
+                    iconNode={<LazyIcon icon="ComputerSettings" />}
                     title="Взаимодействие"
                   />
                   <BrutalItem
-                    icon={<IconInformationCircleStrokeRounded />}
+                    iconNode={<LazyIcon icon="InformationCircle" />}
                     title="О приложении"
                     onClick={setIsAboutOpen}
                   />
                   {checkIsThereNewSW(reg => (
                     <BrutalItem
-                      icon={<IconRefreshStrokeRounded />}
+                      iconNode={<LazyIcon icon="Refresh" />}
                       title="Обновить"
                       onClick={() => {
                         navigator.serviceWorker.addEventListener('controllerchange', () => {

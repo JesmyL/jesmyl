@@ -5,9 +5,6 @@ import { renderComponentInNewWindow } from '../../..';
 import { FullContent } from '../../fullscreen-content/FullContent';
 import StrongControlDateTimeExtracter from '../../strong-control/StrongDateTimeExtracter';
 import IconButton from '../../the-icon/IconButton';
-import { IconCalendarUpload02StrokeRounded } from '../../the-icon/icons/calendar-upload-02';
-import { IconClock01StrokeRounded } from '../../the-icon/icons/clock-01';
-import { IconPrinterStrokeRounded } from '../../the-icon/icons/printer';
 import { useScheduleDayScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schDaysSokiInvocatorClient } from '../invocators/invocators.methods';
 import { ScheduleWidgetEventListUpdater } from './EventListUpdater';
@@ -30,7 +27,7 @@ export default function ScheduleWidgetDayEditPanel({ day, dayi, schedule, schedu
     <>
       <StrongControlDateTimeExtracter
         value={day.wup?.toFixed?.(2).replace(dotReg, ' ') || ''}
-        Icon={IconClock01StrokeRounded}
+        icon="Clock01"
         title="Начало дня"
         takeDate="NO"
         takeTime="hour-min"
@@ -39,8 +36,9 @@ export default function ScheduleWidgetDayEditPanel({ day, dayi, schedule, schedu
         }
       />
       <IconButton
-        Icon={IconPrinterStrokeRounded}
+        icon="Printer"
         className="flex-max margin-gap-v"
+        postfix="Распечатать распорядок дня"
         onClick={() =>
           renderComponentInNewWindow(win => (
             <ScheduleWidgetPrintableDay
@@ -52,10 +50,9 @@ export default function ScheduleWidgetDayEditPanel({ day, dayi, schedule, schedu
             />
           ))
         }
-        postfix="Распечатать распорядок дня"
       />
       <IconButton
-        Icon={IconCalendarUpload02StrokeRounded}
+        icon="CalendarUpload02"
         postfix="Загрузить текстовое расписание"
         disabled={day.list.length > 0}
         disabledReason="Расписание дня должно быть пустым"

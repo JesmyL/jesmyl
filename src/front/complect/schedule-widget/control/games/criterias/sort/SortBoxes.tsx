@@ -1,10 +1,9 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { IScheduleWidgetUser, IScheduleWidgetUserMi } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
 import IconButton from '../../../../../the-icon/IconButton';
-import { IconCheckmarkBadge01StrokeRounded } from '../../../../../the-icon/icons/checkmark-badge-01';
-import { IconMessageQuestionStrokeRounded } from '../../../../../the-icon/icons/message-question';
 import { useScheduleWidgetRightsContext } from '../../../../useScheduleWidget';
 import ScheduleWidgetTeamsCriteriaSorterScreenHistory from './History';
 import { ScheduleWidgetTeamsCriteriaSorterScreenSortBoxPhoto } from './SortBoxPhoto';
@@ -140,7 +139,7 @@ export const ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes = function SortBox
       <div className="flex center column flex-gap full-width">
         <div className="flex around full-width">
           <IconButton
-            Icon={IconMessageQuestionStrokeRounded}
+            icon="MessageQuestion"
             onClick={() => {
               const nextUser = usersForSort[usersForSort.findIndex(user => user.mi === currUser.mi) + 1];
 
@@ -151,7 +150,7 @@ export const ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes = function SortBox
           />
           У кого преимущество?
           <IconButton
-            Icon={IconMessageQuestionStrokeRounded}
+            icon="MessageQuestion"
             onClick={() => setUnknownUsers([...unknownUsers, insertUser.mi])}
             confirm={`${insertUser.fio} - неизвестный участник?`}
           />
@@ -174,8 +173,14 @@ export const ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes = function SortBox
           />
         </div>
         <div className="flex around full-width color--ok">
-          <IconCheckmarkBadge01StrokeRounded className={correct === 'left' ? undefined : 'fade-00'} />
-          <IconCheckmarkBadge01StrokeRounded className={correct === 'right' ? undefined : 'fade-00'} />
+          <LazyIcon
+            icon="CheckmarkBadge01"
+            className={correct === 'left' ? undefined : 'fade-00'}
+          />
+          <LazyIcon
+            icon="CheckmarkBadge01"
+            className={correct === 'right' ? undefined : 'fade-00'}
+          />
         </div>
       </div>
     </>

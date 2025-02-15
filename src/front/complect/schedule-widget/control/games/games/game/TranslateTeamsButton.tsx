@@ -1,9 +1,7 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useMemo, useState } from 'react';
 import { FullContent } from '../../../../../fullscreen-content/FullContent';
 import IconButton from '../../../../../the-icon/IconButton';
-import { IconDashboardSquareAddStrokeRounded } from '../../../../../the-icon/icons/dashboard-square-add';
-import { IconDashboardSquareRemoveStrokeRounded } from '../../../../../the-icon/icons/dashboard-square-remove';
-import { IconTvSmartStrokeRounded } from '../../../../../the-icon/icons/tv-smart';
 import { ScheduleWidgetMarkdownTranslation } from '../../../../live-translations/markdown/Translation';
 import { useScheduleWidgetRightsContext } from '../../../../useScheduleWidget';
 import { useSchWGameContext } from '../Games';
@@ -81,12 +79,12 @@ export const ScheduleWidgetTeamGameTranslateTeamsButton = function TranslateTeam
         <FullContent onClose={setIsOpenFull}>
           <div className="flex full-width around">
             <IconButton
-              Icon={IconDashboardSquareRemoveStrokeRounded}
+              icon="DashboardSquareRemove"
               disabled={cols < 2}
               onClick={() => setCols(cols - 1)}
             />
             <IconButton
-              Icon={IconDashboardSquareAddStrokeRounded}
+              icon="DashboardSquareAdd"
               disabled={game.teams.length <= cols}
               onClick={() => setCols(cols + 1)}
             />
@@ -94,7 +92,8 @@ export const ScheduleWidgetTeamGameTranslateTeamsButton = function TranslateTeam
           <ScheduleWidgetMarkdownTranslation md={grid} />
         </FullContent>
       )}
-      <IconTvSmartStrokeRounded
+      <LazyIcon
+        icon="TvSmart"
         onClick={event => {
           event.stopPropagation();
           setIsOpenFull(true);

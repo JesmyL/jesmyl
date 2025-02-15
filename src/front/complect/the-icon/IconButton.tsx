@@ -1,15 +1,12 @@
-import { FunctionComponent, HTMLAttributes, ReactNode, useState } from 'react';
-import styled from 'styled-components';
+import { HTMLAttributes, ReactNode, useState } from 'react';
 import { ConfirmContent } from '../modal/confirm/ConfirmContent';
 import useToast from '../modal/useToast';
 import { mylib } from '../my-lib';
 import { StyledLoadingSpinner } from './IconLoading';
 import { LazyIcon } from './LazyIcon';
-import { TheIconType } from './model';
 
 interface Props {
-  Icon: TheIconType;
-  icon?: KnownIconName;
+  icon: TheIconKnownName;
   disabled?: boolean;
   disabledReason?: (() => ReactNode) | ReactNode;
   confirm?: React.ReactNode;
@@ -29,120 +26,57 @@ const IconButton = <P extends Props = Props>(
     : OmitOwn<HTMLAttributes<HTMLSpanElement>, 'prefix'>) &
     P,
 ) => {
-  const isClickable = !props.disabled && props.onClick ? true : undefined;
   const className =
-    `${props.className || ''}${isClickable || props.disabledReason ? ' pointer' : ''}` +
+    `${props.className || ''}${(!props.disabled && props.onClick) || props.disabledReason ? ' pointer' : ''}` +
     `${props.disabled ? ' disabled' + (props.disabledReason ? ' clickable' : '') : ''}`;
   const [isLoading, setIsLoading] = useState(false);
-
-  const Icon = props.isLoading || isLoading ? StyledLoadingSpinner : props.Icon;
-
-  return (
-    <ConfirmContent
-      confirm={props.confirm === true ? props.postfix || props.prefix : props.confirm}
-      content={onConfirm => {
-        const onClick =
-          props.onClick &&
-          (async (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-            event.stopPropagation();
-            if (await onConfirm()) {
-              setIsLoading(true);
-              await props.onClick!(event);
-              setIsLoading(false);
-            }
-          });
-
-        return (
-          <>
-            {props.prefix === undefined && props.postfix === undefined ? (
-              <DisabledReasonContained
-                Comp={Icon}
-                icon={props.icon}
-                className={className}
-                disabledReason={props.disabledReason}
-                disabled={props.disabled}
-                onClick={onClick}
-              />
-            ) : (
-              <DisabledReasonContained
-                Comp={Span}
-                icon={props.icon}
-                className={`flex flex-gap flex-max ${className || ''}`}
-                disabledReason={props.disabledReason}
-                disabled={props.disabled}
-                onClick={onClick}
-              >
-                {props.prefix}
-                {props.icon ? (
-                  <LazyIcon
-                    name={props.icon}
-                    className={props.iconClassName}
-                  />
-                ) : (
-                  <Icon className={props.iconClassName} />
-                )}
-                {props.postfix}
-              </DisabledReasonContained>
-            )}
-          </>
-        );
-      }}
-    />
-  );
-};
-
-const Span = styled.span``;
-
-const DisabledReasonContained = <Node extends HTMLElement>({
-  Comp,
-  disabledReason,
-  disabled,
-  icon,
-  ...props
-}: {
-  Comp: FunctionComponent<HTMLAttributes<Node>>;
-  icon: KnownIconName | und;
-  disabledReason?: (() => ReactNode) | ReactNode | und;
-  disabled: boolean | und;
-} & HTMLAttributes<Node>) => {
-  return disabled && disabledReason ? (
-    <WithDisabledReason
-      Comp={Comp}
-      disabledReason={disabledReason}
-      disabled
-      icon={icon}
-      {...props}
-    />
-  ) : (
-    <Comp {...props} />
-  );
-};
-
-const WithDisabledReason = <Node extends HTMLElement>({
-  Comp,
-  disabledReason,
-  disabled,
-  icon,
-  ...props
-}: {
-  Comp: FunctionComponent<HTMLAttributes<Node>>;
-  icon: KnownIconName | und;
-  disabledReason?: (() => ReactNode) | ReactNode;
-  disabled: boolean | und;
-} & HTMLAttributes<Node>) => {
   const [toastNode, toast] = useToast();
 
   return (
     <>
       {toastNode}
-      {icon ? (
-        <LazyIcon name={icon} />
-      ) : (
-        <Comp
-          {...props}
-          onClick={() => toast(mylib.isFunc(disabledReason) ? disabledReason() : disabledReason, { mood: 'ko' })}
-        />
-      )}
+      <ConfirmContent
+        confirm={props.confirm === true ? props.postfix || props.prefix : props.confirm}
+        content={onConfirm => {
+          return (
+            <>
+              <span
+                className={`flex flex-gap flex-max ${className || ''}`}
+                onClick={
+                  props.onClick
+                    ? async event => {
+                        event.stopPropagation();
+
+                        if (props.disabled) {
+                          if (props.disabledReason) {
+                            toast(mylib.isFunc(props.disabledReason) ? props.disabledReason() : props.disabledReason, {
+                              mood: 'ko',
+                            });
+                          }
+                          return;
+                        }
+
+                        if (await onConfirm()) {
+                          setIsLoading(true);
+                          await props.onClick?.(event);
+                          setIsLoading(false);
+                        }
+                      }
+                    : undefined
+                }
+              >
+                {props.prefix}
+                {props.isLoading || isLoading ? (
+                  <StyledLoadingSpinner icon="Loading03" />
+                ) : (
+                  <LazyIcon icon={props.icon} />
+                )}
+                {props.postfix}
+              </span>
+            </>
+          );
+        }}
+      />
     </>
   );
 };

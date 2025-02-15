@@ -1,7 +1,7 @@
 import Modal from 'front/complect/modal/Modal/Modal';
 import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
 import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
 import { MyLib, mylib } from 'front/utils';
 import { useState } from 'react';
 import {
@@ -12,7 +12,6 @@ import {
   ScheduleWidgetDayEventAttValues,
 } from 'shared/api';
 import { itNNull } from 'shared/utils';
-import { IconCopy02StrokeRounded } from '../../../complect/the-icon/icons/copy-02';
 import { useAuth, useIndexSchedules } from '../../../components/index/atoms';
 import IconButton from '../../the-icon/IconButton';
 import ScheduleWidgetTopicTitle from '../complect/TopicTitle';
@@ -30,7 +29,7 @@ export function ScheduleWidgetCopy(props: { schw: IScheduleWidgetWid }) {
   return (
     <>
       <IconButton
-        Icon={IconCopy02StrokeRounded}
+        icon="Copy02"
         postfix="Скопировать расписание"
         onClick={() => setIsModalOpen(true)}
       />
@@ -40,8 +39,8 @@ export function ScheduleWidgetCopy(props: { schw: IScheduleWidgetWid }) {
           <Modal onClose={setIsModalOpen}>
             <ModalHeader>Копируем {schedule.title}</ModalHeader>
             <ModalBody>
-              <EvaSendButton
-                Icon={IconCopy02StrokeRounded}
+              <TheIconSendButton
+                icon="Copy02"
                 postfix={`Скопировать ${schedule.title} в ${rights.schedule.title}`}
                 onSuccess={() => setIsModalOpen(false)}
                 onSend={() => {

@@ -7,7 +7,6 @@ import { backSwipableContainerMaker } from '../backSwipableContainerMaker';
 import { ThrowEvent } from '../eventer/ThrowEvent';
 import Portal from '../popups/[complect]/Portal';
 import IconButton from '../the-icon/IconButton';
-import { IconCancel01StrokeRounded } from '../the-icon/icons/cancel-01';
 import { useActualRef } from '../useActualRef';
 import { useWid } from '../useWid';
 import { propagationStopper } from '../utils/utils';
@@ -53,7 +52,7 @@ export function FullContent({ onClose, closable, children, className, asRootAnch
         >
           {closable || (
             <StyledCloseButton
-              Icon={IconCancel01StrokeRounded}
+              icon="Cancel01"
               className="pointer close-button"
               onClick={close}
             />

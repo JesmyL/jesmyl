@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useBottomPopup } from '../../../../complect/absolute-popup/bottom-popup/useBottomPopup';
 import { isTouchDevice } from '../../../../complect/device-differences';
 import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
-import { IconCancel02StrokeRounded } from '../../../../complect/the-icon/icons/cancel-02';
 import { CodeExecutionScreen } from './coder/Coder';
 import { CoderResultLine } from './coder/complect/line';
 
@@ -28,7 +27,7 @@ export default function IndexConsole() {
     return prepare({
       items: [
         {
-          Icon: IconCancel02StrokeRounded,
+          icon: 'Cancel02',
           title: 'Очистить консоль',
           onClick: () => {
             logs.length = 0;

@@ -1,3 +1,4 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { mylib } from 'front/utils';
 import { useState } from 'react';
 import {
@@ -7,10 +8,7 @@ import {
   IScheduleWidgetUser,
   ScheduleWidgetAppAttCustomizableValueItem,
 } from 'shared/api';
-import { IconViewStrokeRounded } from '../../../../../complect/the-icon/icons/view';
-import { IconViewOffSlashStrokeRounded } from '../../../../../complect/the-icon/icons/view-off-slash';
 import SendableDropdown from '../../../../sends/dropdown/SendableDropdown';
-import IconButton from '../../../../the-icon/IconButton';
 import KeyValueListAttNumberMember from './KeyValueListAttNumberMember';
 
 const zeroFunc = () => 0;
@@ -90,8 +88,9 @@ export default function ScheduleKeyValueListAttLiItemDropdown({
 
   return (
     <div className="flex flex-gap">
-      <IconButton
-        Icon={isShowAll ? IconViewStrokeRounded : IconViewOffSlashStrokeRounded}
+      <LazyIcon
+        className="pointer"
+        icon={isShowAll ? 'View' : 'ViewOffSlash'}
         onClick={() => setIsShowAll(!isShowAll)}
       />
       <SendableDropdown

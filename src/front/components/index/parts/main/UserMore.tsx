@@ -1,6 +1,5 @@
 import { BottomPopupItem } from '../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
 import { useConfirm } from '../../../../complect/modal/confirm/useConfirm';
-import { IconUserStrokeRounded } from '../../../../complect/the-icon/icons/user';
 import { authIDB } from '../../db/auth-idb';
 
 export const UserMore = ({ onClose }: { onClose: (isOpen: false) => void }) => {
@@ -12,7 +11,7 @@ export const UserMore = ({ onClose }: { onClose: (isOpen: false) => void }) => {
       <BottomPopupItem
         id="log-out-button"
         title="Выйти из системы"
-        Icon={IconUserStrokeRounded}
+        icon="User"
         onClick={async event => {
           event.preventDefault();
           event.stopPropagation();

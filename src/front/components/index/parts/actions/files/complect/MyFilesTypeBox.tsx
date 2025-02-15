@@ -4,13 +4,12 @@ import { MyFileType } from 'shared/api';
 import { filesStorage } from '../../../../../../complect/configurators/utils/storage';
 import IconButton from '../../../../../../complect/the-icon/IconButton';
 import { LazyIcon } from '../../../../../../complect/the-icon/LazyIcon';
-import { IconCancel01StrokeRounded } from '../../../../../../complect/the-icon/icons/cancel-01';
 import { useIndexFileAssociations } from '../../../../atoms';
 import { useRemoveMyFile } from '../hooks/remove-file';
 
 export type FileAssociations = Record<
   MyFileType,
-  { title: string; icon: KnownIconName; removeTitle: string; extensions: string[] }
+  { title: string; icon: TheIconKnownName; removeTitle: string; extensions: string[] }
 >;
 
 const forceUpdater = (it: number) => it + 1;
@@ -35,7 +34,7 @@ export const MyFilesTypeBox = ({ type }: { type: MyFileType }) => {
   return (
     <>
       <div className="flex flex-gap margin-gap-t padding-gap bgcolor--2">
-        <LazyIcon name={fileAssociations[type].icon} />
+        <LazyIcon icon={fileAssociations[type].icon} />
         <span className="color--3">{fileAssociations[type].title} </span>
         {!fileAssociations[type].extensions.length || '(.' + fileAssociations[type].extensions.join(', .') + ')'}
       </div>
@@ -48,7 +47,7 @@ export const MyFilesTypeBox = ({ type }: { type: MyFileType }) => {
             >
               {file.name}
               <IconButton
-                Icon={IconCancel01StrokeRounded}
+                icon="Cancel01"
                 confirm={`Удалить ${fileAssociations[type].removeTitle} "${file.name}"`}
                 onClick={() => removeFile(file)}
               />

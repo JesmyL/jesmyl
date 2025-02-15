@@ -1,6 +1,3 @@
-import { IconApproximatelyEqualSquareStrokeRounded } from '../../../../../../../complect/the-icon/icons/approximately-equal-square';
-import { IconCongruentToSquareStrokeRounded } from '../../../../../../../complect/the-icon/icons/congruent-to-square';
-import { IconEqualSignSquareStrokeRounded } from '../../../../../../../complect/the-icon/icons/equal-sign-square';
 import { useChordVisibleVariant } from '../../../../base/useChordVisibleVariant';
 import { ChordVisibleVariant } from '../../../../Cm.model';
 import { ComTool } from '../ComTool';
@@ -13,12 +10,12 @@ export const ChordsVariantTool = () => {
   return (
     <ComTool
       title="Показать аккорды"
-      Icon={
+      icon={
         chordVisibleVariant === ChordVisibleVariant.Maximal
-          ? IconApproximatelyEqualSquareStrokeRounded
+          ? 'ApproximatelyEqualSquare'
           : chordVisibleVariant === ChordVisibleVariant.Minimal
-            ? IconCongruentToSquareStrokeRounded
-            : IconEqualSignSquareStrokeRounded
+            ? 'CongruentToSquare'
+            : 'EqualSignSquare'
       }
       onClick={() => {
         setChordVisibleVariant(

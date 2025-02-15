@@ -1,16 +1,12 @@
 import Modal from 'front/complect/modal/Modal/Modal';
 import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
 import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { MyLib } from 'front/utils';
 import { useMemo, useState } from 'react';
 import { IScheduleWidget, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
 import styled from 'styled-components';
 import { AttTranslatorType, attTranslatorTypes } from '../../../../back/apps/index/schedules/attTranslatorType';
-import { IconAlert02StrokeRounded } from '../../../complect/the-icon/icons/alert-02';
-import { IconAttachmentStrokeRounded } from '../../../complect/the-icon/icons/attachment';
-import { IconClock01StrokeRounded } from '../../../complect/the-icon/icons/clock-01';
-import { IconEdit02StrokeRounded } from '../../../complect/the-icon/icons/edit-02';
-import { IconSchoolReportCardStrokeRounded } from '../../../complect/the-icon/icons/school-report-card';
 import Dropdown from '../../dropdown/Dropdown';
 import SendableDropdown from '../../sends/dropdown/SendableDropdown';
 import StrongDiv from '../../strong-control/StrongDiv';
@@ -47,7 +43,7 @@ export default function ScheduleWidgetEventType(props: {
         fieldKey="title"
         value={props.typeBox}
         isRedact={props.isRedact}
-        Icon={IconSchoolReportCardStrokeRounded}
+        icon="SchoolReportCard"
         title="Название"
         isImpossibleEmptyValue
         onChange={setTitle}
@@ -57,7 +53,7 @@ export default function ScheduleWidgetEventType(props: {
       />
       {error && (
         <div className="flex flex-gap center error-message">
-          <IconAlert02StrokeRounded />
+          <LazyIcon icon="Alert02" />
           {error}
         </div>
       )}
@@ -67,7 +63,7 @@ export default function ScheduleWidgetEventType(props: {
         postfix=" мин"
         isRedact={props.isRedact}
         title="Продолжительность, мин"
-        Icon={IconClock01StrokeRounded}
+        icon="Clock01"
         onSend={value => schEventTypesSokiInvocatorClient.setTm(null, eventTypeScopeProps, +value)}
       />
       {props.isRedact ? (
@@ -111,7 +107,7 @@ export default function ScheduleWidgetEventType(props: {
         !attEntries || (
           <div>
             <div className="flex flex-gap">
-              <IconAttachmentStrokeRounded />
+              <LazyIcon icon="Attachment" />
               Вложения
             </div>
           </div>
@@ -124,7 +120,10 @@ export default function ScheduleWidgetEventType(props: {
     <div className="relative">
       {props.isRedact || (
         <div className="flex flex-end full-width absolute pos-top pos-right margin-sm-gap z-index:5">
-          <IconEdit02StrokeRounded onClick={setIsRedactModalOpen} />
+          <LazyIcon
+            icon="Edit02"
+            onClick={setIsRedactModalOpen}
+          />
         </div>
       )}
 

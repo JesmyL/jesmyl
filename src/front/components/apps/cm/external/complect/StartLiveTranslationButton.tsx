@@ -2,7 +2,6 @@ import { CmComBindAttach, IScheduleWidget } from 'shared/api';
 import { useSwitchCurrentTranslationTextApp } from '../../../+complect/translations/hooks/current-app';
 import { useScheduleWidgetRightsContext } from '../../../../../complect/schedule-widget/useScheduleWidget';
 import IconButton from '../../../../../complect/the-icon/IconButton';
-import { IconComputerStrokeRounded } from '../../../../../complect/the-icon/icons/computer';
 
 interface Props {
   value: CmComBindAttach;
@@ -18,7 +17,7 @@ export const CmAttComStartLiveTranslationButton = (props: Props) => {
   return (
     <>
       <IconButton
-        Icon={IconComputerStrokeRounded}
+        icon="Computer"
         postfix="Транслировать"
         className="margin-gap-l margin-gap-v"
         onClick={() => {

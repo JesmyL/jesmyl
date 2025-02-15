@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { CmComBindAttach, CmComWid } from 'shared/api';
 import { FullContent } from '../../../../../complect/fullscreen-content/FullContent';
 import IconButton from '../../../../../complect/the-icon/IconButton';
-import { IconArrangeStrokeRounded } from '../../../../../complect/the-icon/icons/arrange';
 import { Com } from '../../col/com/Com';
 import { ComFaceList } from '../../col/com/face/list/ComFaceList';
 import { CmComListSearchFilterInput } from '../../complect/ComListSearchFilterInput';
@@ -24,7 +23,7 @@ export default function CmExternalComListAttRedactList({ value, setComw: setCcom
       <div className="flex column full-height">
         <div className="flex around full-width margin-big-gap-v">
           <IconButton
-            Icon={IconArrangeStrokeRounded}
+            icon="Arrange"
             postfix="Порядок песен"
             disabled={!value.comws || value.comws.length < 2}
             onClick={() => setIsOrderOpen(true)}
@@ -42,27 +41,6 @@ export default function CmExternalComListAttRedactList({ value, setComw: setCcom
               setCcomw(com.wid);
               setIsOpenComposition(true);
             }}
-            // comDescription={com => {
-            //   return value.comws?.includes(com.wid) ? (
-            //     <StrongEvaButton
-            //       fieldName="listKey"
-            //       fieldKey="comws"
-            //       fieldValue={['.', '===', com.wid]}
-            //       cud="D"
-            //       Icon={IconMinusSignSquareStrokeRounded}
-            //       className="color--ko"
-            //     />
-            //   ) : (
-            //     <StrongEvaButton
-            //       scope={scope}
-            //       fieldName="listKey"
-            //       fieldKey="comws"
-            //       fieldValue={com.wid}
-            //       cud="C"
-            //       Icon={IconPlusSignCircleStrokeRounded}
-            //     />
-            //   );
-            // }}
           />
         </div>
       </div>

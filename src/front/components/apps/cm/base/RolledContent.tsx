@@ -1,7 +1,6 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { HTMLAttributes, PropsWithChildren, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { IconMinusSignStrokeRounded } from '../../../../complect/the-icon/icons/minus-sign';
-import { IconPlusSignStrokeRounded } from '../../../../complect/the-icon/icons/plus-sign';
 import { useFullScreen } from '../../../../complect/useFullscreen';
 import { cmIDB } from '../_db/cm-idb';
 
@@ -46,7 +45,8 @@ export default function RollControled(props: PropsWithChildren<HTMLAttributes<HT
       }
     >
       <div className={'roll-controls pointer flex column center' + (isRolling ? ' open' : '')}>
-        <IconMinusSignStrokeRounded
+        <LazyIcon
+          icon="MinusSign"
           onClick={event => {
             event.stopPropagation();
             if (speedRollKf <= 1) return;
@@ -54,7 +54,8 @@ export default function RollControled(props: PropsWithChildren<HTMLAttributes<HT
           }}
         />
         <div>{(speedRollKf / 10).toFixed(1)}</div>
-        <IconPlusSignStrokeRounded
+        <LazyIcon
+          icon="PlusSign"
           onClick={event => {
             event.stopPropagation();
             if (speedRollKf >= 20) return;

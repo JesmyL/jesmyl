@@ -1,6 +1,6 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useState } from 'react';
 import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
-import { IconFileNotFoundStrokeRounded } from '../../../../../complect/the-icon/icons/file-not-found';
 
 export const ComNotFoundPage = () => {
   const [firstNow] = useState(Date.now());
@@ -14,7 +14,7 @@ export const ComNotFoundPage = () => {
       headTitle="К списку песен"
       content={
         <span className="flex flex-gap">
-          <IconFileNotFoundStrokeRounded />
+          <LazyIcon icon="FileNotFound" />
           Песня не найдена
         </span>
       }

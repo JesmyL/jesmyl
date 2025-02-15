@@ -1,12 +1,11 @@
 import { LinkAppActionFabric } from 'front/complect/link-app-actions';
 import { QrReader } from 'front/complect/qr-code/useQrReader';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { hosts } from 'shared/api';
 import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
 import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
-import { IconFile02StrokeRounded } from '../../../../complect/the-icon/icons/file-02';
-import { IconQrCode01StrokeRounded } from '../../../../complect/the-icon/icons/qr-code-01';
 import IndexMyFiles from './files/MyFiles';
 
 export default function IndexActions() {
@@ -36,12 +35,12 @@ export default function IndexActions() {
                   />
                 )}
                 <BrutalItem
-                  icon={<IconQrCode01StrokeRounded />}
+                  iconNode={<LazyIcon icon="QrCode01" />}
                   title="Читать QR"
                   onClick={() => setIsQrOpen(true)}
                 />
                 <BrutalItem
-                  icon={<IconFile02StrokeRounded />}
+                  iconNode={<LazyIcon icon="File02" />}
                   title="Мои файлы"
                   to="files"
                 />

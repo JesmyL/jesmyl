@@ -1,7 +1,7 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import { isMobileDevice } from 'front/complect/device-differences';
 import { ScheduleWidgetWatchLiveTranslationButton } from 'front/complect/schedule-widget/live-translations/WatchLiveButton';
-import { IconComputerStrokeRounded } from 'front/complect/the-icon/icons/computer';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useAuth } from 'front/components/index/atoms';
 import { IndexScheduleWidgetTranslations } from 'front/components/index/complect/translations/LiveTranslations';
 import { indexIDB } from 'front/components/index/db/index-idb';
@@ -41,7 +41,10 @@ export default function TheMeetingsEvent() {
                   <ScheduleWidgetWatchLiveTranslationButton schw={schedule.w} />
                 ) : auth.level ? (
                   <Link to="tran">
-                    <IconComputerStrokeRounded className="margin-gap-v" />
+                    <LazyIcon
+                      icon="Computer"
+                      className="margin-gap-v"
+                    />
                   </Link>
                 ) : null}
                 {auth.level < 50 || <CmMeetingEventEdits packComws={packComws} />}

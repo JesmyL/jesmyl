@@ -1,10 +1,7 @@
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
 import React, { useMemo } from 'react';
 import { IScheduleWidgetListCat } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
-import { IconEdit02StrokeRounded } from '../../../complect/the-icon/icons/edit-02';
-import { IconPlusSignStrokeRounded } from '../../../complect/the-icon/icons/plus-sign';
-import { IconSchoolReportCardStrokeRounded } from '../../../complect/the-icon/icons/school-report-card';
 import { ExpandableContent } from '../../expand/ExpandableContent';
 import useModal from '../../modal/useModal';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
@@ -39,7 +36,7 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
               onSend={icon => schListsSokiInvocatorClient.setCategoryIcon(null, catScopeProps, icon)}
             />
             <StrongEditableField
-              Icon={IconSchoolReportCardStrokeRounded}
+              icon="SchoolReportCard"
               title="Название списка"
               value={cat}
               fieldKey="title"
@@ -70,7 +67,7 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
       <ExpandableContent
         title={
           <>
-            <LazyIcon name={cat.icon} /> {title}
+            <LazyIcon icon={cat.icon} /> {title}
           </>
         }
         postfix={isExpand =>
@@ -79,13 +76,16 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
             <div className="flex flex-gap">
               <div className="ellipsis max-width:5em">{cat.title.toLowerCase()}</div>
               {!rights.schedule.lists?.units.some(unit => !unit.title) && (
-                <EvaSendButton
-                  Icon={IconPlusSignStrokeRounded}
+                <TheIconSendButton
+                  icon="PlusSign"
                   confirm={`Создать новое ${cat.title}?`}
                   onSend={() => schListsSokiInvocatorClient.createUnit(null, catScopeProps, cati)}
                 />
               )}
-              <IconEdit02StrokeRounded onClick={screen} />
+              <LazyIcon
+                icon="Edit02"
+                onClick={screen}
+              />
             </div>
           )
         }

@@ -1,6 +1,5 @@
 import { mylib } from 'front/utils';
 import { ReactNode } from 'react';
-import { IconShare08StrokeRounded } from '../complect/the-icon/icons/share-08';
 import useModal from './modal/useModal';
 import IconButton from './the-icon/IconButton';
 
@@ -10,7 +9,7 @@ type PrepareResult = {
   text?: string | (() => string | und);
 };
 
-export default function ShareEvaButton({
+export default function TheIconShareButton({
   text,
   disabled,
   description,
@@ -30,7 +29,7 @@ export default function ShareEvaButton({
     <>
       {modalNode}
       <IconButton
-        Icon={IconShare08StrokeRounded}
+        icon="Share08"
         disabled={disabled}
         prefix={description}
         className={className}

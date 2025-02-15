@@ -1,13 +1,10 @@
-import { IconCancel01StrokeRounded } from 'front/complect/the-icon/icons/cancel-01';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { OrderRepeats } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
 import { useConfirm } from '../../../../../../../complect/modal/confirm/useConfirm';
-import { IconFlag03StrokeRounded } from '../../../../../../../complect/the-icon/icons/flag-03';
-import { IconLinkBackwardStrokeRounded } from '../../../../../../../complect/the-icon/icons/link-backward';
-import { IconRowDeleteStrokeRounded } from '../../../../../../../complect/the-icon/icons/row-delete';
 import { ChordVisibleVariant } from '../../../../Cm.model';
 import ComLine from '../../../../col/com/line/ComLine';
 import TheOrder from '../../../../col/com/order/TheOrder';
@@ -123,13 +120,15 @@ export default function ComRepeats() {
                     {props.headerNode}
                     {ord.me.watchOrd ? (
                       <>
-                        <IconLinkBackwardStrokeRounded
+                        <LazyIcon
+                          icon="LinkBackward"
                           className="vertical-middle pointer margin-gap-h"
                           onClick={() => {
                             ord.me.watchOrd?.element?.scrollIntoView();
                           }}
                         />
-                        <IconRowDeleteStrokeRounded
+                        <LazyIcon
+                          icon="RowDelete"
                           className={`vertical-middle pointer ${ord.isInheritValue('r') ? 'disabled' : ''}`}
                           onClick={async () => {
                             const isClear = await confirm('Очистить собственные правила повторения?');
@@ -276,7 +275,7 @@ export default function ComRepeats() {
                         reset();
                       }}
                     >
-                      <IconCancel01StrokeRounded />
+                      <LazyIcon icon="Cancel01" />
                     </div>
                     {!flashes.length || (
                       <ComRepeatsRemoveButton
@@ -314,7 +313,7 @@ export default function ComRepeats() {
                           reset();
                         }}
                       >
-                        <IconFlag03StrokeRounded />
+                        <LazyIcon icon="Flag03" />
                       </div>
                     )}
                   </div>

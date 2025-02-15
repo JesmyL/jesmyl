@@ -2,10 +2,6 @@ import styled from 'styled-components';
 import { CmComWid } from '../../../../../../../shared/api/complect/apps/cm/complect/enums';
 import { useConfirm } from '../../../../../../complect/modal/confirm/useConfirm';
 import IconButton from '../../../../../../complect/the-icon/IconButton';
-import { IconAddCircleHalfDotStrokeRounded } from '../../../../../../complect/the-icon/icons/add-circle-half-dot';
-import { IconCancelCircleHalfDotStrokeRounded } from '../../../../../../complect/the-icon/icons/cancel-circle-half-dot';
-import { IconRemoveCircleHalfDotStrokeRounded } from '../../../../../../complect/the-icon/icons/remove-circle-half-dot';
-import { IconStarSolidRounded, IconStarStrokeRounded } from '../../../../../../complect/the-icon/icons/star';
 import useSelectedComs from '../../../base/useSelectedComs';
 import { useFavoriteComs } from '../../../lists/favorites/useFavoriteComs';
 
@@ -24,7 +20,7 @@ export default function ComFaceContextMenu({ onClick, comWid }: Props) {
     <StyledMenu>
       {confirmNode}
       <IconButton
-        Icon={isComMarked ? IconStarStrokeRounded : IconStarSolidRounded}
+        icon={isComMarked ? 'Star' : 'StarCircle'}
         postfix={isComMarked ? 'Удалить из Избранного' : 'Добавить в Избранное'}
         onClick={() => {
           onClick(null);
@@ -32,13 +28,13 @@ export default function ComFaceContextMenu({ onClick, comWid }: Props) {
         }}
       />
       <IconButton
-        Icon={isSelected(comWid) ? IconRemoveCircleHalfDotStrokeRounded : IconAddCircleHalfDotStrokeRounded}
+        icon={isSelected(comWid) ? 'RemoveCircleHalfDot' : 'AddCircleHalfDot'}
         postfix={isSelected(comWid) ? 'Отменить выбор' : 'Выбрать'}
         onClick={() => toggleSelectedCom(comWid)}
       />
       {!selectedComws.length || (
         <IconButton
-          Icon={IconCancelCircleHalfDotStrokeRounded}
+          icon="CancelCircleHalfDot"
           postfix="Очистить выбранные"
           onClick={() => {
             confirm('Очистить список выбранных?').then(isClear => isClear && clearSelectedComws());

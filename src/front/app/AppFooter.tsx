@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { isTouchDevice } from '../complect/device-differences';
-import { iconPackOfCircleArrowRight02 } from '../complect/the-icon/icons/circle-arrow-right-02';
 import { AppName } from './App.model';
 import AppFooterItem, {
   CurrentAppFooterItemAppNameContext,
@@ -35,7 +34,7 @@ export default function AppFooter({ children }: { children: React.ReactNode }) {
         <StyledFooter>
           {children}
           <AppFooterItem
-            iconPack={iconPackOfCircleArrowRight02}
+            icon="CircleArrowRight02"
             title="Другое"
             to="!other"
             idPostfix="other"

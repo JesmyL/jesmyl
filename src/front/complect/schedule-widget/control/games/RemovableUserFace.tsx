@@ -1,12 +1,9 @@
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useState } from 'react';
 import { IScheduleWidgetUser } from 'shared/api';
 import Modal from '../../../modal/Modal/Modal';
 import { ModalHeader } from '../../../modal/Modal/ModalHeader';
-import IconButton from '../../../the-icon/IconButton';
-import { IconCancel02StrokeRounded } from '../../../the-icon/icons/cancel-02';
-import { IconImage02StrokeRounded } from '../../../the-icon/icons/image-02';
-import { IconLinkBackwardStrokeRounded } from '../../../the-icon/icons/link-backward';
 import { useScheduleScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
 import { schGamesSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
@@ -45,16 +42,16 @@ export default function ScheduleWidgetRemovableUserFace({ user, isStriked, butto
           user={user}
           justRenderItOnEmpty={<ScheduleWidgetUserTakePhoto user={user} />}
           or={
-            <IconButton
-              Icon={IconImage02StrokeRounded}
-              className="color--7"
+            <LazyIcon
+              icon="Image02"
+              className="pointer color--7"
               onClick={() => setIsPhotoOpen(true)}
             />
           }
         />
         {buttons}
-        <EvaSendButton
-          Icon={isUserStriked ? IconLinkBackwardStrokeRounded : IconCancel02StrokeRounded}
+        <TheIconSendButton
+          icon={isUserStriked ? 'LinkBackward' : 'Cancel02'}
           className={isUserStriked ? 'color--ok' : 'color--ko'}
           onSend={() =>
             schGamesSokiInvocatorClient.toggleStrikedUser(

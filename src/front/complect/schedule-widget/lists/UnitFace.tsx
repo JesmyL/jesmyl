@@ -27,7 +27,7 @@ export default function ScheduleWidgetListUnitFace({
         className={'flex flex-gap pointer' + (rights.myUser?.li?.[unit.cati] === -unit.mi ? ' color--7' : ' color--3')}
         onClick={() => setIsShowMentors(!isShowMentors)}
       >
-        <LazyIcon name={cat?.icon} />
+        <LazyIcon icon={cat?.icon} />
         {isShowMentors ? (
           mentors.length ? (
             mentors.map(user => user.fio || user.nick).join(', ')

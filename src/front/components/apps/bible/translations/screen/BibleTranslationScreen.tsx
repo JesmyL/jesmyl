@@ -1,9 +1,8 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useRef, useState } from 'react';
 import { TranslationScreenProps } from '../../../+complect/translations/Translations.model';
 import { useSetScreenTranslationInteractiveBackground } from '../../../+complect/translations/hooks/interactive-back';
 import { useApplyScreenFontFamilyEffect } from '../../../+complect/translations/hooks/set-font-family';
-import IconButton from '../../../../../complect/the-icon/IconButton';
-import { IconCircleArrowDataTransferDiagonalStrokeRounded } from '../../../../../complect/the-icon/icons/circle-arrow-data-transfer-diagonal';
 import { useBibleAddressVersei } from '../../hooks/address/verses';
 import { useBibleScreenTranslationKeyListener } from '../hooks/key-listener';
 import { useGetBibleScreenTranslationWrapperStyle } from '../hooks/styles/wrapper-style';
@@ -44,9 +43,9 @@ export const BibleTranslationScreen = (props: Props) => {
     >
       {props.isTech && (
         <>
-          <IconButton
-            Icon={IconCircleArrowDataTransferDiagonalStrokeRounded}
-            className="absolute pos-left pos-bottom z-index:130"
+          <LazyIcon
+            icon="CircleArrowDataTransferDiagonal"
+            className="pointer absolute pos-left pos-bottom z-index:130"
             onClick={event => {
               event.preventDefault();
               setIsChangeAddressPanelHeight(is => !is);

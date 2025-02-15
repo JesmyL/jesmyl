@@ -2,7 +2,6 @@ import { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { FullContent } from '../../../../../complect/fullscreen-content/FullContent';
 import IconButton from '../../../../../complect/the-icon/IconButton';
-import { IconPencilEdit02StrokeRounded } from '../../../../../complect/the-icon/icons/pencil-edit-02';
 import { TranslationScreen } from '../TranslationScreen';
 import { useScreenTranslationCurrentConfig } from '../hooks/configs';
 
@@ -46,7 +45,7 @@ export const TranslationSlidePreview = ({ isPreview = true }: Props) => {
             </ScreenWithBackground>
           </div>
           <FullButton
-            Icon={IconPencilEdit02StrokeRounded}
+            icon="PencilEdit02"
             onClick={() => setIsSettingsOpen(true)}
           />
         </>

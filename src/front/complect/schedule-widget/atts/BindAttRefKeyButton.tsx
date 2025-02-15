@@ -9,7 +9,6 @@ import {
   ScheduleWidgetAttRef,
   ScheduleWidgetDayEventAttValues,
 } from 'shared/api';
-import { IconLink01StrokeRounded } from '../../../complect/the-icon/icons/link-01';
 import StrongDiv from '../../strong-control/StrongDiv';
 import IconButton from '../../the-icon/IconButton';
 import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
@@ -41,7 +40,7 @@ export default function ScheduleWidgetBindAttRefKeyButton({
   return (
     <>
       <IconButton
-        Icon={IconLink01StrokeRounded}
+        icon="Link01"
         disabled={!!atts?.[attKey]}
         className="absolute pos-top pos-right padding-gap"
         onClick={event => {

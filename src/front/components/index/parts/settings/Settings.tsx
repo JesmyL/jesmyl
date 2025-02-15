@@ -1,3 +1,4 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { MyLib } from 'front/utils';
 import React, { Suspense } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
@@ -6,11 +7,6 @@ import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
 import { FontFamilySelector } from '../../../../complect/configurators/selectors/FontFamilySelector';
 import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
 import IconCheckbox from '../../../../complect/the-icon/IconCheckbox';
-import { IconKeyboardStrokeRounded } from '../../../../complect/the-icon/icons/keyboard';
-import { IconPaintBoardStrokeRounded } from '../../../../complect/the-icon/icons/paint-board';
-import { IconRssErrorStrokeRounded } from '../../../../complect/the-icon/icons/rss-error';
-import { IconSourceCodeCircleStrokeRounded } from '../../../../complect/the-icon/icons/source-code-circle';
-import { IconTextStrokeRounded } from '../../../../complect/the-icon/icons/text';
 import { useAppFontFamily, useAuth } from '../../atoms';
 import { indexSimpleValIsPlayAnimations, indexSimpleValIsUseNativeKeyboard } from '../../complect/index.simpleValues';
 import useConnectionState from '../../useConnectionState';
@@ -39,13 +35,13 @@ export default function IndexSettings() {
     auth.level === 100 && (
       <Link to="console">
         <BrutalItem
-          icon={<IconSourceCodeCircleStrokeRounded />}
+          iconNode={<LazyIcon icon="SourceCodeCircle" />}
           title="Консоль"
         />
       </Link>
     ),
     <BrutalItem
-      icon={<IconKeyboardStrokeRounded />}
+      iconNode={<LazyIcon icon="Keyboard" />}
       title="Фирменная клавиатура"
       onClick={indexSimpleValIsUseNativeKeyboard.switch}
       box={
@@ -56,13 +52,13 @@ export default function IndexSettings() {
       }
     />,
     <BrutalItem
-      icon={<IconPaintBoardStrokeRounded />}
+      iconNode={<LazyIcon icon="PaintBoard" />}
       title="Анимации"
       onClick={indexSimpleValIsPlayAnimations.switch}
       box={<IconCheckbox simpleValuer={indexSimpleValIsPlayAnimations} />}
     />,
     <BrutalItem
-      icon={<IconTextStrokeRounded />}
+      iconNode={<LazyIcon icon="Text" />}
       title="Шрифт"
       box={
         <FontFamilySelector
@@ -72,7 +68,7 @@ export default function IndexSettings() {
       }
     />,
     <BrutalItem
-      icon={<IconRssErrorStrokeRounded />}
+      iconNode={<LazyIcon icon="RssError" />}
       title="Показать ошибки"
       onClick={() => {
         const container = document.getElementById('error-log-list');

@@ -1,6 +1,6 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useCallback } from 'react';
 import styled from 'styled-components';
-import { IconPlusSignStrokeRounded } from '../../../../../../complect/the-icon/icons/plus-sign';
 import { useCurrentTranslationConfigiSet, useScreenTranslationConfigsValue } from '../../atoms';
 import { useAddScreenTranslationConfig, useScreenTranslationCurrentConfigi } from '../../hooks/configs';
 import { useWatchScreenTranslations } from '../../hooks/watch-translation';
@@ -72,7 +72,8 @@ export const ScreenTranslationsFaceLine = <Config,>(props: Props<Config>) => {
             />
           );
         })}
-        <IconPlusSignStrokeRounded
+        <LazyIcon
+          icon="PlusSign"
           className="margin-gap-l"
           onClick={onAdd}
         />

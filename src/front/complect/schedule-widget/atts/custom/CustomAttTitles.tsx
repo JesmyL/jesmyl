@@ -1,15 +1,14 @@
-import { itIt } from 'shared/utils';
-import { IconLeftToRightListBulletStrokeRounded } from '../../../../complect/the-icon/icons/left-to-right-list-bullet';
-import IconButton from '../../../the-icon/IconButton';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { ScheduleWidgetAppAttCustomized } from 'shared/api';
+import { itIt } from 'shared/utils';
 
 export default function ScheduleWidgetCustomAttTitles({ tatt }: { tatt: ScheduleWidgetAppAttCustomized }) {
   return (
     <>
       <div className="flex flex-gap">
-        <IconButton
-          Icon={IconLeftToRightListBulletStrokeRounded}
-          className="color--7"
+        <LazyIcon
+          icon="LeftToRightListBullet"
+          className="pointer color--7"
         />
         <span className="color--7">Заголовки:</span>
       </div>

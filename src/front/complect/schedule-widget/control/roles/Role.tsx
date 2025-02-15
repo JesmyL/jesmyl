@@ -2,18 +2,10 @@ import Modal from 'front/complect/modal/Modal/Modal';
 import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
 import { ModalFooter } from 'front/complect/modal/Modal/ModalFooter';
 import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import React, { useMemo, useState } from 'react';
 import { IScheduleWidgetRole, ScheduleRoleScopeProps, scheduleWidgetUserRights } from 'shared/api';
-import { IconArrowReloadHorizontalStrokeRounded } from '../../../../complect/the-icon/icons/arrow-reload-horizontal';
-import { IconEdit01StrokeRounded } from '../../../../complect/the-icon/icons/edit-01';
-import { IconFolder01StrokeRounded } from '../../../../complect/the-icon/icons/folder-01';
-import { IconFolderAddStrokeRounded } from '../../../../complect/the-icon/icons/folder-add';
-import { IconGridViewStrokeRounded } from '../../../../complect/the-icon/icons/grid-view';
-import { IconSchoolReportCardStrokeRounded } from '../../../../complect/the-icon/icons/school-report-card';
-import { IconUserStrokeRounded } from '../../../../complect/the-icon/icons/user';
-import { IconUserAdd01StrokeRounded } from '../../../../complect/the-icon/icons/user-add-01';
-import { IconUserRemove01StrokeRounded } from '../../../../complect/the-icon/icons/user-remove-01';
 import { useAuth } from '../../../../components/index/atoms';
 import StrongEditableField from '../../../strong-control/field/StrongEditableField';
 import IconButton from '../../../the-icon/IconButton';
@@ -48,8 +40,9 @@ export default function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole
         role={role}
       />
       {(rights.isCanTotalRedact || (rights.isCanRedact && auth && auth.login === roleUser?.login)) && (
-        <IconButton
-          Icon={IconEdit01StrokeRounded}
+        <LazyIcon
+          className="pointer"
+          icon="Edit01"
           onClick={setIsCatRedactModalOpen}
         />
       )}
@@ -70,11 +63,11 @@ export default function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole
                 return null;
 
               return (
-                <EvaSendButton
+                <TheIconSendButton
                   key={useri}
                   confirm={`Теперь ${user?.fio || user?.nick} займёт роль ${role.title}?`}
                   className="flex flex-gap pointer"
-                  Icon={IconUserStrokeRounded}
+                  icon="User"
                   postfix={user?.fio || user?.nick}
                   onSuccess={() => setIsUserSetModalOpen(false)}
                   onSend={() =>
@@ -126,10 +119,10 @@ export default function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole
                 })
               : rights.schedule.ctrl.cats.map((catName, catNamei) => {
                   return (
-                    <EvaSendButton
+                    <TheIconSendButton
                       key={catNamei}
                       className="flex flex-gap pointer margin-gap"
-                      Icon={IconFolder01StrokeRounded}
+                      icon="Folder01"
                       postfix={catName}
                       onSuccess={() => setIsCatSetModalOpen(false)}
                       onSend={() =>
@@ -147,8 +140,8 @@ export default function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole
           </ModalBody>
           <ModalFooter>
             {!rights.schedule.ctrl.cats.includes('') && catsRedact.isRedact && (
-              <EvaSendButton
-                Icon={IconFolderAddStrokeRounded}
+              <TheIconSendButton
+                icon="FolderAdd"
                 onSend={() => schRolesSokiInvocatorClient.addRoleCategory(null, roleScopeProps)}
               />
             )}
@@ -163,7 +156,7 @@ export default function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole
             <StrongEditableField
               isRedact
               title="Название"
-              Icon={IconSchoolReportCardStrokeRounded}
+              icon="SchoolReportCard"
               value={role}
               fieldKey="title"
               postfix={roleUser && ' - ' + (roleUser.fio || roleUser.nick)}
@@ -178,8 +171,8 @@ export default function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole
             {rights.isCanTotalRedact && (
               <>
                 {role.mi !== 0 && roleUser && (
-                  <EvaSendButton
-                    Icon={IconUserRemove01StrokeRounded}
+                  <TheIconSendButton
+                    icon="UserRemove01"
                     confirm={
                       <>
                         <span className="color--7">{roleUser.fio || roleUser.nick} </span>
@@ -194,14 +187,14 @@ export default function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole
                 )}
                 {roleUser ? (
                   <IconButton
-                    Icon={IconArrowReloadHorizontalStrokeRounded}
+                    icon="ArrowReloadHorizontal"
                     onClick={setIsUserSetModalOpen}
                     postfix="Заменить человека"
                     className="flex-max margin-gap-v"
                   />
                 ) : (
                   <IconButton
-                    Icon={IconUserAdd01StrokeRounded}
+                    icon="UserAdd01"
                     onClick={setIsUserSetModalOpen}
                     postfix="Назначить человека"
                     className="flex-max margin-gap-v"
@@ -209,7 +202,7 @@ export default function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole
                 )}
                 {role.mi > 0 && (
                   <IconButton
-                    Icon={IconGridViewStrokeRounded}
+                    icon="GridView"
                     onClick={setIsCatSetModalOpen}
                     postfix={`Категория ${rights.schedule.ctrl.cats[role.cati || 0] || 'Основное'}`}
                     className="flex-max margin-gap-v"

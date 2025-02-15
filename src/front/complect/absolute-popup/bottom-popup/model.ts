@@ -1,9 +1,8 @@
 import { AreaHTMLAttributes, ReactNode } from 'react';
-import { TheIconType } from '../../the-icon/model';
 
 export type AbsoluteBottomPopupItem = {
   className?: string;
-  Icon: TheIconType;
+  icon: TheIconKnownName;
   titleNode?: ReactNode;
   title?: string;
   rightNode?: ReactNode;

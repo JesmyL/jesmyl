@@ -2,9 +2,8 @@ import TheButton from 'front/complect/Button';
 import Modal from 'front/complect/modal/Modal/Modal';
 import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
 import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconLoading } from 'front/complect/the-icon/IconLoading';
-import { IconDelete02StrokeRounded } from 'front/complect/the-icon/icons/delete-02';
 import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { ScheduleComPackHistoryItem } from 'shared/api';
@@ -72,8 +71,8 @@ export const CmMeetingEventEditsHistoryModal = ({ onClose }: { onClose: (isOpen:
               <h3 className="flex flex-gap full-width between">
                 {new Date(pack.w).toLocaleString('ru', itemTitleTimeOptions)}
 
-                <EvaSendButton
-                  Icon={IconDelete02StrokeRounded}
+                <TheIconSendButton
+                  icon="Delete02"
                   className="color--ko"
                   confirm="Удалить эту запись?"
                   onSend={async () => {

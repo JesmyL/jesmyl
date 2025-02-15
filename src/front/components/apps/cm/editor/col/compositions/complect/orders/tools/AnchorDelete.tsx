@@ -1,7 +1,6 @@
 import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { BottomPopupItem } from '../../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
 import { useConfirm } from '../../../../../../../../../complect/modal/confirm/useConfirm';
-import { IconDelete02StrokeRounded } from '../../../../../../../../../complect/the-icon/icons/delete-02';
 import { OrdersRedactorOrderToolsProps } from '../OrdersRedactorOrderTools';
 
 export const OrdersRedactorOrderToolsAnchorDelete = ({ com, ord, onClose }: OrdersRedactorOrderToolsProps) => {
@@ -12,7 +11,7 @@ export const OrdersRedactorOrderToolsAnchorDelete = ({ com, ord, onClose }: Orde
     <>
       {confirmNode}
       <BottomPopupItem
-        Icon={IconDelete02StrokeRounded}
+        icon="Delete02"
         className="color--ko"
         title={`Удалить ${ifAnchorSuffix} ${ord.me.header()}`}
         onClick={async () => {

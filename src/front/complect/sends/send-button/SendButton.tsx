@@ -1,4 +1,4 @@
-import { IconAlert02StrokeRounded } from '../../../complect/the-icon/icons/alert-02';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import TheButton from '../../Button';
 import useToast from '../../modal/useToast';
 import { TheIconLoading } from '../../the-icon/IconLoading';
@@ -32,7 +32,10 @@ export default function SendButton<Value>(props: SendButtonProps<Value>) {
             {props.title}
             <div className="absolute full-height flex center pos-right pos-top margin-gap-r">
               {error ? (
-                <IconAlert02StrokeRounded className="error-message" />
+                <LazyIcon
+                  icon="Alert02"
+                  className="error-message"
+                />
               ) : (
                 <TheIconLoading isLoading={isLoading} />
               )}

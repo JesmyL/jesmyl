@@ -1,10 +1,7 @@
 import IconButton from 'front/complect/the-icon/IconButton';
-import { IconCancel01StrokeRounded } from 'front/complect/the-icon/icons/cancel-01';
-import { IconTextAlignLeftStrokeRounded } from 'front/complect/the-icon/icons/text-align-left';
 import { InputWithLoadingIcon } from 'front/components/apps/cm/base/InputWithLoadingIcon';
 import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
-import { IconPlusSignCircleStrokeRounded } from '../../../../../../../../../complect/the-icon/icons/plus-sign-circle';
 import { TextCorrectMessages } from '../../../../../complect/TextBlockIncorrectMessages';
 import { EditableCom } from '../../../com/EditableCom';
 import CmTextableBlockAnchorTitles from '../CmTextableBlockAnchorTitles';
@@ -17,7 +14,7 @@ export default function CmTextBlockRedactor({ texti, text, ccom }: { texti: numb
     <div className="margin-big-gap-v">
       {!texti && (
         <IconButton
-          Icon={IconPlusSignCircleStrokeRounded}
+          icon="PlusSignCircle"
           confirm="Вставить новый блок в самое начало?"
           onClick={() => cmComClientInvocatorMethods.insertTextBlock(null, '', ccom.wid, 0)}
         />
@@ -30,7 +27,7 @@ export default function CmTextBlockRedactor({ texti, text, ccom }: { texti: numb
 
         <span className="flex flex-gap">
           <IconButton
-            Icon={IconCancel01StrokeRounded}
+            icon="Cancel01"
             onClick={() => cmComClientInvocatorMethods.removeTextBlock(null, ccom.wid, text, texti)}
             confirm={`Удалить${text ? '' : ' новый'} блок?\n\n${text}`}
           />
@@ -38,7 +35,7 @@ export default function CmTextBlockRedactor({ texti, text, ccom }: { texti: numb
       </div>
       <InputWithLoadingIcon
         multiline
-        Icon={IconTextAlignLeftStrokeRounded}
+        icon="TextAlignLeft"
         label=""
         defaultValue={text}
         onChange={value => ccom.changeTextBlock(texti, value)}
@@ -46,7 +43,7 @@ export default function CmTextBlockRedactor({ texti, text, ccom }: { texti: numb
         corrects={corrects}
       />
       <IconButton
-        Icon={IconPlusSignCircleStrokeRounded}
+        icon="PlusSignCircle"
         confirm="Вставить новый блок сюда?"
         onClick={() => cmComClientInvocatorMethods.insertTextBlock(null, '', ccom.wid, texti + 1)}
       />

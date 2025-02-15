@@ -1,8 +1,4 @@
 import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
-import {
-  IconVynil03SolidRounded,
-  IconVynil03StrokeRounded,
-} from '../../../../../../../complect/the-icon/icons/vynil-03';
 import { ComTool } from '../ComTool';
 
 export const OpenPlayerTool = () => {
@@ -11,7 +7,8 @@ export const OpenPlayerTool = () => {
   return (
     <ComTool
       title="Проигрыватель"
-      Icon={playerHideMode ? IconVynil03SolidRounded : IconVynil03StrokeRounded}
+      icon="Vynil03"
+      iconKind={playerHideMode ? 'SolidRounded' : 'StrokeRounded'}
       onClick={() => setPlayerHideMode(playerHideMode ? '' : 'min')}
     />
   );

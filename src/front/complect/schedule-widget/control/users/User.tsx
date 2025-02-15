@@ -1,10 +1,6 @@
 import { ReactNode, useMemo, useState } from 'react';
-import { IconEdit02StrokeRounded } from '../../../../complect/the-icon/icons/edit-02';
-import { IconLink02StrokeRounded } from '../../../../complect/the-icon/icons/link-02';
-import { IconNotification01StrokeRounded } from '../../../../complect/the-icon/icons/notification-01';
-import { IconNotificationOff01StrokeRounded } from '../../../../complect/the-icon/icons/notification-off-01';
-import { IconUserRemove02StrokeRounded } from '../../../../complect/the-icon/icons/user-remove-02';
 
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import {
   IScheduleWidgetUser,
   ScheduleUserScopeProps,
@@ -64,11 +60,14 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
               <span className="flex flex-gap color--7">
                 {user.login === undefined ? (
                   <>
-                    <IconLink02StrokeRounded className="color--7 icon-scale-05" />
+                    <LazyIcon
+                      icon="Link02"
+                      className="color--7 icon-scale-05"
+                    />
                     {balance < 0 ? null : balance}
                   </>
                 ) : balance < 0 ? (
-                  <IconUserRemove02StrokeRounded />
+                  <LazyIcon icon="UserRemove02" />
                 ) : (
                   balance
                 )}
@@ -76,9 +75,9 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
             )}
           </span>
           <span className="flex flex-gap">
-            <IconButton
-              Icon={IconEdit02StrokeRounded}
-              className="flex between full-width"
+            <LazyIcon
+              icon="Edit02"
+              className="pointer flex between full-width"
               onClick={() => setIsRedactModalOpen(true)}
             />
           </span>
@@ -114,13 +113,13 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
                 {user.tgInform === 0 ||
                 !scheduleWidgetUserRights.checkIsHasRights(user.R, ScheduleWidgetUserRoleRight.Read) ? (
                   <IconButton
-                    Icon={IconNotificationOff01StrokeRounded}
+                    icon="NotificationOff01"
                     postfix="Участник не получает TG-уведомления"
                     disabled
                   />
                 ) : (
                   <IconButton
-                    Icon={IconNotification01StrokeRounded}
+                    icon="Notification01"
                     postfix="Участник получает TG-уведомления"
                     disabled
                   />

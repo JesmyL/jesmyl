@@ -1,7 +1,7 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import React from 'react';
 import { ChordTrack } from '../../../../../../shared/api/complect/apps/cm/complect/chord-card';
 import Dropdown from '../../../../../complect/dropdown/Dropdown';
-import { IconPlusSignCircleStrokeRounded } from '../../../../../complect/the-icon/icons/plus-sign-circle';
 import ChordCardTracked from '../../col/com/chord-card/ChordCardTracked';
 
 const ladLine = Array(20).fill(0);
@@ -158,7 +158,10 @@ export default function ChordRedactableTrack({
           }}
         />
         {redactableChord.length < 6 && (
-          <IconPlusSignCircleStrokeRounded onClick={() => modifyTrack(track => track.push(0))} />
+          <LazyIcon
+            icon="PlusSignCircle"
+            onClick={() => modifyTrack(track => track.push(0))}
+          />
         )}
       </div>
     </>

@@ -3,7 +3,6 @@ import { useAuth, useIndexSchedules } from '../../../components/index/atoms';
 import useConnectionState from '../../../components/index/useConnectionState';
 import PhaseContainerConfigurer from '../../phase-container/PhaseContainerConfigurer';
 import IconButton from '../../the-icon/IconButton';
-import { IconCalendar03StrokeRounded } from '../../the-icon/icons/calendar-03';
 import { schLinkAction } from '../links';
 import ScheduleCreateWidgetButton from './CreateButton';
 import ScheduleWidgetPage from './Page';
@@ -53,7 +52,7 @@ const Component = () => {
                 to={'' + schedule.w}
               >
                 <IconButton
-                  Icon={IconCalendar03StrokeRounded}
+                  icon="Calendar03"
                   className="margin-gap-v"
                   postfix={
                     <>

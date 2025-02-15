@@ -1,6 +1,5 @@
 import React, { Suspense } from 'react';
 import { RoutingAppConfig } from '../../../../app/routing-apps';
-import { IconBook02StrokeRounded } from '../../../../complect/the-icon/icons/book-02';
 import { BibleFooter } from './BibleFooter';
 
 const BibleRouter = React.lazy(() => import('./BibleRouter'));
@@ -14,7 +13,7 @@ export const bibleRoutingApp: RoutingAppConfig = {
     </Suspense>
   ),
   footer: <BibleFooter />,
-  Icon: IconBook02StrokeRounded,
+  icon: 'Book02',
   level: 0,
   lazies: [<BibleRouter mainNode />],
 };

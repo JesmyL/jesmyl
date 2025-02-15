@@ -2,8 +2,6 @@ import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/edito
 import { useState } from 'react';
 import { BottomPopupItem } from '../../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
 import Modal from '../../../../../../../../../complect/modal/Modal/Modal';
-import { IconOptionStrokeRounded } from '../../../../../../../../../complect/the-icon/icons/option';
-import { IconTextStrokeRounded } from '../../../../../../../../../complect/the-icon/icons/text';
 import { EditableCom } from '../../../com/EditableCom';
 import { CmComOrderOnClickBetweenData } from '../model';
 import { OrdersRedactorAdditionsEtapsModalInner } from './Etaps';
@@ -25,12 +23,12 @@ export const OrdersRedactorAdditions = ({
   return (
     <>
       <BottomPopupItem
-        Icon={IconTextStrokeRounded}
+        icon="Text"
         title="Текстовый блок"
         onClick={() => setModalSelectForstEtap(CmNewOrderMakeEtap.Text)}
       />
       <BottomPopupItem
-        Icon={IconOptionStrokeRounded}
+        icon="Option"
         title="Аккордный блок"
         onClick={() => setModalSelectForstEtap(CmNewOrderMakeEtap.Chord)}
       />

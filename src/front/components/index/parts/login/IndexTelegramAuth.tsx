@@ -1,10 +1,10 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import JesmylLogo from '../../../../complect/jesmyl-logo/JesmylLogo';
 import KeyboardInput from '../../../../complect/keyboard/KeyboardInput';
 import useToast from '../../../../complect/modal/useToast';
 import SendButton from '../../../../complect/sends/send-button/SendButton';
-import { IconTelegramStrokeRounded } from '../../../../complect/the-icon/icons/telegram';
 import { useActualRef } from '../../../../complect/useActualRef';
 import { useIndexValues } from '../../atoms';
 import { indexBasicsSokiInvocatorClient } from '../../db/invocators/schedules/fresh-invocator.methods';
@@ -54,7 +54,10 @@ export default function IndexTelegramAuth({ onLoginAuth }: { onLoginAuth: () => 
                         href="https://t.me/jesmylbot"
                         className="children-middle"
                       >
-                        <IconTelegramStrokeRounded className="margin-gap-r" />
+                        <LazyIcon
+                          icon="Telegram"
+                          className="margin-gap-r"
+                        />
                         jesmylbot
                       </a>
                     </span>
@@ -67,7 +70,10 @@ export default function IndexTelegramAuth({ onLoginAuth }: { onLoginAuth: () => 
                         href={values.chatUrl}
                         className="children-middle"
                       >
-                        <IconTelegramStrokeRounded className="margin-gap-r" />
+                        <LazyIcon
+                          icon="Telegram"
+                          className="margin-gap-r"
+                        />
                         jesmyl space
                       </a>
                     </span>

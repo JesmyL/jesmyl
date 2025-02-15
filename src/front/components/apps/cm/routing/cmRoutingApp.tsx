@@ -1,7 +1,6 @@
 import React, { Suspense } from 'react';
 import { Route } from 'react-router-dom';
 import { RoutingAppConfig } from '../../../../app/routing-apps';
-import { IconBookOpen02StrokeRounded } from '../../../../complect/the-icon/icons/book-open-02';
 import TheComposition from '../col/com/TheComposition';
 import Translations from '../translation/Translation';
 import { CmFooter } from './CmFooter';
@@ -17,7 +16,7 @@ export const cmRoutingApp: RoutingAppConfig = {
     </Suspense>
   ),
   footer: <CmFooter />,
-  Icon: IconBookOpen02StrokeRounded,
+  icon: 'BookOpen02',
   lazies: [<CmRouter mainNode />],
   level: 0,
 };

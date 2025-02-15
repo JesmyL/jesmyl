@@ -1,11 +1,10 @@
 import { MouseEvent, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { Eventer, EventerListeners } from 'shared/utils';
 import styled from 'styled-components';
-import { IconCancel01StrokeRounded } from '../../complect/the-icon/icons/cancel-01';
 import { backSwipableContainerMaker } from '../backSwipableContainerMaker';
 import { ThrowEvent } from '../eventer/ThrowEvent';
 import Portal from '../popups/[complect]/Portal';
-import IconButton from '../the-icon/IconButton';
+import { LazyIcon } from '../the-icon/LazyIcon';
 
 const swipeEvents: EventerListeners<void> = [];
 
@@ -58,8 +57,8 @@ export default function useFullContent<PassValue>(
           {...swiper}
         >
           {mode === 'closable' ? null : (
-            <IconButton
-              Icon={IconCancel01StrokeRounded}
+            <LazyIcon
+              icon="Cancel01"
               className="pointer close-button"
               onClick={onClose}
             />

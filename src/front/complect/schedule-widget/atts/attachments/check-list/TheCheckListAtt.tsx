@@ -1,9 +1,6 @@
 import { schDayEventsSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
 import { ScheduleDayEventAttachmentScopeProps } from 'shared/api';
-import { IconCheckmarkSquare02StrokeRounded } from '../../../../../complect/the-icon/icons/checkmark-square-02';
-import { IconPlusSignStrokeRounded } from '../../../../../complect/the-icon/icons/plus-sign';
-import { IconSquareStrokeRounded } from '../../../../../complect/the-icon/icons/square';
 import StrongEditableField from '../../../../strong-control/field/StrongEditableField';
 import { ScheduleChListAtt } from './checkListAtt';
 
@@ -26,9 +23,9 @@ export default function ScheduleCheckListAtt({
             key={itemMi}
             className="flex flex-gap full-width margin-big-gap-b"
           >
-            <EvaSendButton
+            <TheIconSendButton
               className={'self-start relative z-index:15 color--3 ' + (isDone ? 'fade-05' : '')}
-              Icon={isDone ? IconCheckmarkSquare02StrokeRounded : IconSquareStrokeRounded}
+              icon={isDone ? 'CheckmarkSquare02' : 'Square'}
               onSend={() =>
                 schDayEventsSokiInvocatorClient.updateCheckListAttachmentValue(
                   null,
@@ -58,8 +55,8 @@ export default function ScheduleCheckListAtt({
         );
       })}
       {isRedact && (
-        <EvaSendButton
-          Icon={IconPlusSignStrokeRounded}
+        <TheIconSendButton
+          icon="PlusSign"
           prefix="Пункт"
           disabled={value.list.some(li => !li[1])}
           disabledReason="Есть пустые пункты"

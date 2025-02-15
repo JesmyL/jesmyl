@@ -1,10 +1,8 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
 import JesmylLogo from '../../../../../../complect/jesmyl-logo/JesmylLogo';
-import IconButton from '../../../../../../complect/the-icon/IconButton';
-import { IconPauseStrokeRounded } from '../../../../../../complect/the-icon/icons/pause';
-import { IconPlayStrokeRounded } from '../../../../../../complect/the-icon/icons/play';
 import './ComPlayer.scss';
 import ComPlayerTrack from './ComPlayerTrack';
 
@@ -98,8 +96,9 @@ export default function ComPlayer({ src, split }: { src: string; split?: string 
               <span className="error-message">Файл не найден</span>
             ) : (
               <>
-                <IconButton
-                  Icon={isPlay ? IconPauseStrokeRounded : IconPlayStrokeRounded}
+                <LazyIcon
+                  className="pointer"
+                  icon={isPlay ? 'Pause' : 'Play'}
                   onClick={() => {
                     const toggle = () => {
                       if (isPlay) player.pause();

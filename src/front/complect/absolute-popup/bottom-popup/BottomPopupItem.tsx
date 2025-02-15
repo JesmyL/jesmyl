@@ -1,10 +1,12 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { HTMLAttributes } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { TheIconType } from '../../the-icon/model';
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
-  Icon: TheIconType;
+  icon?: TheIconKnownName;
+  iconNode?: JSX.Element;
+  iconKind?: TheIconNameKind;
   titleNode?: React.ReactNode;
   title?: string;
   rightNode?: React.ReactNode;
@@ -14,7 +16,9 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const BottomPopupItem = ({
-  Icon,
+  icon,
+  iconNode,
+  iconKind,
   titleNode,
   title,
   rightNode,
@@ -35,7 +39,15 @@ export const BottomPopupItem = ({
           className={`icon-box ${iconWrapperClassName || ''}`}
           onClick={onIconClick}
         >
-          <Icon className="abs-icon" />
+          {icon ? (
+            <LazyIcon
+              icon={icon}
+              kind={iconKind}
+              className="abs-icon"
+            />
+          ) : (
+            iconNode
+          )}
         </div>
         {(titleNode || title) && <div className="title">{titleNode ?? title}</div>}
       </div>

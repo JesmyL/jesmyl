@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { TheIconType } from './model';
+import { LazyIcon } from './LazyIcon';
 
 interface Props {
-  Icon: TheIconType;
+  icon: TheIconKnownName;
   to: string;
 }
 
@@ -12,7 +12,7 @@ export const IconLink = (props: Props) => {
       to={props.to}
       className="pointer"
     >
-      <props.Icon />
+      <LazyIcon icon={props.icon} />
     </Link>
   );
 };

@@ -1,7 +1,6 @@
 import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { itIt, makeRegExp } from 'shared/utils';
-import { TheIconType } from '../the-icon/model';
 import StrongEditableField from './field/StrongEditableField';
 type TakeDateComponent = 'NO' | 'year' | 'month' | 'day';
 type TakeTimeComponent = 'hour' | 'min' | 'sec' | 'ms';
@@ -21,7 +20,7 @@ const takeInPeriod = (num: string | null, finish: string, start?: number) => {
 export default function StrongInputDateTimeExtracter(props: {
   fieldKey?: string;
   value: string;
-  Icon?: TheIconType;
+  icon?: TheIconKnownName;
   title?: string;
   className?: string;
   takeDate: TakeDateComponent;

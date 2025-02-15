@@ -3,10 +3,7 @@ import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { isTouchDevice } from '../device-differences';
 import KeyboardInput from '../keyboard/KeyboardInput';
-import { IconMinusSignCircleBulkRounded } from '../the-icon/icons/minus-sign-circle';
-import { IconPauseSolidRounded } from '../the-icon/icons/pause';
-import { IconPlaySolidRounded } from '../the-icon/icons/play';
-import { IconPlusSignCircleBulkRounded } from '../the-icon/icons/plus-sign-circle';
+import { LazyIcon } from '../the-icon/LazyIcon';
 import { useActualRef } from '../useActualRef';
 
 interface Props {
@@ -116,10 +113,22 @@ export const Metronome = ({ meterSize = 4, bpm = 120 }: Props) => {
         ref={playButtonRef}
         className="pointer"
       >
-        {isPlay ? <IconPauseSolidRounded /> : <IconPlaySolidRounded />}
+        {isPlay ? (
+          <LazyIcon
+            icon="Pause"
+            kind="SolidRounded"
+          />
+        ) : (
+          <LazyIcon
+            icon="Play"
+            kind="SolidRounded"
+          />
+        )}
       </div>
       <label className="flex column center flex-gap">
-        <IconMinusSignCircleBulkRounded
+        <LazyIcon
+          icon="MinusSignCircle"
+          kind="BulkRounded"
           className="pointer"
           onClick={() => setUserBpm(prev => prev - 1)}
         />
@@ -129,7 +138,9 @@ export const Metronome = ({ meterSize = 4, bpm = 120 }: Props) => {
           value={'' + userBpm}
           onChange={value => setUserBpm(+value)}
         />
-        <IconPlusSignCircleBulkRounded
+        <LazyIcon
+          icon="PlusSignCircle"
+          kind="BulkRounded"
           className="pointer"
           onClick={() => setUserBpm(prev => prev + 1)}
         />

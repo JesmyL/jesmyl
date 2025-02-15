@@ -13,8 +13,6 @@ import { useInitSoki } from '../../../../app/useInitSoki';
 import CopyTextButton from '../../../../complect/CopyTextButton';
 import Dropdown from '../../../../complect/dropdown/Dropdown';
 import IconButton from '../../../../complect/the-icon/IconButton';
-import { IconDownload04StrokeRounded } from '../../../../complect/the-icon/icons/download-04';
-import { IconPlusSignCircleStrokeRounded } from '../../../../complect/the-icon/icons/plus-sign-circle';
 import { useAuth } from '../../../index/atoms';
 import { WedCleans } from '../Cleans';
 import { GuestConversation } from '../guest/complect/GuestConversation';
@@ -190,7 +188,7 @@ export default function WeddingAdmin() {
       </h3>
       {undefinedGuests.map(makeGuest)}
       <IconButton
-        Icon={IconPlusSignCircleStrokeRounded}
+        icon="PlusSignCircle"
         className="margin-big-gap color--3"
         onClick={() => {
           setIsOpenGuestEditor(true);
@@ -199,13 +197,13 @@ export default function WeddingAdmin() {
         postfix="Новый гость"
       />
       <IconButton
-        Icon={IconPlusSignCircleStrokeRounded}
+        icon="PlusSignCircle"
         className="margin-big-gap color--3"
         onClick={() => setIsOpenGuestListLoader(true)}
         postfix="Добавить несколько гостей"
       />
       <IconButton
-        Icon={IconDownload04StrokeRounded}
+        icon="Download04"
         className="margin-big-gap color--3"
         onClick={() => setIsOpenGuestListExcelZipper(true)}
         postfix="Сформировать Excel список"

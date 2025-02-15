@@ -3,7 +3,6 @@ import { useEffect } from 'react';
 import { Link, Route, useNavigate } from 'react-router-dom';
 import { CmComBindAttach, scheduleWidgetUserRights, ScheduleWidgetUserRoleRight } from 'shared/api';
 import IconButton from '../../../../complect/the-icon/IconButton';
-import { IconLinkSquare01SolidRounded } from '../../../../complect/the-icon/icons/link-square-01';
 import TheMeetingsEvent from '../lists/meetings/TheMeetingsEvent';
 import CmExternalComListAtt from './complect/CmExternalComListAtt';
 
@@ -27,7 +26,7 @@ export const cmOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
           />
           <Link to={listPath}>
             <IconButton
-              Icon={IconLinkSquare01SolidRounded}
+              icon="LinkSquare01"
               postfix="Открыть список"
               className="margin-big-gap"
             />

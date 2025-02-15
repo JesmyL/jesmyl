@@ -1,3 +1,4 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { mylib } from 'front/utils';
 import { ReactNode } from 'react';
 import { BottomPopupContentProps, BottomPopupSkeletIcon } from './model';
@@ -10,7 +11,7 @@ export const bottomPopupContentPreparer = ({ items, footer }: BottomPopupContent
         const map = (item: BottomPopupSkeletIcon, itemi: number): ReactNode => {
           if (!item) return null;
           if (mylib.isArr(item)) return item.map((item, itemi) => map(item, itemi));
-          const { className, Icon, titleNode, title, iconWrapperClassName, rightNode, isError, anchorNode, ...other } =
+          const { className, icon, titleNode, title, iconWrapperClassName, rightNode, isError, anchorNode, ...other } =
             item;
 
           return (
@@ -22,7 +23,10 @@ export const bottomPopupContentPreparer = ({ items, footer }: BottomPopupContent
               {anchorNode}
               <div className="flex flex-gap">
                 <div className={`icon-box ${iconWrapperClassName || ''}`}>
-                  <Icon className="abs-icon" />
+                  <LazyIcon
+                    icon={icon}
+                    className="abs-icon"
+                  />
                 </div>
                 <div className="title">{titleNode ?? title}</div>
               </div>

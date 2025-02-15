@@ -1,4 +1,4 @@
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
 import { mylib } from 'front/utils';
 import React, { ReactNode, useMemo, useState } from 'react';
 import { IScheduleWidget, ScheduleWidgetCleans, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
@@ -8,8 +8,6 @@ import Modal from '../../modal/Modal/Modal';
 import { ModalBody } from '../../modal/Modal/ModalBody';
 import { ModalHeader } from '../../modal/Modal/ModalHeader';
 import IconButton from '../../the-icon/IconButton';
-import { IconPlusSignStrokeRounded } from '../../the-icon/icons/plus-sign';
-import { TheIconType } from '../../the-icon/model';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schEventTypesSokiInvocatorClient } from '../invocators/invocators.methods';
 import ScheduleWidgetEventType from './EventType';
@@ -18,7 +16,7 @@ import { useAttTypeTitleError } from './useAttTypeTitleError';
 type Props = {
   postfix: ReactNode;
   schedule: IScheduleWidget;
-  Icon: TheIconType;
+  icon: TheIconKnownName;
   usedCounts?: Record<number, number>;
   onItemSelectSend?: (typei: number) => Promise<unknown>;
 };
@@ -28,7 +26,7 @@ const emptyArr: [] = [];
 const itemIt = <Item,>({ item }: { item: Item }) => item;
 const eqByTitle = (a: { title: string }, b: { title: string }) => (a.title > b.title ? 1 : b.title < a.title ? -1 : 0);
 
-export const ScheduleWidgetEventTypeList = ({ postfix, schedule, Icon, usedCounts, onItemSelectSend }: Props) => {
+export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCounts, onItemSelectSend }: Props) => {
   const types = schedule.types || emptyArr;
   const [term, setTerm] = useState('');
   const error = useAttTypeTitleError(term, schedule, true);
@@ -63,10 +61,10 @@ export const ScheduleWidgetEventTypeList = ({ postfix, schedule, Icon, usedCount
       );
 
       return (
-        <EvaSendButton
+        <TheIconSendButton
           key={tm}
           className="margin-gap-v flex-max"
-          Icon={IconPlusSignStrokeRounded}
+          icon="PlusSign"
           confirm={
             <>
               Добавить шаблон события <span className="color--7">{node}</span>
@@ -124,7 +122,7 @@ export const ScheduleWidgetEventTypeList = ({ postfix, schedule, Icon, usedCount
         </Modal>
       )}
       <IconButton
-        Icon={Icon}
+        icon={icon}
         postfix={postfix}
         onClick={() => setIsModalOpen(true)}
       />

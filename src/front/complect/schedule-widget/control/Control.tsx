@@ -1,11 +1,5 @@
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
-import { IconArrowRight01StrokeRounded } from '../../../complect/the-icon/icons/arrow-right-01';
-import { IconCheckmarkSquare02StrokeRounded } from '../../../complect/the-icon/icons/checkmark-square-02';
-import { IconNotification01StrokeRounded } from '../../../complect/the-icon/icons/notification-01';
-import { IconNotificationOff01StrokeRounded } from '../../../complect/the-icon/icons/notification-off-01';
-import { IconSettings01StrokeRounded } from '../../../complect/the-icon/icons/settings-01';
-import { IconSquareStrokeRounded } from '../../../complect/the-icon/icons/square';
-import { IconUserStrokeRounded } from '../../../complect/the-icon/icons/user';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import useModal from '../../modal/useModal';
 import SendableDropdown from '../../sends/dropdown/SendableDropdown';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
@@ -42,8 +36,8 @@ export const ScheduleWidgetControl = () => {
             <ScheduleWidgetRegisterType />
             {rights.isCanTotalRedact && (
               <>
-                <EvaSendButton
-                  Icon={rights.schedule.withTech ? IconCheckmarkSquare02StrokeRounded : IconSquareStrokeRounded}
+                <TheIconSendButton
+                  icon={rights.schedule.withTech ? 'CheckmarkSquare02' : 'Square'}
                   postfix="Первый - технический день"
                   confirm={`Сделать первый день ${rights.schedule.withTech ? 'обычным' : 'подготовительным'}?`}
                   className="margin-gap-b"
@@ -62,13 +56,9 @@ export const ScheduleWidgetControl = () => {
                   title="TG-чат-реквизиты"
                   onSend={value => schGeneralSokiInvocatorClient.setTgChatRequisites(null, scheduleScopeProps, value)}
                 />
-                <EvaSendButton
+                <TheIconSendButton
                   className="margin-gap-b"
-                  Icon={
-                    rights.schedule.tgInform === 0
-                      ? IconNotificationOff01StrokeRounded
-                      : IconNotification01StrokeRounded
-                  }
+                  icon={rights.schedule.tgInform === 0 ? 'NotificationOff01' : 'Notification01'}
                   postfix={
                     rights.schedule.tgInform === 0
                       ? 'TG-Напоминание: отключено'
@@ -115,10 +105,10 @@ export const ScheduleWidgetControl = () => {
       {modalNode}
       {rights.isCanRedact ? (
         <IconButton
-          Icon={IconSettings01StrokeRounded}
+          icon="Settings01"
           postfix={
             <>
-              Управление <IconArrowRight01StrokeRounded />
+              Управление <LazyIcon icon="ArrowRight01" />
             </>
           }
           onClick={screen}
@@ -126,10 +116,10 @@ export const ScheduleWidgetControl = () => {
         />
       ) : (
         <IconButton
-          Icon={IconUserStrokeRounded}
+          icon="User"
           postfix={
             <>
-              Участники <IconArrowRight01StrokeRounded />
+              Участники <LazyIcon icon="ArrowRight01" />
             </>
           }
           onClick={screen}

@@ -7,8 +7,6 @@ import { FontWeightConfigurator } from '../../../../../../../../complect/configu
 import { ScreenTranslateConfigurationTextAlign } from '../../../../../../../../complect/configurators/TextAlign';
 import { ExpandableContent } from '../../../../../../../../complect/expand/ExpandableContent';
 import IconButton from '../../../../../../../../complect/the-icon/IconButton';
-import { IconCancel01StrokeRounded } from '../../../../../../../../complect/the-icon/icons/cancel-01';
-import { IconPlusSignStrokeRounded } from '../../../../../../../../complect/the-icon/icons/plus-sign';
 import { useDebounceAction } from '../../../../../../../../complect/useDebounceAction';
 import { useUpdateCmCurrentTranslationConfig } from '../../hooks/update-config';
 import { CmTranslationScreenConfig, CmTranslationTextScreenConfig } from '../../model';
@@ -78,7 +76,7 @@ export const CmTranslateCurrentScreenConfigurations = ({ currentConfig }: Props)
             {currentConfig.subs?.next ? (
               <>
                 <IconButton
-                  Icon={IconCancel01StrokeRounded}
+                  icon="Cancel01"
                   className="color--ko"
                   postfix="Убрать текст следующего блока"
                   confirm="Убрать текст следующего блока?"
@@ -104,7 +102,7 @@ export const CmTranslateCurrentScreenConfigurations = ({ currentConfig }: Props)
             ) : (
               <div>
                 <IconButton
-                  Icon={IconPlusSignStrokeRounded}
+                  icon="PlusSign"
                   className="margin-big-gap-v"
                   postfix="Вставить окно следующего блока"
                   onClick={onAddSubConfig}

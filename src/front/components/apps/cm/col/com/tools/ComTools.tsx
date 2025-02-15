@@ -1,10 +1,7 @@
 import { useLiveQuery } from 'dexie-react-hooks';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { BottomPopupItem } from '../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
 import IconButton from '../../../../../../complect/the-icon/IconButton';
-import { IconMinusSignStrokeRounded } from '../../../../../../complect/the-icon/icons/minus-sign';
-import { IconPlusSignStrokeRounded } from '../../../../../../complect/the-icon/icons/plus-sign';
-import { IconSlidersHorizontalStrokeRounded } from '../../../../../../complect/the-icon/icons/sliders-horizontal';
-import { IconTextFontStrokeRounded } from '../../../../../../complect/the-icon/icons/text-font';
 import { ChordVisibleVariant } from '../../../Cm.model';
 import { cmIDB } from '../../../_db/cm-idb';
 import { useChordVisibleVariant } from '../../../base/useChordVisibleVariant';
@@ -25,12 +22,13 @@ export const ComTools = () => {
     <>
       <BottomPopupItem
         id="transpose-tool"
-        Icon={IconSlidersHorizontalStrokeRounded}
+        icon="SlidersHorizontal"
         className={chordVisibleVariant === ChordVisibleVariant.None ? 'disabled' : undefined}
         title="Тональность"
         rightNode={
           <>
-            <IconMinusSignStrokeRounded
+            <LazyIcon
+              icon="MinusSign"
               className="minus"
               onClick={event => {
                 event.stopPropagation();
@@ -46,7 +44,8 @@ export const ComTools = () => {
             >
               {ccom.firstChord}
             </div>
-            <IconPlusSignStrokeRounded
+            <LazyIcon
+              icon="PlusSign"
               className="plus"
               onClick={event => {
                 event.stopPropagation();
@@ -59,13 +58,13 @@ export const ComTools = () => {
 
       <BottomPopupItem
         id="font-size-tool"
-        Icon={IconTextFontStrokeRounded}
+        icon="TextFont"
         title="Размер шрифта"
         rightNode={
           <>
             <IconButton
               className="minus"
-              Icon={IconMinusSignStrokeRounded}
+              icon="MinusSign"
               disabled={fontSize < 0}
               onClick={event => {
                 event.stopPropagation();
@@ -83,7 +82,7 @@ export const ComTools = () => {
             </div>
             <IconButton
               className="plus"
-              Icon={IconPlusSignStrokeRounded}
+              icon="PlusSign"
               disabled={fontSize < 0}
               onClick={event => {
                 event.stopPropagation();

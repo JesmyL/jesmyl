@@ -2,8 +2,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { useAtom } from 'front/complect/atoms';
 import KeyboardInput from 'front/complect/keyboard/KeyboardInput';
 import Modal from 'front/complect/modal/Modal/Modal';
-import IconButton from 'front/complect/the-icon/IconButton';
-import { IconSettings01StrokeRounded } from 'front/complect/the-icon/icons/settings-01';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { propagationStopper } from 'front/complect/utils/utils';
 import React, { useState } from 'react';
 import { complectIDB } from '../../../_idb/complectIDB';
@@ -21,8 +20,9 @@ export const AlertLineInput = () => {
   return (
     <>
       <div className="margin-big-gap-t margin-gap-b flex flex-gap center full-width">
-        <IconButton
-          Icon={IconSettings01StrokeRounded}
+        <LazyIcon
+          className="pointer"
+          icon="Settings01"
           onClick={setIsOpenSettingsModal}
         />
 

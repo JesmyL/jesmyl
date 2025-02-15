@@ -1,4 +1,3 @@
-import { IconArrowExpand01StrokeRounded } from '../../../../../../../complect/the-icon/icons/arrow-expand-01';
 import { useFullScreen } from '../../../../../../../complect/useFullscreen';
 import { ComTool } from '../ComTool';
 
@@ -8,7 +7,7 @@ export const FullscreenTool = () => {
   return (
     <ComTool
       title="На весь экран"
-      Icon={IconArrowExpand01StrokeRounded}
+      icon="ArrowExpand01"
       onClick={() => switchFullscreen(true)}
     />
   );

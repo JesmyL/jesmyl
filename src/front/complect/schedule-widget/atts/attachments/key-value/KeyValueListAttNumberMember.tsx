@@ -1,7 +1,5 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { CustomAttUseTaleId, ScheduleWidgetCleans } from 'shared/api';
-import { IconBasketball01StrokeRounded } from '../../../../../complect/the-icon/icons/basketball-01';
-import { IconHelpSquareStrokeRounded } from '../../../../../complect/the-icon/icons/help-square';
-import { IconUserStrokeRounded } from '../../../../../complect/the-icon/icons/user';
 import IconButton from '../../../../the-icon/IconButton';
 import ScheduleWidgetRoleFace from '../../../control/roles/RoleFace';
 import ScheduleWidgetListUnitFace from '../../../lists/UnitFace';
@@ -27,7 +25,7 @@ export default function KeyValueListAttNumberMember({ value }: { value: number }
       <div className="color--ko">Участник не найден</div>
     ) : (
       <div className="color--3 flex flex-gap">
-        <IconUserStrokeRounded />
+        <LazyIcon icon="User" />
         {user.fio || user.nick}
       </div>
     );
@@ -39,7 +37,7 @@ export default function KeyValueListAttNumberMember({ value }: { value: number }
       <div className="color--ko">Ком. игра не найдена</div>
     ) : (
       <div className="color--3 flex flex-gap">
-        <IconBasketball01StrokeRounded />
+        <LazyIcon icon="Basketball01" />
         {game.title}
       </div>
     );
@@ -47,7 +45,7 @@ export default function KeyValueListAttNumberMember({ value }: { value: number }
 
   return (
     <IconButton
-      Icon={IconHelpSquareStrokeRounded}
+      icon="HelpSquare"
       postfix={<span className="color--ko">Неизвестный пункт</span>}
     />
   );

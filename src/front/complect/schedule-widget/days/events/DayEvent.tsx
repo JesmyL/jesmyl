@@ -1,3 +1,4 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { MyLib, mylib } from 'front/utils';
 import { ReactNode, useMemo } from 'react';
 import {
@@ -11,10 +12,6 @@ import {
   ScheduleWidgetCleans,
 } from 'shared/api';
 import styled from 'styled-components';
-import { IconArrowDown01StrokeRounded } from '../../../../complect/the-icon/icons/arrow-down-01';
-import { IconArrowUp01StrokeRounded } from '../../../../complect/the-icon/icons/arrow-up-01';
-import { IconFile02StrokeRounded } from '../../../../complect/the-icon/icons/file-02';
-import { IconViewOffSlashStrokeRounded } from '../../../../complect/the-icon/icons/view-off-slash';
 import { useIsRememberExpand } from '../../../expand/useIsRememberExpand';
 import StrongEditableField from '../../../strong-control/field/StrongEditableField';
 import IconButton from '../../../the-icon/IconButton';
@@ -179,7 +176,12 @@ export default function ScheduleWidgetDayEvent(props: Props) {
             >
               {timeMark}
             </span>
-            {!isExpandEvent && !!props.event.secret && <IconViewOffSlashStrokeRounded className="color--ko" />}
+            {!isExpandEvent && !!props.event.secret && (
+              <LazyIcon
+                icon="ViewOffSlash"
+                className="color--ko"
+              />
+            )}
             <ScheduleWidgetTopicTitle
               titleBox={eventType}
               topicBox={props.event}
@@ -188,9 +190,9 @@ export default function ScheduleWidgetDayEvent(props: Props) {
           {props.isForceCanRedact ?? rights.isCanRedact
             ? isExpand || isRedact
               ? editIcon
-              : (props.event.dsc || MyLib.keys(props.event.atts).length !== 0) && <IconArrowDown01StrokeRounded />
+              : (props.event.dsc || MyLib.keys(props.event.atts).length !== 0) && <LazyIcon icon="ArrowDown01" />
             : props.isForceExpand ||
-              (isCanExpandEvent ? isExpand ? <IconArrowUp01StrokeRounded /> : <IconArrowDown01StrokeRounded /> : null)}
+              (isCanExpandEvent ? isExpand ? <LazyIcon icon="ArrowUp01" /> : <LazyIcon icon="ArrowDown01" /> : null)}
         </div>
         {(isExpandEvent || props.isForceExpand) && (
           <StyledContent className="no-scrollbar">
@@ -208,7 +210,7 @@ export default function ScheduleWidgetDayEvent(props: Props) {
             ) : (
               !!props.event.secret && (
                 <IconButton
-                  Icon={IconViewOffSlashStrokeRounded}
+                  icon="ViewOffSlash"
                   className="color--ko margin-gap-v"
                   postfix="Это событие только для лидеров"
                 />
@@ -222,7 +224,7 @@ export default function ScheduleWidgetDayEvent(props: Props) {
                 fieldKey="dsc"
                 title="Содержание"
                 textClassName=" "
-                Icon={IconFile02StrokeRounded}
+                icon="File02"
                 onSend={value => schDayEventsSokiInvocatorClient.setDescription(null, dayEventScopeProps, value)}
               />
             )}

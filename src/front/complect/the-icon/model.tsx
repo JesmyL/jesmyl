@@ -1,6 +1,5 @@
 import { FunctionComponent, HTMLAttributes } from 'react';
-
-export type TheIconType = FunctionComponent<HTMLAttributes<HTMLOrSVGElement>>;
+import { knownIconNames } from 'shared/values';
 
 export const theIconNamePostfixList = [
   'StrokeRounded',
@@ -12,7 +11,13 @@ export const theIconNamePostfixList = [
   'SolidSharp',
 ] as const;
 
-export type TheIconSelfPack = Record<IconNamePostfix, TheIconType> & { name: string };
+export type TheIconSelfPack = Record<TheIconNameKind, FunctionComponent<HTMLAttributes<HTMLOrSVGElement>>> & {
+  name: string;
+};
 
 export type TheIconProps = HTMLAttributes<HTMLOrSVGElement> & { withoutAnimation?: boolean };
-export type IconNamePostfix = (typeof theIconNamePostfixList)[number];
+
+declare global {
+  type TheIconNameKind = (typeof theIconNamePostfixList)[number];
+  type TheIconKnownName = (typeof knownIconNames)[number];
+}

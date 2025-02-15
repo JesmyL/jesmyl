@@ -53,7 +53,7 @@ export interface IScheduleWidgetListUnit {
 
 export interface IScheduleWidgetListCat {
   title: string;
-  icon: KnownIconName;
+  icon: TheIconKnownName;
   titles: [string, string];
 }
 
@@ -129,7 +129,7 @@ export interface IScheduleWidgetDayEvent {
 export type ScheduleWidgetDayEventAttValues = Record<ScheduleWidgetAttKey, ScheduleWidgetDayEventAttValue>;
 
 export type ScheduleWidgetAppAttBasic<AttValue extends any = any> = Record<`[SCH]:${string}`, unknown> & {
-  icon: KnownIconName;
+  icon: TheIconKnownName;
   title: string;
   im?: `[SCH]:${string}` | nil;
   description: string;
@@ -194,7 +194,7 @@ export interface IScheduleWidgetRole {
   mi: number;
   title: string;
   userMi?: IScheduleWidgetUserMi;
-  icon?: KnownIconName;
+  icon?: TheIconKnownName;
   cati?: number;
 }
 

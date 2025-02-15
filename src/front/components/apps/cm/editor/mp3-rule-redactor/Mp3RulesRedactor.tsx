@@ -1,6 +1,6 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useState } from 'react';
 import { CmMp3Rule } from 'shared/api';
-import { IconPlusSignCircleStrokeRounded } from '../../../../../complect/the-icon/icons/plus-sign-circle';
 import { cmEditorClientInvocatorMethods } from '../cm-editor-invocator.methods';
 import PhaseCmEditorContainer from '../phase-editor-container/PhaseCmEditorContainer';
 import Mp3RuleEditor from './Mp3RuleEditor';
@@ -46,7 +46,12 @@ export default function Mp3RulesRedactor() {
           })}
           <h2 className="flex flex-gap">
             Новое правило
-            {!isOpenNewRule && <IconPlusSignCircleStrokeRounded onClick={() => setIsOpenNewRule(true)} />}
+            {!isOpenNewRule && (
+              <LazyIcon
+                icon="PlusSignCircle"
+                onClick={() => setIsOpenNewRule(true)}
+              />
+            )}
           </h2>
           {isOpenNewRule && (
             <Mp3RuleEditor

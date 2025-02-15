@@ -1,9 +1,6 @@
 import { mylib } from 'front/utils';
 import AppFooter from '../../../../app/AppFooter';
 import AppFooterItem from '../../../../app/AppFooterItem';
-import { iconPackOfEdit02 } from '../../../../complect/the-icon/icons/edit-02';
-import { iconPackOfLeftToRightListBullet } from '../../../../complect/the-icon/icons/left-to-right-list-bullet';
-import { iconPackOfPlaylist01 } from '../../../../complect/the-icon/icons/playlist-01';
 import { useAuth } from '../../../index/atoms';
 import { useActualCcomw } from '../col/com/useCcom';
 
@@ -18,21 +15,21 @@ export const CmFooter = () => {
         idPostfix="cm-all"
         to="i"
         title="Все"
-        iconPack={iconPackOfLeftToRightListBullet}
+        icon="LeftToRightListBullet"
         search={search}
       />
       <AppFooterItem
         idPostfix="cm-lists"
         to="li"
         title="Списки"
-        iconPack={iconPackOfPlaylist01}
+        icon="Playlist01"
       />
       {auth.level >= 50 && (
         <AppFooterItem
           idPostfix="cm-edit"
           to="edit"
           title="Редактор"
-          iconPack={iconPackOfEdit02}
+          icon="Edit02"
         />
       )}
     </AppFooter>

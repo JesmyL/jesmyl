@@ -1,6 +1,6 @@
 import { schDayEventsSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
-import { IconArrowDataTransferVerticalStrokeRounded } from 'front/complect/the-icon/icons/arrow-data-transfer-vertical';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { mylib } from 'front/utils';
 import Markdown from 'markdown-to-jsx';
 import { ReactNode } from 'react';
@@ -21,14 +21,7 @@ import {
 } from 'shared/api';
 import { itIt, makeRegExp } from 'shared/utils';
 import styled, { css } from 'styled-components';
-import { IconCheckmarkSquare02StrokeRounded } from '../../../../../complect/the-icon/icons/checkmark-square-02';
-import { IconDelete02StrokeRounded } from '../../../../../complect/the-icon/icons/delete-02';
-import { IconLeftToRightListDashStrokeRounded } from '../../../../../complect/the-icon/icons/left-to-right-list-dash';
-import { IconPlusSignStrokeRounded } from '../../../../../complect/the-icon/icons/plus-sign';
-import { IconSquareStrokeRounded } from '../../../../../complect/the-icon/icons/square';
-import { IconTextStrokeRounded } from '../../../../../complect/the-icon/icons/text';
 import StrongEditableField from '../../../../strong-control/field/StrongEditableField';
-import { IconBasketball01StrokeRounded } from '../../../../the-icon/icons/basketball-01';
 import ScheduleWidgetRoleFace from '../../../control/roles/RoleFace';
 import ScheduleWidgetListUnitFace from '../../../lists/UnitFace';
 import {
@@ -78,10 +71,10 @@ export default function ScheduleKeyValueListAtt({
   if (isRedact) {
     checkboxes = customAttUseRights.checkIsHasIndividualRights(att.use, CustomAttUseRights.Checkboxes) && (
       <div className="flex flex-gap margin-gap-v">
-        <IconCheckmarkSquare02StrokeRounded />
+        <LazyIcon icon="CheckmarkSquare02" />
         <span className="text-italic">Пункт</span>
-        <EvaSendButton
-          Icon={IconPlusSignStrokeRounded}
+        <TheIconSendButton
+          icon="PlusSign"
           onSend={() => schDayEventsSokiInvocatorClient.putKeyValueAttachment(null, dayEventAttScopeProps, false, '')}
         />
       </div>
@@ -99,10 +92,10 @@ export default function ScheduleKeyValueListAtt({
               key={titlei}
               className="flex flex-gap"
             >
-              <IconCheckmarkSquare02StrokeRounded />
+              <LazyIcon icon="CheckmarkSquare02" />
               {title}
-              <EvaSendButton
-                Icon={IconPlusSignStrokeRounded}
+              <TheIconSendButton
+                icon="PlusSign"
                 onSend={() =>
                   schDayEventsSokiInvocatorClient.putKeyValueAttachment(null, dayEventAttScopeProps, false, title)
                 }
@@ -114,8 +107,8 @@ export default function ScheduleKeyValueListAtt({
               className="flex flex-gap"
             >
               {title}
-              <EvaSendButton
-                Icon={IconPlusSignStrokeRounded}
+              <TheIconSendButton
+                icon="PlusSign"
                 onSend={() =>
                   schDayEventsSokiInvocatorClient.putKeyValueAttachment(null, dayEventAttScopeProps, title, '+')
                 }
@@ -148,8 +141,8 @@ export default function ScheduleKeyValueListAtt({
 
               return (
                 <div key={team.mi}>
-                  <EvaSendButton
-                    Icon={IconPlusSignStrokeRounded}
+                  <TheIconSendButton
+                    icon="PlusSign"
                     prefix={team.title}
                     onSend={() => {
                       return schDayEventsSokiInvocatorClient.addKeyValueAttachmentListItem(
@@ -180,11 +173,11 @@ export default function ScheduleKeyValueListAtt({
             >
               {customAttUseRights.checkIsHasIndividualRights(att.use, CustomAttUseRights.CheckGames) ? (
                 <>
-                  <IconCheckmarkSquare02StrokeRounded />
-                  <IconBasketball01StrokeRounded />
+                  <LazyIcon icon="CheckmarkSquare02" />
+                  <LazyIcon icon="Basketball01" />
                   {game.title}
-                  <EvaSendButton
-                    Icon={IconPlusSignStrokeRounded}
+                  <TheIconSendButton
+                    icon="PlusSign"
                     onSend={() =>
                       schDayEventsSokiInvocatorClient.putKeyValueAttachment(
                         null,
@@ -197,10 +190,10 @@ export default function ScheduleKeyValueListAtt({
                 </>
               ) : (
                 <>
-                  <IconBasketball01StrokeRounded />
+                  <LazyIcon icon="Basketball01" />
                   {game.title}
-                  <EvaSendButton
-                    Icon={IconPlusSignStrokeRounded}
+                  <TheIconSendButton
+                    icon="PlusSign"
                     onSend={() =>
                       schDayEventsSokiInvocatorClient.putKeyValueAttachment(
                         null,
@@ -233,8 +226,8 @@ export default function ScheduleKeyValueListAtt({
             role={role}
             schedule={rights.schedule}
           />
-          <EvaSendButton
-            Icon={IconPlusSignStrokeRounded}
+          <TheIconSendButton
+            icon="PlusSign"
             onSend={() =>
               schDayEventsSokiInvocatorClient.putKeyValueAttachment(null, dayEventAttScopeProps, role.mi, '+')
             }
@@ -254,8 +247,8 @@ export default function ScheduleKeyValueListAtt({
           key={unit.mi}
           unit={unit}
           postfix={
-            <EvaSendButton
-              Icon={IconPlusSignStrokeRounded}
+            <TheIconSendButton
+              icon="PlusSign"
               onSend={() =>
                 schDayEventsSokiInvocatorClient.putKeyValueAttachment(
                   null,
@@ -290,10 +283,10 @@ export default function ScheduleKeyValueListAtt({
             key={user.mi}
             className="flex flex-gap"
           >
-            <IconCheckmarkSquare02StrokeRounded />
+            <LazyIcon icon="CheckmarkSquare02" />
             {user.fio || user.nick}
-            <EvaSendButton
-              Icon={IconPlusSignStrokeRounded}
+            <TheIconSendButton
+              icon="PlusSign"
               onSend={() =>
                 schDayEventsSokiInvocatorClient.putKeyValueAttachment(
                   null,
@@ -310,8 +303,8 @@ export default function ScheduleKeyValueListAtt({
             className="flex flex-gap"
           >
             {user.fio || user.nick}
-            <EvaSendButton
-              Icon={IconPlusSignStrokeRounded}
+            <TheIconSendButton
+              icon="PlusSign"
               onSend={() =>
                 schDayEventsSokiInvocatorClient.putKeyValueAttachment(
                   null,
@@ -328,10 +321,10 @@ export default function ScheduleKeyValueListAtt({
 
     const itemNode = (
       <div className="flex flex-gap margin-big-gap-v">
-        <IconTextStrokeRounded />
+        <LazyIcon icon="Text" />
         Пункт
-        <EvaSendButton
-          Icon={IconPlusSignStrokeRounded}
+        <TheIconSendButton
+          icon="PlusSign"
           onSend={() =>
             schDayEventsSokiInvocatorClient.putKeyValueAttachment(null, dayEventAttScopeProps, 'Пункт', '+')
           }
@@ -402,9 +395,9 @@ export default function ScheduleKeyValueListAtt({
                   generalNode
                 ) : mylib.isBool(key) ? (
                   <div className={'flex flex-gap color--3' + (key ? ' fade-05' : '')}>
-                    <EvaSendButton
+                    <TheIconSendButton
                       className="self-start relative z-index:15"
-                      Icon={key ? IconCheckmarkSquare02StrokeRounded : IconSquareStrokeRounded}
+                      icon={key ? 'CheckmarkSquare02' : 'Square'}
                       disabled={!customAttUseRights.checkIsCan(userR, att.U)}
                       onSend={() =>
                         schDayEventsSokiInvocatorClient.setKeyValueAttachmentKey(
@@ -441,8 +434,8 @@ export default function ScheduleKeyValueListAtt({
                       !mylib.isBool(key) &&
                       !mylib.isNil(value) &&
                       (value === '+' || value.length < 1) && (
-                        <EvaSendButton
-                          Icon={mylib.isArr(value) ? IconTextStrokeRounded : IconLeftToRightListDashStrokeRounded}
+                        <TheIconSendButton
+                          icon={mylib.isArr(value) ? 'Text' : 'LeftToRightListDash'}
                           onSend={() =>
                             schDayEventsSokiInvocatorClient.setKeyValueAttachmentValue(
                               null,
@@ -469,18 +462,18 @@ export default function ScheduleKeyValueListAtt({
               {isRedact && customAttUseRights.checkIsCan(userR, att.U) && (
                 <div className={'flex flex-gap' + (mylib.isStr(value) ? ' margin-giant-gap-r' : '')}>
                   {itema.length > 1 && itemi > 0 && (
-                    <EvaSendButton
+                    <TheIconSendButton
                       className="relative z-index:15 color--7"
-                      Icon={IconArrowDataTransferVerticalStrokeRounded}
+                      icon="ArrowDataTransferVertical"
                       onSend={() =>
                         schDayEventsSokiInvocatorClient.moveKeyValueAttachment(null, dayEventAttScopeProps, itemMi)
                       }
                     />
                   )}
-                  <EvaSendButton
+                  <TheIconSendButton
                     className="relative z-index:15 color--ko"
                     confirm="Удалить пункт?"
-                    Icon={IconDelete02StrokeRounded}
+                    icon="Delete02"
                     onSend={() =>
                       schDayEventsSokiInvocatorClient.putKeyValueAttachment(null, dayEventAttScopeProps, itemMi, null)
                     }
@@ -519,9 +512,9 @@ export default function ScheduleKeyValueListAtt({
                           <div className="flex flex-gap">
                             <span className="flex self-start">{vali + 1}.</span>
                             {vala.length > 1 && vali > 0 && (
-                              <EvaSendButton
+                              <TheIconSendButton
                                 className="relative z-index:15 color--7"
-                                Icon={IconArrowDataTransferVerticalStrokeRounded}
+                                icon="ArrowDataTransferVertical"
                                 onSend={() =>
                                   schDayEventsSokiInvocatorClient.moveKeyValueAttachmentListItem(
                                     null,
@@ -532,10 +525,10 @@ export default function ScheduleKeyValueListAtt({
                                 }
                               />
                             )}
-                            <EvaSendButton
+                            <TheIconSendButton
                               className="relative z-index:15 color--ko"
                               confirm="Удалить пункт?"
-                              Icon={IconDelete02StrokeRounded}
+                              icon="Delete02"
                               onSend={() =>
                                 schDayEventsSokiInvocatorClient.removeKeyValueAttachmentListItemValue(
                                   null,

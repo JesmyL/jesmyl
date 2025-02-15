@@ -1,7 +1,6 @@
 import { mylib } from 'front/utils';
 import { memo } from 'react';
 import IconButton from '../../../../../complect/the-icon/IconButton';
-import { IconDelete01StrokeRounded } from '../../../../../complect/the-icon/icons/delete-01';
 import { bibleIDB } from '../../_db/bibleIDB';
 import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '../../hooks/address/address';
 import { BibleTranslationAddress } from '../../model';
@@ -27,7 +26,7 @@ export default memo(function BibleTranslationArchive({ title, list, onRemove }: 
       <div className="archive-title flex flex-gap color--3 bgcolor--2 margin-gap-b">
         {title}
         <IconButton
-          Icon={IconDelete01StrokeRounded}
+          icon="Delete01"
           className="color--ko"
           confirm={`Очистить раздел ${title}?`}
           onClick={onRemove}

@@ -1,4 +1,4 @@
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
 import {
   IScheduleWidgetListCat,
   IScheduleWidgetListUnit,
@@ -9,11 +9,6 @@ import { ModalBody } from '../../modal/Modal/ModalBody';
 import { ModalHeader } from '../../modal/Modal/ModalHeader';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
 import { LazyIcon } from '../../the-icon/LazyIcon';
-import { IconBookmark03StrokeRounded } from '../../the-icon/icons/bookmark-03';
-import { IconCheckmarkSquare02StrokeRounded } from '../../the-icon/icons/checkmark-square-02';
-import { IconFile02StrokeRounded } from '../../the-icon/icons/file-02';
-import { IconSquareStrokeRounded } from '../../the-icon/icons/square';
-import { IconUserRemove02StrokeRounded } from '../../the-icon/icons/user-remove-02';
 import ScheduleWidgetUserList from '../control/users/UserList';
 import { schListsSokiInvocatorClient, schUsersSokiInvocatorClient } from '../invocators/invocators.methods';
 
@@ -32,13 +27,13 @@ export const ScheduleWidgetListUnitRedactor = ({ unit, cat, cati, shortTitles, u
     <>
       <ModalHeader>
         <div className="flex flex-gap">
-          <LazyIcon name={cat.icon} />
+          <LazyIcon icon={cat.icon} />
           {title}
         </div>
       </ModalHeader>
       <ModalBody>
         <StrongEditableField
-          Icon={IconBookmark03StrokeRounded}
+          icon="Bookmark03"
           title="Название"
           value={unit}
           fieldKey="title"
@@ -46,7 +41,7 @@ export const ScheduleWidgetListUnitRedactor = ({ unit, cat, cati, shortTitles, u
           onSend={value => schListsSokiInvocatorClient.setUnitTitle(null, unitScopeData, value, cati)}
         />
         <StrongEditableField
-          Icon={IconFile02StrokeRounded}
+          icon="File02"
           title="Описание"
           value={unit}
           fieldKey="dsc"
@@ -62,13 +57,13 @@ export const ScheduleWidgetListUnitRedactor = ({ unit, cat, cati, shortTitles, u
             return (
               <div className="flex flex-gap">
                 {user.li?.[cati] == null ? (
-                  <EvaSendButton
-                    Icon={IconSquareStrokeRounded}
+                  <TheIconSendButton
+                    icon="Square"
                     disabled={user.R === undefined}
                     className="nowrap"
                     postfix={
                       user.R === undefined ? (
-                        <IconUserRemove02StrokeRounded />
+                        <LazyIcon icon="UserRemove02" />
                       ) : isForMember ? (
                         shortTitles[1]
                       ) : (
@@ -84,8 +79,8 @@ export const ScheduleWidgetListUnitRedactor = ({ unit, cat, cati, shortTitles, u
                     }
                   />
                 ) : (
-                  <EvaSendButton
-                    Icon={IconCheckmarkSquare02StrokeRounded}
+                  <TheIconSendButton
+                    icon="CheckmarkSquare02"
                     postfix={user.li[cati] < 0 ? shortTitles[0] : shortTitles[1]}
                     disabled={user.R === undefined || (user.li[cati] !== unit.mi && user.li[cati] !== -unit.mi)}
                     className={

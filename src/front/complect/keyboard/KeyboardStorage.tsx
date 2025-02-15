@@ -1,9 +1,6 @@
 import { ReactNode } from 'react';
-import { IconCancel01StrokeRounded } from '../../complect/the-icon/icons/cancel-01';
-import { IconViewStrokeRounded } from '../../complect/the-icon/icons/view';
-import { IconViewOffSlashStrokeRounded } from '../../complect/the-icon/icons/view-off-slash';
 import propsOfClicker from '../clicker/propsOfClicker';
-import { TheIconType } from '../the-icon/model';
+import { LazyIcon } from '../the-icon/LazyIcon';
 import { KeyboardStorageCallbacks } from './complect/F.Callbacks';
 import {
   KeyboardInputProps,
@@ -87,14 +84,14 @@ export class KeyboardInputStorage extends KeyboardStorageCallbacks {
         </div>
         <div className="icon-button-container">
           {this.type === 'password' ? (
-            ((Icon: TheIconType) => (
-              <Icon
-                className="icon-button eye-button"
-                onMouseDown={this.onPasswordEyeButton}
-              />
-            ))(this.isHiddenPassword ? IconViewStrokeRounded : IconViewOffSlashStrokeRounded)
+            <LazyIcon
+              icon={this.isHiddenPassword ? 'View' : 'ViewOffSlash'}
+              className="icon-button eye-button"
+              onMouseDown={this.onPasswordEyeButton}
+            />
           ) : (
-            <IconCancel01StrokeRounded
+            <LazyIcon
+              icon="Cancel01"
               className="icon-button close-button pointer"
               onMouseDown={this.onClearButton}
             />

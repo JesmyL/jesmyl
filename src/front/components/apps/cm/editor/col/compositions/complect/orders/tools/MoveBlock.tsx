@@ -1,13 +1,12 @@
-import { IconLink02StrokeRounded } from 'front/complect/the-icon/icons/link-02';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { BottomPopupItem } from '../../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
-import { IconArrowDataTransferDiagonalStrokeRounded } from '../../../../../../../../../complect/the-icon/icons/arrow-data-transfer-diagonal';
 import { OrdersRedactorOrderToolsProps } from '../OrdersRedactorOrderTools';
 
 export const OrdersRedactorOrderToolsMoveBlock = (props: OrdersRedactorOrderToolsProps) => {
   return (
     <BottomPopupItem
-      Icon={IconArrowDataTransferDiagonalStrokeRounded}
+      icon="ArrowDataTransferDiagonal"
       title="Переместить блок"
       onClick={async () => {
         props.onClose(false);
@@ -17,7 +16,7 @@ export const OrdersRedactorOrderToolsMoveBlock = (props: OrdersRedactorOrderTool
         props.setClickBetweenOrds({
           buttonTitle: (
             <span className="flex flex-gap">
-              {props.ord.isAnchor && <IconLink02StrokeRounded />}
+              {props.ord.isAnchor && <LazyIcon icon="Link02" />}
               <span className="color--7">{props.ord.me.header()}</span> будет тут
             </span>
           ),

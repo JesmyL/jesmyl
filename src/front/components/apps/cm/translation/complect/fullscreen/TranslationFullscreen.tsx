@@ -1,8 +1,8 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useEffect, useReducer, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { atom, useAtom } from '../../../../../../complect/atoms';
 import { backSwipableContainerMaker } from '../../../../../../complect/backSwipableContainerMaker';
-import { IconCancel01StrokeRounded } from '../../../../../../complect/the-icon/icons/cancel-01';
 import { useActualRef } from '../../../../../../complect/useActualRef';
 import FontSizeContain from '../../../base/font-size-contain/FontSizeContain';
 import { useCloseTranslation } from '../hooks/close-translation';
@@ -68,7 +68,8 @@ export default function TranslationFullscreen() {
             следующая песня
           </div>
         </div>
-        <IconCancel01StrokeRounded
+        <LazyIcon
+          icon="Cancel01"
           className="close-info-button pointer"
           onClick={() => setIsShowInfo(false)}
         />

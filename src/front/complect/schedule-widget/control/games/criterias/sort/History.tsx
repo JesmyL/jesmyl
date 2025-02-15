@@ -1,8 +1,7 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useState } from 'react';
-import styled, { css } from 'styled-components';
-import { IconLinkBackwardStrokeRounded } from '../../../../../the-icon/icons/link-backward';
-import { IconLinkForwardStrokeRounded } from '../../../../../the-icon/icons/link-forward';
 import { IScheduleWidgetUser } from 'shared/api';
+import styled, { css } from 'styled-components';
 import { HistoryAdder } from './model';
 
 interface Props {
@@ -86,6 +85,7 @@ export default function ScheduleWidgetTeamsCriteriaSorterScreenHistory({
       $point={point}
     >
       <StyledUndo
+        icon="LinkBackward"
         className="pointer"
         onClick={() => {
           const newPoint = point === null ? history.length - 1 : point - 1;
@@ -97,6 +97,7 @@ export default function ScheduleWidgetTeamsCriteriaSorterScreenHistory({
         }}
       />
       <StyledRedo
+        icon="LinkForward"
         className="pointer"
         onClick={() => {
           const newPoint = point === null ? history.length - 1 : point + 1;
@@ -112,11 +113,11 @@ const navCss = css`
   scale: 2;
 `;
 
-const StyledUndo = styled(IconLinkBackwardStrokeRounded)`
+const StyledUndo = styled(LazyIcon)<{ icon: 'LinkBackward' }>`
   ${navCss}
 `;
 
-const StyledRedo = styled(IconLinkForwardStrokeRounded)`
+const StyledRedo = styled(LazyIcon)<{ icon: 'LinkForward' }>`
   ${navCss}
 `;
 

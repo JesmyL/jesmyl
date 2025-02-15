@@ -1,13 +1,10 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { indexIDB } from 'front/components/index/db/index-idb';
 import { mylib } from 'front/utils';
 import { useState } from 'react';
 import { ScheduleWidgetPhotoKey } from 'shared/api';
 import Modal from '../../../modal/Modal/Modal';
-import EvaSendButton from '../../../sends/eva-send-button/EvaSendButton';
-import IconButton from '../../../the-icon/IconButton';
-import { IconCloudDownloadStrokeRounded } from '../../../the-icon/icons/cloud-download';
-import { IconCloudUploadStrokeRounded } from '../../../the-icon/icons/cloud-upload';
-import { IconEyeStrokeRounded } from '../../../the-icon/icons/eye';
+import TheIconSendButton from '../../../sends/the-icon-send-button/TheIconSendButton';
 import { schPhotosSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { getScheduleWidgetUserPhotoStorageKey } from '../../storage';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
@@ -30,12 +27,13 @@ export const ScheduleWidgetShareButtons = function ShareButtons({ prefix }: Prop
           <ScheduleWidgetPhotoGalery />
         </Modal>
       )}
-      <IconButton
-        Icon={IconEyeStrokeRounded}
+      <LazyIcon
+        className="pointer"
+        icon="Eye"
         onClick={() => setIsOpenGalery(true)}
       />
-      <EvaSendButton
-        Icon={IconCloudUploadStrokeRounded}
+      <TheIconSendButton
+        icon="CloudUpload"
         onSend={async () => {
           const value = {} as Record<ScheduleWidgetPhotoKey, string>;
           const users = rights.schedule.ctrl.users;
@@ -56,8 +54,8 @@ export const ScheduleWidgetShareButtons = function ShareButtons({ prefix }: Prop
           return schPhotosSokiInvocatorClient.putSharedPhotos(null, rights.schedule.w, value);
         }}
       />
-      <EvaSendButton
-        Icon={IconCloudDownloadStrokeRounded}
+      <TheIconSendButton
+        icon="CloudDownload"
         onSuccess={photos => indexIDB.db.schedulePhotos.bulkPut(photos)}
         onSend={() => schPhotosSokiInvocatorClient.getSharedPhotos(null, rights.schedule.w)}
       />

@@ -1,12 +1,10 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useMemo, useState } from 'react';
 import { IScheduleWidgetListCat, IScheduleWidgetListUnit, IScheduleWidgetUserCati } from 'shared/api';
 import styled from 'styled-components';
-import { IconEdit02StrokeRounded } from '../../../complect/the-icon/icons/edit-02';
-import { IconFile02StrokeRounded } from '../../../complect/the-icon/icons/file-02';
 import { ExpandableContent } from '../../expand/ExpandableContent';
 import Modal from '../../modal/Modal/Modal';
 import StrongEditableField from '../../strong-control/field/StrongEditableField';
-import IconButton from '../../the-icon/IconButton';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import ScheduleWidgetUserList from '../control/users/UserList';
 import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
@@ -47,8 +45,9 @@ export default function ScheduleWidgetListUnit(props: Props) {
             rights.isCanRedact
               ? isExpand =>
                   isExpand && (
-                    <IconButton
-                      Icon={IconEdit02StrokeRounded}
+                    <LazyIcon
+                      className="pointer"
+                      icon="Edit02"
                       onClick={() => setIsModalOpen(true)}
                     />
                   )
@@ -57,7 +56,7 @@ export default function ScheduleWidgetListUnit(props: Props) {
         >
           {unit.dsc && (
             <StrongEditableField
-              Icon={IconFile02StrokeRounded}
+              icon="File02"
               value={unit}
               title="Описание"
               fieldKey="dsc"

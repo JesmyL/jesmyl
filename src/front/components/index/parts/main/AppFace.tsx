@@ -1,3 +1,4 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { RoutingAppConfig } from '../../../../app/routing-apps';
@@ -7,7 +8,7 @@ interface Props {
   config: RoutingAppConfig;
 }
 
-export const AppFace = ({ config: { appName, Icon, title, lazies } }: Props) => {
+export const AppFace = ({ config: { appName, icon, title, lazies } }: Props) => {
   const [isOpenFull, setIsOpenFull] = useState<unknown>(false);
 
   const loadedRef = useRef(0);
@@ -19,10 +20,10 @@ export const AppFace = ({ config: { appName, Icon, title, lazies } }: Props) => 
         to={`/${appName}/i`}
         className="flex flex-gap pointer"
       >
-        <Icon />
+        <LazyIcon icon={icon} />
         <span>{title}</span>
       </Link>
-      {/* <IconCloudDownloadStrokeRounded
+      {/* <LazyIcon icon="CloudDownload"
         className="pointer"
         onClick={setIsOpenFull}
       /> */}

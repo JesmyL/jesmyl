@@ -1,13 +1,10 @@
 import Modal from 'front/complect/modal/Modal/Modal';
 import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
 import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useState } from 'react';
 import { BibleTranslateName } from 'shared/api';
 import IconButton from '../../../../complect/the-icon/IconButton';
-import { IconBookDownloadStrokeRounded } from '../../../../complect/the-icon/icons/book-download';
-import { IconBookOpen02StrokeRounded } from '../../../../complect/the-icon/icons/book-open-02';
-import { IconDelete02StrokeRounded } from '../../../../complect/the-icon/icons/delete-02';
-import { IconPencilEdit02StrokeRounded } from '../../../../complect/the-icon/icons/pencil-edit-02';
 import { bibleSokiInvocatorClient } from '../invoctors/invocator';
 import { removeBibleTranslate } from '../utils';
 import { bibleAllTranslates, translateDescriptions } from './complect';
@@ -20,8 +17,9 @@ export default function BibleModulesTranslationsRedactButton(): JSX.Element {
 
   return (
     <>
-      <IconButton
-        Icon={IconPencilEdit02StrokeRounded}
+      <LazyIcon
+        className="pointer"
+        icon="PencilEdit02"
         onClick={setIsOpenModal}
       />
 
@@ -38,7 +36,7 @@ export default function BibleModulesTranslationsRedactButton(): JSX.Element {
               return (
                 <IconButton
                   key={tName}
-                  Icon={isUnremovable ? IconBookOpen02StrokeRounded : IconDelete02StrokeRounded}
+                  icon={isUnremovable ? 'BookOpen02' : 'Delete02'}
                   className="margin-gap-l margin-gap-v"
                   iconClassName={isUnremovable ? undefined : 'color--ko'}
                   disabled={isUnremovable}
@@ -56,7 +54,7 @@ export default function BibleModulesTranslationsRedactButton(): JSX.Element {
               return (
                 <IconButton
                   key={tName}
-                  Icon={IconBookDownloadStrokeRounded}
+                  icon="BookDownload"
                   className="margin-gap-l margin-gap-v"
                   postfix={title}
                   disabled={translateOnLoad !== null}

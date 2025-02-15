@@ -1,10 +1,8 @@
 import { useMemo } from 'react';
-import { IconGridTableStrokeRounded } from '../complect/the-icon/icons/grid-table';
-import { IconSearchVisualStrokeRounded } from '../complect/the-icon/icons/search-visual';
 import { atom, useAtomToggle, useAtomValue } from './atoms';
 import { KeyboardInputPropsType } from './keyboard/Keyboard.model';
 import KeyboardInput from './keyboard/KeyboardInput';
-import IconButton from './the-icon/IconButton';
+import { LazyIcon } from './the-icon/LazyIcon';
 
 const isNumberSearchAtom = atom(false);
 export const useIsNumberSearch = () => useAtomValue(isNumberSearchAtom);
@@ -29,8 +27,9 @@ export default function DebouncedSearchInput(props: {
   return (
     <div className={`debounced-input ${className}`}>
       {withoutIcon || (
-        <IconButton
-          Icon={isNumberSearch ? IconGridTableStrokeRounded : IconSearchVisualStrokeRounded}
+        <LazyIcon
+          className="pointer"
+          icon={isNumberSearch ? 'GridTable' : 'SearchVisual'}
           onClick={() => isNumberSearchToggle()}
         />
       )}

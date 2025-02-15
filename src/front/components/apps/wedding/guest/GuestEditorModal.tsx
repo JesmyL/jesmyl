@@ -13,9 +13,7 @@ import Modal from '../../../../complect/modal/Modal/Modal';
 import { ModalBody } from '../../../../complect/modal/Modal/ModalBody';
 import { ModalFooter } from '../../../../complect/modal/Modal/ModalFooter';
 import { ModalHeader } from '../../../../complect/modal/Modal/ModalHeader';
-import EvaSendButton from '../../../../complect/sends/eva-send-button/EvaSendButton';
-import { IconCheckmarkCircle01StrokeRounded } from '../../../../complect/the-icon/icons/checkmark-circle-01';
-import { IconUserRemove02StrokeRounded } from '../../../../complect/the-icon/icons/user-remove-02';
+import TheIconSendButton from '../../../../complect/sends/the-icon-send-button/TheIconSendButton';
 import { WedCleans } from '../Cleans';
 import { WedGuestPropositionSentButton } from './complect/SentButton';
 
@@ -115,8 +113,8 @@ export const WedGuestEditorModal = ({ guest, setIsOpen, setGuest }: Props) => {
       </ModalBody>
       <ModalFooter>
         <div className="full-width flex between margin-giant-gap-t">
-          <EvaSendButton
-            Icon={IconUserRemove02StrokeRounded}
+          <TheIconSendButton
+            icon="UserRemove02"
             className="color--ko margin-gap-v"
             confirm={
               <>
@@ -135,8 +133,8 @@ export const WedGuestEditorModal = ({ guest, setIsOpen, setGuest }: Props) => {
             onSuccess={() => setIsOpen(false)}
           />
 
-          <EvaSendButton
-            Icon={IconCheckmarkCircle01StrokeRounded}
+          <TheIconSendButton
+            icon="CheckmarkCircle01"
             className="color--ok"
             postfix="Отправить"
             disabled={!guest.fn || mylib.isEq(initGuest, guest)}

@@ -1,9 +1,8 @@
-import { IconArrowReloadHorizontalStrokeRounded } from '../../../../../complect/the-icon/icons/arrow-reload-horizontal';
-
 import Modal from 'front/complect/modal/Modal/Modal';
 import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
 import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
 import { schDayEventsSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useState } from 'react';
 import {
   CustomAttUseTaleId,
@@ -14,7 +13,6 @@ import {
   ScheduleDayEventAttachmentScopeProps,
 } from 'shared/api';
 import StrongDiv from '../../../../strong-control/StrongDiv';
-import IconButton from '../../../../the-icon/IconButton';
 import KeyValueListAttNumberMember from './KeyValueListAttNumberMember';
 
 export default function ScheduleKeyValueListAttArrayItemKeyChange(props: {
@@ -48,8 +46,9 @@ export default function ScheduleKeyValueListAttArrayItemKeyChange(props: {
 
   return (
     <>
-      <IconButton
-        Icon={IconArrowReloadHorizontalStrokeRounded}
+      <LazyIcon
+        icon="ArrowReloadHorizontal"
+        className="pointer"
         onClick={setIsModalOpen}
       />
 

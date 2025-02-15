@@ -1,9 +1,6 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { WedGuest } from '../../../../../shared/api/complect/apps/wed/complect/model';
 import IconButton from '../../../../complect/the-icon/IconButton';
-import { IconMailRemove01StrokeRounded } from '../../../../complect/the-icon/icons/mail-remove-01';
-import { IconMailValidation01StrokeRounded } from '../../../../complect/the-icon/icons/mail-validation-01';
-import { IconMessage01StrokeRounded } from '../../../../complect/the-icon/icons/message-01';
-import { IconUserCircle02StrokeRounded } from '../../../../complect/the-icon/icons/user-circle-02';
 
 interface Props {
   onClick?: () => void;
@@ -15,16 +12,22 @@ export const WedGuestFace = ({ onClick, guest }: Props) => {
     <IconButton
       key={guest.mi}
       className="margin-gap"
-      Icon={IconUserCircle02StrokeRounded}
+      icon="UserCircle02"
       postfix={
         <>
           <span>{guest.ln} </span>
           <span className="color--7">{`${guest.fn}${guest.wn ? ` и ${guest.wn}` : ''}`}</span>
-          {guest.t && <IconMessage01StrokeRounded />}
+          {guest.t && <LazyIcon icon="Message01" />}
           {guest.g ? (
-            <IconMailValidation01StrokeRounded className="color--ok" />
+            <LazyIcon
+              icon="MailValidation01"
+              className="color--ok"
+            />
           ) : (
-            <IconMailRemove01StrokeRounded className="color--ko" />
+            <LazyIcon
+              icon="MailRemove01"
+              className="color--ko"
+            />
           )}
         </>
       }

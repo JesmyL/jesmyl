@@ -1,15 +1,14 @@
 import { TheIconLoading } from 'front/complect/the-icon/IconLoading';
-import { TheIconProps } from 'front/complect/the-icon/model';
 import { useState } from 'react';
 import ComPlayer from '../../../../../col/com/player/ComPlayer';
 
 interface Props {
   srcs: string[];
   onToggle: (src: string) => Promise<unknown>;
-  ActionIcon: React.FC<TheIconProps>;
+  icon: TheIconKnownName;
 }
 
-export const ComAudioControlledList = ({ srcs, onToggle, ActionIcon }: Props) => {
+export const ComAudioControlledList = ({ srcs, onToggle, icon }: Props) => {
   const [tracksInProcess, setTracksInProcess] = useState<string[]>([]);
 
   return (
@@ -23,7 +22,7 @@ export const ComAudioControlledList = ({ srcs, onToggle, ActionIcon }: Props) =>
             <ComPlayer src={src} />
             <TheIconLoading
               isLoading={tracksInProcess.includes(src)}
-              Icon={ActionIcon}
+              icon={icon}
               className="add-com-audio-button pointer"
               onClick={async () => {
                 setTracksInProcess(tracksInProcess.concat(src));

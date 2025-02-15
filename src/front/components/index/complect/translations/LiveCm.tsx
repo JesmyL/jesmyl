@@ -1,9 +1,8 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import useMeetingComFaceList from 'front/components/apps/cm/lists/meetings/useMeetingComFaceList';
 import { useMeetingPathParts } from 'front/components/apps/cm/lists/meetings/useMeetingPathParts';
 import { useEffect } from 'react';
 import { useAtomValue } from '../../../../complect/atoms';
-import IconButton from '../../../../complect/the-icon/IconButton';
-import { IconBookOpen02StrokeRounded } from '../../../../complect/the-icon/icons/book-open-02';
 import { useSwitchCurrentTranslationTextApp } from '../../../apps/+complect/translations/hooks/current-app';
 import { translationBlockAtom } from '../../../apps/cm/atoms';
 import { useCcom } from '../../../apps/cm/col/com/useCcom';
@@ -60,9 +59,9 @@ export const ScheduleWidgetLiveCmTranslations = ({
   return (
     <CmTranslationControlled
       head={
-        <IconButton
-          Icon={IconBookOpen02StrokeRounded}
-          className="margin-gap-r"
+        <LazyIcon
+          icon="BookOpen02"
+          className="pointer margin-gap-r"
           onClick={() => switchCurrApp()}
         />
       }

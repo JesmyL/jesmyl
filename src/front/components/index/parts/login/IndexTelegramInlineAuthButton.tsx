@@ -1,9 +1,8 @@
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { Link } from 'react-router-dom';
 import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
 import { TelegramWebAppApiOr } from '../../../../complect/tg-app/getTgApi';
-import { IconAuthorizedStrokeRounded } from '../../../../complect/the-icon/icons/authorized';
-import { IconTelegramStrokeRounded } from '../../../../complect/the-icon/icons/telegram';
 import { indexBasicsSokiInvocatorClient } from '../../db/invocators/schedules/fresh-invocator.methods';
 
 export const IndexTelegramInlineAuthButton = () => {
@@ -17,12 +16,12 @@ export const IndexTelegramInlineAuthButton = () => {
             className="full-width"
           >
             <BrutalItem
-              icon={<IconAuthorizedStrokeRounded />}
+              iconNode={<LazyIcon icon="Authorized" />}
               title="Авторизоваться"
               box={
                 api?.initDataUnsafe?.user && (
-                  <EvaSendButton
-                    Icon={IconTelegramStrokeRounded}
+                  <TheIconSendButton
+                    icon="Telegram"
                     className="color--ok"
                     onSend={async () =>
                       await indexBasicsSokiInvocatorClient.authMeByTelegramMiniButton(null, api.initDataUnsafe.user)

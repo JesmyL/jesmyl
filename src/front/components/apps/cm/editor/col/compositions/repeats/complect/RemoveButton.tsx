@@ -2,14 +2,13 @@ import Modal from 'front/complect/modal/Modal/Modal';
 import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
 import { ModalFooter } from 'front/complect/modal/Modal/ModalFooter';
 import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { mylib } from 'front/utils';
 import { useState } from 'react';
 import { OrderRepeats } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import { useConfirm } from '../../../../../../../../complect/modal/confirm/useConfirm';
 import IconButton from '../../../../../../../../complect/the-icon/IconButton';
-import { IconDelete01StrokeRounded } from '../../../../../../../../complect/the-icon/icons/delete-01';
-import { IconUnavailableStrokeRounded } from '../../../../../../../../complect/the-icon/icons/unavailable';
 import { Order } from '../../../../../col/com/order/Order';
 import { cmComOrderClientInvocatorMethods } from '../../../../cm-editor-invocator.methods';
 import { EditableOrder } from '../../complect/orders/EditableOrder';
@@ -56,7 +55,7 @@ export const ComRepeatsRemoveButton = ({ isChordBlock, startOrd, ord, textLinei,
           setIsOpenModal(true);
         }}
       >
-        <IconDelete01StrokeRounded />
+        <LazyIcon icon="Delete01" />
       </div>
 
       {isOpenModal && (
@@ -146,7 +145,7 @@ export const ComRepeatsRemoveButton = ({ isChordBlock, startOrd, ord, textLinei,
           <ModalFooter>
             <div className="flex flex-big-gap">
               <IconButton
-                Icon={IconUnavailableStrokeRounded}
+                icon="Unavailable"
                 postfix="Отмена"
                 onClick={setIsOpenModal}
               />

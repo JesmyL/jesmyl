@@ -6,7 +6,6 @@ import { mylib } from 'front/utils';
 import { useState } from 'react';
 import { BottomPopupItem } from '../../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
 import IconCheckbox from '../../../../../../../../../complect/the-icon/IconCheckbox';
-import { IconFlashStrokeRounded } from '../../../../../../../../../complect/the-icon/icons/flash';
 import { ChordVisibleVariant } from '../../../../../../Cm.model';
 import TheOrder from '../../../../../../col/com/order/TheOrder';
 import { OrdersRedactorOrderToolsProps } from '../OrdersRedactorOrderTools';
@@ -23,7 +22,7 @@ export const OrdersRedactorOrderToolsModulation = ({ com, ord, ordi, onClose }: 
   return (
     <>
       <BottomPopupItem
-        Icon={IconFlashStrokeRounded}
+        icon="Flash"
         title="Значение модуляции"
         onClick={setIsModalOpen}
       />

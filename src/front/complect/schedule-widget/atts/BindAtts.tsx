@@ -1,3 +1,4 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { mylib, MyLib } from 'front/utils';
 import React, { ReactNode, useState } from 'react';
 import {
@@ -9,13 +10,10 @@ import {
   scheduleWidgetUserRights,
 } from 'shared/api';
 import styled from 'styled-components';
-import { IconAttachment01StrokeRounded } from '../../../complect/the-icon/icons/attachment-01';
-import { IconPlusSignStrokeRounded } from '../../../complect/the-icon/icons/plus-sign';
 import Modal from '../../modal/Modal/Modal';
 import { ModalBody } from '../../modal/Modal/ModalBody';
 import { ModalFooter } from '../../modal/Modal/ModalFooter';
 import StrongDiv from '../../strong-control/StrongDiv';
-import IconButton from '../../the-icon/IconButton';
 import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
 import { useScheduleWidgetAppAttsContext, useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetAttFace from './AttFace';
@@ -99,10 +97,11 @@ export const ScheduleWidgetBindAtts = ({
         </Modal>
       )}
       <div className="flex flex-gap">
-        <IconAttachment01StrokeRounded />
+        <LazyIcon icon="Attachment01" />
         Вложения
-        <IconButton
-          Icon={IconPlusSignStrokeRounded}
+        <LazyIcon
+          className="pointer"
+          icon="PlusSign"
           onClick={setIsModalOpen}
         />
       </div>

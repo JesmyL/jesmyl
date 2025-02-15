@@ -1,6 +1,6 @@
 import { addEventListenerPipe, hookEffectPipe } from 'front/complect/hookEffectPipe';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useEffect, useState } from 'react';
-import { IconAlert01StrokeRounded } from '../../complect/the-icon/icons/alert-01';
 
 export default function useConnectionState(className?: string) {
   const [isOnline, setIsOnline] = useState(true);
@@ -16,5 +16,12 @@ export default function useConnectionState(className?: string) {
     [],
   );
 
-  return isOnline || <IconAlert01StrokeRounded className={'color--ko ' + className} />;
+  return (
+    isOnline || (
+      <LazyIcon
+        icon="Alert01"
+        className={'color--ko ' + className}
+      />
+    )
+  );
 }

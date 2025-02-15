@@ -10,12 +10,6 @@ import { buildBackIndexFile } from './build-back-index.mjs';
  */
 export const deployTheCode = async (front, back) => {
   if (~process.argv.indexOf('--front')) {
-    try {
-      console.info(`collect known icons`);
-      await execAsync('node collect-known-icons.mjs');
-      console.info(`collect known icons: finished`);
-    } catch (error) {}
-
     const isIgnoreVersionUpdate = ~process.argv.indexOf('--IVU');
 
     const files = [`./${front.builtFolder}/*`, ...(isIgnoreVersionUpdate ? [] : ['./src/back/+version.json'])];

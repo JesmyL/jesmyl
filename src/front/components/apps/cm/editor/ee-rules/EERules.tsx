@@ -1,6 +1,5 @@
 import { atom, useAtom } from 'front/complect/atoms';
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
-import { IconSentStrokeRounded } from 'front/complect/the-icon/icons/sent';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
 import { mylib } from 'front/utils';
 import { useEffect, useRef, useState } from 'react';
 import { EeStorePack } from 'shared/api';
@@ -44,8 +43,8 @@ export default function EERules() {
       className="e-e-rules-editor"
       headTitle="Ё-Е правила"
       head={
-        <EvaSendButton
-          Icon={IconSentStrokeRounded}
+        <TheIconSendButton
+          icon="Sent"
           disabled={!words.length}
           className="margin-gap"
           confirm={

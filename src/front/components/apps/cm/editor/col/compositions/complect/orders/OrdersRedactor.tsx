@@ -1,14 +1,9 @@
 import TheButton from 'front/complect/Button';
 import IconButton from 'front/complect/the-icon/IconButton';
-import { IconCancel01StrokeRounded } from 'front/complect/the-icon/icons/cancel-01';
-import { IconLink02StrokeRounded } from 'front/complect/the-icon/icons/link-02';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
 import { BottomPopup } from '../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopup';
-import { IconEdit02StrokeRounded } from '../../../../../../../../complect/the-icon/icons/edit-02';
-import { IconPlusSignCircleStrokeRounded } from '../../../../../../../../complect/the-icon/icons/plus-sign-circle';
-import { IconViewStrokeRounded } from '../../../../../../../../complect/the-icon/icons/view';
-import { IconViewOffSlashStrokeRounded } from '../../../../../../../../complect/the-icon/icons/view-off-slash';
 import { ChordVisibleVariant } from '../../../../../Cm.model';
 import TheOrder from '../../../../../col/com/order/TheOrder';
 import { EditableCom } from '../../com/EditableCom';
@@ -43,8 +38,8 @@ export default function OrdersRedactor() {
       </>
       {ccom.orders?.map((ord, ordi, orda) => {
         const editNode = !ord.me.isAnchorInherit && (
-          <IconButton
-            Icon={ord.isAnchor ? IconLink02StrokeRounded : IconEdit02StrokeRounded}
+          <LazyIcon
+            icon={ord.isAnchor ? 'Link02' : 'Edit02'}
             className="margin-gap-h margin-gap-b pointer vertical-middle"
             onClick={() =>
               setToolProps({
@@ -60,9 +55,9 @@ export default function OrdersRedactor() {
         const isWithHead = ord.isWithHead();
 
         const cancelClickBetweenDataButtonNode = (
-          <IconButton
-            Icon={IconCancel01StrokeRounded}
-            className="color--ko"
+          <LazyIcon
+            icon="Cancel01"
+            className="pointer color--ko"
             onClick={() => setClickBetweenOrds(null)}
           />
         );
@@ -90,7 +85,7 @@ export default function OrdersRedactor() {
             <div className="margin-big-gap-h">
               {isWithHead ? null : ord.me.isAnchorInherit && ord.me.leadOrd && ord.me.anchorInheritIndex != null ? (
                 <IconButton
-                  Icon={ord.isVisible ? IconViewStrokeRounded : IconViewOffSlashStrokeRounded}
+                  icon={ord.isVisible ? 'View' : 'ViewOffSlash'}
                   confirm={
                     <>
                       Сделать {ord.me.anchorInheritIndex + 2}-ю часть ссылки на
@@ -153,7 +148,8 @@ export default function OrdersRedactor() {
       })}
       {!clickBetweenData && (
         <div className="flex center margin-big-gap">
-          <IconPlusSignCircleStrokeRounded
+          <LazyIcon
+            icon="PlusSignCircle"
             className="pointer margin-gap-h"
             onClick={() => setNewBlockAdderPopupCom(ccom)}
           />

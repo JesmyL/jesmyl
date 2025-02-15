@@ -1,7 +1,5 @@
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
-import { IconArrowRight01StrokeRounded } from '../../../complect/the-icon/icons/arrow-right-01';
-import { IconLeftToRightListBulletStrokeRounded } from '../../../complect/the-icon/icons/left-to-right-list-bullet';
-import { IconPlusSignStrokeRounded } from '../../../complect/the-icon/icons/plus-sign';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import useIsExpand from '../../expand/useIsExpand';
 import useFullContent from '../../fullscreen-content/useFullContent';
 import IconButton from '../../the-icon/IconButton';
@@ -21,8 +19,8 @@ export default function ScheduleWidgetLists() {
     isExpand =>
       isExpand &&
       rights.isCanTotalRedact && (
-        <EvaSendButton
-          Icon={IconPlusSignStrokeRounded}
+        <TheIconSendButton
+          icon="PlusSign"
           prefix="список"
           confirm="Создать новый список?"
           onSend={() => schListsSokiInvocatorClient.createCategory(null, scheduleScopeProps)}
@@ -54,10 +52,10 @@ export default function ScheduleWidgetLists() {
     <>
       {modalNode}
       <IconButton
-        Icon={IconLeftToRightListBulletStrokeRounded}
+        icon="LeftToRightListBullet"
         postfix={
           <>
-            Списки <IconArrowRight01StrokeRounded />
+            Списки <LazyIcon icon="ArrowRight01" />
           </>
         }
         onClick={() => screen()}

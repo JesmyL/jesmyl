@@ -3,21 +3,13 @@ import { useEffect, useMemo, useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetWid, ScheduleScopeProps } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
-import { IconArrowRight01StrokeRounded } from '../../complect/the-icon/icons/arrow-right-01';
-import { IconBookmark03StrokeRounded } from '../../complect/the-icon/icons/bookmark-03';
-import { IconCalendar03StrokeRounded } from '../../complect/the-icon/icons/calendar-03';
-import { IconDelete02StrokeRounded } from '../../complect/the-icon/icons/delete-02';
-import { IconFile02StrokeRounded } from '../../complect/the-icon/icons/file-02';
-import { IconPlusSignStrokeRounded } from '../../complect/the-icon/icons/plus-sign';
-import { IconSchoolReportCardStrokeRounded } from '../../complect/the-icon/icons/school-report-card';
-import { IconShapesStrokeRounded } from '../../complect/the-icon/icons/shapes';
 import { useAuth } from '../../components/index/atoms';
 import { QrCodeFullScreen } from '../qr-code/QrCodeFullScreen';
-import EvaSendButton from '../sends/eva-send-button/EvaSendButton';
 import SendButton from '../sends/send-button/SendButton';
+import TheIconSendButton from '../sends/the-icon-send-button/TheIconSendButton';
 import StrongControlDateTimeExtracter from '../strong-control/StrongDateTimeExtracter';
 import StrongEditableField from '../strong-control/field/StrongEditableField';
-import { IconQrCodeStrokeRounded } from '../the-icon/icons/qr-code';
+import { LazyIcon } from '../the-icon/LazyIcon';
 import useIsRedactArea from '../useIsRedactArea';
 import ScheduleWidgetCustomAttachments from './atts/custom/CustomAttachments';
 import ScheduleWidgetStartTimeText from './complect/StartTimeText';
@@ -63,13 +55,16 @@ export default function ScheduleWidget({
   const titleNode = (
     <div className="flex full-width between">
       <ScheduleWidgetTopicTitle
-        prefix={<IconCalendar03StrokeRounded />}
+        prefix={<LazyIcon icon="Calendar03" />}
         titleBox={schedule ?? {}}
         altTitle="Мероприятие"
         topicBox={schedule}
       />
       <span className="flex flex-gap">
-        <IconQrCodeStrokeRounded onClick={() => setIsOpenInviteQr(true)} />
+        <LazyIcon
+          icon="QrCode"
+          onClick={() => setIsOpenInviteQr(true)}
+        />
         {editIcon}
       </span>
     </div>
@@ -161,7 +156,7 @@ export default function ScheduleWidget({
             {rights.isCanRedact && isRedact ? (
               <StrongControlDateTimeExtracter
                 title="Начало"
-                Icon={IconCalendar03StrokeRounded}
+                icon="Calendar03"
                 value={dateValue}
                 takeDate="day"
                 takeTime="NO"
@@ -187,7 +182,7 @@ export default function ScheduleWidget({
                       fieldKey="title"
                       value={schedule}
                       isRedact
-                      Icon={IconSchoolReportCardStrokeRounded}
+                      icon="SchoolReportCard"
                       title="Заголовок"
                       onSend={value => schGeneralSokiInvocatorClient.rename(null, scheduleScopeProps, value)}
                     />
@@ -195,7 +190,7 @@ export default function ScheduleWidget({
                       fieldKey="topic"
                       value={schedule}
                       isRedact
-                      Icon={IconBookmark03StrokeRounded}
+                      icon="Bookmark03"
                       title="Тема"
                       onSend={value => schGeneralSokiInvocatorClient.setTopic(null, scheduleScopeProps, value)}
                     />
@@ -208,7 +203,7 @@ export default function ScheduleWidget({
                     isRedact={isRedact}
                     multiline
                     textClassName=" "
-                    Icon={IconFile02StrokeRounded}
+                    icon="File02"
                     title="Описание"
                     onSend={value => schGeneralSokiInvocatorClient.setDescription(null, scheduleScopeProps, value)}
                   />
@@ -235,10 +230,10 @@ export default function ScheduleWidget({
                     <ScheduleWidgetEventTypeList
                       postfix={
                         <>
-                          Шаблоны событий <IconArrowRight01StrokeRounded />
+                          Шаблоны событий <LazyIcon icon="ArrowRight01" />
                         </>
                       }
-                      Icon={IconShapesStrokeRounded}
+                      icon="Shapes"
                       schedule={schedule}
                     />
                     <ScheduleWidgetCustomAttachments tatts={schedule.tatts} />
@@ -246,8 +241,8 @@ export default function ScheduleWidget({
                       <ScheduleWidgetCopy schw={schedule.w} />
                     )}
                     {!schedule.start || (
-                      <EvaSendButton
-                        Icon={IconPlusSignStrokeRounded}
+                      <TheIconSendButton
+                        icon="PlusSign"
                         postfix="Добавить день"
                         confirm="Дни удалять не возможно! Создать новый?"
                         className="margin-gap-v"
@@ -255,9 +250,9 @@ export default function ScheduleWidget({
                       />
                     )}
                     {auth && auth.level >= 80 && (
-                      <EvaSendButton
+                      <TheIconSendButton
                         className="color--ko"
-                        Icon={IconDelete02StrokeRounded}
+                        icon="Delete02"
                         confirm="Восстановить расписание будет не возможно. Продолжить?"
                         postfix="Удалить расписание"
                         onSend={() => schGeneralSokiInvocatorClient.remove(null, scheduleScopeProps)}

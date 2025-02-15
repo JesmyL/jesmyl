@@ -1,6 +1,5 @@
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { FunctionComponent, memo } from 'react';
-import IconButton from '../../../../../complect/the-icon/IconButton';
-import { IconTvSmartSolidRounded, IconTvSmartStrokeRounded } from '../../../../../complect/the-icon/icons/tv-smart';
 import { useIsCanShowTextTranslation } from '../atoms';
 
 interface Props {
@@ -20,13 +19,17 @@ export const ScreenTranslationControlPanelShowMdButton = memo(function ShowMdBut
         onClick={onClick}
         className="pointer"
       >
-        <IconButton Icon={isCanShowTextTranslation ? IconTvSmartSolidRounded : IconTvSmartStrokeRounded} />
+        <LazyIcon
+          icon="TvSmart"
+          kind={isCanShowTextTranslation ? 'SolidRounded' : 'StrokeRounded'}
+        />
       </Parent>
     );
 
   return (
-    <IconButton
-      Icon={isCanShowTextTranslation ? IconTvSmartSolidRounded : IconTvSmartStrokeRounded}
+    <LazyIcon
+      icon="TvSmart"
+      kind={isCanShowTextTranslation ? 'SolidRounded' : 'StrokeRounded'}
       onClick={onClick}
     />
   );

@@ -1,4 +1,5 @@
 import { useAtomSet } from 'front/complect/atoms';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { InputWithLoadingIcon } from 'front/components/apps/cm/base/InputWithLoadingIcon';
 import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
@@ -6,11 +7,6 @@ import { emptyFunc } from 'shared/utils';
 import Dropdown from '../../../../../../../../complect/dropdown/Dropdown';
 import { DropdownItem } from '../../../../../../../../complect/dropdown/Dropdown.model';
 import { useConfirm } from '../../../../../../../../complect/modal/confirm/useConfirm';
-import { IconDashboardSpeed02StrokeRounded } from '../../../../../../../../complect/the-icon/icons/dashboard-speed-02';
-import { IconDelete01StrokeRounded } from '../../../../../../../../complect/the-icon/icons/delete-01';
-import { IconFlag03StrokeRounded } from '../../../../../../../../complect/the-icon/icons/flag-03';
-import { IconGridStrokeRounded } from '../../../../../../../../complect/the-icon/icons/grid';
-import { IconSchoolReportCardStrokeRounded } from '../../../../../../../../complect/the-icon/icons/school-report-card';
 import { useAuth } from '../../../../../../../index/atoms';
 import { ChordVisibleVariant } from '../../../../../Cm.model';
 import { TheCom } from '../../../../../col/com/TheCom';
@@ -45,7 +41,7 @@ export default function EditableCompositionMain() {
     <>
       {confirmNode}
       <InputWithLoadingIcon
-        Icon={IconSchoolReportCardStrokeRounded}
+        icon="SchoolReportCard"
         label="Название"
         defaultValue={ccom.name}
         corrects={nameCorrects}
@@ -55,7 +51,7 @@ export default function EditableCompositionMain() {
       <TextCorrectMessages corrects={nameCorrects} />
 
       <InputWithLoadingIcon
-        Icon={IconDashboardSpeed02StrokeRounded}
+        icon="DashboardSpeed02"
         label="Ударов в минуту"
         type="number"
         defaultValue={'' + (ccom.beatsPerMinute ?? '')}
@@ -63,7 +59,7 @@ export default function EditableCompositionMain() {
         onInput={emptyFunc}
       />
       <div className="flex full-width between margin-gap-v">
-        <IconDashboardSpeed02StrokeRounded />
+        <LazyIcon icon="DashboardSpeed02" />
         <div className="margin-gap-h nowrap">Размерность</div>
         <Dropdown
           id={ccom.meterSize}
@@ -80,7 +76,7 @@ export default function EditableCompositionMain() {
           cmComClientInvocatorMethods.changeLanguage(null, ccom.wid, ccom.langi ? 0 : 1);
         }}
       >
-        <IconFlag03StrokeRounded />
+        <LazyIcon icon="Flag03" />
         <div className="title half-width text-center">Язык</div>
         <div className="half-width text-center">{ccom.langn}</div>
       </div>
@@ -91,7 +87,7 @@ export default function EditableCompositionMain() {
           cmComClientInvocatorMethods.makeBemoled(null, ccom.wid, ccom.isBemoled === 1 ? 0 : 1);
         }}
       >
-        <IconGridStrokeRounded />
+        <LazyIcon icon="Grid" />
         <div className="title half-width  text-center">Сделать {ccom.isBemoled ? 'диезным' : 'бемольным'}</div>
         <div className="half-width" />
       </div>
@@ -104,7 +100,7 @@ export default function EditableCompositionMain() {
             cmComClientInvocatorMethods.remove(null, ccom.wid);
           }}
         >
-          <IconDelete01StrokeRounded />
+          <LazyIcon icon="Delete01" />
           <div className="title half-width text-center">Удалить песню</div>
           <div className="half-width" />
         </div>

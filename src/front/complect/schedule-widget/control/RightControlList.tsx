@@ -1,8 +1,6 @@
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
 import { ScheduleWidgetRightTexts, ScheduleWidgetRightsCtrl } from 'shared/api';
 import styled from 'styled-components';
-import { IconToggleOffStrokeRounded } from '../../../complect/the-icon/icons/toggle-off';
-import { IconToggleOnStrokeRounded } from '../../../complect/the-icon/icons/toggle-on';
 
 export default function ScheduleWidgetRightControlList({
   R,
@@ -50,10 +48,10 @@ export default function ScheduleWidgetRightControlList({
               )}
             </div>
 
-            <EvaSendButton
+            <TheIconSendButton
               disabled={isCantEdit || !isCan || type.always || !!isDisabled?.(type, typei)}
               className={(isReverse ? !isHas : isHas) ? 'color--ok' : 'color--3'}
-              Icon={(isReverse ? !isHas : isHas) ? IconToggleOnStrokeRounded : IconToggleOffStrokeRounded}
+              icon={(isReverse ? !isHas : isHas) ? 'ToggleOn' : 'ToggleOff'}
               onSend={() => onSend(rightCtrl.switchRights(R, type.id))}
             />
           </div>

@@ -1,6 +1,7 @@
 import { FullContent } from 'front/complect/fullscreen-content/FullContent';
 import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/scope-props-contexts';
 import { schGamesSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { mylib } from 'front/utils';
 import { useMemo, useState } from 'react';
 import { IScheduleWidgetTeamCriteria, IScheduleWidgetUser, ScheduleGameCriteriaScopeProps } from 'shared/api';
@@ -9,9 +10,6 @@ import TheButton from '../../../../Button';
 import DebouncedSearchInput from '../../../../DebouncedSearchInput';
 import { ExpandableContent } from '../../../../expand/ExpandableContent';
 import StrongEditableField from '../../../../strong-control/field/StrongEditableField';
-import IconButton from '../../../../the-icon/IconButton';
-import { IconPencilEdit01StrokeRounded } from '../../../../the-icon/icons/pencil-edit-01';
-import { IconSortingAZ01StrokeRounded } from '../../../../the-icon/icons/sorting-a-z-01';
 import { useScheduleWidgetRightsContext } from '../../../useScheduleWidget';
 import ScheduleWidgetRemovableUserFace from '../RemovableUserFace';
 import { checkIsUserPhotoable } from '../utils';
@@ -79,7 +77,10 @@ export default function ScheduleWidgetSortCriteria({ criteria, criteriai }: Prop
                 schGamesSokiInvocatorClient.setCriteriaTitle(null, criteriaScopeProps, value, criteria.title)
               }
             />
-            <IconPencilEdit01StrokeRounded onClick={() => setIsRenaming(isNIs)} />
+            <LazyIcon
+              icon="PencilEdit01"
+              onClick={() => setIsRenaming(isNIs)}
+            />
           </div>
         }
       >
@@ -99,8 +100,9 @@ export default function ScheduleWidgetSortCriteria({ criteria, criteriai }: Prop
                   key={user.mi}
                   user={user}
                   buttons={
-                    <IconButton
-                      Icon={IconSortingAZ01StrokeRounded}
+                    <LazyIcon
+                      className="pointer"
+                      icon="SortingAZ01"
                       onClick={() => {
                         setIsOpenSorter(true);
                         setInsertUser(user);

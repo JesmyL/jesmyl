@@ -1,12 +1,9 @@
 import Modal from 'front/complect/modal/Modal/Modal';
 import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
 import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
 import { useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetDayEvent, ScheduleDayScopeProps } from 'shared/api';
-import { IconCropStrokeRounded } from '../../../../complect/the-icon/icons/crop';
-import { IconDelete01StrokeRounded } from '../../../../complect/the-icon/icons/delete-01';
-import { IconShapesStrokeRounded } from '../../../../complect/the-icon/icons/shapes';
 import IconButton from '../../../the-icon/IconButton';
 import ScheduleWidgetTopicTitle from '../../complect/TopicTitle';
 import ScheduleWidgetEventType from '../../events/EventType';
@@ -27,20 +24,20 @@ export function ScheduleWidgetDayEventEventActions({ schedule, event, onEventCut
   return (
     <>
       <IconButton
-        Icon={IconShapesStrokeRounded}
+        icon="Shapes"
         postfix="Редактировать шаблон события"
         className="flex-max margin-gap-v"
         onClick={setIsOpenModal}
       />
       <IconButton
-        Icon={IconCropStrokeRounded}
+        icon="Crop"
         postfix="Вырезать событие"
         className="flex-max margin-gap-v"
         onClick={onEventCut}
       />
       {schedule.types && (
-        <EvaSendButton
-          Icon={IconDelete01StrokeRounded}
+        <TheIconSendButton
+          icon="Delete01"
           postfix="Удалить событие"
           confirm={
             <ScheduleWidgetTopicTitle

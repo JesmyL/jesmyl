@@ -5,7 +5,6 @@ import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/edito
 import { useState } from 'react';
 import { BottomPopupItem } from '../../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
 import IconCheckbox from '../../../../../../../../../complect/the-icon/IconCheckbox';
-import { IconTextStrokeRounded } from '../../../../../../../../../complect/the-icon/icons/text';
 import { ChordVisibleVariant } from '../../../../../../Cm.model';
 import TheOrder from '../../../../../../col/com/order/TheOrder';
 import { OrdersRedactorOrderToolsProps } from '../OrdersRedactorOrderTools';
@@ -19,7 +18,7 @@ export const OrdersRedactorOrderToolsChangeText = ({ com, ord, ordi, onClose }: 
   return (
     <>
       <BottomPopupItem
-        Icon={IconTextStrokeRounded}
+        icon="Text"
         title="Заменить текст"
         onClick={setIsModalOpen}
       />

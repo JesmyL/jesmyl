@@ -1,5 +1,5 @@
 import { useAtomValue } from 'front/complect/atoms';
-import { IconAlert01StrokeRounded } from 'front/complect/the-icon/icons/alert-01';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { indexIDB } from 'front/components/index/db/index-idb';
 import { useEffect } from 'react';
 import { CmComWid } from 'shared/api';
@@ -36,7 +36,7 @@ export default function EditCompositionBusyInfo({ comw }: { comw: CmComWid }) {
 
   return (
     <StyledIsThereOtherFirstRedactorUserDetect className="color--ko flex flex-gap margin-gap">
-      <IconAlert01StrokeRounded />
+      <LazyIcon icon="Alert01" />
       Редактирует {comBusies[0].fio}
     </StyledIsThereOtherFirstRedactorUserDetect>
   );

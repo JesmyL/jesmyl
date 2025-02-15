@@ -59,6 +59,7 @@ import { iconPackOfCheckmarkSquare02 } from './icons/checkmark-square-02';
 import { iconPackOfCheckmarkSquare04 } from './icons/checkmark-square-04';
 import { iconPackOfCircle } from './icons/circle';
 import { iconPackOfCircleArrowDataTransferDiagonal } from './icons/circle-arrow-data-transfer-diagonal';
+import { iconPackOfCircleArrowRight02 } from './icons/circle-arrow-right-02';
 import { iconPackOfClock01 } from './icons/clock-01';
 import { iconPackOfCloud } from './icons/cloud';
 import { iconPackOfCloudDownload } from './icons/cloud-download';
@@ -71,11 +72,13 @@ import { iconPackOfCopy01 } from './icons/copy-01';
 import { iconPackOfCopy02 } from './icons/copy-02';
 import { iconPackOfCrop } from './icons/crop';
 import { iconPackOfCube } from './icons/cube';
+import { iconPackOfDashboardSpeed01 } from './icons/dashboard-speed-01';
 import { iconPackOfDashboardSpeed02 } from './icons/dashboard-speed-02';
 import { iconPackOfDashboardSquareAdd } from './icons/dashboard-square-add';
 import { iconPackOfDashboardSquareRemove } from './icons/dashboard-square-remove';
 import { iconPackOfDelete01 } from './icons/delete-01';
 import { iconPackOfDelete02 } from './icons/delete-02';
+import { iconPackOfDistributeVerticalTop } from './icons/distribute-vertical-top';
 import { iconPackOfDownload04 } from './icons/download-04';
 import { iconPackOfEdit01 } from './icons/edit-01';
 import { iconPackOfEdit02 } from './icons/edit-02';
@@ -88,6 +91,7 @@ import { iconPackOfFile02 } from './icons/file-02';
 import { iconPackOfFileImport } from './icons/file-import';
 import { iconPackOfFileMusic } from './icons/file-music';
 import { iconPackOfFileNotFound } from './icons/file-not-found';
+import { iconPackOfFileSearch } from './icons/file-search';
 import { iconPackOfFileValidation } from './icons/file-validation';
 import { iconPackOfFlag03 } from './icons/flag-03';
 import { iconPackOfFlash } from './icons/flash';
@@ -113,6 +117,7 @@ import { iconPackOfIncognito } from './icons/incognito';
 import { iconPackOfInformationCircle } from './icons/information-circle';
 import { iconPackOfKeyboard } from './icons/keyboard';
 import { iconPackOfLanguageSkill } from './icons/language-skill';
+import { iconPackOfLayers01 } from './icons/layers-01';
 import { iconPackOfLeftToRightListBullet } from './icons/left-to-right-list-bullet';
 import { iconPackOfLeftToRightListDash } from './icons/left-to-right-list-dash';
 import { iconPackOfLink01 } from './icons/link-01';
@@ -137,6 +142,7 @@ import { iconPackOfMinusSignCircle } from './icons/minus-sign-circle';
 import { iconPackOfMinusSignSquare } from './icons/minus-sign-square';
 import { iconPackOfMoreVerticalCircle01 } from './icons/more-vertical-circle-01';
 import { iconPackOfMusicNote01 } from './icons/music-note-01';
+import { iconPackOfMusicNote03 } from './icons/music-note-03';
 import { iconPackOfNote03 } from './icons/note-03';
 import { iconPackOfNoteEdit } from './icons/note-edit';
 import { iconPackOfNotification01 } from './icons/notification-01';
@@ -178,6 +184,7 @@ import { iconPackOfSourceCodeCircle } from './icons/source-code-circle';
 import { iconPackOfSquare } from './icons/square';
 import { iconPackOfSquareLock02 } from './icons/square-lock-02';
 import { iconPackOfStar } from './icons/star';
+import { iconPackOfStarCircle } from './icons/star-circle';
 import { iconPackOfTarget03 } from './icons/target-03';
 import { iconPackOfTask01 } from './icons/task-01';
 import { iconPackOfTeacher } from './icons/teacher';
@@ -185,10 +192,12 @@ import { iconPackOfTelegram } from './icons/telegram';
 import { iconPackOfText } from './icons/text';
 import { iconPackOfTextAlignLeft } from './icons/text-align-left';
 import { iconPackOfTextFont } from './icons/text-font';
+import { iconPackOfTextVerticalAlignment } from './icons/text-vertical-alignment';
 import { iconPackOfTickDouble02 } from './icons/tick-double-02';
 import { iconPackOfToggleOff } from './icons/toggle-off';
 import { iconPackOfToggleOn } from './icons/toggle-on';
 import { iconPackOfTvSmart } from './icons/tv-smart';
+import { iconPackOfUmbrella } from './icons/umbrella';
 import { iconPackOfUnavailable } from './icons/unavailable';
 import { iconPackOfUser } from './icons/user';
 import { iconPackOfUserAdd01 } from './icons/user-add-01';
@@ -202,17 +211,30 @@ import { iconPackOfUserRemove02 } from './icons/user-remove-02';
 import { iconPackOfView } from './icons/view';
 import { iconPackOfViewOff } from './icons/view-off';
 import { iconPackOfViewOffSlash } from './icons/view-off-slash';
+import { iconPackOfVoice } from './icons/voice';
 import { iconPackOfVoiceId } from './icons/voice-id';
+import { iconPackOfVynil03 } from './icons/vynil-03';
 import { iconPackOfWechat } from './icons/wechat';
 import { iconPackOfWorkHistory } from './icons/work-history';
 import { TheIconSelfPack } from './model';
 
-export const theIconKnownPack: Record<KnownIconNameForPack, TheIconSelfPack> = {
+export const theIconKnownPack: Record<TheIconKnownName, TheIconSelfPack> = {
   AddCircleHalfDot: iconPackOfAddCircleHalfDot,
   Alert01: iconPackOfAlert01,
   Alert02: iconPackOfAlert02,
   Alien02: iconPackOfAlien02,
+  CircleArrowRight02: iconPackOfCircleArrowRight02,
+  FileSearch: iconPackOfFileSearch,
   Anonymous: iconPackOfAnonymous,
+  DashboardSpeed01: iconPackOfDashboardSpeed01,
+  MusicNote03: iconPackOfMusicNote03,
+  StarCircle: iconPackOfStarCircle,
+  Vynil03: iconPackOfVynil03,
+  DistributeVerticalTop: iconPackOfDistributeVerticalTop,
+  Layers01: iconPackOfLayers01,
+  TextVerticalAlignment: iconPackOfTextVerticalAlignment,
+  Umbrella: iconPackOfUmbrella,
+  Voice: iconPackOfVoice,
   ApproximatelyEqualSquare: iconPackOfApproximatelyEqualSquare,
   Arrange: iconPackOfArrange,
   ArrowDataTransferDiagonal: iconPackOfArrowDataTransferDiagonal,

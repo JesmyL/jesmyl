@@ -1,4 +1,3 @@
-import { IconPlaylist03StrokeRounded } from 'front/complect/the-icon/icons/playlist-03';
 import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { BottomPopupItem } from '../../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
 import useModal from '../../../../../../../../../complect/modal/useModal';
@@ -71,7 +70,7 @@ export const OrdersRedactorOrderToolsChordBind = ({ com, ord, ordi, onClose }: O
     <>
       {modalNode}
       <BottomPopupItem
-        Icon={IconPlaylist03StrokeRounded}
+        icon="Playlist03"
         title="Аккорды"
         onClick={openModal}
       />

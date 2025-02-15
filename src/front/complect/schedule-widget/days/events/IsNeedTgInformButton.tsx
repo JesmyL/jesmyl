@@ -1,6 +1,4 @@
-import EvaSendButton from 'front/complect/sends/eva-send-button/EvaSendButton';
-import { IconNotification01StrokeRounded } from 'front/complect/the-icon/icons/notification-01';
-import { IconNotificationOff01StrokeRounded } from 'front/complect/the-icon/icons/notification-off-01';
+import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
 
 type Props = {
   disabled: boolean;
@@ -10,9 +8,9 @@ type Props = {
 
 export const DayEventIsNeedTgInformButton = ({ disabled, isNeedInform, onSend }: Props) => {
   return (
-    <EvaSendButton
+    <TheIconSendButton
       disabled={disabled}
-      Icon={isNeedInform ? IconNotificationOff01StrokeRounded : IconNotification01StrokeRounded}
+      icon={isNeedInform ? 'NotificationOff01' : 'Notification01'}
       postfix={isNeedInform ? 'TG-Напоминания не будет' : 'TG-Напоминание будет'}
       onSend={() => onSend(isNeedInform ? 1 : 0)}
     />

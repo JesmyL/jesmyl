@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { IconCheckmarkCircle02StrokeRounded } from '../complect/the-icon/icons/checkmark-circle-02';
-import { IconEdit02StrokeRounded } from '../complect/the-icon/icons/edit-02';
 import IconButton from './the-icon/IconButton';
+import { LazyIcon } from './the-icon/LazyIcon';
 
 type booleanOrNil = boolean | nil;
 type OnEditStart = ((isSelfRedact: boolean) => void) | nil;
@@ -34,9 +33,9 @@ export function useIsRedactAreaWithInit(
     editIcon:
       redactable && isCanRedact ? (
         !(redact ?? isSelfRedact) ? (
-          <IconButton
-            Icon={IconEdit02StrokeRounded}
-            className="edit-button"
+          <LazyIcon
+            icon="Edit02"
+            className="pointer edit-button"
             onClick={event => {
               event.stopPropagation();
               if (redact == null) setIsSelfRedact(true);
@@ -46,7 +45,7 @@ export function useIsRedactAreaWithInit(
         ) : (
           isShowDoneButton && (
             <IconButton
-              Icon={IconCheckmarkCircle02StrokeRounded}
+              icon="CheckmarkCircle02"
               className="edit-button color--ok"
               disabled={redact === true && !isSelfRedact}
               onClick={event => {

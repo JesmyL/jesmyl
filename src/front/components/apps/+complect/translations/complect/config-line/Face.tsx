@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import IconButton from '../../../../../../complect/the-icon/IconButton';
-import { IconCancel01StrokeRounded } from '../../../../../../complect/the-icon/icons/cancel-01';
 import { ScreenTranslationConfig } from '../../model';
 
 export interface ScreenTranslationsFaceProps {
@@ -26,7 +25,7 @@ export const ScreenTranslationsFace = ({
       <span>{config.title}</span>
       {putOnClose && (
         <IconButton
-          Icon={IconCancel01StrokeRounded}
+          icon="Cancel01"
           confirm="Закрыть окно?"
           onClick={putOnClose(configi)}
         />

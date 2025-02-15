@@ -1,7 +1,3 @@
-import {
-  IconCheckmarkCircle02SolidRounded,
-  IconCheckmarkCircle02StrokeRounded,
-} from '../../../../../../../complect/the-icon/icons/checkmark-circle-02';
 import useSelectedComs from '../../../../base/useSelectedComs';
 import { ComTool } from '../ComTool';
 import { useComToolsCcomContext } from '../useMigratableComTools';
@@ -14,7 +10,8 @@ export const SelectedToggleTool = () => {
     ccom && (
       <ComTool
         title={isSelected(ccom.wid) ? 'Убрать из выбранных' : 'Выбрать песню'}
-        Icon={isSelected(ccom.wid) ? IconCheckmarkCircle02SolidRounded : IconCheckmarkCircle02StrokeRounded}
+        icon="CheckmarkCircle02"
+        iconKind={isSelected(ccom.wid) ? 'SolidRounded' : 'StrokeRounded'}
         onClick={() => toggleSelectedCom(ccom.wid)}
       />
     )

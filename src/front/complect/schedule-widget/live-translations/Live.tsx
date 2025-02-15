@@ -11,7 +11,6 @@ import {
 import { soki } from 'front/soki';
 import { useEffect, useState } from 'react';
 import { IScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
-import { IconComputerStrokeRounded } from '../../../complect/the-icon/icons/computer';
 import { ScreenTranslationControlPanelShowMdButton } from '../../../components/apps/+complect/translations/controls/ShowMdButton';
 import BibleTranslationSlide from '../../../components/apps/bible/translations/BibleTranslationSlide';
 import { CmLiveTranslationScreen } from '../../../components/apps/cm/translation/complect/live/Screen';
@@ -67,7 +66,7 @@ export const ScheduleWidgetLiveTranslation = ({ onClose, schw, isShowMarkdownOnl
             return (
               <div key={login}>
                 <IconButton
-                  Icon={IconComputerStrokeRounded}
+                  icon="Computer"
                   postfix={fio}
                   onClick={() => setStreamerLogin(login)}
                 />

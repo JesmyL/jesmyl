@@ -1,9 +1,7 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import IconButton from 'front/complect/the-icon/IconButton';
 import IconCheckbox from 'front/complect/the-icon/IconCheckbox';
-import { IconBookOpen02StrokeRounded } from 'front/complect/the-icon/icons/book-open-02';
-import { IconCancel01StrokeRounded } from 'front/complect/the-icon/icons/cancel-01';
-import { IconListViewStrokeRounded } from 'front/complect/the-icon/icons/list-view';
+import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
 import { InputWithLoadingIcon } from 'front/components/apps/cm/base/InputWithLoadingIcon';
 import { cmCatClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
@@ -30,7 +28,7 @@ export default function CategoryBinds() {
             corrects={ccom.corrects[`setCatNativeNum:${cat.wid}`]}
           >
             <InputWithLoadingIcon
-              Icon={IconBookOpen02StrokeRounded}
+              icon="BookOpen02"
               label={cat.name}
               type="number"
               defaultValue={`${cat.dict?.[ccom.wid] || ''}`}
@@ -47,7 +45,7 @@ export default function CategoryBinds() {
             />
             {cat.dict?.[ccom.wid] != null && (
               <IconButton
-                Icon={IconCancel01StrokeRounded}
+                icon="Cancel01"
                 postfix={isNaN(cat.dict?.[ccom.wid]!) ? 'Корректно очистить' : 'Удалить'}
                 confirm={`Очистить номер из сборника ${cat.name}?`}
                 className="pointer color--ko margin-big-gap-l margin-gap-b"
@@ -66,7 +64,7 @@ export default function CategoryBinds() {
             className="flex flex-gap flex-max pointer"
             onClick={() => cmCatClientInvocatorMethods.toggleComExistence(null, ccom.wid, cat.wid)}
           >
-            <IconListViewStrokeRounded />
+            <LazyIcon icon="ListView" />
             <span>{cat.name} </span>
             <IconCheckbox checked={cat.stack?.some(comw => ccom.wid === comw)} />
           </EditContainerCorrectsInformer>

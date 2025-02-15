@@ -3,7 +3,6 @@ import { ModalFooter } from 'front/complect/modal/Modal/ModalFooter';
 import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
 import IconButton from 'front/complect/the-icon/IconButton';
 import IconCheckbox from 'front/complect/the-icon/IconCheckbox';
-import { IconArrowRight01StrokeRounded } from 'front/complect/the-icon/icons/arrow-right-01';
 import { blockStyles } from 'front/components/apps/cm/col/com/block-styles/BlockStyles';
 import { StyleBlock } from 'front/components/apps/cm/col/com/block-styles/StyleBlock';
 import { useEffect, useState } from 'react';
@@ -38,7 +37,7 @@ export const OrdersRedactorAdditionsEtapsModalInner = ({
   const nextEtapFooter = (
     <ModalFooter>
       <IconButton
-        Icon={IconArrowRight01StrokeRounded}
+        icon="ArrowRight01"
         prefix="Следующий этап"
         disabled={
           etap === CmNewOrderMakeEtap.Text
