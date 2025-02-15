@@ -31,7 +31,6 @@ export const tgBotUrlController = async (
 Отправку такого сообщения нужно подтвердить Админу.
 
 `;
-  targetBot.refreshAdmins();
 
   const keys: (TelegramBot.InlineKeyboardButton & { cb: JTgBotCallbackQuery })[][] = [
     [
@@ -99,9 +98,8 @@ export const tgBotUrlController = async (
       {
         text: '🔄 Перечитать информацию группы 🔄',
         callback_data: 'refresh-dsc',
-        cb: async bot => {
+        cb: async () => {
           const knowns = await refreshDescription();
-          await bot.refreshAdmins();
 
           adminBot.postMessage(`Информация группы перечитана. Известные ссылки:\n\n${knowns.join('\n')}`);
         },
@@ -126,7 +124,8 @@ export const tgBotUrlController = async (
 
   targetBot.onChatMessages(async (bot, message) => {
     if (message.from == null || message.from.is_bot) return;
-    if (bot.admins[message.from.id] != null) return;
+    const id = message.from.id;
+    if ((await bot.getAdmins()).some(admin => admin.user.id === id)) return;
 
     const sendText = message.text ?? message.caption;
 
@@ -152,7 +151,7 @@ export const tgBotUrlController = async (
     const alertMessage = `Сообщения, содержащие неизвестные ссылки (не указанные в описании группы <b>${message.chat.title}</b>), должны пройти модерацию от Админов.\nСообщение, которое вы отправили будет переслано обратно в автоматическом режиме после прохождения модерации.`;
 
     try {
-      await bot.sendMessage(message.from.id, alertMessage);
+      await bot.sendMessage(id, alertMessage);
     } catch (error) {
       const deleteTime = 30;
       const sentMessage = await bot.postMessage(

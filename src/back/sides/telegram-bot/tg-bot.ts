@@ -1,10 +1,4 @@
-import TgBot, {
-  ChatMember,
-  InlineKeyboardButton,
-  InlineKeyboardMarkup,
-  SendMessageOptions,
-  User,
-} from 'node-telegram-bot-api';
+import TgBot, { InlineKeyboardButton, InlineKeyboardMarkup, SendMessageOptions, User } from 'node-telegram-bot-api';
 import { SokiAuthLogin } from 'shared/api';
 import { emptyFunc, makeRegExp, smylib } from 'shared/utils';
 import { Stream } from 'stream';
@@ -13,8 +7,6 @@ import { JTgBotCallbackQuery, JTgBotChatMessageCallback } from './model';
 import { JesmylTelegramBotWrapper } from './tg-bot-wrapper';
 
 const botName = 'jesmylbot';
-
-const emptyAdmins = { 0: {} as never };
 const emojiesSet: Set<string> = new Set();
 
 export type FreeAnswerCallbackQueryOptions = OmitOwn<Partial<TgBot.AnswerCallbackQueryOptions>, 'callback_query_id'>;
@@ -24,7 +16,6 @@ export class JesmylTelegramBot {
   logger: TgLogger;
   private logAllAsJSON?: boolean;
   private _bot: JesmylTelegramBotWrapper;
-  admins: Record<number, ChatMember> = emptyAdmins;
   botName = botName;
   uniqPrefix: string;
   sendMessage: (
@@ -98,11 +89,6 @@ export class JesmylTelegramBot {
 
   makeSendMessageOptions(keyboard: (InlineKeyboardButton & { cb: JTgBotCallbackQuery })[][], keyPrefix?: string) {
     return this._bot.makeOptionsKeyboard(this, keyboard, false, keyPrefix);
-  }
-
-  refreshAdmins() {
-    this.admins = emptyAdmins;
-    return this.getAdmins();
   }
 
   onChatMessages(cb: JTgBotChatMessageCallback) {
