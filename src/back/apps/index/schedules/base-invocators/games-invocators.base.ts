@@ -1,16 +1,14 @@
+import { makeTwiceKnownName } from 'back/complect/makeTwiceKnownName';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { mylib } from 'front/utils';
 import {
   IScheduleWidgetTeamCriteria,
   IScheduleWidgetTeamGame,
   IScheduleWidgetTeamGameMi,
-  makeTwiceKnownName,
   ScheduleGameCriteriaScopeProps,
   ScheduleGameScopeProps,
 } from 'shared/api';
 import { SchGamesSokiInvocatorMethods } from 'shared/api/invocators/schedules/invocators.model';
-import { smylib } from 'shared/utils';
-import { nounPronsWordsFileStore } from '../../file-stores';
 import { modifySchedule } from '../schedule-modificators';
 import { scheduleTitleInBrackets } from './general-invocators.base';
 
@@ -37,10 +35,7 @@ class SchGamesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGamesSo
               return {
                 mi: mi++,
                 users,
-                title: makeTwiceKnownName(
-                  smylib.randomItem(smylib.keys(nounPronsWordsFileStore.getValue().pronouns)),
-                  smylib.randomItem(smylib.keys(nounPronsWordsFileStore.getValue().nouns)),
-                ).join(' '),
+                title: makeTwiceKnownName(),
               };
             });
           }),

@@ -1,10 +1,9 @@
 import { FileStore } from 'back/complect/FileStore';
-import { IndexValues, NounPronsType } from 'shared/api';
+import { NounPronsType } from 'back/complect/model';
+import { IndexValues } from 'shared/api';
 
-export const nounPronsWordsFileStore = new FileStore<NounPronsType>('/apps/index/nounPronsWords.json', {
-  nouns: {},
-  pronouns: {},
-});
+export const nounsFileStore = new FileStore<NounPronsType>('/apps/index/nouns.json', { words: {} });
+export const pronounsFileStore = new FileStore<NounPronsType>('/apps/index/pronouns.json', { words: {} });
 
 export const appVersionFileStore = new FileStore<{ num: number }>('/+version.json', { num: 0 });
 export const valuesFileStore = new FileStore<IndexValues>('/values', { chatUrl: '' });

@@ -1,3 +1,4 @@
+import { makeTwiceKnownName } from 'back/complect/makeTwiceKnownName';
 import { tokenSecretFileStore } from 'back/complect/soki/SokiServer';
 import { supportTelegramAuthorizations } from 'back/sides/telegram-bot/prod/authorize';
 import { prodTelegramBot } from 'back/sides/telegram-bot/prod/prod-bot';
@@ -10,14 +11,13 @@ import {
   IScheduleWidget,
   IScheduleWidgetUser,
   LocalSokiAuth,
-  makeTwiceKnownName,
   ScheduleWidgetRegType,
   scheduleWidgetRegTypeRights,
   TelegramNativeAuthUserData,
 } from 'shared/api';
 import { IndexBasicsSokiInvocatorModel } from 'shared/api/invocators/index/basics-invocators.model';
-import { itNNull, smylib } from 'shared/utils';
-import { appVersionFileStore, nounPronsWordsFileStore, valuesFileStore } from './file-stores';
+import { itNNull, makeRegExp, smylib } from 'shared/utils';
+import { appVersionFileStore, valuesFileStore } from './file-stores';
 import { indexServerInvocatorShareMethods } from './invocators.shares';
 import { schGeneralSokiInvocatorBaseServer } from './schedules/base-invocators/general-invocators.base';
 import { schedulesFileStore } from './schedules/file-stores';
@@ -102,10 +102,7 @@ class IndexBasicsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexBa
             }
           },
         getDeviceId: () => async () => {
-          return (makeTwiceKnownName(
-            smylib.randomItem(smylib.keys(nounPronsWordsFileStore.getValue().pronouns)),
-            smylib.randomItem(smylib.keys(nounPronsWordsFileStore.getValue().nouns)),
-          ).join('_') +
+          return (makeTwiceKnownName().replace(makeRegExp('/ /g'), '_') +
             '_' +
             Array(5)
               .fill(0)

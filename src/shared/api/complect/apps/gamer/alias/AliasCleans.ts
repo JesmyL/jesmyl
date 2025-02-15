@@ -1,6 +1,5 @@
-import { makeTwiceKnownName, NounPronsType } from 'shared/api';
-import { makeRegExp, SMyLib, smylib } from 'shared/utils';
-import { AliasWordInfo, AliasWordsPack, GamerAliasRoomState } from './alias.model';
+import { smylib } from 'shared/utils';
+import { AliasWordInfo, GamerAliasRoomState } from './alias.model';
 
 export class AliasCleans {
   static computeGameScore = (
@@ -86,80 +85,81 @@ export class AliasCleans {
 
   private static tokenizedWordInfoStorage: Record<string, AliasWordInfo[]> = {};
 
-  static randomSortedInfos = (
-    id: string,
-    dicts: number[] | und,
-    packs: AliasWordsPack[],
-    nounsProns: NounPronsType | und,
-  ): AliasWordInfo[] => {
-    if (dicts === undefined || nounsProns === undefined) return [];
+  // static randomSortedInfos = (
+  //   id: string,
+  //   dicts: number[] | und,
+  //   packs: AliasWordsPack[],
+  //   nounsDict: NounPronsType | und,
+  //   pronounsDict: NounPronsType | und,
+  // ): AliasWordInfo[] => {
+  //   if (dicts === undefined || nounsDict === undefined || pronounsDict === undefined) return [];
 
-    if (this.tokenizedWordInfoStorage[id] !== undefined) return this.tokenizedWordInfoStorage[id];
+  //   if (this.tokenizedWordInfoStorage[id] !== undefined) return this.tokenizedWordInfoStorage[id];
 
-    const packInfos: AliasWordInfo[][] = [];
+  //   const packInfos: AliasWordInfo[][] = [];
 
-    dicts.forEach((max, packi) => {
-      if (max === 0) return 0;
+  //   dicts.forEach((max, packi) => {
+  //     if (max === 0) return 0;
 
-      const packWords = packs[packi].words;
+  //     const packWords = packs[packi].words;
 
-      if (smylib.isNum(packWords)) {
-        const nouns = smylib.toRandomSorted(smylib.keys(nounsProns.nouns).slice(0, -1));
-        let pronounsSorted: string[] = [];
-        let nounsSorted: string[] = [];
-        const isSpecialMax = max < 0;
+  //     if (smylib.isNum(packWords)) {
+  //       const nouns = smylib.toRandomSorted(smylib.keys(nounsDict.words).slice(0, -1));
+  //       let pronounsSorted: string[] = [];
+  //       let nounsSorted: string[] = [];
+  //       const isSpecialMax = max < 0;
 
-        if (!isSpecialMax) {
-          const pronouns = smylib.toRandomSorted(smylib.keys(nounsProns.pronouns).slice(0, -1));
-          const minLen = Math.min(nouns.length, pronouns.length);
+  //       if (!isSpecialMax) {
+  //         const pronouns = smylib.toRandomSorted(smylib.keys(pronounsDict.words).slice(0, -1));
+  //         const minLen = Math.min(nouns.length, pronouns.length);
 
-          pronounsSorted = pronouns.slice(0, minLen);
-          nounsSorted = nouns.slice(0, minLen);
-        } else nounsSorted = nouns;
+  //         pronounsSorted = pronouns.slice(0, minLen);
+  //         nounsSorted = nouns.slice(0, minLen);
+  //       } else nounsSorted = nouns;
 
-        packInfos.push(
-          nounsSorted.slice(0, max).map((noun, nouni): AliasWordInfo => {
-            const weight = isSpecialMax
-              ? nounsProns.nouns[noun] - 1
-              : nounsProns.nouns[noun] + nounsProns.pronouns[pronounsSorted[nouni]];
+  //       packInfos.push(
+  //         nounsSorted.slice(0, max).map((noun, nouni): AliasWordInfo => {
+  //           const weight = isSpecialMax
+  //             ? nounsDict.words[noun] - 1
+  //             : nounsDict.words[noun] + pronounsDict.words[pronounsSorted[nouni]];
 
-            return {
-              wordi: nouni,
-              minus: 1,
-              plus: weight,
-              word: isSpecialMax
-                ? noun.toUpperCase().replace(makeRegExp('/[^-а-яё ]/gi'), '')
-                : makeTwiceKnownName(pronounsSorted[nouni], noun).join(' ').toUpperCase(),
-            };
-          }),
-        );
-      } else {
-        const words = smylib
-          .keys(packWords)
-          .slice(0, -1)
-          .filter(word => packWords[word] <= max);
+  //           return {
+  //             wordi: nouni,
+  //             minus: 1,
+  //             plus: weight,
+  //             word: isSpecialMax
+  //               ? noun.toUpperCase().replace(makeRegExp('/[^-а-яё ]/gi'), '')
+  //               : makeTwiceKnownName(pronounsSorted[nouni], noun).join(' ').toUpperCase(),
+  //           };
+  //         }),
+  //       );
+  //     } else {
+  //       const words = smylib
+  //         .keys(packWords)
+  //         .slice(0, -1)
+  //         .filter(word => packWords[word] <= max);
 
-        packInfos.push(
-          words.map((word, wordi): AliasWordInfo => {
-            return {
-              wordi,
-              word,
-              plus: packWords[word],
-              minus: (max || 0) + 1 - (packWords[word] || 0),
-            };
-          }),
-        );
-      }
+  //       packInfos.push(
+  //         words.map((word, wordi): AliasWordInfo => {
+  //           return {
+  //             wordi,
+  //             word,
+  //             plus: packWords[word],
+  //             minus: (max || 0) + 1 - (packWords[word] || 0),
+  //           };
+  //         }),
+  //       );
+  //     }
 
-      SMyLib.entries(packs[packi]);
-    });
+  //     SMyLib.entries(packs[packi]);
+  //   });
 
-    const infoLine: AliasWordInfo[] = packInfos.flat();
+  //   const infoLine: AliasWordInfo[] = packInfos.flat();
 
-    for (let i = 0; i < infoLine.length; i++) {
-      if (infoLine[i]) infoLine[i].wordi = i;
-    }
+  //   for (let i = 0; i < infoLine.length; i++) {
+  //     if (infoLine[i]) infoLine[i].wordi = i;
+  //   }
 
-    return (this.tokenizedWordInfoStorage[id] = smylib.toRandomSorted(infoLine));
-  };
+  //   return (this.tokenizedWordInfoStorage[id] = smylib.toRandomSorted(infoLine));
+  // };
 }

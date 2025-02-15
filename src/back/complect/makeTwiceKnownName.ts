@@ -1,3 +1,4 @@
+import { nounsFileStore, pronounsFileStore } from 'back/apps/index/file-stores';
 import { makeRegExp, SMyLib, smylib } from 'shared/utils';
 
 type Replacer<Ret> = (substring: string, ...args: string[]) => Ret;
@@ -86,7 +87,10 @@ const fixPronoun = (() => {
 
 const boolItems = [true, false, false, false, false, false, false, false, false, false];
 
-export const makeTwiceKnownName = (pronoun: string, noun: string): [string, string] => {
+export const makeTwiceKnownName = (joinBy = ' ', fixedPronoun?: string, fixedNoun?: string): string => {
+  const pronoun = fixedPronoun ?? smylib.randomItem(smylib.keys(pronounsFileStore.getValue().words), -1);
+  const noun = fixedNoun ?? smylib.randomItem(smylib.keys(nounsFileStore.getValue().words), -1);
+
   const isReverse = smylib.randomItem(boolItems);
 
   for (let i = 0; i < regEnds.length; i++) {
@@ -102,11 +106,13 @@ export const makeTwiceKnownName = (pronoun: string, noun: string): [string, stri
           const p = fixPronoun(pronoun.replace(regEnd[j][0], invoke(regEnd[j][1].pronoun) as never));
           const n = fixNoun(noun);
 
-          return isReverse ? [n, p] : [p, n];
+          return isReverse ? [n, p].join(joinBy) : [p, n].join(joinBy);
         }
       }
     }
   }
 
-  return isReverse ? [fixNoun(noun), fixPronoun(pronoun)] : [fixPronoun(pronoun), fixNoun(noun)];
+  return isReverse
+    ? [fixNoun(noun), fixPronoun(pronoun)].join(joinBy)
+    : [fixPronoun(pronoun), fixNoun(noun)].join(joinBy);
 };
