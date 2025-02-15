@@ -36,7 +36,7 @@ export const tgBotUrlController = async (
   const keys: (TelegramBot.InlineKeyboardButton & { cb: JTgBotCallbackQuery })[][] = [
     [
       {
-        text: 'Отправить',
+        text: '✅ Отправить ✅',
         callback_data: 'send-URL-message',
         cb: async (_bot, query, answer) => {
           try {
@@ -78,7 +78,7 @@ export const tgBotUrlController = async (
         },
       },
       {
-        text: 'Отменить',
+        text: '❌ Отменить ❌',
         callback_data: `delete-URL-message`,
         cb: async (_bot, query, answer) => {
           try {
@@ -97,7 +97,7 @@ export const tgBotUrlController = async (
     ],
     [
       {
-        text: 'Перечитать информацию группы',
+        text: '🔄 Перечитать информацию группы 🔄',
         callback_data: 'refresh-dsc',
         cb: async bot => {
           const knowns = await refreshDescription();
