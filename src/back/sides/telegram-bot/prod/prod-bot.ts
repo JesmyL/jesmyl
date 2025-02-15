@@ -51,7 +51,7 @@ prodTelegramBot.onChatMessages((bot, message) => {
   }
 });
 
-if (+!+'change message')
+if (!+!+'change message')
   prodTelegramBot.editMessageText(551, prodStartMessage(prodTelegramBot.botName), prodStartOptions);
 
 gul94iTelegramBot.register();
