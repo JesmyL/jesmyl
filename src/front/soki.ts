@@ -31,6 +31,14 @@ export class SokiTrip {
 
   private sendRegistrationToken = async () => {
     try {
+      let location: {} | null = null;
+
+      try {
+        const aborter = new AbortController();
+        setTimeout(() => aborter.abort(), 5000);
+        location = await (await fetch('https://api.db-ip.com/v2/free/self', aborter)).json();
+      } catch (e) {}
+
       await this.send({
         token: await authIDB.get.token(),
         visit: {
@@ -38,6 +46,7 @@ export class SokiTrip {
           version: await indexIDB.get.appVersion(),
           urls: this.urls.length ? this.urls : [this.getCurrentUrl()],
           clientTm: Date.now(),
+          location,
         },
       });
 

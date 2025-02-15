@@ -11,6 +11,7 @@ export interface SokiVisit {
   urls: string[];
   version: number;
   clientTm: number;
+  location: {} | null;
 }
 
 export type InvocatorBaseEvent = {
