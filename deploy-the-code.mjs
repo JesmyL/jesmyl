@@ -2,6 +2,8 @@ import { exec } from 'child_process';
 import file_system from 'fs';
 import { buildBackIndexFile } from './build-back-index.mjs';
 
+const versionFilePath = 'src/shared/values/+version.json';
+
 /**
  *
  * @param {{ builtFolder: string; }} front
@@ -12,7 +14,7 @@ export const deployTheCode = async (front, back) => {
   if (~process.argv.indexOf('--front')) {
     const isIgnoreVersionUpdate = ~process.argv.indexOf('--IVU');
 
-    const files = [`./${front.builtFolder}/*`, ...(isIgnoreVersionUpdate ? [] : ['./src/back/+version.json'])];
+    const files = [`./${front.builtFolder}/*`, ...(isIgnoreVersionUpdate ? [] : [`./${versionFilePath}`])];
 
     console.info('Files to load: ', files);
 
@@ -106,10 +108,10 @@ const updateVersion = isIgnoreVersionUpdate => {
    * @param {() => void} cb
    * @returns
    */
-  const setVersion = (version, cb) => file_system.writeFile('src/back/+version.json', version, () => cb?.());
+  const setVersion = (version, cb) => file_system.writeFile(versionFilePath, version, () => cb?.());
 
   return new Promise((resolveVersion, rejectVersion) => {
-    file_system.readFile('src/back/+version.json', 'utf8', (err, versionStr) => {
+    file_system.readFile(versionFilePath, 'utf8', (err, versionStr) => {
       if (err) {
         rejectVersion(err);
         return;

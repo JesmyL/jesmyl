@@ -20,13 +20,6 @@ export const renderApplication = (reactNode: ReactNode, node: HTMLElement | null
     </React.StrictMode>,
   );
 };
-export const renderRootApp = () =>
-  renderApplication(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>,
-    document.getElementById('root'),
-  );
 
 export const renderComponentInNewWindow = (
   reactNode: ReactNode | ((win: typeof window) => ReactNode),
@@ -67,3 +60,10 @@ reportWebVitals();
 
 setPolyfills();
 logFrontErrors();
+
+renderApplication(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
+  document.getElementById('root'),
+);

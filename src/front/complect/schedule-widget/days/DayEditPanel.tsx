@@ -1,7 +1,7 @@
+import { renderComponentInNewWindow } from 'front/front.index';
 import { useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetDay, ScheduleScopeProps } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
-import { renderComponentInNewWindow } from '../../..';
 import { FullContent } from '../../fullscreen-content/FullContent';
 import StrongControlDateTimeExtracter from '../../strong-control/StrongDateTimeExtracter';
 import IconButton from '../../the-icon/IconButton';

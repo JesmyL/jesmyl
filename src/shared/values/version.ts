@@ -1,2 +1,2 @@
-import * as versionNum from 'back/+version.json';
+import * as versionNum from './+version.json';
 export const jversion = { ...versionNum };

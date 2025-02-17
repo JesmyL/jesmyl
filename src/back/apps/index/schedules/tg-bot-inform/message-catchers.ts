@@ -1,7 +1,7 @@
 /* eslint-disable no-throw-literal */
+import { jesmylTgBot } from 'back/sides/telegram-bot/bot';
 import { IScheduleWidget, IScheduleWidgetDay, ScheduleWidgetCleans } from 'shared/api';
 import { itNNull, makeRegExp } from 'shared/utils';
-import { jesmylTgBot } from '../../../../sides/telegram-bot/bot';
 import { schedulesFileStore } from '../file-stores';
 import {
   onScheduleDayBeginTimeSetEvent,

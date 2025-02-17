@@ -2,7 +2,7 @@ import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { CmComWid, IExportableCom } from 'shared/api';
 import { CmComSokiInvocatorModel } from 'shared/api/invocators/cm/com-invocators.model';
 import { smylib } from 'shared/utils';
-import { cmComLanguages } from './complect/values';
+import { cmComLanguages } from 'shared/values/values';
 import { comsFileStore } from './fresh-invocator.base';
 import { cmServerInvocatorShareMethods } from './invocator.shares';
 
