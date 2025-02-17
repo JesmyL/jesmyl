@@ -1,7 +1,7 @@
 import { addEventListenerPipe, hookEffectPipe } from 'front/complect/hookEffectPipe';
 import { TheIconLoading } from 'front/complect/the-icon/IconLoading';
 import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { propagationStopper, propagationStopperAndDefaultPreventer } from 'front/complect/utils/utils';
+import { propagationStopper } from 'front/complect/utils/utils';
 import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
 import { mylib } from 'front/utils';
 import { useEffect, useRef, useState } from 'react';
@@ -128,7 +128,7 @@ export const TheComComment = ({ comw }: Props) => {
       )}
       {isRedact ? (
         <StyledInput
-          onKeyDown={propagationStopperAndDefaultPreventer}
+          onKeyDown={propagationStopper}
           className="com-comment-input full-width bgcolor--2"
           ref={inputRef}
         />
