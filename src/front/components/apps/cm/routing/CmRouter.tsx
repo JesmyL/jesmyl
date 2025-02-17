@@ -31,9 +31,9 @@ export default function CmRouter({ mainNode }: { mainNode: React.ReactNode }) {
 
   useEffect(() => {
     if (selectedComws.length > maxSelectedComsCount) {
-      const copySeleccted = [...selectedComws];
-      copySeleccted.length = maxSelectedComsCount;
-      setSelectedComws(copySeleccted);
+      const copySelected = [...selectedComws];
+      copySelected.length = maxSelectedComsCount;
+      setSelectedComws(copySelected);
       toast(`Можно выбрать максимум ${maxSelectedComsCount} песен`, { mood: 'ko' });
     }
   }, [selectedComws, setSelectedComws, toast]);
