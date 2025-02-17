@@ -1,5 +1,5 @@
 import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import StrongEditableField from '#widgets/schedule-widget/strong-control/field/StrongEditableField';
+import StrongEditableField from '#widgets/schedule/strong-control/field/StrongEditableField';
 import { ScheduleDayEventScopeProps } from 'shared/api';
 import { schDayEventsSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { DayEventIsNeedTgInformButton } from './IsNeedTgInformButton';

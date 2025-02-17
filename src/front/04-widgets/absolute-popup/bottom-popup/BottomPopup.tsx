@@ -1,9 +1,8 @@
+import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
 import { propagationStopper } from '#shared/lib/events-and-callbacks';
+import Portal from '#shared/ui/Portal';
 import { ReactNode, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import Portal from '../../../../complect/popups/[complect]/Portal';
-import useMountTransition from '../../../../complect/popups/useMountTransition';
-import { ThrowEvent } from '../../../lib/eventer/ThrowEvent';
 
 interface Props {
   children?: ReactNode;

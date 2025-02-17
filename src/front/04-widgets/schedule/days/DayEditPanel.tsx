@@ -4,9 +4,9 @@ import { renderComponentInNewWindow } from 'front/front.index';
 import { useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetDay, ScheduleScopeProps } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
-import StrongControlDateTimeExtracter from '../../../complect/strong-control/StrongDateTimeExtracter';
 import { useScheduleDayScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schDaysSokiInvocatorClient } from '../invocators/invocators.methods';
+import StrongInputDateTimeExtracter from '../strong-control/StrongDateTimeExtracter';
 import { ScheduleWidgetEventListUpdater } from './EventListUpdater';
 import ScheduleWidgetPrintableDay from './PrintableDay';
 
@@ -25,7 +25,7 @@ export default function ScheduleWidgetDayEditPanel({ day, dayi, schedule, schedu
 
   return (
     <>
-      <StrongControlDateTimeExtracter
+      <StrongInputDateTimeExtracter
         value={day.wup?.toFixed?.(2).replace(dotReg, ' ') || ''}
         icon="Clock01"
         title="Начало дня"
