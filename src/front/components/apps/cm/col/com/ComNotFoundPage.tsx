@@ -1,6 +1,6 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useState } from 'react';
-import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
+import PhaseContainerConfigurer from '../../../../../07-shared/ui/phase-container/PhaseContainerConfigurer';
 
 export const ComNotFoundPage = () => {
   const [firstNow] = useState(Date.now());

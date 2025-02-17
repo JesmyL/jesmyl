@@ -1,10 +1,10 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { OrderRepeats } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
-import { useConfirm } from '../../../../../../../complect/modal/confirm/useConfirm';
+import { useConfirm } from '../../../../../../../04-widgets/modal/confirm/useConfirm';
 import { ChordVisibleVariant } from '../../../../Cm.model';
 import ComLine from '../../../../col/com/line/ComLine';
 import TheOrder from '../../../../col/com/order/TheOrder';

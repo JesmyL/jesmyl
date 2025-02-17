@@ -1,6 +1,6 @@
-import BrutalItem from 'front/complect/brutal-item/BrutalItem';
-import IconButton from 'front/complect/the-icon/IconButton';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import BrutalItem from '#shared/ui/brutal-item/BrutalItem';
+import IconButton from '#shared/ui/the-icon/IconButton';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { mylib } from 'front/utils';
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';

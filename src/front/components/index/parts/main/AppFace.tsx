@@ -1,8 +1,8 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { FullContent } from '#widgets/fullscreen-content/FullContent';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { RoutingAppConfig } from '../../../../app/routing-apps';
-import { FullContent } from '../../../../complect/fullscreen-content/FullContent';
+import { RoutingAppConfig } from '../../../../02-processes/routers';
 
 interface Props {
   config: RoutingAppConfig;

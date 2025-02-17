@@ -1,10 +1,10 @@
-import Modal from 'front/complect/modal/Modal/Modal';
-import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
-import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import IconButton from '#shared/ui/the-icon/IconButton';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import Modal from '#widgets/modal/Modal/Modal';
+import { ModalBody } from '#widgets/modal/Modal/ModalBody';
+import { ModalHeader } from '#widgets/modal/Modal/ModalHeader';
 import { useState } from 'react';
 import { BibleTranslateName } from 'shared/api';
-import IconButton from '../../../../complect/the-icon/IconButton';
 import { bibleSokiInvocatorClient } from '../invoctors/invocator';
 import { removeBibleTranslate } from '../utils';
 import { bibleAllTranslates, translateDescriptions } from './complect';

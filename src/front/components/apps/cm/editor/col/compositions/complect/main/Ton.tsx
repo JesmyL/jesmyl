@@ -1,9 +1,9 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import IconCheckbox from '#shared/ui/the-icon/IconCheckbox';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { mylib } from 'front/utils';
 import { useState } from 'react';
-import useModal from '../../../../../../../../complect/modal/useModal';
-import IconCheckbox from '../../../../../../../../complect/the-icon/IconCheckbox';
+import useModal from '../../../../../../../../04-widgets/modal/useModal';
 import { ChordVisibleVariant } from '../../../../../Cm.model';
 import ComOrders from '../../../../../col/com/orders/ComOrders';
 import { EditableCom } from '../../com/EditableCom';

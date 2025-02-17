@@ -1,7 +1,7 @@
 import { MyLib } from 'front/utils';
 import styled, { css } from 'styled-components';
 import { CmComWid } from '../../../../../../../../shared/api/complect/apps/cm/complect/enums';
-import { makePseudoElementCorrectContentText } from '../../../../../../../complect/utils';
+import { makePseudoElementCorrectContentText } from '../../../../../../../07-shared/lib/utils';
 import { currentComwIdPrefix } from './_ComList';
 
 export const StyledComList = styled.div<{

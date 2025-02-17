@@ -1,7 +1,7 @@
-import { useAtomSet } from 'front/complect/atoms';
+import { useAtomSet } from '#shared/lib/atoms';
 import { useEffect } from 'react';
 import { isNIs, itNNull } from 'shared/utils';
-import { useActualRef } from '../../../../../../../complect/useActualRef';
+import { useActualRef } from '../../../../../../../07-shared/hooks/useActualRef';
 import { useToggleIsScreenTranslationTextVisible } from '../../../atoms';
 import { TranslationWindow } from '../../../hooks/windows';
 import { isShowTranslatedTextAtom, useTranslationIsInitialSlideShowSet } from '../../../initial-slide-context';

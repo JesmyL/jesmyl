@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { addEventListenerPipe, hookEffectPipe } from '../../../../../../complect/hookEffectPipe';
+import { addEventListenerPipe, hookEffectPipe } from '../../../../../../07-shared/lib/hookEffectPipe';
 import { useCcom } from '../../../col/com/useCcom';
 import { CmLiveTranslationList } from './List';
 import { CmLiveTranslationSlide } from './Slide';

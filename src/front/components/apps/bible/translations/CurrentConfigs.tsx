@@ -1,16 +1,16 @@
 import { useCallback } from 'react';
 import { ScreenTranslateConfigurationNameChanger } from '../../+complect/translations/complect/NameChanger';
-import { BackgroundConfigurator } from '../../../../complect/configurators/Background';
-import { ColorConfigurator } from '../../../../complect/configurators/Color';
-import { DisplayConfigurator } from '../../../../complect/configurators/Display';
-import { FontFamilyConfigurator } from '../../../../complect/configurators/FontFamily';
-import { FontStyleConfigurator } from '../../../../complect/configurators/FontStyle';
-import { FontWeightConfigurator } from '../../../../complect/configurators/FontWeight';
-import { OpacityConfigurator } from '../../../../complect/configurators/Opacity';
-import { ScreenTranslateConfigurationTextAlign } from '../../../../complect/configurators/TextAlign';
-import { ExpandableContent } from '../../../../complect/expand/ExpandableContent';
-import { useActualRef } from '../../../../complect/useActualRef';
-import { useDebounceAction } from '../../../../complect/useDebounceAction';
+import { BackgroundConfigurator } from '../../../../04-widgets/configurators/Background';
+import { ColorConfigurator } from '../../../../04-widgets/configurators/Color';
+import { DisplayConfigurator } from '../../../../04-widgets/configurators/Display';
+import { FontFamilyConfigurator } from '../../../../04-widgets/configurators/FontFamily';
+import { FontStyleConfigurator } from '../../../../04-widgets/configurators/FontStyle';
+import { FontWeightConfigurator } from '../../../../04-widgets/configurators/FontWeight';
+import { OpacityConfigurator } from '../../../../04-widgets/configurators/Opacity';
+import { ScreenTranslateConfigurationTextAlign } from '../../../../04-widgets/configurators/TextAlign';
+import { useActualRef } from '../../../../07-shared/hooks/useActualRef';
+import { useDebounceAction } from '../../../../07-shared/hooks/useDebounceAction';
+import { ExpandableContent } from '../../../../07-shared/ui/expand/ExpandableContent';
 import { useUpdateBibleCurrentTranslationConfig } from './hooks/update-config';
 import { BibleTranslationScreenConfig } from './model';
 

@@ -1,6 +1,6 @@
+import AppFooter from '#app/ui/AppFooter';
+import AppFooterItem from '#app/ui/AppFooterItem';
 import { mylib } from 'front/utils';
-import AppFooter from '../../../../app/AppFooter';
-import AppFooterItem from '../../../../app/AppFooterItem';
 import { useAuth } from '../../../index/atoms';
 import { useActualCcomw } from '../col/com/useCcom';
 

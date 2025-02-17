@@ -1,10 +1,10 @@
-import Modal from 'front/complect/modal/Modal/Modal';
-import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
-import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
+import IconCheckbox from '#shared/ui/the-icon/IconCheckbox';
+import { BottomPopupItem } from '#widgets/absolute-popup/bottom-popup/BottomPopupItem';
+import Modal from '#widgets/modal/Modal/Modal';
+import { ModalBody } from '#widgets/modal/Modal/ModalBody';
+import { ModalHeader } from '#widgets/modal/Modal/ModalHeader';
 import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
-import { BottomPopupItem } from '../../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
-import IconCheckbox from '../../../../../../../../../complect/the-icon/IconCheckbox';
 import { ChordVisibleVariant } from '../../../../../../Cm.model';
 import TheOrder from '../../../../../../col/com/order/TheOrder';
 import { OrdersRedactorOrderToolsProps } from '../OrdersRedactorOrderTools';

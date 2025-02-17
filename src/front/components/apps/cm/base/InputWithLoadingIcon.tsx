@@ -1,7 +1,7 @@
-import { addEventListenerPipe, hookEffectPipe } from 'front/complect/hookEffectPipe';
-import { TheIconLoading } from 'front/complect/the-icon/IconLoading';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { useActualRef } from 'front/complect/useActualRef';
+import { useActualRef } from '#shared/hooks/useActualRef';
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { CorrectsBox } from '../editor/corrects-box/CorrectsBox';

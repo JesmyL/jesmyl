@@ -1,10 +1,10 @@
+import IconCheckbox from '#shared/ui/the-icon/IconCheckbox';
+import { BottomPopupItem } from '#widgets/absolute-popup/bottom-popup/BottomPopupItem';
 import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
-import { BottomPopupItem } from '../../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
-import Modal from '../../../../../../../../../complect/modal/Modal/Modal';
-import { ModalBody } from '../../../../../../../../../complect/modal/Modal/ModalBody';
-import { ModalHeader } from '../../../../../../../../../complect/modal/Modal/ModalHeader';
-import IconCheckbox from '../../../../../../../../../complect/the-icon/IconCheckbox';
+import Modal from '../../../../../../../../../04-widgets/modal/Modal/Modal';
+import { ModalBody } from '../../../../../../../../../04-widgets/modal/Modal/ModalBody';
+import { ModalHeader } from '../../../../../../../../../04-widgets/modal/Modal/ModalHeader';
 import { ChordVisibleVariant } from '../../../../../../Cm.model';
 import { blockStyles } from '../../../../../../col/com/block-styles/BlockStyles';
 import TheOrder from '../../../../../../col/com/order/TheOrder';

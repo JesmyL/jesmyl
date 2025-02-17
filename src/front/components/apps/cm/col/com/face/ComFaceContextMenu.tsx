@@ -1,7 +1,7 @@
+import IconButton from '#shared/ui/the-icon/IconButton';
 import styled from 'styled-components';
 import { CmComWid } from '../../../../../../../shared/api/complect/apps/cm/complect/enums';
-import { useConfirm } from '../../../../../../complect/modal/confirm/useConfirm';
-import IconButton from '../../../../../../complect/the-icon/IconButton';
+import { useConfirm } from '../../../../../../04-widgets/modal/confirm/useConfirm';
 import useSelectedComs from '../../../base/useSelectedComs';
 import { useFavoriteComs } from '../../../lists/favorites/useFavoriteComs';
 

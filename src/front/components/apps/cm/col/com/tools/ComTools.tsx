@@ -1,7 +1,7 @@
+import IconButton from '#shared/ui/the-icon/IconButton';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { BottomPopupItem } from '#widgets/absolute-popup/bottom-popup/BottomPopupItem';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { BottomPopupItem } from '../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
-import IconButton from '../../../../../../complect/the-icon/IconButton';
 import { ChordVisibleVariant } from '../../../Cm.model';
 import { cmIDB } from '../../../_db/cm-idb';
 import { useChordVisibleVariant } from '../../../base/useChordVisibleVariant';

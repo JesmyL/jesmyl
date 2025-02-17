@@ -1,6 +1,6 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { jversion } from 'shared/values';
-import QRCode from '../../../complect/qr-code/QRCode';
+import QRCode from '../../../04-widgets/qr-code/QRCode';
 import { useIndexValues } from '../atoms';
 import { indexIDB } from '../db/index-idb';
 

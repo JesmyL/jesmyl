@@ -1,4 +1,4 @@
-import { BackgroundConfigProps } from 'front/complect/configurators/model';
+import { BackgroundConfigProps } from '#widgets/configurators/model';
 import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
 import {
   defaultScreenTranslationBackgroundConfig,

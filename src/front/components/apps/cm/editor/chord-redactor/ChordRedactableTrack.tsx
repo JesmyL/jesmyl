@@ -1,7 +1,7 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import Dropdown from '#shared/ui/dropdown/Dropdown';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import React from 'react';
 import { ChordTrack } from '../../../../../../shared/api/complect/apps/cm/complect/chord-card';
-import Dropdown from '../../../../../complect/dropdown/Dropdown';
 import ChordCardTracked from '../../col/com/chord-card/ChordCardTracked';
 
 const ladLine = Array(20).fill(0);

@@ -1,5 +1,5 @@
-import { hookEffectPipe, setTimeoutPipe } from 'front/complect/hookEffectPipe';
-import useToast from 'front/complect/modal/useToast';
+import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
+import useToast from '#widgets/modal/useToast';
 import { useAuth } from 'front/components/index/atoms';
 import React, { memo, Suspense, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';

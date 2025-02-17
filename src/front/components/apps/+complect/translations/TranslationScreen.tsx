@@ -1,4 +1,4 @@
-import { useAtomValue } from 'front/complect/atoms';
+import { useAtomValue } from '#shared/lib/atoms';
 import styled, { css } from 'styled-components';
 import { BibleTranslationScreenTextsContext } from '../../bible/texts/AddressContentContext';
 import BibleTranslatesContextProvider from '../../bible/translates/TranslatesContext';

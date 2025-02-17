@@ -1,8 +1,8 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import BrutalItem from '#shared/ui/brutal-item/BrutalItem';
+import BrutalScreen from '#shared/ui/brutal-screen/BrutalScreen';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { Link, Route, Routes } from 'react-router-dom';
-import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
-import BrutalScreen from '../../../../complect/brutal-screen/BrutalScreen';
-import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
+import PhaseContainerConfigurer from '../../../../07-shared/ui/phase-container/PhaseContainerConfigurer';
 import useSelectedComs from '../base/useSelectedComs';
 import TheCat from '../col/cat/TheCat';
 import { useCats } from '../cols/useCols';

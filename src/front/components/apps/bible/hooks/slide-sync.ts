@@ -1,7 +1,7 @@
+import { atom, useAtomInkrement, useAtomValue } from '#shared/lib/atoms';
 import { useCallback } from 'react';
 import { useToggleIsScreenTranslationTextVisible } from '../../+complect/translations/atoms';
-import { atom, useAtomInkrement, useAtomValue } from '../../../../complect/atoms';
-import { useActualRef } from '../../../../complect/useActualRef';
+import { useActualRef } from '../../../../07-shared/hooks/useActualRef';
 import { useBibleTranslationAddToHistory } from '../translations/archive/history/hooks/history';
 import { useBibleTranslationJoinAddress } from './address/address';
 import { useBibleAddressBooki } from './address/books';

@@ -1,7 +1,7 @@
 import { MyLib } from 'front/utils';
 import { useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import { hookEffectPipe, setTimeoutPipe } from '../../../../../complect/hookEffectPipe';
+import { hookEffectPipe, setTimeoutPipe } from '../../../../../07-shared/lib/hookEffectPipe';
 import { useBibleTranslationJoinAddress, useGetterJoinedAddressMaxValues } from '../../hooks/address/address';
 import { useBibleAddressBooki } from '../../hooks/address/books';
 import { useBibleAddressChapteri } from '../../hooks/address/chapters';

@@ -1,6 +1,6 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useState } from 'react';
-import Modal from '../../../../../../../../complect/modal/Modal/Modal';
+import Modal from '../../../../../../../../04-widgets/modal/Modal/Modal';
 import { TheComCommentForExample } from './ForExample';
 import TheComCommentBibleTextsInfo from './TheComCommentBibleTextsInfo';
 

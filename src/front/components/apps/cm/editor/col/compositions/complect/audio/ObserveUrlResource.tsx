@@ -1,8 +1,8 @@
+import KeyboardInput from '#shared/ui/keyboard/KeyboardInput';
 import { cmEditorClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useEffect, useState } from 'react';
 import { CmMp3ContainsPageResult } from 'shared/api';
-import KeyboardInput from '../../../../../../../../complect/keyboard/KeyboardInput';
-import SendButton from '../../../../../../../../complect/sends/send-button/SendButton';
+import SendButton from '../../../../../../../../07-shared/ui/sends/send-button/SendButton';
 import { useCmMp3Rules } from '../../../../mp3-rule-redactor/useCmMp3Rules';
 
 export default function ObserveUrlResource({

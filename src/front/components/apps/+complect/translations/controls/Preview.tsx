@@ -1,7 +1,7 @@
+import IconButton from '#shared/ui/the-icon/IconButton';
+import { FullContent } from '#widgets/fullscreen-content/FullContent';
 import { useState } from 'react';
 import styled, { css } from 'styled-components';
-import { FullContent } from '../../../../../complect/fullscreen-content/FullContent';
-import IconButton from '../../../../../complect/the-icon/IconButton';
 import { TranslationScreen } from '../TranslationScreen';
 import { useScreenTranslationCurrentConfig } from '../hooks/configs';
 

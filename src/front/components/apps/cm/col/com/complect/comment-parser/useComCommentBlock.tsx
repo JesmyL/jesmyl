@@ -1,6 +1,6 @@
+import { useAtom } from '#shared/lib/atoms';
 import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
 import { useEffect, useMemo } from 'react';
-import { useAtom } from '../../../../../../../complect/atoms';
 import { useComCommentText } from '../../../../com-comments-manager';
 import { Com } from '../../Com';
 import { ComBlockCommentMakerCleans } from './Cleans';

@@ -1,12 +1,12 @@
-import IconButton from 'front/complect/the-icon/IconButton';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { propagationStopper } from 'front/complect/utils/utils';
+import { atom, useAtom } from '#shared/lib/atoms';
+import { propagationStopper } from '#shared/lib/events-and-callbacks';
+import KeyboardInput from '#shared/ui/keyboard/KeyboardInput';
+import IconButton from '#shared/ui/the-icon/IconButton';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { MyLib, mylib } from 'front/utils';
 import { useEffect, useMemo, useState } from 'react';
 import { ChordPack, ChordTrack } from '../../../../../../shared/api/complect/apps/cm/complect/chord-card';
-import { atom, useAtom } from '../../../../../complect/atoms';
-import TheButton from '../../../../../complect/Button';
-import KeyboardInput from '../../../../../complect/keyboard/KeyboardInput';
+import TheButton from '../../../../../07-shared/ui/TheButton';
 import { cmIDB } from '../../_db/cm-idb';
 import { useToNewChordSearches } from '../../col/com/chord-card/chord-redactor-searches';
 import ChordCard from '../../col/com/chord-card/ChordCard';

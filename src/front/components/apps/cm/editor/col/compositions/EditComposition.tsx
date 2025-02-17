@@ -1,11 +1,11 @@
-import { useAtomValue } from 'front/complect/atoms';
-import { hookEffectPipe, setTimeoutPipe } from 'front/complect/hookEffectPipe';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { useAtomValue } from '#shared/lib/atoms';
+import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
+import IconButton from '#shared/ui/the-icon/IconButton';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import IconButton from '../../../../../../complect/the-icon/IconButton';
 import useConnectionState from '../../../../../index/useConnectionState';
 import { CmComNumber } from '../../../col/com/complect/ComNumber';
 import ComPlayer from '../../../col/com/player/ComPlayer';

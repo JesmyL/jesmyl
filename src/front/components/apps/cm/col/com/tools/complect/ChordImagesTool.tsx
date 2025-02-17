@@ -1,5 +1,5 @@
+import { useAtomSet } from '#shared/lib/atoms';
 import { isOpenChordImagesAtom } from 'front/components/apps/cm/atoms';
-import { useAtomSet } from '../../../../../../../complect/atoms';
 import { ComTool } from '../ComTool';
 
 export const ChordImagesTool = () => {

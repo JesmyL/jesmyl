@@ -1,6 +1,6 @@
 import { mylib } from 'front/utils';
 import styled from 'styled-components';
-import CopyTextButton from '../../../../../../complect/CopyTextButton';
+import CopyTextButton from '../../../../../../07-shared/ui/CopyTextButton';
 import { CoderResultNameStyled } from './styles';
 
 export const CoderResultSimple = ({ name, value }: { value: unknown; name?: string | number }) => (

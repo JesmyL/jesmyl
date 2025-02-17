@@ -1,4 +1,4 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useState } from 'react';
 import { CmMp3Rule } from 'shared/api';
 import { cmEditorClientInvocatorMethods } from '../cm-editor-invocator.methods';

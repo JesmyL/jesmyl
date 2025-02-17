@@ -1,5 +1,5 @@
-import TheButton from 'front/complect/Button';
-import { FullContent } from 'front/complect/fullscreen-content/FullContent';
+import TheButton from '#shared/ui/TheButton';
+import { FullContent } from '#widgets/fullscreen-content/FullContent';
 import { mylib } from 'front/utils';
 import { useNavigate } from 'react-router-dom';
 import { CmComWid } from 'shared/api';

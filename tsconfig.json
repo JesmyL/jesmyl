@@ -15,9 +15,21 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "paths": {},
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "paths": {
+      "#app/*": ["./front/01-app/*"],
+      "#processes/*": ["./front/02-processes/*"],
+      "#pages/*": ["./front/03-pages/*"],
+      "#widgets/*": ["./front/04-widgets/*"],
+      "#features/*": ["./front/05-features/*"],
+      "#entities/*": ["./front/06-entities/*"],
+      "#shared/*": ["./front/07-shared/*"],
+
+      "shared/*": ["./shared/*"],
+      "front/*": ["./front/*"],
+      "bibles/*": ["./bibles/*"]
+    }
   },
-  "include": ["src", "src/shared/utils/complect", "./node_modules/cypress", "cypress/**/*.ts"],
-  "exclude": ["./src/front/complect/the-icon/icons"]
+  "include": ["src", "src/shared/utils/complect", "./node_modules/cypress", "cypress/**/*.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["src/front/07-shared/ui/the-icon/icons"]
 }

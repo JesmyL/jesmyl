@@ -1,6 +1,6 @@
+import IconButton from '#shared/ui/the-icon/IconButton';
 import { mylib } from 'front/utils';
 import { memo } from 'react';
-import IconButton from '../../../../../complect/the-icon/IconButton';
 import { bibleIDB } from '../../_db/bibleIDB';
 import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '../../hooks/address/address';
 import { BibleTranslationAddress } from '../../model';

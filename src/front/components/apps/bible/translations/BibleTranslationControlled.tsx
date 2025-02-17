@@ -1,8 +1,8 @@
 import { ReactNode, useEffect } from 'react';
 import styled from 'styled-components';
 import { ScreenTranslationControlPanel } from '../../+complect/translations/controls/ControllPanel';
-import { useInitSoki } from '../../../../app/useInitSoki';
-import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
+import { useInitSoki } from '../../../../02-processes/hooks/+app/useInitSoki';
+import PhaseContainerConfigurer from '../../../../07-shared/ui/phase-container/PhaseContainerConfigurer';
 import { bibleIDB } from '../_db/bibleIDB';
 import { useBibleSlideSyncInkrementer } from '../hooks/slide-sync';
 import { useLoadBibleChaptersCombine } from '../hooks/texts';

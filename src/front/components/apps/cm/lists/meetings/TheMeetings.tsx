@@ -1,7 +1,7 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import { indexIDB } from 'front/components/index/db/index-idb';
 import { Route, Routes } from 'react-router-dom';
-import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
+import PhaseContainerConfigurer from '../../../../../07-shared/ui/phase-container/PhaseContainerConfigurer';
 import { MeetingSchPackFace } from './MeetingSchPackFace';
 import TheMeetingsEvent from './TheMeetingsEvent';
 

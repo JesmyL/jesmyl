@@ -1,7 +1,7 @@
-import { ScreenTranslateConfigTypeDisplay } from '../../../../../complect/configurators/Display';
-import { FontStyleType } from '../../../../../complect/configurators/FontStyle';
-import { FontWeightType } from '../../../../../complect/configurators/FontWeight';
-import { TextAlignConfigurator } from '../../../../../complect/configurators/TextAlign';
+import { ScreenTranslateConfigTypeDisplay } from '../../../../../04-widgets/configurators/Display';
+import { FontStyleType } from '../../../../../04-widgets/configurators/FontStyle';
+import { FontWeightType } from '../../../../../04-widgets/configurators/FontWeight';
+import { TextAlignConfigurator } from '../../../../../04-widgets/configurators/TextAlign';
 
 // export type ScreenTranslationPartialConfigProps<Config> = {
 //   config: Config;

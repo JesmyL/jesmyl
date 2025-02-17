@@ -1,8 +1,8 @@
+import { useBottomPopup } from '#shared/ui/absolute-popup/bottom-popup/useBottomPopup';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useBottomPopup } from '../../../../complect/absolute-popup/bottom-popup/useBottomPopup';
-import { isTouchDevice } from '../../../../complect/device-differences';
-import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
+import { isTouchDevice } from '../../../../07-shared/lib/device-differences';
+import PhaseContainerConfigurer from '../../../../07-shared/ui/phase-container/PhaseContainerConfigurer';
 import { CodeExecutionScreen } from './coder/Coder';
 import { CoderResultLine } from './coder/complect/line';
 

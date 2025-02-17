@@ -1,7 +1,7 @@
+import IconCheckbox from '#shared/ui/the-icon/IconCheckbox';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
-import IconCheckbox from '../../../../../complect/the-icon/IconCheckbox';
+import PhaseContainerConfigurer from '../../../../../07-shared/ui/phase-container/PhaseContainerConfigurer';
 import { bibleIDB } from '../../_db/bibleIDB';
 import { useBibleAddressBooki } from '../../hooks/address/books';
 import { useBibleAddressChapteri } from '../../hooks/address/chapters';

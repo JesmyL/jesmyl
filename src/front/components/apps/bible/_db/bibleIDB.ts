@@ -1,4 +1,4 @@
-import { DexieDB } from 'front/complect/_DexieDB';
+import { DexieDB } from '#shared/lib/_DexieDB';
 import { BibleTranslateName } from 'shared/api';
 import {
   BibleBooki,

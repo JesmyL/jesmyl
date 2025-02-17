@@ -1,7 +1,7 @@
+import { FullContent } from '#widgets/fullscreen-content/FullContent';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { FullContent } from '../../../../../complect/fullscreen-content/FullContent';
-import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
+import PhaseContainerConfigurer from '../../../../../07-shared/ui/phase-container/PhaseContainerConfigurer';
 import { useBibleAddressBooki } from '../../hooks/address/books';
 import { useBibleAddressChapteri } from '../../hooks/address/chapters';
 import { useBibleAddressVersei } from '../../hooks/address/verses';

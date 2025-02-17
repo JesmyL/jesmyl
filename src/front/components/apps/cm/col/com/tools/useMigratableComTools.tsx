@@ -2,7 +2,7 @@ import { MyLib } from 'front/utils';
 import React from 'react';
 import { MigratableComToolName } from 'shared/api';
 import styled, { css } from 'styled-components';
-import { contextCreator } from '../../../../../../complect/contextCreator';
+import { contextCreator } from '../../../../../../07-shared/lib/contextCreator';
 import { cmIDB } from '../../../_db/cm-idb';
 import { cmUserStoreSokiInvocatorClient } from '../../../invocators/user-store-invocator.methods';
 import { Com } from '../Com';

@@ -1,7 +1,7 @@
+import { BottomPopup } from '#shared/ui/absolute-popup/bottom-popup/BottomPopup';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { BottomPopup } from '../../../../../complect/absolute-popup/bottom-popup/BottomPopup';
-import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
+import PhaseContainerConfigurer from '../../../../../07-shared/ui/phase-container/PhaseContainerConfigurer';
 import { CmTranslationComListContextInSelected } from '../../base/translations/InSelected';
 import useSelectedComs from '../../base/useSelectedComs';
 import { ComFaceList } from '../../col/com/face/list/ComFaceList';

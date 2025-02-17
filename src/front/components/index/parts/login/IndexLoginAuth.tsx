@@ -1,13 +1,13 @@
+import KeyboardInput from '#shared/ui/keyboard/KeyboardInput';
 import { MyLib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { itNNil } from 'shared/utils';
 import styled from 'styled-components';
-import TheButton from '../../../../complect/Button';
+import LoadIndicatedContent from '../../../../07-shared/ui/load-indicated-content/LoadIndicatedContent';
+import PhaseContainerConfigurer from '../../../../07-shared/ui/phase-container/PhaseContainerConfigurer';
+import TheButton from '../../../../07-shared/ui/TheButton';
 import JesmylLogo from '../../../../complect/jesmyl-logo/JesmylLogo';
-import KeyboardInput from '../../../../complect/keyboard/KeyboardInput';
-import LoadIndicatedContent from '../../../../complect/load-indicated-content/LoadIndicatedContent';
-import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
 import { AuthMode } from '../../Index.model';
 import useConnectionState from '../../useConnectionState';
 import { useAuthErrors } from './atoms';

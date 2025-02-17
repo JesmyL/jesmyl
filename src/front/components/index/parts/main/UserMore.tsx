@@ -1,5 +1,6 @@
-import { BottomPopupItem } from '../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
-import { useConfirm } from '../../../../complect/modal/confirm/useConfirm';
+// import { BottomPopupItem } from '#widgets/absolute-popup/bottom-popup/BottomPopupItem';
+import { BottomPopupItem } from '#widgets/absolute-popup/bottom-popup/BottomPopupItem';
+import { useConfirm } from '../../../../04-widgets/modal/confirm/useConfirm';
 import { authIDB } from '../../db/auth-idb';
 
 export const UserMore = ({ onClose }: { onClose: (isOpen: false) => void }) => {

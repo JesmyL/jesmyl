@@ -8,7 +8,7 @@ import {
   SpecialOrderRepeats,
 } from 'shared/api';
 import { itIt, makeRegExp } from 'shared/utils';
-import SourceBased from '../../../../../../complect/SourceBased';
+import SourceBased from '../../../../../../07-shared/lib/SourceBased';
 import { Com } from '../Com';
 import { EditableOrderRegion, IExportableOrderMe } from './Order.model';
 

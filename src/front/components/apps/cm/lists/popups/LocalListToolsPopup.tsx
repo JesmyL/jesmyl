@@ -1,7 +1,7 @@
+import { BottomPopupItem } from '#widgets/absolute-popup/bottom-popup/BottomPopupItem';
+import { FullContent } from '#widgets/fullscreen-content/FullContent';
 import { useState } from 'react';
-import { BottomPopupItem } from '../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
-import { isTouchDevice } from '../../../../../complect/device-differences';
-import { FullContent } from '../../../../../complect/fullscreen-content/FullContent';
+import { isTouchDevice } from '../../../../../07-shared/lib/device-differences';
 import { Com } from '../../col/com/Com';
 import { ComListQrShare } from './ComListShare';
 import FullscreenExpandComList from './FullscreenExpandComList';

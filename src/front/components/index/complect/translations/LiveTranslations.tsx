@@ -1,5 +1,5 @@
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { addEventListenerPipe, hookEffectPipe } from 'front/complect/hookEffectPipe';
 import { complectIDB } from 'front/components/apps/+complect/_idb/complectIDB';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';

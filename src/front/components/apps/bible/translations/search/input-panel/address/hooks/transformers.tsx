@@ -1,7 +1,7 @@
 import { bibleIDB } from 'front/components/apps/bible/_db/bibleIDB';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { emptyFunc, makeRegExp } from 'shared/utils';
-import { addEventListenerPipe, hookEffectPipe } from '../../../../../../../../complect/hookEffectPipe';
+import { addEventListenerPipe, hookEffectPipe } from '../../../../../../../../07-shared/lib/hookEffectPipe';
 import { useSetBibleAddressIndexes } from '../../../../../hooks/address/address';
 import { useBibleBookList } from '../../../../../hooks/texts';
 import { BibleBooki, BibleChapteri, BibleVersei } from '../../../../../model';

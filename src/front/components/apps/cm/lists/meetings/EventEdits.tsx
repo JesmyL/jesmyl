@@ -1,9 +1,9 @@
-import Modal from 'front/complect/modal/Modal/Modal';
-import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
-import { ModalFooter } from 'front/complect/modal/Modal/ModalFooter';
-import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import Modal from '#widgets/modal/Modal/Modal';
+import { ModalBody } from '#widgets/modal/Modal/ModalBody';
+import { ModalFooter } from '#widgets/modal/Modal/ModalFooter';
+import { ModalHeader } from '#widgets/modal/Modal/ModalHeader';
 import { useAuth } from 'front/components/index/atoms';
 import { mylib } from 'front/utils';
 import { useState } from 'react';

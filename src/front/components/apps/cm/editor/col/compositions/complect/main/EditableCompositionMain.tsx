@@ -1,12 +1,12 @@
-import { useAtomSet } from 'front/complect/atoms';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { useAtomSet } from '#shared/lib/atoms';
+import Dropdown from '#shared/ui/dropdown/Dropdown';
+import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { InputWithLoadingIcon } from 'front/components/apps/cm/base/InputWithLoadingIcon';
 import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
 import { emptyFunc } from 'shared/utils';
-import Dropdown from '../../../../../../../../complect/dropdown/Dropdown';
-import { DropdownItem } from '../../../../../../../../complect/dropdown/Dropdown.model';
-import { useConfirm } from '../../../../../../../../complect/modal/confirm/useConfirm';
+import { useConfirm } from '../../../../../../../../04-widgets/modal/confirm/useConfirm';
 import { useAuth } from '../../../../../../../index/atoms';
 import { ChordVisibleVariant } from '../../../../../Cm.model';
 import { TheCom } from '../../../../../col/com/TheCom';

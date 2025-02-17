@@ -1,6 +1,7 @@
-import TheButton from 'front/complect/Button';
-import SendButton from 'front/complect/sends/send-button/SendButton';
-import { propagationStopper } from 'front/complect/utils/utils';
+import { propagationStopper } from '#shared/lib/events-and-callbacks';
+import KeyboardInput from '#shared/ui/keyboard/KeyboardInput';
+import SendButton from '#shared/ui/sends/send-button/SendButton';
+import TheButton from '#shared/ui/TheButton';
 import { ChordVisibleVariant } from 'front/components/apps/cm/Cm.model';
 import { Com } from 'front/components/apps/cm/col/com/Com';
 import ComOrders from 'front/components/apps/cm/col/com/orders/ComOrders';
@@ -11,7 +12,6 @@ import { useNavigate } from 'react-router-dom';
 import { CmComMod, CmComWid, CmMp3Rule, IExportableCom } from 'shared/api';
 import { itIt, itNNil, makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
-import KeyboardInput from '../../../../../../../../complect/keyboard/KeyboardInput';
 import { EditableCom } from '../../com/EditableCom';
 import { ComAudioControlledList } from '../audio/ControlledList';
 import ObserveUrlResource from '../audio/ObserveUrlResource';

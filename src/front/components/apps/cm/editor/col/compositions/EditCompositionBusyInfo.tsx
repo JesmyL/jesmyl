@@ -1,5 +1,5 @@
-import { useAtomValue } from 'front/complect/atoms';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { useAtomValue } from '#shared/lib/atoms';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { indexIDB } from 'front/components/index/db/index-idb';
 import { useEffect } from 'react';
 import { CmComWid } from 'shared/api';

@@ -1,11 +1,11 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import KeyboardInput from '#shared/ui/keyboard/KeyboardInput';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useToast from '../../../../04-widgets/modal/useToast';
+import { useActualRef } from '../../../../07-shared/hooks/useActualRef';
+import SendButton from '../../../../07-shared/ui/sends/send-button/SendButton';
 import JesmylLogo from '../../../../complect/jesmyl-logo/JesmylLogo';
-import KeyboardInput from '../../../../complect/keyboard/KeyboardInput';
-import useToast from '../../../../complect/modal/useToast';
-import SendButton from '../../../../complect/sends/send-button/SendButton';
-import { useActualRef } from '../../../../complect/useActualRef';
 import { useIndexValues } from '../../atoms';
 import { indexBasicsSokiInvocatorClient } from '../../db/invocators/schedules/fresh-invocator.methods';
 import useConnectionState from '../../useConnectionState';

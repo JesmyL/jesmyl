@@ -1,4 +1,4 @@
-import { atom, useAtomSet, useAtomValue } from '../../../../complect/atoms';
+import { atom, useAtomSet, useAtomValue } from '#shared/lib/atoms';
 
 export const isShowTranslatedTextAtom = atom(true);
 const isShowAtom = atom(true);

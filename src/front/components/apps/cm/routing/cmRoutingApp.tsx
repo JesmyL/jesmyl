@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Route } from 'react-router-dom';
-import { RoutingAppConfig } from '../../../../app/routing-apps';
+import { RoutingAppConfig } from '../../../../02-processes/routers';
 import TheComposition from '../col/com/TheComposition';
 import Translations from '../translation/Translation';
 import { CmFooter } from './CmFooter';

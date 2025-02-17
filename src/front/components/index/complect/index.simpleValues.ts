@@ -1,4 +1,4 @@
-import { JStorageBooleanVal } from '../../../complect/JSimpleStorage/exports/Boolean';
+import { JStorageBooleanVal } from '../../../07-shared/lib/JSimpleStorage/exports/Boolean';
 
 const name = 'index';
 

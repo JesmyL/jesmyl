@@ -1,4 +1,4 @@
-import { BottomPopup } from 'front/complect/absolute-popup/bottom-popup/BottomPopup';
+import { BottomPopup } from '#widgets/absolute-popup/bottom-popup/BottomPopup';
 import { useState } from 'react';
 import { LocalSokiAuth } from 'shared/api';
 import styled from 'styled-components';

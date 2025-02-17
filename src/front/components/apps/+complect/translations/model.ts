@@ -1,6 +1,6 @@
-import { FontStyleType } from 'front/complect/configurators/FontStyle';
-import { FontWeightType } from 'front/complect/configurators/FontWeight';
-import { BackgroundConfigProps } from 'front/complect/configurators/model';
+import { FontStyleType } from '#widgets/configurators/FontStyle';
+import { FontWeightType } from '#widgets/configurators/FontWeight';
+import { BackgroundConfigProps } from '#widgets/configurators/model';
 
 export interface ScreenTranslationConfig {
   title: string;

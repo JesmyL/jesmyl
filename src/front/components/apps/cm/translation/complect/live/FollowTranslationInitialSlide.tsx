@@ -1,6 +1,6 @@
 import { hosts, IScheduleWidgetWid } from 'shared/api';
 import styled from 'styled-components';
-import QRCode from '../../../../../../complect/qr-code/QRCode';
+import QRCode from '../../../../../../04-widgets/qr-code/QRCode';
 
 export const FollowTranslationInitialSlide = ({ schw }: { schw: IScheduleWidgetWid }) => {
   return (

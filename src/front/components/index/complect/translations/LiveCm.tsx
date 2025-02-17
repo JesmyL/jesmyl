@@ -1,8 +1,8 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { useAtomValue } from '#shared/lib/atoms';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import useMeetingComFaceList from 'front/components/apps/cm/lists/meetings/useMeetingComFaceList';
 import { useMeetingPathParts } from 'front/components/apps/cm/lists/meetings/useMeetingPathParts';
 import { useEffect } from 'react';
-import { useAtomValue } from '../../../../complect/atoms';
 import { useSwitchCurrentTranslationTextApp } from '../../../apps/+complect/translations/hooks/current-app';
 import { translationBlockAtom } from '../../../apps/cm/atoms';
 import { useCcom } from '../../../apps/cm/col/com/useCcom';

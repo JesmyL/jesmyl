@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import styled from 'styled-components';
-import { JStorageNumberVal } from '../../../../../../complect/JSimpleStorage/exports/Number';
+import { JStorageNumberVal } from '../../../../../../07-shared/lib/JSimpleStorage/exports/Number';
 import { useSetBibleAddressWithForceJoinReset } from '../../../hooks/address/address';
 import { useBibleCurrentChapterList } from '../../../hooks/texts';
 import { useBibleListFaceClickListener } from '../complect';

@@ -1,4 +1,4 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useRef, useState } from 'react';
 import { TranslationScreenProps } from '../../../+complect/translations/Translations.model';
 import { useSetScreenTranslationInteractiveBackground } from '../../../+complect/translations/hooks/interactive-back';

@@ -1,6 +1,6 @@
 import { mylib } from 'front/utils';
 import { useReducer, useRef } from 'react';
-import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
+import PhaseContainerConfigurer from '../../../../../07-shared/ui/phase-container/PhaseContainerConfigurer';
 import { useIndexFileAssociations } from '../../../atoms';
 import { MyFilesTypeBox } from './complect/MyFilesTypeBox';
 import { useAddMyFileOnDrop, useAddMyFileOnFileChange } from './hooks/on-add-file';

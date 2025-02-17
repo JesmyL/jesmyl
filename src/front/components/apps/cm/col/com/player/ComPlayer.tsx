@@ -1,8 +1,8 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import JesmylLogo from '#shared/ui/jesmyl-logo/JesmylLogo';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
-import JesmylLogo from '../../../../../../complect/jesmyl-logo/JesmylLogo';
 import './ComPlayer.scss';
 import ComPlayerTrack from './ComPlayerTrack';
 

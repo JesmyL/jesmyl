@@ -1,4 +1,4 @@
-import IconButton from 'front/complect/the-icon/IconButton';
+import IconButton from '#shared/ui/the-icon/IconButton';
 import { mylib } from 'front/utils';
 import styled from 'styled-components';
 import { cmIDB } from '../../_db/cm-idb';

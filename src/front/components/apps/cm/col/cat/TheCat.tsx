@@ -1,14 +1,14 @@
+import { useAtomValue } from '#shared/lib/atoms';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { useAtomValue } from 'front/complect/atoms';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
-import LoadIndicatedContent from '../../../../../complect/load-indicated-content/LoadIndicatedContent';
+import LoadIndicatedContent from '../../../../../07-shared/ui/load-indicated-content/LoadIndicatedContent';
 import PhaseContainerConfigurer, {
   StyledPhaseContainerConfigurerContent,
   StyledPhaseContainerConfigurerHead,
-} from '../../../../../complect/phase-container/PhaseContainerConfigurer';
+} from '../../../../../07-shared/ui/phase-container/PhaseContainerConfigurer';
 import { cmIDB } from '../../_db/cm-idb';
 import { SetComListLimitsExtracterContext } from '../../base/SetComListLimitsExtracterContext';
 import CmTranslationComListContextInCat from '../../base/translations/InCat';

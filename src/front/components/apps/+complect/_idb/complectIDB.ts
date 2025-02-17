@@ -1,4 +1,4 @@
-import { DexieDB } from 'front/complect/_DexieDB';
+import { DexieDB } from '#shared/lib/_DexieDB';
 import { defaultComplectConfig } from '../translations/atoms';
 import { AlertLineConfig, ScreenTranslationConfig } from '../translations/model';
 import { TranslationViewApp } from '../translations/Translations.model';

@@ -1,6 +1,6 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import BrutalItem from '#shared/ui/brutal-item/BrutalItem';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { Route, Routes } from 'react-router-dom';
-import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
 import { useAuth } from '../../../index/atoms';
 import { TheMeetings } from '../lists/meetings/TheMeetings';
 import ChordRedactor from './chord-redactor/ChordRedactor';

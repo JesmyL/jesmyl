@@ -1,7 +1,7 @@
 import { mylib } from 'front/utils';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { addEventListenerPipe, hookEffectPipe } from '../../../../../../../complect/hookEffectPipe';
+import { addEventListenerPipe, hookEffectPipe } from '../../../../../../../07-shared/lib/hookEffectPipe';
 import useSelectedComs from '../../../../base/useSelectedComs';
 import { Com } from '../../Com';
 import { currentComwIdPrefix, faceItemDescriptionClassName } from './_ComList';

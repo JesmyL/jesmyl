@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { JStorageSetOrArrayVal } from '../../../../../../complect/JSimpleStorage/exports/SetOrArray';
+import { JStorageSetOrArrayVal } from '../../../../../../07-shared/lib/JSimpleStorage/exports/SetOrArray';
 import { useBibleAddressBooki } from '../../../hooks/address/books';
 import { useBibleAddressChapteri } from '../../../hooks/address/chapters';
 import { useBibleTranslatesContext } from '../../../translates/TranslatesContext';

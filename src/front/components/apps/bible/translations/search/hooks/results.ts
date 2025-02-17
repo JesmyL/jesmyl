@@ -1,4 +1,4 @@
-import { atom, useAtom, useAtomSet, useAtomValue } from '../../../../../../complect/atoms';
+import { atom, useAtom, useAtomSet, useAtomValue } from '#shared/lib/atoms';
 import { BibleTranslationSingleAddress } from '../../../model';
 
 const listAtom = atom<BibleTranslationSingleAddress[]>([]);

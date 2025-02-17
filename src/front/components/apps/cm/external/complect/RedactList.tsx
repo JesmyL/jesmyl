@@ -1,7 +1,7 @@
+import IconButton from '#shared/ui/the-icon/IconButton';
+import { FullContent } from '#widgets/fullscreen-content/FullContent';
 import { useState } from 'react';
 import { CmComBindAttach, CmComWid } from 'shared/api';
-import { FullContent } from '../../../../../complect/fullscreen-content/FullContent';
-import IconButton from '../../../../../complect/the-icon/IconButton';
 import { Com } from '../../col/com/Com';
 import { ComFaceList } from '../../col/com/face/list/ComFaceList';
 import { CmComListSearchFilterInput } from '../../complect/ComListSearchFilterInput';

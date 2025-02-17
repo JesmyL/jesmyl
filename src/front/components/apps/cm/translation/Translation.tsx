@@ -1,5 +1,5 @@
 import { CurrentForceViweAppContext } from '../../+complect/translations/Translation.contexts';
-import { isTouchDevice } from '../../../../complect/device-differences';
+import { isTouchDevice } from '../../../../07-shared/lib/device-differences';
 import CmTranslationControlled from './complect/controlled/CmTranslationControlled';
 import TranslationFullscreen from './complect/fullscreen/TranslationFullscreen';
 

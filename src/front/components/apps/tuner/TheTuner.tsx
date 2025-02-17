@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import PhaseContainerConfigurer from '../../../complect/phase-container/PhaseContainerConfigurer';
+import PhaseContainerConfigurer from '../../../07-shared/ui/phase-container/PhaseContainerConfigurer';
 import { TunerApplication } from './app';
 import './Tuner.scss';
 import './TunerStyle.scss';

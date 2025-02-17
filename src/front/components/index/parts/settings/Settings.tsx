@@ -1,12 +1,12 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import BrutalItem from '#shared/ui/brutal-item/BrutalItem';
+import IconCheckbox from '#shared/ui/the-icon/IconCheckbox';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { MyLib } from 'front/utils';
 import React, { Suspense } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import { itIt } from 'shared/utils';
-import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
-import { FontFamilySelector } from '../../../../complect/configurators/selectors/FontFamilySelector';
-import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
-import IconCheckbox from '../../../../complect/the-icon/IconCheckbox';
+import { FontFamilySelector } from '../../../../04-widgets/configurators/selectors/FontFamilySelector';
+import PhaseContainerConfigurer from '../../../../07-shared/ui/phase-container/PhaseContainerConfigurer';
 import { useAppFontFamily, useAuth } from '../../atoms';
 import { indexSimpleValIsPlayAnimations, indexSimpleValIsUseNativeKeyboard } from '../../complect/index.simpleValues';
 import useConnectionState from '../../useConnectionState';

@@ -1,5 +1,5 @@
 import React, { Suspense } from 'react';
-import { RoutingAppConfig } from '../../../../app/routing-apps';
+import { RoutingAppConfig } from '../../../../02-processes/routers';
 import { BibleFooter } from './BibleFooter';
 
 const BibleRouter = React.lazy(() => import('./BibleRouter'));

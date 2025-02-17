@@ -1,1 +1,1 @@
-export * from '../complect/my-lib';
+export * from '#shared/lib/my-lib';

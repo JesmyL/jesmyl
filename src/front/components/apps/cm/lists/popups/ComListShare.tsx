@@ -1,4 +1,4 @@
-import { QrCodeFullScreen } from 'front/complect/qr-code/QrCodeFullScreen';
+import { QrCodeFullScreen } from '#widgets/qr-code/QrCodeFullScreen';
 import { cmAppActions } from '../../app-actions/cm-app-actions';
 import { Com } from '../../col/com/Com';
 

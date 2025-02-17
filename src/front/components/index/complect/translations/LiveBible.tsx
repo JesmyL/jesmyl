@@ -1,4 +1,4 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { memo, useCallback } from 'react';
 import { useSwitchCurrentTranslationTextApp } from '../../../apps/+complect/translations/hooks/current-app';
 import BibleLiveTranslation from '../../../apps/bible/translations/BibleLiveTranslation';

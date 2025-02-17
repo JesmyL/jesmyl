@@ -1,7 +1,7 @@
+import IconButton from '#shared/ui/the-icon/IconButton';
+import IconCheckbox from '#shared/ui/the-icon/IconCheckbox';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useLiveQuery } from 'dexie-react-hooks';
-import IconButton from 'front/complect/the-icon/IconButton';
-import IconCheckbox from 'front/complect/the-icon/IconCheckbox';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
 import { InputWithLoadingIcon } from 'front/components/apps/cm/base/InputWithLoadingIcon';
 import { cmCatClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
