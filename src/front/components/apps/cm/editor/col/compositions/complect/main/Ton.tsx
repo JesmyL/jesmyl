@@ -61,7 +61,7 @@ export const EditableCompositionMainTon = ({ ccom }: { ccom: EditableCom }) => {
       {modalNode}
       <LazyIcon icon="Notification01" />
       <div className="title half-width text-center">Изменить тональность</div>
-      <div className="half-width text-center">{ccom.firstChord}</div>
+      <div className="half-width text-center">{ccom.getFirstSimpleChord()}</div>
     </div>
   );
 };

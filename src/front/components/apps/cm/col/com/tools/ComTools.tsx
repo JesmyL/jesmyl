@@ -42,7 +42,7 @@ export const ComTools = () => {
                 ccom.setChordsInitialTon();
               }}
             >
-              {ccom.firstChord}
+              {ccom.getFirstSimpleChord()}
             </div>
             <LazyIcon
               icon="PlusSign"

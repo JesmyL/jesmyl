@@ -115,12 +115,10 @@ export class Com extends BaseNamed<IExportableCom> {
     this.initialTransPosition = val;
   }
 
-  get firstChord(): string {
-    return this.chordLabels?.[0]?.[0]?.[0];
-  }
-
   getFirstSimpleChord() {
-    return (this.orders?.[0]?.chords ?? this.chords?.[0])?.match(makeRegExp('/[A-H]#?/'))?.[0];
+    return (this.chordLabels?.[0]?.[0]?.[0] ?? this.orders?.[0]?.chords ?? this.chords?.[0])?.match(
+      makeRegExp('/[A-H]#?m?/'),
+    )?.[0];
   }
 
   pullTransPosition(obj: IExportableCom) {
@@ -181,8 +179,8 @@ export class Com extends BaseNamed<IExportableCom> {
     if (this.transPosition !== undefined) this.transPosition -= -delta;
     else this.transPosition = delta;
 
-    const isUpdated = await cmIDB.tb.fixedComs.update(this.wid, { ton: (this.ton ?? 1) + delta });
-    if (!isUpdated) await cmIDB.tb.fixedComs.put({ w: this.wid, ton: (this.ton ?? 1) + delta });
+    const isUpdated = await cmIDB.tb.fixedComs.update(this.wid, { ton: (this.ton ?? 0) + delta });
+    if (!isUpdated) await cmIDB.tb.fixedComs.put({ w: this.wid, ton: (this.ton ?? 0) + delta });
   }
 
   getOrderedTexts(isIncluseEndstars = true, kind: number | und) {
