@@ -10,8 +10,8 @@ import {
   ScheduleWidgetAttRef,
   ScheduleWidgetDayEventAttValues,
 } from 'shared/api';
-import StrongDiv from '../../schedule-widget/strong-control/StrongDiv';
 import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
+import StrongDiv from '../strong-control/StrongDiv';
 import ScheduleWidgetAttFace from './AttFace';
 
 type Props = {

@@ -26,6 +26,7 @@ import {
 import { schLinkAction } from './links';
 import ScheduleWidgetLists from './lists/Lists';
 import { ScheduleWidgetWatchLiveTranslationButton } from './live-translations/WatchLiveButton';
+import StrongInputDateTimeExtracter from './strong-control/StrongDateTimeExtracter';
 import StrongEditableField from './strong-control/field/StrongEditableField';
 import { ScheduleWidgetMyUserTgInform } from './tg-inform/UserTgInform';
 import { ScheduleWidgetRights, useScheduleWidgetRights } from './useScheduleWidget';
@@ -153,7 +154,7 @@ export default function ScheduleWidget({
           {titleNode}
           <div className="margin-big-gap-v">
             {rights.isCanRedact && isRedact ? (
-              <StrongControlDateTimeExtracter
+              <StrongInputDateTimeExtracter
                 title="Начало"
                 icon="Calendar03"
                 value={dateValue}

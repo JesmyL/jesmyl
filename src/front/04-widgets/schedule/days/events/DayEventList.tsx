@@ -1,13 +1,13 @@
 import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import StrongDiv from '#widgets/schedule/strong-control/StrongDiv';
 import { useEffect, useMemo, useState } from 'react';
 import { indexScheduleGetDayEventTimes, IScheduleWidgetDay, ScheduleDayScopeProps } from 'shared/api';
 import { isNIs } from 'shared/utils';
 import styled from 'styled-components';
 import useIsRedactArea from '../../../../07-shared/hooks/useIsRedactArea';
 import { useIsRememberExpand } from '../../../../07-shared/ui/expand/useIsRememberExpand';
-import StrongDiv from '../../../schedule-widget/strong-control/StrongDiv';
 import ScheduleWidgetTopicTitle from '../../complect/TopicTitle';
 import { ScheduleWidgetEventTypeList } from '../../events/EventTypeList';
 import { schDaysSokiInvocatorClient } from '../../invocators/invocators.methods';

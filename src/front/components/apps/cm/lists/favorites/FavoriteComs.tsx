@@ -1,4 +1,4 @@
-import { BottomPopup } from '#shared/ui/absolute-popup/bottom-popup/BottomPopup';
+import { BottomPopup } from '#widgets/absolute-popup/bottom-popup/BottomPopup';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import PhaseContainerConfigurer from '../../../../../07-shared/ui/phase-container/PhaseContainerConfigurer';

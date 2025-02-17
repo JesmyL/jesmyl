@@ -3,6 +3,7 @@ import Modal from '#widgets/modal/Modal/Modal';
 import { ModalBody } from '#widgets/modal/Modal/ModalBody';
 import { ModalHeader } from '#widgets/modal/Modal/ModalHeader';
 import { schDayEventsSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import StrongDiv from '#widgets/schedule/strong-control/StrongDiv';
 import { useState } from 'react';
 import {
   CustomAttUseTaleId,
@@ -12,7 +13,6 @@ import {
   IScheduleWidgetUser,
   ScheduleDayEventAttachmentScopeProps,
 } from 'shared/api';
-import StrongDiv from '../../../../../complect/strong-control/StrongDiv';
 import KeyValueListAttNumberMember from './KeyValueListAttNumberMember';
 
 export default function ScheduleKeyValueListAttArrayItemKeyChange(props: {

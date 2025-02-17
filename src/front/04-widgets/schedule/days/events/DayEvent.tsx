@@ -1,5 +1,6 @@
 import IconButton from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import StrongEditableField from '#widgets/schedule/strong-control/field/StrongEditableField';
 import { MyLib, mylib } from 'front/utils';
 import { ReactNode, useMemo } from 'react';
 import {
@@ -15,7 +16,6 @@ import {
 import styled from 'styled-components';
 import useIsRedactArea from '../../../../07-shared/hooks/useIsRedactArea';
 import { useIsRememberExpand } from '../../../../07-shared/ui/expand/useIsRememberExpand';
-import StrongEditableField from '../../../schedule-widget/strong-control/field/StrongEditableField';
 import ScheduleWidgetBindAttRefKeyButton from '../../atts/BindAttRefKeyButton';
 import { ScheduleWidgetBindAtts } from '../../atts/BindAtts';
 import ScheduleWidgetTopicTitle from '../../complect/TopicTitle';

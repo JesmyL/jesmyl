@@ -1,6 +1,7 @@
 import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import IconButton from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import StrongEditableField from '#widgets/schedule/strong-control/field/StrongEditableField';
 import React, { ReactNode, useMemo, useState } from 'react';
 import {
   CustomAttUseRights,
@@ -15,7 +16,6 @@ import { itIt, itNIt } from 'shared/utils';
 import Modal from '../../../modal/Modal/Modal';
 import { ModalBody } from '../../../modal/Modal/ModalBody';
 import { ModalHeader } from '../../../modal/Modal/ModalHeader';
-import StrongEditableField from '../../../schedule-widget/strong-control/field/StrongEditableField';
 import { useScheduleScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
 import ScheduleWidgetRightControlList from '../../control/RightControlList';
 import { schAttachmentTypesSokiInvocatorClient } from '../../invocators/invocators.methods';

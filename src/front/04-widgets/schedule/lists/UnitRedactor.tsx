@@ -8,9 +8,9 @@ import {
 } from 'shared/api';
 import { ModalBody } from '../../modal/Modal/ModalBody';
 import { ModalHeader } from '../../modal/Modal/ModalHeader';
-import StrongEditableField from '../../schedule-widget/strong-control/field/StrongEditableField';
 import ScheduleWidgetUserList from '../control/users/UserList';
 import { schListsSokiInvocatorClient, schUsersSokiInvocatorClient } from '../invocators/invocators.methods';
+import StrongEditableField from '../strong-control/field/StrongEditableField';
 
 type Props = {
   unit: IScheduleWidgetListUnit;

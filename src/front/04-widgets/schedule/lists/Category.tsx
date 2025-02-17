@@ -5,9 +5,9 @@ import { IScheduleWidgetListCat } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import { ExpandableContent } from '../../../07-shared/ui/expand/ExpandableContent';
 import useModal from '../../modal/useModal';
-import StrongEditableField from '../../schedule-widget/strong-control/field/StrongEditableField';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
+import StrongEditableField from '../strong-control/field/StrongEditableField';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetListUnit from './Unit';
 

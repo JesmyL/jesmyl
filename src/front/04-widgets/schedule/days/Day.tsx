@@ -14,10 +14,10 @@ import {
 import { isNIs } from 'shared/utils';
 import styled from 'styled-components';
 import useIsRedactArea from '../../../07-shared/hooks/useIsRedactArea';
-import StrongEditableField from '../../schedule-widget/strong-control/field/StrongEditableField';
 import ScheduleAlarmDay from '../alarm/AlarmDay';
 import { ScheduleDayScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schDaysSokiInvocatorClient } from '../invocators/invocators.methods';
+import StrongEditableField from '../strong-control/field/StrongEditableField';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetDayEditPanel from './DayEditPanel';
 import ScheduleWidgetDayEventList from './events/DayEventList';

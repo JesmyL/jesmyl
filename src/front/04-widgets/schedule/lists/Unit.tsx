@@ -4,10 +4,10 @@ import { IScheduleWidgetListCat, IScheduleWidgetListUnit, IScheduleWidgetUserCat
 import styled from 'styled-components';
 import { ExpandableContent } from '../../../07-shared/ui/expand/ExpandableContent';
 import Modal from '../../modal/Modal/Modal';
-import StrongEditableField from '../../schedule-widget/strong-control/field/StrongEditableField';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import ScheduleWidgetUserList from '../control/users/UserList';
 import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
+import StrongEditableField from '../strong-control/field/StrongEditableField';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import { ScheduleWidgetListUnitRedactor } from './UnitRedactor';
 

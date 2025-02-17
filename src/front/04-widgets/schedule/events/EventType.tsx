@@ -9,11 +9,11 @@ import { IScheduleWidget, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
 import styled from 'styled-components';
 import { AttTranslatorType, attTranslatorTypes } from '../../../../back/apps/index/schedules/attTranslatorType';
 import SendableDropdown from '../../../07-shared/ui/sends/dropdown/SendableDropdown';
-import StrongDiv from '../../schedule-widget/strong-control/StrongDiv';
-import StrongEditableField from '../../schedule-widget/strong-control/field/StrongEditableField';
 import { ScheduleWidgetBindAtts } from '../atts/BindAtts';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schEventTypesSokiInvocatorClient } from '../invocators/invocators.methods';
+import StrongEditableField from '../strong-control/field/StrongEditableField';
+import StrongDiv from '../strong-control/StrongDiv';
 import { useAttTypeTitleError } from './useAttTypeTitleError';
 
 export default function ScheduleWidgetEventType(props: {

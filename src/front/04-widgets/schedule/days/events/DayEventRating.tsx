@@ -1,12 +1,12 @@
 import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import StrongEditableField from '#widgets/schedule/strong-control/field/StrongEditableField';
 import { MyLib } from 'front/utils';
 import { ReactNode } from 'react';
 import { IScheduleWidgetDayEvent, ScheduleDayEventScopeProps } from 'shared/api';
 import { emptyAsyncFunc, itNNull } from 'shared/utils';
 import styled from 'styled-components';
 import useIsExpand from '../../../../07-shared/ui/expand/useIsExpand';
-import StrongEditableField from '../../../schedule-widget/strong-control/field/StrongEditableField';
 import { schDayEventsSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 

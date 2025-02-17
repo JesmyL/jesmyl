@@ -1,10 +1,10 @@
+import StrongEditableField from '#widgets/schedule/strong-control/field/StrongEditableField';
 import {
   IScheduleWidgetUser,
   IScheduleWidgetWid,
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
-import StrongEditableField from '../../../schedule-widget/strong-control/field/StrongEditableField';
 import { useScheduleUserScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
 import { schUsersSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';

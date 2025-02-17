@@ -1,3 +1,4 @@
+import useMountTransition from '#shared/hooks/useMountTransition';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
 import { propagationStopper } from '#shared/lib/events-and-callbacks';
 import Portal from '#shared/ui/Portal';

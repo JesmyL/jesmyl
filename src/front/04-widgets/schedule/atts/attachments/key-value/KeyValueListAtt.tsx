@@ -1,6 +1,7 @@
 import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { schDayEventsSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import StrongEditableField from '#widgets/schedule/strong-control/field/StrongEditableField';
 import { mylib } from 'front/utils';
 import Markdown from 'markdown-to-jsx';
 import { ReactNode } from 'react';
@@ -21,7 +22,6 @@ import {
 } from 'shared/api';
 import { itIt, makeRegExp } from 'shared/utils';
 import styled, { css } from 'styled-components';
-import StrongEditableField from '../../../../../complect/strong-control/field/StrongEditableField';
 import ScheduleWidgetRoleFace from '../../../control/roles/RoleFace';
 import ScheduleWidgetListUnitFace from '../../../lists/UnitFace';
 import {

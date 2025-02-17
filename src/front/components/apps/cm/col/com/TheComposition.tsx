@@ -1,6 +1,6 @@
 import { useAtom, useAtomValue } from '#shared/lib/atoms';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { BottomPopup } from '#shared/ui/absolute-popup/bottom-popup/BottomPopup';
+import { BottomPopup } from '#widgets/absolute-popup/bottom-popup/BottomPopup';
 import { FullContent } from '#widgets/fullscreen-content/FullContent';
 import { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
