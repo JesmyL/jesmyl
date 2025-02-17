@@ -1,3 +1,4 @@
+import { hookEffectPipe, setTimeoutPipe } from 'front/complect/hookEffectPipe';
 import useToast from 'front/complect/modal/useToast';
 import { useAuth } from 'front/components/index/atoms';
 import React, { memo, Suspense, useEffect, useState } from 'react';
@@ -82,9 +83,14 @@ export default function CmRouter({ mainNode }: { mainNode: React.ReactNode }) {
 export const RenderEditorOnce = memo(() => {
   const [isCantRender, setIsCantRender] = useState(false);
 
+  useEffect(
+    () =>
+      hookEffectPipe()
+        .pipe(setTimeoutPipe(setIsCantRender, 0, true))
+        .effect(),
+    [],
+  );
   if (isCantRender) return null;
-  setTimeout(setIsCantRender, 0, true);
-
   return (
     <div hidden>
       <Suspense>
