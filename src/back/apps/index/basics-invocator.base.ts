@@ -5,6 +5,7 @@ import { prodTelegramBot } from 'back/sides/telegram-bot/prod/prod-bot';
 import { supportTelegramBot } from 'back/sides/telegram-bot/support/support-bot';
 import { JesmylTelegramBot } from 'back/sides/telegram-bot/tg-bot';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
+import { exec } from 'child_process';
 import jwt from 'jsonwebtoken';
 import TelegramBot from 'node-telegram-bot-api';
 import {
@@ -51,6 +52,14 @@ const makeAuthFromUser = async (user: OmitOwn<TelegramBot.User, 'is_bot'>) => {
 
 appVersionFileStore.watchFile((value, state) => {
   indexServerInvocatorShareMethods.appVersion(null, value.num, state.mtimeMs);
+
+  setTimeout(
+    () =>
+      exec('npm run x')
+        .stdout?.on('data', () => console.log('Complete process: npm run x'))
+        .on('error', console.error),
+    1000,
+  );
 });
 
 valuesFileStore.watchFile((value, state) => {
