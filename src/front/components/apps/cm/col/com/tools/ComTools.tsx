@@ -1,10 +1,10 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { BottomPopupItem } from '#widgets/absolute-popup/bottom-popup/BottomPopupItem';
+import { cmIDB } from '#basis/lib/idb/cm';
+import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
 import { useLiveQuery } from 'dexie-react-hooks';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
+import { useChordVisibleVariant } from '../../../../../../07-basis/lib/hooks/cm/useChordVisibleVariant';
 import { ChordVisibleVariant } from '../../../Cm.model';
-import { cmIDB } from '../../../_db/cm-idb';
-import { useChordVisibleVariant } from '../../../base/useChordVisibleVariant';
 import { useFixedCcom } from '../useCcom';
 import { CmComCatMentions } from '../useGetCatMentions';
 import { useMigratableListComTools } from './useMigratableComTools';

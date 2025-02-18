@@ -1,3 +1,4 @@
+import { contextCreator } from 'front/08-shared/lib/contextCreator';
 import { mylib, MyLib } from 'front/utils';
 import React, { useContext, useMemo } from 'react';
 import {
@@ -10,7 +11,6 @@ import {
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
-import { contextCreator } from '../../07-shared/lib/contextCreator';
 import { appAttsStore } from '../../components/complect/appScheduleAttrsStorage';
 import { useAuth } from '../../components/index/atoms';
 import ScheduleKeyValueListAtt from './atts/attachments/key-value/KeyValueListAtt';

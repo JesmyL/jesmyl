@@ -1,14 +1,20 @@
-import useIsRedactArea from '#shared/hooks/useIsRedactArea';
-import SendButton from '#shared/ui/sends/send-button/SendButton';
-import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import {
+  schDaysSokiInvocatorClient,
+  schGeneralSokiInvocatorClient,
+  schUsersSokiInvocatorClient,
+} from '#basis/lib/invocators/schedules/invocators.methods';
+import useIsRedactArea from 'front/08-shared/lib/hooks/useIsRedactArea';
+import SendButton from 'front/08-shared/ui/sends/send-button/SendButton';
+import TheIconSendButton from 'front/08-shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { mylib } from 'front/utils';
 import { useEffect, useMemo, useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetWid, ScheduleScopeProps } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
+import { QrCodeFullScreen } from '../../06-entities/qr-code/QrCodeFullScreen';
+import { schLinkAction } from '../../07-basis/lib/consts/schedule/link-actions';
 import { useAuth } from '../../components/index/atoms';
-import { QrCodeFullScreen } from '../qr-code/QrCodeFullScreen';
 import ScheduleWidgetCustomAttachments from './atts/custom/CustomAttachments';
 import ScheduleWidgetStartTimeText from './complect/StartTimeText';
 import ScheduleWidgetTopicTitle from './complect/TopicTitle';
@@ -18,12 +24,6 @@ import { ScheduleWidgetDay } from './days/Day';
 import { ScheduleWidgetEventTypeList } from './events/EventTypeList';
 import ScheduleWidgetContextWrapper from './general/ContextWrapper';
 import { ScheduleWidgetCopy } from './general/Copy';
-import {
-  schDaysSokiInvocatorClient,
-  schGeneralSokiInvocatorClient,
-  schUsersSokiInvocatorClient,
-} from './invocators/invocators.methods';
-import { schLinkAction } from './links';
 import ScheduleWidgetLists from './lists/Lists';
 import { ScheduleWidgetWatchLiveTranslationButton } from './live-translations/WatchLiveButton';
 import StrongInputDateTimeExtracter from './strong-control/StrongDateTimeExtracter';

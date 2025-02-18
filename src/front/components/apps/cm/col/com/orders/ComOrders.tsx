@@ -1,7 +1,7 @@
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { useBibleScreenTranslationFontSizeAdapter } from 'front/08-shared/lib/hooks/useFontSizeAdapter';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { ReactNode, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useBibleScreenTranslationFontSizeAdapter } from '../../../../../../07-shared/hooks/useFontSizeAdapter';
 import { Com } from '../Com';
 import TheOrder from '../order/TheOrder';
 import { IComOrdersProps } from './ComOrders.model';

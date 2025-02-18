@@ -1,9 +1,9 @@
-import { useAtom } from '#shared/lib/atoms';
-import Dropdown from '#shared/ui/dropdown/Dropdown';
-import IconButton from '#shared/ui/the-icon/IconButton';
+import { useAtom } from 'front/08-shared/lib/atoms';
+import Dropdown from 'front/08-shared/ui/dropdown/Dropdown';
+import LoadIndicatedContent from 'front/08-shared/ui/load-indicated-content/LoadIndicatedContent';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
 import { mylib } from 'front/utils';
 import { useState } from 'react';
-import LoadIndicatedContent from '../../../../../../07-shared/ui/load-indicated-content/LoadIndicatedContent';
 import { InputWithLoadingIcon } from '../../../base/InputWithLoadingIcon';
 import { catTrackers } from '../../../col/cat/Cat.complect';
 import { useCcatw } from '../../../col/cat/useCcat';

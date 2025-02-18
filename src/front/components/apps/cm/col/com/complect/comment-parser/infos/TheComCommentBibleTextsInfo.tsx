@@ -1,7 +1,5 @@
 import { bibleTitles } from 'front/components/apps/bible/hooks/bibleTitlesJson';
 import React from 'react';
-import { ModalBody } from '../../../../../../../../04-widgets/modal/Modal/ModalBody';
-import { ModalHeader } from '../../../../../../../../04-widgets/modal/Modal/ModalHeader';
 import BibleModulesTranslationsRedactButton from '../../../../../../bible/translates/Add';
 import { bibleAllTranslates, translateDescriptions } from '../../../../../../bible/translates/complect';
 import { useBibleMyTranslates } from '../../../../../../bible/translates/hooks';

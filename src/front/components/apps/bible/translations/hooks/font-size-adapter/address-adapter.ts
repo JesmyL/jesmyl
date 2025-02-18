@@ -1,5 +1,5 @@
+import { useBibleScreenTranslationFontSizeAdapter } from 'front/08-shared/lib/hooks/useFontSizeAdapter';
 import { useIsScreenTranslationTextVisible } from '../../../../+complect/translations/atoms';
-import { useBibleScreenTranslationFontSizeAdapter } from '../../../../../../07-shared/hooks/useFontSizeAdapter';
 import { BibleTranslationScreenConfig } from '../../model';
 
 export const useBibleScreenTranslationFontSizeAddressAdapter = (

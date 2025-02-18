@@ -1,7 +1,7 @@
-import { StyledLoadingSpinner } from '#shared/ui/the-icon/IconLoading';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { BottomPopupItem } from '#widgets/absolute-popup/bottom-popup/BottomPopupItem';
-import { useConfirm } from '#widgets/modal/confirm/useConfirm';
+import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
+import { useConfirm } from '#shared/ui/modal';
+import { StyledLoadingSpinner } from 'front/08-shared/ui/the-icon/IconLoading';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
 import { OrdersRedactorOrderToolsProps } from '../OrdersRedactorOrderTools';

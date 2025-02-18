@@ -1,8 +1,8 @@
-import { AppName } from '#shared/model/App.model';
+import { AppName } from '#basis/model/App.model';
+import { isTouchDevice } from 'front/08-shared/lib/device-differences';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { isTouchDevice } from '../../07-shared/lib/device-differences';
 import AppFooterItem, {
   CurrentAppFooterItemAppNameContext,
   CurrentAppFooterItemPlaceContext,

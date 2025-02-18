@@ -1,5 +1,5 @@
-import { useAtom } from '#shared/lib/atoms';
-import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
+import { cmIDB } from '#basis/lib/idb/cm';
+import { useAtom } from 'front/08-shared/lib/atoms';
 import { useEffect, useMemo } from 'react';
 import { useComCommentText } from '../../../../com-comments-manager';
 import { Com } from '../../Com';

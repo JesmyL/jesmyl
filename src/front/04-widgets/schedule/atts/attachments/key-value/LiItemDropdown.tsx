@@ -1,4 +1,5 @@
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import SendableDropdown from 'front/08-shared/ui/sends/dropdown/SendableDropdown';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { mylib } from 'front/utils';
 import { useState } from 'react';
 import {
@@ -8,7 +9,6 @@ import {
   IScheduleWidgetUser,
   ScheduleWidgetAppAttCustomizableValueItem,
 } from 'shared/api';
-import SendableDropdown from '../../../../../07-shared/ui/sends/dropdown/SendableDropdown';
 import KeyValueListAttNumberMember from './KeyValueListAttNumberMember';
 
 const zeroFunc = () => 0;

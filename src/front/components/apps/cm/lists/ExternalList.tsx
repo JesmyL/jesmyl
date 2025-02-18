@@ -1,13 +1,13 @@
+import PhaseContainerConfigurer from 'front/08-shared/ui/phase-container/PhaseContainerConfigurer';
 import { mylib } from 'front/utils';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Route, Routes, useParams } from 'react-router-dom';
 import { itNUnd } from 'shared/utils';
 import { CmComWid } from '../../../../../shared/api/complect/apps/cm/complect/enums';
-import PhaseContainerConfigurer from '../../../../07-shared/ui/phase-container/PhaseContainerConfigurer';
+import { cmCompositionRoute } from '../../../../01-app/router-configs/cm';
 import { CmComListContext } from '../base/translations/context';
 import { ComFaceList } from '../col/com/face/list/ComFaceList';
 import { useComs } from '../cols/useCols';
-import { cmCompositionRoute } from '../routing/cmRoutingApp';
 import './Lists.scss';
 
 export default function ExternalList() {

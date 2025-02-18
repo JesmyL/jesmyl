@@ -1,8 +1,8 @@
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { BibleTranslationPage } from '#pages/bible/BibleTranslationPage';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { memo, useCallback } from 'react';
 import { useSwitchCurrentTranslationTextApp } from '../../../apps/+complect/translations/hooks/current-app';
 import BibleLiveTranslation from '../../../apps/bible/translations/BibleLiveTranslation';
-import BibleTranslationControlled from '../../../apps/bible/translations/BibleTranslationControlled';
 import { IndexSchWTranslationLiveDataValue } from '../../Index.model';
 import { schLiveSokiInvocatorClient } from './live-invocator';
 import { LiveTranslationAppProps } from './model';
@@ -27,7 +27,7 @@ export const IndexScheduleWidgetBibleTranslationsControlled: React.FC<LiveTransl
           onSend={onSend}
         />
       )}
-      <BibleTranslationControlled
+      <BibleTranslationPage
         head={
           <LazyIcon
             icon="Book02"

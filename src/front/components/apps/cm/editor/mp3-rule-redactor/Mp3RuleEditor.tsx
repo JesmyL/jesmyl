@@ -1,5 +1,5 @@
-import KeyboardInput from '#shared/ui/keyboard/KeyboardInput';
-import IconButton from '#shared/ui/the-icon/IconButton';
+import KeyboardInput from 'front/08-shared/ui/keyboard/KeyboardInput';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
 import { ReactNode, useState } from 'react';
 import { CmMp3Rule } from 'shared/api';
 import { useCmMp3Rules } from './useCmMp3Rules';

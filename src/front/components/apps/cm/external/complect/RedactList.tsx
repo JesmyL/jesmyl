@@ -1,5 +1,5 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
-import { FullContent } from '#widgets/fullscreen-content/FullContent';
+import { FullScreenContent } from '#shared/ui/fullscreen-content';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
 import { useState } from 'react';
 import { CmComBindAttach, CmComWid } from 'shared/api';
 import { Com } from '../../col/com/Com';
@@ -46,12 +46,12 @@ export default function CmExternalComListAttRedactList({ value, setComw: setCcom
       </div>
 
       {isOrderOpen && (
-        <FullContent onClose={setIsOrderOpen}>
+        <FullScreenContent onClose={setIsOrderOpen}>
           <CmExternalComListAttRedactListOrder
             value={value}
             setCcomw={setCcomw}
           />
-        </FullContent>
+        </FullScreenContent>
       )}
     </>
   );

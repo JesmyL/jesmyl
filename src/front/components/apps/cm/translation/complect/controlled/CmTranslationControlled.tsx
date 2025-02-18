@@ -1,9 +1,9 @@
+import PhaseContainerConfigurer from 'front/08-shared/ui/phase-container/PhaseContainerConfigurer';
 import { mylib } from 'front/utils';
 import { ReactNode } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { TranslationSlidePreview } from '../../../../+complect/translations/controls/Preview';
-import PhaseContainerConfigurer from '../../../../../../07-shared/ui/phase-container/PhaseContainerConfigurer';
 import { Com } from '../../../col/com/Com';
 import { ComFaceList } from '../../../col/com/face/list/ComFaceList';
 import { useTakeActualComw } from '../../../col/com/useCcom';

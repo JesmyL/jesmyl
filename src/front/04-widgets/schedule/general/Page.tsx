@@ -1,11 +1,11 @@
-import SendButton from '#shared/ui/sends/send-button/SendButton';
+import { schUsersSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
+import PhaseContainerConfigurer from 'front/08-shared/ui/phase-container/PhaseContainerConfigurer';
+import SendButton from 'front/08-shared/ui/sends/send-button/SendButton';
 import { Route, Routes } from 'react-router-dom';
-import PhaseContainerConfigurer from '../../../07-shared/ui/phase-container/PhaseContainerConfigurer';
+import useConnectionState from '../../../07-basis/lib/hooks/+app/useConnectionState';
 import { useAuth, useIndexSchedules } from '../../../components/index/atoms';
-import useConnectionState from '../../../components/index/useConnectionState';
 import ScheduleWidget from '../ScheduleWidget';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
-import { schUsersSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useCschw, useFixActualSchw } from '../useSch';
 import { ScheduleWidgetAttRoutes } from './AttRoutes';
 

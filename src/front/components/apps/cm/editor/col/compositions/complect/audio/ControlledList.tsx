@@ -1,4 +1,4 @@
-import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
+import { TheIconLoading } from 'front/08-shared/ui/the-icon/IconLoading';
 import { useState } from 'react';
 import ComPlayer from '../../../../../col/com/player/ComPlayer';
 

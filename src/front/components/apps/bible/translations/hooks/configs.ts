@@ -1,3 +1,4 @@
+import { bibleIDB } from '#basis/lib/idb/bible';
 import {
   defaultScreenTranslationBackgroundConfig,
   defaultScreenTranslationPositionConfig,
@@ -7,7 +8,6 @@ import {
   useMakeScreenTranslationConfigsFillPack,
   useScreenTranslationCurrentConfigi,
 } from '../../../+complect/translations/hooks/configs';
-import { bibleIDB } from '../../_db/bibleIDB';
 import { BibleTranslationScreenConfig } from '../model';
 
 export const defaultBibleConfig: BibleTranslationScreenConfig = {

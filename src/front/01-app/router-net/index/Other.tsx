@@ -1,13 +1,13 @@
-import IndexOtherPage from '#pages/index/Other';
-import { routingApps } from '#processes/routers';
+import { routingApps } from '#app/ui/AppRouterProvider';
+import { IndexOtherPage } from '#pages/index';
+import IndexActionsPage from '#pages/index/ui/ActionsPage';
 import ScheduleWidgetListPage from '#widgets/schedule/general/ListPage';
 import { useCurrentApp } from 'front/components/index/atoms';
-import IndexActions from 'front/components/index/parts/actions/Actions';
-import IndexSettings from 'front/components/index/parts/settings/Settings';
+import IndexSettingsPage from 'front/components/index/parts/settings/SettingsPage';
 import React, { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-const IndexAuthorization = React.lazy(() => import('front/components/index/parts/login/IndexAuthorization'));
+const IndexTelegramAuthPage = React.lazy(() => import('front/components/index/parts/login/IndexTelegramAuthPage'));
 
 export default function IndexOtherRoute() {
   const currentAppName = useCurrentApp();
@@ -26,21 +26,21 @@ export default function IndexOtherRoute() {
 
       <Route
         path="actions/*"
-        element={<IndexActions />}
+        element={<IndexActionsPage />}
       />
 
       <Route
         path="login/*"
         element={
           <Suspense>
-            <IndexAuthorization />
+            <IndexTelegramAuthPage />
           </Suspense>
         }
       />
 
       <Route
         path="settings/*"
-        element={<IndexSettings />}
+        element={<IndexSettingsPage />}
       />
 
       <Route

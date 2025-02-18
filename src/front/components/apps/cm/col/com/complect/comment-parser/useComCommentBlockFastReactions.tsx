@@ -1,4 +1,4 @@
-import { useAtomSet } from '#shared/lib/atoms';
+import { useAtomSet } from 'front/08-shared/lib/atoms';
 import { mylib } from 'front/utils';
 import { useEffect } from 'react';
 import { itInvokeIt, wait } from 'shared/utils';

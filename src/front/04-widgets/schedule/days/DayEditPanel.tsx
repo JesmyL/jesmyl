@@ -1,11 +1,11 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
-import { FullContent } from '#widgets/fullscreen-content/FullContent';
+import { schDaysSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
+import { FullScreenContent } from '#shared/ui/fullscreen-content';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
 import { renderComponentInNewWindow } from 'front/front.index';
 import { useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetDay, ScheduleScopeProps } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import { useScheduleDayScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
-import { schDaysSokiInvocatorClient } from '../invocators/invocators.methods';
 import StrongInputDateTimeExtracter from '../strong-control/StrongDateTimeExtracter';
 import { ScheduleWidgetEventListUpdater } from './EventListUpdater';
 import ScheduleWidgetPrintableDay from './PrintableDay';
@@ -60,7 +60,7 @@ export default function ScheduleWidgetDayEditPanel({ day, dayi, schedule, schedu
       />
 
       {isOpenDayListUpdater && (
-        <FullContent onClose={setIsOpenDayListUpdater}>
+        <FullScreenContent onClose={setIsOpenDayListUpdater}>
           <ScheduleWidgetEventListUpdater
             day={day}
             dayi={dayi}
@@ -68,7 +68,7 @@ export default function ScheduleWidgetDayEditPanel({ day, dayi, schedule, schedu
             onClose={setIsOpenDayListUpdater}
             scheduleScopeProps={scheduleScopeProps}
           />
-        </FullContent>
+        </FullScreenContent>
       )}
     </>
   );

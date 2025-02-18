@@ -1,4 +1,4 @@
-import { propagationStopper } from '#shared/lib/events-and-callbacks';
+import { propagationStopper } from 'front/08-shared/lib/events-and-callbacks';
 import { useScreenTranslationCurrentConfig, useScreenTranslationCurrentConfigi } from '../hooks/configs';
 import { useScreenTranslationWindows } from '../hooks/windows';
 import { useUpdateScreenTranslationConfig } from '../hooks/with-config';

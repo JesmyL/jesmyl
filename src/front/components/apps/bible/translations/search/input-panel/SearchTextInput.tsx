@@ -1,6 +1,6 @@
+import { bibleIDB } from '#basis/lib/idb/bible';
+import { addEventListenerPipe, hookEffectPipe } from 'front/08-shared/lib/hookEffectPipe';
 import { useEffect } from 'react';
-import { addEventListenerPipe, hookEffectPipe } from '../../../../../../07-shared/lib/hookEffectPipe';
-import { bibleIDB } from '../../../_db/bibleIDB';
 import { useSetBibleAddressIndexes } from '../../../hooks/address/address';
 import { useBibleTranslationSlideSyncContentSetter } from '../../../hooks/slide-sync';
 import {

@@ -1,7 +1,7 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import TheButton from '#shared/ui/TheButton';
-import { BottomPopup } from '#widgets/absolute-popup/bottom-popup/BottomPopup';
+import { BottomPopup } from '#shared/ui/absolute-popup/bottom-popup/BottomPopup';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
+import TheButton from 'front/08-shared/ui/TheButton';
 import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
 import { ChordVisibleVariant } from '../../../../../Cm.model';

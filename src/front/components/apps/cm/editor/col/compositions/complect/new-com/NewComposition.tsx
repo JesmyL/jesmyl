@@ -1,7 +1,7 @@
-import { propagationStopper } from '#shared/lib/events-and-callbacks';
-import KeyboardInput from '#shared/ui/keyboard/KeyboardInput';
-import SendButton from '#shared/ui/sends/send-button/SendButton';
-import TheButton from '#shared/ui/TheButton';
+import { propagationStopper } from 'front/08-shared/lib/events-and-callbacks';
+import KeyboardInput from 'front/08-shared/ui/keyboard/KeyboardInput';
+import SendButton from 'front/08-shared/ui/sends/send-button/SendButton';
+import TheButton from 'front/08-shared/ui/TheButton';
 import { ChordVisibleVariant } from 'front/components/apps/cm/Cm.model';
 import { Com } from 'front/components/apps/cm/col/com/Com';
 import ComOrders from 'front/components/apps/cm/col/com/orders/ComOrders';

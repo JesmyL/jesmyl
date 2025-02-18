@@ -1,4 +1,4 @@
-import { useChordVisibleVariant } from '../../../../base/useChordVisibleVariant';
+import { useChordVisibleVariant } from '../../../../../../../07-basis/lib/hooks/cm/useChordVisibleVariant';
 import { ChordVisibleVariant } from '../../../../Cm.model';
 import { ComTool } from '../ComTool';
 import { useComToolsCcomContext } from '../useMigratableComTools';

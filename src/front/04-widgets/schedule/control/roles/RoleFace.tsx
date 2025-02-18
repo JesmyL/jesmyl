@@ -1,4 +1,4 @@
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { IScheduleWidget, IScheduleWidgetRole } from 'shared/api';
 import { useAuth } from '../../../../components/index/atoms';
 import { extractScheduleWidgetRoleUser } from '../../useScheduleWidget';

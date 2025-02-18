@@ -1,5 +1,5 @@
-import Dropdown from '#shared/ui/dropdown/Dropdown';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import Dropdown from 'front/08-shared/ui/dropdown/Dropdown';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import React from 'react';
 import { ChordTrack } from '../../../../../../shared/api/complect/apps/cm/complect/chord-card';
 import ChordCardTracked from '../../col/com/chord-card/ChordCardTracked';

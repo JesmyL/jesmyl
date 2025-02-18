@@ -1,4 +1,4 @@
-import IconCheckbox from '#shared/ui/the-icon/IconCheckbox';
+import IconCheckbox from 'front/08-shared/ui/the-icon/IconCheckbox';
 import { mylib } from 'front/utils';
 import { memo, useState } from 'react';
 import { EeStorePack } from 'shared/api';

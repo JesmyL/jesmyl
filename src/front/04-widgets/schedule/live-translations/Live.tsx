@@ -1,14 +1,12 @@
-import { useAtomValue } from '#shared/lib/atoms';
-import IconButton from '#shared/ui/the-icon/IconButton';
-import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
-import Modal from '#widgets/modal/Modal/Modal';
-import { ModalBody } from '#widgets/modal/Modal/ModalBody';
-import { ModalHeader } from '#widgets/modal/Modal/ModalHeader';
+import { soki } from '#basis/lib/soki';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
+import { useAtomValue } from 'front/08-shared/lib/atoms';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
+import { TheIconLoading } from 'front/08-shared/ui/the-icon/IconLoading';
 import {
   schLiveSokiInvocatorBaseClient,
   schLiveSokiInvocatorClient,
 } from 'front/components/index/complect/translations/live-invocator';
-import { soki } from 'front/soki';
 import { useEffect, useState } from 'react';
 import { IScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
 import { ScreenTranslationControlPanelShowMdButton } from '../../../components/apps/+complect/translations/controls/ShowMdButton';

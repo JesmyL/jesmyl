@@ -1,1 +1,1 @@
-export * from '#shared/lib/my-lib';
+export * from 'front/08-shared/lib/my-lib';

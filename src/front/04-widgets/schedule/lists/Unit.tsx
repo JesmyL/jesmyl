@@ -1,12 +1,11 @@
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { schListsSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
+import { ExpandableContent } from 'front/08-shared/ui/expand/ExpandableContent';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { useMemo, useState } from 'react';
 import { IScheduleWidgetListCat, IScheduleWidgetListUnit, IScheduleWidgetUserCati } from 'shared/api';
 import styled from 'styled-components';
-import { ExpandableContent } from '../../../07-shared/ui/expand/ExpandableContent';
-import Modal from '../../modal/Modal/Modal';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import ScheduleWidgetUserList from '../control/users/UserList';
-import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
 import StrongEditableField from '../strong-control/field/StrongEditableField';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import { ScheduleWidgetListUnitRedactor } from './UnitRedactor';

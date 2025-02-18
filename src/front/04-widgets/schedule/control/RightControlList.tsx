@@ -1,4 +1,4 @@
-import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import TheIconSendButton from 'front/08-shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { ScheduleWidgetRightTexts, ScheduleWidgetRightsCtrl } from 'shared/api';
 import styled from 'styled-components';
 

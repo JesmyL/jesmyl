@@ -1,6 +1,6 @@
-import { BottomPopupItem } from '#widgets/absolute-popup/bottom-popup/BottomPopupItem';
+import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
+import { useConfirm } from '#shared/ui/modal';
 import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
-import { useConfirm } from '../../../../../../../../../04-widgets/modal/confirm/useConfirm';
 import { OrdersRedactorOrderToolsProps } from '../OrdersRedactorOrderTools';
 
 export const OrdersRedactorOrderToolsAnchorDelete = ({ com, ord, onClose }: OrdersRedactorOrderToolsProps) => {

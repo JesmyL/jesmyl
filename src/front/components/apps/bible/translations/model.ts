@@ -1,4 +1,4 @@
-import { BackgroundConfigProps } from '#widgets/configurators/model';
+import { BackgroundConfigProps } from '#entities/configurators/model';
 import {
   ScreenTranslationPositionConfig,
   ScreenTranslationSimpleTextConfig,

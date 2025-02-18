@@ -1,9 +1,9 @@
-import { atom, useAtom } from '#shared/lib/atoms';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { atom, useAtom } from 'front/08-shared/lib/atoms';
+import { backSwipableContainerMaker } from 'front/08-shared/lib/backSwipableContainerMaker';
+import { useActualRef } from 'front/08-shared/lib/hooks/useActualRef';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { useEffect, useReducer, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import { useActualRef } from '../../../../../../07-shared/hooks/useActualRef';
-import { backSwipableContainerMaker } from '../../../../../../07-shared/lib/backSwipableContainerMaker';
 import FontSizeContain from '../../../base/font-size-contain/FontSizeContain';
 import { useCloseTranslation } from '../hooks/close-translation';
 import { useCmScreenTranslationComNavigations } from '../hooks/com-navigation';

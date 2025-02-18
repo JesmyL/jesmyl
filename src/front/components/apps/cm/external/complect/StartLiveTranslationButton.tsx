@@ -1,4 +1,4 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
 import { CmComBindAttach, IScheduleWidget } from 'shared/api';
 import { useSwitchCurrentTranslationTextApp } from '../../../+complect/translations/hooks/current-app';
 import { useScheduleWidgetRightsContext } from '../../../../../04-widgets/schedule/useScheduleWidget';

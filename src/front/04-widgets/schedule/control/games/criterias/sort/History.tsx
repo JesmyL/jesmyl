@@ -1,4 +1,4 @@
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { useState } from 'react';
 import { IScheduleWidgetUser } from 'shared/api';
 import styled, { css } from 'styled-components';

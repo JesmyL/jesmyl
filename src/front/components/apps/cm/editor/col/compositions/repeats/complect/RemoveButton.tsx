@@ -1,14 +1,10 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import Modal from '#widgets/modal/Modal/Modal';
-import { ModalBody } from '#widgets/modal/Modal/ModalBody';
-import { ModalFooter } from '#widgets/modal/Modal/ModalFooter';
-import { ModalHeader } from '#widgets/modal/Modal/ModalHeader';
+import { Modal, ModalBody, ModalFooter, ModalHeader, useConfirm } from '#shared/ui/modal';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { mylib } from 'front/utils';
 import { useState } from 'react';
 import { OrderRepeats } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
-import { useConfirm } from '../../../../../../../../04-widgets/modal/confirm/useConfirm';
 import { Order } from '../../../../../col/com/order/Order';
 import { cmComOrderClientInvocatorMethods } from '../../../../cm-editor-invocator.methods';
 import { EditableOrder } from '../../complect/orders/EditableOrder';

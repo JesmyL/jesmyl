@@ -1,7 +1,7 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
+import { cmIDB } from '#basis/lib/idb/cm';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
 import { mylib } from 'front/utils';
 import styled from 'styled-components';
-import { cmIDB } from '../../_db/cm-idb';
 
 export const MoveSelectedComButton = ({ comi }: { comi: number }) => {
   return (

@@ -1,11 +1,16 @@
+import { useBibleTranslatesContext } from '#basis/lib/contexts/bible/TranslatesContext';
+import { bibleIDB } from '#basis/lib/idb/bible';
 import { useCallback, useEffect, useState } from 'react';
 import { emptyArray, makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
-import { bibleIDB } from '../../_db/bibleIDB';
+import {
+  BibleBooki,
+  BibleChapteri,
+  BibleTranslationSingleAddress,
+  BibleVersei,
+} from '../../../../../07-basis/model/bible';
 import { useBibleAddressBooki } from '../../hooks/address/books';
 import { useBibleAddressChapteri } from '../../hooks/address/chapters';
-import { BibleBooki, BibleChapteri, BibleTranslationSingleAddress, BibleVersei } from '../../model';
-import { useBibleTranslatesContext } from '../../translates/TranslatesContext';
 import { useBibleShowTranslatesValue } from '../../translates/hooks';
 import BibleSearchResultVerse from './ResultVerse';
 import { useBibleTranslationSearchResultList, useBibleTranslationSearchResultSelectedValue } from './hooks/results';

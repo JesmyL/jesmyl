@@ -1,5 +1,5 @@
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { BottomPopupItem } from '#widgets/absolute-popup/bottom-popup/BottomPopupItem';
+import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { OrdersRedactorOrderToolsProps } from '../OrdersRedactorOrderTools';
 

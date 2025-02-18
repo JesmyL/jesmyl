@@ -1,4 +1,4 @@
-import { useAtomValue } from '#shared/lib/atoms';
+import { useAtomValue } from 'front/08-shared/lib/atoms';
 import { ScheduleWidgetMarkdownLiveTranslation } from '../MarkdownLive';
 import { markdownTranslationAtom } from './atoms';
 

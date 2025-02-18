@@ -1,9 +1,9 @@
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { schGamesSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/scope-contexts/scope-props-contexts';
-import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import StrongEditableField from '#widgets/schedule/strong-control/field/StrongEditableField';
+import { ExpandableContent } from 'front/08-shared/ui/expand/ExpandableContent';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { useState } from 'react';
-import { ExpandableContent } from '../../../../../../07-shared/ui/expand/ExpandableContent';
 import { useSchWGameContext } from '../Games';
 import ScheduleWidgetTeamGameTeam from '../Team';
 import { ScheduleWidgetTeamGamePrintTeamsButton } from './PrintTeamsButton';

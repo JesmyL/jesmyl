@@ -1,21 +1,21 @@
-import { useAtomValue } from '#shared/lib/atoms';
+import { cmIDB } from '#basis/lib/idb/cm';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { useAtomValue } from 'front/08-shared/lib/atoms';
+import LoadIndicatedContent from 'front/08-shared/ui/load-indicated-content/LoadIndicatedContent';
+import PhaseContainerConfigurer, {
+  StyledPhaseContainerConfigurerContent,
+  StyledPhaseContainerConfigurerHead,
+} from 'front/08-shared/ui/phase-container/PhaseContainerConfigurer';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
-import LoadIndicatedContent from '../../../../../07-shared/ui/load-indicated-content/LoadIndicatedContent';
-import PhaseContainerConfigurer, {
-  StyledPhaseContainerConfigurerContent,
-  StyledPhaseContainerConfigurerHead,
-} from '../../../../../07-shared/ui/phase-container/PhaseContainerConfigurer';
-import { cmIDB } from '../../_db/cm-idb';
+import { cmCompositionRoute } from '../../../../../01-app/router-configs/cm';
+import useLaterComList from '../../../../../07-basis/lib/hooks/cm/useLaterComList';
 import { SetComListLimitsExtracterContext } from '../../base/SetComListLimitsExtracterContext';
 import CmTranslationComListContextInCat from '../../base/translations/InCat';
 import CmTranslationComListContextInZeroCat from '../../base/translations/InZeroCat';
-import useLaterComList from '../../base/useLaterComList';
 import { categoryTermAtom, CmComListSearchFilterInput } from '../../complect/ComListSearchFilterInput';
-import { cmCompositionRoute } from '../../routing/cmRoutingApp';
 import { Com } from '../com/Com';
 import { ComFaceList } from '../com/face/list/ComFaceList';
 import { useCcat } from './useCcat';

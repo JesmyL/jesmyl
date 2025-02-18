@@ -1,11 +1,9 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import Modal from '#widgets/modal/Modal/Modal';
-import { ModalBody } from '#widgets/modal/Modal/ModalBody';
-import { ModalHeader } from '#widgets/modal/Modal/ModalHeader';
+import { bibleSokiInvocatorClient } from '#basis/lib/invocators/bible/invocator';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { useState } from 'react';
 import { BibleTranslateName } from 'shared/api';
-import { bibleSokiInvocatorClient } from '../invoctors/invocator';
 import { removeBibleTranslate } from '../utils';
 import { bibleAllTranslates, translateDescriptions } from './complect';
 import { useBibleMyTranslates } from './hooks';

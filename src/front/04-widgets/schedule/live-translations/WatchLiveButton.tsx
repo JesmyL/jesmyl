@@ -1,5 +1,5 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
-import { FullContent } from '#widgets/fullscreen-content/FullContent';
+import { FullScreenContent } from '#shared/ui/fullscreen-content';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
 import { useSearchParams } from 'react-router-dom';
 import { IScheduleWidgetWid } from 'shared/api';
 import { ScheduleWidgetLiveTranslation } from './Live';
@@ -28,7 +28,7 @@ export const ScheduleWidgetWatchLiveTranslationButton = ({
   return (
     <>
       {searchParams.has(queryKey) && (
-        <FullContent
+        <FullScreenContent
           onClose={setIsOpen}
           containerClassName=""
         >
@@ -36,7 +36,7 @@ export const ScheduleWidgetWatchLiveTranslationButton = ({
             onClose={setIsOpen}
             schw={schw}
           />
-        </FullContent>
+        </FullScreenContent>
       )}
       <IconButton
         icon="ComputerPhoneSync"

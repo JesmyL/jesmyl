@@ -1,6 +1,6 @@
-import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import { schGeneralSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
+import TheIconSendButton from 'front/08-shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { IScheduleWidget, ScheduleScopeProps } from 'shared/api';
-import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRights } from '../useScheduleWidget';
 
 export const ScheduleWidgetMyUserTgInform = ({

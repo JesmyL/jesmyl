@@ -1,8 +1,6 @@
-import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import Modal from '#widgets/modal/Modal/Modal';
-import { ModalBody } from '#widgets/modal/Modal/ModalBody';
-import { ModalHeader } from '#widgets/modal/Modal/ModalHeader';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
+import TheIconSendButton from 'front/08-shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { ReactNode, useState } from 'react';
 import { ScheduleWidgetAttKey, scheduleWidgetUserRights } from 'shared/api';
 import styled from 'styled-components';

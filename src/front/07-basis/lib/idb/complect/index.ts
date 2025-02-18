@@ -1,0 +1,1 @@
+export { complectIDB } from './lib';

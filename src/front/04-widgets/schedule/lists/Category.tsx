@@ -1,17 +1,17 @@
-import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { schListsSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
+import { useModal } from '#shared/ui/modal';
+import { ExpandableContent } from 'front/08-shared/ui/expand/ExpandableContent';
+import TheIconSendButton from 'front/08-shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import React, { useMemo } from 'react';
 import { IScheduleWidgetListCat } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
-import { ExpandableContent } from '../../../07-shared/ui/expand/ExpandableContent';
-import useModal from '../../modal/useModal';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
-import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
 import StrongEditableField from '../strong-control/field/StrongEditableField';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetListUnit from './Unit';
 
-const LazyIconConfigurator = React.lazy(() => import('../../configurators/Icon'));
+const LazyIconConfigurator = React.lazy(() => import('../../../06-entities/configurators/Icon'));
 
 const reg = makeRegExp('/([а-яё]?[йуеъыаоэяиью]+[а-яё]).+/i');
 const cutTitle = (title: string) => title.replace(reg, '$1.');

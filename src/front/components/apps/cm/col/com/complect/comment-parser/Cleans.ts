@@ -1,11 +1,11 @@
+import { BibleBookTranslates, bibleLowerBooks } from '#basis/lib/contexts/bible/TranslatesContext';
+import { makePseudoElementCorrectContentText } from 'front/08-shared/lib/utils';
 import { bibleTitles } from 'front/components/apps/bible/hooks/bibleTitlesJson';
 import { mylib } from 'front/utils';
 import { makeRegExp } from 'shared/utils';
 import { css } from 'styled-components';
 import { CmComOrderWid } from '../../../../../../../../shared/api/complect/apps/cm/complect/enums';
-import { makePseudoElementCorrectContentText } from '../../../../../../../07-shared/lib/utils';
 import { bibleAllTranslates, translateDescriptions } from '../../../../../bible/translates/complect';
-import { BibleBookTranslates, bibleLowerBooks } from '../../../../../bible/translates/TranslatesContext';
 import { Order } from '../../order/Order';
 
 let titlesMap: Map<string, number>;

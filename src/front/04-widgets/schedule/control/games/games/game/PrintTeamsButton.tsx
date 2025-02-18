@@ -1,6 +1,6 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { FullContent } from '#widgets/fullscreen-content/FullContent';
+import { FullScreenContent } from '#shared/ui/fullscreen-content';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useScheduleWidgetRightsContext } from '../../../../useScheduleWidget';
@@ -69,7 +69,7 @@ const StyledButtons = styled.div`
   ${hideOnPrintCss}
 `;
 
-const StyledFull = styled(FullContent)`
+const StyledFull = styled(FullScreenContent)`
   --current-bg: white;
 
   color: black;

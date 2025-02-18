@@ -1,4 +1,5 @@
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { Modal, ModalBody, ModalFooter } from '#shared/ui/modal';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { mylib, MyLib } from 'front/utils';
 import React, { ReactNode, useState } from 'react';
 import {
@@ -10,9 +11,6 @@ import {
   scheduleWidgetUserRights,
 } from 'shared/api';
 import styled from 'styled-components';
-import Modal from '../../modal/Modal/Modal';
-import { ModalBody } from '../../modal/Modal/ModalBody';
-import { ModalFooter } from '../../modal/Modal/ModalFooter';
 import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
 import StrongDiv from '../strong-control/StrongDiv';
 import { useScheduleWidgetAppAttsContext, useScheduleWidgetRightsContext } from '../useScheduleWidget';

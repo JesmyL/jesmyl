@@ -1,13 +1,13 @@
+import { useBibleTranslatesContext } from '#basis/lib/contexts/bible/TranslatesContext';
+import { bibleIDB } from '#basis/lib/idb/bible';
+import { useActualRef } from 'front/08-shared/lib/hooks/useActualRef';
 import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
-import { useActualRef } from '../../../../../07-shared/hooks/useActualRef';
-import { bibleIDB } from '../../_db/bibleIDB';
+import { BibleTranslationAddress, BibleTranslationJoinAddress, BibleVersei } from '../../../../../07-basis/model/bible';
 import { useBibleTranslationAddressIndexesSetter, useBibleTranslationJoinAddress } from '../../hooks/address/address';
 import { useBibleAddressBooki } from '../../hooks/address/books';
 import { useBibleAddressChapteri } from '../../hooks/address/chapters';
 import { useBibleTranslationSlideSyncContentSetter } from '../../hooks/slide-sync';
-import { BibleTranslationAddress, BibleTranslationJoinAddress, BibleVersei } from '../../model';
-import { useBibleTranslatesContext } from '../../translates/TranslatesContext';
 import { useBibleShowTranslatesValue } from '../../translates/hooks';
 import { useBibleTranslationAddToPlan } from '../archive/plan/hooks/plan';
 

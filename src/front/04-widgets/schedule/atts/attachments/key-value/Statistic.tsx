@@ -1,7 +1,7 @@
+import CopyTextButton from 'front/08-shared/ui/CopyTextButton';
 import { mylib } from 'front/utils';
 import { CustomAttUseTaleId, ScheduleWidgetAppAttCustomizableValueItem, ScheduleWidgetCleans } from 'shared/api';
 import { itNNil } from 'shared/utils';
-import CopyTextButton from '../../../../../07-shared/ui/CopyTextButton';
 import { useScheduleWidgetRightsContext } from '../../../useScheduleWidget';
 
 const mapSetItemNumber = (l: string | nil, li: number) => li + 1 + '. ' + l!;

@@ -1,8 +1,8 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
+import { useConfirm } from '#shared/ui/modal';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
 import styled from 'styled-components';
 import { CmComWid } from '../../../../../../../shared/api/complect/apps/cm/complect/enums';
-import { useConfirm } from '../../../../../../04-widgets/modal/confirm/useConfirm';
-import useSelectedComs from '../../../base/useSelectedComs';
+import useSelectedComs from '../../../../../../07-basis/lib/hooks/cm/useSelectedComs';
 import { useFavoriteComs } from '../../../lists/favorites/useFavoriteComs';
 
 interface Props {

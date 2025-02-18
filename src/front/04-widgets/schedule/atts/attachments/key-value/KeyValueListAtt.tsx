@@ -1,7 +1,7 @@
-import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { schDayEventsSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { schDayEventsSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
 import StrongEditableField from '#widgets/schedule/strong-control/field/StrongEditableField';
+import TheIconSendButton from 'front/08-shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { mylib } from 'front/utils';
 import Markdown from 'markdown-to-jsx';
 import { ReactNode } from 'react';

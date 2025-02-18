@@ -1,7 +1,7 @@
-import { useAtomSet } from '#shared/lib/atoms';
+import { useAtomSet } from 'front/08-shared/lib/atoms';
+import { NewWindow } from 'front/08-shared/ui/tags/NewWindow';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { NewWindow } from '../../../../07-shared/ui/tags/NewWindow';
 import { useAuth } from '../../../../components/index/atoms';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import { ScheduleWidgetMarkdownTranslationWindow } from './Window';

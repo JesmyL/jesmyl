@@ -1,16 +1,14 @@
 import { ReactNode, useMemo, useState } from 'react';
 
-import IconButton from '#shared/ui/the-icon/IconButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import {
   IScheduleWidgetUser,
   ScheduleUserScopeProps,
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
-import Modal from '../../../modal/Modal/Modal';
-import { ModalBody } from '../../../modal/Modal/ModalBody';
-import { ModalHeader } from '../../../modal/Modal/ModalHeader';
 import {
   ScheduleUserScopePropsContext,
   useScheduleScopePropsContext,

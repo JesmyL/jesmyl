@@ -1,10 +1,10 @@
-import { atom, useAtomSet, useAtomValue } from '#shared/lib/atoms';
+import { cmIDB } from '#basis/lib/idb/cm';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { atom, useAtomSet, useAtomValue } from 'front/08-shared/lib/atoms';
 import { mylib } from 'front/utils';
 import { useEffect, useMemo } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { CmComWid } from '../../../../../../shared/api/complect/apps/cm/complect/enums';
-import { cmIDB } from '../../_db/cm-idb';
 import { Com } from './Com';
 
 export const useCcomw = (): CmComWid | NaN => {

@@ -1,13 +1,18 @@
+import BibleTranslatesContextProvider, { useBibleTranslatesContext } from '#basis/lib/contexts/bible/TranslatesContext';
+import { hookEffectPipe, setTimeoutPipe } from 'front/08-shared/lib/hookEffectPipe';
 import { MyLib } from 'front/utils';
 import { useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import { hookEffectPipe, setTimeoutPipe } from '../../../../../07-shared/lib/hookEffectPipe';
+import {
+  BibleBooki,
+  BibleChapteri,
+  BibleTranslationJoinAddress,
+  BibleVersei,
+} from '../../../../../07-basis/model/bible';
 import { useBibleTranslationJoinAddress, useGetterJoinedAddressMaxValues } from '../../hooks/address/address';
 import { useBibleAddressBooki } from '../../hooks/address/books';
 import { useBibleAddressChapteri } from '../../hooks/address/chapters';
 import { useBibleAddressVersei } from '../../hooks/address/verses';
-import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '../../model';
-import BibleTranslatesContextProvider, { useBibleTranslatesContext } from '../../translates/TranslatesContext';
 import BibleBookList, { bookiIdPrefix } from './books/BookList';
 import BibleChapterList, { chapteriIdPrefix } from './chapters/ChapterList';
 import BibleVerseList, { verseiIdPrefix } from './verses/VerseList';

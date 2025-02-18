@@ -1,5 +1,5 @@
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import useFullContent, { FullContentValue } from '#widgets/fullscreen-content/useFullContent';
+import { FullScreenContent } from '#shared/ui/fullscreen-content';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { mylib } from 'front/utils';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
@@ -100,10 +100,10 @@ export default function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJu
       .filter(itNNull);
   }, [schedule, schedules]);
 
-  const [node, fullValue, observeSchedule]: [ReactNode, FullContentValue | und, (typeof scheduleBoxes)[number] | und] =
+  const [node, fullValue, observeSchedule]: [ReactNode, React.ReactNode, (typeof scheduleBoxes)[number] | und] =
     useMemo(() => {
       let node = null;
-      let fullValue: FullContentValue | und;
+      let fullValue: React.ReactNode;
       let schBox;
 
       if (observeSchw !== undefined && !mylib.isNaN(observeSchw)) {
@@ -154,17 +154,15 @@ export default function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJu
               return false;
             });
 
-            fullValue = () => {
-              return (
-                <ScheduleAlarmDay
-                  day={currDay}
-                  dayi={currDayi}
-                  schedule={currSchBox.sch}
-                  isForceOpen
-                  scheduleScopeProps={{ schw: currSchBox.sch.w }!}
-                />
-              );
-            };
+            fullValue = (
+              <ScheduleAlarmDay
+                day={currDay}
+                dayi={currDayi}
+                schedule={currSchBox.sch}
+                isForceOpen
+                scheduleScopeProps={{ schw: currSchBox.sch.w }!}
+              />
+            );
 
             if (currEventi < 0) {
               let content = null;
@@ -301,29 +299,25 @@ export default function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJu
           if (startDate.getDate() === nowDate.getDate()) {
             if (willSchBox.sch.withTech)
               if (willSchBox.days[1])
-                fullValue = () => {
-                  return (
-                    <ScheduleAlarmDay
-                      day={willSchBox.days[1]}
-                      dayi={1}
-                      schedule={willSchBox.sch}
-                      isForceOpen
-                      scheduleScopeProps={{ schw: willSchBox.sch.w }}
-                    />
-                  );
-                };
+                fullValue = (
+                  <ScheduleAlarmDay
+                    day={willSchBox.days[1]}
+                    dayi={1}
+                    schedule={willSchBox.sch}
+                    isForceOpen
+                    scheduleScopeProps={{ schw: willSchBox.sch.w }}
+                  />
+                );
               else if (willSchBox.days[0])
-                fullValue = () => {
-                  return (
-                    <ScheduleAlarmDay
-                      day={willSchBox.days[0]}
-                      dayi={0}
-                      schedule={willSchBox.sch}
-                      isForceOpen
-                      scheduleScopeProps={{ schw: willSchBox.sch.w }}
-                    />
-                  );
-                };
+                fullValue = (
+                  <ScheduleAlarmDay
+                    day={willSchBox.days[0]}
+                    dayi={0}
+                    schedule={willSchBox.sch}
+                    isForceOpen
+                    scheduleScopeProps={{ schw: willSchBox.sch.w }}
+                  />
+                );
           }
 
           node = (
@@ -354,11 +348,9 @@ export default function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJu
       return [node, fullValue, schBox];
     }, [observeSchw, scheduleBoxes, isJustShowAllDay, now]);
 
-  const [fullNode] = useFullContent(fullValue, isFullOpen ? 'open' : null, setIsFullOpen);
-
   return isJustShowAllDay ? (
     <>
-      {fullValue?.(() => {}, null) ??
+      {fullValue ??
         node ??
         (schedule && (
           <div className="flex center column full-size">
@@ -370,10 +362,9 @@ export default function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJu
     </>
   ) : (
     <>
-      {fullNode}
       <Alarm
         className={'flex flex-gap between' + (fullValue ? ' pointer' : '')}
-        onClick={fullValue && (() => setIsFullOpen(true))}
+        onClick={fullValue ? () => setIsFullOpen(true) : undefined}
       >
         <Link to={observeSchedule === undefined ? '.' : `schs/${observeSchedule.sch.w}`}>
           <div className="flex">
@@ -404,6 +395,8 @@ export default function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJu
           />
         </Link>
       </Alarm>
+
+      {isFullOpen && <FullScreenContent onClose={setIsFullOpen}>{fullValue}</FullScreenContent>}
     </>
   );
 }

@@ -1,22 +1,19 @@
-import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import IconButton from '#shared/ui/the-icon/IconButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import Modal from '#widgets/modal/Modal/Modal';
-import { ModalBody } from '#widgets/modal/Modal/ModalBody';
-import { ModalFooter } from '#widgets/modal/Modal/ModalFooter';
-import { ModalHeader } from '#widgets/modal/Modal/ModalHeader';
+import { schRolesSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import StrongEditableField from '#widgets/schedule/strong-control/field/StrongEditableField';
+import useIsRedactArea from 'front/08-shared/lib/hooks/useIsRedactArea';
+import TheIconSendButton from 'front/08-shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import React, { useMemo, useState } from 'react';
 import { IScheduleWidgetRole, ScheduleRoleScopeProps, scheduleWidgetUserRights } from 'shared/api';
-import useIsRedactArea from '../../../../07-shared/hooks/useIsRedactArea';
 import { useAuth } from '../../../../components/index/atoms';
 import { useScheduleScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
-import { schRolesSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { extractScheduleWidgetRoleUser, useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetRoleFace from './RoleFace';
 
 const mainRoleRights = scheduleWidgetUserRights.getAllRights();
-const LazyIconConfigurator = React.lazy(() => import('../../../configurators/Icon'));
+const LazyIconConfigurator = React.lazy(() => import('../../../../06-entities/configurators/Icon'));
 
 export default function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
   const rights = useScheduleWidgetRightsContext();

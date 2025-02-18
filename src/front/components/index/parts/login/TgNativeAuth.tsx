@@ -1,9 +1,9 @@
+import { indexBasicsSokiInvocatorClient } from '#basis/lib/invocators/schedules/fresh-invocator.methods';
+import { Script } from 'front/08-shared/ui/tags/Script';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TelegramNativeAuthUserData } from 'shared/api';
 import styled from 'styled-components';
-import { Script } from '../../../../07-shared/ui/tags/Script';
-import { indexBasicsSokiInvocatorClient } from '../../db/invocators/schedules/fresh-invocator.methods';
 
 const funcName = 'onTelegramNativeAuth';
 

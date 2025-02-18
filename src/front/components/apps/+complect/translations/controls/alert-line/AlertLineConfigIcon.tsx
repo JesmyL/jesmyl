@@ -1,4 +1,4 @@
-import { theIconKnownPack } from '#shared/ui/the-icon/pack';
+import { theIconKnownPack } from 'front/08-shared/ui/the-icon/pack';
 import styled, { css } from 'styled-components';
 import { useScreenTranslationBackgroundStyles } from '../../complect/hooks/background-styles';
 import { AlertLineConfig } from '../../model';

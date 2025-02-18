@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { applyFontFamilyFromMyFiles } from '../../../../../04-widgets/configurators/utils/set-font-family-effect';
+import { applyFontFamilyFromMyFiles } from '../../../../../07-basis/lib/utils/applyFontFamilyFromMyFiles';
 
 export const useApplyScreenFontFamilyEffect = (fontFamily: string | und, win: Window | und) => {
   useEffect(() => {

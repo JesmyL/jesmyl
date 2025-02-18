@@ -1,5 +1,5 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
 import { ScheduleWidgetAppAtts } from '#widgets/schedule/ScheduleWidget.model';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
 import { useEffect } from 'react';
 import { Link, Route, useNavigate } from 'react-router-dom';
 import { CmComBindAttach, scheduleWidgetUserRights, ScheduleWidgetUserRoleRight } from 'shared/api';

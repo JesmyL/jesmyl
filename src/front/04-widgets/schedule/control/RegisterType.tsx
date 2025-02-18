@@ -1,7 +1,7 @@
+import { schGeneralSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
+import useIsExpand from 'front/08-shared/ui/expand/useIsExpand';
 import { scheduleWidgetRegTypeRights } from 'shared/api';
-import useIsExpand from '../../../07-shared/ui/expand/useIsExpand';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
-import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetNewUserRegisterLevel from './NewUserRegisterLevel';
 import ScheduleWidgetRightControlList from './RightControlList';

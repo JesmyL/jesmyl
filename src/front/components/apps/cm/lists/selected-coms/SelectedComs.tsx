@@ -1,11 +1,11 @@
-import { BottomPopup } from '#widgets/absolute-popup/bottom-popup/BottomPopup';
+import { BottomPopup } from '#shared/ui/absolute-popup/bottom-popup/BottomPopup';
+import PhaseContainerConfigurer from 'front/08-shared/ui/phase-container/PhaseContainerConfigurer';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import PhaseContainerConfigurer from '../../../../../07-shared/ui/phase-container/PhaseContainerConfigurer';
+import { cmCompositionRoute } from '../../../../../01-app/router-configs/cm';
+import useSelectedComs from '../../../../../07-basis/lib/hooks/cm/useSelectedComs';
 import { CmTranslationComListContextInSelected } from '../../base/translations/InSelected';
-import useSelectedComs from '../../base/useSelectedComs';
 import { ComFaceList } from '../../col/com/face/list/ComFaceList';
-import { cmCompositionRoute } from '../../routing/cmRoutingApp';
 import { LocalListToolsPopup } from '../popups/LocalListToolsPopup';
 import { MoveSelectedComButton } from './MoveSelectedComButton';
 

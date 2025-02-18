@@ -1,6 +1,6 @@
+import { complectIDB } from '#basis/lib/idb/complect';
 import { useCallback } from 'react';
-import { complectIDB } from '../../_idb/complectIDB';
-import { TranslationViewApp } from '../Translations.model';
+import { TranslationViewApp } from '../../../../../07-basis/model/Translations.model';
 
 export const useSwitchCurrentTranslationTextApp = () => {
   const app = complectIDB.useValue.currentTranslationTextApp();

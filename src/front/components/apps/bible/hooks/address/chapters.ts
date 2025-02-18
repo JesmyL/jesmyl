@@ -1,5 +1,5 @@
-import { BibleChapteri } from '../../model';
-import { useBibleTranslatesContext } from '../../translates/TranslatesContext';
+import { useBibleTranslatesContext } from '#basis/lib/contexts/bible/TranslatesContext';
+import { BibleChapteri } from '../../../../../07-basis/model/bible';
 import { useBibleShowTranslatesValue } from '../../translates/hooks';
 import { useBibleChapteri } from '../../translations/lists/atoms';
 import { useBibleAddressBooki } from './books';

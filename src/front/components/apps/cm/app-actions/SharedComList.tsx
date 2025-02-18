@@ -1,10 +1,10 @@
-import TheButton from '#shared/ui/TheButton';
-import { FullContent } from '#widgets/fullscreen-content/FullContent';
+import { FullScreenContent } from '#shared/ui/fullscreen-content';
+import TheButton from 'front/08-shared/ui/TheButton';
 import { mylib } from 'front/utils';
 import { useNavigate } from 'react-router-dom';
 import { CmComWid } from 'shared/api';
 import styled from 'styled-components';
-import useSelectedComs from '../base/useSelectedComs';
+import useSelectedComs from '../../../../07-basis/lib/hooks/cm/useSelectedComs';
 import { ComFaceList } from '../col/com/face/list/ComFaceList';
 
 export const CmSharedComListActionInterpretator = ({
@@ -28,7 +28,7 @@ export const CmSharedComListActionInterpretator = ({
 
   return (
     <>
-      <FullContent onClose={close}>
+      <FullScreenContent onClose={close}>
         <h3>С вами поделились списком</h3>
         <ComFaceList
           list={comws}
@@ -62,7 +62,7 @@ export const CmSharedComListActionInterpretator = ({
             Потеряется {lessComsCount} {mylib.declension(lessComsCount, 'песня', 'песни', 'песен')}
           </StyledButtonDescription>
         </div>
-      </FullContent>
+      </FullScreenContent>
     </>
   );
 };

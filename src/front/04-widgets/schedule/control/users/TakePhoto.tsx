@@ -1,7 +1,7 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { FullContent } from '#widgets/fullscreen-content/FullContent';
-import { indexIDB } from 'front/components/index/db/index-idb';
+import { indexIDB } from '#basis/lib/idb/index/index';
+import { FullScreenContent } from '#shared/ui/fullscreen-content';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { useEffect, useRef, useState } from 'react';
 import { IScheduleWidgetUser } from 'shared/api';
 import { isNIs } from 'shared/utils';
@@ -20,12 +20,12 @@ export default function ScheduleWidgetUserTakePhoto({ user }: Props) {
   return (
     <>
       {isFullNodeOpen && (
-        <FullContent onClose={setIsFullNodeOpen}>
+        <FullScreenContent onClose={setIsFullNodeOpen}>
           <Camera
             close={() => setIsFullNodeOpen(false)}
             user={user}
           />
-        </FullContent>
+        </FullScreenContent>
       )}
       <LazyIcon
         className="pointer"

@@ -1,15 +1,15 @@
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { FullContent } from '#widgets/fullscreen-content/FullContent';
+import { schGamesSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
+import { FullScreenContent } from '#shared/ui/fullscreen-content';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/scope-contexts/scope-props-contexts';
-import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import StrongEditableField from '#widgets/schedule/strong-control/field/StrongEditableField';
+import DebouncedSearchInput from 'front/08-shared/ui/DebouncedSearchInput';
+import { ExpandableContent } from 'front/08-shared/ui/expand/ExpandableContent';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
+import TheButton from 'front/08-shared/ui/TheButton';
 import { mylib } from 'front/utils';
 import { useMemo, useState } from 'react';
 import { IScheduleWidgetTeamCriteria, IScheduleWidgetUser, ScheduleGameCriteriaScopeProps } from 'shared/api';
 import { isNIs } from 'shared/utils';
-import DebouncedSearchInput from '../../../../../07-shared/ui/DebouncedSearchInput';
-import { ExpandableContent } from '../../../../../07-shared/ui/expand/ExpandableContent';
-import TheButton from '../../../../../07-shared/ui/TheButton';
 import { useScheduleWidgetRightsContext } from '../../../useScheduleWidget';
 import ScheduleWidgetRemovableUserFace from '../RemovableUserFace';
 import { checkIsUserPhotoable } from '../utils';
@@ -127,7 +127,7 @@ export default function ScheduleWidgetSortCriteria({ criteria, criteriai }: Prop
           </>
         )}
         {!isOpenSorter || (
-          <FullContent onClose={setIsOpenSorter}>
+          <FullScreenContent onClose={setIsOpenSorter}>
             <ScheduleWidgetTeamsCriteriaSorterScreen
               criteria={criteria}
               criteriaScopeProps={criteriaScopeProps}
@@ -136,7 +136,7 @@ export default function ScheduleWidgetSortCriteria({ criteria, criteriai }: Prop
               onClose={setIsOpenSorter}
               singleInsertUser={insertUser}
             />
-          </FullContent>
+          </FullScreenContent>
         )}
       </ExpandableContent>
     </>

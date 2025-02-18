@@ -1,4 +1,4 @@
-import { useAtom } from '#shared/lib/atoms';
+import { useAtom } from 'front/08-shared/lib/atoms';
 import { cmIsShowCatBindsInCompositionAtom } from 'front/components/apps/cm/atoms';
 import { itNIt } from 'shared/utils';
 import { ComTool } from '../ComTool';

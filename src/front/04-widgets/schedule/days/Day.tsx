@@ -1,6 +1,8 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { FullContent } from '#widgets/fullscreen-content/FullContent';
+import { schDaysSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
+import { FullScreenContent } from '#shared/ui/fullscreen-content';
+import useIsRedactArea from 'front/08-shared/lib/hooks/useIsRedactArea';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { mylib, MyLib } from 'front/utils';
 import { useMemo, useState } from 'react';
 import {
@@ -13,10 +15,8 @@ import {
 } from 'shared/api';
 import { isNIs } from 'shared/utils';
 import styled from 'styled-components';
-import useIsRedactArea from '../../../07-shared/hooks/useIsRedactArea';
 import ScheduleAlarmDay from '../alarm/AlarmDay';
 import { ScheduleDayScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
-import { schDaysSokiInvocatorClient } from '../invocators/invocators.methods';
 import StrongEditableField from '../strong-control/field/StrongEditableField';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetDayEditPanel from './DayEditPanel';
@@ -168,14 +168,14 @@ export const ScheduleWidgetDay = ({
         )}
       </StyledScheduleWidgetDay>
       {!isFullDayOpen || (
-        <FullContent onClose={setIsFullDayOpen}>
+        <FullScreenContent onClose={setIsFullDayOpen}>
           <ScheduleAlarmDay
             day={day}
             dayi={dayi}
             schedule={schedule}
             scheduleScopeProps={scheduleScopeProps}
           />
-        </FullContent>
+        </FullScreenContent>
       )}
     </ScheduleDayScopePropsContext.Provider>
   );

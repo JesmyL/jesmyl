@@ -1,5 +1,5 @@
-import SendButton from '#shared/ui/sends/send-button/SendButton';
-import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { schGamesSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
+import SendButton from 'front/08-shared/ui/sends/send-button/SendButton';
 import { useCallback, useState } from 'react';
 import {
   IScheduleWidgetTeamCriteria,

@@ -1,8 +1,8 @@
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { cmIDB } from '#basis/lib/idb/cm';
+import { useFullScreen } from 'front/08-shared/lib/hooks/useFullscreen';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { HTMLAttributes, PropsWithChildren, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { useFullScreen } from '../../../../07-shared/hooks/useFullscreen';
-import { cmIDB } from '../_db/cm-idb';
 
 export default function RollControled(props: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
   const [isFullscreen] = useFullScreen();

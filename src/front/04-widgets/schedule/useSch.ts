@@ -1,4 +1,4 @@
-import { indexIDB } from 'front/components/index/db/index-idb';
+import { indexIDB } from '#basis/lib/idb/index/index';
 import { mylib } from 'front/utils';
 import { useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';

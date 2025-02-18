@@ -1,9 +1,9 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
+import { bibleIDB } from '#basis/lib/idb/bible';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
 import { mylib } from 'front/utils';
 import { memo } from 'react';
-import { bibleIDB } from '../../_db/bibleIDB';
+import { BibleTranslationAddress } from '../../../../../07-basis/model/bible';
 import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '../../hooks/address/address';
-import { BibleTranslationAddress } from '../../model';
 import BibleTranslationArchiveJoinedAddressText from './JoinedAddress';
 import BibleTranslationArchiveJoinedContentText from './JoinedContentText';
 import BibleTranslationArchiveSingleAddressText from './SingleAddressText';

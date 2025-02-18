@@ -1,21 +1,21 @@
-import { useAtom, useAtomValue } from '#shared/lib/atoms';
-import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { BottomPopup } from '#widgets/absolute-popup/bottom-popup/BottomPopup';
-import { FullContent } from '#widgets/fullscreen-content/FullContent';
-import { useEffect, useRef, useState } from 'react';
-import styled, { css } from 'styled-components';
-import { Metronome } from '../../../../../04-widgets/metronome/Metronome';
+import BibleTranslatesContextProvider from '#basis/lib/contexts/bible/TranslatesContext';
+import useLaterComList from '#basis/lib/hooks/cm/useLaterComList';
+import { cmIDB } from '#basis/lib/idb/cm';
+import { BottomPopup } from '#shared/ui/absolute-popup/bottom-popup/BottomPopup';
+import { FullScreenContent } from '#shared/ui/fullscreen-content';
+import { useAtom, useAtomValue } from 'front/08-shared/lib/atoms';
+import { hookEffectPipe, setTimeoutPipe } from 'front/08-shared/lib/hookEffectPipe';
 import PhaseContainerConfigurer, {
   StyledPhaseContainerConfigurerHead,
   StyledPhaseContainerConfigurerHeadTitle,
-} from '../../../../../07-shared/ui/phase-container/PhaseContainerConfigurer';
-import { DocTitle } from '../../../../../07-shared/ui/tags/DocTitle';
-import BibleTranslatesContextProvider from '../../../bible/translates/TranslatesContext';
-import { cmIDB } from '../../_db/cm-idb';
+} from 'front/08-shared/ui/phase-container/PhaseContainerConfigurer';
+import { DocTitle } from 'front/08-shared/ui/tags/DocTitle';
+import { useEffect, useRef, useState } from 'react';
+import styled, { css } from 'styled-components';
+import { Metronome } from '../../../../../04-widgets/cm/metronome/Metronome';
+import { useChordVisibleVariant } from '../../../../../07-basis/lib/hooks/cm/useChordVisibleVariant';
 import { cmIsShowCatBindsInCompositionAtom, isOpenChordImagesAtom } from '../../atoms';
-import { useCmTranslationComListContext as useCmComListContext } from '../../base/translations/context';
-import { useChordVisibleVariant } from '../../base/useChordVisibleVariant';
-import useLaterComList from '../../base/useLaterComList';
+import { useCmTranslationComListContext } from '../../base/translations/context';
 import './Com.scss';
 import { ComNotFoundPage } from './ComNotFoundPage';
 import TheControlledCom from './TheControlledCom';
@@ -34,7 +34,7 @@ export default function TheComposition() {
   const { addLaterComw, laterComws } = useLaterComList();
   const [isOpenTools, setIsOpenTools] = useState(false);
   const comToolsNode = useMigratableTopComTools();
-  const { list } = useCmComListContext();
+  const { list } = useCmTranslationComListContext();
   const playerHideMode = cmIDB.useValue.playerHideMode();
   const isMetronomeHide = cmIDB.useValue.metronome().isHide;
 
@@ -96,9 +96,9 @@ export default function TheComposition() {
       content={
         <>
           {isOpenChordImages && (
-            <FullContent onClose={setIsOpenChordImages}>
+            <FullScreenContent onClose={setIsOpenChordImages}>
               <ChordImagesList />
-            </FullContent>
+            </FullScreenContent>
           )}
           {isOpenTools && (
             <BottomPopup

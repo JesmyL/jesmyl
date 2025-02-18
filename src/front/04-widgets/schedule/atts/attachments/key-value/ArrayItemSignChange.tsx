@@ -1,9 +1,7 @@
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import Modal from '#widgets/modal/Modal/Modal';
-import { ModalBody } from '#widgets/modal/Modal/ModalBody';
-import { ModalHeader } from '#widgets/modal/Modal/ModalHeader';
-import { schDayEventsSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { schDayEventsSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import StrongDiv from '#widgets/schedule/strong-control/StrongDiv';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { useState } from 'react';
 import {
   CustomAttUseTaleId,

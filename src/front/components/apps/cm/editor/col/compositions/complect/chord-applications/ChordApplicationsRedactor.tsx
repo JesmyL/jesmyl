@@ -1,8 +1,8 @@
-import { StyledLoadingSpinner } from '#shared/ui/the-icon/IconLoading';
+import { styledHoverBind } from 'front/08-shared/lib/styled-component-utils';
+import { StyledLoadingSpinner } from 'front/08-shared/ui/the-icon/IconLoading';
 import { useState } from 'react';
 import { CmComOrderWid } from 'shared/api';
 import styled, { css } from 'styled-components';
-import { styledHoverBind } from '../../../../../../../../07-shared/lib/styled-component-utils';
 import { ChordVisibleVariant } from '../../../../../Cm.model';
 import ComLine from '../../../../../col/com/line/ComLine';
 import TheOrder from '../../../../../col/com/order/TheOrder';

@@ -1,8 +1,8 @@
-import { AppName } from '#shared/model/App.model';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { AppName } from '#basis/model/App.model';
+import { contextCreator } from 'front/08-shared/lib/contextCreator';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { contextCreator } from '../../07-shared/lib/contextCreator';
 
 interface Props {
   to: string;

@@ -1,8 +1,8 @@
+import { useBibleTranslatesContext } from '#basis/lib/contexts/bible/TranslatesContext';
 import { memo } from 'react';
+import { BibleBooki, BibleChapteri, BibleVersei } from '../../../../../07-basis/model/bible';
 import { useBibleTranslationAddressIndexesSetter } from '../../hooks/address/address';
 import { useBibleBookList } from '../../hooks/texts';
-import { BibleBooki, BibleChapteri, BibleVersei } from '../../model';
-import { useBibleTranslatesContext } from '../../translates/TranslatesContext';
 import { useBibleShowTranslatesValue } from '../../translates/hooks';
 
 interface Props {

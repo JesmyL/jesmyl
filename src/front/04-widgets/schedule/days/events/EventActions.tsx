@@ -1,13 +1,11 @@
-import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import IconButton from '#shared/ui/the-icon/IconButton';
-import Modal from '#widgets/modal/Modal/Modal';
-import { ModalBody } from '#widgets/modal/Modal/ModalBody';
-import { ModalHeader } from '#widgets/modal/Modal/ModalHeader';
+import { schDaysSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
+import TheIconSendButton from 'front/08-shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
 import { useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetDayEvent, ScheduleDayScopeProps } from 'shared/api';
 import ScheduleWidgetTopicTitle from '../../complect/TopicTitle';
 import ScheduleWidgetEventType from '../../events/EventType';
-import { schDaysSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 
 type Props = {

@@ -1,8 +1,8 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
-import IconCheckbox from '#shared/ui/the-icon/IconCheckbox';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { cmIDB } from '#basis/lib/idb/cm';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
+import IconCheckbox from 'front/08-shared/ui/the-icon/IconCheckbox';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { InputWithLoadingIcon } from 'front/components/apps/cm/base/InputWithLoadingIcon';
 import { cmCatClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useMemo } from 'react';

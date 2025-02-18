@@ -1,7 +1,7 @@
 import AppFooter from '#app/ui/AppFooter';
 import AppFooterItem from '#app/ui/AppFooterItem';
+import { RoutingAppConfig } from '#basis/model/App.model';
 import { Route, Routes } from 'react-router-dom';
-import { RoutingAppConfig } from '../../../02-processes/routers';
 import TheTuner from './TheTuner';
 
 const footer = (

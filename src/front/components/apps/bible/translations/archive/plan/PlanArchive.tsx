@@ -1,7 +1,7 @@
+import { bibleIDB } from '#basis/lib/idb/bible';
 import { mylib } from 'front/utils';
 import { memo, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { bibleIDB } from '../../../_db/bibleIDB';
 import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '../../../hooks/address/address';
 import BibleTranslationArchive from '../Archive';
 import { useBibleClearTranslationPlanSetter, useBibleTranslationPlan } from './hooks/plan';

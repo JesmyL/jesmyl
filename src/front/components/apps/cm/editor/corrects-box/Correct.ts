@@ -1,4 +1,4 @@
-import SourceBased from '../../../../../07-shared/lib/SourceBased';
+import SourceBased from 'front/08-shared/lib/SourceBased';
 import { ICorrect } from './CorrectsBox.model';
 
 export default class Correct extends SourceBased<ICorrect> implements ICorrect {

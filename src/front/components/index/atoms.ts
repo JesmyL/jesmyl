@@ -1,10 +1,10 @@
-import { atom } from '#shared/lib/atoms';
-import { AppName } from '#shared/model/App.model';
+import { authIDB } from '#basis/lib/idb/auth';
+import { indexIDB } from '#basis/lib/idb/index/index';
+import { AppName } from '#basis/model/App.model';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { atom } from 'front/08-shared/lib/atoms';
 import { useParams } from 'react-router-dom';
 import { SokiAuthLogin } from 'shared/api';
-import { authIDB } from './db/auth-idb';
-import { indexIDB } from './db/index-idb';
 import { IndexSchWTranslationLiveDataValue } from './Index.model';
 
 export const liveDataAtom = atom<IndexSchWTranslationLiveDataValue | null>(null);

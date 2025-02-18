@@ -1,8 +1,8 @@
+import { cmIDB } from '#basis/lib/idb/cm';
 import { mylib } from 'front/utils';
 import { IExportableCom, IExportableOrder } from 'shared/api/complect/apps/cm';
 import { itIt, makeRegExp } from 'shared/utils';
 import { cmComLanguages } from 'shared/values/values';
-import { cmIDB } from '../../_db/cm-idb';
 import { BaseNamed } from '../../base/BaseNamed';
 import { Cat } from '../cat/Cat';
 import { blockStyles } from './block-styles/BlockStyles';

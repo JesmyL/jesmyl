@@ -1,4 +1,4 @@
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { useCallback } from 'react';
 import styled from 'styled-components';
 import { useCurrentTranslationConfigiSet, useScreenTranslationConfigsValue } from '../../atoms';

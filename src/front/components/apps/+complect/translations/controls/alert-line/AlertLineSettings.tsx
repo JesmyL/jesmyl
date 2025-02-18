@@ -1,10 +1,9 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
-import { FullContent } from '#widgets/fullscreen-content/FullContent';
-import { ModalBody } from '#widgets/modal/Modal/ModalBody';
-import { ModalHeader } from '#widgets/modal/Modal/ModalHeader';
+import { complectIDB } from '#basis/lib/idb/complect';
+import { FullScreenContent } from '#shared/ui/fullscreen-content';
+import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { useLiveQuery } from 'dexie-react-hooks';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
 import React, { useState } from 'react';
-import { complectIDB } from '../../../_idb/complectIDB';
 import { defaultAlertLineConfig } from '../../atoms';
 import { AlertLineConfigSettingsInner } from './AlertLineConfigSettings';
 
@@ -42,9 +41,9 @@ export const AlertLineSettingsModalInner = () => {
       </ModalBody>
 
       {editConfigId == null || (
-        <FullContent onClose={() => setEditConfigId(null)}>
+        <FullScreenContent onClose={() => setEditConfigId(null)}>
           <AlertLineConfigSettingsInner configId={editConfigId} />
-        </FullContent>
+        </FullScreenContent>
       )}
     </>
   );

@@ -1,9 +1,9 @@
+import { useBibleTranslatesContext } from '#basis/lib/contexts/bible/TranslatesContext';
+import { JStorageSetOrArrayVal } from 'front/08-shared/lib/JSimpleStorage/exports/SetOrArray';
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { JStorageSetOrArrayVal } from '../../../../../../07-shared/lib/JSimpleStorage/exports/SetOrArray';
 import { useBibleAddressBooki } from '../../../hooks/address/books';
 import { useBibleAddressChapteri } from '../../../hooks/address/chapters';
-import { useBibleTranslatesContext } from '../../../translates/TranslatesContext';
 import { useBibleShowTranslatesValue } from '../../../translates/hooks';
 import { useVerseListListeners } from './useVerseListListeners';
 

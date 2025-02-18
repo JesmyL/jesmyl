@@ -1,9 +1,9 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
+import PhaseContainerConfigurer from 'front/08-shared/ui/phase-container/PhaseContainerConfigurer';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
-import PhaseContainerConfigurer from '../../../07-shared/ui/phase-container/PhaseContainerConfigurer';
+import { schLinkAction } from '../../../07-basis/lib/consts/schedule/link-actions';
+import useConnectionState from '../../../07-basis/lib/hooks/+app/useConnectionState';
 import { useAuth, useIndexSchedules } from '../../../components/index/atoms';
-import useConnectionState from '../../../components/index/useConnectionState';
-import { schLinkAction } from '../links';
 import ScheduleCreateWidgetButton from './CreateButton';
 import ScheduleWidgetPage from './Page';
 

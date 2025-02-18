@@ -1,6 +1,6 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { FullContent } from '#widgets/fullscreen-content/FullContent';
+import { FullScreenContent } from '#shared/ui/fullscreen-content';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { useMemo, useState } from 'react';
 import { ScheduleWidgetMarkdownTranslation } from '../../../../live-translations/markdown/Translation';
 import { useScheduleWidgetRightsContext } from '../../../../useScheduleWidget';
@@ -76,7 +76,7 @@ export const ScheduleWidgetTeamGameTranslateTeamsButton = function TranslateTeam
   return (
     <>
       {isOpenFull && (
-        <FullContent onClose={setIsOpenFull}>
+        <FullScreenContent onClose={setIsOpenFull}>
           <div className="flex full-width around">
             <IconButton
               icon="DashboardSquareRemove"
@@ -90,7 +90,7 @@ export const ScheduleWidgetTeamGameTranslateTeamsButton = function TranslateTeam
             />
           </div>
           <ScheduleWidgetMarkdownTranslation md={grid} />
-        </FullContent>
+        </FullScreenContent>
       )}
       <LazyIcon
         icon="TvSmart"

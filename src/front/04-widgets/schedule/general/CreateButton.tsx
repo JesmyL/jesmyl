@@ -1,13 +1,10 @@
-import KeyboardInput from '#shared/ui/keyboard/KeyboardInput';
-import SendButton from '#shared/ui/sends/send-button/SendButton';
-import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import IconButton from '#shared/ui/the-icon/IconButton';
-import Modal from '#widgets/modal/Modal/Modal';
-import { ModalBody } from '#widgets/modal/Modal/ModalBody';
-import { ModalFooter } from '#widgets/modal/Modal/ModalFooter';
-import { ModalHeader } from '#widgets/modal/Modal/ModalHeader';
+import { schGeneralSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
+import KeyboardInput from 'front/08-shared/ui/keyboard/KeyboardInput';
+import SendButton from 'front/08-shared/ui/sends/send-button/SendButton';
+import TheIconSendButton from 'front/08-shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
 import { useState } from 'react';
-import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 
 export default function ScheduleCreateWidgetButton() {
   const [title, setTitle] = useState('');

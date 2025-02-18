@@ -1,7 +1,9 @@
-import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import IconButton from '#shared/ui/the-icon/IconButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { schAttachmentTypesSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import StrongEditableField from '#widgets/schedule/strong-control/field/StrongEditableField';
+import TheIconSendButton from 'front/08-shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import React, { ReactNode, useMemo, useState } from 'react';
 import {
   CustomAttUseRights,
@@ -13,17 +15,13 @@ import {
 } from 'shared/api';
 import { ScheduleWidgetRightsCtrl } from 'shared/api/complect/schedule-widget/complect/rights-constructor';
 import { itIt, itNIt } from 'shared/utils';
-import Modal from '../../../modal/Modal/Modal';
-import { ModalBody } from '../../../modal/Modal/ModalBody';
-import { ModalHeader } from '../../../modal/Modal/ModalHeader';
 import { useScheduleScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
 import ScheduleWidgetRightControlList from '../../control/RightControlList';
-import { schAttachmentTypesSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetCustomAttTitles from './CustomAttTitles';
 import { ScheduleWidgetCustomAttLocalImagineSelector } from './LocalImagine';
 
-const LazyIconConfigurator = React.lazy(() => import('../../../configurators/Icon'));
+const LazyIconConfigurator = React.lazy(() => import('../../../../06-entities/configurators/Icon'));
 
 enum WhoCan {
   Read,

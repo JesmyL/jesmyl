@@ -1,8 +1,7 @@
-import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import IconButton from '#shared/ui/the-icon/IconButton';
-import Modal from '#widgets/modal/Modal/Modal';
-import { ModalBody } from '#widgets/modal/Modal/ModalBody';
-import { ModalHeader } from '#widgets/modal/Modal/ModalHeader';
+import { schGeneralSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
+import TheIconSendButton from 'front/08-shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
 import { MyLib, mylib } from 'front/utils';
 import { useState } from 'react';
 import {
@@ -15,7 +14,6 @@ import {
 import { itNNull } from 'shared/utils';
 import { useAuth, useIndexSchedules } from '../../../components/index/atoms';
 import ScheduleWidgetTopicTitle from '../complect/TopicTitle';
-import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 
 export function ScheduleWidgetCopy(props: { schw: IScheduleWidgetWid }) {

@@ -1,8 +1,8 @@
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { indexIDB } from '#basis/lib/idb/index/index';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { jversion } from 'shared/values';
-import QRCode from '../../../04-widgets/qr-code/QRCode';
+import QRCode from '../../../06-entities/qr-code/QRCode';
 import { useIndexValues } from '../atoms';
-import { indexIDB } from '../db/index-idb';
 
 export default function IndexAbout() {
   const appVersion = indexIDB.useValue.appVersion();

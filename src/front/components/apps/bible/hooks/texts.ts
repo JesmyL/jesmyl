@@ -1,7 +1,7 @@
+import { useBibleTranslatesContext } from '#basis/lib/contexts/bible/TranslatesContext';
 import { MyLib } from 'front/utils';
 import { itIt } from 'shared/utils';
-import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '../model';
-import { useBibleTranslatesContext } from '../translates/TranslatesContext';
+import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '../../../../07-basis/model/bible';
 import { translateDescriptions } from '../translates/complect';
 import { useBibleShowTranslatesValue } from '../translates/hooks';
 import { verseTranslateTitleCssClassName } from '../translations/complect';

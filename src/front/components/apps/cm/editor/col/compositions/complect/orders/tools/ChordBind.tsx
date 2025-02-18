@@ -1,7 +1,7 @@
-import IconCheckbox from '#shared/ui/the-icon/IconCheckbox';
-import { BottomPopupItem } from '#widgets/absolute-popup/bottom-popup/BottomPopupItem';
+import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
+import { useModal } from '#shared/ui/modal';
+import IconCheckbox from 'front/08-shared/ui/the-icon/IconCheckbox';
 import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
-import useModal from '../../../../../../../../../04-widgets/modal/useModal';
 import { ChordVisibleVariant } from '../../../../../../Cm.model';
 import TheOrder from '../../../../../../col/com/order/TheOrder';
 import { OrdersRedactorOrderToolsProps } from '../OrdersRedactorOrderTools';

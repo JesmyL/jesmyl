@@ -1,13 +1,13 @@
-import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { schDayEventsSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
 import StrongEditableField from '#widgets/schedule/strong-control/field/StrongEditableField';
+import useIsExpand from 'front/08-shared/ui/expand/useIsExpand';
+import TheIconSendButton from 'front/08-shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { MyLib } from 'front/utils';
 import { ReactNode } from 'react';
 import { IScheduleWidgetDayEvent, ScheduleDayEventScopeProps } from 'shared/api';
 import { emptyAsyncFunc, itNNull } from 'shared/utils';
 import styled from 'styled-components';
-import useIsExpand from '../../../../07-shared/ui/expand/useIsExpand';
-import { schDayEventsSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 
 const ratePoints = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5] as const;

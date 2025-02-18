@@ -1,5 +1,5 @@
-import { atom, useAtomValue } from '#shared/lib/atoms';
-import { AppName } from '#shared/model/App.model';
+import { AppName } from '#basis/model/App.model';
+import { atom, useAtomValue } from 'front/08-shared/lib/atoms';
 import React, { Suspense, useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 

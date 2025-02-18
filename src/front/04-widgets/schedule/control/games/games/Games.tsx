@@ -1,6 +1,6 @@
+import { contextCreator } from 'front/08-shared/lib/contextCreator';
+import useIsExpand from 'front/08-shared/ui/expand/useIsExpand';
 import { IScheduleWidgetTeamGame } from 'shared/api';
-import { contextCreator } from '../../../../../07-shared/lib/contextCreator';
-import useIsExpand from '../../../../../07-shared/ui/expand/useIsExpand';
 import { useScheduleWidgetRightsContext } from '../../../useScheduleWidget';
 import { ScheduleWidgetShareButtons } from '../ShareButtons';
 import ScheduleWidgetSortCriterias from '../criterias/SortCriterias';

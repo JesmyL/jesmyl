@@ -1,8 +1,5 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
-import IconCheckbox from '#shared/ui/the-icon/IconCheckbox';
-import { ModalBody } from '#widgets/modal/Modal/ModalBody';
-import { ModalFooter } from '#widgets/modal/Modal/ModalFooter';
-import { ModalHeader } from '#widgets/modal/Modal/ModalHeader';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
+import IconCheckbox from 'front/08-shared/ui/the-icon/IconCheckbox';
 import { blockStyles } from 'front/components/apps/cm/col/com/block-styles/BlockStyles';
 import { StyleBlock } from 'front/components/apps/cm/col/com/block-styles/StyleBlock';
 import { useEffect, useState } from 'react';

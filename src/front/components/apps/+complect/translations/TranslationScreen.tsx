@@ -1,15 +1,15 @@
-import { useAtomValue } from '#shared/lib/atoms';
+import BibleTranslatesContextProvider from '#basis/lib/contexts/bible/TranslatesContext';
+import { useCurrentForceViweAppContext } from '#basis/lib/contexts/CurrentForceViweAppContext';
+import { complectIDB } from '#basis/lib/idb/complect';
+import { useAtomValue } from 'front/08-shared/lib/atoms';
 import styled, { css } from 'styled-components';
+import { TranslationScreenProps } from '../../../../07-basis/model/Translations.model';
 import { BibleTranslationScreenTextsContext } from '../../bible/texts/AddressContentContext';
-import BibleTranslatesContextProvider from '../../bible/translates/TranslatesContext';
 import BibleTranslationCurrentScreen from '../../bible/translations/screen/BibleTranslationCurrentScreen';
 import { CmTranslationCurrentScreen } from '../../cm/translation/complect/controlled/screen/CmTranslationCurrentScreen';
-import { complectIDB } from '../_idb/complectIDB';
-import { useCurrentForceViweAppContext } from './Translation.contexts';
-import { TranslationTextScreen } from './TranslationTextScreen';
-import { TranslationScreenProps } from './Translations.model';
 import { AlertLineSlideText } from './controls/alert-line/AlertLineSlideText';
 import { isShowTranslatedTextAtom, useTranslationInitialSlideValue } from './initial-slide-context';
+import { TranslationTextScreen } from './TranslationTextScreen';
 
 export const TranslationScreen = (props: TranslationScreenProps) => {
   const app = complectIDB.useValue.currentTranslationTextApp();

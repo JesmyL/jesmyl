@@ -1,11 +1,11 @@
+import { cmIDB } from '#basis/lib/idb/cm';
+import { backSwipableContainerMaker } from 'front/08-shared/lib/backSwipableContainerMaker';
+import { addEventListenerPipe, hookEffectPipe } from 'front/08-shared/lib/hookEffectPipe';
 import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { CmComWid } from 'shared/api';
 import styled, { css, RuleSet } from 'styled-components';
-import { backSwipableContainerMaker } from '../../../../../07-shared/lib/backSwipableContainerMaker';
-import { addEventListenerPipe, hookEffectPipe } from '../../../../../07-shared/lib/hookEffectPipe';
 import { ChordVisibleVariant } from '../../Cm.model';
-import { cmIDB } from '../../_db/cm-idb';
 import RollControled from '../../base/RolledContent';
 import { Com } from './Com';
 import './Com.scss';

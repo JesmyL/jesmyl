@@ -1,5 +1,5 @@
-import { useAtomValue } from '#shared/lib/atoms';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { useAtomValue } from 'front/08-shared/lib/atoms';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import useMeetingComFaceList from 'front/components/apps/cm/lists/meetings/useMeetingComFaceList';
 import { useMeetingPathParts } from 'front/components/apps/cm/lists/meetings/useMeetingPathParts';
 import { useEffect } from 'react';

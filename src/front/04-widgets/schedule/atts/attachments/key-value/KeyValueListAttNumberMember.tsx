@@ -1,5 +1,5 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { CustomAttUseTaleId, ScheduleWidgetCleans } from 'shared/api';
 import ScheduleWidgetRoleFace from '../../../control/roles/RoleFace';
 import ScheduleWidgetListUnitFace from '../../../lists/UnitFace';

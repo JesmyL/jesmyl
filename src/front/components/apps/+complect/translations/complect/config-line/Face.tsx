@@ -1,4 +1,4 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
 import styled from 'styled-components';
 import { ScreenTranslationConfig } from '../../model';
 

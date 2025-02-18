@@ -1,11 +1,10 @@
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { indexIDB } from 'front/components/index/db/index-idb';
+import { indexIDB } from '#basis/lib/idb/index/index';
+import { schPhotosSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
+import TheIconSendButton from 'front/08-shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { mylib } from 'front/utils';
 import { useState } from 'react';
 import { ScheduleWidgetPhotoKey } from 'shared/api';
-import TheIconSendButton from '../../../../07-shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import Modal from '../../../modal/Modal/Modal';
-import { schPhotosSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { getScheduleWidgetUserPhotoStorageKey } from '../../storage';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import { ScheduleWidgetPhotoGalery } from './PhotoGalery';

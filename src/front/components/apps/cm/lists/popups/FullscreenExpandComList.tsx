@@ -1,5 +1,5 @@
+import { cmIDB } from '#basis/lib/idb/cm';
 import styled from 'styled-components';
-import { cmIDB } from '../../_db/cm-idb';
 import RollControled from '../../base/RolledContent';
 import { Com } from '../../col/com/Com';
 import { CmComNumber } from '../../col/com/complect/ComNumber';

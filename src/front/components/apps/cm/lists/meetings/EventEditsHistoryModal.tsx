@@ -1,9 +1,7 @@
-import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
-import TheButton from '#shared/ui/TheButton';
-import Modal from '#widgets/modal/Modal/Modal';
-import { ModalBody } from '#widgets/modal/Modal/ModalBody';
-import { ModalHeader } from '#widgets/modal/Modal/ModalHeader';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
+import TheIconSendButton from 'front/08-shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import { TheIconLoading } from 'front/08-shared/ui/the-icon/IconLoading';
+import TheButton from 'front/08-shared/ui/TheButton';
 import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { ScheduleComPackHistoryItem } from 'shared/api';

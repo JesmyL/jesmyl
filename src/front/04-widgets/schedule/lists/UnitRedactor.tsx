@@ -1,3 +1,8 @@
+import {
+  schListsSokiInvocatorClient,
+  schUsersSokiInvocatorClient,
+} from '#basis/lib/invocators/schedules/invocators.methods';
+import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import {
@@ -6,10 +11,7 @@ import {
   IScheduleWidgetUserCati,
   ScheduleUnitScopeProps,
 } from 'shared/api';
-import { ModalBody } from '../../modal/Modal/ModalBody';
-import { ModalHeader } from '../../modal/Modal/ModalHeader';
 import ScheduleWidgetUserList from '../control/users/UserList';
-import { schListsSokiInvocatorClient, schUsersSokiInvocatorClient } from '../invocators/invocators.methods';
 import StrongEditableField from '../strong-control/field/StrongEditableField';
 
 type Props = {

@@ -1,5 +1,5 @@
-import { BackgroundConfigProps } from '#widgets/configurators/model';
-import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
+import { cmIDB } from '#basis/lib/idb/cm';
+import { BackgroundConfigProps } from '#entities/configurators/model';
 import {
   defaultScreenTranslationBackgroundConfig,
   defaultScreenTranslationPositionConfig,

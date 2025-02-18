@@ -1,7 +1,7 @@
-import { BottomPopupItem } from '#widgets/absolute-popup/bottom-popup/BottomPopupItem';
-import { FullContent } from '#widgets/fullscreen-content/FullContent';
+import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
+import { FullScreenContent } from '#shared/ui/fullscreen-content';
+import { isTouchDevice } from 'front/08-shared/lib/device-differences';
 import { useState } from 'react';
-import { isTouchDevice } from '../../../../../07-shared/lib/device-differences';
 import { Com } from '../../col/com/Com';
 import { ComListQrShare } from './ComListShare';
 import FullscreenExpandComList from './FullscreenExpandComList';
@@ -14,7 +14,7 @@ export const LocalListToolsPopup = ({ coms }: { coms: Com[] | und }) => {
     coms && (
       <>
         {isOpenList && (
-          <FullContent
+          <FullScreenContent
             onClose={setIsOpenList}
             containerClassName=""
             asRootAnchor={() => <FullscreenExpandComList coms={coms} />}

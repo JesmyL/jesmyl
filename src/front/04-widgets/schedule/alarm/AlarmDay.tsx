@@ -1,10 +1,10 @@
-import SendButton from '#shared/ui/sends/send-button/SendButton';
+import { schUsersSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
+import SendButton from 'front/08-shared/ui/sends/send-button/SendButton';
 import { useAuth } from 'front/components/index/atoms';
 import { useMemo } from 'react';
 import ScheduleWidgetTopicTitle from '../complect/TopicTitle';
 import { ScheduleWidgetDay, ScheduleWidgetDayProps } from '../days/Day';
 import ScheduleWidgetContextWrapper from '../general/ContextWrapper';
-import { schUsersSokiInvocatorClient } from '../invocators/invocators.methods';
 
 export default function ScheduleAlarmDay(props: ScheduleWidgetDayProps) {
   const auth = useAuth();

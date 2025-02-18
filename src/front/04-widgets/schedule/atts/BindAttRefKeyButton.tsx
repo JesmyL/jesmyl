@@ -1,7 +1,5 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
-import Modal from '#widgets/modal/Modal/Modal';
-import { ModalBody } from '#widgets/modal/Modal/ModalBody';
-import { ModalHeader } from '#widgets/modal/Modal/ModalHeader';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
 import { mylib } from 'front/utils';
 import { ReactNode, useState } from 'react';
 import {

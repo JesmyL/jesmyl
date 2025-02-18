@@ -1,0 +1,122 @@
+import BrutalItem from 'front/08-shared/ui/brutal-item/BrutalItem';
+import PhaseContainerConfigurer from 'front/08-shared/ui/phase-container/PhaseContainerConfigurer';
+import IconCheckbox from 'front/08-shared/ui/the-icon/IconCheckbox';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
+import { MyLib } from 'front/utils';
+import React, { Suspense } from 'react';
+import { Link, Route, Routes } from 'react-router-dom';
+import { itIt } from 'shared/utils';
+import { FontFamilySelector } from '../../../../06-entities/configurators/selectors/FontFamilySelector';
+import useConnectionState from '../../../../07-basis/lib/hooks/+app/useConnectionState';
+import { useAppFontFamily, useAuth } from '../../atoms';
+import { indexSimpleValIsPlayAnimations, indexSimpleValIsUseNativeKeyboard } from '../../complect/index.simpleValues';
+
+const IndexConsole = React.lazy(() => import('./ConsolePage'));
+
+const styles = {
+  position: 'absolute',
+  top: '0',
+  right: '0',
+  bottom: '0',
+  left: '0',
+  background: 'black',
+  zIndex: '1000000',
+  overflowY: 'auto',
+  height: '100dvh',
+  display: null,
+};
+
+export default function IndexSettingsPage() {
+  const auth = useAuth();
+  const [appFontFamily, setAppFontFamily] = useAppFontFamily();
+  const connectionNode = useConnectionState('margin-gap');
+
+  const settingsList = [
+    auth.level === 100 && (
+      <Link to="console">
+        <BrutalItem
+          iconNode={<LazyIcon icon="SourceCodeCircle" />}
+          title="Консоль"
+        />
+      </Link>
+    ),
+    <BrutalItem
+      iconNode={<LazyIcon icon="Keyboard" />}
+      title="Фирменная клавиатура"
+      onClick={indexSimpleValIsUseNativeKeyboard.switch}
+      box={
+        <IconCheckbox
+          simpleValuer={indexSimpleValIsUseNativeKeyboard}
+          negativeValue
+        />
+      }
+    />,
+    <BrutalItem
+      iconNode={<LazyIcon icon="PaintBoard" />}
+      title="Анимации"
+      onClick={indexSimpleValIsPlayAnimations.switch}
+      box={<IconCheckbox simpleValuer={indexSimpleValIsPlayAnimations} />}
+    />,
+    <BrutalItem
+      iconNode={<LazyIcon icon="Text" />}
+      title="Шрифт"
+      box={
+        <FontFamilySelector
+          fontFamily={appFontFamily}
+          onSelect={setAppFontFamily}
+        />
+      }
+    />,
+    <BrutalItem
+      iconNode={<LazyIcon icon="RssError" />}
+      title="Показать ошибки"
+      onClick={() => {
+        const container = document.getElementById('error-log-list');
+
+        if (container == null) return;
+
+        MyLib.entries(styles).forEach(([key, val]) => (container.style[key] = val!));
+
+        container.onclick = () => {
+          MyLib.keys(styles).forEach(key => (container.style[key] = null!));
+          container.style.display = 'none';
+        };
+      }}
+    />,
+  ].filter(itIt);
+
+  return (
+    <Routes>
+      <Route
+        index
+        element={
+          <PhaseContainerConfigurer
+            className="index-settings"
+            headTitle="Настройки"
+            head={connectionNode}
+            content={
+              <>
+                {settingsList.length ? (
+                  settingsList.map((button, buttoni) => {
+                    return <React.Fragment key={buttoni}>{button}</React.Fragment>;
+                  })
+                ) : (
+                  <div className="text-center">Раздел пуст</div>
+                )}
+              </>
+            }
+          />
+        }
+      />
+
+      <Route
+        path="console"
+        element={
+          <Suspense>
+            <IndexConsole />
+          </Suspense>
+        }
+      />
+    </Routes>
+  );
+}

@@ -1,4 +1,4 @@
-import { ConfirmContent } from '#widgets/modal/confirm/ConfirmContent';
+import { ConfirmContent } from '#shared/ui/modal';
 import { ReactNode } from 'react';
 
 export default function StrongDiv(props: {

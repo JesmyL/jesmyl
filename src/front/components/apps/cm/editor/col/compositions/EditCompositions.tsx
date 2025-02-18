@@ -1,8 +1,8 @@
-import { useAtom } from '#shared/lib/atoms';
-import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { useIsNumberSearch } from '#shared/ui/DebouncedSearchInput';
-import { StyledPhaseContainerConfigurerHead } from '#shared/ui/phase-container/PhaseContainerConfigurer';
-import { BottomPopup } from '#widgets/absolute-popup/bottom-popup/BottomPopup';
+import { BottomPopup } from '#shared/ui/absolute-popup/bottom-popup/BottomPopup';
+import { useAtom } from 'front/08-shared/lib/atoms';
+import { hookEffectPipe, setTimeoutPipe } from 'front/08-shared/lib/hookEffectPipe';
+import { useIsNumberSearch } from 'front/08-shared/ui/DebouncedSearchInput';
+import { StyledPhaseContainerConfigurerHead } from 'front/08-shared/ui/phase-container/PhaseContainerConfigurer';
 import { useEffect, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';

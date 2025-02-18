@@ -1,10 +1,10 @@
+import { cmIDB } from '#basis/lib/idb/cm';
+import { cmUserStoreSokiInvocatorClient } from '#basis/lib/invocators/cm/user-store-invocator.methods';
+import { contextCreator } from 'front/08-shared/lib/contextCreator';
 import { MyLib } from 'front/utils';
 import React from 'react';
 import { MigratableComToolName } from 'shared/api';
 import styled, { css } from 'styled-components';
-import { contextCreator } from '../../../../../../07-shared/lib/contextCreator';
-import { cmIDB } from '../../../_db/cm-idb';
-import { cmUserStoreSokiInvocatorClient } from '../../../invocators/user-store-invocator.methods';
 import { Com } from '../Com';
 import { useCcom } from '../useCcom';
 import { CmCatsBindsComTool } from './complect/CatsBinds';

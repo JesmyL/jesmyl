@@ -1,0 +1,1 @@
+export { indexIDB } from './lib';

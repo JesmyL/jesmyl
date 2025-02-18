@@ -1,7 +1,7 @@
-import { bibleIDB } from 'front/components/apps/bible/_db/bibleIDB';
+import { bibleIDB } from '#basis/lib/idb/bible';
 import { mylib } from 'front/utils';
 import { useCallback } from 'react';
-import { BibleTranslationAddress } from '../../../../model';
+import { BibleTranslationAddress } from '../../../../../../../07-basis/model/bible';
 
 export const useBibleTranslationHistory = () => bibleIDB.useValue.translationHistory();
 

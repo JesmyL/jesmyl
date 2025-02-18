@@ -1,4 +1,4 @@
-import KeyboardInput from '#shared/ui/keyboard/KeyboardInput';
+import KeyboardInput from 'front/08-shared/ui/keyboard/KeyboardInput';
 import { TextCorrectMessages } from 'front/components/apps/cm/editor/complect/TextBlockIncorrectMessages';
 import { CorrectsBox } from 'front/components/apps/cm/editor/corrects-box/CorrectsBox';
 

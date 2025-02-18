@@ -1,10 +1,9 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
-import Modal from '#widgets/modal/Modal/Modal';
-import { ModalBody } from '#widgets/modal/Modal/ModalBody';
+import { schGeneralSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
+import { Modal, ModalBody } from '#shared/ui/modal';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
 import { useState } from 'react';
 import { scheduleWidgetUserRights } from 'shared/api';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
-import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetRightControlList from './RightControlList';
 

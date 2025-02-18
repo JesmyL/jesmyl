@@ -1,16 +1,16 @@
+import { useActualRef } from 'front/08-shared/lib/hooks/useActualRef';
+import { useDebounceAction } from 'front/08-shared/lib/hooks/useDebounceAction';
+import { ExpandableContent } from 'front/08-shared/ui/expand/ExpandableContent';
 import { useCallback } from 'react';
 import { ScreenTranslateConfigurationNameChanger } from '../../+complect/translations/complect/NameChanger';
-import { BackgroundConfigurator } from '../../../../04-widgets/configurators/Background';
-import { ColorConfigurator } from '../../../../04-widgets/configurators/Color';
-import { DisplayConfigurator } from '../../../../04-widgets/configurators/Display';
-import { FontFamilyConfigurator } from '../../../../04-widgets/configurators/FontFamily';
-import { FontStyleConfigurator } from '../../../../04-widgets/configurators/FontStyle';
-import { FontWeightConfigurator } from '../../../../04-widgets/configurators/FontWeight';
-import { OpacityConfigurator } from '../../../../04-widgets/configurators/Opacity';
-import { ScreenTranslateConfigurationTextAlign } from '../../../../04-widgets/configurators/TextAlign';
-import { useActualRef } from '../../../../07-shared/hooks/useActualRef';
-import { useDebounceAction } from '../../../../07-shared/hooks/useDebounceAction';
-import { ExpandableContent } from '../../../../07-shared/ui/expand/ExpandableContent';
+import { BackgroundConfigurator } from '../../../../06-entities/configurators/Background';
+import { ColorConfigurator } from '../../../../06-entities/configurators/Color';
+import { DisplayConfigurator } from '../../../../06-entities/configurators/Display';
+import { FontFamilyConfigurator } from '../../../../06-entities/configurators/FontFamily';
+import { FontStyleConfigurator } from '../../../../06-entities/configurators/FontStyle';
+import { FontWeightConfigurator } from '../../../../06-entities/configurators/FontWeight';
+import { OpacityConfigurator } from '../../../../06-entities/configurators/Opacity';
+import { ScreenTranslateConfigurationTextAlign } from '../../../../06-entities/configurators/TextAlign';
 import { useUpdateBibleCurrentTranslationConfig } from './hooks/update-config';
 import { BibleTranslationScreenConfig } from './model';
 

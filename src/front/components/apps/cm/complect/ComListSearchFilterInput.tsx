@@ -1,10 +1,10 @@
-import { atom, useAtom } from '#shared/lib/atoms';
-import DebouncedSearchInput from '#shared/ui/DebouncedSearchInput';
+import { cmIDB } from '#basis/lib/idb/cm';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { atom, useAtom } from 'front/08-shared/lib/atoms';
+import DebouncedSearchInput from 'front/08-shared/ui/DebouncedSearchInput';
 import { mylib } from 'front/utils';
 import { useEffect } from 'react';
 import { CmComWid, IExportableCom } from 'shared/api';
-import { cmIDB } from '../_db/cm-idb';
 import { Com } from '../col/com/Com';
 
 export const categoryTermAtom = atom('');

@@ -1,6 +1,6 @@
-import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { schDayEventsSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { schDayEventsSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
 import StrongEditableField from '#widgets/schedule/strong-control/field/StrongEditableField';
+import TheIconSendButton from 'front/08-shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { ScheduleDayEventAttachmentScopeProps } from 'shared/api';
 import { ScheduleChListAtt } from './checkListAtt';
 

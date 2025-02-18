@@ -1,10 +1,10 @@
-import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import IconButton from '#shared/ui/the-icon/IconButton';
+import { schRolesSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
+import useIsExpand from 'front/08-shared/ui/expand/useIsExpand';
+import TheIconSendButton from 'front/08-shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
 import { useMemo, useState } from 'react';
 import { IScheduleWidgetRole } from 'shared/api';
-import useIsExpand from '../../../../07-shared/ui/expand/useIsExpand';
 import { useScheduleScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
-import { schRolesSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetRole from './Role';
 

@@ -1,15 +1,15 @@
-import { appInitialInvokes } from '#processes/invokes/app-initial-invokes';
-import JesmylLogo from '#shared/ui/jesmyl-logo/JesmylLogo';
-import { KEYBOARD_FLASH } from '#shared/ui/keyboard/KeyboardInput';
-import { SetAppRootAnchorNodesContext } from '#widgets/fullscreen-content/app-root-anchor-nodes-context';
+import { indexInitialInvokes } from '#processes/initial-invokes/index-initial-invokes';
+import { AppRootAnchorNodesContext } from '#shared/ui/fullscreen-content/nodes-context';
+import { useFingersActions } from 'front/08-shared/lib/global-listeners/useFingersActions';
+import { useGlobalFontFamilySetter } from 'front/08-shared/lib/global-listeners/useGlobalFontFamilySetter';
+import { useGlobalFullscreenChanger } from 'front/08-shared/lib/global-listeners/useGlobalFullscreenChanger';
+import { hookEffectPipe, setTimeoutPipe } from 'front/08-shared/lib/hookEffectPipe';
+import JesmylLogo from 'front/08-shared/ui/jesmyl-logo/JesmylLogo';
+import { KEYBOARD_FLASH } from 'front/08-shared/ui/keyboard/KeyboardInput';
 import { MyLib } from 'front/utils';
 import { useEffect, useMemo, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { emptyArray } from 'shared/utils';
-import { useFingersActions } from '../../07-shared/lib/global-listeners/useFingersActions';
-import { useGlobalFontFamilySetter } from '../../07-shared/lib/global-listeners/useGlobalFontFamilySetter';
-import { useGlobalFullscreenChanger } from '../../07-shared/lib/global-listeners/useGlobalFullscreenChanger';
-import { hookEffectPipe, setTimeoutPipe } from '../../07-shared/lib/hookEffectPipe';
 import { useCurrentApp } from '../../components/index/atoms';
 
 const emptyDict = {};
@@ -40,7 +40,7 @@ export default function AppComponent() {
   }, []);
 
   return (
-    <SetAppRootAnchorNodesContext.Provider value={setRootAnchorNodes}>
+    <AppRootAnchorNodesContext.Provider value={setRootAnchorNodes}>
       {MyLib.values(rootAnchorNodes)}
       <div className={`above-container ${keyboardOpen ? 'keyboard-open' : ''}`}>
         {isShowLogo && (
@@ -54,8 +54,8 @@ export default function AppComponent() {
         </div>
         <KEYBOARD_FLASH {...keyboardProps} />
       </div>
-    </SetAppRootAnchorNodesContext.Provider>
+    </AppRootAnchorNodesContext.Provider>
   );
 }
 
-appInitialInvokes();
+indexInitialInvokes();

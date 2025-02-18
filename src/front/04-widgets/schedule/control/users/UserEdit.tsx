@@ -1,3 +1,4 @@
+import { schUsersSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
 import StrongEditableField from '#widgets/schedule/strong-control/field/StrongEditableField';
 import {
   IScheduleWidgetUser,
@@ -6,7 +7,6 @@ import {
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
 import { useScheduleUserScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
-import { schUsersSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetRightControlList from '../RightControlList';
 

@@ -1,6 +1,9 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { schDayEventsSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
 import StrongEditableField from '#widgets/schedule/strong-control/field/StrongEditableField';
+import useIsRedactArea from 'front/08-shared/lib/hooks/useIsRedactArea';
+import { useIsRememberExpand } from 'front/08-shared/ui/expand/useIsRememberExpand';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { MyLib, mylib } from 'front/utils';
 import { ReactNode, useMemo } from 'react';
 import {
@@ -14,13 +17,10 @@ import {
   ScheduleWidgetCleans,
 } from 'shared/api';
 import styled from 'styled-components';
-import useIsRedactArea from '../../../../07-shared/hooks/useIsRedactArea';
-import { useIsRememberExpand } from '../../../../07-shared/ui/expand/useIsRememberExpand';
 import ScheduleWidgetBindAttRefKeyButton from '../../atts/BindAttRefKeyButton';
 import { ScheduleWidgetBindAtts } from '../../atts/BindAtts';
 import ScheduleWidgetTopicTitle from '../../complect/TopicTitle';
 import ScheduleWidgetDayEventAtts from '../../events/atts/DayEventAtts';
-import { schDayEventsSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetDayEventRating from './DayEventRating';
 import { DayEventRedactControls } from './RedactControls';

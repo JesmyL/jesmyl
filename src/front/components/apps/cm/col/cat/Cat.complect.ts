@@ -1,6 +1,6 @@
+import { cmIDB, CmIDBStorage } from '#basis/lib/idb/cm';
 import { MyLib, mylib } from 'front/utils';
 import { itIt, makeRegExp } from 'shared/utils';
-import { cmIDB, CmIDBStorage } from '../../_db/cm-idb';
 import { Com } from '../com/Com';
 import { Cat } from './Cat';
 import { CatTracker } from './Cat.model';

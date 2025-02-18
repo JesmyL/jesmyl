@@ -1,9 +1,9 @@
-import Dropdown from '#shared/ui/dropdown/Dropdown';
-import KeyboardInput from '#shared/ui/keyboard/KeyboardInput';
-import SendButton from '#shared/ui/sends/send-button/SendButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { schGamesSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/scope-contexts/scope-props-contexts';
-import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import Dropdown from 'front/08-shared/ui/dropdown/Dropdown';
+import KeyboardInput from 'front/08-shared/ui/keyboard/KeyboardInput';
+import SendButton from 'front/08-shared/ui/sends/send-button/SendButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { IScheduleWidgetExportableTeam, IScheduleWidgetUserMi } from 'shared/api';

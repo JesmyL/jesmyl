@@ -1,7 +1,6 @@
-import { BottomPopupItem } from '#widgets/absolute-popup/bottom-popup/BottomPopupItem';
+import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
 import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
-import Modal from '../../../../../../../../../04-widgets/modal/Modal/Modal';
 import { EditableCom } from '../../../com/EditableCom';
 import { CmComOrderOnClickBetweenData } from '../model';
 import { OrdersRedactorAdditionsEtapsModalInner } from './Etaps';

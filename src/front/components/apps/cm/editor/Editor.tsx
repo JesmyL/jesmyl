@@ -1,5 +1,5 @@
-import BrutalItem from '#shared/ui/brutal-item/BrutalItem';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import BrutalItem from 'front/08-shared/ui/brutal-item/BrutalItem';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { Route, Routes } from 'react-router-dom';
 import { useAuth } from '../../../index/atoms';
 import { TheMeetings } from '../lists/meetings/TheMeetings';

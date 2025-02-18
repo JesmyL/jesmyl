@@ -1,7 +1,7 @@
-import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import { schDayEventsSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
 import StrongEditableField from '#widgets/schedule/strong-control/field/StrongEditableField';
+import TheIconSendButton from 'front/08-shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { ScheduleDayEventScopeProps } from 'shared/api';
-import { schDayEventsSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { DayEventIsNeedTgInformButton } from './IsNeedTgInformButton';
 
 type Props = {

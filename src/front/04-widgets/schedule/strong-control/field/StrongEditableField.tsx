@@ -1,8 +1,8 @@
-import useIsRedactArea from '#shared/hooks/useIsRedactArea';
-import KeyboardInput from '#shared/ui/keyboard/KeyboardInput';
-import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import useToast from '#widgets/modal/useToast';
+import { useToast } from '#shared/ui/modal';
+import useIsRedactArea from 'front/08-shared/lib/hooks/useIsRedactArea';
+import KeyboardInput from 'front/08-shared/ui/keyboard/KeyboardInput';
+import { TheIconLoading } from 'front/08-shared/ui/the-icon/IconLoading';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { ReactNode, useEffect, useState } from 'react';
 import StrongEditableFieldMultiline from './StrongEditableFieldMultiline';
 

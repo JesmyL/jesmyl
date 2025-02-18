@@ -1,12 +1,12 @@
-import { atom, useAtom } from '#shared/lib/atoms';
-import Dropdown from '#shared/ui/dropdown/Dropdown';
-import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
-import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import IconCheckbox from '#shared/ui/the-icon/IconCheckbox';
+import { atom, useAtom } from 'front/08-shared/lib/atoms';
+import Dropdown from 'front/08-shared/ui/dropdown/Dropdown';
+import { DropdownItem } from 'front/08-shared/ui/dropdown/Dropdown.model';
+import TheIconSendButton from 'front/08-shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import IconCheckbox from 'front/08-shared/ui/the-icon/IconCheckbox';
+import TheButton from 'front/08-shared/ui/TheButton';
 import { mylib } from 'front/utils';
 import { useEffect, useRef, useState } from 'react';
 import { EeStorePack } from 'shared/api';
-import TheButton from '../../../../../07-shared/ui/TheButton';
 import { eeStorage } from '../../base/ee-storage/EeStorage';
 import { cmEditorClientInvocatorMethods } from '../cm-editor-invocator.methods';
 import PhaseCmEditorContainer from '../phase-editor-container/PhaseCmEditorContainer';

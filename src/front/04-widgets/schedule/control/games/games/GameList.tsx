@@ -1,7 +1,7 @@
-import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import { schGamesSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/scope-contexts/scope-props-contexts';
-import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
-import useIsExpand from '../../../../../07-shared/ui/expand/useIsExpand';
+import useIsExpand from 'front/08-shared/ui/expand/useIsExpand';
+import TheIconSendButton from 'front/08-shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { useScheduleWidgetRightsContext } from '../../../useScheduleWidget';
 import { SchWGameContext } from './Games';
 import ScheduleWidgetTeamGame from './game/Game';

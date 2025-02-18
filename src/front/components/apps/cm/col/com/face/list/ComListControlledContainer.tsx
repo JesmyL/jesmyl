@@ -1,5 +1,5 @@
-import propsOfClicker from '#shared/lib/clicker/propsOfClicker';
-import { FloatPopup, useFloatPopupCoords } from '#widgets/absolute-popup/float-popup/FloatPopup';
+import { FloatPopup, useFloatPopupCoords } from '#shared/ui/absolute-popup/float-popup/FloatPopup';
+import propsOfClicker from 'front/08-shared/lib/clicker/propsOfClicker';
 import { mylib } from 'front/utils';
 import { useMemo } from 'react';
 import { CmComWid } from '../../../../../../../../shared/api/complect/apps/cm/complect/enums';

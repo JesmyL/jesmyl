@@ -1,6 +1,6 @@
-import { useAtomValue } from '#shared/lib/atoms';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { indexIDB } from 'front/components/index/db/index-idb';
+import { indexIDB } from '#basis/lib/idb/index/index';
+import { useAtomValue } from 'front/08-shared/lib/atoms';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { useEffect } from 'react';
 import { CmComWid } from 'shared/api';
 import styled from 'styled-components';

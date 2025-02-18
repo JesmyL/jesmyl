@@ -1,8 +1,6 @@
-import IconCheckbox from '#shared/ui/the-icon/IconCheckbox';
-import { BottomPopupItem } from '#widgets/absolute-popup/bottom-popup/BottomPopupItem';
-import Modal from '#widgets/modal/Modal/Modal';
-import { ModalBody } from '#widgets/modal/Modal/ModalBody';
-import { ModalHeader } from '#widgets/modal/Modal/ModalHeader';
+import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
+import IconCheckbox from 'front/08-shared/ui/the-icon/IconCheckbox';
 import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { mylib } from 'front/utils';
 import { useState } from 'react';

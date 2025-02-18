@@ -1,5 +1,5 @@
-import { QrCodeFullScreen } from '#widgets/qr-code/QrCodeFullScreen';
-import { cmAppActions } from 'front/components/apps/cm/app-actions/cm-app-actions';
+import { cmAppActions } from '#basis/lib/consts/cm/link-actions';
+import { QrCodeFullScreen } from '#entities/qr-code/QrCodeFullScreen';
 import { useState } from 'react';
 import { ComTool } from '../ComTool';
 import { useComToolsCcomContext } from '../useMigratableComTools';

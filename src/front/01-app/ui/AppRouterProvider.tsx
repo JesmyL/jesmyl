@@ -1,12 +1,20 @@
+import { bibleRoutingApp } from '#app/router-configs/bible';
 import IndexOtherRoute from '#app/router-net/index/Other';
-import { atom, useAtomSet } from '#shared/lib/atoms';
-import { AppName } from '#shared/model/App.model';
-import useToast from '#widgets/modal/useToast';
+import { useInitSoki } from '#basis/lib/hooks/+app/useInitSoki';
+import { soki } from '#basis/lib/soki';
+import { AppName, AppsRoutingAppConfigDict } from '#basis/model/App.model';
+import { useToast } from '#shared/ui/modal';
+import { atom, useAtomSet } from 'front/08-shared/lib/atoms';
 import { useEffect } from 'react';
 import { Route, useParams, useSearchParams } from 'react-router-dom';
-import { useInitSoki } from '../../02-processes/hooks/+app/useInitSoki';
-import { routingApps } from '../../02-processes/routers';
-import { soki } from '../../soki';
+import { tunerRoutingApp } from '../../components/apps/tuner/tunerRoutingApp';
+import { cmRoutingApp } from '../router-configs/cm';
+
+export const routingApps: AppsRoutingAppConfigDict = {
+  cm: cmRoutingApp,
+  bible: bibleRoutingApp,
+  tuner: tunerRoutingApp,
+};
 
 const AppRouterProvider = () => {
   const params = useParams();

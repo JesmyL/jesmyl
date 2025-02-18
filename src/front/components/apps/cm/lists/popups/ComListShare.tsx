@@ -1,5 +1,5 @@
-import { QrCodeFullScreen } from '#widgets/qr-code/QrCodeFullScreen';
-import { cmAppActions } from '../../app-actions/cm-app-actions';
+import { QrCodeFullScreen } from '#entities/qr-code/QrCodeFullScreen';
+import { cmAppActions } from '../../../../../07-basis/lib/consts/cm/link-actions';
 import { Com } from '../../col/com/Com';
 
 export const ComListQrShare = ({ onClose, coms }: { onClose: (isOpen: false) => void; coms: Com[] }) => {

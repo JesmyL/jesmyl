@@ -1,8 +1,8 @@
+import { bibleIDB } from '#basis/lib/idb/bible';
+import { addEventListenerPipe, hookEffectPipe } from 'front/08-shared/lib/hookEffectPipe';
 import { useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import { addEventListenerPipe, hookEffectPipe } from '../../../../../../07-shared/lib/hookEffectPipe';
-import { bibleIDB } from '../../../_db/bibleIDB';
-import { BibleSearchZone } from '../../../model';
+import { BibleSearchZone } from '../../../../../../07-basis/model/bible';
 import { useBibleTranslationSearchResultSelectedSet } from '../hooks/results';
 import BibleSearchPanelSearchTextInput from './SearchTextInput';
 import { BibleSearchPanelAddressInput } from './address/AddressInput';

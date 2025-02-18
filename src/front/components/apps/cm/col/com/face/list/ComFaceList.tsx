@@ -1,5 +1,5 @@
 import { mylib } from 'front/utils';
-import useSelectedComs from '../../../../base/useSelectedComs';
+import useSelectedComs from '../../../../../../../07-basis/lib/hooks/cm/useSelectedComs';
 import { Com } from '../../Com';
 import { useCcomw } from '../../useCcom';
 import { ComFaceListComList } from './_ComList';

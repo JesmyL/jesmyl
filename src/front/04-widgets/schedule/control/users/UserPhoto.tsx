@@ -1,5 +1,5 @@
+import { indexIDB } from '#basis/lib/idb/index/index';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { indexIDB } from 'front/components/index/db/index-idb';
 import { IScheduleWidgetUser } from 'shared/api';
 import styled from 'styled-components';
 import { getScheduleWidgetUserPhotoStorageKey } from '../../storage';

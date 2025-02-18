@@ -1,4 +1,4 @@
-import { AppName } from '#shared/model/App.model';
+import { AppName } from '#basis/model/App.model';
 import { LocalSokiAuth } from 'shared/api';
 import { BibleTranslationScreenConfig } from '../apps/bible/translations/model';
 import { CmSchWTranslationLiveDataValue } from '../apps/cm/translation/complect/live/model';

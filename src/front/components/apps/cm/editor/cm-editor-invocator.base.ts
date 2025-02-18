@@ -1,6 +1,6 @@
+import { cmIDB } from '#basis/lib/idb/cm';
 import { SokiInvocatorBaseClient } from 'front/SokiInvocatorBase.client';
 import { CmEditorSokiInvocatorModel } from 'shared/api/invocators/cm/editor-invocator.shares.model';
-import { cmIDB } from '../_db/cm-idb';
 import { comEditorBusiesAtom } from './col/compositions/atoms';
 
 class CmEditorSokiInvocatorBaseClient extends SokiInvocatorBaseClient<CmEditorSokiInvocatorModel> {}

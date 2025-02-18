@@ -1,6 +1,6 @@
+import useIsExpand from 'front/08-shared/ui/expand/useIsExpand';
 import { ReactNode } from 'react';
 import { IScheduleWidgetUser, scheduleWidgetUserRights } from 'shared/api';
-import useIsExpand from '../../../../07-shared/ui/expand/useIsExpand';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import { ScheduleWidgetUser } from './User';
 

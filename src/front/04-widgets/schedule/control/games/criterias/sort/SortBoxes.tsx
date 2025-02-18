@@ -1,5 +1,5 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { IScheduleWidgetUser, IScheduleWidgetUserMi } from 'shared/api';
 import { emptyFunc } from 'shared/utils';

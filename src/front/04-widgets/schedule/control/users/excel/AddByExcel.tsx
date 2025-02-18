@@ -1,9 +1,9 @@
-import { Script } from '#shared/ui/tags/Script';
-import ContentOnLoad from '#shared/ui/the-icon/ContentOnLoad';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { FullContent } from '#widgets/fullscreen-content/FullContent';
+import { FullScreenContent } from '#shared/ui/fullscreen-content';
+import { excel2jsonParserBox } from 'front/08-shared/lib/parseExcel2Json';
+import { Script } from 'front/08-shared/ui/tags/Script';
+import ContentOnLoad from 'front/08-shared/ui/the-icon/ContentOnLoad';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { useEffect, useState } from 'react';
-import { excel2jsonParserBox } from '../../../../../07-shared/lib/parseExcel2Json';
 import { ScheduleWidgetUserAddByExcelContent } from './AddByExcelContent';
 
 export function ScheduleWidgetUserAddByExcel() {
@@ -42,7 +42,7 @@ export function ScheduleWidgetUserAddByExcel() {
         onClick={setIsOpenContent}
       />
       {isOpenContent && (
-        <FullContent onClose={setIsOpenContent}>
+        <FullScreenContent onClose={setIsOpenContent}>
           <ContentOnLoad isLoading={isLoading}>
             {error ? (
               <div className="color--ko">
@@ -53,7 +53,7 @@ export function ScheduleWidgetUserAddByExcel() {
               <ScheduleWidgetUserAddByExcelContent close={() => setIsOpenContent(false)} />
             )}
           </ContentOnLoad>
-        </FullContent>
+        </FullScreenContent>
       )}
     </>
   );

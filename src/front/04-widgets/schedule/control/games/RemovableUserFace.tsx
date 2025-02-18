@@ -1,11 +1,10 @@
-import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { schGamesSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
+import { Modal, ModalHeader } from '#shared/ui/modal';
+import { useScheduleScopePropsContext } from '#widgets/schedule/complect/scope-contexts/scope-props-contexts';
+import TheIconSendButton from 'front/08-shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { useState } from 'react';
 import { IScheduleWidgetUser } from 'shared/api';
-import Modal from '../../../modal/Modal/Modal';
-import { ModalHeader } from '../../../modal/Modal/ModalHeader';
-import { useScheduleScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
-import { schGamesSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import ScheduleWidgetUserTakePhoto from '../users/TakePhoto';
 import ScheduleWidgetUserPhoto from '../users/UserPhoto';

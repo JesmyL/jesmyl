@@ -1,8 +1,8 @@
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { useRef, useState } from 'react';
-import { TranslationScreenProps } from '../../../+complect/translations/Translations.model';
 import { useSetScreenTranslationInteractiveBackground } from '../../../+complect/translations/hooks/interactive-back';
 import { useApplyScreenFontFamilyEffect } from '../../../+complect/translations/hooks/set-font-family';
+import { TranslationScreenProps } from '../../../../../07-basis/model/Translations.model';
 import { useBibleAddressVersei } from '../../hooks/address/verses';
 import { useBibleScreenTranslationKeyListener } from '../hooks/key-listener';
 import { useGetBibleScreenTranslationWrapperStyle } from '../hooks/styles/wrapper-style';

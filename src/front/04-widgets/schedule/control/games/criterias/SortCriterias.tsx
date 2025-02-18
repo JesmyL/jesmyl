@@ -1,9 +1,9 @@
-import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { FullContent } from '#widgets/fullscreen-content/FullContent';
+import { schGamesSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
+import { FullScreenContent } from '#shared/ui/fullscreen-content';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/scope-contexts/scope-props-contexts';
-import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import TheIconSendButton from 'front/08-shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import TheButton from 'front/08-shared/ui/TheButton';
 import { useState } from 'react';
-import TheButton from '../../../../../07-shared/ui/TheButton';
 import { useScheduleWidgetRightsContext } from '../../../useScheduleWidget';
 import { ScheduleWidgetShareButtons } from '../ShareButtons';
 import ScheduleWidgetSortCriteria from './SortCriteria';
@@ -17,7 +17,7 @@ export default function ScheduleWidgetSortCriterias() {
     <>
       <TheButton onClick={setIsOpenCriterias}>Посмотреть критерии сортировки</TheButton>
       {isOpenCriterias && (
-        <FullContent onClose={setIsOpenCriterias}>
+        <FullScreenContent onClose={setIsOpenCriterias}>
           <h3 className="flex flex-gap">
             Список критериев
             <TheIconSendButton
@@ -38,7 +38,7 @@ export default function ScheduleWidgetSortCriterias() {
               />
             );
           })}
-        </FullContent>
+        </FullScreenContent>
       )}
     </>
   );

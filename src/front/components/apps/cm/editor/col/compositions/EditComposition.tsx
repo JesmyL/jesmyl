@@ -1,12 +1,12 @@
-import { useAtomValue } from '#shared/lib/atoms';
-import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import IconButton from '#shared/ui/the-icon/IconButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { useAtomValue } from 'front/08-shared/lib/atoms';
+import { hookEffectPipe, setTimeoutPipe } from 'front/08-shared/lib/hookEffectPipe';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import useConnectionState from '../../../../../index/useConnectionState';
+import useConnectionState from '../../../../../../07-basis/lib/hooks/+app/useConnectionState';
 import { CmComNumber } from '../../../col/com/complect/ComNumber';
 import ComPlayer from '../../../col/com/player/ComPlayer';
 import { cmComClientInvocatorMethods } from '../../cm-editor-invocator.methods';

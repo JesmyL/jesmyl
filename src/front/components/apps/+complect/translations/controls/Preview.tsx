@@ -1,5 +1,5 @@
-import IconButton from '#shared/ui/the-icon/IconButton';
-import { FullContent } from '#widgets/fullscreen-content/FullContent';
+import { FullScreenContent } from '#shared/ui/fullscreen-content';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
 import { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { TranslationScreen } from '../TranslationScreen';
@@ -16,7 +16,7 @@ export const TranslationSlidePreview = ({ isPreview = true }: Props) => {
   return (
     <Wrapper className="pointer">
       {isSettingsOpen && currentConfig && (
-        <FullContent onClose={setIsSettingsOpen}>
+        <FullScreenContent onClose={setIsSettingsOpen}>
           <div className="flex center margin-big-gap-t">
             <FullContainer className="flex center bgcolor--3">
               <ScreenWithBackground $proportion={currentConfig.proportion}>
@@ -27,7 +27,7 @@ export const TranslationSlidePreview = ({ isPreview = true }: Props) => {
               </ScreenWithBackground>
             </FullContainer>
           </div>
-        </FullContent>
+        </FullScreenContent>
       )}
       {currentConfig === undefined ? (
         <TranslationScreen

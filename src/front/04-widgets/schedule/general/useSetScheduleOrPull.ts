@@ -1,4 +1,4 @@
-import { atom, useAtom } from '#shared/lib/atoms';
+import { atom, useAtom } from 'front/08-shared/lib/atoms';
 import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetWid } from 'shared/api';

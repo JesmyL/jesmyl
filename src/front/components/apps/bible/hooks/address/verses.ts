@@ -1,7 +1,7 @@
+import { useBibleTranslatesContext } from '#basis/lib/contexts/bible/TranslatesContext';
+import { bibleIDB } from '#basis/lib/idb/bible';
 import { useCallback } from 'react';
-import { bibleIDB } from '../../_db/bibleIDB';
-import { BibleVersei } from '../../model';
-import { useBibleTranslatesContext } from '../../translates/TranslatesContext';
+import { BibleVersei } from '../../../../../07-basis/model/bible';
 import { useBibleShowTranslatesValue } from '../../translates/hooks';
 import { useBibleVersei } from '../../translations/lists/atoms';
 import { useBibleTranslationSlideSyncContentSetter } from '../slide-sync';

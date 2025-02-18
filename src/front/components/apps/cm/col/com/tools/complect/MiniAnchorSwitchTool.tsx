@@ -1,4 +1,4 @@
-import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
+import { cmIDB } from '#basis/lib/idb/cm';
 import { ComTool } from '../ComTool';
 
 export const MiniAnchorSwitchTool = () => {

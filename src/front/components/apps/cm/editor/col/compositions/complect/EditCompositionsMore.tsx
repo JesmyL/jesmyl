@@ -1,5 +1,5 @@
-import { BottomPopupItem } from '#widgets/absolute-popup/bottom-popup/BottomPopupItem';
-import { FullContent } from '#widgets/fullscreen-content/FullContent';
+import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
+import { FullScreenContent } from '#shared/ui/fullscreen-content';
 import { useState } from 'react';
 import NewComposition from './new-com/NewComposition';
 
@@ -9,14 +9,14 @@ export const EditCompositionsMore = ({ onClose }: { onClose(is: false): void }) 
   return (
     <>
       {isComCreatorOpen && (
-        <FullContent onClose={() => setIsComCreatorOpen(null)}>
+        <FullScreenContent onClose={() => setIsComCreatorOpen(null)}>
           <NewComposition
             onClose={() => {
               setIsComCreatorOpen(false);
               onClose(false);
             }}
           />
-        </FullContent>
+        </FullScreenContent>
       )}
       <BottomPopupItem
         id="create-com-button"

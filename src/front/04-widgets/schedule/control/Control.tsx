@@ -1,10 +1,10 @@
-import TheIconSendButton from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import IconButton from '#shared/ui/the-icon/IconButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import SendableDropdown from '../../../07-shared/ui/sends/dropdown/SendableDropdown';
-import useModal from '../../modal/useModal';
+import { schGeneralSokiInvocatorClient } from '#basis/lib/invocators/schedules/invocators.methods';
+import { useModal } from '#shared/ui/modal';
+import SendableDropdown from 'front/08-shared/ui/sends/dropdown/SendableDropdown';
+import TheIconSendButton from 'front/08-shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import IconButton from 'front/08-shared/ui/the-icon/IconButton';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
-import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 import StrongEditableField from '../strong-control/field/StrongEditableField';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import ScheduleWidgetRegisterType from './RegisterType';

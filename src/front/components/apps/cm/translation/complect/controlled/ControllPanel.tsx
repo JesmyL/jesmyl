@@ -1,4 +1,4 @@
-import { ScreenTranslationControlPanel } from '../../../../+complect/translations/controls/ControllPanel';
+import { ScreenTranslationControlPanel } from '../../../../../../06-entities/translation/ControllPanel';
 import { useCmScreenTranslationComTextNavigations } from '../hooks/com-texts';
 
 export const CmTranslationControlPanel = () => {

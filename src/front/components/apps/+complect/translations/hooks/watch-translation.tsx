@@ -1,9 +1,9 @@
+import { useCurrentForceViweAppContext } from '#basis/lib/contexts/CurrentForceViweAppContext';
 import { renderComponentInNewWindow } from 'front/front.index';
 import { useCallback } from 'react';
 import { createGlobalStyle, css } from 'styled-components';
 import { cursors } from '../../../../../cursorsBase64';
 import { useScreenTranslationConfigsValue } from '../atoms';
-import { useCurrentForceViweAppContext } from '../Translation.contexts';
 import { TranslationScreen } from '../TranslationScreen';
 import { useGetScreenTranslationConfig } from './configs';
 import { useScreenTranslationWindows, useUpdateScreenTranslationWindows } from './windows';

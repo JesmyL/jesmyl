@@ -1,4 +1,6 @@
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import useIsRedactArea from 'front/08-shared/lib/hooks/useIsRedactArea';
+import { useIsRememberExpand } from 'front/08-shared/ui/expand/useIsRememberExpand';
+import { LazyIcon } from 'front/08-shared/ui/the-icon/LazyIcon';
 import { mylib } from 'front/utils';
 import { useMemo } from 'react';
 import {
@@ -10,8 +12,6 @@ import {
   ScheduleWidgetDayEventAttValue,
 } from 'shared/api';
 import { isNIs } from 'shared/utils';
-import useIsRedactArea from '../../../../07-shared/hooks/useIsRedactArea';
-import { useIsRememberExpand } from '../../../../07-shared/ui/expand/useIsRememberExpand';
 import ScheduleWidgetTopicTitle from '../../complect/TopicTitle';
 import { useScheduleWidgetAppAttsContext } from '../../useScheduleWidget';
 import ScheduleWidgetDayEventPeriodicTranslation from './DayEventPeriodicTranslationAtt';

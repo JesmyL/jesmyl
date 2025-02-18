@@ -1,38 +1,14 @@
-import { BottomPopup } from '#widgets/absolute-popup/bottom-popup/BottomPopup';
-import { useState } from 'react';
+import { FavoriteComsPage } from '#pages/cm';
 import { Route, Routes } from 'react-router-dom';
-import PhaseContainerConfigurer from '../../../../../07-shared/ui/phase-container/PhaseContainerConfigurer';
+import { cmCompositionRoute } from '../../../../../01-app/router-configs/cm';
 import CmTranslationComListContextInMarks from '../../base/translations/InMarks';
-import { ComFaceList } from '../../col/com/face/list/ComFaceList';
-import { cmCompositionRoute } from '../../routing/cmRoutingApp';
-import { LocalListToolsPopup } from '../popups/LocalListToolsPopup';
-import { useFavoriteComs } from './useFavoriteComs';
 
 export default function FavoriteComs() {
-  const { markedComs } = useFavoriteComs();
-  const [isOpenTools, setIsOpenTools] = useState(false);
-
   return (
     <Routes>
       <Route
         index
-        element={
-          <PhaseContainerConfigurer
-            className="favorites-container"
-            headTitle="Избранное"
-            onMoreClick={setIsOpenTools}
-            content={
-              <>
-                {isOpenTools && (
-                  <BottomPopup onClose={setIsOpenTools}>
-                    <LocalListToolsPopup coms={markedComs} />
-                  </BottomPopup>
-                )}
-                <ComFaceList list={markedComs} />
-              </>
-            }
-          />
-        }
+        element={<FavoriteComsPage />}
       />
 
       {cmCompositionRoute(children => (

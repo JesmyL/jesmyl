@@ -1,7 +1,7 @@
-import { useAtomValue } from '#shared/lib/atoms';
+import { complectIDB } from '#basis/lib/idb/complect';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { useAtomValue } from 'front/08-shared/lib/atoms';
 import styled, { css, keyframes } from 'styled-components';
-import { complectIDB } from '../../../_idb/complectIDB';
 import { translationShowAlertLineConfigIdAtom } from '../../initial-slide-context';
 
 export const AlertLineSlideText = () => {

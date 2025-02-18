@@ -1,4 +1,4 @@
-import { useAtomSet } from '#shared/lib/atoms';
+import { useAtomSet } from 'front/08-shared/lib/atoms';
 import { isOpenChordImagesAtom } from 'front/components/apps/cm/atoms';
 import { ComTool } from '../ComTool';
 

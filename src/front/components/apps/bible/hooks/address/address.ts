@@ -1,7 +1,12 @@
+import { bibleIDB } from '#basis/lib/idb/bible';
 import { mylib } from 'front/utils';
 import { useCallback } from 'react';
-import { bibleIDB } from '../../_db/bibleIDB';
-import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '../../model';
+import {
+  BibleBooki,
+  BibleChapteri,
+  BibleTranslationJoinAddress,
+  BibleVersei,
+} from '../../../../../07-basis/model/bible';
 import { useBibleSingleAddressSetter } from '../../translations/lists/atoms';
 import { useBibleTranslationSearchResultSelectedSet } from '../../translations/search/hooks/results';
 

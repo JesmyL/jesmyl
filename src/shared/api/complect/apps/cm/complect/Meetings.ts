@@ -1,4 +1,4 @@
-import SourceBased from '#shared/lib/SourceBased';
+import SourceBased from 'front/08-shared/lib/SourceBased';
 import { CmComWid, CmMeetingEventWid } from './enums';
 
 export interface IExportableMeetingsEvent {

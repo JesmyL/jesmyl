@@ -1,6 +1,6 @@
-import { FullContent } from '#widgets/fullscreen-content/FullContent';
+import { FullScreenContent } from '#shared/ui/fullscreen-content';
+import TheButton from 'front/08-shared/ui/TheButton';
 import { useState } from 'react';
-import TheButton from '../../../../../../07-shared/ui/TheButton';
 import { useScheduleWidgetRightsContext } from '../../../../useScheduleWidget';
 import ScheduleWidgetTeamGameSetTeamsScreen from './SetTeamsScreen';
 
@@ -18,9 +18,9 @@ export default function ScheduleWidgetTeamGameSetTeamsButton() {
         Сформировать команды
       </TheButton>
       {isOpen && (
-        <FullContent onClose={setIsOpen}>
+        <FullScreenContent onClose={setIsOpen}>
           <ScheduleWidgetTeamGameSetTeamsScreen />
-        </FullContent>
+        </FullScreenContent>
       )}
     </>
   );
