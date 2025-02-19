@@ -1,4 +1,4 @@
-import { propagationStopper } from '../../../complect/utils/utils';
+import { propagationStopper } from '../../lib/event-stubs';
 import { ConfiguratorEditProps } from './model';
 
 type Props = ConfiguratorEditProps<{ fontSize?: number }>;

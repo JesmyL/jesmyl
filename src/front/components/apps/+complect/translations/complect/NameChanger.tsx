@@ -1,4 +1,4 @@
-import { propagationStopper } from 'front/complect/utils/utils';
+import { propagationStopper } from '#shared/lib/event-stubs';
 import { useScreenTranslationCurrentConfig, useScreenTranslationCurrentConfigi } from '../hooks/configs';
 import { useScreenTranslationWindows } from '../hooks/windows';
 import { useUpdateScreenTranslationConfig } from '../hooks/with-config';

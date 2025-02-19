@@ -1,5 +1,5 @@
 import { LazyIcon } from '#shared/ui/icon';
-import { PhaseContainerConfigurer } from 'front/complect/phase-container/PhaseContainerConfigurer';
+import { PageContainer } from '#shared/ui/PageContainer';
 import { useState } from 'react';
 
 export const ComNotFoundPage = () => {
@@ -8,7 +8,7 @@ export const ComNotFoundPage = () => {
   if (Date.now() - firstNow < 400) return null;
 
   return (
-    <PhaseContainerConfigurer
+    <PageContainer
       className="com-container"
       contentClass="padding-gap color--ko flex full-size center"
       headTitle="К списку песен"

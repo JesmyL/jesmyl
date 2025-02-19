@@ -1,9 +1,9 @@
+import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
 import { MyLib } from '#shared/lib/my-lib';
 import { TheButton } from '#shared/ui/Button';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { LoadIndicatedContent } from '#shared/ui/LoadIndicatedContent';
-import { JesmylLogo } from 'front/basis/ui/jesmyl-logo/JesmylLogo';
-import { PhaseContainerConfigurer } from 'front/complect/phase-container/PhaseContainerConfigurer';
+import { PageContainer } from '#shared/ui/PageContainer';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { itNNil } from 'shared/utils';
@@ -181,7 +181,7 @@ export function IndexLoginAuth() {
   );
 }
 
-export const LoginIndex = styled(PhaseContainerConfigurer)`
+export const LoginIndex = styled(PageContainer)`
   .logo {
     display: flex;
     flex-direction: column;

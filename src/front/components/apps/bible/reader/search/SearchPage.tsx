@@ -1,5 +1,5 @@
 import { IconCheckbox } from '#shared/ui/icon';
-import { PhaseContainerConfigurer } from 'front/complect/phase-container/PhaseContainerConfigurer';
+import { PageContainer } from '#shared/ui/PageContainer';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { emptyArray } from 'shared/utils';
@@ -7,9 +7,9 @@ import { bibleIDB } from '../../_db/bibleIDB';
 import { useBibleAddressBooki } from '../../hooks/address/books';
 import { useBibleAddressChapteri } from '../../hooks/address/chapters';
 import { useBibleBookList } from '../../hooks/texts';
-import { BibleSearchResults } from '../../translations/search/Results';
 import { useBibleTranslationSearchResultSelectedSet } from '../../translations/search/hooks/results';
 import { BibleSearchPanelSearchTextInput } from '../../translations/search/input-panel/SearchTextInput';
+import { BibleSearchResults } from '../../translations/search/Results';
 
 export const BibleReaderSearchPage = () => {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ export const BibleReaderSearchPage = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <PhaseContainerConfigurer
+    <PageContainer
       className=""
       withoutBackButton
       headTitle="Поиск"

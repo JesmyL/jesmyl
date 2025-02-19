@@ -1,8 +1,8 @@
-import { useMountTransition } from 'front/complect/popups/useMountTransition';
+import { useMountTransition } from '#shared/lib/+hooks/useMountTransition';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import Portal from '../../../../complect/popups/[complect]/Portal';
 import { ThrowEvent } from '../../../lib/eventer/ThrowEvent';
+import { Portal } from '../../Portal';
 
 export const useFloatPopupCoords = <Additions,>(initState: ({ x: number; y: number } & Additions) | null = null) =>
   useState(initState);

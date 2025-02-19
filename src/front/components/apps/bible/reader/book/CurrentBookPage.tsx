@@ -1,4 +1,4 @@
-import { PhaseContainerConfigurer } from 'front/complect/phase-container/PhaseContainerConfigurer';
+import { PageContainer } from '#shared/ui/PageContainer';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { FullContent } from '../../../../../shared/ui/fullscreen-content/FullContent';
@@ -42,7 +42,7 @@ function Content() {
   }, [currentBooki, currentChapteri]);
 
   return (
-    <PhaseContainerConfigurer
+    <PageContainer
       className=""
       withoutBackButton
       headTitle={

@@ -1,11 +1,11 @@
+import { useFingersActions } from '#basis/lib/+hooks/useFingersActions';
+import { useGlobalFontFamilySetter } from '#basis/lib/+hooks/useGlobalFontFamilySetter';
+import { useGlobalFullscreenChanger } from '#basis/lib/+hooks/useGlobalFullscreenChanger';
+import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
 import { MyLib } from '#shared/lib/my-lib';
 import { SetStateAction, useEffect, useMemo, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { emptyArray } from 'shared/utils';
-import { useFingersActions } from '../basis/lib/+hooks/useFingersActions';
-import { useGlobalFontFamilySetter } from '../basis/lib/+hooks/useGlobalFontFamilySetter';
-import { useGlobalFullscreenChanger } from '../basis/lib/+hooks/useGlobalFullscreenChanger';
-import { JesmylLogo } from '../basis/ui/jesmyl-logo/JesmylLogo';
 import { useCurrentApp } from '../components/index/atoms';
 import { contextCreator } from '../shared/lib/contextCreator';
 import { hookEffectPipe, setTimeoutPipe } from '../shared/lib/hookEffectPipe';

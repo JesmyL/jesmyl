@@ -1,4 +1,4 @@
-import { JStorageBooleanVal } from 'front/basis/lib/JSimpleStorage/exports/Boolean';
+import { JStorageBooleanVal } from '#basis/lib/JSimpleStorage/lib/Boolean';
 import { ReactNode, useEffect, useState } from 'react';
 import { StyledLoadingSpinner } from './IconLoading';
 import { LazyIcon } from './LazyIcon';

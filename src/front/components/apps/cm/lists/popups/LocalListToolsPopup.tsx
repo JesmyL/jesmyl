@@ -1,6 +1,6 @@
 import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
 import { useState } from 'react';
-import { isTouchDevice } from '../../../../../complect/device-differences';
+import { isTouchDevice } from '../../../../../shared/lib/device-detections';
 import { FullContent } from '../../../../../shared/ui/fullscreen-content/FullContent';
 import { Com } from '../../col/com/Com';
 import { ComListQrShare } from './ComListShare';

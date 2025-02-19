@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { TelegramNativeAuthUserData } from 'shared/api';
 import styled from 'styled-components';
 import { Script } from '../../../../shared/ui/tags/Script';
-import { indexBasicsSokiInvocatorClient } from '../../db/invocators/schedules/fresh-invocator.methods';
+import { indexBasicsSokiInvocatorClient } from '../../fresh-invocator.methods';
 
 const funcName = 'onTelegramNativeAuth';
 

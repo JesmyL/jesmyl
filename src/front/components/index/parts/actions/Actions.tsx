@@ -1,8 +1,8 @@
+import { LinkAppActionFabric } from '#basis/lib/link-app-actions';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { LazyIcon } from '#shared/ui/icon';
+import { PageContainer } from '#shared/ui/PageContainer';
 import { QrReader } from '#shared/ui/qr-code/useQrReader';
-import { LinkAppActionFabric } from 'front/basis/lib/link-app-actions';
-import { PhaseContainerConfigurer } from 'front/complect/phase-container/PhaseContainerConfigurer';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { hosts } from 'shared/api';
@@ -17,7 +17,7 @@ export function IndexActions() {
       <Route
         index
         element={
-          <PhaseContainerConfigurer
+          <PageContainer
             className=""
             headTitle="Взаимодействие"
             contentClass="flex column padding-gap"

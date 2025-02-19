@@ -1,6 +1,6 @@
 import { indexIDB } from 'front/components/index/db/index-idb';
 import { indexSokiInvocatorBaseClient } from 'front/components/index/db/invocators/invocator.base';
-import { indexBasicsSokiInvocatorClient } from 'front/components/index/db/invocators/schedules/fresh-invocator.methods';
+import { indexBasicsSokiInvocatorClient } from 'front/components/index/fresh-invocator.methods';
 import { soki } from 'front/soki';
 import { DeviceId } from 'shared/api';
 

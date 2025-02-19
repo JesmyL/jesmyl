@@ -5,13 +5,13 @@ import { DocTitle } from '#shared/ui/tags/DocTitle';
 import { BibleTranslatesContextProvider } from 'front/components/apps/bible/translates/TranslatesContext';
 import { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
-import { Metronome } from '../../../../../complect/metronome/Metronome';
 import {
-  PhaseContainerConfigurer,
+  PageContainer,
   StyledPhaseContainerConfigurerHead,
   StyledPhaseContainerConfigurerHeadTitle,
-} from '../../../../../complect/phase-container/PhaseContainerConfigurer';
+} from '../../../../../shared/ui/PageContainer';
 import { FullContent } from '../../../../../shared/ui/fullscreen-content/FullContent';
+import { Metronome } from '../../../../../widgets/metronome/Metronome';
 import { cmIDB } from '../../_db/cm-idb';
 import { cmIsShowCatBindsInCompositionAtom, isOpenChordImagesAtom } from '../../atoms';
 import { useCmTranslationComListContext as useCmComListContext } from '../../base/translations/context';
@@ -133,7 +133,7 @@ export function TheComposition() {
   );
 }
 
-const StyledComContainer = styled(PhaseContainerConfigurer)<{ $isInLaterList: boolean }>`
+const StyledComContainer = styled(PageContainer)<{ $isInLaterList: boolean }>`
   ${props =>
     props.$isInLaterList &&
     css`

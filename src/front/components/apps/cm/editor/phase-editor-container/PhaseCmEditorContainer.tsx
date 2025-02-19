@@ -1,6 +1,6 @@
-import { PhaseContainerConfigurer } from 'front/complect/phase-container/PhaseContainerConfigurer';
+import { PageContainer } from '#shared/ui/PageContainer';
 import styled from 'styled-components';
-import { PhaseContainerProps } from '../../../../../complect/phase-container/PhaseContainerConfigurer.model';
+import { PhaseContainerProps } from '../../../../../shared/ui/PageContainer/model';
 
 export function PhaseCmEditorContainer(props: PhaseContainerProps) {
   return (
@@ -11,7 +11,7 @@ export function PhaseCmEditorContainer(props: PhaseContainerProps) {
   );
 }
 
-const StyledContainer = styled(PhaseContainerConfigurer)`
+const StyledContainer = styled(PageContainer)`
   .composition-block {
     &.invisible {
       *,

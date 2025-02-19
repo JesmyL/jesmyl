@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { PhaseContainerConfigurer } from 'front/complect/phase-container/PhaseContainerConfigurer';
+import { PageContainer } from '#shared/ui/PageContainer';
 import { ReactNode } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -31,7 +31,7 @@ export function CmTranslationControlled({ head, comList, headTitle, backButtonPa
   const ccomw = useTakeActualComw();
 
   return (
-    <PhaseContainerConfigurer
+    <PageContainer
       className=""
       backButtonPath={backButtonPath ?? mylib.isNaN(ccomw) ? undefined : `../${ccomw}`}
       headTitle={

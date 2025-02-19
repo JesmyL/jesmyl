@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { isTouchDevice } from '../complect/device-differences';
+import { isTouchDevice } from '../shared/lib/device-detections';
 import { AppName } from './App.model';
 import {
   AppFooterItem,

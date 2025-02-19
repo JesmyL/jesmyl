@@ -7,10 +7,10 @@ import { Route, Routes } from 'react-router-dom';
 import { itNNull } from 'shared/utils';
 import { appNames } from '../../../../app/App.model';
 import { routingApps } from '../../../../app/routing-apps';
-import { PhaseContainerConfigurer } from '../../../../complect/phase-container/PhaseContainerConfigurer';
-import { ScheduleWidgetAlarm } from '../../../../complect/schedule-widget/alarm/Alarm';
-import { scheduleWidgetListPageRoute } from '../../../../complect/schedule-widget/general/ListPageRoute';
 import { checkIsThereNewSW } from '../../../../serviceWorkerRegistration';
+import { PageContainer } from '../../../../shared/ui/PageContainer';
+import { ScheduleWidgetAlarm } from '../../../../widgets/schedule-widget/alarm/Alarm';
+import { scheduleWidgetListPageRoute } from '../../../../widgets/schedule-widget/general/ListPageRoute';
 import { useAuth, useCurrentApp } from '../../atoms';
 import { useConnectionState } from '../../useConnectionState';
 import { IndexActions } from '../actions/Actions';
@@ -51,7 +51,7 @@ export const IndexMain = () => {
         index
         element={
           <>
-            <PhaseContainerConfigurer
+            <PageContainer
               className="relative"
               withoutBackButton
               headTitle={(currentAppName && routingApps[currentAppName]?.title) || 'Другое'}

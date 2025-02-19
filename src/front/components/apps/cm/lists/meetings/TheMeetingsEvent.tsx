@@ -1,11 +1,11 @@
+import { isMobileDevice } from '#shared/lib/device-detections';
 import { LazyIcon } from '#shared/ui/icon';
+import { PageContainer } from '#shared/ui/PageContainer';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { isMobileDevice } from 'front/complect/device-differences';
-import { PhaseContainerConfigurer } from 'front/complect/phase-container/PhaseContainerConfigurer';
-import { ScheduleWidgetWatchLiveTranslationButton } from 'front/complect/schedule-widget/live-translations/WatchLiveButton';
 import { useAuth } from 'front/components/index/atoms';
 import { IndexScheduleWidgetTranslations } from 'front/components/index/complect/translations/LiveTranslations';
 import { indexIDB } from 'front/components/index/db/index-idb';
+import { ScheduleWidgetWatchLiveTranslationButton } from 'front/widgets/schedule-widget/live-translations/WatchLiveButton';
 import { Link, Route, Routes } from 'react-router-dom';
 import { CmComListContext } from '../../base/translations/context';
 import { cmCompositionRoute } from '../../routing/cmRoutingApp';
@@ -32,7 +32,7 @@ export function TheMeetingsEvent() {
       <Route
         index
         element={
-          <PhaseContainerConfigurer
+          <PageContainer
             className="meeting-container"
             headTitle={`${schedule.title} - ${schedule.types[typei]?.title ?? ''}`}
             head={

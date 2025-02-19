@@ -1,14 +1,14 @@
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { BrutalScreen } from '#shared/ui/brutal-screen/BrutalScreen';
 import { LazyIcon } from '#shared/ui/icon';
-import { PhaseContainerConfigurer } from 'front/complect/phase-container/PhaseContainerConfigurer';
+import { PageContainer } from '#shared/ui/PageContainer';
 import { Link, Route, Routes } from 'react-router-dom';
 import { useSelectedComs } from '../base/useSelectedComs';
 import { TheCat } from '../col/cat/TheCat';
 import { useCats } from '../cols/useCols';
 import { ExternalList } from './ExternalList';
-import './Lists.scss';
 import { FavoriteComs } from './favorites/FavoriteComs';
+import './Lists.scss';
 import { TheMeetings } from './meetings/TheMeetings';
 import { SelectedComs } from './selected-coms/SelectedComs';
 
@@ -21,7 +21,7 @@ export function Lists() {
       <Route
         index
         element={
-          <PhaseContainerConfigurer
+          <PageContainer
             className="lists-container"
             withoutBackButton
             headTitle="Списки"

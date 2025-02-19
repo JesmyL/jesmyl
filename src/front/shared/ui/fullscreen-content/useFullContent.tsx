@@ -1,10 +1,10 @@
 import { MouseEvent, ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 import { Eventer, EventerListeners } from 'shared/utils';
 import styled from 'styled-components';
-import Portal from '../../../complect/popups/[complect]/Portal';
 import { backSwipableContainerMaker } from '../../lib/backSwipableContainerMaker';
 import { ThrowEvent } from '../../lib/eventer/ThrowEvent';
 import { LazyIcon } from '../icon';
+import { Portal } from '../Portal';
 
 const swipeEvents: EventerListeners<void> = [];
 

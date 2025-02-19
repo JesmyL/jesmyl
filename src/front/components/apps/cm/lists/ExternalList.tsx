@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { PhaseContainerConfigurer } from 'front/complect/phase-container/PhaseContainerConfigurer';
+import { PageContainer } from '#shared/ui/PageContainer';
 import React, { useEffect, useMemo, useState } from 'react';
 import { Route, Routes, useParams } from 'react-router-dom';
 import { itNUnd } from 'shared/utils';
@@ -31,7 +31,7 @@ export function ExternalList() {
       <Route
         index
         element={
-          <PhaseContainerConfigurer
+          <PageContainer
             className="ext-list-container"
             backButtonIcon="Cancel01"
             headTitle="Внешний список"

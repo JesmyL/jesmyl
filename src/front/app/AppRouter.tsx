@@ -5,8 +5,7 @@ import { AppName } from './App.model';
 
 const AppComponent = React.lazy(() => import('./AppComponent'));
 const AppRouterProvider = React.lazy(() => import('./AppRouterProvider'));
-const Wedding = React.lazy(() => import('../components/apps/wedding/Wedding'));
-const ScheduleWidgetTgDayView = React.lazy(() => import('../complect/schedule-widget/general/TgDayView'));
+const ScheduleWidgetTgDayView = React.lazy(() => import('../widgets/schedule-widget/general/TgDayView'));
 
 export const AppRouter = () => {
   return (
@@ -33,10 +32,6 @@ export const AppRouter = () => {
           }
         />
       </Route>
-      <Route
-        path="wedding/:weddn/*"
-        element={<Wedding />}
-      />
       <Route
         path="*"
         element={<Redirect />}

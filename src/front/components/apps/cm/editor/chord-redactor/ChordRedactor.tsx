@@ -1,9 +1,9 @@
 import { atom, useAtom } from '#shared/lib/atom';
+import { propagationStopper } from '#shared/lib/event-stubs';
 import { MyLib, mylib } from '#shared/lib/my-lib';
 import { TheButton } from '#shared/ui/Button';
 import { IconButton, LazyIcon } from '#shared/ui/icon';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
-import { propagationStopper } from 'front/complect/utils/utils';
 import { useEffect, useMemo, useState } from 'react';
 import { ChordPack, ChordTrack } from '../../../../../../shared/api/complect/apps/cm/complect/chord-card';
 import { cmIDB } from '../../_db/cm-idb';

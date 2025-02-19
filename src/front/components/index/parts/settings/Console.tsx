@@ -1,7 +1,7 @@
-import { PhaseContainerConfigurer } from 'front/complect/phase-container/PhaseContainerConfigurer';
+import { PageContainer } from '#shared/ui/PageContainer';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { isTouchDevice } from '../../../../complect/device-differences';
+import { isTouchDevice } from '../../../../shared/lib/device-detections';
 import { useBottomPopup } from '../../../../shared/ui/absolute-popup/bottom-popup/useBottomPopup';
 import { CodeExecutionScreen } from './coder/Coder';
 import { CoderResultLine } from './coder/complect/line';
@@ -52,7 +52,7 @@ export default function IndexConsole() {
   }, []);
 
   return (
-    <PhaseContainerConfigurer
+    <PageContainer
       className="index-settings-console"
       headTitle="Консоль"
       onMoreClick={openBottom}

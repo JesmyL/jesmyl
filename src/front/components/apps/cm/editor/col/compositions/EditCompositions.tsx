@@ -2,7 +2,7 @@ import { useAtom } from '#shared/lib/atom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { BottomPopup } from '#shared/ui/absolute-popup/bottom-popup/BottomPopup';
 import { useIsNumberSearch } from '#shared/ui/DebouncedSearchInput';
-import { StyledPhaseContainerConfigurerHead } from 'front/complect/phase-container/PhaseContainerConfigurer';
+import { StyledPhaseContainerConfigurerHead } from '#shared/ui/PageContainer';
 import { useEffect, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';

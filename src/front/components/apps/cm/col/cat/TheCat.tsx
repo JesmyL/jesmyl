@@ -4,12 +4,12 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
+import { LoadIndicatedContent } from '../../../../../shared/ui/LoadIndicatedContent';
 import {
-  PhaseContainerConfigurer,
+  PageContainer,
   StyledPhaseContainerConfigurerContent,
   StyledPhaseContainerConfigurerHead,
-} from '../../../../../complect/phase-container/PhaseContainerConfigurer';
-import { LoadIndicatedContent } from '../../../../../shared/ui/LoadIndicatedContent';
+} from '../../../../../shared/ui/PageContainer';
 import { cmIDB } from '../../_db/cm-idb';
 import { SetComListLimitsExtracterContext } from '../../base/SetComListLimitsExtracterContext';
 import { CmTranslationComListContextInCat } from '../../base/translations/InCat';
@@ -113,7 +113,7 @@ export function TheCat({ all }: { all?: boolean; catWid?: number }) {
   );
 }
 
-const StyledCatPhaseContainer = styled(PhaseContainerConfigurer)`
+const StyledCatPhaseContainer = styled(PageContainer)`
   .list-title {
     cursor: ns-resize;
   }

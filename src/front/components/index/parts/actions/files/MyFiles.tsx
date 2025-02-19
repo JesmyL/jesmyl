@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { PhaseContainerConfigurer } from 'front/complect/phase-container/PhaseContainerConfigurer';
+import { PageContainer } from '#shared/ui/PageContainer';
 import { useReducer, useRef } from 'react';
 import { useIndexFileAssociations } from '../../../atoms';
 import { MyFilesTypeBox } from './complect/MyFilesTypeBox';
@@ -16,7 +16,7 @@ export function IndexMyFiles() {
   const associates = useIndexFileAssociations();
 
   return (
-    <PhaseContainerConfigurer
+    <PageContainer
       className=""
       headTitle="Мои файлы"
       content={

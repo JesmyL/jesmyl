@@ -1,5 +1,5 @@
 import { ReactNode, useCallback, useRef, useState } from 'react';
-import Portal from '../../../../complect/popups/[complect]/Portal';
+import { Portal } from '../../Portal';
 import { StyledModal, StyledModalScreen, StyledModalScreenWrapper } from '../lib/styled';
 
 type ModalConfigMood = 'norm' | 'ko' | 'ok';

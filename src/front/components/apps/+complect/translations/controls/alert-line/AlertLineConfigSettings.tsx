@@ -1,4 +1,6 @@
+import { complectIDB } from '#basis/idb';
 import { useDebounceAction } from '#shared/lib/+hooks/useDebounceAction';
+import { propagationStopper } from '#shared/lib/event-stubs';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { FontFamilyConfigurator } from '#shared/ui/configurators/FontFamily';
@@ -7,9 +9,7 @@ import { FontStyleConfigurator } from '#shared/ui/configurators/FontStyle';
 import { FontWeightConfigurator } from '#shared/ui/configurators/FontWeight';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { propagationStopper } from 'front/complect/utils/utils';
 import React, { useDeferredValue, useEffect, useRef, useState } from 'react';
-import { complectIDB } from '../../../../../../basis/idb';
 import { BackgroundConfigurator } from '../../../../../../shared/ui/configurators/Background';
 import { ColorConfigurator } from '../../../../../../shared/ui/configurators/Color';
 import { AlertLineConfig } from '../../model';

@@ -1,4 +1,4 @@
-import { complectIDB } from 'front/basis/idb';
+import { complectIDB } from '#basis/idb';
 import { ReactNode, useCallback } from 'react';
 import { LazyIcon } from '../icon';
 

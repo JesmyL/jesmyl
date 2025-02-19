@@ -1,7 +1,7 @@
 import { ReactNode, TouchEventHandler, useCallback, useEffect, useState } from 'react';
-import Portal from '../../../../complect/popups/[complect]/Portal';
 import { useActualRef } from '../../../lib/+hooks/useActualRef';
 import { ThrowEvent } from '../../../lib/eventer/ThrowEvent';
+import { Portal } from '../../Portal';
 import {
   StyledModal,
   StyledModalBody,

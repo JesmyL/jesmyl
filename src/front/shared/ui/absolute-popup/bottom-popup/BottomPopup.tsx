@@ -1,9 +1,9 @@
-import { useMountTransition } from 'front/complect/popups/useMountTransition';
-import { propagationStopper } from 'front/complect/utils/utils';
+import { useMountTransition } from '#shared/lib/+hooks/useMountTransition';
+import { propagationStopper } from '#shared/lib/event-stubs';
 import { ReactNode, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import Portal from '../../../../complect/popups/[complect]/Portal';
 import { ThrowEvent } from '../../../lib/eventer/ThrowEvent';
+import { Portal } from '../../Portal';
 
 interface Props {
   children?: ReactNode;

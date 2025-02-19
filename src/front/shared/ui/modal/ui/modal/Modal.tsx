@@ -1,5 +1,5 @@
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
-import Portal from 'front/complect/popups/[complect]/Portal';
+import { Portal } from '#shared/ui/Portal';
 import { useEffect } from 'react';
 import { StyledModal, StyledModalScreen, StyledModalScreenWrapper } from '../../lib/styled';
 

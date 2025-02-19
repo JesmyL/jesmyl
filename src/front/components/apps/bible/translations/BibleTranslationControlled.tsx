@@ -2,7 +2,7 @@ import { ReactNode, useEffect } from 'react';
 import styled from 'styled-components';
 import { ScreenTranslationControlPanel } from '../../+complect/translations/controls/ControllPanel';
 import { useInitSoki } from '../../../../app/useInitSoki';
-import { PhaseContainerConfigurer } from '../../../../complect/phase-container/PhaseContainerConfigurer';
+import { PageContainer } from '../../../../shared/ui/PageContainer';
 import { bibleIDB } from '../_db/bibleIDB';
 import { useBibleSlideSyncInkrementer } from '../hooks/slide-sync';
 import { useLoadBibleChaptersCombine } from '../hooks/texts';
@@ -42,7 +42,7 @@ export const BibleTranslationControlled = ({ head, headTitle }: Props): JSX.Elem
   }, []);
 
   return (
-    <PhaseContainerConfigurer
+    <PageContainer
       className=""
       headTitle={headTitle ?? 'Библия'}
       head={head}

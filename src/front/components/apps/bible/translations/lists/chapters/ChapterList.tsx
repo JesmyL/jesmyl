@@ -1,6 +1,6 @@
+import { JStorageNumberVal } from '#basis/lib/JSimpleStorage/lib/Number';
 import { useMemo } from 'react';
 import styled from 'styled-components';
-import { JStorageNumberVal } from '../../../../../../basis/lib/JSimpleStorage/exports/Number';
 import { useSetBibleAddressWithForceJoinReset } from '../../../hooks/address/address';
 import { useBibleCurrentChapterList } from '../../../hooks/texts';
 import { useBibleListFaceClickListener } from '../complect';

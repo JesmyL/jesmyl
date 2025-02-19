@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
 import { useEffect, useMemo, useState } from 'react';
-import { isIPhone } from '../../../../../../../complect/device-differences';
+import { isIPhone } from '../../../../../../../shared/lib/device-detections';
 import { addEventListenerPipe, hookEffectPipe } from '../../../../../../../shared/lib/hookEffectPipe';
 import { ComFaceListProps } from './_ComList';
 

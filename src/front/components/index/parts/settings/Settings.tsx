@@ -1,7 +1,7 @@
 import { MyLib } from '#shared/lib/my-lib';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { IconCheckbox, LazyIcon } from '#shared/ui/icon';
-import { PhaseContainerConfigurer } from 'front/complect/phase-container/PhaseContainerConfigurer';
+import { PageContainer } from '#shared/ui/PageContainer';
 import React, { Suspense } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import { itIt } from 'shared/utils';
@@ -89,7 +89,7 @@ export function IndexSettings() {
       <Route
         index
         element={
-          <PhaseContainerConfigurer
+          <PageContainer
             className="index-settings"
             headTitle="Настройки"
             head={connectionNode}

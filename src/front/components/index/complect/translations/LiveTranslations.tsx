@@ -1,6 +1,6 @@
+import { complectIDB } from '#basis/idb';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { complectIDB } from 'front/basis/idb';
 import { BibleTranslatesContextProvider } from 'front/components/apps/bible/translates/TranslatesContext';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';

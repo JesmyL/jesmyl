@@ -1,9 +1,9 @@
 import { useAtom } from '#shared/lib/atom';
+import { propagationStopper } from '#shared/lib/event-stubs';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { LazyIcon, TheIconLoading } from '#shared/ui/icon';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
-import { propagationStopper } from 'front/complect/utils/utils';
 import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
 import { useEffect, useRef, useState } from 'react';
 import { isNIs } from 'shared/utils';

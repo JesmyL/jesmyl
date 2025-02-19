@@ -1,8 +1,8 @@
+import { propagationStopper } from '#shared/lib/event-stubs';
 import { MyLib } from '#shared/lib/my-lib';
 import { TheButton } from '#shared/ui/Button';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { SendButton } from '#shared/ui/sendable/SendButton';
-import { propagationStopper } from 'front/complect/utils/utils';
 import { ChordVisibleVariant } from 'front/components/apps/cm/Cm.model';
 import { Com } from 'front/components/apps/cm/col/com/Com';
 import { ComOrders } from 'front/components/apps/cm/col/com/orders/ComOrders';

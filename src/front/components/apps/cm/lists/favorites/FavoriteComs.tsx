@@ -1,4 +1,4 @@
-import { PhaseContainerConfigurer } from 'front/complect/phase-container/PhaseContainerConfigurer';
+import { PageContainer } from '#shared/ui/PageContainer';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { BottomPopup } from '../../../../../shared/ui/absolute-popup/bottom-popup/BottomPopup';
@@ -17,7 +17,7 @@ export function FavoriteComs() {
       <Route
         index
         element={
-          <PhaseContainerConfigurer
+          <PageContainer
             className="favorites-container"
             headTitle="Избранное"
             onMoreClick={setIsOpenTools}

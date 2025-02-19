@@ -1,6 +1,6 @@
+import { complectIDB } from '#basis/idb';
 import { useAtomValue } from '#shared/lib/atom';
 import styled, { css } from 'styled-components';
-import { complectIDB } from '../../../../basis/idb';
 import { BibleTranslationScreenTextsContext } from '../../bible/texts/AddressContentContext';
 import { BibleTranslatesContextProvider } from '../../bible/translates/TranslatesContext';
 import { BibleTranslationCurrentScreen } from '../../bible/translations/screen/BibleTranslationCurrentScreen';

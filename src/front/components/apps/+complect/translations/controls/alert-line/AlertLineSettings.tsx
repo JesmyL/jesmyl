@@ -1,9 +1,9 @@
+import { complectIDB } from '#basis/idb';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { IconButton } from '#shared/ui/icon';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React, { useState } from 'react';
-import { complectIDB } from '../../../../../../basis/idb';
 import { defaultAlertLineConfig } from '../../atoms';
 import { AlertLineConfigSettingsInner } from './AlertLineConfigSettings';
 

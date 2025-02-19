@@ -1,7 +1,7 @@
 import { useListInfiniteScrollController } from '#shared/lib/+hooks/useListInfiniteScrollController';
+import { isIPhone } from '#shared/lib/device-detections';
 import { mylib } from '#shared/lib/my-lib';
 import { FaceItem } from '#shared/ui/FaceItem';
-import { isIPhone } from 'front/complect/device-differences';
 import { useSetComListLimitsExtracterContext } from 'front/components/apps/cm/base/SetComListLimitsExtracterContext';
 import { useRef } from 'react';
 import { retNull } from 'shared/utils';

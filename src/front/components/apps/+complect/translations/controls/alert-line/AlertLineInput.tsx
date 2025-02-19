@@ -1,11 +1,11 @@
+import { complectIDB } from '#basis/idb';
 import { useAtom } from '#shared/lib/atom';
+import { propagationStopper } from '#shared/lib/event-stubs';
 import { LazyIcon } from '#shared/ui/icon';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { Modal } from '#shared/ui/modal';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { propagationStopper } from 'front/complect/utils/utils';
 import React, { useState } from 'react';
-import { complectIDB } from '../../../../../../basis/idb';
 import { translationShowAlertLineConfigIdAtom } from '../../initial-slide-context';
 import { AlertLineSettingsModalInner } from './AlertLineSettings';
 

@@ -1,13 +1,13 @@
+import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
 import { LazyIcon } from '#shared/ui/icon';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { useToast } from '#shared/ui/modal';
 import { SendButton } from '#shared/ui/sendable/SendButton';
-import { JesmylLogo } from 'front/basis/ui/jesmyl-logo/JesmylLogo';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useActualRef } from '../../../../shared/lib/+hooks/useActualRef';
 import { useIndexValues } from '../../atoms';
-import { indexBasicsSokiInvocatorClient } from '../../db/invocators/schedules/fresh-invocator.methods';
+import { indexBasicsSokiInvocatorClient } from '../../fresh-invocator.methods';
 import { useConnectionState } from '../../useConnectionState';
 import { useAuthErrors } from './atoms';
 import { LoginIndex } from './IndexLoginAuth';

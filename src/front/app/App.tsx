@@ -1,5 +1,5 @@
-import { LinkAppActionFabric } from 'front/basis/lib/link-app-actions';
-import { schLinkAction } from 'front/complect/schedule-widget/links';
+import { LinkAppActionFabric } from '#basis/lib/link-app-actions';
+import { schLinkAction } from 'front/widgets/schedule-widget/links';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './App.scss';

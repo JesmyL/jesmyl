@@ -3,13 +3,13 @@ import { HTMLAttributes, ReactNode, useCallback, useEffect, useMemo } from 'reac
 import { emptyFunc, Eventer, EventerListeners } from 'shared/utils';
 import styled from 'styled-components';
 import { useSetAppRootAnchorNodesContext } from '../../../app/AppComponent';
-import Portal from '../../../complect/popups/[complect]/Portal';
-import { propagationStopper } from '../../../complect/utils/utils';
 import { useActualRef } from '../../lib/+hooks/useActualRef';
 import { useWid } from '../../lib/+hooks/useWid';
 import { backSwipableContainerMaker } from '../../lib/backSwipableContainerMaker';
+import { propagationStopper } from '../../lib/event-stubs';
 import { ThrowEvent } from '../../lib/eventer/ThrowEvent';
 import { IconButton } from '../icon';
+import { Portal } from '../Portal';
 
 const swipeEvents: EventerListeners<void> = [];
 

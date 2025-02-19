@@ -1,6 +1,6 @@
+import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
 import { HTMLAttributes, PropsWithChildren, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import { JesmylLogo } from '../../../basis/ui/jesmyl-logo/JesmylLogo';
 
 const enum State {
   Initial = 'initial-state',
