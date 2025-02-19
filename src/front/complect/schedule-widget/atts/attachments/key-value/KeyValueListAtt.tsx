@@ -1,7 +1,8 @@
+import { mylib } from '#shared/lib/my-lib';
+import { LazyIcon } from '#shared/ui/icon';
+import { StyledMarkdownFieldContent } from '#shared/ui/sendable/StrongEditableFieldMultiline';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import { schDayEventsSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { mylib } from 'front/utils';
 import Markdown from 'markdown-to-jsx';
 import { ReactNode } from 'react';
 import {
@@ -21,30 +22,27 @@ import {
 } from 'shared/api';
 import { itIt, makeRegExp } from 'shared/utils';
 import styled, { css } from 'styled-components';
-import StrongEditableField from '../../../../strong-control/field/StrongEditableField';
-import ScheduleWidgetRoleFace from '../../../control/roles/RoleFace';
-import ScheduleWidgetListUnitFace from '../../../lists/UnitFace';
+import { SendableField } from '../../../../../shared/ui/sendable/SendableField';
+import { ScheduleWidgetRoleFace } from '../../../control/roles/RoleFace';
+import { ScheduleWidgetListUnitFace } from '../../../lists/UnitFace';
 import {
   extractScheduleWidgetRole,
   extractScheduleWidgetRoleUser,
   useScheduleWidgetRightsContext,
 } from '../../../useScheduleWidget';
-import ScheduleKeyValueListAttArrayItemKeyChange from './ArrayItemSignChange';
-import KeyValueListAttNumberMember from './KeyValueListAttNumberMember';
-import ScheduleKeyValueListAttLiItemDropdown from './LiItemDropdown';
-import ScheduleKeyValueListAttStatistic from './Statistic';
+import { ScheduleKeyValueListAttArrayItemKeyChange } from './ArrayItemSignChange';
+import { KeyValueListAttNumberMember } from './KeyValueListAttNumberMember';
+import { ScheduleKeyValueListAttLiItemDropdown } from './LiItemDropdown';
+import { ScheduleKeyValueListAttStatistic } from './Statistic';
 
-export default function ScheduleKeyValueListAtt({
-  value: attValue,
-  att,
-  isRedact,
-  dayEventAttScopeProps,
-}: {
+type Props = {
   value: ScheduleWidgetAppAttCustomizableValue;
   att: ScheduleWidgetAppAttCustomized;
   isRedact: boolean;
   dayEventAttScopeProps: ScheduleDayEventAttachmentScopeProps;
-}) {
+};
+
+export const ScheduleKeyValueListAtt = ({ value: attValue, att, isRedact, dayEventAttScopeProps }: Props) => {
   const rights = useScheduleWidgetRightsContext();
 
   let subItems: ((item: ScheduleWidgetAppAttCustomizableValueItem) => ReactNode) | null = null;
@@ -412,7 +410,7 @@ export default function ScheduleKeyValueListAtt({
                   </div>
                 ) : (
                   mylib.isStr(key) && (
-                    <StrongEditableField
+                    <SendableField
                       className="margin-gap-l mood-for-2 relative z-index:5"
                       value={key}
                       isRedact={isRedact}
@@ -546,7 +544,7 @@ export default function ScheduleKeyValueListAtt({
                               <KeyValueListAttNumberMember value={val} />
                             </div>
                           ) : (
-                            <StrongEditableField
+                            <SendableField
                               value={val}
                               className="mood-for-2 margin-gap-v"
                               isRedact
@@ -589,7 +587,7 @@ export default function ScheduleKeyValueListAtt({
 
                   {subItems?.([key, value, itemMi])}
 
-                  <StrongEditableField
+                  <SendableField
                     className="mood-for-2 relative z-index:5 margin-gap-t"
                     placeholder="Новый подпункт"
                     isRedact={isRedact}
@@ -629,9 +627,9 @@ export default function ScheduleKeyValueListAtt({
       <ScheduleKeyValueListAttStatistic list={attValue.values} />
     </div>
   );
-}
+};
 
-const StrongField = styled(StrongEditableField)<{ $indent: boolean }>`
+const StrongField = styled(SendableField)<{ $indent: boolean }>`
   ${props =>
     props.$indent &&
     css`
@@ -639,7 +637,7 @@ const StrongField = styled(StrongEditableField)<{ $indent: boolean }>`
 
       margin-top: -1.7em;
 
-      .markdownFieldContent {
+      ${StyledMarkdownFieldContent} {
         ol,
         ul {
           padding-inline-start: 15px;

@@ -1,8 +1,8 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { LazyIcon } from '#shared/ui/icon';
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import { BottomPopupItem } from '../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
-import { contextCreator } from '../../../../../../complect/contextCreator';
+import { contextCreator } from '../../../../../../shared/lib/contextCreator';
+import { BottomPopupItem } from '../../../../../../shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
 
 export const [IsComToolIconItemsContext, useIsComToolIconItemsContext] = contextCreator(false);
 export const [ComToolNameContext, useComToolNameContext] = contextCreator('');

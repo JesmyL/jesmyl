@@ -1,4 +1,4 @@
-import { LinkAppActionFabric } from 'front/complect/link-app-actions';
+import { LinkAppActionFabric } from 'front/basis/lib/link-app-actions';
 import { CmComWid } from 'shared/api';
 
 type CmAppActionProps = {

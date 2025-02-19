@@ -1,9 +1,8 @@
-import { useConfirm } from 'front/complect/modal/confirm/useConfirm';
-import { StyledLoadingSpinner } from 'front/complect/the-icon/IconLoading';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
+import { LazyIcon, StyledLoadingSpinner } from '#shared/ui/icon';
+import { useConfirm } from '#shared/ui/modal/hooks/useConfirm';
 import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
-import { BottomPopupItem } from '../../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
 import { OrdersRedactorOrderToolsProps } from '../OrdersRedactorOrderTools';
 
 export const OrdersRedactorOrderToolsVisibility = ({ onClose, ord }: OrdersRedactorOrderToolsProps) => {

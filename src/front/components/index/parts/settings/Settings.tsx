@@ -1,15 +1,14 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { MyLib } from 'front/utils';
+import { MyLib } from '#shared/lib/my-lib';
+import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
+import { IconCheckbox, LazyIcon } from '#shared/ui/icon';
+import { PhaseContainerConfigurer } from 'front/complect/phase-container/PhaseContainerConfigurer';
 import React, { Suspense } from 'react';
 import { Link, Route, Routes } from 'react-router-dom';
 import { itIt } from 'shared/utils';
-import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
-import { FontFamilySelector } from '../../../../complect/configurators/selectors/FontFamilySelector';
-import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
-import IconCheckbox from '../../../../complect/the-icon/IconCheckbox';
+import { FontFamilySelector } from '../../../../shared/ui/configurators/selectors/FontFamilySelector';
 import { useAppFontFamily, useAuth } from '../../atoms';
 import { indexSimpleValIsPlayAnimations, indexSimpleValIsUseNativeKeyboard } from '../../complect/index.simpleValues';
-import useConnectionState from '../../useConnectionState';
+import { useConnectionState } from '../../useConnectionState';
 
 const IndexConsole = React.lazy(() => import('./Console'));
 
@@ -26,7 +25,7 @@ const styles = {
   display: null,
 };
 
-export default function IndexSettings() {
+export function IndexSettings() {
   const auth = useAuth();
   const [appFontFamily, setAppFontFamily] = useAppFontFamily();
   const connectionNode = useConnectionState('margin-gap');

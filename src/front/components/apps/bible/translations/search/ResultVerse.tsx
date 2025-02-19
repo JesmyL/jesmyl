@@ -14,7 +14,7 @@ interface Props {
   onClick?: (booki: BibleBooki, chapteri: BibleChapteri, versei: BibleVersei) => void;
 }
 
-export default memo(function BibleSearchResultVerse({
+export const BibleSearchResultVerse = memo(function BibleSearchResultVerse({
   booki,
   chapteri,
   versei,

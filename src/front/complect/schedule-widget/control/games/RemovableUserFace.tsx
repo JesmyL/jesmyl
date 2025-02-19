@@ -1,14 +1,13 @@
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { LazyIcon } from '#shared/ui/icon';
+import { Modal, ModalHeader } from '#shared/ui/modal';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import { useState } from 'react';
 import { IScheduleWidgetUser } from 'shared/api';
-import Modal from '../../../modal/Modal/Modal';
-import { ModalHeader } from '../../../modal/Modal/ModalHeader';
 import { useScheduleScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
 import { schGamesSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
-import ScheduleWidgetUserTakePhoto from '../users/TakePhoto';
-import ScheduleWidgetUserPhoto from '../users/UserPhoto';
+import { ScheduleWidgetUserTakePhoto } from '../users/TakePhoto';
+import { ScheduleWidgetUserPhoto } from '../users/UserPhoto';
 
 interface Props {
   user: IScheduleWidgetUser;
@@ -16,7 +15,7 @@ interface Props {
   buttons?: React.ReactNode;
 }
 
-export default function ScheduleWidgetRemovableUserFace({ user, isStriked, buttons }: Props) {
+export const ScheduleWidgetRemovableUserFace = ({ user, isStriked, buttons }: Props) => {
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
   const isUserStriked = isStriked ?? rights.schedule.games?.strikedUsers?.includes(user.mi);
@@ -65,4 +64,4 @@ export default function ScheduleWidgetRemovableUserFace({ user, isStriked, butto
       </div>
     </>
   );
-}
+};

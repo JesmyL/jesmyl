@@ -1,29 +1,27 @@
-import Modal from 'front/complect/modal/Modal/Modal';
-import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
-import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { MyLib } from 'front/utils';
+import { MyLib } from '#shared/lib/my-lib';
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
+import { LazyIcon } from '#shared/ui/icon';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
+import { SendableDropdown } from '#shared/ui/sendable/Dropdown';
+import { SendableDiv } from '#shared/ui/sendable/SendableDiv';
+import { SendableField } from '#shared/ui/sendable/SendableField';
 import { useMemo, useState } from 'react';
 import { IScheduleWidget, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
 import styled from 'styled-components';
 import { AttTranslatorType, attTranslatorTypes } from '../../../../back/apps/index/schedules/attTranslatorType';
-import Dropdown from '../../dropdown/Dropdown';
-import SendableDropdown from '../../sends/dropdown/SendableDropdown';
-import StrongDiv from '../../strong-control/StrongDiv';
-import StrongEditableField from '../../strong-control/field/StrongEditableField';
 import { ScheduleWidgetBindAtts } from '../atts/BindAtts';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schEventTypesSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useAttTypeTitleError } from './useAttTypeTitleError';
 
-export default function ScheduleWidgetEventType(props: {
+export const ScheduleWidgetEventType = (props: {
   schedule: IScheduleWidget;
   typei: number;
   typeBox: ScheduleWidgetDayListItemTypeBox;
   onSelect?: () => void;
   isRedact?: boolean;
   onItemSelectSend?: (typei: number) => Promise<unknown>;
-}) {
+}) => {
   const [title, setTitle] = useState(props.typeBox.title);
   const error = useAttTypeTitleError(title, props.schedule, props.isRedact, props.typei);
   const [attTranslatorType, setAttTranslatorType] = useState(AttTranslatorType.Today);
@@ -39,7 +37,7 @@ export default function ScheduleWidgetEventType(props: {
 
   const innerNode = (
     <>
-      <StrongEditableField
+      <SendableField
         fieldKey="title"
         value={props.typeBox}
         isRedact={props.isRedact}
@@ -57,7 +55,7 @@ export default function ScheduleWidgetEventType(props: {
           {error}
         </div>
       )}
-      <StrongEditableField
+      <SendableField
         type="number"
         value={'' + (props.typeBox.tm ?? '')}
         postfix=" мин"
@@ -162,8 +160,8 @@ export default function ScheduleWidgetEventType(props: {
       )}
     </div>
   );
-}
+};
 
-const SelectItem = styled(StrongDiv)`
+const SelectItem = styled(SendableDiv)`
   border-radius: 3px;
 `;

@@ -1,22 +1,24 @@
 import { ReactNode } from 'react';
 import { IScheduleWidgetUser, scheduleWidgetUserRights } from 'shared/api';
-import useIsExpand from '../../../expand/useIsExpand';
+import { useIsExpand } from '../../../../shared/ui/expand/useIsExpand';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 import { ScheduleWidgetUser } from './User';
 
-export default function ScheduleWidgetUserList({
-  asUserPlusPrefix,
-  filter,
-  title = <>Участники</>,
-  titlePostfix,
-  isInitExpand,
-}: {
+type Props = {
   asUserPlusPrefix?: (userNode: ReactNode, user: IScheduleWidgetUser, balance: number) => ReactNode;
   filter?: (user: IScheduleWidgetUser, useri: number, usera: IScheduleWidgetUser[]) => boolean;
   title?: ReactNode;
   titlePostfix?: ReactNode | ((isExpand: boolean) => ReactNode);
   isInitExpand?: boolean;
-}) {
+};
+
+export const ScheduleWidgetUserList = ({
+  asUserPlusPrefix,
+  filter,
+  title = <>Участники</>,
+  titlePostfix,
+  isInitExpand,
+}: Props) => {
   const rights = useScheduleWidgetRightsContext();
   const [expandNode, isExpand] = useIsExpand(isInitExpand ?? false, title, titlePostfix);
 
@@ -57,4 +59,4 @@ export default function ScheduleWidgetUserList({
       )}
     </>
   );
-}
+};

@@ -1,13 +1,10 @@
-import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
-import { ModalFooter } from 'front/complect/modal/Modal/ModalFooter';
-import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import IconButton from 'front/complect/the-icon/IconButton';
-import IconCheckbox from 'front/complect/the-icon/IconCheckbox';
+import { IconButton, IconCheckbox } from '#shared/ui/icon';
+import { ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { blockStyles } from 'front/components/apps/cm/col/com/block-styles/BlockStyles';
 import { StyleBlock } from 'front/components/apps/cm/col/com/block-styles/StyleBlock';
 import { useEffect, useState } from 'react';
 import { EditableCom } from '../../../com/EditableCom';
-import CmTextableBlockAnchorTitles from '../../textable-blocks/CmTextableBlockAnchorTitles';
+import { CmTextableBlockAnchorTitles } from '../../textable-blocks/CmTextableBlockAnchorTitles';
 import { CmNewOrderMakeEtap, cmNewOrderMakeEtapQueue } from './values';
 
 export const OrdersRedactorAdditionsEtapsModalInner = ({

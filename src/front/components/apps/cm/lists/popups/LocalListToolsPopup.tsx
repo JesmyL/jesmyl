@@ -1,10 +1,10 @@
+import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
 import { useState } from 'react';
-import { BottomPopupItem } from '../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
 import { isTouchDevice } from '../../../../../complect/device-differences';
-import { FullContent } from '../../../../../complect/fullscreen-content/FullContent';
+import { FullContent } from '../../../../../shared/ui/fullscreen-content/FullContent';
 import { Com } from '../../col/com/Com';
 import { ComListQrShare } from './ComListShare';
-import FullscreenExpandComList from './FullscreenExpandComList';
+import { FullscreenExpandComList } from './FullscreenExpandComList';
 
 export const LocalListToolsPopup = ({ coms }: { coms: Com[] | und }) => {
   const [isOpenList, setIsOpenList] = useState(false);

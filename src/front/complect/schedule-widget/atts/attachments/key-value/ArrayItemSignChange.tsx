@@ -1,8 +1,7 @@
-import Modal from 'front/complect/modal/Modal/Modal';
-import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
-import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
+import { LazyIcon } from '#shared/ui/icon';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
+import { SendableDiv } from '#shared/ui/sendable/SendableDiv';
 import { schDayEventsSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useState } from 'react';
 import {
   CustomAttUseTaleId,
@@ -12,21 +11,22 @@ import {
   IScheduleWidgetUser,
   ScheduleDayEventAttachmentScopeProps,
 } from 'shared/api';
-import StrongDiv from '../../../../strong-control/StrongDiv';
-import KeyValueListAttNumberMember from './KeyValueListAttNumberMember';
+import { KeyValueListAttNumberMember } from './KeyValueListAttNumberMember';
 
-export default function ScheduleKeyValueListAttArrayItemKeyChange(props: {
+type Props = {
   users: IScheduleWidgetUser[];
   lists: IScheduleWidgetListUnit[] | und;
   roles: IScheduleWidgetRole[] | und;
   games: IScheduleWidgetTeamGame[] | und;
   theKey: number;
   dayEventAttScopeProps: ScheduleDayEventAttachmentScopeProps;
-}) {
+};
+
+export const ScheduleKeyValueListAttArrayItemKeyChange = (props: Props) => {
   const [isModalOpen, setIsModalOpen] = useState<unknown>(false);
   const map = (id: number) => {
     return (
-      <StrongDiv
+      <SendableDiv
         key={id}
         onSuccess={() => setIsModalOpen(false)}
         className="margin-gap-v"
@@ -40,7 +40,7 @@ export default function ScheduleKeyValueListAttArrayItemKeyChange(props: {
         }
       >
         <KeyValueListAttNumberMember value={id} />
-      </StrongDiv>
+      </SendableDiv>
     );
   };
 
@@ -67,4 +67,4 @@ export default function ScheduleKeyValueListAttArrayItemKeyChange(props: {
       )}
     </>
   );
-}
+};

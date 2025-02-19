@@ -1,18 +1,16 @@
+import { SendableField } from '#shared/ui/sendable/SendableField';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import { schDayEventsSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
 import { ScheduleDayEventAttachmentScopeProps } from 'shared/api';
-import StrongEditableField from '../../../../strong-control/field/StrongEditableField';
 import { ScheduleChListAtt } from './checkListAtt';
 
-export default function ScheduleCheckListAtt({
-  value,
-  isRedact,
-  scheduleDayEventAttachmentScopeProps,
-}: {
+type Props = {
   value: ScheduleChListAtt;
   isRedact: boolean;
   scheduleDayEventAttachmentScopeProps: ScheduleDayEventAttachmentScopeProps;
-}) {
+};
+
+export const ScheduleCheckListAtt = ({ value, isRedact, scheduleDayEventAttachmentScopeProps }: Props) => {
   return (
     <>
       {value.list.map(([isDone, title, itemMi]) => {
@@ -36,7 +34,7 @@ export default function ScheduleCheckListAtt({
                 )
               }
             />
-            <StrongEditableField
+            <SendableField
               className="full-width"
               value={title}
               isRedact={isRedact}
@@ -73,4 +71,4 @@ export default function ScheduleCheckListAtt({
       )}
     </>
   );
-}
+};

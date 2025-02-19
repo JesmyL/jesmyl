@@ -1,4 +1,4 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
 import { IExportableCom, IExportableOrder } from 'shared/api/complect/apps/cm';
 import { itIt, makeRegExp } from 'shared/utils';
 import { cmComLanguages } from 'shared/values/values';

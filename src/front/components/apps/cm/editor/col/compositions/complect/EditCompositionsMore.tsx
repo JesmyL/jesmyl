@@ -1,7 +1,7 @@
-import { BottomPopupItem } from 'front/complect/absolute-popup/bottom-popup/BottomPopupItem';
-import { FullContent } from 'front/complect/fullscreen-content/FullContent';
+import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { useState } from 'react';
-import NewComposition from './new-com/NewComposition';
+import { NewComposition } from './new-com/NewComposition';
 
 export const EditCompositionsMore = ({ onClose }: { onClose(is: false): void }) => {
   const [isComCreatorOpen, setIsComCreatorOpen] = useState<unknown>(null);

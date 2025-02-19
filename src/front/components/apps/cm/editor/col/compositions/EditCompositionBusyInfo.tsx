@@ -1,5 +1,5 @@
-import { useAtomValue } from 'front/complect/atoms';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { useAtomValue } from '#shared/lib/atom';
+import { LazyIcon } from '#shared/ui/icon';
 import { indexIDB } from 'front/components/index/db/index-idb';
 import { useEffect } from 'react';
 import { CmComWid } from 'shared/api';
@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { cmEditorClientInvocatorMethods } from '../../cm-editor-invocator.methods';
 import { comEditorBusiesAtom } from './atoms';
 
-export default function EditCompositionBusyInfo({ comw }: { comw: CmComWid }) {
+export function EditCompositionBusyInfo({ comw }: { comw: CmComWid }) {
   const deviceId = indexIDB.useValue.deviceId();
   const busies = useAtomValue(comEditorBusiesAtom);
 

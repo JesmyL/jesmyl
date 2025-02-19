@@ -1,9 +1,9 @@
+import { LazyIcon } from '#shared/ui/icon';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { emptyFunc } from 'shared/utils';
 import styled, { css } from 'styled-components';
-import { backSwipableContainerMaker } from '../backSwipableContainerMaker';
-import { contextCreator } from '../contextCreator';
-import { LazyIcon } from '../the-icon/LazyIcon';
+import { backSwipableContainerMaker } from '../../shared/lib/backSwipableContainerMaker';
+import { contextCreator } from '../../shared/lib/contextCreator';
 import { LinkWithSearchRemember } from './LinkWithSearchRemember';
 import { PhaseContainerConfigurerProps } from './PhaseContainerConfigurer.model';
 
@@ -13,7 +13,7 @@ const swiper = backSwipableContainerMaker(() => navigate('..'));
 export const [PhaseContainerConfigurerWithoutFooterContext, usePhaseContainerConfigurerWithoutFooterContext] =
   contextCreator(false);
 
-export default function PhaseContainerConfigurer(props: PhaseContainerConfigurerProps) {
+export const PhaseContainerConfigurer = (props: PhaseContainerConfigurerProps) => {
   navigate = useNavigate();
   const withoutFooter = usePhaseContainerConfigurerWithoutFooterContext();
 
@@ -66,7 +66,7 @@ export default function PhaseContainerConfigurer(props: PhaseContainerConfigurer
       </StyledPhaseContainerConfigurerContent>
     </StyledContainerPhase>
   );
-}
+};
 
 const StyledContainerPhase = styled.div<{ $withoutFooter: boolean | und }>`
   ${props =>

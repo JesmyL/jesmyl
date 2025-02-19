@@ -1,24 +1,24 @@
-import { mylib } from 'front/utils';
+import { useIsRedactArea } from '#shared/lib/+hooks/useIsRedactArea';
+import { mylib } from '#shared/lib/my-lib';
+import { LazyIcon } from '#shared/ui/icon';
+import { SendableDateTimeInput } from '#shared/ui/sendable/DateTimeInput';
+import { SendButton } from '#shared/ui/sendable/SendButton';
+import { SendableField } from '#shared/ui/sendable/SendableField';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import { useEffect, useMemo, useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetWid, ScheduleScopeProps } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
 import { useAuth } from '../../components/index/atoms';
-import { QrCodeFullScreen } from '../qr-code/QrCodeFullScreen';
-import SendButton from '../sends/send-button/SendButton';
-import TheIconSendButton from '../sends/the-icon-send-button/TheIconSendButton';
-import StrongControlDateTimeExtracter from '../strong-control/StrongDateTimeExtracter';
-import StrongEditableField from '../strong-control/field/StrongEditableField';
-import { LazyIcon } from '../the-icon/LazyIcon';
-import useIsRedactArea from '../useIsRedactArea';
-import ScheduleWidgetCustomAttachments from './atts/custom/CustomAttachments';
-import ScheduleWidgetStartTimeText from './complect/StartTimeText';
-import ScheduleWidgetTopicTitle from './complect/TopicTitle';
+import { QrCodeFullScreen } from '../../shared/ui/qr-code/QrCodeFullScreen';
+import { ScheduleWidgetCustomAttachments } from './atts/custom/CustomAttachments';
+import { ScheduleWidgetStartTimeText } from './complect/StartTimeText';
+import { ScheduleWidgetTopicTitle } from './complect/TopicTitle';
 import { ScheduleScopePropsContext } from './complect/scope-contexts/scope-props-contexts';
 import { ScheduleWidgetControl } from './control/Control';
 import { ScheduleWidgetDay } from './days/Day';
 import { ScheduleWidgetEventTypeList } from './events/EventTypeList';
-import ScheduleWidgetContextWrapper from './general/ContextWrapper';
+import { ScheduleWidgetContextWrapper } from './general/ContextWrapper';
 import { ScheduleWidgetCopy } from './general/Copy';
 import {
   schDaysSokiInvocatorClient,
@@ -26,20 +26,19 @@ import {
   schUsersSokiInvocatorClient,
 } from './invocators/invocators.methods';
 import { schLinkAction } from './links';
-import ScheduleWidgetLists from './lists/Lists';
+import { ScheduleWidgetLists } from './lists/Lists';
 import { ScheduleWidgetWatchLiveTranslationButton } from './live-translations/WatchLiveButton';
 import { ScheduleWidgetMyUserTgInform } from './tg-inform/UserTgInform';
 import { ScheduleWidgetRights, useScheduleWidgetRights } from './useScheduleWidget';
 
 const msInMin = mylib.howMs.inMin;
 
-export default function ScheduleWidget({
-  schedule,
-  rights: topRights,
-}: {
+type Props = {
   schedule?: IScheduleWidget;
   rights?: ScheduleWidgetRights;
-}) {
+};
+
+export const ScheduleWidget = ({ schedule, rights: topRights }: Props) => {
   const auth = useAuth();
   const rights = useScheduleWidgetRights(schedule, topRights);
   const scheduleScopeProps: ScheduleScopeProps = useMemo(
@@ -154,7 +153,7 @@ export default function ScheduleWidget({
           {titleNode}
           <div className="margin-big-gap-v">
             {rights.isCanRedact && isRedact ? (
-              <StrongControlDateTimeExtracter
+              <SendableDateTimeInput
                 title="Начало"
                 icon="Calendar03"
                 value={dateValue}
@@ -178,7 +177,7 @@ export default function ScheduleWidget({
               <>
                 {isRedact && (
                   <>
-                    <StrongEditableField
+                    <SendableField
                       fieldKey="title"
                       value={schedule}
                       isRedact
@@ -186,7 +185,7 @@ export default function ScheduleWidget({
                       title="Заголовок"
                       onSend={value => schGeneralSokiInvocatorClient.rename(null, scheduleScopeProps, value)}
                     />
-                    <StrongEditableField
+                    <SendableField
                       fieldKey="topic"
                       value={schedule}
                       isRedact
@@ -197,7 +196,7 @@ export default function ScheduleWidget({
                   </>
                 )}
                 {(isRedact || schedule.dsc) && (
-                  <StrongEditableField
+                  <SendableField
                     fieldKey="dsc"
                     value={schedule}
                     isRedact={isRedact}
@@ -299,7 +298,7 @@ export default function ScheduleWidget({
       </ScheduleScopePropsContext.Provider>
     </ScheduleWidgetContextWrapper>
   );
-}
+};
 
 const Widget = styled.div`
   transition: margin 0.3s;

@@ -6,7 +6,7 @@ import { Com } from '../../col/com/Com';
 import { ComFaceList } from '../../col/com/face/list/ComFaceList';
 import { useComs } from '../../cols/useCols';
 
-export default function useMeetingComFaceList(
+export function useMeetingComFaceList(
   schw: IScheduleWidgetWid | NaN,
   dayi: number | NaN,
   eventMi: IScheduleWidgetDayEventMi | NaN,

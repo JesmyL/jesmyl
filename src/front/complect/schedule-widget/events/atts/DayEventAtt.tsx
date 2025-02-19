@@ -1,4 +1,6 @@
-import { mylib } from 'front/utils';
+import { useIsRedactArea } from '#shared/lib/+hooks/useIsRedactArea';
+import { mylib } from '#shared/lib/my-lib';
+import { LazyIcon } from '#shared/ui/icon';
 import { useMemo } from 'react';
 import {
   IScheduleWidget,
@@ -9,12 +11,10 @@ import {
   ScheduleWidgetDayEventAttValue,
 } from 'shared/api';
 import { isNIs } from 'shared/utils';
-import { useIsRememberExpand } from '../../../expand/useIsRememberExpand';
-import { LazyIcon } from '../../../the-icon/LazyIcon';
-import useIsRedactArea from '../../../useIsRedactArea';
-import ScheduleWidgetTopicTitle from '../../complect/TopicTitle';
+import { useIsRememberExpand } from '../../../../shared/ui/expand/useIsRememberExpand';
+import { ScheduleWidgetTopicTitle } from '../../complect/TopicTitle';
 import { useScheduleWidgetAppAttsContext } from '../../useScheduleWidget';
-import ScheduleWidgetDayEventPeriodicTranslation from './DayEventPeriodicTranslationAtt';
+import { ScheduleWidgetDayEventPeriodicTranslation } from './DayEventPeriodicTranslationAtt';
 
 type Props = {
   day: IScheduleWidgetDay;
@@ -26,7 +26,7 @@ type Props = {
   dayEventScopeProps: ScheduleDayEventScopeProps;
 };
 
-export default function ScheduleWidgetDayEventAtt(props: Props) {
+export const ScheduleWidgetDayEventAtt = (props: Props) => {
   const [appAtts] = useScheduleWidgetAppAttsContext();
   const appAtt = appAtts[props.attKey];
   const dayEventAttScopeProps: ScheduleDayEventAttachmentScopeProps = useMemo(
@@ -153,4 +153,4 @@ export default function ScheduleWidgetDayEventAtt(props: Props) {
       <div className="margin-big-gap-l">{attContent}</div>
     </>
   );
-}
+};

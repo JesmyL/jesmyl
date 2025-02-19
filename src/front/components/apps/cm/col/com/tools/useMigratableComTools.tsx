@@ -1,8 +1,8 @@
-import { MyLib } from 'front/utils';
+import { MyLib } from '#shared/lib/my-lib';
 import React from 'react';
 import { MigratableComToolName } from 'shared/api';
 import styled, { css } from 'styled-components';
-import { contextCreator } from '../../../../../../complect/contextCreator';
+import { contextCreator } from '../../../../../../shared/lib/contextCreator';
 import { cmIDB } from '../../../_db/cm-idb';
 import { cmUserStoreSokiInvocatorClient } from '../../../invocators/user-store-invocator.methods';
 import { Com } from '../Com';

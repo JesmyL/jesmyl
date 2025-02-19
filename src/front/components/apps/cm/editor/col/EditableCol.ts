@@ -1,4 +1,4 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
 import { makeRegExp } from 'shared/utils';
 import { BaseNamed, BaseNamedExportables } from '../../base/BaseNamed';
 import { eeStorage } from '../../base/ee-storage/EeStorage';

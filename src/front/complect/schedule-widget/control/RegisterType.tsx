@@ -1,12 +1,12 @@
+import { useIsExpand } from '#shared/ui/expand/useIsExpand';
 import { scheduleWidgetRegTypeRights } from 'shared/api';
-import useIsExpand from '../../expand/useIsExpand';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
-import ScheduleWidgetNewUserRegisterLevel from './NewUserRegisterLevel';
-import ScheduleWidgetRightControlList from './RightControlList';
+import { ScheduleWidgetNewUserRegisterLevel } from './NewUserRegisterLevel';
+import { ScheduleWidgetRightControlList } from './RightControlList';
 
-export default function ScheduleWidgetRegisterType() {
+export const ScheduleWidgetRegisterType = () => {
   const rights = useScheduleWidgetRightsContext();
   const [expandNode, isExpand] = useIsExpand(false, <>Тип мероприятия</>);
   const scheduleScopeProps = useScheduleScopePropsContext();
@@ -31,4 +31,4 @@ export default function ScheduleWidgetRegisterType() {
       </div>
     </>
   );
-}
+};

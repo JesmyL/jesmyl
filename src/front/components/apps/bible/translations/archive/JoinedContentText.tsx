@@ -1,6 +1,6 @@
 import { useBibleJoinedSlideText } from '../../hooks/texts';
 import { BibleTranslationJoinAddress } from '../../model';
 
-export default function BibleTranslationArchiveJoinedContentText({ item }: { item: BibleTranslationJoinAddress }) {
+export const BibleTranslationArchiveJoinedContentText = ({ item }: { item: BibleTranslationJoinAddress }) => {
   return <>{useBibleJoinedSlideText(item, true)}</>;
-}
+};

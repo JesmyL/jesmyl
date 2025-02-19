@@ -1,9 +1,9 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { PhaseContainerConfigurer } from 'front/complect/phase-container/PhaseContainerConfigurer';
 import { ReactNode } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { TranslationSlidePreview } from '../../../../+complect/translations/controls/Preview';
-import PhaseContainerConfigurer from '../../../../../../complect/phase-container/PhaseContainerConfigurer';
 import { Com } from '../../../col/com/Com';
 import { ComFaceList } from '../../../col/com/face/list/ComFaceList';
 import { useTakeActualComw } from '../../../col/com/useCcom';
@@ -21,7 +21,7 @@ interface Props {
   backButtonPath?: string;
 }
 
-export default function CmTranslationControlled({ head, comList, headTitle, backButtonPath }: Props) {
+export function CmTranslationControlled({ head, comList, headTitle, backButtonPath }: Props) {
   const [, setSearchParams] = useSearchParams();
 
   const { comPack } = useCmScreenTranslationComNavigations();

@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { ChordTrack } from '../../../../../../../shared/api/complect/apps/cm/complect/chord-card';
+import { ChordTrack } from 'shared/api';
 import './ChordCard.scss';
 
 const stringsCount = 6;
@@ -8,7 +8,7 @@ const leftMargin = 8;
 const strings: number[] = [];
 for (let i = 1; i <= stringsCount; i++) strings.push(i);
 
-export default function ChordCardTracked({
+export function ChordCardTracked({
   customContent,
   bottomPadding = 0,
   track,

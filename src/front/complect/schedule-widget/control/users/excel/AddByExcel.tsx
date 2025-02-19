@@ -1,9 +1,8 @@
-import { FullContent } from 'front/complect/fullscreen-content/FullContent';
-import { Script } from 'front/complect/tags/Script';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
+import { ContentOnLoad, LazyIcon } from '#shared/ui/icon';
+import { Script } from '#shared/ui/tags/Script';
 import { useEffect, useState } from 'react';
-import { excel2jsonParserBox } from '../../../../parseExcel2Json';
-import ContentOnLoad from '../../../../the-icon/ContentOnLoad';
+import { excel2jsonParserBox } from '../../../../../shared/lib/parseExcel2Json';
 import { ScheduleWidgetUserAddByExcelContent } from './AddByExcelContent';
 
 export function ScheduleWidgetUserAddByExcel() {

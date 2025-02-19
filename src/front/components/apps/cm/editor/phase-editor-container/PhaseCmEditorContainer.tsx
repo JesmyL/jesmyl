@@ -1,8 +1,8 @@
+import { PhaseContainerConfigurer } from 'front/complect/phase-container/PhaseContainerConfigurer';
 import styled from 'styled-components';
-import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
 import { PhaseContainerProps } from '../../../../../complect/phase-container/PhaseContainerConfigurer.model';
 
-export default function PhaseCmEditorContainer(props: PhaseContainerProps) {
+export function PhaseCmEditorContainer(props: PhaseContainerProps) {
   return (
     <StyledContainer
       {...props}

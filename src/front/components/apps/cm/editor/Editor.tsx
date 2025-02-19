@@ -1,16 +1,16 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
+import { LazyIcon } from '#shared/ui/icon';
 import { Route, Routes } from 'react-router-dom';
-import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
 import { useAuth } from '../../../index/atoms';
 import { TheMeetings } from '../lists/meetings/TheMeetings';
-import ChordRedactor from './chord-redactor/ChordRedactor';
+import { ChordRedactor } from './chord-redactor/ChordRedactor';
 import { cmEditorSokiInvocatorBaseClient } from './cm-editor-invocator.base';
-import EditCategories from './col/categories/EditCategories';
-import EditCompositions from './col/compositions/EditCompositions';
+import { EditCategories } from './col/categories/EditCategories';
+import { EditCompositions } from './col/compositions/EditCompositions';
 import './Editor.scss';
-import EERules from './ee-rules/EERules';
-import Mp3RulesRedactor from './mp3-rule-redactor/Mp3RulesRedactor';
-import PhaseCmEditorContainer from './phase-editor-container/PhaseCmEditorContainer';
+import { EERules } from './ee-rules/EERules';
+import { Mp3RulesRedactor } from './mp3-rule-redactor/Mp3RulesRedactor';
+import { PhaseCmEditorContainer } from './phase-editor-container/PhaseCmEditorContainer';
 
 export default function Editor() {
   const auth = useAuth();

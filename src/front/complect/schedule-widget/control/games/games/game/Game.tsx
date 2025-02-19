@@ -1,22 +1,22 @@
+import { LazyIcon } from '#shared/ui/icon';
+import { SendableField } from '#shared/ui/sendable/SendableField';
 import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/scope-props-contexts';
 import { schGamesSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useState } from 'react';
-import { ExpandableContent } from '../../../../../expand/ExpandableContent';
-import StrongEditableField from '../../../../../strong-control/field/StrongEditableField';
+import { ExpandableContent } from '../../../../../../shared/ui/expand/ExpandableContent';
 import { useSchWGameContext } from '../Games';
-import ScheduleWidgetTeamGameTeam from '../Team';
+import { ScheduleWidgetTeamGameTeam } from '../Team';
 import { ScheduleWidgetTeamGamePrintTeamsButton } from './PrintTeamsButton';
-import ScheduleWidgetTeamGameSetTeamsButton from './SetTeamsButton';
+import { ScheduleWidgetTeamGameSetTeamsButton } from './SetTeamsButton';
 
-export default function ScheduleWidgetTeamGame() {
+export const ScheduleWidgetTeamGame = () => {
   const [isRenaming, setIsRenaming] = useState(false);
   const game = useSchWGameContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
 
   const titleNode = (
     <h3 className="flex flex-gap">
-      <StrongEditableField
+      <SendableField
         value={game.title}
         placeholder="Командная игра"
         isRedact={isRenaming}
@@ -58,4 +58,4 @@ export default function ScheduleWidgetTeamGame() {
       </div>
     </ExpandableContent>
   );
-}
+};

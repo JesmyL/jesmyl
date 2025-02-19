@@ -8,15 +8,13 @@ import {
   useScheduleWidgetRights,
 } from '../useScheduleWidget';
 
-export default function ScheduleWidgetContextWrapper({
-  schedule,
-  rights: topRights,
-  children,
-}: {
+type Props = {
   schedule: IScheduleWidget;
   rights?: ScheduleWidgetRights;
   children: ReactNode;
-}) {
+};
+
+export const ScheduleWidgetContextWrapper = ({ schedule, rights: topRights, children }: Props) => {
   const rights = useScheduleWidgetRights(schedule, topRights);
   const atts = useMemo(() => makeAttStorage(schedule), [schedule]);
 
@@ -27,4 +25,4 @@ export default function ScheduleWidgetContextWrapper({
       <ScheduleWidgetRightsContext.Provider value={rights}>{children}</ScheduleWidgetRightsContext.Provider>
     </ScheduleWidgetAppAttsContext.Provider>
   );
-}
+};

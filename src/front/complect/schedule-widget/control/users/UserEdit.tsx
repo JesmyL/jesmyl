@@ -1,14 +1,14 @@
+import { SendableField } from '#shared/ui/sendable/SendableField';
 import {
   IScheduleWidgetUser,
   IScheduleWidgetWid,
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
-import StrongEditableField from '../../../strong-control/field/StrongEditableField';
 import { useScheduleUserScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
 import { schUsersSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
-import ScheduleWidgetRightControlList from '../RightControlList';
+import { ScheduleWidgetRightControlList } from '../RightControlList';
 
 const accessLevel = scheduleWidgetUserRights.rightLevel(ScheduleWidgetUserRoleRight.ReadTitles);
 
@@ -20,7 +20,7 @@ export function ScheduleWidgetUserEdit({ user }: { user: IScheduleWidgetUser }) 
 
   return (
     <>
-      <StrongEditableField
+      <SendableField
         isRedact
         setSelfRedact
         title="Имя"

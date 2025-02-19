@@ -1,22 +1,22 @@
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { MyLib } from 'front/utils';
+import { MyLib } from '#shared/lib/my-lib';
+import { useIsExpand } from '#shared/ui/expand/useIsExpand';
+import { LazyIcon } from '#shared/ui/icon';
+import { SendableField } from '#shared/ui/sendable/SendableField';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import { ReactNode } from 'react';
 import { IScheduleWidgetDayEvent, ScheduleDayEventScopeProps } from 'shared/api';
 import { emptyAsyncFunc, itNNull } from 'shared/utils';
 import styled from 'styled-components';
-import useIsExpand from '../../../expand/useIsExpand';
-import StrongEditableField from '../../../strong-control/field/StrongEditableField';
 import { schDayEventsSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
 
 const ratePoints = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5] as const;
 const defRate: [number, string] = [0, ''];
 
-export default function ScheduleWidgetDayEventRating(props: {
+export const ScheduleWidgetDayEventRating = (props: {
   event: IScheduleWidgetDayEvent;
   dayEventScopeProps: ScheduleDayEventScopeProps;
-}) {
+}) => {
   const rights = useScheduleWidgetRightsContext();
 
   const ratingSum =
@@ -67,7 +67,7 @@ export default function ScheduleWidgetDayEventRating(props: {
                   {user.fio || user.nick}: {rate[0]}
                 </div>
                 {rate[1] && (
-                  <StrongEditableField
+                  <SendableField
                     value={rate[1]}
                     multiline
                     onSend={emptyAsyncFunc}
@@ -130,7 +130,7 @@ export default function ScheduleWidgetDayEventRating(props: {
               {myRate[0]}
             </StyledReitingDisplay>
           </div>
-          <StrongEditableField
+          <SendableField
             icon="Message01"
             value={myRate[1]}
             title="Комментарий"
@@ -153,7 +153,7 @@ export default function ScheduleWidgetDayEventRating(props: {
       )}
     </>
   );
-}
+};
 
 const StyledReitingDisplay = styled.span`
   width: 1.5em;

@@ -1,6 +1,6 @@
+import { mylib } from '#shared/lib/my-lib';
 import { makeTwiceKnownName } from 'back/complect/makeTwiceKnownName';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
-import { mylib } from 'front/utils';
 import {
   IScheduleWidgetTeamCriteria,
   IScheduleWidgetTeamGame,

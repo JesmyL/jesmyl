@@ -1,12 +1,12 @@
+import { mylib } from '#shared/lib/my-lib';
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
+import { LazyIcon } from '#shared/ui/icon';
+import { useToast } from '#shared/ui/modal';
+import { SendButton } from '#shared/ui/sendable/SendButton';
 import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/scope-props-contexts';
 import { schUsersSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
-import SendButton from 'front/complect/sends/send-button/SendButton';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { mylib } from 'front/utils';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import Dropdown from '../../../../dropdown/Dropdown';
-import useToast from '../../../../modal/useToast';
-import { excel2jsonParserBox } from '../../../../parseExcel2Json';
+import { excel2jsonParserBox } from '../../../../../shared/lib/parseExcel2Json';
 import { useScheduleWidgetRightsContext } from '../../../useScheduleWidget';
 
 interface Props {

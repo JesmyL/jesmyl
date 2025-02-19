@@ -1,8 +1,7 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { IconButton, LazyIcon } from '#shared/ui/icon';
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
-import { FullContent } from '../../../../../fullscreen-content/FullContent';
-import IconButton from '../../../../../the-icon/IconButton';
+import { FullContent } from '../../../../../../shared/ui/fullscreen-content/FullContent';
 import { useScheduleWidgetRightsContext } from '../../../../useScheduleWidget';
 import { useSchWGameContext } from '../Games';
 

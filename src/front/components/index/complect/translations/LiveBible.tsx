@@ -1,8 +1,8 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { LazyIcon } from '#shared/ui/icon';
 import { memo, useCallback } from 'react';
 import { useSwitchCurrentTranslationTextApp } from '../../../apps/+complect/translations/hooks/current-app';
-import BibleLiveTranslation from '../../../apps/bible/translations/BibleLiveTranslation';
-import BibleTranslationControlled from '../../../apps/bible/translations/BibleTranslationControlled';
+import { BibleLiveTranslation } from '../../../apps/bible/translations/BibleLiveTranslation';
+import { BibleTranslationControlled } from '../../../apps/bible/translations/BibleTranslationControlled';
 import { IndexSchWTranslationLiveDataValue } from '../../Index.model';
 import { schLiveSokiInvocatorClient } from './live-invocator';
 import { LiveTranslationAppProps } from './model';

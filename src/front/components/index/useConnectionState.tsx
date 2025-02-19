@@ -1,8 +1,8 @@
-import { addEventListenerPipe, hookEffectPipe } from 'front/complect/hookEffectPipe';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { LazyIcon } from '#shared/ui/icon';
 import { useEffect, useState } from 'react';
 
-export default function useConnectionState(className?: string) {
+export const useConnectionState = (className?: string) => {
   const [isOnline, setIsOnline] = useState(true);
 
   useEffect(
@@ -24,4 +24,4 @@ export default function useConnectionState(className?: string) {
       />
     )
   );
-}
+};

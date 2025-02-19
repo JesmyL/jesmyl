@@ -1,16 +1,13 @@
-import Modal from 'front/complect/modal/Modal/Modal';
-import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
-import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { IconButton, LazyIcon } from '#shared/ui/icon';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { useState } from 'react';
 import { BibleTranslateName } from 'shared/api';
-import IconButton from '../../../../complect/the-icon/IconButton';
 import { bibleSokiInvocatorClient } from '../invoctors/invocator';
 import { removeBibleTranslate } from '../utils';
 import { bibleAllTranslates, translateDescriptions } from './complect';
 import { useBibleMyTranslates } from './hooks';
 
-export default function BibleModulesTranslationsRedactButton(): JSX.Element {
+export const BibleModulesTranslationsRedactButton = (): JSX.Element => {
   const [myTranslates] = useBibleMyTranslates();
   const [translateOnLoad, setTranslateOnLoad] = useState<BibleTranslateName | null>(null);
   const [isOpenModal, setIsOpenModal] = useState<unknown>(false);
@@ -71,4 +68,4 @@ export default function BibleModulesTranslationsRedactButton(): JSX.Element {
       )}
     </>
   );
-}
+};

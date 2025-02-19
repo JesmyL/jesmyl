@@ -1,15 +1,15 @@
-import { hookEffectPipe, setTimeoutPipe } from 'front/complect/hookEffectPipe';
-import useToast from 'front/complect/modal/useToast';
+import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
+import { useToast } from '#shared/ui/modal';
 import { useAuth } from 'front/components/index/atoms';
 import React, { memo, Suspense, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { CmComWid } from 'shared/api';
 import { cmAppActions } from '../app-actions/cm-app-actions';
 import { CmSharedComListActionInterpretator } from '../app-actions/SharedComList';
-import useSelectedComs from '../base/useSelectedComs';
-import TheCat from '../col/cat/TheCat';
+import { useSelectedComs } from '../base/useSelectedComs';
+import { TheCat } from '../col/cat/TheCat';
 import { useTakeActualComw } from '../col/com/useCcom';
-import Lists from '../lists/Lists';
+import { Lists } from '../lists/Lists';
 import { cmInitialInvokes } from './cm-initial-invokes';
 import { CmFooter } from './CmFooter';
 

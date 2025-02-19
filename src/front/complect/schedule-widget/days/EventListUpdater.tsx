@@ -1,4 +1,5 @@
-import SendButton from 'front/complect/sends/send-button/SendButton';
+import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
+import { SendButton } from '#shared/ui/sendable/SendButton';
 import { useEffect, useMemo, useState } from 'react';
 import {
   indexScheduleGetDayEventTimes,
@@ -9,9 +10,8 @@ import {
 } from 'shared/api';
 import { emptyFunc, itNNull, retNull } from 'shared/utils';
 import styled from 'styled-components';
-import KeyboardInput from '../../keyboard/KeyboardInput';
 import { schDaysSokiInvocatorClient, schEventTypesSokiInvocatorClient } from '../invocators/invocators.methods';
-import ScheduleWidgetDayEvent from './events/DayEvent';
+import { ScheduleWidgetDayEvent } from './events/DayEvent';
 
 interface Props {
   day: IScheduleWidgetDay;

@@ -2,21 +2,21 @@ import { ReactNode, useEffect } from 'react';
 import styled from 'styled-components';
 import { ScreenTranslationControlPanel } from '../../+complect/translations/controls/ControllPanel';
 import { useInitSoki } from '../../../../app/useInitSoki';
-import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
+import { PhaseContainerConfigurer } from '../../../../complect/phase-container/PhaseContainerConfigurer';
 import { bibleIDB } from '../_db/bibleIDB';
 import { useBibleSlideSyncInkrementer } from '../hooks/slide-sync';
 import { useLoadBibleChaptersCombine } from '../hooks/texts';
 import { BibleModulesTranslations } from '../translates/Translations';
-import BibleTranslationControlledBottomPanel from './BottomPanel';
+import { BibleTranslationControlledBottomPanel } from './BottomPanel';
 import { BibleTranslationControlledTopPanel } from './TopPanel';
-import BibleSearchPanel from './search/Panel';
+import { BibleSearchPanel } from './search/Panel';
 
 interface Props {
   head: ReactNode;
   headTitle: ReactNode;
 }
 
-export default function BibleTranslationControlled({ head, headTitle }: Props): JSX.Element {
+export const BibleTranslationControlled = ({ head, headTitle }: Props): JSX.Element => {
   useLoadBibleChaptersCombine();
   const inkSync = useBibleSlideSyncInkrementer();
   useInitSoki('bible');
@@ -60,7 +60,7 @@ export default function BibleTranslationControlled({ head, headTitle }: Props): 
       }
     />
   );
-}
+};
 
 const Container = styled.div`
   --size: 50vmin;

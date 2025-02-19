@@ -1,5 +1,5 @@
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import { WedGuest, WedGuestPropositionSent } from '../../../../../../shared/api/complect/apps/wed/complect/model';
-import TheIconSendButton from '../../../../../complect/sends/the-icon-send-button/TheIconSendButton';
 
 export const WedGuestPropositionSentButton = ({
   guest,

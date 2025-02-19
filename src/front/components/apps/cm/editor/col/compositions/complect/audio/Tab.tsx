@@ -1,4 +1,4 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { LazyIcon } from '#shared/ui/icon';
 import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
 import { CmMp3Rule } from 'shared/api';
@@ -6,10 +6,10 @@ import { itIt, makeRegExp } from 'shared/utils';
 import { EditableCom } from '../../com/EditableCom';
 import { useEditableCcom } from '../../useEditableCcom';
 import { ComAudioControlledList } from './ControlledList';
-import ObserveUrlResource from './ObserveUrlResource';
+import { ObserveUrlResource } from './ObserveUrlResource';
 import { useCmExtractHrefsFromHTML } from './useCmExtractHrefsFromHTML';
 
-export default function ComAudioTab({
+export function ComAudioTab({
   topHTML,
   topCom,
   topMp3Rule,

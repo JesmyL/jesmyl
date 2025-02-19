@@ -2,11 +2,11 @@ import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { CmComWid } from 'shared/api';
 import styled, { css, RuleSet } from 'styled-components';
-import { backSwipableContainerMaker } from '../../../../../complect/backSwipableContainerMaker';
-import { addEventListenerPipe, hookEffectPipe } from '../../../../../complect/hookEffectPipe';
+import { backSwipableContainerMaker } from '../../../../../shared/lib/backSwipableContainerMaker';
+import { addEventListenerPipe, hookEffectPipe } from '../../../../../shared/lib/hookEffectPipe';
 import { ChordVisibleVariant } from '../../Cm.model';
 import { cmIDB } from '../../_db/cm-idb';
-import RollControled from '../../base/RolledContent';
+import { RollControled } from '../../base/RolledContent';
 import { Com } from './Com';
 import './Com.scss';
 import { TheCom } from './TheCom';
@@ -21,7 +21,7 @@ const swiper = backSwipableContainerMaker(
   () => onNextCom(),
 );
 
-export default function TheControlledCom({
+export function TheControlledCom({
   com,
   comwList,
   chordVisibleVariant,

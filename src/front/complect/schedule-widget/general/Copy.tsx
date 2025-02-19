@@ -1,8 +1,7 @@
-import Modal from 'front/complect/modal/Modal/Modal';
-import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
-import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
-import { MyLib, mylib } from 'front/utils';
+import { MyLib, mylib } from '#shared/lib/my-lib';
+import { IconButton } from '#shared/ui/icon';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import { useState } from 'react';
 import {
   CustomAttUseTaleId,
@@ -13,8 +12,7 @@ import {
 } from 'shared/api';
 import { itNNull } from 'shared/utils';
 import { useAuth, useIndexSchedules } from '../../../components/index/atoms';
-import IconButton from '../../the-icon/IconButton';
-import ScheduleWidgetTopicTitle from '../complect/TopicTitle';
+import { ScheduleWidgetTopicTitle } from '../complect/TopicTitle';
 import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 

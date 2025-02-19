@@ -1,26 +1,28 @@
 import { memo } from 'react';
 import styled from 'styled-components';
-import BibleTranslateScreenConfigurations from './ScreenConfigurations';
-import BibleTranslationHistoryArchive from './archive/history/HistoryArchive';
-import BibleTranslationPlanArchive from './archive/plan/PlanArchive';
+import { BibleTranslateScreenConfigurations } from './ScreenConfigurations';
+import { BibleTranslationHistoryArchive } from './archive/history/HistoryArchive';
+import { BibleTranslationPlanArchive } from './archive/plan/PlanArchive';
 
-export default memo(function BibleTranslationControlledBottomPanel(): JSX.Element {
-  return (
-    <BottomGrid className="margin-big-gap-t">
-      <div grid-configs="">
-        <BibleTranslateScreenConfigurations />
-      </div>
-      <div grid-history="">
-        <BibleTranslationHistoryArchive />
-      </div>
-      <div grid-plan="">
-        <div>
-          <BibleTranslationPlanArchive />
+export const BibleTranslationControlledBottomPanel = memo(
+  function BibleTranslationControlledBottomPanel(): JSX.Element {
+    return (
+      <BottomGrid className="margin-big-gap-t">
+        <div grid-configs="">
+          <BibleTranslateScreenConfigurations />
         </div>
-      </div>
-    </BottomGrid>
-  );
-});
+        <div grid-history="">
+          <BibleTranslationHistoryArchive />
+        </div>
+        <div grid-plan="">
+          <div>
+            <BibleTranslationPlanArchive />
+          </div>
+        </div>
+      </BottomGrid>
+    );
+  },
+);
 
 const BottomGrid = styled.div`
   display: grid;

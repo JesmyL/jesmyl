@@ -1,4 +1,4 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
 import { CoderResultArray } from './array';
 import { CoderResultFunction } from './function';
 import { CoderResultComponent } from './model';

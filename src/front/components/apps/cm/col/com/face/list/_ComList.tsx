@@ -1,10 +1,10 @@
+import { useListInfiniteScrollController } from '#shared/lib/+hooks/useListInfiniteScrollController';
+import { mylib } from '#shared/lib/my-lib';
+import { FaceItem } from '#shared/ui/FaceItem';
 import { isIPhone } from 'front/complect/device-differences';
-import { useListInfiniteScrollController } from 'front/complect/useListInfiniteScrollController';
 import { useSetComListLimitsExtracterContext } from 'front/components/apps/cm/base/SetComListLimitsExtracterContext';
-import { mylib } from 'front/utils';
 import { useRef } from 'react';
 import { retNull } from 'shared/utils';
-import { FaceItem } from '../../../../../../../complect/FaceItem';
 import { Com } from '../../Com';
 import { CmComNumber } from '../../complect/ComNumber';
 import { ListComFaceForSelectionsProps } from '../ComFace.model';

@@ -1,10 +1,10 @@
+import { IconButton } from '#shared/ui/icon';
 import { ScheduleWidgetAppAtts } from 'front/complect/schedule-widget/ScheduleWidget.model';
 import { useEffect } from 'react';
 import { Link, Route, useNavigate } from 'react-router-dom';
 import { CmComBindAttach, scheduleWidgetUserRights, ScheduleWidgetUserRoleRight } from 'shared/api';
-import IconButton from '../../../../complect/the-icon/IconButton';
-import TheMeetingsEvent from '../lists/meetings/TheMeetingsEvent';
-import CmExternalComListAtt from './complect/CmExternalComListAtt';
+import { TheMeetingsEvent } from '../lists/meetings/TheMeetingsEvent';
+import { CmExternalComListAtt } from './complect/CmExternalComListAtt';
 
 export const cmOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
   '[cm]:coms': {

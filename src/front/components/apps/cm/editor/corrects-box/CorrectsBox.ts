@@ -1,4 +1,4 @@
-import Correct from './Correct';
+import { Correct } from './Correct';
 import { ICorrect, ICorrectsBoxes } from './CorrectsBox.model';
 
 type ArrayMapCb<T> = (box: T, boxi: number, boxa: T[]) => T;

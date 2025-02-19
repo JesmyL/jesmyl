@@ -1,8 +1,8 @@
-import useToast from 'front/complect/modal/useToast';
+import { atom, useAtomSet } from '#shared/lib/atom';
+import { useToast } from '#shared/ui/modal/hooks/useToast';
 import { useEffect } from 'react';
 import { Route, useParams, useSearchParams } from 'react-router-dom';
-import { atom, useAtomSet } from '../complect/atoms';
-import IndexMain from '../components/index/parts/main/IndexMain';
+import { IndexMain } from '../components/index/parts/main/IndexMain';
 import { soki } from '../soki';
 import { AppName } from './App.model';
 import { routingApps } from './routing-apps';

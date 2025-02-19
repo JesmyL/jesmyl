@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { addEventListenerPipe, hookEffectPipe } from '../../../../../../complect/hookEffectPipe';
+import { addEventListenerPipe, hookEffectPipe } from '../../../../../../shared/lib/hookEffectPipe';
 import { bibleIDB } from '../../../_db/bibleIDB';
 import { useSetBibleAddressIndexes } from '../../../hooks/address/address';
 import { useBibleTranslationSlideSyncContentSetter } from '../../../hooks/slide-sync';
@@ -16,7 +16,7 @@ interface Props {
 
 const onChange = (event: React.ChangeEvent<HTMLInputElement>) => bibleIDB.set.searchTerm(event.target.value);
 
-export default function BibleSearchPanelSearchTextInput({ inputRef }: Props) {
+export const BibleSearchPanelSearchTextInput = ({ inputRef }: Props) => {
   const searchTerm = bibleIDB.useValue.searchTerm();
   const resultSelected = useBibleTranslationSearchResultSelectedValue();
   const setResultSelected = useBibleTranslationSearchResultSelectedSet();
@@ -70,4 +70,4 @@ export default function BibleSearchPanelSearchTextInput({ inputRef }: Props) {
       onChange={onChange}
     />
   );
-}
+};

@@ -1,4 +1,4 @@
-import { mylib, MyLib } from 'front/utils';
+import { mylib, MyLib } from '#shared/lib/my-lib';
 import React, { useContext, useMemo } from 'react';
 import {
   IScheduleWidget,
@@ -12,8 +12,8 @@ import {
 } from 'shared/api';
 import { appAttsStore } from '../../components/complect/appScheduleAttrsStorage';
 import { useAuth } from '../../components/index/atoms';
-import { contextCreator } from '../contextCreator';
-import ScheduleKeyValueListAtt from './atts/attachments/key-value/KeyValueListAtt';
+import { contextCreator } from '../../shared/lib/contextCreator';
+import { ScheduleKeyValueListAtt } from './atts/attachments/key-value/KeyValueListAtt';
 import { scheduleOwnAtts } from './atts/attachments/ownAtts';
 import { ScheduleWidgetAppAtts, ScheduleWidgetAttRefs } from './ScheduleWidget.model';
 

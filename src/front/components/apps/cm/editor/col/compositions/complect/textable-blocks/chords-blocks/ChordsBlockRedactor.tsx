@@ -1,22 +1,13 @@
-import IconButton from 'front/complect/the-icon/IconButton';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { IconButton, LazyIcon } from '#shared/ui/icon';
 import { InputWithLoadingIcon } from 'front/components/apps/cm/base/InputWithLoadingIcon';
 import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
 import { makeRegExp } from 'shared/utils';
 import { TextCorrectMessages } from '../../../../../complect/TextBlockIncorrectMessages';
 import { EditableCom } from '../../../com/EditableCom';
-import CmTextableBlockAnchorTitles from '../CmTextableBlockAnchorTitles';
+import { CmTextableBlockAnchorTitles } from '../CmTextableBlockAnchorTitles';
 
-export default function CmChordsBlockRedactor({
-  text,
-  texti,
-  ccom,
-}: {
-  texti: number;
-  text: string;
-  ccom: EditableCom;
-}) {
+export function CmChordsBlockRedactor({ text, texti, ccom }: { texti: number; text: string; ccom: EditableCom }) {
   const [value, setValue] = useState(text);
   const corrects = EditableCom.chordsBlockIncorrectMessage(value);
 

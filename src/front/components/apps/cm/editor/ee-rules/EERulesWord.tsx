@@ -1,9 +1,9 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { IconCheckbox } from '#shared/ui/icon';
 import { memo, useState } from 'react';
 import { EeStorePack } from 'shared/api';
 import { itIt, makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
-import IconCheckbox from '../../../../../complect/the-icon/IconCheckbox';
 import { eeStorage } from '../../base/ee-storage/EeStorage';
 
 const radioTitles = ['е/ё', 'е!!', 'ё!!'].map((typeName, type) => <div key={type}>{typeName}</div>);

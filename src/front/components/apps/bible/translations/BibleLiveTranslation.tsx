@@ -13,7 +13,7 @@ interface Props {
   onSend: (liveData: IndexSchWTranslationLiveDataValue) => void;
 }
 
-export default function BibleLiveTranslation(props: Props): JSX.Element {
+export function BibleLiveTranslation(props: Props): JSX.Element {
   return (
     <BibleTranslationScreenTextsContext isPreview={false}>
       <Live {...props} />

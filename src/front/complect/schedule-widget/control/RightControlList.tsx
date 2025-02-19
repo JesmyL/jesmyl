@@ -1,18 +1,8 @@
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
-import { ScheduleWidgetRightTexts, ScheduleWidgetRightsCtrl } from 'shared/api';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
+import { ScheduleWidgetRightsCtrl, ScheduleWidgetRightTexts } from 'shared/api';
 import styled from 'styled-components';
 
-export default function ScheduleWidgetRightControlList({
-  R,
-  rightCtrl,
-  className,
-  isCantEdit,
-  isDescriptionsCollect,
-  isHidden,
-  isReverse,
-  isDisabled,
-  onSend,
-}: {
+type Props = {
   R?: number;
   className?: string;
   isCantEdit?: boolean;
@@ -22,7 +12,19 @@ export default function ScheduleWidgetRightControlList({
   isHidden?: (type: ScheduleWidgetRightTexts<number>, typei: number) => boolean;
   isReverse?: boolean;
   isDisabled?: (type: ScheduleWidgetRightTexts<number>, typei: number) => boolean;
-}) {
+};
+
+export const ScheduleWidgetRightControlList = ({
+  R,
+  rightCtrl,
+  className,
+  isCantEdit,
+  isDescriptionsCollect,
+  isHidden,
+  isReverse,
+  isDisabled,
+  onSend,
+}: Props) => {
   let isCan = true;
 
   return (
@@ -63,7 +65,7 @@ export default function ScheduleWidgetRightControlList({
       })}
     </>
   );
-}
+};
 
 const Desc = styled.div`
   font-size: 0.7em;

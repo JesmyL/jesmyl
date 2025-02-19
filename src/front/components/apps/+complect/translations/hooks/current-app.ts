@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { complectIDB } from '../../_idb/complectIDB';
+import { complectIDB } from '../../../../../basis/idb';
 import { TranslationViewApp } from '../Translations.model';
 
 export const useSwitchCurrentTranslationTextApp = () => {

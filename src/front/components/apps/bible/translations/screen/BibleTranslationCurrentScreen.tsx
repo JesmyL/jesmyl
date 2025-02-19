@@ -7,7 +7,7 @@ import {
 import { useBibleScreenTranslationConfig } from '../hooks/configs';
 import { BibleTranslationScreen } from './BibleTranslationScreen';
 
-export default function BibleTranslationCurrentScreen(props: TranslationScreenProps) {
+export const BibleTranslationCurrentScreen = (props: TranslationScreenProps) => {
   const currentConfigi = useScreenTranslationCurrentConfigi();
   const currentConfig = useBibleScreenTranslationConfig(props.screeni ?? currentConfigi);
 
@@ -23,4 +23,4 @@ export default function BibleTranslationCurrentScreen(props: TranslationScreenPr
       isVisible={props.isPreview ? true : isActualVisible}
     />
   );
-}
+};

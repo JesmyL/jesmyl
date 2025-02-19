@@ -1,4 +1,4 @@
-import { mylib, MyLib } from 'front/utils';
+import { mylib, MyLib } from '#shared/lib/my-lib';
 import React, { ReactNode } from 'react';
 import {
   IScheduleWidget,
@@ -10,9 +10,9 @@ import {
 import { emptyFunc } from 'shared/utils';
 import { AttTranslatorType, attTranslatorTypes } from '../../../../../back/apps/index/schedules/attTranslatorType';
 import { ScheduleWidgetAppAtt } from '../../ScheduleWidget.model';
-import ScheduleWidgetTopicTitle from '../../complect/TopicTitle';
+import { ScheduleWidgetTopicTitle } from '../../complect/TopicTitle';
 
-export default function ScheduleWidgetDayEventPeriodicTranslation(props: {
+export const ScheduleWidgetDayEventPeriodicTranslation = (props: {
   day: IScheduleWidgetDay;
   dayi: number;
   attKey: ScheduleWidgetAttKey;
@@ -20,7 +20,7 @@ export default function ScheduleWidgetDayEventPeriodicTranslation(props: {
   schedule: IScheduleWidget;
   appAtt: ScheduleWidgetAppAtt;
   dayEventAttScopeProps: ScheduleDayEventAttachmentScopeProps;
-}) {
+}) => {
   const [attTranslatorType] = props.att;
   const periodTitle = attTranslatorTypes.find(({ id }) => attTranslatorType === id)?.title;
   const nodes: ReactNode[][] = [];
@@ -141,4 +141,4 @@ export default function ScheduleWidgetDayEventPeriodicTranslation(props: {
       )}
     </>
   );
-}
+};

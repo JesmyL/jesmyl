@@ -1,15 +1,14 @@
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from '#shared/ui/icon';
+import { ModalBody, ModalHeader } from '#shared/ui/modal';
+import { SendableField } from '#shared/ui/sendable/SendableField';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import {
   IScheduleWidgetListCat,
   IScheduleWidgetListUnit,
   IScheduleWidgetUserCati,
   ScheduleUnitScopeProps,
 } from 'shared/api';
-import { ModalBody } from '../../modal/Modal/ModalBody';
-import { ModalHeader } from '../../modal/Modal/ModalHeader';
-import StrongEditableField from '../../strong-control/field/StrongEditableField';
-import { LazyIcon } from '../../the-icon/LazyIcon';
-import ScheduleWidgetUserList from '../control/users/UserList';
+import { ScheduleWidgetUserList } from '../control/users/UserList';
 import { schListsSokiInvocatorClient, schUsersSokiInvocatorClient } from '../invocators/invocators.methods';
 
 type Props = {
@@ -32,7 +31,7 @@ export const ScheduleWidgetListUnitRedactor = ({ unit, cat, cati, shortTitles, u
         </div>
       </ModalHeader>
       <ModalBody>
-        <StrongEditableField
+        <SendableField
           icon="Bookmark03"
           title="Название"
           value={unit}
@@ -40,7 +39,7 @@ export const ScheduleWidgetListUnitRedactor = ({ unit, cat, cati, shortTitles, u
           isRedact
           onSend={value => schListsSokiInvocatorClient.setUnitTitle(null, unitScopeData, value, cati)}
         />
-        <StrongEditableField
+        <SendableField
           icon="File02"
           title="Описание"
           value={unit}

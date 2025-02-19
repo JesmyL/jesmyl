@@ -1,9 +1,9 @@
 import { useLiveQuery } from 'dexie-react-hooks';
+import { PhaseContainerConfigurer } from 'front/complect/phase-container/PhaseContainerConfigurer';
 import { indexIDB } from 'front/components/index/db/index-idb';
 import { Route, Routes } from 'react-router-dom';
-import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
 import { MeetingSchPackFace } from './MeetingSchPackFace';
-import TheMeetingsEvent from './TheMeetingsEvent';
+import { TheMeetingsEvent } from './TheMeetingsEvent';
 
 export const TheMeetings = () => {
   return (

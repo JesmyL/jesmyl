@@ -1,10 +1,10 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { LazyIcon } from '#shared/ui/icon';
 import { useEffect, useReducer, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import { atom, useAtom } from '../../../../../../complect/atoms';
-import { backSwipableContainerMaker } from '../../../../../../complect/backSwipableContainerMaker';
-import { useActualRef } from '../../../../../../complect/useActualRef';
-import FontSizeContain from '../../../base/font-size-contain/FontSizeContain';
+import { useActualRef } from '../../../../../../shared/lib/+hooks/useActualRef';
+import { atom, useAtom } from '../../../../../../shared/lib/atom';
+import { backSwipableContainerMaker } from '../../../../../../shared/lib/backSwipableContainerMaker';
+import { FontSizeContain } from '../../../base/font-size-contain/FontSizeContain';
 import { useCloseTranslation } from '../hooks/close-translation';
 import { useCmScreenTranslationComNavigations } from '../hooks/com-navigation';
 import { useCmScreenTranslationComTextNavigations } from '../hooks/com-texts';
@@ -15,7 +15,7 @@ const style = { padding: '5px' };
 
 const isShowAtom = atom(true);
 
-export default function TranslationFullscreen() {
+export function TranslationFullscreen() {
   const [forceUpdates, forceUpdate] = useReducer(forceUpdater, 0);
   const [isShowInfo, setIsShowInfo] = useAtom(isShowAtom);
   const [swipes, setSwipes] = useState(emptyObj);

@@ -1,17 +1,15 @@
+import { LazyIcon } from '#shared/ui/icon';
 import { ReactNode, useState } from 'react';
 import { IScheduleWidgetListUnit } from 'shared/api';
-import { LazyIcon } from '../../the-icon/LazyIcon';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 
-export default function ScheduleWidgetListUnitFace({
-  unitMi,
-  unit: topUnit,
-  postfix,
-}: {
+type Props = {
   unitMi?: number;
   unit?: IScheduleWidgetListUnit;
   postfix?: ReactNode;
-}) {
+};
+
+export const ScheduleWidgetListUnitFace = ({ unitMi, unit: topUnit, postfix }: Props) => {
   const rights = useScheduleWidgetRightsContext();
   const [isShowMentors, setIsShowMentors] = useState(false);
 
@@ -44,4 +42,4 @@ export default function ScheduleWidgetListUnitFace({
       {postfix}
     </div>
   );
-}
+};

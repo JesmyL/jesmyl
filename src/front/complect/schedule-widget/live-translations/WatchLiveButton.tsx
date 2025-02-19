@@ -1,7 +1,7 @@
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
+import { IconButton } from '#shared/ui/icon';
 import { useSearchParams } from 'react-router-dom';
 import { IScheduleWidgetWid } from 'shared/api';
-import { FullContent } from '../../fullscreen-content/FullContent';
-import IconButton from '../../the-icon/IconButton';
 import { ScheduleWidgetLiveTranslation } from './Live';
 
 const queryKey = 'follow';

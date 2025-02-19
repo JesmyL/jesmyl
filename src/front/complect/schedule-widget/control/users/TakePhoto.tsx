@@ -1,20 +1,19 @@
-import { FullContent } from 'front/complect/fullscreen-content/FullContent';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
+import { IconButton, LazyIcon } from '#shared/ui/icon';
 import { indexIDB } from 'front/components/index/db/index-idb';
 import { useEffect, useRef, useState } from 'react';
 import { IScheduleWidgetUser } from 'shared/api';
 import { isNIs } from 'shared/utils';
 import styled from 'styled-components';
-import IconButton from '../../../the-icon/IconButton';
 import { getScheduleWidgetUserPhotoStorageKey } from '../../storage';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
-import ScheduleWidgetUserPhoto from './UserPhoto';
+import { ScheduleWidgetUserPhoto } from './UserPhoto';
 
 interface Props {
   user: IScheduleWidgetUser;
 }
 
-export default function ScheduleWidgetUserTakePhoto({ user }: Props) {
+export const ScheduleWidgetUserTakePhoto = ({ user }: Props) => {
   const [isFullNodeOpen, setIsFullNodeOpen] = useState(false);
 
   return (
@@ -37,7 +36,7 @@ export default function ScheduleWidgetUserTakePhoto({ user }: Props) {
       />
     </>
   );
-}
+};
 
 const widthProportion = 200;
 const heightProportion = 300;

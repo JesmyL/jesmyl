@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { contextCreator } from '../../../../complect/contextCreator';
+import { contextCreator } from '../../../../shared/lib/contextCreator';
 import { useBibleTranslationJoinAddress } from '../hooks/address/address';
 import { useBibleAddressBooki } from '../hooks/address/books';
 import { useBibleAddressChapteri } from '../hooks/address/chapters';

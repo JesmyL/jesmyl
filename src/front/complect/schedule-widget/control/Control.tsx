@@ -1,15 +1,14 @@
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import useModal from '../../modal/useModal';
-import SendableDropdown from '../../sends/dropdown/SendableDropdown';
-import StrongEditableField from '../../strong-control/field/StrongEditableField';
-import IconButton from '../../the-icon/IconButton';
+import { IconButton, LazyIcon } from '#shared/ui/icon';
+import { useModal } from '#shared/ui/modal';
+import { SendableDropdown } from '#shared/ui/sendable/Dropdown';
+import { SendableField } from '#shared/ui/sendable/SendableField';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
-import ScheduleWidgetRegisterType from './RegisterType';
+import { ScheduleWidgetRegisterType } from './RegisterType';
 import { ScheduleWidgetUserAddByExcel } from './users/excel/AddByExcel';
-import ScheduleWidgetUserList from './users/UserList';
+import { ScheduleWidgetUserList } from './users/UserList';
 
 const tgInformTimesItems = [
   { title: 'Напоминать только по началу', id: 0 },
@@ -49,7 +48,7 @@ export const ScheduleWidgetControl = () => {
                     )
                   }
                 />
-                <StrongEditableField
+                <SendableField
                   value={rights.schedule.tgChatReqs}
                   isRedact
                   setSelfRedact

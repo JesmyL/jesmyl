@@ -12,7 +12,7 @@ interface Props {
   className?: string;
 }
 
-export default function ScheduleWidgetUserPhoto({ user, justRenderItOnEmpty, className, or }: Props) {
+export const ScheduleWidgetUserPhoto = ({ user, justRenderItOnEmpty, className, or }: Props) => {
   const rights = useScheduleWidgetRightsContext();
   const src = useLiveQuery(() =>
     indexIDB.db.schedulePhotos.get(getScheduleWidgetUserPhotoStorageKey(user, rights.schedule)),
@@ -35,7 +35,7 @@ export default function ScheduleWidgetUserPhoto({ user, justRenderItOnEmpty, cla
       )}
     </>
   );
-}
+};
 
 const StyledImg = styled.img`
   max-width: 100%;

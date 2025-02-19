@@ -1,7 +1,7 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
 import { useEffect, useMemo, useState } from 'react';
 import { isIPhone } from '../../../../../../../complect/device-differences';
-import { addEventListenerPipe, hookEffectPipe } from '../../../../../../../complect/hookEffectPipe';
+import { addEventListenerPipe, hookEffectPipe } from '../../../../../../../shared/lib/hookEffectPipe';
 import { ComFaceListProps } from './_ComList';
 
 const initComsBefore = 10;

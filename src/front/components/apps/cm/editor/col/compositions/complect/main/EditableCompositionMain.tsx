@@ -1,12 +1,12 @@
-import { useAtomSet } from 'front/complect/atoms';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { useAtomSet } from '#shared/lib/atom';
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
+import { LazyIcon } from '#shared/ui/icon';
+import { useConfirm } from '#shared/ui/modal';
 import { InputWithLoadingIcon } from 'front/components/apps/cm/base/InputWithLoadingIcon';
 import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
 import { emptyFunc } from 'shared/utils';
-import Dropdown from '../../../../../../../../complect/dropdown/Dropdown';
-import { DropdownItem } from '../../../../../../../../complect/dropdown/Dropdown.model';
-import { useConfirm } from '../../../../../../../../complect/modal/confirm/useConfirm';
+import { DropdownItem } from '../../../../../../../../shared/ui/dropdown/Dropdown.model';
 import { useAuth } from '../../../../../../../index/atoms';
 import { ChordVisibleVariant } from '../../../../../Cm.model';
 import { TheCom } from '../../../../../col/com/TheCom';
@@ -27,7 +27,7 @@ const meterSizeItems: DropdownItem<3 | 4>[] = [
   },
 ];
 
-export default function EditableCompositionMain() {
+export function EditableCompositionMain() {
   const ccom = useEditableCcom();
   const setRemovedComs = useAtomSet(removedCompositionsAtom);
   const auth = useAuth();

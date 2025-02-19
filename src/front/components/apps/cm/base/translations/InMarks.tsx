@@ -14,4 +14,3 @@ export const CmTranslationComListContextInMarks = function InMarks({ children }:
 
   return <CmComListContext.Provider value={value}>{children}</CmComListContext.Provider>;
 };
-export default CmTranslationComListContextInMarks;

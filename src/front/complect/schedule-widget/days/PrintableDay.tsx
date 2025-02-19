@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import ScheduleWidgetContextWrapper from '../general/ContextWrapper';
+import { ScheduleWidgetContextWrapper } from '../general/ContextWrapper';
 import { useScheduleWidgetRights } from '../useScheduleWidget';
 import { ScheduleWidgetDay, ScheduleWidgetDayProps } from './Day';
 import { StyledScheduleWidgetDayEvent } from './events/DayEvent';
 
-export default function ScheduleWidgetPrintableDay(props: ScheduleWidgetDayProps & { win: typeof window }) {
+export const ScheduleWidgetPrintableDay = (props: ScheduleWidgetDayProps & { win: typeof window }) => {
   const [fontSize, setFontSize] = useState(40);
   const page = useRef<HTMLDivElement>(null);
 
@@ -47,7 +47,7 @@ export default function ScheduleWidgetPrintableDay(props: ScheduleWidgetDayProps
       </StyledForPrint>
     </ScheduleWidgetContextWrapper>
   );
-}
+};
 
 const StyledForPrint = styled.div`
   padding: 30px;

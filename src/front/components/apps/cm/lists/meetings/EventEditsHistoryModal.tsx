@@ -1,10 +1,8 @@
-import TheButton from 'front/complect/Button';
-import Modal from 'front/complect/modal/Modal/Modal';
-import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
-import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
-import { TheIconLoading } from 'front/complect/the-icon/IconLoading';
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { TheButton } from '#shared/ui/Button';
+import { TheIconLoading } from '#shared/ui/icon';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import { useEffect, useState } from 'react';
 import { ScheduleComPackHistoryItem } from 'shared/api';
 import { emptyFunc } from 'shared/utils';

@@ -1,25 +1,25 @@
+import { PhaseContainerConfigurer } from 'front/complect/phase-container/PhaseContainerConfigurer';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { FullContent } from '../../../../../complect/fullscreen-content/FullContent';
-import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
+import { FullContent } from '../../../../../shared/ui/fullscreen-content/FullContent';
 import { useBibleAddressBooki } from '../../hooks/address/books';
 import { useBibleAddressChapteri } from '../../hooks/address/chapters';
 import { useBibleAddressVersei } from '../../hooks/address/verses';
 import { useBibleBookList } from '../../hooks/texts';
 import { BibleAddressSingle } from '../../texts/BibleAddressSingle';
-import BibleTranslatesContextProvider, { useBibleTranslatesContext } from '../../translates/TranslatesContext';
+import { BibleTranslatesContextProvider, useBibleTranslatesContext } from '../../translates/TranslatesContext';
 import { BibleModulesTranslations } from '../../translates/Translations';
 import { useBibleShowTranslatesValue } from '../../translates/hooks';
 import { useBibleSingleAddressSetter } from '../../translations/lists/atoms';
-import BibleReaderBook from './BookPage';
+import { BibleReaderBook } from './BookPage';
 
-export default function BibleReaderCurrentBookPage() {
+export const BibleReaderCurrentBookPage = () => {
   return (
     <BibleTranslatesContextProvider>
       <Content />
     </BibleTranslatesContextProvider>
   );
-}
+};
 
 function Content() {
   const currentBooki = useBibleAddressBooki();

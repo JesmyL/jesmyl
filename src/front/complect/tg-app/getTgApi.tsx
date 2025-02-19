@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Script } from '../tags/Script';
+import { Script } from '../../shared/ui/tags/Script';
 import { TelegramWebApp } from './model';
 
 let tgApi: TelegramWebApp | nil = null;

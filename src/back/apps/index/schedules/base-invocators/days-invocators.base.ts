@@ -1,5 +1,5 @@
+import { mylib } from '#shared/lib/my-lib';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
-import { mylib } from 'front/utils';
 import { IScheduleWidgetDayEventMi } from 'shared/api';
 import { SchDaysSokiInvocatorMethods } from 'shared/api/invocators/schedules/invocators.model';
 import { makeRegExp, smylib } from 'shared/utils';

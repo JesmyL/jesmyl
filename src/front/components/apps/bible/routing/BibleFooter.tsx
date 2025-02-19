@@ -1,5 +1,5 @@
-import AppFooter from '../../../../app/AppFooter';
-import AppFooterItem from '../../../../app/AppFooterItem';
+import { AppFooter } from '../../../../app/AppFooter';
+import { AppFooterItem } from '../../../../app/AppFooterItem';
 
 export const BibleFooter = () => {
   return (

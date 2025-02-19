@@ -1,4 +1,7 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { TheButton } from '#shared/ui/Button';
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { useMemo, useState } from 'react';
 import styled from 'styled-components';
 import {
@@ -6,10 +9,7 @@ import {
   WedGuestConversation,
   WedGuestSex,
 } from '../../../../../shared/api/complect/apps/wed/complect/model';
-import TheButton from '../../../../complect/Button';
-import Dropdown from '../../../../complect/dropdown/Dropdown';
-import { FullContent } from '../../../../complect/fullscreen-content/FullContent';
-import { useGetExcelValueList } from '../../../../complect/useGetExcelValueList';
+import { useGetExcelValueList } from '../../../../shared/lib/+hooks/useGetExcelValueList';
 import { WedGuestFace } from './GuestFace';
 
 interface Props {

@@ -1,5 +1,5 @@
-import IconButton from 'front/complect/the-icon/IconButton';
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { IconButton } from '#shared/ui/icon';
 import styled from 'styled-components';
 import { cmIDB } from '../../_db/cm-idb';
 

@@ -1,21 +1,21 @@
+import { mylib } from '#shared/lib/my-lib';
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
+import { LazyIcon } from '#shared/ui/icon';
+import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
+import { SendButton } from '#shared/ui/sendable/SendButton';
 import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/scope-props-contexts';
 import { schGamesSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
-import SendButton from 'front/complect/sends/send-button/SendButton';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { mylib } from 'front/utils';
 import { useEffect, useState } from 'react';
 import { IScheduleWidgetExportableTeam, IScheduleWidgetUserMi } from 'shared/api';
-import Dropdown from '../../../../../dropdown/Dropdown';
-import KeyboardInput from '../../../../../keyboard/KeyboardInput';
 import { useScheduleWidgetRightsContext } from '../../../../useScheduleWidget';
-import ScheduleWidgetRemovableUserFace from '../../RemovableUserFace';
+import { ScheduleWidgetRemovableUserFace } from '../../RemovableUserFace';
 import { useSchWGameContext } from '../Games';
 
 const arrayMapper = () => [];
 const retriesLine = [40, 100, 200, 300, 600, 1000, 2000, 5000, 20000, 100000];
 const defStrikedUsers: IScheduleWidgetUserMi[] = [];
 
-export default function ScheduleWidgetTeamGameSetTeamsScreen() {
+export const ScheduleWidgetTeamGameSetTeamsScreen = () => {
   const rights = useScheduleWidgetRightsContext();
   const game = useSchWGameContext();
 
@@ -178,4 +178,4 @@ export default function ScheduleWidgetTeamGameSetTeamsScreen() {
       )}
     </>
   );
-}
+};

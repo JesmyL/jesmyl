@@ -1,6 +1,6 @@
+import { mylib } from '#shared/lib/my-lib';
 import { FileStore } from 'back/complect/FileStore';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
-import { mylib } from 'front/utils';
 import { ICmComComment, IExportableCat, IExportableCom } from 'shared/api';
 import { CmFreshSokiInvocatorModel } from 'shared/api/invocators/cm/fresh-invocators.model';
 import { cmCatServerInvocatorBase } from './cat-invocator.base';

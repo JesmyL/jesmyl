@@ -1,10 +1,10 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
 import { useCallback, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { cmIDB } from '../_db/cm-idb';
 import { useComs } from '../cols/useCols';
 
-export default function useSelectedComs() {
+export const useSelectedComs = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedComws, setSelectedComws] = cmIDB.use.selectedComws();
   const selectedComs = useComs(selectedComws);
@@ -52,4 +52,4 @@ export default function useSelectedComs() {
     toggleSelectedCom,
     setSelectedComws,
   };
-}
+};

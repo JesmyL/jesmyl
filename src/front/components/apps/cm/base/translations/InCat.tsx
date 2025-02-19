@@ -3,7 +3,7 @@ import { useCcat } from '../../col/cat/useCcat';
 import { useComs } from '../../cols/useCols';
 import { CmComListContext, CmComListContextValue } from './context';
 
-const CmTranslationComListContextInCat = function InCat({ children }: { children: React.ReactNode }) {
+export const CmTranslationComListContextInCat = function InCat({ children }: { children: React.ReactNode }) {
   const cat = useCcat();
   const coms = useComs(cat?.comws);
 
@@ -18,5 +18,3 @@ const CmTranslationComListContextInCat = function InCat({ children }: { children
 
   return <CmComListContext.Provider value={value}>{children}</CmComListContext.Provider>;
 };
-
-export default CmTranslationComListContextInCat;

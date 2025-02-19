@@ -1,4 +1,4 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { LazyIcon } from '#shared/ui/icon';
 import { useRef, useState } from 'react';
 import { TranslationScreenProps } from '../../../+complect/translations/Translations.model';
 import { useSetScreenTranslationInteractiveBackground } from '../../../+complect/translations/hooks/interactive-back';
@@ -9,7 +9,7 @@ import { useGetBibleScreenTranslationWrapperStyle } from '../hooks/styles/wrappe
 import { BibleTranslationScreenConfig } from '../model';
 import { BibleTranslationScreenAddressContainer } from './complect/AddressContainer';
 import { BibleTranslationScreenAddressPanel } from './complect/AddressPanel';
-import BibleTranslationScreenContent from './complect/Content';
+import { BibleTranslationScreenContent } from './complect/Content';
 import { BibleTranslationScreenContentConfiguration } from './complect/ContentConfiguration';
 
 interface Props extends TranslationScreenProps {

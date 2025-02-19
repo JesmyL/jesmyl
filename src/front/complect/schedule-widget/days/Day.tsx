@@ -1,6 +1,8 @@
-import { FullContent } from 'front/complect/fullscreen-content/FullContent';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { mylib, MyLib } from 'front/utils';
+import { useIsRedactArea } from '#shared/lib/+hooks/useIsRedactArea';
+import { mylib, MyLib } from '#shared/lib/my-lib';
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
+import { IconButton, LazyIcon } from '#shared/ui/icon';
+import { SendableField } from '#shared/ui/sendable/SendableField';
 import { useMemo, useState } from 'react';
 import {
   indexScheduleCheckIsDayIsPast,
@@ -12,15 +14,12 @@ import {
 } from 'shared/api';
 import { isNIs } from 'shared/utils';
 import styled from 'styled-components';
-import StrongEditableField from '../../strong-control/field/StrongEditableField';
-import IconButton from '../../the-icon/IconButton';
-import useIsRedactArea from '../../useIsRedactArea';
-import ScheduleAlarmDay from '../alarm/AlarmDay';
+import { ScheduleAlarmDay } from '../alarm/AlarmDay';
 import { ScheduleDayScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schDaysSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
-import ScheduleWidgetDayEditPanel from './DayEditPanel';
-import ScheduleWidgetDayEventList from './events/DayEventList';
+import { ScheduleWidgetDayEditPanel } from './DayEditPanel';
+import { ScheduleWidgetDayEventList } from './events/DayEventList';
 
 export interface ScheduleWidgetDayProps {
   day: IScheduleWidgetDay;
@@ -120,7 +119,7 @@ export const ScheduleWidgetDay = ({
             {rights.isCanReadTitles && (
               <div className="day-info">
                 {(isRedact || day.topic) && (
-                  <StrongEditableField
+                  <SendableField
                     value={day}
                     fieldKey="topic"
                     isRedact={isRedact}
@@ -130,7 +129,7 @@ export const ScheduleWidgetDay = ({
                   />
                 )}
                 {(isRedact || day.dsc) && (
-                  <StrongEditableField
+                  <SendableField
                     value={day}
                     fieldKey="dsc"
                     isRedact={isRedact}

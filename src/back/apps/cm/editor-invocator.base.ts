@@ -1,6 +1,6 @@
+import { mylib } from '#shared/lib/my-lib';
 import { FileStore } from 'back/complect/FileStore';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
-import { mylib } from 'front/utils';
 import { EeStorePack } from 'shared/api';
 import { ChordPack } from 'shared/api/complect/apps/cm/complect/chord-card';
 import { CmEditorSokiInvocatorModel } from 'shared/api/invocators/cm/editor-invocators.model';

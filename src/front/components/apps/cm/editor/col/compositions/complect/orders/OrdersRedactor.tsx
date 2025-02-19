@@ -1,18 +1,17 @@
-import TheButton from 'front/complect/Button';
-import IconButton from 'front/complect/the-icon/IconButton';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { TheButton } from '#shared/ui/Button';
+import { IconButton, LazyIcon } from '#shared/ui/icon';
+import { TheOrder } from 'front/components/apps/cm/col/com/order/TheOrder';
 import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
-import { BottomPopup } from '../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopup';
+import { BottomPopup } from '../../../../../../../../shared/ui/absolute-popup/bottom-popup/BottomPopup';
 import { ChordVisibleVariant } from '../../../../../Cm.model';
-import TheOrder from '../../../../../col/com/order/TheOrder';
 import { EditableCom } from '../../com/EditableCom';
 import { useEditableCcom } from '../../useEditableCcom';
 import { OrdersRedactorOrderTools, OrdersRedactorOrderToolsProps } from './OrdersRedactorOrderTools';
 import { OrdersRedactorAdditions } from './additions/Additions';
 import { CmComOrderOnClickBetweenData } from './model';
 
-export default function OrdersRedactor() {
+export function OrdersRedactor() {
   const ccom = useEditableCcom();
   const [newBlockAdderPopupCom, setNewBlockAdderPopupCom] = useState<EditableCom | false>(false);
   const [toolProps, setToolProps] = useState<OrdersRedactorOrderToolsProps | false>(false);

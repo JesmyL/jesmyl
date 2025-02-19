@@ -1,5 +1,7 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { MyLib, mylib } from 'front/utils';
+import { useIsRedactArea } from '#shared/lib/+hooks/useIsRedactArea';
+import { MyLib, mylib } from '#shared/lib/my-lib';
+import { IconButton, LazyIcon } from '#shared/ui/icon';
+import { SendableField } from '#shared/ui/sendable/SendableField';
 import { ReactNode, useMemo } from 'react';
 import {
   indexScheduleGetEventFinishMs,
@@ -12,17 +14,14 @@ import {
   ScheduleWidgetCleans,
 } from 'shared/api';
 import styled from 'styled-components';
-import { useIsRememberExpand } from '../../../expand/useIsRememberExpand';
-import StrongEditableField from '../../../strong-control/field/StrongEditableField';
-import IconButton from '../../../the-icon/IconButton';
-import useIsRedactArea from '../../../useIsRedactArea';
-import ScheduleWidgetBindAttRefKeyButton from '../../atts/BindAttRefKeyButton';
+import { useIsRememberExpand } from '../../../../shared/ui/expand/useIsRememberExpand';
+import { ScheduleWidgetBindAttRefKeyButton } from '../../atts/BindAttRefKeyButton';
 import { ScheduleWidgetBindAtts } from '../../atts/BindAtts';
-import ScheduleWidgetTopicTitle from '../../complect/TopicTitle';
-import ScheduleWidgetDayEventAtts from '../../events/atts/DayEventAtts';
+import { ScheduleWidgetTopicTitle } from '../../complect/TopicTitle';
+import { ScheduleWidgetDayEventAtts } from '../../events/atts/DayEventAtts';
 import { schDayEventsSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
-import ScheduleWidgetDayEventRating from './DayEventRating';
+import { ScheduleWidgetDayEventRating } from './DayEventRating';
 import { DayEventRedactControls } from './RedactControls';
 
 const msInMin = mylib.howMs.inMin;
@@ -48,7 +47,7 @@ interface Props {
   dayScopeProps: ScheduleDayScopeProps;
 }
 
-export default function ScheduleWidgetDayEvent(props: Props) {
+export const ScheduleWidgetDayEvent = (props: Props) => {
   let timeMark = '';
   let timerClassNamePlus = '';
   const rights = useScheduleWidgetRightsContext();
@@ -217,7 +216,7 @@ export default function ScheduleWidgetDayEvent(props: Props) {
               )
             )}
             {(isRedact || props.event.dsc) && (
-              <StrongEditableField
+              <SendableField
                 isRedact={isRedact}
                 multiline
                 value={props.event}
@@ -289,7 +288,7 @@ export default function ScheduleWidgetDayEvent(props: Props) {
       {timeToTitle}
     </>
   );
-}
+};
 
 const StyledContent = styled.div`
   opacity: 0;

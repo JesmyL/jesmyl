@@ -3,7 +3,8 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { isTouchDevice } from '../complect/device-differences';
 import { AppName } from './App.model';
-import AppFooterItem, {
+import {
+  AppFooterItem,
   CurrentAppFooterItemAppNameContext,
   CurrentAppFooterItemPlaceContext,
   footerItemPlaceLsPrefix,
@@ -11,7 +12,7 @@ import AppFooterItem, {
 
 export const lastVisitedRouteLsName = 'nav-last-visited-route';
 
-export default function AppFooter({ children }: { children: React.ReactNode }) {
+export const AppFooter = ({ children }: { children: React.ReactNode }) => {
   const loc = useLocation();
 
   const [, appName, place] = loc.pathname.split('/', 3) as [string, AppName | und, string | und];
@@ -43,7 +44,7 @@ export default function AppFooter({ children }: { children: React.ReactNode }) {
       </CurrentAppFooterItemPlaceContext.Provider>
     </CurrentAppFooterItemAppNameContext.Provider>
   );
-}
+};
 
 const StyledFooter = styled.div.attrs({ className: 'footer-menu' })`
   display: flex;

@@ -1,15 +1,12 @@
-import Modal from 'front/complect/modal/Modal/Modal';
-import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
-import { ModalFooter } from 'front/complect/modal/Modal/ModalFooter';
-import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import SendButton from 'front/complect/sends/send-button/SendButton';
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
+import { IconButton } from '#shared/ui/icon';
+import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
+import { SendButton } from '#shared/ui/sendable/SendButton';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import { useState } from 'react';
-import KeyboardInput from '../../keyboard/KeyboardInput';
-import IconButton from '../../the-icon/IconButton';
 import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 
-export default function ScheduleCreateWidgetButton() {
+export const ScheduleCreateWidgetButton = () => {
   const [title, setTitle] = useState('');
   const [isOpenModal, setIsOpenModal] = useState(false);
 
@@ -69,4 +66,4 @@ export default function ScheduleCreateWidgetButton() {
       )}
     </>
   );
-}
+};

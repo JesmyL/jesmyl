@@ -1,5 +1,5 @@
-import { mylib } from 'front/utils';
-import SourceBased from '../../../../../../complect/SourceBased';
+import { mylib } from '#shared/lib/my-lib';
+import { SourceBased } from '#shared/lib/SourceBased';
 import * as styles from '../../../resources/block-styles.json';
 import { IExportableSetts } from './BlockStyles.model';
 import { StyleBlock } from './StyleBlock';
@@ -11,7 +11,7 @@ export class BlockStyles extends SourceBased<IExportableSetts> {
 
   constructor(top: IExportableSetts) {
     super(top);
-    this.styles = mylib.typ([], top.styles).map(st => new StyleBlock(st));
+    this.styles = top.styles.map(st => new StyleBlock(st));
 
     const levelStyles: Record<number, StyleBlock[]> = {};
     this.styles

@@ -1,10 +1,9 @@
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
+import { IconButton } from '#shared/ui/icon';
+import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { FullContent } from 'front/complect/fullscreen-content/FullContent';
-import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
-import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import IconButton from 'front/complect/the-icon/IconButton';
 import React, { useState } from 'react';
-import { complectIDB } from '../../../_idb/complectIDB';
+import { complectIDB } from '../../../../../../basis/idb';
 import { defaultAlertLineConfig } from '../../atoms';
 import { AlertLineConfigSettingsInner } from './AlertLineConfigSettings';
 

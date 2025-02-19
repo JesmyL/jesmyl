@@ -2,7 +2,7 @@ import React from 'react';
 import { makeRegExp } from 'shared/utils';
 import { ChordVisibleVariant } from '../../../Cm.model';
 import { Com } from '../Com';
-import ComLine from '../line/ComLine';
+import { ComLine } from '../line/ComLine';
 import { Order } from './Order';
 import { IComLineProps, IComOrdHeaderProps } from './Order.model';
 
@@ -19,7 +19,7 @@ interface Props {
   isHideRepeats?: boolean;
 }
 
-export default function TheOrder(props: Props) {
+export function TheOrder(props: Props) {
   const orderUnit = props.orderUnit;
 
   if (

@@ -1,16 +1,13 @@
-import Modal from 'front/complect/modal/Modal/Modal';
-import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
-import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { IconButton, LazyIcon } from '#shared/ui/icon';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import { useState } from 'react';
 import { ScheduleWidgetAppAttCustomized } from 'shared/api';
-import IconButton from '../../../the-icon/IconButton';
 import { useScheduleScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
 import { schAttachmentTypesSokiInvocatorClient } from '../../invocators/invocators.methods';
-import ScheduleWidgetCustomAtt from './CustomAtt';
+import { ScheduleWidgetCustomAtt } from './CustomAtt';
 
-export default function ScheduleWidgetCustomAttachments(props: { tatts: ScheduleWidgetAppAttCustomized[] }) {
+export const ScheduleWidgetCustomAttachments = (props: { tatts: ScheduleWidgetAppAttCustomized[] }) => {
   const [isModalOpen, setIsModalOpen] = useState<unknown>(false);
   const scheduleScopeProps = useScheduleScopePropsContext();
 
@@ -56,4 +53,4 @@ export default function ScheduleWidgetCustomAttachments(props: { tatts: Schedule
       )}
     </div>
   );
-}
+};

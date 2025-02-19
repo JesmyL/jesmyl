@@ -4,7 +4,7 @@ import {
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
-import ScheduleCheckListAtt from './TheCheckListAtt';
+import { ScheduleCheckListAtt } from './TheCheckListAtt';
 
 export interface ScheduleChListAtt {
   list: ScheduleWidgetAppAttCheckListValueItem[];

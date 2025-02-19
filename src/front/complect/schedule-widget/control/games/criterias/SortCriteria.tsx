@@ -1,19 +1,19 @@
-import { FullContent } from 'front/complect/fullscreen-content/FullContent';
+import { mylib } from '#shared/lib/my-lib';
+import { TheButton } from '#shared/ui/Button';
+import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
+import { LazyIcon } from '#shared/ui/icon';
+import { SendableField } from '#shared/ui/sendable/SendableField';
 import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/scope-props-contexts';
 import { schGamesSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { mylib } from 'front/utils';
 import { useMemo, useState } from 'react';
 import { IScheduleWidgetTeamCriteria, IScheduleWidgetUser, ScheduleGameCriteriaScopeProps } from 'shared/api';
 import { isNIs } from 'shared/utils';
-import TheButton from '../../../../Button';
-import DebouncedSearchInput from '../../../../DebouncedSearchInput';
-import { ExpandableContent } from '../../../../expand/ExpandableContent';
-import StrongEditableField from '../../../../strong-control/field/StrongEditableField';
+import { ExpandableContent } from '../../../../../shared/ui/expand/ExpandableContent';
 import { useScheduleWidgetRightsContext } from '../../../useScheduleWidget';
-import ScheduleWidgetRemovableUserFace from '../RemovableUserFace';
+import { ScheduleWidgetRemovableUserFace } from '../RemovableUserFace';
 import { checkIsUserPhotoable } from '../utils';
-import ScheduleWidgetTeamsCriteriaSorterScreen from './sort/SorterScreen';
+import { ScheduleWidgetTeamsCriteriaSorterScreen } from './sort/SorterScreen';
 
 interface Props {
   criteriai: number;
@@ -22,7 +22,7 @@ interface Props {
 
 const itemIt = <Item,>({ item }: { item: Item }) => item;
 
-export default function ScheduleWidgetSortCriteria({ criteria, criteriai }: Props) {
+export const ScheduleWidgetSortCriteria = ({ criteria, criteriai }: Props) => {
   const rights = useScheduleWidgetRightsContext();
   const [isRenaming, setIsRenaming] = useState(false);
   const [isOpenSorter, setIsOpenSorter] = useState<unknown>(false);
@@ -69,7 +69,7 @@ export default function ScheduleWidgetSortCriteria({ criteria, criteriai }: Prop
       <ExpandableContent
         title={
           <div className="flex flex-gap">
-            <StrongEditableField
+            <SendableField
               value={criteria.title}
               placeholder="Новый критерий"
               isRedact={isRenaming}
@@ -141,4 +141,4 @@ export default function ScheduleWidgetSortCriteria({ criteria, criteriai }: Prop
       </ExpandableContent>
     </>
   );
-}
+};

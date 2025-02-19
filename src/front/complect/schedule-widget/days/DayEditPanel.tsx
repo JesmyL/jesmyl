@@ -1,14 +1,14 @@
-import { renderComponentInNewWindow } from 'front/shared/renders';
+import { renderComponentInNewWindow } from '#shared/lib/renders';
+import { IconButton } from '#shared/ui/icon';
+import { SendableDateTimeInput } from '#shared/ui/sendable/DateTimeInput';
 import { useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetDay, ScheduleScopeProps } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
-import { FullContent } from '../../fullscreen-content/FullContent';
-import StrongControlDateTimeExtracter from '../../strong-control/StrongDateTimeExtracter';
-import IconButton from '../../the-icon/IconButton';
+import { FullContent } from '../../../shared/ui/fullscreen-content/FullContent';
 import { useScheduleDayScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schDaysSokiInvocatorClient } from '../invocators/invocators.methods';
 import { ScheduleWidgetEventListUpdater } from './EventListUpdater';
-import ScheduleWidgetPrintableDay from './PrintableDay';
+import { ScheduleWidgetPrintableDay } from './PrintableDay';
 
 const dotReg = makeRegExp('/\\./');
 
@@ -19,13 +19,13 @@ interface Props {
   schedule: IScheduleWidget;
 }
 
-export default function ScheduleWidgetDayEditPanel({ day, dayi, schedule, scheduleScopeProps }: Props) {
+export const ScheduleWidgetDayEditPanel = ({ day, dayi, schedule, scheduleScopeProps }: Props) => {
   const [isOpenDayListUpdater, setIsOpenDayListUpdater] = useState<unknown>(false);
   const dayScopeProps = useScheduleDayScopePropsContext();
 
   return (
     <>
-      <StrongControlDateTimeExtracter
+      <SendableDateTimeInput
         value={day.wup?.toFixed?.(2).replace(dotReg, ' ') || ''}
         icon="Clock01"
         title="Начало дня"
@@ -72,4 +72,4 @@ export default function ScheduleWidgetDayEditPanel({ day, dayi, schedule, schedu
       )}
     </>
   );
-}
+};

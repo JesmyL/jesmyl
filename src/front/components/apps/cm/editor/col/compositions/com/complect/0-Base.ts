@@ -1,4 +1,4 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
 import { IExportableCom } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import { blockStyles } from '../../../../../col/com/block-styles/BlockStyles';

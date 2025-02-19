@@ -1,9 +1,9 @@
-import { mylib } from 'front/utils';
+import { propsOfClicker } from '#shared/lib/clicker/propsOfClicker';
+import { mylib } from '#shared/lib/my-lib';
 import { useMemo } from 'react';
 import { CmComWid } from '../../../../../../../../shared/api/complect/apps/cm/complect/enums';
-import { FloatPopup, useFloatPopupCoords } from '../../../../../../../complect/absolute-popup/float-popup/FloatPopup';
-import propsOfClicker from '../../../../../../../complect/clicker/propsOfClicker';
-import ComFaceContextMenu from '../ComFaceContextMenu';
+import { FloatPopup, useFloatPopupCoords } from '../../../../../../../shared/ui/absolute-popup/float-popup/FloatPopup';
+import { ComFaceContextMenu } from '../ComFaceContextMenu';
 import { ComFaceListProps, currentComwIdPrefix } from './_ComList';
 import { StyledComList } from './StyledComList';
 import { ComListPreviousSibling } from './StyledComListPrevious';

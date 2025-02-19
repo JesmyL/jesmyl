@@ -1,5 +1,7 @@
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { IconButton, LazyIcon } from '#shared/ui/icon';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
+import { SendableField } from '#shared/ui/sendable/SendableField';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import React, { ReactNode, useMemo, useState } from 'react';
 import {
   CustomAttUseRights,
@@ -11,19 +13,14 @@ import {
 } from 'shared/api';
 import { ScheduleWidgetRightsCtrl } from 'shared/api/complect/schedule-widget/complect/rights-constructor';
 import { itIt, itNIt } from 'shared/utils';
-import Modal from '../../../modal/Modal/Modal';
-import { ModalBody } from '../../../modal/Modal/ModalBody';
-import { ModalHeader } from '../../../modal/Modal/ModalHeader';
-import StrongEditableField from '../../../strong-control/field/StrongEditableField';
-import IconButton from '../../../the-icon/IconButton';
 import { useScheduleScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
-import ScheduleWidgetRightControlList from '../../control/RightControlList';
+import { ScheduleWidgetRightControlList } from '../../control/RightControlList';
 import { schAttachmentTypesSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
-import ScheduleWidgetCustomAttTitles from './CustomAttTitles';
+import { ScheduleWidgetCustomAttTitles } from './CustomAttTitles';
 import { ScheduleWidgetCustomAttLocalImagineSelector } from './LocalImagine';
 
-const LazyIconConfigurator = React.lazy(() => import('../../../configurators/Icon'));
+const LazyIconConfigurator = React.lazy(() => import('../../../../shared/ui/configurators/Icon'));
 
 enum WhoCan {
   Read,
@@ -44,11 +41,11 @@ const whoCanUnits: { action: string; rule: 'R' | 'U'; icon: TheIconKnownName }[]
   },
 ];
 
-export default function ScheduleWidgetCustomAtt(props: {
+export const ScheduleWidgetCustomAtt = (props: {
   tatt: ScheduleWidgetAppAttCustomized;
   isRedact?: boolean;
   topContent?: ReactNode;
-}) {
+}) => {
   // const selfScope = takeStrongScopeMaker(props.scope, ' tattMi/', props.tatt.mi);
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
@@ -103,7 +100,7 @@ export default function ScheduleWidgetCustomAtt(props: {
             }
           />
         )}
-        <StrongEditableField
+        <SendableField
           fieldKey="title"
           value={props.tatt}
           isRedact={props.isRedact}
@@ -114,7 +111,7 @@ export default function ScheduleWidgetCustomAtt(props: {
             schAttachmentTypesSokiInvocatorClient.setTitle(null, attachmentTypeScopeProps, value, props.tatt.title)
           }
         />
-        <StrongEditableField
+        <SendableField
           value={props.tatt}
           fieldKey="description"
           multiline
@@ -272,7 +269,7 @@ export default function ScheduleWidgetCustomAtt(props: {
                         <div className="margin-big-gap-l">
                           {props.tatt.titles?.map((title, titlei) => {
                             return (
-                              <StrongEditableField
+                              <SendableField
                                 key={titlei}
                                 isImpossibleEmptyValue
                                 value={title}
@@ -403,4 +400,4 @@ export default function ScheduleWidgetCustomAtt(props: {
       )}
     </>
   );
-}
+};

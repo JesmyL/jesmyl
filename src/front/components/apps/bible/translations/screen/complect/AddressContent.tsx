@@ -10,7 +10,7 @@ interface Props {
   windowResizeUpdatesNum: number | und;
 }
 
-export default function BibleTranslationScreenAddressContent(props: Props) {
+export const BibleTranslationScreenAddressContent = (props: Props) => {
   const addressTextWrapperStyle = useGetBibleScreenTranslationAddressTextWrapperStyle(props.bibleConfig);
   const addressText = useBibleAddressTextContext();
 
@@ -36,4 +36,4 @@ export default function BibleTranslationScreenAddressContent(props: Props) {
       </div>
     </>
   );
-}
+};

@@ -1,7 +1,7 @@
-import Modal from 'front/complect/modal/Modal/Modal';
-import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
-import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { IconButton } from '#shared/ui/icon';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
+import { SendableDiv } from '#shared/ui/sendable/SendableDiv';
 import { ReactNode, useState } from 'react';
 import {
   IScheduleWidget,
@@ -9,10 +9,8 @@ import {
   ScheduleWidgetAttRef,
   ScheduleWidgetDayEventAttValues,
 } from 'shared/api';
-import StrongDiv from '../../strong-control/StrongDiv';
-import IconButton from '../../the-icon/IconButton';
 import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
-import ScheduleWidgetAttFace from './AttFace';
+import { ScheduleWidgetAttFace } from './AttFace';
 
 type Props = {
   forTitle: ReactNode;
@@ -25,7 +23,7 @@ type Props = {
   onSend: (attRef: ScheduleWidgetAttRef) => Promise<unknown>;
 };
 
-export default function ScheduleWidgetBindAttRefKeyButton({
+export const ScheduleWidgetBindAttRefKeyButton = ({
   atts,
   forTitle,
   attKey,
@@ -34,7 +32,7 @@ export default function ScheduleWidgetBindAttRefKeyButton({
   schedule,
   onRemoveAttSend,
   onSend,
-}: Props) {
+}: Props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -65,7 +63,7 @@ export default function ScheduleWidgetBindAttRefKeyButton({
               const dayDate = new Date(schedule.start + dayi * mylib.howMs.inDay);
 
               return (
-                <StrongDiv
+                <SendableDiv
                   key={attKey + dayi + eventMi}
                   className="margin-big-gap-v"
                   onSuccess={() => setIsModalOpen(false)}
@@ -86,7 +84,7 @@ export default function ScheduleWidgetBindAttRefKeyButton({
                     />
                     <div className="fade-05">{tatt.description}</div>
                   </div>
-                </StrongDiv>
+                </SendableDiv>
               );
             })}
           </ModalBody>
@@ -94,4 +92,4 @@ export default function ScheduleWidgetBindAttRefKeyButton({
       )}
     </>
   );
-}
+};

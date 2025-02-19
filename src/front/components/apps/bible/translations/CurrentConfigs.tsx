@@ -1,16 +1,16 @@
+import { BackgroundConfigurator } from '#shared/ui/configurators/Background';
+import { ColorConfigurator } from '#shared/ui/configurators/Color';
+import { DisplayConfigurator } from '#shared/ui/configurators/Display';
+import { FontFamilyConfigurator } from '#shared/ui/configurators/FontFamily';
+import { FontStyleConfigurator } from '#shared/ui/configurators/FontStyle';
+import { FontWeightConfigurator } from '#shared/ui/configurators/FontWeight';
+import { OpacityConfigurator } from '#shared/ui/configurators/Opacity';
+import { ScreenTranslateConfigurationTextAlign } from '#shared/ui/configurators/TextAlign';
 import { useCallback } from 'react';
 import { ScreenTranslateConfigurationNameChanger } from '../../+complect/translations/complect/NameChanger';
-import { BackgroundConfigurator } from '../../../../complect/configurators/Background';
-import { ColorConfigurator } from '../../../../complect/configurators/Color';
-import { DisplayConfigurator } from '../../../../complect/configurators/Display';
-import { FontFamilyConfigurator } from '../../../../complect/configurators/FontFamily';
-import { FontStyleConfigurator } from '../../../../complect/configurators/FontStyle';
-import { FontWeightConfigurator } from '../../../../complect/configurators/FontWeight';
-import { OpacityConfigurator } from '../../../../complect/configurators/Opacity';
-import { ScreenTranslateConfigurationTextAlign } from '../../../../complect/configurators/TextAlign';
-import { ExpandableContent } from '../../../../complect/expand/ExpandableContent';
-import { useActualRef } from '../../../../complect/useActualRef';
-import { useDebounceAction } from '../../../../complect/useDebounceAction';
+import { useActualRef } from '../../../../shared/lib/+hooks/useActualRef';
+import { useDebounceAction } from '../../../../shared/lib/+hooks/useDebounceAction';
+import { ExpandableContent } from '../../../../shared/ui/expand/ExpandableContent';
 import { useUpdateBibleCurrentTranslationConfig } from './hooks/update-config';
 import { BibleTranslationScreenConfig } from './model';
 
@@ -18,7 +18,7 @@ interface Props {
   currentConfig: BibleTranslationScreenConfig;
 }
 
-export default function BibleTranslateCurrentScreenConfigurations({ currentConfig }: Props) {
+export const BibleTranslateCurrentScreenConfigurations = ({ currentConfig }: Props) => {
   const updateConfig = useUpdateBibleCurrentTranslationConfig();
   const update = useDebounceAction(updateConfig);
   const configRef = useActualRef(currentConfig);
@@ -128,4 +128,4 @@ export default function BibleTranslateCurrentScreenConfigurations({ currentConfi
       </ExpandableContent>
     </>
   );
-}
+};

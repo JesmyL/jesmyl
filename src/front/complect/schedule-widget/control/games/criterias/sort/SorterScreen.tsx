@@ -1,5 +1,5 @@
+import { SendButton } from '#shared/ui/sendable/SendButton';
 import { schGamesSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
-import SendButton from 'front/complect/sends/send-button/SendButton';
 import { useCallback, useState } from 'react';
 import {
   IScheduleWidgetTeamCriteria,
@@ -18,14 +18,14 @@ interface Props {
   criteriaScopeProps: ScheduleGameCriteriaScopeProps;
 }
 
-export default function ScheduleWidgetTeamsCriteriaSorterScreen({
+export const ScheduleWidgetTeamsCriteriaSorterScreen = ({
   criteria,
   uncriteriedUsers,
   usersForSort,
   onClose,
   singleInsertUser,
   criteriaScopeProps,
-}: Props) {
+}: Props) => {
   const [sortedUsers, setSortedUsers] = useState(() => {
     const users = [...usersForSort]
       .filter(
@@ -91,4 +91,4 @@ export default function ScheduleWidgetTeamsCriteriaSorterScreen({
       </div>
     </div>
   );
-}
+};

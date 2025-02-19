@@ -1,4 +1,4 @@
-import { contextCreator } from 'front/complect/contextCreator';
+import { contextCreator } from '#shared/lib/contextCreator';
 import {
   IScheduleWidgetUserMi,
   IScheduleWidgetWid,

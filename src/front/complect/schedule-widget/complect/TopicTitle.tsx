@@ -1,20 +1,22 @@
 import { ReactNode } from 'react';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 
-export default function ScheduleWidgetTopicTitle<TitleBox extends { title?: string }>({
+type Props<TitleBox extends { title?: string }> = {
+  titleBox: TitleBox;
+  topicBox?: { topic?: string };
+  className?: string;
+  prefix?: ReactNode;
+  iForceShowTopic?: boolean;
+} & (TitleBox['title'] extends string ? { altTitle?: string } : { altTitle: string });
+
+export const ScheduleWidgetTopicTitle = <TitleBox extends { title?: string }>({
   titleBox,
   topicBox,
   className,
   altTitle,
   prefix,
   iForceShowTopic,
-}: {
-  titleBox: TitleBox;
-  topicBox?: { topic?: string };
-  className?: string;
-  prefix?: ReactNode;
-  iForceShowTopic?: boolean;
-} & (TitleBox['title'] extends string ? { altTitle?: string } : { altTitle: string })) {
+}: Props<TitleBox>) => {
   const userRights = useScheduleWidgetRightsContext();
 
   return (
@@ -31,4 +33,4 @@ export default function ScheduleWidgetTopicTitle<TitleBox extends { title?: stri
         ))}
     </div>
   );
-}
+};

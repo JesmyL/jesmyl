@@ -1,15 +1,15 @@
-import { MyLib } from 'front/utils';
+import { MyLib } from '#shared/lib/my-lib';
 import { SetStateAction, useEffect, useMemo, useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import { emptyArray } from 'shared/utils';
-import { contextCreator } from '../complect/contextCreator';
-import { useFingersActions } from '../complect/global-listeners/useFingersActions';
-import { useGlobalFontFamilySetter } from '../complect/global-listeners/useGlobalFontFamilySetter';
-import { useGlobalFullscreenChanger } from '../complect/global-listeners/useGlobalFullscreenChanger';
-import { hookEffectPipe, setTimeoutPipe } from '../complect/hookEffectPipe';
-import JesmylLogo from '../complect/jesmyl-logo/JesmylLogo';
-import { KEYBOARD_FLASH } from '../complect/keyboard/KeyboardInput';
+import { useFingersActions } from '../basis/lib/+hooks/useFingersActions';
+import { useGlobalFontFamilySetter } from '../basis/lib/+hooks/useGlobalFontFamilySetter';
+import { useGlobalFullscreenChanger } from '../basis/lib/+hooks/useGlobalFullscreenChanger';
+import { JesmylLogo } from '../basis/ui/jesmyl-logo/JesmylLogo';
 import { useCurrentApp } from '../components/index/atoms';
+import { contextCreator } from '../shared/lib/contextCreator';
+import { hookEffectPipe, setTimeoutPipe } from '../shared/lib/hookEffectPipe';
+import { KEYBOARD_FLASH } from '../shared/ui/keyboard/KeyboardInput';
 import './App.scss';
 import { appInitialInvokes } from './app-initial-invokes';
 

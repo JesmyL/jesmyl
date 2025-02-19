@@ -1,24 +1,20 @@
-import Modal from 'front/complect/modal/Modal/Modal';
-import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
-import { ModalFooter } from 'front/complect/modal/Modal/ModalFooter';
-import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { useIsRedactArea } from '#shared/lib/+hooks/useIsRedactArea';
+import { IconButton, LazyIcon } from '#shared/ui/icon';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
+import { SendableField } from '#shared/ui/sendable/SendableField';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import React, { useMemo, useState } from 'react';
 import { IScheduleWidgetRole, ScheduleRoleScopeProps, scheduleWidgetUserRights } from 'shared/api';
 import { useAuth } from '../../../../components/index/atoms';
-import StrongEditableField from '../../../strong-control/field/StrongEditableField';
-import IconButton from '../../../the-icon/IconButton';
-import useIsRedactArea from '../../../useIsRedactArea';
 import { useScheduleScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
 import { schRolesSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { extractScheduleWidgetRoleUser, useScheduleWidgetRightsContext } from '../../useScheduleWidget';
-import ScheduleWidgetRoleFace from './RoleFace';
+import { ScheduleWidgetRoleFace } from './RoleFace';
 
 const mainRoleRights = scheduleWidgetUserRights.getAllRights();
-const LazyIconConfigurator = React.lazy(() => import('../../../configurators/Icon'));
+const LazyIconConfigurator = React.lazy(() => import('../../../../shared/ui/configurators/Icon'));
 
-export default function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
+export const ScheduleWidgetRole = ({ role }: { role: IScheduleWidgetRole }) => {
   const rights = useScheduleWidgetRightsContext();
   const auth = useAuth();
   const roleUser = extractScheduleWidgetRoleUser(rights.schedule, 0, role);
@@ -101,7 +97,7 @@ export default function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole
             {catsRedact.isRedact
               ? rights.schedule.ctrl.cats.map((catName, catNamei) => {
                   return (
-                    <StrongEditableField
+                    <SendableField
                       key={catNamei}
                       isRedact
                       value={catName}
@@ -153,7 +149,7 @@ export default function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole
         <Modal onClose={setIsCatRedactModalOpen}>
           <ModalHeader>Редактирование роли {role.title}</ModalHeader>
           <ModalBody>
-            <StrongEditableField
+            <SendableField
               isRedact
               title="Название"
               icon="SchoolReportCard"
@@ -215,4 +211,4 @@ export default function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole
       )}
     </div>
   );
-}
+};

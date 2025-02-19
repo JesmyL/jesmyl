@@ -1,14 +1,14 @@
-import { FullContent } from 'front/complect/fullscreen-content/FullContent';
+import { TheButton } from '#shared/ui/Button';
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/scope-props-contexts';
 import { schGamesSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
 import { useState } from 'react';
-import TheButton from '../../../../Button';
 import { useScheduleWidgetRightsContext } from '../../../useScheduleWidget';
 import { ScheduleWidgetShareButtons } from '../ShareButtons';
-import ScheduleWidgetSortCriteria from './SortCriteria';
+import { ScheduleWidgetSortCriteria } from './SortCriteria';
 
-export default function ScheduleWidgetSortCriterias() {
+export const ScheduleWidgetSortCriterias = () => {
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
   const [isOpenCriterias, setIsOpenCriterias] = useState<unknown>(false);
@@ -42,4 +42,4 @@ export default function ScheduleWidgetSortCriterias() {
       )}
     </>
   );
-}
+};

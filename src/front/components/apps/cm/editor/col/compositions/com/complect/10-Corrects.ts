@@ -1,4 +1,4 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
 import { makeRegExp } from 'shared/utils';
 import { CorrectsBox } from '../../../../corrects-box/CorrectsBox';
 import { correctNotSlavicNameReg_i, textedChordReg } from '../../../../Editor.complect';

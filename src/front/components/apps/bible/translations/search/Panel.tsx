@@ -1,8 +1,8 @@
 import { memo, useEffect, useRef } from 'react';
 import { bibleIDB } from '../../_db/bibleIDB';
 import { BibleSearchZone } from '../../model';
-import BibleSearchResults from './Results';
-import BibleSearchInputPanel from './input-panel/InputPanel';
+import { BibleSearchResults } from './Results';
+import { BibleSearchInputPanel } from './input-panel/InputPanel';
 
 const setSearchZone = (zone: BibleSearchZone, inputRef: React.RefObject<HTMLInputElement>) => {
   bibleIDB.set.searchZone(zone);
@@ -12,7 +12,7 @@ const setSearchZone = (zone: BibleSearchZone, inputRef: React.RefObject<HTMLInpu
   setTimeout(select, 100);
 };
 
-export default memo(function BibleSearchPanel(): JSX.Element {
+export const BibleSearchPanel = memo(function BibleSearchPanel(): JSX.Element {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {

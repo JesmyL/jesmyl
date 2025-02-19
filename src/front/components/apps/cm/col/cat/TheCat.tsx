@@ -1,26 +1,27 @@
+import { useAtomValue } from '#shared/lib/atom';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { useAtomValue } from 'front/complect/atoms';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
-import LoadIndicatedContent from '../../../../../complect/load-indicated-content/LoadIndicatedContent';
-import PhaseContainerConfigurer, {
+import {
+  PhaseContainerConfigurer,
   StyledPhaseContainerConfigurerContent,
   StyledPhaseContainerConfigurerHead,
 } from '../../../../../complect/phase-container/PhaseContainerConfigurer';
+import { LoadIndicatedContent } from '../../../../../shared/ui/LoadIndicatedContent';
 import { cmIDB } from '../../_db/cm-idb';
 import { SetComListLimitsExtracterContext } from '../../base/SetComListLimitsExtracterContext';
-import CmTranslationComListContextInCat from '../../base/translations/InCat';
-import CmTranslationComListContextInZeroCat from '../../base/translations/InZeroCat';
-import useLaterComList from '../../base/useLaterComList';
+import { CmTranslationComListContextInCat } from '../../base/translations/InCat';
+import { CmTranslationComListContextInZeroCat } from '../../base/translations/InZeroCat';
+import { useLaterComList } from '../../base/useLaterComList';
 import { categoryTermAtom, CmComListSearchFilterInput } from '../../complect/ComListSearchFilterInput';
 import { cmCompositionRoute } from '../../routing/cmRoutingApp';
 import { Com } from '../com/Com';
 import { ComFaceList } from '../com/face/list/ComFaceList';
 import { useCcat } from './useCcat';
 
-export default function TheCat({ all }: { all?: boolean; catWid?: number }) {
+export function TheCat({ all }: { all?: boolean; catWid?: number }) {
   const cat = useCcat(all);
   const { laterComws } = useLaterComList();
   const term = useAtomValue(categoryTermAtom);

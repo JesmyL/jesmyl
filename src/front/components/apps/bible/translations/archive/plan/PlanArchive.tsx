@@ -1,12 +1,12 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
 import { memo, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { bibleIDB } from '../../../_db/bibleIDB';
 import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '../../../hooks/address/address';
-import BibleTranslationArchive from '../Archive';
+import { BibleTranslationArchive } from '../Archive';
 import { useBibleClearTranslationPlanSetter, useBibleTranslationPlan } from './hooks/plan';
 
-export default memo(function BibleTranslationPlanArchive(): JSX.Element {
+export const BibleTranslationPlanArchive = memo(function BibleTranslationPlanArchive(): JSX.Element {
   const plan = useBibleTranslationPlan();
   const clearPlan = useBibleClearTranslationPlanSetter();
   const [selectedItemi, setSelectedItemi] = useState<number | null>(null);

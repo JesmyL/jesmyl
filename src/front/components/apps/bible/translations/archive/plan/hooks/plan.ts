@@ -1,5 +1,5 @@
+import { mylib } from '#shared/lib/my-lib';
 import { bibleIDB } from 'front/components/apps/bible/_db/bibleIDB';
-import { mylib } from 'front/utils';
 import { useCallback } from 'react';
 import { BibleTranslationAddress } from '../../../../model';
 

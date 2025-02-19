@@ -1,6 +1,6 @@
-import { TheIconLoading } from 'front/complect/the-icon/IconLoading';
+import { TheIconLoading } from '#shared/ui/icon';
+import { ComPlayer } from 'front/components/apps/cm/col/com/player/ComPlayer';
 import { useState } from 'react';
-import ComPlayer from '../../../../../col/com/player/ComPlayer';
 
 interface Props {
   srcs: string[];

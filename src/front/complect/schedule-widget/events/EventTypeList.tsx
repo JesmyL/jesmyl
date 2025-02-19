@@ -1,17 +1,15 @@
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
+import { IconButton } from '#shared/ui/icon';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import React, { ReactNode, useMemo, useState } from 'react';
 import { IScheduleWidget, ScheduleWidgetCleans, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
 import { emptyArray } from 'shared/utils';
 import styled from 'styled-components';
-import DebouncedSearchInput from '../../DebouncedSearchInput';
-import Modal from '../../modal/Modal/Modal';
-import { ModalBody } from '../../modal/Modal/ModalBody';
-import { ModalHeader } from '../../modal/Modal/ModalHeader';
-import IconButton from '../../the-icon/IconButton';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schEventTypesSokiInvocatorClient } from '../invocators/invocators.methods';
-import ScheduleWidgetEventType from './EventType';
+import { ScheduleWidgetEventType } from './EventType';
 import { useAttTypeTitleError } from './useAttTypeTitleError';
 
 type Props = {

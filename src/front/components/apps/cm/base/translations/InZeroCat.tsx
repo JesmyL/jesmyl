@@ -18,4 +18,3 @@ export const CmTranslationComListContextInZeroCat = function InZeroCat({ childre
 
   return <CmComListContext.Provider value={value}>{children}</CmComListContext.Provider>;
 };
-export default CmTranslationComListContextInZeroCat;

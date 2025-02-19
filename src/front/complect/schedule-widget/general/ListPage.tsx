@@ -1,13 +1,13 @@
+import { IconButton } from '#shared/ui/icon';
+import { PhaseContainerConfigurer } from 'front/complect/phase-container/PhaseContainerConfigurer';
+import { useConnectionState } from 'front/components/index/useConnectionState';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import { useAuth, useIndexSchedules } from '../../../components/index/atoms';
-import useConnectionState from '../../../components/index/useConnectionState';
-import PhaseContainerConfigurer from '../../phase-container/PhaseContainerConfigurer';
-import IconButton from '../../the-icon/IconButton';
 import { schLinkAction } from '../links';
-import ScheduleCreateWidgetButton from './CreateButton';
-import ScheduleWidgetPage from './Page';
+import { ScheduleCreateWidgetButton } from './CreateButton';
+import { ScheduleWidgetPage } from './Page';
 
-export default function ScheduleWidgetListPage() {
+export const ScheduleWidgetListPage = () => {
   const schedules = useIndexSchedules();
   const navigate = useNavigate();
 
@@ -30,7 +30,7 @@ export default function ScheduleWidgetListPage() {
       />
     </Routes>
   );
-}
+};
 
 const Component = () => {
   const schedules = useIndexSchedules();

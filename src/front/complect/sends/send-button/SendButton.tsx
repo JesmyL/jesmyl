@@ -1,11 +1,10 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import TheButton from '../../Button';
-import useToast from '../../modal/useToast';
-import { TheIconLoading } from '../../the-icon/IconLoading';
-import { SendButtonContentMaker } from '../send-button-content-maker/maker';
-import { SendButtonProps } from './SendButton.model';
+import { TheButton } from '#shared/ui/Button';
+import { LazyIcon, TheIconLoading } from '#shared/ui/icon';
+import { useToast } from '#shared/ui/modal';
+import { SendButtonContentMaker } from '#shared/ui/sendable/lib/send-button-content-maker/maker';
+import { SendButtonProps } from '#shared/ui/sendable/SendButton/model';
 
-export default function SendButton<Value>(props: SendButtonProps<Value>) {
+export const SendButton = <Value,>(props: SendButtonProps<Value>) => {
   const [toastNode, toast] = useToast();
 
   return (
@@ -45,4 +44,4 @@ export default function SendButton<Value>(props: SendButtonProps<Value>) {
       }}
     />
   );
-}
+};

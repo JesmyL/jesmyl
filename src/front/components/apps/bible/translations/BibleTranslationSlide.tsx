@@ -4,11 +4,11 @@ import { IndexSchWTranslationLiveDataValue } from '../../../index/Index.model';
 import { BibleTranslationScreenKnownTextsContext } from '../texts/AddressContentContext';
 import { BibleTranslationScreen } from './screen/BibleTranslationScreen';
 
-export default function BibleTranslationSlide({
+export const BibleTranslationSlide = ({
   config,
   text,
   addressText,
-}: Required<IndexSchWTranslationLiveDataValue>['bible']): JSX.Element {
+}: Required<IndexSchWTranslationLiveDataValue>['bible']): JSX.Element => {
   const [updates, setUpdates] = useState(0);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ export default function BibleTranslationSlide({
       </BibleTranslationScreenKnownTextsContext>
     </Container>
   );
-}
+};
 
 const Container = styled.div`
   overflow: hidden;

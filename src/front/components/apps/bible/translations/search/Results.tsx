@@ -7,7 +7,7 @@ import { useBibleAddressChapteri } from '../../hooks/address/chapters';
 import { BibleBooki, BibleChapteri, BibleTranslationSingleAddress, BibleVersei } from '../../model';
 import { useBibleTranslatesContext } from '../../translates/TranslatesContext';
 import { useBibleShowTranslatesValue } from '../../translates/hooks';
-import BibleSearchResultVerse from './ResultVerse';
+import { BibleSearchResultVerse } from './ResultVerse';
 import { useBibleTranslationSearchResultList, useBibleTranslationSearchResultSelectedValue } from './hooks/results';
 
 interface Props {
@@ -26,7 +26,7 @@ const maxItems = 49;
 
 const sortStringsByLength = (a: string, b: string) => b.length - a.length;
 
-export default function BibleSearchResults({ inputRef, height = '100px', innerZone, onClick: userOnClick }: Props) {
+export const BibleSearchResults = ({ inputRef, height = '100px', innerZone, onClick: userOnClick }: Props) => {
   const searchZone = bibleIDB.useValue.searchZone();
   const searchTerm = bibleIDB.useValue.searchTerm();
   const showTranslates = useBibleShowTranslatesValue();
@@ -135,7 +135,7 @@ export default function BibleSearchResults({ inputRef, height = '100px', innerZo
       {list}
     </List>
   );
-}
+};
 
 const List = styled.div<{ $height: string }>`
   height: ${props => props.$height};

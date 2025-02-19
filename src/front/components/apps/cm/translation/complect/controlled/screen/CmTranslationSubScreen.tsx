@@ -1,8 +1,8 @@
+import { FontSizeContain } from 'front/components/apps/cm/base/font-size-contain/FontSizeContain';
 import { useCallback } from 'react';
 import { ScreenTranslationPositionConfig } from '../../../../../+complect/translations/complect/model';
 import { ScreenTranslateCurrentPositionConfigurators } from '../../../../../+complect/translations/complect/position/Position';
 import { useApplyScreenFontFamilyEffect } from '../../../../../+complect/translations/hooks/set-font-family';
-import FontSizeContain from '../../../../base/font-size-contain/FontSizeContain';
 import { FontSizeContainProps } from '../../../../base/font-size-contain/FontSizeContain.model';
 import { useUpdateCmCurrentTranslationConfig } from '../hooks/update-config';
 import { CmTranslationScreenConfig, CmTranslationTextScreenConfig } from '../model';

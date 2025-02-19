@@ -1,14 +1,14 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { CopyTextButton } from '#shared/ui/CopyTextButton';
 import { CustomAttUseTaleId, ScheduleWidgetAppAttCustomizableValueItem, ScheduleWidgetCleans } from 'shared/api';
 import { itNNil } from 'shared/utils';
-import CopyTextButton from '../../../../CopyTextButton';
 import { useScheduleWidgetRightsContext } from '../../../useScheduleWidget';
 
 const mapSetItemNumber = (l: string | nil, li: number) => li + 1 + '. ' + l!;
 
-export default function ScheduleKeyValueListAttStatistic(props: {
+export const ScheduleKeyValueListAttStatistic = (props: {
   list: ScheduleWidgetAppAttCustomizableValueItem[] | und;
-}) {
+}) => {
   let len = 0;
   let checked = 0;
   let checks = 0;
@@ -129,4 +129,4 @@ export default function ScheduleKeyValueListAttStatistic(props: {
       )}
     </>
   );
-}
+};

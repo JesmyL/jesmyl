@@ -1,3 +1,6 @@
+import { CopyTextButton } from '#shared/ui/CopyTextButton';
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
+import { IconButton } from '#shared/ui/icon';
 import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { emptyArray } from 'shared/utils';
@@ -10,9 +13,6 @@ import {
   WedGuestWillBe,
 } from '../../../../../shared/api/complect/apps/wed/complect/model';
 import { useInitSoki } from '../../../../app/useInitSoki';
-import CopyTextButton from '../../../../complect/CopyTextButton';
-import Dropdown from '../../../../complect/dropdown/Dropdown';
-import IconButton from '../../../../complect/the-icon/IconButton';
 import { useAuth } from '../../../index/atoms';
 import { WedCleans } from '../Cleans';
 import { GuestConversation } from '../guest/complect/GuestConversation';

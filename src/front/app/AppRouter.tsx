@@ -1,6 +1,6 @@
 import React, { Suspense, useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import { atom, useAtomValue } from '../complect/atoms';
+import { atom, useAtomValue } from '../shared/lib/atom';
 import { AppName } from './App.model';
 
 const AppComponent = React.lazy(() => import('./AppComponent'));
@@ -8,7 +8,7 @@ const AppRouterProvider = React.lazy(() => import('./AppRouterProvider'));
 const Wedding = React.lazy(() => import('../components/apps/wedding/Wedding'));
 const ScheduleWidgetTgDayView = React.lazy(() => import('../complect/schedule-widget/general/TgDayView'));
 
-const AppRouter = () => {
+export const AppRouter = () => {
   return (
     <Routes>
       <Route element={<AppComponent />}>
@@ -62,5 +62,3 @@ const Redirect = () => {
 };
 
 const appNameAtom = atom<AppName>('cm');
-
-export default AppRouter;

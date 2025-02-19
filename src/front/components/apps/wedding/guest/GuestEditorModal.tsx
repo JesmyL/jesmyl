@@ -1,4 +1,8 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { CopyTextButton } from '#shared/ui/CopyTextButton';
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -7,13 +11,6 @@ import {
   WedGuestConversation,
   WedGuestSex,
 } from '../../../../../shared/api/complect/apps/wed/complect/model';
-import CopyTextButton from '../../../../complect/CopyTextButton';
-import Dropdown from '../../../../complect/dropdown/Dropdown';
-import Modal from '../../../../complect/modal/Modal/Modal';
-import { ModalBody } from '../../../../complect/modal/Modal/ModalBody';
-import { ModalFooter } from '../../../../complect/modal/Modal/ModalFooter';
-import { ModalHeader } from '../../../../complect/modal/Modal/ModalHeader';
-import TheIconSendButton from '../../../../complect/sends/the-icon-send-button/TheIconSendButton';
 import { WedCleans } from '../Cleans';
 import { WedGuestPropositionSentButton } from './complect/SentButton';
 

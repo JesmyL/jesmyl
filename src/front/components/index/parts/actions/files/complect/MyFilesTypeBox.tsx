@@ -1,9 +1,8 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { IconButton, LazyIcon } from '#shared/ui/icon';
 import { useEffect, useReducer, useState } from 'react';
 import { MyFileType } from 'shared/api';
-import { filesStorage } from '../../../../../../complect/configurators/utils/storage';
-import IconButton from '../../../../../../complect/the-icon/IconButton';
-import { LazyIcon } from '../../../../../../complect/the-icon/LazyIcon';
+import { filesStorage } from '../../../../../../shared/ui/configurators/utils/storage';
 import { useIndexFileAssociations } from '../../../../atoms';
 import { useRemoveMyFile } from '../hooks/remove-file';
 

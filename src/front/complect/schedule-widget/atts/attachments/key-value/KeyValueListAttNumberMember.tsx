@@ -1,11 +1,10 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { IconButton, LazyIcon } from '#shared/ui/icon';
 import { CustomAttUseTaleId, ScheduleWidgetCleans } from 'shared/api';
-import IconButton from '../../../../the-icon/IconButton';
-import ScheduleWidgetRoleFace from '../../../control/roles/RoleFace';
-import ScheduleWidgetListUnitFace from '../../../lists/UnitFace';
+import { ScheduleWidgetRoleFace } from '../../../control/roles/RoleFace';
+import { ScheduleWidgetListUnitFace } from '../../../lists/UnitFace';
 import { extractScheduleWidgetRole, useScheduleWidgetRightsContext } from '../../../useScheduleWidget';
 
-export default function KeyValueListAttNumberMember({ value }: { value: number }) {
+export const KeyValueListAttNumberMember = ({ value }: { value: number }) => {
   const rights = useScheduleWidgetRightsContext();
 
   if (ScheduleWidgetCleans.checkIsTaleIdUnit(value, CustomAttUseTaleId.Roles)) {
@@ -49,4 +48,4 @@ export default function KeyValueListAttNumberMember({ value }: { value: number }
       postfix={<span className="color--ko">Неизвестный пункт</span>}
     />
   );
-}
+};

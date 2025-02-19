@@ -1,18 +1,17 @@
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { useIsRedactArea } from '#shared/lib/+hooks/useIsRedactArea';
+import { LazyIcon, TheIconLoading } from '#shared/ui/icon';
+import { SendableDiv } from '#shared/ui/sendable/SendableDiv';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import { useEffect, useMemo, useState } from 'react';
 import { indexScheduleGetDayEventTimes, IScheduleWidgetDay, ScheduleDayScopeProps } from 'shared/api';
 import { isNIs } from 'shared/utils';
 import styled from 'styled-components';
-import { useIsRememberExpand } from '../../../expand/useIsRememberExpand';
-import StrongDiv from '../../../strong-control/StrongDiv';
-import { TheIconLoading } from '../../../the-icon/IconLoading';
-import useIsRedactArea from '../../../useIsRedactArea';
-import ScheduleWidgetTopicTitle from '../../complect/TopicTitle';
+import { useIsRememberExpand } from '../../../../shared/ui/expand/useIsRememberExpand';
+import { ScheduleWidgetTopicTitle } from '../../complect/TopicTitle';
 import { ScheduleWidgetEventTypeList } from '../../events/EventTypeList';
 import { schDaysSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
-import ScheduleWidgetDayEvent, { StyledScheduleWidgetDayEvent } from './DayEvent';
+import { ScheduleWidgetDayEvent, StyledScheduleWidgetDayEvent } from './DayEvent';
 import { ScheduleWidgetDayEventEventActions } from './EventActions';
 
 type Props = {
@@ -23,7 +22,7 @@ type Props = {
   dayScopeProps: ScheduleDayScopeProps;
 };
 
-export default function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand, dayScopeProps }: Props) {
+export const ScheduleWidgetDayEventList = ({ day, isPastDay, dayi, isForceExpand, dayScopeProps }: Props) => {
   const [isShowPeriodsNotTs, setIsShowTsNotPeriods] = useState(false);
   const [isReplacementInProcess, setIsReplacementInProcess] = useState(false);
   const rights = useScheduleWidgetRightsContext();
@@ -85,7 +84,7 @@ export default function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isFor
             const insertControl = (beforei: number) =>
               isRedact && (
                 <div className={'insert-panel flex flex-gap' + (beforei === 0 ? ' first' : '')}>
-                  <StrongDiv
+                  <SendableDiv
                     className="flex flex-gap pointer"
                     onSuccess={() => {
                       setIsReplacementInProcess(false);
@@ -104,7 +103,7 @@ export default function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isFor
                       </div>
                     )}
                     <LazyIcon icon="ArrowLeftDouble" />
-                  </StrongDiv>
+                  </SendableDiv>
                 </div>
               );
 
@@ -214,7 +213,7 @@ export default function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isFor
       )}
     </StyledList>
   );
-}
+};
 
 const StyledMoveTitle = styled.div`
   max-width: calc(100vw - 180px);

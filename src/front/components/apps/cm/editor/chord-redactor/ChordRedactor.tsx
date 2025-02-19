@@ -1,25 +1,24 @@
-import IconButton from 'front/complect/the-icon/IconButton';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { atom, useAtom } from '#shared/lib/atom';
+import { MyLib, mylib } from '#shared/lib/my-lib';
+import { TheButton } from '#shared/ui/Button';
+import { IconButton, LazyIcon } from '#shared/ui/icon';
+import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { propagationStopper } from 'front/complect/utils/utils';
-import { MyLib, mylib } from 'front/utils';
 import { useEffect, useMemo, useState } from 'react';
 import { ChordPack, ChordTrack } from '../../../../../../shared/api/complect/apps/cm/complect/chord-card';
-import { atom, useAtom } from '../../../../../complect/atoms';
-import TheButton from '../../../../../complect/Button';
-import KeyboardInput from '../../../../../complect/keyboard/KeyboardInput';
 import { cmIDB } from '../../_db/cm-idb';
 import { useToNewChordSearches } from '../../col/com/chord-card/chord-redactor-searches';
-import ChordCard from '../../col/com/chord-card/ChordCard';
+import { ChordCard } from '../../col/com/chord-card/ChordCard';
 import { cmEditorClientInvocatorMethods } from '../cm-editor-invocator.methods';
 import { correctChordNameReg } from '../Editor.complect';
-import PhaseCmEditorContainer from '../phase-editor-container/PhaseCmEditorContainer';
-import ChordRedactableTrack from './ChordRedactableTrack';
+import { PhaseCmEditorContainer } from '../phase-editor-container/PhaseCmEditorContainer';
+import { ChordRedactableTrack } from './ChordRedactableTrack';
 import './ChordRedactor.scss';
 
 const redactableChordsAtom = atom<ChordPack>({});
 const chordsToSendAtom = atom<ChordPack>({});
 
-export default function ChordRedactor() {
+export function ChordRedactor() {
   const [{ newChordName = '' }, setProps] = useToNewChordSearches();
 
   const chords = cmIDB.useValue.chordPack();

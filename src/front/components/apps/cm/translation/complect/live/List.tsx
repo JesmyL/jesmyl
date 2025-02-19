@@ -1,11 +1,11 @@
 import { useEffect, useMemo } from 'react';
 import { makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
-import RollControled from '../../../base/RolledContent';
+import { RollControled } from '../../../base/RolledContent';
 import { useChordVisibleVariant } from '../../../base/useChordVisibleVariant';
 import { Com } from '../../../col/com/Com';
-import ComLine from '../../../col/com/line/ComLine';
-import ComOrders from '../../../col/com/orders/ComOrders';
+import { ComLine } from '../../../col/com/line/ComLine';
+import { ComOrders } from '../../../col/com/orders/ComOrders';
 import { CmSchWTranslationLiveDataValue } from './model';
 
 interface Props extends CmSchWTranslationLiveDataValue {

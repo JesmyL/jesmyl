@@ -1,8 +1,8 @@
+import { IconButton } from '#shared/ui/icon';
 import styled from 'styled-components';
 import { CmComWid } from '../../../../../../../shared/api/complect/apps/cm/complect/enums';
-import { useConfirm } from '../../../../../../complect/modal/confirm/useConfirm';
-import IconButton from '../../../../../../complect/the-icon/IconButton';
-import useSelectedComs from '../../../base/useSelectedComs';
+import { useConfirm } from '../../../../../../shared/ui/modal/hooks/useConfirm';
+import { useSelectedComs } from '../../../base/useSelectedComs';
 import { useFavoriteComs } from '../../../lists/favorites/useFavoriteComs';
 
 interface Props {
@@ -10,7 +10,7 @@ interface Props {
   comWid: CmComWid;
 }
 
-export default function ComFaceContextMenu({ onClick, comWid }: Props) {
+export function ComFaceContextMenu({ onClick, comWid }: Props) {
   const { isMarked, toggleMarked } = useFavoriteComs();
   const isComMarked = isMarked(comWid);
   const { clearSelectedComws, selectedComws, selectedComPosition: isSelected, toggleSelectedCom } = useSelectedComs();

@@ -43,7 +43,7 @@ const insertDividedBits = (lettersText: string, chord: string | und) => {
   return <span>{nodes}</span>;
 };
 
-export default function ComLine(props: IComLineProps) {
+export function ComLine(props: IComLineProps) {
   const className = `composition-line line-num-${props.textLinei}`;
 
   if (!props.chordedOrd)

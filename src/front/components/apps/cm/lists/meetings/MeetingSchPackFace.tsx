@@ -1,7 +1,6 @@
-import BrutalItem from 'front/complect/brutal-item/BrutalItem';
-import IconButton from 'front/complect/the-icon/IconButton';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
+import { IconButton, LazyIcon } from '#shared/ui/icon';
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IScheduleWidget, ScheduleComPackEventPath } from 'shared/api';

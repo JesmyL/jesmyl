@@ -1,4 +1,4 @@
-import { MyLib, mylib } from 'front/utils';
+import { MyLib, mylib } from '#shared/lib/my-lib';
 import { itIt, makeRegExp } from 'shared/utils';
 import { cmIDB, CmIDBStorage } from '../../_db/cm-idb';
 import { Com } from '../com/Com';

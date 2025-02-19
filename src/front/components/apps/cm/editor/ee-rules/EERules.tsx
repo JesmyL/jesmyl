@@ -1,15 +1,15 @@
-import { atom, useAtom } from 'front/complect/atoms';
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
-import { mylib } from 'front/utils';
+import { atom, useAtom } from '#shared/lib/atom';
+import { mylib } from '#shared/lib/my-lib';
+import { TheButton } from '#shared/ui/Button';
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
+import { IconCheckbox } from '#shared/ui/icon';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import { useEffect, useRef, useState } from 'react';
 import { EeStorePack } from 'shared/api';
-import TheButton from '../../../../../complect/Button';
-import Dropdown from '../../../../../complect/dropdown/Dropdown';
-import { DropdownItem } from '../../../../../complect/dropdown/Dropdown.model';
-import IconCheckbox from '../../../../../complect/the-icon/IconCheckbox';
+import { DropdownItem } from '../../../../../shared/ui/dropdown/Dropdown.model';
 import { eeStorage } from '../../base/ee-storage/EeStorage';
 import { cmEditorClientInvocatorMethods } from '../cm-editor-invocator.methods';
-import PhaseCmEditorContainer from '../phase-editor-container/PhaseCmEditorContainer';
+import { PhaseCmEditorContainer } from '../phase-editor-container/PhaseCmEditorContainer';
 import { EERulesListComputer } from './EERulesListComputer';
 import { EERulesWord } from './EERulesWord';
 
@@ -22,7 +22,7 @@ const pageSizeAtom = atom(50);
 const currentPageAtom = atom(0);
 const isCheckBibleAtom = atom(false);
 
-export default function EERules() {
+export function EERules() {
   const [pageSize, setPageSize] = useAtom(pageSizeAtom);
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
   const [isCheckBible, setIsCheckBible] = useAtom(isCheckBibleAtom);

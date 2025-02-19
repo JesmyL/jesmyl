@@ -1,6 +1,6 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
 import { useEffect, useState } from 'react';
-import { useActualRef } from '../../../../../complect/useActualRef';
+import { useActualRef } from '../../../../../shared/lib/+hooks/useActualRef';
 import { bibleIDB } from '../../_db/bibleIDB';
 import { useBibleTranslationAddressIndexesSetter, useBibleTranslationJoinAddress } from '../../hooks/address/address';
 import { useBibleAddressBooki } from '../../hooks/address/books';

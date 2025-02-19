@@ -1,12 +1,12 @@
-import { LinkAppActionFabric } from 'front/complect/link-app-actions';
+import { LinkAppActionFabric } from 'front/basis/lib/link-app-actions';
 import { schLinkAction } from 'front/complect/schedule-widget/links';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './App.scss';
 import { lastVisitedRouteLsName } from './AppFooter';
-import AppRouter from './AppRouter';
+import { AppRouter } from './AppRouter';
 
-function App() {
+export function App() {
   const [isNeedFirstNavigate, setIsNeedFirstNavigate] = useState(true);
 
   return (
@@ -34,5 +34,3 @@ const FirstNaver = ({ onSet }: { onSet: (is: false) => void }) => {
 
   return <></>;
 };
-
-export default App;

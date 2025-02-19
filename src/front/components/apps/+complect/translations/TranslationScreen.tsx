@@ -1,10 +1,10 @@
-import { useAtomValue } from 'front/complect/atoms';
+import { useAtomValue } from '#shared/lib/atom';
 import styled, { css } from 'styled-components';
+import { complectIDB } from '../../../../basis/idb';
 import { BibleTranslationScreenTextsContext } from '../../bible/texts/AddressContentContext';
-import BibleTranslatesContextProvider from '../../bible/translates/TranslatesContext';
-import BibleTranslationCurrentScreen from '../../bible/translations/screen/BibleTranslationCurrentScreen';
+import { BibleTranslatesContextProvider } from '../../bible/translates/TranslatesContext';
+import { BibleTranslationCurrentScreen } from '../../bible/translations/screen/BibleTranslationCurrentScreen';
 import { CmTranslationCurrentScreen } from '../../cm/translation/complect/controlled/screen/CmTranslationCurrentScreen';
-import { complectIDB } from '../_idb/complectIDB';
 import { useCurrentForceViweAppContext } from './Translation.contexts';
 import { TranslationTextScreen } from './TranslationTextScreen';
 import { TranslationScreenProps } from './Translations.model';

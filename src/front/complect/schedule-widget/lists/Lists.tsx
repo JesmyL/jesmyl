@@ -1,18 +1,20 @@
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import useIsExpand from '../../expand/useIsExpand';
-import useFullContent from '../../fullscreen-content/useFullContent';
-import IconButton from '../../the-icon/IconButton';
+import { useIsExpand } from '#shared/ui/expand/useIsExpand';
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
+import { IconButton, LazyIcon } from '#shared/ui/icon';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
+import { useState } from 'react';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
-import ScheduleWidgetTeamGames from '../control/games/games/Games';
-import ScheduleWidgetRoleList from '../control/roles/RoleList';
+import { ScheduleWidgetTeamGames } from '../control/games/games/Games';
+import { ScheduleWidgetRoleList } from '../control/roles/RoleList';
 import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import { ScheduleWidgetListCategory } from './Category';
 
-export default function ScheduleWidgetLists() {
+export const ScheduleWidgetLists = () => {
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
+  const [isOpenFull, setIsOpenFull] = useState<unknown>(false);
+
   const [listsTitle, isExpand] = useIsExpand(
     true,
     'Списки',
@@ -28,29 +30,8 @@ export default function ScheduleWidgetLists() {
       ),
   );
 
-  const [modalNode, screen] = useFullContent(() => {
-    return (
-      <>
-        <h3 className="flex flex-gap">{listsTitle}</h3>
-        {isExpand &&
-          rights.schedule.lists.cats.map((cat, cati) => {
-            return (
-              <ScheduleWidgetListCategory
-                key={cati}
-                cat={cat}
-                cati={cati}
-              />
-            );
-          })}
-        {rights.isCanRedact && <ScheduleWidgetRoleList />}
-        {rights.isCanRedact && <ScheduleWidgetTeamGames />}
-      </>
-    );
-  });
-
   return (
     <>
-      {modalNode}
       <IconButton
         icon="LeftToRightListBullet"
         postfix={
@@ -58,9 +39,26 @@ export default function ScheduleWidgetLists() {
             Списки <LazyIcon icon="ArrowRight01" />
           </>
         }
-        onClick={() => screen()}
+        onClick={setIsOpenFull}
         className="margin-gap-v flex-max"
       />
+      {isOpenFull && (
+        <FullContent onClose={setIsOpenFull}>
+          <h3 className="flex flex-gap">{listsTitle}</h3>
+          {isExpand &&
+            rights.schedule.lists.cats.map((cat, cati) => {
+              return (
+                <ScheduleWidgetListCategory
+                  key={cati}
+                  cat={cat}
+                  cati={cati}
+                />
+              );
+            })}
+          {rights.isCanRedact && <ScheduleWidgetRoleList />}
+          {rights.isCanRedact && <ScheduleWidgetTeamGames />}
+        </FullContent>
+      )}
     </>
   );
-}
+};

@@ -1,9 +1,9 @@
 import { Route, Routes } from 'react-router-dom';
 import { CurrentForceViweAppContext } from '../../+complect/translations/Translation.contexts';
-import BibleReaderCurrentBookPage from '../reader/book/CurrentBookPage';
-import BibleReaderSearchPage from '../reader/search/SearchPage';
-import BibleTranslatesContextProvider from '../translates/TranslatesContext';
-import BibleTranslationControlled from '../translations/BibleTranslationControlled';
+import { BibleReaderCurrentBookPage } from '../reader/book/CurrentBookPage';
+import { BibleReaderSearchPage } from '../reader/search/SearchPage';
+import { BibleTranslatesContextProvider } from '../translates/TranslatesContext';
+import { BibleTranslationControlled } from '../translations/BibleTranslationControlled';
 import { BibleFooter } from './BibleFooter';
 import { bibleInitialInvokes } from './bible-initial-invokes';
 

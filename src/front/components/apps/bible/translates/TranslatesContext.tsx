@@ -57,7 +57,7 @@ interface Props {
   children?: React.ReactNode;
   isSetAllTranslates?: boolean;
 }
-export default function BibleTranslatesContextProvider({ children, isSetAllTranslates }: Props): JSX.Element {
+export const BibleTranslatesContextProvider = ({ children, isSetAllTranslates }: Props): JSX.Element => {
   const showTranslates = useBibleShowTranslatesValue();
   const [myTranslates] = useBibleMyTranslates();
   const [translates, setTranslates] = useState<BibleBookTranslates>(localTranslates);
@@ -118,4 +118,4 @@ export default function BibleTranslatesContextProvider({ children, isSetAllTrans
   }, [watchTranslates]);
 
   return <Context.Provider value={translates}>{children}</Context.Provider>;
-}
+};

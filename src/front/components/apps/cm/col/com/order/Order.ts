@@ -1,4 +1,5 @@
-import { MyLib, mylib } from 'front/utils';
+import { MyLib, mylib } from '#shared/lib/my-lib';
+import { SourceBased } from '#shared/lib/SourceBased';
 import {
   CmComOrderWid,
   IExportableOrder,
@@ -8,7 +9,6 @@ import {
   SpecialOrderRepeats,
 } from 'shared/api';
 import { emptyArray, itIt, makeRegExp } from 'shared/utils';
-import SourceBased from '../../../../../../complect/SourceBased';
 import { Com } from '../Com';
 import { EditableOrderRegion, IExportableOrderMe } from './Order.model';
 

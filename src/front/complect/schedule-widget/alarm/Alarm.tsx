@@ -1,8 +1,8 @@
 import { useIndexSchedules } from '../../../components/index/atoms';
 import { useActualSchw } from '../useSch';
-import ScheduleWidgetAlarmContent from './AlarmContent';
+import { ScheduleWidgetAlarmContent } from './AlarmContent';
 
-export default function ScheduleWidgetAlarm({ isForceShow }: { isForceShow?: boolean }) {
+export const ScheduleWidgetAlarm = ({ isForceShow }: { isForceShow?: boolean }) => {
   const schedules = useIndexSchedules();
   const schw = useActualSchw();
 
@@ -13,4 +13,4 @@ export default function ScheduleWidgetAlarm({ isForceShow }: { isForceShow?: boo
       )}
     </>
   );
-}
+};

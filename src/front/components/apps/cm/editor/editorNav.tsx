@@ -1,13 +1,13 @@
-import ComAudioTab from './col/compositions/complect/audio/Tab';
-import CategoryBinds from './col/compositions/complect/CategoryBinds';
-import ChordApplicationsRedactor from './col/compositions/complect/chord-applications/ChordApplicationsRedactor';
-import ComOnTranslations from './col/compositions/complect/ComOnTranslations';
-import EditableCompositionMain from './col/compositions/complect/main/EditableCompositionMain';
-import OrdersRedactor from './col/compositions/complect/orders/OrdersRedactor';
-import CmChordsBlocksRedactor from './col/compositions/complect/textable-blocks/chords-blocks/ChordsBlocksRedactor';
+import { ComAudioTab } from './col/compositions/complect/audio/Tab';
+import { CategoryBinds } from './col/compositions/complect/CategoryBinds';
+import { ChordApplicationsRedactor } from './col/compositions/complect/chord-applications/ChordApplicationsRedactor';
+import { ComOnTranslations } from './col/compositions/complect/ComOnTranslations';
+import { EditableCompositionMain } from './col/compositions/complect/main/EditableCompositionMain';
+import { OrdersRedactor } from './col/compositions/complect/orders/OrdersRedactor';
+import { CmChordsBlocksRedactor } from './col/compositions/complect/textable-blocks/chords-blocks/ChordsBlocksRedactor';
 import { CmTextBlocksRedactor } from './col/compositions/complect/textable-blocks/text-blocks/TextBlocksRedactor';
-import EditableCompositionWatch from './col/compositions/complect/Watch';
-import ComRepeats from './col/compositions/repeats/ComRepeats';
+import { EditableCompositionWatch } from './col/compositions/complect/Watch';
+import { ComRepeats } from './col/compositions/repeats/ComRepeats';
 
 export const editCompositionNavs: { path: string; Component: React.FC; icon: TheIconKnownName }[] = [
   {

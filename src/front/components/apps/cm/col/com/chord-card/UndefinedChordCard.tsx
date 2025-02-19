@@ -1,4 +1,4 @@
-import { IconLink } from 'front/complect/the-icon/IconLink';
+import { IconLink } from '#shared/ui/icon';
 import { useAuth } from 'front/components/index/atoms';
 import { useToNewChordSearches } from './chord-redactor-searches';
 

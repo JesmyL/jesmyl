@@ -2,11 +2,11 @@ import React, { ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import App from './app/App';
-import { logFrontErrors } from './complect/error-catcher';
-import { setPolyfills } from './complect/polyfills';
-import reportWebVitals from './reportWebVitals';
+import { App } from './app/App';
+import { reportWebVitals } from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import { logFrontErrors } from './shared/lib/error-catcher';
+import { setPolyfills } from './shared/lib/polyfills';
 import { StyledGlobalStyles } from './styleds/styledGlobalStyles';
 import { styledDefaultTheme } from './styleds/styledTheme';
 

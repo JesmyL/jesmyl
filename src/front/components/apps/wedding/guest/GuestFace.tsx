@@ -1,6 +1,5 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { IconButton, LazyIcon } from '#shared/ui/icon';
 import { WedGuest } from '../../../../../shared/api/complect/apps/wed/complect/model';
-import IconButton from '../../../../complect/the-icon/IconButton';
 
 interface Props {
   onClick?: () => void;

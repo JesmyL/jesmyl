@@ -1,4 +1,4 @@
-import { MyLib } from 'front/utils';
+import { MyLib } from '#shared/lib/my-lib';
 import { itIt } from 'shared/utils';
 import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '../model';
 import { useBibleTranslatesContext } from '../translates/TranslatesContext';

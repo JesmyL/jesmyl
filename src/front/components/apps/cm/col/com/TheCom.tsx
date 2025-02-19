@@ -4,7 +4,7 @@ import { Com } from './Com';
 import './Com.scss';
 import { ComNotFoundPage } from './ComNotFoundPage';
 import './block-styles/BlockStyles.scss';
-import ComOrders from './orders/ComOrders';
+import { ComOrders } from './orders/ComOrders';
 import { useCcom } from './useCcom';
 
 interface Props {

@@ -15,7 +15,7 @@ interface Props {
   isVisible: boolean;
 }
 
-export default function BibleTranslationScreenContent(props: Props) {
+export const BibleTranslationScreenContent = (props: Props) => {
   const screenStyle = useGetBibleScreenTranslationScreenStyle(props.isVisible, props.bibleConfig);
   const textContent = useBibleTextContentContext();
 
@@ -40,7 +40,7 @@ export default function BibleTranslationScreenContent(props: Props) {
       </StyledVerseText>
     </>
   );
-}
+};
 
 const StyledVerseText = styled.div`
   .${verseTranslateTitleCssClassName} {

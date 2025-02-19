@@ -1,19 +1,19 @@
-import { useAtom } from 'front/complect/atoms';
-import IconButton from 'front/complect/the-icon/IconButton';
-import { mylib } from 'front/utils';
+import { useAtom } from '#shared/lib/atom';
+import { mylib } from '#shared/lib/my-lib';
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
+import { IconButton } from '#shared/ui/icon';
+import { LoadIndicatedContent } from '#shared/ui/LoadIndicatedContent';
 import { useState } from 'react';
-import Dropdown from '../../../../../../complect/dropdown/Dropdown';
-import LoadIndicatedContent from '../../../../../../complect/load-indicated-content/LoadIndicatedContent';
 import { InputWithLoadingIcon } from '../../../base/InputWithLoadingIcon';
 import { catTrackers } from '../../../col/cat/Cat.complect';
 import { useCcatw } from '../../../col/cat/useCcat';
 import { ComFaceList } from '../../../col/com/face/list/ComFaceList';
 import { cmCatClientInvocatorMethods } from '../../cm-editor-invocator.methods';
-import PhaseCmEditorContainer from '../../phase-editor-container/PhaseCmEditorContainer';
+import { PhaseCmEditorContainer } from '../../phase-editor-container/PhaseCmEditorContainer';
 import { removedCategoriesAtom } from './atoms';
 import { useEditableCcat } from './useEditableCcat';
 
-export default function EditCategory() {
+export function EditCategory() {
   const [removedCats, setRemovedCats] = useAtom(removedCategoriesAtom);
   const ccatw = useCcatw();
   const ccat = useEditableCcat();

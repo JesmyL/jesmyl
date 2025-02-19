@@ -1,10 +1,10 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { LazyIcon } from '#shared/ui/icon';
+import { QRCode } from '#shared/ui/qr-code/QRCode';
 import { jversion } from 'shared/values';
-import QRCode from '../../../complect/qr-code/QRCode';
 import { useIndexValues } from '../atoms';
 import { indexIDB } from '../db/index-idb';
 
-export default function IndexAbout() {
+export function IndexAbout() {
   const appVersion = indexIDB.useValue.appVersion();
   const values = useIndexValues();
 

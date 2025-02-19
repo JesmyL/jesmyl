@@ -1,4 +1,4 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
 import { useEffect } from 'react';
 import { bibleIDB } from '../../../_db/bibleIDB';
 import { useBibleTranslationJoinAddress } from '../../../hooks/address/address';

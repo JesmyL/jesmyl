@@ -1,6 +1,7 @@
+import { MyLib } from '#shared/lib/my-lib';
+import { TheIconLoading } from '#shared/ui/icon';
 import { appAttsStore } from 'front/components/complect/appScheduleAttrsStorage';
 import { indexBasicsSokiInvocatorClient } from 'front/components/index/db/invocators/schedules/fresh-invocator.methods';
-import { MyLib } from 'front/utils';
 import React, { useEffect } from 'react';
 import { Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import { ScheduleWidgetAppAttBasic } from 'shared/api';
@@ -9,8 +10,7 @@ import { useInitSoki } from '../../../app/useInitSoki';
 import { useAuth } from '../../../components/index/atoms';
 import { TelegramWebAppApiOr } from '../../tg-app/getTgApi';
 import { TelegramWebApp, TelegramWebAppInitData } from '../../tg-app/model';
-import { TheIconLoading } from '../../the-icon/IconLoading';
-import ScheduleWidgetAlarmContent from '../alarm/AlarmContent';
+import { ScheduleWidgetAlarmContent } from '../alarm/AlarmContent';
 import { useGetScheduleOrPull } from './useSetScheduleOrPull';
 
 const hashParamName = 'tgWebAppData';

@@ -1,8 +1,8 @@
 import { useCcom } from '../useCcom';
-import ChordCard from './ChordCard';
+import { ChordCard } from './ChordCard';
 import { CmUndefinedChordCard } from './UndefinedChordCard';
 
-export default function ChordImagesList() {
+export function ChordImagesList() {
   const ccom = useCcom();
 
   return (

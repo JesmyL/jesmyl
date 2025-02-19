@@ -1,4 +1,4 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
 import { IScheduleWidget, ScheduleWidgetCleans } from 'shared/api';
 import { useScheduleWidgetRights } from '../useScheduleWidget';
 
@@ -7,7 +7,7 @@ interface Props {
   date?: Date;
 }
 
-export default function ScheduleWidgetStartTimeText({ schedule, date: topDate }: Props) {
+export const ScheduleWidgetStartTimeText = ({ schedule, date: topDate }: Props) => {
   const rights = useScheduleWidgetRights(schedule);
 
   if (!schedule) return null;
@@ -42,4 +42,4 @@ export default function ScheduleWidgetStartTimeText({ schedule, date: topDate }:
       )}
     </>
   );
-}
+};

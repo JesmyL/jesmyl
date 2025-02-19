@@ -1,5 +1,5 @@
+import { PhaseContainerConfigurer } from 'front/complect/phase-container/PhaseContainerConfigurer';
 import { useEffect, useState } from 'react';
-import PhaseContainerConfigurer from '../../../complect/phase-container/PhaseContainerConfigurer';
 import { TunerApplication } from './app';
 import './Tuner.scss';
 import './TunerStyle.scss';
@@ -8,7 +8,7 @@ let tunerContainer: HTMLDivElement | und;
 let tunerApplication: any;
 const effect = () => () => (tunerContainer = undefined);
 
-export default function TheTuner() {
+export function TheTuner() {
   const [started, setStarted] = useState(false);
 
   useEffect(effect, []);

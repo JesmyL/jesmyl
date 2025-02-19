@@ -1,5 +1,5 @@
-import { atom, useAtom } from 'front/complect/atoms';
-import { mylib } from 'front/utils';
+import { atom, useAtom } from '#shared/lib/atom';
+import { mylib } from '#shared/lib/my-lib';
 import { useEffect, useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetWid } from 'shared/api';
 import { useIndexSchedules } from '../../../components/index/atoms';

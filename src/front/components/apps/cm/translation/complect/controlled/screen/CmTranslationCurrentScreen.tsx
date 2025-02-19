@@ -4,7 +4,7 @@ import {
   useGetScreenTranslationConfig,
   useScreenTranslationCurrentConfigi,
 } from '../../../../../+complect/translations/hooks/configs';
-import { useAtomValue } from '../../../../../../../complect/atoms';
+import { useAtomValue } from '../../../../../../../shared/lib/atom';
 import { translationBlockAtom } from '../../../../atoms';
 import { FontSizeContainProps } from '../../../../base/font-size-contain/FontSizeContain.model';
 import { useCmCurrentComTexts } from '../../hooks/get-com-text';

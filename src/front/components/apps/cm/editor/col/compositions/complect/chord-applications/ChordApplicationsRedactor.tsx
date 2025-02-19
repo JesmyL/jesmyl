@@ -1,14 +1,14 @@
-import { StyledLoadingSpinner } from 'front/complect/the-icon/IconLoading';
+import { StyledLoadingSpinner } from '#shared/ui/icon';
 import { useState } from 'react';
 import { CmComOrderWid } from 'shared/api';
 import styled, { css } from 'styled-components';
 import { styledHoverBind } from '../../../../../../../../complect/utils/styled-components';
 import { ChordVisibleVariant } from '../../../../../Cm.model';
-import ComLine from '../../../../../col/com/line/ComLine';
-import TheOrder from '../../../../../col/com/order/TheOrder';
+import { ComLine } from '../../../../../col/com/line/ComLine';
+import { TheOrder } from '../../../../../col/com/order/TheOrder';
 import { useEditableCcom } from '../../useEditableCcom';
 
-export default function ChordApplicationsRedactor() {
+export function ChordApplicationsRedactor() {
   const ccom = useEditableCcom();
   const [ordAwaits, setOrdAwaits] = useState({} as Record<CmComOrderWid, number>);
 
@@ -19,7 +19,7 @@ export default function ChordApplicationsRedactor() {
   };
 
   return (
-    <Content className="chord-application-redactor">
+    <StyledContent className="chord-application-redactor">
       {ccom?.orders?.map((ord, ordi) => {
         if (!ord.isVisible) return null;
         const chords = ord.chords?.split('\n').map(line => line.split(' '));
@@ -95,11 +95,11 @@ export default function ChordApplicationsRedactor() {
           />
         );
       })}
-    </Content>
+    </StyledContent>
   );
 }
 
-const Content = styled.div`
+const StyledContent = styled.div`
   max-width: 100vw;
 
   .composition-line {

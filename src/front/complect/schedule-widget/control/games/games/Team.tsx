@@ -1,12 +1,12 @@
 import { IScheduleWidgetTeam } from 'shared/api';
-import { ExpandableContent } from '../../../../expand/ExpandableContent';
+import { ExpandableContent } from '../../../../../shared/ui/expand/ExpandableContent';
 import { useScheduleWidgetRightsContext } from '../../../useScheduleWidget';
 
 interface Props {
   team: IScheduleWidgetTeam;
 }
 
-export default function ScheduleWidgetTeamGameTeam({ team }: Props) {
+export const ScheduleWidgetTeamGameTeam = ({ team }: Props) => {
   const rights = useScheduleWidgetRightsContext();
 
   return (
@@ -22,4 +22,4 @@ export default function ScheduleWidgetTeamGameTeam({ team }: Props) {
       </ExpandableContent>
     </div>
   );
-}
+};

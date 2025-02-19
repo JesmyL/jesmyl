@@ -1,14 +1,12 @@
-import Modal from 'front/complect/modal/Modal/Modal';
-import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
-import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from '#shared/ui/icon';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import { ReactNode, useState } from 'react';
 import { ScheduleWidgetAttKey, scheduleWidgetUserRights } from 'shared/api';
 import styled from 'styled-components';
-import { LazyIcon } from '../../the-icon/LazyIcon';
 import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
-import ScheduleWidgetCustomAtt from './custom/CustomAtt';
+import { ScheduleWidgetCustomAtt } from './custom/CustomAtt';
 
 type Props = {
   isRedact?: boolean;
@@ -20,7 +18,7 @@ type Props = {
   onRemoveAttSend: (attKey: ScheduleWidgetAttKey) => Promise<unknown>;
 };
 
-export default function ScheduleWidgetAttFace({
+export const ScheduleWidgetAttFace = ({
   tatt,
   typeTitle,
   attKey,
@@ -28,7 +26,7 @@ export default function ScheduleWidgetAttFace({
   isLink,
   customAttTopContent,
   onRemoveAttSend,
-}: Props) {
+}: Props) => {
   const rights = useScheduleWidgetRightsContext();
   const myUserR = rights.myUser?.R ?? rights.schedule.ctrl.defu;
   const [isModalOpen, setIsModalOpen] = useState<unknown>(false);
@@ -94,7 +92,7 @@ export default function ScheduleWidgetAttFace({
       )}
     </>
   );
-}
+};
 
 const Tatt = styled.div`
   --att-size: 90px;

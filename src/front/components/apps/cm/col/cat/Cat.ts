@@ -1,4 +1,4 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
 import { IExportableCat } from 'shared/api';
 import { BaseNamed } from '../../base/BaseNamed';
 import { Com } from '../com/Com';

@@ -1,12 +1,12 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { LazyIcon } from '#shared/ui/icon';
 import { useState } from 'react';
 import { CmMp3Rule } from 'shared/api';
 import { cmEditorClientInvocatorMethods } from '../cm-editor-invocator.methods';
-import PhaseCmEditorContainer from '../phase-editor-container/PhaseCmEditorContainer';
-import Mp3RuleEditor from './Mp3RuleEditor';
+import { PhaseCmEditorContainer } from '../phase-editor-container/PhaseCmEditorContainer';
+import { Mp3RuleEditor } from './Mp3RuleEditor';
 import { useCmMp3Rules } from './useCmMp3Rules';
 
-export default function Mp3RulesRedactor() {
+export function Mp3RulesRedactor() {
   const [newRules, updateNewRules] = useState<CmMp3Rule[]>([]);
   const mp3Rules = useCmMp3Rules();
   const [redactRules, updateRedactRules] = useState(mp3Rules);

@@ -1,5 +1,5 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { LazyIcon } from '#shared/ui/icon';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -12,9 +12,9 @@ import {
 import { itNNull } from 'shared/utils';
 import styled from 'styled-components';
 import { useIndexSchedules } from '../../../components/index/atoms';
-import useFullContent, { FullContentValue } from '../../fullscreen-content/useFullContent';
-import ScheduleWidgetTopicTitle from '../complect/TopicTitle';
-import ScheduleAlarmDay from './AlarmDay';
+import useFullContent, { FullContentValue } from '../../../shared/ui/fullscreen-content/useFullContent';
+import { ScheduleWidgetTopicTitle } from '../complect/TopicTitle';
+import { ScheduleAlarmDay } from './AlarmDay';
 import { ScheduleWidgetAlarmInfoContent } from './InfoContent';
 
 const msInDay = mylib.howMs.inDay;
@@ -58,7 +58,7 @@ interface Props {
 const today = new Date();
 today.setHours(0, 0, 0, 0);
 
-export default function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAllDay }: Props) {
+export const ScheduleWidgetAlarmContent = ({ observeSchw, schedule, isJustShowAllDay }: Props) => {
   const schedules = useIndexSchedules();
   const now = Date.now();
   const [isFullOpen, setIsFullOpen] = useState(false);
@@ -406,7 +406,7 @@ export default function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJu
       </Alarm>
     </>
   );
-}
+};
 
 const Alarm = styled.div`
   --icon-color: var(--color--3);

@@ -1,12 +1,12 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { LazyIcon } from '#shared/ui/icon';
+import { Modal } from '#shared/ui/modal';
+import { SendableField } from '#shared/ui/sendable/SendableField';
 import { useMemo, useState } from 'react';
 import { IScheduleWidgetListCat, IScheduleWidgetListUnit, IScheduleWidgetUserCati } from 'shared/api';
 import styled from 'styled-components';
-import { ExpandableContent } from '../../expand/ExpandableContent';
-import Modal from '../../modal/Modal/Modal';
-import StrongEditableField from '../../strong-control/field/StrongEditableField';
+import { ExpandableContent } from '../../../shared/ui/expand/ExpandableContent';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
-import ScheduleWidgetUserList from '../control/users/UserList';
+import { ScheduleWidgetUserList } from '../control/users/UserList';
 import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import { ScheduleWidgetListUnitRedactor } from './UnitRedactor';
@@ -18,7 +18,7 @@ type Props = {
   shortTitles: [string, string];
 };
 
-export default function ScheduleWidgetListUnit(props: Props) {
+export const ScheduleWidgetListUnit = (props: Props) => {
   const { unit, cat, cati } = props;
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
@@ -55,7 +55,7 @@ export default function ScheduleWidgetListUnit(props: Props) {
           }
         >
           {unit.dsc && (
-            <StrongEditableField
+            <SendableField
               icon="File02"
               value={unit}
               title="Описание"
@@ -82,7 +82,7 @@ export default function ScheduleWidgetListUnit(props: Props) {
       </div>
     </>
   );
-}
+};
 
 const ExpHeader = styled.div`
   color: var(--color--3);

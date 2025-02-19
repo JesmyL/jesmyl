@@ -1,14 +1,14 @@
+import { TheButton } from '#shared/ui/Button';
+import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { ISettings } from 'json-as-xlsx';
 import { useState } from 'react';
 import { WedGuest, WedGuestWillBe } from '../../../../../shared/api/complect/apps/wed/complect/model';
-import TheButton from '../../../../complect/Button';
-import { FullContent } from '../../../../complect/fullscreen-content/FullContent';
-import KeyboardInput from '../../../../complect/keyboard/KeyboardInput';
 import {
   J2XSheet,
   J2XSheetColumn,
   Json2Excel,
 } from '../../../../complect/schedule-widget/control/users/excel/Json2Excel';
+import { FullContent } from '../../../../shared/ui/fullscreen-content/FullContent';
 
 interface Props {
   setIsOpen: (is: boolean) => void;

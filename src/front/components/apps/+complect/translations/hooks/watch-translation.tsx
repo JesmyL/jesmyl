@@ -1,4 +1,4 @@
-import { renderComponentInNewWindow } from 'front/shared/renders';
+import { renderComponentInNewWindow } from '#shared/lib/renders';
 import { useCallback } from 'react';
 import { createGlobalStyle, css } from 'styled-components';
 import { base64Cursors } from '../../../../../shared/lib/base64Cursors';

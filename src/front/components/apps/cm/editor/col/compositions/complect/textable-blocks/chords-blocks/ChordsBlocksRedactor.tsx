@@ -1,7 +1,7 @@
 import { useEditableCcom } from '../../../useEditableCcom';
-import CmChordsBlockRedactor from './ChordsBlockRedactor';
+import { CmChordsBlockRedactor } from './ChordsBlockRedactor';
 
-export default function CmChordsBlocksRedactor() {
+export function CmChordsBlocksRedactor() {
   const ccom = useEditableCcom();
 
   if (!ccom) return null;

@@ -1,7 +1,7 @@
-import { BottomPopup } from 'front/complect/absolute-popup/bottom-popup/BottomPopup';
-import { useAtom } from 'front/complect/atoms';
-import { useIsNumberSearch } from 'front/complect/DebouncedSearchInput';
-import { hookEffectPipe, setTimeoutPipe } from 'front/complect/hookEffectPipe';
+import { useAtom } from '#shared/lib/atom';
+import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
+import { BottomPopup } from '#shared/ui/absolute-popup/bottom-popup/BottomPopup';
+import { useIsNumberSearch } from '#shared/ui/DebouncedSearchInput';
 import { StyledPhaseContainerConfigurerHead } from 'front/complect/phase-container/PhaseContainerConfigurer';
 import { useEffect, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
@@ -14,14 +14,14 @@ import { ComFaceList } from '../../../col/com/face/list/ComFaceList';
 import { useComs } from '../../../cols/useCols';
 import { categoryTermAtom, CmComListSearchFilterInput } from '../../../complect/ComListSearchFilterInput';
 import { editCompositionNavs } from '../../editorNav';
-import PhaseCmEditorContainer from '../../phase-editor-container/PhaseCmEditorContainer';
+import { PhaseCmEditorContainer } from '../../phase-editor-container/PhaseCmEditorContainer';
 import { EditableCom } from './com/EditableCom';
 import { EditCompositionsMore } from './complect/EditCompositionsMore';
-import EditComposition from './EditComposition';
+import { EditComposition } from './EditComposition';
 
 const mapExtractItem = <Item,>({ item }: { item: Item }): Item => item;
 
-export default function EditCompositions() {
+export function EditCompositions() {
   const coms = useComs();
   const [isOpenMorePopup, setIsOpenMorePopup] = useState(false);
   const isNumberSearch = useIsNumberSearch();

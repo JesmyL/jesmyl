@@ -1,12 +1,12 @@
-import SendButton from 'front/complect/sends/send-button/SendButton';
+import { SendButton } from '#shared/ui/sendable/SendButton';
 import { useAuth } from 'front/components/index/atoms';
 import { useMemo } from 'react';
-import ScheduleWidgetTopicTitle from '../complect/TopicTitle';
+import { ScheduleWidgetTopicTitle } from '../complect/TopicTitle';
 import { ScheduleWidgetDay, ScheduleWidgetDayProps } from '../days/Day';
-import ScheduleWidgetContextWrapper from '../general/ContextWrapper';
+import { ScheduleWidgetContextWrapper } from '../general/ContextWrapper';
 import { schUsersSokiInvocatorClient } from '../invocators/invocators.methods';
 
-export default function ScheduleAlarmDay(props: ScheduleWidgetDayProps) {
+export const ScheduleAlarmDay = (props: ScheduleWidgetDayProps) => {
   const auth = useAuth();
   const scheduleScopeProps = useMemo(() => ({ schw: props.schedule.w }), [props.schedule.w]);
 
@@ -41,4 +41,4 @@ export default function ScheduleAlarmDay(props: ScheduleWidgetDayProps) {
       />
     </ScheduleWidgetContextWrapper>
   );
-}
+};

@@ -1,5 +1,5 @@
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
-import StrongEditableField from 'front/complect/strong-control/field/StrongEditableField';
+import { SendableField } from '#shared/ui/sendable/SendableField';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import { ScheduleDayEventScopeProps } from 'shared/api';
 import { schDayEventsSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { DayEventIsNeedTgInformButton } from './IsNeedTgInformButton';
@@ -45,7 +45,7 @@ export const DayEventRedactControls = ({
         }
       />
 
-      <StrongEditableField
+      <SendableField
         isRedact
         type="number"
         value={'' + eventTm}
@@ -54,7 +54,7 @@ export const DayEventRedactControls = ({
         icon="Clock01"
         onSend={value => schDayEventsSokiInvocatorClient.setTm(null, dayEventScopeProps, +value)}
       />
-      <StrongEditableField
+      <SendableField
         isRedact
         value={eventTopic}
         title="Тема"

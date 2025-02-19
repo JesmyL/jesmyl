@@ -1,7 +1,7 @@
+import { atom, useAtom } from '#shared/lib/atom';
+import { mylib } from '#shared/lib/my-lib';
+import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { atom, useAtom } from 'front/complect/atoms';
-import DebouncedSearchInput from 'front/complect/DebouncedSearchInput';
-import { mylib } from 'front/utils';
 import { useEffect } from 'react';
 import { CmComWid, IExportableCom } from 'shared/api';
 import { cmIDB } from '../_db/cm-idb';

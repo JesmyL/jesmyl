@@ -1,5 +1,5 @@
+import { mylib } from '#shared/lib/my-lib';
 import { indexIDB } from 'front/components/index/db/index-idb';
-import { mylib } from 'front/utils';
 import { useEffect } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { IScheduleWidgetWid } from 'shared/api';

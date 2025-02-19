@@ -1,7 +1,7 @@
-import IconButton from 'front/complect/the-icon/IconButton';
-import useToast from '../../modal/useToast';
-import { SendButtonContentMaker } from '../send-button-content-maker/maker';
-import { SendButtonContentMakerProps } from '../send-button-content-maker/maker.model';
+import { IconButton } from '#shared/ui/icon';
+import { useToast } from '#shared/ui/modal';
+import { SendButtonContentMaker } from '#shared/ui/sendable/lib/send-button-content-maker/maker';
+import { SendButtonContentMakerProps } from '#shared/ui/sendable/lib/send-button-content-maker/maker.model';
 
 interface Props<Value> extends SendButtonContentMakerProps<Value> {
   icon: TheIconKnownName;

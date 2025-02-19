@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import useSelectedComs from '../useSelectedComs';
+import { useSelectedComs } from '../useSelectedComs';
 import { CmComListContext, CmComListContextValue } from './context';
 
 export const CmTranslationComListContextInSelected = ({ children }: { children: React.ReactNode }) => {

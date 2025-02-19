@@ -1,5 +1,6 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { LazyIcon } from '#shared/ui/icon';
+import { SendableDropdown } from '#shared/ui/sendable/Dropdown';
 import { useState } from 'react';
 import {
   CustomAttUseTaleId,
@@ -8,8 +9,7 @@ import {
   IScheduleWidgetUser,
   ScheduleWidgetAppAttCustomizableValueItem,
 } from 'shared/api';
-import SendableDropdown from '../../../../sends/dropdown/SendableDropdown';
-import KeyValueListAttNumberMember from './KeyValueListAttNumberMember';
+import { KeyValueListAttNumberMember } from './KeyValueListAttNumberMember';
 
 const zeroFunc = () => 0;
 
@@ -23,7 +23,7 @@ type Props = {
   onSend: (value: string | number) => Promise<unknown>;
 };
 
-export default function ScheduleKeyValueListAttLiItemDropdown({
+export const ScheduleKeyValueListAttLiItemDropdown = ({
   value,
   users: topUsers,
   titles: topTitles,
@@ -31,7 +31,7 @@ export default function ScheduleKeyValueListAttLiItemDropdown({
   lists: topLists,
   topValues,
   onSend,
-}: Props) {
+}: Props) => {
   const [isShowAll, setIsShowAll] = useState(false);
   const filter = (id: number) =>
     !value.includes(id) &&
@@ -101,4 +101,4 @@ export default function ScheduleKeyValueListAttLiItemDropdown({
       />
     </div>
   );
-}
+};

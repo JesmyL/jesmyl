@@ -1,17 +1,17 @@
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from '#shared/ui/icon';
+import { useModal } from '#shared/ui/modal';
+import { SendableField } from '#shared/ui/sendable/SendableField';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import React, { useMemo } from 'react';
 import { IScheduleWidgetListCat } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
-import { ExpandableContent } from '../../expand/ExpandableContent';
-import useModal from '../../modal/useModal';
-import StrongEditableField from '../../strong-control/field/StrongEditableField';
-import { LazyIcon } from '../../the-icon/LazyIcon';
+import { ExpandableContent } from '../../../shared/ui/expand/ExpandableContent';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
-import ScheduleWidgetListUnit from './Unit';
+import { ScheduleWidgetListUnit } from './Unit';
 
-const LazyIconConfigurator = React.lazy(() => import('../../configurators/Icon'));
+const LazyIconConfigurator = React.lazy(() => import('../../../shared/ui/configurators/Icon'));
 
 const reg = makeRegExp('/([а-яё]?[йуеъыаоэяиью]+[а-яё]).+/i');
 const cutTitle = (title: string) => title.replace(reg, '$1.');
@@ -35,7 +35,7 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
               used={[cat.icon]}
               onSend={icon => schListsSokiInvocatorClient.setCategoryIcon(null, catScopeProps, icon)}
             />
-            <StrongEditableField
+            <SendableField
               icon="SchoolReportCard"
               title="Название списка"
               value={cat}
@@ -43,13 +43,13 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
               isRedact
               onSend={value => schListsSokiInvocatorClient.setCategoryTitle(null, catScopeProps, value)}
             />
-            <StrongEditableField
+            <SendableField
               title="Заголовок руководителям"
               value={cat.titles[0]}
               isRedact
               onSend={value => schListsSokiInvocatorClient.setCategoryMentorsTitle(null, catScopeProps, value)}
             />
-            <StrongEditableField
+            <SendableField
               title="Заголовок участникам"
               value={cat.titles[1]}
               isRedact

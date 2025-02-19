@@ -1,7 +1,7 @@
+import { CopyTextButton } from '#shared/ui/CopyTextButton';
+import { useToast } from '#shared/ui/modal';
 import { ReactNode } from 'react';
-import CopyTextButton from '../../../../../../complect/CopyTextButton';
-import { useIsRememberExpand } from '../../../../../../complect/expand/useIsRememberExpand';
-import useToast from '../../../../../../complect/modal/useToast';
+import { useIsRememberExpand } from '../../../../../../shared/ui/expand/useIsRememberExpand';
 import { CoderResultNameStyled } from './styles';
 
 interface Props {

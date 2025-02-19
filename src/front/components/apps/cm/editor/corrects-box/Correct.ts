@@ -1,7 +1,7 @@
-import SourceBased from '../../../../../complect/SourceBased';
+import { SourceBased } from '#shared/lib/SourceBased';
 import { ICorrect } from './CorrectsBox.model';
 
-export default class Correct extends SourceBased<ICorrect> implements ICorrect {
+export class Correct extends SourceBased<ICorrect> implements ICorrect {
   code?: number;
   message: string;
   onFix?: () => void;

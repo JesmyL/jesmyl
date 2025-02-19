@@ -1,12 +1,12 @@
-import IconButton from 'front/complect/the-icon/IconButton';
+import { IconButton } from '#shared/ui/icon';
 import { InputWithLoadingIcon } from 'front/components/apps/cm/base/InputWithLoadingIcon';
 import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
 import { TextCorrectMessages } from '../../../../../complect/TextBlockIncorrectMessages';
 import { EditableCom } from '../../../com/EditableCom';
-import CmTextableBlockAnchorTitles from '../CmTextableBlockAnchorTitles';
+import { CmTextableBlockAnchorTitles } from '../CmTextableBlockAnchorTitles';
 
-export default function CmTextBlockRedactor({ texti, text, ccom }: { texti: number; text: string; ccom: EditableCom }) {
+export function CmTextBlockRedactor({ texti, text, ccom }: { texti: number; text: string; ccom: EditableCom }) {
   const [value, setValue] = useState(text);
   const corrects = EditableCom.textBlockIncorrectMessages(value);
 

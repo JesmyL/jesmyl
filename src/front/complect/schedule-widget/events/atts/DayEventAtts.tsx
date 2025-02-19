@@ -1,4 +1,4 @@
-import { MyLib } from 'front/utils';
+import { MyLib } from '#shared/lib/my-lib';
 import {
   IScheduleWidget,
   IScheduleWidgetDay,
@@ -8,9 +8,9 @@ import {
   scheduleWidgetUserRights,
 } from 'shared/api';
 import { useScheduleWidgetAppAttsContext, useScheduleWidgetRightsContext } from '../../useScheduleWidget';
-import ScheduleWidgetDayEventAtt from './DayEventAtt';
+import { ScheduleWidgetDayEventAtt } from './DayEventAtt';
 
-export default function ScheduleWidgetDayEventAtts(props: {
+export const ScheduleWidgetDayEventAtts = (props: {
   typeBox: ScheduleWidgetDayListItemTypeBox;
   event: IScheduleWidgetDayEvent;
   day: IScheduleWidgetDay;
@@ -18,7 +18,7 @@ export default function ScheduleWidgetDayEventAtts(props: {
   isPrevEvent: boolean;
   schedule: IScheduleWidget;
   dayEventScopeProps: ScheduleDayEventScopeProps;
-}) {
+}) => {
   const [appAtts] = useScheduleWidgetAppAttsContext();
   const rights = useScheduleWidgetRightsContext();
   const userR = rights.myUser?.R ?? rights.schedule.ctrl.defu;
@@ -59,4 +59,4 @@ export default function ScheduleWidgetDayEventAtts(props: {
       })}
     </>
   );
-}
+};

@@ -1,12 +1,12 @@
+import { useIsExpand } from '#shared/ui/expand/useIsExpand';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import { useScheduleScopePropsContext } from 'front/complect/schedule-widget/complect/scope-contexts/scope-props-contexts';
 import { schGamesSokiInvocatorClient } from 'front/complect/schedule-widget/invocators/invocators.methods';
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
-import useIsExpand from '../../../../expand/useIsExpand';
 import { useScheduleWidgetRightsContext } from '../../../useScheduleWidget';
 import { SchWGameContext } from './Games';
-import ScheduleWidgetTeamGame from './game/Game';
+import { ScheduleWidgetTeamGame } from './game/Game';
 
-export default function ScheduleWidgetTeamGameList() {
+export const ScheduleWidgetTeamGameList = () => {
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
 
@@ -45,4 +45,4 @@ export default function ScheduleWidgetTeamGameList() {
       )}
     </>
   );
-}
+};

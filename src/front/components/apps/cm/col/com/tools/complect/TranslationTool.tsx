@@ -1,4 +1,4 @@
-import { useAtomSet } from '../../../../../../../complect/atoms';
+import { useAtomSet } from '../../../../../../../shared/lib/atom';
 import { translationBlockAtom } from '../../../../atoms';
 import { useCcom } from '../../useCcom';
 import { ComTool } from '../ComTool';

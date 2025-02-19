@@ -9,7 +9,7 @@ interface Props {
   setCcomw: (comw: CmComWid) => void;
 }
 
-export default function CmExternalComListAttRedactListOrder({ value, setCcomw }: Props) {
+export function CmExternalComListAttRedactListOrder({ value, setCcomw }: Props) {
   const [removedComws, setRemovedComws] = useState<number[]>([]);
   const cat = useCcat(true);
 

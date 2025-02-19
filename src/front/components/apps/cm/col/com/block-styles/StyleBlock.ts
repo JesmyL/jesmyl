@@ -1,5 +1,5 @@
+import { SourceBased } from '#shared/lib/SourceBased';
 import { makeRegExp } from 'shared/utils';
-import SourceBased from '../../../../../../complect/SourceBased';
 import { Order } from '../order/Order';
 import { IExportableStyleProp } from './BlockStyles.model';
 

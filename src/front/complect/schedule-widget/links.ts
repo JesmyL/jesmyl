@@ -1,4 +1,4 @@
-import { LinkAppActionFabric } from '../link-app-actions';
+import { LinkAppActionFabric } from '../../basis/lib/link-app-actions';
 
 type Props = {
   inviteSch?: number;

@@ -1,5 +1,5 @@
 import { Route } from 'react-router-dom';
-import ScheduleWidgetListPage from './ListPage';
+import { ScheduleWidgetListPage } from './ListPage';
 
 export const scheduleWidgetListPageRoute = (
   <Route

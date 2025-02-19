@@ -1,6 +1,6 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { PhaseContainerConfigurer } from 'front/complect/phase-container/PhaseContainerConfigurer';
 import { useReducer, useRef } from 'react';
-import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
 import { useIndexFileAssociations } from '../../../atoms';
 import { MyFilesTypeBox } from './complect/MyFilesTypeBox';
 import { useAddMyFileOnDrop, useAddMyFileOnFileChange } from './hooks/on-add-file';
@@ -8,7 +8,7 @@ import { useAddMyFileOnDrop, useAddMyFileOnFileChange } from './hooks/on-add-fil
 const onDragOver: DefaultPreventer = event => event.preventDefault();
 const forceUpdater = (it: number) => it + 1;
 
-export default function IndexMyFiles() {
+export function IndexMyFiles() {
   const [updates, forceUpdate] = useReducer(forceUpdater, 0);
   const onDrop = useAddMyFileOnDrop(forceUpdate);
   const onChange = useAddMyFileOnFileChange(forceUpdate);

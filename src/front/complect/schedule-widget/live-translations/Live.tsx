@@ -1,9 +1,6 @@
-import { useAtomValue } from 'front/complect/atoms';
-import Modal from 'front/complect/modal/Modal/Modal';
-import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
-import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import IconButton from 'front/complect/the-icon/IconButton';
-import { TheIconLoading } from 'front/complect/the-icon/IconLoading';
+import { useAtomValue } from '#shared/lib/atom';
+import { IconButton, TheIconLoading } from '#shared/ui/icon';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import {
   schLiveSokiInvocatorBaseClient,
   schLiveSokiInvocatorClient,
@@ -12,7 +9,7 @@ import { soki } from 'front/soki';
 import { useEffect, useState } from 'react';
 import { IScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
 import { ScreenTranslationControlPanelShowMdButton } from '../../../components/apps/+complect/translations/controls/ShowMdButton';
-import BibleTranslationSlide from '../../../components/apps/bible/translations/BibleTranslationSlide';
+import { BibleTranslationSlide } from '../../../components/apps/bible/translations/BibleTranslationSlide';
 import { CmLiveTranslationScreen } from '../../../components/apps/cm/translation/complect/live/Screen';
 import { liveDataAtom, liveDataStreamersAtom } from '../../../components/index/atoms';
 import { ScheduleWidgetMarkdownLiveTranslation } from './MarkdownLive';

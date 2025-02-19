@@ -1,24 +1,21 @@
 import { ReactNode, useMemo, useState } from 'react';
 
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { IconButton, LazyIcon } from '#shared/ui/icon';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import {
   IScheduleWidgetUser,
   ScheduleUserScopeProps,
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
-import Modal from '../../../modal/Modal/Modal';
-import { ModalBody } from '../../../modal/Modal/ModalBody';
-import { ModalHeader } from '../../../modal/Modal/ModalHeader';
-import IconButton from '../../../the-icon/IconButton';
 import {
   ScheduleUserScopePropsContext,
   useScheduleScopePropsContext,
 } from '../../complect/scope-contexts/scope-props-contexts';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
-import ScheduleWidgetUserTakePhoto from './TakePhoto';
+import { ScheduleWidgetUserTakePhoto } from './TakePhoto';
 import { ScheduleWidgetUserEdit } from './UserEdit';
-import ScheduleWidgetUserPhoto from './UserPhoto';
+import { ScheduleWidgetUserPhoto } from './UserPhoto';
 
 interface Props {
   user: IScheduleWidgetUser;

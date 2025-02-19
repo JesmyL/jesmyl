@@ -1,4 +1,4 @@
-import { MyLib } from 'front/utils';
+import { MyLib } from '#shared/lib/my-lib';
 import { CSSProperties, useMemo } from 'react';
 import { useScreenTranslationPositionsStyles } from '../../../../+complect/translations/complect/hooks/position-styles';
 import { useScreenTranslationTextStyles } from '../../../../+complect/translations/complect/hooks/text-styles';

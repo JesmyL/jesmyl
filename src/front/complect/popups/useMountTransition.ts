@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export default function useMountTransition(
-  isMounted: boolean,
-  className: string,
-  unmountDelay: number,
-): [boolean, string] {
+export function useMountTransition(isMounted: boolean, className: string, unmountDelay: number): [boolean, string] {
   const [hasTransitionedIn, setHasTransitionedIn] = useState(false);
 
   useEffect(() => {

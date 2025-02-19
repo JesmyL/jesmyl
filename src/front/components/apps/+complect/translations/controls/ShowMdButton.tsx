@@ -1,4 +1,4 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { LazyIcon } from '#shared/ui/icon';
 import { FunctionComponent, memo } from 'react';
 import { useIsCanShowTextTranslation } from '../atoms';
 

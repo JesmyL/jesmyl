@@ -1,7 +1,7 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { LazyIcon } from '#shared/ui/icon';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { contextCreator } from '../complect/contextCreator';
+import { contextCreator } from '../shared/lib/contextCreator';
 import { AppName } from './App.model';
 
 interface Props {
@@ -22,7 +22,7 @@ const footerItemPlaceLsPrefix = 'nav-link:';
 
 export { CurrentAppFooterItemAppNameContext, CurrentAppFooterItemPlaceContext, footerItemPlaceLsPrefix };
 
-export default function AppFooterItem({ to, icon, title, search, className, children, idPostfix: id }: Props) {
+export const AppFooterItem = ({ to, icon, title, search, className, children, idPostfix: id }: Props) => {
   const appName = useCurrentAppFooterItemAppNameContext();
   const place = useCurrentAppFooterItemPlaceContext();
   const isActive = to === place;
@@ -56,7 +56,7 @@ export default function AppFooterItem({ to, icon, title, search, className, chil
       {children}
     </StyledLink>
   );
-}
+};
 
 const StyledLink = styled(Link)`
   @starting-style {

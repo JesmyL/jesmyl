@@ -1,12 +1,11 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
+import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { useMemo, useState } from 'react';
 import { IScheduleWidgetUser } from 'shared/api';
-import DebouncedSearchInput from '../../../DebouncedSearchInput';
-import { ModalBody } from '../../../modal/Modal/ModalBody';
-import { ModalHeader } from '../../../modal/Modal/ModalHeader';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
-import ScheduleWidgetUserPhoto from '../users/UserPhoto';
-import ScheduleWidgetRemovableUserFace from './RemovableUserFace';
+import { ScheduleWidgetUserPhoto } from '../users/UserPhoto';
+import { ScheduleWidgetRemovableUserFace } from './RemovableUserFace';
 import { checkIsUserPhotoable } from './utils';
 
 export const ScheduleWidgetPhotoGalery = () => {

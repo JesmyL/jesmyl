@@ -1,4 +1,4 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
 import React from 'react';
 import { Route, Routes, useParams } from 'react-router-dom';
 

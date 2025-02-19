@@ -1,14 +1,14 @@
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
+import { useIsExpand } from '#shared/ui/expand/useIsExpand';
+import { IconButton } from '#shared/ui/icon';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import { useMemo, useState } from 'react';
 import { IScheduleWidgetRole } from 'shared/api';
-import useIsExpand from '../../../expand/useIsExpand';
-import IconButton from '../../../the-icon/IconButton';
 import { useScheduleScopePropsContext } from '../../complect/scope-contexts/scope-props-contexts';
 import { schRolesSokiInvocatorClient } from '../../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../../useScheduleWidget';
-import ScheduleWidgetRole from './Role';
+import { ScheduleWidgetRole } from './Role';
 
-export default function ScheduleWidgetRoleList() {
+export const ScheduleWidgetRoleList = () => {
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
 
@@ -66,4 +66,4 @@ export default function ScheduleWidgetRoleList() {
         })}
     </>
   );
-}
+};

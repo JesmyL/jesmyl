@@ -1,13 +1,13 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { LazyIcon } from '#shared/ui/icon';
+import { ComLine } from 'front/components/apps/cm/col/com/line/ComLine';
+import { TheOrder } from 'front/components/apps/cm/col/com/order/TheOrder';
 import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { OrderRepeats } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
-import { useConfirm } from '../../../../../../../complect/modal/confirm/useConfirm';
+import { useConfirm } from '../../../../../../../shared/ui/modal/hooks/useConfirm';
 import { ChordVisibleVariant } from '../../../../Cm.model';
-import ComLine from '../../../../col/com/line/ComLine';
-import TheOrder from '../../../../col/com/order/TheOrder';
 import { EditableOrder } from '../complect/orders/EditableOrder';
 import { useEditableCcom } from '../useEditableCcom';
 import { IEditableComLineProps } from './ComRepeats.model';
@@ -19,7 +19,7 @@ const defaultPos = {
   '--y': 0,
 };
 
-export default function ComRepeats() {
+export function ComRepeats() {
   const [start, setStart] = useState<IEditableComLineProps | null>(null);
   const [pos, setPos] = useState(defaultPos);
   const [isChordBlock, setIsChordBlock] = useState(false);

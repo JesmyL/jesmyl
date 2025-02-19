@@ -1,4 +1,4 @@
-import { contextCreator } from 'front/complect/contextCreator';
+import { contextCreator } from '#shared/lib/contextCreator';
 import { emptyFunc } from 'shared/utils';
 
 export const [SetComListLimitsExtracterContext, useSetComListLimitsExtracterContext] = contextCreator<{

@@ -1,4 +1,4 @@
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import { IScheduleWidget, ScheduleScopeProps } from 'shared/api';
 import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRights } from '../useScheduleWidget';

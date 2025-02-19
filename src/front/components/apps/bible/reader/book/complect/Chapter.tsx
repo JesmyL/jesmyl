@@ -1,8 +1,8 @@
 import { memo } from 'react';
 import { BibleChapteri } from '../../../model';
-import BibleReaderVerseText from './Verse';
+import { BibleReaderVerseText } from './Verse';
 
-export default memo(function BibleReaderChapter({
+export const BibleReaderChapter = memo(function BibleReaderChapter({
   list,
   chapteri,
 }: {

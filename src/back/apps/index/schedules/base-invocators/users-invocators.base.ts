@@ -1,5 +1,5 @@
+import { mylib } from '#shared/lib/my-lib';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
-import { mylib } from 'front/utils';
 import {
   IScheduleWidgetUser,
   IScheduleWidgetUserMi,

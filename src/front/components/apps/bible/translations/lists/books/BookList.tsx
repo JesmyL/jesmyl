@@ -7,7 +7,7 @@ import { useBibleListFaceClickListener } from '../complect';
 export const bookiIdPrefix = 'bible-booki-';
 const faceClassName = 'bible-list-chapter-face';
 
-export default function BibleBookList() {
+export function BibleBookList() {
   const books = useBibleBookList();
   const setValue = useBibleSingleAddressSetter();
   const setAddress = useSetBibleAddressWithForceJoinReset();

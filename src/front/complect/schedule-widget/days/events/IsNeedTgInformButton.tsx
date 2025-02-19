@@ -1,4 +1,4 @@
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
+import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 
 type Props = {
   disabled: boolean;

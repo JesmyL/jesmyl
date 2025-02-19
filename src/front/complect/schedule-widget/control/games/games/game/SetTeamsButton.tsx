@@ -1,10 +1,10 @@
-import { FullContent } from 'front/complect/fullscreen-content/FullContent';
+import { TheButton } from '#shared/ui/Button';
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
+import { useScheduleWidgetRightsContext } from 'front/complect/schedule-widget/useScheduleWidget';
 import { useState } from 'react';
-import TheButton from '../../../../../Button';
-import { useScheduleWidgetRightsContext } from '../../../../useScheduleWidget';
-import ScheduleWidgetTeamGameSetTeamsScreen from './SetTeamsScreen';
+import { ScheduleWidgetTeamGameSetTeamsScreen } from './SetTeamsScreen';
 
-export default function ScheduleWidgetTeamGameSetTeamsButton() {
+export const ScheduleWidgetTeamGameSetTeamsButton = () => {
   const rights = useScheduleWidgetRightsContext();
   const criterias = rights.schedule.games?.criterias;
   const [isOpen, setIsOpen] = useState<unknown>(false);
@@ -24,4 +24,4 @@ export default function ScheduleWidgetTeamGameSetTeamsButton() {
       )}
     </>
   );
-}
+};

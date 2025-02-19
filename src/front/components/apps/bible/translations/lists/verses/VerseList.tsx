@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { JStorageSetOrArrayVal } from '../../../../../../complect/JSimpleStorage/exports/SetOrArray';
+import { JStorageSetOrArrayVal } from '../../../../../../basis/lib/JSimpleStorage/exports/SetOrArray';
 import { useBibleAddressBooki } from '../../../hooks/address/books';
 import { useBibleAddressChapteri } from '../../../hooks/address/chapters';
 import { useBibleTranslatesContext } from '../../../translates/TranslatesContext';
@@ -11,7 +11,7 @@ export const verseiIdPrefix = 'bible-versei-';
 
 const fastVerses = new JStorageSetOrArrayVal<string[]>('bible', 'fastVerses', []);
 
-export default function BibleVerseList(): JSX.Element {
+export function BibleVerseList(): JSX.Element {
   const verseListRef = useRef<HTMLOListElement>(null);
 
   const currentBooki = useBibleAddressBooki();

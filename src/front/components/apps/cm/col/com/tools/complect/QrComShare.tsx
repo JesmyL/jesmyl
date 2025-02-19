@@ -1,4 +1,4 @@
-import { QrCodeFullScreen } from 'front/complect/qr-code/QrCodeFullScreen';
+import { QrCodeFullScreen } from '#shared/ui/qr-code/QrCodeFullScreen';
 import { cmAppActions } from 'front/components/apps/cm/app-actions/cm-app-actions';
 import { useState } from 'react';
 import { ComTool } from '../ComTool';

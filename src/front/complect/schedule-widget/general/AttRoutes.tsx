@@ -1,4 +1,4 @@
-import { MyLib } from 'front/utils';
+import { MyLib } from '#shared/lib/my-lib';
 import React from 'react';
 import { Routes } from 'react-router-dom';
 import { makeAttStorage } from '../useScheduleWidget';

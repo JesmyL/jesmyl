@@ -1,15 +1,15 @@
+import { LazyIcon } from '#shared/ui/icon';
 import { IScheduleWidget, IScheduleWidgetRole } from 'shared/api';
 import { useAuth } from '../../../../components/index/atoms';
-import { LazyIcon } from '../../../the-icon/LazyIcon';
 import { extractScheduleWidgetRoleUser } from '../../useScheduleWidget';
 
-export default function ScheduleWidgetRoleFace({
+export const ScheduleWidgetRoleFace = ({
   role,
   schedule,
 }: {
   role?: IScheduleWidgetRole;
   schedule: IScheduleWidget;
-}) {
+}) => {
   const auth = useAuth();
   const roleUser = role && extractScheduleWidgetRoleUser(schedule, role.mi);
   if (role === undefined) return <div className="color--ko">Неизвестная роль</div>;
@@ -24,4 +24,4 @@ export default function ScheduleWidgetRoleFace({
       </div>
     </div>
   );
-}
+};

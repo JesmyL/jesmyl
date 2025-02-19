@@ -1,5 +1,7 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { mylib, MyLib } from 'front/utils';
+import { mylib, MyLib } from '#shared/lib/my-lib';
+import { LazyIcon } from '#shared/ui/icon';
+import { Modal, ModalBody, ModalFooter } from '#shared/ui/modal';
+import { SendableDiv } from '#shared/ui/sendable/SendableDiv';
 import React, { ReactNode, useState } from 'react';
 import {
   IScheduleWidget,
@@ -10,14 +12,10 @@ import {
   scheduleWidgetUserRights,
 } from 'shared/api';
 import styled from 'styled-components';
-import Modal from '../../modal/Modal/Modal';
-import { ModalBody } from '../../modal/Modal/ModalBody';
-import { ModalFooter } from '../../modal/Modal/ModalFooter';
-import StrongDiv from '../../strong-control/StrongDiv';
 import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
 import { useScheduleWidgetAppAttsContext, useScheduleWidgetRightsContext } from '../useScheduleWidget';
-import ScheduleWidgetAttFace from './AttFace';
-import ScheduleWidgetCustomAttachments from './custom/CustomAttachments';
+import { ScheduleWidgetAttFace } from './AttFace';
+import { ScheduleWidgetCustomAttachments } from './custom/CustomAttachments';
 
 type Props = {
   forTitle: ReactNode;
@@ -69,7 +67,7 @@ export const ScheduleWidgetBindAtts = ({
                 return null;
 
               return (
-                <StrongDiv
+                <SendableDiv
                   key={attKey}
                   className={
                     'relative flex flex-gap bgcolor--1 padding-gap margin-big-gap-v pointer' +
@@ -86,7 +84,7 @@ export const ScheduleWidgetBindAtts = ({
                   />
                   <div className="fade-05 ">{tatt.description}</div>
                   {inAttNodeAdds?.(attKey, tatt, attRefs[attKey] ?? [])}
-                </StrongDiv>
+                </SendableDiv>
               );
             })}
           </ModalBody>
