@@ -3,7 +3,7 @@ import { Eventer, makeRegExp } from 'shared/utils';
 import { authIDB } from './components/index/db/auth-idb';
 import { indexIDB } from './components/index/db/index-idb';
 import { environment } from './environments';
-import { onSokiClientEventerInvocatorInvoke } from './eventers';
+import { onSokiClientEventerInvocatorInvoke } from './shared/lib/eventers';
 
 export class SokiTrip {
   private ws?: WebSocket;

@@ -1,5 +1,5 @@
 import { css } from 'styled-components';
-import { cursors } from '../../cursorsBase64';
+import { base64Cursors } from '../../shared/lib/base64Cursors';
 
 const lightTheme = (selector: string) => css`
   ${selector && `${selector} {`}
@@ -19,14 +19,14 @@ const lightTheme = (selector: string) => css`
 
   &,
   * {
-    ${cursors.defaultDark}
+    ${base64Cursors.defaultDark}
   }
 
   input[type='radio'],
   input[type='button'],
   .pointer,
   .pointer * {
-    ${cursors.pointerDark}
+    ${base64Cursors.pointerDark}
   }
   ${selector && '}'}
 `;
@@ -49,14 +49,14 @@ const darkTheme = (selector: string) => css`
 
   &,
   * {
-    ${cursors.defaultLight}
+    ${base64Cursors.defaultLight}
   }
 
   input[type='radio'],
   input[type='button'],
   .pointer,
   .pointer * {
-    ${cursors.pointerLight}
+    ${base64Cursors.pointerLight}
   }
   ${selector && '}'}
 `;

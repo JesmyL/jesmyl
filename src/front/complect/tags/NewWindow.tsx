@@ -1,5 +1,5 @@
+import { renderComponentInNewWindow } from 'front/shared/renders';
 import { memo, useEffect, useRef, useState } from 'react';
-import { renderComponentInNewWindow } from '../..';
 import { addEventListenerPipe, hookEffectPipe } from '../hookEffectPipe';
 
 interface Props {

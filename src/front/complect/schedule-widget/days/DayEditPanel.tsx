@@ -1,4 +1,4 @@
-import { renderComponentInNewWindow } from 'front/front.index';
+import { renderComponentInNewWindow } from 'front/shared/renders';
 import { useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetDay, ScheduleScopeProps } from 'shared/api';
 import { makeRegExp } from 'shared/utils';

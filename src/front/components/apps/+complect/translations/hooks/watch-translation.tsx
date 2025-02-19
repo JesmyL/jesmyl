@@ -1,7 +1,7 @@
-import { renderComponentInNewWindow } from 'front/front.index';
+import { renderComponentInNewWindow } from 'front/shared/renders';
 import { useCallback } from 'react';
 import { createGlobalStyle, css } from 'styled-components';
-import { cursors } from '../../../../../cursorsBase64';
+import { base64Cursors } from '../../../../../shared/lib/base64Cursors';
 import { useScreenTranslationConfigsValue } from '../atoms';
 import { useCurrentForceViweAppContext } from '../Translation.contexts';
 import { TranslationScreen } from '../TranslationScreen';
@@ -81,7 +81,7 @@ const styles = css`
       transition-delay: 0.2s;
 
       &:not(.any) {
-        ${cursors.defaultLight}
+        ${base64Cursors.defaultLight}
       }
     }
 
