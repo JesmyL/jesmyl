@@ -1,6 +1,7 @@
 import { MyLib } from 'front/utils';
 import { SetStateAction, useEffect, useMemo, useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import { emptyArray } from 'shared/utils';
 import { contextCreator } from '../complect/contextCreator';
 import { useFingersActions } from '../complect/global-listeners/useFingersActions';
 import { useGlobalFontFamilySetter } from '../complect/global-listeners/useGlobalFontFamilySetter';
@@ -12,7 +13,6 @@ import { useCurrentApp } from '../components/index/atoms';
 import './App.scss';
 import { appInitialInvokes } from './app-initial-invokes';
 
-const emptyArr: [] = [];
 const emptyDict = {};
 
 const [SetAppRootAnchorNodesContext, useSetAppRootAnchorNodesContext] = contextCreator(
@@ -37,7 +37,7 @@ export default function AppComponent() {
       .pipe(setTimeoutPipe(setIsShowLogo, 1200, false))
       .effect();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, emptyArr);
+  }, emptyArray);
 
   const keyboardProps = useMemo(() => {
     return {

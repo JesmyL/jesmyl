@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { emptyArray } from 'shared/utils';
 import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
 import IconCheckbox from '../../../../../complect/the-icon/IconCheckbox';
 import { bibleIDB } from '../../_db/bibleIDB';
@@ -9,8 +10,6 @@ import { useBibleBookList } from '../../hooks/texts';
 import BibleSearchResults from '../../translations/search/Results';
 import { useBibleTranslationSearchResultSelectedSet } from '../../translations/search/hooks/results';
 import BibleSearchPanelSearchTextInput from '../../translations/search/input-panel/SearchTextInput';
-
-const emptyArr: [] = [];
 
 export default function BibleReaderSearchPage() {
   const navigate = useNavigate();
@@ -22,7 +21,7 @@ export default function BibleReaderSearchPage() {
   const setResultSelected = useBibleTranslationSearchResultSelectedSet();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => setResultSelected(null), emptyArr);
+  useEffect(() => setResultSelected(null), emptyArray);
 
   const inputRef = useRef<HTMLInputElement>(null);
 

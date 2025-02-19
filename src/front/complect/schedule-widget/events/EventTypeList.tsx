@@ -2,6 +2,7 @@ import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIcon
 import { mylib } from 'front/utils';
 import React, { ReactNode, useMemo, useState } from 'react';
 import { IScheduleWidget, ScheduleWidgetCleans, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
+import { emptyArray } from 'shared/utils';
 import styled from 'styled-components';
 import DebouncedSearchInput from '../../DebouncedSearchInput';
 import Modal from '../../modal/Modal/Modal';
@@ -21,13 +22,11 @@ type Props = {
   onItemSelectSend?: (typei: number) => Promise<unknown>;
 };
 
-const emptyArr: [] = [];
-
 const itemIt = <Item,>({ item }: { item: Item }) => item;
 const eqByTitle = (a: { title: string }, b: { title: string }) => (a.title > b.title ? 1 : b.title < a.title ? -1 : 0);
 
 export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCounts, onItemSelectSend }: Props) => {
-  const types = schedule.types || emptyArr;
+  const types = schedule.types || emptyArray;
   const [term, setTerm] = useState('');
   const error = useAttTypeTitleError(term, schedule, true);
   const scheduleScopeProps = useScheduleScopePropsContext();

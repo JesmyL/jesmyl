@@ -1,6 +1,7 @@
 import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useState } from 'react';
 import { IScheduleWidgetUser } from 'shared/api';
+import { emptyArray } from 'shared/utils';
 import styled, { css } from 'styled-components';
 import { HistoryAdder } from './model';
 
@@ -22,8 +23,6 @@ interface HistoryItem {
   correct?: 'left' | 'right';
 }
 
-const emptyArr: [] = [];
-
 export default function ScheduleWidgetTeamsCriteriaSorterScreenHistory({
   addInHistoryRef,
   setEnd,
@@ -34,7 +33,7 @@ export default function ScheduleWidgetTeamsCriteriaSorterScreenHistory({
   start,
   sortedUsers,
 }: Props) {
-  const [history, setHistory] = useState<HistoryItem[]>(emptyArr);
+  const [history, setHistory] = useState<HistoryItem[]>(emptyArray);
   const [point, setPoint] = useState<number | null>(null);
 
   addInHistoryRef.current = (start, end, users, correct) => {

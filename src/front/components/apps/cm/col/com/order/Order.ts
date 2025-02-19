@@ -7,12 +7,10 @@ import {
   OrderRepeats,
   SpecialOrderRepeats,
 } from 'shared/api';
-import { itIt, makeRegExp } from 'shared/utils';
+import { emptyArray, itIt, makeRegExp } from 'shared/utils';
 import SourceBased from '../../../../../../complect/SourceBased';
 import { Com } from '../Com';
 import { EditableOrderRegion, IExportableOrderMe } from './Order.model';
-
-const emptyArr: [] = [];
 
 export class Order extends SourceBased<IExportableOrder> {
   _regions?: EditableOrderRegion<Order>[];
@@ -305,7 +303,7 @@ export class Order extends SourceBased<IExportableOrder> {
                 count,
               };
             } else {
-              const letter: string | undefined = (makeRegExp('/[a-z]/i').exec(key) || emptyArr)[0];
+              const letter: string | undefined = (makeRegExp('/[a-z]/i').exec(key) ?? emptyArray)[0];
 
               if (letter !== undefined) {
                 const [first, second, third] = key.split(makeRegExp('/[:a-z]/i')).map(num => parseInt(num));
@@ -427,7 +425,7 @@ export class Order extends SourceBased<IExportableOrder> {
 
     if (mylib.isNum(repeats)) return this._insertRepeats(text, repeats, true, true);
     else {
-      const poss: Record<number, Record<number, number[]>> = {};
+      const poss: PRecord<number, PRecord<number, number[]>> = {};
 
       mylib
         .keys(repeats)
@@ -489,7 +487,7 @@ export class Order extends SourceBased<IExportableOrder> {
 
           const repldLine = words
             .map((word, wordi) => {
-              const counts = mylib.typ(emptyArr, (poss[linei] ?? emptyArr)[wordi]);
+              const counts = poss[linei]?.[wordi] ?? emptyArray;
 
               return counts.length === 0
                 ? word
@@ -500,7 +498,7 @@ export class Order extends SourceBased<IExportableOrder> {
             })
             .join(' ');
 
-          const counts = ((poss[linei] ?? emptyArr)[-1] ?? emptyArr).concat((poss[linei] ?? emptyArr)[-2] ?? emptyArr);
+          const counts = poss[linei]?.[-1]?.concat(poss[linei]?.[-2] ?? emptyArray) ?? emptyArray;
 
           return counts.length > 0
             ? counts.reduce(
