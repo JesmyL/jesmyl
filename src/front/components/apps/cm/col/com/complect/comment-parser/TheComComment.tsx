@@ -4,7 +4,7 @@ import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe
 import { mylib } from '#shared/lib/my-lib';
 import { LazyIcon, TheIconLoading } from '#shared/ui/icon';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
-import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
+import { cmIDB } from '@cm/shared/lib/cmIdb';
 import { useEffect, useRef, useState } from 'react';
 import { isNIs } from 'shared/utils';
 import styled from 'styled-components';

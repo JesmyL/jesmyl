@@ -10,9 +10,9 @@ import {
   MigratableComToolName,
   ScheduleComPack,
 } from 'shared/api';
-import { ChordVisibleVariant, FavoriteMeetings, PlayerHideMode } from '../Cm.model';
-import { defaultCmConfig } from '../translation/complect/controlled/hooks/configs';
-import { CmTranslationScreenConfig } from '../translation/complect/controlled/model';
+import { ChordVisibleVariant, FavoriteMeetings, PlayerHideMode } from '../../Cm.model';
+import { defaultCmConfig } from '../../translation/complect/controlled/hooks/configs';
+import { CmTranslationScreenConfig } from '../../translation/complect/controlled/model';
 
 export interface CmIDBStorage {
   chordPack: ChordPack;

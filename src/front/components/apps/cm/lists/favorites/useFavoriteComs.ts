@@ -1,7 +1,7 @@
+import { useComs } from '@cm/cols/useCols';
+import { cmUserStoreSokiInvocatorClient } from '@cm/invocators/user-store-invocator.methods';
+import { cmIDB } from '@cm/shared/lib/cmIdb';
 import { CmComWid } from 'shared/api';
-import { cmIDB } from '../../_db/cm-idb';
-import { useComs } from '../../cols/useCols';
-import { cmUserStoreSokiInvocatorClient } from '../../invocators/user-store-invocator.methods';
 
 let saveTimeout: TimeOut;
 

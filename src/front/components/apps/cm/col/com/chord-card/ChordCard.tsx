@@ -1,5 +1,5 @@
+import { cmIDB } from '@cm/shared/lib/cmIdb';
 import { ChordTrack } from 'shared/api';
-import { cmIDB } from '../../../_db/cm-idb';
 import './ChordCard.scss';
 import { ChordCardTracked } from './ChordCardTracked';
 

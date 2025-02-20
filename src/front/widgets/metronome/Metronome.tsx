@@ -1,10 +1,10 @@
+import { useActualRef } from '#shared/lib/+hooks/useActualRef';
+import { isTouchDevice } from '#shared/lib/device-detections';
 import { LazyIcon } from '#shared/ui/icon';
-import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
+import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
+import { cmIDB } from '@cm/shared/lib/cmIdb';
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import { useActualRef } from '../../shared/lib/+hooks/useActualRef';
-import { isTouchDevice } from '../../shared/lib/device-detections';
-import { KeyboardInput } from '../../shared/ui/keyboard/KeyboardInput';
 
 interface Props {
   meterSize: 3 | 4 | und;

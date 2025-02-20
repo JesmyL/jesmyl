@@ -8,7 +8,7 @@ import {
   useScreenTranslationCurrentConfigi,
 } from '#features/translations/lib/hooks/configs';
 import { BackgroundConfigProps } from '#shared/ui/configurators/model';
-import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
+import { cmIDB } from '@cm/shared/lib/cmIdb';
 import { CmTranslationScreenConfig } from '../model';
 
 export const defaultCmConfig: CmTranslationScreenConfig & BackgroundConfigProps = {

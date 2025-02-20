@@ -1,7 +1,7 @@
+import { useIccat } from '@cm/col/cat/useCcat';
+import { cmIDB } from '@cm/shared/lib/cmIdb';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
-import { cmIDB } from '../../../_db/cm-idb';
-import { useIccat } from '../../../col/cat/useCcat';
 import { EditableCom } from '../compositions/com/EditableCom';
 import { EditableCat } from './EditableCat';
 

@@ -1,22 +1,22 @@
 import { useAtom, useAtomValue } from '#shared/lib/atom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { BottomPopup } from '#shared/ui/absolute-popup/bottom-popup/BottomPopup';
-import { DocTitle } from '#shared/ui/tags/DocTitle';
-import { BibleTranslatesContextProvider } from 'front/components/apps/bible/translates/TranslatesContext';
-import { useEffect, useRef, useState } from 'react';
-import styled, { css } from 'styled-components';
 import {
   PageContainer,
   StyledPhaseContainerConfigurerHead,
   StyledPhaseContainerConfigurerHeadTitle,
-} from '../../../../../shared/ui/PageContainer';
-import { FullContent } from '../../../../../shared/ui/fullscreen-content/FullContent';
-import { Metronome } from '../../../../../widgets/metronome/Metronome';
-import { cmIDB } from '../../_db/cm-idb';
-import { cmIsShowCatBindsInCompositionAtom, isOpenChordImagesAtom } from '../../atoms';
-import { useCmTranslationComListContext as useCmComListContext } from '../../base/translations/context';
-import { useChordVisibleVariant } from '../../base/useChordVisibleVariant';
-import { useLaterComList } from '../../base/useLaterComList';
+} from '#shared/ui/PageContainer';
+import { BottomPopup } from '#shared/ui/absolute-popup/bottom-popup/BottomPopup';
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
+import { DocTitle } from '#shared/ui/tags/DocTitle';
+import { Metronome } from '#widgets/metronome/Metronome';
+import { BibleTranslatesContextProvider } from '@bible/translates/TranslatesContext';
+import { cmIsShowCatBindsInCompositionAtom, isOpenChordImagesAtom } from '@cm/atoms';
+import { useCmTranslationComListContext } from '@cm/base/translations/context';
+import { useChordVisibleVariant } from '@cm/base/useChordVisibleVariant';
+import { useLaterComList } from '@cm/base/useLaterComList';
+import { cmIDB } from '@cm/shared/lib/cmIdb';
+import { useEffect, useRef, useState } from 'react';
+import styled, { css } from 'styled-components';
 import './Com.scss';
 import { ComNotFoundPage } from './ComNotFoundPage';
 import { TheControlledCom } from './TheControlledCom';
@@ -35,7 +35,7 @@ export function TheComposition() {
   const { addLaterComw, laterComws } = useLaterComList();
   const [isOpenTools, setIsOpenTools] = useState(false);
   const comToolsNode = useMigratableTopComTools();
-  const { list } = useCmComListContext();
+  const { list } = useCmTranslationComListContext();
   const playerHideMode = cmIDB.useValue.playerHideMode();
   const isMetronomeHide = cmIDB.useValue.metronome().isHide;
 

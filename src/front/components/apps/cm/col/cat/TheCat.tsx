@@ -10,13 +10,13 @@ import {
   StyledPhaseContainerConfigurerContent,
   StyledPhaseContainerConfigurerHead,
 } from '../../../../../shared/ui/PageContainer';
-import { cmIDB } from '../../_db/cm-idb';
 import { SetComListLimitsExtracterContext } from '../../base/SetComListLimitsExtracterContext';
 import { CmTranslationComListContextInCat } from '../../base/translations/InCat';
 import { CmTranslationComListContextInZeroCat } from '../../base/translations/InZeroCat';
 import { useLaterComList } from '../../base/useLaterComList';
 import { categoryTermAtom, CmComListSearchFilterInput } from '../../complect/ComListSearchFilterInput';
 import { cmCompositionRoute } from '../../routing/cmRoutingApp';
+import { cmIDB } from '../../shared/lib/cmIdb';
 import { Com } from '../com/Com';
 import { ComFaceList } from '../com/face/list/ComFaceList';
 import { useCcat } from './useCcat';

@@ -4,8 +4,8 @@ import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect } from 'react';
 import { CmComWid, IExportableCom } from 'shared/api';
-import { cmIDB } from '../_db/cm-idb';
 import { Com } from '../col/com/Com';
+import { cmIDB } from '../shared/lib/cmIdb';
 
 export const categoryTermAtom = atom('');
 

@@ -1,6 +1,6 @@
+import { cmIDB } from '@cm/shared/lib/cmIdb';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
-import { cmIDB } from '../../_db/cm-idb';
 import { EditableCat } from './categories/EditableCat';
 import { EditableCom } from './compositions/com/EditableCom';
 

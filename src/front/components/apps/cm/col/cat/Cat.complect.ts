@@ -1,6 +1,6 @@
 import { MyLib, mylib } from '#shared/lib/my-lib';
 import { itIt, makeRegExp } from 'shared/utils';
-import { cmIDB, CmIDBStorage } from '../../_db/cm-idb';
+import { cmIDB, CmIDBStorage } from '../../shared/lib/cmIdb';
 import { Com } from '../com/Com';
 import { Cat } from './Cat';
 import { CatTracker } from './Cat.model';

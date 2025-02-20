@@ -1,7 +1,7 @@
+import { cmIDB } from '@cm/shared/lib/cmIdb';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { CmComWid, CmComWidStr } from 'shared/api';
-import { cmIDB } from '../_db/cm-idb';
 import { Cat } from '../col/cat/Cat';
 import { Com } from '../col/com/Com';
 

@@ -1,9 +1,9 @@
 import { mylib } from '#shared/lib/my-lib';
 import { bibleTranslatesIDB } from '@bible/shared/lib/bibleIDB';
+import { cmIDB } from '@cm/shared/lib/cmIdb';
 import { memo, useEffect, useState } from 'react';
 import { BibleTranslateName } from 'shared/api';
 import { itIt, makeRegExp } from 'shared/utils';
-import { cmIDB } from '../../_db/cm-idb';
 import { useEditableCats, useEditableComs } from '../col/useEditableCols';
 
 const emptyArr = [] as [];

@@ -1,4 +1,4 @@
-import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
+import { cmIDB } from '@cm/shared/lib/cmIdb';
 import { useEffect, useMemo } from 'react';
 import { useAtom } from '../../../../../../../shared/lib/atom';
 import { useComCommentText } from '../../../../com-comments-manager';

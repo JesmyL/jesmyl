@@ -2,9 +2,9 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { authIDB } from 'front/components/index/db/auth-idb';
 import { Eventer } from 'shared/utils';
 import { CmComWid, CmComWidStr } from '../../../../shared/api/complect/apps/cm/complect/enums';
-import { cmIDB } from './_db/cm-idb';
 import { cmFreshesSokiInvocatorClient } from './invocators/fresh-invocator.methods';
 import { cmUserStoreSokiInvocatorClient } from './invocators/user-store-invocator.methods';
+import { cmIDB } from './shared/lib/cmIdb';
 
 export const useComCommentText = (comw: CmComWid) =>
   useLiveQuery(() => cmIDB.tb.comComments.get(comw), [comw])?.comment;

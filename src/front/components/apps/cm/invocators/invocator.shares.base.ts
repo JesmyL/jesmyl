@@ -1,6 +1,6 @@
+import { cmIDB } from '@cm/shared/lib/cmIdb';
 import { SokiInvocatorBaseClient } from 'front/SokiInvocatorBase.client';
 import { CmSokiInvocatorSharesModel } from 'shared/api/invocators/cm/invocator.shares.model';
-import { cmIDB } from '../_db/cm-idb';
 
 class CmSokiInvocatorBaseClient extends SokiInvocatorBaseClient<CmSokiInvocatorSharesModel> {
   constructor() {
