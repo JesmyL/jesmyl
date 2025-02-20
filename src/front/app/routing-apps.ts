@@ -1,6 +1,6 @@
-import { bibleRoutingApp } from '../components/apps/bible/routing/bibleRoutingApp';
-import { cmRoutingApp } from '../components/apps/cm/routing/cmRoutingApp';
-import { tunerRoutingApp } from '../components/apps/tuner/tunerRoutingApp';
+import { bibleRoutingApp } from '@bible/exports';
+import { cmRoutingApp } from '@cm/exports';
+import { tunerRoutingApp } from '@tuner/exports';
 import { AppName } from './App.model';
 
 export type RoutingAppConfig = {

@@ -1,9 +1,9 @@
 import { useBibleBookList } from '#basis/consts/bibleTitles';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { BibleBooki, BibleChapteri, BibleVersei } from '@bible/model';
+import { bibleIDB } from '@bible/shared/lib/bibleIDB';
 import { useSetBibleAddressIndexes } from '@bible/shared/translations/hooks/address';
 import { bibleLowerBooks, useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
-import { bibleIDB } from 'front/components/apps/bible/_db/bibleIDB';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { emptyFunc, makeRegExp } from 'shared/utils';
 

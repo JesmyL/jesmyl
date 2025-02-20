@@ -1,5 +1,5 @@
 import { BibleTranslateName } from 'shared/api';
-import { bibleIDB, bibleTranslatesIDB } from './_db/bibleIDB';
+import { bibleIDB, bibleTranslatesIDB } from './bibleIDB';
 
 export const removeBibleTranslate = async (tName: BibleTranslateName) => {
   await bibleTranslatesIDB.remove[tName]();

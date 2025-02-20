@@ -1,5 +1,5 @@
-import { bibleIDB } from '@bible/_db/bibleIDB';
 import { BibleBooki, BibleChapteri, BibleVersei } from '@bible/model';
+import { bibleIDB } from '@bible/shared/lib/bibleIDB';
 import { useCallback } from 'react';
 
 export const useBibleChapteri = () => bibleIDB.use.chapteri();

@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { bibleIDB } from '@bible/_db/bibleIDB';
+import { bibleIDB } from '@bible/shared/lib/bibleIDB';
 import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '@bible/shared/translations/hooks/address';
 import { memo, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';

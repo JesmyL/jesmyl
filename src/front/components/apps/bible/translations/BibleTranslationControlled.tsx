@@ -1,7 +1,7 @@
 import { useInitSoki } from '#basis/lib/+hooks/useInitSoki';
 import { ScreenTranslationControlPanel } from '#features/translations/ui/ControllPanel';
 import { PageContainer } from '#shared/ui/PageContainer';
-import { bibleIDB } from '@bible/_db/bibleIDB';
+import { bibleIDB } from '@bible/shared/lib/bibleIDB';
 import { BibleModulesTranslations } from '@bible/translates/Translations';
 import { ReactNode, useEffect } from 'react';
 import styled from 'styled-components';

@@ -3,7 +3,7 @@ import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { useState } from 'react';
 import { BibleTranslateName } from 'shared/api';
 import { bibleSokiInvocatorClient } from '../invoctors/invocator';
-import { removeBibleTranslate } from '../utils';
+import { removeBibleTranslate } from '../shared/lib/removeBibleTranslate';
 import { bibleAllTranslates, translateDescriptions } from './complect';
 import { useBibleMyTranslates } from './hooks';
 

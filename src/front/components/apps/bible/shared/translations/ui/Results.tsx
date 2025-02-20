@@ -1,5 +1,5 @@
-import { bibleIDB } from '@bible/_db/bibleIDB';
 import { BibleBooki, BibleChapteri, BibleTranslationSingleAddress, BibleVersei } from '@bible/model';
+import { bibleIDB } from '@bible/shared/lib/bibleIDB';
 import { useBibleShowTranslatesValue } from '@bible/translates/hooks';
 import { useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
 import { useCallback, useEffect, useState } from 'react';

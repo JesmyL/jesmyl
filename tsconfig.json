@@ -24,6 +24,7 @@
 
       "@cm/*": ["./front/components/apps/cm/*"],
       "@bible/*": ["./front/components/apps/bible/*"],
+      "@tuner/*": ["./front/components/apps/tuner/*"],
 
       "shared/*": ["./shared/*"],
       "front/*": ["./front/*"],

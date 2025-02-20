@@ -1,6 +1,6 @@
 import { soki } from 'front/soki';
-import { bibleIDB, bibleTranslatesIDB } from '../_db/bibleIDB';
 import { bibleSokiInvocatorBaseClient, bibleSokiInvocatorClient } from '../invoctors/invocator';
+import { bibleIDB, bibleTranslatesIDB } from '../shared/lib/bibleIDB';
 
 export const bibleInitialInvokes = () => {
   bibleSokiInvocatorBaseClient.$$register();

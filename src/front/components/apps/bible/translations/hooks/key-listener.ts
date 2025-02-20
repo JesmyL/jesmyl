@@ -1,7 +1,7 @@
 import { useActualRef } from '#shared/lib/+hooks/useActualRef';
 import { mylib } from '#shared/lib/my-lib';
-import { bibleIDB } from '@bible/_db/bibleIDB';
 import { BibleTranslationAddress, BibleTranslationJoinAddress, BibleVersei } from '@bible/model';
+import { bibleIDB } from '@bible/shared/lib/bibleIDB';
 import { useBibleShowTranslatesValue } from '@bible/translates/hooks';
 import { useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
 import { useEffect, useState } from 'react';

@@ -1,7 +1,7 @@
 import { useBibleBookList } from '#basis/consts/bibleTitles';
 import { IconCheckbox } from '#shared/ui/icon';
 import { PageContainer } from '#shared/ui/PageContainer';
-import { bibleIDB } from '@bible/_db/bibleIDB';
+import { bibleIDB } from '@bible/shared/lib/bibleIDB';
 import { useBibleCurrentBooki } from '@bible/shared/translations/hooks/books';
 import { useBibleCurrentChapteri } from '@bible/shared/translations/hooks/chapters';
 import { useBibleTranslationSearchResultSelectedSet } from '@bible/shared/translations/hooks/results';

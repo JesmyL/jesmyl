@@ -2,8 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { BibleTranslateName } from 'shared/api';
 import { Eventer } from 'shared/utils';
 import { bibleTitles } from '../../../../basis/consts/bibleTitles';
-import { bibleTranslatesIDB } from '../_db/bibleIDB';
 import { BibleTranslate } from '../model';
+import { bibleTranslatesIDB } from '../shared/lib/bibleIDB';
 import { bibleAllTranslates } from './complect';
 import { useBibleMyTranslates, useBibleShowTranslatesValue } from './hooks';
 

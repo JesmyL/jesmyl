@@ -1,7 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { IconButton } from '#shared/ui/icon';
-import { bibleIDB } from '@bible/_db/bibleIDB';
 import { BibleTranslationAddress } from '@bible/model';
+import { bibleIDB } from '@bible/shared/lib/bibleIDB';
 import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '@bible/shared/translations/hooks/address';
 import { memo } from 'react';
 import { BibleTranslationArchiveJoinedAddressText } from './JoinedAddress';

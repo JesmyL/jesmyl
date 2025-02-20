@@ -1,5 +1,4 @@
 import { DexieDB } from '#shared/lib/_DexieDB';
-import { BibleTranslateName } from 'shared/api';
 import {
   BibleBooki,
   BibleChapteri,
@@ -8,8 +7,9 @@ import {
   BibleTranslationAddress,
   BibleTranslationJoinAddress,
   BibleVersei,
-} from '../model';
-import { BibleTranslationScreenConfig } from '../translations/model';
+} from '@bible/model';
+import { BibleTranslationScreenConfig } from '@bible/translations/model';
+import { BibleTranslateName } from 'shared/api';
 
 export interface BibleIDBStorage {
   booki: BibleBooki;

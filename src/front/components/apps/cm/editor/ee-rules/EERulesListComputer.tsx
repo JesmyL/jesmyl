@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { bibleTranslatesIDB } from 'front/components/apps/bible/_db/bibleIDB';
+import { bibleTranslatesIDB } from '@bible/shared/lib/bibleIDB';
 import { memo, useEffect, useState } from 'react';
 import { BibleTranslateName } from 'shared/api';
 import { itIt, makeRegExp } from 'shared/utils';

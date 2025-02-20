@@ -1,6 +1,6 @@
 import { memo, useEffect, useRef } from 'react';
-import { bibleIDB } from '../../_db/bibleIDB';
 import { BibleSearchZone } from '../../model';
+import { bibleIDB } from '../../shared/lib/bibleIDB';
 import { BibleSearchResults } from '../../shared/translations/ui/Results';
 import { BibleSearchInputPanel } from './input-panel/InputPanel';
 

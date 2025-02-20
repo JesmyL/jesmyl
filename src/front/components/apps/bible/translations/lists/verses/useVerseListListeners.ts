@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
-import { bibleIDB } from '@bible/_db/bibleIDB';
 import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress } from '@bible/model';
+import { bibleIDB } from '@bible/shared/lib/bibleIDB';
 import { useBibleTranslationJoinAddress } from '@bible/shared/translations/hooks/address';
 import { useBibleTranslationSlideSyncContentSetter } from '@bible/shared/translations/hooks/slide-sync';
 import { useBibleCurrentVersei } from '@bible/shared/translations/hooks/verses';

@@ -1,5 +1,5 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { bibleIDB } from '@bible/_db/bibleIDB';
+import { bibleIDB } from '@bible/shared/lib/bibleIDB';
 import { useSetBibleAddressIndexes } from '@bible/shared/translations/hooks/address';
 import { useBibleTranslationSlideSyncContentSetter } from '@bible/shared/translations/hooks/slide-sync';
 import { BibleSearchPanelInput } from '@bible/shared/translations/ui/Input';
