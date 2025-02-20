@@ -1,6 +1,6 @@
+import { useSwitchCurrentTranslationTextApp } from '#features/translations/lib/hooks/current-app';
 import { LazyIcon } from '#shared/ui/icon';
 import { memo, useCallback } from 'react';
-import { useSwitchCurrentTranslationTextApp } from '../../../apps/+complect/translations/hooks/current-app';
 import { BibleLiveTranslation } from '../../../apps/bible/translations/BibleLiveTranslation';
 import { BibleTranslationControlled } from '../../../apps/bible/translations/BibleTranslationControlled';
 import { IndexSchWTranslationLiveDataValue } from '../../Index.model';

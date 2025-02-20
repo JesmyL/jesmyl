@@ -1,6 +1,6 @@
 import { BackgroundConfigProps } from '#shared/ui/configurators/model';
-import { FontWeightType } from '../../../../../shared/ui/configurators/FontWeight';
-import { TextAlignConfigurator } from '../../../../../shared/ui/configurators/TextAlign';
+import { FontWeightType } from '../../../shared/ui/configurators/FontWeight';
+import { TextAlignConfigurator } from '../../../shared/ui/configurators/TextAlign';
 import { ScreenTranslationPositionConfig, ScreenTranslationTextConfig } from './model';
 
 export const defaultScreenTranslationPositionConfig: ScreenTranslationPositionConfig = {

@@ -1,7 +1,7 @@
 import { soki } from 'front/soki';
-import { cmFreshesSokiInvocatorClient } from '../../../../basis/invocators/invocators/fresh-invocator.methods';
 import { cmIDB } from '../_db/cm-idb';
 import { onLocalComCommentsSendEvent } from '../com-comments-manager';
+import { cmFreshesSokiInvocatorClient } from '../invocators/fresh-invocator.methods';
 import { cmSokiInvocatorBaseClient } from '../invocators/invocator.shares.base';
 
 export const cmInitialInvokes = () => {

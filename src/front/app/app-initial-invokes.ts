@@ -4,7 +4,7 @@ import { indexBasicsSokiInvocatorClient } from 'front/components/index/fresh-inv
 import { soki } from 'front/soki';
 import { DeviceId } from 'shared/api';
 
-export const appInitialInvokes = () => {
+export const indexInitialInvokes = () => {
   indexSokiInvocatorBaseClient.$$register();
 
   const getFreshes = async (lastModified: number) => {

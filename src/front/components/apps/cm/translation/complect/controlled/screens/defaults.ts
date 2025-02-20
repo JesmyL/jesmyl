@@ -1,4 +1,4 @@
-import { defaultScreenTranslationTextConfig } from '../../../../../../../components/apps/+complect/translations/complect/defaults';
+import { defaultScreenTranslationTextConfig } from '#features/translations/lib/defaults';
 
 export const cmTranslationSubConfigNext = {
   ...defaultScreenTranslationTextConfig,

@@ -1,5 +1,5 @@
+import { useSetScreenTranslationInteractiveBackground } from '#features/translations/lib/hooks/interactive-back';
 import { useRef } from 'react';
-import { useSetScreenTranslationInteractiveBackground } from '../../../../+complect/translations/hooks/interactive-back';
 import { useGetBibleScreenTranslationAddressStyle } from '../../hooks/styles/address-style';
 import { BibleTranslationScreenConfig } from '../../model';
 import { BibleTranslationScreenAddressContent } from './AddressContent';

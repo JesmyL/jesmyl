@@ -1,10 +1,10 @@
-import { TranslationScreenProps } from '../../../../../+complect/translations/Translations.model';
-import { useIsScreenTranslationTextVisible } from '../../../../../+complect/translations/atoms';
+import { useIsScreenTranslationTextVisible } from '#features/translations/lib/atoms';
 import {
   useGetScreenTranslationConfig,
   useScreenTranslationCurrentConfigi,
-} from '../../../../../+complect/translations/hooks/configs';
-import { useAtomValue } from '../../../../../../../shared/lib/atom';
+} from '#features/translations/lib/hooks/configs';
+import { TranslationScreenProps } from '#features/translations/model/Translations.model';
+import { useAtomValue } from '#shared/lib/atom';
 import { translationBlockAtom } from '../../../../atoms';
 import { FontSizeContainProps } from '../../../../base/font-size-contain/FontSizeContain.model';
 import { useCmCurrentComTexts } from '../../hooks/get-com-text';

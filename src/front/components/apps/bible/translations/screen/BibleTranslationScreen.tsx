@@ -1,8 +1,8 @@
+import { useSetScreenTranslationInteractiveBackground } from '#features/translations/lib/hooks/interactive-back';
+import { TranslationScreenProps } from '#features/translations/model/Translations.model';
+import { useApplyScreenFontFamilyEffect } from '#shared/ui/configurators/hooks/useApplyScreenFontFamilyEffect';
 import { LazyIcon } from '#shared/ui/icon';
 import { useRef, useState } from 'react';
-import { TranslationScreenProps } from '../../../+complect/translations/Translations.model';
-import { useSetScreenTranslationInteractiveBackground } from '../../../+complect/translations/hooks/interactive-back';
-import { useApplyScreenFontFamilyEffect } from '../../../+complect/translations/hooks/set-font-family';
 import { useBibleAddressVersei } from '../../hooks/address/verses';
 import { useBibleScreenTranslationKeyListener } from '../hooks/key-listener';
 import { useGetBibleScreenTranslationWrapperStyle } from '../hooks/styles/wrapper-style';

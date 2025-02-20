@@ -1,5 +1,5 @@
+import { useScreenTranslationBackgroundStyles } from '#features/translations/lib/hooks/background-styles';
 import { CSSProperties, useMemo } from 'react';
-import { useScreenTranslationBackgroundStyles } from '../../../../../../+complect/translations/complect/hooks/background-styles';
 import { CmTranslationScreenConfig } from '../../model';
 
 export const useGetCmScreenTranslationWrapperStyle = (currentConfig: CmTranslationScreenConfig | und) => {

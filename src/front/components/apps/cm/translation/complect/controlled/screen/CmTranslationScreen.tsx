@@ -1,8 +1,8 @@
+import { useSetScreenTranslationInteractiveBackground } from '#features/translations/lib/hooks/interactive-back';
+import { TranslationScreenProps } from '#features/translations/model/Translations.model';
+import { ScreenTranslateCurrentPositionConfigurators } from '#features/translations/ui/position/Position';
+import { useApplyScreenFontFamilyEffect } from '#shared/ui/configurators/hooks/useApplyScreenFontFamilyEffect';
 import { useRef } from 'react';
-import { TranslationScreenProps } from '../../../../../+complect/translations/Translations.model';
-import { ScreenTranslateCurrentPositionConfigurators } from '../../../../../+complect/translations/complect/position/Position';
-import { useSetScreenTranslationInteractiveBackground } from '../../../../../+complect/translations/hooks/interactive-back';
-import { useApplyScreenFontFamilyEffect } from '../../../../../+complect/translations/hooks/set-font-family';
 import { FontSizeContain } from '../../../../base/font-size-contain/FontSizeContain';
 import { FontSizeContainProps } from '../../../../base/font-size-contain/FontSizeContain.model';
 import { CmTranslationScreenConfig } from '../model';

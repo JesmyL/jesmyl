@@ -1,3 +1,4 @@
+import { ScreenTranslationControlPanelShowMdButton } from '#features/translations/ui/ShowMdButton';
 import { useAtomValue } from '#shared/lib/atom';
 import { IconButton, TheIconLoading } from '#shared/ui/icon';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
@@ -8,7 +9,6 @@ import {
 import { soki } from 'front/soki';
 import { useEffect, useState } from 'react';
 import { IScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
-import { ScreenTranslationControlPanelShowMdButton } from '../../../components/apps/+complect/translations/controls/ShowMdButton';
 import { BibleTranslationSlide } from '../../../components/apps/bible/translations/BibleTranslationSlide';
 import { CmLiveTranslationScreen } from '../../../components/apps/cm/translation/complect/live/Screen';
 import { liveDataAtom, liveDataStreamersAtom } from '../../../components/index/atoms';

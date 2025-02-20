@@ -2,11 +2,11 @@ import { atom, useAtomSet } from '#shared/lib/atom';
 import { useToast } from '#shared/ui/modal/hooks/useToast';
 import { useEffect } from 'react';
 import { Route, useParams, useSearchParams } from 'react-router-dom';
+import { useInitSoki } from '../basis/lib/+hooks/useInitSoki';
 import { IndexMain } from '../components/index/parts/main/IndexMain';
 import { soki } from '../soki';
 import { AppName } from './App.model';
 import { routingApps } from './routing-apps';
-import { useInitSoki } from './useInitSoki';
 
 const AppRouterProvider = () => {
   const params = useParams();

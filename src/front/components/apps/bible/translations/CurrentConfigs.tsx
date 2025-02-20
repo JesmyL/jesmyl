@@ -1,3 +1,6 @@
+import { ScreenTranslateConfigurationNameChanger } from '#features/translations/ui/NameChanger';
+import { useActualRef } from '#shared/lib/+hooks/useActualRef';
+import { useDebounceAction } from '#shared/lib/+hooks/useDebounceAction';
 import { BackgroundConfigurator } from '#shared/ui/configurators/Background';
 import { ColorConfigurator } from '#shared/ui/configurators/Color';
 import { DisplayConfigurator } from '#shared/ui/configurators/Display';
@@ -6,11 +9,8 @@ import { FontStyleConfigurator } from '#shared/ui/configurators/FontStyle';
 import { FontWeightConfigurator } from '#shared/ui/configurators/FontWeight';
 import { OpacityConfigurator } from '#shared/ui/configurators/Opacity';
 import { ScreenTranslateConfigurationTextAlign } from '#shared/ui/configurators/TextAlign';
+import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { useCallback } from 'react';
-import { ScreenTranslateConfigurationNameChanger } from '../../+complect/translations/complect/NameChanger';
-import { useActualRef } from '../../../../shared/lib/+hooks/useActualRef';
-import { useDebounceAction } from '../../../../shared/lib/+hooks/useDebounceAction';
-import { ExpandableContent } from '../../../../shared/ui/expand/ExpandableContent';
 import { useUpdateBibleCurrentTranslationConfig } from './hooks/update-config';
 import { BibleTranslationScreenConfig } from './model';
 

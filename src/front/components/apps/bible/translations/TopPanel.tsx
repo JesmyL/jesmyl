@@ -1,6 +1,6 @@
+import { TranslationSlidePreview } from '#features/translations/ui/Preview';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { TranslationSlidePreview } from '../../+complect/translations/controls/Preview';
 import { BibleLists } from './lists/Lists';
 
 export const BibleTranslationControlledTopPanel = function TopPanel(): JSX.Element {

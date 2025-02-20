@@ -1,12 +1,12 @@
 import { complectIDB } from '#basis/idb';
+import { useTranslationInitialSlideSet } from '#features/translations/lib/atoms';
+import { useScreenTranslationWindows } from '#features/translations/lib/hooks/windows';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { BibleTranslatesContextProvider } from 'front/components/apps/bible/translates/TranslatesContext';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { itNNull } from 'shared/utils';
-import { useScreenTranslationWindows } from '../../../apps/+complect/translations/hooks/windows';
-import { useTranslationInitialSlideSet } from '../../../apps/+complect/translations/initial-slide-context';
 import { FollowTranslationInitialSlide } from '../../../apps/cm/translation/complect/live/FollowTranslationInitialSlide';
 import { useAuth } from '../../atoms';
 import { indexIDB } from '../../db/index-idb';

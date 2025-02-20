@@ -1,7 +1,7 @@
+import { useScreenTranslationCurrentConfigi } from '#features/translations/lib/hooks/configs';
+import { ScreenTranslationPositionConfig } from '#features/translations/model/Position.model';
+import { ScreenTranslateCurrentPositionConfigurators } from '#features/translations/ui/position/Position';
 import { useCallback } from 'react';
-import { ScreenTranslationPositionConfig } from '../../../../+complect/translations/complect/model';
-import { ScreenTranslateCurrentPositionConfigurators } from '../../../../+complect/translations/complect/position/Position';
-import { useScreenTranslationCurrentConfigi } from '../../../../+complect/translations/hooks/configs';
 import { useBibleScreenTranslationConfig } from '../../hooks/configs';
 import { useUpdateBibleCurrentTranslationConfig } from '../../hooks/update-config';
 

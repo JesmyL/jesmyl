@@ -1,7 +1,7 @@
 import { IconButton } from '#shared/ui/icon';
 import { CmComBindAttach, IScheduleWidget } from 'shared/api';
-import { useSwitchCurrentTranslationTextApp } from '../../../+complect/translations/hooks/current-app';
 import { useScheduleWidgetRightsContext } from '../../../../../widgets/schedule-widget/useScheduleWidget';
+import { useSwitchCurrentTranslationTextApp } from '../../../../../widgets/translations/hooks/current-app';
 
 interface Props {
   value: CmComBindAttach;

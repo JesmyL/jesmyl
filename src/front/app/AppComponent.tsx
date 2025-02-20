@@ -11,7 +11,7 @@ import { contextCreator } from '../shared/lib/contextCreator';
 import { hookEffectPipe, setTimeoutPipe } from '../shared/lib/hookEffectPipe';
 import { KEYBOARD_FLASH } from '../shared/ui/keyboard/KeyboardInput';
 import './App.scss';
-import { appInitialInvokes } from './app-initial-invokes';
+import { indexInitialInvokes } from './app-initial-invokes';
 
 const emptyDict = {};
 
@@ -65,4 +65,4 @@ export default function AppComponent() {
   );
 }
 
-appInitialInvokes();
+indexInitialInvokes();

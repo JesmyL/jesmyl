@@ -1,9 +1,9 @@
-import { BackgroundConfigProps } from '#shared/ui/configurators/model';
 import {
   ScreenTranslationPositionConfig,
   ScreenTranslationSimpleTextConfig,
   ScreenTranslationTextConfig,
-} from '../../+complect/translations/complect/model';
+} from '#features/translations/model/Position.model';
+import { BackgroundConfigProps } from '#shared/ui/configurators/model';
 
 export interface BibleTranslationScreenConfig extends BackgroundConfigProps, ScreenTranslationTextConfig {
   addressPanel: ScreenTranslationPositionConfig;

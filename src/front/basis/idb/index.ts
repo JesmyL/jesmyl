@@ -1,5 +1,5 @@
+import { defaultComplectConfig } from '#features/translations/lib/atoms';
 import { DexieDB } from '#shared/lib/_DexieDB';
-import { defaultComplectConfig } from '../../components/apps/+complect/translations/atoms';
 import { ComplectStore } from './model';
 
 export const complectIDB = new DexieDB<ComplectStore>('complect', {

@@ -1,7 +1,27 @@
 import { complectIDB } from '#basis/idb';
-import { atom, useAtom, useAtomSet, useAtomToggle, useAtomValue } from '../../../../shared/lib/atom';
+import { atom, useAtom, useAtomSet, useAtomToggle, useAtomValue } from '../../shared/lib/atom';
 import { defaultScreenTranslationBackgroundConfig } from './complect/defaults';
 import { AlertLineConfig, ScreenTranslationConfig } from './model';
+
+export const isShowTranslatedTextAtom = atom(true);
+const isShowAtom = atom(true);
+const initialSlideAtom = atom<React.ReactNode>(null);
+
+export const useTranslationIsInitialSlideShowSet = () => useAtomSet(isShowAtom);
+export const useTranslationIsInitialSlideShow = () => useAtomValue(isShowAtom);
+
+export const useTranslationInitialSlideSet = () => useAtomSet(initialSlideAtom);
+
+export const useTranslationInitialSlideValue = () => {
+  const initialSlide = useAtomValue(initialSlideAtom);
+  const isShow = useAtomValue(isShowAtom);
+
+  if (isShow && initialSlide) return initialSlide;
+
+  return null;
+};
+
+export const translationShowAlertLineConfigIdAtom = atom<number | null>(null);
 
 const isCanShowTextTranslationAtom = atom(false);
 export const useIsCanShowTextTranslation = () => useAtom(isCanShowTextTranslationAtom);

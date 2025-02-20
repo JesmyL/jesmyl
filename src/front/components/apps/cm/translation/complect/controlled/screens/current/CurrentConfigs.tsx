@@ -1,13 +1,13 @@
+import { ScreenTranslateConfigurationNameChanger } from '#features/translations/ui/NameChanger';
+import { useDebounceAction } from '#shared/lib/+hooks/useDebounceAction';
 import { BackgroundConfigurator } from '#shared/ui/configurators/Background';
 import { ColorConfigurator } from '#shared/ui/configurators/Color';
 import { FontFamilyConfigurator } from '#shared/ui/configurators/FontFamily';
 import { FontWeightConfigurator } from '#shared/ui/configurators/FontWeight';
 import { ScreenTranslateConfigurationTextAlign } from '#shared/ui/configurators/TextAlign';
+import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { IconButton } from '#shared/ui/icon';
 import { useCallback } from 'react';
-import { ScreenTranslateConfigurationNameChanger } from '../../../../../../+complect/translations/complect/NameChanger';
-import { useDebounceAction } from '../../../../../../../../shared/lib/+hooks/useDebounceAction';
-import { ExpandableContent } from '../../../../../../../../shared/ui/expand/ExpandableContent';
 import { useUpdateCmCurrentTranslationConfig } from '../../hooks/update-config';
 import { CmTranslationScreenConfig, CmTranslationTextScreenConfig } from '../../model';
 import { cmTranslationSubConfigNext } from '../defaults';

@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import { CurrentForceViweAppContext } from '../../+complect/translations/Translation.contexts';
+import { CurrentForceViweAppContext } from '../../../../widgets/translations/lib/Translation.contexts';
 import { BibleReaderCurrentBookPage } from '../reader/book/CurrentBookPage';
 import { BibleReaderSearchPage } from '../reader/search/SearchPage';
 import { BibleTranslatesContextProvider } from '../translates/TranslatesContext';

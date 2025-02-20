@@ -1,5 +1,5 @@
+import { useScreenTranslationWindows } from '#features/translations/lib/hooks/windows';
 import { useEffect } from 'react';
-import { useScreenTranslationWindows } from '../../../../../../+complect/translations/hooks/windows';
 import { useActualRef } from '../../../../../../../../shared/lib/+hooks/useActualRef';
 import { useCmScreenTranslationComNavigations } from '../../../hooks/com-navigation';
 import { useCmScreenTranslationComTextNavigations } from '../../../hooks/com-texts';

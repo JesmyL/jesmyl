@@ -1,6 +1,8 @@
 import { DexieDB } from '#shared/lib/_DexieDB';
 import {
+  ChordPack,
   CmComWid,
+  EeStorePack,
   ICmComComment,
   IExportableCat,
   IExportableCom,
@@ -8,8 +10,6 @@ import {
   MigratableComToolName,
   ScheduleComPack,
 } from 'shared/api';
-import { EeStorePack } from 'shared/api/complect/apps/cm/complect/ee-store';
-import { ChordPack } from '../../../../../shared/api/complect/apps/cm/complect/chord-card';
 import { ChordVisibleVariant, FavoriteMeetings, PlayerHideMode } from '../Cm.model';
 import { defaultCmConfig } from '../translation/complect/controlled/hooks/configs';
 import { CmTranslationScreenConfig } from '../translation/complect/controlled/model';

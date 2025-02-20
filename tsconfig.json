@@ -19,6 +19,8 @@
     "paths": {
       "#shared/*": ["./front/shared/*"],
       "#basis/*": ["./front/basis/*"],
+      "#widgets/*": ["./front/widgets/*"],
+      "#features/*": ["./front/features/*"],
 
       "shared/*": ["./shared/*"],
       "front/*": ["./front/*"],

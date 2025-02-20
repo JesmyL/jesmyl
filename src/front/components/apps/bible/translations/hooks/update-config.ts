@@ -1,5 +1,5 @@
+import { useScreenTranslationCurrentConfigi } from '#features/translations/lib/hooks/configs';
 import { useCallback } from 'react';
-import { useScreenTranslationCurrentConfigi } from '../../../+complect/translations/hooks/configs';
 import { BibleTranslationScreenConfig } from '../model';
 import { useBibleScreenTranslationConfigsSet } from './configs';
 

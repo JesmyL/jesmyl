@@ -1,9 +1,9 @@
+import { TranslationSlidePreview } from '#features/translations/ui/Preview';
 import { mylib } from '#shared/lib/my-lib';
 import { PageContainer } from '#shared/ui/PageContainer';
 import { ReactNode } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { TranslationSlidePreview } from '../../../../+complect/translations/controls/Preview';
 import { Com } from '../../../col/com/Com';
 import { ComFaceList } from '../../../col/com/face/list/ComFaceList';
 import { useTakeActualComw } from '../../../col/com/useCcom';

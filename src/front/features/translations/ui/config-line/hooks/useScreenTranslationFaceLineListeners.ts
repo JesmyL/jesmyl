@@ -1,0 +1,88 @@
+import { useAtomSet } from '#shared/lib/atom';
+import { TranslationWindow } from 'front/widgets/translations/lib/hooks/windows';
+import { useEffect } from 'react';
+import { isNIs, itNNull } from 'shared/utils';
+import { useActualRef } from '../../../../../shared/lib/+hooks/useActualRef';
+import {
+  isShowTranslatedTextAtom,
+  useToggleIsScreenTranslationTextVisible,
+  useTranslationIsInitialSlideShowSet,
+} from '../../../lib/atoms';
+import { ScreenTranslationConfig } from '../../../model/Configs.model';
+
+const invokeEach = (cb: () => void) => cb();
+
+export const useScreenTranslationFaceLineListeners = (
+  configs: ScreenTranslationConfig[],
+  currentConfigi: number,
+  setCurrentConfigi: (configi: number) => void,
+  updateConfig: (configi: number, config: Partial<ScreenTranslationConfig> | null) => void,
+  windows: readonly (nil | TranslationWindow)[],
+) => {
+  const switchIsVisible = useToggleIsScreenTranslationTextVisible();
+  const currentConfigiRef = useActualRef(currentConfigi);
+  const isInitialSlideShowSet = useTranslationIsInitialSlideShowSet();
+  const setIsShowTranslatedText = useAtomSet(isShowTranslatedTextAtom);
+
+  useEffect(() => {
+    const listeners = windows
+      .map((parentWin, wini) => {
+        if (parentWin == null) return null!;
+        const win = parentWin.win;
+
+        let timeout: TimeOut;
+
+        const resize = () => updateConfig(wini, { proportion: win.innerWidth / win.innerHeight });
+
+        win.onresize = () => {
+          clearTimeout(timeout);
+          timeout = setTimeout(resize);
+        };
+
+        const onKeyDown = (win.onkeydown = async event => {
+          switch (event.code) {
+            case 'Tab':
+              setCurrentConfigi(
+                event.shiftKey
+                  ? currentConfigiRef.current === 0
+                    ? configs.length - 1
+                    : currentConfigiRef.current - 1
+                  : currentConfigiRef.current === configs.length - 1
+                    ? 0
+                    : currentConfigiRef.current + 1,
+              );
+              break;
+
+            case 'Enter':
+              parentWin.focus();
+              break;
+
+            case 'Escape':
+              parentWin.blur();
+              break;
+
+            case 'Space':
+              setIsShowTranslatedText(isNIs);
+              break;
+
+            case 'Backspace':
+              isInitialSlideShowSet(isNIs);
+              break;
+          }
+        });
+
+        win.onfocus = () => setCurrentConfigi(wini);
+        window.addEventListener('keydown', onKeyDown);
+
+        return () => {
+          win.onresize = null;
+          win.onkeydown = null;
+          win.onfocus = null;
+          window.removeEventListener('keydown', onKeyDown);
+        };
+      })
+      .filter(itNNull);
+
+    return () => listeners.forEach(invokeEach);
+  }, [configs, currentConfigiRef, isInitialSlideShowSet, setCurrentConfigi, switchIsVisible, updateConfig, windows]);
+};

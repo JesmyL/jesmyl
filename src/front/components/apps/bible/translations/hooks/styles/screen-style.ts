@@ -1,7 +1,7 @@
+import { useScreenTranslationPositionsStyles } from '#features/translations/lib/hooks/position-styles';
+import { useScreenTranslationTextStyles } from '#features/translations/lib/hooks/text-styles';
 import { MyLib } from '#shared/lib/my-lib';
 import { CSSProperties, useMemo } from 'react';
-import { useScreenTranslationPositionsStyles } from '../../../../+complect/translations/complect/hooks/position-styles';
-import { useScreenTranslationTextStyles } from '../../../../+complect/translations/complect/hooks/text-styles';
 import { verseTranslateTitleCssVariableName } from '../../complect';
 import { BibleTranslationScreenConfig } from '../../model';
 

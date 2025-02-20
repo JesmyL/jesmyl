@@ -2,11 +2,11 @@ import {
   defaultScreenTranslationBackgroundConfig,
   defaultScreenTranslationPositionConfig,
   defaultScreenTranslationTextConfig,
-} from '../../../+complect/translations/complect/defaults';
+} from '#features/translations/lib/defaults';
 import {
   useMakeScreenTranslationConfigsFillPack,
   useScreenTranslationCurrentConfigi,
-} from '../../../+complect/translations/hooks/configs';
+} from '#features/translations/lib/hooks/configs';
 import { bibleIDB } from '../../_db/bibleIDB';
 import { BibleTranslationScreenConfig } from '../model';
 

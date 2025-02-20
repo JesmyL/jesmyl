@@ -1,8 +1,8 @@
+import { useInitSoki } from '#basis/lib/+hooks/useInitSoki';
+import { ScreenTranslationControlPanel } from '#features/translations/ui/ControllPanel';
+import { PageContainer } from '#shared/ui/PageContainer';
 import { ReactNode, useEffect } from 'react';
 import styled from 'styled-components';
-import { ScreenTranslationControlPanel } from '../../+complect/translations/controls/ControllPanel';
-import { useInitSoki } from '../../../../app/useInitSoki';
-import { PageContainer } from '../../../../shared/ui/PageContainer';
 import { bibleIDB } from '../_db/bibleIDB';
 import { useBibleSlideSyncInkrementer } from '../hooks/slide-sync';
 import { useLoadBibleChaptersCombine } from '../hooks/texts';

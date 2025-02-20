@@ -1,10 +1,10 @@
+import { useSwitchCurrentTranslationTextApp } from '#features/translations/lib/hooks/current-app';
+import { useAtomValue } from '#shared/lib/atom';
 import { LazyIcon } from '#shared/ui/icon';
 import { useMeetingComFaceList } from 'front/components/apps/cm/lists/meetings/useMeetingComFaceList';
 import { useMeetingPathParts } from 'front/components/apps/cm/lists/meetings/useMeetingPathParts';
 import { CmTranslationControlled } from 'front/components/apps/cm/translation/complect/controlled/CmTranslationControlled';
 import { useEffect } from 'react';
-import { useAtomValue } from '../../../../shared/lib/atom';
-import { useSwitchCurrentTranslationTextApp } from '../../../apps/+complect/translations/hooks/current-app';
 import { translationBlockAtom } from '../../../apps/cm/atoms';
 import { useCcom } from '../../../apps/cm/col/com/useCcom';
 import { useCmScreenTranslationConfigs } from '../../../apps/cm/translation/complect/controlled/hooks/configs';
