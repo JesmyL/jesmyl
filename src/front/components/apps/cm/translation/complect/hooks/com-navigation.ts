@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useCmTranslationComListContext } from '../../../base/translations/context';
+import { useCmTranslationComListContext } from '../../../basis/lib/com-list-contexts/context';
 import { Com } from '../../../col/com/Com';
 import { useCom } from '../../../col/com/useCcom';
 import { useCmScreenTranslationComTextNavigations } from './com-texts';

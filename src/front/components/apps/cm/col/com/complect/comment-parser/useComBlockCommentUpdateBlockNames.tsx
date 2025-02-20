@@ -1,4 +1,4 @@
-import { updateComComment } from 'front/components/apps/cm/com-comments-manager';
+import { updateComComment } from '@cm/basis/lib/com-comments-manager';
 import { useEffect } from 'react';
 import { emptyFunc } from 'shared/utils';
 import { hookEffectPipe, setTimeoutPipe } from '../../../../../../../shared/lib/hookEffectPipe';

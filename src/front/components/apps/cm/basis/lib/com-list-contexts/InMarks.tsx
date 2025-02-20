@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { useFavoriteComs } from '../../lists/favorites/useFavoriteComs';
+import { useFavoriteComs } from '../../../lists/favorites/useFavoriteComs';
 import { CmComListContext, CmComListContextValue } from './context';
 
 export const CmTranslationComListContextInMarks = function InMarks({ children }: { children: React.ReactNode }) {

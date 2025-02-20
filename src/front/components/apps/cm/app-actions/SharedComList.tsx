@@ -4,7 +4,7 @@ import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { useNavigate } from 'react-router-dom';
 import { CmComWid } from 'shared/api';
 import styled from 'styled-components';
-import { useSelectedComs } from '../base/useSelectedComs';
+import { useSelectedComs } from '../basis/lib/hooks/useSelectedComs';
 import { ComFaceList } from '../col/com/face/list/ComFaceList';
 
 export const CmSharedComListActionInterpretator = ({

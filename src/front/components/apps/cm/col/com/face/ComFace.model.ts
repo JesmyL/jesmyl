@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { useSelectedComs } from '../../../base/useSelectedComs';
+import { useSelectedComs } from '../../../basis/lib/hooks/useSelectedComs';
 import { Com } from '../Com';
 
 export interface ComFaceInheritProps {

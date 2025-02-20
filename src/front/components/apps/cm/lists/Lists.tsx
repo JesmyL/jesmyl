@@ -3,7 +3,7 @@ import { BrutalScreen } from '#shared/ui/brutal-screen/BrutalScreen';
 import { LazyIcon } from '#shared/ui/icon';
 import { PageContainer } from '#shared/ui/PageContainer';
 import { Link, Route, Routes } from 'react-router-dom';
-import { useSelectedComs } from '../base/useSelectedComs';
+import { useSelectedComs } from '../basis/lib/hooks/useSelectedComs';
 import { TheCat } from '../col/cat/TheCat';
 import { useCats } from '../cols/useCols';
 import { ExternalList } from './ExternalList';

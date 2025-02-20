@@ -1,9 +1,9 @@
 import { IconButton, LazyIcon } from '#shared/ui/icon';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { BottomPopupItem } from '../../../../../../shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
-import { useChordVisibleVariant } from '../../../base/useChordVisibleVariant';
-import { ChordVisibleVariant } from '../../../Cm.model';
-import { cmIDB } from '../../../shared/lib/cmIdb';
+import { cmIDB } from '../../../basis/lib/cmIdb';
+import { useChordVisibleVariant } from '../../../basis/lib/hooks/useChordVisibleVariant';
+import { ChordVisibleVariant } from '../../../shared/model/Cm.model';
 import { useFixedCcom } from '../useCcom';
 import { CmComCatMentions } from '../useGetCatMentions';
 import { useMigratableListComTools } from './useMigratableComTools';

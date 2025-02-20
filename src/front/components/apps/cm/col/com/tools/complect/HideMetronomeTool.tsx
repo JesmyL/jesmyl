@@ -1,4 +1,4 @@
-import { cmIDB } from '@cm/shared/lib/cmIdb';
+import { cmIDB } from '@cm/basis/lib/cmIdb';
 import { ComTool } from '../ComTool';
 
 export const HideMetronomeTool = () => {

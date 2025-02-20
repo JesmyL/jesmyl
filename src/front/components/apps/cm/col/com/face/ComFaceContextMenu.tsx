@@ -2,7 +2,7 @@ import { IconButton } from '#shared/ui/icon';
 import styled from 'styled-components';
 import { CmComWid } from '../../../../../../../shared/api/complect/apps/cm/complect/enums';
 import { useConfirm } from '../../../../../../shared/ui/modal/hooks/useConfirm';
-import { useSelectedComs } from '../../../base/useSelectedComs';
+import { useSelectedComs } from '../../../basis/lib/hooks/useSelectedComs';
 import { useFavoriteComs } from '../../../lists/favorites/useFavoriteComs';
 
 interface Props {

@@ -1,4 +1,4 @@
-import { useSelectedComs } from 'front/components/apps/cm/base/useSelectedComs';
+import { useSelectedComs } from '@cm/basis/lib/hooks/useSelectedComs';
 import { ComTool } from '../ComTool';
 import { useComToolsCcomContext } from '../useMigratableComTools';
 

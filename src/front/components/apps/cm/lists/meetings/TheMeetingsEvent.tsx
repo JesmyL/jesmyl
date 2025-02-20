@@ -7,7 +7,7 @@ import { IndexScheduleWidgetTranslations } from 'front/components/index/complect
 import { indexIDB } from 'front/components/index/db/index-idb';
 import { ScheduleWidgetWatchLiveTranslationButton } from 'front/widgets/schedule-widget/live-translations/WatchLiveButton';
 import { Link, Route, Routes } from 'react-router-dom';
-import { CmComListContext } from '../../base/translations/context';
+import { CmComListContext } from '../../basis/lib/com-list-contexts/context';
 import { cmCompositionRoute } from '../../routing/cmRoutingApp';
 import { CmMeetingEventEdits } from './EventEdits';
 import { useMeetingComFaceList } from './useMeetingComFaceList';

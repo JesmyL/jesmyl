@@ -1,4 +1,4 @@
-import { ChordVisibleVariant } from '../../../../Cm.model';
+import { ChordVisibleVariant } from '../../../../basis/model/Cm.model';
 import { TheCom } from '../../../../col/com/TheCom';
 import { useEditableCcom } from '../useEditableCcom';
 

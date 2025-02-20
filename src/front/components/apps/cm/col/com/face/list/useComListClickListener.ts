@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { useSelectedComs } from 'front/components/apps/cm/base/useSelectedComs';
+import { useSelectedComs } from '@cm/basis/lib/hooks/useSelectedComs';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addEventListenerPipe, hookEffectPipe } from '../../../../../../../shared/lib/hookEffectPipe';

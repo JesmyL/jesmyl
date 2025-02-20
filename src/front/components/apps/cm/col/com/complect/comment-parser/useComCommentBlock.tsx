@@ -1,7 +1,7 @@
-import { cmIDB } from '@cm/shared/lib/cmIdb';
+import { cmIDB } from '@cm/basis/lib/cmIdb';
 import { useEffect, useMemo } from 'react';
 import { useAtom } from '../../../../../../../shared/lib/atom';
-import { useComCommentText } from '../../../../com-comments-manager';
+import { useComCommentText } from '../../../../basis/lib/com-comments-manager';
 import { Com } from '../../Com';
 import { ComBlockCommentMakerCleans } from './Cleans';
 import { isComCommentRedactAtom } from './complect';

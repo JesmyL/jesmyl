@@ -1,8 +1,8 @@
 import { mylib } from '#shared/lib/my-lib';
 import { useCallback, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useComs } from '../cols/useCols';
-import { cmIDB } from '../shared/lib/cmIdb';
+import { useComs } from '../../../cols/useCols';
+import { cmIDB } from '../cmIdb';
 
 export const useSelectedComs = () => {
   const [searchParams, setSearchParams] = useSearchParams();

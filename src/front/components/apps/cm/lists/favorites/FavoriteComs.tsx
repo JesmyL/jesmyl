@@ -2,7 +2,7 @@ import { PageContainer } from '#shared/ui/PageContainer';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { BottomPopup } from '../../../../../shared/ui/absolute-popup/bottom-popup/BottomPopup';
-import { CmTranslationComListContextInMarks } from '../../base/translations/InMarks';
+import { CmTranslationComListContextInMarks } from '../../basis/lib/com-list-contexts/InMarks';
 import { ComFaceList } from '../../col/com/face/list/ComFaceList';
 import { cmCompositionRoute } from '../../routing/cmRoutingApp';
 import { LocalListToolsPopup } from '../popups/LocalListToolsPopup';

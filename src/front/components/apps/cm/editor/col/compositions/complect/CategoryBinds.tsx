@@ -1,7 +1,7 @@
 import { IconButton, IconCheckbox, LazyIcon } from '#shared/ui/icon';
-import { cmIDB } from '@cm/shared/lib/cmIdb';
+import { cmIDB } from '@cm/basis/lib/cmIdb';
+import { InputWithLoadingIcon } from '@cm/basis/ui/InputWithLoadingIcon';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { InputWithLoadingIcon } from 'front/components/apps/cm/base/InputWithLoadingIcon';
 import { cmCatClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useMemo } from 'react';
 import { emptyFunc, makeRegExp } from 'shared/utils';

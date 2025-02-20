@@ -1,6 +1,6 @@
-import { cmIDB } from '@cm/shared/lib/cmIdb';
+import { cmIDB } from '@cm/basis/lib/cmIdb';
 import { soki } from 'front/soki';
-import { onLocalComCommentsSendEvent } from '../com-comments-manager';
+import { onLocalComCommentsSendEvent } from '../basis/lib/com-comments-manager';
 import { cmFreshesSokiInvocatorClient } from '../invocators/fresh-invocator.methods';
 import { cmSokiInvocatorBaseClient } from '../invocators/invocator.shares.base';
 

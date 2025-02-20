@@ -5,8 +5,8 @@ import {
 } from '#features/translations/lib/hooks/configs';
 import { TranslationScreenProps } from '#features/translations/model/Translations.model';
 import { useAtomValue } from '#shared/lib/atom';
+import { FontSizeContainProps } from '../../../../../../../shared/ui/font-size-contain/FontSizeContain.model';
 import { translationBlockAtom } from '../../../../atoms';
-import { FontSizeContainProps } from '../../../../base/font-size-contain/FontSizeContain.model';
 import { useCmCurrentComTexts } from '../../hooks/get-com-text';
 import { useCmScreenTranslationConfig } from '../hooks/configs';
 import { CmTranslationScreen } from './CmTranslationScreen';

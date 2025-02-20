@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
 import { bibleTranslatesIDB } from '@bible/shared/lib/bibleIDB';
-import { cmIDB } from '@cm/shared/lib/cmIdb';
+import { cmIDB } from '@cm/basis/lib/cmIdb';
 import { memo, useEffect, useState } from 'react';
 import { BibleTranslateName } from 'shared/api';
 import { itIt, makeRegExp } from 'shared/utils';

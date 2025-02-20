@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
 import { IExportableCat } from 'shared/api';
-import { BaseNamed } from '../../base/BaseNamed';
+import { BaseNamed } from '../../basis/lib/BaseNamed';
 import { Com } from '../com/Com';
 
 export class Cat extends BaseNamed<IExportableCat> {

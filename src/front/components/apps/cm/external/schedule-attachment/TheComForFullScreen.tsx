@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { CmComWid } from 'shared/api';
-import { ChordVisibleVariant } from '../../Cm.model';
+import { ChordVisibleVariant } from '../../basis/model/Cm.model';
 import { Com } from '../../col/com/Com';
 import { TheControlledCom } from '../../col/com/TheControlledCom';
 

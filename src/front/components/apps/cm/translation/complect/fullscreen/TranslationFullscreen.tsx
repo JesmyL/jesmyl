@@ -4,7 +4,7 @@ import styled, { css, keyframes } from 'styled-components';
 import { useActualRef } from '../../../../../../shared/lib/+hooks/useActualRef';
 import { atom, useAtom } from '../../../../../../shared/lib/atom';
 import { backSwipableContainerMaker } from '../../../../../../shared/lib/backSwipableContainerMaker';
-import { FontSizeContain } from '../../../base/font-size-contain/FontSizeContain';
+import { FontSizeContain } from '../../../../../../shared/ui/font-size-contain/FontSizeContain';
 import { useCloseTranslation } from '../hooks/close-translation';
 import { useCmScreenTranslationComNavigations } from '../hooks/com-navigation';
 import { useCmScreenTranslationComTextNavigations } from '../hooks/com-texts';

@@ -4,12 +4,12 @@ import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe
 import { mylib } from '#shared/lib/my-lib';
 import { LazyIcon, TheIconLoading } from '#shared/ui/icon';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
-import { cmIDB } from '@cm/shared/lib/cmIdb';
+import { cmIDB } from '@cm/basis/lib/cmIdb';
 import { useEffect, useRef, useState } from 'react';
 import { isNIs } from 'shared/utils';
 import styled from 'styled-components';
 import { CmComWid } from '../../../../../../../../shared/api/complect/apps/cm/complect/enums';
-import { updateComComment, useComComment } from '../../../../com-comments-manager';
+import { updateComComment, useComComment } from '../../../../basis/lib/com-comments-manager';
 import { isComCommentRedactAtom } from './complect';
 import { TheComCommentInfo } from './infos/TheComCommentInfo';
 

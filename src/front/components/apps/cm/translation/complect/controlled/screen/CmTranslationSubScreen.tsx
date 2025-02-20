@@ -1,9 +1,9 @@
 import { ScreenTranslationPositionConfig } from '#features/translations/model/Position.model';
 import { ScreenTranslateCurrentPositionConfigurators } from '#features/translations/ui/position/Position';
 import { useApplyScreenFontFamilyEffect } from '#shared/ui/configurators/hooks/useApplyScreenFontFamilyEffect';
-import { FontSizeContain } from 'front/components/apps/cm/base/font-size-contain/FontSizeContain';
+import { FontSizeContain } from '#shared/ui/font-size-contain/FontSizeContain';
 import { useCallback } from 'react';
-import { FontSizeContainProps } from '../../../../base/font-size-contain/FontSizeContain.model';
+import { FontSizeContainProps } from '../../../../../../../shared/ui/font-size-contain/FontSizeContain.model';
 import { useUpdateCmCurrentTranslationConfig } from '../hooks/update-config';
 import { CmTranslationScreenConfig, CmTranslationTextScreenConfig } from '../model';
 import { cmTranslationSubConfigNext } from '../screens/defaults';

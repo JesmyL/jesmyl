@@ -1,8 +1,8 @@
 import { useEffect, useMemo } from 'react';
 import { makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
-import { RollControled } from '../../../base/RolledContent';
-import { useChordVisibleVariant } from '../../../base/useChordVisibleVariant';
+import { useChordVisibleVariant } from '../../../basis/lib/hooks/useChordVisibleVariant';
+import { RollControledContent } from '../../../basis/ui/RolledContent';
 import { Com } from '../../../col/com/Com';
 import { ComLine } from '../../../col/com/line/ComLine';
 import { ComOrders } from '../../../col/com/orders/ComOrders';
@@ -47,7 +47,7 @@ export const CmLiveTranslationList = (props: Props) => {
   }, [querySelector]);
 
   return (
-    <RollControled>
+    <RollControledContent>
       <List
         className="flex"
         $querySelector={querySelector}
@@ -69,7 +69,7 @@ export const CmLiveTranslationList = (props: Props) => {
           />
         )}
       </List>
-    </RollControled>
+    </RollControledContent>
   );
 };
 

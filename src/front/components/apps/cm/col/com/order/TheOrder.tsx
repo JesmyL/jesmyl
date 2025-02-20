@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeRegExp } from 'shared/utils';
-import { ChordVisibleVariant } from '../../../Cm.model';
+import { ChordVisibleVariant } from '../../../basis/model/Cm.model';
 import { Com } from '../Com';
 import { ComLine } from '../line/ComLine';
 import { Order } from './Order';

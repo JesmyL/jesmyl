@@ -4,7 +4,7 @@ import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { IconButton } from '#shared/ui/icon';
 import { LoadIndicatedContent } from '#shared/ui/LoadIndicatedContent';
 import { useState } from 'react';
-import { InputWithLoadingIcon } from '../../../base/InputWithLoadingIcon';
+import { InputWithLoadingIcon } from '../../../basis/ui/InputWithLoadingIcon';
 import { catTrackers } from '../../../col/cat/Cat.complect';
 import { useCcatw } from '../../../col/cat/useCcat';
 import { ComFaceList } from '../../../col/com/face/list/ComFaceList';

@@ -3,8 +3,8 @@ import { TranslationScreenProps } from '#features/translations/model/Translation
 import { ScreenTranslateCurrentPositionConfigurators } from '#features/translations/ui/position/Position';
 import { useApplyScreenFontFamilyEffect } from '#shared/ui/configurators/hooks/useApplyScreenFontFamilyEffect';
 import { useRef } from 'react';
-import { FontSizeContain } from '../../../../base/font-size-contain/FontSizeContain';
-import { FontSizeContainProps } from '../../../../base/font-size-contain/FontSizeContain.model';
+import { FontSizeContain } from '../../../../../../../shared/ui/font-size-contain/FontSizeContain';
+import { FontSizeContainProps } from '../../../../../../../shared/ui/font-size-contain/FontSizeContain.model';
 import { CmTranslationScreenConfig } from '../model';
 import { CmTranslationSubScreen } from './CmTranslationSubScreen';
 import { useGetCmScreenTranslationStyle } from './hooks/get-style';

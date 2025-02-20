@@ -10,13 +10,13 @@ import {
   StyledPhaseContainerConfigurerContent,
   StyledPhaseContainerConfigurerHead,
 } from '../../../../../shared/ui/PageContainer';
-import { SetComListLimitsExtracterContext } from '../../base/SetComListLimitsExtracterContext';
-import { CmTranslationComListContextInCat } from '../../base/translations/InCat';
-import { CmTranslationComListContextInZeroCat } from '../../base/translations/InZeroCat';
-import { useLaterComList } from '../../base/useLaterComList';
-import { categoryTermAtom, CmComListSearchFilterInput } from '../../complect/ComListSearchFilterInput';
+import { SetComListLimitsExtracterContext } from '../../basis/lib/SetComListLimitsExtracterContext';
+import { cmIDB } from '../../basis/lib/cmIdb';
+import { CmTranslationComListContextInCat } from '../../basis/lib/com-list-contexts/InCat';
+import { CmTranslationComListContextInZeroCat } from '../../basis/lib/com-list-contexts/InZeroCat';
+import { useLaterComList } from '../../basis/lib/hooks/useLaterComList';
+import { categoryTermAtom, CmComListSearchFilterInput } from '../../basis/ui/ComListSearchFilterInput';
 import { cmCompositionRoute } from '../../routing/cmRoutingApp';
-import { cmIDB } from '../../shared/lib/cmIdb';
 import { Com } from '../com/Com';
 import { ComFaceList } from '../com/face/list/ComFaceList';
 import { useCcat } from './useCcat';

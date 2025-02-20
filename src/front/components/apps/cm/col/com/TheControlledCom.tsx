@@ -4,9 +4,9 @@ import { CmComWid } from 'shared/api';
 import styled, { css, RuleSet } from 'styled-components';
 import { backSwipableContainerMaker } from '../../../../../shared/lib/backSwipableContainerMaker';
 import { addEventListenerPipe, hookEffectPipe } from '../../../../../shared/lib/hookEffectPipe';
-import { ChordVisibleVariant } from '../../Cm.model';
-import { RollControled } from '../../base/RolledContent';
-import { cmIDB } from '../../shared/lib/cmIdb';
+import { cmIDB } from '../../basis/lib/cmIdb';
+import { RollControledContent } from '../../basis/ui/RolledContent';
+import { ChordVisibleVariant } from '../../shared/model/Cm.model';
 import { Com } from './Com';
 import './Com.scss';
 import { TheCom } from './TheCom';
@@ -100,7 +100,7 @@ export function TheControlledCom({
   );
 }
 
-const StyledRollControled = styled(RollControled)<{ $commentStyles?: RuleSet<object> | string }>`
+const StyledRollControled = styled(RollControledContent)<{ $commentStyles?: RuleSet<object> | string }>`
   ${props => props.$commentStyles}
 `;
 

@@ -8,8 +8,8 @@ import { ScheduleWidgetAppAttBasic } from 'shared/api';
 import styled from 'styled-components';
 import { useInitSoki } from '../../../basis/lib/+hooks/useInitSoki';
 import { useAuth } from '../../../components/index/atoms';
-import { TelegramWebAppApiOr } from '../../tg-app/TelegramWebAppApiOr';
-import { TelegramWebApp, TelegramWebAppInitData } from '../../tg-app/model';
+import { TelegramWebAppApiOr } from '../../tg/TelegramWebAppApiOr';
+import { TelegramWebApp, TelegramWebAppInitData } from '../../tg/model';
 import { ScheduleWidgetAlarmContent } from '../alarm/AlarmContent';
 import { useGetScheduleOrPull } from './useSetScheduleOrPull';
 

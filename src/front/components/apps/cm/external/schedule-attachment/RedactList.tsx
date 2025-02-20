@@ -2,9 +2,9 @@ import { IconButton } from '#shared/ui/icon';
 import { useState } from 'react';
 import { CmComBindAttach, CmComWid } from 'shared/api';
 import { FullContent } from '../../../../../shared/ui/fullscreen-content/FullContent';
+import { CmComListSearchFilterInput } from '../../basis/ui/ComListSearchFilterInput';
 import { Com } from '../../col/com/Com';
 import { ComFaceList } from '../../col/com/face/list/ComFaceList';
-import { CmComListSearchFilterInput } from '../../complect/ComListSearchFilterInput';
 import { EditableCom } from '../../editor/col/compositions/com/EditableCom';
 import { CmExternalComListAttRedactListOrder } from './RedactListOrder';
 

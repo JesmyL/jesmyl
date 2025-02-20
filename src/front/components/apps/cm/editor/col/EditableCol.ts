@@ -1,7 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { makeRegExp } from 'shared/utils';
-import { BaseNamed, BaseNamedExportables } from '../../base/BaseNamed';
-import { eeStorage } from '../../base/ee-storage/EeStorage';
+import { BaseNamed, BaseNamedExportables } from '../../basis/lib/BaseNamed';
+import { eeStorage } from '../../basis/lib/ee-storage/EeStorage';
 import { IEditableCol } from '../../cols/Cols.model';
 import { CorrectsBox } from '../corrects-box/CorrectsBox';
 import { ICorrect } from '../corrects-box/CorrectsBox.model';

@@ -7,7 +7,7 @@ import { TheIconSendButton } from '#shared/ui/sendable/TheIconSendButton';
 import { useEffect, useRef, useState } from 'react';
 import { EeStorePack } from 'shared/api';
 import { DropdownItem } from '../../../../../shared/ui/dropdown/Dropdown.model';
-import { eeStorage } from '../../base/ee-storage/EeStorage';
+import { eeStorage } from '../../basis/lib/ee-storage/EeStorage';
 import { cmEditorClientInvocatorMethods } from '../cm-editor-invocator.methods';
 import { PhaseCmEditorContainer } from '../phase-editor-container/PhaseCmEditorContainer';
 import { EERulesListComputer } from './EERulesListComputer';

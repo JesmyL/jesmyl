@@ -7,7 +7,7 @@ import { OrderRepeats } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
 import { useConfirm } from '../../../../../../../shared/ui/modal/hooks/useConfirm';
-import { ChordVisibleVariant } from '../../../../Cm.model';
+import { ChordVisibleVariant } from '../../../../basis/model/Cm.model';
 import { EditableOrder } from '../complect/orders/EditableOrder';
 import { useEditableCcom } from '../useEditableCcom';
 import { IEditableComLineProps } from './ComRepeats.model';

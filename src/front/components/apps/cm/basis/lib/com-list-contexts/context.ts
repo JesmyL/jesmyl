@@ -1,5 +1,5 @@
-import { contextCreator } from '../../../../../shared/lib/contextCreator';
-import { Com } from '../../col/com/Com';
+import { contextCreator } from '../../../../../../shared/lib/contextCreator';
+import { Com } from '../../../col/com/Com';
 
 type Titles = Record<number, string>;
 

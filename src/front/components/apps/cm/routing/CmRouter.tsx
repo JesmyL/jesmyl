@@ -6,7 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import { CmComWid } from 'shared/api';
 import { cmAppActions } from '../app-actions/cm-app-actions';
 import { CmSharedComListActionInterpretator } from '../app-actions/SharedComList';
-import { useSelectedComs } from '../base/useSelectedComs';
+import { useSelectedComs } from '../basis/lib/hooks/useSelectedComs';
 import { TheCat } from '../col/cat/TheCat';
 import { useTakeActualComw } from '../col/com/useCcom';
 import { Lists } from '../lists/Lists';

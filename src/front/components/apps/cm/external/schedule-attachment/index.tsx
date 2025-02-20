@@ -3,8 +3,8 @@ import { ScheduleWidgetAppAtts } from 'front/widgets/schedule-widget/ScheduleWid
 import { useEffect } from 'react';
 import { Link, Route, useNavigate } from 'react-router-dom';
 import { CmComBindAttach, scheduleWidgetUserRights, ScheduleWidgetUserRoleRight } from 'shared/api';
-import { TheMeetingsEvent } from '../lists/meetings/TheMeetingsEvent';
-import { CmExternalComListAtt } from './complect/CmExternalComListAtt';
+import { TheMeetingsEvent } from '../../lists/meetings/TheMeetingsEvent';
+import { CmExternalComListAtt } from './CmExternalComListAtt';
 
 export const cmOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
   '[cm]:coms': {

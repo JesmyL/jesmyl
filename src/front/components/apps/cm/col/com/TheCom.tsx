@@ -1,5 +1,5 @@
 import { RefObject } from 'react';
-import { ChordVisibleVariant } from '../../Cm.model';
+import { ChordVisibleVariant } from '../../basis/model/Cm.model';
 import { Com } from './Com';
 import './Com.scss';
 import { ComNotFoundPage } from './ComNotFoundPage';

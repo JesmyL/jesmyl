@@ -4,7 +4,7 @@ import { useEffect, useMemo } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { CmComWid } from '../../../../../../shared/api/complect/apps/cm/complect/enums';
 import { atom, useAtomSet, useAtomValue } from '../../../../../shared/lib/atom';
-import { cmIDB } from '../../shared/lib/cmIdb';
+import { cmIDB } from '../../basis/lib/cmIdb';
 import { Com } from './Com';
 
 export const useCcomw = (): CmComWid | NaN => {

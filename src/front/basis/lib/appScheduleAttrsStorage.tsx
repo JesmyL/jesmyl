@@ -1,4 +1,4 @@
-import { cmOwnAppAtts } from '../../components/apps/cm/external/cmExternalAttach';
+import { cmOwnAppAtts } from '@cm/exports';
 
 export const appAttsStore = {
   ...cmOwnAppAtts,

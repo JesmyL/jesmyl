@@ -6,7 +6,7 @@ import { useAuth } from 'front/components/index/atoms';
 import { useState } from 'react';
 import { CmComWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
-import { useSelectedComs } from '../../base/useSelectedComs';
+import { useSelectedComs } from '../../basis/lib/hooks/useSelectedComs';
 import { ComFaceList } from '../../col/com/face/list/ComFaceList';
 import { cmComExternalsClientInvocatorMethods } from '../../editor/cm-editor-invocator.methods';
 import { MoveSelectedComButton } from '../selected-coms/MoveSelectedComButton';

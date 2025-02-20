@@ -4,7 +4,7 @@ import { TheOrder } from 'front/components/apps/cm/col/com/order/TheOrder';
 import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
 import { BottomPopup } from '../../../../../../../../shared/ui/absolute-popup/bottom-popup/BottomPopup';
-import { ChordVisibleVariant } from '../../../../../Cm.model';
+import { ChordVisibleVariant } from '../../../../../basis/model/Cm.model';
 import { EditableCom } from '../../com/EditableCom';
 import { useEditableCcom } from '../../useEditableCcom';
 import { OrdersRedactorOrderTools, OrdersRedactorOrderToolsProps } from './OrdersRedactorOrderTools';

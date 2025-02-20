@@ -4,7 +4,7 @@ import { useModal } from '#shared/ui/modal';
 import { ComOrders } from 'front/components/apps/cm/col/com/orders/ComOrders';
 import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
-import { ChordVisibleVariant } from '../../../../../Cm.model';
+import { ChordVisibleVariant } from '../../../../../basis/model/Cm.model';
 import { EditableCom } from '../../com/EditableCom';
 
 const dotts = '.'

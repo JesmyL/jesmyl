@@ -1,8 +1,8 @@
-import { RollControled } from '@cm/base/RolledContent';
+import { cmIDB } from '@cm/basis/lib/cmIdb';
+import { RollControledContent } from '@cm/basis/ui/RolledContent';
 import { Com } from '@cm/col/com/Com';
 import { CmComNumber } from '@cm/col/com/complect/ComNumber';
 import { ComOrders } from '@cm/col/com/orders/ComOrders';
-import { cmIDB } from '@cm/shared/lib/cmIdb';
 import styled from 'styled-components';
 
 export function FullscreenExpandComList({ coms }: { coms: Com[] }) {
@@ -10,7 +10,7 @@ export function FullscreenExpandComList({ coms }: { coms: Com[] }) {
 
   return (
     <ExpandContent className="com-expand-content full-height">
-      <RollControled>
+      <RollControledContent>
         <div className="inner-content">
           {coms?.map(com => (
             <div key={com.wid}>
@@ -24,7 +24,7 @@ export function FullscreenExpandComList({ coms }: { coms: Com[] }) {
             </div>
           ))}
         </div>
-      </RollControled>
+      </RollControledContent>
     </ExpandContent>
   );
 }

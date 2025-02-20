@@ -3,7 +3,7 @@ import { MyLib } from '#shared/lib/my-lib';
 import { TheButton } from '#shared/ui/Button';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { SendButton } from '#shared/ui/sendable/SendButton';
-import { ChordVisibleVariant } from 'front/components/apps/cm/Cm.model';
+import { ChordVisibleVariant } from '@cm/basis/model/Cm.model';
 import { Com } from 'front/components/apps/cm/col/com/Com';
 import { ComOrders } from 'front/components/apps/cm/col/com/orders/ComOrders';
 import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';

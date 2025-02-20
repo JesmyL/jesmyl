@@ -1,7 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { IconButton } from '#shared/ui/icon';
 import styled from 'styled-components';
-import { cmIDB } from '../../shared/lib/cmIdb';
+import { cmIDB } from '../../basis/lib/cmIdb';
 
 export const MoveSelectedComButton = ({ comi }: { comi: number }) => {
   return (

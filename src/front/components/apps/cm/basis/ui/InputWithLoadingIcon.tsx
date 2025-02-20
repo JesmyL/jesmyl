@@ -3,7 +3,7 @@ import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe
 import { LazyIcon, TheIconLoading } from '#shared/ui/icon';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { CorrectsBox } from '../editor/corrects-box/CorrectsBox';
+import { CorrectsBox } from '../../editor/corrects-box/CorrectsBox';
 
 type Props<ChangedValue> = {
   onChange: (value: string) => Promise<ChangedValue>;

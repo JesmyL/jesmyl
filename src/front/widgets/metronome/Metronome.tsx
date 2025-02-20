@@ -2,7 +2,7 @@ import { useActualRef } from '#shared/lib/+hooks/useActualRef';
 import { isTouchDevice } from '#shared/lib/device-detections';
 import { LazyIcon } from '#shared/ui/icon';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
-import { cmIDB } from '@cm/shared/lib/cmIdb';
+import { cmIDB } from '@cm/basis/lib/cmIdb';
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 

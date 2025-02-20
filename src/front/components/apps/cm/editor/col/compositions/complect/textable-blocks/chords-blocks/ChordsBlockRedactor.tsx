@@ -1,5 +1,5 @@
 import { IconButton, LazyIcon } from '#shared/ui/icon';
-import { InputWithLoadingIcon } from 'front/components/apps/cm/base/InputWithLoadingIcon';
+import { InputWithLoadingIcon } from '@cm/basis/ui/InputWithLoadingIcon';
 import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
 import { makeRegExp } from 'shared/utils';

@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
-import { useCcat } from '../../col/cat/useCcat';
-import { useComs } from '../../cols/useCols';
+import { useCcat } from '../../../col/cat/useCcat';
+import { useComs } from '../../../cols/useCols';
 import { CmComListContext, CmComListContextValue } from './context';
 
-export const CmTranslationComListContextInCat = function InCat({ children }: { children: React.ReactNode }) {
-  const cat = useCcat();
-  const coms = useComs(cat?.comws);
+export const CmTranslationComListContextInZeroCat = function InZeroCat({ children }: { children: React.ReactNode }) {
+  const cat = useCcat(true);
+  const coms = useComs();
 
   const value = useMemo((): CmComListContextValue => {
     if (cat == null) return {};
