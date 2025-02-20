@@ -1,5 +1,5 @@
+import { useBibleCurrentBooki } from '@bible/shared/translations/hooks/books';
 import { memo } from 'react';
-import { useBibleBooki } from '../translations/lists/atoms';
 import { BibleModulesTranslationsRedactButton } from './Add';
 import { translateFilter } from './complect';
 import { useBibleMyTranslates, useBibleShowTranslates } from './hooks';
@@ -11,7 +11,7 @@ export const BibleModulesTranslations = memo(function BibleModules({
 }): JSX.Element {
   const [myTranslates] = useBibleMyTranslates();
   const [showTranslates, setShowTranslates] = useBibleShowTranslates();
-  const [booki] = useBibleBooki();
+  const booki = useBibleCurrentBooki();
 
   return (
     <div className="flex flex-gap margin-gap-v">

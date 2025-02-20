@@ -2,8 +2,8 @@ import { useSetScreenTranslationInteractiveBackground } from '#features/translat
 import { TranslationScreenProps } from '#features/translations/model/Translations.model';
 import { useApplyScreenFontFamilyEffect } from '#shared/ui/configurators/hooks/useApplyScreenFontFamilyEffect';
 import { LazyIcon } from '#shared/ui/icon';
+import { useBibleCurrentVersei } from '@bible/shared/translations/hooks/verses';
 import { useRef, useState } from 'react';
-import { useBibleAddressVersei } from '../../hooks/address/verses';
 import { useBibleScreenTranslationKeyListener } from '../hooks/key-listener';
 import { useGetBibleScreenTranslationWrapperStyle } from '../hooks/styles/wrapper-style';
 import { BibleTranslationScreenConfig } from '../model';
@@ -23,7 +23,7 @@ export const BibleTranslationScreen = (props: Props) => {
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const screenWrapperRef = useRef<HTMLDivElement>(null);
-  const versei = useBibleAddressVersei();
+  const versei = useBibleCurrentVersei();
 
   useBibleScreenTranslationKeyListener(versei, props.win);
 

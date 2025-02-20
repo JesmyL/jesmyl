@@ -1,5 +1,5 @@
+import { bibleTitles } from '#basis/consts/bibleTitles';
 import { mylib } from '#shared/lib/my-lib';
-import { bibleTitles } from 'front/components/apps/bible/hooks/bibleTitlesJson';
 import { makeRegExp } from 'shared/utils';
 import { css } from 'styled-components';
 import { CmComOrderWid } from '../../../../../../../../shared/api/complect/apps/cm/complect/enums';

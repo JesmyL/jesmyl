@@ -1,7 +1,7 @@
+import { useBibleBookList } from '#basis/consts/bibleTitles';
+import { useBibleSingleAddressSetter } from '@bible/shared/translations/atoms';
+import { useSetBibleAddressWithForceJoinReset } from '@bible/shared/translations/hooks/address';
 import styled from 'styled-components';
-import { useSetBibleAddressWithForceJoinReset } from '../../../hooks/address/address';
-import { useBibleBookList } from '../../../hooks/texts';
-import { useBibleSingleAddressSetter } from '../atoms';
 import { useBibleListFaceClickListener } from '../complect';
 
 export const bookiIdPrefix = 'bible-booki-';

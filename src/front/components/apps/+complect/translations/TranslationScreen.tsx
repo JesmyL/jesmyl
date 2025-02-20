@@ -1,15 +1,15 @@
 import { complectIDB } from '#basis/idb';
+import { TranslationScreenProps } from '#features/translations/model/Translations.model';
+import { TranslationTextScreen } from '#features/translations/ui/TranslationTextScreen';
+import { AlertLineSlideText } from '#features/translations/ui/alert-line/AlertLineSlideText';
 import { useAtomValue } from '#shared/lib/atom';
 import styled, { css } from 'styled-components';
-import { BibleTranslatesContextProvider } from '../../../components/apps/bible/translates/TranslatesContext';
-import { BibleTranslationCurrentScreen } from '../../../components/apps/bible/translations/screen/BibleTranslationCurrentScreen';
-import { BibleTranslationScreenTextsContext } from '../../../components/apps/bible/translations/ui/AddressContentContext';
-import { CmTranslationCurrentScreen } from '../../../components/apps/cm/translation/complect/controlled/screen/CmTranslationCurrentScreen';
-import { isShowTranslatedTextAtom, useTranslationInitialSlideValue } from '../lib/atoms';
-import { useCurrentForceViweAppContext } from '../lib/Translation.contexts';
-import { TranslationScreenProps } from '../model/Translations.model';
-import { AlertLineSlideText } from './alert-line/AlertLineSlideText';
-import { TranslationTextScreen } from './TranslationTextScreen';
+import { BibleTranslatesContextProvider } from '../../bible/translates/TranslatesContext';
+import { BibleTranslationCurrentScreen } from '../../bible/translations/screen/BibleTranslationCurrentScreen';
+import { BibleTranslationScreenTextsContext } from '../../bible/translations/ui/AddressContentContext';
+import { CmTranslationCurrentScreen } from '../../cm/translation/complect/controlled/screen/CmTranslationCurrentScreen';
+import { useCurrentForceViweAppContext } from './Translation.contexts';
+import { isShowTranslatedTextAtom, useTranslationInitialSlideValue } from './atoms';
 
 export const TranslationScreen = (props: TranslationScreenProps) => {
   const app = complectIDB.useValue.currentTranslationTextApp();

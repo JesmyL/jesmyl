@@ -1,15 +1,15 @@
 import { useInitSoki } from '#basis/lib/+hooks/useInitSoki';
 import { ScreenTranslationControlPanel } from '#features/translations/ui/ControllPanel';
 import { PageContainer } from '#shared/ui/PageContainer';
+import { bibleIDB } from '@bible/_db/bibleIDB';
+import { BibleModulesTranslations } from '@bible/translates/Translations';
 import { ReactNode, useEffect } from 'react';
 import styled from 'styled-components';
-import { bibleIDB } from '../_db/bibleIDB';
-import { useBibleSlideSyncInkrementer } from '../hooks/slide-sync';
-import { useLoadBibleChaptersCombine } from '../hooks/texts';
-import { BibleModulesTranslations } from '../translates/Translations';
+import { useBibleSlideSyncInkrementer } from '../shared/translations/hooks/slide-sync';
 import { BibleTranslationControlledBottomPanel } from './BottomPanel';
-import { BibleTranslationControlledTopPanel } from './TopPanel';
+import { useLoadBibleChaptersCombine } from './hooks/texts';
 import { BibleSearchPanel } from './search/Panel';
+import { BibleTranslationControlledTopPanel } from './TopPanel';
 
 interface Props {
   head: ReactNode;

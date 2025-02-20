@@ -1,16 +1,11 @@
 import { useMemo } from 'react';
-import { contextCreator } from '../../../../shared/lib/contextCreator';
-import { useBibleTranslationJoinAddress } from '../hooks/address/address';
-import { useBibleAddressBooki } from '../hooks/address/books';
-import { useBibleAddressChapteri } from '../hooks/address/chapters';
-import { useBibleAddressVersei } from '../hooks/address/verses';
-import { useBibleSlideSyncValue } from '../hooks/slide-sync';
-import {
-  useBibleJoinedAddressText,
-  useBibleJoinedSlideText,
-  useBibleSimpleAddressText,
-  useBibleSingleSlideText,
-} from '../hooks/texts';
+import { contextCreator } from '../../../../../shared/lib/contextCreator';
+import { useBibleSimpleAddressText, useBibleTranslationJoinAddress } from '../../shared/translations/hooks/address';
+import { useBibleCurrentBooki } from '../../shared/translations/hooks/books';
+import { useBibleCurrentChapteri } from '../../shared/translations/hooks/chapters';
+import { useBibleSlideSyncValue } from '../../shared/translations/hooks/slide-sync';
+import { useBibleCurrentVersei } from '../../shared/translations/hooks/verses';
+import { useBibleJoinedAddressText, useBibleJoinedSlideText, useBibleSingleSlideText } from '../hooks/texts';
 
 const [AddressContext, useBibleAddressTextContext] = contextCreator('');
 const [TextContext, useBibleTextContentContext] = contextCreator('');
@@ -32,9 +27,9 @@ export const BibleTranslationScreenKnownTextsContext = ({
 };
 
 export const BibleTranslationScreenTextsContext = (props: { children?: React.ReactNode; isPreview: boolean | und }) => {
-  const booki = useBibleAddressBooki();
-  const chapteri = useBibleAddressChapteri();
-  const versei = useBibleAddressVersei();
+  const booki = useBibleCurrentBooki();
+  const chapteri = useBibleCurrentChapteri();
+  const versei = useBibleCurrentVersei();
   const actualJoinAddress = useBibleTranslationJoinAddress();
 
   const text = useBibleSingleSlideText(booki, chapteri, versei);

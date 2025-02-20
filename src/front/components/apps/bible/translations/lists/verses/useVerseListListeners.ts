@@ -1,10 +1,10 @@
 import { mylib } from '#shared/lib/my-lib';
+import { bibleIDB } from '@bible/_db/bibleIDB';
+import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress } from '@bible/model';
+import { useBibleTranslationJoinAddress } from '@bible/shared/translations/hooks/address';
+import { useBibleTranslationSlideSyncContentSetter } from '@bible/shared/translations/hooks/slide-sync';
+import { useBibleCurrentVersei } from '@bible/shared/translations/hooks/verses';
 import { useEffect } from 'react';
-import { bibleIDB } from '../../../_db/bibleIDB';
-import { useBibleTranslationJoinAddress } from '../../../hooks/address/address';
-import { useBibleAddressVersei } from '../../../hooks/address/verses';
-import { useBibleTranslationSlideSyncContentSetter } from '../../../hooks/slide-sync';
-import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress } from '../../../model';
 import { verseiIdPrefix } from './VerseList';
 
 export const useVerseListListeners = (
@@ -14,7 +14,7 @@ export const useVerseListListeners = (
 ) => {
   const currentJoinAddress = useBibleTranslationJoinAddress();
   const syncSlide = useBibleTranslationSlideSyncContentSetter();
-  const currentVersei = useBibleAddressVersei();
+  const currentVersei = useBibleCurrentVersei();
   const currentJoin = currentJoinAddress?.[currentBooki]?.[currentChapteri];
 
   useEffect(() => {

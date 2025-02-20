@@ -1,11 +1,11 @@
+import { useBibleBookList } from '#basis/consts/bibleTitles';
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { BibleBooki, BibleChapteri, BibleVersei } from '@bible/model';
+import { useSetBibleAddressIndexes } from '@bible/shared/translations/hooks/address';
+import { bibleLowerBooks, useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
 import { bibleIDB } from 'front/components/apps/bible/_db/bibleIDB';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { emptyFunc, makeRegExp } from 'shared/utils';
-import { addEventListenerPipe, hookEffectPipe } from '../../../../../../../../shared/lib/hookEffectPipe';
-import { useSetBibleAddressIndexes } from '../../../../../hooks/address/address';
-import { useBibleBookList } from '../../../../../hooks/texts';
-import { BibleBooki, BibleChapteri, BibleVersei } from '../../../../../model';
-import { bibleLowerBooks, useBibleTranslatesContext } from '../../../../../translates/TranslatesContext';
 
 const addressReg = makeRegExp('/(\\d?\\s*[а-яё]+)\\s*((\\d{1,3})((:|\\s+)(\\d{1,3})(\\s*([-,]?)\\s*)(\\d{1,3})?)?)?/i');
 const makePropsFromAddressArgs = (args: [string, ...(string | und)[]] | RegExpMatchArray) => {

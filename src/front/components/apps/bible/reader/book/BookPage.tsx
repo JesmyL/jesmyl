@@ -2,7 +2,7 @@ import { mylib } from '#shared/lib/my-lib';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { BibleBooki, BibleChapteri, BibleVersei } from '../../model';
-import { useBibleSingleAddressSetter } from '../../translations/lists/atoms';
+import { useBibleSingleAddressSetter } from '../../shared/translations/atoms';
 import { BibleReaderChapter } from './complect/Chapter';
 
 interface Props {

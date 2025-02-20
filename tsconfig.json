@@ -22,6 +22,9 @@
       "#widgets/*": ["./front/widgets/*"],
       "#features/*": ["./front/features/*"],
 
+      "@cm/*": ["./front/components/apps/cm/*"],
+      "@bible/*": ["./front/components/apps/bible/*"],
+
       "shared/*": ["./shared/*"],
       "front/*": ["./front/*"],
       "bibles/*": ["./bibles/*"]

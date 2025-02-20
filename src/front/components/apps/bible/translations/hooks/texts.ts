@@ -1,35 +1,15 @@
+import { bibleTitles } from '#basis/consts/bibleTitles';
 import { MyLib } from '#shared/lib/my-lib';
+import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '@bible/model';
+import { translateDescriptions } from '@bible/translates/complect';
+import { useBibleShowTranslatesValue } from '@bible/translates/hooks';
+import { useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
 import { itIt } from 'shared/utils';
-import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '../model';
-import { useBibleTranslatesContext } from '../translates/TranslatesContext';
-import { translateDescriptions } from '../translates/complect';
-import { useBibleShowTranslatesValue } from '../translates/hooks';
-import { verseTranslateTitleCssClassName } from '../translations/complect';
-import { useBibleAddressBooki } from './address/books';
-import { bibleTitles } from './bibleTitlesJson';
+import { verseTranslateTitleCssClassName } from '../complect';
 
 const numSortFunc = (a: number, b: number) => a - b;
 
-export const useLoadBibleChaptersCombine = () => {
-  const combine = useBibleTranslatesContext().rst;
-
-  // useEffect(() => {
-  //   if (combine?.chapters != null) return;
-
-  //   const timeout = setTimeout(() => soki.makeInitialRequests('bible'), 1000);
-
-  //   return () => clearTimeout(timeout);
-  // }, [combine?.chapters]);
-
-  return combine;
-};
-
-export const useBibleCurrentChapterList = () => {
-  const currentBooki = useBibleAddressBooki();
-  const showTranslates = useBibleShowTranslatesValue();
-  return useBibleTranslatesContext()[showTranslates[0]]?.chapters?.[currentBooki];
-};
-export const useBibleBookList = () => bibleTitles.titles;
+export const useLoadBibleChaptersCombine = () => useBibleTranslatesContext().rst;
 
 export const useBibleSingleSlideText = (
   booki: BibleBooki,
@@ -122,15 +102,6 @@ export const useBibleJoinedSlideText = (
       );
     })
     .join('</br>');
-};
-
-export const useBibleSimpleAddressText = (
-  booki: BibleBooki,
-  chapteri: BibleChapteri,
-  versei: BibleVersei,
-  titleVariant: 0 | 1 = 0,
-) => {
-  return `${bibleTitles.titles[booki][titleVariant]} ${chapteri + 1}:${versei + 1}`;
 };
 
 export const useBibleJoinedAddressText = (joinAddress: BibleTranslationJoinAddress | nil, titleVariant: 0 | 1 = 0) => {

@@ -1,5 +1,5 @@
 import { complectIDB } from '#basis/idb';
-import { atom, useAtom, useAtomSet, useAtomToggle, useAtomValue } from '../../shared/lib/atom';
+import { atom, useAtom, useAtomSet, useAtomToggle, useAtomValue } from '#shared/lib/atom';
 import { defaultScreenTranslationBackgroundConfig } from './complect/defaults';
 import { AlertLineConfig, ScreenTranslationConfig } from './model';
 

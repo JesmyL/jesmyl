@@ -1,7 +1,7 @@
-import { useBibleAddressTextContext } from '../../../texts/AddressContentContext';
 import { useBibleScreenTranslationFontSizeAddressAdapter } from '../../hooks/font-size-adapter/address-adapter';
 import { useGetBibleScreenTranslationAddressTextWrapperStyle } from '../../hooks/styles/address-text-wrapper-style';
 import { BibleTranslationScreenConfig } from '../../model';
+import { useBibleAddressTextContext } from '../../ui/AddressContentContext';
 
 interface Props {
   screeni: number | und;

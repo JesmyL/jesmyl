@@ -1,11 +1,11 @@
+import { CurrentForceViweAppContext } from '#features/translations/lib/Translation.contexts';
+import { BibleReaderCurrentBookPage } from '@bible/reader/book/CurrentBookPage';
+import { BibleReaderSearchPage } from '@bible/reader/search/SearchPage';
+import { BibleTranslatesContextProvider } from '@bible/translates/TranslatesContext';
+import { BibleTranslationControlled } from '@bible/translations/BibleTranslationControlled';
 import { Route, Routes } from 'react-router-dom';
-import { CurrentForceViweAppContext } from '../../../../widgets/translations/lib/Translation.contexts';
-import { BibleReaderCurrentBookPage } from '../reader/book/CurrentBookPage';
-import { BibleReaderSearchPage } from '../reader/search/SearchPage';
-import { BibleTranslatesContextProvider } from '../translates/TranslatesContext';
-import { BibleTranslationControlled } from '../translations/BibleTranslationControlled';
-import { BibleFooter } from './BibleFooter';
 import { bibleInitialInvokes } from './bible-initial-invokes';
+import { BibleFooter } from './BibleFooter';
 
 export default function BibleRouter({ mainNode }: { mainNode: React.ReactNode }) {
   return (

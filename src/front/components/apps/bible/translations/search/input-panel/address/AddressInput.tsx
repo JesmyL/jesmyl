@@ -1,5 +1,5 @@
 import { bibleIDB } from 'front/components/apps/bible/_db/bibleIDB';
-import { BibleSearchPanelInput } from '../Input';
+import { BibleSearchPanelInput } from '../../../../shared/translations/ui/Input';
 import { useBibleTransformAddressTermToAddress } from './hooks/transformers';
 
 interface Props {

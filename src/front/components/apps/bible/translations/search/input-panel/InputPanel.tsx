@@ -1,10 +1,10 @@
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { bibleIDB } from '@bible/_db/bibleIDB';
+import { BibleSearchZone } from '@bible/model';
+import { BibleSearchPanelSearchTextInput } from '@bible/shared/translations/ui/SearchTextInput';
 import { useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import { addEventListenerPipe, hookEffectPipe } from '../../../../../../shared/lib/hookEffectPipe';
-import { bibleIDB } from '../../../_db/bibleIDB';
-import { BibleSearchZone } from '../../../model';
 import { useBibleTranslationSearchResultSelectedSet } from '../hooks/results';
-import { BibleSearchPanelSearchTextInput } from './SearchTextInput';
 import { BibleSearchPanelAddressInput } from './address/AddressInput';
 
 interface Props {

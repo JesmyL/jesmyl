@@ -2,11 +2,11 @@ import { useToggleIsScreenTranslationTextVisible } from '#features/translations/
 import { useActualRef } from '#shared/lib/+hooks/useActualRef';
 import { atom, useAtomInkrement, useAtomValue } from '#shared/lib/atom';
 import { useCallback } from 'react';
-import { useBibleTranslationAddToHistory } from '../translations/archive/history/hooks/history';
-import { useBibleTranslationJoinAddress } from './address/address';
-import { useBibleAddressBooki } from './address/books';
-import { useBibleAddressChapteri } from './address/chapters';
-import { useBibleAddressVersei } from './address/verses';
+import { useBibleTranslationAddToHistory } from '../../../translations/archive/history/hooks/history';
+import { useBibleTranslationJoinAddress } from './address';
+import { useBibleCurrentBooki } from './books';
+import { useBibleCurrentChapteri } from './chapters';
+import { useBibleCurrentVersei } from './verses';
 
 const inkAtom = atom(0);
 
@@ -14,9 +14,9 @@ export const useBibleSlideSyncInkrementer = () => useAtomInkrement(inkAtom);
 export const useBibleSlideSyncValue = () => useAtomValue(inkAtom);
 
 export const useBibleTranslationSlideSyncContentSetter = () => {
-  const currentBookiRef = useActualRef(useBibleAddressBooki());
-  const currentChapteriRef = useActualRef(useBibleAddressChapteri());
-  const currentVerseiRef = useActualRef(useBibleAddressVersei());
+  const currentBookiRef = useActualRef(useBibleCurrentBooki());
+  const currentChapteriRef = useActualRef(useBibleCurrentChapteri());
+  const currentVerseiRef = useActualRef(useBibleCurrentVersei());
   const currentJoinAddress = useBibleTranslationJoinAddress();
   const addToHistory = useBibleTranslationAddToHistory();
   const switchIsVisible = useToggleIsScreenTranslationTextVisible();

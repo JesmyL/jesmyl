@@ -1,14 +1,14 @@
+import { bibleIDB } from '@bible/_db/bibleIDB';
+import { BibleBooki, BibleChapteri, BibleTranslationSingleAddress, BibleVersei } from '@bible/model';
+import { useBibleShowTranslatesValue } from '@bible/translates/hooks';
+import { useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
 import { useCallback, useEffect, useState } from 'react';
 import { emptyArray, makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
-import { bibleIDB } from '../../_db/bibleIDB';
-import { useBibleAddressBooki } from '../../hooks/address/books';
-import { useBibleAddressChapteri } from '../../hooks/address/chapters';
-import { BibleBooki, BibleChapteri, BibleTranslationSingleAddress, BibleVersei } from '../../model';
-import { useBibleTranslatesContext } from '../../translates/TranslatesContext';
-import { useBibleShowTranslatesValue } from '../../translates/hooks';
+import { useBibleCurrentBooki } from '../hooks/books';
+import { useBibleCurrentChapteri } from '../hooks/chapters';
+import { useBibleTranslationSearchResultList, useBibleTranslationSearchResultSelectedValue } from '../hooks/results';
 import { BibleSearchResultVerse } from './ResultVerse';
-import { useBibleTranslationSearchResultList, useBibleTranslationSearchResultSelectedValue } from './hooks/results';
 
 interface Props {
   inputRef: React.RefObject<HTMLInputElement>;
@@ -36,8 +36,8 @@ export const BibleSearchResults = ({ inputRef, height = '100px', innerZone, onCl
   const [resultList, setResultList] = useBibleTranslationSearchResultList();
   const onClick = useCallback(() => inputRef.current?.focus(), [inputRef]);
 
-  let currentBooki = useBibleAddressBooki();
-  let currentChapteri = useBibleAddressChapteri();
+  let currentBooki = useBibleCurrentBooki();
+  let currentChapteri = useBibleCurrentChapteri();
   if (searchZone === 'global') {
     currentBooki = BibleBooki.none;
     currentChapteri = BibleChapteri.none;

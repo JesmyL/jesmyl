@@ -1,13 +1,16 @@
+import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { MyLib } from '#shared/lib/my-lib';
+import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '@bible/model';
+import {
+  useBibleTranslationJoinAddress,
+  useGetterJoinedAddressMaxValues,
+} from '@bible/shared/translations/hooks/address';
+import { useBibleCurrentBooki } from '@bible/shared/translations/hooks/books';
+import { useBibleCurrentChapteri } from '@bible/shared/translations/hooks/chapters';
+import { useBibleCurrentVersei } from '@bible/shared/translations/hooks/verses';
+import { BibleTranslatesContextProvider, useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
 import { useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import { hookEffectPipe, setTimeoutPipe } from '../../../../../shared/lib/hookEffectPipe';
-import { useBibleTranslationJoinAddress, useGetterJoinedAddressMaxValues } from '../../hooks/address/address';
-import { useBibleAddressBooki } from '../../hooks/address/books';
-import { useBibleAddressChapteri } from '../../hooks/address/chapters';
-import { useBibleAddressVersei } from '../../hooks/address/verses';
-import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '../../model';
-import { BibleTranslatesContextProvider, useBibleTranslatesContext } from '../../translates/TranslatesContext';
 import { BibleBookList, bookiIdPrefix } from './books/BookList';
 import { BibleChapterList, chapteriIdPrefix } from './chapters/ChapterList';
 import { BibleVerseList, verseiIdPrefix } from './verses/VerseList';
@@ -17,9 +20,9 @@ const scrollIntoViewVerseOptions = { block: 'center', behavior: 'smooth' } as co
 
 export const BibleLists = () => {
   const joinAddress = useBibleTranslationJoinAddress();
-  const currentBooki = useBibleAddressBooki();
-  const currentChapteri = useBibleAddressChapteri();
-  const currentVersei = useBibleAddressVersei();
+  const currentBooki = useBibleCurrentBooki();
+  const currentChapteri = useBibleCurrentChapteri();
+  const currentVersei = useBibleCurrentVersei();
   const translates = useBibleTranslatesContext();
   const getJoinAddressMaxes = useGetterJoinedAddressMaxValues();
 

@@ -1,9 +1,10 @@
+import { bibleTitles } from '#basis/consts/bibleTitles';
 import { mylib } from '#shared/lib/my-lib';
+import { bibleIDB } from '@bible/_db/bibleIDB';
+import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '@bible/model';
+import { useBibleTranslationSearchResultSelectedSet } from '@bible/shared/translations/hooks/results';
 import { useCallback } from 'react';
-import { bibleIDB } from '../../_db/bibleIDB';
-import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '../../model';
-import { useBibleSingleAddressSetter } from '../../translations/lists/atoms';
-import { useBibleTranslationSearchResultSelectedSet } from '../../translations/search/hooks/results';
+import { useBibleSingleAddressSetter } from '../atoms';
 
 export const useBibleTranslationAddressIndexesSetter = () => {
   const setAddress = useBibleSingleAddressSetter();
@@ -66,3 +67,12 @@ export const useGetterJoinedAddressMaxValues = () =>
 
     return [booki, chapteri, Math.max(...joinAddress[booki][chapteri]) as BibleVersei] as const;
   }, []);
+
+export const useBibleSimpleAddressText = (
+  booki: BibleBooki,
+  chapteri: BibleChapteri,
+  versei: BibleVersei,
+  titleVariant: 0 | 1 = 0,
+) => {
+  return `${bibleTitles.titles[booki][titleVariant]} ${chapteri + 1}:${versei + 1}`;
+};

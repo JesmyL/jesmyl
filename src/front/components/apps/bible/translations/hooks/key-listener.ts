@@ -1,21 +1,24 @@
+import { useActualRef } from '#shared/lib/+hooks/useActualRef';
 import { mylib } from '#shared/lib/my-lib';
+import { bibleIDB } from '@bible/_db/bibleIDB';
+import { BibleTranslationAddress, BibleTranslationJoinAddress, BibleVersei } from '@bible/model';
+import { useBibleShowTranslatesValue } from '@bible/translates/hooks';
+import { useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
 import { useEffect, useState } from 'react';
-import { useActualRef } from '../../../../../shared/lib/+hooks/useActualRef';
-import { bibleIDB } from '../../_db/bibleIDB';
-import { useBibleTranslationAddressIndexesSetter, useBibleTranslationJoinAddress } from '../../hooks/address/address';
-import { useBibleAddressBooki } from '../../hooks/address/books';
-import { useBibleAddressChapteri } from '../../hooks/address/chapters';
-import { useBibleTranslationSlideSyncContentSetter } from '../../hooks/slide-sync';
-import { BibleTranslationAddress, BibleTranslationJoinAddress, BibleVersei } from '../../model';
-import { useBibleTranslatesContext } from '../../translates/TranslatesContext';
-import { useBibleShowTranslatesValue } from '../../translates/hooks';
+import {
+  useBibleTranslationAddressIndexesSetter,
+  useBibleTranslationJoinAddress,
+} from '../../shared/translations/hooks/address';
+import { useBibleCurrentBooki } from '../../shared/translations/hooks/books';
+import { useBibleCurrentChapteri } from '../../shared/translations/hooks/chapters';
+import { useBibleTranslationSlideSyncContentSetter } from '../../shared/translations/hooks/slide-sync';
 import { useBibleTranslationAddToPlan } from '../archive/plan/hooks/plan';
 
 export const useBibleScreenTranslationKeyListener = (versei: BibleVersei, win?: Window) => {
   const [numberCollection, setNumberCollection] = useState('');
 
-  const currentBooki = useBibleAddressBooki();
-  const currentChapteri = useBibleAddressChapteri();
+  const currentBooki = useBibleCurrentBooki();
+  const currentChapteri = useBibleCurrentChapteri();
   const showTranslates = useBibleShowTranslatesValue();
   const htmlChapters = useBibleTranslatesContext()[showTranslates[0]]?.chapters;
   const joinAddress = useBibleTranslationJoinAddress();

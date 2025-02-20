@@ -1,16 +1,16 @@
+import { useBibleBookList } from '#basis/consts/bibleTitles';
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { PageContainer } from '#shared/ui/PageContainer';
+import { useBibleSingleAddressSetter } from '@bible/shared/translations/atoms';
+import { useBibleCurrentBooki } from '@bible/shared/translations/hooks/books';
+import { useBibleCurrentChapteri } from '@bible/shared/translations/hooks/chapters';
+import { useBibleCurrentVersei } from '@bible/shared/translations/hooks/verses';
+import { BibleAddressSingle } from '@bible/texts/BibleAddressSingle';
+import { useBibleShowTranslatesValue } from '@bible/translates/hooks';
+import { BibleTranslatesContextProvider, useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
+import { BibleModulesTranslations } from '@bible/translates/Translations';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { FullContent } from '../../../../../shared/ui/fullscreen-content/FullContent';
-import { useBibleAddressBooki } from '../../hooks/address/books';
-import { useBibleAddressChapteri } from '../../hooks/address/chapters';
-import { useBibleAddressVersei } from '../../hooks/address/verses';
-import { useBibleBookList } from '../../hooks/texts';
-import { BibleAddressSingle } from '../../texts/BibleAddressSingle';
-import { BibleTranslatesContextProvider, useBibleTranslatesContext } from '../../translates/TranslatesContext';
-import { BibleModulesTranslations } from '../../translates/Translations';
-import { useBibleShowTranslatesValue } from '../../translates/hooks';
-import { useBibleSingleAddressSetter } from '../../translations/lists/atoms';
 import { BibleReaderBook } from './BookPage';
 
 export const BibleReaderCurrentBookPage = () => {
@@ -22,9 +22,9 @@ export const BibleReaderCurrentBookPage = () => {
 };
 
 function Content() {
-  const currentBooki = useBibleAddressBooki();
-  const currentChapteri = useBibleAddressChapteri();
-  const currentVersei = useBibleAddressVersei();
+  const currentBooki = useBibleCurrentBooki();
+  const currentChapteri = useBibleCurrentChapteri();
+  const currentVersei = useBibleCurrentVersei();
   const bookTitles = useBibleBookList();
   const showTranslates = useBibleShowTranslatesValue();
   const chapters = useBibleTranslatesContext()[showTranslates[0]]?.chapters;

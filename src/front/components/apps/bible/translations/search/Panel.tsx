@@ -1,7 +1,7 @@
 import { memo, useEffect, useRef } from 'react';
 import { bibleIDB } from '../../_db/bibleIDB';
 import { BibleSearchZone } from '../../model';
-import { BibleSearchResults } from './Results';
+import { BibleSearchResults } from '../../shared/translations/ui/Results';
 import { BibleSearchInputPanel } from './input-panel/InputPanel';
 
 const setSearchZone = (zone: BibleSearchZone, inputRef: React.RefObject<HTMLInputElement>) => {

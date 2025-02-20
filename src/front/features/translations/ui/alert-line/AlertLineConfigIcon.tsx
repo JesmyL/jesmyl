@@ -1,7 +1,7 @@
-import { theIconKnownPack } from 'front/complect/the-icon/pack';
+import { useScreenTranslationBackgroundStyles } from '#features/translations/lib/hooks/background-styles';
+import { AlertLineConfig } from '#features/translations/model/Configs.model';
+import { theIconKnownPack } from '#shared/ui/icon/pack';
 import styled, { css } from 'styled-components';
-import { useScreenTranslationBackgroundStyles } from '../../lib/hooks/background-styles';
-import { AlertLineConfig } from '../../model/Configs.model';
 
 type Props = {
   config: AlertLineConfig;

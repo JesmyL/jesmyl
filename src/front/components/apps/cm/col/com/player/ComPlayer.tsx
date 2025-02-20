@@ -1,3 +1,4 @@
+import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
 import { LazyIcon } from '#shared/ui/icon';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { emptyFunc } from 'shared/utils';

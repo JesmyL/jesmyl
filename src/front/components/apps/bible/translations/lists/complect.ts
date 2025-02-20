@@ -1,7 +1,7 @@
+import { useActualRef } from '#shared/lib/+hooks/useActualRef';
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { getParentNodeWithClassName } from '#shared/lib/utils';
 import { useEffect, useRef } from 'react';
-import { useActualRef } from '../../../../../shared/lib/+hooks/useActualRef';
-import { addEventListenerPipe, hookEffectPipe } from '../../../../../shared/lib/hookEffectPipe';
-import { getParentNodeWithClassName } from '../../../../../shared/lib/utils';
 
 export const useBibleListFaceClickListener = (
   idPrefix: `${string}-`,

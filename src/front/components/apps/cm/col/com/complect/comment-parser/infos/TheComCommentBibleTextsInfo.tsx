@@ -1,5 +1,5 @@
+import { bibleTitles } from '#basis/consts/bibleTitles';
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
-import { bibleTitles } from 'front/components/apps/bible/hooks/bibleTitlesJson';
 import { BibleModulesTranslationsRedactButton } from 'front/components/apps/bible/translates/Add';
 import React from 'react';
 import { bibleAllTranslates, translateDescriptions } from '../../../../../../bible/translates/complect';

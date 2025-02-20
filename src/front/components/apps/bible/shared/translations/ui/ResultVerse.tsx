@@ -1,9 +1,9 @@
+import { useBibleBookList } from '#basis/consts/bibleTitles';
+import { BibleBooki, BibleChapteri, BibleVersei } from '@bible/model';
+import { useBibleTranslationAddressIndexesSetter } from '@bible/shared/translations/hooks/address';
+import { useBibleShowTranslatesValue } from '@bible/translates/hooks';
+import { useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
 import { memo } from 'react';
-import { useBibleTranslationAddressIndexesSetter } from '../../hooks/address/address';
-import { useBibleBookList } from '../../hooks/texts';
-import { BibleBooki, BibleChapteri, BibleVersei } from '../../model';
-import { useBibleTranslatesContext } from '../../translates/TranslatesContext';
-import { useBibleShowTranslatesValue } from '../../translates/hooks';
 
 interface Props {
   booki: BibleBooki;

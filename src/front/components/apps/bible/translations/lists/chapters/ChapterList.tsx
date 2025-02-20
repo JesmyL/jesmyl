@@ -1,8 +1,8 @@
 import { JStorageNumberVal } from '#basis/lib/JSimpleStorage/lib/Number';
+import { useSetBibleAddressWithForceJoinReset } from '@bible/shared/translations/hooks/address';
+import { useBibleCurrentChapterList } from '@bible/shared/translations/hooks/chapters';
 import { useMemo } from 'react';
 import styled from 'styled-components';
-import { useSetBibleAddressWithForceJoinReset } from '../../../hooks/address/address';
-import { useBibleCurrentChapterList } from '../../../hooks/texts';
 import { useBibleListFaceClickListener } from '../complect';
 
 export const chapteriIdPrefix = 'bible-chapteri-';

@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { IndexSchWTranslationLiveDataValue } from '../../../index/Index.model';
+import { useBibleScreenTranslationConfigs } from './hooks/configs';
 import {
   BibleTranslationScreenTextsContext,
   useBibleAddressTextContext,
   useBibleTextContentContext,
-} from '../texts/AddressContentContext';
-import { useBibleScreenTranslationConfigs } from './hooks/configs';
+} from './ui/AddressContentContext';
 
 interface Props {
   fio: string;

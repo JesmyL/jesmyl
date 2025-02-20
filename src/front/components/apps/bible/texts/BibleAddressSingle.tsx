@@ -1,7 +1,7 @@
-import { useBibleAddressBooki } from '../hooks/address/books';
-import { useBibleAddressChapteri } from '../hooks/address/chapters';
-import { useBibleAddressVersei } from '../hooks/address/verses';
-import { useBibleSimpleAddressText } from '../hooks/texts';
+import { useBibleSimpleAddressText } from '@bible/shared/translations/hooks/address';
+import { useBibleCurrentBooki } from '@bible/shared/translations/hooks/books';
+import { useBibleCurrentChapteri } from '@bible/shared/translations/hooks/chapters';
+import { useBibleCurrentVersei } from '@bible/shared/translations/hooks/verses';
 import { BibleTranslationSingleAddress } from '../model';
 
 export const BibleAddressSingle = (props: { address?: BibleTranslationSingleAddress }) => {
@@ -15,5 +15,5 @@ const Propped = (props: { address: BibleTranslationSingleAddress }) => {
 };
 
 const Current = () => {
-  return <>{useBibleSimpleAddressText(useBibleAddressBooki(), useBibleAddressChapteri(), useBibleAddressVersei())}</>;
+  return <>{useBibleSimpleAddressText(useBibleCurrentBooki(), useBibleCurrentChapteri(), useBibleCurrentVersei())}</>;
 };

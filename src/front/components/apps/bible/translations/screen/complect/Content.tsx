@@ -1,9 +1,9 @@
 import styled from 'styled-components';
-import { useBibleTextContentContext } from '../../../texts/AddressContentContext';
 import { verseTranslateTitleCssClassName, verseTranslateTitleCssVariableName } from '../../complect';
 import { useBibleScreenTranslationFontSizeScreenAdapter } from '../../hooks/font-size-adapter/screen-adapter';
 import { useGetBibleScreenTranslationScreenStyle } from '../../hooks/styles/screen-style';
 import { BibleTranslationScreenConfig } from '../../model';
+import { useBibleTextContentContext } from '../../ui/AddressContentContext';
 import './Content.scss';
 
 interface Props {

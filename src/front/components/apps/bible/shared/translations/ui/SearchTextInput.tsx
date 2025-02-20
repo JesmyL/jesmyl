@@ -1,14 +1,14 @@
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { bibleIDB } from '@bible/_db/bibleIDB';
+import { useSetBibleAddressIndexes } from '@bible/shared/translations/hooks/address';
+import { useBibleTranslationSlideSyncContentSetter } from '@bible/shared/translations/hooks/slide-sync';
+import { BibleSearchPanelInput } from '@bible/shared/translations/ui/Input';
 import { useEffect } from 'react';
-import { addEventListenerPipe, hookEffectPipe } from '../../../../../../shared/lib/hookEffectPipe';
-import { bibleIDB } from '../../../_db/bibleIDB';
-import { useSetBibleAddressIndexes } from '../../../hooks/address/address';
-import { useBibleTranslationSlideSyncContentSetter } from '../../../hooks/slide-sync';
 import {
   useBibleTranslationSearchResultList,
   useBibleTranslationSearchResultSelectedSet,
   useBibleTranslationSearchResultSelectedValue,
 } from '../hooks/results';
-import { BibleSearchPanelInput } from './Input';
 
 interface Props {
   inputRef: React.RefObject<HTMLInputElement>;

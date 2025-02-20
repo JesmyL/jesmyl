@@ -1,7 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { bibleIDB } from 'front/components/apps/bible/_db/bibleIDB';
 import { useCallback } from 'react';
-import { BibleTranslationAddress } from '../../../../model';
+import { BibleTranslationAddress } from '../../../../../../components/apps/bible/model';
 
 export const useBibleTranslationPlan = () => bibleIDB.useValue.translationPlan();
 

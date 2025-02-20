@@ -1,29 +1,29 @@
 import { useCallback } from 'react';
-import { bibleIDB } from '../../_db/bibleIDB';
-import { BibleVersei } from '../../model';
-import { useBibleTranslatesContext } from '../../translates/TranslatesContext';
-import { useBibleShowTranslatesValue } from '../../translates/hooks';
-import { useBibleVersei } from '../../translations/lists/atoms';
-import { useBibleTranslationSlideSyncContentSetter } from '../slide-sync';
+import { bibleIDB } from '../../../_db/bibleIDB';
+import { BibleVersei } from '../../../model';
+import { useBibleTranslatesContext } from '../../../translates/TranslatesContext';
+import { useBibleShowTranslatesValue } from '../../../translates/hooks';
+import { useBibleVersei } from '../atoms';
 import { useBibleTranslationJoinAddress } from './address';
-import { useBibleAddressBooki } from './books';
-import { useBibleAddressChapteri } from './chapters';
+import { useBibleCurrentBooki } from './books';
+import { useBibleCurrentChapteri } from './chapters';
+import { useBibleTranslationSlideSyncContentSetter } from './slide-sync';
 
 const useBibleAddressCurrentVersei = () => useBibleVersei()[0];
 
 export const useBibleAddressIsCurrentVersei = (versei: BibleVersei) => {
   const joinAddress = useBibleTranslationJoinAddress();
-  const currentBooki = useBibleAddressBooki();
-  const currentChapteri = useBibleAddressChapteri();
-  const currentVersei = useBibleAddressVersei();
+  const currentBooki = useBibleCurrentBooki();
+  const currentChapteri = useBibleCurrentChapteri();
+  const currentVersei = useBibleCurrentVersei();
   return joinAddress === null
     ? currentVersei === versei
     : joinAddress?.[currentBooki]?.[currentChapteri].includes(versei) ?? false;
 };
 
-export const useBibleAddressVersei = (): BibleVersei => {
-  const currentChapteri = useBibleAddressChapteri();
-  const currentBooki = useBibleAddressBooki();
+export const useBibleCurrentVersei = (): BibleVersei => {
+  const currentChapteri = useBibleCurrentChapteri();
+  const currentBooki = useBibleCurrentBooki();
   const currentVersei = useBibleAddressCurrentVersei();
   const showTranslates = useBibleShowTranslatesValue();
   const chapter = useBibleTranslatesContext()[showTranslates[0]]?.chapters?.[currentBooki]?.[currentChapteri];
@@ -36,8 +36,8 @@ export const useBibleAddressVersei = (): BibleVersei => {
 };
 
 export const usePutBibleAddressVerseiSetter = () => {
-  const currentChapteri = useBibleAddressChapteri();
-  const currentBooki = useBibleAddressBooki();
+  const currentChapteri = useBibleCurrentChapteri();
+  const currentBooki = useBibleCurrentBooki();
   const currentJoinAddress = useBibleTranslationJoinAddress();
   const syncSlide = useBibleTranslationSlideSyncContentSetter();
 

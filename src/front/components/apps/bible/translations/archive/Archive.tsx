@@ -1,9 +1,9 @@
 import { mylib } from '#shared/lib/my-lib';
 import { IconButton } from '#shared/ui/icon';
+import { bibleIDB } from '@bible/_db/bibleIDB';
+import { BibleTranslationAddress } from '@bible/model';
+import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '@bible/shared/translations/hooks/address';
 import { memo } from 'react';
-import { bibleIDB } from '../../_db/bibleIDB';
-import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '../../hooks/address/address';
-import { BibleTranslationAddress } from '../../model';
 import { BibleTranslationArchiveJoinedAddressText } from './JoinedAddress';
 import { BibleTranslationArchiveJoinedContentText } from './JoinedContentText';
 import { BibleTranslationArchiveSingleAddressText } from './SingleAddressText';
