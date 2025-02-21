@@ -1,5 +1,6 @@
 import { InvocatorClientEvent, InvocatorServerEvent } from 'shared/api';
 import { Eventer, makeRegExp } from 'shared/utils';
+import { jversion } from 'shared/values';
 import { authIDB } from './components/index/db/auth-idb';
 import { indexIDB } from './components/index/db/index-idb';
 import { environment } from './environments';
@@ -43,7 +44,7 @@ export class SokiTrip {
         token: await authIDB.get.token(),
         visit: {
           deviceId: await indexIDB.get.deviceId(),
-          version: await indexIDB.get.appVersion(),
+          version: jversion.num,
           urls: this.urls.length ? this.urls : [this.getCurrentUrl()],
           clientTm: Date.now(),
           location,
