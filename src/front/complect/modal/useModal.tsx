@@ -1,7 +1,8 @@
-import { ReactNode, TouchEventHandler, useCallback, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { ThrowEvent } from '../eventer/ThrowEvent';
 import Portal from '../popups/[complect]/Portal';
 import { useActualRef } from '../useActualRef';
+import { propagationStopper } from '../utils/utils';
 import {
   StyledModal,
   StyledModalBody,
@@ -17,8 +18,6 @@ interface UserModalConfig {
   mood?: ModalConfigMood;
   onOpenSwitch?: () => void;
 }
-
-const stoppedEvent: TouchEventHandler<HTMLDivElement> = event => event.stopPropagation();
 
 export interface ScreenModalConfig extends UserModalConfig {}
 
@@ -67,7 +66,7 @@ export default function useModal(
     (isForceOpen || config.isOpen) && (
       <Portal>
         <StyledModal
-          onTouchStart={stoppedEvent}
+          onTouchStart={propagationStopper}
           className={'type_screen' + (isForceOpen === false ? ' force-hidden' : '')}
           onClick={event => {
             event.stopPropagation();
@@ -77,7 +76,7 @@ export default function useModal(
           <StyledModalScreenWrapper className="type_screen">
             <StyledModalScreen
               className={'type_screen mood mood_' + config.mood}
-              onClick={event => event.stopPropagation()}
+              onClick={propagationStopper}
             >
               {config.content === undefined ? topContent?.(modalElements, close) : config.content(modalElements, close)}
             </StyledModalScreen>

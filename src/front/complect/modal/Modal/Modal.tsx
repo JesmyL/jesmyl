@@ -1,3 +1,4 @@
+import { propagationStopper } from 'front/complect/utils/utils';
 import { useEffect } from 'react';
 import { ThrowEvent } from '../../eventer/ThrowEvent';
 import Portal from '../../popups/[complect]/Portal';
@@ -29,7 +30,7 @@ export default function Modal({ mood, children, onClose }: Props) {
         <StyledModalScreenWrapper className="type_screen">
           <StyledModalScreen
             className={'type_screen mood mood_' + mood}
-            onClick={event => event.stopPropagation()}
+            onClick={propagationStopper}
           >
             {children}
           </StyledModalScreen>

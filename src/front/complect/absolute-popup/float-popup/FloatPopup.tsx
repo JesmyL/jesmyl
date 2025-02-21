@@ -1,3 +1,4 @@
+import { propagationStopper } from 'front/complect/utils/utils';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { ThrowEvent } from '../../eventer/ThrowEvent';
@@ -46,7 +47,7 @@ export function FloatPopup<Additions>({
             onClick={() => onClose(null)}
           >
             <StyledContent
-              onClick={event => event.stopPropagation()}
+              onClick={propagationStopper}
               ref={contentRef}
             >
               {children}

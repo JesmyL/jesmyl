@@ -1,5 +1,6 @@
 import { FullContent } from 'front/complect/fullscreen-content/FullContent';
 import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { defaultPreventer } from 'front/complect/utils/utils';
 import { indexIDB } from 'front/components/index/db/index-idb';
 import { useEffect, useRef, useState } from 'react';
 import { IScheduleWidgetUser } from 'shared/api';
@@ -119,7 +120,7 @@ function Camera({ close, user }: Props & { close: () => void }) {
           <StyledVideoWrapper ref={videoWrapperRef}>
             <StyledVideo
               ref={videoRef}
-              onPlay={event => event.preventDefault()}
+              onPlay={defaultPreventer}
             />
           </StyledVideoWrapper>
         </div>

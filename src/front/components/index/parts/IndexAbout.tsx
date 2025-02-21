@@ -1,4 +1,5 @@
 import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { propagationStopper } from 'front/complect/utils/utils';
 import { jversion } from 'shared/values';
 import QRCode from '../../../complect/qr-code/QRCode';
 import { useIndexValues } from '../atoms';
@@ -12,12 +13,12 @@ export default function IndexAbout() {
     <div className="flex center">
       <div
         className="flex custom-align-items column"
-        onClick={event => event.stopPropagation()}
+        onClick={propagationStopper}
       >
         {values.chatUrl && (
           <div className="padding-giant-gap">
             <QRCode text={values.chatUrl} />
-            <div className="flex center">
+            <div className="flex center flex-gap">
               <LazyIcon icon="Telegram" />
               <a href={values.chatUrl}>@jesmyl space</a>
             </div>
@@ -25,7 +26,7 @@ export default function IndexAbout() {
         )}
         <div className="padding-giant-gap">
           <QRCode text="https://t.me/danikpon" />
-          <div className="flex center">
+          <div className="flex center flex-gap">
             <LazyIcon icon="Telegram" />
             <a href="https://t.me/danikpon">дизайн (3</a>
           </div>
