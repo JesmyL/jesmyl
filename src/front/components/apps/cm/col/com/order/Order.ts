@@ -498,7 +498,9 @@ export class Order extends SourceBased<IExportableOrder> {
             })
             .join(' ');
 
-          const counts = poss[linei]?.[-1]?.concat(poss[linei]?.[-2] ?? emptyArray) ?? emptyArray;
+          const counts = ((poss[linei] ?? emptyArray)[-1] ?? emptyArray).concat(
+            (poss[linei] ?? emptyArray)[-2] ?? emptyArray,
+          );
 
           return counts.length > 0
             ? counts.reduce(
