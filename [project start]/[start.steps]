@@ -26,9 +26,6 @@ npm i core-js
 npm i --save-dev @types/ws
 npm i -D tslib @types/node
 
-chmod +x /var/www/jesmyl.ru/static/js/
-
-
 # open port 
 iptables -I INPUT -p tcp -m tcp --dport 4446 -j ACCEPT
 netstat -na | grep :4446
