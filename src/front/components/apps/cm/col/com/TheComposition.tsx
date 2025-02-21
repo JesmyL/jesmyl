@@ -1,28 +1,28 @@
+import { BottomPopup } from 'front/complect/absolute-popup/bottom-popup/BottomPopup';
+import { useAtom, useAtomValue } from 'front/complect/atoms';
+import { FullContent } from 'front/complect/fullscreen-content/FullContent';
 import { hookEffectPipe, setTimeoutPipe } from 'front/complect/hookEffectPipe';
-import { useEffect, useRef, useState } from 'react';
-import styled, { css } from 'styled-components';
-import { BottomPopup } from '../../../../../complect/absolute-popup/bottom-popup/BottomPopup';
-import { useAtom, useAtomValue } from '../../../../../complect/atoms';
-import { FullContent } from '../../../../../complect/fullscreen-content/FullContent';
-import { Metronome } from '../../../../../complect/metronome/Metronome';
+import { Metronome } from 'front/complect/metronome/Metronome';
 import PhaseContainerConfigurer, {
   StyledPhaseContainerConfigurerHead,
   StyledPhaseContainerConfigurerHeadTitle,
-} from '../../../../../complect/phase-container/PhaseContainerConfigurer';
-import { DocTitle } from '../../../../../complect/tags/DocTitle';
-import BibleTranslatesContextProvider from '../../../bible/translates/TranslatesContext';
+} from 'front/complect/phase-container/PhaseContainerConfigurer';
+import { DocTitle } from 'front/complect/tags/DocTitle';
+import BibleTranslatesContextProvider from 'front/components/apps/bible/translates/TranslatesContext';
+import { useEffect, useRef, useState } from 'react';
+import styled, { css } from 'styled-components';
 import { cmIDB } from '../../_db/cm-idb';
 import { cmIsShowCatBindsInCompositionAtom, isOpenChordImagesAtom } from '../../atoms';
-import { useCmTranslationComListContext as useCmComListContext } from '../../base/translations/context';
+import { useCmTranslationComListContext } from '../../base/translations/context';
 import { useChordVisibleVariant } from '../../base/useChordVisibleVariant';
 import useLaterComList from '../../base/useLaterComList';
-import './Com.scss';
-import { ComNotFoundPage } from './ComNotFoundPage';
-import TheControlledCom from './TheControlledCom';
+import { cmComClientInvocatorMethods } from '../../editor/cm-editor-invocator.methods';
 import ChordImagesList from './chord-card/ChordImagesList';
-import { CmComNumber } from './complect/ComNumber';
+import { ComNotFoundPage } from './ComNotFoundPage';
 import { useCheckIsComCommentIncludesBibleAddress } from './complect/comment-parser/useCheckIsComCommentIncludesBibleAddress';
+import { CmComNumber } from './complect/ComNumber';
 import ComPlayer from './player/ComPlayer';
+import TheControlledCom from './TheControlledCom';
 import { ComTools } from './tools/ComTools';
 import { useMigratableTopComTools } from './tools/useMigratableComTools';
 import { useFixedCcom, useTakeActualComw } from './useCcom';
@@ -34,7 +34,7 @@ export default function TheComposition() {
   const { addLaterComw, laterComws } = useLaterComList();
   const [isOpenTools, setIsOpenTools] = useState(false);
   const comToolsNode = useMigratableTopComTools();
-  const { list } = useCmComListContext();
+  const { list } = useCmTranslationComListContext();
   const playerHideMode = cmIDB.useValue.playerHideMode();
   const isMetronomeHide = cmIDB.useValue.metronome().isHide;
 
@@ -44,8 +44,13 @@ export default function TheComposition() {
   useTakeActualComw();
 
   useEffect(() => {
+    if (ccom?.wid == null) return;
+
     return hookEffectPipe()
-      .pipe(setTimeoutPipe(() => addLaterComw(ccom?.wid ?? 0), 3000))
+      .pipe(
+        setTimeoutPipe(() => addLaterComw(ccom.wid), 3000),
+        setTimeoutPipe(() => cmComClientInvocatorMethods.printComwVisit(null, ccom.wid), 77_777),
+      )
       .effect();
   }, [addLaterComw, ccom?.wid]);
 

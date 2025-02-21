@@ -19,8 +19,8 @@ export const makeSokiInvocatorBase = <
     [K in keyof M]: (tool: ToolParam) => (...args: Parameters<M[K]>) => Promise<ReturnType<M[K]>>;
   };
 
-  const registeredInvocators: Record<string, Invocator<any>> = {};
-  const registeredOnEachInvocations: Record<string, OnEachOnvocations<any>> = {};
+  const registeredInvocators: PRecord<string, Invocator<any>> = {};
+  const registeredOnEachInvocations: PRecord<string, OnEachOnvocations<any> | null> = {};
 
   eventerValue.listen(async ({ invoke: { name, method, params }, sendResponse, tool, requestId }) => {
     try {
@@ -31,8 +31,8 @@ export const makeSokiInvocatorBase = <
 
       if (
         onEachInvoke !== undefined &&
-        registeredOnEachInvocations[name] !== undefined &&
-        registeredOnEachInvocations[name][method] !== undefined
+        registeredOnEachInvocations[name] != null &&
+        registeredOnEachInvocations[name][method] != null
       ) {
         const retValue = registeredOnEachInvocations[name][method](invokedResult, ...params);
         onEachInvoke(retValue, { tool, method, name });
@@ -48,7 +48,7 @@ export const makeSokiInvocatorBase = <
   type ClassName = `${string}${string}${typeof classNamePostfix}`;
 
   type OnEachOnvocations<M extends Methods> = {
-    [K in keyof M]: (value: ReturnType<M[K]>, ...args: Parameters<M[K]>) => OnEachesRet;
+    [K in keyof M]: ((value: ReturnType<M[K]>, ...args: Parameters<M[K]>) => OnEachesRet) | null;
   };
 
   type SokiInvocator = new <M extends Methods>(

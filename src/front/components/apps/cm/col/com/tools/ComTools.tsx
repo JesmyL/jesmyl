@@ -1,10 +1,14 @@
 import { useLiveQuery } from 'dexie-react-hooks';
+import { BottomPopupItem } from 'front/complect/absolute-popup/bottom-popup/BottomPopupItem';
+import IconButton from 'front/complect/the-icon/IconButton';
+import { TheIconLoading } from 'front/complect/the-icon/IconLoading';
 import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { BottomPopupItem } from '../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
-import IconButton from '../../../../../../complect/the-icon/IconButton';
-import { ChordVisibleVariant } from '../../../Cm.model';
+import { mylib } from 'front/utils';
+import { useEffect, useState } from 'react';
 import { cmIDB } from '../../../_db/cm-idb';
 import { useChordVisibleVariant } from '../../../base/useChordVisibleVariant';
+import { ChordVisibleVariant } from '../../../Cm.model';
+import { cmComClientInvocatorMethods } from '../../../editor/cm-editor-invocator.methods';
 import { useFixedCcom } from '../useCcom';
 import { CmComCatMentions } from '../useGetCatMentions';
 import { useMigratableListComTools } from './useMigratableComTools';
@@ -15,6 +19,16 @@ export const ComTools = () => {
   const [chordVisibleVariant] = useChordVisibleVariant();
   const comToolsNode = useMigratableListComTools();
   const ifixedCom = useLiveQuery(() => ccom && cmIDB.tb.fixedComs.get(ccom.wid), [ccom?.wid]);
+  const [visitsCount, setVisitsCount] = useState<null | number>(null);
+
+  useEffect(() => {
+    if (ccom?.wid == null) return;
+
+    (async () => {
+      const visitsCount = await cmComClientInvocatorMethods.takeComwVisitsCount(null, ccom.wid);
+      setVisitsCount(visitsCount);
+    })();
+  }, [ccom?.wid]);
 
   if (!ccom) return null;
 
@@ -102,6 +116,14 @@ export const ComTools = () => {
         <CmComCatMentions com={ccom} />
       </div>
 
+      <div className="full-width fade-05 flex center flex-gap font-size:0.7em margin-gap-v">
+        Просмотрели
+        {visitsCount === null ? (
+          <TheIconLoading />
+        ) : (
+          ` ${visitsCount} ${mylib.declension(visitsCount, 'раз', 'раза', 'раз')}`
+        )}
+      </div>
       <div className="full-width fade-05 flex center font-size:0.7em margin-gap-v">
         Добавлено: {new Date(ccom.wid).toLocaleString('ru')}
       </div>

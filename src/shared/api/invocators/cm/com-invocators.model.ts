@@ -25,4 +25,7 @@ export type CmComSokiInvocatorModel = {
 
   remove: (comw: CmComWid) => IExportableCom;
   bringBackToLife: (comw: CmComWid) => IExportableCom;
+
+  printComwVisit: (comw: CmComWid) => void;
+  takeComwVisitsCount: (comw: CmComWid) => number;
 };

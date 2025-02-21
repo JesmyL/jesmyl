@@ -2,7 +2,6 @@ import { cmIDB } from '../_db/cm-idb';
 
 const maxStack = 4;
 const addLaterComw = (comw: number) => {
-  if (comw === 0) return;
   cmIDB.set.laterComwList(prev => {
     const set = new Set(prev.toReversed());
 

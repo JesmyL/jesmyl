@@ -1,10 +1,13 @@
+import { FileStore } from 'back/complect/FileStore';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
-import { CmComWid, IExportableCom } from 'shared/api';
+import { CmComWid, CmComWidStr, IExportableCom } from 'shared/api';
 import { CmComSokiInvocatorModel } from 'shared/api/invocators/cm/com-invocators.model';
 import { smylib } from 'shared/utils';
 import { cmComLanguages } from 'shared/values/values';
 import { comsFileStore } from './fresh-invocator.base';
 import { cmServerInvocatorShareMethods } from './invocator.shares';
+
+const comwVisitsFileStore = new FileStore<PRecord<CmComWidStr, number>>('/apps/cm/comwVisits.json', {});
 
 class CmComSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmComSokiInvocatorModel> {
   constructor() {
@@ -42,6 +45,13 @@ class CmComSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmComSokiInvo
 
         remove: () => comw => modifyInvocableCom(comw, com => (com.isRemoved = 1)),
         bringBackToLife: () => comw => modifyInvocableCom(comw, com => delete com.isRemoved),
+
+        printComwVisit: () => async comw => {
+          const marks = comwVisitsFileStore.getValueWithAutoSave();
+          marks[comw] ??= 0;
+          marks[comw]++;
+        },
+        takeComwVisitsCount: () => async comw => comwVisitsFileStore.getValue()[comw] ?? 0,
       },
 
       {
@@ -91,6 +101,9 @@ class CmComSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmComSokiInvo
 
         remove: com => `Песня ${getCmComNameInBrackets(com)} удалена`,
         bringBackToLife: com => `Удалённая песня ${getCmComNameInBrackets(com)} возвращена`,
+
+        printComwVisit: null,
+        takeComwVisitsCount: null,
       },
     );
   }
