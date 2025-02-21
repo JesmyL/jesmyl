@@ -3,6 +3,17 @@ import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
 import { useEffect, useState } from 'react';
 
 export default function useConnectionState(className?: string) {
+  return (
+    useIsOnline() || (
+      <LazyIcon
+        icon="Alert01"
+        className={'color--ko ' + className}
+      />
+    )
+  );
+}
+
+export const useIsOnline = () => {
   const [isOnline, setIsOnline] = useState(true);
 
   useEffect(
@@ -16,12 +27,5 @@ export default function useConnectionState(className?: string) {
     [],
   );
 
-  return (
-    isOnline || (
-      <LazyIcon
-        icon="Alert01"
-        className={'color--ko ' + className}
-      />
-    )
-  );
-}
+  return isOnline;
+};

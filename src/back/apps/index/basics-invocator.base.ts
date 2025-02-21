@@ -1,5 +1,6 @@
 import { makeTwiceKnownName } from 'back/complect/makeTwiceKnownName';
 import { tokenSecretFileStore } from 'back/complect/soki/SokiServer';
+import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { supportTelegramAuthorizations } from 'back/sides/telegram-bot/prod/authorize';
 import { prodTelegramBot } from 'back/sides/telegram-bot/prod/prod-bot';
 import { supportTelegramBot } from 'back/sides/telegram-bot/support/support-bot';
@@ -52,14 +53,17 @@ const makeAuthFromUser = async (user: OmitOwn<TelegramBot.User, 'is_bot'>) => {
 
 appVersionFileStore.watchFile((value, state) => {
   indexServerInvocatorShareMethods.appVersion(null, value.num, state.mtimeMs);
+  tglogger.log(`Version upgrade: ${value.num}`);
 
-  setTimeout(
-    () =>
-      exec('npm run x')
-        .stdout?.on('data', () => console.log('Complete process: npm run x'))
-        .on('error', console.error),
-    1000,
-  );
+  const command = 'chmod +x /var/www/jesmyl.ru/assets/';
+
+  setTimeout(() => {
+    tglogger.log(`${command} start`);
+
+    exec(command, (error, stdout, stderr) => {
+      tglogger[error ? 'error' : 'log'](`${command}\n\n${JSON.stringify({ error, stdout, stderr }, null, ' ')}`);
+    });
+  }, 500);
 });
 
 valuesFileStore.watchFile((value, state) => {

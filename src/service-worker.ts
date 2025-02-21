@@ -25,3 +25,7 @@ registerRoute(
     !props.url.pathname.endsWith('.jpg'),
   new NetworkFirst(),
 );
+
+self.addEventListener('message', messageEvent => {
+  if (messageEvent.data === 'SKIP_WAITING') return self.skipWaiting();
+});

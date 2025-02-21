@@ -6,6 +6,6 @@
     "relog-s": "fuser -k 3359/tcp & node /var/www/sub/back.index.js",
     "re-start-s": "systemctl restart jsub",
     "re-status-s": "systemctl status jsub",
-    "x": "chmod +x /var/www/jesmyl.ru/static/js/"
+    "x": "chmod +x /var/www/jesmyl.ru/assets/"
   }
 }

@@ -15,8 +15,12 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "paths": {},
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "paths": {
+      "shared/*": ["./shared/*"],
+      "front/*": ["./front/*"],
+      "bibles/*": ["./bibles/*"]
+    }
   },
   "include": ["src", "src/shared/utils/complect", "./node_modules/cypress", "cypress/**/*.ts"],
   "exclude": ["./src/front/complect/the-icon/icons"]

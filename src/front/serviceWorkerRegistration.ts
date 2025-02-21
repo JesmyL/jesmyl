@@ -11,7 +11,8 @@
 // opt-in, read https://cra.link/PWA
 
 let swRegistration: ServiceWorkerRegistration | null = null;
-export const checkIsThereNewSW = (cb: (reg: ServiceWorkerRegistration) => any) => swRegistration && cb(swRegistration);
+export const checkIsThereNewSW = (cb: (reg: ServiceWorkerRegistration) => any, elseCb: () => void) =>
+  swRegistration ? cb(swRegistration) : elseCb();
 
 const isLocalhost = Boolean(
   window.location.hostname === 'localhost' ||

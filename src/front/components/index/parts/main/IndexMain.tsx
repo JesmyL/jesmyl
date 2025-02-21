@@ -1,7 +1,9 @@
+import { TheIconLoading } from 'front/complect/the-icon/IconLoading';
 import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import React, { Suspense, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { itNNull } from 'shared/utils';
+import { jversion } from 'shared/values';
 import { appNames } from '../../../../app/App.model';
 import { routingApps } from '../../../../app/routing-apps';
 import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
@@ -12,7 +14,8 @@ import ScheduleWidgetAlarm from '../../../../complect/schedule-widget/alarm/Alar
 import { scheduleWidgetListPageRoute } from '../../../../complect/schedule-widget/general/ListPageRoute';
 import { checkIsThereNewSW } from '../../../../serviceWorkerRegistration';
 import { useAuth, useCurrentApp } from '../../atoms';
-import useConnectionState from '../../useConnectionState';
+import { indexIDB } from '../../db/index-idb';
+import useConnectionState, { useIsOnline } from '../../useConnectionState';
 import IndexActions from '../actions/Actions';
 import IndexAbout from '../IndexAbout';
 import { IndexTelegramInlineAuthButton } from '../login/IndexTelegramInlineAuthButton';
@@ -24,11 +27,21 @@ const IndexAuthorization = React.lazy(() => import('../login/IndexAuthorization'
 
 export default function IndexMain() {
   const currentAppName = useCurrentApp();
-
+  const newVersion = indexIDB.useValue.appVersion();
+  const [cacheNames, setCacheNames] = useState<string[]>([]);
   const [isAboutOpen, setIsAboutOpen] = useState<unknown>(false);
+  const [isRefreshProcess, setIsRefreshProcess] = useState(false);
+  const isOnline = useIsOnline();
+
+  useEffect(() => {
+    (async () => {
+      const cacheNames = await caches.keys();
+      setCacheNames(cacheNames);
+    })();
+  }, []);
 
   const auth = useAuth();
-  const connectionNode = useConnectionState();
+  const connectionStateNode = useConnectionState();
   const appList = appNames
     .map(appName => {
       const config = routingApps[appName];
@@ -57,7 +70,7 @@ export default function IndexMain() {
               headTitle={(currentAppName && routingApps[currentAppName]?.title) || 'Другое'}
               head={
                 <div className="flex flex-gap">
-                  {connectionNode}
+                  {connectionStateNode}
 
                   <div className="margin-gap-h pointer flex flex-gap">
                     {auth.login && <IndexProfileInfo auth={auth} />}
@@ -83,20 +96,42 @@ export default function IndexMain() {
                     iconNode={<LazyIcon icon="InformationCircle" />}
                     title="О приложении"
                     onClick={setIsAboutOpen}
-                  />
-                  {checkIsThereNewSW(reg => (
-                    <BrutalItem
-                      iconNode={<LazyIcon icon="Refresh" />}
-                      title="Обновить"
-                      onClick={() => {
-                        navigator.serviceWorker.addEventListener('controllerchange', () => {
-                          window.location.reload();
-                        });
+                    box={
+                      isOnline ? (
+                        isRefreshProcess ? (
+                          <TheIconLoading />
+                        ) : (
+                          !cacheNames.length ||
+                          newVersion === jversion.num || (
+                            <LazyIcon
+                              icon="Refresh"
+                              onClick={event => {
+                                event.stopPropagation();
+                                setIsRefreshProcess(true);
 
-                        reg?.waiting?.postMessage({ type: 'SKIP_WAITING' });
-                      }}
-                    />
-                  ))}
+                                const clearCache = async () => {
+                                  try {
+                                    await Promise.all(cacheNames.map(cacheName => caches.delete(cacheName)));
+                                    window.location.reload();
+                                  } catch (error) {}
+
+                                  setIsRefreshProcess(false);
+                                };
+
+                                checkIsThereNewSW(reg => {
+                                  reg?.waiting?.postMessage({ type: 'SKIP_WAITING' });
+                                  setTimeout(clearCache, 1000);
+                                }, clearCache);
+                              }}
+                            />
+                          )
+                        )
+                      ) : (
+                        connectionStateNode
+                      )
+                    }
+                  />
+
                   {!appList.length || (
                     <BrutalScreen>
                       <div className="title">Другие программы</div>
