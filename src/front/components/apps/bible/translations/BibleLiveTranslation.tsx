@@ -1,10 +1,7 @@
-import {
-  BibleTranslationScreenTextsContext,
-  useBibleAddressTextContext,
-  useBibleTextContentContext,
-} from '@bible/texts/AddressContentContext';
+import { BibleTranslationScreenTextsContext } from '@bible/texts/AddressContentContext';
+import { useBibleAddressTextContext, useBibleTextContentContext } from '@bible/texts/lib/contexts';
 import { IndexSchWTranslationLiveDataValue } from '@index/Index.model';
-import { useEffect } from 'react';
+import { JSX, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useBibleScreenTranslationConfigs } from './hooks/configs';
 

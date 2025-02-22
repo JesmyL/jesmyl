@@ -1,5 +1,5 @@
-import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
+import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { cmComOrderClientInvocatorMethods } from '@cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
 import { EditableCom } from '../../../com/EditableCom';

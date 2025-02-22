@@ -4,7 +4,7 @@ import { useScheduleScopePropsContext } from '#widgets/schedule/complect/scope-c
 import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import { ScheduleWidgetTeamGame } from './game/Game';
-import { SchWGameContext } from './Games';
+import { ScheduleGameContext } from './lib/contexts';
 
 export function ScheduleWidgetTeamGameList() {
   const rights = useScheduleWidgetRightsContext();
@@ -33,12 +33,12 @@ export function ScheduleWidgetTeamGameList() {
         <>
           {rights.schedule.games?.list.map(game => {
             return (
-              <SchWGameContext.Provider
+              <ScheduleGameContext.Provider
                 key={game.mi}
                 value={game}
               >
                 <ScheduleWidgetTeamGame />
-              </SchWGameContext.Provider>
+              </ScheduleGameContext.Provider>
             );
           })}
         </>

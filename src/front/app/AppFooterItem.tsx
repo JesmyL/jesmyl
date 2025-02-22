@@ -1,8 +1,11 @@
-import { contextCreator } from '#shared/lib/contextCreator';
+import {
+  footerItemPlaceLsPrefix,
+  useCurrentAppFooterItemAppNameContext,
+  useCurrentAppFooterItemPlaceContext,
+} from '#basis/lib/App.contexts';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { AppName } from '../basis/model/App.model';
 
 interface Props {
   to: string;
@@ -13,14 +16,6 @@ interface Props {
   className?: string;
   children?: React.ReactNode;
 }
-
-const [CurrentAppFooterItemPlaceContext, useCurrentAppFooterItemPlaceContext] = contextCreator<string | und>(undefined);
-const [CurrentAppFooterItemAppNameContext, useCurrentAppFooterItemAppNameContext] = contextCreator<AppName | und>(
-  undefined,
-);
-const footerItemPlaceLsPrefix = 'nav-link:';
-
-export { CurrentAppFooterItemAppNameContext, CurrentAppFooterItemPlaceContext, footerItemPlaceLsPrefix };
 
 export function AppFooterItem({ to, icon, title, search, className, children, idPostfix: id }: Props) {
   const appName = useCurrentAppFooterItemAppNameContext();

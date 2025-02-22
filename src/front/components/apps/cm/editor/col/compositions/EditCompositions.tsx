@@ -1,17 +1,17 @@
-import { useAtom } from '#shared/lib/atoms';
+import { atom, useAtom, useAtomValue } from '#shared/lib/atoms';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { BottomPopup } from '#shared/ui/absolute-popup/bottom-popup/BottomPopup';
-import { useIsNumberSearch } from '#shared/ui/DebouncedSearchInput';
 import { StyledPhaseContainerConfigurerHead } from '#shared/ui/phase-container/PhaseContainerConfigurer';
+import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { Cat } from '@cm/col/cat/Cat';
 import { CatSpecialSearches } from '@cm/col/cat/Cat.complect';
 import { TheCatSpecialSearches } from '@cm/col/cat/SpecialSearches';
 import { Com } from '@cm/col/com/Com';
 import { ComFaceList } from '@cm/col/com/face/list/ComFaceList';
 import { useComs } from '@cm/cols/useCols';
-import { categoryTermAtom, CmComListSearchFilterInput } from '@cm/complect/ComListSearchFilterInput';
 import { editCompositionNavs } from '@cm/editor/editorNav';
 import { PhaseCmEditorContainer } from '@cm/editor/phase-editor-container/PhaseCmEditorContainer';
+import { CmComListSearchFilterInput } from '@cm/shared/ComListSearchFilterInput';
+import { categoryTermAtom } from '@cm/shared/ComListSearchFilterInput/lib';
 import { useEffect, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
@@ -20,11 +20,12 @@ import { EditCompositionsMore } from './complect/EditCompositionsMore';
 import { EditComposition } from './EditComposition';
 
 const mapExtractItem = <Item,>({ item }: { item: Item }): Item => item;
+const isNumberSearchAtom = atom(false);
 
 export function EditCompositions() {
   const coms = useComs();
   const [isOpenMorePopup, setIsOpenMorePopup] = useState(false);
-  const isNumberSearch = useIsNumberSearch();
+  const isNumberSearch = useAtomValue(isNumberSearchAtom);
   const listRef = useRef<HTMLDivElement>(null);
   const [searchedComs, setSearchedComs] = useState<Com[]>([]);
   const [mapper, setMapper] = useState<CatSpecialSearches['map'] | null>(null);
@@ -82,6 +83,7 @@ export function EditCompositions() {
                     if (listRef.current) listRef.current.scrollTop = 0;
                   }}
                   onSearch={setSearchedComs}
+                  isNumberSearchAtom={isNumberSearchAtom}
                 />
               }
               onMoreClick={setIsOpenMorePopup}

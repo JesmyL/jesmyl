@@ -5,7 +5,7 @@ import './Tuner.scss';
 import './TunerStyle.scss';
 
 let tunerContainer: HTMLDivElement | und;
-let tunerApplication: any;
+let tunerApplication: (TunerApplication & { frequencyData?: Uint8Array }) | und;
 const effect = () => () => (tunerContainer = undefined);
 
 export function TheTuner() {
@@ -34,8 +34,9 @@ export function TheTuner() {
             className="start-button"
             onClick={() => {
               setStarted(true);
+              if (tunerApplication == null) return;
               tunerApplication.tuner.init();
-              tunerApplication.frequencyData = new Uint8Array(tunerApplication.tuner.analyser.frequencyBinCount);
+              tunerApplication.frequencyData = new Uint8Array(tunerApplication.tuner.analyser?.frequencyBinCount ?? 0);
             }}
           >
             Start

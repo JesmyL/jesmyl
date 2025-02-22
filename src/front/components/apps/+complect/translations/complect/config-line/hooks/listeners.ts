@@ -81,5 +81,14 @@ export const useScreenTranslationFaceLineListeners = (
       .filter(itNNull);
 
     return () => listeners.forEach(invokeEach);
-  }, [configs, currentConfigiRef, isInitialSlideShowSet, setCurrentConfigi, switchIsVisible, updateConfig, windows]);
+  }, [
+    configs,
+    currentConfigiRef,
+    isInitialSlideShowSet,
+    setCurrentConfigi,
+    setIsShowTranslatedText,
+    switchIsVisible,
+    updateConfig,
+    windows,
+  ]);
 };

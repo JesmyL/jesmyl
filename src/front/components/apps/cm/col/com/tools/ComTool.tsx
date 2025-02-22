@@ -1,14 +1,8 @@
-import { contextCreator } from '#shared/lib/contextCreator';
-import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
+import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
-
-export const [IsComToolIconItemsContext, useIsComToolIconItemsContext] = contextCreator(false);
-export const [ComToolNameContext, useComToolNameContext] = contextCreator('');
-export const [ComToolItemAttrsContext, useComToolItemAttrsContext] = contextCreator<{
-  onIconClick?: PreventerAndStopperCallback;
-}>({});
+import { useComToolItemAttrsContext, useComToolNameContext, useIsComToolIconItemsContext } from './lib/contexts';
 
 type Props = Parameters<typeof BottomPopupItem>[0];
 

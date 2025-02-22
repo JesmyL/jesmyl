@@ -1,4 +1,4 @@
-import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
+import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmComOrderClientInvocatorMethods } from '@cm/editor/cm-editor-invocator.methods';
 import { OrdersRedactorOrderToolsProps } from '../OrdersRedactorOrderTools';

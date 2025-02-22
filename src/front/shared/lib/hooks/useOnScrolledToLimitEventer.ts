@@ -2,7 +2,7 @@ import { RefObject, useEffect, useMemo } from 'react';
 import { Eventer } from 'shared/utils';
 import { addEventListenerPipe, hookEffectPipe } from '../hookEffectPipe';
 
-export const useOnScrolledToLimitEventer = (listRef: RefObject<HTMLDivElement>) => {
+export const useOnScrolledToLimitEventer = (listRef: RefObject<HTMLDivElement | null>) => {
   const eventerScope = useMemo(() => Eventer.createValue<'start' | 'end'>(), []);
 
   useEffect(() => {

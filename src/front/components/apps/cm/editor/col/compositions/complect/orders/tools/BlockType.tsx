@@ -1,7 +1,7 @@
-import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { ChordVisibleVariant } from '@cm/Cm.model';
 import { blockStyles } from '@cm/col/com/block-styles/BlockStyles';

@@ -2,12 +2,13 @@ import { bibleIDB } from '@bible/_db/bibleIDB';
 import { useBibleAddressBooki } from '@bible/hooks/address/books';
 import { useBibleAddressChapteri } from '@bible/hooks/address/chapters';
 import { BibleBooki, BibleChapteri, BibleTranslationSingleAddress, BibleVersei } from '@bible/model';
-import { useBibleShowTranslatesValue } from '@bible/translates/hooks';
-import { useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
-import { useCallback, useEffect, useState } from 'react';
+import { useBibleTranslatesContext } from '@bible/translates/lib/contexts';
+import { useBibleShowTranslatesValue } from '@bible/translates/lib/hooks';
+import { JSX, useCallback, useEffect, useState } from 'react';
 import { emptyArray, makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
 import { useBibleTranslationSearchResultList, useBibleTranslationSearchResultSelectedValue } from './hooks/results';
+import { BibleSearchResultVerse } from './ResultVerse';
 
 interface Props {
   inputRef: React.RefObject<HTMLInputElement>;

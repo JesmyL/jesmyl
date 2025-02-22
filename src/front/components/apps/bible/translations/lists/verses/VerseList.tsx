@@ -1,13 +1,12 @@
 import { JStorageSetOrArrayVal } from '#shared/lib/JSimpleStorage/exports/SetOrArray';
 import { useBibleAddressBooki } from '@bible/hooks/address/books';
 import { useBibleAddressChapteri } from '@bible/hooks/address/chapters';
-import { useBibleShowTranslatesValue } from '@bible/translates/hooks';
-import { useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
-import { useEffect, useRef } from 'react';
+import { useBibleTranslatesContext } from '@bible/translates/lib/contexts';
+import { useBibleShowTranslatesValue } from '@bible/translates/lib/hooks';
+import { JSX, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import { bibleVerseiIdPrefix } from '../lib/consts';
 import { useVerseListListeners } from './useVerseListListeners';
-
-export const verseiIdPrefix = 'bible-versei-';
 
 const fastVerses = new JStorageSetOrArrayVal<string[]>('bible', 'fastVerses', []);
 
@@ -34,7 +33,7 @@ export function BibleVerseList(): JSX.Element {
         return (
           <StyledFace
             key={versei}
-            id={verseiIdPrefix + versei}
+            id={bibleVerseiIdPrefix + versei}
             className="bible-list-face pointer"
             dangerouslySetInnerHTML={{ __html }}
           />

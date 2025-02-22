@@ -3,7 +3,8 @@ import { bibleIDB } from '@bible/_db/bibleIDB';
 import { useSetBibleAddressIndexes } from '@bible/hooks/address/address';
 import { useBibleBookList } from '@bible/hooks/texts';
 import { BibleBooki, BibleChapteri, BibleVersei } from '@bible/model';
-import { bibleLowerBooks, useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
+import { bibleLowerBooks } from '@bible/translates/lib/consts';
+import { useBibleTranslatesContext } from '@bible/translates/lib/contexts';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { emptyFunc, makeRegExp } from 'shared/utils';
 
@@ -13,6 +14,8 @@ const makePropsFromAddressArgs = (args: [string, ...(string | und)[]] | RegExpMa
 
   return { $all, bookn, chapterStr, verseStr, verseSeparator, finishVerseStr };
 };
+
+const disable = false;
 
 export const useBibleTransformAddressTermToAddress = (term: string, inputRef: React.RefObject<HTMLInputElement>) => {
   const books = useBibleBookList();
@@ -131,7 +134,7 @@ export const useBibleTransformAddressTermToAddress = (term: string, inputRef: Re
           } as never);
         }
       };
-    } while (false);
+    } while (disable);
 
     const address = (
       <>

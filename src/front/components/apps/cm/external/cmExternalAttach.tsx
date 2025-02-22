@@ -1,10 +1,10 @@
 import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { ScheduleWidgetAppAtts } from '#widgets/schedule/ScheduleWidget.model';
 import { TheMeetingsEvent } from '@cm/lists/meetings/TheMeetingsEvent';
-import { useEffect } from 'react';
-import { Link, Route, useNavigate } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import { CmComBindAttach, ScheduleWidgetUserRoleRight, scheduleWidgetUserRights } from 'shared/api';
-import { CmExternalComListAtt } from './complect/CmExternalComListAtt';
+import { CmExternalComListAtt } from './ui/CmExternalComListAtt';
+import { RedactButtonDetector } from './ui/RedactButtonDetector';
 
 export const cmOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
   '[cm]:coms': {
@@ -47,15 +47,4 @@ export const cmOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
       </>
     ),
   },
-};
-
-const RedactButtonDetector = ({ isRedact, to }: { isRedact: boolean; to: string }) => {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!isRedact) return;
-    navigate(to);
-  }, [isRedact, navigate, to]);
-
-  return <></>;
 };

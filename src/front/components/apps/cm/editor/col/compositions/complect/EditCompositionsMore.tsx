@@ -1,5 +1,5 @@
-import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
+import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { useState } from 'react';
 import { NewComposition } from './new-com/NewComposition';
 

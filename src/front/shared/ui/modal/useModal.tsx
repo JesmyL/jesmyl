@@ -41,7 +41,7 @@ export function useModal(
   topContent?: Contenter,
   onOpenSwitch?: (is: boolean) => void,
   isForceOpen?: boolean,
-): [ReactNode, (_event?: any, content?: Contenter, config?: UserModalConfig) => void, () => void] {
+): [ReactNode, (_event?: unknown, content?: Contenter, config?: UserModalConfig) => void, () => void] {
   const [config, setConfig] = useState(defaultUseModalConfig);
   const onOpenSwitchRef = useActualRef(onOpenSwitch);
 

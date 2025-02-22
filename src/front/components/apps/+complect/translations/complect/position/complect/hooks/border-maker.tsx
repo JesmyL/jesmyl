@@ -4,7 +4,7 @@ import { FixedResizerLines, ScreenTranslationPositionConfig } from '../../../mod
 const minSize = 2;
 
 export const usePositionConfiguratorResizerBorderMaker = (
-  rectRef: React.RefObject<HTMLDivElement>,
+  rectRef: React.RefObject<HTMLDivElement | null>,
   wrapperRef: React.RefObject<HTMLDivElement>,
   setOnMove: (callback: ((event: MouseEvent) => void) | null) => void,
   updateConfig: (config: Partial<ScreenTranslationPositionConfig>) => void,

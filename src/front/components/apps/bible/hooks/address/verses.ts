@@ -1,7 +1,7 @@
 import { bibleIDB } from '@bible/_db/bibleIDB';
 import { BibleVersei } from '@bible/model';
-import { useBibleShowTranslatesValue } from '@bible/translates/hooks';
-import { useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
+import { useBibleTranslatesContext } from '@bible/translates/lib/contexts';
+import { useBibleShowTranslatesValue } from '@bible/translates/lib/hooks';
 import { useBibleVersei } from '@bible/translations/lists/atoms';
 import { useCallback } from 'react';
 import { useBibleTranslationSlideSyncContentSetter } from '../slide-sync';

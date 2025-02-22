@@ -1,4 +1,4 @@
-import { BottomPopup } from '#shared/ui/absolute-popup/bottom-popup/BottomPopup';
+import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheButton } from '#shared/ui/TheButton';

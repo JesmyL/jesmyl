@@ -4,14 +4,14 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/scope-contexts/scope-props-contexts';
 import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { useState } from 'react';
-import { useSchWGameContext } from '../Games';
+import { useScheduleGameContext } from '../lib/contexts';
 import { ScheduleWidgetTeamGameTeam } from '../Team';
 import { ScheduleWidgetTeamGamePrintTeamsButton } from './PrintTeamsButton';
 import { ScheduleWidgetTeamGameSetTeamsButton } from './SetTeamsButton';
 
 export function ScheduleWidgetTeamGame() {
   const [isRenaming, setIsRenaming] = useState(false);
-  const game = useSchWGameContext();
+  const game = useScheduleGameContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
 
   const titleNode = (

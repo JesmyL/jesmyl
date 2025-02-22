@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useOnScrolledToLimitEventer } from './useOnScrolledToLimitEventer';
 
 export const useListInfiniteScrollController = <Item>(
-  listRef: React.RefObject<HTMLDivElement>,
+  listRef: React.RefObject<HTMLDivElement | null>,
   list: Item[],
   findCurrentIndex: (item: Item, index: number, items: Item[]) => boolean,
   initItemsBefore = 15,

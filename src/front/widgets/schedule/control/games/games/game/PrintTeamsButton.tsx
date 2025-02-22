@@ -4,13 +4,13 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
-import { useSchWGameContext } from '../Games';
+import { useScheduleGameContext } from '../lib/contexts';
 
 export const ScheduleWidgetTeamGamePrintTeamsButton = function PrintTeamsButton() {
   const rights = useScheduleWidgetRightsContext();
 
   const [isOpenPrint, setIsOpenPrint] = useState(false);
-  const game = useSchWGameContext();
+  const game = useScheduleGameContext();
   const [cols, setCols] = useState(Math.floor(game.teams.length / 2));
 
   return (

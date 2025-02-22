@@ -1,5 +1,5 @@
-import { BottomPopup } from '#shared/ui/absolute-popup/bottom-popup/BottomPopup';
 import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContainerConfigurer';
+import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { useState } from 'react';
 
 import { Route, Routes } from 'react-router-dom';

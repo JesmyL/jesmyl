@@ -2,16 +2,16 @@ import { useSetBibleAddressWithForceJoinReset } from '@bible/hooks/address/addre
 import { useBibleBookList } from '@bible/hooks/texts';
 import styled from 'styled-components';
 import { useBibleSingleAddressSetter } from '../atoms';
-import { useBibleListFaceClickListener } from '../complect';
+import { bibleBookiIdPrefix } from '../lib/consts';
+import { useBibleListFaceClickListener } from '../lib/useBibleListFaceClickListener';
 
-export const bookiIdPrefix = 'bible-booki-';
 const faceClassName = 'bible-list-chapter-face';
 
 export function BibleBookList() {
   const books = useBibleBookList();
   const setValue = useBibleSingleAddressSetter();
   const setAddress = useSetBibleAddressWithForceJoinReset();
-  const listRef = useBibleListFaceClickListener(bookiIdPrefix, faceClassName, booki => setAddress(booki, 0, 0));
+  const listRef = useBibleListFaceClickListener(bibleBookiIdPrefix, faceClassName, booki => setAddress(booki, 0, 0));
 
   return (
     <Container ref={listRef}>
@@ -19,7 +19,7 @@ export function BibleBookList() {
         return (
           <Face
             key={booki}
-            id={bookiIdPrefix + booki}
+            id={bibleBookiIdPrefix + booki}
             className={`bible-list-face pointer ${faceClassName}`}
             onClick={() => setValue(booki, 0, 0)}
           >

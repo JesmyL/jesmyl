@@ -14,6 +14,7 @@ export class JStorage<Scope> {
   transaction: (mode: IDBTransactionMode) => IDBObjectStore;
   readyState: () => IDBRequestReadyState;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   properties: Record<keyof Scope, any> = {} as never;
 
   constructor(name: string) {

@@ -1,5 +1,5 @@
-import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
 import { useModal } from '#shared/ui/modal/useModal';
+import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { ChordVisibleVariant } from '@cm/Cm.model';
 import { TheOrder } from '@cm/col/com/order/TheOrder';

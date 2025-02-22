@@ -1,16 +1,15 @@
+import {
+  CurrentAppFooterItemAppNameContext,
+  CurrentAppFooterItemPlaceContext,
+  footerItemPlaceLsPrefix,
+} from '#basis/lib/App.contexts';
 import { isTouchDevice } from '#shared/lib/device-differences';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { AppName } from '../basis/model/App.model';
-import {
-  AppFooterItem,
-  CurrentAppFooterItemAppNameContext,
-  CurrentAppFooterItemPlaceContext,
-  footerItemPlaceLsPrefix,
-} from './AppFooterItem';
-
-export const lastVisitedRouteLsName = 'nav-last-visited-route';
+import { AppFooterItem } from './AppFooterItem';
+import { lastVisitedRouteLsName } from './lib/consts';
 
 export function AppFooter({ children }: { children: React.ReactNode }) {
   const loc = useLocation();

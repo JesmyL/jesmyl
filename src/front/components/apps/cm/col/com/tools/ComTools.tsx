@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
+import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -11,7 +11,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
 import { useFixedCcom } from '../useCcom';
 import { CmComCatMentions } from '../useGetCatMentions';
-import { useMigratableListComTools } from './useMigratableComTools';
+import { useMigratableListComTools } from './lib/useMigratableComTools';
 
 export const ComTools = () => {
   const ccom = useFixedCcom();

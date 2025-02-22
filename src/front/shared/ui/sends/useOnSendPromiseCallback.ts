@@ -1,8 +1,10 @@
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { useCallback, useState } from 'react';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type CallbackWithDto<Dto = any, Ret = void> = Dto extends never ? () => Ret : (dto: Dto) => Ret;
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const useOnSendPromiseCallback = <Value, Dto = any>(
   onSend?: CallbackWithDto<Dto, Promise<Value> | void | nil>,
   onSuccess?: ((value: Value) => void) | nil,

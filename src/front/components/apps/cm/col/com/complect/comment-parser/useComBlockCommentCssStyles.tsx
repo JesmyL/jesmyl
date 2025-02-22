@@ -1,7 +1,7 @@
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
 import { MyLib } from '#shared/lib/my-lib';
-import { useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
+import { useBibleTranslatesContext } from '@bible/translates/lib/contexts';
 import { useEffect, useState } from 'react';
 import { CmComWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';

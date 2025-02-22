@@ -1,18 +1,14 @@
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
-import { contextCreator } from '#shared/lib/contextCreator';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { emptyFunc } from 'shared/utils';
 import styled, { css } from 'styled-components';
 import { LazyIcon } from '../the-icon/LazyIcon';
 import { LinkWithSearchRemember } from './LinkWithSearchRemember';
 import { PhaseContainerConfigurerProps } from './PhaseContainerConfigurer.model';
+import { usePhaseContainerConfigurerWithoutFooterContext } from './lib/contexts';
 
 let navigate: NavigateFunction = emptyFunc;
 const swiper = backSwipableContainerMaker(() => navigate('..'));
-
-export const [PhaseContainerConfigurerWithoutFooterContext, usePhaseContainerConfigurerWithoutFooterContext] =
-  contextCreator(false);
-
 export function PhaseContainerConfigurer(props: PhaseContainerConfigurerProps) {
   navigate = useNavigate();
   const withoutFooter = usePhaseContainerConfigurerWithoutFooterContext();

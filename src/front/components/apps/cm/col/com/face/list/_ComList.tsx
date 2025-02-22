@@ -8,6 +8,7 @@ import { retNull } from 'shared/utils';
 import { Com } from '../../Com';
 import { CmComNumber } from '../../complect/ComNumber';
 import { ListComFaceForSelectionsProps } from '../ComFace.model';
+import { cmCurrentComwIdPrefix, cmFaceItemDescriptionClassName } from '../lib/consts';
 import { ComListControlledContainer } from './ComListControlledContainer';
 import { IComFaceList } from './model';
 
@@ -17,9 +18,6 @@ export interface ComFaceListProps extends IComFaceList, ListComFaceForSelections
   className?: string;
 }
 
-export const currentComwIdPrefix = 'com_face_wid_';
-export const faceItemDescriptionClassName = 'face-item-description';
-
 export const ComFaceListComList = (props: ComFaceListProps) => {
   const listRef = useRef<HTMLDivElement>(null);
   const { limits, updateLimits } = useListInfiniteScrollController(listRef, props.list, com => com.wid === props.ccomw);
@@ -28,7 +26,9 @@ export const ComFaceListComList = (props: ComFaceListProps) => {
 
   const isSetWids = !(props.titles && mylib.keys(props.titles).length);
   const setComDescription = props.comDescription
-    ? (com: Com, comi: number) => <div className={faceItemDescriptionClassName}>{props.comDescription!(com, comi)}</div>
+    ? (com: Com, comi: number) => (
+        <div className={cmFaceItemDescriptionClassName}>{props.comDescription!(com, comi)}</div>
+      )
     : retNull;
 
   return (
@@ -40,7 +40,7 @@ export const ComFaceListComList = (props: ComFaceListProps) => {
         return (
           <FaceItem
             key={isSetWids ? com.wid : comi}
-            id={`${currentComwIdPrefix}${com.wid}`}
+            id={`${cmCurrentComwIdPrefix}${com.wid}`}
             className={`flex between pointer ${comi}-comi`}
           >
             <div className="face-logo">

@@ -1,17 +1,19 @@
 import { propsOfClicker } from '#shared/lib/clicker/propsOfClicker';
 import { mylib } from '#shared/lib/my-lib';
-import { FloatPopup, useFloatPopupCoords } from '#shared/ui/absolute-popup/float-popup/FloatPopup';
+import { FloatPopup } from '#shared/ui/popup/FloatPopup';
+import { useFloatPopupCoords } from '#shared/ui/popup/FloatPopup/lib';
 import { useMemo } from 'react';
 import { CmComWid } from 'shared/api';
 import { ComFaceContextMenu } from '../ComFaceContextMenu';
-import { ComFaceListProps, currentComwIdPrefix } from './_ComList';
+import { cmCurrentComwIdPrefix } from '../lib/consts';
+import { ComFaceListProps } from './_ComList';
 import { StyledComList } from './StyledComList';
 import { ComListPreviousSibling } from './StyledComListPrevious';
 import { useScrollToCurrentComFace } from './useScrollToCurrentComFace';
 
 interface Props extends ComFaceListProps {
   children: React.ReactNode;
-  listRef: React.RefObject<HTMLDivElement>;
+  listRef: React.RefObject<HTMLDivElement | null>;
 }
 
 export const ComListControlledContainer = (props: Props) => {
@@ -33,9 +35,9 @@ export const ComListControlledContainer = (props: Props) => {
             foundElementWithFaceItemClassName = foundElementWithFaceItemClassName.parentElement;
           }
 
-          if (!foundElementWithFaceItemClassName?.id.startsWith(currentComwIdPrefix)) return;
+          if (!foundElementWithFaceItemClassName?.id.startsWith(cmCurrentComwIdPrefix)) return;
 
-          const comw = +foundElementWithFaceItemClassName.id.slice(currentComwIdPrefix.length);
+          const comw = +foundElementWithFaceItemClassName.id.slice(cmCurrentComwIdPrefix.length);
 
           if (mylib.isNaN(comw)) return;
 

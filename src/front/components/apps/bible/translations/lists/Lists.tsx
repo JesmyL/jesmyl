@@ -5,12 +5,14 @@ import { useBibleAddressBooki } from '@bible/hooks/address/books';
 import { useBibleAddressChapteri } from '@bible/hooks/address/chapters';
 import { useBibleAddressVersei } from '@bible/hooks/address/verses';
 import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '@bible/model';
-import { BibleTranslatesContextProvider, useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
+import { useBibleTranslatesContext } from '@bible/translates/lib/contexts';
+import { BibleTranslatesContextProvider } from '@bible/translates/TranslatesContext';
 import { useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import { BibleBookList, bookiIdPrefix } from './books/BookList';
-import { BibleChapterList, chapteriIdPrefix } from './chapters/ChapterList';
-import { BibleVerseList, verseiIdPrefix } from './verses/VerseList';
+import { BibleBookList } from './books/BookList';
+import { BibleChapterList } from './chapters/ChapterList';
+import { bibleBookiIdPrefix, bibleChapteriIdPrefix, bibleVerseiIdPrefix } from './lib/consts';
+import { BibleVerseList } from './verses/VerseList';
 
 const scrollIntoViewBookAndChapterOptions = { block: 'center' } as const;
 const scrollIntoViewVerseOptions = { block: 'center', behavior: 'smooth' } as const;
@@ -33,9 +35,11 @@ export function BibleLists() {
 
           if (joinAddress != null) [booki, chapteri, versei] = getJoinAddressMaxes(joinAddress);
 
-          document.getElementById(bookiIdPrefix + booki)?.scrollIntoView(scrollIntoViewBookAndChapterOptions);
-          document.getElementById(chapteriIdPrefix + chapteri)?.scrollIntoView(scrollIntoViewBookAndChapterOptions);
-          document.getElementById(verseiIdPrefix + versei)?.scrollIntoView(scrollIntoViewVerseOptions);
+          document.getElementById(bibleBookiIdPrefix + booki)?.scrollIntoView(scrollIntoViewBookAndChapterOptions);
+          document
+            .getElementById(bibleChapteriIdPrefix + chapteri)
+            ?.scrollIntoView(scrollIntoViewBookAndChapterOptions);
+          document.getElementById(bibleVerseiIdPrefix + versei)?.scrollIntoView(scrollIntoViewVerseOptions);
         }, 100),
       )
       .effect();
@@ -82,7 +86,7 @@ const Lists = styled.div<{
     if (props.$joinAddress)
       return MyLib.entries(props.$joinAddress).map(([booki, book]) => {
         return css`
-          #${bookiIdPrefix}${booki} {
+          #${bibleBookiIdPrefix}${booki} {
             ${selectedStyle}
 
             .title {
@@ -92,13 +96,13 @@ const Lists = styled.div<{
 
           ${MyLib.entries(book).map(
             ([chapteri, chapter]) => css`
-              #${chapteriIdPrefix}${chapteri} {
+              #${bibleChapteriIdPrefix}${chapteri} {
                 ${selectedStyle}
               }
 
               ${chapter.map(
                 versei => css`
-                  #${verseiIdPrefix}${versei} {
+                  #${bibleVerseiIdPrefix}${versei} {
                     ${selectedStyle}
                   }
                 `,
@@ -109,17 +113,17 @@ const Lists = styled.div<{
       });
 
     return css`
-      #${bookiIdPrefix}${props.$booki} {
+      #${bibleBookiIdPrefix}${props.$booki} {
         ${currentStyle}
 
         .title {
           color: var(--color--1);
         }
       }
-      #${chapteriIdPrefix}${props.$chapteri} {
+      #${bibleChapteriIdPrefix}${props.$chapteri} {
         ${currentStyle}
       }
-      #${verseiIdPrefix}${props.$versei} {
+      #${bibleVerseiIdPrefix}${props.$versei} {
         ${currentStyle}
       }
     `;

@@ -1,13 +1,14 @@
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { useEffect } from 'react';
-import { ComFaceListProps, currentComwIdPrefix } from './_ComList';
+import { cmCurrentComwIdPrefix } from '../lib/consts';
+import { ComFaceListProps } from './_ComList';
 
-export const useScrollToCurrentComFace = (listRef: React.RefObject<HTMLDivElement>, props: ComFaceListProps) => {
+export const useScrollToCurrentComFace = (listRef: React.RefObject<HTMLDivElement | null>, props: ComFaceListProps) => {
   useEffect(() => {
     if (listRef.current === null || props.ccomw === undefined || props.isPutCcomFaceOff || props.titles) return;
 
-    const node = listRef.current.querySelector(`#${currentComwIdPrefix}${props.ccomw}`);
+    const node = listRef.current.querySelector(`#${cmCurrentComwIdPrefix}${props.ccomw}`);
 
     if (node === null) return;
 

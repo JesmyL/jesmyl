@@ -2,7 +2,7 @@ import { IconButton } from '#shared/ui/the-icon/IconButton';
 import styled from 'styled-components';
 import { ScreenTranslationConfig } from '../../model';
 
-export interface ScreenTranslationsFaceProps {
+interface ScreenTranslationsFaceProps {
   configi: number;
   config: ScreenTranslationConfig;
   putOnClick: (configi: number) => (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;

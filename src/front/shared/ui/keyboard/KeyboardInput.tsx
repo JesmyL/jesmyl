@@ -1,17 +1,11 @@
-import { propsOfClicker } from '#shared/lib/clicker/propsOfClicker';
 import { indexSimpleValIsUseNativeKeyboard } from 'front/components/index/complect/index.simpleValues';
-import React, { memo, ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { makeRegExp } from 'shared/utils';
 import { LazyIcon } from '../the-icon/LazyIcon';
-import { keyboardKeyDict, keyboardNumberScreenLines } from './Keyboard.complect';
 import { KeyboardInputProps } from './Keyboard.model';
 import './Keyboard.scss';
 import { KeyboardInputStorage } from './KeyboardStorage';
-
-let currentInput: KeyboardInputStorage;
-let topForceUpdate: () => void = () => {};
-let topOnBlur: () => void = () => {};
-let topOnFocus: (currentInput: KeyboardInputStorage | nil) => void = () => {};
+import { keyboardInputGlobals } from './lib';
 
 const stopCb = (event: PropagationStopperEvent) => event.stopPropagation();
 
@@ -41,9 +35,9 @@ export function KeyboardInput(props: KeyboardInputProps) {
   }, [value, input]);
 
   const valueGetterSetter = (set?: string) => {
-    if (currentInput !== undefined) {
-      if (set !== undefined) currentInput.replaceAll(set);
-      return currentInput.value;
+    if (keyboardInputGlobals.currentInput !== undefined) {
+      if (set !== undefined) keyboardInputGlobals.currentInput.replaceAll(set);
+      return keyboardInputGlobals.currentInput.value;
     }
 
     if (nativeRef.current != null) {
@@ -144,8 +138,8 @@ export function KeyboardInput(props: KeyboardInputProps) {
 
       inputNode = (
         <textarea
-          {...otherProps}
-          {...(nativeProps as any)}
+          {...(otherProps as never as { value: string })}
+          {...(nativeProps as never as { value: string })}
           onBlur={
             otherProps.onBlur &&
             (() => {
@@ -158,8 +152,8 @@ export function KeyboardInput(props: KeyboardInputProps) {
     } else {
       inputNode = (
         <input
-          {...otherProps}
-          {...(nativeProps as any)}
+          {...(otherProps as never as { value: string })}
+          {...(nativeProps as never as { value: string })}
           onBlur={
             otherProps.onBlur &&
             (() => {
@@ -226,18 +220,18 @@ export function KeyboardInput(props: KeyboardInputProps) {
     props,
     () => {
       setUpdates(updates + 1);
-      topForceUpdate();
+      keyboardInputGlobals.topForceUpdate();
     },
     () => {
-      currentInput?.blur();
-      topForceUpdate();
-      topOnBlur();
+      keyboardInputGlobals.currentInput?.blur();
+      keyboardInputGlobals.topForceUpdate();
+      keyboardInputGlobals.topOnBlur();
       props.onBlur?.();
     },
     () => {
-      currentInput?.blur(input !== currentInput);
-      currentInput = input;
-      topOnFocus(currentInput);
+      keyboardInputGlobals.currentInput?.blur(input !== keyboardInputGlobals.currentInput);
+      keyboardInputGlobals.currentInput = input;
+      keyboardInputGlobals.topOnFocus(keyboardInputGlobals.currentInput);
       props.onFocus?.({
         name: 'focus',
         blur: () => input.blur(),
@@ -248,260 +242,3 @@ export function KeyboardInput(props: KeyboardInputProps) {
     },
   );
 }
-
-export const KEYBOARD_FLASH = memo(function ({
-  onBlur,
-  onFocus,
-}: {
-  onBlur: () => void;
-  onFocus: (currentInput: KeyboardInputStorage | nil) => void;
-}) {
-  const [updates, setUpdates] = useState(0);
-  const [moreClosed, setMoreClosed] = useState(true);
-  const [keyInFix, setKeyInFix] = useState<string | null>(null);
-  topForceUpdate = () => setUpdates(updates + 1);
-  topOnBlur = () => onBlur();
-  topOnFocus = () => onFocus(currentInput);
-
-  useEffect(() => {
-    const onMouseDown = (event: MouseEvent) => {
-      event.stopPropagation();
-      currentInput?.onOverflowMouseDown();
-    };
-    const onMouseUp = () => {
-      currentInput?.onOverflowMouseUp();
-      setKeyInFix(null);
-    };
-    const onKeyDown = (event: KeyboardEvent) => currentInput?.onOverflowKeyDown(event);
-    const onKeyUp = () => currentInput?.onOverflowKeyUp();
-
-    window.addEventListener('keydown', onKeyDown);
-    window.addEventListener('keyup', onKeyUp);
-    window.addEventListener('mousedown', onMouseDown);
-    window.addEventListener('mouseup', onMouseUp);
-
-    return () => {
-      currentInput?.blur();
-      window.removeEventListener('mousedown', onMouseDown);
-      window.removeEventListener('mouseup', onMouseUp);
-      window.removeEventListener('keydown', onKeyDown);
-      window.removeEventListener('keyup', onKeyUp);
-    };
-  }, []);
-
-  if (indexSimpleValIsUseNativeKeyboard.get()) return null;
-
-  const keyNode = (
-    className: string,
-    key: string,
-    icon?: TheIconKnownName,
-    onMouseUp?: React.MouseEventHandler<HTMLDivElement>,
-    children?: ReactNode,
-    onContextMenu?: React.MouseEventHandler<HTMLOrSVGElement>,
-    onTouchStart?: React.TouchEventHandler<HTMLDivElement>,
-  ) => {
-    return (
-      <div
-        className={`keyboard-flash-key pointer ${className} ${keyInFix === key ? 'key-in-fix' : ''}`}
-        onMouseUp={onMouseUp || (() => currentInput.write(key))}
-        onMouseDown={event => {
-          event.stopPropagation();
-          setKeyInFix(key);
-        }}
-        onMouseOver={() => keyInFix && setKeyInFix(key)}
-        onTouchStart={event => {
-          event.stopPropagation();
-          setKeyInFix(key);
-          onTouchStart?.(event);
-        }}
-        {...propsOfClicker({ onCtxMenu: onContextMenu })}
-      >
-        {children}
-        {icon ? (
-          <LazyIcon
-            icon={icon}
-            className="key-button"
-          />
-        ) : (
-          <div>{key}</div>
-        )}
-      </div>
-    );
-  };
-
-  return (
-    <div
-      className={`keyboard-flash ${currentInput?.isFocused ? 'active' : ''} ${moreClosed ? '' : 'more-open'}`}
-      onMouseDown={event => {
-        event.stopPropagation();
-        setKeyInFix('CLOSE-MORE');
-      }}
-      onTouchEnd={event => {
-        event.stopPropagation();
-        setKeyInFix(null);
-        currentInput.onTouchNavigationEnd(event);
-      }}
-      onTouchMove={event => {
-        currentInput.onTouchNavigationMove(event, event.targetTouches[0].clientX);
-      }}
-      onMouseUp={event => {
-        event.stopPropagation();
-        setKeyInFix(null);
-        if (!moreClosed) setMoreClosed(true);
-      }}
-    >
-      {currentInput ? (
-        currentInput.type === 'number' ? (
-          <>
-            {keyboardNumberScreenLines.map((line, linei) => {
-              return (
-                <div
-                  key={linei}
-                  className="keyboard-flash-line number-type"
-                >
-                  {line.map((key, keyi) => {
-                    return <React.Fragment key={keyi}>{keyNode('writable', key)}</React.Fragment>;
-                  })}
-                </div>
-              );
-            })}
-            <div className="keyboard-flash-line bottom-line">
-              {keyNode(currentInput.canUndo() ? 'full-width' : 'full-width disabled', 'UNDO', 'LinkBackward', () =>
-                currentInput.undo(),
-              )}
-              {keyNode(currentInput.canRedo() ? 'full-width' : 'full-width disabled', 'REDO', 'LinkForward', () =>
-                currentInput.redo(),
-              )}
-              {keyNode('writable self-width', '0')}
-              {keyNode('backspace full-width', 'BACKSPACE', 'Eraser01', event => currentInput.backspace(event))}
-              {keyNode('full-width', 'BLUR', 'ArrowDown01', () => currentInput.blur())}
-            </div>
-          </>
-        ) : (
-          <>
-            {keyboardKeyDict[currentInput.currentLanguage][currentInput.event.shiftKey ? 'upper' : 'lower'].map(
-              (line, linei) => {
-                return (
-                  <div
-                    key={linei}
-                    className="keyboard-flash-line"
-                  >
-                    {linei === 3
-                      ? keyNode(
-                          `shift-key ${currentInput.isCapsLock ? 'caps-lock' : ''} ${
-                            currentInput.event.ctrlKey ? 'is-control-key-label' : ''
-                          }`,
-                          'SHIFT',
-                          'ArrowUp03',
-                          () => currentInput.switchCaps(),
-                          null,
-                          event => {
-                            event.preventDefault();
-                            currentInput.switchCtrlKey();
-                          },
-                          event => currentInput.onTouchNavigationStart('select', event.targetTouches[0].clientX),
-                        )
-                      : null}
-                    {line.map((key, keyi) => {
-                      return <React.Fragment key={keyi}>{keyNode('writable', key)}</React.Fragment>;
-                    })}
-                    {linei === 3
-                      ? keyNode(
-                          'backspace',
-                          'BACKSPACE',
-                          'Eraser01',
-                          event => currentInput.backspace(event),
-                          null,
-                          undefined,
-                          event => currentInput.onTouchNavigationStart('delete', event.targetTouches[0].clientX),
-                        )
-                      : null}
-                  </div>
-                );
-              },
-            )}
-
-            <div className="keyboard-flash-line bottom-line">
-              {keyNode(
-                currentInput.canUndo() ? 'undo-action' : 'undo-action disabled',
-                'UNDO',
-                'LinkBackward',
-                event => {
-                  event.stopPropagation();
-                  setKeyInFix(null);
-                  currentInput.undo();
-                },
-              )}
-              {keyNode(
-                'more-box',
-                'CLOSE-MORE',
-                moreClosed ? 'Idea01' : 'Cancel02',
-                () => setMoreClosed(!moreClosed),
-                moreClosed ? null : (
-                  <div
-                    className="keyboard-flash-key-more-box-list no-scrollbar"
-                    ref={elem => {
-                      if (elem && keyInFix === null) elem.scrollTop = window.innerHeight;
-                    }}
-                  >
-                    <div className="keyboard-flash-key-more-box-inner">
-                      {keyNode(
-                        '',
-                        'WORD-SELECT-MODE',
-                        currentInput.event.ctrlKey ? 'FlashOff' : 'Flash',
-                        () => currentInput.switchCtrlKey(),
-                        <span className="key-description">Ctrl клавиша</span>,
-                      )}
-                      {currentInput.nullOrCanSelectAll() &&
-                        keyNode(
-                          '',
-                          'SELECT_ALL',
-                          'Text',
-                          () => currentInput.selectAll(),
-                          <span className="key-description">Выделить всё</span>,
-                        )}
-                      {currentInput.nullOrCanCopy() &&
-                        keyNode(
-                          '',
-                          'COPY',
-                          'Copy01',
-                          () => currentInput.copy(),
-                          <span className="key-description">Копировать</span>,
-                        )}
-                      {currentInput.nullOrCanPaste() &&
-                        keyNode(
-                          '',
-                          'PASTE',
-                          'Task01',
-                          () => currentInput.paste(),
-                          <span className="key-description">Вставить</span>,
-                        )}
-                      {keyNode(
-                        currentInput.canRedo() ? '' : ' disabled',
-                        'REDO',
-                        'LinkForward',
-                        event => {
-                          event.stopPropagation();
-                          setKeyInFix(null);
-                          currentInput.redo();
-                        },
-                        <span className="key-description">Вернуть</span>,
-                      )}
-                    </div>
-                  </div>
-                ),
-              )}
-              {keyNode('space-key', ' ', undefined, undefined, null, undefined, event =>
-                currentInput.onTouchNavigationStart('navigate', event.targetTouches[0].clientX),
-              )}
-              {keyNode('', 'LANG', 'LanguageSkill', () => currentInput.switchLanguage(), null)}
-              {currentInput.isMultiline
-                ? keyNode('enter', '\n', 'ArrowTurnBackward')
-                : keyNode('', 'BLUR', 'ArrowDown01', () => currentInput.blur())}
-            </div>
-          </>
-        )
-      ) : null}
-    </div>
-  );
-});

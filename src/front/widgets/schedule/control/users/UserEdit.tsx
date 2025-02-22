@@ -44,11 +44,6 @@ export function ScheduleWidgetUserEdit({ user }: { user: IScheduleWidgetUser }) 
           onSend={value => schUsersSokiInvocatorClient.setUserRights(null, scheduleUserScopeProps, value)}
         />
       )}
-      {!user.login && (
-        <div className="user-select margin-giant-gap-t">
-          {/* {makeAppActionLink('index', 'swInvite', packScheduleWidgetInviteLink(rights.schedule.w, user.mi))} */}
-        </div>
-      )}
     </>
   );
 }

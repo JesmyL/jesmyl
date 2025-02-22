@@ -42,6 +42,7 @@ export function LoadIndicatedContent(
       if (Date.now() - initTime < 200) onEnd();
       else setState(State.Ready);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.isLoading, isInit]);
 
   return (

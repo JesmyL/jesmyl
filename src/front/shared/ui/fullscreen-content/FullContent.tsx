@@ -1,10 +1,10 @@
+import { useSetAppRootAnchorNodesContext } from '#basis/lib/App.contexts';
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { useWid } from '#shared/lib/hooks/useWid';
 import { mylib } from '#shared/lib/my-lib';
-import { useSetAppRootAnchorNodesContext } from 'front/app/AppComponent';
 import { HTMLAttributes, ReactNode, useCallback, useEffect, useMemo } from 'react';
 import { Eventer, EventerListeners, emptyFunc } from 'shared/utils';
 import styled from 'styled-components';

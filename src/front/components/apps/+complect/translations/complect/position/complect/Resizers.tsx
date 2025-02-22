@@ -8,7 +8,7 @@ import { ShowHalfFixersKeyActiveMode } from './model';
 interface Props {
   setOnMove: (callback: ((event: MouseEvent) => void) | null) => void;
   updateConfig: (config: Partial<ScreenTranslationPositionConfig>) => void;
-  rectRef: React.RefObject<HTMLDivElement>;
+  rectRef: React.RefObject<HTMLDivElement | null>;
   wrapperRef: React.RefObject<HTMLDivElement>;
   resizeOnly?: ScreenResizerResizeOnly;
   config: ScreenTranslationPositionConfig;

@@ -1,9 +1,9 @@
 import { useBibleTranslationAddressIndexesSetter } from '@bible/hooks/address/address';
 import { useBibleBookList } from '@bible/hooks/texts';
 import { BibleBooki, BibleChapteri, BibleVersei } from '@bible/model';
-import { useBibleShowTranslatesValue } from '@bible/translates/hooks';
-import { useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
-import { memo } from 'react';
+import { useBibleTranslatesContext } from '@bible/translates/lib/contexts';
+import { useBibleShowTranslatesValue } from '@bible/translates/lib/hooks';
+import { JSX, memo } from 'react';
 
 interface Props {
   booki: BibleBooki;
@@ -14,7 +14,7 @@ interface Props {
   onClick?: (booki: BibleBooki, chapteri: BibleChapteri, versei: BibleVersei) => void;
 }
 
-export default memo(function BibleSearchResultVerse({
+export const BibleSearchResultVerse = memo(function BibleSearchResultVerse({
   booki,
   chapteri,
   versei,

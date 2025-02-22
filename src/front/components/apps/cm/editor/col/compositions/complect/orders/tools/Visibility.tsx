@@ -1,5 +1,5 @@
-import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
 import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
+import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { StyledLoadingSpinner } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmComOrderClientInvocatorMethods } from '@cm/editor/cm-editor-invocator.methods';

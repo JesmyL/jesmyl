@@ -4,13 +4,13 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ScheduleWidgetMarkdownTranslation } from '#widgets/schedule/live-translations/markdown/Translation';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import { useMemo, useState } from 'react';
-import { useSchWGameContext } from '../Games';
+import { useScheduleGameContext } from '../lib/contexts';
 
 export const ScheduleWidgetTeamGameTranslateTeamsButton = function TranslateTeamsButton() {
   const rights = useScheduleWidgetRightsContext();
 
   const [isOpenFull, setIsOpenFull] = useState(false);
-  const game = useSchWGameContext();
+  const game = useScheduleGameContext();
   const [cols, setCols] = useState(Math.floor(game.teams.length / 2));
 
   const grid: string = useMemo(() => {

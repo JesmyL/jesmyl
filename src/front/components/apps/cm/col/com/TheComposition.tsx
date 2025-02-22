@@ -1,12 +1,12 @@
 import { useAtom, useAtomValue } from '#shared/lib/atoms';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { BottomPopup } from '#shared/ui/absolute-popup/bottom-popup/BottomPopup';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import {
   PhaseContainerConfigurer,
   StyledPhaseContainerConfigurerHead,
   StyledPhaseContainerConfigurerHeadTitle,
 } from '#shared/ui/phase-container/PhaseContainerConfigurer';
+import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { DocTitle } from '#shared/ui/tags/DocTitle';
 import { Metronome } from '#widgets/metronome/Metronome';
 import { BibleTranslatesContextProvider } from 'front/components/apps/bible/translates/TranslatesContext';
@@ -25,7 +25,7 @@ import { CmComNumber } from './complect/ComNumber';
 import { ComPlayer } from './player/ComPlayer';
 import { TheControlledCom } from './TheControlledCom';
 import { ComTools } from './tools/ComTools';
-import { useMigratableTopComTools } from './tools/useMigratableComTools';
+import { useMigratableTopComTools } from './tools/lib/useMigratableComTools';
 import { useFixedCcom, useTakeActualComw } from './useCcom';
 import { CmComCatMentions } from './useGetCatMentions';
 

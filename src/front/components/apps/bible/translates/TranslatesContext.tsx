@@ -1,12 +1,12 @@
 import { mylib } from '#shared/lib/my-lib';
 import { bibleTranslatesIDB } from '@bible/_db/bibleIDB';
-import { bibleTitles } from '@bible/hooks/bibleTitlesJson';
 import { BibleTranslate } from '@bible/model';
-import React, { JSX, useContext, useEffect, useState } from 'react';
+import React, { JSX, useEffect, useState } from 'react';
 import { BibleTranslateName } from 'shared/api';
 import { Eventer } from 'shared/utils';
-import { bibleAllTranslates } from './complect';
-import { useBibleMyTranslates, useBibleShowTranslatesValue } from './hooks';
+import { bibleAllTranslates } from './lib/consts';
+import { BibleTranslatesContext } from './lib/contexts';
+import { useBibleMyTranslates, useBibleShowTranslatesValue } from './lib/hooks';
 
 interface ChapterCombine {
   lowerChapters?: (string[][] | und)[];
@@ -46,15 +46,9 @@ bibleTranslatesIDB.hook('creating', (tName, obj) => {
     if (tNames.has(tName as never)) onTranslateSetEvents.invoke({ tName: tName as never, value: obj.val as never });
 });
 
-export const bibleLowerBooks = bibleTitles.titles.map(book => book.map(title => title.toLowerCase()));
-
 export type BibleBookTranslates = PRecord<BibleTranslateName, ChapterCombine>;
 const loadings: PRecord<BibleTranslateName, boolean> = {};
 const localTranslates: BibleBookTranslates = {};
-
-const Context = React.createContext<BibleBookTranslates>({});
-
-export const useBibleTranslatesContext = () => useContext(Context);
 
 interface Props {
   children?: React.ReactNode;
@@ -120,5 +114,5 @@ export function BibleTranslatesContextProvider({ children, isSetAllTranslates }:
       .effect(...subscribes);
   }, [watchTranslates]);
 
-  return <Context.Provider value={translates}>{children}</Context.Provider>;
+  return <BibleTranslatesContext.Provider value={translates}>{children}</BibleTranslatesContext.Provider>;
 }

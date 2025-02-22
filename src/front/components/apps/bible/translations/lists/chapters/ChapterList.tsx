@@ -3,9 +3,9 @@ import { useSetBibleAddressWithForceJoinReset } from '@bible/hooks/address/addre
 import { useBibleCurrentChapterList } from '@bible/hooks/texts';
 import { useMemo } from 'react';
 import styled from 'styled-components';
-import { useBibleListFaceClickListener } from '../complect';
+import { bibleChapteriIdPrefix } from '../lib/consts';
+import { useBibleListFaceClickListener } from '../lib/useBibleListFaceClickListener';
 
-export const chapteriIdPrefix = 'bible-chapteri-';
 const faceClassName = 'bible-list-chapter-face';
 
 const fastChaptersCount = new JStorageNumberVal('bible', 'fastChaptersCount', 0);
@@ -14,7 +14,7 @@ export function BibleChapterList() {
   const chapters = useBibleCurrentChapterList();
   const setAddress = useSetBibleAddressWithForceJoinReset();
 
-  const listRef = useBibleListFaceClickListener(chapteriIdPrefix, faceClassName, chapteri =>
+  const listRef = useBibleListFaceClickListener(bibleChapteriIdPrefix, faceClassName, chapteri =>
     setAddress(undefined, chapteri, 0),
   );
 
@@ -34,7 +34,7 @@ export function BibleChapterList() {
         return (
           <div
             key={chapteri}
-            id={chapteriIdPrefix + chapteri}
+            id={bibleChapteriIdPrefix + chapteri}
             className={`bible-list-face pointer ${faceClassName}`}
           >
             {chapteri + 1}

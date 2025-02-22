@@ -5,7 +5,7 @@ import { useBibleAddressVersei } from '@bible/hooks/address/verses';
 import { useBibleTranslationSlideSyncContentSetter } from '@bible/hooks/slide-sync';
 import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress } from '@bible/model';
 import { useEffect } from 'react';
-import { verseiIdPrefix } from './VerseList';
+import { bibleVerseiIdPrefix } from '../lib/consts';
 
 export const useVerseListListeners = (
   verseListNodeRef: { current: HTMLOListElement | null },
@@ -28,10 +28,10 @@ export const useVerseListListeners = (
       .addEventListener(verseListNode, 'mousedown', event => {
         const verseNode = event.target as HTMLDivElement | null;
 
-        if (verseNode === null || !verseNode.id.startsWith(verseiIdPrefix)) return;
+        if (verseNode === null || !verseNode.id.startsWith(bibleVerseiIdPrefix)) return;
         const ctrlKey = event.ctrlKey;
         const shiftKey = event.shiftKey;
-        const versei = +verseNode.id.slice(verseiIdPrefix.length);
+        const versei = +verseNode.id.slice(bibleVerseiIdPrefix.length);
 
         if (mylib.isNaN(versei)) return;
 

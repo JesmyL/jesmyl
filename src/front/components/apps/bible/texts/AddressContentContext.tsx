@@ -1,4 +1,3 @@
-import { contextCreator } from '#shared/lib/contextCreator';
 import { useBibleTranslationJoinAddress } from '@bible/hooks/address/address';
 import { useBibleAddressBooki } from '@bible/hooks/address/books';
 import { useBibleAddressChapteri } from '@bible/hooks/address/chapters';
@@ -11,25 +10,7 @@ import {
   useBibleSingleSlideText,
 } from '@bible/hooks/texts';
 import { useMemo } from 'react';
-
-const [AddressContext, useBibleAddressTextContext] = contextCreator('');
-const [TextContext, useBibleTextContentContext] = contextCreator('');
-
-export const BibleTranslationScreenKnownTextsContext = ({
-  addressText,
-  text,
-  children,
-}: {
-  addressText: string;
-  text: string;
-  children?: React.ReactNode;
-}) => {
-  return (
-    <TextContext.Provider value={text}>
-      <AddressContext.Provider value={addressText}>{children}</AddressContext.Provider>
-    </TextContext.Provider>
-  );
-};
+import { BibleAddressTextContext, BibleTextContentContext } from './lib/contexts';
 
 export const BibleTranslationScreenTextsContext = (props: { children?: React.ReactNode; isPreview: boolean | und }) => {
   const booki = useBibleAddressBooki();
@@ -71,7 +52,7 @@ export const BibleTranslationScreenTextsContext = (props: { children?: React.Rea
         : cachedJoinAddress;
 
   return (
-    <TextContext.Provider
+    <BibleTextContentContext.Provider
       value={
         joinAddressCode === null
           ? props.isPreview
@@ -82,9 +63,7 @@ export const BibleTranslationScreenTextsContext = (props: { children?: React.Rea
             : joinedCachedText
       }
     >
-      <AddressContext.Provider value={address}>{props.children}</AddressContext.Provider>
-    </TextContext.Provider>
+      <BibleAddressTextContext.Provider value={address}>{props.children}</BibleAddressTextContext.Provider>
+    </BibleTextContentContext.Provider>
   );
 };
-
-export { useBibleAddressTextContext, useBibleTextContentContext };

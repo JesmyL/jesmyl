@@ -1,5 +1,5 @@
-import { BottomPopup } from '#shared/ui/absolute-popup/bottom-popup/BottomPopup';
 import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContainerConfigurer';
+import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { CmTranslationComListContextInSelected } from '@cm/base/translations/InSelected';
 import { useSelectedComs } from '@cm/base/useSelectedComs';
 import { ComFaceList } from '@cm/col/com/face/list/ComFaceList';

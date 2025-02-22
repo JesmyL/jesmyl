@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 declare const XLSX: { read(data: unknown, options: object): any; utils: { sheet_to_row_object_array(prop: any): any } };
 
 export const excel2jsonParserBox = (awaitTimeMs: number = 10000) => {

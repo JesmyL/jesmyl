@@ -3,7 +3,7 @@ import { ScreenTranslationPositionConfig } from '../../model';
 
 export const useScreenPositionConfigMouseDownCallback = (
   isCantMove: boolean | und,
-  rectRef: React.RefObject<HTMLDivElement>,
+  rectRef: React.RefObject<HTMLDivElement | null>,
   wrapperRef: React.RefObject<HTMLDivElement>,
   updateConfig: (config: Partial<ScreenTranslationPositionConfig>) => void,
   setOnMove: (callback: ((event: MouseEvent) => void) | null) => void,

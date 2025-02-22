@@ -10,8 +10,9 @@ import { SetComListLimitsExtracterContext } from '@cm/base/SetComListLimitsExtra
 import CmTranslationComListContextInCat from '@cm/base/translations/InCat';
 import CmTranslationComListContextInZeroCat from '@cm/base/translations/InZeroCat';
 import { useLaterComList } from '@cm/base/useLaterComList';
-import { categoryTermAtom, CmComListSearchFilterInput } from '@cm/complect/ComListSearchFilterInput';
 import { cmCompositionRoute } from '@cm/routing/cmRoutingApp';
+import { CmComListSearchFilterInput } from '@cm/shared/ComListSearchFilterInput';
+import { categoryTermAtom } from '@cm/shared/ComListSearchFilterInput/lib';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';

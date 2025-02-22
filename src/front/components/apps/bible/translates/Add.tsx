@@ -7,8 +7,8 @@ import { bibleSokiInvocatorClient } from '@bible/invoctors/invocator';
 import { removeBibleTranslate } from '@bible/utils';
 import { useState } from 'react';
 import { BibleTranslateName } from 'shared/api';
-import { bibleAllTranslates, translateDescriptions } from './complect';
-import { useBibleMyTranslates } from './hooks';
+import { bibleAllTranslates, translateDescriptions } from './lib/consts';
+import { useBibleMyTranslates } from './lib/hooks';
 
 export function BibleModulesTranslationsRedactButton(): JSX.Element {
   const [myTranslates] = useBibleMyTranslates();

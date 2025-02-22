@@ -1,11 +1,10 @@
-import { atom, useAtomToggle, useAtomValue } from '#shared/lib/atoms';
+import { Atom, atom, useAtomToggle, useAtomValue } from '#shared/lib/atoms';
 import { useMemo } from 'react';
 import { KeyboardInputPropsType } from './keyboard/Keyboard.model';
 import { KeyboardInput } from './keyboard/KeyboardInput';
 import { LazyIcon } from './the-icon/LazyIcon';
 
 const isNumberSearchAtom = atom(false);
-export const useIsNumberSearch = () => useAtomValue(isNumberSearchAtom);
 
 export function DebouncedSearchInput(props: {
   initialTerm?: string;
@@ -18,11 +17,12 @@ export function DebouncedSearchInput(props: {
   withoutIcon?: boolean;
   className?: string;
   type?: KeyboardInputPropsType;
+  isNumberSearchAtom?: Atom<boolean, (value: boolean) => void>;
 }) {
   const { initialTerm = '', onSearch, onDebounced, debounce, onTermChange, withoutIcon, className } = props;
   const timeout = useMemo((): { val?: TimeOut } => ({}), []);
-  const isNumberSearch = useAtomValue(isNumberSearchAtom);
-  const isNumberSearchToggle = useAtomToggle(isNumberSearchAtom);
+  const isNumberSearch = useAtomValue(props.isNumberSearchAtom ?? isNumberSearchAtom);
+  const isNumberSearchToggle = useAtomToggle(props.isNumberSearchAtom ?? isNumberSearchAtom);
 
   return (
     <div className={`debounced-input ${className}`}>

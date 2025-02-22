@@ -1,6 +1,6 @@
 import { BibleChapteri } from '@bible/model';
-import { useBibleShowTranslatesValue } from '@bible/translates/hooks';
-import { useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
+import { useBibleTranslatesContext } from '@bible/translates/lib/contexts';
+import { useBibleShowTranslatesValue } from '@bible/translates/lib/hooks';
 import { useBibleChapteri } from '@bible/translations/lists/atoms';
 import { useBibleAddressBooki } from './books';
 

@@ -3,8 +3,8 @@ import { schLinkAction } from '#widgets/schedule/links';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './App.scss';
-import { lastVisitedRouteLsName } from './AppFooter';
 import AppRouter from './AppRouter';
+import { lastVisitedRouteLsName } from './lib/consts';
 
 function App() {
   const [isNeedFirstNavigate, setIsNeedFirstNavigate] = useState(true);

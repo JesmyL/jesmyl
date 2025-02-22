@@ -4,11 +4,11 @@ import { useSelectedComs } from '@cm/base/useSelectedComs';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Com } from '../../Com';
-import { currentComwIdPrefix, faceItemDescriptionClassName } from './_ComList';
+import { cmCurrentComwIdPrefix, cmFaceItemDescriptionClassName } from '../lib/consts';
 import { IComFaceList } from './model';
 
 export const useComListClickListener = (
-  listRef: React.RefObject<HTMLDivElement>,
+  listRef: React.RefObject<HTMLDivElement | null>,
   importantOnClick: IComFaceList['importantOnClick'],
   list: Com[],
   toggleSelectedCom: ReturnType<typeof useSelectedComs>['toggleSelectedCom'],
@@ -30,7 +30,7 @@ export const useComListClickListener = (
               isFaceLogo = true;
             }
 
-            if (foundElementWithFaceItemClassName.classList.contains(faceItemDescriptionClassName)) {
+            if (foundElementWithFaceItemClassName.classList.contains(cmFaceItemDescriptionClassName)) {
               isFaceDescription = true;
             }
 
@@ -39,9 +39,9 @@ export const useComListClickListener = (
             foundElementWithFaceItemClassName = foundElementWithFaceItemClassName.parentElement;
           }
 
-          if (isFaceDescription || !foundElementWithFaceItemClassName?.id.startsWith(currentComwIdPrefix)) return;
+          if (isFaceDescription || !foundElementWithFaceItemClassName?.id.startsWith(cmCurrentComwIdPrefix)) return;
 
-          const comw = +foundElementWithFaceItemClassName.id.slice(currentComwIdPrefix.length);
+          const comw = +foundElementWithFaceItemClassName.id.slice(cmCurrentComwIdPrefix.length);
 
           if (mylib.isNaN(comw)) return;
 

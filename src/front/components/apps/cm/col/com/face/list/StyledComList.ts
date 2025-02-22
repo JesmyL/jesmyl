@@ -2,7 +2,7 @@ import { makePseudoElementCorrectContentText } from '#shared/lib/getParentNodeWi
 import { MyLib } from '#shared/lib/my-lib';
 import { CmComWid } from 'shared/api';
 import styled, { css } from 'styled-components';
-import { currentComwIdPrefix } from './_ComList';
+import { cmCurrentComwIdPrefix } from '../lib/consts';
 
 export const StyledComList = styled.div<{
   $ccomw: CmComWid | NaN | nil;
@@ -39,7 +39,7 @@ export const StyledComList = styled.div<{
   ${props =>
     !props.$isPutCcomFaceOff &&
     css`
-      #${currentComwIdPrefix}${props.$ccomw} {
+      #${cmCurrentComwIdPrefix}${props.$ccomw} {
         font-weight: bold;
       }
     `}
@@ -48,7 +48,7 @@ export const StyledComList = styled.div<{
     return css`
       ${props.$accentComw
         ? css`
-            > :not(#${currentComwIdPrefix}${props.$accentComw}) {
+            > :not(#${cmCurrentComwIdPrefix}${props.$accentComw}) {
               opacity: 0.4;
             }
           `

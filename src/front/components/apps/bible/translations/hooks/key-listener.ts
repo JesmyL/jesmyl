@@ -6,8 +6,8 @@ import { useBibleAddressBooki } from '@bible/hooks/address/books';
 import { useBibleAddressChapteri } from '@bible/hooks/address/chapters';
 import { useBibleTranslationSlideSyncContentSetter } from '@bible/hooks/slide-sync';
 import { BibleTranslationAddress, BibleTranslationJoinAddress, BibleVersei } from '@bible/model';
-import { useBibleShowTranslatesValue } from '@bible/translates/hooks';
-import { useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
+import { useBibleTranslatesContext } from '@bible/translates/lib/contexts';
+import { useBibleShowTranslatesValue } from '@bible/translates/lib/hooks';
 import { useEffect, useState } from 'react';
 import { useBibleTranslationAddToPlan } from '../archive/plan/hooks/plan';
 

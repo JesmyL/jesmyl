@@ -9,7 +9,7 @@ import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWid
 import { useEffect, useState } from 'react';
 import { IScheduleWidgetExportableTeam, IScheduleWidgetUserMi } from 'shared/api';
 import { ScheduleWidgetRemovableUserFace } from '../../RemovableUserFace';
-import { useSchWGameContext } from '../Games';
+import { useScheduleGameContext } from '../lib/contexts';
 
 const arrayMapper = () => [];
 const retriesLine = [40, 100, 200, 300, 600, 1000, 2000, 5000, 20000, 100000];
@@ -17,7 +17,7 @@ const defStrikedUsers: IScheduleWidgetUserMi[] = [];
 
 export function ScheduleWidgetTeamGameSetTeamsScreen() {
   const rights = useScheduleWidgetRightsContext();
-  const game = useSchWGameContext();
+  const game = useScheduleGameContext();
 
   const criterias = rights.schedule.games?.criterias;
   const schUsers = rights.schedule.ctrl.users;

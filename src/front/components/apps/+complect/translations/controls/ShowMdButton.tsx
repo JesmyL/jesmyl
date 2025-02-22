@@ -3,7 +3,7 @@ import { FunctionComponent, memo } from 'react';
 import { useIsCanShowTextTranslation } from '../atoms';
 
 interface Props {
-  Parent?: FunctionComponent<any>;
+  Parent?: FunctionComponent<{ children: React.ReactNode; onClick?: Function; className?: string }>;
 }
 
 export const ScreenTranslationControlPanelShowMdButton = memo(function ShowMdButton({ Parent }: Props) {
