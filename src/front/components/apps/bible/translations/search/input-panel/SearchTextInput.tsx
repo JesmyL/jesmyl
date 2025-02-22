@@ -11,7 +11,7 @@ import {
 import { BibleSearchPanelInput } from './Input';
 
 interface Props {
-  inputRef: React.RefObject<HTMLInputElement>;
+  inputRef: React.RefObject<HTMLInputElement | null>;
 }
 
 const onChange = (event: React.ChangeEvent<HTMLInputElement>) => bibleIDB.set.searchTerm(event.target.value);

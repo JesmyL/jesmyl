@@ -3,7 +3,7 @@ import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { bibleIDB } from '@bible/_db/bibleIDB';
 import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '@bible/hooks/address/address';
 import { BibleTranslationAddress } from '@bible/model';
-import { memo } from 'react';
+import { JSX, memo } from 'react';
 import { BibleTranslationArchiveJoinedAddressText } from './JoinedAddress';
 import { BibleTranslationArchiveJoinedContentText } from './JoinedContentText';
 import { BibleTranslationArchiveSingleAddressText } from './SingleAddressText';
@@ -17,7 +17,11 @@ interface Props {
 
 const itemClassName = 'nowrap pointer margin-gap-b';
 
-export default memo(function BibleTranslationArchive({ title, list, onRemove }: Props): JSX.Element {
+export const BibleTranslationArchive = memo(function BibleTranslationArchive({
+  title,
+  list,
+  onRemove,
+}: Props): JSX.Element {
   const setAddress = useSetBibleAddressIndexes();
   const getJoinAddressMaxes = useGetterJoinedAddressMaxValues();
 

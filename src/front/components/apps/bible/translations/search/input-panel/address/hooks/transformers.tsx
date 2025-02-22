@@ -17,7 +17,10 @@ const makePropsFromAddressArgs = (args: [string, ...(string | und)[]] | RegExpMa
 
 const disable = false;
 
-export const useBibleTransformAddressTermToAddress = (term: string, inputRef: React.RefObject<HTMLInputElement>) => {
+export const useBibleTransformAddressTermToAddress = (
+  term: string,
+  inputRef: React.RefObject<HTMLInputElement | null>,
+) => {
   const books = useBibleBookList();
   const chapters = useBibleTranslatesContext().rst?.chapters;
   const [address, setAddress] = useState<ReactNode>(null);

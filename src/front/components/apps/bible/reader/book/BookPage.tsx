@@ -1,8 +1,9 @@
 import { mylib } from '#shared/lib/my-lib';
 import { BibleBooki, BibleChapteri, BibleVersei } from '@bible/model';
 import { useBibleSingleAddressSetter } from '@bible/translations/lists/atoms';
-import { useEffect, useRef, useState } from 'react';
+import { JSX, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { BibleReaderChapter } from './complect/Chapter';
 
 interface Props {
   chapterList: (string[] | und)[] | nil;

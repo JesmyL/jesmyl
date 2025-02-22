@@ -63,7 +63,7 @@ appVersionFileStore.watchFile((value, state) => {
     exec(command, (error, stdout, stderr) => {
       tglogger[error ? 'error' : 'log'](`${command}\n\n${JSON.stringify({ error, stdout, stderr }, null, ' ')}`);
     });
-  }, 500);
+  }, 2000);
 });
 
 valuesFileStore.watchFile((value, state) => {

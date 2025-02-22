@@ -1,5 +1,5 @@
 interface Props {
-  inputRef: React.RefObject<HTMLInputElement>;
+  inputRef: React.RefObject<HTMLInputElement | null>;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
   term: string;
 }

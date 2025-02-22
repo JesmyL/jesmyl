@@ -4,10 +4,12 @@ import { bibleIDB } from '@bible/_db/bibleIDB';
 import { useBibleSlideSyncInkrementer } from '@bible/hooks/slide-sync';
 import { useLoadBibleChaptersCombine } from '@bible/hooks/texts';
 import { BibleModulesTranslations } from '@bible/translates/Translations';
-import { ReactNode, useEffect } from 'react';
+import { JSX, ReactNode, useEffect } from 'react';
 import styled from 'styled-components';
 import { ScreenTranslationControlPanel } from '../../+complect/translations/controls/ControllPanel';
+import { BibleTranslationControlledBottomPanel } from './BottomPanel';
 import { BibleTranslationControlledTopPanel } from './TopPanel';
+import { BibleSearchPanel } from './search/Panel';
 
 interface Props {
   head: ReactNode;
@@ -44,6 +46,8 @@ export function BibleTranslationControlled({ head, headTitle }: Props): JSX.Elem
       className=""
       headTitle={headTitle ?? 'Библия'}
       head={head}
+      withoutBackButton
+      withoutBackSwipe
       content={
         <Container>
           <BibleTranslationControlledTopPanel />

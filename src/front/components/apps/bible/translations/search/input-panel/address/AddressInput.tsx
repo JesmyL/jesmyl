@@ -3,10 +3,10 @@ import { BibleSearchPanelInput } from '../Input';
 import { useBibleTransformAddressTermToAddress } from './hooks/transformers';
 
 interface Props {
-  inputRef: React.RefObject<HTMLInputElement>;
+  inputRef: React.RefObject<HTMLInputElement | null>;
 }
 
-const onChange = (event: React.ChangeEvent<HTMLInputElement>) => bibleIDB.set.addressTerm(event.target.value);
+const onChange = (event: React.ChangeEvent<HTMLInputElement | null>) => bibleIDB.set.addressTerm(event.target.value);
 
 export const BibleSearchPanelAddressInput = ({ inputRef }: Props) => {
   const addressTerm = bibleIDB.useValue.addressTerm();

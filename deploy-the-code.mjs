@@ -14,7 +14,7 @@ export const deployTheCode = async (front, back) => {
   if (~process.argv.indexOf('--front')) {
     const isIgnoreVersionUpdate = ~process.argv.indexOf('--IVU');
 
-    const files = [...(isIgnoreVersionUpdate ? [] : [`./${versionFilePath}`]), `./${front.builtFolder}/*`];
+    const files = [`./${front.builtFolder}/*`, ...(isIgnoreVersionUpdate ? [] : [`./${versionFilePath}`])];
 
     console.info('Files to load: ', files);
 

@@ -1,11 +1,12 @@
 import { mylib } from '#shared/lib/my-lib';
 import { bibleIDB } from '@bible/_db/bibleIDB';
 import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '@bible/hooks/address/address';
-import { memo, useEffect, useRef, useState } from 'react';
+import { JSX, memo, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { BibleTranslationArchive } from '../Archive';
 import { useBibleClearTranslationPlanSetter, useBibleTranslationPlan } from './hooks/plan';
 
-export default memo(function BibleTranslationPlanArchive(): JSX.Element {
+export const BibleTranslationPlanArchive = memo(function BibleTranslationPlanArchive(): JSX.Element {
   const plan = useBibleTranslationPlan();
   const clearPlan = useBibleClearTranslationPlanSetter();
   const [selectedItemi, setSelectedItemi] = useState<number | null>(null);
@@ -39,7 +40,7 @@ export default memo(function BibleTranslationPlanArchive(): JSX.Element {
               event.stopPropagation();
               if (selectedItemi > 0) setSelectedItemi(selectedItemi - 1);
               break;
-            case 'Enter':
+            case 'Enter': {
               event.stopPropagation();
               setSelectedItemi(null);
               inputNode.blur();
@@ -53,6 +54,7 @@ export default memo(function BibleTranslationPlanArchive(): JSX.Element {
               }
 
               break;
+            }
             case 'Escape':
               event.stopPropagation();
               setSelectedItemi(null);

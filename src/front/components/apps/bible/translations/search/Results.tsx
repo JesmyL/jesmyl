@@ -11,7 +11,7 @@ import { useBibleTranslationSearchResultList, useBibleTranslationSearchResultSel
 import { BibleSearchResultVerse } from './ResultVerse';
 
 interface Props {
-  inputRef: React.RefObject<HTMLInputElement>;
+  inputRef: React.RefObject<HTMLInputElement | null>;
   height?: string;
   innerZone: 'book' | 'chapter';
   onClick?: (booki: BibleBooki, chapteri: BibleChapteri, versei: BibleVersei) => void;

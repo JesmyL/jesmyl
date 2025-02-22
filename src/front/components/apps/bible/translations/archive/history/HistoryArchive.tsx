@@ -1,7 +1,8 @@
-import { memo } from 'react';
+import { JSX, memo } from 'react';
+import { BibleTranslationArchive } from '../Archive';
 import { useBibleClearTranslationHistorySetter, useBibleTranslationHistory } from './hooks/history';
 
-export default memo(function BibleTranslationHistoryArchive(): JSX.Element {
+export const BibleTranslationHistoryArchive = memo(function BibleTranslationHistoryArchive(): JSX.Element {
   const history = useBibleTranslationHistory();
   const clearHistory = useBibleClearTranslationHistorySetter();
 

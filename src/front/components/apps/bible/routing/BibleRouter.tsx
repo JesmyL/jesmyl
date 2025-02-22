@@ -7,7 +7,7 @@ import { CurrentForceViweAppContext } from '../../+complect/translations/Transla
 import { bibleInitialInvokes } from './bible-initial-invokes';
 import { BibleFooter } from './BibleFooter';
 
-export function BibleRouter({ mainNode }: { mainNode: React.ReactNode }) {
+export default function BibleRouter({ mainNode }: { mainNode: React.ReactNode }) {
   return (
     <>
       <Routes>

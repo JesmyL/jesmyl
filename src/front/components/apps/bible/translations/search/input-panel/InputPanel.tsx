@@ -8,8 +8,8 @@ import { BibleSearchPanelAddressInput } from './address/AddressInput';
 import { BibleSearchPanelSearchTextInput } from './SearchTextInput';
 
 interface Props {
-  inputRef: React.RefObject<HTMLInputElement>;
-  setSearchZone: (zone: BibleSearchZone, inputRef: React.RefObject<HTMLInputElement>) => void;
+  inputRef: React.RefObject<HTMLInputElement | null>;
+  setSearchZone: (zone: BibleSearchZone, inputRef: React.RefObject<HTMLInputElement | null>) => void;
 }
 
 export function BibleSearchInputPanel({ inputRef, setSearchZone }: Props) {
