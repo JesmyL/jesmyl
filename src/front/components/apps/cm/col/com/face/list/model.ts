@@ -1,4 +1,4 @@
-import { CmComWid } from '../../../../../../../../shared/api/complect/apps/cm/complect/enums';
+import { CmComWid } from 'shared/api';
 import { Com } from '../../Com';
 import { ComFaceInheritProps } from '../ComFace.model';
 

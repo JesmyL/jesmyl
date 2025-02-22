@@ -147,7 +147,9 @@ export class JesmylTelegramBot {
               }
             : undefined,
         );
-    } catch (error) {}
+    } catch (_error) {
+      //
+    }
   }
 
   getAdmins = () => this._bot.bot.getChatAdministrators(this.chatId);

@@ -1,4 +1,4 @@
-import { useCcom } from '../../../col/com/useCcom';
+import { useCcom } from '@cm/col/com/useCcom';
 
 interface Props {
   comw?: number;

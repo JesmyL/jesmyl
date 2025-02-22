@@ -1,19 +1,19 @@
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
+import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContainerConfigurer';
+import { useBibleAddressBooki } from '@bible/hooks/address/books';
+import { useBibleAddressChapteri } from '@bible/hooks/address/chapters';
+import { useBibleAddressVersei } from '@bible/hooks/address/verses';
+import { useBibleBookList } from '@bible/hooks/texts';
+import { BibleAddressSingle } from '@bible/texts/BibleAddressSingle';
+import { useBibleShowTranslatesValue } from '@bible/translates/hooks';
+import { BibleTranslatesContextProvider, useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
+import { BibleModulesTranslations } from '@bible/translates/Translations';
+import { useBibleSingleAddressSetter } from '@bible/translations/lists/atoms';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { FullContent } from '../../../../../complect/fullscreen-content/FullContent';
-import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
-import { useBibleAddressBooki } from '../../hooks/address/books';
-import { useBibleAddressChapteri } from '../../hooks/address/chapters';
-import { useBibleAddressVersei } from '../../hooks/address/verses';
-import { useBibleBookList } from '../../hooks/texts';
-import { BibleAddressSingle } from '../../texts/BibleAddressSingle';
-import BibleTranslatesContextProvider, { useBibleTranslatesContext } from '../../translates/TranslatesContext';
-import { BibleModulesTranslations } from '../../translates/Translations';
-import { useBibleShowTranslatesValue } from '../../translates/hooks';
-import { useBibleSingleAddressSetter } from '../../translations/lists/atoms';
-import BibleReaderBook from './BookPage';
+import { BibleReaderBook } from './BookPage';
 
-export default function BibleReaderCurrentBookPage() {
+export function BibleReaderCurrentBookPage() {
   return (
     <BibleTranslatesContextProvider>
       <Content />

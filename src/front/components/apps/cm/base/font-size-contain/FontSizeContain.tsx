@@ -7,7 +7,7 @@ const shadowStyle: CSSProperties = {
   pointerEvents: 'none',
 };
 
-export default function FontSizeContain({ className, content, html, subUpdates, style }: FontSizeContainProps) {
+export function FontSizeContain({ className, content, html, subUpdates, style }: FontSizeContainProps) {
   const [childStyle, setChildStyle] = useState<CSSProperties | und>();
   const [isInit, setIsInit] = useState(true);
 

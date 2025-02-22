@@ -1,7 +1,7 @@
-import { renderComponentInNewWindow } from 'front/front.index';
+import { renderComponentInNewWindow } from '#shared/lib/renders';
+import { cursors } from 'front/cursorsBase64';
 import { useCallback } from 'react';
 import { createGlobalStyle, css } from 'styled-components';
-import { cursors } from '../../../../../cursorsBase64';
 import { useScreenTranslationConfigsValue } from '../atoms';
 import { useCurrentForceViweAppContext } from '../Translation.contexts';
 import { TranslationScreen } from '../TranslationScreen';

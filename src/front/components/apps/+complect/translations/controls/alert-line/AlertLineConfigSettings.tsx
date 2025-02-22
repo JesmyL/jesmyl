@@ -1,21 +1,21 @@
+import { propagationStopper } from '#shared/lib/event-funcs';
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { useDebounceAction } from '#shared/lib/hooks/useDebounceAction';
+import { mylib } from '#shared/lib/my-lib';
+import { BackgroundConfigurator } from '#shared/ui/configurators/Background';
+import { ColorConfigurator } from '#shared/ui/configurators/Color';
+import { FontFamilyConfigurator } from '#shared/ui/configurators/FontFamily';
+import { FontSizeConfigurator } from '#shared/ui/configurators/FontSize';
+import { FontStyleConfigurator } from '#shared/ui/configurators/FontStyle';
+import { FontWeightConfigurator } from '#shared/ui/configurators/FontWeight/ui';
+import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { FontFamilyConfigurator } from 'front/complect/configurators/FontFamily';
-import { FontSizeConfigurator } from 'front/complect/configurators/FontSize';
-import { FontStyleConfigurator } from 'front/complect/configurators/FontStyle';
-import { FontWeightConfigurator } from 'front/complect/configurators/FontWeight';
-import { addEventListenerPipe, hookEffectPipe } from 'front/complect/hookEffectPipe';
-import KeyboardInput from 'front/complect/keyboard/KeyboardInput';
-import { useDebounceAction } from 'front/complect/useDebounceAction';
-import { propagationStopper } from 'front/complect/utils/utils';
-import { mylib } from 'front/utils';
 import React, { useDeferredValue, useEffect, useRef, useState } from 'react';
-import { BackgroundConfigurator } from '../../../../../../complect/configurators/Background';
-import { ColorConfigurator } from '../../../../../../complect/configurators/Color';
 import { complectIDB } from '../../../_idb/complectIDB';
 import { AlertLineConfig } from '../../model';
 
 const LazyAlertLineConfigIcon = React.lazy(() => import('./AlertLineConfigIcon'));
-const LazyIconConfigurator = React.lazy(() => import('front/complect/configurators/Icon'));
+const LazyIconConfigurator = React.lazy(() => import('#shared/ui/configurators/Icon'));
 
 export const AlertLineConfigSettingsInner = ({ configId }: { configId: number }) => {
   const config = useLiveQuery(

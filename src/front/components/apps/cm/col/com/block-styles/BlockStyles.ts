@@ -1,5 +1,5 @@
-import { mylib } from 'front/utils';
-import SourceBased from '../../../../../../complect/SourceBased';
+import { mylib } from '#shared/lib/my-lib';
+import { SourceBased } from '#shared/lib/SourceBased';
 import * as styles from '../../../resources/block-styles.json';
 import { IExportableSetts } from './BlockStyles.model';
 import { StyleBlock } from './StyleBlock';
@@ -42,4 +42,4 @@ export class BlockStyles extends SourceBased<IExportableSetts> {
   }
 }
 
-export let blockStyles: BlockStyles | nil = new BlockStyles(styles);
+export const blockStyles: BlockStyles | nil = new BlockStyles(styles);

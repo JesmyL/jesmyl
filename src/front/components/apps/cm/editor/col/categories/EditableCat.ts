@@ -1,5 +1,5 @@
+import { Cat } from '@cm/col/cat/Cat';
 import { IExportableCat } from 'shared/api';
-import { Cat } from '../../../col/cat/Cat';
 import { EditableCom } from '../compositions/com/EditableCom';
 
 export class EditableCat extends Cat {

@@ -1,5 +1,5 @@
-import { IconLink } from 'front/complect/the-icon/IconLink';
-import { useAuth } from 'front/components/index/atoms';
+import { IconLink } from '#shared/ui/the-icon/IconLink';
+import { useAuth } from '@index/atoms';
 import { useToNewChordSearches } from './chord-redactor-searches';
 
 export const CmUndefinedChordCard = ({ chord }: { chord: string }) => {

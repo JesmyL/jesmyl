@@ -1,5 +1,5 @@
+import { IconButton } from '#shared/ui/the-icon/IconButton';
 import styled from 'styled-components';
-import IconButton from '../../../../../../complect/the-icon/IconButton';
 import { ScreenTranslationConfig } from '../../model';
 
 export interface ScreenTranslationsFaceProps {

@@ -1,9 +1,9 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { blockStyles } from '@cm/col/com/block-styles/BlockStyles';
+import { Com } from '@cm/col/com/Com';
+import { EditableCol } from '@cm/editor/col/EditableCol';
 import { IExportableCom } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
-import { blockStyles } from '../../../../../col/com/block-styles/BlockStyles';
-import { Com } from '../../../../../col/com/Com';
-import { EditableCol } from '../../../EditableCol';
 
 export class EditableComBase extends Com {
   col: EditableCol<IExportableCom>;

@@ -1,25 +1,25 @@
-import IconButton from 'front/complect/the-icon/IconButton';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { propagationStopper } from 'front/complect/utils/utils';
-import { MyLib, mylib } from 'front/utils';
+import { atom, useAtom } from '#shared/lib/atoms';
+import { propagationStopper } from '#shared/lib/event-funcs';
+import { MyLib, mylib } from '#shared/lib/my-lib';
+import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
+import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheButton } from '#shared/ui/TheButton';
+import { cmIDB } from '@cm/_db/cm-idb';
+import { useToNewChordSearches } from '@cm/col/com/chord-card/chord-redactor-searches';
+import { ChordCard } from '@cm/col/com/chord-card/ChordCard';
 import { useEffect, useMemo, useState } from 'react';
-import { ChordPack, ChordTrack } from '../../../../../../shared/api/complect/apps/cm/complect/chord-card';
-import { atom, useAtom } from '../../../../../complect/atoms';
-import TheButton from '../../../../../complect/Button';
-import KeyboardInput from '../../../../../complect/keyboard/KeyboardInput';
-import { cmIDB } from '../../_db/cm-idb';
-import { useToNewChordSearches } from '../../col/com/chord-card/chord-redactor-searches';
-import ChordCard from '../../col/com/chord-card/ChordCard';
+import { ChordPack, ChordTrack } from 'shared/api';
 import { cmEditorClientInvocatorMethods } from '../cm-editor-invocator.methods';
 import { correctChordNameReg } from '../Editor.complect';
-import PhaseCmEditorContainer from '../phase-editor-container/PhaseCmEditorContainer';
-import ChordRedactableTrack from './ChordRedactableTrack';
+import { PhaseCmEditorContainer } from '../phase-editor-container/PhaseCmEditorContainer';
+import { ChordRedactableTrack } from './ChordRedactableTrack';
 import './ChordRedactor.scss';
 
 const redactableChordsAtom = atom<ChordPack>({});
 const chordsToSendAtom = atom<ChordPack>({});
 
-export default function ChordRedactor() {
+export function ChordRedactor() {
   const [{ newChordName = '' }, setProps] = useToNewChordSearches();
 
   const chords = cmIDB.useValue.chordPack();

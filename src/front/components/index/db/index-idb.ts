@@ -1,5 +1,5 @@
-import { AppName } from 'front/app/App.model';
-import { DexieDB } from 'front/complect/_DexieDB';
+import { AppName } from '#basis/model/App.model';
+import { DexieDB } from '#shared/lib/DexieDB';
 import { DeviceId, IndexValues, IScheduleWidget, IScheduleWidgetWid, ScheduleWidgetPhotoKey } from 'shared/api';
 import { FileAssociations } from '../parts/actions/files/complect/MyFilesTypeBox';
 

@@ -1,18 +1,18 @@
-import TheButton from 'front/complect/Button';
-import IconButton from 'front/complect/the-icon/IconButton';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
+import { BottomPopup } from '#shared/ui/absolute-popup/bottom-popup/BottomPopup';
+import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheButton } from '#shared/ui/TheButton';
+import { ChordVisibleVariant } from '@cm/Cm.model';
+import { TheOrder } from '@cm/col/com/order/TheOrder';
+import { cmComOrderClientInvocatorMethods } from '@cm/editor/cm-editor-invocator.methods';
 import { useState } from 'react';
-import { BottomPopup } from '../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopup';
-import { ChordVisibleVariant } from '../../../../../Cm.model';
-import TheOrder from '../../../../../col/com/order/TheOrder';
 import { EditableCom } from '../../com/EditableCom';
 import { useEditableCcom } from '../../useEditableCcom';
-import { OrdersRedactorOrderTools, OrdersRedactorOrderToolsProps } from './OrdersRedactorOrderTools';
 import { OrdersRedactorAdditions } from './additions/Additions';
 import { CmComOrderOnClickBetweenData } from './model';
+import { OrdersRedactorOrderTools, OrdersRedactorOrderToolsProps } from './OrdersRedactorOrderTools';
 
-export default function OrdersRedactor() {
+export function OrdersRedactor() {
   const ccom = useEditableCcom();
   const [newBlockAdderPopupCom, setNewBlockAdderPopupCom] = useState<EditableCom | false>(false);
   const [toolProps, setToolProps] = useState<OrdersRedactorOrderToolsProps | false>(false);
@@ -73,7 +73,9 @@ export default function OrdersRedactor() {
                   onClick={async () => {
                     try {
                       await clickBetweenData.onClick(null, ord);
-                    } catch (e) {}
+                    } catch (_error) {
+                      //
+                    }
                     setClickBetweenOrds(null);
                   }}
                 >
@@ -134,7 +136,9 @@ export default function OrdersRedactor() {
                   onClick={async () => {
                     try {
                       await clickBetweenData.onClick(ord, orda[ordi + 1] ?? null);
-                    } catch (e) {}
+                    } catch (_error) {
+                      //
+                    }
                     setClickBetweenOrds(null);
                   }}
                 >

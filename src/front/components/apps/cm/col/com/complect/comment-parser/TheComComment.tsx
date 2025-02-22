@@ -1,20 +1,20 @@
-import { addEventListenerPipe, hookEffectPipe } from 'front/complect/hookEffectPipe';
-import { TheIconLoading } from 'front/complect/the-icon/IconLoading';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { propagationStopper } from 'front/complect/utils/utils';
-import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
-import { mylib } from 'front/utils';
+import { useAtom } from '#shared/lib/atoms';
+import { propagationStopper } from '#shared/lib/event-funcs';
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { mylib } from '#shared/lib/my-lib';
+import { Modal } from '#shared/ui/modal/Modal/Modal';
+import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
+import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { cmIDB } from '@cm/_db/cm-idb';
+import { updateComComment, useComComment } from '@cm/com-comments-manager';
 import { useEffect, useRef, useState } from 'react';
+import { CmComWid } from 'shared/api';
 import { isNIs } from 'shared/utils';
 import styled from 'styled-components';
-import { CmComWid } from '../../../../../../../../shared/api/complect/apps/cm/complect/enums';
-import { useAtom } from '../../../../../../../complect/atoms';
-import Modal from '../../../../../../../complect/modal/Modal/Modal';
-import { ModalBody } from '../../../../../../../complect/modal/Modal/ModalBody';
-import { ModalHeader } from '../../../../../../../complect/modal/Modal/ModalHeader';
-import { updateComComment, useComComment } from '../../../../com-comments-manager';
 import { isComCommentRedactAtom } from './complect';
-import TheComCommentInfo from './infos/TheComCommentInfo';
+import { TheComCommentInfo } from './infos/TheComCommentInfo';
 
 interface Props {
   comw: CmComWid;

@@ -1,13 +1,13 @@
-import { TranslationScreenProps } from '../../../+complect/translations/Translations.model';
-import { useIsScreenTranslationTextVisible } from '../../../+complect/translations/atoms';
+import { useIsScreenTranslationTextVisible } from 'front/components/apps/+complect/translations/atoms';
 import {
   useScreenTranslationCurrentConfig,
   useScreenTranslationCurrentConfigi,
-} from '../../../+complect/translations/hooks/configs';
+} from 'front/components/apps/+complect/translations/hooks/configs';
+import { TranslationScreenProps } from 'front/components/apps/+complect/translations/Translations.model';
 import { useBibleScreenTranslationConfig } from '../hooks/configs';
 import { BibleTranslationScreen } from './BibleTranslationScreen';
 
-export default function BibleTranslationCurrentScreen(props: TranslationScreenProps) {
+export function BibleTranslationCurrentScreen(props: TranslationScreenProps) {
   const currentConfigi = useScreenTranslationCurrentConfigi();
   const currentConfig = useBibleScreenTranslationConfig(props.screeni ?? currentConfigi);
 

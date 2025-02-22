@@ -1,9 +1,9 @@
+import { cmIDB } from '@cm/_db/cm-idb';
+import { useComs } from '@cm/cols/useCols';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { CmCatWid } from 'shared/api';
-import { cmIDB } from '../../_db/cm-idb';
-import { useComs } from '../../cols/useCols';
 import { Cat } from './Cat';
 
 export function useCcat(isTakeZeroCat?: boolean): Cat | nil {

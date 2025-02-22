@@ -1,4 +1,4 @@
-import useSelectedComs from '../../../../base/useSelectedComs';
+import { useSelectedComs } from '@cm/base/useSelectedComs';
 import { ComTool } from '../ComTool';
 import { useComToolsCcomContext } from '../useMigratableComTools';
 

@@ -1,4 +1,4 @@
-import { IExportableOrderMe } from '../../../../../col/com/order/Order.model';
+import { IExportableOrderMe } from '@cm/col/com/order/Order.model';
 import { EditableOrder } from '../../complect/orders/EditableOrder';
 import { EditableComCorrects } from './10-Corrects';
 

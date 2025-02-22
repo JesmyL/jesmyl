@@ -1,12 +1,11 @@
+import { atom, useAtomValue } from '#shared/lib/atoms';
 import React, { Suspense, useEffect } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
-import { atom, useAtomValue } from '../complect/atoms';
-import { AppName } from './App.model';
+import { AppName } from '../basis/model/App.model';
 
 const AppComponent = React.lazy(() => import('./AppComponent'));
 const AppRouterProvider = React.lazy(() => import('./AppRouterProvider'));
-const Wedding = React.lazy(() => import('../components/apps/wedding/Wedding'));
-const ScheduleWidgetTgDayView = React.lazy(() => import('../complect/schedule-widget/general/TgDayView'));
+const ScheduleWidgetTgDayView = React.lazy(() => import('../widgets/schedule/general/TgDayView'));
 
 const AppRouter = () => {
   return (
@@ -33,10 +32,6 @@ const AppRouter = () => {
           }
         />
       </Route>
-      <Route
-        path="wedding/:weddn/*"
-        element={<Wedding />}
-      />
       <Route
         path="*"
         element={<Redirect />}

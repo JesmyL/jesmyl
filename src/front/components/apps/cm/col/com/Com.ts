@@ -1,9 +1,9 @@
-import { mylib } from 'front/utils';
-import { IExportableCom, IExportableOrder } from 'shared/api/complect/apps/cm';
+import { mylib } from '#shared/lib/my-lib';
+import { cmIDB } from '@cm/_db/cm-idb';
+import { BaseNamed } from '@cm/base/BaseNamed';
+import { IExportableCom, IExportableOrder } from 'shared/api';
 import { itIt, makeRegExp } from 'shared/utils';
 import { cmComLanguages } from 'shared/values/values';
-import { cmIDB } from '../../_db/cm-idb';
-import { BaseNamed } from '../../base/BaseNamed';
 import { Cat } from '../cat/Cat';
 import { blockStyles } from './block-styles/BlockStyles';
 import { StyleBlock } from './block-styles/StyleBlock';
@@ -19,7 +19,7 @@ import { Order } from './order/Order';
 import { IExportableOrderMe, OrderTopHeaderBag } from './order/Order.model';
 
 export class Com extends BaseNamed<IExportableCom> {
-  initial: Record<string, any>;
+  initial: Partial<IExportableCom & { pos: number }>;
   ton?: number;
   initialName: string;
   excludedModulations: number[] = [];
@@ -148,7 +148,7 @@ export class Com extends BaseNamed<IExportableCom> {
 
   getVowelPositions(textLine: string) {
     const R = [];
-    for (let i = 0; i < textLine.length; i++) iRuUaReg.test(textLine[i]) && R.push(i);
+    for (let i = 0; i < textLine.length; i++) if (iRuUaReg.test(textLine[i])) R.push(i);
     return R;
   }
 
@@ -196,7 +196,7 @@ export class Com extends BaseNamed<IExportableCom> {
       .split(makeRegExp('/\\n/'));
 
     const texts = this.translationMap(kind)
-      .map(peaceSize => textBeats?.splice(0, peaceSize)!)
+      .map(peaceSize => textBeats?.splice(0, peaceSize))
       .filter(itIt);
 
     return texts;

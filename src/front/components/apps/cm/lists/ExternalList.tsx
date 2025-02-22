@@ -1,16 +1,16 @@
-import { mylib } from 'front/utils';
-import React, { useEffect, useMemo, useState } from 'react';
+import { mylib } from '#shared/lib/my-lib';
+import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContainerConfigurer';
+import { CmComListContext } from '@cm/base/translations/context';
+import { ComFaceList } from '@cm/col/com/face/list/ComFaceList';
+import { useComs } from '@cm/cols/useCols';
+import { cmCompositionRoute } from '@cm/routing/cmRoutingApp';
+import { useEffect, useMemo, useState } from 'react';
 import { Route, Routes, useParams } from 'react-router-dom';
+import { CmComWid } from 'shared/api';
 import { itNUnd } from 'shared/utils';
-import { CmComWid } from '../../../../../shared/api/complect/apps/cm/complect/enums';
-import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
-import { CmComListContext } from '../base/translations/context';
-import { ComFaceList } from '../col/com/face/list/ComFaceList';
-import { useComs } from '../cols/useCols';
-import { cmCompositionRoute } from '../routing/cmRoutingApp';
 import './Lists.scss';
 
-export default function ExternalList() {
+export function ExternalList() {
   const params = useParams();
   const [comws, setComws] = useState<CmComWid[] | null>(null);
 
@@ -23,7 +23,9 @@ export default function ExternalList() {
       if (!mylib.isArr(comws) || comws.some(comw => !mylib.isNum(comw))) return;
 
       setComws(comws);
-    } catch (error) {}
+    } catch (_error) {
+      //
+    }
   }, [params]);
 
   return (

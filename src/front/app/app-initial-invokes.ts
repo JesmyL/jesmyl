@@ -15,7 +15,9 @@ export const appInitialInvokes = () => {
         const deviceId = await indexBasicsSokiInvocatorClient.getDeviceId(null);
         indexIDB.set.deviceId(deviceId);
       }
-    } catch (e) {}
+    } catch (_e) {
+      //
+    }
 
     await indexBasicsSokiInvocatorClient.requestFreshes(null, lastModified);
   };

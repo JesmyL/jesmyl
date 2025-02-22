@@ -1,7 +1,7 @@
-import { updateComComment } from 'front/components/apps/cm/com-comments-manager';
+import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
+import { updateComComment } from '@cm/com-comments-manager';
 import { useEffect } from 'react';
 import { emptyFunc } from 'shared/utils';
-import { hookEffectPipe, setTimeoutPipe } from '../../../../../../../complect/hookEffectPipe';
 import { Com } from '../../Com';
 import { Order } from '../../order/Order';
 import { ComBlockCommentMakerCleans } from './Cleans';

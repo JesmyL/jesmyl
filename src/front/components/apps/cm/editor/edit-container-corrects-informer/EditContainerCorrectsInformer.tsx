@@ -3,7 +3,7 @@ import { CorrectsBox } from '../corrects-box/CorrectsBox';
 import { ICorrect } from '../corrects-box/CorrectsBox.model';
 import './EditContainerCorrectsInformer.scss';
 
-export default function EditContainerCorrectsInformer(
+export function EditContainerCorrectsInformer(
   props: PropsWithChildren<{
     corrects?: CorrectsBox | nil;
     access?: number;

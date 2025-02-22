@@ -1,12 +1,12 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { memo } from 'react';
 import styled from 'styled-components';
 import { useScreenTranslationConfigsValue } from '../atoms';
 import { useWatchScreenTranslations } from '../hooks/watch-translation';
 import { useScreenTranslationCurrentWindow, useScreenTranslationWindows } from '../hooks/windows';
 import { useTranslationIsInitialSlideShow, useTranslationIsInitialSlideShowSet } from '../initial-slide-context';
-import { ScreenTranslationControlPanelShowMdButton } from './ShowMdButton';
 import { AlertLineInput } from './alert-line/AlertLineInput';
+import { ScreenTranslationControlPanelShowMdButton } from './ShowMdButton';
 
 interface Props {
   onPrev: () => void;

@@ -1,6 +1,6 @@
-import useSelectedComs from 'front/components/apps/cm/base/useSelectedComs';
+import { useSelectedComs } from '@cm/base/useSelectedComs';
+import { CmComWid } from 'shared/api';
 import styled from 'styled-components';
-import { CmComWid } from '../../../../../../../../shared/api/complect/apps/cm/complect/enums';
 import { ComFaceListProps, currentComwIdPrefix } from './_ComList';
 import { StyledComList } from './StyledComList';
 import { useComListClickListener } from './useComListClickListener';

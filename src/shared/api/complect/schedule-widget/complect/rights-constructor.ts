@@ -101,7 +101,7 @@ export class ScheduleWidgetRightsCtrl<Right extends number = number> {
   };
 
   switchRights = (R: number | nil, ruleKey: Right, set?: '1' | '0' | nil) => {
-    let arr = (R || 1).toString(2).split('');
+    const arr = (R || 1).toString(2).split('');
 
     if (set == null) arr[ruleKey] = '' + +!+arr[ruleKey];
     else arr[ruleKey] = set;
@@ -114,7 +114,7 @@ export class ScheduleWidgetRightsCtrl<Right extends number = number> {
   };
 
   static switchRights = (R: number | nil, ruleKey: number, len: number) => {
-    let arr = (R || 1).toString(2).split('');
+    const arr = (R || 1).toString(2).split('');
 
     arr[ruleKey + 1] = '' + +!+arr[ruleKey + 1];
 

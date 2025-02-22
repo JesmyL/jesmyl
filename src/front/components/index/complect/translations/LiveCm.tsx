@@ -1,14 +1,14 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import useMeetingComFaceList from 'front/components/apps/cm/lists/meetings/useMeetingComFaceList';
-import { useMeetingPathParts } from 'front/components/apps/cm/lists/meetings/useMeetingPathParts';
+import { useAtomValue } from '#shared/lib/atoms';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { translationBlockAtom } from '@cm/atoms';
+import { useCcom } from '@cm/col/com/useCcom';
+import { useMeetingComFaceList } from '@cm/lists/meetings/useMeetingComFaceList';
+import { useMeetingPathParts } from '@cm/lists/meetings/useMeetingPathParts';
+import { CmTranslationControlled } from '@cm/translation/complect/controlled/CmTranslationControlled';
+import { useCmScreenTranslationConfigs } from '@cm/translation/complect/controlled/hooks/configs';
+import { IndexSchWTranslationLiveDataValue } from '@index/Index.model';
+import { useSwitchCurrentTranslationTextApp } from 'front/components/apps/+complect/translations/hooks/current-app';
 import { useEffect } from 'react';
-import { useAtomValue } from '../../../../complect/atoms';
-import { useSwitchCurrentTranslationTextApp } from '../../../apps/+complect/translations/hooks/current-app';
-import { translationBlockAtom } from '../../../apps/cm/atoms';
-import { useCcom } from '../../../apps/cm/col/com/useCcom';
-import CmTranslationControlled from '../../../apps/cm/translation/complect/controlled/CmTranslationControlled';
-import { useCmScreenTranslationConfigs } from '../../../apps/cm/translation/complect/controlled/hooks/configs';
-import { IndexSchWTranslationLiveDataValue } from '../../Index.model';
 import { schLiveSokiInvocatorClient } from './live-invocator';
 import { LiveTranslationAppProps } from './model';
 

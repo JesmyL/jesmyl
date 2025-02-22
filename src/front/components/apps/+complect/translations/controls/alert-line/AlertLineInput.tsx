@@ -1,9 +1,9 @@
+import { useAtom } from '#shared/lib/atoms';
+import { propagationStopper } from '#shared/lib/event-funcs';
+import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
+import { Modal } from '#shared/ui/modal/Modal/Modal';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { useAtom } from 'front/complect/atoms';
-import KeyboardInput from 'front/complect/keyboard/KeyboardInput';
-import Modal from 'front/complect/modal/Modal/Modal';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { propagationStopper } from 'front/complect/utils/utils';
 import React, { useState } from 'react';
 import { complectIDB } from '../../../_idb/complectIDB';
 import { translationShowAlertLineConfigIdAtom } from '../../initial-slide-context';

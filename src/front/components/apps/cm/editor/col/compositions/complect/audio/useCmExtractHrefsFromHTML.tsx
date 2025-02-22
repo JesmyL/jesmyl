@@ -26,18 +26,22 @@ export const useCmExtractHrefsFromHTML = (
                 if (url)
                   try {
                     serverUrl = new URL(url);
-                  } catch (e) {}
+                  } catch (_error) {
+                    //
+                  }
 
                 if (attribute)
                   try {
                     attrUrl = new URL(attribute);
-                  } catch (e) {
+                  } catch (_e) {
                     try {
                       attrUrl = new URL(url);
                       const [path, ...search] = attribute.split('?');
                       attrUrl.pathname = path;
                       if (search.length) attrUrl.search = search.join('?');
-                    } catch (e) {}
+                    } catch (_error) {
+                      //
+                    }
                   }
 
                 if (attrUrl && serverUrl) {

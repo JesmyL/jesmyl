@@ -1,12 +1,12 @@
-import useToast from 'front/complect/modal/useToast';
+import { atom, useAtomSet } from '#shared/lib/atoms';
+import { useToast } from '#shared/ui/modal/useToast';
+import { IndexMain } from 'front/components/index/parts/main/IndexMain';
+import { soki } from 'front/soki';
 import { useEffect } from 'react';
 import { Route, useParams, useSearchParams } from 'react-router-dom';
-import { atom, useAtomSet } from '../complect/atoms';
-import IndexMain from '../components/index/parts/main/IndexMain';
-import { soki } from '../soki';
-import { AppName } from './App.model';
+import { useInitSoki } from '../basis/lib/useInitSoki';
+import { AppName } from '../basis/model/App.model';
 import { routingApps } from './routing-apps';
-import { useInitSoki } from './useInitSoki';
 
 const AppRouterProvider = () => {
   const params = useParams();

@@ -1,11 +1,11 @@
+import { RollControled } from '@cm/base/RolledContent';
+import { useChordVisibleVariant } from '@cm/base/useChordVisibleVariant';
+import { Com } from '@cm/col/com/Com';
+import { ComLine } from '@cm/col/com/line/ComLine';
+import { ComOrders } from '@cm/col/com/orders/ComOrders';
 import { useEffect, useMemo } from 'react';
 import { makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
-import RollControled from '../../../base/RolledContent';
-import { useChordVisibleVariant } from '../../../base/useChordVisibleVariant';
-import { Com } from '../../../col/com/Com';
-import ComLine from '../../../col/com/line/ComLine';
-import ComOrders from '../../../col/com/orders/ComOrders';
 import { CmSchWTranslationLiveDataValue } from './model';
 
 interface Props extends CmSchWTranslationLiveDataValue {
@@ -34,16 +34,20 @@ export const CmLiveTranslationList = (props: Props) => {
     return { sum, counts };
   }, [props.com]);
 
-  const queries = [];
-  for (let linei = props.fromLinei; linei < props.toLinei; linei++) {
-    queries.push(`#${_lineNamePrefix}${linei}`);
-  }
-  const querySelector = queries.join(', ');
+  const querySelector = useMemo(() => {
+    const queries = [];
+    for (let linei = props.fromLinei; linei < props.toLinei; linei++) {
+      queries.push(`#${_lineNamePrefix}${linei}`);
+    }
+    return queries.join(', ');
+  }, [props.fromLinei, props.toLinei]);
 
   useEffect(() => {
     try {
       document.querySelector(querySelector)?.scrollIntoView({ block: 'center' });
-    } catch (error) {}
+    } catch (_error) {
+      //
+    }
   }, [querySelector]);
 
   return (

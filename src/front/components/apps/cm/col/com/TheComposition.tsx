@@ -1,34 +1,35 @@
-import { BottomPopup } from 'front/complect/absolute-popup/bottom-popup/BottomPopup';
-import { useAtom, useAtomValue } from 'front/complect/atoms';
-import { FullContent } from 'front/complect/fullscreen-content/FullContent';
-import { hookEffectPipe, setTimeoutPipe } from 'front/complect/hookEffectPipe';
-import { Metronome } from 'front/complect/metronome/Metronome';
-import PhaseContainerConfigurer, {
+import { useAtom, useAtomValue } from '#shared/lib/atoms';
+import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
+import { BottomPopup } from '#shared/ui/absolute-popup/bottom-popup/BottomPopup';
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
+import {
+  PhaseContainerConfigurer,
   StyledPhaseContainerConfigurerHead,
   StyledPhaseContainerConfigurerHeadTitle,
-} from 'front/complect/phase-container/PhaseContainerConfigurer';
-import { DocTitle } from 'front/complect/tags/DocTitle';
-import BibleTranslatesContextProvider from 'front/components/apps/bible/translates/TranslatesContext';
+} from '#shared/ui/phase-container/PhaseContainerConfigurer';
+import { DocTitle } from '#shared/ui/tags/DocTitle';
+import { Metronome } from '#widgets/metronome/Metronome';
+import { BibleTranslatesContextProvider } from 'front/components/apps/bible/translates/TranslatesContext';
 import { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { cmIDB } from '../../_db/cm-idb';
 import { cmIsShowCatBindsInCompositionAtom, isOpenChordImagesAtom } from '../../atoms';
 import { useCmTranslationComListContext } from '../../base/translations/context';
 import { useChordVisibleVariant } from '../../base/useChordVisibleVariant';
-import useLaterComList from '../../base/useLaterComList';
+import { useLaterComList } from '../../base/useLaterComList';
 import { cmComClientInvocatorMethods } from '../../editor/cm-editor-invocator.methods';
-import ChordImagesList from './chord-card/ChordImagesList';
+import { ChordImagesList } from './chord-card/ChordImagesList';
 import { ComNotFoundPage } from './ComNotFoundPage';
 import { useCheckIsComCommentIncludesBibleAddress } from './complect/comment-parser/useCheckIsComCommentIncludesBibleAddress';
 import { CmComNumber } from './complect/ComNumber';
-import ComPlayer from './player/ComPlayer';
-import TheControlledCom from './TheControlledCom';
+import { ComPlayer } from './player/ComPlayer';
+import { TheControlledCom } from './TheControlledCom';
 import { ComTools } from './tools/ComTools';
 import { useMigratableTopComTools } from './tools/useMigratableComTools';
 import { useFixedCcom, useTakeActualComw } from './useCcom';
 import { CmComCatMentions } from './useGetCatMentions';
 
-export default function TheComposition() {
+export function TheComposition() {
   const [chordVisibleVariant] = useChordVisibleVariant();
   const ccom = useFixedCcom();
   const { addLaterComw, laterComws } = useLaterComList();

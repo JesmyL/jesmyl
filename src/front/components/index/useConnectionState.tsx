@@ -1,8 +1,8 @@
-import { addEventListenerPipe, hookEffectPipe } from 'front/complect/hookEffectPipe';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useEffect, useState } from 'react';
 
-export default function useConnectionState(className?: string) {
+export function useConnectionState(className?: string) {
   return (
     useIsOnline() || (
       <LazyIcon

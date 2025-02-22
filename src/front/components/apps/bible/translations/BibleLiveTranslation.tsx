@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { IndexSchWTranslationLiveDataValue } from '../../../index/Index.model';
 import {
   BibleTranslationScreenTextsContext,
   useBibleAddressTextContext,
   useBibleTextContentContext,
-} from '../texts/AddressContentContext';
+} from '@bible/texts/AddressContentContext';
+import { IndexSchWTranslationLiveDataValue } from '@index/Index.model';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useBibleScreenTranslationConfigs } from './hooks/configs';
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
   onSend: (liveData: IndexSchWTranslationLiveDataValue) => void;
 }
 
-export default function BibleLiveTranslation(props: Props): JSX.Element {
+export function BibleLiveTranslation(props: Props): JSX.Element {
   return (
     <BibleTranslationScreenTextsContext isPreview={false}>
       <Live {...props} />

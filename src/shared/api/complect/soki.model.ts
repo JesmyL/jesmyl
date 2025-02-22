@@ -1,5 +1,5 @@
 import { User } from 'node-telegram-bot-api';
-import { DeviceId } from '..';
+import { DeviceId } from './enums';
 import { SokiInvokerData } from './invocator.master.model';
 
 export const sokiAppNames = ['index', 'cm', 'tuner', 'admin', 'gamer', 'leader', 'bible', 'wed'] as const;
@@ -11,7 +11,7 @@ export interface SokiVisit {
   urls: string[];
   version: number;
   clientTm: number;
-  location: {} | null;
+  location: object | null;
 }
 
 export type InvocatorBaseEvent = {

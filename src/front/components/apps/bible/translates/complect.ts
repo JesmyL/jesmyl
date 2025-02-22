@@ -1,5 +1,5 @@
+import { BibleBooki } from '@bible/model';
 import { BibleTranslateName } from 'shared/api';
-import { BibleBooki } from '../model';
 
 export const bibleDefaultTranslates = [BibleTranslateName.rst];
 export const bibleOtherTranslates = [BibleTranslateName.nrt, BibleTranslateName.kas];

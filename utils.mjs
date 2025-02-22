@@ -19,9 +19,14 @@ export const walkAllFiles = (path, cb) => {
   walk(path);
 };
 
-walkAllFiles('src/front', (_filePath, name, _path, isDir) => {
+walkAllFiles('src/front', (filePath, name, path, isDir) => {
   if (name === 'icons') return true;
   if (isDir) return;
+
+  if (!filePath.endsWith('.ts') && !filePath.endsWith('.tsx')) return;
+  const content = '' + fs.readFileSync(filePath);
+  if (content.match(/^import/)) return;
+  console.log(filePath);
 });
 
 export const replaceFileContent = (path, cb) => fs.writeFileSync(path, cb('' + fs.readFileSync(path)));

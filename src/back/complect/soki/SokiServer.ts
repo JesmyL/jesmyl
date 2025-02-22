@@ -1,4 +1,3 @@
-/* eslint-disable no-throw-literal */
 import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { SokiServerInvocatorTool } from 'back/SokiInvocatorBase.server';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
@@ -135,7 +134,7 @@ export class SokiServer {
 
     if ('forEach' in clientSelector) {
       if (!smylib.isFunc(clientSelector.forEach)) return;
-      clientSelector.forEach(client => client.send(stringEvent));
+      clientSelector.forEach((client: WebSocket) => client.send(stringEvent));
       return;
     }
 

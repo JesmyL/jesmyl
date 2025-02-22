@@ -1,9 +1,9 @@
+import { cmIDB } from '@cm/_db/cm-idb';
 import { SokiInvocatorBaseClient } from 'front/SokiInvocatorBase.client';
-import { CmEditorSokiInvocatorModel } from 'shared/api/invocators/cm/editor-invocator.shares.model';
-import { cmIDB } from '../_db/cm-idb';
+import { CmEditorSokiInvocatorSharesModel } from 'shared/api/invocators/cm/editor-invocator.shares.model';
 import { comEditorBusiesAtom } from './col/compositions/atoms';
 
-class CmEditorSokiInvocatorBaseClient extends SokiInvocatorBaseClient<CmEditorSokiInvocatorModel> {}
+class CmEditorSokiInvocatorBaseClient extends SokiInvocatorBaseClient<CmEditorSokiInvocatorSharesModel> {}
 export const cmEditorSokiInvocatorBaseClient = new CmEditorSokiInvocatorBaseClient('CmEditorSokiInvocatorBaseClient', {
   editedEEWords:
     () =>

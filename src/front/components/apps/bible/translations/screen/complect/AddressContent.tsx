@@ -1,7 +1,7 @@
-import { useBibleAddressTextContext } from '../../../texts/AddressContentContext';
-import { useBibleScreenTranslationFontSizeAddressAdapter } from '../../hooks/font-size-adapter/address-adapter';
-import { useGetBibleScreenTranslationAddressTextWrapperStyle } from '../../hooks/styles/address-text-wrapper-style';
-import { BibleTranslationScreenConfig } from '../../model';
+import { useBibleAddressTextContext } from '@bible/texts/AddressContentContext';
+import { useBibleScreenTranslationFontSizeAddressAdapter } from '@bible/translations/hooks/font-size-adapter/address-adapter';
+import { useGetBibleScreenTranslationAddressTextWrapperStyle } from '@bible/translations/hooks/styles/address-text-wrapper-style';
+import { BibleTranslationScreenConfig } from '@bible/translations/model';
 
 interface Props {
   screeni: number | und;
@@ -10,7 +10,7 @@ interface Props {
   windowResizeUpdatesNum: number | und;
 }
 
-export default function BibleTranslationScreenAddressContent(props: Props) {
+export function BibleTranslationScreenAddressContent(props: Props) {
   const addressTextWrapperStyle = useGetBibleScreenTranslationAddressTextWrapperStyle(props.bibleConfig);
   const addressText = useBibleAddressTextContext();
 

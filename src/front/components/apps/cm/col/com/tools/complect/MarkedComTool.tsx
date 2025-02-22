@@ -1,4 +1,4 @@
-import { useFavoriteComs } from '../../../../lists/favorites/useFavoriteComs';
+import { useFavoriteComs } from '@cm/lists/favorites/useFavoriteComs';
 import { ComTool } from '../ComTool';
 import { useComToolsCcomContext } from '../useMigratableComTools';
 

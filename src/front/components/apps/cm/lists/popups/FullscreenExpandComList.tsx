@@ -1,11 +1,11 @@
+import { cmIDB } from '@cm/_db/cm-idb';
+import { RollControled } from '@cm/base/RolledContent';
+import { Com } from '@cm/col/com/Com';
+import { CmComNumber } from '@cm/col/com/complect/ComNumber';
+import { ComOrders } from '@cm/col/com/orders/ComOrders';
 import styled from 'styled-components';
-import { cmIDB } from '../../_db/cm-idb';
-import RollControled from '../../base/RolledContent';
-import { Com } from '../../col/com/Com';
-import { CmComNumber } from '../../col/com/complect/ComNumber';
-import ComOrders from '../../col/com/orders/ComOrders';
 
-export default function FullscreenExpandComList({ coms }: { coms: Com[] }) {
+export function FullscreenExpandComList({ coms }: { coms: Com[] }) {
   const fontSize = cmIDB.useValue.comFontSize();
 
   return (

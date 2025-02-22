@@ -1,22 +1,22 @@
-import { useAtomValue } from 'front/complect/atoms';
-import { hookEffectPipe, setTimeoutPipe } from 'front/complect/hookEffectPipe';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { mylib } from 'front/utils';
+import { useAtomValue } from '#shared/lib/atoms';
+import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
+import { mylib } from '#shared/lib/my-lib';
+import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { CmComNumber } from '@cm/col/com/complect/ComNumber';
+import { ComPlayer } from '@cm/col/com/player/ComPlayer';
+import { cmComClientInvocatorMethods } from '@cm/editor/cm-editor-invocator.methods';
+import { editCompositionNavs } from '@cm/editor/editorNav';
+import { PhaseCmEditorContainer } from '@cm/editor/phase-editor-container/PhaseCmEditorContainer';
+import { useConnectionState } from '@index/useConnectionState';
 import { useEffect, useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import IconButton from '../../../../../../complect/the-icon/IconButton';
-import useConnectionState from '../../../../../index/useConnectionState';
-import { CmComNumber } from '../../../col/com/complect/ComNumber';
-import ComPlayer from '../../../col/com/player/ComPlayer';
-import { cmComClientInvocatorMethods } from '../../cm-editor-invocator.methods';
-import { editCompositionNavs } from '../../editorNav';
-import PhaseCmEditorContainer from '../../phase-editor-container/PhaseCmEditorContainer';
 import { removedCompositionsAtom } from './atoms';
-import EditCompositionBusyInfo, { StyledIsThereOtherFirstRedactorUserDetect } from './EditCompositionBusyInfo';
+import { EditCompositionBusyInfo, StyledIsThereOtherFirstRedactorUserDetect } from './EditCompositionBusyInfo';
 import { useCcomw, useEditableCcom } from './useEditableCcom';
 
-export default function EditComposition() {
+export function EditComposition() {
   const ccom = useEditableCcom();
   const ccomw = useCcomw();
   const removedComs = useAtomValue(removedCompositionsAtom);

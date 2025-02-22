@@ -7,10 +7,13 @@ export interface EventerCallbackEvent<Value, StopValue> {
   mute: () => void;
 }
 
-export type EventerCallback<Value, Return = void, StopValue = any> = (
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Any = any;
+
+export type EventerCallback<Value, Return = void, StopValue = Any> = (
   event: EventerCallbackEvent<Value, StopValue>,
 ) => Return;
-export type EventerListeners<Value, Return = void, StopValue = any> = EventerCallback<Value, Return, StopValue>[];
+export type EventerListeners<Value, Return = void, StopValue = Any> = EventerCallback<Value, Return, StopValue>[];
 
 export type EventerValueCallback<Value, Return = void> = (value: Value) => Return;
 export type EventerValueListeners<Value, Return = void> =
@@ -26,7 +29,7 @@ export type EventerListenScope<Value = void, Return = void> = {
 
 export class Eventer {
   static listen = <
-    Lis extends EventerListeners<any, Return>,
+    Lis extends EventerListeners<Any, Return>,
     Value extends Lis extends EventerListeners<infer E, Return> ? E : never,
     Return,
     StopValue extends Lis extends EventerListeners<Value, Return, infer E> ? E : never,
@@ -50,7 +53,7 @@ export class Eventer {
   };
 
   static mute = <
-    Lis extends EventerListeners<any, Return>,
+    Lis extends EventerListeners<Any, Return>,
     Value extends Lis extends EventerListeners<infer E, Return> ? E : never,
     Return,
   >(
@@ -62,7 +65,7 @@ export class Eventer {
   };
 
   static invoke = async <
-    Lis extends EventerListeners<any, Return>,
+    Lis extends EventerListeners<Any, Return>,
     Value extends Lis extends EventerListeners<infer E, Return> ? E : never,
     Return,
     StopValue extends Lis extends EventerListeners<Value, Return, infer E> ? E : never,
@@ -92,7 +95,7 @@ export class Eventer {
   };
 
   static listenValue = <
-    Lis extends EventerValueListeners<any, Return>,
+    Lis extends EventerValueListeners<Any, Return>,
     Value extends Lis extends EventerValueListeners<infer E, Return> ? E : never,
     Return,
   >(
@@ -109,7 +112,7 @@ export class Eventer {
   };
 
   static muteValue = <
-    Lis extends EventerValueListeners<any, Return>,
+    Lis extends EventerValueListeners<Any, Return>,
     Value extends Lis extends EventerValueListeners<infer E, Return> ? E : never,
     Return,
   >(
@@ -121,7 +124,7 @@ export class Eventer {
   };
 
   static invokeValue = <
-    Lis extends EventerValueListeners<any, Return>,
+    Lis extends EventerValueListeners<Any, Return>,
     Value extends Lis extends EventerValueListeners<infer E, Return> ? E : never,
     Return,
   >(

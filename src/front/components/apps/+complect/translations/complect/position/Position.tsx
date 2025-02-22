@@ -1,12 +1,12 @@
+import { useUpdateCmCurrentTranslationConfig } from 'front/components/apps/cm/translation/complect/controlled/hooks/update-config';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled, { RuleSet, css } from 'styled-components';
-import { useUpdateCmCurrentTranslationConfig } from '../../../../cm/translation/complect/controlled/hooks/update-config';
 import { useFixedResizerLines } from '../atoms';
 import { defaultScreenTranslationPositionConfig } from '../defaults';
 import { FixedResizerLines, ScreenTranslationPositionConfig } from '../model';
 import { PositionConfiguratorsResizersHalfWrapperFixer } from './complect/HalfWrapperFixer';
-import { PositionConfiguratorsResizers } from './complect/Resizers';
 import { ShowHalfFixersKeyActiveMode } from './complect/model';
+import { PositionConfiguratorsResizers } from './complect/Resizers';
 import { useScreenPositionConfigMouseDownCallback } from './hooks/mouse-down-callback';
 
 type Top = 'top' | '';

@@ -1,4 +1,4 @@
-import { useFullScreen } from '../../../../../../../complect/useFullscreen';
+import { useFullScreen } from '#shared/lib/hooks/useFullscreen';
 import { ComTool } from '../ComTool';
 
 export const FullscreenTool = () => {

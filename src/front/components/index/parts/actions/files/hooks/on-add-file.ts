@@ -1,5 +1,5 @@
-import { ChangeEvent, DragEvent, useCallback } from 'react';
-import { filesStorage } from '../../../../../../complect/configurators/utils/storage';
+import { filesStorage } from '#shared/ui/configurators/utils/storage';
+import { ChangeEvent, useCallback } from 'react';
 import { useAssociateTheFileType } from './associate-file';
 
 export const useAddMyFile = () => {

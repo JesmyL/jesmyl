@@ -1,4 +1,4 @@
-import SourceBased from '../../../../../complect/SourceBased';
+import { SourceBased } from '#shared/lib/SourceBased';
 import { ICorrect } from './CorrectsBox.model';
 
 export default class Correct extends SourceBased<ICorrect> implements ICorrect {

@@ -1,9 +1,8 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { BibleBooki, BibleChapteri, BibleVersei } from '@bible/model';
+import { useBibleSingleAddressSetter } from '@bible/translations/lists/atoms';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { BibleBooki, BibleChapteri, BibleVersei } from '../../model';
-import { useBibleSingleAddressSetter } from '../../translations/lists/atoms';
-import BibleReaderChapter from './complect/Chapter';
 
 interface Props {
   chapterList: (string[] | und)[] | nil;
@@ -12,12 +11,7 @@ interface Props {
   currentVersei?: BibleVersei;
 }
 
-export default function BibleReaderBook({
-  chapterList,
-  currentChapteri,
-  currentVersei,
-  currentBooki,
-}: Props): JSX.Element {
+export function BibleReaderBook({ chapterList, currentChapteri, currentVersei, currentBooki }: Props): JSX.Element {
   const listRef = useRef<HTMLDivElement>(null);
   const isScrollingRef = useRef(false);
   const [resizeNum, setResizeNum] = useState(0);

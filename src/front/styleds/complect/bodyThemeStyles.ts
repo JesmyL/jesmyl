@@ -1,5 +1,5 @@
+import { cursors } from 'front/cursorsBase64';
 import { css } from 'styled-components';
-import { cursors } from '../../cursorsBase64';
 
 const lightTheme = (selector: string) => css`
   ${selector && `${selector} {`}

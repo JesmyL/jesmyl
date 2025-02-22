@@ -1,17 +1,17 @@
+import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContainerConfigurer';
+import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
+import { bibleIDB } from '@bible/_db/bibleIDB';
+import { useBibleAddressBooki } from '@bible/hooks/address/books';
+import { useBibleAddressChapteri } from '@bible/hooks/address/chapters';
+import { useBibleBookList } from '@bible/hooks/texts';
+import { useBibleTranslationSearchResultSelectedSet } from '@bible/translations/search/hooks/results';
+import { BibleSearchPanelSearchTextInput } from '@bible/translations/search/input-panel/SearchTextInput';
+import { BibleSearchResults } from '@bible/translations/search/Results';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { emptyArray } from 'shared/utils';
-import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
-import IconCheckbox from '../../../../../complect/the-icon/IconCheckbox';
-import { bibleIDB } from '../../_db/bibleIDB';
-import { useBibleAddressBooki } from '../../hooks/address/books';
-import { useBibleAddressChapteri } from '../../hooks/address/chapters';
-import { useBibleBookList } from '../../hooks/texts';
-import BibleSearchResults from '../../translations/search/Results';
-import { useBibleTranslationSearchResultSelectedSet } from '../../translations/search/hooks/results';
-import BibleSearchPanelSearchTextInput from '../../translations/search/input-panel/SearchTextInput';
 
-export default function BibleReaderSearchPage() {
+export function BibleReaderSearchPage() {
   const navigate = useNavigate();
   const currentBooki = useBibleAddressBooki();
   const currentChapteri = useBibleAddressChapteri();

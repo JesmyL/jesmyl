@@ -1,9 +1,8 @@
-/* eslint-disable eqeqeq */
 import md5 from 'md5';
 import { makeRegExp } from './makeRegExp';
 import { itIt, itNIt } from './utils';
 
-export type StringTemplaterArgs<Adds = {}> = {
+export type StringTemplaterArgs<Adds = object> = {
   ink: (num: number, post: string, pre: string) => string;
   switch: () => string;
 } & Adds;
@@ -30,13 +29,13 @@ export class SMyLib {
 
   isObj = (it: unknown): it is Record<string, unknown> => it instanceof Object && !(it instanceof Array);
   isobj = (it: unknown): it is Record<string | number, unknown> | unknown[] => typeof it === 'object' && it != null;
-  isArr = <Item = any>(it: any): it is Item[] => it instanceof Array;
+  isArr = <Item = unknown>(it: unknown): it is Item[] => it instanceof Array;
   isNum = (it: unknown): it is number => typeof it === 'number' && !isNaN(it);
   isnum = (it: number | string): it is number => parseFloat(it as string) == it;
   isStr = (it: unknown): it is string => typeof it === 'string';
   isFunc = <Fun extends Function>(it: unknown | Fun): it is Fun => typeof it === 'function';
   isRegExp = (it: unknown): it is RegExp => it instanceof RegExp;
-  isAFunc = (it: Function | unknown): it is Function =>
+  isAFunc = (it: func | unknown): it is func =>
     this.isFunc(it) && (it as never as { [Symbol.toStringTag]: unknown })[Symbol.toStringTag] === 'AsyncFunction';
   isUnd = (it: unknown): it is undefined => it === undefined;
   isBool = (it: unknown): it is boolean => typeof it === 'boolean';
@@ -181,7 +180,7 @@ export class SMyLib {
   typeOf(obj: unknown): string | null {
     return (
       (['isStr', 'isNum', 'isBool', 'isArr', 'isNull', 'isUnd', 'isFunc', 'isObj', 'isNan'] as (keyof SMyLib)[]).find(
-        (type: keyof SMyLib) => (this[type] as Function)(obj),
+        (type: keyof SMyLib) => (this[type] as func)(obj),
       ) || null
     );
   }
@@ -316,11 +315,11 @@ export class SMyLib {
           const diapason = getDiapason(parta.slice(parti + 1), null, true);
           escLim += diapason.len;
 
-          const nrm = inline(diapason.list) as [];
-          addNorm(func.apply(this, nrm));
+          addNorm(func.apply(this, inline(diapason.list) as never));
         };
 
         if (part === dob) {
+          console.info();
         } else if (part === dcb || part === ocb) escLim++;
         else if (this.isStr(part)) {
           const match = part.match(makeRegExp('/^\\$(\\w+)(!{1,2}|\\?{1,2})?(;?)/'));
@@ -350,11 +349,11 @@ export class SMyLib {
               }
             } else if (this.isFunc(val)) invokeFunc(val);
             else {
-              parti && escLim++;
+              if (parti) escLim++;
               addNorm(val, op);
             }
           } else {
-            parti && escLim++;
+            if (parti) escLim++;
             addNorm(part.replace(makeRegExp('/^\\\\/'), ''), op);
           }
         } else addNorm(part);

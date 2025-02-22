@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import { mylib } from '#shared/lib/my-lib';
+import { bibleTranslatesIDB } from '@bible/_db/bibleIDB';
+import { bibleTitles } from '@bible/hooks/bibleTitlesJson';
+import { BibleTranslate } from '@bible/model';
+import React, { JSX, useContext, useEffect, useState } from 'react';
 import { BibleTranslateName } from 'shared/api';
 import { Eventer } from 'shared/utils';
-import { bibleTranslatesIDB } from '../_db/bibleIDB';
-import { bibleTitles } from '../hooks/bibleTitlesJson';
-import { BibleTranslate } from '../model';
 import { bibleAllTranslates } from './complect';
 import { useBibleMyTranslates, useBibleShowTranslatesValue } from './hooks';
 
@@ -36,18 +37,20 @@ const onTranslateSetEvents = Eventer.createValue<{ tName: BibleTranslateName; va
 const tNames = new Set(bibleAllTranslates);
 
 bibleTranslatesIDB.hook('updating', (_, tName, obj) => {
-  if (tNames.has(tName as never)) onTranslateSetEvents.invoke({ tName: tName as never, value: obj.val });
+  if (mylib.isObj(obj) && 'val' in obj)
+    if (tNames.has(tName as never)) onTranslateSetEvents.invoke({ tName: tName as never, value: obj.val as never });
 });
 
 bibleTranslatesIDB.hook('creating', (tName, obj) => {
-  if (tNames.has(tName as never)) onTranslateSetEvents.invoke({ tName: tName as never, value: obj.val });
+  if (mylib.isObj(obj) && 'val' in obj)
+    if (tNames.has(tName as never)) onTranslateSetEvents.invoke({ tName: tName as never, value: obj.val as never });
 });
 
 export const bibleLowerBooks = bibleTitles.titles.map(book => book.map(title => title.toLowerCase()));
 
 export type BibleBookTranslates = PRecord<BibleTranslateName, ChapterCombine>;
 const loadings: PRecord<BibleTranslateName, boolean> = {};
-let localTranslates: BibleBookTranslates = {};
+const localTranslates: BibleBookTranslates = {};
 
 const Context = React.createContext<BibleBookTranslates>({});
 
@@ -57,7 +60,7 @@ interface Props {
   children?: React.ReactNode;
   isSetAllTranslates?: boolean;
 }
-export default function BibleTranslatesContextProvider({ children, isSetAllTranslates }: Props): JSX.Element {
+export function BibleTranslatesContextProvider({ children, isSetAllTranslates }: Props): JSX.Element {
   const showTranslates = useBibleShowTranslatesValue();
   const [myTranslates] = useBibleMyTranslates();
   const [translates, setTranslates] = useState<BibleBookTranslates>(localTranslates);
@@ -99,13 +102,13 @@ export default function BibleTranslatesContextProvider({ children, isSetAllTrans
             (async () => {
               try {
                 const content = await bibleTranslatesIDB.get[tName]();
-                content && mapChapters(tName, content);
+                if (content) mapChapters(tName, content);
                 loadings[tName] = false;
 
                 if (!watchTranslates.some(tName => localTranslates[tName] === undefined)) {
                   setTranslates({ ...localTranslates });
                 }
-              } catch (error) {
+              } catch (_error) {
                 loadings[tName] = false;
               }
             })();

@@ -1,6 +1,6 @@
-import { ConfiguratorEditProps } from 'front/complect/configurators/model';
-import Dropdown from '../../../../../../../../../complect/dropdown/Dropdown';
-import { translationPushKinds } from '../../../../../../col/com/Com.complect';
+import { ConfiguratorEditProps } from '#shared/ui/configurators/model';
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
+import { translationPushKinds } from '@cm/col/com/Com.complect';
 
 type Props = ConfiguratorEditProps<{ pushKind?: number }>;
 

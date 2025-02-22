@@ -1,5 +1,6 @@
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
+import eslint from 'vite-plugin-eslint';
 import { VitePWA } from 'vite-plugin-pwa';
 import * as tsconf from './tsconfig.json';
 
@@ -16,7 +17,15 @@ export default defineConfig(() => {
     build: {
       outDir: 'build',
     },
-    plugins: [react(), VitePWA({ injectRegister: 'auto' })],
+    plugins: [
+      react(),
+      eslint({
+        emitWarning: false,
+        // failOnWarning: false,
+        // lintOnStart: false,
+      }),
+      VitePWA({ injectRegister: 'auto', strategies: 'generateSW', registerType: 'autoUpdate' }),
+    ],
     resolve: { alias },
   };
 });

@@ -13,18 +13,19 @@ export const makeSokiInvocatorBase = <
   eventerValue: EventerListenScope<SokiInvokerTranferDto<Event, ToolParam>>,
   onEachInvoke?: (onEachesRet: OnEachesRet, data: { tool: ToolParam; name: string; method: string }) => void,
 ) => {
-  type Methods = Record<string, (...args: any[]) => any>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  type Methods = Record<string, (...args: any[]) => unknown>;
 
   type Invocator<M extends Methods> = {
     [K in keyof M]: (tool: ToolParam) => (...args: Parameters<M[K]>) => Promise<ReturnType<M[K]>>;
   };
 
-  const registeredInvocators: PRecord<string, Invocator<any>> = {};
-  const registeredOnEachInvocations: PRecord<string, OnEachOnvocations<any> | null> = {};
+  const registeredInvocators: PRecord<string, Invocator<Methods>> = {};
+  const registeredOnEachInvocations: PRecord<string, OnEachOnvocations<Methods> | null> = {};
 
   eventerValue.listen(async ({ invoke: { name, method, params }, sendResponse, tool, requestId }) => {
     try {
-      if (registeredInvocators[name] == null) throw new Error(`the name ${name} not registered`);
+      if (registeredInvocators[name] == null) throw new Error(`the name ${name} not registered - ${method}()`);
       if (!smylib.isFunc(registeredInvocators[name][method]))
         throw new Error(`the ${name} has no the ${method} method`);
       const invokedResult = await registeredInvocators[name][method](tool)(...params);
@@ -60,8 +61,8 @@ export const makeSokiInvocatorBase = <
   return function (
     this: unknown,
     className: ClassName,
-    methods: Invocator<any>,
-    onEachInvocations: OnEachOnvocations<any>,
+    methods: Invocator<Methods>,
+    onEachInvocations: OnEachOnvocations<Methods>,
   ) {
     const self = this as Methods;
 
@@ -71,20 +72,19 @@ export const makeSokiInvocatorBase = <
     }
 
     Object.keys(methods).forEach(methodName => {
-      self[methodName] =
-        (tool: ToolParam) =>
+      self[methodName] = ((tool: ToolParam) =>
         (...params: unknown[]) =>
-          methods[methodName](tool)(...params);
+          methods[methodName](tool)(...params)) as never;
     });
 
-    self.$$register = () => {
+    self.$$register = (() => {
       const name = className.slice(0, -classNamePostfix.length);
 
       if (registeredInvocators[name] !== undefined) throw new Error(`the ${className} is registered more then 1 times`);
 
-      registeredInvocators[name] = self;
+      registeredInvocators[name] = self as never;
       registeredOnEachInvocations[name] = onEachInvocations;
-    };
+    }) as never;
 
     return this;
   } as unknown as SokiInvocator;

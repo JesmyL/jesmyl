@@ -1,8 +1,8 @@
+import { cmIDB } from '@cm/_db/cm-idb';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { CmComWid } from 'shared/api';
-import { cmIDB } from '../../../_db/cm-idb';
 import { EditableCom } from './com/EditableCom';
 
 export const useCcomw = () => +useParams().comw! as CmComWid | NaN;

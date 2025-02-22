@@ -14,7 +14,7 @@ export const deployTheCode = async (front, back) => {
   if (~process.argv.indexOf('--front')) {
     const isIgnoreVersionUpdate = ~process.argv.indexOf('--IVU');
 
-    const files = [`./${front.builtFolder}/*`, ...(isIgnoreVersionUpdate ? [] : [`./${versionFilePath}`])];
+    const files = [...(isIgnoreVersionUpdate ? [] : [`./${versionFilePath}`]), `./${front.builtFolder}/*`];
 
     console.info('Files to load: ', files);
 
@@ -41,7 +41,7 @@ export const deployTheCode = async (front, back) => {
       await sendFilesOnServer(files, back);
 
       console.info('Front files sent on server');
-    } catch (error) {
+    } catch (_error) {
       console.error('Build failure');
       resetVersion();
     }
@@ -62,7 +62,7 @@ export const deployTheCode = async (front, back) => {
       for (const [targetDir, localFiles] of loadToDirFiles)
         try {
           await sendFilesOnServer(localFiles, { targetDir: `${back.targetDir}/${targetDir}` });
-        } catch (e) {
+        } catch (_e) {
           console.error('XXXXX - load error');
         }
     }

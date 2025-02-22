@@ -1,16 +1,16 @@
+import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
+import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { useSelectedComs } from '@cm/base/useSelectedComs';
+import { useFavoriteComs } from '@cm/lists/favorites/useFavoriteComs';
+import { CmComWid } from 'shared/api';
 import styled from 'styled-components';
-import { CmComWid } from '../../../../../../../shared/api/complect/apps/cm/complect/enums';
-import { useConfirm } from '../../../../../../complect/modal/confirm/useConfirm';
-import IconButton from '../../../../../../complect/the-icon/IconButton';
-import useSelectedComs from '../../../base/useSelectedComs';
-import { useFavoriteComs } from '../../../lists/favorites/useFavoriteComs';
 
 interface Props {
   onClick: (reset: null) => void;
   comWid: CmComWid;
 }
 
-export default function ComFaceContextMenu({ onClick, comWid }: Props) {
+export function ComFaceContextMenu({ onClick, comWid }: Props) {
   const { isMarked, toggleMarked } = useFavoriteComs();
   const isComMarked = isMarked(comWid);
   const { clearSelectedComws, selectedComws, selectedComPosition: isSelected, toggleSelectedCom } = useSelectedComs();

@@ -1,17 +1,17 @@
+import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { cmIDB } from '@cm/_db/cm-idb';
+import { InputWithLoadingIcon } from '@cm/base/InputWithLoadingIcon';
+import { cmCatClientInvocatorMethods } from '@cm/editor/cm-editor-invocator.methods';
+import { EditContainerCorrectsInformer } from '@cm/editor/edit-container-corrects-informer/EditContainerCorrectsInformer';
 import { useLiveQuery } from 'dexie-react-hooks';
-import IconButton from 'front/complect/the-icon/IconButton';
-import IconCheckbox from 'front/complect/the-icon/IconCheckbox';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { cmIDB } from 'front/components/apps/cm/_db/cm-idb';
-import { InputWithLoadingIcon } from 'front/components/apps/cm/base/InputWithLoadingIcon';
-import { cmCatClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
 import { useMemo } from 'react';
 import { emptyFunc, makeRegExp } from 'shared/utils';
-import EditContainerCorrectsInformer from '../../../edit-container-corrects-informer/EditContainerCorrectsInformer';
 import { EditableCat } from '../../categories/EditableCat';
 import { useEditableCcom } from '../useEditableCcom';
 
-export default function CategoryBinds() {
+export function CategoryBinds() {
   const ccom = useEditableCcom();
   const icats = useLiveQuery(() => cmIDB.db.cats.toArray());
   const cats = useMemo(() => icats?.map(icat => new EditableCat(icat, [])), [icats]);
@@ -46,7 +46,7 @@ export default function CategoryBinds() {
             {cat.dict?.[ccom.wid] != null && (
               <IconButton
                 icon="Cancel01"
-                postfix={isNaN(cat.dict?.[ccom.wid]!) ? 'Корректно очистить' : 'Удалить'}
+                postfix={isNaN(cat.dict?.[ccom.wid as never]) ? 'Корректно очистить' : 'Удалить'}
                 confirm={`Очистить номер из сборника ${cat.name}?`}
                 className="pointer color--ko margin-big-gap-l margin-gap-b"
                 onClick={() => cmCatClientInvocatorMethods.removeNativeComNum(null, ccom.wid, cat.wid)}

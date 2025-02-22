@@ -5,7 +5,7 @@ function makeRegExp(reg: StrRegExp, isResetLastIndex?: boolean) {
   if (regs[reg] === undefined)
     try {
       regs[reg] = new RegExp(reg.slice(1, reg.lastIndexOf('/')), reg.slice(reg.lastIndexOf('/') + 1));
-    } catch (e) {
+    } catch (_e) {
       throw Error(`Incorrect arg passed in ${makeRegExp.name}(${reg})`);
     }
 

@@ -1,9 +1,9 @@
-import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
-import { BottomPopupItem } from '../../../../../../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
-import useModal from '../../../../../../../../../complect/modal/useModal';
-import IconCheckbox from '../../../../../../../../../complect/the-icon/IconCheckbox';
-import { ChordVisibleVariant } from '../../../../../../Cm.model';
-import TheOrder from '../../../../../../col/com/order/TheOrder';
+import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
+import { useModal } from '#shared/ui/modal/useModal';
+import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
+import { ChordVisibleVariant } from '@cm/Cm.model';
+import { TheOrder } from '@cm/col/com/order/TheOrder';
+import { cmComOrderClientInvocatorMethods } from '@cm/editor/cm-editor-invocator.methods';
 import { OrdersRedactorOrderToolsProps } from '../OrdersRedactorOrderTools';
 
 export const OrdersRedactorOrderToolsChordBind = ({ com, ord, ordi, onClose }: OrdersRedactorOrderToolsProps) => {

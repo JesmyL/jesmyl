@@ -1,5 +1,4 @@
 import { memo } from 'react';
-import BibleTranslationArchive from '../Archive';
 import { useBibleClearTranslationHistorySetter, useBibleTranslationHistory } from './hooks/history';
 
 export default memo(function BibleTranslationHistoryArchive(): JSX.Element {

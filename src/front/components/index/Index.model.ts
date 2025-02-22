@@ -1,7 +1,7 @@
+import { AppName } from '#basis/model/App.model';
+import { BibleTranslationScreenConfig } from '@bible/translations/model';
+import { CmSchWTranslationLiveDataValue } from '@cm/translation/complect/live/model';
 import { LocalSokiAuth } from 'shared/api';
-import { AppName } from '../../app/App.model';
-import { BibleTranslationScreenConfig } from '../apps/bible/translations/model';
-import { CmSchWTranslationLiveDataValue } from '../apps/cm/translation/complect/live/model';
 
 export type IndexErrorScope = keyof ClientRegisterData;
 

@@ -12,6 +12,7 @@ declare global {
   type doubleStr = `${'-' | ''}${intStr}.${number}`;
   type numberStr = `${'-' | ''}${intStr}${`.${number}` | ''}`;
   type StringBySlash = `${string}/${string}`;
+  type func = (arg: unknown, ...args: unknown[]) => unknown | void;
 
   type PRecord<Key extends string | number, Value> = Partial<Record<Key, Value>>;
 
@@ -21,10 +22,10 @@ declare global {
   type NaN = NotANumber;
   type NaNumber = number | NotANumber;
 
-  type PropagationStopperEvent<With = {}> = { stopPropagation(): void } & With;
+  type PropagationStopperEvent = { stopPropagation(): void };
   type PropagationStopper = (event: PropagationStopperEvent) => void;
 
-  type DefaultPreventerEvent<With = {}> = { preventDefault(): void } & With;
+  type DefaultPreventerEvent = { preventDefault(): void };
   type DefaultPreventer = (event: DefaultPreventerEvent) => void;
 
   type PreventerAndStopperCallback = (event: DefaultPreventerEvent & PropagationStopperEvent) => void;

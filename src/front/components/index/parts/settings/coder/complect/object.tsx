@@ -1,10 +1,10 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
 import { makeRegExp } from 'shared/utils';
 import { CoderResultComponent } from './model';
 import { CoderResultValue } from './value';
 import { CoderValueExpandable } from './value-expandable';
 
-export const CoderResultObject: CoderResultComponent<{}> = ({ value, name, scope, isObjectParent }) => {
+export const CoderResultObject: CoderResultComponent<object> = ({ value, name, scope, isObjectParent }) => {
   const keys = mylib.keys(value);
   const resultName = name ?? value.constructor.name;
   const scopeName = isObjectParent

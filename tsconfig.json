@@ -17,11 +17,21 @@
     "jsx": "react-jsx",
     "baseUrl": "src",
     "paths": {
+      "#shared/*": ["./front/shared/*"],
+      "#widgets/*": ["./front/widgets/*"],
+      "#basis/*": ["./front/basis/*"],
+
+      "@cm/*": ["./front/components/apps/cm/*"],
+      "@bible/*": ["./front/components/apps/bible/*"],
+      "@index/*": ["./front/components/index/*"],
+      "@app/*": ["./front/app/*"],
+
       "shared/*": ["./shared/*"],
       "front/*": ["./front/*"],
+      "back/*": ["./back/*"],
       "bibles/*": ["./bibles/*"]
     }
   },
   "include": ["src", "src/shared/utils/complect", "./node_modules/cypress", "cypress/**/*.ts"],
-  "exclude": ["./src/front/complect/the-icon/icons"]
+  "exclude": ["src/front/shared/ui/the-icon/icons"]
 }

@@ -1,5 +1,5 @@
+import { ChordVisibleVariant } from '@cm/Cm.model';
 import { ReactNode, RefObject } from 'react';
-import { ChordVisibleVariant } from '../../../Cm.model';
 import { Com } from '../Com';
 import { IComLineProps, IComOrdHeaderProps } from '../order/Order.model';
 

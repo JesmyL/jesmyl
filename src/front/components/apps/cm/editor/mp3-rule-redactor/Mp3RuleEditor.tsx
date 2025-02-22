@@ -1,10 +1,10 @@
+import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
+import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { ReactNode, useState } from 'react';
 import { CmMp3Rule } from 'shared/api';
-import KeyboardInput from '../../../../../complect/keyboard/KeyboardInput';
-import IconButton from '../../../../../complect/the-icon/IconButton';
 import { useCmMp3Rules } from './useCmMp3Rules';
 
-export default function Mp3RuleEditor(
+export function Mp3RuleEditor(
   props: Partial<CmMp3Rule> & {
     redact?: boolean;
     button?: ReactNode;
@@ -40,7 +40,7 @@ export default function Mp3RuleEditor(
                     else if (unnecessary) {
                       setErrorMessage(`Ссылка должна быть на корень сайта (без ${unnecessary})`);
                     } else setErrorMessage('');
-                  } catch (e) {
+                  } catch (_e) {
                     setErrorMessage('Невалидный URL-адрес');
                   }
                   setUrl(value);

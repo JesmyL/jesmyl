@@ -1,4 +1,4 @@
-import { useAuth } from '../../../../../../index/atoms';
+import { useAuth } from '@index/atoms';
 import { ComTool } from '../ComTool';
 import { useComToolsCcomContext } from '../useMigratableComTools';
 

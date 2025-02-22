@@ -1,5 +1,5 @@
-import KeyboardInput from 'front/complect/keyboard/KeyboardInput';
-import { TextCorrectMessages } from 'front/components/apps/cm/editor/complect/TextBlockIncorrectMessages';
+import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
+import { TextCorrectMessages } from '@cm/editor/complect/TextBlockIncorrectMessages';
 import { IExportableCom } from 'shared/api';
 import { EditableCom } from '../../../com/EditableCom';
 

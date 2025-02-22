@@ -1,14 +1,14 @@
-import { StyledLoadingSpinner } from 'front/complect/the-icon/IconLoading';
+import { styledHoverBind } from '#shared/lib/styled-utils';
+import { StyledLoadingSpinner } from '#shared/ui/the-icon/IconLoading';
+import { ChordVisibleVariant } from '@cm/Cm.model';
+import { ComLine } from '@cm/col/com/line/ComLine';
+import { TheOrder } from '@cm/col/com/order/TheOrder';
 import { useState } from 'react';
 import { CmComOrderWid } from 'shared/api';
 import styled, { css } from 'styled-components';
-import { styledHoverBind } from '../../../../../../../../complect/utils/styled-components';
-import { ChordVisibleVariant } from '../../../../../Cm.model';
-import ComLine from '../../../../../col/com/line/ComLine';
-import TheOrder from '../../../../../col/com/order/TheOrder';
 import { useEditableCcom } from '../../useEditableCcom';
 
-export default function ChordApplicationsRedactor() {
+export function ChordApplicationsRedactor() {
   const ccom = useEditableCcom();
   const [ordAwaits, setOrdAwaits] = useState({} as Record<CmComOrderWid, number>);
 

@@ -1,15 +1,15 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { useBibleAddressVersei } from '@bible/hooks/address/verses';
+import { useSetScreenTranslationInteractiveBackground } from 'front/components/apps/+complect/translations/hooks/interactive-back';
+import { useApplyScreenFontFamilyEffect } from 'front/components/apps/+complect/translations/hooks/set-font-family';
+import { TranslationScreenProps } from 'front/components/apps/+complect/translations/Translations.model';
 import { useRef, useState } from 'react';
-import { TranslationScreenProps } from '../../../+complect/translations/Translations.model';
-import { useSetScreenTranslationInteractiveBackground } from '../../../+complect/translations/hooks/interactive-back';
-import { useApplyScreenFontFamilyEffect } from '../../../+complect/translations/hooks/set-font-family';
-import { useBibleAddressVersei } from '../../hooks/address/verses';
 import { useBibleScreenTranslationKeyListener } from '../hooks/key-listener';
 import { useGetBibleScreenTranslationWrapperStyle } from '../hooks/styles/wrapper-style';
 import { BibleTranslationScreenConfig } from '../model';
 import { BibleTranslationScreenAddressContainer } from './complect/AddressContainer';
 import { BibleTranslationScreenAddressPanel } from './complect/AddressPanel';
-import BibleTranslationScreenContent from './complect/Content';
+import { BibleTranslationScreenContent } from './complect/Content';
 import { BibleTranslationScreenContentConfiguration } from './complect/ContentConfiguration';
 
 interface Props extends TranslationScreenProps {

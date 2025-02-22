@@ -1,10 +1,10 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { Modal } from '#shared/ui/modal/Modal/Modal';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useState } from 'react';
-import Modal from '../../../../../../../../complect/modal/Modal/Modal';
 import { TheComCommentForExample } from './ForExample';
-import TheComCommentBibleTextsInfo from './TheComCommentBibleTextsInfo';
+import { TheComCommentBibleTextsInfo } from './TheComCommentBibleTextsInfo';
 
-export default function TheComCommentInfo({ HashSwitcherIcon }: { HashSwitcherIcon: TheIconKnownName }) {
+export function TheComCommentInfo({ HashSwitcherIcon }: { HashSwitcherIcon: TheIconKnownName }) {
   const italicBlockNumber_ = <i>номер блока</i>;
   const [isOpenBibleInfo, setIsOpenBibleInfo] = useState<unknown>(false);
 

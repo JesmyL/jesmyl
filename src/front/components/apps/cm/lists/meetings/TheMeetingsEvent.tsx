@@ -1,19 +1,19 @@
+import { isMobileDevice } from '#shared/lib/device-differences';
+import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContainerConfigurer';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { ScheduleWidgetWatchLiveTranslationButton } from '#widgets/schedule/live-translations/WatchLiveButton';
+import { CmComListContext } from '@cm/base/translations/context';
+import { cmCompositionRoute } from '@cm/routing/cmRoutingApp';
+import { useAuth } from '@index/atoms';
+import { IndexScheduleWidgetTranslations } from '@index/complect/translations/LiveTranslations';
+import { indexIDB } from '@index/db/index-idb';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { isMobileDevice } from 'front/complect/device-differences';
-import { ScheduleWidgetWatchLiveTranslationButton } from 'front/complect/schedule-widget/live-translations/WatchLiveButton';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { useAuth } from 'front/components/index/atoms';
-import { IndexScheduleWidgetTranslations } from 'front/components/index/complect/translations/LiveTranslations';
-import { indexIDB } from 'front/components/index/db/index-idb';
 import { Link, Route, Routes } from 'react-router-dom';
-import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
-import { CmComListContext } from '../../base/translations/context';
-import { cmCompositionRoute } from '../../routing/cmRoutingApp';
 import { CmMeetingEventEdits } from './EventEdits';
-import useMeetingComFaceList from './useMeetingComFaceList';
+import { useMeetingComFaceList } from './useMeetingComFaceList';
 import { useMeetingPathParts } from './useMeetingPathParts';
 
-export default function TheMeetingsEvent() {
+export function TheMeetingsEvent() {
   const scopeProps = useMeetingPathParts();
   const { comFaceListNode, coms, packComws } = useMeetingComFaceList(
     scopeProps.schw,

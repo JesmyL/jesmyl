@@ -1,8 +1,8 @@
+import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { TheIconLoading } from '../complect/the-icon/IconLoading';
-import { AppName } from './App.model';
-import { useInitSoki } from './useInitSoki';
+import { useInitSoki } from '../basis/lib/useInitSoki';
+import { AppName } from '../basis/model/App.model';
 
 export const scheduleWidgetActionsRouteName = 'app-actions' as const;
 
@@ -31,7 +31,7 @@ const AppServiceActions = () => {
       .setTimeout(async () => {
         try {
           // setSuccess('' + (await serviceMaster(appName as AppName)(key, value)));
-        } catch (error) {
+        } catch (_error) {
           setError('' + error);
         }
       }, 1000)

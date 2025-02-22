@@ -14,7 +14,7 @@ const addLaterComw = (comw: number) => {
   });
 };
 
-export default function useLaterComList() {
+export function useLaterComList() {
   return {
     laterComws: cmIDB.useValue.laterComwList(),
     addLaterComw,

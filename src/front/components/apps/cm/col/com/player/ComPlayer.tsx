@@ -1,16 +1,16 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
-import JesmylLogo from '../../../../../../complect/jesmyl-logo/JesmylLogo';
 import './ComPlayer.scss';
-import ComPlayerTrack from './ComPlayerTrack';
+import { ComPlayerTrack } from './ComPlayerTrack';
 
 let currentAudioNode: HTMLAudioElement | und;
 const emptyArr: [] = [];
 const movesMemoCallback = () => ({ prevX: 0, onEnd: emptyFunc });
 
-export default function ComPlayer({ src, split }: { src: string; split?: string | RegExp | boolean }) {
+export function ComPlayer({ src, split }: { src: string; split?: string | RegExp | boolean }) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const player = audioRef.current;
   const [isError, setIsError] = useState(false);

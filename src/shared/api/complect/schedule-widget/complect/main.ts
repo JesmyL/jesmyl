@@ -128,7 +128,7 @@ export interface IScheduleWidgetDayEvent {
 
 export type ScheduleWidgetDayEventAttValues = Record<ScheduleWidgetAttKey, ScheduleWidgetDayEventAttValue>;
 
-export type ScheduleWidgetAppAttBasic<AttValue extends any = any> = Record<`[SCH]:${string}`, unknown> & {
+export type ScheduleWidgetAppAttBasic<AttValue = any> = Record<`[SCH]:${string}`, unknown> & {
   icon: TheIconKnownName;
   title: string;
   im?: `[SCH]:${string}` | nil;

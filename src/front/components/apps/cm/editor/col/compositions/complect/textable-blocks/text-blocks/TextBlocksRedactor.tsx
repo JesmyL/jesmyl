@@ -1,5 +1,5 @@
 import { useEditableCcom } from '../../../useEditableCcom';
-import CmTextBlockRedactor from './TextBlockRedactor';
+import { CmTextBlockRedactor } from './TextBlockRedactor';
 
 export const CmTextBlocksRedactor = () => {
   const ccom = useEditableCcom();

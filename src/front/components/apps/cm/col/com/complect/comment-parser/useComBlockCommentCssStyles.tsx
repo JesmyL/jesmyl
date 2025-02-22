@@ -1,11 +1,11 @@
-import { MyLib } from 'front/utils';
+import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
+import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
+import { MyLib } from '#shared/lib/my-lib';
+import { useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
 import { useEffect, useState } from 'react';
 import { CmComWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
-import { css, RuleSet } from 'styled-components';
-import { hookEffectPipe, setTimeoutPipe } from '../../../../../../../complect/hookEffectPipe';
-import { useDebounceValue } from '../../../../../../../complect/useDebounceValue';
-import { useBibleTranslatesContext } from '../../../../../bible/translates/TranslatesContext';
+import { RuleSet, css } from 'styled-components';
 import { Order } from '../../order/Order';
 import { ComBlockCommentMakerCleans } from './Cleans';
 

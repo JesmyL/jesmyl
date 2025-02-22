@@ -1,8 +1,8 @@
+import { AppName } from '#basis/model/App.model';
+import { atom } from '#shared/lib/atoms';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useParams } from 'react-router-dom';
 import { SokiAuthLogin } from 'shared/api';
-import { AppName } from '../../app/App.model';
-import { atom } from '../../complect/atoms';
 import { authIDB } from './db/auth-idb';
 import { indexIDB } from './db/index-idb';
 import { IndexSchWTranslationLiveDataValue } from './Index.model';

@@ -1,5 +1,4 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
-import { mylib } from 'front/utils';
 import { IScheduleWidgetDayEventMi } from 'shared/api';
 import { SchDaysSokiInvocatorMethods } from 'shared/api/invocators/schedules/invocators.model';
 import { makeRegExp, smylib } from 'shared/utils';
@@ -46,7 +45,7 @@ class SchDaysSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchDaysSoki
           modifyScheduleDay(true, (day, _, type) =>
             day.list.push({
               type,
-              mi: mylib.takeNextMi(day.list, IScheduleWidgetDayEventMi.def),
+              mi: smylib.takeNextMi(day.list, IScheduleWidgetDayEventMi.def),
             }),
           ),
 
@@ -62,7 +61,7 @@ class SchDaysSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchDaysSoki
             const eventi = day.list.findIndex(event => event.mi === eventMi);
             if (eventi < 0) throw new Error('event not found');
 
-            day.list = mylib.withInsertedBeforei(day.list, beforei, eventi);
+            day.list = smylib.withInsertedBeforei(day.list, beforei, eventi);
           }),
       },
       {

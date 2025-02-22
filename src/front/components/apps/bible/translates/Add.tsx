@@ -1,16 +1,16 @@
-import Modal from 'front/complect/modal/Modal/Modal';
-import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
-import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { Modal } from '#shared/ui/modal/Modal/Modal';
+import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
+import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { bibleSokiInvocatorClient } from '@bible/invoctors/invocator';
+import { removeBibleTranslate } from '@bible/utils';
 import { useState } from 'react';
 import { BibleTranslateName } from 'shared/api';
-import IconButton from '../../../../complect/the-icon/IconButton';
-import { bibleSokiInvocatorClient } from '../invoctors/invocator';
-import { removeBibleTranslate } from '../utils';
 import { bibleAllTranslates, translateDescriptions } from './complect';
 import { useBibleMyTranslates } from './hooks';
 
-export default function BibleModulesTranslationsRedactButton(): JSX.Element {
+export function BibleModulesTranslationsRedactButton(): JSX.Element {
   const [myTranslates] = useBibleMyTranslates();
   const [translateOnLoad, setTranslateOnLoad] = useState<BibleTranslateName | null>(null);
   const [isOpenModal, setIsOpenModal] = useState<unknown>(false);

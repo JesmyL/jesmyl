@@ -1,9 +1,9 @@
+import { bibleIDB } from '@bible/_db/bibleIDB';
+import { BibleVersei } from '@bible/model';
+import { useBibleShowTranslatesValue } from '@bible/translates/hooks';
+import { useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
+import { useBibleVersei } from '@bible/translations/lists/atoms';
 import { useCallback } from 'react';
-import { bibleIDB } from '../../_db/bibleIDB';
-import { BibleVersei } from '../../model';
-import { useBibleTranslatesContext } from '../../translates/TranslatesContext';
-import { useBibleShowTranslatesValue } from '../../translates/hooks';
-import { useBibleVersei } from '../../translations/lists/atoms';
 import { useBibleTranslationSlideSyncContentSetter } from '../slide-sync';
 import { useBibleTranslationJoinAddress } from './address';
 import { useBibleAddressBooki } from './books';

@@ -1,10 +1,10 @@
+import { logFrontErrors } from '#basis/lib/error-catcher';
+import { setPolyfills } from '#shared/lib/polyfills';
 import React, { ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { StyleSheetManager, ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import App from './app/App';
-import { logFrontErrors } from './complect/error-catcher';
-import { setPolyfills } from './complect/polyfills';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { StyledGlobalStyles } from './styleds/styledGlobalStyles';
@@ -19,33 +19,6 @@ export const renderApplication = (reactNode: ReactNode, node: HTMLElement | null
       </ThemeProvider>
     </React.StrictMode>,
   );
-};
-
-export const renderComponentInNewWindow = (
-  reactNode: ReactNode | ((win: typeof window) => ReactNode),
-  url?: string | URL,
-  target?: string,
-  features?: string,
-  htmlNode?: HTMLElement,
-) => {
-  const win = window.open(url, target, features);
-  if (win) {
-    const div = document.createElement('div');
-    div.classList.add('above-container');
-    win.document.body.appendChild(div);
-
-    if (htmlNode !== undefined) div.appendChild(htmlNode);
-    else
-      renderApplication(
-        <StyleSheetManager target={win.document.head}>
-          <StyledGlobalStyles />
-          {typeof reactNode === 'function' ? reactNode(win as never) : reactNode}
-        </StyleSheetManager>,
-        div,
-      );
-  }
-
-  return win;
 };
 
 // If you want your app to work offline and load faster, you can change

@@ -1,6 +1,6 @@
-import { MyLib, mylib } from 'front/utils';
+import { MyLib, mylib } from '#shared/lib/my-lib';
+import { CmIDBStorage, cmIDB } from '@cm/_db/cm-idb';
 import { itIt, makeRegExp } from 'shared/utils';
-import { cmIDB, CmIDBStorage } from '../../_db/cm-idb';
 import { Com } from '../com/Com';
 import { Cat } from './Cat';
 import { CatTracker } from './Cat.model';
@@ -105,7 +105,7 @@ export const catSpecialSearches: Record<`@${string}`, CatSpecialSearches> = {
               mylib.isNum(ord.top.r) ? `${ord.top.r}`.match(reg) : MyLib.keys(ord.top.r).some(key => key.match(reg)),
             ),
         );
-      } catch (error) {
+      } catch (_error) {
         return [];
       }
     },
@@ -118,14 +118,14 @@ export const catSpecialSearches: Record<`@${string}`, CatSpecialSearches> = {
         const reg = makeRegExp(regStr as never);
 
         return coms.filter(com => com.orders?.some(ord => ord.repeatedText().match(reg)));
-      } catch (error) {
+      } catch (_error) {
         return [];
       }
     },
   },
   '@filterPositionsUnequalChordsCounts': {
     title: 'Количество аккордов не равна аппликатуре',
-    map: async (coms, term) => {
+    map: async coms => {
       return coms.filter(
         com =>
           com.ords?.some(

@@ -1,11 +1,11 @@
-import TheButton from 'front/complect/Button';
-import { FullContent } from 'front/complect/fullscreen-content/FullContent';
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
+import { TheButton } from '#shared/ui/TheButton';
+import { useSelectedComs } from '@cm/base/useSelectedComs';
+import { ComFaceList } from '@cm/col/com/face/list/ComFaceList';
 import { useNavigate } from 'react-router-dom';
 import { CmComWid } from 'shared/api';
 import styled from 'styled-components';
-import useSelectedComs from '../base/useSelectedComs';
-import { ComFaceList } from '../col/com/face/list/ComFaceList';
 
 export const CmSharedComListActionInterpretator = ({
   comws,

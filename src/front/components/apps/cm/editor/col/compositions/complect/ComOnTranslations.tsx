@@ -1,9 +1,9 @@
-import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
-import { translationPushKinds } from '../../../../col/com/Com.complect';
-import { useCmScreenTranslationCurrentConfig } from '../../../../translation/complect/controlled/hooks/configs';
+import { translationPushKinds } from '@cm/col/com/Com.complect';
+import { cmComClientInvocatorMethods } from '@cm/editor/cm-editor-invocator.methods';
+import { useCmScreenTranslationCurrentConfig } from '@cm/translation/complect/controlled/hooks/configs';
 import { useEditableCcom } from '../useEditableCcom';
 
-export default function ComOnTranslations() {
+export function ComOnTranslations() {
   const ccom = useEditableCcom();
   const currentConfig = useCmScreenTranslationCurrentConfig();
 

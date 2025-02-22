@@ -1,6 +1,5 @@
 import { makeTwiceKnownName } from 'back/complect/makeTwiceKnownName';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
-import { mylib } from 'front/utils';
 import {
   IScheduleWidgetTeamCriteria,
   IScheduleWidgetTeamGame,
@@ -9,6 +8,7 @@ import {
   ScheduleGameScopeProps,
 } from 'shared/api';
 import { SchGamesSokiInvocatorMethods } from 'shared/api/invocators/schedules/invocators.model';
+import { smylib } from 'shared/utils';
 import { modifySchedule } from '../schedule-modificators';
 import { scheduleTitleInBrackets } from './general-invocators.base';
 
@@ -22,7 +22,7 @@ class SchGamesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGamesSo
             sch.games ??= { criterias: [], list: [] };
             sch.games.list.push({
               title: `Игра ${sch.games.list.length + 1}`,
-              mi: mylib.takeNextMi(sch.games.list, IScheduleWidgetTeamGameMi.def),
+              mi: smylib.takeNextMi(sch.games.list, IScheduleWidgetTeamGameMi.def),
               teams: [],
             });
           }),

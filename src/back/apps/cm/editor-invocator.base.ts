@@ -1,6 +1,5 @@
 import { FileStore } from 'back/complect/FileStore';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
-import { mylib } from 'front/utils';
 import { EeStorePack } from 'shared/api';
 import { ChordPack } from 'shared/api/complect/apps/cm/complect/chord-card';
 import { CmEditorSokiInvocatorModel } from 'shared/api/invocators/cm/editor-invocators.model';
@@ -49,7 +48,7 @@ export const cmEditorSokiInvocatorBaseServer = new CmEditorSokiInvocatorBaseServ
     unwatchComBusies: unwatchEditComBusies,
   },
   {
-    setChords: (_, chords) => `Изменены аккорды ${mylib.keys(chords).join(', ')}`,
+    setChords: (_, chords) => `Изменены аккорды ${smylib.keys(chords).join(', ')}`,
 
     getResourceHTMLString: () => ``,
     setEEWords: (_, words) => `Изменены ё/е-правила в словах ${smylib.keys(words).join(', ')}`,

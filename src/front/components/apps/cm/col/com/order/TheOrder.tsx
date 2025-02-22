@@ -2,7 +2,7 @@ import React from 'react';
 import { makeRegExp } from 'shared/utils';
 import { ChordVisibleVariant } from '../../../Cm.model';
 import { Com } from '../Com';
-import ComLine from '../line/ComLine';
+import { ComLine } from '../line/ComLine';
 import { Order } from './Order';
 import { IComLineProps, IComOrdHeaderProps } from './Order.model';
 
@@ -19,7 +19,7 @@ interface Props {
   isHideRepeats?: boolean;
 }
 
-export default function TheOrder(props: Props) {
+export function TheOrder(props: Props) {
   const orderUnit = props.orderUnit;
 
   if (
@@ -37,7 +37,9 @@ export default function TheOrder(props: Props) {
       <div
         id={`com-block-${orderUniti}`}
         className={`${className} styled-header anchor`}
-        ref={el => el && (orderUnit.element = el)}
+        ref={el => {
+          if (el) orderUnit.element = el;
+        }}
       >
         {orderUnit.me.header({
           isTexted: false,
@@ -93,7 +95,9 @@ export default function TheOrder(props: Props) {
           'composition-block styled-block flex flex-baseline' +
           (orderUnit.isVisible ? '' : ' invisible')
         }
-        ref={el => el && (orderUnit.element = el)}
+        ref={el => {
+          if (el) orderUnit.element = el;
+        }}
       >
         {header}
         {isTexted && (
@@ -119,7 +123,9 @@ export default function TheOrder(props: Props) {
         (orderUnit.isVisible ? '' : ' invisible') +
         (chordedOrd ? ' chorded-block' : ' without-chords')
       }
-      ref={el => el && (orderUnit.element = el)}
+      ref={el => {
+        if (el) orderUnit.element = el;
+      }}
     >
       {header}
       {lines.map((textLine, textLinei, textLinea) => {

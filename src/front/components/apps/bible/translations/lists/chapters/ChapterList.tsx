@@ -1,8 +1,8 @@
+import { JStorageNumberVal } from '#shared/lib/JSimpleStorage/exports/Number';
+import { useSetBibleAddressWithForceJoinReset } from '@bible/hooks/address/address';
+import { useBibleCurrentChapterList } from '@bible/hooks/texts';
 import { useMemo } from 'react';
 import styled from 'styled-components';
-import { JStorageNumberVal } from '../../../../../../complect/JSimpleStorage/exports/Number';
-import { useSetBibleAddressWithForceJoinReset } from '../../../hooks/address/address';
-import { useBibleCurrentChapterList } from '../../../hooks/texts';
 import { useBibleListFaceClickListener } from '../complect';
 
 export const chapteriIdPrefix = 'bible-chapteri-';
@@ -10,7 +10,7 @@ const faceClassName = 'bible-list-chapter-face';
 
 const fastChaptersCount = new JStorageNumberVal('bible', 'fastChaptersCount', 0);
 
-export default function BibleChapterList() {
+export function BibleChapterList() {
   const chapters = useBibleCurrentChapterList();
   const setAddress = useSetBibleAddressWithForceJoinReset();
 

@@ -1,19 +1,19 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
+import { useActualRef } from '#shared/lib/hooks/useActualRef';
+import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
+import { useToast } from '#shared/ui/modal/useToast';
+import { SendButton } from '#shared/ui/sends/send-button/SendButton';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { useIndexValues } from '@index/atoms';
+import { indexBasicsSokiInvocatorClient } from '@index/db/invocators/schedules/fresh-invocator.methods';
+import { useConnectionState } from '@index/useConnectionState';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import JesmylLogo from '../../../../complect/jesmyl-logo/JesmylLogo';
-import KeyboardInput from '../../../../complect/keyboard/KeyboardInput';
-import useToast from '../../../../complect/modal/useToast';
-import SendButton from '../../../../complect/sends/send-button/SendButton';
-import { useActualRef } from '../../../../complect/useActualRef';
-import { useIndexValues } from '../../atoms';
-import { indexBasicsSokiInvocatorClient } from '../../db/invocators/schedules/fresh-invocator.methods';
-import useConnectionState from '../../useConnectionState';
+import { useAuthErrors } from './atoms';
 import { LoginIndex } from './IndexLoginAuth';
 import { TgNativeAuth } from './TgNativeAuth';
-import { useAuthErrors } from './atoms';
 
-export default function IndexTelegramAuth({ onLoginAuth }: { onLoginAuth: () => void }) {
+export function IndexTelegramAuth() {
   const [authCode, setAuthCode] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSendTgCode, setIsSendTgCode] = useState(false);

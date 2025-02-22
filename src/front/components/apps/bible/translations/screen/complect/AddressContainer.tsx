@@ -1,8 +1,8 @@
+import { useGetBibleScreenTranslationAddressStyle } from '@bible/translations/hooks/styles/address-style';
+import { BibleTranslationScreenConfig } from '@bible/translations/model';
+import { useSetScreenTranslationInteractiveBackground } from 'front/components/apps/+complect/translations/hooks/interactive-back';
 import { useRef } from 'react';
-import { useSetScreenTranslationInteractiveBackground } from '../../../../+complect/translations/hooks/interactive-back';
-import { useGetBibleScreenTranslationAddressStyle } from '../../hooks/styles/address-style';
-import { BibleTranslationScreenConfig } from '../../model';
-import BibleTranslationScreenAddressContent from './AddressContent';
+import { BibleTranslationScreenAddressContent } from './AddressContent';
 import { BibleTranslationScreenAddressContentPositionConfiguration } from './AddressContentPositionConfiguration';
 
 interface Props {

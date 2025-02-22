@@ -1,23 +1,23 @@
-import { MyLib } from 'front/utils';
+import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
+import { MyLib } from '#shared/lib/my-lib';
+import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
+import { LoadIndicatedContent } from '#shared/ui/load-indicated-content/LoadIndicatedContent';
+import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContainerConfigurer';
+import { TheButton } from '#shared/ui/TheButton';
+import { AuthMode } from '@index/Index.model';
+import { useConnectionState } from '@index/useConnectionState';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { itNNil } from 'shared/utils';
 import styled from 'styled-components';
-import TheButton from '../../../../complect/Button';
-import JesmylLogo from '../../../../complect/jesmyl-logo/JesmylLogo';
-import KeyboardInput from '../../../../complect/keyboard/KeyboardInput';
-import LoadIndicatedContent from '../../../../complect/load-indicated-content/LoadIndicatedContent';
-import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
-import { AuthMode } from '../../Index.model';
-import useConnectionState from '../../useConnectionState';
 import { useAuthErrors } from './atoms';
 
-export default function IndexLoginAuth() {
+export function IndexLoginAuth() {
   const [nick, setNick] = useState('');
   const [passw, setPassword] = useState('');
   const [rpassw, setRPassword] = useState('');
   const [mode, setMode] = useState<AuthMode>('login');
-  const [isInProcess, setIsInProscess] = useState(1);
+  const [isInProcess] = useState(1);
 
   const connectionNode = useConnectionState();
   const [errors, setErrors] = useAuthErrors();

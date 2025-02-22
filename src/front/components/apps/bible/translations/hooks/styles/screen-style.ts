@@ -1,13 +1,13 @@
-import { MyLib } from 'front/utils';
+import { MyLib } from '#shared/lib/my-lib';
+import { verseTranslateTitleCssVariableName } from '@bible/translations/complect';
+import { BibleTranslationScreenConfig } from '@bible/translations/model';
+import { useScreenTranslationPositionsStyles } from 'front/components/apps/+complect/translations/complect/hooks/position-styles';
+import { useScreenTranslationTextStyles } from 'front/components/apps/+complect/translations/complect/hooks/text-styles';
 import { CSSProperties, useMemo } from 'react';
-import { useScreenTranslationPositionsStyles } from '../../../../+complect/translations/complect/hooks/position-styles';
-import { useScreenTranslationTextStyles } from '../../../../+complect/translations/complect/hooks/text-styles';
-import { verseTranslateTitleCssVariableName } from '../../complect';
-import { BibleTranslationScreenConfig } from '../../model';
 
 export const screenGridArea = 'screen-grid-area';
 
-const packInnerStyles = <Config extends Partial<Record<'insertedtext' | 'textinbrackets', {}>>>(
+const packInnerStyles = <Config extends Partial<Record<'insertedtext' | 'textinbrackets', object>>>(
   area: 'insertedtext' | 'textinbrackets',
   currentConfig: Config,
   isVisible: boolean,

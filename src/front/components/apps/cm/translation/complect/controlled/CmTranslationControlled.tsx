@@ -1,18 +1,18 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContainerConfigurer';
+import { Com } from '@cm/col/com/Com';
+import { ComFaceList } from '@cm/col/com/face/list/ComFaceList';
+import { useTakeActualComw } from '@cm/col/com/useCcom';
+import { TranslationSlidePreview } from 'front/components/apps/+complect/translations/controls/Preview';
 import { ReactNode } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { TranslationSlidePreview } from '../../../../+complect/translations/controls/Preview';
-import PhaseContainerConfigurer from '../../../../../../complect/phase-container/PhaseContainerConfigurer';
-import { Com } from '../../../col/com/Com';
-import { ComFaceList } from '../../../col/com/face/list/ComFaceList';
-import { useTakeActualComw } from '../../../col/com/useCcom';
 import { useCmScreenTranslationComNavigations } from '../hooks/com-navigation';
 import { useCmScreenTranslationComTextNavigations } from '../hooks/com-texts';
 import { CmTranslationControlPanel } from './ControllPanel';
-import { CmTranslationSlideLine } from './SlideLine';
 import { useScreenKeyDownListen } from './screen/hooks/keydown-listen';
 import { CmTranslateScreenConfigurations } from './screens/ScreenConfigurations';
+import { CmTranslationSlideLine } from './SlideLine';
 
 interface Props {
   head?: ReactNode;
@@ -21,7 +21,7 @@ interface Props {
   backButtonPath?: string;
 }
 
-export default function CmTranslationControlled({ head, comList, headTitle, backButtonPath }: Props) {
+export function CmTranslationControlled({ head, comList, headTitle, backButtonPath }: Props) {
   const [, setSearchParams] = useSearchParams();
 
   const { comPack } = useCmScreenTranslationComNavigations();

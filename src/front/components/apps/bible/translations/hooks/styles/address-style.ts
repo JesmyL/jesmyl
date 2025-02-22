@@ -1,7 +1,6 @@
-import { useMemo } from 'react';
-import { CSSProperties } from 'styled-components';
-import { useScreenTranslationBackgroundStyles } from '../../../../+complect/translations/complect/hooks/background-styles';
-import { BibleTranslationScreenConfig } from '../../model';
+import { BibleTranslationScreenConfig } from '@bible/translations/model';
+import { useScreenTranslationBackgroundStyles } from 'front/components/apps/+complect/translations/complect/hooks/background-styles';
+import { CSSProperties, useMemo } from 'react';
 
 export const addressGridArea = 'address-grid-area';
 

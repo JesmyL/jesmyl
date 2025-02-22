@@ -27,7 +27,7 @@ import { exec } from 'child_process';
       await execAsync(`scp -r root@185.244.173.52:/var/www/jesmyl.ru/${serverPath} ${localPath}`);
 
       console.info(`${serverPath} saved!`);
-    } catch (error) {
+    } catch (_error) {
       console.info(`${serverPath} load FAILURE!`);
     }
   }

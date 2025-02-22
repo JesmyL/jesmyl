@@ -1,25 +1,25 @@
-import TheButton from 'front/complect/Button';
-import SendButton from 'front/complect/sends/send-button/SendButton';
-import { propagationStopper } from 'front/complect/utils/utils';
-import { ChordVisibleVariant } from 'front/components/apps/cm/Cm.model';
-import { Com } from 'front/components/apps/cm/col/com/Com';
-import ComOrders from 'front/components/apps/cm/col/com/orders/ComOrders';
-import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
-import { MyLib } from 'front/utils';
+import { propagationStopper } from '#shared/lib/event-funcs';
+import { MyLib } from '#shared/lib/my-lib';
+import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
+import { SendButton } from '#shared/ui/sends/send-button/SendButton';
+import { TheButton } from '#shared/ui/TheButton';
+import { ChordVisibleVariant } from '@cm/Cm.model';
+import { Com } from '@cm/col/com/Com';
+import { ComOrders } from '@cm/col/com/orders/ComOrders';
+import { cmComClientInvocatorMethods } from '@cm/editor/cm-editor-invocator.methods';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CmComMod, CmComWid, CmMp3Rule, IExportableCom } from 'shared/api';
 import { itIt, itNNil, makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
-import KeyboardInput from '../../../../../../../../complect/keyboard/KeyboardInput';
 import { EditableCom } from '../../com/EditableCom';
 import { ComAudioControlledList } from '../audio/ControlledList';
-import ObserveUrlResource from '../audio/ObserveUrlResource';
+import { ObserveUrlResource } from '../audio/ObserveUrlResource';
 import { useCmExtractHrefsFromHTML } from '../audio/useCmExtractHrefsFromHTML';
 import { NewComNameChange } from './complect/NameChange';
 import { CmNewComTextableListRedactor } from './complect/TextableListRedactor';
 
-export default function NewComposition({ onClose }: { onClose: (is: false) => void }) {
+export function NewComposition({ onClose }: { onClose: (is: false) => void }) {
   const navigate = useNavigate();
   const [value, setValue] = useState('');
   const [isTakeName, setIsTakeName] = useState(true);

@@ -6,7 +6,6 @@ export const setSharedPolyfills = () => {
     value: (typeof Array.prototype)[Name],
   ) => {
     if (!Array.prototype[name])
-      // eslint-disable-next-line no-extend-native
       Object.defineProperty(Array.prototype, name, {
         value,
         enumerable: false,
@@ -18,7 +17,6 @@ export const setSharedPolyfills = () => {
     value: (typeof String.prototype)[Name],
   ) => {
     if (!String.prototype[name])
-      // eslint-disable-next-line no-extend-native
       Object.defineProperty(String.prototype, name, {
         value,
         enumerable: false,
@@ -27,7 +25,7 @@ export const setSharedPolyfills = () => {
 
   Promise.withResolvers ??= <T>(): PromiseWithResolvers<T> => {
     let resolve: (value: T | PromiseLike<T>) => void = emptyFunc;
-    let reject: (reason?: any) => void = emptyFunc;
+    let reject: (reason?: unknown) => void = emptyFunc;
 
     const promise = new Promise<T>((res, rej) => {
       resolve = res;
@@ -38,10 +36,9 @@ export const setSharedPolyfills = () => {
   };
 
   setArrayProtoMethod('flat', function <Item>(this: unknown, depth?: number) {
-    // eslint-disable-next-line strict
     'use strict';
     if (depth === undefined) depth = 1;
-    var flatten: (arr: Item[], depth: number) => Item[] = function (arr: Item[], depth: number) {
+    const flatten: (arr: Item[], depth: number) => Item[] = function (arr: Item[], depth: number) {
       if (depth < 1) return arr.slice();
       return arr.reduce((acc: Item[], val: Item) => {
         return acc.concat(Array.isArray(val) ? flatten(val, depth - 1) : val);
@@ -60,7 +57,7 @@ export const setSharedPolyfills = () => {
     return this;
   });
 
-  setStringProtoMethod('reverse', function (this: String) {
+  setStringProtoMethod('reverse', function (this: string) {
     let res = '';
     for (let i = this.length - 1; i >= 0; i--) res += this[i];
 
@@ -81,12 +78,10 @@ export const setSharedPolyfills = () => {
   // force resigns for unifications//
   ///////////////////////////////////
 
-  // eslint-disable-next-line no-extend-native
   Array.prototype.toSorted = function (compareFunction) {
     return smylib.toSorted(this, compareFunction);
   };
 
-  // eslint-disable-next-line no-extend-native
   Array.prototype.sort = function (compareFunction) {
     return smylib.sort(this, compareFunction);
   };

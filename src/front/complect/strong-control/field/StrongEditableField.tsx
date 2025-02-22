@@ -1,10 +1,10 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { StrongEditableFieldMultiline } from '#basis/ui/strong-control/field/StrongEditableFieldMultiline';
+import { useIsRedactArea } from '#shared/lib/hooks/useIsRedactArea';
+import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
+import { useToast } from '#shared/ui/modal/useToast';
+import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ReactNode, useEffect, useState } from 'react';
-import KeyboardInput from '../../keyboard/KeyboardInput';
-import useToast from '../../modal/useToast';
-import { TheIconLoading } from '../../the-icon/IconLoading';
-import useIsRedactArea from '../../useIsRedactArea';
-import StrongEditableFieldMultiline from './StrongEditableFieldMultiline';
 
 type Props<Key, Value> = {
   fieldKey?: Key;

@@ -1,8 +1,8 @@
+import { Cat } from '@cm/col/cat/Cat';
+import { Com } from '@cm/col/com/Com';
+import { EditableCat } from '@cm/editor/col/categories/EditableCat';
+import { EditableCom } from '@cm/editor/col/compositions/com/EditableCom';
 import { IExportableCat, IExportableCom } from 'shared/api';
-import { Cat } from '../col/cat/Cat';
-import { Com } from '../col/com/Com';
-import { EditableCat } from '../editor/col/categories/EditableCat';
-import { EditableCom } from '../editor/col/compositions/com/EditableCom';
 
 export interface ICols {
   coms: Com[];

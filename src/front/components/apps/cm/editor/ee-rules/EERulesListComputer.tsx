@@ -1,9 +1,9 @@
-import { bibleTranslatesIDB } from 'front/components/apps/bible/_db/bibleIDB';
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { bibleTranslatesIDB } from '@bible/_db/bibleIDB';
+import { cmIDB } from '@cm/_db/cm-idb';
 import { memo, useEffect, useState } from 'react';
 import { BibleTranslateName } from 'shared/api';
 import { itIt, makeRegExp } from 'shared/utils';
-import { cmIDB } from '../../_db/cm-idb';
 import { useEditableCats, useEditableComs } from '../col/useEditableCols';
 
 const emptyArr = [] as [];

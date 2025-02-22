@@ -1,6 +1,6 @@
-import { mylib } from 'front/utils';
+import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
+import { mylib } from '#shared/lib/my-lib';
 import { useEffect } from 'react';
-import { hookEffectPipe, setTimeoutPipe } from '../../../../../../../complect/hookEffectPipe';
 import { ComFaceListProps, currentComwIdPrefix } from './_ComList';
 
 export const useScrollToCurrentComFace = (listRef: React.RefObject<HTMLDivElement>, props: ComFaceListProps) => {

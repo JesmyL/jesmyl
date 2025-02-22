@@ -1,15 +1,15 @@
+import { useCcat } from '@cm/col/cat/useCcat';
+import { ComFaceList } from '@cm/col/com/face/list/ComFaceList';
 import { useState } from 'react';
 import { CmComBindAttach, CmComWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
-import { useCcat } from '../../col/cat/useCcat';
-import { ComFaceList } from '../../col/com/face/list/ComFaceList';
 
 interface Props {
   value: CmComBindAttach;
   setCcomw: (comw: CmComWid) => void;
 }
 
-export default function CmExternalComListAttRedactListOrder({ value, setCcomw }: Props) {
+export function CmExternalComListAttRedactListOrder({ value, setCcomw }: Props) {
   const [removedComws, setRemovedComws] = useState<number[]>([]);
   const cat = useCcat(true);
 

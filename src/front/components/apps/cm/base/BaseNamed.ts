@@ -1,4 +1,4 @@
-import SourceBased from '../../../../complect/SourceBased';
+import { SourceBased } from '#shared/lib/SourceBased';
 
 export interface BaseNamedExportables {
   n: string;

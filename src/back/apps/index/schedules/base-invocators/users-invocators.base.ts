@@ -1,5 +1,4 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
-import { mylib } from 'front/utils';
 import {
   IScheduleWidgetUser,
   IScheduleWidgetUserMi,
@@ -46,7 +45,7 @@ class SchUsersSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchUsersSo
           this.modifyUser(props, user => {
             if (user.li == null) return;
             delete user.li[props.cati];
-            if (!mylib.keys(user.li).length) delete user.li;
+            if (!smylib.keys(user.li).length) delete user.li;
           }),
 
         setUserFio: () => (props, value) => this.modifyUser(props, user => (user.fio = value)),

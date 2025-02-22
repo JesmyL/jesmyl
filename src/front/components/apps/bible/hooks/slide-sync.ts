@@ -1,8 +1,8 @@
+import { atom, useAtomInkrement, useAtomValue } from '#shared/lib/atoms';
+import { useActualRef } from '#shared/lib/hooks/useActualRef';
+import { useBibleTranslationAddToHistory } from '@bible/translations/archive/history/hooks/history';
 import { useCallback } from 'react';
 import { useToggleIsScreenTranslationTextVisible } from '../../+complect/translations/atoms';
-import { atom, useAtomInkrement, useAtomValue } from '../../../../complect/atoms';
-import { useActualRef } from '../../../../complect/useActualRef';
-import { useBibleTranslationAddToHistory } from '../translations/archive/history/hooks/history';
 import { useBibleTranslationJoinAddress } from './address/address';
 import { useBibleAddressBooki } from './address/books';
 import { useBibleAddressChapteri } from './address/chapters';

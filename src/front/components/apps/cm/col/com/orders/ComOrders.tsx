@@ -1,12 +1,12 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { useBibleScreenTranslationFontSizeAdapter } from '#shared/lib/hooks/useFontSizeAdapter';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ReactNode, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useBibleScreenTranslationFontSizeAdapter } from '../../../../../../complect/useFontSizeAdapter';
 import { Com } from '../Com';
-import TheOrder from '../order/TheOrder';
+import { TheOrder } from '../order/TheOrder';
 import { IComOrdersProps } from './ComOrders.model';
 
-export default function ComOrders(props: IComOrdersProps) {
+export function ComOrders(props: IComOrdersProps) {
   const { com, fontSize, asLineComponent } = props;
   const [exMods, updateExMods] = useState<number[]>(com.excludedModulations);
 

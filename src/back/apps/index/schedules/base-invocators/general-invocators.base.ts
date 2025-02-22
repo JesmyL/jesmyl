@@ -160,7 +160,7 @@ class SchGeneralSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGener
         setTopic: sch => `В расписании ${scheduleTitleInBrackets(sch)} изменена тема: ${sch.topic}`,
         setDescription: sch => `В расписании ${scheduleTitleInBrackets(sch)} изменено описание: ${sch.dsc}`,
         remove: sch => `Расписание ${scheduleTitleInBrackets(sch)} удалено`,
-        copySchedule: (sch, _, copiedSch) =>
+        copySchedule: (_sch, _, copiedSch) =>
           `Расписание ${scheduleTitleInBrackets(copiedSch)} скопировано в ${scheduleTitleInBrackets} `,
 
         setDefaultUserRights: (sch, _, value) =>
@@ -208,7 +208,7 @@ class SchGeneralSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGener
                 hideContentRule.title,
               )}`
             );
-          } catch (error) {
+          } catch (_error) {
             return `В расписании <b>${scheduleTitleInBrackets(schedule)}</b> изменение типа`;
           }
         },

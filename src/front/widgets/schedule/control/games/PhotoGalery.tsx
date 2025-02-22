@@ -1,0 +1,47 @@
+import { mylib } from '#shared/lib/my-lib';
+import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
+import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
+import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
+import { useMemo, useState } from 'react';
+import { IScheduleWidgetUser } from 'shared/api';
+import { ScheduleWidgetUserPhoto } from '../users/UserPhoto';
+import { ScheduleWidgetRemovableUserFace } from './RemovableUserFace';
+import { checkIsUserPhotoable } from './utils';
+
+export const ScheduleWidgetPhotoGalery = () => {
+  const rights = useScheduleWidgetRightsContext();
+  const [term, setTerm] = useState('');
+
+  const filteredUsers: IScheduleWidgetUser[] = useMemo(() => {
+    const sortedUsers = rights.schedule.ctrl.users.sort((a, b) => (a.fio! < b.fio! ? -1 : a.fio! > b.fio! ? 1 : 0));
+    return !term ? sortedUsers : mylib.searchRate(sortedUsers, term, ['fio']).map(({ item }) => item);
+  }, [rights.schedule.ctrl.users, term]);
+
+  return (
+    <>
+      <DebouncedSearchInput
+        className="debounced-searcher round-styled"
+        placeholder="Фильтр по имени"
+        debounce={300}
+        onDebounced={setTerm}
+      />
+      <ModalHeader>Фотографии (локально)</ModalHeader>
+      <ModalBody>
+        {filteredUsers.map(user => {
+          if (!checkIsUserPhotoable(user)) return null;
+
+          return (
+            <div
+              key={user.mi}
+              className="flex center column margin-big-gap-v"
+            >
+              <ScheduleWidgetRemovableUserFace user={user} />
+              <ScheduleWidgetUserPhoto user={user} />
+            </div>
+          );
+        })}
+      </ModalBody>
+    </>
+  );
+};

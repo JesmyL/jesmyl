@@ -1,9 +1,9 @@
-import { ChordTrack } from '../../../../../../../shared/api/complect/apps/cm/complect/chord-card';
-import { cmIDB } from '../../../_db/cm-idb';
+import { cmIDB } from '@cm/_db/cm-idb';
+import { ChordTrack } from 'shared/api';
 import './ChordCard.scss';
-import ChordCardTracked from './ChordCardTracked';
+import { ChordCardTracked } from './ChordCardTracked';
 
-export default function ChordCard({
+export function ChordCard({
   chordName,
   resource,
   ...props

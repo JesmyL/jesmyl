@@ -1,5 +1,5 @@
-import { LinkAppActionFabric } from 'front/complect/link-app-actions';
-import { schLinkAction } from 'front/complect/schedule-widget/links';
+import { LinkAppActionFabric } from '#shared/lib/link-app-actions';
+import { schLinkAction } from '#widgets/schedule/links';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './App.scss';
@@ -20,7 +20,8 @@ function App() {
 const FirstNaver = ({ onSet }: { onSet: (is: false) => void }) => {
   const navigate = useNavigate();
   const loc = useLocation();
-  const onHrefData = LinkAppActionFabric.useOnHrefData(schLinkAction);
+  const onHrefData = LinkAppActionFabric.useOnHrefData();
+  schLinkAction.register();
 
   useEffect(() => {
     onHrefData(window.location.href);

@@ -1,6 +1,6 @@
-import { BottomPopupItem } from '../../../../complect/absolute-popup/bottom-popup/BottomPopupItem';
-import { useConfirm } from '../../../../complect/modal/confirm/useConfirm';
-import { authIDB } from '../../db/auth-idb';
+import { BottomPopupItem } from '#shared/ui/absolute-popup/bottom-popup/BottomPopupItem';
+import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
+import { authIDB } from '@index/db/auth-idb';
 
 export const UserMore = ({ onClose }: { onClose: (isOpen: false) => void }) => {
   const [confirmNode, confirm] = useConfirm();

@@ -1,7 +1,7 @@
-import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
+import { chordDiezEquivalent, gSimpleBemoleChordReg } from '@cm/col/com/Com.complect';
+import { IExportableOrderMe } from '@cm/col/com/order/Order.model';
+import { cmComClientInvocatorMethods } from '@cm/editor/cm-editor-invocator.methods';
 import { makeRegExp } from 'shared/utils';
-import { chordDiezEquivalent, gSimpleBemoleChordReg } from '../../../../col/com/Com.complect';
-import { IExportableOrderMe } from '../../../../col/com/order/Order.model';
 import { EditableOrder } from '../complect/orders/EditableOrder';
 import { EditableComParseBlocks } from './complect/31-ParseBlocks';
 

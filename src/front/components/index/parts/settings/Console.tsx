@@ -1,8 +1,9 @@
+/* eslint-disable no-console */
+import { isTouchDevice } from '#shared/lib/device-differences';
+import { useBottomPopup } from '#shared/ui/absolute-popup/bottom-popup/useBottomPopup';
+import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContainerConfigurer';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useBottomPopup } from '../../../../complect/absolute-popup/bottom-popup/useBottomPopup';
-import { isTouchDevice } from '../../../../complect/device-differences';
-import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
 import { CodeExecutionScreen } from './coder/Coder';
 import { CoderResultLine } from './coder/complect/line';
 

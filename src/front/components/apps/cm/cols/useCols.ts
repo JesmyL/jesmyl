@@ -1,9 +1,9 @@
+import { cmIDB } from '@cm/_db/cm-idb';
+import { Cat } from '@cm/col/cat/Cat';
+import { Com } from '@cm/col/com/Com';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { CmComWid, CmComWidStr } from 'shared/api';
-import { cmIDB } from '../_db/cm-idb';
-import { Cat } from '../col/cat/Cat';
-import { Com } from '../col/com/Com';
 
 export const useComs = (comwsLine?: CmComWid[]) => {
   const icoms = useLiveQuery(

@@ -21,7 +21,7 @@ const shareLiveData = (schw: IScheduleWidgetWid, streamerLogin: SokiAuthLogin) =
   waiters.forEach(client => {
     try {
       schLiveSokiInvocatorSharesServer.updateData(client, data);
-    } catch (error) {
+    } catch (_error) {
       waiters.delete(client);
     }
   });
@@ -82,7 +82,7 @@ export const schLiveSokiInvocatorServer = new SchLiveSokiInvocatorBaseServer('Sc
       wathers.forEach(client => {
         try {
           schLiveSokiInvocatorSharesServer.updateData(client, null);
-        } catch (error) {
+        } catch (_error) {
           wathers.delete(client);
         }
       });

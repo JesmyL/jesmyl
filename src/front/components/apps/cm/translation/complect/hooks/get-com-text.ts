@@ -1,5 +1,5 @@
+import { useCom } from '@cm/col/com/useCcom';
 import { useMemo } from 'react';
-import { useCom } from '../../../col/com/useCcom';
 
 export const useCmCurrentComTexts = (pushKind: number | und) => {
   const com = useCom();

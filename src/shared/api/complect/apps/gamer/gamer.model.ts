@@ -1,5 +1,4 @@
-const gameNames = ['spy', 'alias'] as const;
-export type GamerGameName = (typeof gameNames)[number];
+export type GamerGameName = 'spy' | 'alias';
 
 export type GamerRoomMemberLogin = string;
 

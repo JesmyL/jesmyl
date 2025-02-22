@@ -1,4 +1,4 @@
-import { DexieDB } from 'front/complect/_DexieDB';
+import { DexieDB } from '#shared/lib/DexieDB';
 import { LocalSokiAuth } from 'shared/api';
 
 interface Storage {

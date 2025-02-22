@@ -1,4 +1,4 @@
-import { BackgroundConfigProps } from 'front/complect/configurators/model';
+import { BackgroundConfigProps } from '#shared/ui/configurators/model';
 import {
   ScreenTranslationPositionConfig,
   ScreenTranslationSimpleTextConfig,

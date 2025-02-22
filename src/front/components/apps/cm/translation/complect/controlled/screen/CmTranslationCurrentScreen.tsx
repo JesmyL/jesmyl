@@ -1,12 +1,12 @@
-import { TranslationScreenProps } from '../../../../../+complect/translations/Translations.model';
-import { useIsScreenTranslationTextVisible } from '../../../../../+complect/translations/atoms';
+import { useAtomValue } from '#shared/lib/atoms';
+import { translationBlockAtom } from '@cm/atoms';
+import { FontSizeContainProps } from '@cm/base/font-size-contain/FontSizeContain.model';
+import { useIsScreenTranslationTextVisible } from 'front/components/apps/+complect/translations/atoms';
 import {
   useGetScreenTranslationConfig,
   useScreenTranslationCurrentConfigi,
-} from '../../../../../+complect/translations/hooks/configs';
-import { useAtomValue } from '../../../../../../../complect/atoms';
-import { translationBlockAtom } from '../../../../atoms';
-import { FontSizeContainProps } from '../../../../base/font-size-contain/FontSizeContain.model';
+} from 'front/components/apps/+complect/translations/hooks/configs';
+import { TranslationScreenProps } from 'front/components/apps/+complect/translations/Translations.model';
 import { useCmCurrentComTexts } from '../../hooks/get-com-text';
 import { useCmScreenTranslationConfig } from '../hooks/configs';
 import { CmTranslationScreen } from './CmTranslationScreen';

@@ -23,7 +23,7 @@ export class FileStore<Value> {
   private readValue(defaultValue: Value) {
     try {
       return JSON.parse('' + fs.readFileSync(this.filePath));
-    } catch (error) {
+    } catch (_error) {
       return defaultValue;
     }
   }
@@ -32,7 +32,7 @@ export class FileStore<Value> {
     try {
       fs.writeFileSync(this.filePath, JSON.stringify(value));
       return true;
-    } catch (error) {
+    } catch (_error) {
       try {
         const splits = this.filePath.split('/');
         let prev = splits[0] === '' ? '/' : '';
@@ -49,7 +49,7 @@ export class FileStore<Value> {
         fs.writeFileSync(this.filePath, JSON.stringify(value));
 
         return true;
-      } catch (error) {
+      } catch (_error) {
         return false;
       }
     }
@@ -76,7 +76,7 @@ export class FileStore<Value> {
   fileModifiedAt = (): number => {
     try {
       return fs.statSync(this.filePath).mtime.getTime();
-    } catch (error) {
+    } catch (_error) {
       this.saveValue();
       if (this.watchFileTries-- < 0) return 0;
       return this.fileModifiedAt();
@@ -91,7 +91,7 @@ export class FileStore<Value> {
         this.value = this.readValue(this.defaultValue);
         cb(this.value, curr, prev);
       });
-    } catch (error) {
+    } catch (_error) {
       this.saveValue();
       if (this.watchFileTries-- < 0) return;
       this.watchFile(cb);

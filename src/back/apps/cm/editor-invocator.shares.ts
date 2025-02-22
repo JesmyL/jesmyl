@@ -1,7 +1,7 @@
 import { SokiInvocatorServer } from 'back/SokiInvocator.server';
-import { CmEditorSokiInvocatorModel } from 'shared/api/invocators/cm/editor-invocator.shares.model';
+import { CmEditorSokiInvocatorSharesModel } from 'shared/api/invocators/cm/editor-invocator.shares.model';
 
-class CmEditorSokiInvocatorServer extends SokiInvocatorServer<CmEditorSokiInvocatorModel> {}
+class CmEditorSokiInvocatorServer extends SokiInvocatorServer<CmEditorSokiInvocatorSharesModel> {}
 export const cmEditorServerInvocatorShareMethods = new CmEditorSokiInvocatorServer('CmEditorSokiInvocatorServer', {
   editedEEWords: true,
   refreshEEPack: true,

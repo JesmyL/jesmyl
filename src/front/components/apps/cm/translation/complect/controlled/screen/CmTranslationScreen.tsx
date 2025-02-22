@@ -1,10 +1,10 @@
+import { FontSizeContain } from '@cm/base/font-size-contain/FontSizeContain';
+import { FontSizeContainProps } from '@cm/base/font-size-contain/FontSizeContain.model';
+import { ScreenTranslateCurrentPositionConfigurators } from 'front/components/apps/+complect/translations/complect/position/Position';
+import { useSetScreenTranslationInteractiveBackground } from 'front/components/apps/+complect/translations/hooks/interactive-back';
+import { useApplyScreenFontFamilyEffect } from 'front/components/apps/+complect/translations/hooks/set-font-family';
+import { TranslationScreenProps } from 'front/components/apps/+complect/translations/Translations.model';
 import { useRef } from 'react';
-import { TranslationScreenProps } from '../../../../../+complect/translations/Translations.model';
-import { ScreenTranslateCurrentPositionConfigurators } from '../../../../../+complect/translations/complect/position/Position';
-import { useSetScreenTranslationInteractiveBackground } from '../../../../../+complect/translations/hooks/interactive-back';
-import { useApplyScreenFontFamilyEffect } from '../../../../../+complect/translations/hooks/set-font-family';
-import FontSizeContain from '../../../../base/font-size-contain/FontSizeContain';
-import { FontSizeContainProps } from '../../../../base/font-size-contain/FontSizeContain.model';
 import { CmTranslationScreenConfig } from '../model';
 import { CmTranslationSubScreen } from './CmTranslationSubScreen';
 import { useGetCmScreenTranslationStyle } from './hooks/get-style';

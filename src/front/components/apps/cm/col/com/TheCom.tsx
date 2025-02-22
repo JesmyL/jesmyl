@@ -1,10 +1,11 @@
+import { ChordVisibleVariant } from '@cm/Cm.model';
 import { RefObject } from 'react';
-import { ChordVisibleVariant } from '../../Cm.model';
 import { Com } from './Com';
 import './Com.scss';
 import { ComNotFoundPage } from './ComNotFoundPage';
+
 import './block-styles/BlockStyles.scss';
-import ComOrders from './orders/ComOrders';
+import { ComOrders } from './orders/ComOrders';
 import { useCcom } from './useCcom';
 
 interface Props {

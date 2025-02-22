@@ -1,6 +1,6 @@
-import KeyboardInput from 'front/complect/keyboard/KeyboardInput';
-import { TextCorrectMessages } from 'front/components/apps/cm/editor/complect/TextBlockIncorrectMessages';
-import { CorrectsBox } from 'front/components/apps/cm/editor/corrects-box/CorrectsBox';
+import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
+import { TextCorrectMessages } from '@cm/editor/complect/TextBlockIncorrectMessages';
+import { CorrectsBox } from '@cm/editor/corrects-box/CorrectsBox';
 
 export const CmNewComTextableListRedactor = ({
   title,

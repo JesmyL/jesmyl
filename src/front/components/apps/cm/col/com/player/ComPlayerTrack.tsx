@@ -5,7 +5,7 @@ const calcCurrentTime = (duration: number, offsetX: number, offsetWidth: number)
   return duration * (offsetX / offsetWidth);
 };
 
-export default function ComPlayerTrack({ player }: { player: HTMLAudioElement }) {
+export function ComPlayerTrack({ player }: { player: HTMLAudioElement }) {
   const [progressWidth, setProgressWidth] = useState('0');
   const [time, setTime] = useState('00:00');
 

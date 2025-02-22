@@ -1,7 +1,7 @@
+import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
+import { useSwitchCurrentTranslationTextApp } from 'front/components/apps/+complect/translations/hooks/current-app';
 import { CmComBindAttach, IScheduleWidget } from 'shared/api';
-import { useSwitchCurrentTranslationTextApp } from '../../../+complect/translations/hooks/current-app';
-import { useScheduleWidgetRightsContext } from '../../../../../complect/schedule-widget/useScheduleWidget';
-import IconButton from '../../../../../complect/the-icon/IconButton';
 
 interface Props {
   value: CmComBindAttach;

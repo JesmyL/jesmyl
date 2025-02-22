@@ -1,4 +1,4 @@
-import { MyLib } from 'front/utils';
+import { MyLib } from '#shared/lib/my-lib';
 import { makeRegExp } from 'shared/utils';
 
 export const ruUaSingLettersStr = 'уеыаоэяиёюіїє ' as const;

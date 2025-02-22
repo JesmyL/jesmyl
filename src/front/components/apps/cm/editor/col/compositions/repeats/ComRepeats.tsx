@@ -1,17 +1,17 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
-import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
+import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { ChordVisibleVariant } from '@cm/Cm.model';
+import { ComLine } from '@cm/col/com/line/ComLine';
+import { TheOrder } from '@cm/col/com/order/TheOrder';
+import { cmComOrderClientInvocatorMethods } from '@cm/editor/cm-editor-invocator.methods';
 import { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { OrderRepeats } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
-import { useConfirm } from '../../../../../../../complect/modal/confirm/useConfirm';
-import { ChordVisibleVariant } from '../../../../Cm.model';
-import ComLine from '../../../../col/com/line/ComLine';
-import TheOrder from '../../../../col/com/order/TheOrder';
 import { EditableOrder } from '../complect/orders/EditableOrder';
 import { useEditableCcom } from '../useEditableCcom';
-import { IEditableComLineProps } from './ComRepeats.model';
 import { ComRepeatsRemoveButton } from './complect/RemoveButton';
+import { IEditableComLineProps } from './ComRepeats.model';
 
 const flashCounts = [2, 3, 4, 5];
 const defaultPos = {
@@ -19,7 +19,7 @@ const defaultPos = {
   '--y': 0,
 };
 
-export default function ComRepeats() {
+export function ComRepeats() {
   const [start, setStart] = useState<IEditableComLineProps | null>(null);
   const [pos, setPos] = useState(defaultPos);
   const [isChordBlock, setIsChordBlock] = useState(false);

@@ -1,4 +1,4 @@
-import { contextCreator } from '../../../../../complect/contextCreator';
+import { contextCreator } from '#shared/lib/contextCreator';
 import { Com } from '../../col/com/Com';
 
 type Titles = Record<number, string>;

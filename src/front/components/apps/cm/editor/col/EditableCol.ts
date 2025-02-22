@@ -1,8 +1,8 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { BaseNamed, BaseNamedExportables } from '@cm/base/BaseNamed';
+import { eeStorage } from '@cm/base/ee-storage/EeStorage';
+import { IEditableCol } from '@cm/cols/Cols.model';
 import { makeRegExp } from 'shared/utils';
-import { BaseNamed, BaseNamedExportables } from '../../base/BaseNamed';
-import { eeStorage } from '../../base/ee-storage/EeStorage';
-import { IEditableCol } from '../../cols/Cols.model';
 import { CorrectsBox } from '../corrects-box/CorrectsBox';
 import { ICorrect } from '../corrects-box/CorrectsBox.model';
 import { correctNotSlavicNameReg_i } from '../Editor.complect';

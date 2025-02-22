@@ -1,4 +1,5 @@
-import { MyLib, mylib } from 'front/utils';
+import { mylib, MyLib } from '#shared/lib/my-lib';
+import { SourceBased } from '#shared/lib/SourceBased';
 import {
   CmComOrderWid,
   IExportableOrder,
@@ -8,7 +9,6 @@ import {
   SpecialOrderRepeats,
 } from 'shared/api';
 import { emptyArray, itIt, makeRegExp } from 'shared/utils';
-import SourceBased from '../../../../../../complect/SourceBased';
 import { Com } from '../Com';
 import { EditableOrderRegion, IExportableOrderMe } from './Order.model';
 
@@ -40,7 +40,7 @@ export class Order extends SourceBased<IExportableOrder> {
     return this.me.source?.top.w || this.top.w;
   }
   set wid(val: CmComOrderWid) {
-    this.me.source && (this.me.source.top.w = val);
+    if (this.me.source) this.me.source.top.w = val;
   }
 
   get isAnchor() {
@@ -473,8 +473,8 @@ export class Order extends SourceBased<IExportableOrder> {
 
           const [beg = '', end = ''] = key.split('-');
           const [begLine, begWord = -1] = beg.split(':');
-          let [endLine, endWord = -2] = end.split(':');
-          endLine = endLine || begLine;
+          const [endSplitLine, endWord = -2] = end.split(':');
+          const endLine = endSplitLine || begLine;
 
           if (begLine) pushRep(+begLine, +begWord);
           if (endLine) pushRep(+endLine, +endWord, -1);

@@ -1,16 +1,16 @@
-import { useMemo } from 'react';
-import { contextCreator } from '../../../../complect/contextCreator';
-import { useBibleTranslationJoinAddress } from '../hooks/address/address';
-import { useBibleAddressBooki } from '../hooks/address/books';
-import { useBibleAddressChapteri } from '../hooks/address/chapters';
-import { useBibleAddressVersei } from '../hooks/address/verses';
-import { useBibleSlideSyncValue } from '../hooks/slide-sync';
+import { contextCreator } from '#shared/lib/contextCreator';
+import { useBibleTranslationJoinAddress } from '@bible/hooks/address/address';
+import { useBibleAddressBooki } from '@bible/hooks/address/books';
+import { useBibleAddressChapteri } from '@bible/hooks/address/chapters';
+import { useBibleAddressVersei } from '@bible/hooks/address/verses';
+import { useBibleSlideSyncValue } from '@bible/hooks/slide-sync';
 import {
   useBibleJoinedAddressText,
   useBibleJoinedSlideText,
   useBibleSimpleAddressText,
   useBibleSingleSlideText,
-} from '../hooks/texts';
+} from '@bible/hooks/texts';
+import { useMemo } from 'react';
 
 const [AddressContext, useBibleAddressTextContext] = contextCreator('');
 const [TextContext, useBibleTextContentContext] = contextCreator('');

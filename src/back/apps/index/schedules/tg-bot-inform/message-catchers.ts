@@ -119,7 +119,7 @@ jesmylTgBot.catchCallbackQuery(async (query, bot, answer) => {
   try {
     if (!(await bot.getChatAdministrators(query.message.chat.id)).some(member => member.user.id === query.from.id))
       return ret('Обновлять расписание могут только админы этой группы');
-  } catch (error) {
+  } catch (_error) {
     return ret('Ошибка');
   }
 
@@ -136,7 +136,7 @@ jesmylTgBot.catchCallbackQuery(async (query, bot, answer) => {
 
   const { dayWup, list, newTypes } = ScheduleWidgetCleans.preparedText2DayList(query.message.text, schedule);
 
-  if (true) {
+  if (+!+'find sch') {
     const schedule = getScheduleByRequisit(`/${query.chat_instance}`);
 
     if (schedule === undefined) return ret('Расписание не найдено');

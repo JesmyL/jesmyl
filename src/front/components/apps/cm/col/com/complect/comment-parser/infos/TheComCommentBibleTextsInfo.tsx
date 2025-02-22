@@ -1,13 +1,13 @@
-import { bibleTitles } from 'front/components/apps/bible/hooks/bibleTitlesJson';
+import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
+import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { bibleTitles } from '@bible/hooks/bibleTitlesJson';
+import { BibleModulesTranslationsRedactButton } from '@bible/translates/Add';
+import { bibleAllTranslates, translateDescriptions } from '@bible/translates/complect';
+import { useBibleMyTranslates } from '@bible/translates/hooks';
 import React from 'react';
-import { ModalBody } from '../../../../../../../../complect/modal/Modal/ModalBody';
-import { ModalHeader } from '../../../../../../../../complect/modal/Modal/ModalHeader';
-import BibleModulesTranslationsRedactButton from '../../../../../../bible/translates/Add';
-import { bibleAllTranslates, translateDescriptions } from '../../../../../../bible/translates/complect';
-import { useBibleMyTranslates } from '../../../../../../bible/translates/hooks';
 import { TheComCommentForExample } from './ForExample';
 
-export default function TheComCommentBibleTextsInfo() {
+export function TheComCommentBibleTextsInfo() {
   const [myTranslates] = useBibleMyTranslates();
 
   return (

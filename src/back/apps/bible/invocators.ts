@@ -22,7 +22,9 @@ export const bibleSokiInvocatorBaseServer = new BibleSokiInvocatorBaseServer('Bi
             '' + fs.readFileSync(makeTranslateFileName(tName)),
             modifiedAt,
           );
-        } catch (error) {}
+        } catch (_error) {
+          //
+        }
       });
     },
   requestTranslate:

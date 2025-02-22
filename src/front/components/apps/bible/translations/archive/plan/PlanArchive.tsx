@@ -1,9 +1,8 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { bibleIDB } from '@bible/_db/bibleIDB';
+import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '@bible/hooks/address/address';
 import { memo, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { bibleIDB } from '../../../_db/bibleIDB';
-import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '../../../hooks/address/address';
-import BibleTranslationArchive from '../Archive';
 import { useBibleClearTranslationPlanSetter, useBibleTranslationPlan } from './hooks/plan';
 
 export default memo(function BibleTranslationPlanArchive(): JSX.Element {

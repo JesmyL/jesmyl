@@ -1,7 +1,7 @@
+import { authIDB } from '@index/db/auth-idb';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { authIDB } from 'front/components/index/db/auth-idb';
+import { CmComWid, CmComWidStr } from 'shared/api';
 import { Eventer } from 'shared/utils';
-import { CmComWid, CmComWidStr } from '../../../../shared/api/complect/apps/cm/complect/enums';
 import { cmIDB } from './_db/cm-idb';
 import { cmFreshesSokiInvocatorClient } from './invocators/fresh-invocator.methods';
 import { cmUserStoreSokiInvocatorClient } from './invocators/user-store-invocator.methods';
@@ -75,5 +75,7 @@ export const updateComComment = async (comw: CmComWid, comment: string, setIsLoa
   try {
     await trySend(comw, comment, setIsLoading);
     await cmIDB.tb.comComments.put({ comment, comw });
-  } catch (error) {}
+  } catch (_error) {
+    //
+  }
 };

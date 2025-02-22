@@ -6,4 +6,6 @@ export let backConfig = backConfigProd;
 
 try {
   if ('' + fs.readFileSync(`${__dirname}/.env.mode`) === 'TEST') backConfig = backConfigTests;
-} catch (e) {}
+} catch (_error) {
+  //
+}

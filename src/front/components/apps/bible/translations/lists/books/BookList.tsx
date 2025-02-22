@@ -1,13 +1,13 @@
+import { useSetBibleAddressWithForceJoinReset } from '@bible/hooks/address/address';
+import { useBibleBookList } from '@bible/hooks/texts';
 import styled from 'styled-components';
-import { useSetBibleAddressWithForceJoinReset } from '../../../hooks/address/address';
-import { useBibleBookList } from '../../../hooks/texts';
 import { useBibleSingleAddressSetter } from '../atoms';
 import { useBibleListFaceClickListener } from '../complect';
 
 export const bookiIdPrefix = 'bible-booki-';
 const faceClassName = 'bible-list-chapter-face';
 
-export default function BibleBookList() {
+export function BibleBookList() {
   const books = useBibleBookList();
   const setValue = useBibleSingleAddressSetter();
   const setAddress = useSetBibleAddressWithForceJoinReset();

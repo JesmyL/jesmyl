@@ -1,9 +1,9 @@
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { useCcom } from '@cm/col/com/useCcom';
 import { useEffect, useState } from 'react';
-import { addEventListenerPipe, hookEffectPipe } from '../../../../../../complect/hookEffectPipe';
-import { useCcom } from '../../../col/com/useCcom';
 import { CmLiveTranslationList } from './List';
-import { CmLiveTranslationSlide } from './Slide';
 import { CmSchWTranslationLiveDataValue } from './model';
+import { CmLiveTranslationSlide } from './Slide';
 
 export const CmLiveTranslationScreen = (props: CmSchWTranslationLiveDataValue) => {
   const com = useCcom(props.comw);

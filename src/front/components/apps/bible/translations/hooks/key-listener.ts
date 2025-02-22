@@ -1,14 +1,14 @@
-import { mylib } from 'front/utils';
+import { useActualRef } from '#shared/lib/hooks/useActualRef';
+import { mylib } from '#shared/lib/my-lib';
+import { bibleIDB } from '@bible/_db/bibleIDB';
+import { useBibleTranslationAddressIndexesSetter, useBibleTranslationJoinAddress } from '@bible/hooks/address/address';
+import { useBibleAddressBooki } from '@bible/hooks/address/books';
+import { useBibleAddressChapteri } from '@bible/hooks/address/chapters';
+import { useBibleTranslationSlideSyncContentSetter } from '@bible/hooks/slide-sync';
+import { BibleTranslationAddress, BibleTranslationJoinAddress, BibleVersei } from '@bible/model';
+import { useBibleShowTranslatesValue } from '@bible/translates/hooks';
+import { useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
 import { useEffect, useState } from 'react';
-import { useActualRef } from '../../../../../complect/useActualRef';
-import { bibleIDB } from '../../_db/bibleIDB';
-import { useBibleTranslationAddressIndexesSetter, useBibleTranslationJoinAddress } from '../../hooks/address/address';
-import { useBibleAddressBooki } from '../../hooks/address/books';
-import { useBibleAddressChapteri } from '../../hooks/address/chapters';
-import { useBibleTranslationSlideSyncContentSetter } from '../../hooks/slide-sync';
-import { BibleTranslationAddress, BibleTranslationJoinAddress, BibleVersei } from '../../model';
-import { useBibleTranslatesContext } from '../../translates/TranslatesContext';
-import { useBibleShowTranslatesValue } from '../../translates/hooks';
 import { useBibleTranslationAddToPlan } from '../archive/plan/hooks/plan';
 
 export const useBibleScreenTranslationKeyListener = (versei: BibleVersei, win?: Window) => {

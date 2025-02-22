@@ -1,8 +1,9 @@
+import { RoutingAppConfig } from 'front/app/routing-apps';
 import React, { Suspense } from 'react';
+
 import { Route } from 'react-router-dom';
-import { RoutingAppConfig } from '../../../../app/routing-apps';
-import TheComposition from '../col/com/TheComposition';
-import Translations from '../translation/Translation';
+import { TheComposition } from '../col/com/TheComposition';
+import { Translations } from '../translation/Translation';
 import { CmFooter } from './CmFooter';
 
 const CmRouter = React.lazy(() => import('./CmRouter'));

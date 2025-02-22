@@ -1,26 +1,27 @@
+import { useAtomValue } from '#shared/lib/atoms';
+import { LoadIndicatedContent } from '#shared/ui/load-indicated-content/LoadIndicatedContent';
+import {
+  PhaseContainerConfigurer,
+  StyledPhaseContainerConfigurerContent,
+  StyledPhaseContainerConfigurerHead,
+} from '#shared/ui/phase-container/PhaseContainerConfigurer';
+import { cmIDB } from '@cm/_db/cm-idb';
+import { SetComListLimitsExtracterContext } from '@cm/base/SetComListLimitsExtracterContext';
+import CmTranslationComListContextInCat from '@cm/base/translations/InCat';
+import CmTranslationComListContextInZeroCat from '@cm/base/translations/InZeroCat';
+import { useLaterComList } from '@cm/base/useLaterComList';
+import { categoryTermAtom, CmComListSearchFilterInput } from '@cm/complect/ComListSearchFilterInput';
+import { cmCompositionRoute } from '@cm/routing/cmRoutingApp';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { useAtomValue } from 'front/complect/atoms';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
-import LoadIndicatedContent from '../../../../../complect/load-indicated-content/LoadIndicatedContent';
-import PhaseContainerConfigurer, {
-  StyledPhaseContainerConfigurerContent,
-  StyledPhaseContainerConfigurerHead,
-} from '../../../../../complect/phase-container/PhaseContainerConfigurer';
-import { cmIDB } from '../../_db/cm-idb';
-import { SetComListLimitsExtracterContext } from '../../base/SetComListLimitsExtracterContext';
-import CmTranslationComListContextInCat from '../../base/translations/InCat';
-import CmTranslationComListContextInZeroCat from '../../base/translations/InZeroCat';
-import useLaterComList from '../../base/useLaterComList';
-import { categoryTermAtom, CmComListSearchFilterInput } from '../../complect/ComListSearchFilterInput';
-import { cmCompositionRoute } from '../../routing/cmRoutingApp';
 import { Com } from '../com/Com';
 import { ComFaceList } from '../com/face/list/ComFaceList';
 import { useCcat } from './useCcat';
 
-export default function TheCat({ all }: { all?: boolean; catWid?: number }) {
+export function TheCat({ all }: { all?: boolean; catWid?: number }) {
   const cat = useCcat(all);
   const { laterComws } = useLaterComList();
   const term = useAtomValue(categoryTermAtom);

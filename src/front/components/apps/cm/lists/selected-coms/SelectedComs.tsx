@@ -1,15 +1,15 @@
+import { BottomPopup } from '#shared/ui/absolute-popup/bottom-popup/BottomPopup';
+import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContainerConfigurer';
+import { CmTranslationComListContextInSelected } from '@cm/base/translations/InSelected';
+import { useSelectedComs } from '@cm/base/useSelectedComs';
+import { ComFaceList } from '@cm/col/com/face/list/ComFaceList';
+import { cmCompositionRoute } from '@cm/routing/cmRoutingApp';
 import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { BottomPopup } from '../../../../../complect/absolute-popup/bottom-popup/BottomPopup';
-import PhaseContainerConfigurer from '../../../../../complect/phase-container/PhaseContainerConfigurer';
-import { CmTranslationComListContextInSelected } from '../../base/translations/InSelected';
-import useSelectedComs from '../../base/useSelectedComs';
-import { ComFaceList } from '../../col/com/face/list/ComFaceList';
-import { cmCompositionRoute } from '../../routing/cmRoutingApp';
 import { LocalListToolsPopup } from '../popups/LocalListToolsPopup';
 import { MoveSelectedComButton } from './MoveSelectedComButton';
 
-export default function SelectedComs() {
+export function SelectedComs() {
   const { selectedComs, selectedComws } = useSelectedComs();
   const [isToolsOpen, setIsToolsOpen] = useState(false);
 

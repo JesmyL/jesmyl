@@ -1,4 +1,4 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
 import { itIt } from 'shared/utils';
 import { EditableCom } from '../../com/EditableCom';
 
@@ -8,7 +8,7 @@ interface Props {
   com: EditableCom;
 }
 
-export default function CmTextableBlockAnchorTitles({ texti, com, chordi }: Props) {
+export function CmTextableBlockAnchorTitles({ texti, com, chordi }: Props) {
   const textPosition = (chordi ?? texti ?? 0) + 1 + '. ';
 
   const ordersUsedText =

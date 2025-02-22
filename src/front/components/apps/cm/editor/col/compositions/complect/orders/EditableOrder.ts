@@ -1,7 +1,7 @@
-import { cmComOrderClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
+import { Order } from '@cm/col/com/order/Order';
+import { EditableOrderRegion, IExportableOrderMe } from '@cm/col/com/order/Order.model';
+import { cmComOrderClientInvocatorMethods } from '@cm/editor/cm-editor-invocator.methods';
 import { InheritancableOrder, OrderRepeats } from 'shared/api';
-import { Order } from '../../../../../col/com/order/Order';
-import { EditableOrderRegion, IExportableOrderMe } from '../../../../../col/com/order/Order.model';
 import { EditableCom } from '../../com/EditableCom';
 
 export class EditableOrder extends Order {
@@ -57,7 +57,8 @@ export class EditableOrder extends Order {
     const lineSplitted = textLine.split('');
     const vowels = this.com.getVowelPositions(textLine);
 
-    posi < 0 ? line.push(pos) : line.splice(posi, 1);
+    if (posi < 0) line.push(pos);
+    else line.splice(posi, 1);
 
     const positions = line.sort((a, b) => a - b);
     if (this.positions) this.positions[linei] = positions;

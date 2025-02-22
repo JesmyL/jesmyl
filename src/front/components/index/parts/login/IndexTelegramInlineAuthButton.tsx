@@ -1,9 +1,9 @@
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { TelegramWebAppApiOr } from '#basis/ui/tg-app/getTgApi';
+import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
+import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { indexBasicsSokiInvocatorClient } from '@index/db/invocators/schedules/fresh-invocator.methods';
 import { Link } from 'react-router-dom';
-import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
-import { TelegramWebAppApiOr } from '../../../../complect/tg-app/getTgApi';
-import { indexBasicsSokiInvocatorClient } from '../../db/invocators/schedules/fresh-invocator.methods';
 
 export const IndexTelegramInlineAuthButton = () => {
   return (

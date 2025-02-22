@@ -1,31 +1,32 @@
-import { TheIconLoading } from 'front/complect/the-icon/IconLoading';
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { appNames } from '#basis/model/App.model';
+import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
+import { BrutalScreen } from '#shared/ui/brutal-screen/BrutalScreen';
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
+import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContainerConfigurer';
+import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { ScheduleWidgetAlarm } from '#widgets/schedule/alarm/Alarm';
+import { scheduleWidgetListPageRoute } from '#widgets/schedule/general/ListPageRoute';
+import { routingApps } from 'front/app/routing-apps';
+import { checkIsThereNewSW } from 'front/serviceWorkerRegistration';
 import React, { Suspense, useEffect, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
 import { itNNull } from 'shared/utils';
 import { jversion } from 'shared/values';
-import { appNames } from '../../../../app/App.model';
-import { routingApps } from '../../../../app/routing-apps';
-import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
-import BrutalScreen from '../../../../complect/brutal-screen/BrutalScreen';
-import { FullContent } from '../../../../complect/fullscreen-content/FullContent';
-import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
-import ScheduleWidgetAlarm from '../../../../complect/schedule-widget/alarm/Alarm';
-import { scheduleWidgetListPageRoute } from '../../../../complect/schedule-widget/general/ListPageRoute';
-import { checkIsThereNewSW } from '../../../../serviceWorkerRegistration';
+
+import { Route, Routes } from 'react-router-dom';
 import { useAuth, useCurrentApp } from '../../atoms';
 import { indexIDB } from '../../db/index-idb';
-import useConnectionState, { useIsOnline } from '../../useConnectionState';
-import IndexActions from '../actions/Actions';
-import IndexAbout from '../IndexAbout';
+import { useConnectionState, useIsOnline } from '../../useConnectionState';
+import { IndexActions } from '../actions/Actions';
+import { IndexAbout } from '../IndexAbout';
 import { IndexTelegramInlineAuthButton } from '../login/IndexTelegramInlineAuthButton';
-import IndexSettings from '../settings/Settings';
+import { IndexSettings } from '../settings/Settings';
 import { AppFace } from './AppFace';
 import { IndexProfileInfo } from './ProfileInfo';
 
 const IndexAuthorization = React.lazy(() => import('../login/IndexAuthorization'));
 
-export default function IndexMain() {
+export function IndexMain() {
   const currentAppName = useCurrentApp();
   const newVersion = indexIDB.useValue.appVersion();
   const [cacheNames, setCacheNames] = useState<string[]>([]);
@@ -113,7 +114,9 @@ export default function IndexMain() {
                                   try {
                                     await Promise.all(cacheNames.map(cacheName => caches.delete(cacheName)));
                                     window.location.reload();
-                                  } catch (error) {}
+                                  } catch (_error) {
+                                    //
+                                  }
 
                                   setIsRefreshProcess(false);
                                 };

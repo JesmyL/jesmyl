@@ -1,8 +1,8 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { EditableCol } from '@cm/editor/col/EditableCol';
+import { CorrectsBox } from '@cm/editor/corrects-box/CorrectsBox';
+import { correctNotSlavicNameReg_i, textedChordReg } from '@cm/editor/Editor.complect';
 import { makeRegExp } from 'shared/utils';
-import { CorrectsBox } from '../../../../corrects-box/CorrectsBox';
-import { correctNotSlavicNameReg_i, textedChordReg } from '../../../../Editor.complect';
-import { EditableCol } from '../../../EditableCol';
 import { EditableComBase } from './0-Base';
 
 export class EditableComCorrects extends EditableComBase {

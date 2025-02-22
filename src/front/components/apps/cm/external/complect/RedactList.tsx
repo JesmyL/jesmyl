@@ -1,12 +1,12 @@
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
+import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { Com } from '@cm/col/com/Com';
+import { ComFaceList } from '@cm/col/com/face/list/ComFaceList';
+import { CmComListSearchFilterInput } from '@cm/complect/ComListSearchFilterInput';
+import { EditableCom } from '@cm/editor/col/compositions/com/EditableCom';
 import { useState } from 'react';
 import { CmComBindAttach, CmComWid } from 'shared/api';
-import { FullContent } from '../../../../../complect/fullscreen-content/FullContent';
-import IconButton from '../../../../../complect/the-icon/IconButton';
-import { Com } from '../../col/com/Com';
-import { ComFaceList } from '../../col/com/face/list/ComFaceList';
-import { CmComListSearchFilterInput } from '../../complect/ComListSearchFilterInput';
-import { EditableCom } from '../../editor/col/compositions/com/EditableCom';
-import CmExternalComListAttRedactListOrder from './RedactListOrder';
+import { CmExternalComListAttRedactListOrder } from './RedactListOrder';
 
 interface Props {
   value: CmComBindAttach;
@@ -14,7 +14,7 @@ interface Props {
   setIsOpenComposition: (isOpen: boolean) => void;
 }
 
-export default function CmExternalComListAttRedactList({ value, setComw: setCcomw, setIsOpenComposition }: Props) {
+export function CmExternalComListAttRedactList({ value, setComw: setCcomw, setIsOpenComposition }: Props) {
   const [isOrderOpen, setIsOrderOpen] = useState(false);
   const [coms, setComs] = useState<Com[]>([]);
 

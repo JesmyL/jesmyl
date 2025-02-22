@@ -1,4 +1,4 @@
-export default function EditButton() {
+export function EditButton() {
   return (
     <>
       <button>REDACT</button>

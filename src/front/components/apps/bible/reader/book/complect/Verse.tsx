@@ -1,5 +1,5 @@
+import { BibleChapteri, BibleVersei } from '@bible/model';
 import { memo } from 'react';
-import { BibleChapteri, BibleVersei } from '../../../model';
 
 interface Props {
   html: string;

@@ -1,12 +1,12 @@
+import { cmIDB } from '@cm/_db/cm-idb';
+import { Com } from '@cm/col/com/Com';
+import { ComFaceList } from '@cm/col/com/face/list/ComFaceList';
+import { useComs } from '@cm/cols/useCols';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { IScheduleWidgetDayEventMi, IScheduleWidgetWid } from 'shared/api';
 import { emptyArray } from 'shared/utils';
-import { cmIDB } from '../../_db/cm-idb';
-import { Com } from '../../col/com/Com';
-import { ComFaceList } from '../../col/com/face/list/ComFaceList';
-import { useComs } from '../../cols/useCols';
 
-export default function useMeetingComFaceList(
+export function useMeetingComFaceList(
   schw: IScheduleWidgetWid | NaN,
   dayi: number | NaN,
   eventMi: IScheduleWidgetDayEventMi | NaN,

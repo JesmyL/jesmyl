@@ -1,4 +1,3 @@
-/* eslint-disable no-throw-literal */
 import { IScheduleWidget, IScheduleWidgetDayEvent, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
 import { CustomAttUseTaleId } from 'shared/api/complect/schedule-widget/complect/rights';
 import { makeRegExp, SMyLib, smylib } from 'shared/utils';
@@ -152,7 +151,7 @@ export class ScheduleWidgetCleans {
     if (lines == null || lines.length < 3) throw `Текст должен содержать минимум три строки расписания`;
 
     let lastTimeStr = '';
-    let errors: string[] = [];
+    const errors: string[] = [];
 
     const list = lines.map(line => {
       line = line.trim();

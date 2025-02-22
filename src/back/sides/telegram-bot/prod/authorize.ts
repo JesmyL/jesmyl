@@ -35,11 +35,11 @@ export const authorizeTelegramCb: JTgBotCallbackQuery = async (prodBot, query, a
 
   try {
     member = await prodBot.tryIsUserMember(id);
-  } catch (err) {
+  } catch (_err) {
     return unsubscribedAlert;
   }
 
-  let user = member.user;
+  const user = member.user;
 
   const prefix = `\n\n${user.first_name || ''} ${user.last_name || ''} (${
     user.username
@@ -96,7 +96,9 @@ export const authorizeTelegramCb: JTgBotCallbackQuery = async (prodBot, query, a
       ).ok
     )
       return;
-  } catch (error) {}
+  } catch (_error) {
+    //
+  }
 
   prodBot.logger.codeRequest(`Запрос кода авторизации${prefix}`);
 

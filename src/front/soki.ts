@@ -32,13 +32,15 @@ export class SokiTrip {
 
   private sendRegistrationToken = async () => {
     try {
-      let location: {} | null = null;
+      let location: object | null = null;
 
       try {
         const aborter = new AbortController();
         setTimeout(() => aborter.abort(), 5000);
         location = await (await fetch('https://api.db-ip.com/v2/free/self', aborter)).json();
-      } catch (e) {}
+      } catch (_e) {
+        //
+      }
 
       await this.send({
         token: await authIDB.get.token(),
@@ -97,7 +99,9 @@ export class SokiTrip {
           tool: undefined,
           requestId: event.requestId,
         });
-      } catch (e) {}
+      } catch (_error) {
+        //
+      }
     };
 
     return this;
@@ -124,7 +128,7 @@ export class SokiTrip {
         if (this.ws && this.ws.readyState === this.ws.OPEN) {
           this.ws.send(JSON.stringify(event));
         } else setTimeout(trySend, 100);
-      } catch (error) {
+      } catch (_error) {
         setTimeout(trySend, 100);
       }
     };

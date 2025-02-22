@@ -1,13 +1,12 @@
+import { bibleIDB } from '@bible/_db/bibleIDB';
+import { useBibleAddressBooki } from '@bible/hooks/address/books';
+import { useBibleAddressChapteri } from '@bible/hooks/address/chapters';
+import { BibleBooki, BibleChapteri, BibleTranslationSingleAddress, BibleVersei } from '@bible/model';
+import { useBibleShowTranslatesValue } from '@bible/translates/hooks';
+import { useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
 import { useCallback, useEffect, useState } from 'react';
 import { emptyArray, makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
-import { bibleIDB } from '../../_db/bibleIDB';
-import { useBibleAddressBooki } from '../../hooks/address/books';
-import { useBibleAddressChapteri } from '../../hooks/address/chapters';
-import { BibleBooki, BibleChapteri, BibleTranslationSingleAddress, BibleVersei } from '../../model';
-import { useBibleTranslatesContext } from '../../translates/TranslatesContext';
-import { useBibleShowTranslatesValue } from '../../translates/hooks';
-import BibleSearchResultVerse from './ResultVerse';
 import { useBibleTranslationSearchResultList, useBibleTranslationSearchResultSelectedValue } from './hooks/results';
 
 interface Props {
@@ -26,7 +25,7 @@ const maxItems = 49;
 
 const sortStringsByLength = (a: string, b: string) => b.length - a.length;
 
-export default function BibleSearchResults({ inputRef, height = '100px', innerZone, onClick: userOnClick }: Props) {
+export function BibleSearchResults({ inputRef, height = '100px', innerZone, onClick: userOnClick }: Props) {
   const searchZone = bibleIDB.useValue.searchZone();
   const searchTerm = bibleIDB.useValue.searchTerm();
   const showTranslates = useBibleShowTranslatesValue();

@@ -1,15 +1,15 @@
-import TheButton from 'front/complect/Button';
-import Modal from 'front/complect/modal/Modal/Modal';
-import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
-import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
-import { TheIconLoading } from 'front/complect/the-icon/IconLoading';
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { Modal } from '#shared/ui/modal/Modal/Modal';
+import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
+import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
+import { TheButton } from '#shared/ui/TheButton';
+import { ComFaceList } from '@cm/col/com/face/list/ComFaceList';
+import { cmComExternalsClientInvocatorMethods } from '@cm/editor/cm-editor-invocator.methods';
 import { useEffect, useState } from 'react';
 import { ScheduleComPackHistoryItem } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
-import { ComFaceList } from '../../col/com/face/list/ComFaceList';
-import { cmComExternalsClientInvocatorMethods } from '../../editor/cm-editor-invocator.methods';
 import { useMeetingPathParts } from './useMeetingPathParts';
 
 export const CmMeetingEventEditsHistoryModal = ({ onClose }: { onClose: (isOpen: false) => void }) => {

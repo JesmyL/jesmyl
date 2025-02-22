@@ -1,7 +1,7 @@
-import { bibleRoutingApp } from '../components/apps/bible/routing/bibleRoutingApp';
-import { cmRoutingApp } from '../components/apps/cm/routing/cmRoutingApp';
-import { tunerRoutingApp } from '../components/apps/tuner/tunerRoutingApp';
-import { AppName } from './App.model';
+import { bibleRoutingApp } from 'front/components/apps/bible/routing/bibleRoutingApp';
+import { cmRoutingApp } from 'front/components/apps/cm/routing/cmRoutingApp';
+import { tunerRoutingApp } from 'front/components/apps/tuner/tunerRoutingApp';
+import { AppName } from '../basis/model/App.model';
 
 export type RoutingAppConfig = {
   appName: AppName;

@@ -1,8 +1,5 @@
 import { memo } from 'react';
 import styled from 'styled-components';
-import BibleTranslateScreenConfigurations from './ScreenConfigurations';
-import BibleTranslationHistoryArchive from './archive/history/HistoryArchive';
-import BibleTranslationPlanArchive from './archive/plan/PlanArchive';
 
 export default memo(function BibleTranslationControlledBottomPanel(): JSX.Element {
   return (

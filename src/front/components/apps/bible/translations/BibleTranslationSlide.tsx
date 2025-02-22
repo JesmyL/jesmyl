@@ -1,10 +1,10 @@
+import { BibleTranslationScreenKnownTextsContext } from '@bible/texts/AddressContentContext';
+import { IndexSchWTranslationLiveDataValue } from '@index/Index.model';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { IndexSchWTranslationLiveDataValue } from '../../../index/Index.model';
-import { BibleTranslationScreenKnownTextsContext } from '../texts/AddressContentContext';
 import { BibleTranslationScreen } from './screen/BibleTranslationScreen';
 
-export default function BibleTranslationSlide({
+export function BibleTranslationSlide({
   config,
   text,
   addressText,

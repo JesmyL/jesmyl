@@ -1,6 +1,6 @@
+import { useCcat } from '@cm/col/cat/useCcat';
+import { useComs } from '@cm/cols/useCols';
 import { useMemo } from 'react';
-import { useCcat } from '../../col/cat/useCcat';
-import { useComs } from '../../cols/useCols';
 import { CmComListContext, CmComListContextValue } from './context';
 
 const CmTranslationComListContextInCat = function InCat({ children }: { children: React.ReactNode }) {

@@ -1,28 +1,28 @@
-import { atom, useAtom } from 'front/complect/atoms';
-import TheIconSendButton from 'front/complect/sends/the-icon-send-button/TheIconSendButton';
-import { mylib } from 'front/utils';
+import { atom, useAtom } from '#shared/lib/atoms';
+import { mylib } from '#shared/lib/my-lib';
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
+import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
+import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
+import { TheButton } from '#shared/ui/TheButton';
+import { eeStorage } from '@cm/base/ee-storage/EeStorage';
 import { useEffect, useRef, useState } from 'react';
 import { EeStorePack } from 'shared/api';
-import TheButton from '../../../../../complect/Button';
-import Dropdown from '../../../../../complect/dropdown/Dropdown';
-import { DropdownItem } from '../../../../../complect/dropdown/Dropdown.model';
-import IconCheckbox from '../../../../../complect/the-icon/IconCheckbox';
-import { eeStorage } from '../../base/ee-storage/EeStorage';
 import { cmEditorClientInvocatorMethods } from '../cm-editor-invocator.methods';
-import PhaseCmEditorContainer from '../phase-editor-container/PhaseCmEditorContainer';
+import { PhaseCmEditorContainer } from '../phase-editor-container/PhaseCmEditorContainer';
 import { EERulesListComputer } from './EERulesListComputer';
 import { EERulesWord } from './EERulesWord';
 
 const sizes = [10, 30, 50];
 
-let listBox = { list: [] } as { list: string[] };
+const listBox = { list: [] } as { list: string[] };
 
 const eeWordsAtom = atom<EeStorePack>({});
 const pageSizeAtom = atom(50);
 const currentPageAtom = atom(0);
 const isCheckBibleAtom = atom(false);
 
-export default function EERules() {
+export function EERules() {
   const [pageSize, setPageSize] = useAtom(pageSizeAtom);
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
   const [isCheckBible, setIsCheckBible] = useAtom(isCheckBibleAtom);
@@ -102,7 +102,7 @@ export default function EERules() {
                   })}
               />
               слов: {listBox.list.length}
-              {listBox.list.slice(currentPage * pageSize, currentPage * pageSize + pageSize).map((word, wordi) => {
+              {listBox.list.slice(currentPage * pageSize, currentPage * pageSize + pageSize).map(word => {
                 return (
                   <EERulesWord
                     key={word}

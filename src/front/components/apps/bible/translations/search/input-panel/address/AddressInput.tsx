@@ -1,4 +1,4 @@
-import { bibleIDB } from 'front/components/apps/bible/_db/bibleIDB';
+import { bibleIDB } from '@bible/_db/bibleIDB';
 import { BibleSearchPanelInput } from '../Input';
 import { useBibleTransformAddressTermToAddress } from './hooks/transformers';
 

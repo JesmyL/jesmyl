@@ -1,8 +1,8 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { contextCreator } from '#shared/lib/contextCreator';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { contextCreator } from '../complect/contextCreator';
-import { AppName } from './App.model';
+import { AppName } from '../basis/model/App.model';
 
 interface Props {
   to: string;
@@ -22,7 +22,7 @@ const footerItemPlaceLsPrefix = 'nav-link:';
 
 export { CurrentAppFooterItemAppNameContext, CurrentAppFooterItemPlaceContext, footerItemPlaceLsPrefix };
 
-export default function AppFooterItem({ to, icon, title, search, className, children, idPostfix: id }: Props) {
+export function AppFooterItem({ to, icon, title, search, className, children, idPostfix: id }: Props) {
   const appName = useCurrentAppFooterItemAppNameContext();
   const place = useCurrentAppFooterItemPlaceContext();
   const isActive = to === place;

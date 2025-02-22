@@ -1,10 +1,10 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { bibleIDB } from '@bible/_db/bibleIDB';
+import { useBibleTranslationJoinAddress } from '@bible/hooks/address/address';
+import { useBibleAddressVersei } from '@bible/hooks/address/verses';
+import { useBibleTranslationSlideSyncContentSetter } from '@bible/hooks/slide-sync';
+import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress } from '@bible/model';
 import { useEffect } from 'react';
-import { bibleIDB } from '../../../_db/bibleIDB';
-import { useBibleTranslationJoinAddress } from '../../../hooks/address/address';
-import { useBibleAddressVersei } from '../../../hooks/address/verses';
-import { useBibleTranslationSlideSyncContentSetter } from '../../../hooks/slide-sync';
-import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress } from '../../../model';
 import { verseiIdPrefix } from './VerseList';
 
 export const useVerseListListeners = (

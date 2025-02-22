@@ -1,8 +1,8 @@
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
+import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
+import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { FullContent } from 'front/complect/fullscreen-content/FullContent';
-import { ModalBody } from 'front/complect/modal/Modal/ModalBody';
-import { ModalHeader } from 'front/complect/modal/Modal/ModalHeader';
-import IconButton from 'front/complect/the-icon/IconButton';
 import React, { useState } from 'react';
 import { complectIDB } from '../../../_idb/complectIDB';
 import { defaultAlertLineConfig } from '../../atoms';

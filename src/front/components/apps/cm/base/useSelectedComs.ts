@@ -1,10 +1,10 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { cmIDB } from '@cm/_db/cm-idb';
+import { useComs } from '@cm/cols/useCols';
 import { useCallback, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { cmIDB } from '../_db/cm-idb';
-import { useComs } from '../cols/useCols';
 
-export default function useSelectedComs() {
+export function useSelectedComs() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selectedComws, setSelectedComws] = cmIDB.use.selectedComws();
   const selectedComs = useComs(selectedComws);
@@ -16,9 +16,11 @@ export default function useSelectedComs() {
     try {
       const comws = JSON.parse(scomws);
       if (mylib.isArr(comws) && !comws.some(it => !mylib.isNum(it))) {
-        setSelectedComws(comws);
+        setSelectedComws(comws as number[]);
       }
-    } catch (error) {}
+    } catch (_error) {
+      //
+    }
 
     setSearchParams(prev => {
       const news = new URLSearchParams(prev);

@@ -1,10 +1,10 @@
-import { MyLib } from 'front/utils';
+import { MyLib } from '#shared/lib/my-lib';
+import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '@bible/model';
+import { translateDescriptions } from '@bible/translates/complect';
+import { useBibleShowTranslatesValue } from '@bible/translates/hooks';
+import { useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
+import { verseTranslateTitleCssClassName } from '@bible/translations/complect';
 import { itIt } from 'shared/utils';
-import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '../model';
-import { useBibleTranslatesContext } from '../translates/TranslatesContext';
-import { translateDescriptions } from '../translates/complect';
-import { useBibleShowTranslatesValue } from '../translates/hooks';
-import { verseTranslateTitleCssClassName } from '../translations/complect';
 import { useBibleAddressBooki } from './address/books';
 import { bibleTitles } from './bibleTitlesJson';
 

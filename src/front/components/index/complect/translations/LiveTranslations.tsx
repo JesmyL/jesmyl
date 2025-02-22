@@ -1,18 +1,18 @@
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { BibleTranslatesContextProvider } from '@bible/translates/TranslatesContext';
+import { FollowTranslationInitialSlide } from '@cm/translation/complect/live/FollowTranslationInitialSlide';
+import { useAuth } from '@index/atoms';
+import { indexIDB } from '@index/db/index-idb';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { addEventListenerPipe, hookEffectPipe } from 'front/complect/hookEffectPipe';
 import { complectIDB } from 'front/components/apps/+complect/_idb/complectIDB';
+import { useScreenTranslationWindows } from 'front/components/apps/+complect/translations/hooks/windows';
+import { useTranslationInitialSlideSet } from 'front/components/apps/+complect/translations/initial-slide-context';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { itNNull } from 'shared/utils';
-import { useScreenTranslationWindows } from '../../../apps/+complect/translations/hooks/windows';
-import { useTranslationInitialSlideSet } from '../../../apps/+complect/translations/initial-slide-context';
-import BibleTranslatesContextProvider from '../../../apps/bible/translates/TranslatesContext';
-import { FollowTranslationInitialSlide } from '../../../apps/cm/translation/complect/live/FollowTranslationInitialSlide';
-import { useAuth } from '../../atoms';
-import { indexIDB } from '../../db/index-idb';
+import { schLiveSokiInvocatorClient } from './live-invocator';
 import { IndexScheduleWidgetBibleTranslationsControlled } from './LiveBible';
 import { ScheduleWidgetLiveCmTranslations } from './LiveCm';
-import { schLiveSokiInvocatorClient } from './live-invocator';
 
 export const IndexScheduleWidgetTranslations = () => {
   const auth = useAuth();

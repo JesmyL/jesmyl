@@ -280,7 +280,9 @@ class TgInformer {
 
               jesmylTgBot.bot.sendMessage(admin.user.id, text, { parse_mode: 'HTML' });
             });
-          } catch (error) {}
+          } catch (_error) {
+            //
+          }
       }
 
       let sendUserMessage = async (tgId: number) => {
@@ -291,7 +293,9 @@ class TgInformer {
             await jesmylTgBot.bot.getChatMember(tgChatId, tgId);
             return;
           }
-        } catch (error) {}
+        } catch (_error) {
+          //
+        }
 
         jesmylTgBot.sendMessage(tgId, text, tglogger, options);
       };
@@ -309,7 +313,9 @@ class TgInformer {
             sendUserMessage = async (tgId: number) => {
               jesmylTgBot.sendMessage(tgId, text, tglogger, options);
             };
-      } catch (error) {}
+      } catch (_error) {
+        //
+      }
 
       for (const user of schedule.ctrl.users) {
         if (

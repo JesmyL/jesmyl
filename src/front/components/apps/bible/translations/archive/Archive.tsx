@@ -1,13 +1,13 @@
-import { mylib } from 'front/utils';
+import { mylib } from '#shared/lib/my-lib';
+import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { bibleIDB } from '@bible/_db/bibleIDB';
+import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '@bible/hooks/address/address';
+import { BibleTranslationAddress } from '@bible/model';
 import { memo } from 'react';
-import IconButton from '../../../../../complect/the-icon/IconButton';
-import { bibleIDB } from '../../_db/bibleIDB';
-import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '../../hooks/address/address';
-import { BibleTranslationAddress } from '../../model';
-import BibleTranslationArchiveJoinedAddressText from './JoinedAddress';
-import BibleTranslationArchiveJoinedContentText from './JoinedContentText';
-import BibleTranslationArchiveSingleAddressText from './SingleAddressText';
-import BibleTranslationArchiveSingleContentText from './SingleContentText';
+import { BibleTranslationArchiveJoinedAddressText } from './JoinedAddress';
+import { BibleTranslationArchiveJoinedContentText } from './JoinedContentText';
+import { BibleTranslationArchiveSingleAddressText } from './SingleAddressText';
+import { BibleTranslationArchiveSingleContentText } from './SingleContentText';
 
 interface Props {
   title: string;

@@ -1,5 +1,5 @@
+import { useCats } from '@cm/cols/useCols';
 import React from 'react';
-import { useCats } from '../../cols/useCols';
 import { Com } from './Com';
 
 export const CmComCatMentions = ({ com }: { com: Com }) => {

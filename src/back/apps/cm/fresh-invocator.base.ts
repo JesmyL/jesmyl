@@ -1,8 +1,8 @@
 import { FileStore } from 'back/complect/FileStore';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
-import { mylib } from 'front/utils';
 import { ICmComComment, IExportableCat, IExportableCom } from 'shared/api';
 import { CmFreshSokiInvocatorModel } from 'shared/api/invocators/cm/fresh-invocators.model';
+import { smylib } from 'shared/utils';
 import { cmCatServerInvocatorBase } from './cat-invocator.base';
 import { cmComExternalsSokiInvocatorBaseServer } from './com-externals-invocator.base';
 import { cmComServerInvocatorBase } from './com-invocator.base';
@@ -68,19 +68,21 @@ export const cmFreshServerInvocatorBase = new CmFreshSokiInvocatorBaseServer('Cm
       sendFreshModifiedableList(
         lastModfiedAt,
         eventPacksFileStore,
-        () => mylib.values(eventPacksFileStore.getValue()),
+        () => smylib.values(eventPacksFileStore.getValue()),
         (items, modifiedAt) => cmServerInvocatorShareMethods.refreshScheduleEventComPacks(client, items, modifiedAt),
       );
 
       if (auth != null) {
         if (auth.level >= 50) {
-          const eePackModifiedAt = eePackFileStore.fileModifiedAt();
-          if (eePackModifiedAt > lastModfiedAt) {
-            cmEditorServerInvocatorShareMethods.refreshEEPack(client, {
-              modifiedAt: chordPackModifiedAt,
-              pack: eePackFileStore.getValue(),
-            });
-          }
+          setTimeout(() => {
+            const eePackModifiedAt = eePackFileStore.fileModifiedAt();
+            if (eePackModifiedAt > lastModfiedAt) {
+              cmEditorServerInvocatorShareMethods.refreshEEPack(client, {
+                modifiedAt: chordPackModifiedAt,
+                pack: eePackFileStore.getValue(),
+              });
+            }
+          }, 3000);
         }
 
         if (auth.login != null) {
@@ -89,7 +91,7 @@ export const cmFreshServerInvocatorBase = new CmFreshSokiInvocatorBaseServer('Cm
           sendFreshModifiedableList(
             lastModfiedAt,
             comCommentsFileStore,
-            () => mylib.values(comCommentsFileStore.getValue()[login]),
+            () => smylib.values(comCommentsFileStore.getValue()[login]),
             (comments, modifiedAt) => cmServerInvocatorShareMethods.refreshComComments(client, comments, modifiedAt),
           );
 

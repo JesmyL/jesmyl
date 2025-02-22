@@ -1,5 +1,5 @@
-import { useAtom } from 'front/complect/atoms';
-import { cmIsShowCatBindsInCompositionAtom } from 'front/components/apps/cm/atoms';
+import { useAtom } from '#shared/lib/atoms';
+import { cmIsShowCatBindsInCompositionAtom } from '@cm/atoms';
 import { itNIt } from 'shared/utils';
 import { ComTool } from '../ComTool';
 

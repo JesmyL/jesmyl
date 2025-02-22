@@ -1,5 +1,5 @@
-import { atom, useAtom } from '../../../../complect/atoms';
-import { IndexErrorScope } from '../../Index.model';
+import { atom, useAtom } from '#shared/lib/atoms';
+import { IndexErrorScope } from '@index/Index.model';
 
 const errorsAtom = atom<Partial<Record<IndexErrorScope, string | null>>>({});
 

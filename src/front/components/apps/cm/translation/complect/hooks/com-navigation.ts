@@ -1,8 +1,8 @@
+import { useCmTranslationComListContext } from '@cm/base/translations/context';
+import { Com } from '@cm/col/com/Com';
+import { useCom } from '@cm/col/com/useCcom';
 import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { useCmTranslationComListContext } from '../../../base/translations/context';
-import { Com } from '../../../col/com/Com';
-import { useCom } from '../../../col/com/useCcom';
 import { useCmScreenTranslationComTextNavigations } from './com-texts';
 
 export const useCmScreenTranslationComNavigations = () => {

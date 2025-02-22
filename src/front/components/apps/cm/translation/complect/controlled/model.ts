@@ -1,8 +1,8 @@
-import { BackgroundConfigProps } from 'front/complect/configurators/model';
+import { BackgroundConfigProps } from '#shared/ui/configurators/model';
 import {
   ScreenTranslationPositionConfig,
   ScreenTranslationTextConfig,
-} from '../../../../+complect/translations/complect/model';
+} from 'front/components/apps/+complect/translations/complect/model';
 
 export type CmTranslationTextScreenConfig = ScreenTranslationPositionConfig & ScreenTranslationTextConfig;
 

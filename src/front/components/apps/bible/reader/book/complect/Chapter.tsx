@@ -1,6 +1,5 @@
+import { BibleChapteri } from '@bible/model';
 import { memo } from 'react';
-import { BibleChapteri } from '../../../model';
-import BibleReaderVerseText from './Verse';
 
 export default memo(function BibleReaderChapter({
   list,

@@ -1,4 +1,4 @@
-import { indexSimpleValIsPlayAnimations } from '../components/index/complect/index.simpleValues';
+import { indexSimpleValIsPlayAnimations } from '@index/complect/index.simpleValues';
 
 export const styledDefaultTheme = {
   isIOS: /iPad|iPhone|iPod/.test(navigator.userAgent),

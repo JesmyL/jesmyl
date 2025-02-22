@@ -1,18 +1,18 @@
+import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { cmIDB } from '@cm/_db/cm-idb';
+import { RollControled } from '@cm/base/RolledContent';
+import { ChordVisibleVariant } from '@cm/Cm.model';
 import { useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { CmComWid } from 'shared/api';
-import styled, { css, RuleSet } from 'styled-components';
-import { backSwipableContainerMaker } from '../../../../../complect/backSwipableContainerMaker';
-import { addEventListenerPipe, hookEffectPipe } from '../../../../../complect/hookEffectPipe';
-import { ChordVisibleVariant } from '../../Cm.model';
-import { cmIDB } from '../../_db/cm-idb';
-import RollControled from '../../base/RolledContent';
+import styled, { RuleSet, css } from 'styled-components';
 import { Com } from './Com';
 import './Com.scss';
-import { TheCom } from './TheCom';
 import { TheComComment } from './complect/comment-parser/TheComComment';
 import { useComCommentBlockCss } from './complect/comment-parser/useComCommentBlock';
 import { useComCommentBlockFastReactions } from './complect/comment-parser/useComCommentBlockFastReactions';
+import { TheCom } from './TheCom';
 
 let onPrevCom: () => void;
 let onNextCom: () => void;
@@ -21,7 +21,7 @@ const swiper = backSwipableContainerMaker(
   () => onNextCom(),
 );
 
-export default function TheControlledCom({
+export function TheControlledCom({
   com,
   comwList,
   chordVisibleVariant,

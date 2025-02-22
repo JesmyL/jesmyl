@@ -1,7 +1,7 @@
-import { BibleChapteri } from '../../model';
-import { useBibleTranslatesContext } from '../../translates/TranslatesContext';
-import { useBibleShowTranslatesValue } from '../../translates/hooks';
-import { useBibleChapteri } from '../../translations/lists/atoms';
+import { BibleChapteri } from '@bible/model';
+import { useBibleShowTranslatesValue } from '@bible/translates/hooks';
+import { useBibleTranslatesContext } from '@bible/translates/TranslatesContext';
+import { useBibleChapteri } from '@bible/translations/lists/atoms';
 import { useBibleAddressBooki } from './books';
 
 export const useBibleAddressChapteri = (): BibleChapteri => {

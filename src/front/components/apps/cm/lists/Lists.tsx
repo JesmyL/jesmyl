@@ -1,18 +1,18 @@
-import { LazyIcon } from 'front/complect/the-icon/LazyIcon';
+import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
+import { BrutalScreen } from '#shared/ui/brutal-screen/BrutalScreen';
+import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContainerConfigurer';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { useSelectedComs } from '@cm/base/useSelectedComs';
+import { TheCat } from '@cm/col/cat/TheCat';
+import { useCats } from '@cm/cols/useCols';
 import { Link, Route, Routes } from 'react-router-dom';
-import BrutalItem from '../../../../complect/brutal-item/BrutalItem';
-import BrutalScreen from '../../../../complect/brutal-screen/BrutalScreen';
-import PhaseContainerConfigurer from '../../../../complect/phase-container/PhaseContainerConfigurer';
-import useSelectedComs from '../base/useSelectedComs';
-import TheCat from '../col/cat/TheCat';
-import { useCats } from '../cols/useCols';
-import ExternalList from './ExternalList';
+import { ExternalList } from './ExternalList';
+import { FavoriteComs } from './favorites/FavoriteComs';
 import './Lists.scss';
-import FavoriteComs from './favorites/FavoriteComs';
 import { TheMeetings } from './meetings/TheMeetings';
-import SelectedComs from './selected-coms/SelectedComs';
+import { SelectedComs } from './selected-coms/SelectedComs';
 
-export default function Lists() {
+export function Lists() {
   const cats = useCats();
   const { selectedComws } = useSelectedComs();
 

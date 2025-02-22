@@ -1,27 +1,27 @@
-import { BottomPopup } from 'front/complect/absolute-popup/bottom-popup/BottomPopup';
-import { useAtom } from 'front/complect/atoms';
-import { useIsNumberSearch } from 'front/complect/DebouncedSearchInput';
-import { hookEffectPipe, setTimeoutPipe } from 'front/complect/hookEffectPipe';
-import { StyledPhaseContainerConfigurerHead } from 'front/complect/phase-container/PhaseContainerConfigurer';
+import { useAtom } from '#shared/lib/atoms';
+import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
+import { BottomPopup } from '#shared/ui/absolute-popup/bottom-popup/BottomPopup';
+import { useIsNumberSearch } from '#shared/ui/DebouncedSearchInput';
+import { StyledPhaseContainerConfigurerHead } from '#shared/ui/phase-container/PhaseContainerConfigurer';
+import { Cat } from '@cm/col/cat/Cat';
+import { CatSpecialSearches } from '@cm/col/cat/Cat.complect';
+import { TheCatSpecialSearches } from '@cm/col/cat/SpecialSearches';
+import { Com } from '@cm/col/com/Com';
+import { ComFaceList } from '@cm/col/com/face/list/ComFaceList';
+import { useComs } from '@cm/cols/useCols';
+import { categoryTermAtom, CmComListSearchFilterInput } from '@cm/complect/ComListSearchFilterInput';
+import { editCompositionNavs } from '@cm/editor/editorNav';
+import { PhaseCmEditorContainer } from '@cm/editor/phase-editor-container/PhaseCmEditorContainer';
 import { useEffect, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
-import { Cat } from '../../../col/cat/Cat';
-import { CatSpecialSearches } from '../../../col/cat/Cat.complect';
-import { TheCatSpecialSearches } from '../../../col/cat/SpecialSearches';
-import { Com } from '../../../col/com/Com';
-import { ComFaceList } from '../../../col/com/face/list/ComFaceList';
-import { useComs } from '../../../cols/useCols';
-import { categoryTermAtom, CmComListSearchFilterInput } from '../../../complect/ComListSearchFilterInput';
-import { editCompositionNavs } from '../../editorNav';
-import PhaseCmEditorContainer from '../../phase-editor-container/PhaseCmEditorContainer';
 import { EditableCom } from './com/EditableCom';
 import { EditCompositionsMore } from './complect/EditCompositionsMore';
-import EditComposition from './EditComposition';
+import { EditComposition } from './EditComposition';
 
 const mapExtractItem = <Item,>({ item }: { item: Item }): Item => item;
 
-export default function EditCompositions() {
+export function EditCompositions() {
   const coms = useComs();
   const [isOpenMorePopup, setIsOpenMorePopup] = useState(false);
   const isNumberSearch = useIsNumberSearch();
@@ -58,7 +58,9 @@ export default function EditCompositions() {
             if (mappedComs == null) return;
 
             setSearchedComs(mappedComs);
-          } catch (error) {}
+          } catch (_error) {
+            //
+          }
         }),
       )
       .effect(() => resetSearch?.());

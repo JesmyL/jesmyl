@@ -1,10 +1,7 @@
+import { liveDataAtom, liveDataStreamersAtom } from '@index/atoms';
 import { SokiInvocatorClient } from 'front/SokiInvocator.client';
 import { SokiInvocatorBaseClient } from 'front/SokiInvocatorBase.client';
-import {
-  SchLiveSokiInvocatorModel,
-  SchLiveSokiInvocatorSharesModel,
-} from 'shared/api/invocators/schedules/live-invocators.model';
-import { liveDataAtom, liveDataStreamersAtom } from '../../atoms';
+import { SchLiveSokiInvocatorModel, SchLiveSokiInvocatorSharesModel } from 'shared/api';
 
 class SchLiveSokiInvocatorClient extends SokiInvocatorClient<SchLiveSokiInvocatorModel> {}
 export const schLiveSokiInvocatorClient = new SchLiveSokiInvocatorClient('SchLiveSokiInvocatorClient', {

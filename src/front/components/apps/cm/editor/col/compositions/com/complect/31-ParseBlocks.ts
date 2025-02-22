@@ -1,14 +1,14 @@
-import { mylib } from 'front/utils';
-import { makeRegExp } from 'shared/utils';
-import { blockStyles } from '../../../../../col/com/block-styles/BlockStyles';
-import { StyleBlock } from '../../../../../col/com/block-styles/StyleBlock';
-import { INewExportableOrder } from '../../../../../col/com/order/Order.model';
+import { mylib } from '#shared/lib/my-lib';
+import { blockStyles } from '@cm/col/com/block-styles/BlockStyles';
+import { StyleBlock } from '@cm/col/com/block-styles/StyleBlock';
+import { INewExportableOrder } from '@cm/col/com/order/Order.model';
 import {
   checkIsChordLineReg,
   ruDifferentLowerLettersStr,
   slavicLowerLettersStr,
   uaDifferentLowerLettersStr,
-} from '../../../../Editor.complect';
+} from '@cm/editor/Editor.complect';
+import { makeRegExp } from 'shared/utils';
 import { EditableComBlocks } from './30-Blocks';
 
 const freeSlavicLineReg_gi = makeRegExp(`/[^${slavicLowerLettersStr} ]/gi`);

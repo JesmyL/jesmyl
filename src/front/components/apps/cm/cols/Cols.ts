@@ -1,7 +1,7 @@
+import { SourceBased } from '#shared/lib/SourceBased';
+import { Cat } from '@cm/col/cat/Cat';
+import { Com } from '@cm/col/com/Com';
 import { IExportableCols, IExportableCom } from 'shared/api';
-import SourceBased from '../../../../complect/SourceBased';
-import { Cat } from '../col/cat/Cat';
-import { Com } from '../col/com/Com';
 import { ICols } from './Cols.model';
 
 export class Cols extends SourceBased<IExportableCols> implements ICols {

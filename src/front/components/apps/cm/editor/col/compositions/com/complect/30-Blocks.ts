@@ -1,4 +1,4 @@
-import { cmComClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
+import { cmComClientInvocatorMethods } from '../../../../cm-editor-invocator.methods';
 import { EditableComOrders } from './20-Orders';
 
 const itTrim = (it: string) => it.trim();

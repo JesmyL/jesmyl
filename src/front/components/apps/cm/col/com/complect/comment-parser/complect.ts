@@ -1,3 +1,3 @@
-import { atom } from '../../../../../../../complect/atoms';
+import { atom } from '#shared/lib/atoms';
 
 export const isComCommentRedactAtom = atom(false);

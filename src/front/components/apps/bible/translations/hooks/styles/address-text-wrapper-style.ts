@@ -1,7 +1,7 @@
+import { BibleTranslationScreenConfig } from '@bible/translations/model';
+import { useScreenTranslationPositionsStyles } from 'front/components/apps/+complect/translations/complect/hooks/position-styles';
+import { useScreenTranslationTextStyles } from 'front/components/apps/+complect/translations/complect/hooks/text-styles';
 import { CSSProperties, useMemo } from 'react';
-import { useScreenTranslationPositionsStyles } from '../../../../+complect/translations/complect/hooks/position-styles';
-import { useScreenTranslationTextStyles } from '../../../../+complect/translations/complect/hooks/text-styles';
-import { BibleTranslationScreenConfig } from '../../model';
 
 export const useGetBibleScreenTranslationAddressTextWrapperStyle = (
   currentConfig: BibleTranslationScreenConfig | und,

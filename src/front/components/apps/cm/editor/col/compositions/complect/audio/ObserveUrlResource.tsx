@@ -1,11 +1,11 @@
-import { cmEditorClientInvocatorMethods } from 'front/components/apps/cm/editor/cm-editor-invocator.methods';
+import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
+import { SendButton } from '#shared/ui/sends/send-button/SendButton';
+import { cmEditorClientInvocatorMethods } from '@cm/editor/cm-editor-invocator.methods';
+import { useCmMp3Rules } from '@cm/editor/mp3-rule-redactor/useCmMp3Rules';
 import { useEffect, useState } from 'react';
 import { CmMp3ContainsPageResult } from 'shared/api';
-import KeyboardInput from '../../../../../../../../complect/keyboard/KeyboardInput';
-import SendButton from '../../../../../../../../complect/sends/send-button/SendButton';
-import { useCmMp3Rules } from '../../../../mp3-rule-redactor/useCmMp3Rules';
 
-export default function ObserveUrlResource({
+export function ObserveUrlResource({
   onSuccess,
   availableWithTextQuery,
 }: {
@@ -22,7 +22,7 @@ export default function ObserveUrlResource({
       if (mp3Rules && !mp3Rules.some(u => new URL(u.url).origin === theUrl.origin)) {
         setErrorMessage('Неизвестный источник');
       } else setErrorMessage('');
-    } catch (e) {
+    } catch (_e) {
       setErrorMessage('Невалидный URL-адрес');
     }
   }, [url, mp3Rules]);

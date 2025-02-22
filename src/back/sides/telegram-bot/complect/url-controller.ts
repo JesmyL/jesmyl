@@ -55,11 +55,11 @@ export const tgBotUrlController = async (
                 caption: messageText,
                 reply_to_message_id: parsedMessage.media_group_id ? parsedMessage.message_id + 1 : undefined,
               });
-            } catch (error) {
+            } catch (_error) {
               if (parsedMessage.media_group_id)
                 try {
                   await targetBot.sendMediaBased(parsedMessage, { caption: messageText });
-                } catch (error) {
+                } catch (_error) {
                   await targetBot.postMessage(messageText);
                 }
               else await targetBot.postMessage(messageText);
@@ -152,7 +152,7 @@ export const tgBotUrlController = async (
 
     try {
       await bot.sendMessage(id, alertMessage);
-    } catch (error) {
+    } catch (_error) {
       const deleteTime = 30;
       const sentMessage = await bot.postMessage(
         `${alertMessage}\n\n<b>Это сообщение будет удалено через ${deleteTime} секунд</b>`,
@@ -163,7 +163,9 @@ export const tgBotUrlController = async (
 
     try {
       await adminBot.sendMediaBased(message, { caption: 'Это вложение содержится в следующем сообщении' });
-    } catch (error) {}
+    } catch (_error) {
+      //
+    }
 
     adminBot.postMessage(
       (messageFrom.username ? `t.me/${messageFrom.username}, ` : '') +

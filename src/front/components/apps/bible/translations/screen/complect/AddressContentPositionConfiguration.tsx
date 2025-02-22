@@ -1,9 +1,9 @@
+import { useBibleScreenTranslationConfig } from '@bible/translations/hooks/configs';
+import { useUpdateBibleCurrentTranslationConfig } from '@bible/translations/hooks/update-config';
+import { ScreenTranslationPositionConfig } from 'front/components/apps/+complect/translations/complect/model';
+import { ScreenTranslateCurrentPositionConfigurators } from 'front/components/apps/+complect/translations/complect/position/Position';
+import { useScreenTranslationCurrentConfigi } from 'front/components/apps/+complect/translations/hooks/configs';
 import { useCallback } from 'react';
-import { ScreenTranslationPositionConfig } from '../../../../+complect/translations/complect/model';
-import { ScreenTranslateCurrentPositionConfigurators } from '../../../../+complect/translations/complect/position/Position';
-import { useScreenTranslationCurrentConfigi } from '../../../../+complect/translations/hooks/configs';
-import { useBibleScreenTranslationConfig } from '../../hooks/configs';
-import { useUpdateBibleCurrentTranslationConfig } from '../../hooks/update-config';
 
 export const BibleTranslationScreenAddressContentPositionConfiguration = (props: {
   screeni: number | und;

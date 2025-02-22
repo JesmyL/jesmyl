@@ -1,18 +1,18 @@
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { bibleIDB } from '@bible/_db/bibleIDB';
+import { BibleSearchZone } from '@bible/model';
 import { useEffect } from 'react';
 import styled, { css } from 'styled-components';
-import { addEventListenerPipe, hookEffectPipe } from '../../../../../../complect/hookEffectPipe';
-import { bibleIDB } from '../../../_db/bibleIDB';
-import { BibleSearchZone } from '../../../model';
 import { useBibleTranslationSearchResultSelectedSet } from '../hooks/results';
-import BibleSearchPanelSearchTextInput from './SearchTextInput';
 import { BibleSearchPanelAddressInput } from './address/AddressInput';
+import { BibleSearchPanelSearchTextInput } from './SearchTextInput';
 
 interface Props {
   inputRef: React.RefObject<HTMLInputElement>;
   setSearchZone: (zone: BibleSearchZone, inputRef: React.RefObject<HTMLInputElement>) => void;
 }
 
-export default function BibleSearchInputPanel({ inputRef, setSearchZone }: Props) {
+export function BibleSearchInputPanel({ inputRef, setSearchZone }: Props) {
   const searchZone = bibleIDB.useValue.searchZone();
   const setResultSelected = useBibleTranslationSearchResultSelectedSet();
 
