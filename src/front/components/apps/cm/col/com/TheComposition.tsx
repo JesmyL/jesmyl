@@ -1,6 +1,7 @@
 import { useAtom, useAtomValue } from '#shared/lib/atoms';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
+import { Modal } from '#shared/ui/modal/Modal/Modal';
 import {
   PhaseContainerConfigurer,
   StyledPhaseContainerConfigurerHead,
@@ -19,7 +20,9 @@ import { useChordVisibleVariant } from '../../base/useChordVisibleVariant';
 import { useLaterComList } from '../../base/useLaterComList';
 import { cmComClientInvocatorMethods } from '../../editor/cm-editor-invocator.methods';
 import { ChordImagesList } from './chord-card/ChordImagesList';
+import { CmComCommentModalInner } from './CommentModalInner';
 import { ComNotFoundPage } from './ComNotFoundPage';
+import { isComCommentRedactAtom } from './complect/comment-parser/complect';
 import { useCheckIsComCommentIncludesBibleAddress } from './complect/comment-parser/useCheckIsComCommentIncludesBibleAddress';
 import { CmComNumber } from './complect/ComNumber';
 import { ComPlayer } from './player/ComPlayer';
@@ -30,6 +33,7 @@ import { useFixedCcom, useTakeActualComw } from './useCcom';
 import { CmComCatMentions } from './useGetCatMentions';
 
 export function TheComposition() {
+  const [isCommentRedact, setIsCommentRedact] = useAtom(isComCommentRedactAtom);
   const [chordVisibleVariant] = useChordVisibleVariant();
   const ccom = useFixedCcom();
   const { addLaterComw, laterComws } = useLaterComList();
@@ -132,6 +136,15 @@ export function TheComposition() {
           )}
 
           {controlledComNode}
+
+          {isCommentRedact && (
+            <Modal
+              key="com-comment"
+              onClose={setIsCommentRedact}
+            >
+              <CmComCommentModalInner com={ccom} />
+            </Modal>
+          )}
         </>
       }
     />

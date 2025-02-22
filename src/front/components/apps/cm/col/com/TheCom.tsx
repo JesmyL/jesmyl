@@ -14,7 +14,7 @@ interface Props {
   chordVisibleVariant?: ChordVisibleVariant;
   isMiniAnchor?: boolean;
   fontSize?: number;
-  listRef?: RefObject<HTMLDivElement>;
+  listRef?: RefObject<HTMLDivElement | null>;
 }
 
 export const TheCom = ({

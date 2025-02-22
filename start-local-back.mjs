@@ -10,7 +10,7 @@ const errorsToPass = new Set([
 
   const proc = exec('node ./src/back/back.index.js');
 
-  proc.stdout.on('data', console.log);
+  proc.stdout.on('data', console.info);
   proc.stderr.on('data', error => {
     if (errorsToPass.has(error)) return;
     console.error(error);

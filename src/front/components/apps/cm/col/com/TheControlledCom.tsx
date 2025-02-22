@@ -9,7 +9,6 @@ import { CmComWid } from 'shared/api';
 import styled, { RuleSet, css } from 'styled-components';
 import { Com } from './Com';
 import './Com.scss';
-import { TheComComment } from './complect/comment-parser/TheComComment';
 import { useComCommentBlockCss } from './complect/comment-parser/useComCommentBlock';
 import { useComCommentBlockFastReactions } from './complect/comment-parser/useComCommentBlockFastReactions';
 import { TheCom } from './TheCom';
@@ -94,7 +93,6 @@ export function TheControlledCom({
           isMiniAnchor={isMiniAnchor}
           listRef={listRef}
         />
-        <TheComComment comw={com.wid} />
       </WithScrollProgress>
     </StyledRollControled>
   );

@@ -26,7 +26,6 @@ walkAllFiles('src/front', (filePath, name, path, isDir) => {
   if (!filePath.endsWith('.ts') && !filePath.endsWith('.tsx')) return;
   const content = '' + fs.readFileSync(filePath);
   if (content.match(/^import/)) return;
-  console.log(filePath);
 });
 
 export const replaceFileContent = (path, cb) => fs.writeFileSync(path, cb('' + fs.readFileSync(path)));

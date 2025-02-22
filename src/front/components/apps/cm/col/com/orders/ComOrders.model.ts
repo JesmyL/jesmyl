@@ -11,5 +11,5 @@ export interface IComOrdersProps {
   fontSize?: number;
   chordVisibleVariant: ChordVisibleVariant;
   showInvisibles?: boolean;
-  listRef?: RefObject<HTMLDivElement>;
+  listRef?: RefObject<HTMLDivElement | null>;
 }

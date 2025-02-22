@@ -25,17 +25,15 @@ export const useComCommentBlockFastReactions = (com: Com) => {
       if (headerNode == null) return;
       let isFirstClick = true;
 
-      const setComment = async () => {
+      const focusCommentInput = async () => {
         if (isFirstClick) {
           isFirstClick = false;
           setTimeout(() => (isFirstClick = true), 500);
           return;
         }
 
-        setIsRedact(false);
-        await wait(10);
         setIsRedact(true);
-        await wait();
+        await wait(300);
 
         const commentInput = document.querySelector('.com-comment-input') as HTMLTextAreaElement;
         if (commentInput == null) return;
@@ -75,8 +73,8 @@ export const useComCommentBlockFastReactions = (com: Com) => {
         commentInput.selectionStart = commentInput.selectionEnd = commentInput.value.indexOf('\n', caretPosition + 1);
       };
 
-      headerNode.addEventListener('click', setComment);
-      mutes.add(() => headerNode.removeEventListener('click', setComment));
+      headerNode.addEventListener('click', focusCommentInput);
+      mutes.add(() => headerNode.removeEventListener('click', focusCommentInput));
     });
 
     return () => mutes.forEach(itInvokeIt);

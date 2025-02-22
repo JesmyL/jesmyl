@@ -117,4 +117,5 @@ export type MenuComToolNameList =
   | 'open-player'
   | 'hide-metronome'
   | 'qr-share'
+  | 'com-comment'
   | 'cats-binds';

@@ -10,6 +10,7 @@ import { useCcom } from '../../useCcom';
 import { CmCatsBindsComTool } from '../ui/CatsBinds';
 import { ChordImagesTool } from '../ui/ChordImagesTool';
 import { ChordsVariantTool } from '../ui/ChordsVariantTool';
+import { ComCommentTool } from '../ui/ComCommentTool';
 import { FullscreenTool } from '../ui/FullscreenTool';
 import { HideMetronomeTool } from '../ui/HideMetronomeTool';
 import { MarkedComTool } from '../ui/MarkedComTool';
@@ -76,6 +77,7 @@ const toolsDict: Record<MigratableComToolName, React.ReactNode> = {
   'is-mini-anchor': <MiniAnchorSwitchTool />,
   'qr-share': <QrComShare />,
   'cats-binds': <CmCatsBindsComTool />,
+  'com-comment': <ComCommentTool />,
 
   'edit-com': <RedactComTool />,
 };

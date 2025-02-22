@@ -2,8 +2,9 @@ import { StyledModalFooter } from '../styled';
 
 interface Props {
   children: React.ReactNode;
+  className?: string;
 }
 
-export function ModalFooter({ children }: Props) {
-  return <StyledModalFooter>{children}</StyledModalFooter>;
+export function ModalFooter({ children, className }: Props) {
+  return <StyledModalFooter className={className}>{children}</StyledModalFooter>;
 }
