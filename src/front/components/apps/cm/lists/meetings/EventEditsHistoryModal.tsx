@@ -1,60 +1,40 @@
-import { addAbortControlledPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
 import { mylib } from '#shared/lib/my-lib';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { TheButton } from '#shared/ui/TheButton';
 import { ComFaceList } from '@cm/col/com/face/list/ComFaceList';
 import { cmComExternalsClientInvocatorMethods } from '@cm/editor/cm-editor-invocator.methods';
-import { useEffect, useState } from 'react';
-import { ScheduleComPackHistoryItem } from 'shared/api';
+import { useState } from 'react';
 import { emptyFunc } from 'shared/utils';
 import { useMeetingPathParts } from './useMeetingPathParts';
 
 export const CmMeetingEventEditsHistoryModalInner = () => {
   const { dayi, schw } = useMeetingPathParts();
-  const [historyPacks, setHistoryPacks] = useState<ScheduleComPackHistoryItem[] | null>(null);
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
   const [limit, setLimit] = useState(10);
-
-  useEffect(() => {
-    if (mylib.isNaN(schw) || mylib.isNaN(dayi)) return;
-
-    return hookEffectPipe()
-      .pipe(
-        addAbortControlledPipe(async aborter => {
-          try {
-            const packs = await cmComExternalsClientInvocatorMethods.getScheduleEventHistory({ aborter }, schw, dayi);
-
-            setHistoryPacks(packs);
-          } catch (error) {
-            if (aborter.signal.aborted) return;
-            setError('' + error);
-          }
-
-          setIsLoading(false);
-        }),
-      )
-      .effect();
-  }, [dayi, schw]);
+  const [historyPacks, isLoading, error, setHistoryPacks] = useInvocatedValue(
+    null,
+    async aborter => {
+      if (mylib.isNaN(schw) || mylib.isNaN(dayi)) return null;
+      return cmComExternalsClientInvocatorMethods.getScheduleEventHistory({ aborter }, schw, dayi);
+    },
+    [schw, dayi],
+  );
 
   if (mylib.isNaN(schw) || mylib.isNaN(dayi)) return null;
 
   if (isLoading)
     return (
       <ModalBody>
-        <div className="flex center full-size">
-          <TheIconLoading />
-        </div>
+        <div className="flex center full-size margin-gap">{isLoading}</div>
       </ModalBody>
     );
 
   if (historyPacks == null || error)
     return (
       <ModalBody>
-        <div className="flex center full-size color--ko">{error || 'Ошибка'}</div>
+        <div className="flex center full-size color--ko">{error ? `${error}` : 'Ошибка'}</div>
       </ModalBody>
     );
 
