@@ -21,6 +21,7 @@ export class SokiServer {
   private auths = new Map<WebSocket, LocalSokiAuth>();
   private clientsByLogin = new Map<SokiAuthLogin, Set<WebSocket>>();
   private visits = new Map<WebSocket, SokiVisit>();
+  private abortedRequestIdsSet = new Set<string>();
 
   start() {
     new WebSocketServer({ port: 4446 }).on('connection', (client: WebSocket) => {
@@ -41,6 +42,11 @@ export class SokiServer {
 
         if (event.ping) {
           this.send({ pong: 1, requestId: event.requestId }, client);
+          return;
+        }
+
+        if (event.abort !== undefined) {
+          this.abortedRequestIdsSet.add(event.abort);
           return;
         }
 
@@ -158,8 +164,14 @@ export class SokiServer {
     );
   };
 
-  private sendInvokeEvent = (event: InvocatorServerEvent, tool: SokiServerInvocatorTool) =>
+  private sendInvokeEvent = (event: InvocatorServerEvent, tool: SokiServerInvocatorTool) => {
+    if (this.abortedRequestIdsSet.has(event.requestId)) {
+      this.abortedRequestIdsSet.delete(event.requestId);
+      return;
+    }
+
     this.send(event, tool.client);
+  };
 
   private isLocalhost = (url: string | nil) =>
     !url ||

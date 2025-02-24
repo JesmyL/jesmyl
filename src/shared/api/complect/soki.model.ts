@@ -19,6 +19,7 @@ export type InvocatorBaseEvent = {
   invokedResult?: unknown;
   invoke?: SokiInvokerData;
   errorMessage?: string | `#invalid_token`;
+  abort?: string;
 };
 
 export type InvocatorServerEvent = InvocatorBaseEvent & {
@@ -30,6 +31,8 @@ export type InvocatorClientEvent = InvocatorBaseEvent & {
   visit?: SokiVisit;
   ping?: 1;
 };
+
+export type InvocatorClientTool = { aborter?: AbortController; timeout?: number };
 
 export interface TelegramNativeAuthUserData extends OmitOwn<User, 'language_code' | 'is_bot'> {
   auth_date?: number;

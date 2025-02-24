@@ -1,4 +1,4 @@
-import { InvocatorClientEvent, InvocatorServerEvent } from 'shared/api';
+import { InvocatorClientEvent, InvocatorClientTool, InvocatorServerEvent } from 'shared/api';
 import { Eventer, makeRegExp } from 'shared/utils';
 import { jversion } from 'shared/values';
 import { authIDB } from './components/index/db/auth-idb';
@@ -11,7 +11,7 @@ export class SokiTrip {
 
   private isConnected = false;
   private connectionState = Eventer.createValue<boolean>();
-  private requests = {} as Record<string, (event: InvocatorClientEvent) => void>;
+  private requests = {} as PRecord<string, (event: InvocatorClientEvent) => void>;
 
   private isOpened = false;
 
@@ -86,17 +86,19 @@ export class SokiTrip {
           return;
         }
 
-        console.info(event);
+        if (this.requests[event.requestId] !== undefined) {
+          console.info(event);
 
-        this.requests[event.requestId]?.(event);
-        delete this.requests[event.requestId];
+          this.requests[event.requestId]!(event);
+          delete this.requests[event.requestId];
+        }
 
         if (event.invoke === undefined) return;
 
         onSokiClientEventerInvocatorInvoke.invoke({
           invoke: event.invoke,
           sendResponse: this.send,
-          tool: undefined,
+          tool: null,
           requestId: event.requestId,
         });
       } catch (_error) {
@@ -136,7 +138,10 @@ export class SokiTrip {
     trySend();
   }
 
-  send = <InvokedResult = unknown>(event: OmitOwn<InvocatorClientEvent, 'requestId'>) => {
+  send = <InvokedResult = unknown>(
+    event: OmitOwn<InvocatorClientEvent, 'requestId'>,
+    tool?: InvocatorClientTool | null,
+  ) => {
     const requestId = '' + Date.now() + Math.random();
     const fullEvent = { ...event, requestId };
 
@@ -149,6 +154,28 @@ export class SokiTrip {
       if (event.errorMessage) result.reject(event.errorMessage);
       else result.resolve(event.invokedResult as never);
     };
+
+    if (tool?.aborter != null) {
+      const aborter = tool.aborter;
+      const removeListener = () => aborter.signal.removeEventListener('abort', onAbort);
+      let reason = '#aborted';
+
+      const onAbort = () => {
+        removeListener();
+        result.reject(reason);
+        delete this.requests[requestId];
+        this.send({ abort: requestId });
+      };
+
+      if (tool.timeout != null)
+        setTimeout(() => {
+          reason = '#aborted by timout';
+          onAbort();
+        }, tool.timeout);
+
+      result.promise.then(removeListener).catch(removeListener);
+      aborter.signal.addEventListener('abort', onAbort);
+    }
 
     return result.promise;
   };
