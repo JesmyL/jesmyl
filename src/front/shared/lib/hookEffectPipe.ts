@@ -20,6 +20,12 @@ export const addEventListenerPipe = <
   return new EffectPipeMember(() => elem.removeEventListener(eventName, callback as never, turn));
 };
 
+export const addAbortControlledPipe = (callback: (aborter: AbortController) => void) => {
+  const aborter = new AbortController();
+  callback(aborter);
+  return new EffectPipeMember(() => aborter.abort());
+};
+
 export const addDebouncedEventListenerPipe = <
   EventName extends keyof HTMLElementEventMap,
   Event extends HTMLElementEventMap[EventName],
