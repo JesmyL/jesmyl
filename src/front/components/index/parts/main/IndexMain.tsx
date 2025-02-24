@@ -13,9 +13,10 @@ import React, { Suspense, useEffect, useState } from 'react';
 import { itNNull } from 'shared/utils';
 import { jversion } from 'shared/values';
 
+import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
+import { indexBasicsSokiInvocatorClient } from '@index/db/invocators/schedules/fresh-invocator.methods';
 import { Route, Routes } from 'react-router-dom';
 import { useAuth, useCurrentApp } from '../../atoms';
-import { indexIDB } from '../../db/index-idb';
 import { useConnectionState, useIsOnline } from '../../useConnectionState';
 import { IndexActions } from '../actions/Actions';
 import { IndexAbout } from '../IndexAbout';
@@ -28,7 +29,13 @@ const IndexAuthorization = React.lazy(() => import('../login/IndexAuthorization'
 
 export function IndexMain() {
   const currentAppName = useCurrentApp();
-  const newVersion = indexIDB.useValue.appVersion();
+
+  const [newVersion, isVersionLoading] = useInvocatedValue(
+    0,
+    aborter => indexBasicsSokiInvocatorClient.getFreshAppVersion({ aborter }),
+    [],
+  );
+
   const [cacheNames, setCacheNames] = useState<string[]>([]);
   const [isAboutOpen, setIsAboutOpen] = useState<unknown>(false);
   const [isRefreshProcess, setIsRefreshProcess] = useState(false);
@@ -99,7 +106,7 @@ export function IndexMain() {
                     onClick={setIsAboutOpen}
                     box={
                       isOnline ? (
-                        isRefreshProcess ? (
+                        isRefreshProcess || isVersionLoading ? (
                           <TheIconLoading />
                         ) : (
                           !cacheNames.length ||

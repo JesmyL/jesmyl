@@ -1,4 +1,4 @@
-import { SokiInvocatorClient } from 'front/SokiInvocator.client';
+import { SokiInvocatorClient } from '#basis/lib/SokiInvocator.client';
 import { CmCatSokiInvocatorModel } from 'shared/api/invocators/cm/cat-invocators.model';
 import { CmComExternalsSokiInvocatorModel } from 'shared/api/invocators/cm/com-externals-invocators.model';
 import { CmComSokiInvocatorModel } from 'shared/api/invocators/cm/com-invocators.model';

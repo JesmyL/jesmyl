@@ -1,3 +1,4 @@
+import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
 import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
@@ -5,7 +6,6 @@ import { useToast } from '#shared/ui/modal/useToast';
 import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContainerConfigurer';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useIndexValues } from '@index/atoms';
 import { indexBasicsSokiInvocatorClient } from '@index/db/invocators/schedules/fresh-invocator.methods';
 import { useConnectionState } from '@index/useConnectionState';
 import { useState } from 'react';
@@ -18,7 +18,7 @@ export function IndexTelegramAuth() {
   const [authCode, setAuthCode] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSendTgCode, setIsSendTgCode] = useState(false);
-  const values = useIndexValues();
+  const [values] = useInvocatedValue({}, aborter => indexBasicsSokiInvocatorClient.getIndexValues({ aborter }), []);
 
   const connectionNode = useConnectionState();
   const [errors] = useAuthErrors();

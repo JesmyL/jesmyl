@@ -1,5 +1,5 @@
+import { SokiInvocatorBaseClient } from '#basis/lib/SokiInvocatorBase.client';
 import { cmIDB } from '@cm/_db/cm-idb';
-import { SokiInvocatorBaseClient } from 'front/SokiInvocatorBase.client';
 import { CmEditorSokiInvocatorSharesModel } from 'shared/api/invocators/cm/editor-invocator.shares.model';
 import { comEditorBusiesAtom } from './col/compositions/atoms';
 

@@ -20,7 +20,6 @@ import {
 import { IndexBasicsSokiInvocatorModel } from 'shared/api/invocators/index/basics-invocators.model';
 import { itNNull, makeRegExp, smylib } from 'shared/utils';
 import { appVersionFileStore, valuesFileStore } from './file-stores';
-import { indexServerInvocatorShareMethods } from './invocators.shares';
 import { schGeneralSokiInvocatorBaseServer } from './schedules/base-invocators/general-invocators.base';
 import { schedulesFileStore } from './schedules/file-stores';
 import { schServerInvocatorShareMethods } from './schedules/invocators.shares';
@@ -51,8 +50,7 @@ const makeAuthFromUser = async (user: OmitOwn<TelegramBot.User, 'is_bot'>) => {
   } satisfies LocalSokiAuth;
 };
 
-appVersionFileStore.watchFile((value, state) => {
-  indexServerInvocatorShareMethods.appVersion(null, value.num, state.mtimeMs);
+appVersionFileStore.watchFile(value => {
   tglogger.log(`Version upgrade: ${value.num}`);
 
   const command = 'chmod +x /var/www/jesmyl.ru/assets/';
@@ -64,10 +62,6 @@ appVersionFileStore.watchFile((value, state) => {
       tglogger[error ? 'error' : 'log'](`${command}\n\n${JSON.stringify({ error, stdout, stderr }, null, ' ')}`);
     });
   }, 2000);
-});
-
-valuesFileStore.watchFile((value, state) => {
-  indexServerInvocatorShareMethods.indexValues(null, value, state.mtimeMs);
 });
 
 const authByTgUser = () => async (user: TelegramNativeAuthUserData) => {
@@ -105,14 +99,6 @@ class IndexBasicsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexBa
               .filter(itNNull);
 
             if (schedules.length) schServerInvocatorShareMethods.refreshSchedules(client, schedules);
-
-            if (appVersionFileStore.fileModifiedAt() > lastModfiedAt) {
-              indexServerInvocatorShareMethods.appVersion(null, appVersionFileStore.getValue().num, 0);
-            }
-
-            if (valuesFileStore.fileModifiedAt() > lastModfiedAt) {
-              indexServerInvocatorShareMethods.indexValues(null, valuesFileStore.getValue(), 0);
-            }
           },
         getDeviceId: () => async () => {
           return (makeTwiceKnownName().replace(makeRegExp('/ /g'), '_') +
@@ -132,6 +118,9 @@ class IndexBasicsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexBa
           if (user == null) throw new Error('code is invalid');
           return authByTgUser()(user);
         },
+
+        getFreshAppVersion: () => async () => appVersionFileStore.getValue().num,
+        getIndexValues: () => async () => valuesFileStore.getValue(),
       },
       {
         authMeByTelegramBotNumber: ({ auth }) =>
@@ -151,7 +140,10 @@ class IndexBasicsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexBa
           `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
 
         getDeviceId: deviceId => `Запрос DeviceId - ${deviceId}`,
-        requestFreshes: () => ``,
+
+        requestFreshes: null,
+        getFreshAppVersion: null,
+        getIndexValues: null,
       },
     );
   }

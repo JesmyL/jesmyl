@@ -1,5 +1,5 @@
+import { SokiInvocatorBaseClient } from '#basis/lib/SokiInvocatorBase.client';
 import { indexIDB } from 'front/components/index/db/index-idb';
-import { SokiInvocatorBaseClient } from 'front/SokiInvocatorBase.client';
 
 import { SchSokiInvocatorSharesModel } from 'shared/api';
 

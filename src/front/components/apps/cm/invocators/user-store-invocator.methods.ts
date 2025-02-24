@@ -1,4 +1,4 @@
-import { SokiInvocatorClient } from 'front/SokiInvocator.client';
+import { SokiInvocatorClient } from '#basis/lib/SokiInvocator.client';
 import { CmUserStoreSokiInvocatorModel } from 'shared/api/invocators/cm/user-store-invocators.model';
 
 class CmUserStoreSokiInvocatorClient extends SokiInvocatorClient<CmUserStoreSokiInvocatorModel> {}

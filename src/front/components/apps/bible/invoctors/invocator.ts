@@ -1,7 +1,7 @@
+import { SokiInvocatorClient } from '#basis/lib/SokiInvocator.client';
+import { SokiInvocatorBaseClient } from '#basis/lib/SokiInvocatorBase.client';
 import { bibleIDB, bibleTranslatesIDB } from '@bible/_db/bibleIDB';
 import { BibleTranslate } from '@bible/model';
-import { SokiInvocatorClient } from 'front/SokiInvocator.client';
-import { SokiInvocatorBaseClient } from 'front/SokiInvocatorBase.client';
 import { BibleSokiInvocatorBaseModel, BibleSokiInvocatorModel } from 'shared/api/invocators/bible/invocators.model';
 
 class BibleSokiInvocatorClient extends SokiInvocatorClient<BibleSokiInvocatorModel> {}

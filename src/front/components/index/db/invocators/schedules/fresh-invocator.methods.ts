@@ -1,5 +1,5 @@
+import { SokiInvocatorClient } from '#basis/lib/SokiInvocator.client';
 import { soki } from 'front/soki';
-import { SokiInvocatorClient } from 'front/SokiInvocator.client';
 import { LocalSokiAuth } from 'shared/api';
 import { IndexBasicsSokiInvocatorModel } from 'shared/api/invocators/index/basics-invocators.model';
 import { authIDB } from '../../auth-idb';
@@ -21,4 +21,7 @@ export const indexBasicsSokiInvocatorClient = new IndexBasicsSokiInvocatorClient
   authMeByTelegramBotNumber: tgAuthorize,
   authMeByTelegramMiniButton: tgAuthorize,
   authMeByTelegramInScheduleDay: tgAuthorize,
+
+  getFreshAppVersion: true,
+  getIndexValues: true,
 });

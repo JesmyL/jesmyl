@@ -1,14 +1,19 @@
 import { propagationStopper } from '#shared/lib/event-funcs';
 
+import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
 import { QRCode } from '#shared/ui/qr-code/QRCode';
+import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { indexBasicsSokiInvocatorClient } from '@index/db/invocators/schedules/fresh-invocator.methods';
 import { jversion } from 'shared/values';
-import { useIndexValues } from '../atoms';
-import { indexIDB } from '../db/index-idb';
 
 export function IndexAbout() {
-  const appVersion = indexIDB.useValue.appVersion();
-  const values = useIndexValues();
+  const [appVersion, isVersionLoading] = useInvocatedValue(
+    0,
+    aborter => indexBasicsSokiInvocatorClient.getFreshAppVersion({ aborter }),
+    [],
+  );
+  const [values] = useInvocatedValue({}, aborter => indexBasicsSokiInvocatorClient.getIndexValues({ aborter }), []);
 
   return (
     <div className="flex center">
@@ -34,11 +39,22 @@ export function IndexAbout() {
         </div>
       </div>
       <div
-        className={`absolute pos-bottom padding-giant-gap ${
+        className={`absolute pos-bottom flex flex-gap padding-giant-gap ${
           appVersion ? (jversion.num !== appVersion ? 'color--ko' : 'color--7') : ''
         }`}
       >
-        v{jversion.num} {appVersion ? (jversion.num === appVersion ? '- Актуальная' : `(Новая - v${appVersion})`) : ''}
+        v{jversion.num}
+        {isVersionLoading ? (
+          <TheIconLoading />
+        ) : appVersion ? (
+          jversion.num === appVersion ? (
+            '- Актуальная'
+          ) : (
+            `(Новая - v${appVersion})`
+          )
+        ) : (
+          ''
+        )}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { SokiInvocatorClient } from 'front/SokiInvocator.client';
+import { SokiInvocatorClient } from '#basis/lib/SokiInvocator.client';
 import {
   SchAttachmentTypesSokiInvocatorMethods,
   SchDayEventsSokiInvocatorMethods,

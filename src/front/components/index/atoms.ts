@@ -13,7 +13,6 @@ export const liveDataStreamersAtom = atom<{ fio: string; login: SokiAuthLogin }[
 export const useIndexSchedules = () => useLiveQuery(() => indexIDB.db.schs.toArray());
 
 export const useIndexFileAssociations = () => indexIDB.useValue.fileAssociations();
-export const useIndexValues = () => indexIDB.useValue.values();
 
 export const useAuth = () => authIDB.useValue.auth();
 
