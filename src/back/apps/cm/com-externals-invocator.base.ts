@@ -62,7 +62,7 @@ class CmComExternalsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmCo
           `Удалена пачка песен из истории события в расписании ` +
           `"${schedulesFileStore.getValue().find(sch => sch.w === schw)?.title ?? '??'}"`,
 
-        getScheduleEventHistory: () => ``,
+        getScheduleEventHistory: null,
       },
     );
   }
