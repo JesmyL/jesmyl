@@ -28,9 +28,7 @@ const fetch = (url: string) => {
   });
 };
 
-const mp3ResourcesData = new FileStore<CmMp3Rule[]>('/apps/cm/mp3Rules.json', []);
-
-export const cmGetMp3RulesList = async () => mp3ResourcesData.getValue();
+export const mp3ResourcesData = new FileStore<CmMp3Rule[]>('/apps/cm/mp3Rules.json', []);
 
 export const cmGetResourceHTMLString = (src: string) => {
   return new Promise<CmMp3ContainsPageResult>((resolve, reject) => {
