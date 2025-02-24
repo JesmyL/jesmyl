@@ -1,4 +1,5 @@
 import { addAbortControlledPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { theIconLoadingNode } from '#shared/ui/the-icon/theIconLoadingNode';
 import { useEffect, useState } from 'react';
 
 export const useInvocatedValue = <Value>(
@@ -8,7 +9,7 @@ export const useInvocatedValue = <Value>(
 ) => {
   const [value, setValue] = useState(initialValue);
   const [error, setError] = useState<unknown>(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
@@ -20,6 +21,7 @@ export const useInvocatedValue = <Value>(
             const value = await invocation(aborter);
             setValue(value);
             setIsLoading(false);
+            setError(null);
           } catch (error) {
             if (aborter.signal.aborted) return;
             setTimeout(setIsLoading, 100, false);
@@ -31,5 +33,5 @@ export const useInvocatedValue = <Value>(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);
 
-  return [value, isLoading, error] as const;
+  return [value, isLoading ? theIconLoadingNode : null, error, setValue] as const;
 };
