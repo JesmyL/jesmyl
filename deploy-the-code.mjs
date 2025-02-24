@@ -12,22 +12,19 @@ const versionFilePath = 'src/shared/values/+version.json';
  */
 export const deployTheCode = async (front, back) => {
   if (~process.argv.indexOf('--front')) {
-    const isIgnoreVersionUpdate = ~process.argv.indexOf('--IVU');
+    const builtFiles = [`./${front.builtFolder}/*`];
 
-    const files = [`./${front.builtFolder}/*`, ...(isIgnoreVersionUpdate ? [] : [`./${versionFilePath}`])];
+    console.info('Files to load: ', builtFiles);
 
-    console.info('Files to load: ', files);
-
-    if (~process.argv.indexOf('--IB')) {
+    if (process.argv.includes('--IB')) {
       console.info('Sending ignored building');
-
-      await sendFilesOnServer(files, back);
-
+      await sendFilesOnServer(builtFiles, back);
       console.info(`Front files sent without building`);
 
       return;
     }
 
+    const isIgnoreVersionUpdate = process.argv.includes('--IVU');
     const [num, resetVersion] = await updateVersion(isIgnoreVersionUpdate);
 
     try {
@@ -38,11 +35,13 @@ export const deployTheCode = async (front, back) => {
       console.info(`...Build ${num} is finished`);
       console.info('Copying files on server');
 
-      await sendFilesOnServer(files, back);
+      await sendFilesOnServer(builtFiles, back);
+      if (!isIgnoreVersionUpdate) await sendFilesOnServer([`./${versionFilePath}`], back);
 
       console.info('Front files sent on server');
-    } catch (_error) {
+    } catch (error) {
       console.error('Build failure');
+      console.error(error);
       resetVersion();
     }
   }
