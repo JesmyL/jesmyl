@@ -13,7 +13,7 @@ import { useState } from 'react';
 import { CmComWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import { MoveSelectedComButton } from '../selected-coms/MoveSelectedComButton';
-import { CmMeetingEventEditsHistoryModal } from './EventEditsHistoryModal';
+import { CmMeetingEventEditsHistoryModalInner } from './EventEditsHistoryModal';
 import { useMeetingPathParts } from './useMeetingPathParts';
 
 export const CmMeetingEventEdits = ({ packComws }: { packComws: CmComWid[] }) => {
@@ -40,7 +40,11 @@ export const CmMeetingEventEdits = ({ packComws }: { packComws: CmComWid[] }) =>
         onClick={setIsOpenHistoryModal}
       />
 
-      {isOpenHistoryModal && <CmMeetingEventEditsHistoryModal onClose={setIsOpenHistoryModal} />}
+      {isOpenHistoryModal && (
+        <Modal onClose={setIsOpenHistoryModal}>
+          <CmMeetingEventEditsHistoryModalInner />
+        </Modal>
+      )}
 
       {isOpenSendModal && (
         <Modal onClose={setIsOpenSendModal}>

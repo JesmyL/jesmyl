@@ -1,5 +1,5 @@
+import { addAbortControlledPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
-import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
@@ -12,7 +12,7 @@ import { ScheduleComPackHistoryItem } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import { useMeetingPathParts } from './useMeetingPathParts';
 
-export const CmMeetingEventEditsHistoryModal = ({ onClose }: { onClose: (isOpen: false) => void }) => {
+export const CmMeetingEventEditsHistoryModalInner = () => {
   const { dayi, schw } = useMeetingPathParts();
   const [historyPacks, setHistoryPacks] = useState<ScheduleComPackHistoryItem[] | null>(null);
   const [error, setError] = useState('');
@@ -21,34 +21,41 @@ export const CmMeetingEventEditsHistoryModal = ({ onClose }: { onClose: (isOpen:
 
   useEffect(() => {
     if (mylib.isNaN(schw) || mylib.isNaN(dayi)) return;
-    (async () => {
-      try {
-        const packs = await cmComExternalsClientInvocatorMethods.getScheduleEventHistory(null, schw, dayi);
-        setHistoryPacks(packs);
-      } catch (error) {
-        setError('' + error);
-      }
 
-      setIsLoading(false);
-    })();
+    return hookEffectPipe()
+      .pipe(
+        addAbortControlledPipe(async aborter => {
+          try {
+            const packs = await cmComExternalsClientInvocatorMethods.getScheduleEventHistory({ aborter }, schw, dayi);
+
+            setHistoryPacks(packs);
+          } catch (error) {
+            if (aborter.signal.aborted) return;
+            setError('' + error);
+          }
+
+          setIsLoading(false);
+        }),
+      )
+      .effect();
   }, [dayi, schw]);
 
   if (mylib.isNaN(schw) || mylib.isNaN(dayi)) return null;
 
   if (isLoading)
     return (
-      <Modal onClose={onClose}>
+      <ModalBody>
         <div className="flex center full-size">
           <TheIconLoading />
         </div>
-      </Modal>
+      </ModalBody>
     );
 
   if (historyPacks == null || error)
     return (
-      <Modal onClose={onClose}>
+      <ModalBody>
         <div className="flex center full-size color--ko">{error || 'Ошибка'}</div>
-      </Modal>
+      </ModalBody>
     );
 
   const itemTitleTimeOptions = {
@@ -60,7 +67,7 @@ export const CmMeetingEventEditsHistoryModal = ({ onClose }: { onClose: (isOpen:
   } as const;
 
   return (
-    <Modal onClose={onClose}>
+    <>
       <ModalHeader>
         История {historyPacks.length > limit ? `${limit}/${historyPacks.length}` : historyPacks.length}
       </ModalHeader>
@@ -105,6 +112,6 @@ export const CmMeetingEventEditsHistoryModal = ({ onClose }: { onClose: (isOpen:
           </div>
         )}
       </ModalBody>
-    </Modal>
+    </>
   );
 };

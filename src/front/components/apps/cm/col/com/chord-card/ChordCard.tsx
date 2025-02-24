@@ -1,4 +1,5 @@
 import { cmIDB } from '@cm/_db/cm-idb';
+import { JSX } from 'react';
 import { ChordTrack } from 'shared/api';
 import './ChordCard.scss';
 import { ChordCardTracked } from './ChordCardTracked';
