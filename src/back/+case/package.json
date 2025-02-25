@@ -9,7 +9,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "x": "chmod +x /var/www/jesmyl.ru/assets/"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC"
