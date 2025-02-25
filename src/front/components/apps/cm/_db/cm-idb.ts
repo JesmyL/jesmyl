@@ -38,12 +38,6 @@ export interface CmIDBStorage {
   isMiniAnchor: boolean;
   playerHideMode: PlayerHideMode;
   translationScreenConfigs: CmTranslationScreenConfig[];
-  metronome: {
-    isHide: boolean;
-    accentes: string;
-    mainSound: `${number}`;
-    secondarySound: `${number}`;
-  };
   eventContext: number[];
   favoriteMeetings: FavoriteMeetings;
 
@@ -67,7 +61,6 @@ class CmIDB extends DexieDB<CmIDBStorage> {
       isMiniAnchor: { $byDefault: false },
       isShowComHashComments: { $byDefault: true },
       laterComwList: { $byDefault: [] },
-      metronome: { $byDefault: { accentes: '1000', isHide: true, mainSound: '380', secondarySound: '200' } },
       playerHideMode: { $byDefault: 'expand' },
       speedRollKf: { $byDefault: 10 },
       translationScreenConfigs: { $byDefault: [defaultCmConfig] },

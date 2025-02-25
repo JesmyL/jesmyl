@@ -9,7 +9,7 @@ import {
 } from '#shared/ui/phase-container/PhaseContainerConfigurer';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { DocTitle } from '#shared/ui/tags/DocTitle';
-import { Metronome } from '#widgets/metronome/Metronome';
+import { Metronome } from '#widgets/metronome';
 import { BibleTranslatesContextProvider } from 'front/components/apps/bible/translates/TranslatesContext';
 import { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
@@ -41,7 +41,6 @@ export function TheComposition() {
   const comToolsNode = useMigratableTopComTools();
   const { list } = useCmTranslationComListContext();
   const playerHideMode = cmIDB.useValue.playerHideMode();
-  const isMetronomeHide = cmIDB.useValue.metronome().isHide;
 
   const [isOpenChordImages, setIsOpenChordImages] = useAtom(isOpenChordImagesAtom);
   const isShowCatBinds = useAtomValue(cmIsShowCatBindsInCompositionAtom);
@@ -85,10 +84,7 @@ export function TheComposition() {
   return (
     <StyledComContainer
       $isInLaterList={laterComws.includes(ccom.wid)}
-      className={
-        (playerHideMode && comAudio ? ` with-open-player ${playerHideMode}` : '') +
-        (isMetronomeHide ? ' hide-metronome' : '')
-      }
+      className={playerHideMode && comAudio ? ` with-open-player ${playerHideMode}` : ''}
       headTitle={<CmComNumber comw={ccom.wid} />}
       onMoreClick={setIsOpenTools}
       contentClass="composition-content padding-gap"
@@ -125,10 +121,6 @@ export function TheComposition() {
               split
             />
           )}
-          <Metronome
-            meterSize={ccom.meterSize}
-            bpm={ccom.beatsPerMinute}
-          />
           {isShowCatBinds && (
             <div className="fade-05 full-width color--7">
               <CmComCatMentions com={ccom} />
@@ -145,6 +137,11 @@ export function TheComposition() {
               <CmComCommentModalInner com={ccom} />
             </Modal>
           )}
+
+          <Metronome
+            meterSize={ccom.meterSize}
+            bpm={ccom.beatsPerMinute}
+          />
         </>
       }
     />

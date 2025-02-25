@@ -1,15 +1,15 @@
-import { cmIDB } from '@cm/_db/cm-idb';
+import { useAtomSet } from '#shared/lib/atoms';
+import { metronomeIsOpenAtom } from '#widgets/metronome';
 import { ComTool } from '../ComTool';
 
 export const HideMetronomeTool = () => {
-  const [isMetronomeHide, setIsMetronomeHide] = cmIDB.use.metronome();
+  const setIsOpen = useAtomSet(metronomeIsOpenAtom);
 
   return (
     <ComTool
       title="Метроном"
       icon="DashboardSpeed01"
-      iconKind={isMetronomeHide ? 'StrokeRounded' : 'SolidRounded'}
-      onClick={() => setIsMetronomeHide(prev => ({ ...prev, isHide: !prev.isHide }))}
+      onClick={() => setIsOpen(true)}
     />
   );
 };

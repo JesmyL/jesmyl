@@ -53,6 +53,7 @@
     "react-virtuoso": "^0.6.0",
     "sass": "^1.49.9",
     "styled-components": "^6.1.1",
+    "tone": "^15.0.4",
     "vite-plugin-pwa": "^0.21.1",
     "web-vitals": "^0.2.4",
     "workbox-background-sync": "^5.1.4",
