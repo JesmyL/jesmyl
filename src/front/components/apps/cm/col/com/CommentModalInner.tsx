@@ -1,3 +1,4 @@
+import { checkIsCssRuleSupports } from '#shared/lib/checkIsCssSupports';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
@@ -12,7 +13,7 @@ import { Com } from '@cm/col/com/Com';
 import { TheComCommentInfo } from '@cm/col/com/complect/comment-parser/infos/TheComCommentInfo';
 import { updateComComment, useComComment } from '@cm/com-comments-manager';
 import { useEffect, useRef, useState } from 'react';
-import { isNIs } from 'shared/utils';
+import { emptyFunc, isNIs } from 'shared/utils';
 import styled from 'styled-components';
 
 const HashSwitcherIcon = 'Note03';
@@ -24,11 +25,6 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
 
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  const setInputHeight = () => {
-    if (inputRef.current === null) return;
-    mylib.setInputHeightByContent(inputRef.current);
-  };
-
   useEffect(() => {
     (async () => {
       if (inputRef.current === null || com.wid == null) return;
@@ -37,7 +33,7 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
       if (commentBox == null) return;
 
       inputNode.value = commentBox.comment;
-      setInputHeight();
+      setInputHeight(inputNode);
     })();
   }, [com.wid]);
 
@@ -45,14 +41,13 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
     if (inputRef.current === null || com.wid == null) return;
     const inputNode = inputRef.current;
 
-    setInputHeight();
+    setInputHeight(inputNode);
 
     return hookEffectPipe()
-      .pipe(addEventListenerPipe(inputNode, 'focus', setInputHeight))
-      .pipe(addEventListenerPipe(inputNode, 'click', propagationStopper))
+      .pipe(addEventListenerPipe(inputNode, 'focus', () => setInputHeight(inputNode)))
       .pipe(
         addEventListenerPipe(inputNode, 'input', () => {
-          setInputHeight();
+          setInputHeight(inputNode);
 
           updateComComment(com.wid, inputNode.value, setIsLoading);
         }),
@@ -62,12 +57,12 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
 
   return (
     <>
-      <ModalHeader>
-        <span className="color--7">{com.name}</span>. Мои заметки
+      <ModalHeader className="flex flex-gap">
+        <LazyIcon icon="TextAlignLeft" />
+        <span className="color--7">{com.name}</span>
       </ModalHeader>
       <ModalBody>
         <StyledInput
-          onKeyDown={propagationStopper}
           className="com-comment-input full-width bgcolor--1"
           ref={inputRef}
         />
@@ -104,6 +99,12 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
   );
 };
 
+const setInputHeight = checkIsCssRuleSupports('field-sizing: content')
+  ? emptyFunc
+  : (inputNode: HTMLTextAreaElement) => mylib.setInputHeightByContent(inputNode);
+
 const StyledInput = styled.textarea`
   resize: none;
+  field-sizing: content;
+  min-height: 2lh;
 `;
