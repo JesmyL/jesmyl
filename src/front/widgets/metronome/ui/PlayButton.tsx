@@ -1,4 +1,5 @@
 import { useAtom } from '#shared/lib/atoms';
+import { isTouchDevice } from '#shared/lib/device-differences';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { memo } from 'react';
 import { itNIt } from 'shared/utils';
@@ -11,7 +12,8 @@ export const MetronomePlayButton = memo(function MetronomePlayButton() {
   return (
     <div
       className={'pointer'}
-      onClick={() => setIsPlay(itNIt)}
+      onMouseDown={isTouchDevice ? undefined : () => setIsPlay(itNIt)}
+      onTouchStart={isTouchDevice ? () => setIsPlay(itNIt) : undefined}
     >
       {isPlay ? (
         <StyledIcon

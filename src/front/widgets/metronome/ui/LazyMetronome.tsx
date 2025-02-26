@@ -9,7 +9,7 @@ import { useMetronomePlayStateController } from '../lib/useMetronomePlayStateCon
 import { MetronomeBpmInput } from './BpmInput';
 import { MetronomeMeterDots } from './MeterDots';
 import { MetronomePlayButton } from './PlayButton';
-import { MetronomeTouctBpmButton } from './TouctBpmButton';
+import { MetronomeTouchBpmButton } from './TouchBpmButton';
 
 interface Props {
   meterSize: 3 | 4 | und;
@@ -31,7 +31,7 @@ export default function LazyMetronome({ meterSize = 4, bpm = 120 }: Props) {
       <Modal onClose={() => setIsOpen(itNIt)}>
         <StyledModalBody className="flex column between">
           <div className="flex between full-width">
-            <MetronomeTouctBpmButton />
+            <MetronomeTouchBpmButton />
             <MetronomeMeterDots />
           </div>
           <div className="flex full-width between">
