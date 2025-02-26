@@ -1,10 +1,10 @@
 import { logFrontErrors } from '#basis/lib/error-catcher';
 import { setPolyfills } from '#shared/lib/polyfills';
+import App from '@app/App';
 import React, { ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import App from './app/App';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import { StyledGlobalStyles } from './styleds/styledGlobalStyles';
