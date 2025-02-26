@@ -1,6 +1,6 @@
 import { authIDB } from '@index/db/auth-idb';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { CmComWid, CmComWidStr } from 'shared/api';
+import { CmComWid } from 'shared/api';
 import { Eventer } from 'shared/utils';
 import { cmIDB } from './_db/cm-idb';
 import { cmFreshesSokiInvocatorClient } from './invocators/fresh-invocator.methods';
@@ -70,7 +70,7 @@ let trySend = async (comw: CmComWid, comment: string, setIsLoading: (is: boolean
   }
 };
 
-const updateComCommentTimeOut = {} as Record<CmComWidStr, TimeOut>;
+const updateComCommentTimeOut = {} as Record<CmComWid, TimeOut>;
 export const updateComComment = async (comw: CmComWid, comment: string, setIsLoading: (is: boolean) => void) => {
   try {
     await trySend(comw, comment, setIsLoading);

@@ -2,8 +2,6 @@ export const enum CmComWid {
   def = -1,
 }
 
-export type CmComWidStr = `${CmComWid}`;
-
 export const enum CmComMod {
   def = -1,
 }

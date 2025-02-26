@@ -1,13 +1,13 @@
 import { FileStore } from 'back/complect/FileStore';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
-import { CmComWid, CmComWidStr, IExportableCom } from 'shared/api';
+import { CmComWid, IExportableCom } from 'shared/api';
 import { CmComSokiInvocatorModel } from 'shared/api/invocators/cm/com-invocators.model';
 import { smylib } from 'shared/utils';
 import { cmComLanguages } from 'shared/values/values';
 import { comsFileStore } from './fresh-invocator.base';
 import { cmServerInvocatorShareMethods } from './invocator.shares';
 
-const comwVisitsFileStore = new FileStore<PRecord<CmComWidStr, number>>('/apps/cm/comwVisits.json', {});
+const comwVisitsFileStore = new FileStore<PRecord<CmComWid, number>>('/apps/cm/comwVisits.json', {});
 
 class CmComSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmComSokiInvocatorModel> {
   constructor() {

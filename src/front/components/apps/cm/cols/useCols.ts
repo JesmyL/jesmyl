@@ -3,7 +3,7 @@ import { Cat } from '@cm/col/cat/Cat';
 import { Com } from '@cm/col/com/Com';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
-import { CmComWid, CmComWidStr } from 'shared/api';
+import { CmComWid } from 'shared/api';
 
 export const useComs = (comwsLine?: CmComWid[]) => {
   const icoms = useLiveQuery(
@@ -15,7 +15,7 @@ export const useComs = (comwsLine?: CmComWid[]) => {
     if (icoms == null) return [];
 
     if (comwsLine) {
-      const indexes = {} as Record<CmComWidStr, number>;
+      const indexes = {} as Record<CmComWid, number>;
       comwsLine.forEach((comw, comwi) => (indexes[comw] = comwi));
       icoms?.sort();
       icoms.sort((a, b) => indexes[a.w] - indexes[b.w]);
