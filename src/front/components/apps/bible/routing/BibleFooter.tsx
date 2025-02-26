@@ -1,3 +1,4 @@
+import { isMobileDevice } from '#shared/lib/device-differences';
 import { AppFooter } from '@app/AppFooter';
 import { AppFooterItem } from '@app/AppFooterItem';
 
@@ -16,12 +17,14 @@ export const BibleFooter = () => {
         title="Поиск"
         icon="FileSearch"
       />
-      <AppFooterItem
-        idPostfix="tran"
-        to="tran"
-        title="Трансляция"
-        icon="Computer"
-      />
+      {isMobileDevice || (
+        <AppFooterItem
+          idPostfix="tran"
+          to="tran"
+          title="Трансляция"
+          icon="Computer"
+        />
+      )}
     </AppFooter>
   );
 };
