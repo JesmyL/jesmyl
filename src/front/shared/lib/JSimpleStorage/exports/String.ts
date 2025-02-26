@@ -1,12 +1,12 @@
 import { JStorageSimpleVal } from '../JStorageSimple';
 
-export class JStorageStringVal extends JStorageSimpleVal<string> {
-  constructor(storageName: string, id: string, defaultValue: string) {
+export class JStorageStringVal<Value = string> extends JStorageSimpleVal<Value> {
+  constructor(storageName: string, id: string, defaultValue: Value) {
     super(storageName, id, defaultValue);
 
     const key = this.key;
 
-    this.setter = (val: string) => {
+    this.setter = (val: Value) => {
       localStorage[key] = `"${val}`;
     };
 

@@ -78,6 +78,7 @@ import { iconPackOfDashboardSquareAdd } from './icons/dashboard-square-add';
 import { iconPackOfDashboardSquareRemove } from './icons/dashboard-square-remove';
 import { iconPackOfDelete01 } from './icons/delete-01';
 import { iconPackOfDelete02 } from './icons/delete-02';
+import { iconPackOfDiameter } from './icons/diameter';
 import { iconPackOfDistributeVerticalTop } from './icons/distribute-vertical-top';
 import { iconPackOfDownload04 } from './icons/download-04';
 import { iconPackOfEdit01 } from './icons/edit-01';
@@ -223,6 +224,7 @@ export const theIconKnownPack: Record<TheIconKnownName, TheIconSelfPack> = {
   Alert01: iconPackOfAlert01,
   Alert02: iconPackOfAlert02,
   Alien02: iconPackOfAlien02,
+  Diameter: iconPackOfDiameter,
   CircleArrowRight02: iconPackOfCircleArrowRight02,
   FileSearch: iconPackOfFileSearch,
   Anonymous: iconPackOfAnonymous,
