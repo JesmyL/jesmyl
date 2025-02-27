@@ -92,6 +92,7 @@ import { iconPackOfFile02 } from './icons/file-02';
 import { iconPackOfFileImport } from './icons/file-import';
 import { iconPackOfFileMusic } from './icons/file-music';
 import { iconPackOfFileNotFound } from './icons/file-not-found';
+import { iconPackOfFileRemove } from './icons/file-remove';
 import { iconPackOfFileSearch } from './icons/file-search';
 import { iconPackOfFileValidation } from './icons/file-validation';
 import { iconPackOfFlag03 } from './icons/flag-03';
@@ -226,6 +227,7 @@ export const theIconKnownPack: Record<TheIconKnownName, TheIconSelfPack> = {
   Alien02: iconPackOfAlien02,
   Diameter: iconPackOfDiameter,
   CircleArrowRight02: iconPackOfCircleArrowRight02,
+  FileRemove: iconPackOfFileRemove,
   FileSearch: iconPackOfFileSearch,
   Anonymous: iconPackOfAnonymous,
   DashboardSpeed01: iconPackOfDashboardSpeed01,
