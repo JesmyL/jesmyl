@@ -7,7 +7,7 @@ export const ComCommentTool = () => {
 
   return (
     <ComTool
-      title="Комментарий"
+      title="Мои заметки"
       icon="TextAlignLeft"
       onClick={() => setIsRedact(true)}
     />
