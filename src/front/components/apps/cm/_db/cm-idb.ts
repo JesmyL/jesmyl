@@ -17,7 +17,7 @@ import { CmTranslationScreenConfig } from '../translation/complect/controlled/mo
 export interface CmIDBStorage {
   chordPack: ChordPack;
   eeStore: EeStorePack;
-  ignoredEESet: Set<string> | null;
+  ignoredEESet: Set<string>;
   favoriteComs: CmComWid[];
   comTopTools: MigratableComToolName[];
 
@@ -51,7 +51,7 @@ class CmIDB extends DexieDB<CmIDBStorage> {
       chordPack: { $byDefault: {} },
       lastModifiedAt: { $byDefault: 0 },
       eeStore: { $byDefault: {} },
-      ignoredEESet: { $byDefault: null },
+      ignoredEESet: { $byDefault: new Set() },
       favoriteComs: { $byDefault: [] },
       selectedComws: { $byDefault: [] },
       comTopTools: { $byDefault: ['mark-com', 'fullscreen-mode', 'chords-variant'] as never },

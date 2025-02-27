@@ -2,7 +2,7 @@ import { mylib } from '#shared/lib/my-lib';
 import { bibleTranslatesIDB } from '@bible/_db/bibleIDB';
 import { cmIDB } from '@cm/_db/cm-idb';
 import { memo, useEffect, useState } from 'react';
-import { BibleTranslateName } from 'shared/api';
+import { BibleTranslateName, EeStorePack } from 'shared/api';
 import { emptyArray, itIt, makeRegExp } from 'shared/utils';
 import { useEditableCats, useEditableComs } from '../col/useEditableCols';
 
@@ -10,22 +10,26 @@ type Props = {
   isCheckBible: boolean;
   setUpdates: React.Dispatch<React.SetStateAction<number>>;
   listBox: { list: string[] };
+  eeStoreRef: { current: EeStorePack };
 };
 
-export const EERulesListComputer = memo(function ListComputer({ isCheckBible, listBox, setUpdates }: Props) {
+export const EERulesListComputer = memo(function ListComputer({
+  isCheckBible,
+  listBox,
+  setUpdates,
+  eeStoreRef,
+}: Props) {
   const cats = useEditableCats();
   const coms = useEditableComs();
-  const [store, setStore] = useState<string[]>([]);
+  const [storeWords, setStoreWords] = useState<string[]>(emptyArray);
   const [etap, setEtap] = useState('Подготовка');
   const ignoredWordsSet = cmIDB.useValue.ignoredEESet();
 
   useEffect(() => {
-    cmIDB.get.eeStore().then(store => setStore(mylib.keys(store ?? {})));
+    cmIDB.get.eeStore().then(store => setStoreWords(mylib.keys(store ?? {})));
   }, []);
 
   useEffect(() => {
-    if (ignoredWordsSet === null) return;
-
     let timeout: TimeOut;
     const etap = (etapTitle: string, cb: () => void) => {
       setEtap(etapTitle);
@@ -59,7 +63,7 @@ export const EERulesListComputer = memo(function ListComputer({ isCheckBible, li
                 const splits = norm.split(' ');
 
                 etap('Отсеивание неуникальных слов', () => {
-                  const spaceds = Array.from(new Set([...store, ...splits]));
+                  const spaceds = Array.from(new Set([...storeWords, ...splits]));
 
                   etap('Отбор слов содержащих буквы "е"', () => {
                     const words: string[] = [];
@@ -68,11 +72,14 @@ export const EERulesListComputer = memo(function ListComputer({ isCheckBible, li
 
                     const add = (word: string) => {
                       if (
-                        word.search(makeRegExp('/[іїєґ]/')) < 0 &&
-                        word.search(makeRegExp('/е/')) > -1 &&
-                        !ignoredWordsSet.has(word)
+                        word.search(makeRegExp('/[іїєґ]/')) > -1 ||
+                        word.search(makeRegExp('/е/')) < 0 ||
+                        ignoredWordsSet.has(word)
                       )
-                        words.push(word);
+                        return;
+
+                      if (eeStoreRef.current[word] === undefined) words.push(word);
+                      else words.unshift(word);
                     };
 
                     const addWord = () => {
@@ -105,7 +112,7 @@ export const EERulesListComputer = memo(function ListComputer({ isCheckBible, li
     });
 
     return () => clearTimeout(timeout);
-  }, [cats, coms, ignoredWordsSet, isCheckBible, listBox, setUpdates, store]);
+  }, [cats, coms, eeStoreRef, ignoredWordsSet, isCheckBible, listBox, setUpdates, storeWords]);
 
   return <>{etap}</>;
 });

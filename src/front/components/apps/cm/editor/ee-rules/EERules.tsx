@@ -1,4 +1,4 @@
-import { atom, useAtom } from '#shared/lib/atoms';
+import { atom, useAtom, useAtomSet, useAtomValue } from '#shared/lib/atoms';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
@@ -9,7 +9,7 @@ import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheButton } from '#shared/ui/TheButton';
 import { cmIDB } from '@cm/_db/cm-idb';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { EeStorePack } from 'shared/api';
 import { cmEditorClientInvocatorMethods } from '../cm-editor-invocator.methods';
 import { PhaseCmEditorContainer } from '../phase-editor-container/PhaseCmEditorContainer';
@@ -30,7 +30,7 @@ export function EERules() {
   const [pageSize, setPageSize] = useAtom(pageSizeAtom);
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
   const [isCheckBible, setIsCheckBible] = useAtom(isCheckBibleAtom);
-  const [editedWords, setEditedWords] = useAtom(eeWordsAtom);
+  const setEditedWords = useAtomSet(eeWordsAtom);
   const setIgnoredWordsSet = cmIDB.useSet.ignoredEESet();
   const eeStoreRef = useActualRef(cmIDB.useValue.eeStore());
   const [isOpenSearchWord, setIsOpenSearchWord] = useState(false);
@@ -38,12 +38,12 @@ export function EERules() {
   const [updates, setUpdates] = useState(0);
   const [isShowListComputer, setIsShowListComputer] = useState(false);
 
-  const editedWordsRef = useRef(editedWords);
-  editedWordsRef.current = editedWords;
+  const editedWordsRef = useActualRef(useAtomValue(eeWordsAtom));
+  const ignoredWordsSetRef = useActualRef(cmIDB.useValue.ignoredEESet());
 
   useEffect(() => setIsShowListComputer(false), [updates]);
 
-  const words = mylib.keys(editedWords);
+  const words = mylib.keys(editedWordsRef.current);
 
   return (
     <PhaseCmEditorContainer
@@ -58,7 +58,7 @@ export function EERules() {
             `Отправить ${words.length} ${mylib.declension(words.length, 'слово', 'слова', 'слов')}: ` +
             `${words.join(', ')}`
           }
-          onSend={() => cmEditorClientInvocatorMethods.setEEWords(null, editedWords)}
+          onSend={() => cmEditorClientInvocatorMethods.setEEWords(null, editedWordsRef.current)}
           onSuccess={() => setEditedWords({})}
         />
       }
@@ -86,6 +86,7 @@ export function EERules() {
               isCheckBible={isCheckBible}
               setUpdates={setUpdates}
               listBox={listBox}
+              eeStoreRef={eeStoreRef}
             />
           ) : (
             <>
@@ -121,6 +122,7 @@ export function EERules() {
                     key={word}
                     word={word}
                     setEditedWords={setEditedWords}
+                    ignoredWordsSetRef={ignoredWordsSetRef}
                     eeStoreRef={eeStoreRef}
                     editedWordsRef={editedWordsRef as never}
                     setIgnoredWordsSet={setIgnoredWordsSet}
@@ -135,6 +137,7 @@ export function EERules() {
               <EERulesWordSearchModalInner
                 setEditedWords={setEditedWords}
                 eeStoreRef={eeStoreRef}
+                ignoredWordsSetRef={ignoredWordsSetRef}
                 editedWordsRef={editedWordsRef as never}
                 setIgnoredWordsSet={setIgnoredWordsSet}
               />

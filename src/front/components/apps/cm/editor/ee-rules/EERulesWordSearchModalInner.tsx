@@ -12,9 +12,16 @@ type Props = {
   eeStoreRef: { current: EeStorePack };
   setEditedWords: (setter: (words: EeStorePack) => EeStorePack) => void;
   setIgnoredWordsSet: DexiedValueSetter<CmIDBStorage, 'ignoredEESet', void>;
+  ignoredWordsSetRef: { current: Set<string> };
 };
 
-export function EERulesWordSearchModalInner({ editedWordsRef, setEditedWords, setIgnoredWordsSet, eeStoreRef }: Props) {
+export function EERulesWordSearchModalInner({
+  editedWordsRef,
+  setEditedWords,
+  setIgnoredWordsSet,
+  eeStoreRef,
+  ignoredWordsSetRef,
+}: Props) {
   const [word, setWord] = useState('');
 
   return (
@@ -29,6 +36,7 @@ export function EERulesWordSearchModalInner({ editedWordsRef, setEditedWords, se
           key={word}
           word={word}
           eeStoreRef={eeStoreRef}
+          ignoredWordsSetRef={ignoredWordsSetRef}
           setEditedWords={setEditedWords}
           editedWordsRef={editedWordsRef as never}
           setIgnoredWordsSet={setIgnoredWordsSet}
