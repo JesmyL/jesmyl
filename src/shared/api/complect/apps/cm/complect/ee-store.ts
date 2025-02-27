@@ -1,1 +1,1 @@
-export type EeStorePack = Record<string, number | number[]>;
+export type EeStorePack = PRecord<string, number | number[]>;

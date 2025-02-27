@@ -1,19 +1,23 @@
 import { atom, useAtom } from '#shared/lib/atoms';
+import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
+import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheButton } from '#shared/ui/TheButton';
-import { eeStorage } from '@cm/base/ee-storage/EeStorage';
+import { cmIDB } from '@cm/_db/cm-idb';
 import { useEffect, useRef, useState } from 'react';
 import { EeStorePack } from 'shared/api';
 import { cmEditorClientInvocatorMethods } from '../cm-editor-invocator.methods';
 import { PhaseCmEditorContainer } from '../phase-editor-container/PhaseCmEditorContainer';
 import { EERulesListComputer } from './EERulesListComputer';
 import { EERulesWord } from './EERulesWord';
+import { EERulesWordSearchModalInner } from './EERulesWordSearchModalInner';
 
-const sizes = [10, 30, 50];
+const sizes = [10, 30, 50, 100];
 
 const listBox = { list: [] } as { list: string[] };
 
@@ -27,6 +31,9 @@ export function EERules() {
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
   const [isCheckBible, setIsCheckBible] = useAtom(isCheckBibleAtom);
   const [editedWords, setEditedWords] = useAtom(eeWordsAtom);
+  const setIgnoredWordsSet = cmIDB.useSet.ignoredEESet();
+  const eeStoreRef = useActualRef(cmIDB.useValue.eeStore());
+  const [isOpenSearchWord, setIsOpenSearchWord] = useState(false);
 
   const [updates, setUpdates] = useState(0);
   const [isShowListComputer, setIsShowListComputer] = useState(false);
@@ -57,12 +64,18 @@ export function EERules() {
       }
       content={
         <>
-          <TheButton
-            className="margin-gap"
-            onClick={() => setIsShowListComputer(true)}
-          >
-            Проверить наличие неизвестных слов
-          </TheButton>
+          <div className="flex flex-gap">
+            <TheButton
+              className="margin-gap"
+              onClick={() => setIsShowListComputer(true)}
+            >
+              Проверить наличие неизвестных слов
+            </TheButton>
+            <IconButton
+              icon="SearchVisual"
+              onClick={() => setIsOpenSearchWord(true)}
+            />
+          </div>
           <IconCheckbox
             postfix="включать библейские слова"
             checked={isCheckBible}
@@ -97,7 +110,7 @@ export function EERules() {
                       title: words[0],
                       id: page,
                       disabled: currentPage === page,
-                      color: words.some(word => eeStorage.get(word) == null) ? 'ko' : null,
+                      color: words.some(word => eeStoreRef.current[word] == null) ? 'ko' : null,
                     };
                   })}
               />
@@ -108,11 +121,24 @@ export function EERules() {
                     key={word}
                     word={word}
                     setEditedWords={setEditedWords}
+                    eeStoreRef={eeStoreRef}
                     editedWordsRef={editedWordsRef as never}
+                    setIgnoredWordsSet={setIgnoredWordsSet}
                   />
                 );
               })}
             </>
+          )}
+
+          {isOpenSearchWord && (
+            <Modal onClose={setIsOpenSearchWord}>
+              <EERulesWordSearchModalInner
+                setEditedWords={setEditedWords}
+                eeStoreRef={eeStoreRef}
+                editedWordsRef={editedWordsRef as never}
+                setIgnoredWordsSet={setIgnoredWordsSet}
+              />
+            </Modal>
           )}
         </>
       }
