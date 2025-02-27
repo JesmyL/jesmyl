@@ -52,6 +52,17 @@ class CmComSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmComSokiInvo
           marks[comw]++;
         },
         takeComwVisitsCount: () => async comw => comwVisitsFileStore.getValue()[comw] ?? 0,
+
+        takeRemovedComs: () => async () => comsFileStore.getValue().filter(com => com.isRemoved),
+        destroy: () => async comw => {
+          const coms = comsFileStore.getValueWithAutoSave();
+          const index = coms.findIndex(com => com.w === comw);
+          if (index < 0) return '';
+          const name = coms[index].n;
+          coms.splice(index, 1);
+
+          return name;
+        },
       },
 
       {
@@ -100,10 +111,12 @@ class CmComSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmComSokiInvo
         newCom: com => `Добавлена новая песня ${getCmComNameInBrackets(com)}`,
 
         remove: com => `Песня ${getCmComNameInBrackets(com)} удалена`,
+        destroy: comName => `Песня ${comName} уничтожена`,
         bringBackToLife: com => `Удалённая песня ${getCmComNameInBrackets(com)} возвращена`,
 
         printComwVisit: null,
         takeComwVisitsCount: null,
+        takeRemovedComs: null,
       },
     );
   }

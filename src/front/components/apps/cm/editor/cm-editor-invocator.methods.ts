@@ -42,10 +42,12 @@ export const cmComClientInvocatorMethods = new CmComSokiInvocatorClient('CmComSo
   removeTextBlock: true,
 
   remove: true,
+  destroy: true,
   bringBackToLife: true,
 
   printComwVisit: true,
   takeComwVisitsCount: true,
+  takeRemovedComs: true,
 });
 
 class CmComExternalsSokiInvocatorClient extends SokiInvocatorClient<CmComExternalsSokiInvocatorModel> {}

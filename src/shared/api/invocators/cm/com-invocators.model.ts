@@ -6,6 +6,7 @@ export type CmComSokiInvocatorModel = {
   newCom: (value: OmitOwn<IExportableCom, 'w'>) => IExportableCom;
 
   rename: SimpleComValueSetter<string>;
+  destroy: (comw: CmComWid) => string;
   setBpM: SimpleComValueSetter<number>;
   setMeterSize: SimpleComValueSetter<3 | 4>;
   changeLanguage: SimpleComValueSetter<number>;
@@ -28,4 +29,5 @@ export type CmComSokiInvocatorModel = {
 
   printComwVisit: (comw: CmComWid) => void;
   takeComwVisitsCount: (comw: CmComWid) => number;
+  takeRemovedComs: () => IExportableCom[];
 };
