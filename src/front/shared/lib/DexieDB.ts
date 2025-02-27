@@ -8,7 +8,7 @@ const keyvalues = '%keyvalues%';
 const byDefaultField = '$byDefault';
 type ByDefaultField = typeof byDefaultField;
 
-type ValueSetter<Store, K extends keyof Store, RetVal = void> = (
+export type DexiedValueSetter<Store, K extends keyof Store, RetVal = void> = (
   value: Store[K] | ((val: Store[K]) => Store[K]),
 ) => RetVal;
 
@@ -27,12 +27,12 @@ export class DexieDB<Store> {
   hook: TableHooks<unknown> = ((...args: []) =>
     (this.getKeyvalues() as { hook(...args: unknown[]): unknown }).hook(...args)) as never;
 
-  set = {} as { [K in keyof Required<Store>]: ValueSetter<Store, K, Promise<void>> };
+  set = {} as { [K in keyof Required<Store>]: DexiedValueSetter<Store, K, Promise<void>> };
   get = {} as { [K in keyof Required<Store>]: () => Promise<Store[K]> };
   remove = {} as { [K in keyof Required<Store>]: () => Promise<number> };
 
-  use = {} as { [K in keyof Required<Store>]: () => [Store[K], ValueSetter<Store, K>] };
-  useSet = {} as { [K in keyof Required<Store>]: () => ValueSetter<Store, K> };
+  use = {} as { [K in keyof Required<Store>]: () => [Store[K], DexiedValueSetter<Store, K>] };
+  useSet = {} as { [K in keyof Required<Store>]: () => DexiedValueSetter<Store, K> };
   useValue = {} as { [K in keyof Required<Store>]: () => Store[K] };
 
   updateLastModifiedAt!: Store extends { lastModifiedAt: number } ? (modifiedAt: number) => Promise<void> : never;
