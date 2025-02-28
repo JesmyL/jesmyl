@@ -4,7 +4,7 @@ import { useComs } from '@cm/cols/useCols';
 import { cmUserStoreSokiInvocatorClient } from '@cm/invocators/user-store-invocator.methods';
 
 let saveTimeout: TimeOut;
-const maxFavouritesCount = 50;
+const maxFavouritesCount = 30;
 
 export const useFavouriteComs = () => {
   const favourites = cmIDB.useValue.favoriteComs();
