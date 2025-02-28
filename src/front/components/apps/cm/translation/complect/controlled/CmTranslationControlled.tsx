@@ -3,9 +3,11 @@ import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContai
 import { Com } from '@cm/col/com/Com';
 import { ComFaceList } from '@cm/col/com/face/list/ComFaceList';
 import { useTakeActualComw } from '@cm/col/com/useCcom';
+import { useFavouriteComs } from '@cm/lists/favourites/useFavouriteComs';
 import { TranslationSlidePreview } from 'front/components/apps/+complect/translations/controls/Preview';
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { itNIt } from 'shared/utils';
 import styled from 'styled-components';
 import { useCmScreenTranslationComNavigations } from '../hooks/com-navigation';
 import { useCmScreenTranslationComTextNavigations } from '../hooks/com-texts';
@@ -23,6 +25,8 @@ interface Props {
 
 export function CmTranslationControlled({ head, comList, headTitle, backButtonPath }: Props) {
   const [, setSearchParams] = useSearchParams();
+  const { favouriteComws } = useFavouriteComs();
+  const [isShowFavouritesList, setIsShowFavouritesList] = useState(false);
 
   const { comPack } = useCmScreenTranslationComNavigations();
   const setTexti = useCmScreenTranslationComTextNavigations().setTexti;
@@ -51,8 +55,15 @@ export function CmTranslationControlled({ head, comList, headTitle, backButtonPa
             <TranslationSlidePreview />
 
             <div className="translation-com-list">
+              <div
+                className="flex flex-gap padding-gap padding-big-gap-l sticky bgcolor--5"
+                onClick={() => setIsShowFavouritesList(itNIt)}
+              >
+                <span className={isShowFavouritesList ? undefined : 'color--7'}>Список</span>/
+                <span className={isShowFavouritesList ? 'color--7' : undefined}>Избранные</span>
+              </div>
               <StyledComFaceList
-                list={comList ?? comPack.list}
+                list={isShowFavouritesList ? favouriteComws : comList ?? comPack.list}
                 titles={comPack.titles}
                 importantOnClick={com => {
                   setSearchParams(prev => ({ ...prev, comw: com.wid }));
@@ -81,12 +92,12 @@ const Container = styled.div`
   --min-size: 200px;
 
   .translation-com-list {
-    width: 50%;
-    height: var(--size);
-    min-height: var(--min-size);
+    width: calc(100vw - var(--max-size));
+    height: 50vmin;
+    min-height: 200px;
     max-height: var(--max-size);
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
 
     .face-item.current {
       font-weight: bold;

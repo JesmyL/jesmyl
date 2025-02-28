@@ -1,4 +1,4 @@
-import { useFavoriteComs } from '@cm/lists/favourites/useFavouriteComs';
+import { useFavouriteComs } from '@cm/lists/favourites/useFavouriteComs';
 import { useMemo } from 'react';
 import { CmComListContext, CmComListContextValue } from './context';
 
@@ -7,7 +7,7 @@ export const CmTranslationComListContextInFavourites = function InFavourites({
 }: {
   children: React.ReactNode;
 }) {
-  const list = useFavoriteComs().favouriteComws;
+  const list = useFavouriteComs().favouriteComws;
 
   const value = useMemo((): CmComListContextValue => {
     return {

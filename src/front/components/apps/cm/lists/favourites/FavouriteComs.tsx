@@ -7,10 +7,10 @@ import { CmTranslationComListContextInFavourites } from '../../base/translations
 import { ComFaceList } from '../../col/com/face/list/ComFaceList';
 import { cmCompositionRoute } from '../../routing/cmRoutingApp';
 import { LocalListToolsPopup } from '../popups/LocalListToolsPopup';
-import { useFavoriteComs } from './useFavouriteComs';
+import { useFavouriteComs } from './useFavouriteComs';
 
 export function FavoriteComs() {
-  const { favouriteComws } = useFavoriteComs();
+  const { favouriteComws } = useFavouriteComs();
   const [isOpenTools, setIsOpenTools] = useState(false);
 
   return (

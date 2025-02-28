@@ -4,7 +4,7 @@ import { cmUserStoreSokiInvocatorClient } from '@cm/invocators/user-store-invoca
 
 let saveTimeout: TimeOut;
 
-export const useFavoriteComs = () => {
+export const useFavouriteComs = () => {
   const favourites = cmIDB.useValue.favoriteComs();
   const favouriteSet = new Set(favourites);
 
