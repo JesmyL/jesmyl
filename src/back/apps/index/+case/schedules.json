@@ -631,7 +631,7 @@
   },
   {
     "w": 1737866590786,
-    "m": 1740719454562.336,
+    "m": 1740730620174.5352,
     "title": "Мои задачи",
     "app": "index",
     "dsc": "",
@@ -646,7 +646,7 @@
               "[SCH]:custom:0": {
                 "values": [
                   [true, "крутилка", 3],
-                  [false, "расширение VS-Code intellicode", 25],
+                  [true, "расширение VS-Code intellicode", 25],
                   [true, "appVersion modAt remove", 23],
                   [true, "пользовательские ошибки - писать от кого", 0],
                   [true, "проверка токена только в первый раз", 2],
@@ -678,7 +678,7 @@
                     22
                   ],
                   [true, "сохранять только последние комментарии к песням", 24],
-                  [false, "сортировка этих полей", 26],
+                  [false, "сортировка этих полей\ninput height\nкнопка автосорта", 26],
                   [true, "lazy icons", 27],
                   [true, "***cm***\nперемещение целевых блоков не ниже чем их ссылки", 28],
                   [true, "`${CmComWid}`", 29],
@@ -720,10 +720,12 @@
                   [true, "- валидация текстов песен на  беке\n- не отправлять ee-store на клиент", 63],
                   [true, "трансляция библии", 64],
                   [true, "dexie db \n- use, set, useValue - список использований", 65],
-                  [false, "хорошие штуки\n\n- popover\n- anchor", 66],
-                  [false, "возможность создания своих папок в избранных", 67],
-                  [false, "editedEEwords share", 68],
-                  [false, "favourites limit", 69]
+                  [false, "хорошие штуки\n\n###html\n- popover\n- anchor\n\n###css\n- calc-size", 66],
+                  [true, "возможность создания своих папок в избранных", 67],
+                  [true, "editedEEwords share", 68],
+                  [true, "favourites limit", 69],
+                  [false, "modals without anchor nodes", 70],
+                  [false, "lazy translations", 71]
                 ]
               }
             },
