@@ -4,16 +4,19 @@ import { useComToolsCcomContext } from '../lib/useMigratableComTools';
 
 export const MarkedComTool = () => {
   const ccom = useComToolsCcomContext();
-  const { isFavourite, toggleFavourite } = useFavouriteComs();
+  const { isFavourite, toggleFavourite, favouritesToastNode } = useFavouriteComs();
 
   return (
     ccom && (
-      <ComTool
-        title={isFavourite(ccom.wid) ? 'Удалить избранное' : 'Добавить избранное'}
-        icon="Star"
-        iconKind={isFavourite(ccom.wid) ? 'SolidRounded' : 'StrokeRounded'}
-        onClick={() => toggleFavourite(ccom.wid)}
-      />
+      <>
+        <ComTool
+          title={isFavourite(ccom.wid) ? 'Удалить избранное' : 'Добавить избранное'}
+          icon="Star"
+          iconKind={isFavourite(ccom.wid) ? 'SolidRounded' : 'StrokeRounded'}
+          onClick={() => toggleFavourite(ccom.wid)}
+        />
+        {favouritesToastNode}
+      </>
     )
   );
 };

@@ -11,14 +11,13 @@ interface Props {
 }
 
 export function ComFaceContextMenu({ onClick, comWid }: Props) {
-  const { isFavourite, toggleFavourite } = useFavouriteComs();
+  const { isFavourite, toggleFavourite, favouritesToastNode } = useFavouriteComs();
   const isComMarked = isFavourite(comWid);
   const { clearSelectedComws, selectedComws, selectedComPosition: isSelected, toggleSelectedCom } = useSelectedComs();
   const [confirmNode, confirm] = useConfirm();
 
   return (
     <StyledMenu>
-      {confirmNode}
       <IconButton
         icon={isComMarked ? 'Star' : 'StarCircle'}
         postfix={isComMarked ? 'Удалить из Избранного' : 'Добавить в Избранное'}
@@ -41,6 +40,8 @@ export function ComFaceContextMenu({ onClick, comWid }: Props) {
           }}
         />
       )}
+      {confirmNode}
+      {favouritesToastNode}
     </StyledMenu>
   );
 }
