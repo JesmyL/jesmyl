@@ -88,6 +88,7 @@ export interface IComOrdProps {
   chordedOrd: boolean;
   orderUnit: Order;
   orderUniti: number;
+  positions?: number[];
   isJoinLetters: boolean;
   com: Com;
 }

@@ -48,6 +48,7 @@ export class EditableOrder extends Order {
       : this.me.isAnchor && this.me.source?.top[key] == null;
   }
 
+  // todo: remove
   async setChordPosition(linei: number, pos: number) {
     const prev = [...(this.positions?.[linei] || [])].sort((a: number, b: number) => a - b);
     const line = this.positions?.[linei] || [];
