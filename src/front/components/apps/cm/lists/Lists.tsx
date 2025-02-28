@@ -7,7 +7,7 @@ import { TheCat } from '@cm/col/cat/TheCat';
 import { useCats } from '@cm/cols/useCols';
 import { Link, Route, Routes } from 'react-router-dom';
 import { ExternalList } from './ExternalList';
-import { FavoriteComs } from './favorites/FavoriteComs';
+import { FavoriteComs } from './favourites/FavouriteComs';
 import './Lists.scss';
 import { TheMeetings } from './meetings/TheMeetings';
 import { SelectedComs } from './selected-coms/SelectedComs';

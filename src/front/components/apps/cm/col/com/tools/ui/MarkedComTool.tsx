@@ -1,18 +1,18 @@
-import { useFavoriteComs } from '@cm/lists/favorites/useFavoriteComs';
+import { useFavoriteComs } from '@cm/lists/favourites/useFavouriteComs';
 import { ComTool } from '../ComTool';
 import { useComToolsCcomContext } from '../lib/useMigratableComTools';
 
 export const MarkedComTool = () => {
   const ccom = useComToolsCcomContext();
-  const { isMarked, toggleMarked } = useFavoriteComs();
+  const { isFavourite, toggleFavourite } = useFavoriteComs();
 
   return (
     ccom && (
       <ComTool
-        title={isMarked(ccom.wid) ? 'Удалить избранное' : 'Добавить избранное'}
+        title={isFavourite(ccom.wid) ? 'Удалить избранное' : 'Добавить избранное'}
         icon="Star"
-        iconKind={isMarked(ccom.wid) ? 'SolidRounded' : 'StrokeRounded'}
-        onClick={() => toggleMarked(ccom.wid)}
+        iconKind={isFavourite(ccom.wid) ? 'SolidRounded' : 'StrokeRounded'}
+        onClick={() => toggleFavourite(ccom.wid)}
       />
     )
   );

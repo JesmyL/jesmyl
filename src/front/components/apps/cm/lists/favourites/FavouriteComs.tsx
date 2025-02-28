@@ -3,14 +3,14 @@ import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { useState } from 'react';
 
 import { Route, Routes } from 'react-router-dom';
-import CmTranslationComListContextInMarks from '../../base/translations/InMarks';
+import { CmTranslationComListContextInFavourites } from '../../base/translations/InFavourites';
 import { ComFaceList } from '../../col/com/face/list/ComFaceList';
 import { cmCompositionRoute } from '../../routing/cmRoutingApp';
 import { LocalListToolsPopup } from '../popups/LocalListToolsPopup';
-import { useFavoriteComs } from './useFavoriteComs';
+import { useFavoriteComs } from './useFavouriteComs';
 
 export function FavoriteComs() {
-  const { markedComs } = useFavoriteComs();
+  const { favouriteComws } = useFavoriteComs();
   const [isOpenTools, setIsOpenTools] = useState(false);
 
   return (
@@ -26,10 +26,10 @@ export function FavoriteComs() {
               <>
                 {isOpenTools && (
                   <BottomPopup onClose={setIsOpenTools}>
-                    <LocalListToolsPopup coms={markedComs} />
+                    <LocalListToolsPopup coms={favouriteComws} />
                   </BottomPopup>
                 )}
-                <ComFaceList list={markedComs} />
+                <ComFaceList list={favouriteComws} />
               </>
             }
           />
@@ -37,7 +37,7 @@ export function FavoriteComs() {
       />
 
       {cmCompositionRoute(children => (
-        <CmTranslationComListContextInMarks>{children}</CmTranslationComListContextInMarks>
+        <CmTranslationComListContextInFavourites>{children}</CmTranslationComListContextInFavourites>
       ))}
     </Routes>
   );

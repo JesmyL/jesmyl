@@ -1,31 +1,28 @@
 import { cmIDB } from '@cm/_db/cm-idb';
 import { useComs } from '@cm/cols/useCols';
 import { cmUserStoreSokiInvocatorClient } from '@cm/invocators/user-store-invocator.methods';
-import { CmComWid } from 'shared/api';
 
 let saveTimeout: TimeOut;
 
 export const useFavoriteComs = () => {
-  const favorites = cmIDB.useValue.favoriteComs();
-  const favoriteSet = new Set(favorites);
-  const favoriteComs = useComs(favorites);
+  const favourites = cmIDB.useValue.favoriteComs();
+  const favouriteSet = new Set(favourites);
 
   const ret = {
-    markedComs: favoriteComs,
-    setMarks: (comws: CmComWid[]) => {
+    favouriteComws: useComs(favourites),
+    isFavourite: (comw: number) => favouriteSet.has(comw),
+    toggleFavourite: (comw: number) => {
+      if (ret.isFavourite(comw)) favouriteSet.delete(comw);
+      else favouriteSet.add(comw);
+
+      const comws = Array.from(favouriteSet);
+
       cmIDB.set.favoriteComs(comws);
       clearTimeout(saveTimeout);
       saveTimeout = setTimeout(() => {
         cmUserStoreSokiInvocatorClient.setAboutComFavorites(null, { comws });
       }, 1000);
     },
-    toggleMarked: (comw: number) => {
-      if (ret.isMarked(comw)) favoriteSet.delete(comw);
-      else favoriteSet.add(comw);
-
-      ret.setMarks(Array.from(favoriteSet));
-    },
-    isMarked: (comw: number) => favoriteSet.has(comw),
   };
 
   return ret;

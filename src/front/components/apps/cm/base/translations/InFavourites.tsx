@@ -1,9 +1,13 @@
+import { useFavoriteComs } from '@cm/lists/favourites/useFavouriteComs';
 import { useMemo } from 'react';
-import { useFavoriteComs } from '../../lists/favorites/useFavoriteComs';
 import { CmComListContext, CmComListContextValue } from './context';
 
-export const CmTranslationComListContextInMarks = function InMarks({ children }: { children: React.ReactNode }) {
-  const list = useFavoriteComs().markedComs;
+export const CmTranslationComListContextInFavourites = function InFavourites({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const list = useFavoriteComs().favouriteComws;
 
   const value = useMemo((): CmComListContextValue => {
     return {
@@ -14,4 +18,3 @@ export const CmTranslationComListContextInMarks = function InMarks({ children }:
 
   return <CmComListContext.Provider value={value}>{children}</CmComListContext.Provider>;
 };
-export default CmTranslationComListContextInMarks;
