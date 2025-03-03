@@ -1,0 +1,1 @@
+export { CmEditableCompositionMainTab } from './ui';

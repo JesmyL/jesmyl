@@ -7,7 +7,7 @@ import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIcon
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useSelectedComs } from '@cm/base/useSelectedComs';
 import { ComFaceList } from '@cm/col/com/face/list/ComFaceList';
-import { cmComExternalsClientInvocatorMethods } from '@cm/editor/cm-editor-invocator.methods';
+import { cmComExternalsClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
 import { useAuth } from '@index/atoms';
 import { useState } from 'react';
 import { CmComWid } from 'shared/api';

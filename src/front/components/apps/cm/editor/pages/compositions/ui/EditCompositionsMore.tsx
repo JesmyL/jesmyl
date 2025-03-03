@@ -1,0 +1,52 @@
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
+import { Modal } from '#shared/ui/modal/Modal/Modal';
+import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
+import { useAuth } from '@index/atoms';
+import { useState } from 'react';
+import { NewComposition } from './NewCom';
+import { RemovedComsModalInner } from './RemovedComsModalInner';
+
+export const EditCompositionsMore = ({ onClose }: { onClose(is: false): void }) => {
+  const [isComCreatorOpen, setIsComCreatorOpen] = useState(false);
+  const [isRemovedComsOpen, setIsRemovedComsOpen] = useState(false);
+  const auth = useAuth();
+
+  return (
+    <>
+      <BottomPopupItem
+        id="create-com-button"
+        icon="PlusSignCircle"
+        title="Новая песня"
+        onClick={event => {
+          event.stopPropagation();
+          setIsComCreatorOpen(true);
+        }}
+      />
+      <BottomPopupItem
+        id="create-com-button"
+        icon="FileRemove"
+        title="Удалённые песни"
+        onClick={event => {
+          event.stopPropagation();
+          setIsRemovedComsOpen(true);
+        }}
+      />
+
+      {isComCreatorOpen && (
+        <FullContent onClose={setIsComCreatorOpen}>
+          <NewComposition
+            onClose={() => {
+              setIsComCreatorOpen(false);
+              onClose(false);
+            }}
+          />
+        </FullContent>
+      )}
+      {auth.level >= 80 && isRemovedComsOpen && (
+        <Modal onClose={setIsRemovedComsOpen}>
+          <RemovedComsModalInner />
+        </Modal>
+      )}
+    </>
+  );
+};

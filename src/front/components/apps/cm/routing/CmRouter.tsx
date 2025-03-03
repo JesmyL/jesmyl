@@ -13,7 +13,7 @@ import { Lists } from '../lists/Lists';
 import { cmInitialInvokes } from './cm-initial-invokes';
 import { CmFooter } from './CmFooter';
 
-const Editor = React.lazy(() => import('../editor/Editor'));
+const Editor = React.lazy(() => import('../editor'));
 const maxSelectedComsCount = 50;
 
 export default function CmRouter({ mainNode }: { mainNode: React.ReactNode }) {

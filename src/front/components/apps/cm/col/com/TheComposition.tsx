@@ -18,7 +18,7 @@ import { cmIsShowCatBindsInCompositionAtom, isOpenChordImagesAtom } from '../../
 import { useCmTranslationComListContext } from '../../base/translations/context';
 import { useChordVisibleVariant } from '../../base/useChordVisibleVariant';
 import { useLaterComList } from '../../base/useLaterComList';
-import { cmComClientInvocatorMethods } from '../../editor/cm-editor-invocator.methods';
+import { cmComClientInvocatorMethods } from '../../editor/lib/cm-editor-invocator.methods';
 import { ChordImagesList } from './chord-card/ChordImagesList';
 import { CmComCommentModalInner } from './CommentModalInner';
 import { ComNotFoundPage } from './ComNotFoundPage';

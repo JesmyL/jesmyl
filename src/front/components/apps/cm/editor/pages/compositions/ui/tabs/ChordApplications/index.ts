@@ -1,0 +1,1 @@
+export { CmChordApplicationsRedactorTab } from './ui';

@@ -2,7 +2,6 @@ import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { CorrectsBox } from '@cm/editor/corrects-box/CorrectsBox';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
@@ -14,7 +13,7 @@ type Props<ChangedValue> = {
   label?: string;
   icon: TheIconKnownName;
   multiline?: boolean;
-  corrects?: CorrectsBox;
+  isError?: boolean;
 };
 
 export const InputWithLoadingIcon = <ChangedValue,>({
@@ -25,14 +24,13 @@ export const InputWithLoadingIcon = <ChangedValue,>({
   icon,
   label,
   multiline,
-  corrects,
+  isError,
 }: Props<ChangedValue>) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const actualOnChange = useActualRef(onChange);
   const actualOnInput = useActualRef(onInput);
   const [isLoading, setIsLoading] = useState(false);
   const [value, setValue] = useState(defaultValue);
-  const isThereErrors = corrects?.errors?.length;
 
   useEffect(() => setValue(defaultValue), [defaultValue]);
 
@@ -52,7 +50,7 @@ export const InputWithLoadingIcon = <ChangedValue,>({
         addEventListenerPipe(multiline ? inputNode : null, 'input', setHeight),
         addEventListenerPipe(multiline ? inputNode : null, 'focus', setHeight),
         addEventListenerPipe(inputNode, 'change', async () => {
-          if (isThereErrors || defaultValue === inputNode.value) return;
+          if (isError || defaultValue === inputNode.value) return;
           setIsLoading(true);
 
           try {
@@ -65,11 +63,11 @@ export const InputWithLoadingIcon = <ChangedValue,>({
         }),
       )
       .effect();
-  }, [actualOnChange, actualOnInput, defaultValue, isThereErrors, multiline]);
+  }, [actualOnChange, actualOnInput, defaultValue, isError, multiline]);
 
   return (
     <div className="full-width flex flex-gap margin-gap-v">
-      {isThereErrors ? (
+      {isError ? (
         <LazyIcon
           icon="Alert02"
           className="color--ko"

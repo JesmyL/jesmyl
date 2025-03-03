@@ -1,0 +1,1 @@
+export { CmComRepeatsRedactorTab } from './ui';

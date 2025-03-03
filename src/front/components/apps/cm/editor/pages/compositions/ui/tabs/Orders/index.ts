@@ -1,0 +1,1 @@
+export { CmOrdersRedactorTab } from './ui';

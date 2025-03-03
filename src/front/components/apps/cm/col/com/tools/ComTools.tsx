@@ -6,7 +6,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmIDB } from '@cm/_db/cm-idb';
 import { useChordVisibleVariant } from '@cm/base/useChordVisibleVariant';
 import { ChordVisibleVariant } from '@cm/Cm.model';
-import { cmComClientInvocatorMethods } from '@cm/editor/cm-editor-invocator.methods';
+import { cmComClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
 import { useFixedCcom } from '../useCcom';
