@@ -1,6 +1,6 @@
-import { mylib } from '#shared/lib/my-lib';
 import { useModal } from '#shared/ui/modal/useModal';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
+import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ChordVisibleVariant } from '@cm/Cm.model';
 import { ComOrders } from '@cm/col/com/orders/ComOrders';
@@ -16,6 +16,8 @@ const dotts = '.'
 
 export const EditableCompositionMainTon = ({ ccom }: { ccom: EditableCom }) => {
   const [initialPosition] = useState(ccom.transPosition);
+  const [iconOnLoad, setIconOnLoad] = useState('');
+  const firstChord = ccom.getFirstSimpleChord();
 
   const [modalNode, openModal] = useModal(({ header, body }, close) => {
     return (
@@ -23,30 +25,34 @@ export const EditableCompositionMainTon = ({ ccom }: { ccom: EditableCom }) => {
         {header(<>Тональность песни</>)}
         {body(
           <>
-            <ComOrders
-              com={ccom}
-              chordVisibleVariant={ChordVisibleVariant.Maximal}
-            />
             {dotts.map(position => {
-              return (
+              const transposedChord = ccom.transposeBlock(firstChord ?? '', position - (ccom.transPosition ?? 0));
+
+              return transposedChord === iconOnLoad ? (
+                <TheIconLoading
+                  key={position}
+                  className="margin-gap-t"
+                />
+              ) : (
                 <IconCheckbox
                   key={position}
                   checked={position === ccom.transPosition}
                   disabled={position === ccom.transPosition}
                   className={'margin-gap-t ' + (position === initialPosition ? ' text-bold' : '')}
-                  onChange={() => {
-                    cmComClientInvocatorMethods.changeTon(null, ccom.wid, position);
+                  onChange={async () => {
+                    setIconOnLoad(transposedChord);
+                    await cmComClientInvocatorMethods.changeTon(null, ccom.wid, position);
                     close();
+                    setIconOnLoad('');
                   }}
-                  postfix={`На ${position} ${mylib.declension(
-                    position,
-                    'полутон',
-                    'полутона',
-                    'полутонов',
-                  )} от базовой`}
+                  postfix={transposedChord}
                 />
               );
             })}
+            <ComOrders
+              com={ccom}
+              chordVisibleVariant={ChordVisibleVariant.Maximal}
+            />
           </>,
         )}
       </>
@@ -61,7 +67,7 @@ export const EditableCompositionMainTon = ({ ccom }: { ccom: EditableCom }) => {
       {modalNode}
       <LazyIcon icon="Notification01" />
       <div className="title half-width text-center">Изменить тональность</div>
-      <div className="half-width text-center">{ccom.getFirstSimpleChord()}</div>
+      <div className="half-width text-center">{firstChord}</div>
     </div>
   );
 };

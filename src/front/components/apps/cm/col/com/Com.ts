@@ -152,7 +152,7 @@ export class Com extends BaseNamed<IExportableCom> {
     return R;
   }
 
-  transChord(chord: string, delta: number = 1) {
+  transposeChord(chord: string, delta: number = 1) {
     const cindex = simpleHashChords.indexOf(chord);
     const di = cindex - -delta;
     const len = simpleHashChords.length;
@@ -161,12 +161,12 @@ export class Com extends BaseNamed<IExportableCom> {
     return simpleHashChords[nindex];
   }
 
-  transBlock(cblock: string, delta = this.transPosition) {
-    return cblock?.replace(gSimpleHashChordReg, chord => this.transChord(chord, delta));
+  transposeBlock(cblock: string, delta = this.transPosition) {
+    return cblock?.replace(gSimpleHashChordReg, chord => this.transposeChord(chord, delta));
   }
 
   transposedBlocks(delta?: number) {
-    return this.chords?.map((cblock: string) => this.transBlock(cblock, delta));
+    return this.chords?.map((cblock: string) => this.transposeBlock(cblock, delta));
   }
 
   async setChordsInitialTon() {
@@ -355,7 +355,7 @@ export class Com extends BaseNamed<IExportableCom> {
 
   actualChords(chordsScalar?: string | number, position = this.transPosition) {
     const chords = mylib.isStr(chordsScalar) ? (chordsScalar as string) : this.chords?.[chordsScalar as number];
-    return chords && Com.withBemoles(this.transBlock(chords, position), this.isBemoled);
+    return chords && Com.withBemoles(this.transposeBlock(chords, position), this.isBemoled);
   }
 
   protected emptyOrderHeader = () => '';

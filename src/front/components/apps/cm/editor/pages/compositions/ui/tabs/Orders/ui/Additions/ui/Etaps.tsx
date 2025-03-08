@@ -92,7 +92,7 @@ export const OrdersRedactorAdditionsEtapsModalInner = ({ com, onClose, firstEtap
                     disabled={selectedChordi === chordi}
                     checked={selectedChordi === chordi}
                     onChange={() => setChordi(chordi)}
-                    postfix={<pre>{com.transBlock(chord)}</pre>}
+                    postfix={<pre>{com.transposeBlock(chord)}</pre>}
                   />
                 </div>
               );
