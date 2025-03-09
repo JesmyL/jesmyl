@@ -80,7 +80,9 @@ export const makeSokiInvocatorBase = <
     self.$$register = (() => {
       const name = className.slice(0, -classNamePostfix.length);
 
-      if (registeredInvocators[name] !== undefined) throw new Error(`the ${className} is registered more then 1 times`);
+      if (registeredInvocators[name] !== undefined) {
+        console.warn(`the ${className} is registered more then 1 times`);
+      }
 
       registeredInvocators[name] = self as never;
       registeredOnEachInvocations[name] = onEachInvocations;

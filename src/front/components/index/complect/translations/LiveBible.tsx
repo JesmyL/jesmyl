@@ -1,11 +1,12 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { BibleLiveTranslation } from '@bible/translations/BibleLiveTranslation';
-import { BibleTranslationControlled } from '@bible/translations/BibleTranslationControlled';
 import { IndexSchWTranslationLiveDataValue } from '@index/Index.model';
 import { useSwitchCurrentTranslationTextApp } from 'front/components/apps/+complect/translations/hooks/current-app';
-import { memo, useCallback } from 'react';
+import React, { memo, useCallback } from 'react';
 import { schLiveSokiInvocatorClient } from './live-invocator';
 import { LiveTranslationAppProps } from './model';
+
+const BibleTranslationControlled = React.lazy(() => import('@bible/translations/BibleTranslationControlled'));
 
 export const IndexScheduleWidgetBibleTranslationsControlled: React.FC<LiveTranslationAppProps> = memo(function BibleTr({
   isCantTranslateLive,

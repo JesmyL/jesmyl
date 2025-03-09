@@ -3,6 +3,7 @@ import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContai
 import { bibleIDB } from '@bible/_db/bibleIDB';
 import { useBibleSlideSyncInkrementer } from '@bible/hooks/slide-sync';
 import { useLoadBibleChaptersCombine } from '@bible/hooks/texts';
+import { bibleSokiInvocatorBaseClient } from '@bible/invoctors/invocator';
 import { BibleModulesTranslations } from '@bible/translates/Translations';
 import { JSX, ReactNode, useEffect } from 'react';
 import styled from 'styled-components';
@@ -16,7 +17,7 @@ interface Props {
   headTitle: ReactNode;
 }
 
-export function BibleTranslationControlled({ head, headTitle }: Props): JSX.Element {
+export default function BibleTranslationControlled({ head, headTitle }: Props): JSX.Element {
   useLoadBibleChaptersCombine();
   const inkSync = useBibleSlideSyncInkrementer();
   useInitSoki('bible');
@@ -69,3 +70,5 @@ const Container = styled.div`
   --max-size: 300px;
   --min-size: 200px;
 `;
+
+bibleSokiInvocatorBaseClient.$$register();
