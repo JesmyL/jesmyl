@@ -4,8 +4,8 @@ import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { Order } from '@cm/col/com/order/Order';
 import { cmComOrderClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
 import { EditableComOrder } from '@cm/editor/lib/EditableComOrder';
@@ -144,7 +144,7 @@ export const ComRepeatsRemoveButton = ({ isChordBlock, startOrd, ord, textLinei,
 
           <ModalFooter>
             <div className="flex flex-big-gap">
-              <IconButton
+              <TheIconButton
                 icon="Unavailable"
                 postfix="Отмена"
                 onClick={setIsOpenModal}

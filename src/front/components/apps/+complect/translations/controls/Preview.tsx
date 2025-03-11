@@ -1,5 +1,5 @@
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useScreenTranslationCurrentConfig } from '../hooks/configs';
@@ -66,7 +66,7 @@ const FullContainer = styled.div`
   max-width: ${size};
 `;
 
-const FullButton = styled(IconButton)`
+const FullButton = styled(TheIconButton)`
   position: absolute;
   top: 5px;
   right: 5px;

@@ -3,7 +3,7 @@ import { mylib } from '#shared/lib/my-lib';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ReactNode, useState } from 'react';
 import {
   IScheduleWidget,
@@ -39,7 +39,7 @@ export function ScheduleWidgetBindAttRefKeyButton({
 
   return (
     <>
-      <IconButton
+      <TheIconButton
         icon="Link01"
         disabled={!!atts?.[attKey]}
         className="absolute pos-top pos-right padding-gap"

@@ -70,15 +70,15 @@ const StyledFaceItem = styled.div`
   .face-logo::after {
     display: flex;
     position: absolute;
-    right: -2px;
-    bottom: -1px;
+    right: -0.3em;
+    bottom: -0.4em;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
     background-color: var(--color--3);
-    width: 1.2em;
-    height: 1.2em;
+    width: 1.3em;
+    height: 1.3em;
     color: var(--color--2);
-    font-size: 0.5em;
+    font-size: 0.7em;
   }
 `;

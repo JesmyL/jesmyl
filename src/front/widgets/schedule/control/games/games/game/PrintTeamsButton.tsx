@@ -1,6 +1,6 @@
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
@@ -18,12 +18,12 @@ export const ScheduleWidgetTeamGamePrintTeamsButton = function PrintTeamsButton(
       {isOpenPrint && (
         <StyledFull onClose={setIsOpenPrint}>
           <StyledButtons className="flex full-width around">
-            <IconButton
+            <TheIconButton
               icon="DashboardSquareRemove"
               disabled={cols < 2}
               onClick={() => setCols(cols - 1)}
             />
-            <IconButton
+            <TheIconButton
               icon="DashboardSquareAdd"
               disabled={game.teams.length <= cols}
               onClick={() => setCols(cols + 1)}

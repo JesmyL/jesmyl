@@ -47,8 +47,8 @@ export default function BibleTranslationControlled({ head, headTitle }: Props): 
       className=""
       headTitle={headTitle ?? 'Библия'}
       head={head}
-      withoutBackButton
-      withoutBackSwipe
+      // withoutBackButton
+      // withoutBackSwipe
       content={
         <Container>
           <BibleTranslationControlledTopPanel />

@@ -1,7 +1,7 @@
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React, { useState } from 'react';
 import { complectIDB } from '../../../_idb/complectIDB';
@@ -20,7 +20,7 @@ export const AlertLineSettingsModalInner = () => {
       <ModalBody>
         {configs?.map(config => {
           return (
-            <IconButton
+            <TheIconButton
               key={config.id}
               icon="Edit02"
               className="margin-gap-v pointer"
@@ -34,7 +34,7 @@ export const AlertLineSettingsModalInner = () => {
             />
           );
         })}
-        <IconButton
+        <TheIconButton
           icon="PlusSign"
           postfix="Добавить шаблон"
           onClick={() => complectIDB.tb.alertLineConfigs.add(defaultAlertLineConfig)}

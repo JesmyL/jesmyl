@@ -49,7 +49,7 @@ export const ScheduleWidgetMarkdownTranslation = ({ md = '' }: Props) => {
   return (
     <>
       <NewWindow
-        onInit={win => win.document.body.classList.add('reverse-theme')}
+        onInit={win => win.document.querySelector('html')?.classList.add('dark')}
         features="top=100,left=30000,width=400,height=200"
         target={`schedule-translation-window/${rights.schedule.w}`}
       >

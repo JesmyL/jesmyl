@@ -4,7 +4,7 @@ import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useSelectedComs } from '@cm/base/useSelectedComs';
 import { ComFaceList } from '@cm/col/com/face/list/ComFaceList';
 import { cmComExternalsClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
@@ -29,13 +29,13 @@ export const CmMeetingEventEdits = ({ packComws }: { packComws: CmComWid[] }) =>
   return (
     <>
       {!selectedComs.length || mylib.isEq(selectedComws, packComws) || (
-        <LazyIcon
+        <TheIconButton
           icon="Sent"
           onClick={setIsOpenSendModal}
         />
       )}
 
-      <LazyIcon
+      <TheIconButton
         icon="WorkHistory"
         onClick={setIsOpenHistoryModal}
       />
@@ -59,7 +59,6 @@ export const CmMeetingEventEdits = ({ packComws }: { packComws: CmComWid[] }) =>
           <ModalFooter>
             <TheIconSendButton
               icon="Sent"
-              className="margin-gap"
               prefix="Отправить"
               onSend={() =>
                 cmComExternalsClientInvocatorMethods.setInScheduleEvent(null, schw, dayi, eventMi, selectedComws, fio)

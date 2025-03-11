@@ -6,7 +6,7 @@ interface Storage {
   token: string | null;
 }
 
-const storeName = process.env.NODE_ENV === 'development' ? 'authorization' : 'authorization';
+const storeName = process.env.NODE_ENV === 'development' ? 'authorization?' : 'authorization';
 
 class AuthIDB extends DexieDB<Storage> {
   constructor() {

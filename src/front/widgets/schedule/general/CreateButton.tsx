@@ -5,7 +5,7 @@ import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useState } from 'react';
 import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 
@@ -54,7 +54,7 @@ export function ScheduleCreateWidgetButton() {
                   return schGeneralSokiInvocatorClient.create(null, title);
                 }}
               />
-              <IconButton
+              <TheIconButton
                 icon="Cancel01"
                 postfix="Отменить"
                 className="color--ko"

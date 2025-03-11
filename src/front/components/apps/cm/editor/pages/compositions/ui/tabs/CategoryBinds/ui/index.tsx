@@ -1,6 +1,6 @@
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmIDB } from '@cm/_db/cm-idb';
 import { InputWithLoadingIcon } from '@cm/base/InputWithLoadingIcon';
 import { cmCatClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
@@ -40,7 +40,7 @@ export const CmCategoryBindsRedactorTab = () => {
               onInput={emptyFunc}
             />
             {cat.dict?.[ccom.wid] != null && (
-              <IconButton
+              <TheIconButton
                 icon="Cancel01"
                 postfix={isNaN(cat.dict?.[ccom.wid as never]) ? 'Корректно очистить' : 'Удалить'}
                 confirm={`Очистить номер из сборника ${cat.name}?`}

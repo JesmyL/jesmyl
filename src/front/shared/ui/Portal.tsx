@@ -6,7 +6,7 @@ export function Portal({ children, classNames }: { children: ReactNode; classNam
   const [container] = useState(() => {
     const div = document.createElement('div');
 
-    div.classList.add('full-size', 'absolute', ...(classNames ?? emptyArray));
+    div.classList.add('portal-node', 'full-size', 'absolute', ...(classNames ?? emptyArray));
     return div;
   });
 

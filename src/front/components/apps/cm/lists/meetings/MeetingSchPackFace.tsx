@@ -1,7 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IScheduleWidget, ScheduleComPackEventPath } from 'shared/api';
@@ -55,7 +55,7 @@ export const MeetingSchPackFace = ({ schedule }: { schedule: IScheduleWidget }) 
               key={path}
               to={`${schedule.w}/${path}`}
             >
-              <IconButton
+              <TheIconButton
                 className="pointer margin-big-gap"
                 icon="ArrowRight02"
                 prefix={`${parseInt(path) + 1}-й день ${title}`}

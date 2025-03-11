@@ -1,45 +1,66 @@
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { ActualRef } from '#shared/lib/hooks/useActualRef';
+import { Slider } from '@mui/material';
 import { useEffect, useState } from 'react';
 import './ComPlayer.scss';
 
-const calcCurrentTime = (duration: number, offsetX: number, offsetWidth: number) => {
-  return duration * (offsetX / offsetWidth);
-};
+let userChangeTimeout: TimeOut;
 
-export function ComPlayerTrack({ player }: { player: HTMLAudioElement }) {
-  const [progressWidth, setProgressWidth] = useState('0');
+export function ComPlayerTrack({
+  player,
+  userChangeRef,
+}: {
+  player: HTMLAudioElement;
+  userChangeRef: ActualRef<boolean>;
+}) {
+  const [currentTime, setCurrentTime] = useState(0);
   const [time, setTime] = useState('00:00');
 
   useEffect(() => {
-    const onTimeUpdate = () => {
-      setTime(
-        Math.floor(player.currentTime / 60)
-          .toFixed(0)
-          .padStart(2, '0') +
-          ':' +
-          Math.floor(player.currentTime % 60)
-            .toFixed(0)
-            .padStart(2, '0'),
-      );
-      setProgressWidth(`${((player.currentTime / player.duration) * 100).toFixed(2)}%`);
-    };
+    return hookEffectPipe()
+      .pipe(
+        addEventListenerPipe(player, 'timeupdate', () => {
+          setTime(
+            Math.floor(player.currentTime / 60)
+              .toFixed(0)
+              .padStart(2, '0') +
+              ':' +
+              Math.floor(player.currentTime % 60)
+                .toFixed(0)
+                .padStart(2, '0'),
+          );
 
-    player.addEventListener('timeupdate', onTimeUpdate);
-    return () => {
-      player.removeEventListener('timeupdate', onTimeUpdate);
-    };
-  }, [player]);
+          if (userChangeRef.current) return;
+
+          setCurrentTime(player.currentTime);
+        }),
+      )
+      .effect();
+  }, [player, userChangeRef]);
 
   return (
     <>
-      <div
-        className="player-track pointer"
-        style={{ '--track-progress-width': progressWidth } as never}
-        onClick={event => {
-          player.currentTime = calcCurrentTime(
-            player.duration,
-            event.nativeEvent.offsetX,
-            event.currentTarget.offsetWidth,
-          );
+      <Slider
+        size="small"
+        value={currentTime || 0}
+        min={0}
+        step={1}
+        max={player.duration || 10}
+        color="x7"
+        disabled={isNaN(player.duration)}
+        onChange={(_, value) => {
+          player.pause();
+          userChangeRef.current = true;
+          clearTimeout(userChangeTimeout);
+          userChangeTimeout = setTimeout(() => {
+            userChangeRef.current = false;
+            player.play();
+          }, 300);
+
+          const time = value as number;
+          setCurrentTime(time);
+
+          player.currentTime = time;
         }}
       />
       {time}

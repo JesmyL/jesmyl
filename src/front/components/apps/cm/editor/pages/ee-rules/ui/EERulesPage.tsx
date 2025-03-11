@@ -5,8 +5,8 @@ import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { TheButton } from '#shared/ui/TheButton';
 import { cmIDB } from '@cm/_db/cm-idb';
 import { useEffect, useState } from 'react';
@@ -71,7 +71,7 @@ export const EERulesPage = () => {
             >
               Проверить наличие неизвестных слов
             </TheButton>
-            <IconButton
+            <TheIconButton
               icon="SearchVisual"
               onClick={() => setIsOpenSearchWord(true)}
             />

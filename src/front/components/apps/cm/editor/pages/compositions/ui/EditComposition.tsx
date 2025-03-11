@@ -1,8 +1,7 @@
 import { useAtomValue } from '#shared/lib/atoms';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { CmComNumber } from '@cm/col/com/complect/ComNumber';
 import { ComPlayer } from '@cm/col/com/player/ComPlayer';
 import { cmComClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
@@ -44,7 +43,7 @@ export const EditComposition = () => {
         content={
           <div className="flex column">
             <h2 className="color--ko">Песня удалена</h2>
-            <IconButton
+            <TheIconButton
               icon="MapsRefresh"
               postfix="Восстановить"
               className="color--ok"
@@ -69,7 +68,7 @@ export const EditComposition = () => {
       head={
         <>
           {connectionNode}
-          <LazyIcon
+          <TheIconButton
             icon="MusicNote03"
             kind={isOpenPlayer ? 'SolidRounded' : 'StrokeRounded'}
             className="margin-gap"
@@ -93,13 +92,13 @@ export const EditComposition = () => {
                   {({ isActive }) =>
                     icon ? (
                       isActive ? (
-                        <LazyIcon
+                        <TheIconButton
                           icon={icon}
                           kind="StrokeRounded"
                           className="color--7"
                         />
                       ) : (
-                        <LazyIcon
+                        <TheIconButton
                           icon={icon}
                           kind="BulkRounded"
                         />
@@ -142,7 +141,6 @@ const StyledContainer = styled(PageCmEditorContainer)`
   .nav-panel {
     top: -8px;
     background: var(--color--1);
-    padding-top: 5px;
   }
 
   .com-player {

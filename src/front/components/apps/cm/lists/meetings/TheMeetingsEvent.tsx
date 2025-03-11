@@ -1,6 +1,6 @@
 import { isMobileDevice } from '#shared/lib/device-differences';
 import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContainerConfigurer';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ScheduleWidgetWatchLiveTranslationButton } from '#widgets/schedule/live-translations/WatchLiveButton';
 import { CmComListContext } from '@cm/base/translations/context';
 import { cmCompositionRoute } from '@cm/routing/cmRoutingApp';
@@ -36,15 +36,12 @@ export function TheMeetingsEvent() {
             className="meeting-container"
             headTitle={`${schedule.title} - ${schedule.types[typei]?.title ?? ''}`}
             head={
-              <div className="flex flex-gap margin-gap-h">
+              <div className="flex ">
                 {isMobileDevice ? (
                   <ScheduleWidgetWatchLiveTranslationButton schw={schedule.w} />
                 ) : auth.level ? (
                   <Link to="tran">
-                    <LazyIcon
-                      icon="Computer"
-                      className="margin-gap-v"
-                    />
+                    <TheIconButton icon="Computer" />
                   </Link>
                 ) : null}
                 {auth.level < 50 || <CmMeetingEventEdits packComws={packComws} />}

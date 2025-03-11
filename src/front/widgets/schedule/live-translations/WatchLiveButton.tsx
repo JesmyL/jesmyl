@@ -1,5 +1,5 @@
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useSearchParams } from 'react-router-dom';
 import { IScheduleWidgetWid } from 'shared/api';
 import { ScheduleWidgetLiveTranslation } from './Live';
@@ -38,7 +38,7 @@ export const ScheduleWidgetWatchLiveTranslationButton = ({
           />
         </FullContent>
       )}
-      <IconButton
+      <TheIconButton
         icon="ComputerPhoneSync"
         onClick={setIsOpen}
         className="margin-gap-v"

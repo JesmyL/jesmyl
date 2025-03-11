@@ -1,4 +1,4 @@
-import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ScheduleWidgetAppAtts } from '#widgets/schedule/ScheduleWidget.model';
 import { TheMeetingsEvent } from '@cm/lists/meetings/TheMeetingsEvent';
 import { Link, Route } from 'react-router-dom';
@@ -25,7 +25,7 @@ export const cmOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
             to={listPath}
           />
           <Link to={listPath}>
-            <IconButton
+            <TheIconButton
               icon="LinkSquare01"
               postfix="Открыть список"
               className="margin-big-gap"

@@ -3,7 +3,7 @@ import { contextCreator } from '#shared/lib/contextCreator';
 import { SetStateAction } from 'react';
 
 export const [SetAppRootAnchorNodesContext, useSetAppRootAnchorNodesContext] = contextCreator(
-  (_nodes: SetStateAction<Record<string, React.ReactNode>>) => {},
+  (_nodes: SetStateAction<Map<string, React.ReactNode>>) => {},
 );
 
 export const [CurrentAppFooterItemPlaceContext, useCurrentAppFooterItemPlaceContext] = contextCreator<string | und>(

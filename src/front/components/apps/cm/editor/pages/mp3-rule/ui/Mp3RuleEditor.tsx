@@ -1,5 +1,5 @@
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ReactNode, useState } from 'react';
 import { CmMp3Rule } from 'shared/api';
 import { useCmMp3Rules } from '../../../lib/hooks/useCmMp3Rules';
@@ -101,7 +101,7 @@ export const Mp3RuleEditor = (
         )}
         {props.button ||
           (isRedact ? (
-            <IconButton
+            <TheIconButton
               icon="CheckmarkCircle02"
               className="color--ok margin-big-gap"
               disabled={!!errorMessage || !attr || !query}
@@ -118,7 +118,7 @@ export const Mp3RuleEditor = (
               }}
             />
           ) : (
-            <IconButton
+            <TheIconButton
               icon="Edit02"
               onClick={() => setIsRedact(true)}
             />

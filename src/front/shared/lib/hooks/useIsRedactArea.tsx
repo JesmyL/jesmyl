@@ -1,5 +1,5 @@
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useState } from 'react';
 
 type booleanOrNil = boolean | nil;
@@ -44,7 +44,7 @@ export function useIsRedactAreaWithInit(
           />
         ) : (
           isShowDoneButton && (
-            <IconButton
+            <TheIconButton
               icon="CheckmarkCircle02"
               className="edit-button color--ok"
               disabled={redact === true && !isSelfRedact}

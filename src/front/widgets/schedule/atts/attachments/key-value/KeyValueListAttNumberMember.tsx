@@ -1,5 +1,5 @@
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ScheduleWidgetRoleFace } from '#widgets/schedule/control/roles/RoleFace';
 import { ScheduleWidgetListUnitFace } from '#widgets/schedule/lists/UnitFace';
 import { extractScheduleWidgetRole, useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
@@ -44,7 +44,7 @@ export function KeyValueListAttNumberMember({ value }: { value: number }) {
   }
 
   return (
-    <IconButton
+    <TheIconButton
       icon="HelpSquare"
       postfix={<span className="color--ko">Неизвестный пункт</span>}
     />

@@ -1,9 +1,10 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { HTMLAttributes, JSX } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { useBottomPopupOnCloseContext } from './context';
 
-interface Props extends HTMLAttributes<HTMLDivElement> {
+interface Props extends HTMLAttributes<HTMLLIElement> {
   icon?: TheIconKnownName;
   iconNode?: JSX.Element;
   iconKind?: TheIconNameKind;
@@ -22,73 +23,51 @@ export const BottomPopupItem = ({
   titleNode,
   title,
   rightNode,
-  iconWrapperClassName,
+  iconWrapperClassName = '',
   path,
   onClick,
   onIconClick,
+  className = '',
   ...attrs
 }: Props) => {
+  const onClose = useBottomPopupOnCloseContext();
+
   const node = (
-    <StyledItem
+    <ListItem
+      disablePadding
       {...attrs}
-      onClick={onClick}
-      className={'pointer ' + (attrs.className || '')}
+      onClick={event => {
+        onClick?.(event);
+        if (event.isPropagationStopped()) return;
+        onClose(false);
+      }}
+      className={'pointer ' + className}
+      secondaryAction={rightNode}
     >
-      <div className="flex flex-gap">
-        <div
-          className={`icon-box ${iconWrapperClassName || ''}`}
-          onClick={onIconClick}
-        >
-          {icon ? (
-            <LazyIcon
-              icon={icon}
-              kind={iconKind}
-              className="abs-icon"
-            />
-          ) : (
-            iconNode
-          )}
-        </div>
-        {(titleNode || title) && <div className="title">{titleNode ?? title}</div>}
-      </div>
-      {rightNode && <div className="abs-action flex around pointer">{rightNode}</div>}
-    </StyledItem>
+      <ListItemButton>
+        {(iconNode || icon) && (
+          <ListItemIcon>
+            <div
+              className={'icon-box ' + iconWrapperClassName}
+              onClick={onIconClick}
+            >
+              {iconNode ||
+                (icon && (
+                  <LazyIcon
+                    icon={icon}
+                    kind={iconKind}
+                  />
+                ))}
+            </div>
+          </ListItemIcon>
+        )}
+        <ListItemText
+          primary={titleNode ?? title}
+          className="button-item-text"
+        />
+      </ListItemButton>
+    </ListItem>
   );
 
   return path && onClick === undefined ? <Link to={path}>{node}</Link> : node;
 };
-
-const StyledItem = styled.div`
-  justify-content: space-between;
-  padding: 7px 0;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  max-width: 450px;
-
-  &.abs-full {
-    .abs-action {
-      width: calc(6em + 20px);
-    }
-  }
-
-  .abs-action {
-    > .abs-full,
-    &.abs-full {
-      width: calc(6em + 20px);
-    }
-
-    > * {
-      width: 2em;
-      text-align: center;
-
-      + * {
-        margin-left: 10px;
-      }
-    }
-  }
-
-  .title {
-    text-align: center;
-  }
-`;

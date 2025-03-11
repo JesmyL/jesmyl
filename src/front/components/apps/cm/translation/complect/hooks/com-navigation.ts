@@ -1,5 +1,6 @@
 import { useCmTranslationComListContext } from '@cm/base/translations/context';
 import { Com } from '@cm/col/com/Com';
+import { cmCurrentComwIdPrefix } from '@cm/col/com/face/lib/consts';
 import { useCom } from '@cm/col/com/useCcom';
 import { useCallback } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -46,6 +47,6 @@ const getComi = (comw?: number, comList?: Com[] | nil) => {
 };
 
 const scrollToView = (com: Com) => {
-  const comFace = document.getElementById(`com_face_wid_${com.wid}`);
+  const comFace = document.getElementById(`${cmCurrentComwIdPrefix}${com.wid}`);
   if (comFace) comFace.scrollIntoView({ block: 'center' });
 };

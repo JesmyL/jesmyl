@@ -17,35 +17,33 @@ export const EditCompositionsMore = ({ onClose }: { onClose(is: false): void }) 
         id="create-com-button"
         icon="PlusSignCircle"
         title="Новая песня"
-        onClick={event => {
-          event.stopPropagation();
-          setIsComCreatorOpen(true);
-        }}
+        onClick={() => setIsComCreatorOpen(true)}
       />
       <BottomPopupItem
         id="create-com-button"
         icon="FileRemove"
         title="Удалённые песни"
-        onClick={event => {
-          event.stopPropagation();
-          setIsRemovedComsOpen(true);
-        }}
+        onClick={() => setIsRemovedComsOpen(true)}
       />
 
       {isComCreatorOpen && (
-        <FullContent onClose={setIsComCreatorOpen}>
-          <NewComposition
-            onClose={() => {
-              setIsComCreatorOpen(false);
-              onClose(false);
-            }}
-          />
-        </FullContent>
+        <FullContent
+          onClose={setIsComCreatorOpen}
+          asRootAnchor={() => (
+            <NewComposition
+              onClose={() => {
+                setIsComCreatorOpen(false);
+                onClose(false);
+              }}
+            />
+          )}
+        />
       )}
       {auth.level >= 80 && isRemovedComsOpen && (
-        <Modal onClose={setIsRemovedComsOpen}>
-          <RemovedComsModalInner />
-        </Modal>
+        <Modal
+          onClose={setIsRemovedComsOpen}
+          asRootAnchor={() => <RemovedComsModalInner />}
+        />
       )}
     </>
   );

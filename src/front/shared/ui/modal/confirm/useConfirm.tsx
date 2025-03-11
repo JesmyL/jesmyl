@@ -1,9 +1,9 @@
-import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
-import { ReactNode, useCallback, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useState } from 'react';
 import { Modal } from '../Modal/Modal';
 import { ModalBody } from '../Modal/ModalBody';
 import { ModalFooter } from '../Modal/ModalFooter';
 import { ModalHeader } from '../Modal/ModalHeader';
+import { ConfirmListeners } from './ui/Listeners';
 
 export const useConfirm = () => {
   const [bodyContent, setBodyContent] = useState<ReactNode>();
@@ -11,47 +11,49 @@ export const useConfirm = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [confirmationResolvers, setConfirmationResolvers] = useState(() => Promise.withResolvers<boolean>());
 
-  useEffect(() => {
-    if (!isModalOpen) return;
-
-    return ThrowEvent.listenKeyDown('Enter', event => {
-      event.stopPropagation();
-      confirmationResolvers.resolve(true);
-      setIsModalOpen(false);
-    });
-  }, [isModalOpen, confirmationResolvers]);
-
   return [
     <>
       {isModalOpen && (
-        <Modal onClose={setIsModalOpen}>
-          <ModalHeader>{headerContent}</ModalHeader>
-          <ModalBody>{bodyContent}</ModalBody>
-          <ModalFooter>
-            <span className="flex flex-big-gap">
-              <span
-                id="confirm-button-YES"
-                className="pointer"
-                onClick={() => {
-                  confirmationResolvers.resolve(true);
-                  setIsModalOpen(false);
-                }}
-              >
-                Да
-              </span>
-              <span
-                id="confirm-button-NO"
-                className="pointer"
-                onClick={() => {
-                  confirmationResolvers.resolve(false);
-                  setIsModalOpen(false);
-                }}
-              >
-                Нет
-              </span>
-            </span>
-          </ModalFooter>
-        </Modal>
+        <Modal
+          onClose={setIsModalOpen}
+          asRootAnchor={onClose => (
+            <>
+              <ConfirmListeners
+                confirmationResolvers={confirmationResolvers}
+                isModalOpen={isModalOpen}
+                onClose={onClose}
+              />
+              <ModalHeader>{headerContent}</ModalHeader>
+              <ModalBody>{bodyContent}</ModalBody>
+              <ModalFooter>
+                <span className="flex flex-big-gap">
+                  <span
+                    id="confirm-button-YES"
+                    className="pointer"
+                    onClick={() => {
+                      confirmationResolvers.resolve(true);
+                      setIsModalOpen(false);
+                      onClose(false);
+                    }}
+                  >
+                    Да
+                  </span>
+                  <span
+                    id="confirm-button-NO"
+                    className="pointer"
+                    onClick={() => {
+                      confirmationResolvers.resolve(false);
+                      setIsModalOpen(false);
+                      onClose(false);
+                    }}
+                  >
+                    Нет
+                  </span>
+                </span>
+              </ModalFooter>
+            </>
+          )}
+        />
       )}
     </>,
     useCallback((content: ReactNode, header?: ReactNode) => {

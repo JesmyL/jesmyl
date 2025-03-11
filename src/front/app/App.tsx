@@ -1,18 +1,29 @@
 import { LinkAppActionFabric } from '#shared/lib/link-app-actions';
 import { schLinkAction } from '#widgets/schedule/links';
+import { ThemeProvider } from '@mui/material';
+import { complectIDB } from 'front/components/apps/+complect/_idb/complectIDB';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './App.scss';
 import AppRouter from './AppRouter';
 import { lastVisitedRouteLsName } from './lib/consts';
+import { muiDarkThemePalette } from './lib/theme/lib/darkPalette';
+import { muiLightThemePalette } from './lib/theme/lib/lightPalette';
+import './tw.css';
 
 function App() {
+  const isDarkMode = complectIDB.useValue.isDarkMode();
   const [isNeedFirstNavigate, setIsNeedFirstNavigate] = useState(true);
 
   return (
     <>
-      {isNeedFirstNavigate && <FirstNaver onSet={setIsNeedFirstNavigate} />}
-      <AppRouter />
+      <ThemeProvider
+        theme={isDarkMode ? muiDarkThemePalette : muiLightThemePalette}
+        defaultMode="light"
+      >
+        {isNeedFirstNavigate && <FirstNaver onSet={setIsNeedFirstNavigate} />}
+        <AppRouter />
+      </ThemeProvider>
     </>
   );
 }

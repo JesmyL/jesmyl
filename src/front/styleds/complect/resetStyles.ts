@@ -17,6 +17,10 @@ export const resetStyles = css`
     box-sizing: border-box;
   }
 
+  svg {
+    box-sizing: content-box;
+  }
+
   .bgcolor-black {
     background-color: black;
   }

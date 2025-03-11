@@ -1,7 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { ReactNode } from 'react';
 import { useModal } from './modal/useModal';
-import { IconButton } from './the-icon/IconButton';
+import { TheIconButton } from './the-icon/TheIconButton';
 
 type PrepareResult = {
   url?: string;
@@ -28,7 +28,7 @@ export function TheIconShareButton({
   return (
     <>
       {modalNode}
-      <IconButton
+      <TheIconButton
         icon="Share08"
         disabled={disabled}
         prefix={description}

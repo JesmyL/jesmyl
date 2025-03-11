@@ -2,8 +2,8 @@ import { atom, useAtom } from '#shared/lib/atoms';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { MyLib, mylib } from '#shared/lib/my-lib';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { TheButton } from '#shared/ui/TheButton';
 import { cmIDB } from '@cm/_db/cm-idb';
 import { useToNewChordSearches } from '@cm/col/com/chord-card/chord-redactor-searches';
@@ -123,7 +123,7 @@ export const ChordRedactorPage = () => {
       contentClass={`chord-redactor-content padding-gap ${isNewChord ? 'chord-addition' : ''}`}
       headTitle="Редактор аккордов"
       head={
-        <IconButton
+        <TheIconButton
           icon="Sent"
           disabled={!mylib.keys(chordsToSend).length}
           disabledReason="Изменений нет"

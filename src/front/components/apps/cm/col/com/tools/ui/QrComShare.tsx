@@ -18,15 +18,13 @@ export const QrComShare = () => {
           onClose={setIsOpenQr}
           text={link}
           copyText={`${link} - ${ccom.name}`}
+          isAsRootAnchor
         />
       )}
       <ComTool
         title="Поделиться по QR"
         icon="QrCode"
-        onClick={event => {
-          event.stopPropagation();
-          setIsOpenQr(true);
-        }}
+        onClick={() => setIsOpenQr(true)}
       />
     </>
   );

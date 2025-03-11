@@ -1,7 +1,7 @@
 import { DexiedValueSetter } from '#shared/lib/DexieDB';
 import { mylib } from '#shared/lib/my-lib';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { CmIDBStorage } from '@cm/_db/cm-idb';
 import { memo, useReducer, useState } from 'react';
 import { EeStorePack } from 'shared/api';
@@ -57,7 +57,7 @@ export const EERulesWord = memo(
 
             {eeStoreRef.current[word] === undefined && (
               <th>
-                <IconButton
+                <TheIconButton
                   icon={isIgnored ? 'PlusSignCircle' : 'Cancel02'}
                   className={'margin-gap ' + (isIgnored ? 'color--ok' : 'color--ko')}
                   onClick={() => {

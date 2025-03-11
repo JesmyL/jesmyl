@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmIDB } from '@cm/_db/cm-idb';
 import styled from 'styled-components';
 
@@ -18,7 +18,7 @@ export const MoveSelectedComButton = ({ comi }: { comi: number }) => {
   );
 };
 
-const MoveComButton = styled(IconButton)`
+const MoveComButton = styled(TheIconButton)`
   position: relative;
   top: -20px;
 `;

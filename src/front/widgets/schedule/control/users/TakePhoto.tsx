@@ -1,8 +1,8 @@
 import { defaultPreventer } from '#shared/lib/event-funcs';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { getScheduleWidgetUserPhotoStorageKey } from '#widgets/schedule/storage';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import { indexIDB } from 'front/components/index/db/index-idb';
@@ -192,7 +192,7 @@ const StyledVideo = styled.video`
   max-height: 40dvh;
 `;
 
-const StyledActionButton = styled(IconButton)`
+const StyledActionButton = styled(TheIconButton)`
   --icon-scale: 3;
 `;
 

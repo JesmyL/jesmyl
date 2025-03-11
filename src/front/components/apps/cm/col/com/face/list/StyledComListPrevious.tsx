@@ -1,6 +1,6 @@
 import { useSelectedComs } from '@cm/base/useSelectedComs';
 import { CmComWid } from 'shared/api';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { cmCurrentComwIdPrefix } from '../lib/consts';
 import { ComFaceListProps } from './_ComList';
 import { StyledComList } from './StyledComList';
@@ -17,15 +17,24 @@ export const ComListPreviousSibling = (
 
   return <StyledComListPrevious $selectedComws={selectedComws} />;
 };
+const selectedComwMapper = (comw: CmComWid, comwi: number) => {
+  return css`
+    #${cmCurrentComwIdPrefix}${comw} .face-logo {
+      border-color: var(--color--3);
 
-const selectedComwMapper = (comw: CmComWid) => `#${cmCurrentComwIdPrefix}${comw}`;
+      &::after {
+        content: '${comwi + 1}';
+      }
+    }
+  `;
+};
 
 export const StyledComListPrevious = styled.div<{
   $selectedComws: CmComWid[];
 }>`
   display: none;
 
-  + ${StyledComList} :is(${props => props.$selectedComws.map(selectedComwMapper).join(',')}) .face-logo {
-    border-color: var(--color--3);
+  + ${StyledComList} {
+    ${props => props.$selectedComws.map(selectedComwMapper)}
   }
 `;

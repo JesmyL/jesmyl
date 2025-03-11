@@ -2,8 +2,8 @@ import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditab
 import { useModal } from '#shared/ui/modal/useModal';
 import { SendableDropdown } from '#shared/ui/sends/dropdown/SendableDropdown';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
@@ -104,7 +104,7 @@ export const ScheduleWidgetControl = () => {
     <>
       {modalNode}
       {rights.isCanRedact ? (
-        <IconButton
+        <TheIconButton
           icon="Settings01"
           postfix={
             <>
@@ -115,7 +115,7 @@ export const ScheduleWidgetControl = () => {
           className="margin-gap-v flex-max"
         />
       ) : (
-        <IconButton
+        <TheIconButton
           icon="User"
           postfix={
             <>

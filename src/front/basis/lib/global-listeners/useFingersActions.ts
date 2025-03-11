@@ -3,18 +3,19 @@ import { complectIDB } from 'front/components/apps/+complect/_idb/complectIDB';
 import { useEffect } from 'react';
 import { isNIs } from 'shared/utils';
 
-const classList = document.body.classList;
+const classList = document.querySelector('html')?.classList;
 const minTouches = 3;
 const maxTouches = 3;
-const className = 'reverse-theme';
 
 export const useFingersActions = () => {
-  const isThemeReverse = complectIDB.useValue.isReverseTheme();
+  const isDarkMode = complectIDB.useValue.isDarkMode();
 
   useEffect(() => {
-    if (isThemeReverse) classList.add(className);
-    else classList.remove(className);
+    if (isDarkMode) classList?.add('dark');
+    else classList?.remove('dark');
+  }, [isDarkMode]);
 
+  useEffect(() => {
     let timeout: TimeOut;
 
     return hookEffectPipe()
@@ -23,7 +24,7 @@ export const useFingersActions = () => {
           if (event.touches.length === 4) {
             timeout = setTimeout(() => window.navigator.clipboard.writeText(window.location.href), 500);
           } else if (event.touches.length >= minTouches && event.touches.length <= maxTouches) {
-            timeout = setTimeout(complectIDB.set.isReverseTheme, 500, isNIs);
+            timeout = setTimeout(complectIDB.set.isDarkMode, 500, isNIs);
           } else {
             clearTimeout(timeout);
           }
@@ -33,9 +34,9 @@ export const useFingersActions = () => {
         }),
         addEventListenerPipe(document.body, 'keyup', event => {
           if (event.code === 'Space' && event.ctrlKey && event.altKey && event.shiftKey)
-            complectIDB.set.isReverseTheme(isNIs);
+            complectIDB.set.isDarkMode(isNIs);
         }),
       )
       .effect();
-  }, [isThemeReverse]);
+  }, []);
 };

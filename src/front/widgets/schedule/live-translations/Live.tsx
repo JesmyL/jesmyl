@@ -2,8 +2,8 @@ import { useAtomValue } from '#shared/lib/atoms';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { BibleTranslationSlide } from '@bible/translations/BibleTranslationSlide';
 import { CmLiveTranslationScreen } from '@cm/translation/complect/live/Screen';
 import { liveDataAtom, liveDataStreamersAtom } from '@index/atoms';
@@ -65,7 +65,7 @@ export const ScheduleWidgetLiveTranslation = ({ onClose, schw, isShowMarkdownOnl
           {streamers.map(({ fio, login }) => {
             return (
               <div key={login}>
-                <IconButton
+                <TheIconButton
                   icon="Computer"
                   postfix={fio}
                   onClick={() => setStreamerLogin(login)}

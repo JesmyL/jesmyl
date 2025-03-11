@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { useModal } from './modal/useModal';
 import { useToast } from './modal/useToast';
-import { IconButton } from './the-icon/IconButton';
+import { TheIconButton } from './the-icon/TheIconButton';
 
 interface Props {
   text: string | (() => string | nil);
@@ -46,7 +46,7 @@ export function CopyTextButton({ text, disabled, description, className, message
       >
         {description}
         {withoutIcon || (
-          <IconButton
+          <TheIconButton
             icon="Copy01"
             disabled={disabled}
           />

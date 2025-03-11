@@ -1,5 +1,5 @@
 import { createGlobalStyle, css } from 'styled-components';
-import { bodyThemeStyles } from './complect/bodyThemeStyles';
+import { globalThemeStyles } from './complect/bodyThemeStyles';
 import { colorStyles } from './complect/colorStyles';
 import { computedStyles } from './complect/computedStyles';
 import { fontStyles } from './complect/fontStyles';
@@ -12,8 +12,8 @@ import { utilStyles } from './complect/utilStyles';
 const styles = css`
   ${initialStyles}
 
-  body {
-    ${bodyThemeStyles}
+  html {
+    ${globalThemeStyles}
   }
 
   ${computedStyles}

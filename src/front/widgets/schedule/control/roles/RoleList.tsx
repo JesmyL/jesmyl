@@ -1,6 +1,6 @@
 import { useIsExpand } from '#shared/ui/expand/useIsExpand';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/scope-contexts/scope-props-contexts';
 import { schRolesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
@@ -46,7 +46,7 @@ export function ScheduleWidgetRoleList() {
           const isExpand = catExpands.includes(listi);
           return (
             <div key={listi}>
-              <IconButton
+              <TheIconButton
                 icon={isExpand ? 'ArrowUpDouble' : 'ArrowDownDouble'}
                 prefix={rights.schedule.ctrl.cats[listi]}
                 className="flex-max color--4"

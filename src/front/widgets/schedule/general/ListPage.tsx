@@ -2,7 +2,7 @@ import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContai
 import { useAuth, useIndexSchedules } from 'front/components/index/atoms';
 import { useConnectionState } from 'front/components/index/useConnectionState';
 
-import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import { schLinkAction } from '../links';
 import { ScheduleCreateWidgetButton } from './CreateButton';
@@ -52,7 +52,7 @@ const Component = () => {
                 key={schedule.w}
                 to={'' + schedule.w}
               >
-                <IconButton
+                <TheIconButton
                   icon="Calendar03"
                   className="margin-gap-v"
                   postfix={

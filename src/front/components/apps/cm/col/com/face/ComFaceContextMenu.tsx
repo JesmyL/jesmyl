@@ -1,5 +1,5 @@
 import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useSelectedComs } from '@cm/base/useSelectedComs';
 import { useFavouriteComs } from '@cm/lists/favourites/useFavouriteComs';
 import { CmComWid } from 'shared/api';
@@ -18,7 +18,7 @@ export function ComFaceContextMenu({ onClick, comWid }: Props) {
 
   return (
     <StyledMenu>
-      <IconButton
+      <TheIconButton
         icon={isComMarked ? 'Star' : 'StarCircle'}
         postfix={isComMarked ? 'Удалить из Избранного' : 'Добавить в Избранное'}
         onClick={() => {
@@ -26,13 +26,13 @@ export function ComFaceContextMenu({ onClick, comWid }: Props) {
           toggleFavourite(comWid);
         }}
       />
-      <IconButton
+      <TheIconButton
         icon={isSelected(comWid) ? 'RemoveCircleHalfDot' : 'AddCircleHalfDot'}
         postfix={isSelected(comWid) ? 'Отменить выбор' : 'Выбрать'}
         onClick={() => toggleSelectedCom(comWid)}
       />
       {!selectedComws.length || (
-        <IconButton
+        <TheIconButton
           icon="CancelCircleHalfDot"
           postfix="Очистить выбранные"
           onClick={() => {

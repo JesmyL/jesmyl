@@ -1,5 +1,6 @@
 import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { useActualRef } from '#shared/lib/hooks/useActualRef';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
@@ -13,6 +14,7 @@ const movesMemoCallback = () => ({ prevX: 0, onEnd: emptyFunc });
 export function ComPlayer({ src, split }: { src: string; split?: string | RegExp | boolean }) {
   const audioRef = useRef<HTMLAudioElement>(null);
   const player = audioRef.current;
+  const userChangeRef = useActualRef(false);
   const [isError, setIsError] = useState(false);
   const [isPlay, setIsPlay] = useState(false);
   const [isCanLoad, setIsCanLoad] = useState(false);
@@ -52,8 +54,14 @@ export function ComPlayer({ src, split }: { src: string; split?: string | RegExp
           ref={audioRef}
           src={currentSrc}
           onError={() => setIsError(true)}
-          onPause={() => setIsPlay(false)}
-          onPlay={() => setIsPlay(true)}
+          onPause={() => {
+            if (userChangeRef.current) return;
+            setIsPlay(false);
+          }}
+          onPlay={() => {
+            if (userChangeRef.current) return;
+            setIsPlay(true);
+          }}
           onTimeUpdate={() => {
             if (player.duration > -1 && player.currentTime >= player.duration) {
               setIsPlay(false);
@@ -71,32 +79,13 @@ export function ComPlayer({ src, split }: { src: string; split?: string | RegExp
         <audio ref={audioRef} />
       )}
       {
-        <StyledPlayer
-          className={'composition-player flex flex-gap' + (player ? '' : ' center')}
-          onTouchEnd={event => {
-            event.stopPropagation();
-            moves.onEnd();
-            moves.prevX = 0;
-          }}
-          onTouchMove={event => {
-            event.stopPropagation();
-            if (
-              player &&
-              moves.prevX !== 0 &&
-              player.currentTime + event.touches[0].pageX - moves.prevX < player.duration
-            ) {
-              player.currentTime += event.touches[0].pageX - moves.prevX;
-            }
-
-            moves.prevX = event.touches[0].pageX;
-          }}
-        >
+        <StyledPlayer className={'composition-player flex gap-3 pr-3 ' + (player ? '' : 'center')}>
           {player ? (
             isError ? (
               <span className="error-message">Файл не найден</span>
             ) : (
               <>
-                <LazyIcon
+                <TheIconButton
                   className="pointer"
                   icon={isPlay ? 'Pause' : 'Play'}
                   onClick={() => {
@@ -118,7 +107,10 @@ export function ComPlayer({ src, split }: { src: string; split?: string | RegExp
                   }}
                 />
 
-                <ComPlayerTrack player={player} />
+                <ComPlayerTrack
+                  player={player}
+                  userChangeRef={userChangeRef}
+                />
                 {variants.length > 1 && (
                   <div
                     className="current-variant-badge flex center pointer"
@@ -146,7 +138,6 @@ const StyledPlayer = styled.div`
     opacity 0.2s,
     margin 0.2s;
   background: var(--color--2);
-  padding: 0 5px;
   width: 100%;
   height: var(--com-player-height);
   overflow: hidden;

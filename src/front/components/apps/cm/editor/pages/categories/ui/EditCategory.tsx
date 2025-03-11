@@ -2,7 +2,7 @@ import { useAtom } from '#shared/lib/atoms';
 import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { LoadIndicatedContent } from '#shared/ui/load-indicated-content/LoadIndicatedContent';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { InputWithLoadingIcon } from '@cm/base/InputWithLoadingIcon';
 import { catTrackers } from '@cm/col/cat/Cat.complect';
 import { useCcatw } from '@cm/col/cat/useCcat';
@@ -29,7 +29,7 @@ export const EditCategory = () => {
         content={
           <div className="flex column">
             <h2 className="color--ko">Категория удалена</h2>
-            <IconButton
+            <TheIconButton
               icon="MapsRefresh"
               postfix="Восстановить"
               className="color--ok"
@@ -66,7 +66,7 @@ export const EditCategory = () => {
               />
             </div>
             {ccat.kind !== 'list' && ccat.coms.length > 0 && (
-              <IconButton
+              <TheIconButton
                 icon="Cancel01"
                 postfix="Очистить список"
                 confirm="Список восстановить не получится"
@@ -82,7 +82,7 @@ export const EditCategory = () => {
           </div>
 
           <div className="flex center margin-gap-v">
-            <IconButton
+            <TheIconButton
               icon="CancelCircle"
               className="color--ko"
               postfix="Удалить категорию"

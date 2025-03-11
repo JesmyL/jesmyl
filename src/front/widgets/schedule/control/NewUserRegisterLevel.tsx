@@ -1,6 +1,6 @@
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useState } from 'react';
 import { scheduleWidgetUserRights } from 'shared/api';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
@@ -15,7 +15,7 @@ export function ScheduleWidgetNewUserRegisterLevel() {
 
   return (
     <>
-      <IconButton
+      <TheIconButton
         icon="ArrowRight01"
         className="margin-big-gap-v margin-gap-l"
         prefix="Права по умолчанию"

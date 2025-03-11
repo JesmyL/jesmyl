@@ -1,8 +1,8 @@
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import {
   ScheduleUserScopePropsContext,
   useScheduleScopePropsContext,
@@ -111,13 +111,13 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
               <div className="margin-big-gap-t">
                 {user.tgInform === 0 ||
                 !scheduleWidgetUserRights.checkIsHasRights(user.R, ScheduleWidgetUserRoleRight.Read) ? (
-                  <IconButton
+                  <TheIconButton
                     icon="NotificationOff01"
                     postfix="Участник не получает TG-уведомления"
                     disabled
                   />
                 ) : (
-                  <IconButton
+                  <TheIconButton
                     icon="Notification01"
                     postfix="Участник получает TG-уведомления"
                     disabled

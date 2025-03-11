@@ -1,6 +1,6 @@
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { TheButton } from '#shared/ui/TheButton';
 import { ChordVisibleVariant } from '@cm/Cm.model';
 import { TheOrder } from '@cm/col/com/order/TheOrder';
@@ -88,7 +88,7 @@ export const CmOrdersRedactorTab = () => {
             )}
             <div className="margin-big-gap-h">
               {isWithHead ? null : ord.me.isAnchorInherit && ord.me.leadOrd && ord.me.anchorInheritIndex != null ? (
-                <IconButton
+                <TheIconButton
                   icon={ord.isVisible ? 'View' : 'ViewOffSlash'}
                   confirm={
                     <>

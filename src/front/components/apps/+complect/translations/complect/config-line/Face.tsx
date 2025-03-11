@@ -1,4 +1,4 @@
-import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import styled from 'styled-components';
 import { ScreenTranslationConfig } from '../../model';
 
@@ -24,7 +24,7 @@ export const ScreenTranslationsFace = ({
     >
       <span>{config.title}</span>
       {putOnClose && (
-        <IconButton
+        <TheIconButton
           icon="Cancel01"
           confirm="Закрыть окно?"
           onClick={putOnClose(configi)}

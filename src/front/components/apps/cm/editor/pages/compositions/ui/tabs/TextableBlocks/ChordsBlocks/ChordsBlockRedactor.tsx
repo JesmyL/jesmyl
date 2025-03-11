@@ -1,5 +1,5 @@
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { InputWithLoadingIcon } from '@cm/base/InputWithLoadingIcon';
 import { cmComClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
 import { EditableCom } from '@cm/editor/lib/EditableCom';
@@ -15,7 +15,7 @@ export const CmChordsBlockRedactor = ({ text, texti, ccom }: { texti: number; te
   return (
     <div className="margin-big-gap-v">
       {!texti && (
-        <IconButton
+        <TheIconButton
           icon="PlusSignCircle"
           confirm="Вставить новый блок в самое начало?"
           onClick={() => cmComClientInvocatorMethods.insertChordBlock(null, '', ccom.wid, 0)}
@@ -35,7 +35,7 @@ export const CmChordsBlockRedactor = ({ text, texti, ccom }: { texti: number; te
               onClick={() => ccom.replaceBemoles(texti)}
             />
           )}
-          <IconButton
+          <TheIconButton
             icon="Cancel01"
             confirm={`Удалить блок?\n\n${text}`}
             onClick={() => cmComClientInvocatorMethods.removeChordBlock(null, ccom.wid, text, texti)}
@@ -53,7 +53,7 @@ export const CmChordsBlockRedactor = ({ text, texti, ccom }: { texti: number; te
       />
       <TextCorrectMessages corrects={corrects} />
 
-      <IconButton
+      <TheIconButton
         icon="PlusSignCircle"
         confirm="Вставить новый блок сюда?"
         onClick={() => cmComClientInvocatorMethods.insertChordBlock(null, '', ccom.wid, texti + 1)}

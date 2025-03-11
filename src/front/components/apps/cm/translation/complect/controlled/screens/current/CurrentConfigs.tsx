@@ -5,7 +5,7 @@ import { FontFamilyConfigurator } from '#shared/ui/configurators/FontFamily';
 import { FontWeightConfigurator } from '#shared/ui/configurators/FontWeight/ui';
 import { ScreenTranslateConfigurationTextAlign } from '#shared/ui/configurators/TextAlign';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ScreenTranslateConfigurationNameChanger } from 'front/components/apps/+complect/translations/complect/NameChanger';
 import { useCallback } from 'react';
 import { useUpdateCmCurrentTranslationConfig } from '../../hooks/update-config';
@@ -75,7 +75,7 @@ export const CmTranslateCurrentScreenConfigurations = ({ currentConfig }: Props)
           <div className="margin-gap-l">
             {currentConfig.subs?.next ? (
               <>
-                <IconButton
+                <TheIconButton
                   icon="Cancel01"
                   className="color--ko"
                   postfix="Убрать текст следующего блока"
@@ -101,7 +101,7 @@ export const CmTranslateCurrentScreenConfigurations = ({ currentConfig }: Props)
               </>
             ) : (
               <div>
-                <IconButton
+                <TheIconButton
                   icon="PlusSign"
                   className="margin-big-gap-v"
                   postfix="Вставить окно следующего блока"

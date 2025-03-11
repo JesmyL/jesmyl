@@ -1,6 +1,6 @@
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ScheduleWidgetMarkdownTranslation } from '#widgets/schedule/live-translations/markdown/Translation';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import { useMemo, useState } from 'react';
@@ -78,12 +78,12 @@ export const ScheduleWidgetTeamGameTranslateTeamsButton = function TranslateTeam
       {isOpenFull && (
         <FullContent onClose={setIsOpenFull}>
           <div className="flex full-width around">
-            <IconButton
+            <TheIconButton
               icon="DashboardSquareRemove"
               disabled={cols < 2}
               onClick={() => setCols(cols - 1)}
             />
-            <IconButton
+            <TheIconButton
               icon="DashboardSquareAdd"
               disabled={game.teams.length <= cols}
               onClick={() => setCols(cols + 1)}

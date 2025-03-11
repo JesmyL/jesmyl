@@ -1,4 +1,4 @@
-import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { InputWithLoadingIcon } from '@cm/base/InputWithLoadingIcon';
 import { cmComClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
 import { EditableCom } from '@cm/editor/lib/EditableCom';
@@ -13,7 +13,7 @@ export const CmTextBlockRedactor = ({ texti, text, ccom }: { texti: number; text
   return (
     <div className="margin-big-gap-v">
       {!texti && (
-        <IconButton
+        <TheIconButton
           icon="PlusSignCircle"
           confirm="Вставить новый блок в самое начало?"
           onClick={() => cmComClientInvocatorMethods.insertTextBlock(null, '', ccom.wid, 0)}
@@ -26,7 +26,7 @@ export const CmTextBlockRedactor = ({ texti, text, ccom }: { texti: number; text
         />
 
         <span className="flex flex-gap">
-          <IconButton
+          <TheIconButton
             icon="Cancel01"
             onClick={() => cmComClientInvocatorMethods.removeTextBlock(null, ccom.wid, text, texti)}
             confirm={`Удалить${text ? '' : ' новый'} блок?\n\n${text}`}
@@ -42,7 +42,7 @@ export const CmTextBlockRedactor = ({ texti, text, ccom }: { texti: number; text
         onInput={setValue}
         isError={!!corrects.errors?.length}
       />
-      <IconButton
+      <TheIconButton
         icon="PlusSignCircle"
         confirm="Вставить новый блок сюда?"
         onClick={() => cmComClientInvocatorMethods.insertTextBlock(null, '', ccom.wid, texti + 1)}

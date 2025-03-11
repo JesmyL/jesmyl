@@ -2,8 +2,8 @@ import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/scope-contexts/scope-props-contexts';
 import { schAttachmentTypesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { useState } from 'react';
@@ -16,7 +16,7 @@ export function ScheduleWidgetCustomAttachments(props: { tatts: ScheduleWidgetAp
 
   return (
     <div>
-      <IconButton
+      <TheIconButton
         icon="Attachment02"
         postfix={
           <>

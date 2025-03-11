@@ -1,15 +1,12 @@
-import { useSetAppRootAnchorNodesContext } from '#basis/lib/App.contexts';
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
-import { useActualRef } from '#shared/lib/hooks/useActualRef';
-import { useWid } from '#shared/lib/hooks/useWid';
-import { mylib } from '#shared/lib/my-lib';
-import { HTMLAttributes, ReactNode, useCallback, useEffect, useMemo } from 'react';
+import { HTMLAttributes, ReactNode, useEffect, useMemo } from 'react';
 import { Eventer, EventerListeners, emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
 import { Portal } from '../Portal';
-import { IconButton } from '../the-icon/IconButton';
+import { RootAnchoredContent } from '../RootAnchoredContent';
+import { TheIconButton } from '../the-icon/TheIconButton';
 
 const swipeEvents: EventerListeners<void> = [];
 
@@ -28,55 +25,38 @@ interface Props {
 }
 
 export function FullContent({ onClose, closable, children, className, asRootAnchor, containerClassName }: Props) {
-  const actualChildrenRef = useActualRef(children);
-  const actualAsRootAnchorRef = useActualRef(asRootAnchor);
   const subClose = useMemo(() => ({ current: emptyFunc }), []);
+  const close = () => {
+    subClose.current();
+    if (onClose !== true) onClose(false);
+  };
 
-  const node = useCallback(
-    (wid?: string) => {
-      const close = () => {
-        if (actualAsRootAnchorRef.current) {
-          subClose.current();
-          return;
-        }
-
-        if (onClose !== true) onClose(false);
-      };
-
-      return (
-        <Swiped
-          key={wid}
-          close={close}
-          onClick={closable ? close : propagationStopper}
-          className={className}
-        >
-          {closable || (
-            <StyledCloseButton
-              icon="Cancel01"
-              className="pointer close-button"
-              onClick={close}
-            />
-          )}
-          <Container className={containerClassName ?? 'padding-big-gap'}>
-            {mylib.isFunc(actualAsRootAnchorRef.current)
-              ? actualAsRootAnchorRef.current(subClose.current)
-              : actualChildrenRef.current}
-          </Container>
-        </Swiped>
-      );
-    },
-    [actualAsRootAnchorRef, actualChildrenRef, className, closable, containerClassName, onClose, subClose],
+  const renderNode = (
+    <Swiped
+      close={close}
+      onClick={closable ? close : propagationStopper}
+      className={className}
+    >
+      {closable || (
+        <StyledCloseButton
+          icon="Cancel01"
+          className="pointer close-button"
+          onClick={close}
+        />
+      )}
+      <Container className={containerClassName ?? 'p-5'}>{asRootAnchor?.(close) ?? children}</Container>
+    </Swiped>
   );
 
-  if (actualAsRootAnchorRef.current)
+  if (asRootAnchor)
     return (
-      <RootAnchor
-        node={node}
+      <RootAnchoredContent
+        renderNode={renderNode}
         subClose={subClose}
       />
     );
 
-  return <Portal>{node()}</Portal>;
+  return <Portal>{renderNode}</Portal>;
 }
 
 const Swiped = ({ close, ...props }: { close: () => void } & HTMLAttributes<HTMLDivElement>) => {
@@ -100,24 +80,7 @@ const Swiped = ({ close, ...props }: { close: () => void } & HTMLAttributes<HTML
   );
 };
 
-const RootAnchor = ({
-  node,
-  subClose,
-}: {
-  node: (wid: string) => React.ReactNode;
-  subClose: { current: () => void };
-}) => {
-  const addNode = useSetAppRootAnchorNodesContext();
-  const wid = useWid();
-
-  subClose.current = () => addNode(prev => ({ ...prev, [wid]: null }));
-
-  useEffect(() => addNode(prev => ({ ...prev, [wid]: node(wid) })), [addNode, node, wid]);
-
-  return <></>;
-};
-
-const StyledCloseButton = styled(IconButton)``;
+const StyledCloseButton = styled(TheIconButton)``;
 
 const StyledContainerWrapper = styled.div`
   position: absolute;

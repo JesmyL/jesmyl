@@ -1,8 +1,8 @@
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { blockStyles } from '@cm/col/com/block-styles/BlockStyles';
 import { StyleBlock } from '@cm/col/com/block-styles/StyleBlock';
 import { EditableCom } from '@cm/editor/lib/EditableCom';
@@ -34,7 +34,7 @@ export const OrdersRedactorAdditionsEtapsModalInner = ({ com, onClose, firstEtap
 
   const nextEtapFooter = (
     <ModalFooter>
-      <IconButton
+      <TheIconButton
         icon="ArrowRight01"
         prefix="Следующий этап"
         disabled={

@@ -5,8 +5,8 @@ import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/scope-contexts/scope-props-contexts';
 import { schRolesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { extractScheduleWidgetRoleUser, useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
@@ -186,14 +186,14 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
                   />
                 )}
                 {roleUser ? (
-                  <IconButton
+                  <TheIconButton
                     icon="ArrowReloadHorizontal"
                     onClick={setIsUserSetModalOpen}
                     postfix="Заменить человека"
                     className="flex-max margin-gap-v"
                   />
                 ) : (
-                  <IconButton
+                  <TheIconButton
                     icon="UserAdd01"
                     onClick={setIsUserSetModalOpen}
                     postfix="Назначить человека"
@@ -201,7 +201,7 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
                   />
                 )}
                 {role.mi > 0 && (
-                  <IconButton
+                  <TheIconButton
                     icon="GridView"
                     onClick={setIsCatSetModalOpen}
                     postfix={`Категория ${rights.schedule.ctrl.cats[role.cati || 0] || 'Основное'}`}

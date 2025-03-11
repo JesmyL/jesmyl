@@ -2,8 +2,8 @@ import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditab
 import { useIsRedactArea } from '#shared/lib/hooks/useIsRedactArea';
 import { mylib, MyLib } from '#shared/lib/my-lib';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useMemo, useState } from 'react';
 import {
   indexScheduleCheckIsDayIsPast,
@@ -149,7 +149,7 @@ export const ScheduleWidgetDay = ({
                     scheduleScopeProps={scheduleScopeProps}
                   />
                 ) : (
-                  <IconButton
+                  <TheIconButton
                     icon="Favourite"
                     className={'flex-max ' + (dayRating < 0 ? 'color--ko' : dayRating > 0 ? 'color--ok' : 'color--3')}
                     postfix={'Рейтинг дня: ' + dayRating}

@@ -5,7 +5,7 @@ import { TranslationViewApp } from '../translations/Translations.model';
 
 type Store = {
   alertLineConfigs: AlertLineConfig[];
-  isReverseTheme: boolean;
+  isDarkMode: boolean;
   currentTranslationTextApp: TranslationViewApp;
   translationAlertLine: null | string;
   screenTranslationConfigs: ScreenTranslationConfig[];
@@ -16,7 +16,7 @@ export const complectIDB = new DexieDB<Store>('complect', {
   alertLineConfigs: {
     id: '++',
   },
-  isReverseTheme: { $byDefault: true },
+  isDarkMode: { $byDefault: false },
   currentTranslationTextApp: { $byDefault: 'cm' },
   translationAlertLine: { $byDefault: null },
   screenTranslationConfigs: { $byDefault: [defaultComplectConfig] },

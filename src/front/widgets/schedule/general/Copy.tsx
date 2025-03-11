@@ -3,7 +3,7 @@ import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useAuth, useIndexSchedules } from '@index/atoms';
 import { useState } from 'react';
 import {
@@ -28,7 +28,7 @@ export function ScheduleWidgetCopy(props: { schw: IScheduleWidgetWid }) {
 
   return (
     <>
-      <IconButton
+      <TheIconButton
         icon="Copy02"
         postfix="Скопировать расписание"
         onClick={() => setIsModalOpen(true)}

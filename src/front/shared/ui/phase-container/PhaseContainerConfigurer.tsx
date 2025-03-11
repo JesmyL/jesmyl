@@ -1,4 +1,5 @@
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
+import { IconButton } from '@mui/material';
 import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { emptyFunc } from 'shared/utils';
 import styled, { css } from 'styled-components';
@@ -32,24 +33,28 @@ export function PhaseContainerConfigurer(props: PhaseContainerConfigurerProps) {
           <LinkWithSearchRemember
             to={props.backButtonPath ?? '..'}
             rememberProps={props.rememberProps}
-            className="flex"
+            className="flex pointer"
           >
             <LazyIcon
               icon={props.backButtonIcon ?? 'ArrowLeft02'}
               className="action-button"
             />
-            <StyledPhaseContainerConfigurerHeadTitle>{props.headTitle}</StyledPhaseContainerConfigurerHeadTitle>
+            <StyledPhaseContainerConfigurerHeadTitle className="full-w">
+              {props.headTitle}
+            </StyledPhaseContainerConfigurerHeadTitle>
           </LinkWithSearchRemember>
         )}
         <StyledPhaseContainerConfigurerHeadWithMoreIcon className={`head ${props.headClass || 'flex between'}`}>
-          <StyledPhaseContainerConfigurerHead>{props.head}</StyledPhaseContainerConfigurerHead>
+          <StyledPhaseContainerConfigurerHead className="w-full">{props.head}</StyledPhaseContainerConfigurerHead>
           {props.onMoreClick && (
-            <LazyIcon
-              icon="MoreVerticalCircle01"
-              id="phase-container-header-more-button"
-              className="action-button"
-              onClick={() => props.onMoreClick?.(true)}
-            />
+            <IconButton color="x7">
+              <LazyIcon
+                icon="MoreVerticalCircle01"
+                id="phase-container-header-more-button"
+                className="action-button"
+                onClick={() => props.onMoreClick?.(true)}
+              />
+            </IconButton>
           )}
         </StyledPhaseContainerConfigurerHeadWithMoreIcon>
       </StyledPhaseContainerConfigurerHeader>

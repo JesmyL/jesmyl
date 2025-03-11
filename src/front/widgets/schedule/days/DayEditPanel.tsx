@@ -1,7 +1,7 @@
 import { StrongInputDateTimeExtracter } from '#basis/ui/strong-control/StrongDateTimeExtracter';
 import { renderComponentInNewWindow } from '#shared/lib/renders';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetDay, ScheduleScopeProps } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
@@ -35,7 +35,7 @@ export function ScheduleWidgetDayEditPanel({ day, dayi, schedule, scheduleScopeP
           isChanged && schDaysSokiInvocatorClient.setBeginTime(null, dayScopeProps, value)
         }
       />
-      <IconButton
+      <TheIconButton
         icon="Printer"
         className="flex-max margin-gap-v"
         postfix="Распечатать распорядок дня"
@@ -51,7 +51,7 @@ export function ScheduleWidgetDayEditPanel({ day, dayi, schedule, scheduleScopeP
           ))
         }
       />
-      <IconButton
+      <TheIconButton
         icon="CalendarUpload02"
         postfix="Загрузить текстовое расписание"
         disabled={day.list.length > 0}

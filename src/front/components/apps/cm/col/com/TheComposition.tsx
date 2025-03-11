@@ -91,29 +91,9 @@ export function TheComposition() {
       contentRef={comListRef}
       withoutBackSwipe
       rememberProps={['comw']}
-      head={
-        <div
-          id="com-tools-top-panel"
-          className="flex flex-gap"
-        >
-          {comToolsNode}
-        </div>
-      }
+      head={<div id="com-tools-top-panel">{comToolsNode}</div>}
       content={
         <>
-          {isOpenChordImages && (
-            <FullContent onClose={setIsOpenChordImages}>
-              <ChordImagesList />
-            </FullContent>
-          )}
-          {isOpenTools && (
-            <BottomPopup
-              id="com-tools-bottom-popup"
-              onClose={setIsOpenTools}
-            >
-              <ComTools />
-            </BottomPopup>
-          )}
           <DocTitle title={ccom.name} />
           {comAudio && (
             <ComPlayer
@@ -142,6 +122,20 @@ export function TheComposition() {
             meterSize={ccom.meterSize}
             bpm={ccom.beatsPerMinute}
           />
+
+          {isOpenChordImages && (
+            <FullContent onClose={setIsOpenChordImages}>
+              <ChordImagesList />
+            </FullContent>
+          )}
+          {isOpenTools && (
+            <BottomPopup
+              id="com-tools-bottom-popup"
+              onClose={setIsOpenTools}
+            >
+              <ComTools />
+            </BottomPopup>
+          )}
         </>
       }
     />

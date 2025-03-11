@@ -3,8 +3,8 @@ import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/scope-contexts/scope-props-contexts';
 import { ScheduleWidgetRightControlList } from '#widgets/schedule/control/RightControlList';
 import { schAttachmentTypesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
@@ -136,7 +136,7 @@ export function ScheduleWidgetCustomAtt(props: {
             <div className="margin-big-gap-v">
               {whoCanUnits.map((whoCan, whoCani) => {
                 return (
-                  <IconButton
+                  <TheIconButton
                     key={whoCan.rule}
                     icon={whoCan.icon}
                     className="flex-max margin-gap-v"

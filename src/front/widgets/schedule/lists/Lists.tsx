@@ -1,8 +1,8 @@
 import { useIsExpand } from '#shared/ui/expand/useIsExpand';
 import { useFullContent } from '#shared/ui/fullscreen-content/useFullContent';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
 import { ScheduleWidgetTeamGames } from '../control/games/games/Games';
 import { ScheduleWidgetRoleList } from '../control/roles/RoleList';
@@ -51,7 +51,7 @@ export function ScheduleWidgetLists() {
   return (
     <>
       {modalNode}
-      <IconButton
+      <TheIconButton
         icon="LeftToRightListBullet"
         postfix={
           <>

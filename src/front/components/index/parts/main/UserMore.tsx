@@ -12,10 +12,7 @@ export const UserMore = ({ onClose }: { onClose: (isOpen: false) => void }) => {
         id="log-out-button"
         title="Выйти из системы"
         icon="User"
-        onClick={async event => {
-          event.preventDefault();
-          event.stopPropagation();
-
+        onClick={async () => {
           if (await confirm('Произвести выход из системы?', 'Разлогиниться')) {
             await authIDB.remove.auth();
             await authIDB.remove.token();

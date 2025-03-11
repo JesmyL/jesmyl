@@ -2,8 +2,8 @@ import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditab
 import { useIsRedactArea } from '#shared/lib/hooks/useIsRedactArea';
 import { mylib, MyLib } from '#shared/lib/my-lib';
 import { useIsRememberExpand } from '#shared/ui/expand/useIsRememberExpand';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ScheduleWidgetBindAttRefKeyButton } from '#widgets/schedule/atts/BindAttRefKeyButton';
 import { ScheduleWidgetBindAtts } from '#widgets/schedule/atts/BindAtts';
 import { ScheduleWidgetTopicTitle } from '#widgets/schedule/complect/TopicTitle';
@@ -209,7 +209,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
               />
             ) : (
               !!props.event.secret && (
-                <IconButton
+                <TheIconButton
                   icon="ViewOffSlash"
                   className="color--ko margin-gap-v"
                   postfix="Это событие только для лидеров"

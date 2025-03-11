@@ -1,5 +1,5 @@
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { IScheduleWidgetUser, IScheduleWidgetUserMi } from 'shared/api';
@@ -138,7 +138,7 @@ export const ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes = function SortBox
       />
       <div className="flex center column flex-gap full-width">
         <div className="flex around full-width">
-          <IconButton
+          <TheIconButton
             icon="MessageQuestion"
             onClick={() => {
               const nextUser = usersForSort[usersForSort.findIndex(user => user.mi === currUser.mi) + 1];
@@ -149,7 +149,7 @@ export const ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes = function SortBox
             className={sortedUsers.length > 1 ? 'fade-00' : undefined}
           />
           У кого преимущество?
-          <IconButton
+          <TheIconButton
             icon="MessageQuestion"
             onClick={() => setUnknownUsers([...unknownUsers, insertUser.mi])}
             confirm={`${insertUser.fio} - неизвестный участник?`}

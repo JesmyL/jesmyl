@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 import { isTouchDevice } from '#shared/lib/device-differences';
 import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContainerConfigurer';
-import { useBottomPopup } from '#shared/ui/popup/bottom-popup/useBottomPopup';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { CodeExecutionScreen } from './coder/Coder';
@@ -24,20 +23,6 @@ console[scope] = ((...args: unknown[]) => {
 
 export default function IndexConsole() {
   const [, setUpdates] = useState(0);
-  const [bottomNode, openBottom] = useBottomPopup((_isOpen, _close, prepare) => {
-    return prepare({
-      items: [
-        {
-          icon: 'Cancel02',
-          title: 'Очистить консоль',
-          onClick: () => {
-            logs.length = 0;
-            setUpdates(itInc);
-          },
-        },
-      ],
-    });
-  });
 
   useEffect(() => {
     let timeout: TimeOut;
@@ -56,13 +41,11 @@ export default function IndexConsole() {
     <PhaseContainerConfigurer
       className="index-settings-console"
       headTitle="Консоль"
-      onMoreClick={openBottom}
       content={
         <div
           className="full-height"
           onTouchStart={eventStopper}
         >
-          {bottomNode}
           <Line>
             <CoderResultLine
               value={logs}

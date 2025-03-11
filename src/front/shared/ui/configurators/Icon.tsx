@@ -4,7 +4,7 @@ import { Modal } from '../modal/Modal/Modal';
 import { ModalBody } from '../modal/Modal/ModalBody';
 import { ModalHeader } from '../modal/Modal/ModalHeader';
 import { TheIconSendButton } from '../sends/the-icon-send-button/TheIconSendButton';
-import { IconButton } from '../the-icon/IconButton';
+import { TheIconButton } from '../the-icon/TheIconButton';
 import { theIconKnownPack } from '../the-icon/pack';
 
 export default function IconConfigurator(props: {
@@ -17,7 +17,7 @@ export default function IconConfigurator(props: {
 
   return (
     <>
-      <IconButton
+      <TheIconButton
         icon={props.icon ?? 'HelpSquare'}
         postfix="Изменить иконку"
         onClick={setIsOpenModal}

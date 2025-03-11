@@ -1,7 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { filesStorage } from '#shared/ui/configurators/utils/storage';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useIndexFileAssociations } from '@index/atoms';
 import { useEffect, useReducer, useState } from 'react';
 import { MyFileType } from 'shared/api';
@@ -46,7 +46,7 @@ export const MyFilesTypeBox = ({ type }: { type: MyFileType }) => {
               className="flex flex-gap margin-gap-t"
             >
               {file.name}
-              <IconButton
+              <TheIconButton
                 icon="Cancel01"
                 confirm={`Удалить ${fileAssociations[type].removeTitle} "${file.name}"`}
                 onClick={() => removeFile(file)}

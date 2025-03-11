@@ -1,12 +1,12 @@
 import { mylib } from '#shared/lib/my-lib';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmIDB } from '@cm/_db/cm-idb';
 import { useChordVisibleVariant } from '@cm/base/useChordVisibleVariant';
 import { ChordVisibleVariant } from '@cm/Cm.model';
 import { cmComClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
+import { Chip, useMediaQuery } from '@mui/material';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
 import { useFixedCcom } from '../useCcom';
@@ -29,6 +29,7 @@ export const ComTools = () => {
       setVisitsCount(visitsCount);
     })();
   }, [ccom?.wid]);
+  const isSmallDevice = useMediaQuery('(max-width: 350px)');
 
   if (!ccom) return null;
 
@@ -38,76 +39,60 @@ export const ComTools = () => {
         id="transpose-tool"
         icon="SlidersHorizontal"
         className={chordVisibleVariant === ChordVisibleVariant.None ? 'disabled' : undefined}
-        title="Тональность"
+        title={isSmallDevice ? '' : 'Тональность'}
+        onClick={event => event.stopPropagation()}
         rightNode={
-          <>
-            <LazyIcon
+          <div className="flex justify-between gap-1">
+            <TheIconButton
               icon="MinusSign"
               className="minus"
-              onClick={event => {
-                event.stopPropagation();
-                ccom.transpose(-1);
-              }}
+              onClick={() => ccom.transpose(-1)}
             />
-            <div
-              className={'center' + (ifixedCom?.ton == null ? '' : ' color--7')}
-              onClick={event => {
-                event.stopPropagation();
-                ccom.setChordsInitialTon();
-              }}
-            >
-              {ccom.getFirstSimpleChord()}
-            </div>
-            <LazyIcon
+            <Chip
+              label={ccom.getFirstSimpleChord()}
+              className={'min-w-13 flex justify-center'}
+              onClick={() => ccom.setChordsInitialTon()}
+              classes={{ label: ifixedCom?.ton == null ? 'text-x7' : 'text-x3' }}
+            />
+            <TheIconButton
               icon="PlusSign"
               className="plus"
-              onClick={event => {
-                event.stopPropagation();
-                ccom.transpose(1);
-              }}
+              onClick={() => ccom.transpose(1)}
             />
-          </>
+          </div>
         }
       />
 
       <BottomPopupItem
         id="font-size-tool"
         icon="TextFont"
-        title="Размер шрифта"
+        title={isSmallDevice ? '' : 'Размер шрифта'}
+        onClick={event => event.stopPropagation()}
         rightNode={
-          <>
-            <IconButton
+          <div className="flex justify-between gap-1">
+            <TheIconButton
               className="minus"
               icon="MinusSign"
-              disabled={fontSize < 0}
-              onClick={event => {
-                event.stopPropagation();
-                setFontSize(fontSize - 1);
-              }}
+              disabled={fontSize <= minFontSize}
+              onClick={() => setFontSize(changeFontSize(-1))}
             />
-            <div
-              className="center"
-              onClick={event => {
-                event.stopPropagation();
-                setFontSize(-fontSize);
-              }}
-            >
-              {fontSize < 0 ? 'auto' : fontSize}
-            </div>
-            <IconButton
+            <Chip
+              label={fontSize < 0 ? 'auto' : fontSize}
+              className="min-w-13 flex justify-center"
+              onClick={() => setFontSize(changeFontSize(0))}
+              classes={{ label: fontSize < 0 ? 'text-x7' : 'text-x3' }}
+            />
+            <TheIconButton
               className="plus"
               icon="PlusSign"
-              disabled={fontSize < 0}
-              onClick={event => {
-                event.stopPropagation();
-                setFontSize(fontSize + 1);
-              }}
+              disabled={fontSize < 0 || fontSize >= maxFontSize}
+              onClick={() => setFontSize(changeFontSize(1))}
             />
-          </>
+          </div>
         }
       />
 
-      <div className="flex center full-width fade-05 font-size:0.7em margin-big-gap-t">
+      <div className="flex justify-center text-center w-full fade-05 text-xs mt-3">
         Клик на иконку для добавления в быстрое меню
       </div>
       {comToolsNode}
@@ -129,4 +114,17 @@ export const ComTools = () => {
       </div>
     </>
   );
+};
+
+const maxFontSize = 50;
+const minFontSize = 5;
+
+const changeFontSize = (delta: number) => {
+  return (prev: number) => {
+    if (delta === 0) return -prev;
+    if (delta < 0 && prev <= minFontSize) return prev;
+    if (delta > 0 && prev >= maxFontSize) return prev;
+
+    return prev + delta;
+  };
 };

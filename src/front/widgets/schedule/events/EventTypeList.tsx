@@ -4,7 +4,7 @@ import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ReactNode, useMemo, useState } from 'react';
 import { IScheduleWidget, ScheduleWidgetCleans, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
 import { emptyArray } from 'shared/utils';
@@ -120,7 +120,7 @@ export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCount
           </ModalBody>
         </Modal>
       )}
-      <IconButton
+      <TheIconButton
         icon={icon}
         postfix={postfix}
         onClick={() => setIsModalOpen(true)}

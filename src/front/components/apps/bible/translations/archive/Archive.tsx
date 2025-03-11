@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { IconButton } from '#shared/ui/the-icon/IconButton';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { bibleIDB } from '@bible/_db/bibleIDB';
 import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '@bible/hooks/address/address';
 import { BibleTranslationAddress } from '@bible/model';
@@ -29,7 +29,7 @@ export const BibleTranslationArchive = memo(function BibleTranslationArchive({
     <>
       <div className="archive-title flex flex-gap color--3 bgcolor--2 margin-gap-b">
         {title}
-        <IconButton
+        <TheIconButton
           icon="Delete01"
           className="color--ko"
           confirm={`Очистить раздел ${title}?`}
