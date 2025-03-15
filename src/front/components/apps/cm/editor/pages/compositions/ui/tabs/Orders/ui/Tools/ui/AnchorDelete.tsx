@@ -1,6 +1,6 @@
 import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
-import { cmComOrderClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
+import { cmComOrderClientInvocatorMethods } from '$cm/editor/lib/cm-editor-invocator.methods';
 import { OrdersRedactorOrderToolsProps } from '../model';
 
 export const OrdersRedactorOrderToolsAnchorDelete = ({ com, ord, onClose }: OrdersRedactorOrderToolsProps) => {

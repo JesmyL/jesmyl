@@ -1,6 +1,6 @@
-import { translationPushKinds } from '@cm/col/com/Com.complect';
-import { cmComClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
-import { useCmScreenTranslationCurrentConfig } from '@cm/translation/complect/controlled/hooks/configs';
+import { translationPushKinds } from '$cm/col/com/Com.complect';
+import { cmComClientInvocatorMethods } from '$cm/editor/lib/cm-editor-invocator.methods';
+import { useCmScreenTranslationCurrentConfig } from '$cm/translation/complect/controlled/hooks/configs';
 import { useEditableCcom } from '../../../../lib/useEditableCom';
 
 export const CmComOnTranslationsRedactorTab = () => {
@@ -29,9 +29,7 @@ export const CmComOnTranslationsRedactorTab = () => {
           <div
             key={linesi}
             className="margin-big-gap-v"
-            style={{
-              whiteSpace: 'pre-wrap',
-            }}
+            style={{ whiteSpace: 'pre-wrap' }}
           >
             {lines?.map((text, texti) => (
               <div

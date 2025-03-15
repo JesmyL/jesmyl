@@ -1,8 +1,8 @@
-import { RollControled } from '@cm/base/RolledContent';
-import { useChordVisibleVariant } from '@cm/base/useChordVisibleVariant';
-import { Com } from '@cm/col/com/Com';
-import { ComLine } from '@cm/col/com/line/ComLine';
-import { ComOrders } from '@cm/col/com/orders/ComOrders';
+import { RollControled } from '$cm/base/RolledContent';
+import { useChordVisibleVariant } from '$cm/base/useChordVisibleVariant';
+import { Com } from '$cm/col/com/Com';
+import { ComLine } from '$cm/col/com/line/ComLine';
+import { ComOrders } from '$cm/col/com/orders/ComOrders';
 import { useEffect, useMemo } from 'react';
 import { makeRegExp } from 'shared/utils';
 import styled from 'styled-components';

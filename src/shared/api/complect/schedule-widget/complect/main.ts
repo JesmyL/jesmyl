@@ -139,7 +139,6 @@ export type ScheduleWidgetAppAttBasic<AttValue = any> = Record<`[SCH]:${string}`
   Rs?: IScheduleWidgetUserMi[] | nil;
   U: number;
   Us?: IScheduleWidgetUserMi[] | nil;
-  routes?: 'React.ReactNode' | any;
 };
 
 export type ScheduleWidgetAppAttCustomizableValueItem = [

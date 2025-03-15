@@ -1,5 +1,5 @@
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { updateComComment } from '@cm/com-comments-manager';
+import { updateComComment } from '$cm/com-comments-manager';
 import { useEffect } from 'react';
 import { emptyFunc } from 'shared/utils';
 import { Com } from '../../Com';

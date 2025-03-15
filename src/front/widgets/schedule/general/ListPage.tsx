@@ -1,45 +1,31 @@
-import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContainerConfigurer';
+import { useAppNameContext } from '#basis/lib/contexts';
+import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { useAuth, useIndexSchedules } from 'front/components/index/atoms';
 import { useConnectionState } from 'front/components/index/useConnectionState';
-
-import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import { schLinkAction } from '../links';
 import { ScheduleCreateWidgetButton } from './CreateButton';
-import { ScheduleWidgetPage } from './Page';
 
-export function ScheduleWidgetListPage() {
+export const ScheduleWidgetListPage = () => {
   const schedules = useIndexSchedules();
+  const connectionNode = useConnectionState();
+  const auth = useAuth();
   const navigate = useNavigate();
+  const appName = useAppNameContext();
 
   schLinkAction.useOnAction(({ props }) => {
     if (props.inviteSch && schedules?.some(sch => sch.w === props.inviteSch)) {
-      navigate('' + props.inviteSch);
+      navigate({
+        to: '/!other/$appName/schs',
+        params: { appName },
+        search: { schw: props.inviteSch },
+      });
     }
   });
 
   return (
-    <Routes>
-      <Route
-        index
-        element={<Component />}
-      />
-
-      <Route
-        path=":schw/*"
-        element={<ScheduleWidgetPage />}
-      />
-    </Routes>
-  );
-}
-
-const Component = () => {
-  const schedules = useIndexSchedules();
-  const connectionNode = useConnectionState();
-  const auth = useAuth();
-
-  return (
-    <PhaseContainerConfigurer
+    <PageContainerConfigurer
       className="ScheduleWidgetPage ScheduleWidgetListPage"
       headTitle="Мероприятия"
       head={<span className="flex flex-gap margin-gap">{connectionNode}</span>}
@@ -50,7 +36,9 @@ const Component = () => {
             return (
               <Link
                 key={schedule.w}
-                to={'' + schedule.w}
+                to="/!other/$appName/schs"
+                params={{ appName }}
+                search={{ schw: schedule.w }}
               >
                 <TheIconButton
                   icon="Calendar03"

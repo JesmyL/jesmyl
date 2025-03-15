@@ -8,7 +8,7 @@ import {
   ScheduleWidgetDayListItemTypeBox,
   scheduleWidgetUserRights,
 } from 'shared/api';
-import { ScheduleWidgetDayEventAtt } from './DayEventAtt';
+import { ScheduleDayEventAtt } from './DayEventAtt';
 
 export function ScheduleWidgetDayEventAtts(props: {
   typeBox: ScheduleWidgetDayListItemTypeBox;
@@ -45,7 +45,7 @@ export function ScheduleWidgetDayEventAtts(props: {
           (appAtt.Us?.length ? !!rights.myUser && appAtt.Us.includes(rights.myUser.mi) : false);
 
         return (
-          <ScheduleWidgetDayEventAtt
+          <ScheduleDayEventAtt
             key={attKey}
             dayEventScopeProps={props.dayEventScopeProps}
             att={att}

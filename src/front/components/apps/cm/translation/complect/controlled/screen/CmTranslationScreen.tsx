@@ -1,5 +1,5 @@
-import { FontSizeContain } from '@cm/base/font-size-contain/FontSizeContain';
-import { FontSizeContainProps } from '@cm/base/font-size-contain/FontSizeContain.model';
+import { FontSizeContain } from '$cm/base/font-size-contain/FontSizeContain';
+import { FontSizeContainProps } from '$cm/base/font-size-contain/FontSizeContain.model';
 import { ScreenTranslateCurrentPositionConfigurators } from 'front/components/apps/+complect/translations/complect/position/Position';
 import { useSetScreenTranslationInteractiveBackground } from 'front/components/apps/+complect/translations/hooks/interactive-back';
 import { useApplyScreenFontFamilyEffect } from 'front/components/apps/+complect/translations/hooks/set-font-family';

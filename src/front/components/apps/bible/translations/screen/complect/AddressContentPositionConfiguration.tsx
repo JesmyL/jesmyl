@@ -1,5 +1,5 @@
-import { useBibleScreenTranslationConfig } from '@bible/translations/hooks/configs';
-import { useUpdateBibleCurrentTranslationConfig } from '@bible/translations/hooks/update-config';
+import { useBibleScreenTranslationConfig } from '$bible/translations/hooks/configs';
+import { useUpdateBibleCurrentTranslationConfig } from '$bible/translations/hooks/update-config';
 import { ScreenTranslationPositionConfig } from 'front/components/apps/+complect/translations/complect/model';
 import { ScreenTranslateCurrentPositionConfigurators } from 'front/components/apps/+complect/translations/complect/position/Position';
 import { useScreenTranslationCurrentConfigi } from 'front/components/apps/+complect/translations/hooks/configs';

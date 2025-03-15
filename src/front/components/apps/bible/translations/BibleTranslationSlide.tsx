@@ -1,5 +1,5 @@
-import { BibleTranslationScreenKnownTextsContext } from '@bible/texts/KnownTextsContext';
-import { IndexSchWTranslationLiveDataValue } from '@index/Index.model';
+import { BibleTranslationScreenKnownTextsContext } from '$bible/texts/KnownTextsContext';
+import { IndexSchWTranslationLiveDataValue } from '$index/Index.model';
 import { JSX, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { BibleTranslationScreen } from './screen/BibleTranslationScreen';

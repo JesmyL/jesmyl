@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
-import { bibleTranslatesIDB } from '@bible/_db/bibleIDB';
-import { BibleTranslate } from '@bible/model';
+import { bibleTranslatesIDB } from '$bible/_db/bibleIDB';
+import { BibleTranslate } from '$bible/model';
 import React, { JSX, useEffect, useState } from 'react';
 import { BibleTranslateName } from 'shared/api';
 import { Eventer } from 'shared/utils';
@@ -27,10 +27,7 @@ const mapChapters = (tName: BibleTranslateName, { chapters }: { chapters: (strin
     }
   }
 
-  localTranslates[tName] = {
-    lowerChapters,
-    chapters,
-  };
+  localTranslates[tName] = { lowerChapters, chapters };
 };
 
 const onTranslateSetEvents = Eventer.createValue<{ tName: BibleTranslateName; value: BibleTranslate }>();

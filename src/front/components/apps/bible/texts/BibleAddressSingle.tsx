@@ -1,8 +1,8 @@
-import { useBibleAddressBooki } from '@bible/hooks/address/books';
-import { useBibleAddressChapteri } from '@bible/hooks/address/chapters';
-import { useBibleAddressVersei } from '@bible/hooks/address/verses';
-import { useBibleSimpleAddressText } from '@bible/hooks/texts';
-import { BibleTranslationSingleAddress } from '@bible/model';
+import { useBibleAddressBooki } from '$bible/hooks/address/books';
+import { useBibleAddressChapteri } from '$bible/hooks/address/chapters';
+import { useBibleAddressVersei } from '$bible/hooks/address/verses';
+import { useBibleSimpleAddressText } from '$bible/hooks/texts';
+import { BibleTranslationSingleAddress } from '$bible/model';
 
 export const BibleAddressSingle = (props: { address?: BibleTranslationSingleAddress }) => {
   if (props.address === undefined) return <Current />;

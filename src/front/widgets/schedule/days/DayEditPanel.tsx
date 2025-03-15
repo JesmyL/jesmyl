@@ -5,7 +5,7 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetDay, ScheduleScopeProps } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
-import { useScheduleDayScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
+import { useScheduleDayScopePropsContext } from '../complect/lib/contexts';
 import { schDaysSokiInvocatorClient } from '../invocators/invocators.methods';
 import { ScheduleWidgetEventListUpdater } from './EventListUpdater';
 import { ScheduleWidgetPrintableDay } from './PrintableDay';

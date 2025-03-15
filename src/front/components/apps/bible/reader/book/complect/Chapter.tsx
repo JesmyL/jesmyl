@@ -1,4 +1,4 @@
-import { BibleChapteri } from '@bible/model';
+import { BibleChapteri } from '$bible/model';
 import { JSX, memo } from 'react';
 import { BibleReaderVerseText } from './Verse';
 

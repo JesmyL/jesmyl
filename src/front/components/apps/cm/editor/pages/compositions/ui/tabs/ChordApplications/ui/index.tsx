@@ -1,8 +1,8 @@
 import { styledHoverBind } from '#shared/lib/styled-utils';
 import { StyledLoadingSpinner } from '#shared/ui/the-icon/IconLoading';
-import { ChordVisibleVariant } from '@cm/Cm.model';
-import { ComLine } from '@cm/col/com/line/ComLine';
-import { TheOrder } from '@cm/col/com/order/TheOrder';
+import { ChordVisibleVariant } from '$cm/Cm.model';
+import { ComLine } from '$cm/col/com/line/ComLine';
+import { TheOrder } from '$cm/col/com/order/TheOrder';
 import { emptyArray } from 'shared/utils';
 import styled, { css } from 'styled-components';
 import { useEditableCcom } from '../../../../lib/useEditableCom';

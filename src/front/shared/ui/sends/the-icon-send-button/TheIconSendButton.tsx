@@ -12,12 +12,11 @@ interface Props<Value> extends SendButtonContentMakerProps<Value> {
 }
 
 export function TheIconSendButton<Value>({ className = '', ...props }: Props<Value>) {
-  const [toastNode, toast] = useToast();
+  const toast = useToast();
 
   return (
     <SendButtonContentMaker
       {...props}
-      anchorNodes={<>{toastNode}</>}
       onFailure={error => {
         props.onFailure?.(error);
         toast(error, { mood: 'ko' });

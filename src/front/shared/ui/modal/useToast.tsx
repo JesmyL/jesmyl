@@ -1,5 +1,6 @@
-import { ReactNode, useCallback, useRef, useState } from 'react';
-import { Portal } from '../Portal';
+import { ReactNode, useCallback, useRef } from 'react';
+import { emptyFunc } from 'shared/utils';
+import { useSetRootAnchoredContent } from '../useSetRootAnchoredContent';
 import { StyledModal, StyledModalScreen, StyledModalScreenWrapper } from './styled';
 
 type ModalConfigMood = 'norm' | 'ko' | 'ok';
@@ -12,43 +13,29 @@ export interface ToastModalConfig extends UserModalConfig {
   showTime?: number;
 }
 
-interface UseModalConfig extends UserModalConfig {
-  isOpen: boolean;
-  content?: ReactNode;
-}
-
-const defaultUseModalConfig: UseModalConfig = {
-  isOpen: false,
-};
-
 const classNames = ['pointers-none'];
 
-export function useToast(
-  topConfig?: ToastModalConfig,
-): [ReactNode, (content?: ReactNode, config?: ToastModalConfig) => void] {
-  const [config, setConfig] = useState(defaultUseModalConfig);
-  const timerRef = useRef<TimeOut>();
+export function useToast(topConfig?: ToastModalConfig): (content?: ReactNode, config?: ToastModalConfig) => void {
+  const onCloseRef = useRef<() => void>(emptyFunc);
+  const timerRef = useRef<TimeOut>(0);
+  const setContent = useSetRootAnchoredContent(onCloseRef);
 
-  return [
-    config.isOpen && (
-      <Portal classNames={classNames}>
+  return useCallback(
+    (content, config) => {
+      setContent(
         <StyledModal className="type_toast">
           <StyledModalScreenWrapper className="type_toast">
-            <StyledModalScreen className={'type_toast mood mood_' + (topConfig ?? config).mood}>
-              {config.content}
+            <StyledModalScreen className={'type_toast mood mood_' + ((topConfig ?? config)?.mood ?? '')}>
+              {content}
             </StyledModalScreen>
           </StyledModalScreenWrapper>
-        </StyledModal>
-      </Portal>
-    ),
-    useCallback((content, config) => {
-      setConfig({
-        ...config,
-        isOpen: true,
-        content,
-      });
+        </StyledModal>,
+        classNames,
+      );
+
       clearTimeout(timerRef.current);
-      timerRef.current = setTimeout(() => setConfig(prev => ({ ...prev, isOpen: false })), config?.showTime ?? 3000);
-    }, []),
-  ];
+      timerRef.current = setTimeout(() => onCloseRef.current(), config?.showTime ?? 3000);
+    },
+    [setContent, topConfig],
+  );
 }

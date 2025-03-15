@@ -1,5 +1,5 @@
+import { useNavigate } from '@tanstack/react-router';
 import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 export const useCloseTranslation = () => {
   const navigate = useNavigate();
@@ -7,7 +7,7 @@ export const useCloseTranslation = () => {
   return useCallback(
     (event?: PropagationStopperEvent) => {
       event?.stopPropagation();
-      navigate('..');
+      navigate({ to: '.', search: prev => ({ ...(prev as object), tran: undefined }) });
       if (document.fullscreenElement) document.exitFullscreen();
       return false;
     },

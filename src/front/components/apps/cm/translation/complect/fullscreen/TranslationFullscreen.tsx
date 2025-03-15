@@ -1,8 +1,9 @@
 import { atom, useAtom } from '#shared/lib/atoms';
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
+import { propsOfClicker } from '#shared/lib/clicker/propsOfClicker';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { FontSizeContain } from '@cm/base/font-size-contain/FontSizeContain';
+import { FontSizeContain } from '$cm/base/font-size-contain/FontSizeContain';
 import { useEffect, useReducer, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { useCloseTranslation } from '../hooks/close-translation';
@@ -50,7 +51,7 @@ export function TranslationFullscreen() {
         />
         <div
           className="top-area info-area left pointer"
-          onDoubleClick={prevCom}
+          {...propsOfClicker({ onDblClick: prevCom })}
         >
           <div className="description">
             дважды клик&nbsp;-
@@ -60,7 +61,7 @@ export function TranslationFullscreen() {
         </div>
         <div
           className="top-area info-area right pointer"
-          onDoubleClick={nextCom}
+          {...propsOfClicker({ onDblClick: nextCom })}
         >
           <div className="description">
             дважды клик&nbsp;-
@@ -154,7 +155,7 @@ const StyledContainer = styled.div<{ $isShowInfo: boolean }>`
     rotate: -90deg;
     color: var(--color--ko);
     top: 4em;
-    left: -4em;
+    left: -3.5em;
 
     z-index: 200;
   }

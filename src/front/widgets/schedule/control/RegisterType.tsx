@@ -1,6 +1,6 @@
 import { useIsExpand } from '#shared/ui/expand/useIsExpand';
 import { scheduleWidgetRegTypeRights } from 'shared/api';
-import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
+import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import { ScheduleWidgetNewUserRegisterLevel } from './NewUserRegisterLevel';

@@ -2,7 +2,7 @@ import { DexiedValueSetter } from '#shared/lib/DexieDB';
 import { mylib } from '#shared/lib/my-lib';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { CmIDBStorage } from '@cm/_db/cm-idb';
+import { CmIDBStorage } from '$cm/_db/cm-idb';
 import { memo, useReducer, useState } from 'react';
 import { EeStorePack } from 'shared/api';
 import { itIt, itNIt, makeRegExp } from 'shared/utils';
@@ -10,9 +10,7 @@ import styled from 'styled-components';
 
 const radioTitles = ['е/ё', 'е!!', 'ё!!'].map((typeName, type) => <div key={type}>{typeName}</div>);
 
-const textAlignStyle = {
-  textAlign: 'right',
-} as const;
+const textAlignStyle = { textAlign: 'right' } as const;
 
 type Props = {
   word: string;

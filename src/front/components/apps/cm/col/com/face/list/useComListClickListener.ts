@@ -1,8 +1,8 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
-import { useSelectedComs } from '@cm/base/useSelectedComs';
+import { useSelectedComs } from '$cm/base/useSelectedComs';
+import { useNavigate } from '@tanstack/react-router';
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Com } from '../../Com';
 import { cmCurrentComwIdPrefix, cmFaceItemDescriptionClassName } from '../lib/consts';
 import { IComFaceList } from './model';
@@ -11,8 +11,8 @@ export const useComListClickListener = (
   listRef: React.RefObject<HTMLDivElement | null>,
   importantOnClick: IComFaceList['importantOnClick'],
   list: Com[],
-  toggleSelectedCom: ReturnType<typeof useSelectedComs>['toggleSelectedCom'],
 ) => {
+  const { toggleSelectedCom } = useSelectedComs();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,6 +52,13 @@ export const useComListClickListener = (
             return;
           }
 
+          const defaultClick = () => {
+            navigate({
+              to: '.',
+              search: prev => ({ ...(prev as object), comw }) as object,
+            });
+          };
+
           if (importantOnClick) {
             const com = list.find(com => com.wid === comw);
             if (!com) return;
@@ -59,8 +66,8 @@ export const useComListClickListener = (
               className.endsWith('-comi'),
             );
             if (!comi) return;
-            importantOnClick(com, parseInt(comi), event);
-          } else navigate(`./${comw}`);
+            importantOnClick({ com, comi: parseInt(comi), event, defaultClick });
+          } else defaultClick();
         }),
       )
       .effect();

@@ -1,7 +1,8 @@
-import { renderApplication } from 'front/front.index';
 import { StyledGlobalStyles } from 'front/styleds/styledGlobalStyles';
+import { styledDefaultTheme } from 'front/styleds/styledTheme';
 import { ReactNode } from 'react';
-import { StyleSheetManager } from 'styled-components';
+import { createRoot } from 'react-dom/client';
+import { StyleSheetManager, ThemeProvider } from 'styled-components';
 
 export const renderComponentInNewWindow = (
   reactNode: ReactNode | ((win: typeof window) => ReactNode),
@@ -28,4 +29,13 @@ export const renderComponentInNewWindow = (
   }
 
   return win;
+};
+
+export const renderApplication = (reactNode: ReactNode, node: HTMLElement | null) => {
+  createRoot(node).render(
+    <ThemeProvider theme={styledDefaultTheme}>
+      <StyledGlobalStyles />
+      {reactNode}
+    </ThemeProvider>,
+  );
 };

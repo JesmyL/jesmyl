@@ -1,7 +1,7 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { cmComClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
-import { EditableCom } from '@cm/editor/lib/EditableCom';
-import { useEditableCcom } from '@cm/editor/pages/compositions/lib/useEditableCom';
+import { cmComClientInvocatorMethods } from '$cm/editor/lib/cm-editor-invocator.methods';
+import { EditableCom } from '$cm/editor/lib/EditableCom';
+import { useEditableCcom } from '$cm/editor/pages/compositions/lib/useEditableCom';
 import { useState } from 'react';
 import { CmMp3Rule } from 'shared/api';
 import { itIt, makeRegExp } from 'shared/utils';
@@ -9,11 +9,7 @@ import { ComAudioControlledList } from '../../../AudioControlledList';
 import { ObserveUrlResource } from '../../../ObserveUrlResource';
 import { useCmExtractHrefsFromHTML } from '../lib/useCmExtractHrefsFromHTML';
 
-type Props = {
-  topHTML?: string;
-  topCom?: EditableCom;
-  topMp3Rule?: CmMp3Rule;
-};
+type Props = { topHTML?: string; topCom?: EditableCom; topMp3Rule?: CmMp3Rule };
 
 export const CmComAudioRedactorTab = ({ topHTML, topCom, topMp3Rule }: Props) => {
   const cEditableCom = useEditableCcom();

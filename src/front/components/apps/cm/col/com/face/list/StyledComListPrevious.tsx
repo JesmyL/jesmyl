@@ -1,22 +1,16 @@
-import { useSelectedComs } from '@cm/base/useSelectedComs';
+import { useSelectedComs } from '$cm/base/useSelectedComs';
+import { memo } from 'react';
 import { CmComWid } from 'shared/api';
 import styled, { css } from 'styled-components';
 import { cmCurrentComwIdPrefix } from '../lib/consts';
-import { ComFaceListProps } from './_ComList';
 import { StyledComList } from './StyledComList';
-import { useComListClickListener } from './useComListClickListener';
 
-export const ComListPreviousSibling = (
-  props: Pick<ComFaceListProps, 'importantOnClick' | 'list'> & {
-    listRef: React.RefObject<HTMLDivElement | null>;
-  },
-) => {
-  const { selectedComws, toggleSelectedCom } = useSelectedComs();
-
-  useComListClickListener(props.listRef, props.importantOnClick, props.list, toggleSelectedCom);
+export const ComListPreviousSibling = memo(() => {
+  const { selectedComws } = useSelectedComs();
 
   return <StyledComListPrevious $selectedComws={selectedComws} />;
-};
+});
+
 const selectedComwMapper = (comw: CmComWid, comwi: number) => {
   return css`
     #${cmCurrentComwIdPrefix}${comw} .face-logo {
@@ -29,9 +23,7 @@ const selectedComwMapper = (comw: CmComWid, comwi: number) => {
   `;
 };
 
-export const StyledComListPrevious = styled.div<{
-  $selectedComws: CmComWid[];
-}>`
+export const StyledComListPrevious = styled.div<{ $selectedComws: CmComWid[] }>`
   display: none;
 
   + ${StyledComList} {

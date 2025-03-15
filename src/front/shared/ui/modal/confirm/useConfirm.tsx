@@ -1,4 +1,6 @@
-import { ReactNode, useCallback, useState } from 'react';
+import { useSetRootAnchoredContent } from '#shared/ui/useSetRootAnchoredContent';
+import { ReactNode, useCallback, useRef } from 'react';
+import { emptyFunc } from 'shared/utils';
 import { Modal } from '../Modal/Modal';
 import { ModalBody } from '../Modal/ModalBody';
 import { ModalFooter } from '../Modal/ModalFooter';
@@ -6,65 +8,57 @@ import { ModalHeader } from '../Modal/ModalHeader';
 import { ConfirmListeners } from './ui/Listeners';
 
 export const useConfirm = () => {
-  const [bodyContent, setBodyContent] = useState<ReactNode>();
-  const [headerContent, setHeaderContent] = useState<ReactNode>('Подтверди');
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [confirmationResolvers, setConfirmationResolvers] = useState(() => Promise.withResolvers<boolean>());
+  const onCloseRef = useRef<() => void>(emptyFunc);
+  const setContent = useSetRootAnchoredContent(onCloseRef);
 
   return [
-    <>
-      {isModalOpen && (
-        <Modal
-          onClose={setIsModalOpen}
-          asRootAnchor={onClose => (
-            <>
-              <ConfirmListeners
-                confirmationResolvers={confirmationResolvers}
-                isModalOpen={isModalOpen}
-                onClose={onClose}
-              />
-              <ModalHeader>{headerContent}</ModalHeader>
-              <ModalBody>{bodyContent}</ModalBody>
-              <ModalFooter>
-                <span className="flex flex-big-gap">
-                  <span
-                    id="confirm-button-YES"
-                    className="pointer"
-                    onClick={() => {
-                      confirmationResolvers.resolve(true);
-                      setIsModalOpen(false);
-                      onClose(false);
-                    }}
-                  >
-                    Да
-                  </span>
-                  <span
-                    id="confirm-button-NO"
-                    className="pointer"
-                    onClick={() => {
-                      confirmationResolvers.resolve(false);
-                      setIsModalOpen(false);
-                      onClose(false);
-                    }}
-                  >
-                    Нет
-                  </span>
+    <></>,
+    useCallback(
+      (content: ReactNode, header?: ReactNode) => {
+        const resolvers = Promise.withResolvers<boolean>();
+
+        setContent(
+          <Modal
+            onClose={emptyFunc}
+            isRenderHere
+          >
+            <ConfirmListeners
+              confirmationResolvers={resolvers}
+              onClose={() => onCloseRef.current()}
+            />
+            <ModalHeader>{header ?? 'Подтверди'}</ModalHeader>
+            <ModalBody>{content}</ModalBody>
+            <ModalFooter>
+              <span className="flex flex-big-gap">
+                <span
+                  id="confirm-button-YES"
+                  className="pointer"
+                  onClick={() => {
+                    resolvers.resolve(true);
+
+                    onCloseRef.current();
+                  }}
+                >
+                  Да
                 </span>
-              </ModalFooter>
-            </>
-          )}
-        />
-      )}
-    </>,
-    useCallback((content: ReactNode, header?: ReactNode) => {
-      if (header !== undefined) setHeaderContent(header);
-      setBodyContent(content);
-      setIsModalOpen(true);
+                <span
+                  id="confirm-button-NO"
+                  className="pointer"
+                  onClick={() => {
+                    resolvers.resolve(false);
+                    onCloseRef.current();
+                  }}
+                >
+                  Нет
+                </span>
+              </span>
+            </ModalFooter>
+          </Modal>,
+        );
 
-      const resolvers = Promise.withResolvers<boolean>();
-      setConfirmationResolvers(resolvers);
-
-      return resolvers.promise;
-    }, []),
+        return resolvers.promise;
+      },
+      [setContent],
+    ),
   ] as const;
 };

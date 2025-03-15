@@ -1,4 +1,4 @@
-import { authIDB } from '@index/db/auth-idb';
+import { authIDB } from '$index/db/auth-idb';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { CmComWid } from 'shared/api';
 import { Eventer } from 'shared/utils';

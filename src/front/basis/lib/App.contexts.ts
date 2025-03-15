@@ -1,15 +1,10 @@
-import { AppName } from '#basis/model/App.model';
 import { contextCreator } from '#shared/lib/contextCreator';
-import { SetStateAction } from 'react';
+import { emptyFunc } from 'shared/utils';
 
-export const [SetAppRootAnchorNodesContext, useSetAppRootAnchorNodesContext] = contextCreator(
-  (_nodes: SetStateAction<Map<string, React.ReactNode>>) => {},
-);
+export const [SetAppRootAnchorNodesContext, useSetAppRootAnchorNodesContext] =
+  contextCreator<React.Dispatch<React.SetStateAction<Map<string, React.ReactNode>>>>(emptyFunc);
 
-export const [CurrentAppFooterItemPlaceContext, useCurrentAppFooterItemPlaceContext] = contextCreator<string | und>(
-  undefined,
-);
-export const [CurrentAppFooterItemAppNameContext, useCurrentAppFooterItemAppNameContext] = contextCreator<
-  AppName | und
+export const [CurrentAppFooterItemPlaceContext, useCurrentAppFooterItemPlaceContext] = contextCreator<
+  `/${string}/${string}/` | und
 >(undefined);
 export const footerItemPlaceLsPrefix = 'nav-link:';

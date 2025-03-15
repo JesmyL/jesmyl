@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
-import { BibleBooki, BibleChapteri, BibleVersei } from '@bible/model';
-import { useBibleSingleAddressSetter } from '@bible/translations/lists/atoms';
+import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/model';
+import { useBibleSingleAddressSetter } from '$bible/translations/lists/atoms';
 import { JSX, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { BibleReaderChapter } from './complect/Chapter';

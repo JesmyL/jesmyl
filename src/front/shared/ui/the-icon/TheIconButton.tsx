@@ -24,11 +24,10 @@ export const TheIconButton = (props: Props) => {
   const className =
     `${props.className || ''}${(!props.disabled && props.onClick) || props.disabledReason ? ' pointer' : ''}` +
     `${props.disabled ? ' disabled' + (props.disabledReason ? ' clickable' : '') : ''}`;
-  const [toastNode, toast] = useToast();
+  const toast = useToast();
 
   return (
     <>
-      {toastNode}
       <ConfirmContent
         confirm={props.confirm === true ? props.postfix || props.prefix : props.confirm}
         content={onConfirm => {

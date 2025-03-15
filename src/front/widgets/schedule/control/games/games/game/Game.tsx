@@ -1,7 +1,7 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useScheduleScopePropsContext } from '#widgets/schedule/complect/scope-contexts/scope-props-contexts';
+import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { useState } from 'react';
 import { useScheduleGameContext } from '../lib/contexts';

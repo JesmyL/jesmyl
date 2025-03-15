@@ -1,11 +1,10 @@
-import { useComs } from '@cm/cols/useCols';
+import { useComs } from '$cm/basis/lib/coms-selections';
 import { CmComWid } from 'shared/api';
 import { itNNil } from 'shared/utils';
-import { ListComFaceForSelectionsProps } from '../ComFace.model';
 import { ComFaceListComList } from './_ComList';
 import { IComFaceList } from './model';
 
-interface Props extends IComFaceList, ListComFaceForSelectionsProps {
+interface Props extends IComFaceList {
   list: CmComWid[];
   titles?: Record<number, string>;
 }

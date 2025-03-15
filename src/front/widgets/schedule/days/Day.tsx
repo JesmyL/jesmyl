@@ -16,7 +16,7 @@ import {
 import { isNIs } from 'shared/utils';
 import styled from 'styled-components';
 import { ScheduleAlarmDay } from '../alarm/AlarmDay';
-import { ScheduleDayScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
+import { ScheduleDayScopePropsContext } from '../complect/lib/contexts';
 import { schDaysSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import { ScheduleWidgetDayEditPanel } from './DayEditPanel';

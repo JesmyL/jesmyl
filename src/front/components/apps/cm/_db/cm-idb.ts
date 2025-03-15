@@ -28,6 +28,9 @@ export interface CmIDBStorage {
   fixedComs: IFixedCom[];
   cats: IExportableCat[];
 
+  lastOpenComw?: CmComWid;
+  isShowFavouritesInTranslations: boolean;
+
   scheduleComPacks: ScheduleComPack[];
   selectedComws: CmComWid[];
 
@@ -66,6 +69,8 @@ class CmIDB extends DexieDB<CmIDBStorage> {
       playerHideMode: { $byDefault: 'expand' },
       speedRollKf: { $byDefault: 10 },
       translationScreenConfigs: { $byDefault: [defaultCmConfig] },
+      lastOpenComw: { $byDefault: undefined },
+      isShowFavouritesInTranslations: { $byDefault: false },
 
       coms: {
         w: '++',

@@ -1,47 +1,41 @@
-import {
-  CurrentAppFooterItemAppNameContext,
-  CurrentAppFooterItemPlaceContext,
-  footerItemPlaceLsPrefix,
-} from '#basis/lib/App.contexts';
+import { CurrentAppFooterItemPlaceContext, footerItemPlaceLsPrefix } from '#basis/lib/App.contexts';
+import { AppName } from '#basis/model/App.model';
 import { isTouchDevice } from '#shared/lib/device-differences';
+import { useLocation } from '@tanstack/react-router';
 import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
-import { AppName } from '../basis/model/App.model';
 import { AppFooterItem } from './AppFooterItem';
 import { lastVisitedRouteLsName } from './lib/consts';
 
-export function AppFooter({ children }: { children: React.ReactNode }) {
+export function AppFooter({ children }: { children: React.ReactNode; appName: AppName }) {
   const loc = useLocation();
 
   const [, appName, place] = loc.pathname.split('/', 3) as [string, AppName | und, string | und];
 
   useEffect(() => {
-    if ((isTouchDevice && loc.pathname.includes('@')) || !appName || !place) return;
+    if ((isTouchDevice && loc.pathname.includes('-!-')) || !appName || !place) return;
 
-    const lsName = footerItemPlaceLsPrefix + appName + '/' + place;
-    const url = `${loc.pathname}${loc.search.length > 1 ? loc.search : ''}${loc.hash.length > 1 ? loc.hash : ''}`;
+    const lsName = `${footerItemPlaceLsPrefix}/${appName}/${place}/`;
+    const url = `${loc.pathname}${loc.searchStr.length > 1 ? loc.searchStr : ''}${loc.hash.length > 1 ? loc.hash : ''}`;
 
     if (url === `/${appName}/${place}`) localStorage.removeItem(lsName);
     else localStorage.setItem(lsName, url);
 
     localStorage.setItem(lastVisitedRouteLsName, url);
-  }, [appName, loc.hash, loc.pathname, loc.search, place]);
+  }, [appName, loc.hash, loc.pathname, loc.searchStr, place]);
 
   return (
-    <CurrentAppFooterItemAppNameContext.Provider value={appName}>
-      <CurrentAppFooterItemPlaceContext.Provider value={place}>
-        <StyledFooter>
-          {children}
-          <AppFooterItem
-            icon="CircleArrowRight02"
-            title="Другое"
-            to="!other"
-            idPostfix="other"
-          />
-        </StyledFooter>
-      </CurrentAppFooterItemPlaceContext.Provider>
-    </CurrentAppFooterItemAppNameContext.Provider>
+    <CurrentAppFooterItemPlaceContext.Provider value={`/${appName}/${place}/`}>
+      <StyledFooter>
+        {children}
+        <AppFooterItem
+          icon="CircleArrowRight02"
+          title="Другое"
+          to={`/!other/${(appName?.startsWith('!') ? place : appName) as never}`}
+          idPostfix="other"
+        />
+      </StyledFooter>
+    </CurrentAppFooterItemPlaceContext.Provider>
   );
 }
 

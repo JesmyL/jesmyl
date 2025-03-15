@@ -1,5 +1,5 @@
 import { DexieDB } from '#shared/lib/DexieDB';
-import { defaultComplectConfig } from '../translations/atoms';
+import { defaultComplectConfig } from '../translations/consts';
 import { AlertLineConfig, ScreenTranslationConfig } from '../translations/model';
 import { TranslationViewApp } from '../translations/Translations.model';
 
@@ -13,9 +13,7 @@ type Store = {
 };
 
 export const complectIDB = new DexieDB<Store>('complect', {
-  alertLineConfigs: {
-    id: '++',
-  },
+  alertLineConfigs: { id: '++' },
   isDarkMode: { $byDefault: false },
   currentTranslationTextApp: { $byDefault: 'cm' },
   translationAlertLine: { $byDefault: null },

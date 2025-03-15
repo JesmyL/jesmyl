@@ -1,12 +1,11 @@
 import { useAtomValue } from '#shared/lib/atoms';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { translationBlockAtom } from '@cm/atoms';
-import { useCcom } from '@cm/col/com/useCcom';
-import { useMeetingComFaceList } from '@cm/lists/meetings/useMeetingComFaceList';
-import { useMeetingPathParts } from '@cm/lists/meetings/useMeetingPathParts';
-import { CmTranslationControlled } from '@cm/translation/complect/controlled/CmTranslationControlled';
-import { useCmScreenTranslationConfigs } from '@cm/translation/complect/controlled/hooks/configs';
-import { IndexSchWTranslationLiveDataValue } from '@index/Index.model';
+import { translationBlockAtom } from '$cm/atoms';
+import { useCcom } from '$cm/basis/lib/com-selections';
+import { CmTranslationControlled } from '$cm/translation/complect/controlled/CmTranslationControlled';
+import { useCmScreenTranslationConfigs } from '$cm/translation/complect/controlled/hooks/configs';
+import { useCmScreenTranslationComNavigations } from '$cm/translation/complect/hooks/com-navigation';
+import { IndexSchWTranslationLiveDataValue } from '$index/Index.model';
 import { useSwitchCurrentTranslationTextApp } from 'front/components/apps/+complect/translations/hooks/current-app';
 import { useEffect } from 'react';
 import { schLiveSokiInvocatorClient } from './live-invocator';
@@ -22,9 +21,7 @@ export const ScheduleWidgetLiveCmTranslations = ({
   const [config] = useCmScreenTranslationConfigs();
   const switchCurrApp = useSwitchCurrentTranslationTextApp();
   const currTexti = useAtomValue(translationBlockAtom);
-
-  const scopeProps = useMeetingPathParts();
-  const { coms } = useMeetingComFaceList(scopeProps.schw, scopeProps.dayi, scopeProps.eventMi);
+  const { coms } = useCmScreenTranslationComNavigations();
 
   useEffect(() => {
     if (isCantTranslateLive) return;
@@ -67,7 +64,6 @@ export const ScheduleWidgetLiveCmTranslations = ({
       }
       comList={coms}
       headTitle={headTitle}
-      backButtonPath=".."
     />
   );
 };

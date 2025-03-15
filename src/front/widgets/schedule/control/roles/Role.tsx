@@ -7,7 +7,7 @@ import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { useScheduleScopePropsContext } from '#widgets/schedule/complect/scope-contexts/scope-props-contexts';
+import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { schRolesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { extractScheduleWidgetRoleUser, useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import { useAuth } from 'front/components/index/atoms';

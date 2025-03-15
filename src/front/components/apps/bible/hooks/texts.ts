@@ -1,9 +1,9 @@
 import { MyLib } from '#shared/lib/my-lib';
-import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '@bible/model';
-import { translateDescriptions } from '@bible/translates/lib/consts';
-import { useBibleTranslatesContext } from '@bible/translates/lib/contexts';
-import { useBibleShowTranslatesValue } from '@bible/translates/lib/hooks';
-import { verseTranslateTitleCssClassName } from '@bible/translations/complect';
+import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '$bible/model';
+import { translateDescriptions } from '$bible/translates/lib/consts';
+import { useBibleTranslatesContext } from '$bible/translates/lib/contexts';
+import { useBibleShowTranslatesValue } from '$bible/translates/lib/hooks';
+import { verseTranslateTitleCssClassName } from '$bible/translations/complect';
 import { itIt } from 'shared/utils';
 import { useBibleAddressBooki } from './address/books';
 import { bibleTitles } from './bibleTitlesJson';

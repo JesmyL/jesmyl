@@ -1,18 +1,24 @@
-import { useAuth } from '@index/atoms';
+import { useCcom } from '$cm/basis/lib/com-selections';
+import { useAuth } from '$index/atoms';
+import { Link } from '@tanstack/react-router';
 import { ComTool } from '../ComTool';
-import { useComToolsCcomContext } from '../lib/useMigratableComTools';
 
 export default function RedactComTool() {
   const auth = useAuth();
-  const ccom = useComToolsCcomContext();
+  const ccom = useCcom();
 
   return (
     auth.level > 49 && (
-      <ComTool
-        title="Редактировать"
-        icon="PencilEdit02"
-        path={ccom && `/cm/edit/coms/${ccom.wid}`}
-      />
+      <Link
+        to="/cm/edit/coms/$comw"
+        params={{ comw: `${ccom?.wid ?? 0}` }}
+        search={{ tab: 'watch' }}
+      >
+        <ComTool
+          title="Редактировать"
+          icon="PencilEdit02"
+        />
+      </Link>
     )
   );
 }

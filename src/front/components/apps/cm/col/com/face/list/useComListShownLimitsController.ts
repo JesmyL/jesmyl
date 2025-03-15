@@ -1,6 +1,7 @@
 import { isIPhone } from '#shared/lib/device-differences';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
+import { useLastOpenComw } from '$cm/basis/lib/com-selections';
 import { useEffect, useMemo, useState } from 'react';
 import { ComFaceListProps } from './_ComList';
 
@@ -13,6 +14,7 @@ const isRejectScrollDivision = isIPhone;
 
 export const useComListShownLimitsController = (listRef: React.RefObject<HTMLDivElement>, props: ComFaceListProps) => {
   const [, forceUpdate] = useState(0);
+  const lastOpenComw = useLastOpenComw();
 
   const limits = useMemo(() => {
     let initialLimits;
@@ -20,7 +22,7 @@ export const useComListShownLimitsController = (listRef: React.RefObject<HTMLDiv
     if (props.titles) {
       initialLimits = { start: 0, finish: props.list.length, initStart: 0, initFinish: props.list.length };
     } else {
-      let ccomi = mylib.isNum(props.ccomw) ? props.list.findIndex(com => com.wid === props.ccomw) || 0 : 0;
+      let ccomi = mylib.isNum(lastOpenComw) ? props.list.findIndex(com => com.wid === lastOpenComw) || 0 : 0;
       ccomi = ccomi < 0 ? 0 : 0;
 
       const startLimitPlus = initComsAfter - (props.list.length - ccomi);
@@ -41,7 +43,7 @@ export const useComListShownLimitsController = (listRef: React.RefObject<HTMLDiv
     }
 
     return initialLimits;
-  }, [props.ccomw, props.list, props.titles]);
+  }, [lastOpenComw, props.list, props.titles]);
 
   useEffect(() => {
     if (props.titles) return;

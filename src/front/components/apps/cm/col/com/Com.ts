@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
-import { cmIDB } from '@cm/_db/cm-idb';
-import { BaseNamed } from '@cm/base/BaseNamed';
+import { cmIDB } from '$cm/_db/cm-idb';
+import { BaseNamed } from '$cm/base/BaseNamed';
 import { IExportableCom, IExportableOrder } from 'shared/api';
 import { itIt, makeRegExp } from 'shared/utils';
 import { cmComLanguages } from 'shared/values/values';
@@ -170,7 +170,7 @@ export class Com extends BaseNamed<IExportableCom> {
   }
 
   async setChordsInitialTon() {
-    const fixed = { ...(mylib.isNNlOrUnd(this.wid) && (await cmIDB.tb.fixedComs.get(this.wid))) };
+    const fixed = { ...(mylib.isNNlButUnd(this.wid) && (await cmIDB.tb.fixedComs.get(this.wid))) };
     delete fixed.ton;
     await cmIDB.tb.fixedComs.put(fixed);
   }
@@ -427,13 +427,7 @@ export class Com extends BaseNamed<IExportableCom> {
       const style = getStyle(me);
 
       if (!style) {
-        orders.push(
-          this.orderConstructor({
-            top: ordMe.top,
-            source: ordMe,
-            header: this.emptyOrderHeader,
-          }),
-        );
+        orders.push(this.orderConstructor({ top: ordMe.top, source: ordMe, header: this.emptyOrderHeader }));
         continue;
       }
 

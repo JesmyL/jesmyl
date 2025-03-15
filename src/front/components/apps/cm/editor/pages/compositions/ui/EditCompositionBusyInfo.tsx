@@ -1,7 +1,7 @@
 import { useAtomValue } from '#shared/lib/atoms';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { cmEditorClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
-import { indexIDB } from '@index/db/index-idb';
+import { cmEditorClientInvocatorMethods } from '$cm/editor/lib/cm-editor-invocator.methods';
+import { indexIDB } from '$index/db/index-idb';
 import { useEffect } from 'react';
 import { CmComWid } from 'shared/api';
 import styled from 'styled-components';

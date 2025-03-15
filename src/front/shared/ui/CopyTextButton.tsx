@@ -1,5 +1,7 @@
-import { ReactNode } from 'react';
-import { useModal } from './modal/useModal';
+import { ReactNode, useState } from 'react';
+import { Modal } from './modal/Modal/Modal';
+import { ModalBody } from './modal/Modal/ModalBody';
+import { ModalHeader } from './modal/Modal/ModalHeader';
 import { useToast } from './modal/useToast';
 import { TheIconButton } from './the-icon/TheIconButton';
 
@@ -14,33 +16,24 @@ interface Props {
 }
 
 export function CopyTextButton({ text, disabled, description, className, message, withoutIcon, onClose }: Props) {
-  const [toastNode, toast] = useToast();
-  const [modalNode, modal] = useModal();
+  const toast = useToast();
+  const [textToCopy, setTextToCopy] = useState('');
 
   return (
     <>
-      {modalNode}
-      {toastNode}
       <span
         className={(className || '') + ' flex flex-gap pointer'}
         onClick={event => {
           event.stopPropagation();
           const textToWrite = typeof text === 'string' ? text : text();
+          if (textToWrite == null) return;
 
           try {
-            if (textToWrite == null) return;
             navigator.clipboard.writeText(textToWrite);
             toast(message ?? 'Текст скопирован');
             onClose?.();
           } catch (_e) {
-            modal(event, ({ header, body }) => {
-              return (
-                <>
-                  {header(<>Не удалось скопировать текст:</>)}
-                  {body(<div className="user-select-all">{textToWrite}</div>)}
-                </>
-              );
-            });
+            setTextToCopy(textToWrite);
           }
         }}
       >
@@ -52,6 +45,13 @@ export function CopyTextButton({ text, disabled, description, className, message
           />
         )}
       </span>
+
+      {textToCopy && (
+        <Modal onClose={() => setTextToCopy('')}>
+          <ModalHeader>Не удалось скопировать текст:</ModalHeader>
+          <ModalBody className="user-select-all">{textToCopy}</ModalBody>
+        </Modal>
+      )}
     </>
   );
 }

@@ -1,10 +1,11 @@
+import { useAppNameContext } from '#basis/lib/contexts';
 import { mylib } from '#shared/lib/my-lib';
 import { FullContentValue } from '#shared/ui/fullscreen-content/FullContent';
 import { useFullContent } from '#shared/ui/fullscreen-content/useFullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useIndexSchedules } from '@index/atoms';
+import { useIndexSchedules } from '$index/atoms';
+import { Link } from '@tanstack/react-router';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
 import {
   IScheduleWidget,
   IScheduleWidgetDay,
@@ -63,6 +64,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
   const schedules = useIndexSchedules();
   const now = Date.now();
   const [isFullOpen, setIsFullOpen] = useState(false);
+  const appName = useAppNameContext();
 
   const [updates, setUpdates] = useState<null | number>(null);
   useEffect(() => {
@@ -376,7 +378,11 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
         className={'flex flex-gap between' + (fullValue ? ' pointer' : '')}
         onClick={fullValue && (() => setIsFullOpen(true))}
       >
-        <Link to={observeSchedule === undefined ? '.' : `schs/${observeSchedule.sch.w}`}>
+        <Link
+          to={observeSchedule === undefined ? '.' : `/!other/$appName/schs`}
+          params={{ appName }}
+          search={{ schw: observeSchedule && observeSchedule.sch.w }}
+        >
           <div className="flex">
             <LazyIcon
               icon="Calendar01"
@@ -398,7 +404,10 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
           </div>
         </Link>
 
-        <Link to="schs">
+        <Link
+          to="/!other/$appName/schs"
+          params={{ appName }}
+        >
           <LazyIcon
             icon="LeftToRightListDash"
             className="margin-gap"

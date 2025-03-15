@@ -1,4 +1,4 @@
-import { EditableComOrder } from '@cm/editor/lib/EditableComOrder';
+import { EditableComOrder } from '$cm/editor/lib/EditableComOrder';
 
 export type CmComOrderOnClickBetweenData = {
   buttonTitle: React.ReactNode;

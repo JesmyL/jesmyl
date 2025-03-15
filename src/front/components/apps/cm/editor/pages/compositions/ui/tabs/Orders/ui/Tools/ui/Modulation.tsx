@@ -4,9 +4,9 @@ import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
-import { ChordVisibleVariant } from '@cm/Cm.model';
-import { TheOrder } from '@cm/col/com/order/TheOrder';
-import { cmComOrderClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
+import { ChordVisibleVariant } from '$cm/Cm.model';
+import { TheOrder } from '$cm/col/com/order/TheOrder';
+import { cmComOrderClientInvocatorMethods } from '$cm/editor/lib/cm-editor-invocator.methods';
 import { useState } from 'react';
 import { OrdersRedactorOrderToolsProps } from '../model';
 

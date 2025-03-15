@@ -1,6 +1,6 @@
 import { useIsExpand } from '#shared/ui/expand/useIsExpand';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { useScheduleScopePropsContext } from '#widgets/schedule/complect/scope-contexts/scope-props-contexts';
+import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import { ScheduleWidgetTeamGame } from './game/Game';

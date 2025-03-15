@@ -3,7 +3,7 @@ import { Cyp } from './complect';
 export const cyTestAuthorize = (doTestTitle?: string, doTest?: () => Promise<void>) => {
   it(doTestTitle ?? 'authorize', async () => {
     const tgAuthCode = +prompt('Код для авторизации', '')!;
-    cy.visit(`${Cyp.host}/cm/!other`);
+    cy.visit(`${Cyp.host}/!other/cm`);
 
     if (tgAuthCode) {
       await doTest?.();

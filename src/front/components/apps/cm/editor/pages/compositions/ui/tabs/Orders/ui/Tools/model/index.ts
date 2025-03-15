@@ -1,4 +1,5 @@
-import { EditableCom, EditableComOrder } from '@cm/editor/pages/compositions';
+import { EditableCom } from '$cm/editor/lib/EditableCom';
+import { EditableComOrder } from '$cm/editor/lib/EditableComOrder';
 import { CmComOrderOnClickBetweenData } from '../../../model';
 
 export interface OrdersRedactorOrderToolsProps {

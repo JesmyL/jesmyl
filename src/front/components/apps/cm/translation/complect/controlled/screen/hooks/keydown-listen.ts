@@ -1,6 +1,6 @@
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
-import { useCmScreenTranslationComNavigations } from '@cm/translation/complect/hooks/com-navigation';
-import { useCmScreenTranslationComTextNavigations } from '@cm/translation/complect/hooks/com-texts';
+import { useCmScreenTranslationComNavigations } from '$cm/translation/complect/hooks/com-navigation';
+import { useCmScreenTranslationComTextNavigations } from '$cm/translation/complect/hooks/com-texts';
 import { useScreenTranslationWindows } from 'front/components/apps/+complect/translations/hooks/windows';
 import { useEffect } from 'react';
 

@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { isTouchDevice } from '#shared/lib/device-differences';
-import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContainerConfigurer';
+import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { CodeExecutionScreen } from './coder/Coder';
@@ -21,7 +21,7 @@ console[scope] = ((...args: unknown[]) => {
   forceUpdate();
 }) as never;
 
-export default function IndexConsole() {
+export const IndexConsolePage = () => {
   const [, setUpdates] = useState(0);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function IndexConsole() {
   }, []);
 
   return (
-    <PhaseContainerConfigurer
+    <PageContainerConfigurer
       className="index-settings-console"
       headTitle="Консоль"
       content={
@@ -60,7 +60,7 @@ export default function IndexConsole() {
       }
     />
   );
-}
+};
 
 const Line = styled.div`
   overflow-wrap: anywhere;

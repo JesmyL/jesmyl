@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 import {
-  defaultComplectConfig,
   useCurrentTranslationConfigiValue,
   useScreenTranslationConfigsSet,
   useScreenTranslationConfigsValue,
 } from '../atoms';
+import { defaultComplectConfig } from '../consts';
 import { ScreenTranslationConfig } from '../model';
 
 export const useMakeScreenTranslationConfigsFillPack = <Config>(configs: Config[], defaultConfig: Config) => {

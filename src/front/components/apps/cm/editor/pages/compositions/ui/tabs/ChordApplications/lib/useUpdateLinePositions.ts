@@ -1,5 +1,5 @@
-import { Order } from '@cm/col/com/order/Order';
-import { cmComOrderClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
+import { Order } from '$cm/col/com/order/Order';
+import { cmComOrderClientInvocatorMethods } from '$cm/editor/lib/cm-editor-invocator.methods';
 import { useState } from 'react';
 import { CmComOrderWid } from 'shared/api';
 
@@ -18,10 +18,7 @@ export const useUpdateLinePositions = () => {
 
     line.sort((a, b) => a - b);
 
-    setLinePositions(prev => ({
-      ...prev,
-      [key]: line,
-    }));
+    setLinePositions(prev => ({ ...prev, [key]: line }));
     setLinesOnUpdateSet(prev => {
       const news = { ...prev };
       news[ord.wid] ??= new Set();

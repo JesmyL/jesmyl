@@ -1,6 +1,6 @@
-import { chordDiezEquivalent, gSimpleBemoleChordReg } from '@cm/col/com/Com.complect';
-import { IExportableOrderMe } from '@cm/col/com/order/Order.model';
-import { cmComClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
+import { chordDiezEquivalent, gSimpleBemoleChordReg } from '$cm/col/com/Com.complect';
+import { IExportableOrderMe } from '$cm/col/com/order/Order.model';
+import { cmComClientInvocatorMethods } from '$cm/editor/lib/cm-editor-invocator.methods';
 import { makeRegExp } from 'shared/utils';
 import { EditableComOrder } from '../EditableComOrder';
 import { EditableComParseBlocks } from './complect/31-ParseBlocks';

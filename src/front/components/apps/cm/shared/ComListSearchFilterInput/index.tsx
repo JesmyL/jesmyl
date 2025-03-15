@@ -1,40 +1,34 @@
 import { Atom, useAtom } from '#shared/lib/atoms';
 import { mylib } from '#shared/lib/my-lib';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
-import { cmIDB } from '@cm/_db/cm-idb';
-import { Com } from '@cm/col/com/Com';
-import { useLiveQuery } from 'dexie-react-hooks';
+import { Com } from '$cm/col/com/Com';
 import { useEffect } from 'react';
-import { CmComWid, IExportableCom } from 'shared/api';
+import { IExportableCom } from 'shared/api';
 import { categoryTermAtom } from './lib';
 
 export const CmComListSearchFilterInput = <ComConstructor extends Com>({
   Constructor,
   onDebounced,
   onSearch,
-  showComwList,
+  coms,
   isNumberSearchAtom,
 }: {
   onDebounced?: () => void;
   onSearch: (coms: ComConstructor[]) => void;
-  showComwList?: CmComWid[];
+  coms?: Com[];
   Constructor: new (icom: IExportableCom) => ComConstructor;
   isNumberSearchAtom?: Atom<boolean, (value: boolean) => void>;
 }) => {
   const [term, setTerm] = useAtom(categoryTermAtom);
 
-  const fullIcomList = useLiveQuery(
-    () => (showComwList == null ? cmIDB.db.coms.toArray() : cmIDB.db.coms.where('w').anyOf(showComwList).toArray()),
-    [showComwList],
-  );
   useEffect(() => {
     if (term === '404') {
       onSearch([]);
       return;
     }
-    const coms = fullIcomList?.map(icom => new Constructor(icom)) ?? [];
+    const comList = coms?.map(com => new Constructor(com.top)) ?? [];
     if (!term) {
-      onSearch(coms);
+      onSearch(comList);
       return;
     }
 
@@ -42,11 +36,11 @@ export const CmComListSearchFilterInput = <ComConstructor extends Com>({
 
     onSearch(
       mylib
-        .searchRate(coms, numCheckedTerm, ['name', mylib.c.POSITION, ['orders', mylib.c.INDEX, 'text']])
+        .searchRate(comList, numCheckedTerm, ['name', mylib.c.POSITION, ['orders', mylib.c.INDEX, 'text']])
         .sort((a, b) => b.rate - a.rate)
         .map(({ item }) => item),
     );
-  }, [Constructor, fullIcomList, onSearch, term]);
+  }, [Constructor, coms, onSearch, term]);
 
   return (
     <DebouncedSearchInput

@@ -1,14 +1,14 @@
-import { useBibleTranslationJoinAddress } from '@bible/hooks/address/address';
-import { useBibleAddressBooki } from '@bible/hooks/address/books';
-import { useBibleAddressChapteri } from '@bible/hooks/address/chapters';
-import { useBibleAddressVersei } from '@bible/hooks/address/verses';
-import { useBibleSlideSyncValue } from '@bible/hooks/slide-sync';
+import { useBibleTranslationJoinAddress } from '$bible/hooks/address/address';
+import { useBibleAddressBooki } from '$bible/hooks/address/books';
+import { useBibleAddressChapteri } from '$bible/hooks/address/chapters';
+import { useBibleAddressVersei } from '$bible/hooks/address/verses';
+import { useBibleSlideSyncValue } from '$bible/hooks/slide-sync';
 import {
   useBibleJoinedAddressText,
   useBibleJoinedSlideText,
   useBibleSimpleAddressText,
   useBibleSingleSlideText,
-} from '@bible/hooks/texts';
+} from '$bible/hooks/texts';
 import { useMemo } from 'react';
 import { BibleAddressTextContext, BibleTextContentContext } from './lib/contexts';
 

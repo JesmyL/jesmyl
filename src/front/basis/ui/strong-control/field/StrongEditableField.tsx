@@ -31,12 +31,12 @@ type Props<Key, Value> = {
 export function StrongEditableField<Key extends string, Value extends string | Partial<Record<Key, string>>>(
   props: Props<Key, Value>,
 ) {
-  const value = typeof props.value === 'string' ? props.value : props.value?.[props.fieldKey as never] ?? '';
+  const value = typeof props.value === 'string' ? props.value : (props.value?.[props.fieldKey as never] ?? '');
   const [stateValue, setStateValue] = useState(value);
   const [isUserChange, setIsUserChange] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const [modalNode, toast] = useToast();
+  const toast = useToast();
   const { editIcon, isSelfRedact } = useIsRedactArea(true, null, true, true, props.onSelfRedactChange);
   const isRedact = props.setSelfRedact ? isSelfRedact : props.isRedact;
 
@@ -99,7 +99,6 @@ export function StrongEditableField<Key extends string, Value extends string | P
       className={props.className || 'margin-gap-v'}
       attr-text={stateValue}
     >
-      {modalNode}
       {isRedact ? (
         <>
           {(props.title || props.setSelfRedact) && (

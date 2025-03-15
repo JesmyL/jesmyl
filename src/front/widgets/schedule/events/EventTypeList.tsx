@@ -9,7 +9,7 @@ import { ReactNode, useMemo, useState } from 'react';
 import { IScheduleWidget, ScheduleWidgetCleans, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
 import { emptyArray } from 'shared/utils';
 import styled from 'styled-components';
-import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
+import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { schEventTypesSokiInvocatorClient } from '../invocators/invocators.methods';
 import { ScheduleWidgetEventType } from './EventType';
 import { useAttTypeTitleError } from './useAttTypeTitleError';

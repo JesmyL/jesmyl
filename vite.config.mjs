@@ -1,4 +1,5 @@
 import tailwindcss from '@tailwindcss/vite';
+import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 import basicSsl from '@vitejs/plugin-basic-ssl';
 import react from '@vitejs/plugin-react';
 import dns from 'dns';
@@ -20,14 +21,10 @@ Object.entries(tsConfig.compilerOptions.paths).forEach(([aliasKey, [path]]) => {
 
 export default defineConfig(() => {
   return {
-    build: {
-      outDir: 'build',
-    },
-    server: {
-      https: true,
-    },
+    build: { outDir: 'build' },
+    server: { https: true },
     plugins: [
-      react(),
+      TanStackRouterVite({ target: 'react', autoCodeSplitting: true, routesDirectory: 'src/front/routes' }),
       tsconfigPaths(),
       eslint({
         emitWarning: false,
@@ -38,6 +35,7 @@ export default defineConfig(() => {
       VitePWA({ injectRegister: 'auto', strategies: 'generateSW', registerType: 'autoUpdate' }),
       tailwindcss(),
       basicSsl(),
+      react(),
     ],
     resolve: { alias },
   };

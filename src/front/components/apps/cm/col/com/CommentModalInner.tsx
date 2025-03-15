@@ -8,12 +8,12 @@ import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { cmIDB } from '@cm/_db/cm-idb';
-import { Com } from '@cm/col/com/Com';
-import { TheComCommentInfo } from '@cm/col/com/complect/comment-parser/infos/TheComCommentInfo';
-import { updateComComment, useComComment } from '@cm/com-comments-manager';
+import { cmIDB } from '$cm/_db/cm-idb';
+import { Com } from '$cm/col/com/Com';
+import { TheComCommentInfo } from '$cm/col/com/complect/comment-parser/infos/TheComCommentInfo';
+import { updateComComment, useComComment } from '$cm/com-comments-manager';
 import { useEffect, useRef, useState } from 'react';
-import { emptyFunc, isNIs } from 'shared/utils';
+import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
 
 const HashSwitcherIcon = 'Note03';
@@ -82,13 +82,16 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
           className="pointer flex full-width between color--7 margin-gap-v"
           onClick={event => {
             propagationStopper(event);
-            setIsShowInfoModal(isNIs);
+            setIsShowInfoModal(true);
           }}
         />
       </ModalFooter>
 
       {isShowInfoModal && (
-        <Modal onClose={setIsShowInfoModal}>
+        <Modal
+          onClose={setIsShowInfoModal}
+          isRenderHere
+        >
           <ModalHeader>Заметки к песне</ModalHeader>
           <ModalBody>
             <TheComCommentInfo HashSwitcherIcon={HashSwitcherIcon} />

@@ -1,35 +1,42 @@
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { mylib } from '#shared/lib/my-lib';
+import { useLastOpenComw } from '$cm/basis/lib/com-selections';
 import { useEffect } from 'react';
 import { cmCurrentComwIdPrefix } from '../lib/consts';
 import { ComFaceListProps } from './_ComList';
 
-export const useScrollToCurrentComFace = (listRef: React.RefObject<HTMLDivElement | null>, props: ComFaceListProps) => {
+export const useScrollToCurrentComFace = (
+  listRef: React.RefObject<HTMLDivElement | null>,
+  props: ComFaceListProps,
+  deps: unknown[],
+) => {
+  const lastOpenComw = useLastOpenComw();
+
   useEffect(() => {
-    if (listRef.current === null || props.ccomw === undefined || props.isPutCcomFaceOff || props.titles) return;
+    if (listRef.current === null || lastOpenComw === undefined || props.isPutCcomFaceOff || props.titles) return;
 
-    const node = listRef.current.querySelector(`#${cmCurrentComwIdPrefix}${props.ccomw}`);
+    const listNode = listRef.current;
+    let isFound = false;
 
-    if (node === null) return;
+    const scrollToCom = () => {
+      if (isFound) return;
+      const node = listNode.querySelector(`#${cmCurrentComwIdPrefix}${lastOpenComw}`);
+
+      if (node !== null) {
+        isFound = true;
+        node.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      }
+    };
 
     return hookEffectPipe()
       .pipe(
-        setTimeoutPipe(() => {
-          const parent = (function get(node: HTMLElement | null): HTMLElement | null {
-            return node && (node.scrollHeight > node.clientHeight ? node : get(node.parentElement));
-          })(node as never);
-
-          if (parent == null) {
-            node.scrollIntoView({ block: 'center' });
-            return;
-          }
-
-          mylib.scrollToView(node, 'top', {
-            parent,
-            top: 36,
-          });
-        }),
+        setTimeoutPipe(scrollToCom, 0),
+        setTimeoutPipe(scrollToCom, 10),
+        setTimeoutPipe(scrollToCom, 50),
+        setTimeoutPipe(scrollToCom, 100),
+        setTimeoutPipe(scrollToCom, 200),
+        setTimeoutPipe(scrollToCom, 500),
       )
       .effect();
-  }, [listRef, props.ccomw, props.isPutCcomFaceOff, props.titles]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listRef, lastOpenComw, props.isPutCcomFaceOff, props.titles, ...deps]);
 };

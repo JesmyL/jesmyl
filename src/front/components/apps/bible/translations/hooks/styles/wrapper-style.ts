@@ -1,4 +1,4 @@
-import { BibleTranslationScreenConfig } from '@bible/translations/model';
+import { BibleTranslationScreenConfig } from '$bible/translations/model';
 import { useScreenTranslationTextStyles } from 'front/components/apps/+complect/translations/complect/hooks/text-styles';
 import { CSSProperties, useMemo } from 'react';
 import { addressGridArea } from './address-style';

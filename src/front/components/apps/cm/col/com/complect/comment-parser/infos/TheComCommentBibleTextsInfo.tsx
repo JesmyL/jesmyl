@@ -1,9 +1,9 @@
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
-import { bibleTitles } from '@bible/hooks/bibleTitlesJson';
-import { BibleModulesTranslationsRedactButton } from '@bible/translates/Add';
-import { bibleAllTranslates, translateDescriptions } from '@bible/translates/lib/consts';
-import { useBibleMyTranslates } from '@bible/translates/lib/hooks';
+import { bibleTitles } from '$bible/hooks/bibleTitlesJson';
+import { BibleModulesTranslationsRedactButton } from '$bible/translates/Add';
+import { bibleAllTranslates, translateDescriptions } from '$bible/translates/lib/consts';
+import { useBibleMyTranslates } from '$bible/translates/lib/hooks';
 import React from 'react';
 import { TheComCommentForExample } from './ForExample';
 

@@ -4,7 +4,7 @@ import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { useAuth, useIndexSchedules } from '@index/atoms';
+import { useAuth, useIndexSchedules } from '$index/atoms';
 import { useState } from 'react';
 import {
   CustomAttUseTaleId,
@@ -54,10 +54,7 @@ export function ScheduleWidgetCopy(props: { schw: IScheduleWidgetWid }) {
                       ...schedule.ctrl,
                       users: [myUser],
                       roles: schedule.ctrl.roles.map(role => {
-                        return {
-                          ...role,
-                          user: undefined,
-                        };
+                        return { ...role, user: undefined };
                       }),
                     },
                     days: schedule.days.map(day => {
@@ -99,11 +96,7 @@ export function ScheduleWidgetCopy(props: { schw: IScheduleWidgetWid }) {
                               }
                             });
 
-                          return {
-                            ...event,
-                            rate: undefined,
-                            atts,
-                          };
+                          return { ...event, rate: undefined, atts };
                         }),
                       };
                     }),

@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
-import { bibleTranslatesIDB } from '@bible/_db/bibleIDB';
-import { cmIDB } from '@cm/_db/cm-idb';
+import { bibleTranslatesIDB } from '$bible/_db/bibleIDB';
+import { cmIDB } from '$cm/_db/cm-idb';
 import { memo, useEffect, useState } from 'react';
 import { BibleTranslateName, EeStorePack } from 'shared/api';
 import { emptyArray, itIt, makeRegExp } from 'shared/utils';
@@ -41,10 +41,10 @@ export const EERulesListComputer = memo(function ListComputer({
       const texts: string[] = [
         cats?.map(col => col.name) ?? emptyArray,
         coms?.map(col => (col.texts ? [col.name, ...col.texts] : col.name)) ?? emptyArray,
-        isCheckBible ? (await bibleTranslatesIDB.get[BibleTranslateName.rst]())?.chapters ?? emptyArray : emptyArray,
-        isCheckBible ? (await bibleTranslatesIDB.get[BibleTranslateName.nrt]())?.chapters ?? emptyArray : emptyArray,
+        isCheckBible ? ((await bibleTranslatesIDB.get[BibleTranslateName.rst]())?.chapters ?? emptyArray) : emptyArray,
+        isCheckBible ? ((await bibleTranslatesIDB.get[BibleTranslateName.nrt]())?.chapters ?? emptyArray) : emptyArray,
         isCheckBible
-          ? (await bibleTranslatesIDB.get[BibleTranslateName.kas]())?.chapters?.filter(itIt) ?? emptyArray
+          ? ((await bibleTranslatesIDB.get[BibleTranslateName.kas]())?.chapters?.filter(itIt) ?? emptyArray)
           : emptyArray,
       ].flat(10);
 

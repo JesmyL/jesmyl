@@ -1,26 +1,25 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { BibleTranslatesContextProvider } from '@bible/translates/TranslatesContext';
-import { FollowTranslationInitialSlide } from '@cm/translation/complect/live/FollowTranslationInitialSlide';
-import { useAuth } from '@index/atoms';
-import { indexIDB } from '@index/db/index-idb';
+import { BibleTranslatesContextProvider } from '$bible/translates/TranslatesContext';
+import { FollowTranslationInitialSlide } from '$cm/translation/complect/live/FollowTranslationInitialSlide';
+import { useAuth } from '$index/atoms';
+import { indexIDB } from '$index/db/index-idb';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { complectIDB } from 'front/components/apps/+complect/_idb/complectIDB';
 import { useScreenTranslationWindows } from 'front/components/apps/+complect/translations/hooks/windows';
 import { useTranslationInitialSlideSet } from 'front/components/apps/+complect/translations/initial-slide-context';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { IScheduleWidgetWid } from 'shared/api';
 import { itNNull } from 'shared/utils';
 import { schLiveSokiInvocatorClient } from './live-invocator';
 import { IndexScheduleWidgetBibleTranslationsControlled } from './LiveBible';
 import { ScheduleWidgetLiveCmTranslations } from './LiveCm';
 
-export const IndexScheduleWidgetTranslations = () => {
+export const IndexScheduleWidgetTranslations = ({ schw }: { schw: IScheduleWidgetWid | und }) => {
   const auth = useAuth();
   const windows = useScreenTranslationWindows();
   const isCm = complectIDB.useValue.currentTranslationTextApp() === 'cm';
   const [isCantTranslateLive, setIsCantTranslateLive] = useState(true);
-  const schw = +useParams().schw!;
-  const schedule = useLiveQuery(() => indexIDB.db.schs.get(schw), [schw]);
+  const schedule = useLiveQuery(() => schw && indexIDB.db.schs.get(schw), [schw]);
   const setInitialSlide = useTranslationInitialSlideSet();
 
   useEffect(() => {

@@ -3,10 +3,7 @@ import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import {
-  ScheduleUserScopePropsContext,
-  useScheduleScopePropsContext,
-} from '#widgets/schedule/complect/scope-contexts/scope-props-contexts';
+import { ScheduleUserScopePropsContext, useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import { ReactNode, useMemo, useState } from 'react';
 import {

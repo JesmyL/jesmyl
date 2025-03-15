@@ -1,7 +1,7 @@
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
-import { cmEditorClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
-import { useCmMp3Rules } from '@cm/editor/lib/hooks/useCmMp3Rules';
+import { cmEditorClientInvocatorMethods } from '$cm/editor/lib/cm-editor-invocator.methods';
+import { useCmMp3Rules } from '$cm/editor/lib/hooks/useCmMp3Rules';
 import { useEffect, useState } from 'react';
 import { CmMp3ContainsPageResult } from 'shared/api';
 

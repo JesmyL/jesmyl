@@ -1,12 +1,10 @@
-import { mylib } from '#shared/lib/my-lib';
-import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContainerConfigurer';
-import { Com } from '@cm/col/com/Com';
-import { ComFaceList } from '@cm/col/com/face/list/ComFaceList';
-import { useTakeActualComw } from '@cm/col/com/useCcom';
-import { useFavouriteComs } from '@cm/lists/favourites/useFavouriteComs';
+import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
+import { cmIDB } from '$cm/_db/cm-idb';
+import { useCmOpenComLinkRendererContext } from '$cm/basis/lib/contexts/current-com-list';
+import { Com } from '$cm/col/com/Com';
+import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
 import { TranslationSlidePreview } from 'front/components/apps/+complect/translations/controls/Preview';
-import { ReactNode, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { ReactNode } from 'react';
 import { itNIt } from 'shared/utils';
 import styled from 'styled-components';
 import { useCmScreenTranslationComNavigations } from '../hooks/com-navigation';
@@ -23,32 +21,39 @@ interface Props {
   backButtonPath?: string;
 }
 
-export function CmTranslationControlled({ head, comList, headTitle, backButtonPath }: Props) {
-  const [, setSearchParams] = useSearchParams();
-  const { favouriteComws } = useFavouriteComs();
-  const [isShowFavouritesList, setIsShowFavouritesList] = useState(false);
+export function CmTranslationControlled(props: Props) {
+  const [isShowFavouritesList, setIsShowFavouritesList] = cmIDB.use.isShowFavouritesInTranslations();
 
-  const { comPack } = useCmScreenTranslationComNavigations();
+  const { comPack, coms } = useCmScreenTranslationComNavigations();
   const setTexti = useCmScreenTranslationComTextNavigations().setTexti;
+  const linkToCom = useCmOpenComLinkRendererContext();
 
   useScreenKeyDownListen();
-  const ccomw = useTakeActualComw();
 
   return (
-    <PhaseContainerConfigurer
+    <PageContainerConfigurer
       className=""
-      backButtonPath={backButtonPath ?? mylib.isNaN(ccomw) ? undefined : `../${ccomw}`}
+      backButtonRender={(linkRef, backButtonNode) =>
+        linkToCom({
+          linkRef,
+          children: backButtonNode,
+          search: {
+            comw: coms[0]?.wid,
+            tran: undefined,
+          },
+        })
+      }
       headTitle={
-        headTitle ? (
+        props.headTitle ? (
           <>
-            {headTitle}
+            {props.headTitle}
             {comPack.pageTitlePostfix}
           </>
         ) : (
           'Трансляция' + (comPack.pageTitlePostfix || '')
         )
       }
-      head={head}
+      head={props.head}
       content={
         <Container>
           <div className="flex">
@@ -56,17 +61,17 @@ export function CmTranslationControlled({ head, comList, headTitle, backButtonPa
 
             <div className="translation-com-list">
               <div
-                className="flex flex-gap padding-gap padding-big-gap-l sticky bgcolor--5"
+                className="flex flex-gap  pl-5 py-2 sticky pointer bg-x5"
                 onClick={() => setIsShowFavouritesList(itNIt)}
               >
-                <span className={isShowFavouritesList ? undefined : 'color--7'}>Список</span>/
-                <span className={isShowFavouritesList ? 'color--7' : undefined}>Избранные</span>
+                <span className={isShowFavouritesList ? undefined : 'text-x7'}>Список</span>/
+                <span className={isShowFavouritesList ? 'text-x7' : undefined}>Избранные</span>
               </div>
               <StyledComFaceList
-                list={isShowFavouritesList ? favouriteComws : comList ?? comPack.list}
+                list={props.comList ?? coms}
                 titles={comPack.titles}
-                importantOnClick={com => {
-                  setSearchParams(prev => ({ ...prev, comw: com.wid }));
+                importantOnClick={({ defaultClick }) => {
+                  defaultClick();
                   setTexti(0);
                 }}
               />

@@ -1,7 +1,6 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { HTMLAttributes, JSX } from 'react';
-import { Link } from 'react-router-dom';
 import { useBottomPopupOnCloseContext } from './context';
 
 interface Props extends HTMLAttributes<HTMLLIElement> {
@@ -12,7 +11,6 @@ interface Props extends HTMLAttributes<HTMLLIElement> {
   title?: string;
   rightNode?: React.ReactNode;
   iconWrapperClassName?: string;
-  path?: string;
   onIconClick?: PreventerAndStopperCallback;
 }
 
@@ -24,7 +22,6 @@ export const BottomPopupItem = ({
   title,
   rightNode,
   iconWrapperClassName = '',
-  path,
   onClick,
   onIconClick,
   className = '',
@@ -32,7 +29,7 @@ export const BottomPopupItem = ({
 }: Props) => {
   const onClose = useBottomPopupOnCloseContext();
 
-  const node = (
+  return (
     <ListItem
       disablePadding
       {...attrs}
@@ -68,6 +65,4 @@ export const BottomPopupItem = ({
       </ListItemButton>
     </ListItem>
   );
-
-  return path && onClick === undefined ? <Link to={path}>{node}</Link> : node;
 };

@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { useIndexFileAssociations } from '@index/atoms';
+import { useIndexFileAssociations } from '$index/atoms';
 import { useMemo } from 'react';
 import { MyFileType } from 'shared/api';
 import { makeRegExp } from 'shared/utils';

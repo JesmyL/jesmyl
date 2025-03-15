@@ -1,15 +1,15 @@
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
-import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContainerConfigurer';
-import { useBibleAddressBooki } from '@bible/hooks/address/books';
-import { useBibleAddressChapteri } from '@bible/hooks/address/chapters';
-import { useBibleAddressVersei } from '@bible/hooks/address/verses';
-import { useBibleBookList } from '@bible/hooks/texts';
-import { BibleAddressSingle } from '@bible/texts/BibleAddressSingle';
-import { useBibleTranslatesContext } from '@bible/translates/lib/contexts';
-import { useBibleShowTranslatesValue } from '@bible/translates/lib/hooks';
-import { BibleTranslatesContextProvider } from '@bible/translates/TranslatesContext';
-import { BibleModulesTranslations } from '@bible/translates/Translations';
-import { useBibleSingleAddressSetter } from '@bible/translations/lists/atoms';
+import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
+import { useBibleAddressBooki } from '$bible/hooks/address/books';
+import { useBibleAddressChapteri } from '$bible/hooks/address/chapters';
+import { useBibleAddressVersei } from '$bible/hooks/address/verses';
+import { useBibleBookList } from '$bible/hooks/texts';
+import { BibleAddressSingle } from '$bible/texts/BibleAddressSingle';
+import { useBibleTranslatesContext } from '$bible/translates/lib/contexts';
+import { useBibleShowTranslatesValue } from '$bible/translates/lib/hooks';
+import { BibleTranslatesContextProvider } from '$bible/translates/TranslatesContext';
+import { BibleModulesTranslations } from '$bible/translates/Translations';
+import { useBibleSingleAddressSetter } from '$bible/translations/lists/atoms';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { BibleReaderBook } from './BookPage';
@@ -43,7 +43,7 @@ function Content() {
   }, [currentBooki, currentChapteri]);
 
   return (
-    <PhaseContainerConfigurer
+    <PageContainerConfigurer
       className=""
       withoutBackButton
       headTitle={

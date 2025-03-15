@@ -3,10 +3,10 @@ import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { Com } from '@cm/col/com/Com';
-import { ComFaceList } from '@cm/col/com/face/list/ComFaceList';
-import { TheCom } from '@cm/col/com/TheCom';
-import { cmComClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
+import { Com } from '$cm/col/com/Com';
+import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
+import { TheCom } from '$cm/col/com/TheCom';
+import { cmComClientInvocatorMethods } from '$cm/editor/lib/cm-editor-invocator.methods';
 import { useMemo, useState } from 'react';
 import { CmComWid } from 'shared/api';
 import { emptyArray } from 'shared/utils';
@@ -27,7 +27,7 @@ export const RemovedComsModalInner = () => {
       <ModalBody>
         <ComFaceList
           list={coms}
-          importantOnClick={com => setOpenComw(com.wid)}
+          importantOnClick={({ com }) => setOpenComw(com.wid)}
           comDescription={comControls}
         />
       </ModalBody>

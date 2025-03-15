@@ -6,13 +6,12 @@ import { SendButtonContentMaker } from '../send-button-content-maker/maker';
 import { SendButtonProps } from './SendButton.model';
 
 export function SendButton<Value>(props: SendButtonProps<Value>) {
-  const [toastNode, toast] = useToast();
+  const toast = useToast();
 
   return (
     <SendButtonContentMaker
       {...props}
       confirm={props.confirm === true ? props.title : props.confirm}
-      anchorNodes={<>{toastNode}</>}
       onFailure={error => {
         props.onFailure?.(error);
         toast(error, { mood: 'ko' });

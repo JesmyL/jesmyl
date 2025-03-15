@@ -6,14 +6,11 @@ interface Storage {
   token: string | null;
 }
 
-const storeName = process.env.NODE_ENV === 'development' ? 'authorization?' : 'authorization';
+const storeName = process.env.NODE_ENV === 'development' ? 'authorization2' : 'authorization';
 
 class AuthIDB extends DexieDB<Storage> {
   constructor() {
-    super(storeName, {
-      auth: { $byDefault: { level: 0 } },
-      token: { $byDefault: null },
-    });
+    super(storeName, { auth: { $byDefault: { level: 0 } }, token: { $byDefault: null } });
   }
 }
 

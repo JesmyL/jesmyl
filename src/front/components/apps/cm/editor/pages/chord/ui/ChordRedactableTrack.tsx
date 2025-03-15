@@ -1,6 +1,6 @@
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { ChordCardTracked } from '@cm/col/com/chord-card/ChordCardTracked';
+import { ChordCardTracked } from '$cm/col/com/chord-card/ChordCardTracked';
 import React from 'react';
 import { ChordTrack } from 'shared/api';
 
@@ -19,10 +19,7 @@ export const ChordRedactableTrack = ({
         placeholder="Начальный лад"
         className="half-width"
         id={Math.trunc(redactableChord[0])}
-        items={ladLine.map((_, lad) => ({
-          title: `Лад ${lad + 1}`,
-          id: lad,
-        }))}
+        items={ladLine.map((_, lad) => ({ title: `Лад ${lad + 1}`, id: lad }))}
         onSelect={({ id }) => {
           modifyTrack(track => {
             track[0] = +`${id}.${('' + track[0]).split('.')[1] || ''}`;

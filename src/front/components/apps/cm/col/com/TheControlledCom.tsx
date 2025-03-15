@@ -1,11 +1,10 @@
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { cmIDB } from '@cm/_db/cm-idb';
-import { RollControled } from '@cm/base/RolledContent';
-import { ChordVisibleVariant } from '@cm/Cm.model';
+import { cmIDB } from '$cm/_db/cm-idb';
+import { RollControled } from '$cm/base/RolledContent';
+import { ChordVisibleVariant } from '$cm/Cm.model';
+import { Link } from '@tanstack/react-router';
 import { useEffect, useRef } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { CmComWid } from 'shared/api';
 import styled, { RuleSet, css } from 'styled-components';
 import { Com } from './Com';
 import './Com.scss';
@@ -20,48 +19,29 @@ const swiper = backSwipableContainerMaker(
   () => onNextCom(),
 );
 
-export function TheControlledCom({
-  com,
-  comwList,
-  chordVisibleVariant,
-  onComSet,
-}: {
+interface Props {
   com: Com;
-  comwList?: CmComWid[] | nil;
+  comList: Com[];
   chordVisibleVariant: ChordVisibleVariant;
-  onComSet?: (comw: CmComWid) => void;
-}) {
+}
+
+export const TheControlledCom = ({ com, comList, chordVisibleVariant }: Props) => {
   const fontSize = cmIDB.useValue.comFontSize();
   const isMiniAnchor = cmIDB.useValue.isMiniAnchor();
   const listRef = useRef<HTMLDivElement>(null);
-  const [, setSearchParams] = useSearchParams();
   const commentCss = useComCommentBlockCss(com);
+
+  const comi = comList.findIndex(c => c.wid === com.wid);
+  const nextComw = comi < comList.length - 1 ? comList[comi + 1]?.wid : comList[0]?.wid;
+  const prevComw = comi > 0 ? comList[comi - 1]?.wid : comList[comList.length - 1]?.wid;
+
+  const nextComLinkRef = useRef<HTMLAnchorElement>(null);
+  const prevComLinkRef = useRef<HTMLAnchorElement>(null);
 
   useComCommentBlockFastReactions(com);
 
-  onNextCom = () => {
-    if (!comwList?.length) return;
-    const comi = comwList.findIndex(wid => wid === com.wid);
-    if (comi < comwList.length - 1) {
-      onComSet?.(comwList[comi + 1]);
-      setSearchParams({ comw: '' + comwList[comi + 1] });
-    } else {
-      onComSet?.(comwList[0]);
-      setSearchParams({ comw: '' + comwList[0] });
-    }
-  };
-
-  onPrevCom = () => {
-    if (!comwList?.length) return;
-    const comi = comwList.findIndex(wid => wid === com.wid);
-    if (comi > 0) {
-      onComSet?.(comwList[comi - 1]);
-      setSearchParams({ comw: '' + comwList[comi - 1] });
-    } else {
-      onComSet?.(comwList[comwList.length - 1]);
-      setSearchParams({ comw: '' + comwList[comwList.length - 1] });
-    }
-  };
+  onNextCom = () => nextComLinkRef.current?.click();
+  onPrevCom = () => prevComLinkRef.current?.click();
 
   useEffect(() => {
     return hookEffectPipe()
@@ -77,26 +57,40 @@ export function TheControlledCom({
   }, []);
 
   return (
-    <StyledRollControled
-      $commentStyles={commentCss}
-      className="composition-content"
-    >
-      <WithScrollProgress
-        {...swiper}
-        className="relative full-height"
-        $listHeight={listRef.current?.clientHeight}
+    <>
+      <StyledRollControled
+        $commentStyles={commentCss}
+        className="composition-content"
       >
-        <TheCom
-          com={com}
-          fontSize={fontSize}
-          chordVisibleVariant={chordVisibleVariant}
-          isMiniAnchor={isMiniAnchor}
-          listRef={listRef}
+        <WithScrollProgress
+          {...swiper}
+          className="relative full-height"
+          $listHeight={listRef.current?.clientHeight}
+        >
+          <TheCom
+            com={com}
+            fontSize={fontSize}
+            chordVisibleVariant={chordVisibleVariant}
+            isMiniAnchor={isMiniAnchor}
+            listRef={listRef}
+          />
+        </WithScrollProgress>
+      </StyledRollControled>
+      <div hidden>
+        <Link
+          ref={prevComLinkRef}
+          to="."
+          search={prev => ({ ...(prev as object), comw: prevComw })}
         />
-      </WithScrollProgress>
-    </StyledRollControled>
+        <Link
+          ref={nextComLinkRef}
+          to="."
+          search={prev => ({ ...(prev as object), comw: nextComw })}
+        />
+      </div>
+    </>
   );
-}
+};
 
 const StyledRollControled = styled(RollControled)<{ $commentStyles?: RuleSet<object> | string }>`
   ${props => props.$commentStyles}

@@ -1,34 +1,16 @@
-import { useSetAppRootAnchorNodesContext } from '#basis/lib/App.contexts';
-import { useWid } from '#shared/lib/hooks/useWid';
 import { useEffect } from 'react';
-import { Portal } from './Portal';
+import { useSetRootAnchoredContent } from './useSetRootAnchoredContent';
 
-export const RootAnchoredContent = ({
-  renderNode,
-  subClose,
-}: {
-  renderNode: React.ReactNode;
-  subClose: { current: () => void };
-}) => {
-  const addNode = useSetAppRootAnchorNodesContext();
-  const wid = useWid();
+interface Props {
+  children: React.ReactNode;
+  onCloseRef: { current: () => void };
+  classNames?: string[];
+}
 
-  subClose.current = () =>
-    addNode(prev => {
-      const map = new Map(prev);
-      map.delete(wid);
-      return map;
-    });
+export const RootAnchoredContent = ({ children, onCloseRef, classNames }: Props) => {
+  const setContent = useSetRootAnchoredContent(onCloseRef, children, classNames);
 
-  useEffect(
-    () =>
-      addNode(prev => {
-        const map = new Map(prev);
-        map.set(wid, <Portal>{renderNode}</Portal>);
-        return map;
-      }),
-    [addNode, renderNode, wid],
-  );
+  useEffect(() => setContent(), [children, classNames, setContent]);
 
   return <></>;
 };

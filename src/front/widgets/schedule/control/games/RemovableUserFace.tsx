@@ -2,7 +2,7 @@ import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useScheduleScopePropsContext } from '#widgets/schedule/complect/scope-contexts/scope-props-contexts';
+import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import { useState } from 'react';

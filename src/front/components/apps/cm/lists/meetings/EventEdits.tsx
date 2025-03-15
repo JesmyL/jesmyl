@@ -5,21 +5,25 @@ import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { useSelectedComs } from '@cm/base/useSelectedComs';
-import { ComFaceList } from '@cm/col/com/face/list/ComFaceList';
-import { cmComExternalsClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
-import { useAuth } from '@index/atoms';
+import { ScheduleDayEventPathProps } from '#widgets/schedule/ScheduleWidget.model';
+import { useSelectedComs } from '$cm/base/useSelectedComs';
+import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
+import { cmComExternalsClientInvocatorMethods } from '$cm/editor/lib/cm-editor-invocator.methods';
+import { MoveSelectedComButton } from '$cm/entities/MoveSelectedComButton';
+import { useAuth } from '$index/atoms';
 import { useState } from 'react';
 import { CmComWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
-import { MoveSelectedComButton } from '../selected-coms/MoveSelectedComButton';
 import { CmMeetingEventEditsHistoryModalInner } from './EventEditsHistoryModal';
-import { useMeetingPathParts } from './useMeetingPathParts';
 
-export const CmMeetingEventEdits = ({ packComws }: { packComws: CmComWid[] }) => {
+export const CmMeetingEventEdits = ({
+  packComws,
+  dayi,
+  eventMi,
+  schw,
+}: { packComws: CmComWid[] } & Required<ScheduleDayEventPathProps>) => {
   const auth = useAuth();
   const { selectedComs, selectedComws } = useSelectedComs();
-  const { dayi, eventMi, schw } = useMeetingPathParts();
   const [isOpenHistoryModal, setIsOpenHistoryModal] = useState<unknown>(false);
   const [isOpenSendModal, setIsOpenSendModal] = useState<unknown>(false);
 
@@ -42,7 +46,10 @@ export const CmMeetingEventEdits = ({ packComws }: { packComws: CmComWid[] }) =>
 
       {isOpenHistoryModal && (
         <Modal onClose={setIsOpenHistoryModal}>
-          <CmMeetingEventEditsHistoryModalInner />
+          <CmMeetingEventEditsHistoryModalInner
+            dayi={dayi}
+            schw={schw}
+          />
         </Modal>
       )}
 

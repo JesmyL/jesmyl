@@ -1,8 +1,8 @@
-import { useBibleTranslationAddressIndexesSetter } from '@bible/hooks/address/address';
-import { useBibleBookList } from '@bible/hooks/texts';
-import { BibleBooki, BibleChapteri, BibleVersei } from '@bible/model';
-import { useBibleTranslatesContext } from '@bible/translates/lib/contexts';
-import { useBibleShowTranslatesValue } from '@bible/translates/lib/hooks';
+import { useBibleTranslationAddressIndexesSetter } from '$bible/hooks/address/address';
+import { useBibleBookList } from '$bible/hooks/texts';
+import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/model';
+import { useBibleTranslatesContext } from '$bible/translates/lib/contexts';
+import { useBibleShowTranslatesValue } from '$bible/translates/lib/hooks';
 import { JSX, memo } from 'react';
 
 interface Props {

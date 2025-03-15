@@ -1,12 +1,14 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
-import { useModal } from '#shared/ui/modal/useModal';
+import { Modal } from '#shared/ui/modal/Modal/Modal';
+import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
+import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { IScheduleWidgetListCat } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
-import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
+import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import { ScheduleWidgetListUnit } from './Unit';
@@ -23,12 +25,61 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
   const title = <>{cat.title || <span className="text-italic">Список</span>}</>;
   const shortTitles: [string, string] = [cutTitle(cat.titles[0]), cutTitle(cat.titles[1])];
 
-  const [modalNode, screen] = useModal(({ header, body }) => {
-    return (
-      <>
-        {header(<div className="flex flex-gap">{title}</div>)}
-        {body(
+  const [isOpenModal, setIsOpenModal] = useState<unknown>(false);
+
+  return (
+    <>
+      <ExpandableContent
+        title={
           <>
+            <LazyIcon icon={cat.icon} /> {title}
+          </>
+        }
+        postfix={isExpand =>
+          isExpand &&
+          rights.isCanTotalRedact && (
+            <div className="flex flex-gap">
+              <div className="ellipsis max-width:5em">{cat.title.toLowerCase()}</div>
+              {!rights.schedule.lists?.units.some(unit => !unit.title) && (
+                <TheIconSendButton
+                  icon="PlusSign"
+                  confirm={`Создать новое ${cat.title}?`}
+                  onSend={() => schListsSokiInvocatorClient.createUnit(null, catScopeProps, cati)}
+                />
+              )}
+              <LazyIcon
+                icon="Edit02"
+                onClick={setIsOpenModal}
+              />
+            </div>
+          )
+        }
+      >
+        {isExpand => (
+          <div className="margin-big-gap-h">
+            {isExpand &&
+              rights.schedule.lists?.units.map(unit => {
+                if (unit.cati !== cati) return null;
+
+                return (
+                  <ScheduleWidgetListUnit
+                    key={unit.mi}
+                    cat={cat}
+                    cati={cati}
+                    unit={unit}
+                    shortTitles={shortTitles}
+                  />
+                );
+              })}
+          </div>
+        )}
+      </ExpandableContent>
+
+      {isOpenModal && (
+        <Modal onClose={setIsOpenModal}>
+          <ModalHeader className="flex flex-gap">{title}</ModalHeader>
+
+          <ModalBody>
             <LazyIconConfigurator
               header={`Иконка для списка ${cat.title}`}
               icon={cat.icon}
@@ -55,60 +106,9 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
               isRedact
               onSend={value => schListsSokiInvocatorClient.setCategoryMembersTitle(null, catScopeProps, value)}
             />
-          </>,
-        )}
-      </>
-    );
-  });
-
-  return (
-    <>
-      {modalNode}
-      <ExpandableContent
-        title={
-          <>
-            <LazyIcon icon={cat.icon} /> {title}
-          </>
-        }
-        postfix={isExpand =>
-          isExpand &&
-          rights.isCanTotalRedact && (
-            <div className="flex flex-gap">
-              <div className="ellipsis max-width:5em">{cat.title.toLowerCase()}</div>
-              {!rights.schedule.lists?.units.some(unit => !unit.title) && (
-                <TheIconSendButton
-                  icon="PlusSign"
-                  confirm={`Создать новое ${cat.title}?`}
-                  onSend={() => schListsSokiInvocatorClient.createUnit(null, catScopeProps, cati)}
-                />
-              )}
-              <LazyIcon
-                icon="Edit02"
-                onClick={screen}
-              />
-            </div>
-          )
-        }
-      >
-        {isExpand => (
-          <div className="margin-big-gap-h">
-            {isExpand &&
-              rights.schedule.lists?.units.map(unit => {
-                if (unit.cati !== cati) return null;
-
-                return (
-                  <ScheduleWidgetListUnit
-                    key={unit.mi}
-                    cat={cat}
-                    cati={cati}
-                    unit={unit}
-                    shortTitles={shortTitles}
-                  />
-                );
-              })}
-          </div>
-        )}
-      </ExpandableContent>
+          </ModalBody>
+        </Modal>
+      )}
     </>
   );
 }

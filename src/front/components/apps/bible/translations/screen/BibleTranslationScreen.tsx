@@ -1,5 +1,5 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useBibleAddressVersei } from '@bible/hooks/address/verses';
+import { useBibleAddressVersei } from '$bible/hooks/address/verses';
 import { useSetScreenTranslationInteractiveBackground } from 'front/components/apps/+complect/translations/hooks/interactive-back';
 import { useApplyScreenFontFamilyEffect } from 'front/components/apps/+complect/translations/hooks/set-font-family';
 import { TranslationScreenProps } from 'front/components/apps/+complect/translations/Translations.model';

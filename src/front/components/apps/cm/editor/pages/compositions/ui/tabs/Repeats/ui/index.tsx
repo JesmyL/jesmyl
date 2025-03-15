@@ -1,10 +1,10 @@
 import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { ChordVisibleVariant } from '@cm/Cm.model';
-import { ComLine } from '@cm/col/com/line/ComLine';
-import { TheOrder } from '@cm/col/com/order/TheOrder';
-import { cmComOrderClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
-import { EditableComOrder } from '@cm/editor/lib/EditableComOrder';
+import { ChordVisibleVariant } from '$cm/Cm.model';
+import { ComLine } from '$cm/col/com/line/ComLine';
+import { TheOrder } from '$cm/col/com/order/TheOrder';
+import { cmComOrderClientInvocatorMethods } from '$cm/editor/lib/cm-editor-invocator.methods';
+import { EditableComOrder } from '$cm/editor/lib/EditableComOrder';
 import { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { OrderRepeats } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
@@ -14,10 +14,7 @@ import { IEditableComLineProps } from '../model';
 import { ComRepeatsRemoveButton } from './RemoveButton';
 
 const flashCounts = [2, 3, 4, 5];
-const defaultPos = {
-  '--x': 0,
-  '--y': 0,
-};
+const defaultPos = { '--x': 0, '--y': 0 };
 
 export const CmComRepeatsRedactorTab = () => {
   const [start, setStart] = useState<IEditableComLineProps | null>(null);
@@ -98,10 +95,7 @@ export const CmComRepeatsRedactorTab = () => {
                       });
 
                       setIsChordBlock(true);
-                      setPos({
-                        '--x': event.currentTarget.offsetLeft,
-                        '--y': event.currentTarget.offsetTop + 100,
-                      });
+                      setPos({ '--x': event.currentTarget.offsetLeft, '--y': event.currentTarget.offsetTop + 100 });
                     } else {
                       setIsChordBlock(false);
                       setIsReadySetChordBlock(true);
@@ -217,10 +211,7 @@ export const CmComRepeatsRedactorTab = () => {
 
                       if (start == null || isChordBlock) {
                         setStart({ ...props, orderUnit: ord, wordi: +wordi });
-                        setPos({
-                          '--x': event.currentTarget.offsetLeft,
-                          '--y': event.currentTarget.offsetTop,
-                        });
+                        setPos({ '--x': event.currentTarget.offsetLeft, '--y': event.currentTarget.offsetTop });
                         setIsChordBlock(false);
                       } else {
                         const nextLetter = ccom.getRegionNextLetter();
@@ -303,13 +294,7 @@ export const CmComRepeatsRedactorTab = () => {
                       <div
                         className="button flag pointer"
                         onClick={() => {
-                          setField(
-                            startOrd,
-                            {
-                              [`~${startLinei}:${startWordi}`]: flashCount - 1,
-                            },
-                            startOrd.repeats,
-                          );
+                          setField(startOrd, { [`~${startLinei}:${startWordi}`]: flashCount - 1 }, startOrd.repeats);
                           reset();
                         }}
                       >

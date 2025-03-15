@@ -3,7 +3,7 @@ import { useFullContent } from '#shared/ui/fullscreen-content/useFullContent';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
+import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { ScheduleWidgetTeamGames } from '../control/games/games/Games';
 import { ScheduleWidgetRoleList } from '../control/roles/RoleList';
 import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';

@@ -1,36 +1,27 @@
-import { contextCreator } from '#shared/lib/contextCreator';
 import { MyLib } from '#shared/lib/my-lib';
-import { cmIDB } from '@cm/_db/cm-idb';
-import { cmUserStoreSokiInvocatorClient } from '@cm/invocators/user-store-invocator.methods';
+import { cmIDB } from '$cm/_db/cm-idb';
+import { useCcom } from '$cm/basis/lib/com-selections';
+import { cmUserStoreSokiInvocatorClient } from '$cm/invocators/user-store-invocator.methods';
 import React from 'react';
 import { MigratableComToolName } from 'shared/api';
 import styled, { css } from 'styled-components';
-import { Com } from '../../Com';
-import { useCcom } from '../../useCcom';
-import { CmCatsBindsComTool } from '../ui/CatsBinds';
-import { ChordImagesTool } from '../ui/ChordImagesTool';
-import { ChordsVariantTool } from '../ui/ChordsVariantTool';
-import { ComCommentTool } from '../ui/ComCommentTool';
-import { FullscreenTool } from '../ui/FullscreenTool';
-import { HideMetronomeTool } from '../ui/HideMetronomeTool';
-import { MarkedComTool } from '../ui/MarkedComTool';
-import { MiniAnchorSwitchTool } from '../ui/MiniAnchorSwitchTool';
-import { OpenPlayerTool } from '../ui/OpenPlayerTool';
-import { QrComShare } from '../ui/QrComShare';
-import { SelectedToggleTool } from '../ui/SelectedToggleTool';
-import { TranslationTool } from '../ui/TranslationTool';
+import { CmCatsBindsComTool } from '../ui/CatsBindsComTool';
+import { ChordImagesComTool } from '../ui/ChordImagesComTool';
+import { ChordsVariantComTool } from '../ui/ChordsVariantComTool';
+import { ComCommentComTool } from '../ui/ComCommentComTool';
+import { FavoriteComTool } from '../ui/FavoriteComTool';
+import { FullscreenComTool } from '../ui/FullscreenComTool';
+import { HideMetronomeComTool } from '../ui/HideMetronomeComTool';
+import { MiniAnchorSwitchComTool } from '../ui/MiniAnchorSwitchComTool';
+import { OpenPlayerComTool } from '../ui/OpenPlayerComTool';
+import { QrComShareComTool } from '../ui/QrComShareComTool';
+import { SelectedComTool } from '../ui/SelectedComTool';
+import { TranslationComTool } from '../ui/TranslationComTool';
 import { ComToolItemAttrsContext, ComToolNameContext, IsComToolIconItemsContext } from './contexts';
 
 const RedactComTool = React.lazy(() => import('../ui/RedactComTool'));
 
-const [ComToolsCcomContext, useComToolsCcomContext] = contextCreator<Com | und>(undefined);
-
-export { useComToolsCcomContext };
-
-const mapToolsSelf = {} as {
-  fun: (tool: MigratableComToolName) => void;
-  comTopTools: MigratableComToolName[];
-};
+const mapToolsSelf = {} as { fun: (tool: MigratableComToolName) => void; comTopTools: MigratableComToolName[] };
 
 function mapTools(this: und | typeof mapToolsSelf, key: MigratableComToolName) {
   if (this === undefined)
@@ -66,18 +57,18 @@ function mapTools(this: und | typeof mapToolsSelf, key: MigratableComToolName) {
 }
 
 const toolsDict: Record<MigratableComToolName, React.ReactNode> = {
-  'mark-com': <MarkedComTool />,
-  'fullscreen-mode': <FullscreenTool />,
-  'chords-variant': <ChordsVariantTool />,
-  'show-translation': <TranslationTool />,
-  'chord-images': <ChordImagesTool />,
-  'selected-toggle': <SelectedToggleTool />,
-  'open-player': <OpenPlayerTool />,
-  'hide-metronome': <HideMetronomeTool />,
-  'is-mini-anchor': <MiniAnchorSwitchTool />,
-  'qr-share': <QrComShare />,
+  'mark-com': <FavoriteComTool />,
+  'fullscreen-mode': <FullscreenComTool />,
+  'chords-variant': <ChordsVariantComTool />,
+  'show-translation': <TranslationComTool />,
+  'chord-images': <ChordImagesComTool />,
+  'selected-toggle': <SelectedComTool />,
+  'open-player': <OpenPlayerComTool />,
+  'hide-metronome': <HideMetronomeComTool />,
+  'is-mini-anchor': <MiniAnchorSwitchComTool />,
+  'qr-share': <QrComShareComTool />,
   'cats-binds': <CmCatsBindsComTool />,
-  'com-comment': <ComCommentTool />,
+  'com-comment': <ComCommentComTool />,
 
   'edit-com': <RedactComTool />,
 };
@@ -100,19 +91,14 @@ export const useMigratableListComTools = () => {
     }, 1000);
   };
 
-  return (
-    <ComToolsCcomContext.Provider value={ccom}>{toolKeys.map(mapTools, mapToolsSelf)}</ComToolsCcomContext.Provider>
-  );
+  return toolKeys.map(mapTools, mapToolsSelf);
 };
 
 export const useMigratableTopComTools = () => {
-  const ccom = useCcom();
   const comTopTools = cmIDB.useValue.comTopTools();
 
   return (
-    <ComToolsCcomContext.Provider value={ccom}>
-      <IsComToolIconItemsContext.Provider value={true}>{comTopTools.map(mapTools)}</IsComToolIconItemsContext.Provider>
-    </ComToolsCcomContext.Provider>
+    <IsComToolIconItemsContext.Provider value={true}>{comTopTools.map(mapTools)}</IsComToolIconItemsContext.Provider>
   );
 };
 

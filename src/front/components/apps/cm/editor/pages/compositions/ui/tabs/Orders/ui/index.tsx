@@ -2,10 +2,10 @@ import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { TheButton } from '#shared/ui/TheButton';
-import { ChordVisibleVariant } from '@cm/Cm.model';
-import { TheOrder } from '@cm/col/com/order/TheOrder';
-import { cmComOrderClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
-import { EditableCom } from '@cm/editor/lib/EditableCom';
+import { ChordVisibleVariant } from '$cm/Cm.model';
+import { TheOrder } from '$cm/col/com/order/TheOrder';
+import { cmComOrderClientInvocatorMethods } from '$cm/editor/lib/cm-editor-invocator.methods';
+import { EditableCom } from '$cm/editor/lib/EditableCom';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useEditableCcom } from '../../../../lib/useEditableCom';
@@ -26,10 +26,7 @@ export const CmOrdersRedactorTab = () => {
     <StyledOrdersRedactor>
       <>
         {newBlockAdderPopupCom && (
-          <BottomPopup
-            isPreventCloseOnClick
-            onClose={setNewBlockAdderPopupCom}
-          >
+          <BottomPopup onClose={setNewBlockAdderPopupCom}>
             <OrdersRedactorAdditions
               com={newBlockAdderPopupCom}
               onClose={setNewBlockAdderPopupCom}
@@ -43,15 +40,7 @@ export const CmOrdersRedactorTab = () => {
           <LazyIcon
             icon={ord.isAnchor ? 'Link02' : 'Edit02'}
             className="margin-gap-h margin-gap-b pointer vertical-middle"
-            onClick={() =>
-              setToolProps({
-                com: ccom,
-                onClose: setToolProps,
-                ord,
-                ordi,
-                setClickBetweenOrds,
-              })
-            }
+            onClick={() => setToolProps({ com: ccom, onClose: setToolProps, ord, ordi, setClickBetweenOrds })}
           />
         );
         const isWithHead = ord.isWithHead();
@@ -162,10 +151,7 @@ export const CmOrdersRedactorTab = () => {
         </div>
       )}
       {toolProps && (
-        <BottomPopup
-          onClose={setToolProps}
-          isPreventCloseOnClick
-        >
+        <BottomPopup onClose={setToolProps}>
           <OrdersRedactorOrderTools {...toolProps} />
         </BottomPopup>
       )}

@@ -1,17 +1,32 @@
-import { useMeetingComFaceList } from '@cm/lists/meetings/useMeetingComFaceList';
-import { useNavigate } from 'react-router-dom';
+import { useMeetingComFaceList } from '$cm/lists/meetings/useMeetingComFaceList';
+import { useNavigate } from '@tanstack/react-router';
 import { ScheduleDayEventScopeProps } from 'shared/api';
 
 interface Props {
   scopeProps: ScheduleDayEventScopeProps;
-  listPath: string;
 }
 
-export function CmExternalComListAtt({ scopeProps, listPath }: Props) {
+export function CmExternalComListAtt({ scopeProps }: Props) {
   const navigate = useNavigate();
-  const { comFaceListNode } = useMeetingComFaceList(scopeProps.schw, scopeProps.dayi, scopeProps.eventMi, com =>
-    navigate(`${listPath}/${com.wid}`),
-  );
+
+  const { comFaceListNode } = useMeetingComFaceList({
+    schw: scopeProps.schw,
+    dayi: scopeProps.dayi,
+    eventMi: scopeProps.eventMi,
+    comImportantOnClick: ({ com }) => {
+      navigate({
+        to: '.',
+        params: { appName: 'cm' },
+        search: {
+          attKey: '[cm]:coms',
+          dayi: scopeProps.dayi,
+          eventMi: scopeProps.eventMi,
+          schw: scopeProps.schw,
+          comw: com.wid,
+        },
+      });
+    },
+  });
 
   return <>{comFaceListNode}</>;
 }

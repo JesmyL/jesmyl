@@ -187,7 +187,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
               topicBox={props.event}
             />
           </div>
-          {props.isForceCanRedact ?? rights.isCanRedact
+          {(props.isForceCanRedact ?? rights.isCanRedact)
             ? isExpand || isRedact
               ? editIcon
               : (props.event.dsc || MyLib.keys(props.event.atts).length !== 0) && <LazyIcon icon="ArrowDown01" />

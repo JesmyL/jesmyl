@@ -1,4 +1,4 @@
-import { useCats } from '@cm/cols/useCols';
+import { useCats } from '$cm/basis/lib/hooks/useCats';
 import React from 'react';
 import { Com } from './Com';
 

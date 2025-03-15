@@ -1,5 +1,5 @@
-import { FontSizeContain } from '@cm/base/font-size-contain/FontSizeContain';
-import { FontSizeContainProps } from '@cm/base/font-size-contain/FontSizeContain.model';
+import { FontSizeContain } from '$cm/base/font-size-contain/FontSizeContain';
+import { FontSizeContainProps } from '$cm/base/font-size-contain/FontSizeContain.model';
 import { ScreenTranslationPositionConfig } from 'front/components/apps/+complect/translations/complect/model';
 import { ScreenTranslateCurrentPositionConfigurators } from 'front/components/apps/+complect/translations/complect/position/Position';
 import { useApplyScreenFontFamilyEffect } from 'front/components/apps/+complect/translations/hooks/set-font-family';
@@ -37,14 +37,7 @@ export const CmTranslationSubScreen = ({
     (config: Partial<ScreenTranslationPositionConfig>) => {
       updateConfig({
         ...parentConfig,
-        subs: {
-          ...parentConfig.subs,
-          next: {
-            ...cmTranslationSubConfigNext,
-            ...parentConfig.subs?.next,
-            ...config,
-          },
-        },
+        subs: { ...parentConfig.subs, next: { ...cmTranslationSubConfigNext, ...parentConfig.subs?.next, ...config } },
       });
     },
     [parentConfig, updateConfig],

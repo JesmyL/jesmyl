@@ -9,10 +9,5 @@ interface PropsWithClick {
 export const SendButtonContentMakerBody = <Value,>(props: SendButtonContentMakerProps<Value> & PropsWithClick) => {
   const [onClick, error, isLoading] = useOnSendPromiseCallback(props.onClick, props.onSuccess, props.onFailure);
 
-  return (
-    <>
-      {props.anchorNodes}
-      {props.content?.(onClick, error, props.isLoading ?? isLoading)}
-    </>
-  );
+  return <>{props.content?.(onClick, error, props.isLoading ?? isLoading)}</>;
 };

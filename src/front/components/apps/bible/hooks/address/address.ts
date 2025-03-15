@@ -1,8 +1,8 @@
 import { mylib } from '#shared/lib/my-lib';
-import { bibleIDB } from '@bible/_db/bibleIDB';
-import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '@bible/model';
-import { useBibleSingleAddressSetter } from '@bible/translations/lists/atoms';
-import { useBibleTranslationSearchResultSelectedSet } from '@bible/translations/search/hooks/results';
+import { bibleIDB } from '$bible/_db/bibleIDB';
+import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '$bible/model';
+import { useBibleSingleAddressSetter } from '$bible/translations/lists/atoms';
+import { useBibleTranslationSearchResultSelectedSet } from '$bible/translations/search/hooks/results';
 import { useCallback } from 'react';
 
 export const useBibleTranslationAddressIndexesSetter = () => {

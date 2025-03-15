@@ -1,8 +1,8 @@
-import { cmIDB } from '@cm/_db/cm-idb';
-import { RollControled } from '@cm/base/RolledContent';
-import { Com } from '@cm/col/com/Com';
-import { CmComNumber } from '@cm/col/com/complect/ComNumber';
-import { ComOrders } from '@cm/col/com/orders/ComOrders';
+import { cmIDB } from '$cm/_db/cm-idb';
+import { RollControled } from '$cm/base/RolledContent';
+import { Com } from '$cm/col/com/Com';
+import { CmComNumber } from '$cm/col/com/complect/ComNumber';
+import { ComOrders } from '$cm/col/com/orders/ComOrders';
 import styled from 'styled-components';
 
 export function FullscreenExpandComList({ coms }: { coms: Com[] }) {

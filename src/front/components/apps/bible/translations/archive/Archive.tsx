@@ -1,8 +1,8 @@
 import { mylib } from '#shared/lib/my-lib';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { bibleIDB } from '@bible/_db/bibleIDB';
-import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '@bible/hooks/address/address';
-import { BibleTranslationAddress } from '@bible/model';
+import { bibleIDB } from '$bible/_db/bibleIDB';
+import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '$bible/hooks/address/address';
+import { BibleTranslationAddress } from '$bible/model';
 import { JSX, memo } from 'react';
 import { BibleTranslationArchiveJoinedAddressText } from './JoinedAddress';
 import { BibleTranslationArchiveJoinedContentText } from './JoinedContentText';

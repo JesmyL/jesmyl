@@ -1,4 +1,4 @@
-import { cmIDB } from '@cm/_db/cm-idb';
+import { cmIDB } from '$cm/_db/cm-idb';
 import { EeStorePack } from 'shared/api';
 
 export class EeStorage {

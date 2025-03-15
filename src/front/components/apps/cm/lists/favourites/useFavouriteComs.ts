@@ -1,7 +1,7 @@
 import { useToast } from '#shared/ui/modal/useToast';
-import { cmIDB } from '@cm/_db/cm-idb';
-import { useComs } from '@cm/cols/useCols';
-import { cmUserStoreSokiInvocatorClient } from '@cm/invocators/user-store-invocator.methods';
+import { cmIDB } from '$cm/_db/cm-idb';
+import { useComs } from '$cm/basis/lib/coms-selections';
+import { cmUserStoreSokiInvocatorClient } from '$cm/invocators/user-store-invocator.methods';
 
 let saveTimeout: TimeOut;
 const maxFavouritesCount = 30;
@@ -9,11 +9,10 @@ const maxFavouritesCount = 30;
 export const useFavouriteComs = () => {
   const favourites = cmIDB.useValue.favoriteComs();
   const favouriteSet = new Set(favourites);
-  const [favouritesToastNode, toast] = useToast();
+  const toast = useToast();
 
   const ret = {
-    favouritesToastNode,
-    favouriteComws: useComs(favourites),
+    favouriteComs: useComs(favourites),
     isFavourite: (comw: number) => favouriteSet.has(comw),
     toggleFavourite: (comw: number) => {
       if (ret.isFavourite(comw)) favouriteSet.delete(comw);

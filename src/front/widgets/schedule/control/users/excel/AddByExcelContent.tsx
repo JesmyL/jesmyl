@@ -4,7 +4,7 @@ import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { useToast } from '#shared/ui/modal/useToast';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useScheduleScopePropsContext } from '#widgets/schedule/complect/scope-contexts/scope-props-contexts';
+import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { schUsersSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -24,7 +24,7 @@ export function ScheduleWidgetUserAddByExcelContent({ close }: Props) {
   const scheduleScopeProps = useScheduleScopePropsContext();
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const [toastNode, toast] = useToast();
+  const toast = useToast();
   const [wetUsers, setWetUsers] = useState<Record<string, string>[] | null>(null);
   const [titles, setTitles] = useState<string[]>([]);
   const [nameField, setNameField] = useState<string | null>(null);
@@ -92,7 +92,6 @@ export function ScheduleWidgetUserAddByExcelContent({ close }: Props) {
   if (wetUsers === null)
     return (
       <>
-        {toastNode}
         <h3>Файл Excel</h3>
         <p>
           <input
@@ -106,7 +105,6 @@ export function ScheduleWidgetUserAddByExcelContent({ close }: Props) {
 
   return (
     <>
-      {toastNode}
       <div>
         <h3>Имя</h3>
         <Dropdown

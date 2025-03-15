@@ -5,7 +5,7 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React, { useState } from 'react';
 import { complectIDB } from '../../../_idb/complectIDB';
-import { defaultAlertLineConfig } from '../../atoms';
+import { defaultAlertLineConfig } from '../../consts';
 import { AlertLineConfigSettingsInner } from './AlertLineConfigSettings';
 
 const LazyAlertLineConfigIcon = React.lazy(() => import('./AlertLineConfigIcon'));

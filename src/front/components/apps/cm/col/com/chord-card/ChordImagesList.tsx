@@ -1,14 +1,15 @@
-import { useCcom } from '../useCcom';
+import { useCom } from '$cm/basis/lib/com-selections';
+import { CmComWid } from 'shared/api';
 import { ChordCard } from './ChordCard';
 import { CmUndefinedChordCard } from './UndefinedChordCard';
 
-export function ChordImagesList() {
-  const ccom = useCcom();
+export function ChordImagesList({ comw }: { comw: CmComWid }) {
+  const com = useCom(comw);
 
   return (
     <div className="margin-big-gap flex center column">
-      {ccom?.usedChords &&
-        Object.keys(ccom.usedChords)
+      {com?.usedChords &&
+        Object.keys(com.usedChords)
           .filter(uc => uc)
           .map(chordName => {
             return (
@@ -22,7 +23,7 @@ export function ChordImagesList() {
                       className="flex column margin-big-gap"
                     >
                       {card || <CmUndefinedChordCard chord={chordName} />}
-                      {ccom.usedChords?.[chordName] || '?'}
+                      {com.usedChords?.[chordName] || '?'}
                     </div>
                   );
                 }}

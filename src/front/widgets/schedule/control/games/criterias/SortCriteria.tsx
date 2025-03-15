@@ -5,7 +5,7 @@ import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheButton } from '#shared/ui/TheButton';
-import { useScheduleScopePropsContext } from '#widgets/schedule/complect/scope-contexts/scope-props-contexts';
+import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import { useMemo, useState } from 'react';

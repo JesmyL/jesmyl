@@ -1,4 +1,4 @@
-import { useBibleBooki } from '@bible/translations/lists/atoms';
+import { useBibleBooki } from '$bible/translations/lists/atoms';
 import { memo } from 'react';
 import { BibleModulesTranslationsRedactButton } from './Add';
 import { translateFilter } from './lib/consts';

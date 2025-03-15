@@ -1,50 +1,42 @@
-import { LinkAppActionFabric } from '#shared/lib/link-app-actions';
-import { schLinkAction } from '#widgets/schedule/links';
+import { SetAppRootAnchorNodesContext } from '#basis/lib/App.contexts';
 import { ThemeProvider } from '@mui/material';
+import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { complectIDB } from 'front/components/apps/+complect/_idb/complectIDB';
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { routeTree } from 'routeTree.gen';
 import './App.scss';
-import AppRouter from './AppRouter';
-import { lastVisitedRouteLsName } from './lib/consts';
 import { muiDarkThemePalette } from './lib/theme/lib/darkPalette';
 import { muiLightThemePalette } from './lib/theme/lib/lightPalette';
 import './tw.css';
 
+const router = createRouter({ routeTree });
+
+declare module '@tanstack/react-router' {
+  interface Register {
+    router: typeof router;
+  }
+}
+
 function App() {
   const isDarkMode = complectIDB.useValue.isDarkMode();
-  const [isNeedFirstNavigate, setIsNeedFirstNavigate] = useState(true);
+  const [rootAnchorNodes, setRootAnchorNodes] = useState<Map<string, React.ReactNode>>(new Map());
 
   return (
     <>
-      <ThemeProvider
-        theme={isDarkMode ? muiDarkThemePalette : muiLightThemePalette}
-        defaultMode="light"
-      >
-        {isNeedFirstNavigate && <FirstNaver onSet={setIsNeedFirstNavigate} />}
-        <AppRouter />
-      </ThemeProvider>
+      <SetAppRootAnchorNodesContext.Provider value={setRootAnchorNodes}>
+        <ThemeProvider
+          theme={isDarkMode ? muiDarkThemePalette : muiLightThemePalette}
+          defaultMode="light"
+        >
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </SetAppRootAnchorNodesContext.Provider>
+
+      {Array.from(rootAnchorNodes.entries()).map(([key, node]) => (
+        <React.Fragment key={key}>{node}</React.Fragment>
+      ))}
     </>
   );
 }
-
-const FirstNaver = ({ onSet }: { onSet: (is: false) => void }) => {
-  const navigate = useNavigate();
-  const loc = useLocation();
-  const onHrefData = LinkAppActionFabric.useOnHrefData();
-  schLinkAction.register();
-
-  useEffect(() => {
-    onHrefData(window.location.href);
-  }, [navigate, onHrefData]);
-
-  useEffect(() => {
-    onSet(false);
-    if (loc.pathname.length > 1) return;
-    navigate(localStorage.getItem(lastVisitedRouteLsName) || '/cm/i');
-  }, [loc.pathname.length, navigate, onSet]);
-
-  return <></>;
-};
 
 export default App;

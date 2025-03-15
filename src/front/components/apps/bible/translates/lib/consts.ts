@@ -1,5 +1,5 @@
-import { bibleTitles } from '@bible/hooks/bibleTitlesJson';
-import { BibleBooki } from '@bible/model';
+import { bibleTitles } from '$bible/hooks/bibleTitlesJson';
+import { BibleBooki } from '$bible/model';
 import { BibleTranslateName } from 'shared/api';
 
 export const bibleDefaultTranslates = [BibleTranslateName.rst];

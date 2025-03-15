@@ -1,4 +1,4 @@
-import { BibleChapteri, BibleVersei } from '@bible/model';
+import { BibleChapteri, BibleVersei } from '$bible/model';
 import { JSX, memo } from 'react';
 
 interface Props {

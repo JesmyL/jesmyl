@@ -1,12 +1,11 @@
-import { ChordVisibleVariant } from '@cm/Cm.model';
+import { ChordVisibleVariant } from '$cm/Cm.model';
+import { useCcom } from '$cm/basis/lib/com-selections';
 import { RefObject } from 'react';
 import { Com } from './Com';
 import './Com.scss';
 import { ComNotFoundPage } from './ComNotFoundPage';
-
 import './block-styles/BlockStyles.scss';
 import { ComOrders } from './orders/ComOrders';
-import { useCcom } from './useCcom';
 
 interface Props {
   com?: Com;

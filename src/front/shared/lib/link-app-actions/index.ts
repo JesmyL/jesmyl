@@ -1,5 +1,5 @@
+import { useNavigate, UseNavigateResult } from '@tanstack/react-router';
 import { useCallback, useEffect } from 'react';
-import { NavigateFunction, useNavigate } from 'react-router-dom';
 import { SokiAppName } from 'shared/api';
 import { atom, useAtomValue } from '../atoms';
 import { useActualRef } from '../hooks/useActualRef';
@@ -9,7 +9,7 @@ type ActionFor = SokiAppName | `*/${string}`;
 
 export type LinkActionEvent<Props extends Record<string, unknown> = Record<string, unknown>> = {
   props: Props;
-  navigateFromRoot: NavigateFunction;
+  navigateFromRoot: UseNavigateResult<string>;
 };
 
 const registededPathsMap = new Map<string, string>();
@@ -47,7 +47,7 @@ const useOnHrefData = () => {
         actonAtom.set({ props, navigateFromRoot: navigate });
 
         if (actionFor.startsWith('*/')) setTimeout(navigate, 200, registededPathsMap.get(actionFor) ?? '/');
-        else navigate(`/${actionFor}/i`);
+        else navigate({ to: `/${actionFor}/i` });
       } catch (error) {
         console.error(error);
       }

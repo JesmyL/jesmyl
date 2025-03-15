@@ -1,7 +1,7 @@
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
-import { useAuth } from '@index/atoms';
+import { useAuth } from '$index/atoms';
 import { useState } from 'react';
 import { NewComposition } from './NewCom';
 import { RemovedComsModalInner } from './RemovedComsModalInner';
@@ -27,23 +27,20 @@ export const EditCompositionsMore = ({ onClose }: { onClose(is: false): void }) 
       />
 
       {isComCreatorOpen && (
-        <FullContent
-          onClose={setIsComCreatorOpen}
-          asRootAnchor={() => (
-            <NewComposition
-              onClose={() => {
-                setIsComCreatorOpen(false);
-                onClose(false);
-              }}
-            />
-          )}
-        />
+        <FullContent onClose={setIsComCreatorOpen}>
+          <NewComposition
+            onClose={() => {
+              setIsComCreatorOpen(false);
+              onClose(false);
+            }}
+          />
+        </FullContent>
       )}
+
       {auth.level >= 80 && isRemovedComsOpen && (
-        <Modal
-          onClose={setIsRemovedComsOpen}
-          asRootAnchor={() => <RemovedComsModalInner />}
-        />
+        <Modal onClose={setIsRemovedComsOpen}>
+          <RemovedComsModalInner />
+        </Modal>
       )}
     </>
   );

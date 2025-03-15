@@ -1,36 +1,16 @@
 import { MyLib, mylib } from '#shared/lib/my-lib';
-import { CmIDBStorage, cmIDB } from '@cm/_db/cm-idb';
+import { CmIDBStorage, cmIDB } from '$cm/_db/cm-idb';
 import { itIt, makeRegExp } from 'shared/utils';
 import { Com } from '../com/Com';
 import { Cat } from './Cat';
 import { CatTracker } from './Cat.model';
 
 export const catTrackers: CatTracker[] = [
-  {
-    title: 'Полный',
-    id: 'full',
-    select: () => true,
-  },
-  {
-    title: 'Сборник',
-    id: 'dict',
-    select: (com: Com, cat: Cat) => !!cat.dict?.[com.wid],
-  },
-  {
-    title: 'Список',
-    id: 'list',
-    select: (com: Com, cat: Cat) => cat.stack?.includes(com.wid),
-  },
-  {
-    title: 'Язык - Русский',
-    id: 'lang:ru',
-    select: (com: Com) => !com.langi,
-  },
-  {
-    title: 'Язык - Украинский',
-    id: 'lang:ua',
-    select: (com: Com) => com.langi === 1,
-  },
+  { title: 'Полный', id: 'full', select: () => true },
+  { title: 'Сборник', id: 'dict', select: (com: Com, cat: Cat) => !!cat.dict?.[com.wid] },
+  { title: 'Список', id: 'list', select: (com: Com, cat: Cat) => cat.stack?.includes(com.wid) },
+  { title: 'Язык - Русский', id: 'lang:ru', select: (com: Com) => !com.langi },
+  { title: 'Язык - Украинский', id: 'lang:ua', select: (com: Com) => com.langi === 1 },
 ];
 
 export type CatSpecialSearches = {
@@ -81,10 +61,7 @@ const eeIncorrectWordsReg = delayedValueSetDefiner('eeStore', /^ееее$/, valu
 });
 
 export const catSpecialSearches: Record<`@${string}`, CatSpecialSearches> = {
-  '@audioLess': {
-    title: 'Песни без аудио',
-    map: async coms => coms.filter(com => !com.audio.trim()),
-  },
+  '@audioLess': { title: 'Песни без аудио', map: async coms => coms.filter(com => !com.audio.trim()) },
   '@lineLen:': {
     title: 'Со сторкой больше чем:элементов[50]',
     map: async (coms, term) => {
@@ -99,11 +76,10 @@ export const catSpecialSearches: Record<`@${string}`, CatSpecialSearches> = {
         const regStr = term.slice(term.indexOf(':') + 1) || '/~/i';
         const reg = makeRegExp(regStr as never);
 
-        return coms.filter(
-          com =>
-            com.ords?.some(ord =>
-              mylib.isNum(ord.top.r) ? `${ord.top.r}`.match(reg) : MyLib.keys(ord.top.r).some(key => key.match(reg)),
-            ),
+        return coms.filter(com =>
+          com.ords?.some(ord =>
+            mylib.isNum(ord.top.r) ? `${ord.top.r}`.match(reg) : MyLib.keys(ord.top.r).some(key => key.match(reg)),
+          ),
         );
       } catch (_error) {
         return [];
@@ -126,21 +102,20 @@ export const catSpecialSearches: Record<`@${string}`, CatSpecialSearches> = {
   '@filterPositionsUnequalChordsCounts': {
     title: 'Количество аккордов не равна аппликатуре',
     map: async coms => {
-      return coms.filter(
-        com =>
-          com.ords?.some(
-            ord =>
-              ord.top.c != null &&
-              ord.top.p &&
-              com.chords?.[ord.top.c]
-                .split('\n')
-                .some(
-                  (line, linei, linea) =>
-                    line &&
-                    linei < linea.length - 1 &&
-                    line.trim().split(' ').filter(itIt).length !== ord.top.p![linei]?.length,
-                ),
-          ),
+      return coms.filter(com =>
+        com.ords?.some(
+          ord =>
+            ord.top.c != null &&
+            ord.top.p &&
+            com.chords?.[ord.top.c]
+              .split('\n')
+              .some(
+                (line, linei, linea) =>
+                  line &&
+                  linei < linea.length - 1 &&
+                  line.trim().split(' ').filter(itIt).length !== ord.top.p![linei]?.length,
+              ),
+        ),
       );
     },
   },

@@ -3,7 +3,7 @@ import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useScheduleScopePropsContext } from '#widgets/schedule/complect/scope-contexts/scope-props-contexts';
+import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import { useEffect, useState } from 'react';

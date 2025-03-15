@@ -4,7 +4,7 @@ import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
 import { QRCode } from '#shared/ui/qr-code/QRCode';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { indexBasicsSokiInvocatorClient } from '@index/db/invocators/schedules/fresh-invocator.methods';
+import { indexBasicsSokiInvocatorClient } from '$index/db/invocators/schedules/fresh-invocator.methods';
 import { jversion } from 'shared/values';
 
 export function IndexAbout() {

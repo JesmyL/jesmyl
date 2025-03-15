@@ -1,8 +1,8 @@
 import { useAtomValue } from '#shared/lib/atoms';
-import { BibleTranslationScreenTextsContext } from '@bible/texts/AddressContentContext';
-import { BibleTranslatesContextProvider } from '@bible/translates/TranslatesContext';
-import { BibleTranslationCurrentScreen } from '@bible/translations/screen/BibleTranslationCurrentScreen';
-import { CmTranslationCurrentScreen } from '@cm/translation/complect/controlled/screen/CmTranslationCurrentScreen';
+import { BibleTranslationScreenTextsContext } from '$bible/texts/AddressContentContext';
+import { BibleTranslatesContextProvider } from '$bible/translates/TranslatesContext';
+import { BibleTranslationCurrentScreen } from '$bible/translations/screen/BibleTranslationCurrentScreen';
+import { CmTranslationCurrentScreen } from '$cm/translation/complect/controlled/screen/CmTranslationCurrentScreen';
 import styled, { css } from 'styled-components';
 import { complectIDB } from '../_idb/complectIDB';
 import { AlertLineSlideText } from './controls/alert-line/AlertLineSlideText';

@@ -43,7 +43,7 @@ export class SMyLib {
   isNil = (it: unknown): it is null | undefined => it === null || it === undefined;
   isNaN = (it: unknown): it is NaN => typeof it === 'number' && isNaN(it);
   isNl = (it: unknown) => this.isNaN(it) || this.isNil(it);
-  isNNlOrUnd = (it: unknown) => (this.isNl(it) ? undefined : true);
+  isNNlButUnd = (it: unknown) => (this.isNl(it) ? undefined : true);
 
   static entries = <T>(it: T): [keyof T, T[keyof T]][] => (it == null ? [] : Object.entries(it)) as never;
 
@@ -197,7 +197,7 @@ export class SMyLib {
 
     absNum %= 10;
 
-    return absNum > 1 && absNum < 5 ? two! : absNum === 1 ? one! : five ?? two!;
+    return absNum > 1 && absNum < 5 ? two! : absNum === 1 ? one! : (five ?? two!);
   }
 
   stringTemplaterFunctions = {

@@ -1,6 +1,6 @@
-import { ChordVisibleVariant } from '@cm/Cm.model';
-import { TheCom } from '@cm/col/com/TheCom';
-import { useEditableCcom } from '@cm/editor/pages/compositions/lib/useEditableCom';
+import { ChordVisibleVariant } from '$cm/Cm.model';
+import { TheCom } from '$cm/col/com/TheCom';
+import { useEditableCcom } from '$cm/editor/pages/compositions/lib/useEditableCom';
 
 export const CmEditableCompositionWatchTab = () => {
   const ccom = useEditableCcom();

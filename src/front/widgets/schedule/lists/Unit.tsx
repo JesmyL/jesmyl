@@ -5,7 +5,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useMemo, useState } from 'react';
 import { IScheduleWidgetListCat, IScheduleWidgetListUnit, IScheduleWidgetUserCati } from 'shared/api';
 import styled from 'styled-components';
-import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
+import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { ScheduleWidgetUserList } from '../control/users/UserList';
 import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';

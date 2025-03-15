@@ -1,22 +1,20 @@
 import { atom, useAtom, useAtomValue } from '#shared/lib/atoms';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { StyledPhaseContainerConfigurerHead } from '#shared/ui/phase-container/PhaseContainerConfigurer';
+import { StyledPhaseContainerConfigurerHead } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
-import { Cat } from '@cm/col/cat/Cat';
-import { CatSpecialSearches } from '@cm/col/cat/Cat.complect';
-import { TheCatSpecialSearches } from '@cm/col/cat/SpecialSearches';
-import { Com } from '@cm/col/com/Com';
-import { ComFaceList } from '@cm/col/com/face/list/ComFaceList';
-import { useComs } from '@cm/cols/useCols';
-import { EditableCom } from '@cm/editor/lib/EditableCom';
-import { editCompositionNavs } from '@cm/editor/pages/compositions/lib/editorNav';
-import { PageCmEditorContainer } from '@cm/editor/ui/PhaseCmEditorContainer';
-import { CmComListSearchFilterInput } from '@cm/shared/ComListSearchFilterInput';
-import { categoryTermAtom } from '@cm/shared/ComListSearchFilterInput/lib';
+import { useComs } from '$cm/basis/lib/coms-selections';
+import { Cat } from '$cm/col/cat/Cat';
+import { CatSpecialSearches } from '$cm/col/cat/Cat.complect';
+import { TheCatSpecialSearches } from '$cm/col/cat/SpecialSearches';
+import { Com } from '$cm/col/com/Com';
+import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
+import { EditableCom } from '$cm/editor/lib/EditableCom';
+import { PageCmEditorContainer } from '$cm/editor/ui/PageCmEditorContainer';
+import { CmComListSearchFilterInput } from '$cm/shared/ComListSearchFilterInput';
+import { categoryTermAtom } from '$cm/shared/ComListSearchFilterInput/lib';
+import { useNavigate } from '@tanstack/react-router';
 import { useEffect, useRef, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
-import { EditComposition } from './EditComposition';
 import { EditCompositionsMore } from './EditCompositionsMore';
 
 const mapExtractItem = <Item,>({ item }: { item: Item }): Item => item;
@@ -30,6 +28,7 @@ export const EditCompositionsPage = () => {
   const [searchedComs, setSearchedComs] = useState<Com[]>([]);
   const [mapper, setMapper] = useState<CatSpecialSearches['map'] | null>(null);
   const [term, setTerm] = useAtom(categoryTermAtom);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!term) {
@@ -68,61 +67,50 @@ export const EditCompositionsPage = () => {
   }, [isNumberSearch, mapper, term, coms]);
 
   return (
-    <Routes>
-      <Route
-        index
-        element={
+    <>
+      <StyledPhaseCmEditorContainer
+        className="edit-compositions"
+        headClass="flex between full-width"
+        head={
+          <CmComListSearchFilterInput
+            Constructor={EditableCom}
+            onDebounced={() => {
+              if (listRef.current) listRef.current.scrollTop = 0;
+            }}
+            onSearch={setSearchedComs}
+            isNumberSearchAtom={isNumberSearchAtom}
+          />
+        }
+        onMoreClick={setIsOpenMorePopup}
+        contentRef={listRef}
+        content={
           <>
-            <StyledPhaseCmEditorContainer
-              className="edit-compositions"
-              headClass="flex between full-width"
-              head={
-                <CmComListSearchFilterInput
-                  Constructor={EditableCom}
-                  onDebounced={() => {
-                    if (listRef.current) listRef.current.scrollTop = 0;
-                  }}
-                  onSearch={setSearchedComs}
-                  isNumberSearchAtom={isNumberSearchAtom}
-                />
-              }
-              onMoreClick={setIsOpenMorePopup}
-              contentRef={listRef}
-              content={
-                <>
-                  {term.startsWith('@') && (
-                    <TheCatSpecialSearches
-                      term={term}
-                      setTerm={setTerm}
-                      setMapper={setMapper}
-                    />
-                  )}
-                  <ComFaceList list={searchedComs} />
-                </>
-              }
-            />
-            {isOpenMorePopup && (
-              <BottomPopup onClose={setIsOpenMorePopup}>
-                <EditCompositionsMore onClose={setIsOpenMorePopup} />
-              </BottomPopup>
+            {term.startsWith('@') && (
+              <TheCatSpecialSearches
+                term={term}
+                setTerm={setTerm}
+                setMapper={setMapper}
+              />
             )}
+            <ComFaceList
+              list={searchedComs}
+              importantOnClick={({ com }) => {
+                navigate({
+                  to: '/cm/edit/coms/$comw',
+                  params: { comw: `${com.wid}` },
+                  search: { tab: 'watch' },
+                });
+              }}
+            />
           </>
         }
       />
-
-      <Route
-        path=":comw"
-        element={<EditComposition />}
-      >
-        {editCompositionNavs.map(({ path, Component }) => (
-          <Route
-            key={path}
-            path={path}
-            element={<Component />}
-          />
-        ))}
-      </Route>
-    </Routes>
+      {isOpenMorePopup && (
+        <BottomPopup onClose={setIsOpenMorePopup}>
+          <EditCompositionsMore onClose={setIsOpenMorePopup} />
+        </BottomPopup>
+      )}
+    </>
   );
 };
 

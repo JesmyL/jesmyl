@@ -1,19 +1,20 @@
-import { IconLink } from '#shared/ui/the-icon/IconLink';
-import { useAuth } from '@index/atoms';
-import { useToNewChordSearches } from './chord-redactor-searches';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { useAuth } from '$index/atoms';
+import { Link } from '@tanstack/react-router';
 
 export const CmUndefinedChordCard = ({ chord }: { chord: string }) => {
   const auth = useAuth();
-  const [, , makeChordParams] = useToNewChordSearches();
 
   return (
     <div className="error-message flex flex-gap">
       Неизвестный аккорд
       {auth.level > 49 && (
-        <IconLink
-          icon="Edit02"
-          to={`/cm/edit/chord?${makeChordParams({ newChordName: chord })}`}
-        />
+        <Link
+          to="/cm/edit/chord"
+          search={{ newChordName: chord }}
+        >
+          <LazyIcon icon="Edit02" />
+        </Link>
       )}
     </div>
   );

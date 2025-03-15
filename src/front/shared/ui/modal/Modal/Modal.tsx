@@ -11,17 +11,17 @@ export interface Props {
   mood?: 'ok' | 'ko';
   children?: React.ReactNode;
   onClose: (isOpen: false) => void;
-  asRootAnchor?: (close: (isOpen: false) => void) => React.ReactNode;
+  isRenderHere?: boolean;
 }
 
-export function Modal({ mood, children, onClose, asRootAnchor }: Props) {
-  const subClose = useMemo(() => ({ current: emptyFunc }), []);
+export function Modal({ mood, children, onClose, isRenderHere }: Props) {
+  const onCloseRef = useMemo(() => ({ current: emptyFunc }), []);
   const close = useCallback(() => {
-    subClose.current();
+    onCloseRef.current();
     onClose(false);
-  }, [onClose, subClose]);
+  }, [onClose, onCloseRef]);
 
-  const renderNode = (
+  const content = (
     <EscapableModal
       className="type_screen"
       onClose={close}
@@ -31,21 +31,15 @@ export function Modal({ mood, children, onClose, asRootAnchor }: Props) {
           className={'type_screen mood mood_' + mood}
           onClick={propagationStopper}
         >
-          {asRootAnchor?.(close) ?? children}
+          {children}
         </StyledModalScreen>
       </StyledModalScreenWrapper>
     </EscapableModal>
   );
 
-  if (asRootAnchor)
-    return (
-      <RootAnchoredContent
-        renderNode={renderNode}
-        subClose={subClose}
-      />
-    );
+  if (isRenderHere) return <Portal>{content}</Portal>;
 
-  return <Portal>{renderNode}</Portal>;
+  return <RootAnchoredContent onCloseRef={onCloseRef}>{content}</RootAnchoredContent>;
 }
 
 const EscapableModal = ({

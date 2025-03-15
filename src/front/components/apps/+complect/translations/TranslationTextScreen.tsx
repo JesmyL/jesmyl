@@ -1,6 +1,6 @@
+import { useScheduleCurrentSchwContext } from '#widgets/schedule/complect/lib/contexts';
 import { ScheduleWidgetLiveTranslation } from '#widgets/schedule/live-translations/Live';
-import { useIndexSchedules } from '@index/atoms';
-import { useParams } from 'react-router-dom';
+import { useIndexSchedules } from '$index/atoms';
 import { emptyFunc } from 'shared/utils';
 import { useIsCanShowTextTranslation } from './atoms';
 
@@ -16,7 +16,7 @@ export const TranslationTextScreen = ({ children }: Props) => {
 };
 
 const Screen = ({ children }: Props) => {
-  const schw = +useParams().schw!;
+  const schw = useScheduleCurrentSchwContext();
   const schedules = useIndexSchedules();
   const schedule = schedules?.find(sch => sch.w === schw);
 

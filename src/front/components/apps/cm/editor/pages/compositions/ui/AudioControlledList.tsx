@@ -1,5 +1,5 @@
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
-import { ComPlayer } from '@cm/col/com/player/ComPlayer';
+import { ComPlayer } from '$cm/col/com/player/ComPlayer';
 import { useState } from 'react';
 
 interface Props {

@@ -1,5 +1,4 @@
-import { ReactNode } from 'react';
-import { Link, To } from 'react-router-dom';
+import { JSX, ReactNode } from 'react';
 import styled from 'styled-components';
 
 type Props = {
@@ -7,13 +6,13 @@ type Props = {
   title: string;
   box?: ReactNode;
   description?: ReactNode;
-  to?: To;
   onClick?: (event: unknown) => void;
+  idPostfix?: string;
 };
 
-export function BrutalItem({ onClick, iconNode, title, box, description, to }: Props) {
+export function BrutalItem({ onClick, iconNode, title, box, description, idPostfix }: Props) {
   const inner = (
-    <Item className="pointer flex between relative">
+    <Item className="pointer flex between relative w-full">
       <div className="nowrap over-hidden flex center">
         <div className="margin-big-gap">{iconNode}</div>
         <div className="ellipsis inline-block">{title}</div>
@@ -31,17 +30,9 @@ export function BrutalItem({ onClick, iconNode, title, box, description, to }: P
     </Item>
   );
 
-  return to ? (
-    <Link
-      id={`edit-${to}`}
-      to={to}
-      className="full-width"
-    >
-      {inner}
-    </Link>
-  ) : (
+  return (
     <div
-      id={`edit-${to}`}
+      id={`edit-${idPostfix}`}
       className="flex between relative full-width"
       onClick={onClick}
     >

@@ -1,10 +1,18 @@
-import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ScheduleWidgetAppAtts } from '#widgets/schedule/ScheduleWidget.model';
-import { TheMeetingsEvent } from '@cm/lists/meetings/TheMeetingsEvent';
-import { Link, Route } from 'react-router-dom';
-import { CmComBindAttach, ScheduleWidgetUserRoleRight, scheduleWidgetUserRights } from 'shared/api';
+
+import { useAppNameContext } from '#basis/lib/contexts';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { makeCmEventNestedRoute } from '$cm/basis/lib/cmEventNestedRouteMaker';
+import { useMeetingComFaceList } from '$cm/lists/meetings/useMeetingComFaceList';
+import { Link, useSearch } from '@tanstack/react-router';
+import { useMemo } from 'react';
+import {
+  CmComBindAttach,
+  ScheduleDayEventAttachmentScopeProps,
+  ScheduleWidgetUserRoleRight,
+  scheduleWidgetUserRights,
+} from 'shared/api';
 import { CmExternalComListAtt } from './ui/CmExternalComListAtt';
-import { RedactButtonDetector } from './ui/RedactButtonDetector';
 
 export const cmOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
   '[cm]:coms': {
@@ -14,37 +22,52 @@ export const cmOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
     initVal: {},
     R: ScheduleWidgetUserRoleRight.Free,
     U: scheduleWidgetUserRights.includeRights(ScheduleWidgetUserRoleRight.Redact),
-    result: (_value, scopeProps, isRedact, _switchIsRedact) => {
-      const { dayi, eventMi } = scopeProps;
-      const listPath = `${dayi}/${eventMi}/-/com-list`;
-
+    useActionPanelNode,
+    result: (_value, scopeProps, _isRedact, _switchIsRedact) => {
       return (
         <>
-          <RedactButtonDetector
-            isRedact={isRedact}
-            to={listPath}
-          />
-          <Link to={listPath}>
-            <TheIconButton
-              icon="LinkSquare01"
-              postfix="Открыть список"
-              className="margin-big-gap"
-            />
-          </Link>
-          <CmExternalComListAtt
-            scopeProps={scopeProps}
-            listPath={listPath}
-          />
+          <CmExternalComListAtt scopeProps={scopeProps} />
         </>
       );
     },
-    routes: (
-      <>
-        <Route
-          path=":dayi/:eventMi/:attMi/com-list/*"
-          element={<TheMeetingsEvent />}
-        />
-      </>
-    ),
+    ExtRoute: props => route && <route.ComRouteComponent />,
   },
 };
+
+const path = '/!other/$appName/schs/';
+
+const route = makeCmEventNestedRoute({
+  path,
+  RouteComponent: () => <>Ошибка 6517923985</>,
+  useComListPack,
+});
+
+function useComListPack() {
+  const { dayi, eventMi, schw } = useSearch({ from: path });
+  const { coms } = useMeetingComFaceList({ dayi, eventMi, schw: +schw! });
+
+  return useMemo(() => ({ list: coms }), [coms]);
+}
+
+function useActionPanelNode(
+  scopeProps: ScheduleDayEventAttachmentScopeProps,
+  _editIconNode: React.ReactNode,
+  isCanRedact: boolean,
+) {
+  const appName = useAppNameContext();
+
+  return (
+    <Link
+      to="/!other/$appName/schs"
+      params={{ appName }}
+      search={{
+        dayi: scopeProps.dayi,
+        eventMi: scopeProps.eventMi,
+        attKey: '[cm]:coms',
+        schw: scopeProps.schw,
+      }}
+    >
+      {isCanRedact ? <LazyIcon icon="Edit02" /> : <LazyIcon icon="LinkSquare01" />}
+    </Link>
+  );
+}

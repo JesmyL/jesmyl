@@ -1,7 +1,9 @@
-import { ReactNode } from 'react';
+import { JSX, ReactNode } from 'react';
 import {
   AttKey,
   IScheduleWidget,
+  IScheduleWidgetDayEventMi,
+  IScheduleWidgetWid,
   ScheduleDayEventAttachmentScopeProps,
   ScheduleWidgetAppAttBasic,
   ScheduleWidgetAttKey,
@@ -10,17 +12,20 @@ import {
 
 export type ScheduleWidgetAttRefs = Record<ScheduleWidgetAttKey<AttKey>, ScheduleWidgetAttRef[]>;
 
-export type ScheduleWidgetAppAtts<AttAppName extends AttKey = AttKey, AttValue extends any = any> = Record<
+export type ScheduleWidgetAppAtts<AttAppName extends AttKey = AttKey, AttValue = any> = Record<
   ScheduleWidgetAttKey<AttAppName>,
   ScheduleWidgetAppAtt<AttValue>
 >;
 
-export type ScheduleWidgetAppAttResultItem<AttValue extends any> = (
-  mpValue: () => AttValue,
-  content: ReactNode,
-) => JSX.Element;
+export interface ScheduleDayEventPathProps {
+  schw?: IScheduleWidgetWid;
+  dayi?: number;
+  eventMi?: IScheduleWidgetDayEventMi;
+}
 
-export interface ScheduleWidgetAppAtt<AttValue extends any = any> extends ScheduleWidgetAppAttBasic<AttValue> {
+export type ScheduleWidgetAppAttResultItem<AttValue> = (mpValue: () => AttValue, content: ReactNode) => JSX.Element;
+
+export interface ScheduleWidgetAppAtt<AttValue = any> extends ScheduleWidgetAppAttBasic<AttValue> {
   result: (
     value: AttValue,
     dayEventAttScopeProps: ScheduleDayEventAttachmentScopeProps,
@@ -28,4 +33,13 @@ export interface ScheduleWidgetAppAtt<AttValue extends any = any> extends Schedu
     switchIsRedact: (isRedact?: boolean) => void,
     schedule: IScheduleWidget,
   ) => ReactNode;
+
+  useActionPanelNode: (
+    scopeProps: ScheduleDayEventAttachmentScopeProps,
+    editIconNode: React.ReactNode,
+    isCanRedact: boolean,
+    isExpand: boolean,
+  ) => React.ReactNode;
+
+  ExtRoute: (props: OmitOwn<ScheduleDayEventAttachmentScopeProps, 'attTitle'>) => JSX.Element;
 }

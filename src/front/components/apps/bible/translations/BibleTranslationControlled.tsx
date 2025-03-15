@@ -1,10 +1,9 @@
-import { useInitSoki } from '#basis/lib/useInitSoki';
-import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContainerConfigurer';
-import { bibleIDB } from '@bible/_db/bibleIDB';
-import { useBibleSlideSyncInkrementer } from '@bible/hooks/slide-sync';
-import { useLoadBibleChaptersCombine } from '@bible/hooks/texts';
-import { bibleSokiInvocatorBaseClient } from '@bible/invoctors/invocator';
-import { BibleModulesTranslations } from '@bible/translates/Translations';
+import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
+import { bibleIDB } from '$bible/_db/bibleIDB';
+import { useBibleSlideSyncInkrementer } from '$bible/hooks/slide-sync';
+import { useLoadBibleChaptersCombine } from '$bible/hooks/texts';
+import { bibleSokiInvocatorBaseClient } from '$bible/invoctors/invocator';
+import { BibleModulesTranslations } from '$bible/translates/Translations';
 import { JSX, ReactNode, useEffect } from 'react';
 import styled from 'styled-components';
 import { ScreenTranslationControlPanel } from '../../+complect/translations/controls/ControllPanel';
@@ -20,7 +19,6 @@ interface Props {
 export default function BibleTranslationControlled({ head, headTitle }: Props): JSX.Element {
   useLoadBibleChaptersCombine();
   const inkSync = useBibleSlideSyncInkrementer();
-  useInitSoki('bible');
 
   useEffect(() => inkSync(1), [inkSync]);
 
@@ -43,7 +41,7 @@ export default function BibleTranslationControlled({ head, headTitle }: Props): 
   }, []);
 
   return (
-    <PhaseContainerConfigurer
+    <PageContainerConfigurer
       className=""
       headTitle={headTitle ?? 'Библия'}
       head={head}

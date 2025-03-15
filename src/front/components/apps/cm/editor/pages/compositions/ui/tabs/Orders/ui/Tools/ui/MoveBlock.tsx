@@ -1,6 +1,6 @@
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { cmComOrderClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
+import { cmComOrderClientInvocatorMethods } from '$cm/editor/lib/cm-editor-invocator.methods';
 import { OrdersRedactorOrderToolsProps } from '../model';
 
 export const OrdersRedactorOrderToolsMoveBlock = (props: OrdersRedactorOrderToolsProps) => {

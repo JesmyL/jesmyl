@@ -1,6 +1,8 @@
 import { mylib } from '#shared/lib/my-lib';
-import { ReactNode } from 'react';
-import { useModal } from './modal/useModal';
+import { ReactNode, useState } from 'react';
+import { Modal } from './modal/Modal/Modal';
+import { ModalBody } from './modal/Modal/ModalBody';
+import { ModalHeader } from './modal/Modal/ModalHeader';
 import { TheIconButton } from './the-icon/TheIconButton';
 
 type PrepareResult = {
@@ -23,11 +25,10 @@ export function TheIconShareButton({
   className?: string;
   prepare?: () => und | PrepareResult;
 }) {
-  const [modalNode, modal] = useModal();
+  const [bodyNode, setBodyNode] = useState<React.ReactNode>();
 
   return (
     <>
-      {modalNode}
       <TheIconButton
         icon="Share08"
         disabled={disabled}
@@ -55,23 +56,23 @@ export function TheIconShareButton({
               text: mylib.isStr(prepared.text) ? prepared.text : prepared.text?.(),
             });
           } catch (_e) {
-            modal(event, ({ header, body }) => {
-              return (
-                <>
-                  {header(<>Не удалось поделиться:</>)}
-                  {body(
-                    <div className="user-select-all">
-                      {(prepared.title || '') +
-                        (prepared.text ? '\n\n' + prepared.text : '') +
-                        (prepared.url ? '\n\n' + prepared.url : '')}
-                    </div>,
-                  )}
-                </>
-              );
-            });
+            setBodyNode(
+              <div className="user-select-all">
+                {(prepared.title || '') +
+                  (prepared.text ? '\n\n' + prepared.text : '') +
+                  (prepared.url ? '\n\n' + prepared.url : '')}
+              </div>,
+            );
           }
         }}
       />
+
+      {bodyNode && (
+        <Modal onClose={setBodyNode}>
+          <ModalHeader>Не удалось поделиться:</ModalHeader>
+          <ModalBody>{bodyNode}</ModalBody>
+        </Modal>
+      )}
     </>
   );
 }

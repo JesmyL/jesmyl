@@ -1,5 +1,5 @@
-import { bibleIDB } from '@bible/_db/bibleIDB';
-import { BibleSearchZone } from '@bible/model';
+import { bibleIDB } from '$bible/_db/bibleIDB';
+import { BibleSearchZone } from '$bible/model';
 import { JSX, memo, useEffect, useRef } from 'react';
 import { BibleSearchInputPanel } from './input-panel/InputPanel';
 import { BibleSearchResults } from './Results';

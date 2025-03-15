@@ -1,7 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { useSelectedComs } from '@cm/base/useSelectedComs';
 import { Com } from '../../Com';
-import { useCcomw } from '../../useCcom';
 import { ComFaceListComList } from './_ComList';
 import { ComFaceListWidList } from './_WidList';
 import { IComFaceList } from './model';
@@ -13,9 +11,6 @@ interface Props extends IComFaceList {
 }
 
 export const ComFaceList = (props: Props) => {
-  const ccomw = useCcomw();
-  const { selectedComPosition, toggleSelectedCom } = useSelectedComs();
-
   if (props.list == null) return null;
 
   if (mylib.isNum(props.list[0]))
@@ -23,9 +18,6 @@ export const ComFaceList = (props: Props) => {
       <ComFaceListWidList
         {...props}
         list={props.list as []}
-        ccomw={ccomw}
-        selectedComPosition={selectedComPosition}
-        toggleSelectedCom={toggleSelectedCom}
       />
     );
 
@@ -34,10 +26,7 @@ export const ComFaceList = (props: Props) => {
       {!props.list.length || (
         <ComFaceListComList
           {...props}
-          ccomw={ccomw}
           list={props.list as []}
-          selectedComPosition={selectedComPosition}
-          toggleSelectedCom={toggleSelectedCom}
         />
       )}
     </>

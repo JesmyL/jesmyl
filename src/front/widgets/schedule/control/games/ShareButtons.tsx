@@ -5,7 +5,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { schPhotosSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { getScheduleWidgetUserPhotoStorageKey } from '#widgets/schedule/storage';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
-import { indexIDB } from '@index/db/index-idb';
+import { indexIDB } from '$index/db/index-idb';
 import { useState } from 'react';
 import { ScheduleWidgetPhotoKey } from 'shared/api';
 import { ScheduleWidgetPhotoGalery } from './PhotoGalery';

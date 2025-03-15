@@ -1,7 +1,7 @@
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
-import { cmComOrderClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
-import { EditableCom } from '@cm/editor/lib/EditableCom';
+import { cmComOrderClientInvocatorMethods } from '$cm/editor/lib/cm-editor-invocator.methods';
+import { EditableCom } from '$cm/editor/lib/EditableCom';
 import { useState } from 'react';
 import { CmComOrderOnClickBetweenData } from '../../../model';
 import { CmNewOrderMakeEtap } from '../model';

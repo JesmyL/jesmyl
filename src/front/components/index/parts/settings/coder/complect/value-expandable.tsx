@@ -16,11 +16,10 @@ const valueExpandableStyle = { marginLeft: 20 };
 
 export const CoderValueExpandable = ({ shortValue, fullValue, name, onCopy, scope }: Props) => {
   const [, isExpand, setIsExpand] = useIsRememberExpand(scope);
-  const [toastNode, toast] = useToast();
+  const toast = useToast();
 
   return (
     <>
-      {toastNode}
       <span
         onClick={() => setIsExpand()}
         className="flex pointer flex-gap flex-max"

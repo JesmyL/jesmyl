@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { EditableCom } from '@cm/editor/lib/EditableCom';
+import { EditableCom } from '$cm/editor/lib/EditableCom';
 import { itIt } from 'shared/utils';
 
 interface Props {

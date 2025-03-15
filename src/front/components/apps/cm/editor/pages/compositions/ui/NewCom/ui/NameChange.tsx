@@ -1,6 +1,6 @@
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
-import { EditableCom } from '@cm/editor/lib/EditableCom';
-import { TextCorrectMessages } from '@cm/editor/ui/TextBlockIncorrectMessages';
+import { EditableCom } from '$cm/editor/lib/EditableCom';
+import { TextCorrectMessages } from '$cm/editor/ui/TextBlockIncorrectMessages';
 import { IExportableCom } from 'shared/api';
 
 export const NewComNameChange = ({

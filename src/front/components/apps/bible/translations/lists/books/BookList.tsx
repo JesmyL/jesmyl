@@ -1,5 +1,5 @@
-import { useSetBibleAddressWithForceJoinReset } from '@bible/hooks/address/address';
-import { useBibleBookList } from '@bible/hooks/texts';
+import { useSetBibleAddressWithForceJoinReset } from '$bible/hooks/address/address';
+import { useBibleBookList } from '$bible/hooks/texts';
 import styled from 'styled-components';
 import { useBibleSingleAddressSetter } from '../atoms';
 import { bibleBookiIdPrefix } from '../lib/consts';

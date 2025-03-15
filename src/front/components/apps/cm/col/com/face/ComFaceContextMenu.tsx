@@ -1,7 +1,7 @@
 import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { useSelectedComs } from '@cm/base/useSelectedComs';
-import { useFavouriteComs } from '@cm/lists/favourites/useFavouriteComs';
+import { useSelectedComs } from '$cm/base/useSelectedComs';
+import { useFavouriteComs } from '$cm/lists/favourites/useFavouriteComs';
 import { CmComWid } from 'shared/api';
 import styled from 'styled-components';
 
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export function ComFaceContextMenu({ onClick, comWid }: Props) {
-  const { isFavourite, toggleFavourite, favouritesToastNode } = useFavouriteComs();
+  const { isFavourite, toggleFavourite } = useFavouriteComs();
   const isComMarked = isFavourite(comWid);
   const { clearSelectedComws, selectedComws, selectedComPosition: isSelected, toggleSelectedCom } = useSelectedComs();
   const [confirmNode, confirm] = useConfirm();
@@ -41,7 +41,6 @@ export function ComFaceContextMenu({ onClick, comWid }: Props) {
         />
       )}
       {confirmNode}
-      {favouritesToastNode}
     </StyledMenu>
   );
 }

@@ -1,6 +1,6 @@
 import { SokiInvocatorClient } from '#basis/lib/SokiInvocator.client';
 import { SokiInvocatorBaseClient } from '#basis/lib/SokiInvocatorBase.client';
-import { liveDataAtom, liveDataStreamersAtom } from '@index/atoms';
+import { liveDataAtom, liveDataStreamersAtom } from '$index/atoms';
 import { SchLiveSokiInvocatorModel, SchLiveSokiInvocatorSharesModel } from 'shared/api';
 
 class SchLiveSokiInvocatorClient extends SokiInvocatorClient<SchLiveSokiInvocatorModel> {}

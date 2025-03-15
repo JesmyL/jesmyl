@@ -1,4 +1,4 @@
-import { bibleIDB } from '@bible/_db/bibleIDB';
+import { bibleIDB } from '$bible/_db/bibleIDB';
 import {
   defaultScreenTranslationBackgroundConfig,
   defaultScreenTranslationPositionConfig,
@@ -13,20 +13,9 @@ import { BibleTranslationScreenConfig } from '../model';
 export const defaultBibleConfig: BibleTranslationScreenConfig = {
   ...defaultScreenTranslationTextConfig,
   ...defaultScreenTranslationBackgroundConfig,
-  insertedtext: {
-    color: '#ffffff',
-    opacity: 0.7,
-  },
-  textinbrackets: {
-    color: '#ffffff',
-    display: 'none',
-  },
-  addressPanel: {
-    height: 20,
-    left: 0,
-    top: 80,
-    width: 100,
-  },
+  insertedtext: { color: '#ffffff', opacity: 0.7 },
+  textinbrackets: { color: '#ffffff', display: 'none' },
+  addressPanel: { height: 20, left: 0, top: 80, width: 100 },
 
   screen: defaultScreenTranslationPositionConfig,
 

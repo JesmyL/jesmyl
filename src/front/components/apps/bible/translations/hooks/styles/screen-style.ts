@@ -1,6 +1,6 @@
 import { MyLib } from '#shared/lib/my-lib';
-import { verseTranslateTitleCssVariableName } from '@bible/translations/complect';
-import { BibleTranslationScreenConfig } from '@bible/translations/model';
+import { verseTranslateTitleCssVariableName } from '$bible/translations/complect';
+import { BibleTranslationScreenConfig } from '$bible/translations/model';
 import { useScreenTranslationPositionsStyles } from 'front/components/apps/+complect/translations/complect/hooks/position-styles';
 import { useScreenTranslationTextStyles } from 'front/components/apps/+complect/translations/complect/hooks/text-styles';
 import { CSSProperties, useMemo } from 'react';

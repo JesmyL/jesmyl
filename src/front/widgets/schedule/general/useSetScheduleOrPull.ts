@@ -1,6 +1,6 @@
 import { atom, useAtom } from '#shared/lib/atoms';
 import { mylib } from '#shared/lib/my-lib';
-import { useIndexSchedules } from '@index/atoms';
+import { useIndexSchedules } from '$index/atoms';
 import { useEffect, useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetWid } from 'shared/api';
 

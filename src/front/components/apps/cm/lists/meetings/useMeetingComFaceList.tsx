@@ -1,19 +1,21 @@
-import { cmIDB } from '@cm/_db/cm-idb';
-import { Com } from '@cm/col/com/Com';
-import { ComFaceList } from '@cm/col/com/face/list/ComFaceList';
-import { useComs } from '@cm/cols/useCols';
+import { cmIDB } from '$cm/_db/cm-idb';
+import { useComs } from '$cm/basis/lib/coms-selections';
+import { Com } from '$cm/col/com/Com';
+import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { IScheduleWidgetDayEventMi, IScheduleWidgetWid } from 'shared/api';
 import { emptyArray } from 'shared/utils';
 
-export function useMeetingComFaceList(
-  schw: IScheduleWidgetWid | NaN,
-  dayi: number | NaN,
-  eventMi: IScheduleWidgetDayEventMi | NaN,
-  comImportantOnClick?: (com: Com) => void,
-) {
-  const pack = useLiveQuery(() => cmIDB.db.scheduleComPacks.get({ schw }), [schw]);
-  const packComws = pack?.pack?.[dayi]?.[eventMi as never] ?? emptyArray;
+interface Props {
+  schw: IScheduleWidgetWid | und;
+  dayi: number | und;
+  eventMi: IScheduleWidgetDayEventMi | und;
+  comImportantOnClick?: (props: { com: Com }) => void;
+}
+
+export function useMeetingComFaceList({ dayi, eventMi, schw, comImportantOnClick }: Props) {
+  const pack = useLiveQuery(() => schw && cmIDB.db.scheduleComPacks.get({ schw }), [schw]);
+  const packComws = pack?.pack?.[dayi as never]?.[eventMi as never] ?? emptyArray;
   const coms = useComs(packComws);
 
   return {

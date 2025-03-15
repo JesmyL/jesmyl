@@ -7,8 +7,8 @@ import {
   BibleTranslationAddress,
   BibleTranslationJoinAddress,
   BibleVersei,
-} from '@bible/model';
-import { BibleTranslationScreenConfig } from '@bible/translations/model';
+} from '$bible/model';
+import { BibleTranslationScreenConfig } from '$bible/translations/model';
 import { BibleTranslateName } from 'shared/api';
 
 export interface BibleIDBStorage {

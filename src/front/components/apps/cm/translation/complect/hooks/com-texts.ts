@@ -1,4 +1,4 @@
-import { useComTranslationBlock } from '@cm/atoms';
+import { useComTranslationBlock } from '$cm/atoms';
 import { useCmScreenTranslationCurrentConfig } from '../controlled/hooks/configs';
 import { useCmCurrentComTexts } from './get-com-text';
 

@@ -12,7 +12,6 @@ export interface SendButtonContentMakerProps<Value> {
   onSuccess?: ((val: Value) => void) | nil;
   onFailure?: (errorMessage: string) => string | void;
   confirm?: ReactNode;
-  anchorNodes?: JSX.Element;
   content?: SendButtonContentMakerPropsContent;
   disabled?: boolean;
 }

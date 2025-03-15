@@ -1,10 +1,11 @@
 import { mylib } from '#shared/lib/my-lib';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { TheButton } from '#shared/ui/TheButton';
-import { useSelectedComs } from '@cm/base/useSelectedComs';
-import { ComFaceList } from '@cm/col/com/face/list/ComFaceList';
-import { useNavigate } from 'react-router-dom';
+import { useSelectedComs } from '$cm/base/useSelectedComs';
+import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
+import { useNavigate } from '@tanstack/react-router';
 import { CmComWid } from 'shared/api';
+import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
 
 export const CmSharedComListActionInterpretator = ({
@@ -20,7 +21,7 @@ export const CmSharedComListActionInterpretator = ({
   const localComwsSet = new Set(selectedComws);
   const close = (isNavigate: boolean) => {
     onClose(null);
-    if (isNavigate) navigate('/cm/li/selected');
+    if (isNavigate) navigate({ to: '/cm/li/sel' });
   };
 
   const addComsCount = incomingComwsSet.difference(localComwsSet).size;
@@ -32,7 +33,7 @@ export const CmSharedComListActionInterpretator = ({
         <h3>С вами поделились списком</h3>
         <ComFaceList
           list={comws}
-          importantOnClick={() => {}}
+          importantOnClick={emptyFunc}
         />
         <div className="flex column flex-gap margin-big-gap">
           <TheButton

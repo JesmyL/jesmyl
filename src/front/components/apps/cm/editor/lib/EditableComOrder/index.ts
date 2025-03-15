@@ -1,6 +1,6 @@
-import { Order } from '@cm/col/com/order/Order';
-import { EditableOrderRegion, IExportableOrderMe } from '@cm/col/com/order/Order.model';
-import { cmComOrderClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
+import { Order } from '$cm/col/com/order/Order';
+import { EditableOrderRegion, IExportableOrderMe } from '$cm/col/com/order/Order.model';
+import { cmComOrderClientInvocatorMethods } from '$cm/editor/lib/cm-editor-invocator.methods';
 import { InheritancableOrder, OrderRepeats } from 'shared/api';
 import { EditableCom } from '../EditableCom';
 

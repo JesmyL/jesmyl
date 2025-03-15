@@ -1,6 +1,6 @@
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
-import { ICorrects } from '@cm/editor/model/Corrects';
-import { TextCorrectMessages } from '@cm/editor/ui/TextBlockIncorrectMessages';
+import { ICorrects } from '$cm/editor/model/Corrects';
+import { TextCorrectMessages } from '$cm/editor/ui/TextBlockIncorrectMessages';
 
 type Props = {
   title: React.ReactNode;

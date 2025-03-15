@@ -1,6 +1,6 @@
 import { useFullScreen } from '#shared/lib/hooks/useFullscreen';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { cmIDB } from '@cm/_db/cm-idb';
+import { cmIDB } from '$cm/_db/cm-idb';
 import { HTMLAttributes, PropsWithChildren, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 

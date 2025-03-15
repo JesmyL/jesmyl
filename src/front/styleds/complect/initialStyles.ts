@@ -5,11 +5,13 @@ export const initialStyles = css`
   body,
   #root {
     overscroll-behavior: none;
+    height: 100vh;
   }
 
   body {
-    --font-family: -apple-system, montserrat, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell',
-      'Fira Sans', 'Droid Sans', 'Helvetica Neue', main, sans-serif;
+    --font-family:
+      -apple-system, montserrat, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+      'Droid Sans', 'Helvetica Neue', main, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
@@ -38,7 +40,6 @@ export const initialStyles = css`
     font-family: var(--font-family);
 
     #root {
-      height: 100%;
       overflow: hidden;
     }
 

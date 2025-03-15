@@ -1,9 +1,9 @@
 import { mylib } from '#shared/lib/my-lib';
-import { bibleIDB } from '@bible/_db/bibleIDB';
-import { useBibleTranslationJoinAddress } from '@bible/hooks/address/address';
-import { useBibleAddressVersei } from '@bible/hooks/address/verses';
-import { useBibleTranslationSlideSyncContentSetter } from '@bible/hooks/slide-sync';
-import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress } from '@bible/model';
+import { bibleIDB } from '$bible/_db/bibleIDB';
+import { useBibleTranslationJoinAddress } from '$bible/hooks/address/address';
+import { useBibleAddressVersei } from '$bible/hooks/address/verses';
+import { useBibleTranslationSlideSyncContentSetter } from '$bible/hooks/slide-sync';
+import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress } from '$bible/model';
 import { useEffect } from 'react';
 import { bibleVerseiIdPrefix } from '../lib/consts';
 
@@ -92,10 +92,7 @@ export const useVerseListListeners = (
             }
             const chapter = Array.from(versesSet);
 
-            newJoin[currentBooki] = {
-              ...currentJoinAddress[currentBooki],
-              [currentChapteri]: chapter,
-            };
+            newJoin[currentBooki] = { ...currentJoinAddress[currentBooki], [currentChapteri]: chapter };
 
             if (chapter.length === 0) {
               delete newJoin[currentBooki][currentChapteri];

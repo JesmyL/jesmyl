@@ -1,13 +1,13 @@
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { mylib } from '#shared/lib/my-lib';
-import { bibleIDB } from '@bible/_db/bibleIDB';
-import { useBibleTranslationAddressIndexesSetter, useBibleTranslationJoinAddress } from '@bible/hooks/address/address';
-import { useBibleAddressBooki } from '@bible/hooks/address/books';
-import { useBibleAddressChapteri } from '@bible/hooks/address/chapters';
-import { useBibleTranslationSlideSyncContentSetter } from '@bible/hooks/slide-sync';
-import { BibleTranslationAddress, BibleTranslationJoinAddress, BibleVersei } from '@bible/model';
-import { useBibleTranslatesContext } from '@bible/translates/lib/contexts';
-import { useBibleShowTranslatesValue } from '@bible/translates/lib/hooks';
+import { bibleIDB } from '$bible/_db/bibleIDB';
+import { useBibleTranslationAddressIndexesSetter, useBibleTranslationJoinAddress } from '$bible/hooks/address/address';
+import { useBibleAddressBooki } from '$bible/hooks/address/books';
+import { useBibleAddressChapteri } from '$bible/hooks/address/chapters';
+import { useBibleTranslationSlideSyncContentSetter } from '$bible/hooks/slide-sync';
+import { BibleTranslationAddress, BibleTranslationJoinAddress, BibleVersei } from '$bible/model';
+import { useBibleTranslatesContext } from '$bible/translates/lib/contexts';
+import { useBibleShowTranslatesValue } from '$bible/translates/lib/hooks';
 import { useEffect, useState } from 'react';
 import { useBibleTranslationAddToPlan } from '../archive/plan/hooks/plan';
 

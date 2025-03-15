@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
-import { bibleIDB } from '@bible/_db/bibleIDB';
-import { BibleTranslationAddress } from '@bible/model';
+import { bibleIDB } from '$bible/_db/bibleIDB';
+import { BibleTranslationAddress } from '$bible/model';
 import { useCallback } from 'react';
 
 export const useBibleTranslationHistory = () => bibleIDB.useValue.translationHistory();

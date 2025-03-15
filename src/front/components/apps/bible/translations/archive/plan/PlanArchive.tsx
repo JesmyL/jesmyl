@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
-import { bibleIDB } from '@bible/_db/bibleIDB';
-import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '@bible/hooks/address/address';
+import { bibleIDB } from '$bible/_db/bibleIDB';
+import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '$bible/hooks/address/address';
 import { JSX, memo, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { BibleTranslationArchive } from '../Archive';

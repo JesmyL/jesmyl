@@ -3,7 +3,7 @@ import { CurrentForceViweAppContext } from '../../+complect/translations/Transla
 import { CmTranslationControlled } from './complect/controlled/CmTranslationControlled';
 import { TranslationFullscreen } from './complect/fullscreen/TranslationFullscreen';
 
-export function Translations() {
+export const CmTranslations = () => {
   return (
     <>
       <CurrentForceViweAppContext.Provider value="cm">
@@ -11,4 +11,4 @@ export function Translations() {
       </CurrentForceViweAppContext.Provider>
     </>
   );
-}
+};

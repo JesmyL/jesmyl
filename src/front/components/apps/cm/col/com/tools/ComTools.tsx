@@ -2,14 +2,14 @@ import { mylib } from '#shared/lib/my-lib';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { cmIDB } from '@cm/_db/cm-idb';
-import { useChordVisibleVariant } from '@cm/base/useChordVisibleVariant';
-import { ChordVisibleVariant } from '@cm/Cm.model';
-import { cmComClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
+import { cmIDB } from '$cm/_db/cm-idb';
+import { useChordVisibleVariant } from '$cm/base/useChordVisibleVariant';
+import { useFixedCcom } from '$cm/basis/lib/com-selections';
+import { ChordVisibleVariant } from '$cm/Cm.model';
+import { cmComClientInvocatorMethods } from '$cm/editor/lib/cm-editor-invocator.methods';
 import { Chip, useMediaQuery } from '@mui/material';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
-import { useFixedCcom } from '../useCcom';
 import { CmComCatMentions } from '../useGetCatMentions';
 import { useMigratableListComTools } from './lib/useMigratableComTools';
 
@@ -97,7 +97,7 @@ export const ComTools = () => {
       </div>
       {comToolsNode}
 
-      <div className="fade-05 full-width margin-gap-v color--7">
+      <div className="fade-05 w-full my-2 mx-5 text-x7">
         <CmComCatMentions com={ccom} />
       </div>
 

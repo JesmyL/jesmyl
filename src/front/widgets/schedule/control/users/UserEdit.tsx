@@ -1,5 +1,5 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
-import { useScheduleUserScopePropsContext } from '#widgets/schedule/complect/scope-contexts/scope-props-contexts';
+import { useScheduleUserScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { schUsersSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import {

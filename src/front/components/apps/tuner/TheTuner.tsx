@@ -1,4 +1,4 @@
-import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContainerConfigurer';
+import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { useEffect, useState } from 'react';
 import { TunerApplication } from './app';
 import './Tuner.scss';
@@ -14,7 +14,7 @@ export function TheTuner() {
   useEffect(effect, []);
 
   return (
-    <PhaseContainerConfigurer
+    <PageContainerConfigurer
       className="tuner-application"
       withoutBackButton
       headTitle="Тюнер"

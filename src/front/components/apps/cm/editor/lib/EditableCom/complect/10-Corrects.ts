@@ -1,7 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
-import { eeStorage } from '@cm/base/ee-storage/EeStorage';
-import { textedChordReg } from '@cm/editor/lib/utils';
-import { ICorrect, ICorrects } from '@cm/editor/model/Corrects';
+import { eeStorage } from '$cm/base/ee-storage/EeStorage';
+import { textedChordReg } from '$cm/editor/lib/utils';
+import { ICorrect, ICorrects } from '$cm/editor/model/Corrects';
 import { makeRegExp } from 'shared/utils';
 import { EditableComBase } from './0-Base';
 
@@ -26,9 +26,7 @@ export class EditableComCorrects extends EditableComBase {
   }
 
   static textBlockIncorrectMessages(text: string | und, isSetAllText?: boolean) {
-    const ret = (message: string | null): ICorrects => ({
-      errors: message ? [{ message }] : undefined,
-    });
+    const ret = (message: string | null): ICorrects => ({ errors: message ? [{ message }] : undefined });
 
     let mistakes = '';
 

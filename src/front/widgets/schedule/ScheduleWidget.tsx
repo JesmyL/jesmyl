@@ -12,7 +12,7 @@ import { IScheduleWidget, IScheduleWidgetWid, ScheduleScopeProps } from 'shared/
 import { makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
 import { ScheduleWidgetCustomAttachments } from './atts/custom/CustomAttachments';
-import { ScheduleScopePropsContext } from './complect/scope-contexts/scope-props-contexts';
+import { ScheduleScopePropsContext } from './complect/lib/contexts';
 import { ScheduleWidgetStartTimeText } from './complect/StartTimeText';
 import { ScheduleWidgetTopicTitle } from './complect/TopicTitle';
 import { ScheduleWidgetControl } from './control/Control';

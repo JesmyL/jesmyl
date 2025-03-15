@@ -1,18 +1,30 @@
-import { useModal } from '#shared/ui/modal/useModal';
+import { Modal } from '#shared/ui/modal/Modal/Modal';
+import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
+import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
-import { ChordVisibleVariant } from '@cm/Cm.model';
-import { TheOrder } from '@cm/col/com/order/TheOrder';
-import { cmComOrderClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
+import { ChordVisibleVariant } from '$cm/Cm.model';
+import { TheOrder } from '$cm/col/com/order/TheOrder';
+import { cmComOrderClientInvocatorMethods } from '$cm/editor/lib/cm-editor-invocator.methods';
+import { useState } from 'react';
 import { OrdersRedactorOrderToolsProps } from '../model';
 
 export const OrdersRedactorOrderToolsChordBind = ({ com, ord, ordi, onClose }: OrdersRedactorOrderToolsProps) => {
-  const [modalNode, openModal] = useModal(({ header, body }, close) => {
-    return (
-      <>
-        {header(<>Аккорды</>)}
-        {body(
-          <>
+  const [isOpenModal, setIsOpenModal] = useState<unknown>(false);
+
+  return (
+    <>
+      <BottomPopupItem
+        icon="Playlist03"
+        title="Аккорды"
+        onClick={setIsOpenModal}
+      />
+
+      {isOpenModal && (
+        <Modal onClose={setIsOpenModal}>
+          <ModalHeader>Аккорды</ModalHeader>
+
+          <ModalBody>
             <pre style={{ whiteSpace: 'normal' }}>
               <b>Устанавливаем Аккорды для блока</b>
               <br />
@@ -54,26 +66,15 @@ export const OrdersRedactorOrderToolsChordBind = ({ com, ord, ordi, onClose }: O
                     <pre>
                       <b>{chordsBlocki + 1}</b>
                       <br />
-                      {com.transBlock(chordsBlock)}
+                      {com.transposeBlock(chordsBlock)}
                     </pre>
                   }
                 />
               );
             })}
-          </>,
-        )}
-      </>
-    );
-  });
-
-  return (
-    <>
-      {modalNode}
-      <BottomPopupItem
-        icon="Playlist03"
-        title="Аккорды"
-        onClick={openModal}
-      />
+          </ModalBody>
+        </Modal>
+      )}
     </>
   );
 };

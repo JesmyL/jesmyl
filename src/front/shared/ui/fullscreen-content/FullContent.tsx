@@ -1,10 +1,10 @@
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
+import { mylib } from '#shared/lib/my-lib';
 import { HTMLAttributes, ReactNode, useEffect, useMemo } from 'react';
 import { Eventer, EventerListeners, emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
-import { Portal } from '../Portal';
 import { RootAnchoredContent } from '../RootAnchoredContent';
 import { TheIconButton } from '../the-icon/TheIconButton';
 
@@ -18,45 +18,41 @@ export type FullContentValue<PassValue = unknown> = (close: () => void, passValu
 interface Props {
   onClose: ((isOpen: false) => void) | true;
   closable?: boolean;
-  children?: React.ReactNode;
+  children: ((close: () => void) => React.ReactNode) | React.ReactNode;
   className?: string;
   containerClassName?: string;
-  asRootAnchor?: (close: () => void) => React.ReactNode;
 }
 
-export function FullContent({ onClose, closable, children, className, asRootAnchor, containerClassName }: Props) {
+export function FullContent(props: Props) {
   const subClose = useMemo(() => ({ current: emptyFunc }), []);
   const close = () => {
     subClose.current();
-    if (onClose !== true) onClose(false);
+    if (props.onClose !== true) props.onClose(false);
   };
 
-  const renderNode = (
-    <Swiped
-      close={close}
-      onClick={closable ? close : propagationStopper}
-      className={className}
-    >
-      {closable || (
-        <StyledCloseButton
-          icon="Cancel01"
-          className="pointer close-button"
-          onClick={close}
-        />
-      )}
-      <Container className={containerClassName ?? 'p-5'}>{asRootAnchor?.(close) ?? children}</Container>
-    </Swiped>
+  return (
+    <RootAnchoredContent
+      onCloseRef={subClose}
+      children={
+        <Swiped
+          close={close}
+          onClick={props.closable ? close : propagationStopper}
+          className={props.className}
+        >
+          {props.closable || (
+            <StyledCloseButton
+              icon="Cancel01"
+              className="pointer close-button"
+              onClick={close}
+            />
+          )}
+          <StyledContainer className={props.containerClassName ?? 'p-5'}>
+            {mylib.isFunc(props.children) ? props.children(close) : props.children}
+          </StyledContainer>
+        </Swiped>
+      }
+    />
   );
-
-  if (asRootAnchor)
-    return (
-      <RootAnchoredContent
-        renderNode={renderNode}
-        subClose={subClose}
-      />
-    );
-
-  return <Portal>{renderNode}</Portal>;
 }
 
 const Swiped = ({ close, ...props }: { close: () => void } & HTMLAttributes<HTMLDivElement>) => {
@@ -98,7 +94,7 @@ const StyledContainerWrapper = styled.div`
   }
 `;
 
-const Container = styled.div`
+const StyledContainer = styled.div`
   position: absolute;
   top: 0;
   left: 0;

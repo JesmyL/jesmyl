@@ -5,11 +5,14 @@ export const useListInfiniteScrollController = <Item>(
   listRef: React.RefObject<HTMLDivElement | null>,
   list: Item[],
   findCurrentIndex: (item: Item, index: number, items: Item[]) => boolean,
+  deps: unknown[],
   initItemsBefore = 15,
   initItemsAfter = 40,
   addItemsCount = 30,
 ): ListSlicerLimitsControls => {
-  const [limits, setLimits] = useState(() => {
+  const [limits, setLimits] = useState({ start: 0, finish: 0 });
+
+  useEffect(() => {
     let itemi = list.findIndex(findCurrentIndex);
 
     itemi = itemi < 0 ? 0 : itemi;
@@ -23,8 +26,9 @@ export const useListInfiniteScrollController = <Item>(
     const start = initialStartLimit < 0 ? 0 : initialStartLimit;
     const finish = initialFinishLimit + 1;
 
-    return { start, finish };
-  });
+    setLimits({ start, finish });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, deps);
 
   const updateLimits = useCallback(
     (start: number | nil, finish: number | nil) => {

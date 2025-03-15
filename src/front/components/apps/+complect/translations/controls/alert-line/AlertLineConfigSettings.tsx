@@ -19,7 +19,7 @@ const LazyIconConfigurator = React.lazy(() => import('#shared/ui/configurators/I
 
 export const AlertLineConfigSettingsInner = ({ configId }: { configId: number }) => {
   const config = useLiveQuery(
-    () => mylib.isNNlOrUnd(configId) && complectIDB.tb.alertLineConfigs.get(configId),
+    () => mylib.isNNlButUnd(configId) && complectIDB.tb.alertLineConfigs.get(configId),
     [configId],
   );
 

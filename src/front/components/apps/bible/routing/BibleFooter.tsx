@@ -1,26 +1,27 @@
 import { isMobileDevice } from '#shared/lib/device-differences';
-import { AppFooter } from '@app/AppFooter';
-import { AppFooterItem } from '@app/AppFooterItem';
+import { AppFooter } from '$app/AppFooter';
+import { AppFooterItem } from '$app/AppFooterItem';
+import { bibleInitialInvokes } from './bible-initial-invokes';
 
 export const BibleFooter = () => {
   return (
-    <AppFooter>
+    <AppFooter appName="bible">
       <AppFooterItem
         idPostfix="main"
-        to="i"
+        to="/bible/i"
         title="Глава"
         icon="File02"
       />
       <AppFooterItem
         idPostfix="search"
-        to="search"
+        to="/bible/search"
         title="Поиск"
         icon="FileSearch"
       />
       {isMobileDevice || (
         <AppFooterItem
           idPostfix="tran"
-          to="tran"
+          to="/bible/tran"
           title="Трансляция"
           icon="Computer"
         />
@@ -28,3 +29,5 @@ export const BibleFooter = () => {
     </AppFooter>
   );
 };
+
+bibleInitialInvokes();

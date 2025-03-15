@@ -10,11 +10,10 @@ export function SendableDropdown<Id extends string | number, Item extends Dropdo
   },
 ) {
   const [isLoading, setIsLoading] = useState(false);
-  const [toastNode, toast] = useToast();
+  const toast = useToast();
 
   return (
     <div className="relative">
-      {toastNode}
       <TheIconLoading
         className="absolute pos-right z-index:400 margin-gap"
         isLoading={isLoading}

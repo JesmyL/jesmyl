@@ -1,6 +1,6 @@
 import { atom, useAtomInkrement, useAtomValue } from '#shared/lib/atoms';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
-import { useBibleTranslationAddToHistory } from '@bible/translations/archive/history/hooks/history';
+import { useBibleTranslationAddToHistory } from '$bible/translations/archive/history/hooks/history';
 import { useCallback } from 'react';
 import { useToggleIsScreenTranslationTextVisible } from '../../+complect/translations/atoms';
 import { useBibleTranslationJoinAddress } from './address/address';

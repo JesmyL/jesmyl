@@ -1,4 +1,4 @@
-import { BibleTranslationScreenConfig } from '@bible/translations/model';
+import { BibleTranslationScreenConfig } from '$bible/translations/model';
 import { useScreenTranslationPositionsStyles } from 'front/components/apps/+complect/translations/complect/hooks/position-styles';
 import { useScreenTranslationTextStyles } from 'front/components/apps/+complect/translations/complect/hooks/text-styles';
 import { CSSProperties, useMemo } from 'react';
@@ -23,10 +23,6 @@ export const useGetBibleScreenTranslationAddressTextWrapperStyle = (
                 : 'center',
           zIndex: 10,
         }
-      : {
-          color: '#777777',
-          fontWeight: 'bold',
-          textAlign: 'center',
-        };
+      : { color: '#777777', fontWeight: 'bold', textAlign: 'center' };
   }, [currentConfig, positions, textStyles]);
 };

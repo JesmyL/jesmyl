@@ -1,7 +1,7 @@
 import { appAttsStore } from '#basis/lib/appScheduleAttrsStorage';
 import { contextCreator } from '#shared/lib/contextCreator';
 import { MyLib, mylib } from '#shared/lib/my-lib';
-import { useAuth } from '@index/atoms';
+import { useAuth } from '$index/atoms';
 import React, { useContext, useMemo } from 'react';
 import {
   IScheduleWidget,
@@ -33,21 +33,9 @@ export const defaultScheduleWidget: IScheduleWidget = {
   types: [],
   app: 'index',
   tgInformTime: 5,
-  ctrl: {
-    cats: [],
-    roles: [],
-    type: ScheduleWidgetRegType.Private,
-    users: [],
-    defu: ScheduleWidgetUserRoleRight.Read,
-  },
-  games: {
-    criterias: [],
-    list: [],
-  },
-  lists: {
-    cats: [],
-    units: [],
-  },
+  ctrl: { cats: [], roles: [], type: ScheduleWidgetRegType.Private, users: [], defu: ScheduleWidgetUserRoleRight.Read },
+  games: { criterias: [], list: [] },
+  lists: { cats: [], units: [] },
 };
 
 export interface ScheduleWidgetRights extends ScheduleWidgetUserRights, ScheduleWidgetScheduleWidgetRegType {
@@ -186,6 +174,7 @@ export const makeAttStorage = (schedule?: IScheduleWidget): [ScheduleWidgetAppAt
     atts[`[SCH]:custom:${att.mi}`] = {
       ...att,
       isCustomize: true,
+      useActionPanelNode: () => null,
       result: (value, dayEventAttScopeProps, isRedact) => (
         <ScheduleKeyValueListAtt
           isRedact={isRedact}
@@ -194,6 +183,7 @@ export const makeAttStorage = (schedule?: IScheduleWidget): [ScheduleWidgetAppAt
           dayEventAttScopeProps={{ ...dayEventAttScopeProps, attTitle: att.title }}
         />
       ),
+      ExtRoute: () => <></>,
     };
   });
   return [{ ...appAttsStore, ...scheduleOwnAtts, ...atts }, attRefs];

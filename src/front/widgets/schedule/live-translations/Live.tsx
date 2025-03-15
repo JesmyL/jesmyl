@@ -4,13 +4,13 @@ import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { BibleTranslationSlide } from '@bible/translations/BibleTranslationSlide';
-import { CmLiveTranslationScreen } from '@cm/translation/complect/live/Screen';
-import { liveDataAtom, liveDataStreamersAtom } from '@index/atoms';
+import { BibleTranslationSlide } from '$bible/translations/BibleTranslationSlide';
+import { CmLiveTranslationScreen } from '$cm/translation/complect/live/Screen';
+import { liveDataAtom, liveDataStreamersAtom } from '$index/atoms';
 import {
   schLiveSokiInvocatorBaseClient,
   schLiveSokiInvocatorClient,
-} from '@index/complect/translations/live-invocator';
+} from '$index/complect/translations/live-invocator';
 import { ScreenTranslationControlPanelShowMdButton } from 'front/components/apps/+complect/translations/controls/ShowMdButton';
 import { soki } from 'front/soki';
 import { useEffect, useState } from 'react';

@@ -12,7 +12,7 @@ import { useMemo, useState } from 'react';
 import { IScheduleWidget, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
 import styled from 'styled-components';
 import { ScheduleWidgetBindAtts } from '../atts/BindAtts';
-import { useScheduleScopePropsContext } from '../complect/scope-contexts/scope-props-contexts';
+import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { schEventTypesSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useAttTypeTitleError } from './useAttTypeTitleError';
 

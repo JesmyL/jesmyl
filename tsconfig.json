@@ -21,10 +21,15 @@
       "#widgets/*": ["./front/widgets/*"],
       "#basis/*": ["./front/basis/*"],
 
-      "@cm/*": ["./front/components/apps/cm/*"],
-      "@bible/*": ["./front/components/apps/bible/*"],
-      "@index/*": ["./front/components/index/*"],
-      "@app/*": ["./front/app/*"],
+      "$cm/app/*": ["./front/components/apps/cm/01-app/*"],
+      "$cm/pages/*": ["./front/components/apps/cm/03-pages/*"],
+      "$cm/entities/*": ["./front/components/apps/cm/06-entities/*"],
+      "$cm/basis/*": ["./front/components/apps/cm/07-basis/*"],
+      "$cm/*": ["./front/components/apps/cm/*"],
+
+      "$bible/*": ["./front/components/apps/bible/*"],
+      "$index/*": ["./front/components/index/*"],
+      "$app/*": ["./front/app/*"],
 
       "shared/*": ["./shared/*"],
       "front/*": ["./front/*"],

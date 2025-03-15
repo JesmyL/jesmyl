@@ -1,8 +1,8 @@
 import { JStorageSetOrArrayVal } from '#shared/lib/JSimpleStorage/exports/SetOrArray';
-import { useBibleAddressBooki } from '@bible/hooks/address/books';
-import { useBibleAddressChapteri } from '@bible/hooks/address/chapters';
-import { useBibleTranslatesContext } from '@bible/translates/lib/contexts';
-import { useBibleShowTranslatesValue } from '@bible/translates/lib/hooks';
+import { useBibleAddressBooki } from '$bible/hooks/address/books';
+import { useBibleAddressChapteri } from '$bible/hooks/address/chapters';
+import { useBibleTranslatesContext } from '$bible/translates/lib/contexts';
+import { useBibleShowTranslatesValue } from '$bible/translates/lib/hooks';
 import { JSX, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { bibleVerseiIdPrefix } from '../lib/consts';

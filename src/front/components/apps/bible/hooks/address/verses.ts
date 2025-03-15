@@ -1,8 +1,8 @@
-import { bibleIDB } from '@bible/_db/bibleIDB';
-import { BibleVersei } from '@bible/model';
-import { useBibleTranslatesContext } from '@bible/translates/lib/contexts';
-import { useBibleShowTranslatesValue } from '@bible/translates/lib/hooks';
-import { useBibleVersei } from '@bible/translations/lists/atoms';
+import { bibleIDB } from '$bible/_db/bibleIDB';
+import { BibleVersei } from '$bible/model';
+import { useBibleTranslatesContext } from '$bible/translates/lib/contexts';
+import { useBibleShowTranslatesValue } from '$bible/translates/lib/hooks';
+import { useBibleVersei } from '$bible/translations/lists/atoms';
 import { useCallback } from 'react';
 import { useBibleTranslationSlideSyncContentSetter } from '../slide-sync';
 import { useBibleTranslationJoinAddress } from './address';
@@ -18,7 +18,7 @@ export const useBibleAddressIsCurrentVersei = (versei: BibleVersei) => {
   const currentVersei = useBibleAddressVersei();
   return joinAddress === null
     ? currentVersei === versei
-    : joinAddress?.[currentBooki]?.[currentChapteri].includes(versei) ?? false;
+    : (joinAddress?.[currentBooki]?.[currentChapteri].includes(versei) ?? false);
 };
 
 export const useBibleAddressVersei = (): BibleVersei => {

@@ -2,7 +2,7 @@ import { mylib } from '#shared/lib/my-lib';
 import { filesStorage } from '#shared/ui/configurators/utils/storage';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { useIndexFileAssociations } from '@index/atoms';
+import { useIndexFileAssociations } from '$index/atoms';
 import { useEffect, useReducer, useState } from 'react';
 import { MyFileType } from 'shared/api';
 import { useRemoveMyFile } from '../hooks/remove-file';

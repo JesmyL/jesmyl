@@ -15,7 +15,7 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
 
   useEffect(() => setId(props.id), [props.id]);
 
-  const [modalNode, toast] = useToast();
+  const toast = useToast();
   const [onClick, error, isLoading] = useOnSendPromiseCallback(
     item => {
       return props.onSelect === undefined ? props.onSelectId?.(item.id) : props.onSelect(item);
@@ -52,7 +52,6 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
         setDropped(!isDropped);
       }}
     >
-      {modalNode}
       <div className="selected-item ellipsis full-max-width">
         {selectedItem?.title || (
           <span className="not-selected">{props.undTitle ?? props.nullTitle ?? props.placeholder ?? 'Не выбрано'}</span>

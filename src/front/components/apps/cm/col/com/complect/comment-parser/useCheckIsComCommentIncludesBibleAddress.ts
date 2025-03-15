@@ -1,4 +1,4 @@
-import { useComCommentText } from '@cm/com-comments-manager';
+import { useComCommentText } from '$cm/com-comments-manager';
 import { CmComWid } from 'shared/api';
 import { Com } from '../../Com';
 import { ComBlockCommentMakerCleans } from './Cleans';

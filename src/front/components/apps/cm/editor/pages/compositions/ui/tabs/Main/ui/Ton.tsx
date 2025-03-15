@@ -1,11 +1,13 @@
-import { useModal } from '#shared/ui/modal/useModal';
+import { Modal } from '#shared/ui/modal/Modal/Modal';
+import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
+import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { ChordVisibleVariant } from '@cm/Cm.model';
-import { ComOrders } from '@cm/col/com/orders/ComOrders';
-import { cmComClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
-import { EditableCom } from '@cm/editor/lib/EditableCom';
+import { ChordVisibleVariant } from '$cm/Cm.model';
+import { ComOrders } from '$cm/col/com/orders/ComOrders';
+import { cmComClientInvocatorMethods } from '$cm/editor/lib/cm-editor-invocator.methods';
+import { EditableCom } from '$cm/editor/lib/EditableCom';
 import { useState } from 'react';
 
 const dotts = '.'
@@ -19,12 +21,22 @@ export const EditableCompositionMainTon = ({ ccom }: { ccom: EditableCom }) => {
   const [iconOnLoad, setIconOnLoad] = useState('');
   const firstChord = ccom.getFirstSimpleChord();
 
-  const [modalNode, openModal] = useModal(({ header, body }, close) => {
-    return (
-      <>
-        {header(<>Тональность песни</>)}
-        {body(
-          <>
+  const [isOpenModal, setIsOpenModal] = useState<unknown>(false);
+
+  return (
+    <div
+      className="flex full-width between margin-gap-v pointer"
+      onClick={setIsOpenModal}
+    >
+      <LazyIcon icon="Notification01" />
+      <div className="title half-width text-center">Изменить тональность</div>
+      <div className="half-width text-center">{firstChord}</div>
+
+      {!isOpenModal || (
+        <Modal onClose={setIsOpenModal}>
+          <ModalHeader>Тональность песни</ModalHeader>
+
+          <ModalBody>
             {dotts.map(position => {
               const transposedChord = ccom.transposeBlock(firstChord ?? '', position - (ccom.transPosition ?? 0));
 
@@ -53,21 +65,9 @@ export const EditableCompositionMainTon = ({ ccom }: { ccom: EditableCom }) => {
               com={ccom}
               chordVisibleVariant={ChordVisibleVariant.Maximal}
             />
-          </>,
-        )}
-      </>
-    );
-  });
-
-  return (
-    <div
-      className="flex full-width between margin-gap-v pointer"
-      onClick={openModal}
-    >
-      {modalNode}
-      <LazyIcon icon="Notification01" />
-      <div className="title half-width text-center">Изменить тональность</div>
-      <div className="half-width text-center">{firstChord}</div>
+          </ModalBody>
+        </Modal>
+      )}
     </div>
   );
 };

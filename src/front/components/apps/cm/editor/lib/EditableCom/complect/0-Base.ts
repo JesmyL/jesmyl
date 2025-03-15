@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
-import { blockStyles } from '@cm/col/com/block-styles/BlockStyles';
-import { Com } from '@cm/col/com/Com';
+import { blockStyles } from '$cm/col/com/block-styles/BlockStyles';
+import { Com } from '$cm/col/com/Com';
 import { IExportableCom } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 

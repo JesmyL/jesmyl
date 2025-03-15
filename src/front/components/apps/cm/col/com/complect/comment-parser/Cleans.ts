@@ -1,8 +1,8 @@
 import { makePseudoElementCorrectContentText } from '#shared/lib/getParentNodeWithClassName';
 import { mylib } from '#shared/lib/my-lib';
-import { bibleTitles } from '@bible/hooks/bibleTitlesJson';
-import { bibleAllTranslates, bibleLowerBooks, translateDescriptions } from '@bible/translates/lib/consts';
-import { BibleBookTranslates } from '@bible/translates/TranslatesContext';
+import { bibleTitles } from '$bible/hooks/bibleTitlesJson';
+import { bibleAllTranslates, bibleLowerBooks, translateDescriptions } from '$bible/translates/lib/consts';
+import { BibleBookTranslates } from '$bible/translates/TranslatesContext';
 import { CmComOrderWid } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import { css } from 'styled-components';
@@ -155,13 +155,13 @@ export class ComBlockCommentMakerCleans {
       const booki =
         addr.$bookTitle === undefined
           ? undefined
-          : titlesMap.get(`${addr.$bookNumber || ''}${addr.$bookTitle.toLowerCase()}`) ??
+          : (titlesMap.get(`${addr.$bookNumber || ''}${addr.$bookTitle.toLowerCase()}`) ??
             titlesMap.get(`${addr.$bookNumber}-я ${addr.$bookTitle.toLowerCase()}`) ??
             titlesMap.get(`${addr.$bookNumber}-е ${addr.$bookTitle.toLowerCase()}`) ??
             titlesMap.get(`от ${addr.$bookTitle.toLowerCase()}`) ??
             titlesMap.get(`1${addr.$bookTitle.toLowerCase()}`) ??
             titlesMap.get(`1-е ${addr.$bookTitle.toLowerCase()}`) ??
-            titlesMap.get(`1-я ${addr.$bookTitle.toLowerCase()}`);
+            titlesMap.get(`1-я ${addr.$bookTitle.toLowerCase()}`));
 
       const bookTitle =
         (addr.$bookNumber ? `${addr.$bookNumber}${addr.$bookNumberSuffix ? `-${addr.$bookNumberSuffix}` : ''} ` : '') +

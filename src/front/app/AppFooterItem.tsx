@@ -1,32 +1,26 @@
-import {
-  footerItemPlaceLsPrefix,
-  useCurrentAppFooterItemAppNameContext,
-  useCurrentAppFooterItemPlaceContext,
-} from '#basis/lib/App.contexts';
+import { footerItemPlaceLsPrefix, useCurrentAppFooterItemPlaceContext } from '#basis/lib/App.contexts';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { Link } from 'react-router-dom';
+import { FileRoutesByPath, Link } from '@tanstack/react-router';
 import styled from 'styled-components';
 
 interface Props {
-  to: string;
+  to: keyof FileRoutesByPath;
   idPostfix: string;
   icon: TheIconKnownName;
   title: string;
-  search?: `?${string}`;
   className?: string;
   children?: React.ReactNode;
 }
 
-export function AppFooterItem({ to, icon, title, search, className, children, idPostfix: id }: Props) {
-  const appName = useCurrentAppFooterItemAppNameContext();
+export function AppFooterItem({ to, icon, title, className, children, idPostfix: id }: Props) {
   const place = useCurrentAppFooterItemPlaceContext();
-  const isActive = to === place;
+  const isActive = to === place || `${to}/` === place;
 
-  if (!isActive && appName && place) {
-    to = localStorage.getItem(footerItemPlaceLsPrefix + appName + '/' + to) ?? to;
+  if (!isActive && place) {
+    to = (localStorage.getItem(footerItemPlaceLsPrefix + to) ??
+      localStorage.getItem(footerItemPlaceLsPrefix + `${to}/`) ??
+      to) as never;
   }
-
-  if (search !== undefined && !to.includes('?')) to += search;
 
   return (
     <StyledLink

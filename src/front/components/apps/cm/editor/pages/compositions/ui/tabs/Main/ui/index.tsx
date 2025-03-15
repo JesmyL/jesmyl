@@ -3,28 +3,22 @@ import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
 import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { InputWithLoadingIcon } from '@cm/base/InputWithLoadingIcon';
-import { ChordVisibleVariant } from '@cm/Cm.model';
-import { TheCom } from '@cm/col/com/TheCom';
-import { cmComClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
-import { EditableCom } from '@cm/editor/lib/EditableCom';
-import { removedCompositionsAtom } from '@cm/editor/pages/compositions/lib/atoms';
-import { useEditableCcom } from '@cm/editor/pages/compositions/lib/useEditableCom';
-import { TextCorrectMessages } from '@cm/editor/ui/TextBlockIncorrectMessages';
-import { useAuth } from '@index/atoms';
+import { InputWithLoadingIcon } from '$cm/base/InputWithLoadingIcon';
+import { ChordVisibleVariant } from '$cm/Cm.model';
+import { TheCom } from '$cm/col/com/TheCom';
+import { cmComClientInvocatorMethods } from '$cm/editor/lib/cm-editor-invocator.methods';
+import { EditableCom } from '$cm/editor/lib/EditableCom';
+import { removedCompositionsAtom } from '$cm/editor/pages/compositions/lib/atoms';
+import { useEditableCcom } from '$cm/editor/pages/compositions/lib/useEditableCom';
+import { TextCorrectMessages } from '$cm/editor/ui/TextBlockIncorrectMessages';
+import { useAuth } from '$index/atoms';
 import { useState } from 'react';
 import { emptyFunc } from 'shared/utils';
 import { EditableCompositionMainTon } from './Ton';
 
 const meterSizeItems: DropdownItem<3 | 4>[] = [
-  {
-    id: 4,
-    title: '4/4',
-  },
-  {
-    id: 3,
-    title: '3/4',
-  },
+  { id: 4, title: '4/4' },
+  { id: 3, title: '3/4' },
 ];
 
 export const CmEditableCompositionMainTab = () => {

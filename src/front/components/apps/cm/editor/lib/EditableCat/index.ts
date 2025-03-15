@@ -1,4 +1,4 @@
-import { Cat } from '@cm/col/cat/Cat';
+import { Cat } from '$cm/col/cat/Cat';
 import { IExportableCat } from 'shared/api';
 import { EditableCom } from '../EditableCom';
 

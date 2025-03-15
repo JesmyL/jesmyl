@@ -1,7 +1,7 @@
 import { DexiedValueSetter } from '#shared/lib/DexieDB';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
-import { CmIDBStorage } from '@cm/_db/cm-idb';
+import { CmIDBStorage } from '$cm/_db/cm-idb';
 import { useState } from 'react';
 import { EeStorePack } from 'shared/api';
 import styled from 'styled-components';

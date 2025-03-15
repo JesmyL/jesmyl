@@ -1,5 +1,5 @@
-import { useGetBibleScreenTranslationAddressStyle } from '@bible/translations/hooks/styles/address-style';
-import { BibleTranslationScreenConfig } from '@bible/translations/model';
+import { useGetBibleScreenTranslationAddressStyle } from '$bible/translations/hooks/styles/address-style';
+import { BibleTranslationScreenConfig } from '$bible/translations/model';
 import { useSetScreenTranslationInteractiveBackground } from 'front/components/apps/+complect/translations/hooks/interactive-back';
 import { useRef } from 'react';
 import { BibleTranslationScreenAddressContent } from './AddressContent';

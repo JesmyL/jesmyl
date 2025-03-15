@@ -1,7 +1,5 @@
-import { AppName } from '#basis/model/App.model';
 import { atom } from '#shared/lib/atoms';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { useParams } from 'react-router-dom';
 import { SokiAuthLogin } from 'shared/api';
 import { authIDB } from './db/auth-idb';
 import { indexIDB } from './db/index-idb';
@@ -17,5 +15,3 @@ export const useIndexFileAssociations = () => indexIDB.useValue.fileAssociations
 export const useAuth = () => authIDB.useValue.auth();
 
 export const useAppFontFamily = () => indexIDB.use.appFontFamily();
-
-export const useCurrentApp = () => useParams().appName as AppName | und;

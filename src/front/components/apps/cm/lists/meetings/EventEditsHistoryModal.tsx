@@ -4,14 +4,13 @@ import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheButton } from '#shared/ui/TheButton';
-import { ComFaceList } from '@cm/col/com/face/list/ComFaceList';
-import { cmComExternalsClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
+import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
+import { cmComExternalsClientInvocatorMethods } from '$cm/editor/lib/cm-editor-invocator.methods';
 import { useState } from 'react';
+import { IScheduleWidgetWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
-import { useMeetingPathParts } from './useMeetingPathParts';
 
-export const CmMeetingEventEditsHistoryModalInner = () => {
-  const { dayi, schw } = useMeetingPathParts();
+export const CmMeetingEventEditsHistoryModalInner = ({ dayi, schw }: { dayi: number; schw: IScheduleWidgetWid }) => {
   const [limit, setLimit] = useState(10);
   const [historyPacks, isLoading, error, setHistoryPacks] = useInvocatedValue(
     null,

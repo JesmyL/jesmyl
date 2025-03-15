@@ -1,7 +1,7 @@
-import { useBibleAddressTextContext } from '@bible/texts/lib/contexts';
-import { useBibleScreenTranslationFontSizeAddressAdapter } from '@bible/translations/hooks/font-size-adapter/address-adapter';
-import { useGetBibleScreenTranslationAddressTextWrapperStyle } from '@bible/translations/hooks/styles/address-text-wrapper-style';
-import { BibleTranslationScreenConfig } from '@bible/translations/model';
+import { useBibleAddressTextContext } from '$bible/texts/lib/contexts';
+import { useBibleScreenTranslationFontSizeAddressAdapter } from '$bible/translations/hooks/font-size-adapter/address-adapter';
+import { useGetBibleScreenTranslationAddressTextWrapperStyle } from '$bible/translations/hooks/styles/address-text-wrapper-style';
+import { BibleTranslationScreenConfig } from '$bible/translations/model';
 
 interface Props {
   screeni: number | und;

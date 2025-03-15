@@ -1,14 +1,14 @@
-import { PhaseContainerConfigurer } from '#shared/ui/phase-container/PhaseContainerConfigurer';
+import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
-import { bibleIDB } from '@bible/_db/bibleIDB';
-import { useBibleAddressBooki } from '@bible/hooks/address/books';
-import { useBibleAddressChapteri } from '@bible/hooks/address/chapters';
-import { useBibleBookList } from '@bible/hooks/texts';
-import { useBibleTranslationSearchResultSelectedSet } from '@bible/translations/search/hooks/results';
-import { BibleSearchPanelSearchTextInput } from '@bible/translations/search/input-panel/SearchTextInput';
-import { BibleSearchResults } from '@bible/translations/search/Results';
+import { bibleIDB } from '$bible/_db/bibleIDB';
+import { useBibleAddressBooki } from '$bible/hooks/address/books';
+import { useBibleAddressChapteri } from '$bible/hooks/address/chapters';
+import { useBibleBookList } from '$bible/hooks/texts';
+import { useBibleTranslationSearchResultSelectedSet } from '$bible/translations/search/hooks/results';
+import { BibleSearchPanelSearchTextInput } from '$bible/translations/search/input-panel/SearchTextInput';
+import { BibleSearchResults } from '$bible/translations/search/Results';
+import { useNavigate } from '@tanstack/react-router';
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { emptyArray } from 'shared/utils';
 
 export function BibleReaderSearchPage() {
@@ -26,7 +26,7 @@ export function BibleReaderSearchPage() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <PhaseContainerConfigurer
+    <PageContainerConfigurer
       className=""
       withoutBackButton
       headTitle="Поиск"
@@ -70,7 +70,7 @@ export function BibleReaderSearchPage() {
               inputRef={inputRef}
               height="calc(100% - 100px)"
               innerZone={innerZone}
-              onClick={() => navigate('/bible/i')}
+              onClick={() => navigate({ to: '/bible/i' })}
             />
           </div>
         </>

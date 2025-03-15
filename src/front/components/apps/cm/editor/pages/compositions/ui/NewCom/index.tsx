@@ -3,13 +3,13 @@ import { MyLib } from '#shared/lib/my-lib';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TheButton } from '#shared/ui/TheButton';
-import { ChordVisibleVariant } from '@cm/Cm.model';
-import { Com } from '@cm/col/com/Com';
-import { ComOrders } from '@cm/col/com/orders/ComOrders';
-import { cmComClientInvocatorMethods } from '@cm/editor/lib/cm-editor-invocator.methods';
-import { EditableCom } from '@cm/editor/lib/EditableCom';
+import { ChordVisibleVariant } from '$cm/Cm.model';
+import { Com } from '$cm/col/com/Com';
+import { ComOrders } from '$cm/col/com/orders/ComOrders';
+import { cmComClientInvocatorMethods } from '$cm/editor/lib/cm-editor-invocator.methods';
+import { EditableCom } from '$cm/editor/lib/EditableCom';
+import { useNavigate } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { CmComMod, CmComWid, CmMp3Rule, IExportableCom } from 'shared/api';
 import { itIt, itNNil, makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
@@ -206,7 +206,7 @@ export const NewComposition = ({ onClose }: { onClose: (is: false) => void }) =>
           onSend={() => cmComClientInvocatorMethods.newCom(null, newCom)}
           onSuccess={com => {
             onClose(false);
-            navigate('' + com.w);
+            navigate({ to: '/cm/edit/coms/$comw', params: { comw: `${com.w}` } });
           }}
         />
       </div>
