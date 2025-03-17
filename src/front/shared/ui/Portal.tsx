@@ -2,7 +2,12 @@ import { ReactNode, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import { emptyArray } from 'shared/utils';
 
-export function Portal({ children, classNames = emptyArray }: { children: ReactNode; classNames?: string[] }) {
+interface Props {
+  children: ReactNode;
+  classNames?: string[];
+}
+
+export function Portal({ children, classNames = emptyArray }: Props) {
   const [container] = useState(() => {
     const div = document.createElement('div');
 
