@@ -28,12 +28,11 @@ const finishFlash = '\\';
 const flashDivider = '&nbsp;';
 
 export const ComRepeatsRemoveButton = ({ isChordBlock, startOrd, ord, textLinei, wordi, reset, setField }: Props) => {
-  const [confirmNode, confirm] = useConfirm();
+  const confirm = useConfirm();
   const [isOpenModal, setIsOpenModal] = useState<unknown>(false);
 
   return (
     <>
-      {confirmNode}
       <div
         className="button remove"
         onClick={async event => {

@@ -8,12 +8,7 @@ export const ConfirmContent = (props: ConfirmedContentProps) => {
 };
 
 const WithConfirm = (props: ConfirmedContentProps) => {
-  const [node, confirm] = useConfirm();
+  const confirm = useConfirm();
 
-  return (
-    <>
-      {node}
-      {props.content(() => confirm(props.confirm))}
-    </>
-  );
+  return <>{props.content(() => confirm(props.confirm))}</>;
 };

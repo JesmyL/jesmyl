@@ -22,7 +22,7 @@ export const CmComRepeatsRedactorTab = () => {
   const [isChordBlock, setIsChordBlock] = useState(false);
   const [isReadySetChordBlock, setIsReadySetChordBlock] = useState(false);
   const [flashCount, setFlashCount] = useState(2);
-  const [confirmNode, confirm] = useConfirm();
+  const confirm = useConfirm();
 
   const ccom = useEditableCcom();
   const { textLinei: startLinei, wordi: startWordi, orderUnit: startOrd } = start || {};
@@ -71,7 +71,6 @@ export const CmComRepeatsRedactorTab = () => {
 
   return (
     <Content className={`com-repeats-editor ${start == null ? '' : 'active'}`}>
-      {confirmNode}
       {ccom?.orders?.map((ord, ordi) => {
         if (!ord.isVisible) return null;
 

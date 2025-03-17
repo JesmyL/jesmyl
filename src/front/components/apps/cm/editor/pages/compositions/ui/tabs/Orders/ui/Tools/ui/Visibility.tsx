@@ -7,33 +7,30 @@ import { useState } from 'react';
 import { OrdersRedactorOrderToolsProps } from '../model';
 
 export const OrdersRedactorOrderToolsVisibility = ({ onClose, ord }: OrdersRedactorOrderToolsProps) => {
-  const [confirmNode, confirm] = useConfirm();
+  const confirm = useConfirm();
   const [isLoading, setIsLoading] = useState(false);
 
   return (
-    <>
-      {confirmNode}
-      <BottomPopupItem
-        iconNode={
-          isLoading ? (
-            <StyledLoadingSpinner icon="Loading03" />
-          ) : ord.isVisible ? (
-            <LazyIcon icon="ViewOff" />
-          ) : (
-            <LazyIcon icon="View" />
-          )
+    <BottomPopupItem
+      iconNode={
+        isLoading ? (
+          <StyledLoadingSpinner icon="Loading03" />
+        ) : ord.isVisible ? (
+          <LazyIcon icon="ViewOff" />
+        ) : (
+          <LazyIcon icon="View" />
+        )
+      }
+      title={ord.isVisible ? 'Скрыть блок' : 'Показать блок'}
+      onClick={async () => {
+        if (await confirm(`Скрыть блок ${ord.me.header()}?`)) {
+          setIsLoading(true);
+          await cmComOrderClientInvocatorMethods.toggleVisibility(null, ord.wid, ord.me.header(), ord.com.wid);
+          setIsLoading(false);
         }
-        title={ord.isVisible ? 'Скрыть блок' : 'Показать блок'}
-        onClick={async () => {
-          if (await confirm(`Скрыть блок ${ord.me.header()}?`)) {
-            setIsLoading(true);
-            await cmComOrderClientInvocatorMethods.toggleVisibility(null, ord.wid, ord.me.header(), ord.com.wid);
-            setIsLoading(false);
-          }
 
-          onClose(false);
-        }}
-      />
-    </>
+        onClose(false);
+      }}
+    />
   );
 };

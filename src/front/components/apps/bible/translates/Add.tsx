@@ -16,10 +16,7 @@ export function BibleModulesTranslationsRedactButton(): JSX.Element {
       />
 
       {isOpenModal && (
-        <Modal
-          onClose={setIsOpenModal}
-          isRenderHere
-        >
+        <Modal onClose={setIsOpenModal}>
           <TranslatesLoadModalInner />
         </Modal>
       )}

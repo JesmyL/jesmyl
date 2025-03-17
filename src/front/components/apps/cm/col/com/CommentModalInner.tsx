@@ -88,10 +88,7 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
       </ModalFooter>
 
       {isShowInfoModal && (
-        <Modal
-          onClose={setIsShowInfoModal}
-          isRenderHere
-        >
+        <Modal onClose={setIsShowInfoModal}>
           <ModalHeader>Заметки к песне</ModalHeader>
           <ModalBody>
             <TheComCommentInfo HashSwitcherIcon={HashSwitcherIcon} />

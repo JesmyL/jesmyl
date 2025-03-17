@@ -14,7 +14,7 @@ export function ComFaceContextMenu({ onClick, comWid }: Props) {
   const { isFavourite, toggleFavourite } = useFavouriteComs();
   const isComMarked = isFavourite(comWid);
   const { clearSelectedComws, selectedComws, selectedComPosition: isSelected, toggleSelectedCom } = useSelectedComs();
-  const [confirmNode, confirm] = useConfirm();
+  const confirm = useConfirm();
 
   return (
     <StyledMenu>
@@ -40,7 +40,6 @@ export function ComFaceContextMenu({ onClick, comWid }: Props) {
           }}
         />
       )}
-      {confirmNode}
     </StyledMenu>
   );
 }

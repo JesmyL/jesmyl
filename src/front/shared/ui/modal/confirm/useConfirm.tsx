@@ -11,54 +11,51 @@ export const useConfirm = () => {
   const onCloseRef = useRef<() => void>(emptyFunc);
   const setContent = useSetRootAnchoredContent(onCloseRef);
 
-  return [
-    <></>,
-    useCallback(
-      (content: ReactNode, header?: ReactNode) => {
-        const resolvers = Promise.withResolvers<boolean>();
+  return useCallback(
+    (content: ReactNode, header?: ReactNode) => {
+      const resolvers = Promise.withResolvers<boolean>();
 
-        setContent(
-          <Modal
-            onClose={emptyFunc}
-            isRenderHere
-          >
-            <ConfirmListeners
-              confirmationResolvers={resolvers}
-              onClose={() => onCloseRef.current()}
-            />
-            <ModalHeader>{header ?? 'Подтверди'}</ModalHeader>
-            <ModalBody>{content}</ModalBody>
-            <ModalFooter>
-              <span className="flex flex-big-gap">
-                <span
-                  id="confirm-button-YES"
-                  className="pointer"
-                  onClick={() => {
-                    resolvers.resolve(true);
+      setContent(
+        <Modal
+          onClose={() => onCloseRef.current()}
+          isRenderHere
+        >
+          <ConfirmListeners
+            confirmationResolvers={resolvers}
+            onClose={() => onCloseRef.current()}
+          />
+          <ModalHeader>{header ?? 'Подтверди'}</ModalHeader>
+          <ModalBody>{content}</ModalBody>
+          <ModalFooter>
+            <span className="flex flex-big-gap">
+              <span
+                id="confirm-button-YES"
+                className="pointer"
+                onClick={() => {
+                  resolvers.resolve(true);
 
-                    onCloseRef.current();
-                  }}
-                >
-                  Да
-                </span>
-                <span
-                  id="confirm-button-NO"
-                  className="pointer"
-                  onClick={() => {
-                    resolvers.resolve(false);
-                    onCloseRef.current();
-                  }}
-                >
-                  Нет
-                </span>
+                  onCloseRef.current();
+                }}
+              >
+                Да
               </span>
-            </ModalFooter>
-          </Modal>,
-        );
+              <span
+                id="confirm-button-NO"
+                className="pointer"
+                onClick={() => {
+                  resolvers.resolve(false);
+                  onCloseRef.current();
+                }}
+              >
+                Нет
+              </span>
+            </span>
+          </ModalFooter>
+        </Modal>,
+      );
 
-        return resolvers.promise;
-      },
-      [setContent],
-    ),
-  ] as const;
+      return resolvers.promise;
+    },
+    [setContent],
+  );
 };

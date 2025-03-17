@@ -25,7 +25,7 @@ export const CmEditableCompositionMainTab = () => {
   const ccom = useEditableCcom();
   const setRemovedComs = useAtomSet(removedCompositionsAtom);
   const auth = useAuth();
-  const [confirmNode, confirm] = useConfirm();
+  const confirm = useConfirm();
   const [name, setName] = useState('');
 
   if (!ccom) return null;
@@ -33,7 +33,6 @@ export const CmEditableCompositionMainTab = () => {
 
   return (
     <>
-      {confirmNode}
       <InputWithLoadingIcon
         icon="SchoolReportCard"
         label="Название"

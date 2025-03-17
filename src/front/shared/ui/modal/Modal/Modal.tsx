@@ -1,9 +1,8 @@
 import { propagationStopper } from '#shared/lib/event-funcs';
 
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
-import { Portal } from '#shared/ui/Portal';
 import { RootAnchoredContent } from '#shared/ui/RootAnchoredContent';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { emptyFunc } from 'shared/utils';
 import { StyledModal, StyledModalScreen, StyledModalScreenWrapper } from '../styled';
 
@@ -16,16 +15,20 @@ export interface Props {
 
 export function Modal({ mood, children, onClose, isRenderHere }: Props) {
   const onCloseRef = useMemo(() => ({ current: emptyFunc }), []);
-  const close = useCallback(() => {
+  const close = () => {
     onCloseRef.current();
     onClose(false);
-  }, [onClose, onCloseRef]);
+  };
 
-  const content = (
-    <EscapableModal
+  const modalNode = (
+    <StyledModal
       className="type_screen"
-      onClose={close}
+      onClick={event => {
+        event.stopPropagation();
+        close();
+      }}
     >
+      <EscapableModal onClose={close} />
       <StyledModalScreenWrapper className="type_screen">
         <StyledModalScreen
           className={'type_screen mood mood_' + mood}
@@ -34,23 +37,15 @@ export function Modal({ mood, children, onClose, isRenderHere }: Props) {
           {children}
         </StyledModalScreen>
       </StyledModalScreenWrapper>
-    </EscapableModal>
+    </StyledModal>
   );
 
-  if (isRenderHere) return <Portal>{content}</Portal>;
+  if (isRenderHere) return modalNode;
 
-  return <RootAnchoredContent onCloseRef={onCloseRef}>{content}</RootAnchoredContent>;
+  return <RootAnchoredContent onCloseRef={onCloseRef}>{modalNode}</RootAnchoredContent>;
 }
 
-const EscapableModal = ({
-  children,
-  className,
-  onClose,
-}: {
-  onClose: () => void;
-  children: React.ReactNode;
-  className: string;
-}) => {
+const EscapableModal = ({ onClose }: { onClose: () => void }) => {
   useEffect(() => {
     return ThrowEvent.listenKeyDown('Escape', event => {
       event.stopPropagation();
@@ -58,15 +53,5 @@ const EscapableModal = ({
     });
   }, [onClose]);
 
-  return (
-    <StyledModal
-      onClick={event => {
-        event.stopPropagation();
-        onClose();
-      }}
-      className={className}
-    >
-      {children}
-    </StyledModal>
-  );
+  return <></>;
 };

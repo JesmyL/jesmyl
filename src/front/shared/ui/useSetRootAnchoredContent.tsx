@@ -1,4 +1,5 @@
 import { useSetAppRootAnchorNodesContext } from '#basis/lib/App.contexts';
+import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
 import { useWid } from '#shared/lib/hooks/useWid';
 import { useCallback } from 'react';
 import { Portal } from './Portal';
@@ -23,7 +24,12 @@ export const useSetRootAnchoredContent = (
     (content?: React.ReactNode, classNames?: string[]) => {
       updateContent(prev => {
         const map = new Map(prev);
-        map.set(wid, <Portal classNames={classNames ?? topClassNames}>{content ?? topContent}</Portal>);
+        map.set(
+          wid,
+          <AppDialogProvider title="inner">
+            <Portal classNames={classNames ?? topClassNames}>{content ?? topContent}</Portal>
+          </AppDialogProvider>,
+        );
         return map;
       });
     },

@@ -105,10 +105,7 @@ export function TheComCommentInfo({ HashSwitcherIcon }: { HashSwitcherIcon: TheI
 
       <>
         {isOpenBibleInfo && (
-          <Modal
-            onClose={setIsOpenBibleInfo}
-            isRenderHere
-          >
+          <Modal onClose={setIsOpenBibleInfo}>
             <TheComCommentBibleTextsInfo />
           </Modal>
         )}
