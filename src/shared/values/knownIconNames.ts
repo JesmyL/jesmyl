@@ -165,6 +165,7 @@ export const knownIconNames = [
   'Pin',
   'Play',
   'PlayCircle02',
+  'PlayCircle',
   'Playlist01',
   'Playlist02',
   'Playlist03',

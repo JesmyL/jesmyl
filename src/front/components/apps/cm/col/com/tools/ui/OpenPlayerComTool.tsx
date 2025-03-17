@@ -7,7 +7,7 @@ export const OpenPlayerComTool = () => {
   return (
     <ComTool
       title="Проигрыватель"
-      icon="Vynil03"
+      icon="PlayCircle"
       iconKind={playerHideMode ? 'SolidRounded' : 'StrokeRounded'}
       onClick={() => setPlayerHideMode(playerHideMode ? '' : 'min')}
     />

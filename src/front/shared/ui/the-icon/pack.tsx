@@ -156,6 +156,7 @@ import { iconPackOfPencilEdit01 } from './icons/pencil-edit-01';
 import { iconPackOfPencilEdit02 } from './icons/pencil-edit-02';
 import { iconPackOfPin } from './icons/pin';
 import { iconPackOfPlay } from './icons/play';
+import { iconPackOfPlayCircle } from './icons/play-circle';
 import { iconPackOfPlayCircle02 } from './icons/play-circle-02';
 import { iconPackOfPlaylist01 } from './icons/playlist-01';
 import { iconPackOfPlaylist02 } from './icons/playlist-02';
@@ -385,6 +386,7 @@ export const theIconKnownPack: Record<TheIconKnownName, TheIconSelfPack> = {
   Pin: iconPackOfPin,
   Play: iconPackOfPlay,
   PlayCircle02: iconPackOfPlayCircle02,
+  PlayCircle: iconPackOfPlayCircle,
   Playlist01: iconPackOfPlaylist01,
   Playlist02: iconPackOfPlaylist02,
   Playlist03: iconPackOfPlaylist03,

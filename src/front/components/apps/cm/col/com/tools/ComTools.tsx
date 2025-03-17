@@ -97,11 +97,11 @@ export const ComTools = () => {
       </div>
       {comToolsNode}
 
-      <div className="fade-05 w-full my-2 mx-5 text-x7">
+      <div className="fade-05 w-full py-2 px-5 text-x7">
         <CmComCatMentions com={ccom} />
       </div>
 
-      <div className="full-width fade-05 flex center flex-gap font-size:0.7em margin-gap-v">
+      <div className="full-width fade-05 flex center flex-gap font-size:0.7em py-3">
         Просмотрели
         {visitsCount === null ? (
           <TheIconLoading />
@@ -109,7 +109,7 @@ export const ComTools = () => {
           ` ${visitsCount} ${mylib.declension(visitsCount, 'раз', 'раза', 'раз')}`
         )}
       </div>
-      <div className="full-width fade-05 flex center font-size:0.7em margin-gap-v">
+      <div className="full-width fade-05 flex center font-size:0.7em py-3">
         Добавлено: {new Date(ccom.wid).toLocaleString('ru')}
       </div>
     </>
