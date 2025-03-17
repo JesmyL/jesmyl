@@ -10,10 +10,10 @@ interface Props<Elem> {
 
 export function propsOfClicker<Elem extends HTMLElement>({ onCtxMenu, onDblClick }: Props<Elem>) {
   const mouseCallback = (event: React.MouseEvent<Elem>) => {
-    event.preventDefault();
+    event.stopPropagation();
   };
   const touchCallback = (event: React.TouchEvent<Elem>) => {
-    event.preventDefault();
+    event.stopPropagation();
   };
 
   const overridableProps = {

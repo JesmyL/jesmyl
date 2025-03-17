@@ -55,7 +55,10 @@ export const CmEditorPage = () => {
                   idPostfix="events"
                 />
               </Link>
-              <Link to="/cm/edit/chord">
+              <Link
+                to="/cm/edit/chord"
+                search={{ newChordName: '' }}
+              >
                 <BrutalItem
                   iconNode={
                     <LazyIcon
