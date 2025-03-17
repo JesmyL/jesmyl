@@ -1,21 +1,16 @@
-import { ReactNode, useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { emptyFunc } from 'shared/utils';
 import { useSetRootAnchoredContent } from '../useSetRootAnchoredContent';
 import { StyledModal, StyledModalScreen, StyledModalScreenWrapper } from './styled';
 
 type ModalConfigMood = 'norm' | 'ko' | 'ok';
 
-interface UserModalConfig {
+interface ToastModalConfig {
   mood?: ModalConfigMood;
-}
-
-export interface ToastModalConfig extends UserModalConfig {
   showTime?: number;
 }
 
-const classNames = ['pointers-none'];
-
-export function useToast(topConfig?: ToastModalConfig): (content?: ReactNode, config?: ToastModalConfig) => void {
+export function useToast(topConfig?: ToastModalConfig): (content: React.ReactNode, config?: ToastModalConfig) => void {
   const onCloseRef = useRef<() => void>(emptyFunc);
   const timerRef = useRef<TimeOut>(0);
   const setContent = useSetRootAnchoredContent(onCloseRef);
@@ -25,12 +20,12 @@ export function useToast(topConfig?: ToastModalConfig): (content?: ReactNode, co
       setContent(
         <StyledModal className="type_toast">
           <StyledModalScreenWrapper className="type_toast">
-            <StyledModalScreen className={'type_toast mood mood_' + ((topConfig ?? config)?.mood ?? '')}>
+            <StyledModalScreen className={'type_toast mood mood_' + ((config ?? topConfig)?.mood ?? '')}>
               {content}
             </StyledModalScreen>
           </StyledModalScreenWrapper>
         </StyledModal>,
-        classNames,
+        ['pointers-none'],
       );
 
       clearTimeout(timerRef.current);
