@@ -28,6 +28,16 @@ declare module '@mui/material/IconButton' {
     x1: true;
   }
 }
+declare module '@mui/material/TextField' {
+  interface TextFieldPropsColorOverrides extends ColorPalette {
+    x1: true;
+  }
+}
+declare module '@mui/material/Chip' {
+  interface ChipPropsColorOverrides extends ColorPalette {
+    x1: true;
+  }
+}
 
 declare module '@mui/material/Slider' {
   interface SliderPropsColorOverrides extends ColorPalette {

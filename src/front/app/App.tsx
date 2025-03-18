@@ -16,7 +16,7 @@ declare module '@tanstack/react-router' {
   }
 }
 
-function App() {
+export const App = () => {
   const isDarkMode = complectIDB.useValue.isDarkMode();
 
   return (
@@ -29,6 +29,4 @@ function App() {
       </ThemeProvider>
     </AppDialogProvider>
   );
-}
-
-export default App;
+};

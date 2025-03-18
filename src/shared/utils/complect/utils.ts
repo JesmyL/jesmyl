@@ -104,6 +104,8 @@ const baseHeadersReplacer = (_all: string, $1: string, $2: string) => tags[$1][0
 export const itIt = <It>(it: It) => it;
 export const itNIt = <It>(it: It) => !it;
 export const isNIs = (is: boolean) => !is;
+export const itNumSort = (a: number, b: number) => a - b;
+export const itNumSortReverse = (a: number, b: number) => b - a;
 export const emptyFunc = () => {};
 export const emptyAsyncFunc = async () => {};
 export const emptyArray = [];

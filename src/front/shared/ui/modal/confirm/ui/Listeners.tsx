@@ -9,7 +9,7 @@ export const ConfirmListeners = ({
   onClose: (is: false) => void;
 }) => {
   useEffect(() => {
-    return ThrowEvent.listenKeyDown('Enter', event => {
+    return ThrowEvent.listenKeyUp('Enter', event => {
       event.stopPropagation();
       confirmationResolvers.resolve(true);
       onClose(false);

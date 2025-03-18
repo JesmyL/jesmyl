@@ -47,4 +47,12 @@ export const initialStyles = css`
       -webkit-touch-callout: none;
     }
   }
+
+  ${[1, 2, 3, 4, 5, 6, 7, 8, 'OK', 'KO'].map(postfix => {
+    return css`
+      .text-x${postfix} {
+        --icon-color: var(${`--color-x${postfix}`});
+      }
+    `;
+  })}
 `;

@@ -27,6 +27,7 @@ export const utilStyles = css`
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    max-width: 100%;
   }
 
   .white-pre {

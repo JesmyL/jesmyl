@@ -17,12 +17,12 @@ export const useConfirm = () => {
 
       setContent(
         <Modal
-          onClose={() => onCloseRef.current()}
+          onClose={onCloseRef.current}
           isRenderHere
         >
           <ConfirmListeners
             confirmationResolvers={resolvers}
-            onClose={() => onCloseRef.current()}
+            onClose={onCloseRef.current}
           />
           <ModalHeader>{header ?? 'Подтверди'}</ModalHeader>
           <ModalBody>{content}</ModalBody>
@@ -32,9 +32,8 @@ export const useConfirm = () => {
                 id="confirm-button-YES"
                 className="pointer"
                 onClick={() => {
-                  resolvers.resolve(true);
-
                   onCloseRef.current();
+                  resolvers.resolve(true);
                 }}
               >
                 Да
