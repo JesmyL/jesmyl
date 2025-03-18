@@ -1,4 +1,6 @@
 import { DexieDB } from '#shared/lib/DexieDB';
+import { mylib } from '#shared/lib/my-lib';
+import { useLiveQuery } from 'dexie-react-hooks';
 import {
   ChordPack,
   CmComWid,
@@ -10,6 +12,7 @@ import {
   MigratableComToolName,
   ScheduleComPack,
 } from 'shared/api';
+import { itNumSort } from 'shared/utils';
 import { ChordVisibleVariant, FavoriteMeetings, PlayerHideMode } from '../Cm.model';
 import { defaultCmConfig } from '../translation/complect/controlled/hooks/configs';
 import { CmTranslationScreenConfig } from '../translation/complect/controlled/model';
@@ -27,6 +30,7 @@ export interface CmIDBStorage {
   coms: IExportableCom[];
   fixedComs: IFixedCom[];
   cats: IExportableCat[];
+  audioTrackMarks: { src: string; marks: KRecord<number, string> }[];
 
   lastOpenComw?: CmComWid;
   isShowFavouritesInTranslations: boolean;
@@ -90,8 +94,39 @@ class CmIDB extends DexieDB<CmIDBStorage> {
       scheduleComPacks: {
         schw: '++',
       },
+      audioTrackMarks: {
+        src: '++',
+      },
     });
   }
+
+  useAudioTrackMarks = (src: string) => useLiveQuery(() => this.tb.audioTrackMarks.get({ src }), [src]);
+
+  addAudioTrackMark = async (src: string, time: number, text: string) => {
+    const prevMarks = await this.tb.audioTrackMarks.get({ src });
+    let addMarks: KRecord<number, string> = {};
+    const marks: KRecord<number, string> = {};
+
+    if (prevMarks != null) addMarks = { ...prevMarks.marks };
+    addMarks[time] = text;
+
+    mylib
+      .keys(addMarks)
+      .map(Number)
+      .sort(itNumSort)
+      .forEach(time => (marks[time] = addMarks[time]));
+
+    this.tb.audioTrackMarks.put({ src, marks });
+  };
+
+  deleteAudioTrackMark = async (src: string, time: number) => {
+    const prevMarks = await this.tb.audioTrackMarks.get({ src });
+    const marks: KRecord<number, string> = { ...prevMarks?.marks };
+
+    delete marks[time];
+
+    this.tb.audioTrackMarks.put({ src, marks });
+  };
 }
 
 export const cmIDB = new CmIDB();

@@ -103,6 +103,7 @@ export function TheComposition() {
             <ComPlayer
               src={comAudio}
               split
+              isWithEditButton
             />
           )}
           {isShowCatBinds && (

@@ -1,18 +1,32 @@
 import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { Button, Menu } from '@mui/material';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { emptyFunc } from 'shared/utils';
-import styled from 'styled-components';
-import './ComPlayer.scss';
+import styled, { css, keyframes } from 'styled-components';
+import { ComPlayerMarksConfigurerEditMenuButton } from './ComPlayerMarksConfigurerEditMenuButton';
+import { ComPlayerMarksMovers } from './ComPlayerMarksMovers';
 import { ComPlayerTrack } from './ComPlayerTrack';
 
 let currentAudioNode: HTMLAudioElement | und;
-const emptyArr: [] = [];
 const movesMemoCallback = () => ({ prevX: 0, onEnd: emptyFunc });
 
-export function ComPlayer({ src, split }: { src: string; split?: string | RegExp | boolean }) {
-  const audioRef = useRef<HTMLAudioElement>(null);
+interface Props {
+  src: string;
+  split?: string | RegExp | boolean;
+  timeRender?: (timeNode: React.ReactNode, currentSrc: string) => React.ReactNode;
+  audioRef?: React.RefObject<HTMLAudioElement | null>;
+  isWithEditButton?: boolean;
+}
+
+export function ComPlayer({ src, split, timeRender, audioRef: topAudioRef, isWithEditButton }: Props) {
+  let audioRef = useRef<HTMLAudioElement>(null);
+  if (topAudioRef) audioRef = topAudioRef;
+
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
+
   const player = audioRef.current;
   const userChangeRef = useActualRef(false);
   const [isError, setIsError] = useState(false);
@@ -23,7 +37,7 @@ export function ComPlayer({ src, split }: { src: string; split?: string | RegExp
   const splitter = split === true ? /\n+/ : split || null;
   const variants = splitter ? src.split(splitter).map(src => src.trim()) : [src.trim()];
   const currentSrc = variants[currentVariant];
-  const moves = useMemo(movesMemoCallback, emptyArr);
+  const moves = useMemo(movesMemoCallback, []);
 
   useEffect(() => {
     setIsPlay(false);
@@ -45,7 +59,7 @@ export function ComPlayer({ src, split }: { src: string; split?: string | RegExp
       clearTimeout(timeout);
       document.removeEventListener('visibilitychange', onVisibilityChange);
     };
-  }, [src, player, moves]);
+  }, [src]);
 
   return (
     <>
@@ -78,62 +92,113 @@ export function ComPlayer({ src, split }: { src: string; split?: string | RegExp
       ) : (
         <audio ref={audioRef} />
       )}
-      {
-        <StyledPlayer className={'composition-player flex gap-3 pr-3 ' + (player ? '' : 'center')}>
-          {player ? (
-            isError ? (
-              <span className="error-message">Файл не найден</span>
-            ) : (
-              <>
-                <TheIconButton
-                  className="pointer"
-                  icon={isPlay ? 'Pause' : 'Play'}
-                  onClick={() => {
-                    const toggle = () => {
-                      if (isPlay) player.pause();
-                      else {
-                        currentAudioNode?.pause();
-                        currentAudioNode = player;
-                        player.play();
-                      }
-                      setIsPlay(!isPlay);
-                    };
 
-                    if (isCanLoad) toggle();
-                    else {
-                      setIsCanLoad(true);
-                      setTimeout(() => toggle());
-                    }
-                  }}
-                />
-
-                <ComPlayerTrack
-                  player={player}
-                  userChangeRef={userChangeRef}
-                />
-                {variants.length > 1 && (
-                  <div
-                    className="current-variant-badge flex center pointer"
-                    onClick={() => {
-                      setCurrentVariant(currentVariant > variants.length - 2 ? 0 : currentVariant + 1);
-                      setIsPlay(false);
-                    }}
-                  >
-                    {currentVariant + 1}
-                  </div>
-                )}
-              </>
-            )
+      <StyledPlayer className={'composition-player flex gap-3 pr-3 ' + (player ? '' : 'center')}>
+        {player ? (
+          isError ? (
+            <span className="error-message">Файл не найден</span>
           ) : (
-            isShowLoader && <JesmylLogo className="loading-logo rotate" />
-          )}
-        </StyledPlayer>
-      }
+            <>
+              <TheIconButton
+                className="pointer"
+                icon={isPlay ? 'Pause' : 'Play'}
+                onClick={() => {
+                  const toggle = () => {
+                    if (isPlay) player.pause();
+                    else {
+                      currentAudioNode?.pause();
+                      currentAudioNode = player;
+                      player.play();
+                    }
+                    setIsPlay(!isPlay);
+                  };
+
+                  if (isCanLoad) toggle();
+                  else {
+                    setIsCanLoad(true);
+                    setTimeout(() => toggle());
+                  }
+                }}
+              />
+
+              <ComPlayerTrack
+                player={player}
+                userChangeRef={userChangeRef}
+                src={currentSrc}
+                timeRender={
+                  timeRender
+                    ? timeNode => timeRender(timeNode, currentSrc)
+                    : timeNode => (
+                        <Button
+                          ref={buttonRef}
+                          className="text-x3! bg-x1! pointer rounded-2xl!"
+                          color="x3"
+                          size="small"
+                          variant="outlined"
+                          onClick={() => {
+                            setIsOpenMenu(true);
+                          }}
+                        >
+                          {timeNode}
+                        </Button>
+                      )
+                }
+              />
+
+              {variants.length > 1 && (
+                <div
+                  className="current-variant-badge flex center pointer"
+                  onClick={() => {
+                    setCurrentVariant(currentVariant > variants.length - 2 ? 0 : currentVariant + 1);
+                    setIsPlay(false);
+                  }}
+                >
+                  {currentVariant + 1}
+                </div>
+              )}
+            </>
+          )
+        ) : (
+          isShowLoader && <JesmylLogo className="loading-logo rotate" />
+        )}
+      </StyledPlayer>
+
+      <Menu
+        open={isOpenMenu}
+        anchorEl={buttonRef.current}
+        onClose={() => setIsOpenMenu(false)}
+        classes={{ list: 'bg-x2 text-x4 flex flex-col gap-3', paper: 'bg-x7', root: 'mt-1' }}
+      >
+        <ComPlayerMarksMovers
+          audioRef={audioRef}
+          src={src}
+        />
+
+        {isWithEditButton && (
+          <ComPlayerMarksConfigurerEditMenuButton
+            src={src}
+            onClick={() => setIsOpenMenu(false)}
+          />
+        )}
+      </Menu>
     </>
   );
 }
 
+const loadAudioAnimation = keyframes`${css`
+  from {
+    transform: scale(0.2) rotate(0);
+  }
+
+  to {
+    transform: scale(0.2) rotate(360deg);
+  }
+`}`;
+
 const StyledPlayer = styled.div`
+  --com-player-size: 30px;
+  --com-player-height: var(--com-player-size);
+
   transition:
     opacity 0.2s,
     margin 0.2s;
@@ -167,7 +232,7 @@ const StyledPlayer = styled.div`
   }
 
   .loading-logo {
-    animation: rotate-loading-logo 1s linear infinite;
+    animation: ${loadAudioAnimation} 1s linear infinite;
   }
 
   .player-track {
