@@ -5,7 +5,9 @@ import styled from 'styled-components';
 export const FollowTranslationInitialSlide = ({ schw }: { schw: IScheduleWidgetWid }) => {
   return (
     <StyledSlide className="full-size flex center column">
-      <StyledQRCode text={`${hosts.host}/cm/!other/schs/${schw}?follow`} />
+      <StyledQRCode
+        text={`${hosts.host}/!other/cm/schs?schw=${schw}&now=${Date.now()}${Math.random()}&follow=desktop-link`}
+      />
       <h1 className="text-center">Следите за текущей трансляцией у себя в телефоне</h1>
     </StyledSlide>
   );
