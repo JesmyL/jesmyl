@@ -32,7 +32,14 @@ export default defineConfig(() => {
         // failOnWarning: false,
         // lintOnStart: false,
       }),
-      VitePWA({ injectRegister: 'auto', strategies: 'generateSW', registerType: 'autoUpdate' }),
+      VitePWA({
+        injectRegister: 'auto',
+        strategies: 'generateSW',
+        registerType: 'autoUpdate',
+        workbox: {
+          cleanupOutdatedCaches: false,
+        },
+      }),
       tailwindcss(),
       basicSsl(),
       react(),
