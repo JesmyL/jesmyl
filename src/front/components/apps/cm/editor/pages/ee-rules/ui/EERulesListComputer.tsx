@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { bibleTranslatesIDB } from '$bible/_db/bibleIDB';
+import { bibleTranslatesIDB } from '$bible/basis/lib/bibleIDB';
 import { cmIDB } from '$cm/_db/cm-idb';
 import { memo, useEffect, useState } from 'react';
 import { BibleTranslateName, EeStorePack } from 'shared/api';

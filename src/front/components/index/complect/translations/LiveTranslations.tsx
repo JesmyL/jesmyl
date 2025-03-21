@@ -1,5 +1,5 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { BibleTranslatesContextProvider } from '$bible/translates/TranslatesContext';
+import { BibleTranslatesContextProvider } from '$bible/basis/contexts/TranslatesContext';
 import { FollowTranslationInitialSlide } from '$cm/translation/complect/live/FollowTranslationInitialSlide';
 import { useAuth } from '$index/atoms';
 import { indexIDB } from '$index/db/index-idb';

@@ -1,4 +1,4 @@
-import { bibleIDB } from '$bible/_db/bibleIDB';
+import { bibleIDB } from '$bible/basis/lib/bibleIDB';
 import {
   defaultScreenTranslationBackgroundConfig,
   defaultScreenTranslationPositionConfig,

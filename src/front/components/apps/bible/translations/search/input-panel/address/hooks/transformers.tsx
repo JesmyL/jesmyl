@@ -1,10 +1,10 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { bibleIDB } from '$bible/_db/bibleIDB';
-import { useSetBibleAddressIndexes } from '$bible/hooks/address/address';
-import { useBibleBookList } from '$bible/hooks/texts';
-import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/model';
-import { bibleLowerBooks } from '$bible/translates/lib/consts';
-import { useBibleTranslatesContext } from '$bible/translates/lib/contexts';
+import { bibleIDB } from '$bible/basis/lib/bibleIDB';
+import { bibleLowerBooks } from '$bible/basis/lib/const/consts';
+import { useBibleTranslatesContext } from '$bible/basis/lib/contexts/translates';
+import { useSetBibleAddressIndexes } from '$bible/basis/lib/hooks/address/address';
+import { useBibleBookList } from '$bible/basis/lib/hooks/texts';
+import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/basis/model/base';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { emptyFunc, makeRegExp } from 'shared/utils';
 

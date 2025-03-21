@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { JSX, useState } from 'react';
 import styled from 'styled-components';
 import { TranslationSlidePreview } from '../../+complect/translations/controls/Preview';
 import { BibleLists } from './lists/Lists';

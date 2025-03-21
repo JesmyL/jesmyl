@@ -1,6 +1,6 @@
-import { useBibleJoinedAddressText } from '$bible/hooks/texts';
-import { BibleTranslationJoinAddress } from '$bible/model';
+import { makeBibleJoinedAddressText } from '$bible/basis/lib/hooks/texts';
+import { BibleTranslationJoinAddress } from '$bible/basis/model/base';
 
 export function BibleTranslationArchiveJoinedAddressText({ item }: { item: BibleTranslationJoinAddress }) {
-  return <>{useBibleJoinedAddressText(item, 1)}</>;
+  return <>{makeBibleJoinedAddressText(item, 1)}</>;
 }

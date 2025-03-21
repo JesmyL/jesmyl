@@ -1,12 +1,15 @@
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { MyLib } from '#shared/lib/my-lib';
-import { useBibleTranslationJoinAddress, useGetterJoinedAddressMaxValues } from '$bible/hooks/address/address';
-import { useBibleAddressBooki } from '$bible/hooks/address/books';
-import { useBibleAddressChapteri } from '$bible/hooks/address/chapters';
-import { useBibleAddressVersei } from '$bible/hooks/address/verses';
-import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '$bible/model';
-import { useBibleTranslatesContext } from '$bible/translates/lib/contexts';
-import { BibleTranslatesContextProvider } from '$bible/translates/TranslatesContext';
+import { BibleTranslatesContextProvider } from '$bible/basis/contexts/TranslatesContext';
+import { useBibleTranslatesContext } from '$bible/basis/lib/contexts/translates';
+import {
+  useBibleTranslationJoinAddress,
+  useGetterJoinedAddressMaxValues,
+} from '$bible/basis/lib/hooks/address/address';
+import { useBibleAddressBooki } from '$bible/basis/lib/hooks/address/books';
+import { useBibleAddressChapteri } from '$bible/basis/lib/hooks/address/chapters';
+import { useBibleAddressVersei } from '$bible/basis/lib/hooks/address/verses';
+import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '$bible/basis/model/base';
 import { useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { BibleBookList } from './books/BookList';

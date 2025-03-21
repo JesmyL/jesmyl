@@ -1,4 +1,4 @@
-import { useBibleAddressTextContext } from '$bible/texts/lib/contexts';
+import { useBibleAddressTextContext } from '$bible/basis/lib/contexts/texts';
 import { useBibleScreenTranslationFontSizeAddressAdapter } from '$bible/translations/hooks/font-size-adapter/address-adapter';
 import { useGetBibleScreenTranslationAddressTextWrapperStyle } from '$bible/translations/hooks/styles/address-text-wrapper-style';
 import { BibleTranslationScreenConfig } from '$bible/translations/model';

@@ -1,8 +1,8 @@
 import { makePseudoElementCorrectContentText } from '#shared/lib/getParentNodeWithClassName';
 import { mylib } from '#shared/lib/my-lib';
-import { bibleTitles } from '$bible/hooks/bibleTitlesJson';
-import { bibleAllTranslates, bibleLowerBooks, translateDescriptions } from '$bible/translates/lib/consts';
-import { BibleBookTranslates } from '$bible/translates/TranslatesContext';
+import { BibleBookTranslates } from '$bible/basis/contexts/TranslatesContext';
+import { bibleTitles } from '$bible/basis/lib/const/bibleTitlesJson';
+import { bibleAllTranslates, bibleLowerBooks, translateDescriptions } from '$bible/basis/lib/const/consts';
 import { CmComOrderWid } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import { css } from 'styled-components';

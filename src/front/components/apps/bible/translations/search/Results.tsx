@@ -1,9 +1,9 @@
-import { bibleIDB } from '$bible/_db/bibleIDB';
-import { useBibleAddressBooki } from '$bible/hooks/address/books';
-import { useBibleAddressChapteri } from '$bible/hooks/address/chapters';
-import { BibleBooki, BibleChapteri, BibleTranslationSingleAddress, BibleVersei } from '$bible/model';
-import { useBibleTranslatesContext } from '$bible/translates/lib/contexts';
-import { useBibleShowTranslatesValue } from '$bible/translates/lib/hooks';
+import { bibleIDB } from '$bible/basis/lib/bibleIDB';
+import { useBibleTranslatesContext } from '$bible/basis/lib/contexts/translates';
+import { useBibleAddressBooki } from '$bible/basis/lib/hooks/address/books';
+import { useBibleAddressChapteri } from '$bible/basis/lib/hooks/address/chapters';
+import { useBibleShowTranslatesValue } from '$bible/basis/lib/hooks/translates';
+import { BibleBooki, BibleChapteri, BibleTranslationSingleAddress, BibleVersei } from '$bible/basis/model/base';
 import { JSX, useCallback, useEffect, useState } from 'react';
 import { emptyArray, makeRegExp } from 'shared/utils';
 import styled from 'styled-components';

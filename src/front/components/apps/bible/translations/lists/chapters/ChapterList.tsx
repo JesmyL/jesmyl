@@ -1,6 +1,6 @@
 import { JStorageNumberVal } from '#shared/lib/JSimpleStorage/exports/Number';
-import { useSetBibleAddressWithForceJoinReset } from '$bible/hooks/address/address';
-import { useBibleCurrentChapterList } from '$bible/hooks/texts';
+import { useSetBibleAddressWithForceJoinReset } from '$bible/basis/lib/hooks/address/address';
+import { useBibleCurrentChapterList } from '$bible/basis/lib/hooks/texts';
 import { useMemo } from 'react';
 import styled from 'styled-components';
 import { bibleChapteriIdPrefix } from '../lib/consts';

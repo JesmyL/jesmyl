@@ -1,4 +1,4 @@
-import { BibleTranslatesContextProvider } from '$bible/translates/TranslatesContext';
+import { BibleTranslatesContextProvider } from '$bible/basis/contexts/TranslatesContext';
 import BibleTranslationControlled from '$bible/translations/BibleTranslationControlled';
 import { createFileRoute } from '@tanstack/react-router';
 import { CurrentForceViweAppContext } from 'front/components/apps/+complect/translations/Translation.contexts';

@@ -1,4 +1,4 @@
-import { BibleReaderCurrentBookPage } from '$bible/reader/book/CurrentBookPage';
+import { BibleReaderCurrentBookPage } from '$bible/pages/ReaderCurrentBookPage';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/bible/i')({

@@ -1,8 +1,8 @@
 import { JStorageSetOrArrayVal } from '#shared/lib/JSimpleStorage/exports/SetOrArray';
-import { useBibleAddressBooki } from '$bible/hooks/address/books';
-import { useBibleAddressChapteri } from '$bible/hooks/address/chapters';
-import { useBibleTranslatesContext } from '$bible/translates/lib/contexts';
-import { useBibleShowTranslatesValue } from '$bible/translates/lib/hooks';
+import { useBibleTranslatesContext } from '$bible/basis/lib/contexts/translates';
+import { useBibleAddressBooki } from '$bible/basis/lib/hooks/address/books';
+import { useBibleAddressChapteri } from '$bible/basis/lib/hooks/address/chapters';
+import { useBibleShowTranslatesValue } from '$bible/basis/lib/hooks/translates';
 import { JSX, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { bibleVerseiIdPrefix } from '../lib/consts';
@@ -72,6 +72,7 @@ const StyledContainer = styled.ol`
   overflow-y: auto;
   overflow-x: hidden;
   width: calc(100vw - 300px - 2.5em - 7em);
+  list-style: decimal;
   list-style-position: inside;
 
   insertedtext,

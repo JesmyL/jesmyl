@@ -1,4 +1,4 @@
-import { useBibleTextContentContext } from '$bible/texts/lib/contexts';
+import { useBibleTextContentContext } from '$bible/basis/lib/contexts/texts';
 import { verseTranslateTitleCssClassName, verseTranslateTitleCssVariableName } from '$bible/translations/complect';
 import { useBibleScreenTranslationFontSizeScreenAdapter } from '$bible/translations/hooks/font-size-adapter/screen-adapter';
 import { useGetBibleScreenTranslationScreenStyle } from '$bible/translations/hooks/styles/screen-style';

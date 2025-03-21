@@ -1,6 +1,6 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { bibleIDB } from '$bible/_db/bibleIDB';
-import { BibleSearchZone } from '$bible/model';
+import { bibleIDB } from '$bible/basis/lib/bibleIDB';
+import { BibleSearchZone } from '$bible/basis/model/base';
 import { useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { useBibleTranslationSearchResultSelectedSet } from '../hooks/results';

@@ -1,6 +1,6 @@
 import { useAtomValue } from '#shared/lib/atoms';
-import { BibleTranslationScreenTextsContext } from '$bible/texts/AddressContentContext';
-import { BibleTranslatesContextProvider } from '$bible/translates/TranslatesContext';
+import { BibleCurrentTextsContext } from '$bible/basis/contexts/CurrentTextsContext';
+import { BibleTranslatesContextProvider } from '$bible/basis/contexts/TranslatesContext';
 import { BibleTranslationCurrentScreen } from '$bible/translations/screen/BibleTranslationCurrentScreen';
 import { CmTranslationCurrentScreen } from '$cm/translation/complect/controlled/screen/CmTranslationCurrentScreen';
 import styled, { css } from 'styled-components';
@@ -43,9 +43,9 @@ export const TranslationScreen = (props: TranslationScreenProps) => {
             <CmTranslationCurrentScreen {...props} />
           ) : (
             <BibleTranslatesContextProvider>
-              <BibleTranslationScreenTextsContext isPreview={props.isPreview}>
+              <BibleCurrentTextsContext isPreview={props.isPreview}>
                 <BibleTranslationCurrentScreen {...props} />
-              </BibleTranslationScreenTextsContext>
+              </BibleCurrentTextsContext>
             </BibleTranslatesContextProvider>
           )}
         </TranslationTextScreen>

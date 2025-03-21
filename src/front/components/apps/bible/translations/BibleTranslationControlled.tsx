@@ -1,9 +1,8 @@
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
-import { bibleIDB } from '$bible/_db/bibleIDB';
-import { useBibleSlideSyncInkrementer } from '$bible/hooks/slide-sync';
-import { useLoadBibleChaptersCombine } from '$bible/hooks/texts';
-import { bibleSokiInvocatorBaseClient } from '$bible/invoctors/invocator';
-import { BibleModulesTranslations } from '$bible/translates/Translations';
+import { bibleIDB } from '$bible/basis/lib/bibleIDB';
+import { useBiblePrintShowSlideAddressCode } from '$bible/basis/lib/hooks/slide-sync';
+import { BibleModulesTranslationsControl } from '$bible/entities/ModulesTranslationsControl';
+import { bibleSokiInvocatorBaseClient } from '$bible/processes/invocator';
 import { JSX, ReactNode, useEffect } from 'react';
 import styled from 'styled-components';
 import { ScreenTranslationControlPanel } from '../../+complect/translations/controls/ControllPanel';
@@ -17,10 +16,11 @@ interface Props {
 }
 
 export default function BibleTranslationControlled({ head, headTitle }: Props): JSX.Element {
-  useLoadBibleChaptersCombine();
-  const inkSync = useBibleSlideSyncInkrementer();
+  const printShowAddress = useBiblePrintShowSlideAddressCode();
 
-  useEffect(() => inkSync(1), [inkSync]);
+  useEffect(() => {
+    printShowAddress();
+  }, [printShowAddress]);
 
   useEffect(() => {
     return hookEffectLine()
@@ -50,7 +50,7 @@ export default function BibleTranslationControlled({ head, headTitle }: Props): 
       content={
         <Container>
           <BibleTranslationControlledTopPanel />
-          <BibleModulesTranslations />
+          <BibleModulesTranslationsControl />
           <ScreenTranslationControlPanel
             onPrev={() => bibleIDB.set.versei(v => v - 1)}
             onNext={() => bibleIDB.set.versei(v => v + 1)}

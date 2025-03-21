@@ -9,10 +9,10 @@ import {
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { DocTitle } from '#shared/ui/tags/DocTitle';
 import { Metronome } from '#widgets/metronome';
+import { BibleTranslatesContextProvider } from '$bible/basis/contexts/TranslatesContext';
 import { useFixedCcom } from '$cm/basis/lib/com-selections';
 import { useCmCurrentComPackContext } from '$cm/basis/lib/contexts/current-com-list';
 import { Link } from '@tanstack/react-router';
-import { BibleTranslatesContextProvider } from 'front/components/apps/bible/translates/TranslatesContext';
 import { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { cmIDB } from '../../_db/cm-idb';

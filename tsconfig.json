@@ -22,12 +22,21 @@
       "#basis/*": ["./front/basis/*"],
 
       "$cm/app/*": ["./front/components/apps/cm/01-app/*"],
+      "$cm/processes/*": ["./front/components/apps/cm/02-processes/*"],
       "$cm/pages/*": ["./front/components/apps/cm/03-pages/*"],
       "$cm/entities/*": ["./front/components/apps/cm/06-entities/*"],
       "$cm/basis/*": ["./front/components/apps/cm/07-basis/*"],
       "$cm/*": ["./front/components/apps/cm/*"],
 
+      "$bible/app/*": ["./front/components/apps/bible/01-app/*"],
+      "$bible/processes/*": ["./front/components/apps/bible/02-processes/*"],
+      "$bible/pages/*": ["./front/components/apps/bible/03-pages/*"],
+      "$bible/widgets/*": ["./front/components/apps/bible/04-widgets/*"],
+      "$bible/features/*": ["./front/components/apps/bible/05-features/*"],
+      "$bible/entities/*": ["./front/components/apps/bible/06-entities/*"],
+      "$bible/basis/*": ["./front/components/apps/bible/07-basis/*"],
       "$bible/*": ["./front/components/apps/bible/*"],
+
       "$index/*": ["./front/components/index/*"],
       "$app/*": ["./front/app/*"],
 

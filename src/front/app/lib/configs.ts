@@ -1,5 +1,5 @@
 import { AppName } from '#basis/model/App.model';
-import { bibleRoutingApp } from 'front/components/apps/bible/routing/bibleRoutingApp';
+import { bibleRoutingApp } from '$bible/app/bibleRoutingApp';
 import { cmRoutingApp } from 'front/components/apps/cm/routing/cmRoutingApp';
 import { tunerRoutingApp } from 'front/components/apps/tuner/tunerRoutingApp';
 

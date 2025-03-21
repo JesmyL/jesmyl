@@ -1,6 +1,6 @@
 import { useScheduleCurrentSchwContext } from '#widgets/schedule/complect/lib/contexts';
-import { BibleTranslationScreenTextsContext } from '$bible/texts/AddressContentContext';
-import { useBibleAddressTextContext, useBibleTextContentContext } from '$bible/texts/lib/contexts';
+import { BibleCurrentTextsContext } from '$bible/basis/contexts/CurrentTextsContext';
+import { useBibleAddressTextContext, useBibleTextContentContext } from '$bible/basis/lib/contexts/texts';
 import { IndexSchWTranslationLiveDataValue } from '$index/Index.model';
 import { JSX, useEffect } from 'react';
 import { useBibleScreenTranslationConfigs } from './hooks/configs';
@@ -12,9 +12,9 @@ interface Props {
 
 export function BibleLiveTranslation(props: Props): JSX.Element {
   return (
-    <BibleTranslationScreenTextsContext isPreview={false}>
+    <BibleCurrentTextsContext isPreview={false}>
       <Live {...props} />
-    </BibleTranslationScreenTextsContext>
+    </BibleCurrentTextsContext>
   );
 }
 

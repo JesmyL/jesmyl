@@ -1,9 +1,9 @@
 import { mylib } from '#shared/lib/my-lib';
-import { bibleIDB } from '$bible/_db/bibleIDB';
-import { useBibleTranslationJoinAddress } from '$bible/hooks/address/address';
-import { useBibleAddressVersei } from '$bible/hooks/address/verses';
-import { useBibleTranslationSlideSyncContentSetter } from '$bible/hooks/slide-sync';
-import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress } from '$bible/model';
+import { bibleIDB } from '$bible/basis/lib/bibleIDB';
+import { useBibleTranslationJoinAddress } from '$bible/basis/lib/hooks/address/address';
+import { useBibleAddressVersei } from '$bible/basis/lib/hooks/address/verses';
+import { useBibleTranslationSlideSyncContentSetter } from '$bible/basis/lib/hooks/slide-sync';
+import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress } from '$bible/basis/model/base';
 import { useEffect } from 'react';
 import { bibleVerseiIdPrefix } from '../lib/consts';
 
