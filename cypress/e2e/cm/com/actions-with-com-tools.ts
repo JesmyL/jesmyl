@@ -2,7 +2,7 @@ import { Cyp } from '../../complect';
 
 export const cyTestCmActionsWithComTools = (withComWidAction: () => string) => {
   it('actions with com tools', () => {
-    cy.visit(`${Cyp.host}/cm/i/${withComWidAction()}`);
+    cy.visit(`${Cyp.host}/cm/i/?comw=${withComWidAction()}`);
 
     cy.wait(100);
     cy.get('#com-comment-panel').scrollIntoView({ duration: 2000 });
