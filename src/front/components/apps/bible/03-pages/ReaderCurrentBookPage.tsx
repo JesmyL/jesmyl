@@ -10,9 +10,9 @@ import { useBibleShowTranslatesValue } from '$bible/basis/lib/hooks/translates';
 import { BibleAddressSingle } from '$bible/entities/BibleAddressSingle';
 import { BibleModulesTranslationsControl } from '$bible/entities/ModulesTranslationsControl';
 import { useBibleSingleAddressSetter } from '$bible/translations/lists/atoms';
+import { BibleReaderBookText } from '$bible/widgets/BookText';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { BibleReaderBookText } from '../04-widgets/BookText';
 
 export function BibleReaderCurrentBookPage() {
   return (

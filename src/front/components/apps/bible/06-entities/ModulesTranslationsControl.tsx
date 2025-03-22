@@ -1,7 +1,7 @@
+import { translateFilter } from '$bible/basis/lib/const/consts';
+import { useBibleMyTranslates, useBibleShowTranslates } from '$bible/basis/lib/hooks/translates';
 import { useBibleBooki } from '$bible/translations/lists/atoms';
 import { JSX, memo } from 'react';
-import { translateFilter } from '../07-basis/lib/const/consts';
-import { useBibleMyTranslates, useBibleShowTranslates } from '../07-basis/lib/hooks/translates';
 import { BibleModulesTranslationsRedactButton } from './ModulesTranslationsRedactButton';
 
 export const BibleModulesTranslationsControl = memo(function BibleModules({

@@ -2,12 +2,12 @@ import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { bibleAllTranslates, translateDescriptions } from '$bible/basis/lib/const/consts';
+import { useBibleMyTranslates } from '$bible/basis/lib/hooks/translates';
 import { removeBibleTranslate } from '$bible/basis/lib/utils';
 import { bibleSokiInvocatorBaseClient, bibleSokiInvocatorClient } from '$bible/processes/invocator';
 import { useEffect, useState } from 'react';
 import { BibleTranslateName } from 'shared/api';
-import { bibleAllTranslates, translateDescriptions } from '../07-basis/lib/const/consts';
-import { useBibleMyTranslates } from '../07-basis/lib/hooks/translates';
 
 export default function TranslatesLoadModalInner() {
   const [myTranslates] = useBibleMyTranslates();
