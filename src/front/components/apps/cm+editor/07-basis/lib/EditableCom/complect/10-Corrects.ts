@@ -1,6 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { textedChordReg } from '$cm+editor/basis/lib/utils';
 import { ICorrect, ICorrects } from '$cm+editor/basis/model/Corrects';
+import { EeStorePack } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import { cmEditorIDB } from '../../cmEditorIDB';
 import { EditableComBase } from './0-Base';
@@ -85,13 +86,14 @@ export class EditableComCorrects extends EditableComBase {
     const errors: ICorrect[] = [];
     const warnings: ICorrect[] = [];
     const unknowns: ICorrect[] = [];
+    let eeStore: EeStorePack;
 
     text.split(makeRegExp('/[^а-яёіґїє]/i')).forEach(async realWord => {
+      eeStore ??= await cmEditorIDB.get.eeStore();
       if (!realWord.match(makeRegExp('/[её]/i')) || realWord.match(makeRegExp('/[іґїє]/i'))) return;
       const lower = realWord.toLowerCase();
       const word = lower.replace(makeRegExp('/ё/g'), 'е');
       const parts = lower.split(makeRegExp('/[а-дж-я]*([её])/')).filter(p => p);
-      const eeStore = await cmEditorIDB.get.eeStore();
 
       if (eeStore[word] == null) {
         unknowns.push({
