@@ -13,7 +13,7 @@ type Props = {
   setClickBetweenOrds: (data: CmComOrderOnClickBetweenData) => void;
 };
 
-export const OrdersRedactorAdditions = ({ com, onClose, setClickBetweenOrds }: Props) => {
+export const OrdersRedactorAdditions = ({ com, setClickBetweenOrds }: Props) => {
   const [modalSelectForstEtap, setModalSelectForstEtap] = useState<null | CmNewOrderMakeEtap>(null);
 
   if (!com) return;
@@ -32,34 +32,36 @@ export const OrdersRedactorAdditions = ({ com, onClose, setClickBetweenOrds }: P
       />
       {modalSelectForstEtap && (
         <Modal onClose={() => setModalSelectForstEtap(null)}>
-          <OrdersRedactorAdditionsEtapsModalInner
-            com={com}
-            firstEtap={modalSelectForstEtap}
-            onClose={onClose}
-            onOrderBuilt={(styleBlock, chordi, texti) => {
-              setModalSelectForstEtap(null);
-              onClose(false);
-              setClickBetweenOrds({
-                buttonTitle: (
-                  <>
-                    Новый блок <span className="color--7">{styleBlock.title[com.langi]}</span>
-                  </>
-                ),
-                checkIsShowButton: () => true,
-                onClick: async aboveOrd => {
-                  cmComOrderClientInvocatorMethods.insertNewBlock(
-                    null,
-                    com.wid,
-                    styleBlock.title[com.langi],
-                    aboveOrd?.wid,
-                    chordi,
-                    styleBlock.key,
-                    texti,
-                  );
-                },
-              });
-            }}
-          />
+          {({ onClose }) => (
+            <OrdersRedactorAdditionsEtapsModalInner
+              com={com}
+              firstEtap={modalSelectForstEtap}
+              onClose={onClose}
+              onOrderBuilt={(styleBlock, chordi, texti) => {
+                setModalSelectForstEtap(null);
+                onClose();
+                setClickBetweenOrds({
+                  buttonTitle: (
+                    <>
+                      Новый блок <span className="color--7">{styleBlock.title[com.langi]}</span>
+                    </>
+                  ),
+                  checkIsShowButton: () => true,
+                  onClick: async ({ aboveLeadOrdw }) => {
+                    cmComOrderClientInvocatorMethods.insertNewBlock(
+                      null,
+                      com.wid,
+                      styleBlock.title[com.langi],
+                      aboveLeadOrdw,
+                      chordi,
+                      styleBlock.key,
+                      texti,
+                    );
+                  },
+                });
+              }}
+            />
+          )}
         </Modal>
       )}
     </>

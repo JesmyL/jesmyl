@@ -14,12 +14,9 @@ import { OrderRepeats } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
 
-const flashCounts = [2, 3, 4, 5];
-const defaultPos = { '--x': 0, '--y': 0 };
-
 export const CmEditorTabComRepeats = () => {
   const [start, setStart] = useState<IEditableComLineProps | null>(null);
-  const [pos, setPos] = useState(defaultPos);
+  const [pos, setPos] = useState({ '--x': 0, '--y': 0 });
   const [isChordBlock, setIsChordBlock] = useState(false);
   const [isReadySetChordBlock, setIsReadySetChordBlock] = useState(false);
   const [flashCount, setFlashCount] = useState(2);
@@ -95,7 +92,10 @@ export const CmEditorTabComRepeats = () => {
                       });
 
                       setIsChordBlock(true);
-                      setPos({ '--x': event.currentTarget.offsetLeft, '--y': event.currentTarget.offsetTop + 100 });
+                      setPos({
+                        '--x': event.currentTarget.clientLeft,
+                        '--y': event.currentTarget.clientTop + 100,
+                      });
                     } else {
                       setIsChordBlock(false);
                       setIsReadySetChordBlock(true);
@@ -283,7 +283,7 @@ export const CmEditorTabComRepeats = () => {
                         wordi={wordi}
                       />
                     )}
-                    {flashCounts.map(currFlashCount => {
+                    {[2, 3, 4, 5].map(currFlashCount => {
                       return (
                         <div
                           key={currFlashCount}

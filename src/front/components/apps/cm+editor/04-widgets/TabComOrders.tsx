@@ -63,7 +63,11 @@ export const CmEditorTabComOrders = () => {
                 <TheButton
                   onClick={async () => {
                     try {
-                      await clickBetweenData.onClick(null, null, ord);
+                      await clickBetweenData.onClick({
+                        aboveLeadOrdw: null,
+                        ordAbove: null,
+                        ordBelow: ord,
+                      });
                     } catch (_error) {
                       //
                     }
@@ -126,11 +130,11 @@ export const CmEditorTabComOrders = () => {
                 <TheButton
                   onClick={async () => {
                     try {
-                      await clickBetweenData.onClick(
-                        ord,
-                        ord?.me.isAnchorInherit ? ord?.me.leadOrd?.wid : ord?.wid,
-                        orda[ordi + 1] ?? null,
-                      );
+                      await clickBetweenData.onClick({
+                        ordAbove: ord,
+                        aboveLeadOrdw: ord?.me.isAnchorInherit ? ord?.me.leadOrd?.wid : ord?.wid,
+                        ordBelow: orda[ordi + 1] ?? null,
+                      });
                     } catch (_error) {
                       //
                     }

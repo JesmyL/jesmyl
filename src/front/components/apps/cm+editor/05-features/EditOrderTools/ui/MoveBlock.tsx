@@ -1,13 +1,16 @@
+import { DisabledArea } from '#shared/ui/DisabledArea';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { OrdersRedactorOrderToolsProps } from '../model';
 
 export const OrdersRedactorOrderToolsMoveBlock = (props: OrdersRedactorOrderToolsProps) => {
+  const isDisabled = props.ord.me.prev == null && props.ord.me.isNextInherit;
+
   return (
-    <BottomPopupItem
-      icon="ArrowDataTransferDiagonal"
-      title="Переместить блок"
+    <DisabledArea
+      isDisabled={isDisabled}
+      disabledReason="Следующий блок - продолжение"
       onClick={async () => {
         props.onClose(false);
         let isFoundTargetOrd = !props.ord.isAnchor;
@@ -21,6 +24,7 @@ export const OrdersRedactorOrderToolsMoveBlock = (props: OrdersRedactorOrderTool
             </span>
           ),
           checkIsShowButton: (ordAbove, ordBelow) => {
+            if (ordAbove == null && props.ord?.me.isInherit) return false;
             if (ordBelow?.me.isAnchorInherit) return false;
 
             if (isFoundFirstAnchorOrd || ordAbove?.me.targetOrd?.wid === props.ord.wid) {
@@ -42,17 +46,26 @@ export const OrdersRedactorOrderToolsMoveBlock = (props: OrdersRedactorOrderTool
 
             return isFoundTargetOrdPrev;
           },
-          onClick: async ordAbove => {
+          onClick: async ({ aboveLeadOrdw }) => {
             await cmComOrderClientInvocatorMethods.moveOrdAfter(
               null,
               props.ord.wid,
               props.ord.me.header(),
               props.com.wid,
-              ordAbove?.wid,
+              aboveLeadOrdw,
             );
           },
         });
       }}
-    />
+    >
+      {({ onClick, className }) => (
+        <BottomPopupItem
+          icon="ArrowDataTransferDiagonal"
+          title="Переместить блок"
+          className={className}
+          onClick={onClick}
+        />
+      )}
+    </DisabledArea>
   );
 };

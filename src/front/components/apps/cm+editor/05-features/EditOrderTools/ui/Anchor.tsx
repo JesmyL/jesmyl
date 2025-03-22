@@ -23,9 +23,10 @@ export const OrdersRedactorOrderToolsAnchor = ({
                 Ссылка на <span className="color--7">{ord.me.header()}</span>
               </>
             ),
-            onClick: async ordAbove => {
-              if (ordAbove === null) return;
-              cmComOrderClientInvocatorMethods.addAnchorOrder(null, ord.me.header(), com.wid, ord.wid, ordAbove.wid);
+            onClick: async ({ aboveLeadOrdw }) => {
+              if (aboveLeadOrdw == null) return;
+
+              cmComOrderClientInvocatorMethods.addAnchorOrder(null, ord.me.header(), com.wid, ord.wid, aboveLeadOrdw);
             },
             checkIsShowButton: (ordAbove, ordBelow) => {
               if (!isAboveOrdAfterTarget) isAboveOrdAfterTarget = ordAbove?.wid === ord.wid;
