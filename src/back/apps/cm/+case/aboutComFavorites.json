@@ -1,8 +1,8 @@
 {
   "T166cbf17596a0c2919e4df1a6d54e66": {
     "comws": [1534140323560, 1742107357770],
-    "m": 1742129949359.0076,
-    "tools": ["edit-com", "com-comment", "hide-metronome", "mark-com", "open-player", "chord-images"]
+    "m": 1742638249263.2368,
+    "tools": ["edit-com", "com-comment", "hide-metronome", "mark-com", "chord-images", "selected-toggle"]
   },
   "08a0e6ba7792e902569816a81b846b25": {
     "comws": [

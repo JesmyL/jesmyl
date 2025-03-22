@@ -63,7 +63,7 @@ export const CmEditorTabComOrders = () => {
                 <TheButton
                   onClick={async () => {
                     try {
-                      await clickBetweenData.onClick(null, ord);
+                      await clickBetweenData.onClick(null, null, ord);
                     } catch (_error) {
                       //
                     }
@@ -122,11 +122,15 @@ export const CmEditorTabComOrders = () => {
               }
             />
             {clickBetweenData && clickBetweenData.checkIsShowButton(ord, orda[ordi + 1] ?? null) && (
-              <div className="flex flex-gap center margin-big-gap-t">
+              <div className="flex gap-3 justify-center mt-5">
                 <TheButton
                   onClick={async () => {
                     try {
-                      await clickBetweenData.onClick(ord, orda[ordi + 1] ?? null);
+                      await clickBetweenData.onClick(
+                        ord,
+                        ord?.me.isAnchorInherit ? ord?.me.leadOrd?.wid : ord?.wid,
+                        orda[ordi + 1] ?? null,
+                      );
                     } catch (_error) {
                       //
                     }
