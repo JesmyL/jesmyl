@@ -8,7 +8,7 @@ import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { cmIDB } from '$cm/_db/cm-idb';
+import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { Com } from '$cm/col/com/Com';
 import { TheComCommentInfo } from '$cm/col/com/complect/comment-parser/infos/TheComCommentInfo';
 import { updateComComment, useComComment } from '$cm/com-comments-manager';

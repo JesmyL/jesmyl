@@ -1,7 +1,7 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { cmIDB } from '$cm/_db/cm-idb';
+import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { MenuItem } from '@mui/material';
 import { useEffect, useRef } from 'react';
 

@@ -1,5 +1,5 @@
 import { MyLib } from '#shared/lib/my-lib';
-import { cmIDB } from '$cm/_db/cm-idb';
+import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useCcom } from '$cm/basis/lib/com-selections';
 import { cmUserStoreSokiInvocatorClient } from '$cm/invocators/user-store-invocator.methods';
 import React from 'react';

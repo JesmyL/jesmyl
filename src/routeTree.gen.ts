@@ -27,7 +27,6 @@ import { Route as BibleIImport } from './front/routes/bible/i'
 import { Route as otherAppNameRouteImport } from './front/routes/!other.$appName/route'
 import { Route as CmLiIndexImport } from './front/routes/cm/li/index'
 import { Route as CmIIndexImport } from './front/routes/cm/i/index'
-import { Route as CmEditIndexImport } from './front/routes/cm/edit/index'
 import { Route as otherAppNameIndexImport } from './front/routes/!other.$appName/index'
 import { Route as CmLiSelImport } from './front/routes/cm/li/sel'
 import { Route as CmLiFavImport } from './front/routes/cm/li/fav'
@@ -52,6 +51,7 @@ import { Route as otherAppNameActionsFilesIndexImport } from './front/routes/!ot
 // Create Virtual Routes
 
 const ScheduleDayIndexLazyImport = createFileRoute('/schedule-day/')()
+const CmEditIndexLazyImport = createFileRoute('/cm/edit/')()
 
 // Create/Update Routes
 
@@ -135,6 +135,14 @@ const otherAppNameRouteRoute = otherAppNameRouteImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const CmEditIndexLazyRoute = CmEditIndexLazyImport.update({
+  id: '/edit/',
+  path: '/edit/',
+  getParentRoute: () => CmRouteRoute,
+} as any).lazy(() =>
+  import('./front/routes/cm/edit/index.lazy').then((d) => d.Route),
+)
+
 const CmLiIndexRoute = CmLiIndexImport.update({
   id: '/li/',
   path: '/li/',
@@ -144,12 +152,6 @@ const CmLiIndexRoute = CmLiIndexImport.update({
 const CmIIndexRoute = CmIIndexImport.update({
   id: '/i/',
   path: '/i/',
-  getParentRoute: () => CmRouteRoute,
-} as any)
-
-const CmEditIndexRoute = CmEditIndexImport.update({
-  id: '/edit/',
-  path: '/edit/',
   getParentRoute: () => CmRouteRoute,
 } as any)
 
@@ -426,13 +428,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof otherAppNameIndexImport
       parentRoute: typeof otherAppNameRouteImport
     }
-    '/cm/edit/': {
-      id: '/cm/edit/'
-      path: '/edit'
-      fullPath: '/cm/edit'
-      preLoaderRoute: typeof CmEditIndexImport
-      parentRoute: typeof CmRouteImport
-    }
     '/cm/i/': {
       id: '/cm/i/'
       path: '/i'
@@ -445,6 +440,13 @@ declare module '@tanstack/react-router' {
       path: '/li'
       fullPath: '/cm/li'
       preLoaderRoute: typeof CmLiIndexImport
+      parentRoute: typeof CmRouteImport
+    }
+    '/cm/edit/': {
+      id: '/cm/edit/'
+      path: '/edit'
+      fullPath: '/cm/edit'
+      preLoaderRoute: typeof CmEditIndexLazyImport
       parentRoute: typeof CmRouteImport
     }
     '/cm/edit/coms/$comw': {
@@ -574,9 +576,9 @@ interface CmRouteRouteChildren {
   CmLiEventsRoute: typeof CmLiEventsRoute
   CmLiFavRoute: typeof CmLiFavRoute
   CmLiSelRoute: typeof CmLiSelRoute
-  CmEditIndexRoute: typeof CmEditIndexRoute
   CmIIndexRoute: typeof CmIIndexRoute
   CmLiIndexRoute: typeof CmLiIndexRoute
+  CmEditIndexLazyRoute: typeof CmEditIndexLazyRoute
   CmEditComsComwRouteRoute: typeof CmEditComsComwRouteRouteWithChildren
   CmEditCatsCatwRoute: typeof CmEditCatsCatwRoute
   CmLiCatCatwRoute: typeof CmLiCatCatwRoute
@@ -593,9 +595,9 @@ const CmRouteRouteChildren: CmRouteRouteChildren = {
   CmLiEventsRoute: CmLiEventsRoute,
   CmLiFavRoute: CmLiFavRoute,
   CmLiSelRoute: CmLiSelRoute,
-  CmEditIndexRoute: CmEditIndexRoute,
   CmIIndexRoute: CmIIndexRoute,
   CmLiIndexRoute: CmLiIndexRoute,
+  CmEditIndexLazyRoute: CmEditIndexLazyRoute,
   CmEditComsComwRouteRoute: CmEditComsComwRouteRouteWithChildren,
   CmEditCatsCatwRoute: CmEditCatsCatwRoute,
   CmLiCatCatwRoute: CmLiCatCatwRoute,
@@ -665,9 +667,9 @@ export interface FileRoutesByFullPath {
   '/cm/li/fav': typeof CmLiFavRoute
   '/cm/li/sel': typeof CmLiSelRoute
   '/!other/$appName/': typeof otherAppNameIndexRoute
-  '/cm/edit': typeof CmEditIndexRoute
   '/cm/i': typeof CmIIndexRoute
   '/cm/li': typeof CmLiIndexRoute
+  '/cm/edit': typeof CmEditIndexLazyRoute
   '/cm/edit/coms/$comw': typeof CmEditComsComwRouteRouteWithChildren
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/cm/edit/cats/$catw': typeof CmEditCatsCatwRoute
@@ -700,9 +702,9 @@ export interface FileRoutesByTo {
   '/cm/li/fav': typeof CmLiFavRoute
   '/cm/li/sel': typeof CmLiSelRoute
   '/!other/$appName': typeof otherAppNameIndexRoute
-  '/cm/edit': typeof CmEditIndexRoute
   '/cm/i': typeof CmIIndexRoute
   '/cm/li': typeof CmLiIndexRoute
+  '/cm/edit': typeof CmEditIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/cm/edit/cats/$catw': typeof CmEditCatsCatwRoute
   '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
@@ -739,9 +741,9 @@ export interface FileRoutesById {
   '/cm/li/fav': typeof CmLiFavRoute
   '/cm/li/sel': typeof CmLiSelRoute
   '/!other/$appName/': typeof otherAppNameIndexRoute
-  '/cm/edit/': typeof CmEditIndexRoute
   '/cm/i/': typeof CmIIndexRoute
   '/cm/li/': typeof CmLiIndexRoute
+  '/cm/edit/': typeof CmEditIndexLazyRoute
   '/cm/edit/coms/$comw': typeof CmEditComsComwRouteRouteWithChildren
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/cm/edit/cats/$catw': typeof CmEditCatsCatwRoute
@@ -780,9 +782,9 @@ export interface FileRouteTypes {
     | '/cm/li/fav'
     | '/cm/li/sel'
     | '/!other/$appName/'
-    | '/cm/edit'
     | '/cm/i'
     | '/cm/li'
+    | '/cm/edit'
     | '/cm/edit/coms/$comw'
     | '/!other/$appName/settings/console'
     | '/cm/edit/cats/$catw'
@@ -814,9 +816,9 @@ export interface FileRouteTypes {
     | '/cm/li/fav'
     | '/cm/li/sel'
     | '/!other/$appName'
-    | '/cm/edit'
     | '/cm/i'
     | '/cm/li'
+    | '/cm/edit'
     | '/!other/$appName/settings/console'
     | '/cm/edit/cats/$catw'
     | '/cm/li/cat/$catw'
@@ -851,9 +853,9 @@ export interface FileRouteTypes {
     | '/cm/li/fav'
     | '/cm/li/sel'
     | '/!other/$appName/'
-    | '/cm/edit/'
     | '/cm/i/'
     | '/cm/li/'
+    | '/cm/edit/'
     | '/cm/edit/coms/$comw'
     | '/!other/$appName/settings/console'
     | '/cm/edit/cats/$catw'
@@ -928,9 +930,9 @@ export const routeTree = rootRoute
         "/cm/li/events",
         "/cm/li/fav",
         "/cm/li/sel",
-        "/cm/edit/",
         "/cm/i/",
         "/cm/li/",
+        "/cm/edit/",
         "/cm/edit/coms/$comw",
         "/cm/edit/cats/$catw",
         "/cm/li/cat/$catw",
@@ -1020,16 +1022,16 @@ export const routeTree = rootRoute
       "filePath": "!other.$appName/index.tsx",
       "parent": "/!other/$appName"
     },
-    "/cm/edit/": {
-      "filePath": "cm/edit/index.tsx",
-      "parent": "/cm"
-    },
     "/cm/i/": {
       "filePath": "cm/i/index.tsx",
       "parent": "/cm"
     },
     "/cm/li/": {
       "filePath": "cm/li/index.tsx",
+      "parent": "/cm"
+    },
+    "/cm/edit/": {
+      "filePath": "cm/edit/index.lazy.tsx",
       "parent": "/cm"
     },
     "/cm/edit/coms/$comw": {

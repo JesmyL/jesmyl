@@ -1,4 +1,4 @@
-import { cmIDB } from '../_db/cm-idb';
+import { cmIDB } from '$cm/basis/lib/cmIDB';
 
 const maxStack = 4;
 const addLaterComw = (comw: number) => {

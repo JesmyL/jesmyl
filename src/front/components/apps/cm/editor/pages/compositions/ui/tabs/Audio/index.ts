@@ -1,1 +1,0 @@
-export { CmComAudioRedactorTab } from './ui';

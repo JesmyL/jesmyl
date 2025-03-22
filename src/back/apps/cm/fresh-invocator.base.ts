@@ -7,8 +7,7 @@ import { cmCatServerInvocatorBase } from './cat-invocator.base';
 import { cmComExternalsSokiInvocatorBaseServer } from './com-externals-invocator.base';
 import { cmComServerInvocatorBase } from './com-invocator.base';
 import { cmComOrderServerInvocatorBase } from './com-order-invocator.base';
-import { chordPackFileStore, cmEditorSokiInvocatorBaseServer, eePackFileStore } from './editor-invocator.base';
-import { cmEditorServerInvocatorShareMethods } from './editor-invocator.shares';
+import { chordPackFileStore, cmEditorSokiInvocatorBaseServer } from './editor-invocator.base';
 import { eventPacksFileStore } from './file-stores';
 import { cmServerInvocatorShareMethods } from './invocator.shares';
 import {
@@ -72,33 +71,19 @@ export const cmFreshServerInvocatorBase = new CmFreshSokiInvocatorBaseServer('Cm
         (items, modifiedAt) => cmServerInvocatorShareMethods.refreshScheduleEventComPacks(client, items, modifiedAt),
       );
 
-      if (auth != null) {
-        if (auth.level >= 50) {
-          setTimeout(() => {
-            const eePackModifiedAt = eePackFileStore.fileModifiedAt();
-            if (eePackModifiedAt > lastModfiedAt) {
-              cmEditorServerInvocatorShareMethods.refreshEEPack(client, {
-                modifiedAt: chordPackModifiedAt,
-                pack: eePackFileStore.getValue(),
-              });
-            }
-          }, 3000);
-        }
+      if (auth?.login != null) {
+        const login = auth.login;
 
-        if (auth.login != null) {
-          const login = auth.login;
+        sendFreshModifiedableList(
+          lastModfiedAt,
+          comCommentsFileStore,
+          () => smylib.values(comCommentsFileStore.getValue()[login]),
+          (comments, modifiedAt) => cmServerInvocatorShareMethods.refreshComComments(client, comments, modifiedAt),
+        );
 
-          sendFreshModifiedableList(
-            lastModfiedAt,
-            comCommentsFileStore,
-            () => smylib.values(comCommentsFileStore.getValue()[login]),
-            (comments, modifiedAt) => cmServerInvocatorShareMethods.refreshComComments(client, comments, modifiedAt),
-          );
-
-          const favoriteItem = aboutComFavoritesFileStore.getValue()[login];
-          if (favoriteItem != null && favoriteItem.m > lastModfiedAt)
-            cmServerInvocatorShareMethods.refreshAboutComFavorites(client, favoriteItem);
-        }
+        const favoriteItem = aboutComFavoritesFileStore.getValue()[login];
+        if (favoriteItem != null && favoriteItem.m > lastModfiedAt)
+          cmServerInvocatorShareMethods.refreshAboutComFavorites(client, favoriteItem);
       }
     },
 

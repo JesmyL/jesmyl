@@ -1,1 +1,0 @@
-export { CmComOnTranslationsRedactorTab } from './ui';

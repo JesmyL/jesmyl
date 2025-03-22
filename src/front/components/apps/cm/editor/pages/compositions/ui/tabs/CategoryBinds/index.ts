@@ -1,1 +1,0 @@
-export { CmCategoryBindsRedactorTab } from './ui';

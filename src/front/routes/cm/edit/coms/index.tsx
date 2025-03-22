@@ -1,4 +1,4 @@
-import { EditCompositionsPage } from '$cm/editor/pages/compositions/ui/EditCompositions';
+import { EditCompositionsPage } from '$cm+editor/pages/EditCompositionsPage';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/cm/edit/coms/')({

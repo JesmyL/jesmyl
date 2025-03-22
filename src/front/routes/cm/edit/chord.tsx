@@ -1,4 +1,4 @@
-import { EditChordPage } from '$cm/pages/EditChordPage';
+import { EditChordPage } from '$cm+editor/pages/EditChordPage';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/cm/edit/chord')({

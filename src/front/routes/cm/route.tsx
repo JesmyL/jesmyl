@@ -1,5 +1,5 @@
 import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
-import { CmApp } from '$cm/01-app/CmApp';
+import { CmApp } from '$cm/app/CmApp';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/cm')({ component: RouteComponent });

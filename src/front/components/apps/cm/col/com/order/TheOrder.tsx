@@ -93,7 +93,7 @@ export function TheOrder(props: Props) {
         className={
           (props.specialClassId || '') +
           'composition-block styled-block flex flex-baseline' +
-          (orderUnit.isVisible ? '' : ' invisible')
+          (orderUnit.isVisible ? '' : ' ord-invisible')
         }
         ref={el => {
           if (el) orderUnit.element = el;
@@ -120,7 +120,7 @@ export function TheOrder(props: Props) {
       className={
         (props.specialClassId || '') +
         `composition-block styled-block ${className}` +
-        (orderUnit.isVisible ? '' : ' invisible') +
+        (orderUnit.isVisible ? '' : ' ord-invisible') +
         (chordedOrd ? ' chorded-block' : ' without-chords')
       }
       ref={el => {

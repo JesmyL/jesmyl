@@ -49,18 +49,33 @@ export const cmEditorSokiInvocatorBaseServer = new CmEditorSokiInvocatorBaseServ
 
     watchComBusies: watchEditComBusies,
     unwatchComBusies: unwatchEditComBusies,
+
+    requestFreshes:
+      ({ auth, client }) =>
+      async lastModfiedAt => {
+        if (auth && auth.level >= 50) {
+          const eePackModifiedAt = eePackFileStore.fileModifiedAt();
+          if (eePackModifiedAt > lastModfiedAt) {
+            cmEditorServerInvocatorShareMethods.refreshEEPack(client, {
+              modifiedAt: eePackModifiedAt,
+              pack: eePackFileStore.getValue(),
+            });
+          }
+        }
+      },
   },
   {
     setChords: (_, chords) => `Изменены аккорды ${smylib.keys(chords).join(', ')}`,
 
-    getResourceHTMLString: () => ``,
+    getResourceHTMLString: null,
     setEEWords: (_, words) => `Изменены ё/е-правила в словах ${smylib.keys(words).join(', ')}`,
 
-    getMp3RulesList: () => ``,
+    getMp3RulesList: null,
     addMp3Rule: () => `Добавлено MP3-правило`,
     setMp3Rule: () => `Изменено MP3-правило`,
 
-    watchComBusies: () => ``,
-    unwatchComBusies: () => ``,
+    watchComBusies: null,
+    unwatchComBusies: null,
+    requestFreshes: null,
   },
 );

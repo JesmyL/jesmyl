@@ -1,4 +1,4 @@
-import { cmIDB } from '$cm/_db/cm-idb';
+import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { TheComposition } from '$cm/col/com/TheComposition';
 import { CmTranslations } from '$cm/translation/Translation';
 import { FileRoutesByPath, Link, useSearch } from '@tanstack/react-router';

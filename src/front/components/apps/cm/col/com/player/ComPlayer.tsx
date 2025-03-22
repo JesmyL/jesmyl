@@ -171,12 +171,12 @@ export function ComPlayer({ src, split, timeRender, audioRef: topAudioRef, isWit
       >
         <ComPlayerMarksMovers
           audioRef={audioRef}
-          src={src}
+          src={currentSrc}
         />
 
         {isWithEditButton && (
           <ComPlayerMarksConfigurerEditMenuButton
-            src={src}
+            src={currentSrc}
             onClick={() => setIsOpenMenu(false)}
           />
         )}

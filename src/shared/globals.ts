@@ -14,7 +14,8 @@ declare global {
   type StringBySlash = `${string}/${string}`;
   type func = (arg: unknown, ...args: unknown[]) => unknown | void;
 
-  type KRecord<Key extends string | number, Value> = Record<`${Key}`, Value> | Record<Key, Value>;
+  type KRecord<Key extends string | number, Value> = (Record<`${Key}`, Value> | Record<Key, Value>) &
+    Record<`${Key}` | Key, Value>;
   type PRecord<Key extends string | number, Value> = Partial<KRecord<Key, Value>>;
 
   type OmitOwn<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;

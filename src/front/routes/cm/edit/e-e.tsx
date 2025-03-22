@@ -1,4 +1,4 @@
-import { EditEERulesPage } from '$cm/pages/EditEERulesPage';
+import { EditEERulesPage } from '$cm+editor/pages/EditEERulesPage';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/cm/edit/e-e')({

@@ -1,4 +1,4 @@
-import { cmIDB } from '$cm/_db/cm-idb';
+import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { onLocalComCommentsSendEvent } from '$cm/com-comments-manager';
 import { cmFreshesSokiInvocatorClient } from '$cm/invocators/fresh-invocator.methods';
 import { cmSokiInvocatorBaseClient } from '$cm/invocators/invocator.shares.base';

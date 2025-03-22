@@ -1,5 +1,5 @@
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
-import { cmIDB } from '$cm/_db/cm-idb';
+import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useCmOpenComLinkRendererContext } from '$cm/basis/lib/contexts/current-com-list';
 import { Com } from '$cm/col/com/Com';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';

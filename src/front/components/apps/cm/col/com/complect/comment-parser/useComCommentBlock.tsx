@@ -1,5 +1,5 @@
 import { useAtomValue } from '#shared/lib/atoms';
-import { cmIDB } from '$cm/_db/cm-idb';
+import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useComCommentText } from '$cm/com-comments-manager';
 import { useMemo } from 'react';
 import { Com } from '../../Com';

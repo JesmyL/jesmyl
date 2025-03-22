@@ -1,9 +1,8 @@
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { useToast } from '#shared/ui/modal/useToast';
-import { CmEditorPage } from '$cm/pages/EditorPage';
 import { Outlet } from '@tanstack/react-router';
 import { useAuth } from 'front/components/index/atoms';
-import { Suspense, memo, useEffect, useState } from 'react';
+import React, { Suspense, memo, useEffect, useState } from 'react';
 import { CmComWid } from 'shared/api';
 import { cmAppActions } from '../app-actions/cm-app-actions';
 import { CmSharedComListActionInterpretator } from '../app-actions/SharedComList';
@@ -12,6 +11,7 @@ import { cmInitialInvokes } from '../routing/cm-initial-invokes';
 import { CmFooter } from '../routing/CmFooter';
 
 const maxSelectedComsCount = 50;
+const CmEditorPage = React.lazy(() => import('$cm+editor/app/EditorPage').then(m => ({ default: m.CmEditorPage })));
 
 export const CmApp = () => {
   const auth = useAuth();

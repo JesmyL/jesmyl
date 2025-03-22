@@ -1,5 +1,6 @@
 import { MyLib, mylib } from '#shared/lib/my-lib';
-import { CmIDBStorage, cmIDB } from '$cm/_db/cm-idb';
+import { cmEditorIDB } from '$cm+editor/basis/lib/cmEditorIDB';
+import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { itIt, makeRegExp } from 'shared/utils';
 import { Com } from '../com/Com';
 import { Cat } from './Cat';
@@ -19,15 +20,15 @@ export type CatSpecialSearches = {
   isRerenderOnInput?: boolean;
 };
 
-const delayedValueSetDefiner = <Key extends keyof CmIDBStorage, Value>(
-  key: Key,
-  defaultValue: Value,
-  mapper: (value: CmIDBStorage[Key]) => Value,
+const delayedValueSetDefiner = <Value, RetValue>(
+  promiser: () => Promise<Value>,
+  defaultValue: RetValue,
+  mapper: (value: Value) => RetValue,
 ) => {
-  let value: Value | und;
+  let value: RetValue | und;
   let isNeedLoad = true;
 
-  return async (): Promise<Value> => {
+  return async (): Promise<RetValue> => {
     if (value === undefined && isNeedLoad) {
       isNeedLoad = false;
       const setKnownChordsSet: typeof mapper = chords => {
@@ -36,7 +37,7 @@ const delayedValueSetDefiner = <Key extends keyof CmIDBStorage, Value>(
         return value;
       };
 
-      setKnownChordsSet(await cmIDB.get[key]());
+      setKnownChordsSet(await promiser());
 
       return defaultValue;
     }
@@ -45,8 +46,13 @@ const delayedValueSetDefiner = <Key extends keyof CmIDBStorage, Value>(
   };
 };
 
-const knownChordsSet = delayedValueSetDefiner('chordPack', new Set<string>(), chords => new Set(MyLib.keys(chords)));
-const eeIncorrectWordsReg = delayedValueSetDefiner('eeStore', /^ееее$/, value => {
+const knownChordsSet = delayedValueSetDefiner(
+  cmIDB.get.chordPack,
+  new Set<string>(),
+  chords => new Set(MyLib.keys(chords)),
+);
+
+const eeIncorrectWordsReg = delayedValueSetDefiner(cmEditorIDB.get.eeStore, /^ееее$/, value => {
   const notRuLetter = '([^а-яёіґїє])';
   return new RegExp(
     notRuLetter +
@@ -78,7 +84,7 @@ export const catSpecialSearches: Record<`@${string}`, CatSpecialSearches> = {
 
         return coms.filter(com =>
           com.ords?.some(ord =>
-            mylib.isNum(ord.top.r) ? `${ord.top.r}`.match(reg) : MyLib.keys(ord.top.r).some(key => key.match(reg)),
+            mylib.isNum(ord.top.r) ? `${ord.top.r}`.match(reg) : MyLib.keys(ord.top.r).some(key => `${key}`.match(reg)),
           ),
         );
       } catch (_error) {

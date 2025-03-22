@@ -1,5 +1,5 @@
 import { useToast } from '#shared/ui/modal/useToast';
-import { cmIDB } from '$cm/_db/cm-idb';
+import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useComs } from '$cm/basis/lib/coms-selections';
 import { cmUserStoreSokiInvocatorClient } from '$cm/invocators/user-store-invocator.methods';
 

@@ -1,6 +1,6 @@
 import { contextCreator } from '#shared/lib/contextCreator';
 import { mylib } from '#shared/lib/my-lib';
-import { cmIDB } from '$cm/_db/cm-idb';
+import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { CmComWid } from 'shared/api';

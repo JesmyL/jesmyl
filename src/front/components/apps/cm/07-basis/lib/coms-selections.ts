@@ -1,5 +1,5 @@
 import { contextCreator } from '#shared/lib/contextCreator';
-import { cmIDB } from '$cm/_db/cm-idb';
+import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { Com } from '$cm/col/com/Com';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';

@@ -1,7 +1,7 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { ActualRef } from '#shared/lib/hooks/useActualRef';
 import { mylib } from '#shared/lib/my-lib';
-import { cmIDB } from '$cm/_db/cm-idb';
+import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { Slider } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
 

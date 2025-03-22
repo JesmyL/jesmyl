@@ -1,7 +1,7 @@
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { cmIDB } from '$cm/_db/cm-idb';
 import { RollControled } from '$cm/base/RolledContent';
+import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { Link } from '@tanstack/react-router';
 import { useEffect, useRef } from 'react';

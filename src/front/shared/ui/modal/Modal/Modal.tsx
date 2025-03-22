@@ -1,6 +1,7 @@
 import { propagationStopper } from '#shared/lib/event-funcs';
 
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
+import { mylib } from '#shared/lib/my-lib';
 import { RootAnchoredContent } from '#shared/ui/RootAnchoredContent';
 import { useEffect, useMemo } from 'react';
 import { emptyFunc } from 'shared/utils';
@@ -8,7 +9,7 @@ import { StyledModal, StyledModalScreen, StyledModalScreenWrapper } from '../sty
 
 export interface Props {
   mood?: 'ok' | 'ko';
-  children?: React.ReactNode;
+  children?: React.ReactNode | ((props: { onClose: () => void }) => React.ReactNode);
   onClose: (isOpen: false) => void;
   isRenderHere?: boolean;
 }
@@ -34,7 +35,7 @@ export function Modal({ mood, children, onClose, isRenderHere }: Props) {
           className={'type_screen mood mood_' + mood}
           onClick={propagationStopper}
         >
-          {children}
+          {mylib.isFunc(children) ? children({ onClose: close }) : children}
         </StyledModalScreen>
       </StyledModalScreenWrapper>
     </StyledModal>

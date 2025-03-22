@@ -1,4 +1,4 @@
-import { cmIDB } from '$cm/_db/cm-idb';
+import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useCcom } from '$cm/basis/lib/com-selections';
 import { useCmCurrentComPackContext } from '$cm/basis/lib/contexts/current-com-list';
 import { Com } from '$cm/col/com/Com';

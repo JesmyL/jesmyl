@@ -21,6 +21,15 @@
       "#widgets/*": ["./front/widgets/*"],
       "#basis/*": ["./front/basis/*"],
 
+      "$cm+editor/app/*": ["./front/components/apps/cm+editor/01-app/*"],
+      "$cm+editor/processes/*": ["./front/components/apps/cm+editor/02-processes/*"],
+      "$cm+editor/pages/*": ["./front/components/apps/cm+editor/03-pages/*"],
+      "$cm+editor/widgets/*": ["./front/components/apps/cm+editor/04-widgets/*"],
+      "$cm+editor/features/*": ["./front/components/apps/cm+editor/05-features/*"],
+      "$cm+editor/entities/*": ["./front/components/apps/cm+editor/06-entities/*"],
+      "$cm+editor/basis/*": ["./front/components/apps/cm+editor/07-basis/*"],
+      "$cm+editor/*": ["./front/components/apps/cm+editor/*"],
+
       "$cm/app/*": ["./front/components/apps/cm/01-app/*"],
       "$cm/processes/*": ["./front/components/apps/cm/02-processes/*"],
       "$cm/pages/*": ["./front/components/apps/cm/03-pages/*"],

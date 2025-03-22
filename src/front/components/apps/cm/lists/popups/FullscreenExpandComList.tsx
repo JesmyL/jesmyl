@@ -1,5 +1,5 @@
-import { cmIDB } from '$cm/_db/cm-idb';
 import { RollControled } from '$cm/base/RolledContent';
+import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { Com } from '$cm/col/com/Com';
 import { CmComNumber } from '$cm/col/com/complect/ComNumber';
 import { ComOrders } from '$cm/col/com/orders/ComOrders';
