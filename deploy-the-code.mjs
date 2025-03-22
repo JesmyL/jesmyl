@@ -125,10 +125,10 @@ const updateVersion = isIgnoreVersionUpdate => {
 
       const prevNum = num;
       num++;
-      const newNum = JSON.stringify({ num }, null, ' ');
+      const newNum = JSON.stringify({ num }, null, '  ') + '\n';
 
       setVersion(newNum, () =>
-        resolveVersion([num, async () => setVersion(JSON.stringify({ num: prevNum }, null, ' '))]),
+        resolveVersion([num, async () => setVersion(JSON.stringify({ num: prevNum }, null, '  ') + '\n')]),
       );
     });
   });
