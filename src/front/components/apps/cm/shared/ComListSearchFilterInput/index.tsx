@@ -1,4 +1,5 @@
-import { Atom, useAtom } from '#shared/lib/atoms';
+import { isNumberSearchAtom } from '#basis/lib/atoms/isNumberSearchAtom';
+import { useAtom, useAtomValue } from '#shared/lib/atoms';
 import { mylib } from '#shared/lib/my-lib';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { Com } from '$cm/col/com/Com';
@@ -11,15 +12,14 @@ export const CmComListSearchFilterInput = <ComConstructor extends Com>({
   onDebounced,
   onSearch,
   coms,
-  isNumberSearchAtom,
 }: {
   onDebounced?: () => void;
   onSearch: (coms: ComConstructor[]) => void;
   coms?: Com[];
   Constructor: new (icom: IExportableCom) => ComConstructor;
-  isNumberSearchAtom?: Atom<boolean, (value: boolean) => void>;
 }) => {
   const [term, setTerm] = useAtom(categoryTermAtom);
+  const isNumberSearch = useAtomValue(isNumberSearchAtom);
 
   useEffect(() => {
     if (term === '404') {
@@ -32,15 +32,20 @@ export const CmComListSearchFilterInput = <ComConstructor extends Com>({
       return;
     }
 
-    const numCheckedTerm = isNaN(+term) ? term : +term > 403 ? `${+term - 1}` : term;
+    const numCheckedTerm = isNumberSearch || isNaN(+term) ? term : +term > 403 ? `${+term - 1}` : term;
 
     onSearch(
       mylib
-        .searchRate(comList, numCheckedTerm, ['name', mylib.c.POSITION, ['orders', mylib.c.INDEX, 'text']])
+        .searchRate(
+          comList,
+          numCheckedTerm,
+          ['name', mylib.c.POSITION, ['orders', mylib.c.INDEX, 'text']],
+          isNumberSearch,
+        )
         .sort((a, b) => b.rate - a.rate)
         .map(({ item }) => item),
     );
-  }, [Constructor, coms, onSearch, term]);
+  }, [Constructor, coms, isNumberSearch, onSearch, term]);
 
   return (
     <DebouncedSearchInput
@@ -50,7 +55,6 @@ export const CmComListSearchFilterInput = <ComConstructor extends Com>({
       initialTerm={term}
       onSearch={setTerm}
       onDebounced={onDebounced}
-      isNumberSearchAtom={isNumberSearchAtom}
     />
   );
 };

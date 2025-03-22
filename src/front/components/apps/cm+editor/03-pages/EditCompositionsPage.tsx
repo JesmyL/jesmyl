@@ -1,4 +1,5 @@
-import { atom, useAtom, useAtomValue } from '#shared/lib/atoms';
+import { isNumberSearchAtom } from '#basis/lib/atoms/isNumberSearchAtom';
+import { useAtom, useAtomValue } from '#shared/lib/atoms';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { StyledPhaseContainerConfigurerHead } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
@@ -18,7 +19,6 @@ import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 const mapExtractItem = <Item,>({ item }: { item: Item }): Item => item;
-const isNumberSearchAtom = atom(false);
 
 export const EditCompositionsPage = () => {
   const coms = useComs();
@@ -78,7 +78,6 @@ export const EditCompositionsPage = () => {
               if (listRef.current) listRef.current.scrollTop = 0;
             }}
             onSearch={setSearchedComs}
-            isNumberSearchAtom={isNumberSearchAtom}
           />
         }
         onMoreClick={setIsOpenMorePopup}

@@ -1,4 +1,4 @@
-import { SMyLib, makeRegExp } from 'shared/utils';
+import { SMyLib, itIt, makeRegExp } from 'shared/utils';
 
 const constants = {
   REMOVE: ['REMOVE'],
@@ -95,8 +95,8 @@ export class MyLib extends SMyLib {
     isNumberSearch?: boolean,
   ): RetItem[] {
     const normalWords = isNumberSearch
-      ? searchWord.split(makeRegExp('/0+/')).filter(word => word)
-      : searchWord.split(makeRegExp("/[^а-яёa-z0-9ґї'ʼє]+/i")).filter(word => word);
+      ? searchWord.split(makeRegExp('/0+/')).filter(itIt)
+      : searchWord.split(makeRegExp("/[^а-яёa-z0-9ґї'ʼє]+/i")).filter(itIt);
     const words = normalWords.map(word => word.toLowerCase());
     const wordRegs = normalWords.map(word => this.internationalWordReg(word, isNumberSearch));
 
