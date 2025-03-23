@@ -1,61 +1,75 @@
 import { isNumberSearchAtom } from '#basis/lib/atoms/isNumberSearchAtom';
-import { useAtomToggle, useAtomValue } from '#shared/lib/atoms';
-import { useMemo } from 'react';
+import { atom, Atom, useAtom, useAtomSet, useAtomToggle, useAtomValue } from '#shared/lib/atoms';
+import { UsedWid, useWid } from '#shared/lib/hooks/useWid';
+import { useEffect } from 'react';
 import styled from 'styled-components';
-import { KeyboardInputPropsType } from './keyboard/Keyboard.model';
 import { LazyIcon } from './the-icon/LazyIcon';
 
 interface Props {
-  initialTerm?: string;
+  termAtom?: Atom<string>;
+  debouncedTermAtom?: Atom<string>;
   debounce?: number;
-  onSearch?: (term: string) => void;
-  onIconClick?: (term: string) => void;
-  onDebounced?: (term: string) => void;
-  onTermChange?: (term: string) => void;
   placeholder?: string;
-  withoutIcon?: boolean;
   className?: string;
-  type?: KeyboardInputPropsType;
 }
 
-export const DebouncedSearchInput = (props: Props) => {
-  const { initialTerm = '', onSearch, onDebounced, debounce, onTermChange, withoutIcon, className } = props;
-  const timeout = useMemo((): { val?: TimeOut } => ({}), []);
+const timeouts: PRecord<UsedWid, TimeOut> = {};
+const defaultTermAtoms: PRecord<UsedWid, Atom<string>> = {};
+
+export const DebouncedSearchInput = ({ debounce = 300, className = '', placeholder, ...props }: Props) => {
+  const wid = useWid();
+  const termAtom = props.termAtom ?? (defaultTermAtoms[wid] ??= atom(''));
+  const debouncedTermAtom = props.debouncedTermAtom ?? props.termAtom ?? (defaultTermAtoms[wid] ??= atom(''));
+
+  const [term, setTerm] = useAtom(termAtom);
+  const setDebouncedTerm = useAtomSet(debouncedTermAtom);
+
   const isNumberSearch = useAtomValue(isNumberSearchAtom);
   const isNumberSearchToggle = useAtomToggle(isNumberSearchAtom);
 
+  useEffect(
+    () => () => {
+      delete defaultTermAtoms[wid];
+      delete timeouts[wid];
+    },
+    [wid],
+  );
+
   return (
-    <div className={`debounced-input ${className}`}>
-      {withoutIcon || (
-        <LazyIcon
-          className="pointer"
-          icon={isNumberSearch ? 'GridTable' : 'SearchVisual'}
-          onClick={() => isNumberSearchToggle()}
-        />
-      )}
-      <StyledIinput
+    <label className={`debounced-input flex gap-2 ${className}`}>
+      <LazyIcon
+        className="pointer"
+        icon={isNumberSearch ? 'GridTable' : 'SearchVisual'}
+        onClick={() => isNumberSearchToggle()}
+      />
+      <StyledInput
         type={isNumberSearch ? 'tel' : 'text'}
-        value={initialTerm}
+        value={term}
         className="input"
-        placeholder={props.placeholder}
+        placeholder={placeholder}
         onChange={event => {
           const term = event.currentTarget.value;
-          onSearch?.(term);
+          setTerm(term);
 
-          if (debounce) {
-            clearTimeout(timeout.val);
-            timeout.val = setTimeout(() => {
-              onDebounced?.(term);
-              onTermChange?.(term);
-            }, debounce);
-          } else onTermChange?.(term);
+          if (!debounce || debouncedTermAtom === termAtom) return;
+
+          clearTimeout(timeouts[wid]);
+          timeouts[wid] = setTimeout(setDebouncedTerm, debounce, term);
         }}
       />
-    </div>
+      <LazyIcon
+        className="pointer"
+        icon="Cancel01"
+        onClick={() => {
+          setTerm('');
+          setDebouncedTerm('');
+        }}
+      />
+    </label>
   );
 };
 
-const StyledIinput = styled.input`
+const StyledInput = styled.input`
   --text-color: var(--color-x3);
 
   &::placeholder {

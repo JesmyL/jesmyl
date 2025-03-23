@@ -1,4 +1,4 @@
-import { useAtomValue } from '#shared/lib/atoms';
+import { useAtom, useAtomValue } from '#shared/lib/atoms';
 import { LoadIndicatedContent } from '#shared/ui/load-indicated-content/LoadIndicatedContent';
 import {
   PageContainerConfigurer,
@@ -8,7 +8,7 @@ import {
 import { SetComListLimitsExtracterContext } from '$cm/base/SetComListLimitsExtracterContext';
 import { Cat } from '$cm/col/cat/Cat';
 import { CmComListSearchFilterInput } from '$cm/shared/ComListSearchFilterInput';
-import { categoryTermAtom } from '$cm/shared/ComListSearchFilterInput/lib';
+import { categoryDebounceTermAtom, categoryTermAtom } from '$cm/shared/ComListSearchFilterInput/lib';
 import { FileRoutesByPath } from '@tanstack/react-router';
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { emptyFunc } from 'shared/utils';
@@ -31,6 +31,11 @@ export const CmCatPage = (props: Props) => {
   const setComListLimitsExtracterRef = useRef<(start: number | nil, finish: number | nil) => void>(emptyFunc);
   const listRef = useRef<HTMLDivElement>(null);
   const categoryTitleRef = useRef<HTMLDivElement>(null);
+  const debouncedTerm = useAtom(categoryDebounceTermAtom);
+
+  useEffect(() => {
+    if (listRef.current) listRef.current.scrollTop = 0;
+  }, [debouncedTerm]);
 
   useEffect(() => {
     if (term.length !== 1) return;
@@ -53,9 +58,6 @@ export const CmCatPage = (props: Props) => {
         head={
           <CmComListSearchFilterInput
             Constructor={Com}
-            onDebounced={() => {
-              if (listRef.current) listRef.current.scrollTop = 0;
-            }}
             onSearch={setSearchedComs}
             coms={props.coms}
           />

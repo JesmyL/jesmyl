@@ -1,17 +1,20 @@
+import { atom, useAtomValue } from '#shared/lib/atoms';
 import { mylib } from '#shared/lib/my-lib';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { IScheduleWidgetUser } from 'shared/api';
 import { ScheduleWidgetUserPhoto } from '../users/UserPhoto';
 import { ScheduleWidgetRemovableUserFace } from './RemovableUserFace';
 import { checkIsUserPhotoable } from './utils';
 
+const termAtom = atom('');
+
 export const ScheduleWidgetPhotoGalery = () => {
   const rights = useScheduleWidgetRightsContext();
-  const [term, setTerm] = useState('');
+  const term = useAtomValue(termAtom);
 
   const filteredUsers: IScheduleWidgetUser[] = useMemo(() => {
     const sortedUsers = rights.schedule.ctrl.users.sort((a, b) => (a.fio! < b.fio! ? -1 : a.fio! > b.fio! ? 1 : 0));
@@ -23,8 +26,7 @@ export const ScheduleWidgetPhotoGalery = () => {
       <DebouncedSearchInput
         className="debounced-searcher round-styled"
         placeholder="Фильтр по имени"
-        debounce={300}
-        onDebounced={setTerm}
+        termAtom={termAtom}
       />
       <ModalHeader>Фотографии (локально)</ModalHeader>
       <ModalBody>

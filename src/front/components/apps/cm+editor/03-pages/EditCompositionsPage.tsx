@@ -13,7 +13,7 @@ import { TheCatSpecialSearches } from '$cm/col/cat/SpecialSearches';
 import { Com } from '$cm/col/com/Com';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
 import { CmComListSearchFilterInput } from '$cm/shared/ComListSearchFilterInput';
-import { categoryTermAtom } from '$cm/shared/ComListSearchFilterInput/lib';
+import { categoryDebounceTermAtom, categoryTermAtom } from '$cm/shared/ComListSearchFilterInput/lib';
 import { useNavigate } from '@tanstack/react-router';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
@@ -29,6 +29,11 @@ export const EditCompositionsPage = () => {
   const [mapper, setMapper] = useState<CatSpecialSearches['map'] | null>(null);
   const [term, setTerm] = useAtom(categoryTermAtom);
   const navigate = useNavigate();
+  const debouncedTerm = useAtom(categoryDebounceTermAtom);
+
+  useEffect(() => {
+    if (listRef.current) listRef.current.scrollTop = 0;
+  }, [debouncedTerm]);
 
   useEffect(() => {
     if (!term) {
@@ -74,9 +79,6 @@ export const EditCompositionsPage = () => {
         head={
           <CmComListSearchFilterInput
             Constructor={EditableCom}
-            onDebounced={() => {
-              if (listRef.current) listRef.current.scrollTop = 0;
-            }}
             onSearch={setSearchedComs}
           />
         }

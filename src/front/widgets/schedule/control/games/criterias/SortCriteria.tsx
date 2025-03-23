@@ -1,4 +1,5 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
+import { atom, useAtomValue } from '#shared/lib/atoms';
 import { mylib } from '#shared/lib/my-lib';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
@@ -21,8 +22,10 @@ interface Props {
 }
 
 const itemIt = <Item,>({ item }: { item: Item }) => item;
+const termAtom = atom('');
 
 export function ScheduleWidgetSortCriteria({ criteria, criteriai }: Props) {
+  const term = useAtomValue(termAtom);
   const rights = useScheduleWidgetRightsContext();
   const [isRenaming, setIsRenaming] = useState(false);
   const [isOpenSorter, setIsOpenSorter] = useState<unknown>(false);
@@ -54,7 +57,6 @@ export function ScheduleWidgetSortCriteria({ criteria, criteriai }: Props) {
     return [usersForSort, uncriteriedUsers, sortedUsers.sort((a, b) => criteria.sorts[a.mi] - criteria.sorts[b.mi])];
   }, [criteria.sorts, rights.schedule.ctrl.users]);
 
-  const [term, setTerm] = useState('');
   const filteredUsers: IScheduleWidgetUser[] = useMemo(
     () => (!term ? sortedUsers : mylib.searchRate(sortedUsers, term, ['fio']).map(itemIt)),
     [sortedUsers, term],
@@ -87,8 +89,7 @@ export function ScheduleWidgetSortCriteria({ criteria, criteriai }: Props) {
         <DebouncedSearchInput
           className="debounced-searcher round-styled"
           placeholder="Фильтр по имени"
-          debounce={300}
-          onDebounced={setTerm}
+          termAtom={termAtom}
         />
         {!sortedUsers.length || (
           <>

@@ -1,3 +1,4 @@
+import { atom, useAtomValue } from '#shared/lib/atoms';
 import { mylib } from '#shared/lib/my-lib';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
@@ -24,10 +25,11 @@ type Props = {
 
 const itemIt = <Item,>({ item }: { item: Item }) => item;
 const eqByTitle = (a: { title: string }, b: { title: string }) => (a.title > b.title ? 1 : b.title < a.title ? -1 : 0);
+const termAtom = atom('');
 
 export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCounts, onItemSelectSend }: Props) => {
   const types = schedule.types || emptyArray;
-  const [term, setTerm] = useState('');
+  const term = useAtomValue(termAtom);
   const error = useAttTypeTitleError(term, schedule, true);
   const scheduleScopeProps = useScheduleScopePropsContext();
 
@@ -87,8 +89,7 @@ export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCount
             <DebouncedSearchInput
               className="debounced-searcher round-styled"
               placeholder="Фильтр по названию"
-              debounce={30}
-              onDebounced={setTerm}
+              termAtom={termAtom}
             />
           </ModalHeader>
           <ModalBody>
