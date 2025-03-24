@@ -10,10 +10,14 @@ import { jversion } from 'shared/values';
 export function IndexAbout() {
   const [appVersion, isVersionLoading] = useInvocatedValue(
     0,
-    aborter => indexBasicsSokiInvocatorClient.getFreshAppVersion({ aborter }),
+    ({ aborter }) => indexBasicsSokiInvocatorClient.getFreshAppVersion({ aborter }),
     [],
   );
-  const [values] = useInvocatedValue({}, aborter => indexBasicsSokiInvocatorClient.getIndexValues({ aborter }), []);
+  const [values] = useInvocatedValue(
+    {},
+    ({ aborter }) => indexBasicsSokiInvocatorClient.getIndexValues({ aborter }),
+    [],
+  );
 
   return (
     <div className="flex center">

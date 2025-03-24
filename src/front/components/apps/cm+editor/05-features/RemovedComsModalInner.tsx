@@ -15,7 +15,7 @@ export const RemovedComsModalInner = () => {
   const [openComw, setOpenComw] = useState<CmComWid | null>(null);
   const [icoms] = useInvocatedValue(
     emptyArray,
-    aborter => cmComClientInvocatorMethods.takeRemovedComs({ aborter }),
+    ({ aborter }) => cmComClientInvocatorMethods.takeRemovedComs({ aborter }),
     emptyArray,
   );
 

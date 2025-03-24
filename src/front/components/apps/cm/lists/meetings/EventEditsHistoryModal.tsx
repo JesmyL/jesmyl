@@ -14,7 +14,7 @@ export const CmMeetingEventEditsHistoryModalInner = ({ dayi, schw }: { dayi: num
   const [limit, setLimit] = useState(10);
   const [historyPacks, isLoading, error, setHistoryPacks] = useInvocatedValue(
     null,
-    async aborter => {
+    async ({ aborter }) => {
       if (mylib.isNaN(schw) || mylib.isNaN(dayi)) return null;
       return cmComExternalsClientInvocatorMethods.getScheduleEventHistory({ aborter }, schw, dayi);
     },

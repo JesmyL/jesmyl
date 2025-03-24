@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 export const useInvocatedValue = <Value>(
   initialValue: Value,
-  invocation: (aborter: AbortController) => Promise<Value>,
+  invocation: (props: { aborter: AbortController }) => Promise<Value>,
   deps: unknown[],
 ) => {
   const [value, setValue] = useState(initialValue);
@@ -18,7 +18,7 @@ export const useInvocatedValue = <Value>(
       .pipe(
         addAbortControlledPipe(async aborter => {
           try {
-            const value = await invocation(aborter);
+            const value = await invocation({ aborter });
             setValue(value);
             setIsLoading(false);
             setError(null);

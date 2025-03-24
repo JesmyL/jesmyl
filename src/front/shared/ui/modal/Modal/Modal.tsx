@@ -10,7 +10,7 @@ import { StyledModal, StyledModalScreen, StyledModalScreenWrapper } from '../sty
 export interface Props {
   mood?: 'ok' | 'ko';
   children?: React.ReactNode | ((props: { onClose: () => void }) => React.ReactNode);
-  onClose: (isOpen: false) => void;
+  onClose?: (isOpen: false) => void;
   isRenderHere?: boolean;
 }
 
@@ -18,7 +18,7 @@ export function Modal({ mood, children, onClose, isRenderHere }: Props) {
   const onCloseRef = useMemo(() => ({ current: emptyFunc }), []);
   const close = () => {
     onCloseRef.current();
-    onClose(false);
+    onClose?.(false);
   };
 
   const modalNode = (

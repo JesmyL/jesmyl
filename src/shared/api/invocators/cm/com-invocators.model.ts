@@ -30,4 +30,6 @@ export type CmComSokiInvocatorModel = {
   printComwVisit: (comw: CmComWid) => void;
   takeComwVisitsCount: (comw: CmComWid) => number;
   takeRemovedComs: () => IExportableCom[];
+
+  getComwVisits: () => PRecord<CmComWid, number>;
 };

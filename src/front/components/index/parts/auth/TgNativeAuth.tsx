@@ -6,13 +6,9 @@ import { TelegramNativeAuthUserData } from 'shared/api';
 import styled from 'styled-components';
 
 const funcName = 'onTelegramNativeAuth';
-
-interface Props {
-  showToastRef: { current: () => void };
-}
 const win: Record<string, unknown> = window as never;
 
-export const TgNativeAuth = ({ showToastRef }: Props) => {
+export const TgNativeAuth = () => {
   const tgNativeRef = useRef<HTMLDivElement | null>(null);
   const [isScriptLoaded, setIsScriptLoaded] = useState<unknown>(false);
   const navigate = useNavigate();
@@ -33,7 +29,7 @@ export const TgNativeAuth = ({ showToastRef }: Props) => {
       document.body.appendChild(tgAuthIframe);
       delete win[funcName];
     };
-  }, [isScriptLoaded, navigate, showToastRef]);
+  }, [isScriptLoaded, navigate]);
 
   return (
     <>

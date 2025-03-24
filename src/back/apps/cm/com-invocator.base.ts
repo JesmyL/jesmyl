@@ -52,6 +52,7 @@ class CmComSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmComSokiInvo
           marks[comw]++;
         },
         takeComwVisitsCount: () => async comw => comwVisitsFileStore.getValue()[comw] ?? 0,
+        getComwVisits: () => async () => comwVisitsFileStore.getValue(),
 
         takeRemovedComs: () => async () => comsFileStore.getValue().filter(com => com.isRemoved),
         destroy: () => async comw => {
@@ -117,6 +118,7 @@ class CmComSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmComSokiInvo
         printComwVisit: null,
         takeComwVisitsCount: null,
         takeRemovedComs: null,
+        getComwVisits: null,
       },
     );
   }

@@ -1,6 +1,5 @@
 import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
 import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
-import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { useToast } from '#shared/ui/modal/useToast';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
@@ -18,15 +17,17 @@ export const IndexTelegramAuthPage = () => {
   const [authCode, setAuthCode] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isSendTgCode, setIsSendTgCode] = useState(false);
-  const [values] = useInvocatedValue({}, aborter => indexBasicsSokiInvocatorClient.getIndexValues({ aborter }), []);
+  const [values] = useInvocatedValue(
+    {},
+    ({ aborter }) => indexBasicsSokiInvocatorClient.getIndexValues({ aborter }),
+    [],
+  );
 
   const connectionNode = useConnectionState();
   const [errors] = useAuthErrors();
   const navigate = useNavigate();
   const error = (message: string | nil) => message && <div className="login-error-message">{message}</div>;
   const toast = useToast({ mood: 'ko' });
-
-  const showToastRef = useActualRef(toast);
 
   return (
     <StyledPage
@@ -88,7 +89,7 @@ export const IndexTelegramAuthPage = () => {
                   {!isSendTgCode && (
                     <li>
                       <div className="flex flex-gap">
-                        <TgNativeAuth showToastRef={showToastRef} />
+                        <TgNativeAuth />
                         или
                         <span
                           id="input-the-tg-code-button"

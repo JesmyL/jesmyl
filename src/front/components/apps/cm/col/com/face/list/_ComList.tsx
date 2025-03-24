@@ -26,7 +26,7 @@ export const ComFaceListComList = (props: ComFaceListProps) => {
   const { limits, updateLimits } = useListInfiniteScrollController(
     listRef,
     props.list,
-    com => com.wid === lastOpenComw,
+    props.isPutCcomFaceOff ? (_, comi) => comi === 0 : com => com.wid === lastOpenComw,
     [lastOpenComw],
   );
 

@@ -48,6 +48,7 @@ export const cmComClientInvocatorMethods = new CmComSokiInvocatorClient('CmComSo
   printComwVisit: true,
   takeComwVisitsCount: true,
   takeRemovedComs: true,
+  getComwVisits: true,
 });
 
 class CmComExternalsSokiInvocatorClient extends SokiInvocatorClient<CmComExternalsSokiInvocatorModel> {}

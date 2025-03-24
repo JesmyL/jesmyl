@@ -1,10 +1,12 @@
 import { useAtom, useAtomValue } from '#shared/lib/atom';
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LoadIndicatedContent } from '#shared/ui/load-indicated-content/LoadIndicatedContent';
 import {
   PageContainerConfigurer,
   StyledPhaseContainerConfigurerContent,
   StyledPhaseContainerConfigurerHead,
 } from '#shared/ui/phase-container/PageContainerConfigurer';
+import { CmRatingSortedComList } from '$cm/04-widgets/RatingSortedComList';
 import { SetComListLimitsExtracterContext } from '$cm/base/SetComListLimitsExtracterContext';
 import { Cat } from '$cm/col/cat/Cat';
 import { CmComListSearchFilterInput } from '$cm/shared/ComListSearchFilterInput';
@@ -32,6 +34,7 @@ export const CmCatPage = (props: Props) => {
   const listRef = useRef<HTMLDivElement>(null);
   const categoryTitleRef = useRef<HTMLDivElement>(null);
   const debouncedTerm = useAtom(categoryDebounceTermAtom);
+  const [isOpenRatingSortedComs, setIsOpenRatingSortedComs] = useState(false);
 
   useEffect(() => {
     if (listRef.current) listRef.current.scrollTop = 0;
@@ -55,6 +58,7 @@ export const CmCatPage = (props: Props) => {
         withoutBackButton={props.withoutBackButton}
         headClass="flex between full-width"
         backButtonPath={props.backButtonPath}
+        onMoreClick={() => setIsOpenRatingSortedComs(true)}
         head={
           <CmComListSearchFilterInput
             Constructor={Com}
@@ -87,6 +91,12 @@ export const CmCatPage = (props: Props) => {
                   />
                 </SetComListLimitsExtracterContext.Provider>
               </div>
+              {isOpenRatingSortedComs && (
+                <FullContent onClose={setIsOpenRatingSortedComs}>
+                  <div className="sticky top-0 py-5 bg-x5">Рейтинг</div>
+                  <CmRatingSortedComList coms={props.coms} />
+                </FullContent>
+              )}
             </>
           )
         }

@@ -28,7 +28,7 @@ export const IndexOtherPage = () => {
 
   const [newVersion, isVersionLoading] = useInvocatedValue(
     0,
-    aborter => indexBasicsSokiInvocatorClient.getFreshAppVersion({ aborter }),
+    ({ aborter }) => indexBasicsSokiInvocatorClient.getFreshAppVersion({ aborter }),
     [],
   );
 
