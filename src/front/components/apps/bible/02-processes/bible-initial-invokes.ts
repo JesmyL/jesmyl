@@ -5,19 +5,17 @@ import { bibleSokiInvocatorBaseClient, bibleSokiInvocatorClient } from './invoca
 export const bibleInitialInvokes = () => {
   bibleSokiInvocatorBaseClient.$$register();
 
-  const getFreshes = async (lastModifiedAt: number) => {
+  const getFreshes = async () => {
+    const lastModifiedAt = await bibleTranslatesIDB.get.lastModifiedAt();
     const myTranslates = await bibleIDB.get.myTranslates();
 
     bibleSokiInvocatorClient.requestFreshes(null, lastModifiedAt, myTranslates);
   };
 
-  soki.listenOnConnectionOpenEvent(async () => {
-    const lastModifiedAt = await bibleTranslatesIDB.get.lastModifiedAt();
-    await getFreshes(lastModifiedAt);
+  soki.onBeforeAuthorizeEvent.listen(() => {
+    bibleTranslatesIDB.remove.lastModifiedAt();
   });
 
-  soki.onAuthorizeEvent.listen(async () => {
-    await bibleTranslatesIDB.updateLastModifiedAt(0);
-    await getFreshes(0);
-  });
+  soki.listenOnConnectionOpenEvent(getFreshes);
+  soki.onAuthorizeEvent.listen(getFreshes);
 };

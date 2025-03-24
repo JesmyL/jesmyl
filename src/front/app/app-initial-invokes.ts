@@ -7,7 +7,8 @@ import { DeviceId } from 'shared/api';
 export const appInitialInvokes = () => {
   schSokiInvocatorBaseClient.$$register();
 
-  const getFreshes = async (lastModified: number) => {
+  const getFreshes = async () => {
+    const lastModified = await indexIDB.get.lastModifiedAt();
     const localDeviceId = await indexIDB.get.deviceId();
 
     try {
@@ -22,10 +23,8 @@ export const appInitialInvokes = () => {
     await indexBasicsSokiInvocatorClient.requestFreshes(null, lastModified);
   };
 
-  soki.listenOnConnectionOpenEvent(async () => {
-    const lastModified = await indexIDB.get.lastModifiedAt();
-    getFreshes(lastModified);
-  });
+  soki.onBeforeAuthorizeEvent.listen(() => indexIDB.remove.lastModifiedAt());
+  soki.onAuthorizeEvent.listen(getFreshes);
 
-  soki.onAuthorizeEvent.listen(() => getFreshes(0));
+  soki.listenOnConnectionOpenEvent(getFreshes);
 };

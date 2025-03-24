@@ -7,19 +7,15 @@ import { soki } from 'front/soki';
 export const cmInitialInvokes = () => {
   cmSokiInvocatorBaseClient.$$register();
 
-  const getFreshes = async (lastModified: number) => {
+  const getFreshes = async () => {
+    const lastModified = await cmIDB.get.lastModifiedAt();
     await cmFreshesSokiInvocatorClient.requestFreshes(null, lastModified);
 
     onLocalComCommentsSendEvent.invoke();
   };
 
-  soki.listenOnConnectionOpenEvent(async () => {
-    const lastModified = await cmIDB.get.lastModifiedAt();
-    getFreshes(lastModified);
-  });
+  soki.onBeforeAuthorizeEvent.listen(() => cmIDB.remove.lastModifiedAt());
+  soki.onAuthorizeEvent.listen(getFreshes);
 
-  soki.onAuthorizeEvent.listen(async () => {
-    await cmIDB.updateLastModifiedAt(0);
-    await getFreshes(0);
-  });
+  soki.listenOnConnectionOpenEvent(getFreshes);
 };

@@ -6,17 +6,13 @@ import { soki } from 'front/soki';
 export const cmEditorInitialInvokes = () => {
   cmEditorSokiInvocatorBaseClient.$$register();
 
-  const getFreshes = async (lastModified: number) => {
+  const getFreshes = async () => {
+    const lastModified = await cmEditorIDB.get.lastModifiedAt();
     await cmEditorClientInvocatorMethods.requestFreshes(null, lastModified);
   };
 
-  soki.listenOnConnectionOpenEvent(async () => {
-    const lastModified = await cmEditorIDB.get.lastModifiedAt();
-    getFreshes(lastModified);
-  });
+  soki.onBeforeAuthorizeEvent.listen(() => cmEditorIDB.remove.lastModifiedAt());
+  soki.onAuthorizeEvent.listen(getFreshes);
 
-  soki.onAuthorizeEvent.listen(async () => {
-    await cmEditorIDB.updateLastModifiedAt(0);
-    await getFreshes(0);
-  });
+  soki.listenOnConnectionOpenEvent(getFreshes);
 };
