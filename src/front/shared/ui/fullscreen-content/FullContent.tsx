@@ -16,19 +16,22 @@ export type FullContentOpenMode = null | 'open' | 'closable';
 export type FullContentValue<PassValue = unknown> = (close: () => void, passValue?: PassValue) => ReactNode;
 
 interface Props {
-  onClose: ((isOpen: false) => void) | true;
+  onClose?: (isOpen: false) => void;
   closable?: boolean;
   children: ((close: () => void) => React.ReactNode) | React.ReactNode;
   className?: string;
   containerClassName?: string;
+  onCloseRef?: { current: () => void };
 }
 
 export function FullContent(props: Props) {
   const subClose = useMemo(() => ({ current: emptyFunc }), []);
   const close = () => {
     subClose.current();
-    if (props.onClose !== true) props.onClose(false);
+    props.onClose?.(false);
   };
+
+  if (props.onCloseRef !== undefined) props.onCloseRef.current = close;
 
   return (
     <RootAnchoredContent
