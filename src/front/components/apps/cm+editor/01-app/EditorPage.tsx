@@ -1,7 +1,6 @@
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer';
-import { cmEditorInitialInvokes } from '$cm+editor/processes/cm+editor-initial-invokes';
 import { Link } from '@tanstack/react-router';
 import { useAuth } from 'front/components/index/atoms';
 
@@ -105,5 +104,3 @@ export const CmEditorPage = () => {
     />
   );
 };
-
-cmEditorInitialInvokes();

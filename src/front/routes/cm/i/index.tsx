@@ -3,6 +3,7 @@ import { useComs } from '$cm/basis/lib/coms-selections';
 import { CmComListContextValue } from '$cm/basis/lib/contexts/current-com-list';
 import { useCat } from '$cm/col/cat/useCcat';
 import { TheAllCatPage } from '$cm/pages/AllCatPage';
+import { cmInitialInvokes } from '$cm/routing/cm-initial-invokes';
 import { createFileRoute } from '@tanstack/react-router';
 import { useMemo } from 'react';
 
@@ -28,3 +29,5 @@ function useComListPack() {
     return { list: coms, pageTitlePostfix: ' - ' + cat.name };
   }, [cat, coms]);
 }
+
+cmInitialInvokes();

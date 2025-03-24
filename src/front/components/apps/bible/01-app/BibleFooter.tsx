@@ -1,7 +1,6 @@
 import { isMobileDevice } from '#shared/lib/device-differences';
 import { AppFooter } from '$app/AppFooter';
 import { AppFooterItem } from '$app/AppFooterItem';
-import { bibleInitialInvokes } from '$bible/processes/bible-initial-invokes';
 
 export const BibleFooter = () => {
   return (
@@ -29,5 +28,3 @@ export const BibleFooter = () => {
     </AppFooter>
   );
 };
-
-bibleInitialInvokes();

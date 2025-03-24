@@ -11,7 +11,6 @@ import { Outlet, ParsedLocation, useLocation, useNavigate } from '@tanstack/reac
 import { soki } from 'front/soki';
 import { useEffect, useMemo, useState } from 'react';
 import { emptyArray } from 'shared/utils';
-import { appInitialInvokes } from './app-initial-invokes';
 import { lastVisitedRouteLsName } from './lib/consts';
 
 export const AppComponent = () => {
@@ -70,8 +69,6 @@ export const AppComponent = () => {
     </>
   );
 };
-
-appInitialInvokes();
 
 const FirstNaver = ({ onSet, loc }: { onSet: (is: false) => void; loc: ParsedLocation<object> }) => {
   const navigate = useNavigate();

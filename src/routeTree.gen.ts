@@ -24,6 +24,7 @@ import { Route as TunerIImport } from './front/routes/tuner/i'
 import { Route as BibleTranImport } from './front/routes/bible/tran'
 import { Route as BibleSearchImport } from './front/routes/bible/search'
 import { Route as BibleIImport } from './front/routes/bible/i'
+import { Route as CmEditRouteImport } from './front/routes/cm/edit/route'
 import { Route as otherAppNameRouteImport } from './front/routes/!other.$appName/route'
 import { Route as CmLiIndexImport } from './front/routes/cm/li/index'
 import { Route as CmIIndexImport } from './front/routes/cm/i/index'
@@ -129,6 +130,12 @@ const BibleIRoute = BibleIImport.update({
   getParentRoute: () => BibleRouteRoute,
 } as any)
 
+const CmEditRouteRoute = CmEditRouteImport.update({
+  id: '/edit',
+  path: '/edit',
+  getParentRoute: () => CmRouteRoute,
+} as any)
+
 const otherAppNameRouteRoute = otherAppNameRouteImport.update({
   id: '/!other/$appName',
   path: '/!other/$appName',
@@ -136,9 +143,9 @@ const otherAppNameRouteRoute = otherAppNameRouteImport.update({
 } as any)
 
 const CmEditIndexLazyRoute = CmEditIndexLazyImport.update({
-  id: '/edit/',
-  path: '/edit/',
-  getParentRoute: () => CmRouteRoute,
+  id: '/',
+  path: '/',
+  getParentRoute: () => CmEditRouteRoute,
 } as any).lazy(() =>
   import('./front/routes/cm/edit/index.lazy').then((d) => d.Route),
 )
@@ -180,39 +187,39 @@ const CmLiEventsRoute = CmLiEventsImport.update({
 } as any)
 
 const CmEditMp3RulesRoute = CmEditMp3RulesImport.update({
-  id: '/edit/mp3Rules',
-  path: '/edit/mp3Rules',
-  getParentRoute: () => CmRouteRoute,
+  id: '/mp3Rules',
+  path: '/mp3Rules',
+  getParentRoute: () => CmEditRouteRoute,
 } as any)
 
 const CmEditEventsRoute = CmEditEventsImport.update({
-  id: '/edit/events',
-  path: '/edit/events',
-  getParentRoute: () => CmRouteRoute,
+  id: '/events',
+  path: '/events',
+  getParentRoute: () => CmEditRouteRoute,
 } as any)
 
 const CmEditEERoute = CmEditEEImport.update({
-  id: '/edit/e-e',
-  path: '/edit/e-e',
-  getParentRoute: () => CmRouteRoute,
+  id: '/e-e',
+  path: '/e-e',
+  getParentRoute: () => CmEditRouteRoute,
 } as any)
 
 const CmEditChordRoute = CmEditChordImport.update({
-  id: '/edit/chord',
-  path: '/edit/chord',
-  getParentRoute: () => CmRouteRoute,
+  id: '/chord',
+  path: '/chord',
+  getParentRoute: () => CmEditRouteRoute,
 } as any)
 
 const CmEditComsIndexRoute = CmEditComsIndexImport.update({
-  id: '/edit/coms/',
-  path: '/edit/coms/',
-  getParentRoute: () => CmRouteRoute,
+  id: '/coms/',
+  path: '/coms/',
+  getParentRoute: () => CmEditRouteRoute,
 } as any)
 
 const CmEditCatsIndexRoute = CmEditCatsIndexImport.update({
-  id: '/edit/cats/',
-  path: '/edit/cats/',
-  getParentRoute: () => CmRouteRoute,
+  id: '/cats/',
+  path: '/cats/',
+  getParentRoute: () => CmEditRouteRoute,
 } as any)
 
 const otherAppNameSettingsIndexRoute = otherAppNameSettingsIndexImport.update({
@@ -246,9 +253,9 @@ const CmLiCatCatwRoute = CmLiCatCatwImport.update({
 } as any)
 
 const CmEditCatsCatwRoute = CmEditCatsCatwImport.update({
-  id: '/edit/cats/$catw',
-  path: '/edit/cats/$catw',
-  getParentRoute: () => CmRouteRoute,
+  id: '/cats/$catw',
+  path: '/cats/$catw',
+  getParentRoute: () => CmEditRouteRoute,
 } as any)
 
 const otherAppNameSettingsConsoleRoute =
@@ -259,9 +266,9 @@ const otherAppNameSettingsConsoleRoute =
   } as any)
 
 const CmEditComsComwRouteRoute = CmEditComsComwRouteImport.update({
-  id: '/edit/coms/$comw',
-  path: '/edit/coms/$comw',
-  getParentRoute: () => CmRouteRoute,
+  id: '/coms/$comw',
+  path: '/coms/$comw',
+  getParentRoute: () => CmEditRouteRoute,
 } as any)
 
 const CmEditComsComwIndexRoute = CmEditComsComwIndexImport.update({
@@ -315,6 +322,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/!other/$appName'
       preLoaderRoute: typeof otherAppNameRouteImport
       parentRoute: typeof rootRoute
+    }
+    '/cm/edit': {
+      id: '/cm/edit'
+      path: '/edit'
+      fullPath: '/cm/edit'
+      preLoaderRoute: typeof CmEditRouteImport
+      parentRoute: typeof CmRouteImport
     }
     '/bible/i': {
       id: '/bible/i'
@@ -374,31 +388,31 @@ declare module '@tanstack/react-router' {
     }
     '/cm/edit/chord': {
       id: '/cm/edit/chord'
-      path: '/edit/chord'
+      path: '/chord'
       fullPath: '/cm/edit/chord'
       preLoaderRoute: typeof CmEditChordImport
-      parentRoute: typeof CmRouteImport
+      parentRoute: typeof CmEditRouteImport
     }
     '/cm/edit/e-e': {
       id: '/cm/edit/e-e'
-      path: '/edit/e-e'
+      path: '/e-e'
       fullPath: '/cm/edit/e-e'
       preLoaderRoute: typeof CmEditEEImport
-      parentRoute: typeof CmRouteImport
+      parentRoute: typeof CmEditRouteImport
     }
     '/cm/edit/events': {
       id: '/cm/edit/events'
-      path: '/edit/events'
+      path: '/events'
       fullPath: '/cm/edit/events'
       preLoaderRoute: typeof CmEditEventsImport
-      parentRoute: typeof CmRouteImport
+      parentRoute: typeof CmEditRouteImport
     }
     '/cm/edit/mp3Rules': {
       id: '/cm/edit/mp3Rules'
-      path: '/edit/mp3Rules'
+      path: '/mp3Rules'
       fullPath: '/cm/edit/mp3Rules'
       preLoaderRoute: typeof CmEditMp3RulesImport
-      parentRoute: typeof CmRouteImport
+      parentRoute: typeof CmEditRouteImport
     }
     '/cm/li/events': {
       id: '/cm/li/events'
@@ -444,17 +458,17 @@ declare module '@tanstack/react-router' {
     }
     '/cm/edit/': {
       id: '/cm/edit/'
-      path: '/edit'
-      fullPath: '/cm/edit'
+      path: '/'
+      fullPath: '/cm/edit/'
       preLoaderRoute: typeof CmEditIndexLazyImport
-      parentRoute: typeof CmRouteImport
+      parentRoute: typeof CmEditRouteImport
     }
     '/cm/edit/coms/$comw': {
       id: '/cm/edit/coms/$comw'
-      path: '/edit/coms/$comw'
+      path: '/coms/$comw'
       fullPath: '/cm/edit/coms/$comw'
       preLoaderRoute: typeof CmEditComsComwRouteImport
-      parentRoute: typeof CmRouteImport
+      parentRoute: typeof CmEditRouteImport
     }
     '/!other/$appName/settings/console': {
       id: '/!other/$appName/settings/console'
@@ -465,10 +479,10 @@ declare module '@tanstack/react-router' {
     }
     '/cm/edit/cats/$catw': {
       id: '/cm/edit/cats/$catw'
-      path: '/edit/cats/$catw'
+      path: '/cats/$catw'
       fullPath: '/cm/edit/cats/$catw'
       preLoaderRoute: typeof CmEditCatsCatwImport
-      parentRoute: typeof CmRouteImport
+      parentRoute: typeof CmEditRouteImport
     }
     '/cm/li/cat/$catw': {
       id: '/cm/li/cat/$catw'
@@ -507,17 +521,17 @@ declare module '@tanstack/react-router' {
     }
     '/cm/edit/cats/': {
       id: '/cm/edit/cats/'
-      path: '/edit/cats'
+      path: '/cats'
       fullPath: '/cm/edit/cats'
       preLoaderRoute: typeof CmEditCatsIndexImport
-      parentRoute: typeof CmRouteImport
+      parentRoute: typeof CmEditRouteImport
     }
     '/cm/edit/coms/': {
       id: '/cm/edit/coms/'
-      path: '/edit/coms'
+      path: '/coms'
       fullPath: '/cm/edit/coms'
       preLoaderRoute: typeof CmEditComsIndexImport
-      parentRoute: typeof CmRouteImport
+      parentRoute: typeof CmEditRouteImport
     }
     '/!other/$appName/actions/files/': {
       id: '/!other/$appName/actions/files/'
@@ -567,42 +581,54 @@ const CmEditComsComwRouteRouteChildren: CmEditComsComwRouteRouteChildren = {
 const CmEditComsComwRouteRouteWithChildren =
   CmEditComsComwRouteRoute._addFileChildren(CmEditComsComwRouteRouteChildren)
 
-interface CmRouteRouteChildren {
-  CmIndexRoute: typeof CmIndexRoute
+interface CmEditRouteRouteChildren {
   CmEditChordRoute: typeof CmEditChordRoute
   CmEditEERoute: typeof CmEditEERoute
   CmEditEventsRoute: typeof CmEditEventsRoute
   CmEditMp3RulesRoute: typeof CmEditMp3RulesRoute
+  CmEditIndexLazyRoute: typeof CmEditIndexLazyRoute
+  CmEditComsComwRouteRoute: typeof CmEditComsComwRouteRouteWithChildren
+  CmEditCatsCatwRoute: typeof CmEditCatsCatwRoute
+  CmEditCatsIndexRoute: typeof CmEditCatsIndexRoute
+  CmEditComsIndexRoute: typeof CmEditComsIndexRoute
+}
+
+const CmEditRouteRouteChildren: CmEditRouteRouteChildren = {
+  CmEditChordRoute: CmEditChordRoute,
+  CmEditEERoute: CmEditEERoute,
+  CmEditEventsRoute: CmEditEventsRoute,
+  CmEditMp3RulesRoute: CmEditMp3RulesRoute,
+  CmEditIndexLazyRoute: CmEditIndexLazyRoute,
+  CmEditComsComwRouteRoute: CmEditComsComwRouteRouteWithChildren,
+  CmEditCatsCatwRoute: CmEditCatsCatwRoute,
+  CmEditCatsIndexRoute: CmEditCatsIndexRoute,
+  CmEditComsIndexRoute: CmEditComsIndexRoute,
+}
+
+const CmEditRouteRouteWithChildren = CmEditRouteRoute._addFileChildren(
+  CmEditRouteRouteChildren,
+)
+
+interface CmRouteRouteChildren {
+  CmEditRouteRoute: typeof CmEditRouteRouteWithChildren
+  CmIndexRoute: typeof CmIndexRoute
   CmLiEventsRoute: typeof CmLiEventsRoute
   CmLiFavRoute: typeof CmLiFavRoute
   CmLiSelRoute: typeof CmLiSelRoute
   CmIIndexRoute: typeof CmIIndexRoute
   CmLiIndexRoute: typeof CmLiIndexRoute
-  CmEditIndexLazyRoute: typeof CmEditIndexLazyRoute
-  CmEditComsComwRouteRoute: typeof CmEditComsComwRouteRouteWithChildren
-  CmEditCatsCatwRoute: typeof CmEditCatsCatwRoute
   CmLiCatCatwRoute: typeof CmLiCatCatwRoute
-  CmEditCatsIndexRoute: typeof CmEditCatsIndexRoute
-  CmEditComsIndexRoute: typeof CmEditComsIndexRoute
 }
 
 const CmRouteRouteChildren: CmRouteRouteChildren = {
+  CmEditRouteRoute: CmEditRouteRouteWithChildren,
   CmIndexRoute: CmIndexRoute,
-  CmEditChordRoute: CmEditChordRoute,
-  CmEditEERoute: CmEditEERoute,
-  CmEditEventsRoute: CmEditEventsRoute,
-  CmEditMp3RulesRoute: CmEditMp3RulesRoute,
   CmLiEventsRoute: CmLiEventsRoute,
   CmLiFavRoute: CmLiFavRoute,
   CmLiSelRoute: CmLiSelRoute,
   CmIIndexRoute: CmIIndexRoute,
   CmLiIndexRoute: CmLiIndexRoute,
-  CmEditIndexLazyRoute: CmEditIndexLazyRoute,
-  CmEditComsComwRouteRoute: CmEditComsComwRouteRouteWithChildren,
-  CmEditCatsCatwRoute: CmEditCatsCatwRoute,
   CmLiCatCatwRoute: CmLiCatCatwRoute,
-  CmEditCatsIndexRoute: CmEditCatsIndexRoute,
-  CmEditComsIndexRoute: CmEditComsIndexRoute,
 }
 
 const CmRouteRouteWithChildren =
@@ -651,6 +677,7 @@ export interface FileRoutesByFullPath {
   '/cm': typeof CmRouteRouteWithChildren
   '/tuner': typeof TunerRouteRouteWithChildren
   '/!other/$appName': typeof otherAppNameRouteRouteWithChildren
+  '/cm/edit': typeof CmEditRouteRouteWithChildren
   '/bible/i': typeof BibleIRoute
   '/bible/search': typeof BibleSearchRoute
   '/bible/tran': typeof BibleTranRoute
@@ -669,7 +696,7 @@ export interface FileRoutesByFullPath {
   '/!other/$appName/': typeof otherAppNameIndexRoute
   '/cm/i': typeof CmIIndexRoute
   '/cm/li': typeof CmLiIndexRoute
-  '/cm/edit': typeof CmEditIndexLazyRoute
+  '/cm/edit/': typeof CmEditIndexLazyRoute
   '/cm/edit/coms/$comw': typeof CmEditComsComwRouteRouteWithChildren
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/cm/edit/cats/$catw': typeof CmEditCatsCatwRoute
@@ -725,6 +752,7 @@ export interface FileRoutesById {
   '/cm': typeof CmRouteRouteWithChildren
   '/tuner': typeof TunerRouteRouteWithChildren
   '/!other/$appName': typeof otherAppNameRouteRouteWithChildren
+  '/cm/edit': typeof CmEditRouteRouteWithChildren
   '/bible/i': typeof BibleIRoute
   '/bible/search': typeof BibleSearchRoute
   '/bible/tran': typeof BibleTranRoute
@@ -766,6 +794,7 @@ export interface FileRouteTypes {
     | '/cm'
     | '/tuner'
     | '/!other/$appName'
+    | '/cm/edit'
     | '/bible/i'
     | '/bible/search'
     | '/bible/tran'
@@ -784,7 +813,7 @@ export interface FileRouteTypes {
     | '/!other/$appName/'
     | '/cm/i'
     | '/cm/li'
-    | '/cm/edit'
+    | '/cm/edit/'
     | '/cm/edit/coms/$comw'
     | '/!other/$appName/settings/console'
     | '/cm/edit/cats/$catw'
@@ -837,6 +866,7 @@ export interface FileRouteTypes {
     | '/cm'
     | '/tuner'
     | '/!other/$appName'
+    | '/cm/edit'
     | '/bible/i'
     | '/bible/search'
     | '/bible/tran'
@@ -922,22 +952,14 @@ export const routeTree = rootRoute
     "/cm": {
       "filePath": "cm/route.tsx",
       "children": [
+        "/cm/edit",
         "/cm/",
-        "/cm/edit/chord",
-        "/cm/edit/e-e",
-        "/cm/edit/events",
-        "/cm/edit/mp3Rules",
         "/cm/li/events",
         "/cm/li/fav",
         "/cm/li/sel",
         "/cm/i/",
         "/cm/li/",
-        "/cm/edit/",
-        "/cm/edit/coms/$comw",
-        "/cm/edit/cats/$catw",
-        "/cm/li/cat/$catw",
-        "/cm/edit/cats/",
-        "/cm/edit/coms/"
+        "/cm/li/cat/$catw"
       ]
     },
     "/tuner": {
@@ -957,6 +979,21 @@ export const routeTree = rootRoute
         "/!other/$appName/schs/",
         "/!other/$appName/settings/",
         "/!other/$appName/actions/files/"
+      ]
+    },
+    "/cm/edit": {
+      "filePath": "cm/edit/route.tsx",
+      "parent": "/cm",
+      "children": [
+        "/cm/edit/chord",
+        "/cm/edit/e-e",
+        "/cm/edit/events",
+        "/cm/edit/mp3Rules",
+        "/cm/edit/",
+        "/cm/edit/coms/$comw",
+        "/cm/edit/cats/$catw",
+        "/cm/edit/cats/",
+        "/cm/edit/coms/"
       ]
     },
     "/bible/i": {
@@ -992,19 +1029,19 @@ export const routeTree = rootRoute
     },
     "/cm/edit/chord": {
       "filePath": "cm/edit/chord.tsx",
-      "parent": "/cm"
+      "parent": "/cm/edit"
     },
     "/cm/edit/e-e": {
       "filePath": "cm/edit/e-e.tsx",
-      "parent": "/cm"
+      "parent": "/cm/edit"
     },
     "/cm/edit/events": {
       "filePath": "cm/edit/events.tsx",
-      "parent": "/cm"
+      "parent": "/cm/edit"
     },
     "/cm/edit/mp3Rules": {
       "filePath": "cm/edit/mp3Rules.tsx",
-      "parent": "/cm"
+      "parent": "/cm/edit"
     },
     "/cm/li/events": {
       "filePath": "cm/li/events.tsx",
@@ -1032,11 +1069,11 @@ export const routeTree = rootRoute
     },
     "/cm/edit/": {
       "filePath": "cm/edit/index.lazy.tsx",
-      "parent": "/cm"
+      "parent": "/cm/edit"
     },
     "/cm/edit/coms/$comw": {
       "filePath": "cm/edit/coms/$comw/route.tsx",
-      "parent": "/cm",
+      "parent": "/cm/edit",
       "children": [
         "/cm/edit/coms/$comw/"
       ]
@@ -1047,7 +1084,7 @@ export const routeTree = rootRoute
     },
     "/cm/edit/cats/$catw": {
       "filePath": "cm/edit/cats/$catw.tsx",
-      "parent": "/cm"
+      "parent": "/cm/edit"
     },
     "/cm/li/cat/$catw": {
       "filePath": "cm/li/cat.$catw.tsx",
@@ -1071,11 +1108,11 @@ export const routeTree = rootRoute
     },
     "/cm/edit/cats/": {
       "filePath": "cm/edit/cats/index.tsx",
-      "parent": "/cm"
+      "parent": "/cm/edit"
     },
     "/cm/edit/coms/": {
       "filePath": "cm/edit/coms/index.tsx",
-      "parent": "/cm"
+      "parent": "/cm/edit"
     },
     "/!other/$appName/actions/files/": {
       "filePath": "!other.$appName/actions/files/index.tsx",

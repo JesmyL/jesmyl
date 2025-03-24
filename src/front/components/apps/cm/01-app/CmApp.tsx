@@ -7,7 +7,6 @@ import { CmComWid } from 'shared/api';
 import { cmAppActions } from '../app-actions/cm-app-actions';
 import { CmSharedComListActionInterpretator } from '../app-actions/SharedComList';
 import { useSelectedComs } from '../base/useSelectedComs';
-import { cmInitialInvokes } from '../routing/cm-initial-invokes';
 import { CmFooter } from '../routing/CmFooter';
 
 const maxSelectedComsCount = 50;
@@ -70,5 +69,3 @@ export const RenderEditorOnce = memo(() => {
     </div>
   );
 });
-
-cmInitialInvokes();
