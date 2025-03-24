@@ -17,33 +17,57 @@ export const makeSokiInvocatorBase = <
   type Methods = Record<string, (...args: any[]) => unknown>;
 
   type Invocator<M extends Methods> = {
-    [K in keyof M]: (tool: ToolParam) => (...args: Parameters<M[K]>) => Promise<ReturnType<M[K]>>;
+    [K in keyof M]: (tool: ToolParam) => (...args: Parameters<M[K]>) => Promise<ReturnType<M[K]>> | ReturnType<M[K]>;
   };
 
   const registeredInvocators: PRecord<string, Invocator<Methods>> = {};
   const registeredOnEachInvocations: PRecord<string, OnEachOnvocations<Methods> | null> = {};
+  const unregisteredWaiters: PRecord<string, () => void> = {};
 
   eventerValue.listen(async ({ invoke: { name, method, params }, sendResponse, tool, requestId }) => {
-    try {
-      if (registeredInvocators[name] == null) throw new Error(`the name ${name} not registered - ${method}()`);
-      if (!smylib.isFunc(registeredInvocators[name][method]))
-        throw new Error(`the ${name} has no the ${method} method`);
-      const invokedResult = await registeredInvocators[name][method](tool)(...params);
+    const invokeMethod = async () => {
+      try {
+        if (registeredInvocators[name] === undefined) {
+          throw new Error(`the name ${name} is not registered - ${method}()`);
+        }
 
-      if (
-        onEachInvoke !== undefined &&
-        registeredOnEachInvocations[name] != null &&
-        registeredOnEachInvocations[name][method] != null
-      ) {
-        const retValue = registeredOnEachInvocations[name][method](invokedResult, ...params);
-        onEachInvoke(retValue, { tool, method, name });
+        if (!smylib.isFunc(registeredInvocators[name][method]))
+          throw new Error(`the ${name} has no the ${method} method`);
+        const invokedResult = await registeredInvocators[name][method](tool)(...params);
+
+        if (
+          onEachInvoke !== undefined &&
+          registeredOnEachInvocations[name] != null &&
+          registeredOnEachInvocations[name][method] != null
+        ) {
+          const retValue = registeredOnEachInvocations[name][method](invokedResult, ...params);
+          onEachInvoke(retValue, { tool, method, name });
+        }
+
+        sendResponse({ invokedResult, requestId } as never, tool);
+      } catch (error) {
+        console.error(error);
+        sendResponse({ errorMessage: '' + error, requestId } as never, tool);
       }
+    };
 
-      sendResponse({ invokedResult, requestId } as never, tool);
-    } catch (error) {
-      console.error(error);
-      sendResponse({ errorMessage: '' + error, requestId } as never, tool);
+    if (registeredInvocators[name] === undefined) {
+      console.warn(`${name}.${method}() will invoke with delay`);
+
+      unregisteredWaiters[name] = () => {
+        console.warn(`${name}.${method}() invoked with delay`);
+        invokeMethod();
+      };
+
+      setTimeout(() => {
+        delete unregisteredWaiters[name];
+        invokeMethod();
+      }, 10_000);
+
+      return;
     }
+
+    invokeMethod();
   });
 
   type ClassName = `${string}${string}${typeof classNamePostfix}`;
@@ -86,6 +110,8 @@ export const makeSokiInvocatorBase = <
 
       registeredInvocators[name] = self as never;
       registeredOnEachInvocations[name] = onEachInvocations;
+
+      unregisteredWaiters[name]?.();
     }) as never;
 
     return this;

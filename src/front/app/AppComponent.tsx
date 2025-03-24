@@ -22,7 +22,10 @@ export const AppComponent = () => {
   const toast = useToast();
 
   useEffect(
-    () => soki.onTokenInvalidEvent.listen(() => toast('Авторизация не действительна', { mood: 'ko' })),
+    () =>
+      soki.onTokenInvalidEvent.listen(() => {
+        toast('Авторизация не действительна', { mood: 'ko' });
+      }),
     [toast],
   );
 

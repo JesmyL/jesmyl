@@ -1,7 +1,9 @@
 import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
+import { authIDB } from '$index/db/auth-idb';
 import { ThemeProvider } from '@mui/material';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { complectIDB } from 'front/components/apps/+complect/_idb/complectIDB';
+import { soki } from 'front/soki';
 import { routeTree } from 'routeTree.gen';
 import './App.scss';
 import { muiDarkThemePalette } from './lib/theme/lib/darkPalette';
@@ -30,3 +32,8 @@ export const App = () => {
     </AppDialogProvider>
   );
 };
+
+soki.onTokenInvalidEvent.listen(() => {
+  authIDB.remove.auth();
+  authIDB.remove.token();
+});

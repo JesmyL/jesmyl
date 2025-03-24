@@ -6,6 +6,10 @@ export const sokiAppNames = ['index', 'cm', 'tuner', 'admin', 'gamer', 'leader',
 export const sokiAppNamesSet = new Set(sokiAppNames);
 export type SokiAppName = (typeof sokiAppNames)[number];
 
+export const enum SokiError {
+  InvalidToken = '#invalid_token',
+}
+
 export interface SokiVisit {
   deviceId: DeviceId;
   urls: string[];
@@ -18,7 +22,7 @@ export type InvocatorBaseEvent = {
   requestId: string;
   invokedResult?: unknown;
   invoke?: SokiInvokerData;
-  errorMessage?: string | `#invalid_token`;
+  errorMessage?: string | SokiError;
   abort?: string;
 };
 

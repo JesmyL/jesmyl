@@ -1,4 +1,4 @@
-import { InvocatorClientEvent, InvocatorClientTool, InvocatorServerEvent } from 'shared/api';
+import { InvocatorClientEvent, InvocatorClientTool, InvocatorServerEvent, SokiError } from 'shared/api';
 import { Eventer, makeRegExp } from 'shared/utils';
 import { jversion } from 'shared/values';
 import { authIDB } from './components/index/db/auth-idb';
@@ -57,10 +57,7 @@ export class SokiTrip {
       this.onConnectionOpenEvent.invoke(true);
       this.isOpened = true;
     } catch (errorMessage) {
-      if (errorMessage === '#invalid_token') {
-        authIDB.remove.auth();
-        authIDB.remove.token();
-
+      if (errorMessage === SokiError.InvalidToken) {
         this.onTokenInvalidEvent.invoke();
       }
     }

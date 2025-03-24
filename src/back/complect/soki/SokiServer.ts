@@ -1,7 +1,14 @@
 import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { SokiServerInvocatorTool } from 'back/SokiInvocatorBase.server';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
-import { InvocatorClientEvent, InvocatorServerEvent, LocalSokiAuth, SokiAuthLogin, SokiVisit } from 'shared/api';
+import {
+  InvocatorClientEvent,
+  InvocatorServerEvent,
+  LocalSokiAuth,
+  SokiAuthLogin,
+  SokiError,
+  SokiVisit,
+} from 'shared/api';
 import { makeRegExp, smylib } from 'shared/utils';
 import WebSocket, { WebSocketServer } from 'ws';
 import { setSharedPolyfills } from '../../../shared/utils/complect/polyfills';
@@ -68,7 +75,7 @@ export class SokiServer {
             jwt.verify(event.token, tokenSecretFileStore.getValue().token);
           } catch (error) {
             if (error instanceof JsonWebTokenError) {
-              this.send({ errorMessage: '#invalid_token', requestId: event.requestId }, client);
+              this.send({ errorMessage: SokiError.InvalidToken, requestId: event.requestId }, client);
               return;
             }
           }
