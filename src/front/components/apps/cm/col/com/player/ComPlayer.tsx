@@ -1,6 +1,6 @@
 import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
-import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { Button, Menu } from '@mui/material';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { emptyFunc } from 'shared/utils';
@@ -20,7 +20,7 @@ interface Props {
   isWithEditButton?: boolean;
 }
 
-export function ComPlayer({ src, split, timeRender, audioRef: topAudioRef, isWithEditButton }: Props) {
+export const ComPlayer = ({ src, split, timeRender, audioRef: topAudioRef, isWithEditButton }: Props) => {
   let audioRef = useRef<HTMLAudioElement>(null);
   if (topAudioRef) audioRef = topAudioRef;
 
@@ -93,13 +93,13 @@ export function ComPlayer({ src, split, timeRender, audioRef: topAudioRef, isWit
         <audio ref={audioRef} />
       )}
 
-      <StyledPlayer className={'composition-player flex gap-3 pr-3 ' + (player ? '' : 'center')}>
+      <StyledPlayer className={'composition-player flex gap-2 px-2 ' + (player ? '' : 'center')}>
         {player ? (
           isError ? (
             <span className="error-message">Файл не найден</span>
           ) : (
             <>
-              <TheIconButton
+              <LazyIcon
                 className="pointer"
                 icon={isPlay ? 'Pause' : 'Play'}
                 onClick={() => {
@@ -131,7 +131,7 @@ export function ComPlayer({ src, split, timeRender, audioRef: topAudioRef, isWit
                     : timeNode => (
                         <Button
                           ref={buttonRef}
-                          className="text-x3! bg-x1! pointer rounded-2xl!"
+                          className="text-x3! bg-x1! h-6! pointer rounded-2xl!"
                           color="x3"
                           size="small"
                           variant="outlined"
@@ -183,7 +183,7 @@ export function ComPlayer({ src, split, timeRender, audioRef: topAudioRef, isWit
       </Menu>
     </>
   );
-}
+};
 
 const loadAudioAnimation = keyframes`${css`
   from {

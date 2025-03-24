@@ -1,4 +1,4 @@
-import { useAtomSet } from '#shared/lib/atoms';
+import { useAtomSet } from '#shared/lib/atom';
 import { metronomeIsOpenAtom } from '#widgets/metronome';
 import { ComTool } from '../ComTool';
 

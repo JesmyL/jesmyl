@@ -1,16 +1,17 @@
+import { useAtom } from '#shared/lib/atom';
+import { isFullscreenAtom } from '#shared/lib/atoms/fullscreen';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { useFullScreen } from '#shared/lib/hooks/useFullscreen';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useEffect } from 'react';
 
 export const useGlobalFullscreenChanger = () => {
-  const [isFullscreen, switchFullscreen] = useFullScreen();
+  const [isFullscreen, switchFullscreen] = useAtom(isFullscreenAtom);
 
   useEffect(() => {
     return hookEffectPipe()
       .pipe(
-        addEventListenerPipe(window, 'keydown', event => {
-          if (event.code === 'Escape') switchFullscreen(false);
+        addEventListenerPipe(window, 'fullscreenchange', () => {
+          switchFullscreen(!!document.fullscreenElement);
         }),
       )
       .effect();

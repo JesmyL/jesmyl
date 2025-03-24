@@ -1,4 +1,4 @@
-import { useAtomValue } from '#shared/lib/atoms';
+import { useAtomValue } from '#shared/lib/atom';
 import { translationBlockAtom } from '$cm/atoms';
 import { FontSizeContainProps } from '$cm/base/font-size-contain/FontSizeContain.model';
 import { useIsScreenTranslationTextVisible } from 'front/components/apps/+complect/translations/atoms';

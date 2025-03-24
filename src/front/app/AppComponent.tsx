@@ -56,9 +56,8 @@ export const AppComponent = () => {
           </div>
         )}
         <div className={`application-container ${isFullscreen ? ' fullscreen-mode' : ''}`}>
-          {fullscreenIcon}
-
           <Outlet />
+          {fullscreenIcon}
         </div>
         <KEYBOARD_FLASH {...keyboardProps} />
       </div>

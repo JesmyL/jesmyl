@@ -1,4 +1,4 @@
-import { useAtomValue } from '#shared/lib/atoms';
+import { useAtomValue } from '#shared/lib/atom';
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
 import { useEffect } from 'react';
 import { Loop, LoopOptions, Sampler, getTransport } from 'tone';

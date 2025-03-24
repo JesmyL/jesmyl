@@ -1,4 +1,4 @@
-import { atom, useAtomValue } from '#shared/lib/atoms';
+import { atom, useAtomValue } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';

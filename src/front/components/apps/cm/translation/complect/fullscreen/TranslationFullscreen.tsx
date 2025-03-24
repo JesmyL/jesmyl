@@ -1,4 +1,4 @@
-import { atom, useAtom } from '#shared/lib/atoms';
+import { atom, useAtom } from '#shared/lib/atom';
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { propsOfClicker } from '#shared/lib/clicker/propsOfClicker';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';

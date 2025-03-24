@@ -1,4 +1,4 @@
-import { useAtomSet } from '#shared/lib/atoms';
+import { useAtomSet } from '#shared/lib/atom';
 import { translationBlockAtom } from '$cm/atoms';
 import { useCcom } from '$cm/basis/lib/com-selections';
 import { useCmOpenComLinkRendererContext } from '$cm/basis/lib/contexts/current-com-list';

@@ -1,4 +1,4 @@
-import { useAtomSet } from '#shared/lib/atoms';
+import { useAtomSet } from '#shared/lib/atom';
 import { isTouchDevice } from '#shared/lib/device-differences';
 import { memo } from 'react';
 import styled from 'styled-components';

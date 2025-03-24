@@ -1,4 +1,4 @@
-import { useAtom, useAtomValue } from '#shared/lib/atoms';
+import { useAtom, useAtomValue } from '#shared/lib/atom';
 import { LoadIndicatedContent } from '#shared/ui/load-indicated-content/LoadIndicatedContent';
 import {
   PageContainerConfigurer,

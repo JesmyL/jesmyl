@@ -1,5 +1,5 @@
 import { isNumberSearchAtom } from '#basis/lib/atoms/isNumberSearchAtom';
-import { useAtom, useAtomValue } from '#shared/lib/atoms';
+import { useAtom, useAtomValue } from '#shared/lib/atom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { StyledPhaseContainerConfigurerHead } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';

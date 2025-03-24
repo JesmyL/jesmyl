@@ -1,5 +1,5 @@
 import { isNumberSearchAtom } from '#basis/lib/atoms/isNumberSearchAtom';
-import { atom, Atom, useAtom, useAtomSet, useAtomToggle, useAtomValue } from '#shared/lib/atoms';
+import { atom, Atom, useAtom, useAtomSet, useAtomToggle, useAtomValue } from '#shared/lib/atom';
 import { UsedWid, useWid } from '#shared/lib/hooks/useWid';
 import { useEffect } from 'react';
 import styled, { css } from 'styled-components';

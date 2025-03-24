@@ -1,4 +1,4 @@
-import { useAtom } from '#shared/lib/atoms';
+import { useAtom } from '#shared/lib/atom';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { Modal } from '#shared/ui/modal/Modal/Modal';

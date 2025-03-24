@@ -1,4 +1,4 @@
-import { useAtom, useAtomValue } from '#shared/lib/atoms';
+import { useAtom, useAtomValue } from '#shared/lib/atom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import {
@@ -184,6 +184,7 @@ const StyledComContainer = styled(PageContainerConfigurer)<{ $isInLaterList: boo
         width var(--transition-speed),
         background var(--transition-speed),
         margin var(--transition-speed),
+        margin-top var(--transition-speed),
         opacity var(--transition-speed);
     }
   }
@@ -192,10 +193,14 @@ const StyledComContainer = styled(PageContainerConfigurer)<{ $isInLaterList: boo
     display: none;
   }
 
-  &.with-open-player {
-    .composition-player {
-      opacity: 1;
-      pointer-events: all;
-    }
+  &.with-open-player .composition-player {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  html .fullscreen-mode :is(&, &.with-open-player) .composition-player {
+    opacity: 0;
+    margin-top: calc(0px - var(--com-player-size));
+    pointer-events: none;
   }
 `;

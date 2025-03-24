@@ -1,4 +1,4 @@
-import { atom, useAtomValue } from '#shared/lib/atoms';
+import { atom, useAtomValue } from '#shared/lib/atom';
 import { bibleIDB } from '$bible/basis/lib/bibleIDB';
 import { BibleTranslationAnyAddress } from '$bible/basis/model/base';
 import { useBibleTranslationAddToHistory } from '$bible/translations/archive/history/hooks/history';

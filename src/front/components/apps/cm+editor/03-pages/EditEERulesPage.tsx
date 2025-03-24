@@ -1,4 +1,4 @@
-import { atom, useAtom, useAtomSet, useAtomValue } from '#shared/lib/atoms';
+import { atom, useAtom, useAtomSet, useAtomValue } from '#shared/lib/atom';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';

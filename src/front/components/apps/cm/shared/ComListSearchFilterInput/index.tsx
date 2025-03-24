@@ -1,5 +1,5 @@
 import { isNumberSearchAtom } from '#basis/lib/atoms/isNumberSearchAtom';
-import { useAtomValue } from '#shared/lib/atoms';
+import { useAtomValue } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { Com } from '$cm/col/com/Com';

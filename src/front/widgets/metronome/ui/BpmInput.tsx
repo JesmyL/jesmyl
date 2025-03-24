@@ -1,4 +1,4 @@
-import { useAtom } from '#shared/lib/atoms';
+import { useAtom } from '#shared/lib/atom';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { memo } from 'react';

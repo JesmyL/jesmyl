@@ -1,8 +1,9 @@
-import { useFullScreen } from '#shared/lib/hooks/useFullscreen';
+import { useAtomSet } from '#shared/lib/atom';
+import { isFullscreenAtom } from '#shared/lib/atoms/fullscreen';
 import { ComTool } from '../ComTool';
 
 export const FullscreenComTool = () => {
-  const [, switchFullscreen] = useFullScreen();
+  const switchFullscreen = useAtomSet(isFullscreenAtom);
 
   return (
     <ComTool

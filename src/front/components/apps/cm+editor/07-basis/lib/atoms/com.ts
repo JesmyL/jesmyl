@@ -1,4 +1,4 @@
-import { atom } from '#shared/lib/atoms';
+import { atom } from '#shared/lib/atom';
 import { CmComWid } from 'shared/api';
 import { ComEditBusy } from 'shared/api/invocators/cm/editor-invocator.shares.model';
 

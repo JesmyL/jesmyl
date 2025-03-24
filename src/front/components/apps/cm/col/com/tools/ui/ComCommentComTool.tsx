@@ -1,4 +1,4 @@
-import { useAtomSet } from '#shared/lib/atoms';
+import { useAtomSet } from '#shared/lib/atom';
 import { isComCommentRedactAtom } from '../../complect/comment-parser/complect';
 import { ComTool } from '../ComTool';
 

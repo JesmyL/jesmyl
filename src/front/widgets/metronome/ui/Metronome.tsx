@@ -1,4 +1,4 @@
-import { useAtomValue } from '#shared/lib/atoms';
+import { useAtomValue } from '#shared/lib/atom';
 import React, { Suspense } from 'react';
 import { metronomeIsOpenAtom } from '../lib/atoms';
 

@@ -1,4 +1,4 @@
-import { useAtomValue } from '#shared/lib/atoms';
+import { useAtomValue } from '#shared/lib/atom';
 import { BibleCurrentTextsContext } from '$bible/basis/contexts/CurrentTextsContext';
 import { BibleTranslatesContextProvider } from '$bible/basis/contexts/TranslatesContext';
 import { BibleTranslationCurrentScreen } from '$bible/translations/screen/BibleTranslationCurrentScreen';

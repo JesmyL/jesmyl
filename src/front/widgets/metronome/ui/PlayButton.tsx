@@ -1,4 +1,4 @@
-import { useAtom } from '#shared/lib/atoms';
+import { useAtom } from '#shared/lib/atom';
 import { isTouchDevice } from '#shared/lib/device-differences';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { memo } from 'react';

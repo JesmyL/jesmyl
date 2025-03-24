@@ -1,4 +1,4 @@
-import { atom, useAtom } from '#shared/lib/atoms';
+import { atom, useAtom } from '#shared/lib/atom';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { MyLib, mylib } from '#shared/lib/my-lib';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';

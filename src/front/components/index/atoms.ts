@@ -1,4 +1,4 @@
-import { atom } from '#shared/lib/atoms';
+import { atom } from '#shared/lib/atom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { SokiAuthLogin } from 'shared/api';
 import { authIDB } from './db/auth-idb';

@@ -1,4 +1,4 @@
-import { useAtomValue } from '#shared/lib/atoms';
+import { useAtomValue } from '#shared/lib/atom';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useComCommentText } from '$cm/com-comments-manager';
 import { useMemo } from 'react';

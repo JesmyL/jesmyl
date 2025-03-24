@@ -1,4 +1,4 @@
-import { useAtom, useAtomSet } from '#shared/lib/atoms';
+import { useAtom, useAtomSet } from '#shared/lib/atom';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { useEffect } from 'react';

@@ -1,4 +1,4 @@
-import { useAtomSet } from '#shared/lib/atoms';
+import { useAtomSet } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
 import { useEffect } from 'react';
 import { itInvokeIt, wait } from 'shared/utils';

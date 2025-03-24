@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react';
-import { Atom } from './AnAtom';
+import { Atom } from './Atom.class';
 
 export const useAtomValue = <Value>(atom: Atom<Value>) => {
   return useSyncExternalStore(atom.subscribe, atom.get);

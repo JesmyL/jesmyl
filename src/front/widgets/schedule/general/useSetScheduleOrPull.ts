@@ -1,4 +1,4 @@
-import { atom, useAtom } from '#shared/lib/atoms';
+import { atom, useAtom } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
 import { useIndexSchedules } from '$index/atoms';
 import { useEffect, useState } from 'react';

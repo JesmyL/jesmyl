@@ -1,4 +1,4 @@
-import { useAtomValue } from '#shared/lib/atoms';
+import { useAtomValue } from '#shared/lib/atom';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { translationBlockAtom } from '$cm/atoms';
 import { useCcom } from '$cm/basis/lib/com-selections';

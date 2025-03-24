@@ -1,4 +1,4 @@
-import { useAtomValue } from '#shared/lib/atoms';
+import { useAtomValue } from '#shared/lib/atom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { MyLib, mylib } from '#shared/lib/my-lib';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';

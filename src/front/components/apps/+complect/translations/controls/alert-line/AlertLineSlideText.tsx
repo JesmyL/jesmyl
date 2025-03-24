@@ -1,4 +1,4 @@
-import { useAtomValue } from '#shared/lib/atoms';
+import { useAtomValue } from '#shared/lib/atom';
 import { useLiveQuery } from 'dexie-react-hooks';
 import styled, { css, keyframes } from 'styled-components';
 import { complectIDB } from '../../../_idb/complectIDB';

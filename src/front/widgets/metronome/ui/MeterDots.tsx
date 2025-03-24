@@ -1,4 +1,4 @@
-import { useAtom } from '#shared/lib/atoms';
+import { useAtom } from '#shared/lib/atom';
 import { memo } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { metronomeUserAccentsAtom, metronomeUserMeterSizeAtom } from '../lib/atoms';
