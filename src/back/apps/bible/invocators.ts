@@ -1,10 +1,12 @@
+import { backConfig } from 'back/config/backConfig';
 import { SokiInvocatorServer } from 'back/SokiInvocator.server';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import fs from 'fs';
 import { BibleTranslateName } from 'shared/api';
 import { BibleSokiInvocatorBaseModel, BibleSokiInvocatorModel } from 'shared/api/invocators/bible/invocators.model';
 
-const makeTranslateFileName = (tName: BibleTranslateName) => `${__dirname}/apps/bible/${tName}.json`;
+const makeTranslateFileName = (tName: BibleTranslateName) =>
+  `${__dirname}${backConfig.fileStoreDir}/apps/bible/${tName}.json`;
 
 class BibleSokiInvocatorBaseServer extends SokiInvocatorBaseServer<BibleSokiInvocatorModel> {}
 export const bibleSokiInvocatorBaseServer = new BibleSokiInvocatorBaseServer('BibleSokiInvocatorBaseServer', {
