@@ -413,7 +413,7 @@ export function ScheduleKeyValueListAtt({
                 ) : (
                   mylib.isStr(key) && (
                     <StrongEditableField
-                      className="margin-gap-l mood-for-2 relative z-index:5"
+                      className="ml-3 -mt-4 mood-for-2 relative z-5"
                       value={key}
                       isRedact={isRedact}
                       setSelfRedact
@@ -487,7 +487,7 @@ export function ScheduleKeyValueListAtt({
                 <StrongField
                   $indent={!isRedact && mylib.isBool(key)}
                   className={
-                    'margin-gap-l mood-for-2 relative z-index:5 ' +
+                    `ml-3 -mt-${isRedact ? 3 : 9} mood-for-2 relative z-5 ` +
                     (mylib.isBool(key) ? (key ? 'color--3 fade-05' : 'color--3') : '')
                   }
                   value={value}
@@ -636,8 +636,6 @@ const StrongField = styled(StrongEditableField)<{ $indent: boolean }>`
     props.$indent &&
     css`
       --indent: 24px;
-
-      margin-top: -1.7em;
 
       .markdownFieldContent {
         ol,

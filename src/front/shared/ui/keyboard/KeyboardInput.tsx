@@ -1,6 +1,7 @@
 import { indexSimpleValIsUseNativeKeyboard } from 'front/components/index/complect/index.simpleValues';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { makeRegExp } from 'shared/utils';
+import styled from 'styled-components';
 import { LazyIcon } from '../the-icon/LazyIcon';
 import { KeyboardInputProps } from './Keyboard.model';
 import './Keyboard.scss';
@@ -134,10 +135,8 @@ export function KeyboardInput(props: KeyboardInputProps) {
     let inputNode = null;
 
     if (multiline) {
-      const rows = multiline ? value?.split('\n').length : 1;
-
       inputNode = (
-        <textarea
+        <StyledTextarea
           {...(otherProps as never as { value: string })}
           {...(nativeProps as never as { value: string })}
           onBlur={
@@ -146,7 +145,6 @@ export function KeyboardInput(props: KeyboardInputProps) {
               if (isCanBlur) otherProps.onBlur?.();
             })
           }
-          rows={rows && rows < 2 ? 2 : rows}
         />
       );
     } else {
@@ -242,3 +240,8 @@ export function KeyboardInput(props: KeyboardInputProps) {
     },
   );
 }
+
+const StyledTextarea = styled.textarea`
+  field-sizing: content;
+  min-height: 2lh;
+`;
