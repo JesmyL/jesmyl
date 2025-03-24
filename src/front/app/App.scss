@@ -160,15 +160,6 @@ body {
       }
     }
 
-    .collapse-fullscreen-button {
-      position: absolute;
-      top: -40px;
-      right: 0;
-      z-index: 50;
-      transition: top 0.2s;
-      margin: 10px;
-    }
-
     .phase-container {
       height: var(--phase-container-height);
     }
@@ -180,10 +171,6 @@ body {
       --content-height: 100%;
       --phase-container-height: 100%;
       --content-top: 0;
-
-      .collapse-fullscreen-button {
-        top: 0;
-      }
     }
   }
 }

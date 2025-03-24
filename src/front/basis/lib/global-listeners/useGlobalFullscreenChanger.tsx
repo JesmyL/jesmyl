@@ -18,10 +18,12 @@ export const useGlobalFullscreenChanger = () => {
 
   return [
     isFullscreen,
-    <LazyIcon
-      icon="ArrowShrink02"
-      className="collapse-fullscreen-button pointer"
-      onClick={() => switchFullscreen(false)}
-    />,
+    isFullscreen && (
+      <LazyIcon
+        icon="ArrowShrink02"
+        className="pointer absolute top-0 right-0 z-50 m-[10px]"
+        onClick={() => switchFullscreen(false)}
+      />
+    ),
   ] as const;
 };
