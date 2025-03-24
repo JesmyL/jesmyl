@@ -1,9 +1,0 @@
-.application-container {
-  &.fullscreen-mode {
-    .composition-player {
-      opacity: 0;
-      margin-top: calc(0px - var(--com-player-size));
-      pointer-events: none;
-    }
-  }
-}

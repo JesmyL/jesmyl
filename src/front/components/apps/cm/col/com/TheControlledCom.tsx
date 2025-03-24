@@ -7,7 +7,6 @@ import { Link } from '@tanstack/react-router';
 import { useEffect, useRef } from 'react';
 import styled, { RuleSet, css } from 'styled-components';
 import { Com } from './Com';
-import './Com.scss';
 import { useComCommentBlockCss } from './complect/comment-parser/useComCommentBlock';
 import { useComCommentBlockFastReactions } from './complect/comment-parser/useComCommentBlockFastReactions';
 import { TheCom } from './TheCom';

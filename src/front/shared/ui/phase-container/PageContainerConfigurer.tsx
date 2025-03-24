@@ -117,8 +117,4 @@ export const StyledPhaseContainerConfigurerContent = styled.div`
   &.no-padding-top {
     padding-top: 0;
   }
-
-  > .phase-content {
-    height: 100%;
-  }
 `;
