@@ -11,7 +11,8 @@ import { BibleAddressSingle } from '$bible/entities/BibleAddressSingle';
 import { BibleModulesTranslationsControl } from '$bible/entities/ModulesTranslationsControl';
 import { useBibleSingleAddressSetter } from '$bible/translations/lists/atoms';
 import { BibleReaderBookText } from '$bible/widgets/BookText';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
 
 export function BibleReaderCurrentBookPage() {
@@ -32,6 +33,8 @@ function Content() {
   const [selectedBooki, setSelectedBooki] = useState(currentBooki);
   const [selectedChapteri, setSelectedChapteri] = useState(currentChapteri);
   const setAddress = useBibleSingleAddressSetter();
+  const onBookCloseRef = useRef(emptyFunc);
+  const onChapterCloseRef = useRef(emptyFunc);
 
   const [isOpenBookSelector, setIsOpenBookSelector] = useState(false);
   const [isOpenChapterSelector, setIsOpenChapterSelector] = useState(false);
@@ -67,7 +70,7 @@ function Content() {
           )}
 
           {isOpenBookSelector && (
-            <FullContent onClose={setIsOpenBookSelector}>
+            <FullContent onCloseRef={onBookCloseRef}>
               {bookTitles.map(([bookTitle], booki) => {
                 return (
                   <div
@@ -91,7 +94,7 @@ function Content() {
           )}
 
           {isOpenChapterSelector && (
-            <FullContent onClose={setIsOpenChapterSelector}>
+            <FullContent onCloseRef={onChapterCloseRef}>
               {chapters?.[selectedBooki]?.map((chapter, chapteri) => {
                 return (
                   <ItemFace
@@ -116,25 +119,27 @@ function Content() {
 
           {isOpenVerseSelector && (
             <FullContent onClose={setIsOpenVerseSelector}>
-              {chapters?.[selectedBooki]?.[selectedChapteri]?.map((_, versei) => {
-                return (
-                  <ItemFace
-                    key={versei}
-                    className={
-                      'inline-flex center pointer bgcolor--2 color--3' +
-                      (versei === currentVersei ? ' color--7 text-bold  text-underline' : '')
-                    }
-                    onClick={() => {
-                      setAddress(selectedBooki, selectedChapteri, versei);
-                      setIsOpenBookSelector(false);
-                      setIsOpenChapterSelector(false);
-                      setIsOpenVerseSelector(false);
-                    }}
-                  >
-                    {versei + 1}
-                  </ItemFace>
-                );
-              })}
+              {close =>
+                chapters?.[selectedBooki]?.[selectedChapteri]?.map((_, versei) => {
+                  return (
+                    <ItemFace
+                      key={versei}
+                      className={
+                        'inline-flex center pointer bgcolor--2 color--3' +
+                        (versei === currentVersei ? ' color--7 text-bold  text-underline' : '')
+                      }
+                      onClick={() => {
+                        setAddress(selectedBooki, selectedChapteri, versei);
+                        onBookCloseRef.current();
+                        onChapterCloseRef.current();
+                        close();
+                      }}
+                    >
+                      {versei + 1}
+                    </ItemFace>
+                  );
+                })
+              }
             </FullContent>
           )}
         </>

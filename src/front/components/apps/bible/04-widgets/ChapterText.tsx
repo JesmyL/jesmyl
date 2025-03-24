@@ -11,12 +11,13 @@ export const BibleChapterText = memo(function BibleChapterText({
 }): JSX.Element {
   return (
     <>
-      <h2
+      <div
+        className="text-5xl my-10 font-bold text-x3"
         attr-chapteri={chapteri}
         attr-versei={0}
       >
         Глава {chapteri + 1}
-      </h2>
+      </div>
       {list.map((verseHTML, versei) => {
         return (
           verseHTML && (
