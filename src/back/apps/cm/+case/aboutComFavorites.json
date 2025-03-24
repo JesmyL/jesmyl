@@ -1,8 +1,17 @@
 {
   "T166cbf17596a0c2919e4df1a6d54e66": {
     "comws": [1534140323560, 1742107357770],
-    "m": 1742638249263.2368,
-    "tools": ["edit-com", "com-comment", "hide-metronome", "mark-com", "chord-images", "selected-toggle"]
+    "m": 1742795656419.896,
+    "tools": [
+      "edit-com",
+      "com-comment",
+      "hide-metronome",
+      "mark-com",
+      "chord-images",
+      "selected-toggle",
+      "open-player",
+      "fullscreen-mode"
+    ]
   },
   "08a0e6ba7792e902569816a81b846b25": {
     "comws": [
@@ -58,8 +67,8 @@
     "m": 1742585279133.8616
   },
   "T6558fe287d2ea93be3e19bbe64b5dfc": {
-    "comws": [1614755527240, 1534006585256],
-    "m": 1741886840185.6724,
+    "comws": [1718543236522, 1741883251071],
+    "m": 1742713315400.7683,
     "tools": ["edit-com", "fullscreen-mode", "com-comment", "cats-binds", "hide-metronome"]
   },
   "T8574ab57c74159d39de20665af3eebe": { "comws": [1634188046492], "m": 1729802274224 },
@@ -121,10 +130,10 @@
     ]
   },
   "T60edfeab425f12df682be8cddcfbdd4": {
-    "m": 1742626809720.1226,
-    "comws": [1548914797644, 1548917413824, 1551634187548, 1536948845570, 1706870792872]
+    "m": 1742711845642.7048,
+    "comws": [1697960190882, 1633461428760, 1610443752890]
   },
-  "T7f21a14d3133065ca2e48254f87ecf3": { "m": 1741589345450.2712, "comws": [1517854709000] },
+  "T7f21a14d3133065ca2e48254f87ecf3": { "m": 1742662634785.439, "comws": [1517854709000, 1548914797644] },
   "Ta61379ef755b2009adad70843072202": { "m": 1741797131687.9072, "tools": ["mark-com", "fullscreen-mode"] },
   "Tc67813aa70f0671b7050b09f59b676a": { "m": 1742407875555.8206, "comws": [] }
 }
