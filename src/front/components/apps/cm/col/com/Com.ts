@@ -202,7 +202,7 @@ export class Com extends BaseNamed<IExportableCom> {
     return texts;
   }
 
-  translationMap(kind: number | und) {
+  translationMap(kind: number | und, isPushChordedBlocks = false) {
     const kinds = translationPushKinds[kind ?? this.translationPushKind];
     let curr = 0;
     const orders = this.orders ?? [];
@@ -214,6 +214,7 @@ export class Com extends BaseNamed<IExportableCom> {
 
       if (!ord.isRealText()) {
         ordi++;
+        if (isPushChordedBlocks && !ord.text) kinds.push(-1);
         continue;
       }
 

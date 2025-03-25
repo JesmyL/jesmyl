@@ -24,17 +24,24 @@ export const ScheduleWidgetLiveCmTranslations = ({
   const { coms } = useCmScreenTranslationComNavigations();
 
   useEffect(() => {
-    if (isCantTranslateLive) return;
+    if (isCantTranslateLive || !ccom) return;
 
     return setTimeoutEffect(() => {
-      if (!ccom?.texts) return;
-
-      const line = ccom.translationMap(undefined);
+      const blockLengths = ccom.translationMap(config.pushKind, true);
       let toLinei = 0;
+      let chordedBlocksCount = 0;
 
-      for (let blocki = 0; blocki < currTexti + 1; blocki++) toLinei += line[blocki];
+      for (let blocki = 0; blocki <= currTexti + chordedBlocksCount; blocki++) {
+        if (blockLengths[blocki] < 0) {
+          toLinei += 1;
+          chordedBlocksCount++;
+          continue;
+        }
+        toLinei += blockLengths[blocki];
+      }
 
-      const fromLinei = toLinei - line[currTexti];
+      const fromLinei = toLinei - blockLengths[currTexti + chordedBlocksCount];
+      const texts = ccom.getOrderedTexts(true, config.pushKind);
 
       const liveData: IndexSchWTranslationLiveDataValue = {
         fio,
@@ -43,8 +50,8 @@ export const ScheduleWidgetLiveCmTranslations = ({
           texti: currTexti,
           fromLinei,
           toLinei,
-          text: ccom.texts[currTexti],
-          nextText: ccom.texts[currTexti + 1] || '',
+          text: texts[currTexti],
+          nextText: texts[currTexti + 1] || '',
           config,
         },
       };

@@ -1,6 +1,6 @@
 import { RollControled } from '$cm/base/RolledContent';
 import { useChordVisibleVariant } from '$cm/base/useChordVisibleVariant';
-import { Com } from '$cm/col/com/Com';
+import { useCom } from '$cm/basis/lib/com-selections';
 import { ComLine } from '$cm/col/com/line/ComLine';
 import { ComOrders } from '$cm/col/com/orders/ComOrders';
 import { useEffect, useMemo } from 'react';
@@ -8,20 +8,17 @@ import { makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
 import { CmSchWTranslationLiveDataValue } from './model';
 
-interface Props extends CmSchWTranslationLiveDataValue {
-  com?: Com;
-}
-
 const _lineNamePrefix = 'live-translation-line';
 
-export const CmLiveTranslationList = (props: Props) => {
+export const CmLiveTranslationList = (props: CmSchWTranslationLiveDataValue) => {
+  const com = useCom(props.comw);
   const [chordVisibleVariant] = useChordVisibleVariant();
   const lineVolumes = useMemo(() => {
     const sum: number[] = [0];
     const counts = [] as number[];
     let lastSum = 0;
 
-    props.com?.orders?.forEach(unit => {
+    com?.orders?.forEach(unit => {
       if (unit.texti === null || !unit.isVisible) {
         sum.push(lastSum);
         return;
@@ -32,7 +29,7 @@ export const CmLiveTranslationList = (props: Props) => {
     });
 
     return { sum, counts };
-  }, [props.com]);
+  }, [com]);
 
   const querySelector = useMemo(() => {
     const queries = [];
@@ -44,7 +41,7 @@ export const CmLiveTranslationList = (props: Props) => {
 
   useEffect(() => {
     try {
-      document.querySelector(querySelector)?.scrollIntoView({ block: 'center' });
+      document.querySelector(querySelector)?.scrollIntoView({ block: 'center', behavior: 'smooth' });
     } catch (_error) {
       //
     }
@@ -56,10 +53,10 @@ export const CmLiveTranslationList = (props: Props) => {
         className="flex"
         $querySelector={querySelector}
       >
-        {props.com && (
+        {com && (
           <ComOrders
             chordVisibleVariant={chordVisibleVariant}
-            com={props.com}
+            com={com}
             asLineComponent={props => {
               return (
                 <div
