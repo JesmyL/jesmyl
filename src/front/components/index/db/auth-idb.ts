@@ -7,7 +7,8 @@ interface Storage {
   token: string | null;
 }
 
-const storeName = environment.isTest ? 'authorization' : 'authorization';
+const storeName =
+  environment.isTest || new URL(window.location.href).hostname === 'localhost' ? 'authorization' : 'authorization';
 
 class AuthIDB extends DexieDB<Storage> {
   constructor() {
