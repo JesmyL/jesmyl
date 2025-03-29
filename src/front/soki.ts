@@ -3,7 +3,7 @@ import { Eventer, makeRegExp } from 'shared/utils';
 import { jversion } from 'shared/values';
 import { authIDB } from './components/index/db/auth-idb';
 import { indexIDB } from './components/index/db/index-idb';
-import { environment } from './environments';
+import { environment } from './environment';
 import { onSokiClientEventerInvocatorInvoke } from './eventers';
 
 export class SokiTrip {

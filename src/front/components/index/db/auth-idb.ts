@@ -1,4 +1,5 @@
 import { DexieDB } from '#shared/lib/DexieDB';
+import { environment } from 'front/environment';
 import { LocalSokiAuth } from 'shared/api';
 
 interface Storage {
@@ -6,11 +7,14 @@ interface Storage {
   token: string | null;
 }
 
-const storeName = process.env.NODE_ENV === 'development' ? 'authorization' : 'authorization';
+const storeName = environment.isTest ? 'authorization' : 'authorization';
 
 class AuthIDB extends DexieDB<Storage> {
   constructor() {
-    super(storeName, { auth: { $byDefault: { level: 0 } }, token: { $byDefault: null } });
+    super(storeName, {
+      auth: { $byDefault: { level: 0 } },
+      token: { $byDefault: null },
+    });
   }
 }
 
