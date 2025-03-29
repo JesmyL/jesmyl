@@ -44,6 +44,16 @@ export const CmEditorTabComOrders = () => {
           />
         );
         const isWithHead = ord.isWithHead();
+        const betweenProps = {
+          ordAbove: ord,
+          aboveLeadOrdw: ord?.me.isAnchorInherit ? ord?.me.leadOrd?.wid : ord?.wid,
+          ordBelow: orda[ordi + 1] ?? null,
+        };
+        const zeroProps = {
+          aboveLeadOrdw: null,
+          ordAbove: null,
+          ordBelow: ord,
+        };
 
         const cancelClickBetweenDataButtonNode = (
           <LazyIcon
@@ -58,16 +68,12 @@ export const CmEditorTabComOrders = () => {
             key={ordi}
             className={ord.me.isAnchorInherit ? 'inherit-block' : ''}
           >
-            {ordi === 0 && clickBetweenData && clickBetweenData.checkIsShowButton(null, ord) && (
+            {ordi === 0 && clickBetweenData && clickBetweenData.checkIsShowButton(zeroProps) && (
               <div className="flex flex-gap margin-big-gap-t center">
                 <TheButton
                   onClick={async () => {
                     try {
-                      await clickBetweenData.onClick({
-                        aboveLeadOrdw: null,
-                        ordAbove: null,
-                        ordBelow: ord,
-                      });
+                      await clickBetweenData.onClick(zeroProps);
                     } catch (_error) {
                       //
                     }
@@ -125,16 +131,12 @@ export const CmEditorTabComOrders = () => {
                     }
               }
             />
-            {clickBetweenData && clickBetweenData.checkIsShowButton(ord, orda[ordi + 1] ?? null) && (
+            {clickBetweenData && clickBetweenData.checkIsShowButton(betweenProps) && (
               <div className="flex gap-3 justify-center mt-5">
                 <TheButton
                   onClick={async () => {
                     try {
-                      await clickBetweenData.onClick({
-                        ordAbove: ord,
-                        aboveLeadOrdw: ord?.me.isAnchorInherit ? ord?.me.leadOrd?.wid : ord?.wid,
-                        ordBelow: orda[ordi + 1] ?? null,
-                      });
+                      await clickBetweenData.onClick(betweenProps);
                     } catch (_error) {
                       //
                     }

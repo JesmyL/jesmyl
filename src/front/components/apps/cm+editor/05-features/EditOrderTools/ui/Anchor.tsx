@@ -28,7 +28,7 @@ export const OrdersRedactorOrderToolsAnchor = ({
 
               cmComOrderClientInvocatorMethods.addAnchorOrder(null, ord.me.header(), com.wid, ord.wid, aboveLeadOrdw);
             },
-            checkIsShowButton: (ordAbove, ordBelow) => {
+            checkIsShowButton: ({ ordAbove, ordBelow }) => {
               if (!isAboveOrdAfterTarget) isAboveOrdAfterTarget = ordAbove?.wid === ord.wid;
               const canShow = isAboveOrdAfterTarget;
               if (ordBelow === null) isAboveOrdAfterTarget = false;

@@ -8,37 +8,35 @@ import { CmNewOrderMakeEtap } from '../model';
 import { OrdersRedactorAdditionsEtapsModalInner } from './Etaps';
 
 type Props = {
-  com: EditableCom | und;
+  com: EditableCom;
   onClose: (is: false) => void;
   setClickBetweenOrds: (data: CmComOrderOnClickBetweenData) => void;
 };
 
 export const OrdersRedactorAdditions = ({ com, setClickBetweenOrds }: Props) => {
-  const [modalSelectForstEtap, setModalSelectForstEtap] = useState<null | CmNewOrderMakeEtap>(null);
-
-  if (!com) return;
+  const [modalSelectFirstEtap, setModalSelectFirstEtap] = useState<null | CmNewOrderMakeEtap>(null);
 
   return (
     <>
       <BottomPopupItem
         icon="Text"
         title="Текстовый блок"
-        onClick={() => setModalSelectForstEtap(CmNewOrderMakeEtap.Text)}
+        onClick={() => setModalSelectFirstEtap(CmNewOrderMakeEtap.Text)}
       />
       <BottomPopupItem
         icon="Option"
         title="Аккордный блок"
-        onClick={() => setModalSelectForstEtap(CmNewOrderMakeEtap.Chord)}
+        onClick={() => setModalSelectFirstEtap(CmNewOrderMakeEtap.Chord)}
       />
-      {modalSelectForstEtap && (
-        <Modal onClose={() => setModalSelectForstEtap(null)}>
+      {modalSelectFirstEtap && (
+        <Modal>
           {({ onClose }) => (
             <OrdersRedactorAdditionsEtapsModalInner
               com={com}
-              firstEtap={modalSelectForstEtap}
+              firstEtap={modalSelectFirstEtap}
               onClose={onClose}
               onOrderBuilt={(styleBlock, chordi, texti) => {
-                setModalSelectForstEtap(null);
+                setModalSelectFirstEtap(null);
                 onClose();
                 setClickBetweenOrds({
                   buttonTitle: (
@@ -46,7 +44,10 @@ export const OrdersRedactorAdditions = ({ com, setClickBetweenOrds }: Props) => 
                       Новый блок <span className="color--7">{styleBlock.title[com.langi]}</span>
                     </>
                   ),
-                  checkIsShowButton: () => true,
+                  checkIsShowButton: ({ ordAbove }) => {
+                    if (ordAbove == null && styleBlock.isInherit) return false;
+                    return true;
+                  },
                   onClick: async ({ aboveLeadOrdw }) => {
                     cmComOrderClientInvocatorMethods.insertNewBlock(
                       null,

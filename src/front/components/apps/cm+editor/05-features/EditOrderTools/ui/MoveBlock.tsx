@@ -23,7 +23,7 @@ export const OrdersRedactorOrderToolsMoveBlock = (props: OrdersRedactorOrderTool
               <span className="color--7">{props.ord.me.header()}</span> будет тут
             </span>
           ),
-          checkIsShowButton: (ordAbove, ordBelow) => {
+          checkIsShowButton: ({ ordAbove, ordBelow }) => {
             if (ordAbove == null && props.ord?.me.isInherit) return false;
             if (ordBelow?.me.isAnchorInherit) return false;
 
