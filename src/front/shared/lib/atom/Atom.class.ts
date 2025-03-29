@@ -10,7 +10,6 @@ export class Atom<Value, Sunscriber extends (value: Value) => void = (value: Val
   onValueChange?: (value: Value) => void;
   onValueSetForServerUserStore?: (value: Value) => void;
   rem: () => void;
-  getStorageValue: () => Promise<Value>;
 
   constructor(value: Value) {
     this.value = value;
@@ -22,8 +21,6 @@ export class Atom<Value, Sunscriber extends (value: Value) => void = (value: Val
             this.save(null!);
           }
         : emptyFunc;
-
-    this.getStorageValue = async () => this.value;
   }
 
   get = () => this.value;

@@ -13,9 +13,3 @@ export const useAtomInkrement = (atom: Atom<number>) => atom.inkrement;
 export const useAtom = <Value>(atom: Atom<Value>) => [useAtomValue(atom), useAtomSet(atom)] as const;
 
 export const atom = <Value>(value: Value): Atom<Value> => new Atom(value);
-
-export const getAtomValue = async <Value>(atom: Atom<Value>) => await atom.getStorageValue();
-export const atomValueSetter =
-  <Value>(atom: Atom<Value>) =>
-  (value: Value | ((prev: Value) => Value)) =>
-    atom.set(value);
