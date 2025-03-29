@@ -81,9 +81,9 @@ const FirstNaver = ({ onSet, loc }: { onSet: (is: false) => void; loc: ParsedLoc
 
   useEffect(() => {
     onSet(false);
-    if (loc.pathname.length > 1) return;
+    if (loc.pathname.length > 1 || loc.searchStr || loc.hash) return;
     navigate({ to: localStorage.getItem(lastVisitedRouteLsName) || '/cm/i' });
-  }, [loc.pathname.length, navigate, onSet]);
+  }, [loc.hash, loc.pathname.length, loc.searchStr, navigate, onSet]);
 
   return <></>;
 };
