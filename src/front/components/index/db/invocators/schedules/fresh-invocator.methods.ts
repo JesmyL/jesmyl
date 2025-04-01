@@ -1,8 +1,8 @@
 import { SokiInvocatorClient } from '#basis/lib/SokiInvocator.client';
+import { authIDB } from '$index/db/auth-idb';
 import { soki } from 'front/soki';
 import { LocalSokiAuth } from 'shared/api';
 import { IndexBasicsSokiInvocatorModel } from 'shared/api/invocators/index/basics-invocators.model';
-import { authIDB } from '../../auth-idb';
 
 const tgAuthorize = async ({ auth, token }: { auth: LocalSokiAuth; token: string }) => {
   await authIDB.set.auth(auth);
