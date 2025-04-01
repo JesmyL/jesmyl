@@ -25,15 +25,13 @@ export const makeSokiInvocator = <ClassNamePostfix extends string, ToolParam = n
 
   type ClassName = `${string}${string}${typeof classNamePostfix}`;
 
-  type SokiInvocator = new <M extends Methods>(config: {
+  type Config<M extends Methods> = {
     className: ClassName;
     methods: ResultListeners<M>;
-  }) => RegisteredMethods<M>;
+  };
+  type SokiInvocator = new <M extends Methods>(config: Config<M>) => RegisteredMethods<M>;
 
-  return function (
-    this: unknown,
-    { className, listeners }: { className: ClassName; listeners: KRecord<string, (value: unknown) => unknown> },
-  ) {
+  return function (this: unknown, { className, methods }: Config<Methods>) {
     const self = this as Methods;
 
     if (isNeedCheckClassName) {
@@ -44,16 +42,16 @@ export const makeSokiInvocator = <ClassNamePostfix extends string, ToolParam = n
 
     const name = className.slice(0, -classNamePostfix.length);
 
-    Object.keys(listeners).forEach(method => {
+    Object.keys(methods).forEach(method => {
       self[method] = (args: any, tool: ToolParam) => {
         const { promise, reject, resolve } = Promise.withResolvers();
 
         send({ name, method, args }, tool).then(
-          listeners[method] === (true as never)
+          methods[method] === true
             ? resolve
             : value => {
                 resolve(value);
-                listeners[method](value);
+                (methods[method] as (value: unknown) => void)(value);
               },
           reject,
         );

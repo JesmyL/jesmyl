@@ -91,16 +91,16 @@ export const makeSokiInvocatorBase = <
 
   type ClassName = `${string}${string}${typeof classNamePostfix}`;
 
-  type Options<M extends Methods> = {
+  type Config<M extends Methods> = {
     className: ClassName;
     methods: Invocator<M>;
     onEachFeedbackTools?: OnEachFeedbackInvocations<M, FeedbackRet>;
     beforeEacheTools?: BeforeEaches<BeforeEachTool, keyof M>;
   };
 
-  type SokiInvocator = new <M extends Methods>(options: Options<M>) => Invocator<M> & { $$register: () => void };
+  type SokiInvocator = new <M extends Methods>(config: Config<M>) => Invocator<M> & { $$register: () => void };
 
-  return function (this: unknown, options: Options<Methods>) {
+  return function (this: unknown, options: Config<Methods>) {
     const { className, methods, beforeEacheTools: beforeEaches, onEachFeedbackTools: onEachInvocations } = options;
     const self = this as Methods;
 
