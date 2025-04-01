@@ -6,39 +6,39 @@ import { scheduleTitleInBrackets } from './general-invocators.base';
 
 const sharedPhotoDict = {} as Record<ScheduleWidgetPhotoKey, string>;
 
-class SchPhotosSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchPhotosSokiInvocatorMethods> {
-  constructor() {
-    super(
-      'SchPhotosSokiInvocatorBaseServer',
-      {
-        putSharedPhotos: () => async (_, photoDict) => {
-          const loadedCount = smylib.keys(photoDict).length;
-          const prevCachedCount = smylib.keys(sharedPhotoDict).length;
-          Object.assign(sharedPhotoDict, photoDict);
-          const newCachedCount = smylib.keys(sharedPhotoDict).length;
+export const schPhotosSokiInvocatorBaseServer =
+  new (class SchPhotosSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchPhotosSokiInvocatorMethods> {
+    constructor() {
+      super({
+        className: 'SchPhotosSokiInvocatorBaseServer',
+        methods: {
+          putSharedPhotos: async ({ photoDict }) => {
+            const loadedCount = smylib.keys(photoDict).length;
+            const prevCachedCount = smylib.keys(sharedPhotoDict).length;
+            Object.assign(sharedPhotoDict, photoDict);
+            const newCachedCount = smylib.keys(sharedPhotoDict).length;
 
-          return { addedCount: newCachedCount - prevCachedCount, loadedCount };
+            return { addedCount: newCachedCount - prevCachedCount, loadedCount };
+          },
+
+          getSharedPhotos: async ({ schw }) => {
+            const keyPrefix = '' + schw;
+            const photos: { key: ScheduleWidgetPhotoKey; src: string }[] = [];
+            SMyLib.keys(sharedPhotoDict).forEach(key => {
+              if (key.startsWith(keyPrefix)) photos.push({ key, src: sharedPhotoDict[key] });
+            });
+
+            return photos;
+          },
         },
+        onEachFeedbackTools: {
+          putSharedPhotos: ({ schw }, counts) =>
+            `Были отправлены фото для расписания ${scheduleTitleInBrackets(schw)}\n` +
+            `Загружено: ${counts.loadedCount}\nНовых: ${counts.addedCount}`,
 
-        getSharedPhotos: () => async schw => {
-          const keyPrefix = '' + schw;
-          const photos: { key: ScheduleWidgetPhotoKey; src: string }[] = [];
-          SMyLib.keys(sharedPhotoDict).forEach(key => {
-            if (key.startsWith(keyPrefix)) photos.push({ key, src: sharedPhotoDict[key] });
-          });
-
-          return photos;
+          getSharedPhotos: ({ schw }, photos) =>
+            `Запрос списка фото для расписания ${scheduleTitleInBrackets(schw)}. Отправлено ${photos.length} шт`,
         },
-      },
-      {
-        putSharedPhotos: (counts, schw) =>
-          `Были отправлены фото для расписания ${scheduleTitleInBrackets(schw)}\n` +
-          `Загружено: ${counts.loadedCount}\nНовых: ${counts.addedCount}`,
-
-        getSharedPhotos: (photos, schw) =>
-          `Запрос списка фото для расписания ${scheduleTitleInBrackets(schw)}. Отправлено ${photos.length} шт`,
-      },
-    );
-  }
-}
-export const schPhotosSokiInvocatorBaseServer = new SchPhotosSokiInvocatorBaseServer();
+      });
+    }
+  })();

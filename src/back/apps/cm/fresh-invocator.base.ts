@@ -37,101 +37,111 @@ const sendFreshModifiedableList = <Item extends { m: number }>(
   }
 };
 
-class CmFreshSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmFreshSokiInvocatorModel> {}
-export const cmFreshServerInvocatorBase = new CmFreshSokiInvocatorBaseServer('CmFreshSokiInvocatorBaseServer', {
-  requestFreshes:
-    ({ client, auth }) =>
-    async lastModfiedAt => {
-      sendFreshModifiedableList(
-        lastModfiedAt,
-        comsFileStore,
-        () => comsFileStore.getValue(),
-        (coms, modifiedAt) => cmServerInvocatorShareMethods.refreshComList(client, coms, modifiedAt),
-      );
+export const cmFreshServerInvocatorBase =
+  new (class CmFreshSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmFreshSokiInvocatorModel> {
+    constructor() {
+      super({
+        className: 'CmFreshSokiInvocatorBaseServer',
+        beforeEacheTools: {
+          requestFreshes: { minLevel: 0 },
+        },
+        methods: {
+          requestFreshes: async ({ lastModfiedAt }, { client, auth }) => {
+            sendFreshModifiedableList(
+              lastModfiedAt,
+              comsFileStore,
+              () => comsFileStore.getValue(),
+              (coms, modifiedAt) => cmServerInvocatorShareMethods.refreshComList({ coms, modifiedAt }, client),
+            );
 
-      sendFreshModifiedableList(
-        lastModfiedAt,
-        catsFileStore,
-        () => catsFileStore.getValue(),
-        (cats, modifiedAt) => cmServerInvocatorShareMethods.refreshCatList(client, cats, modifiedAt),
-      );
+            sendFreshModifiedableList(
+              lastModfiedAt,
+              catsFileStore,
+              () => catsFileStore.getValue(),
+              (cats, modifiedAt) => cmServerInvocatorShareMethods.refreshCatList({ cats, modifiedAt }, client),
+            );
 
-      const chordPackModifiedAt = chordPackFileStore.fileModifiedAt();
-      if (!chordPackModifiedAt || chordPackModifiedAt > lastModfiedAt) {
-        cmServerInvocatorShareMethods.refreshChordPack(client, {
-          modifiedAt: chordPackModifiedAt,
-          pack: chordPackFileStore.getValue(),
-        });
-      }
+            const chordPackModifiedAt = chordPackFileStore.fileModifiedAt();
+            if (!chordPackModifiedAt || chordPackModifiedAt > lastModfiedAt) {
+              cmServerInvocatorShareMethods.refreshChordPack(
+                {
+                  modifiedAt: chordPackModifiedAt,
+                  pack: chordPackFileStore.getValue(),
+                },
+                client,
+              );
+            }
 
-      sendFreshModifiedableList(
-        lastModfiedAt,
-        eventPacksFileStore,
-        () => smylib.values(eventPacksFileStore.getValue()),
-        (items, modifiedAt) => cmServerInvocatorShareMethods.refreshScheduleEventComPacks(client, items, modifiedAt),
-      );
+            sendFreshModifiedableList(
+              lastModfiedAt,
+              eventPacksFileStore,
+              () => smylib.values(eventPacksFileStore.getValue()),
+              (items, modifiedAt) =>
+                cmServerInvocatorShareMethods.refreshScheduleEventComPacks({ packs: items, modifiedAt }, client),
+            );
 
-      if (auth?.login != null) {
-        const login = auth.login;
+            if (auth?.login != null) {
+              const login = auth.login;
 
-        sendFreshModifiedableList(
-          lastModfiedAt,
-          comCommentsFileStore,
-          () => smylib.values(comCommentsFileStore.getValue()[login]),
-          (comments, modifiedAt) => cmServerInvocatorShareMethods.refreshComComments(client, comments, modifiedAt),
-        );
+              sendFreshModifiedableList(
+                lastModfiedAt,
+                comCommentsFileStore,
+                () => smylib.values(comCommentsFileStore.getValue()[login]),
+                (comments, modifiedAt) =>
+                  cmServerInvocatorShareMethods.refreshComComments({ comments, modifiedAt }, client),
+              );
 
-        const favoriteItem = aboutComFavoritesFileStore.getValue()[login];
-        if (favoriteItem != null && favoriteItem.m > lastModfiedAt)
-          cmServerInvocatorShareMethods.refreshAboutComFavorites(client, favoriteItem);
-      }
-    },
+              const favoriteItem = aboutComFavoritesFileStore.getValue()[login];
+              if (favoriteItem != null && favoriteItem.m > lastModfiedAt)
+                cmServerInvocatorShareMethods.refreshAboutComFavorites({ value: favoriteItem }, client);
+            }
+          },
 
-  exchangeFreshComComments:
-    ({ client, auth }) =>
-    async (modifiedComments, clientDateNow) => {
-      if (auth?.login == null) throw new Error('Не авторизован');
+          exchangeFreshComComments: async ({ modifiedComments, clientDateNow }, { client, auth }) => {
+            if (auth?.login == null) throw new Error('Не авторизован');
 
-      const withClientTimeDelta = Date.now() - clientDateNow;
+            const withClientTimeDelta = Date.now() - clientDateNow;
 
-      const comments = comCommentsFileStore.getValue();
-      const userServerComments = (comments[auth.login] ??= {});
-      let localSavedCommentsMaxModifiedAt = 0;
-      const freshComments: ICmComComment[] = [];
-      const resultComments: ICmComComment[] = [];
+            const comments = comCommentsFileStore.getValue();
+            const userServerComments = (comments[auth.login] ??= {});
+            let localSavedCommentsMaxModifiedAt = 0;
+            const freshComments: ICmComComment[] = [];
+            const resultComments: ICmComComment[] = [];
 
-      modifiedComments.forEach(({ comment, comw, m }) => {
-        const commentModifiedAt = m + withClientTimeDelta;
+            modifiedComments.forEach(({ comment, comw, m }) => {
+              const commentModifiedAt = m + withClientTimeDelta;
 
-        if (userServerComments[comw] != null && commentModifiedAt < userServerComments[comw].m) {
-          resultComments.push(userServerComments[comw]);
-          return;
-        }
+              if (userServerComments[comw] != null && commentModifiedAt < userServerComments[comw].m) {
+                resultComments.push(userServerComments[comw]);
+                return;
+              }
 
-        userServerComments[comw] = {
-          comment,
-          comw,
-          m: commentModifiedAt,
-        };
+              userServerComments[comw] = {
+                comment,
+                comw,
+                m: commentModifiedAt,
+              };
 
-        resultComments.push(userServerComments[comw]);
-        freshComments.push(userServerComments[comw]);
-        localSavedCommentsMaxModifiedAt = Math.max(localSavedCommentsMaxModifiedAt, commentModifiedAt);
+              resultComments.push(userServerComments[comw]);
+              freshComments.push(userServerComments[comw]);
+              localSavedCommentsMaxModifiedAt = Math.max(localSavedCommentsMaxModifiedAt, commentModifiedAt);
+            });
+
+            if (localSavedCommentsMaxModifiedAt) {
+              comCommentsFileStore.saveValue();
+
+              cmServerInvocatorShareMethods.refreshComComments(
+                { comments: freshComments, modifiedAt: localSavedCommentsMaxModifiedAt },
+                { login: auth.login, ignoreClient: client },
+              );
+            }
+
+            return resultComments;
+          },
+        },
       });
-
-      if (localSavedCommentsMaxModifiedAt) {
-        comCommentsFileStore.saveValue();
-
-        cmServerInvocatorShareMethods.refreshComComments(
-          { login: auth.login, ignoreClient: client },
-          freshComments,
-          localSavedCommentsMaxModifiedAt,
-        );
-      }
-
-      return resultComments;
-    },
-});
+    }
+  })();
 
 cmComServerInvocatorBase.$$register();
 cmComExternalsSokiInvocatorBaseServer.$$register();

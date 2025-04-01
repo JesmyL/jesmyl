@@ -21,7 +21,7 @@ export function ScheduleWidgetTeamGameList() {
           icon="PlusSign"
           prefix="игра"
           confirm="Добавить новую игру?"
-          onSend={() => schGamesSokiInvocatorClient.addGame(null, scheduleScopeProps)}
+          onSend={() => schGamesSokiInvocatorClient.addGame({ props: scheduleScopeProps })}
         />
       ),
   );

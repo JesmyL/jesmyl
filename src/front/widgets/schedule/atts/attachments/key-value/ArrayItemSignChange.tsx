@@ -31,12 +31,11 @@ export function ScheduleKeyValueListAttArrayItemKeyChange(props: {
         onSuccess={() => setIsModalOpen(false)}
         className="margin-gap-v"
         onSend={() =>
-          schDayEventsSokiInvocatorClient.changeKeyValueAttachmentKey(
-            null,
-            props.dayEventAttScopeProps,
-            props.theKey,
-            id,
-          )
+          schDayEventsSokiInvocatorClient.changeKeyValueAttachmentKey({
+            props: props.dayEventAttScopeProps,
+            key: props.theKey,
+            value: id,
+          })
         }
       >
         <KeyValueListAttNumberMember value={id} />

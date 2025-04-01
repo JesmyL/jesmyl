@@ -3,21 +3,24 @@ import { CmEditorSokiInvocatorSharesModel } from 'shared/api/invocators/cm/edito
 import { comEditorBusiesAtom } from './atoms/com';
 import { cmEditorIDB } from './cmEditorIDB';
 
-class CmEditorSokiInvocatorBaseClient extends SokiInvocatorBaseClient<CmEditorSokiInvocatorSharesModel> {}
-export const cmEditorSokiInvocatorBaseClient = new CmEditorSokiInvocatorBaseClient('CmEditorSokiInvocatorBaseClient', {
-  editedEEWords:
-    () =>
-    async ({ words, modifiedAt }) => {
-      await cmEditorIDB.set.eeStore(prev => ({ ...prev, ...words }));
-      cmEditorIDB.updateLastModifiedAt(modifiedAt);
-    },
+export const cmEditorSokiInvocatorBaseClient =
+  new (class CmEditorSokiInvocatorBaseClient extends SokiInvocatorBaseClient<CmEditorSokiInvocatorSharesModel> {
+    constructor() {
+      super({
+        className: 'CmEditorSokiInvocatorBaseClient',
+        methods: {
+          editedEEWords: async ({ words, modifiedAt }) => {
+            await cmEditorIDB.set.eeStore(prev => ({ ...prev, ...words }));
+            cmEditorIDB.updateLastModifiedAt(modifiedAt);
+          },
 
-  refreshEEPack:
-    () =>
-    async ({ pack, modifiedAt }) => {
-      await cmEditorIDB.updateLastModifiedAt(modifiedAt);
-      cmEditorIDB.set.eeStore(pack);
-    },
+          refreshEEPack: async ({ pack, modifiedAt }) => {
+            await cmEditorIDB.updateLastModifiedAt(modifiedAt);
+            cmEditorIDB.set.eeStore(pack);
+          },
 
-  comBusies: () => async busies => comEditorBusiesAtom.set(busies),
-});
+          comBusies: async ({ busies }) => comEditorBusiesAtom.set(busies),
+        },
+      });
+    }
+  })();

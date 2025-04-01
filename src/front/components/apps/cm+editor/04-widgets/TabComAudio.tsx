@@ -26,18 +26,16 @@ export const CmEditorTabComAudio = ({ topHTML, topCom, topMp3Rule }: Props) => {
   if (!ccom) return null;
 
   const removeSrc = (src: string) =>
-    cmComClientInvocatorMethods.setAudioLinks(
-      null,
-      ccom.wid,
-      Array.from(new Set(ccom.audio.split(/\n/).filter(s => s && s !== src))).join('\n'),
-    );
+    cmComClientInvocatorMethods.setAudioLinks({
+      comw: ccom.wid,
+      value: Array.from(new Set(ccom.audio.split(/\n/).filter(s => s && s !== src))).join('\n'),
+    });
 
   const addSrc = (src: string) =>
-    cmComClientInvocatorMethods.setAudioLinks(
-      null,
-      ccom.wid,
-      Array.from(new Set(ccom.audio.split(/\n/).concat(src).filter(itIt))).join('\n'),
-    );
+    cmComClientInvocatorMethods.setAudioLinks({
+      comw: ccom.wid,
+      value: Array.from(new Set(ccom.audio.split(/\n/).concat(src).filter(itIt))).join('\n'),
+    });
 
   return (
     <>

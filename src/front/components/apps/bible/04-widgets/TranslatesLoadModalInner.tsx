@@ -52,7 +52,7 @@ export default function TranslatesLoadModalInner() {
               disabled={translateOnLoad !== null}
               onSend={async () => {
                 setTranslateOnLoad(tName);
-                await bibleSokiInvocatorClient.requestTranslate(null, tName);
+                await bibleSokiInvocatorClient.requestTranslate({ translate: tName });
                 setTranslateOnLoad(null);
               }}
             />

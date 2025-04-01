@@ -4,186 +4,183 @@ import { CmComOrderSokiInvocatorModel } from 'shared/api/invocators/cm/com-order
 import { itNNil, smylib } from 'shared/utils';
 import { getCmComNameInBrackets, modifyInvocableCom } from './com-invocator.base';
 
-class CmComOrderSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmComOrderSokiInvocatorModel> {
-  constructor() {
-    super(
-      'CmComOrderSokiInvocatorBaseServer',
-      {
-        clearOwnRepeats: () => this.simpleOrdValueSetter('r'),
-        setRepeats: () => this.simpleOrdValueSetter('r'),
-        setType: () => this.simpleOrdValueSetter('s'),
-        bindChordBlock: () => this.simpleOrdValueSetter('c'),
+export const cmComOrderServerInvocatorBase =
+  new (class CmComOrderSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmComOrderSokiInvocatorModel> {
+    constructor() {
+      const modifyOrd = (comw: CmComWid, ordw: CmComOrderWid, modifier: (ord: IExportableOrder) => void) => {
+        return modifyInvocableCom(comw, com => {
+          const ord = com.o?.find(ord => ord.w === ordw);
 
-        toggleVisibility: () => (ordw: CmComOrderWid, _orderTitle: string, comw: CmComWid) =>
-          this.modifyOrd(comw, ordw, ord => (ord.v = ord.v ? 0 : 1)),
+          if (ord == null) throw new Error('Ord not found');
 
-        toggleAnchorInheritVisibility: () => (comw, leadOrderWid, anchorInheritIndex) =>
-          this.modifyOrd(comw, leadOrderWid, ord => {
-            ord.inh ??= {};
-            ord.inh.v ??= {};
+          modifier(ord);
 
-            ord.inh.v[anchorInheritIndex] = ord.inh.v[anchorInheritIndex] === undefined ? 0 : undefined;
+          return com;
+        });
+      };
 
-            if (!smylib.values(ord.inh.v).filter(itNNil).length) delete ord.inh.v;
-            if (!smylib.values(ord.inh).filter(itNNil).length) delete ord.inh;
-          }),
+      const simpleOrdValueSetter = <Key extends keyof IExportableOrder>(key: Key) => {
+        return ({ comw, ordw, value }: { ordw: CmComOrderWid; comw: CmComWid; value?: IExportableOrder[Key] | null }) =>
+          modifyOrd(comw, ordw, ord => (ord[key] = value as never));
+      };
 
-        moveOrdAfter: () => (ordw, _orderTitle, comw, insertAfterOrdwOrFirst) =>
-          modifyInvocableCom(comw, com => {
-            com.o ??= [];
+      const getNextOrdWid = (ords: { w: CmComOrderWid }[]) =>
+        ords.reduce((max, curr) => (curr.w > max ? curr.w : max), CmComOrderWid.def) + 1;
 
-            const movableOrdi = com.o.findIndex(o => o.w === ordw);
-            const insertAfterOrdi =
-              insertAfterOrdwOrFirst == null ? -1 : com.o.findIndex(o => o.w === insertAfterOrdwOrFirst);
+      const getOrder = (com: IExportableCom, ordw: CmComOrderWid) => com.o?.find(o => o.w === ordw);
 
-            if (movableOrdi < 0) throw new Error('Целевой порядковый блок не найден');
+      super({
+        className: 'CmComOrderSokiInvocatorBaseServer',
+        methods: {
+          clearOwnRepeats: simpleOrdValueSetter('r'),
+          setRepeats: simpleOrdValueSetter('r'),
+          setType: simpleOrdValueSetter('s'),
+          bindChordBlock: simpleOrdValueSetter('c'),
 
-            const [ord] = com.o.splice(movableOrdi, 1);
-            com.o.splice(insertAfterOrdi + (movableOrdi < insertAfterOrdi ? 0 : 1), 0, ord);
-          }),
+          toggleVisibility: ({ comw, ordw }) => modifyOrd(comw, ordw, ord => (ord.v = ord.v ? 0 : 1)),
 
-        remove: () => (_orderTitle, comw, ordw) =>
-          modifyInvocableCom(comw, com => {
-            com.o ??= [];
-            com.o = com.o.filter(ord => ord.w !== ordw && ord.a !== ordw);
-          }),
+          toggleAnchorInheritVisibility: ({ comw, leadOrderWid, anchorInheritIndex }) =>
+            modifyOrd(comw, leadOrderWid, ord => {
+              ord.inh ??= {};
+              ord.inh.v ??= {};
 
-        addAnchorOrder: () => (_orderTitle, comw, targetOrdw, insertAfterOrdw) =>
-          modifyInvocableCom(comw, com => {
-            com.o ??= [];
+              ord.inh.v[anchorInheritIndex] = ord.inh.v[anchorInheritIndex] === undefined ? 0 : undefined;
 
-            const targetOrdi = com.o.findIndex(o => o.w === targetOrdw);
-            const insertAfterOrdi = com.o.findIndex(o => o.w === insertAfterOrdw);
+              if (!smylib.values(ord.inh.v).filter(itNNil).length) delete ord.inh.v;
+              if (!smylib.values(ord.inh).filter(itNNil).length) delete ord.inh;
+            }),
 
-            if (targetOrdi < 0) throw new Error('Целевой порядковый блок не найден');
-            if (insertAfterOrdi < 0) throw new Error('Опорный порядковый блок не найден');
-            if (insertAfterOrdi < targetOrdi) throw new Error('Целевой порядковый блок должен быть выше опорного');
+          moveOrdAfter: ({ ordw, comw, insertAfterOrdwOrFirst }) =>
+            modifyInvocableCom(comw, com => {
+              com.o ??= [];
 
-            com.o.splice(insertAfterOrdi + 1, 0, {
-              w: this.getNextOrdWid(com.o),
-              a: targetOrdw,
-            });
-          }),
+              const movableOrdi = com.o.findIndex(o => o.w === ordw);
+              const insertAfterOrdi =
+                insertAfterOrdwOrFirst == null ? -1 : com.o.findIndex(o => o.w === insertAfterOrdwOrFirst);
 
-        setTexti: () => (_, comw, ordw, texti) => this.modifyOrd(comw, ordw, ord => (ord.t = texti)),
+              if (movableOrdi < 0) throw new Error('Целевой порядковый блок не найден');
 
-        toggleVisibilityInMiniMode: () => (_, comw, ordw) =>
-          this.modifyOrd(comw, ordw, ord => (ord.o = ord.o ? undefined : 1)),
+              const [ord] = com.o.splice(movableOrdi, 1);
+              com.o.splice(insertAfterOrdi + (movableOrdi < insertAfterOrdi ? 0 : 1), 0, ord);
+            }),
 
-        toggleTitleVisibility: () => (_, comw, ordw) =>
-          this.modifyOrd(comw, ordw, ord => (ord.e = ord.e ? undefined : 1)),
+          remove: ({ comw, ordw }) =>
+            modifyInvocableCom(comw, com => {
+              com.o ??= [];
+              com.o = com.o.filter(ord => ord.w !== ordw && ord.a !== ordw);
+            }),
 
-        insertNewBlock: () => (comw, _, insertAfterOrdwOrFirst, chordi, type, texti) =>
-          modifyInvocableCom(comw, com => {
-            com.o ??= [];
-            const afterOrdi =
-              insertAfterOrdwOrFirst == null ? -1 : com.o.findIndex(ord => ord.w === insertAfterOrdwOrFirst);
+          addAnchorOrder: ({ comw, targetOrdw, insertAfterOrdw }) =>
+            modifyInvocableCom(comw, com => {
+              com.o ??= [];
 
-            const ord: IExportableOrder = {
-              w: this.getNextOrdWid(com.o),
-              s: type,
-              c: chordi,
-              t: texti,
-            };
+              const targetOrdi = com.o.findIndex(o => o.w === targetOrdw);
+              const insertAfterOrdi = com.o.findIndex(o => o.w === insertAfterOrdw);
 
-            if (afterOrdi < 1) {
-              com.o.unshift(ord);
-            } else com.o.splice(afterOrdi + 1, 0, ord);
-          }),
+              if (targetOrdi < 0) throw new Error('Целевой порядковый блок не найден');
+              if (insertAfterOrdi < 0) throw new Error('Опорный порядковый блок не найден');
+              if (insertAfterOrdi < targetOrdi) throw new Error('Целевой порядковый блок должен быть выше опорного');
 
-        setPositionsLine: () => (comw, _, ordw, linei, line) =>
-          this.modifyOrd(comw, ordw, ord => {
-            ord.p ??= [];
-            ord.p[linei] = line;
-          }),
+              com.o.splice(insertAfterOrdi + 1, 0, {
+                w: getNextOrdWid(com.o),
+                a: targetOrdw,
+              });
+            }),
 
-        setModulationValue: () => (comw, _, ordw, value) =>
-          this.modifyOrd(comw, ordw, ord => {
-            ord.f ??= {};
-            ord.f.md = value;
-          }),
+          setTexti: ({ comw, ordw, texti }) => modifyOrd(comw, ordw, ord => (ord.t = texti)),
 
-        removeRepeats: () => (comw, _, ordw) => this.modifyOrd(comw, ordw, ord => delete ord.r),
-      },
+          toggleVisibilityInMiniMode: ({ comw, ordw }) => modifyOrd(comw, ordw, ord => (ord.o = ord.o ? undefined : 1)),
 
-      {
-        clearOwnRepeats: (com, _ordw, orderTitle) =>
-          `Сброшено значение повторений для блока ${orderTitle} в песне ${getCmComNameInBrackets(com)}`,
+          toggleTitleVisibility: ({ comw, ordw }) => modifyOrd(comw, ordw, ord => (ord.e = ord.e ? undefined : 1)),
 
-        setRepeats: (com, _ordw, orderTitle, _comw, _value, textValue) =>
-          `Изменены повторения для блока ${orderTitle} в песне ${getCmComNameInBrackets(com)}:\n\n${textValue}`,
+          insertNewBlock: ({ comw, insertAfterOrdwOrFirst, chordi, type, texti }) =>
+            modifyInvocableCom(comw, com => {
+              com.o ??= [];
+              const afterOrdi =
+                insertAfterOrdwOrFirst == null ? -1 : com.o.findIndex(ord => ord.w === insertAfterOrdwOrFirst);
 
-        setType: (com, _ordw, orderTitle, _comw, _type, newTypeTitle) =>
-          `В песне ${getCmComNameInBrackets(com)} название блока ${orderTitle} изменено на ${newTypeTitle}`,
+              const ord: IExportableOrder = {
+                w: getNextOrdWid(com.o),
+                s: type,
+                c: chordi,
+                t: texti,
+              };
 
-        bindChordBlock: (com, _, orderTitle, __, chordi, isAnchor) =>
-          `В песне ${getCmComNameInBrackets(com)} к ${isAnchor ? 'ссылке на блок' : 'блоку'} ` +
-          `${orderTitle} прикреплён ${chordi + 1}-й блок Аккордов`,
+              if (afterOrdi < 1) {
+                com.o.unshift(ord);
+              } else com.o.splice(afterOrdi + 1, 0, ord);
+            }),
 
-        toggleVisibility: (com, ordw, orderTitle) =>
-          `В песне ${getCmComNameInBrackets(com)} порядковый блок ` +
-          `${orderTitle} сделан ${this.getOrder(com, ordw)?.v ? '' : 'не'}видимым`,
+          setPositionsLine: ({ comw, ordw, linei, line }) =>
+            modifyOrd(comw, ordw, ord => {
+              ord.p ??= [];
+              ord.p[linei] = line;
+            }),
 
-        toggleAnchorInheritVisibility: (com, _, leadOrderWid, anchorInheritIndex, leadOrderTitle) =>
-          `В песне ${getCmComNameInBrackets(com)} ${anchorInheritIndex + 2}-я часть ссылки на ${leadOrderTitle}` +
-          ` сделана ${this.getOrder(com, leadOrderWid)?.inh?.v?.[anchorInheritIndex] == null ? '' : 'не'}видимой`,
+          setModulationValue: ({ comw, ordw, value }) =>
+            modifyOrd(comw, ordw, ord => {
+              ord.f ??= {};
+              ord.f.md = value;
+            }),
 
-        moveOrdAfter: (com, _, orderTitle) =>
-          `Перемещён порядковый блок ${orderTitle} в песне ${getCmComNameInBrackets(com)}`,
+          removeRepeats: ({ comw, ordw }) => modifyOrd(comw, ordw, ord => delete ord.r),
+        },
 
-        addAnchorOrder: (com, orderTitle) => `В песне создана ссылка ${getCmComNameInBrackets(com)} ${orderTitle}`,
+        onEachFeedbackTools: {
+          clearOwnRepeats: ({ orderTitle }, com) =>
+            `Сброшено значение повторений для блока ${orderTitle} в песне ${getCmComNameInBrackets(com)}`,
 
-        setTexti: (com, orderTitle, _, __, texti) =>
-          `В песне ${getCmComNameInBrackets(com)} к порядковому блоку ${orderTitle} прикреплён ${texti + 1} текст`,
+          setRepeats: ({ orderTitle, textValue }, com) =>
+            `Изменены повторения для блока ${orderTitle} в песне ${getCmComNameInBrackets(com)}:\n\n${textValue}`,
 
-        toggleVisibilityInMiniMode: (com, orderTitle, _, ordw) =>
-          `В песне ${getCmComNameInBrackets(com)} ссылка на блок ${orderTitle} сделана ` +
-          `${this.getOrder(com, ordw)?.o ? 'видимой' : 'невидимой'} в мини-режиме`,
+          setType: ({ orderTitle, newTypeTitle }, com) =>
+            `В песне ${getCmComNameInBrackets(com)} название блока ${orderTitle} изменено на ${newTypeTitle}`,
 
-        toggleTitleVisibility: (com, orderTitle, _, ordw) =>
-          `В песне ${getCmComNameInBrackets(com)} заголовок в порядковом блоке ${orderTitle} сделан ` +
-          `${this.getOrder(com, ordw)?.e ? 'видимым' : 'невидимым'}`,
+          bindChordBlock: ({ orderTitle, chordi, isAnchor }, com) =>
+            `В песне ${getCmComNameInBrackets(com)} к ${isAnchor ? 'ссылке на блок' : 'блоку'} ` +
+            `${orderTitle} прикреплён ${chordi + 1}-й блок Аккордов`,
 
-        remove: (com, orderTitle, _, __, isAnchor) =>
-          `В песне ${getCmComNameInBrackets(com)} ${isAnchor ? 'удалена ссылка на' : 'удалён'} ${orderTitle}`,
+          toggleVisibility: ({ ordw, orderTitle }, com) =>
+            `В песне ${getCmComNameInBrackets(com)} порядковый блок ` +
+            `${orderTitle} сделан ${getOrder(com, ordw)?.v ? '' : 'не'}видимым`,
 
-        insertNewBlock: (com, _, orderTitle) =>
-          `В песне ${getCmComNameInBrackets(com)} добавлен новый порядковый блок ${orderTitle}`,
+          toggleAnchorInheritVisibility: ({ leadOrderWid, anchorInheritIndex, leadOrderTitle }, com) =>
+            `В песне ${getCmComNameInBrackets(com)} ${anchorInheritIndex + 2}-я часть ссылки на ${leadOrderTitle}` +
+            ` сделана ${getOrder(com, leadOrderWid)?.inh?.v?.[anchorInheritIndex] == null ? '' : 'не'}видимой`,
 
-        setPositionsLine: (com, _, orderTitle, __, linei, _line, lineChangesText) =>
-          `В песне ${getCmComNameInBrackets(com)} в блоке ${orderTitle} изменена аппликатура в ` +
-          `${linei + 1}-й строке: ${lineChangesText}`,
+          moveOrdAfter: ({ orderTitle }, com) =>
+            `Перемещён порядковый блок ${orderTitle} в песне ${getCmComNameInBrackets(com)}`,
 
-        setModulationValue: (com, _, orderTitle, __, value) =>
-          `В песне ${getCmComNameInBrackets(com)} установлено значение модулирования блока ${orderTitle} - ${value}`,
+          addAnchorOrder: ({ orderTitle }, com) =>
+            `В песне создана ссылка ${getCmComNameInBrackets(com)} ${orderTitle}`,
 
-        removeRepeats: (com, _, orderTitle) =>
-          `В песне ${getCmComNameInBrackets(com)} убраны повторения в блоке ${orderTitle}`,
-      },
-    );
-  }
+          setTexti: ({ orderTitle, texti }, com) =>
+            `В песне ${getCmComNameInBrackets(com)} к порядковому блоку ${orderTitle} прикреплён ${texti + 1} текст`,
 
-  modifyOrd = (comw: CmComWid, ordw: CmComOrderWid, modifier: (ord: IExportableOrder) => void) => {
-    return modifyInvocableCom(comw, com => {
-      const ord = com.o?.find(ord => ord.w === ordw);
+          toggleVisibilityInMiniMode: ({ orderTitle, ordw }, com) =>
+            `В песне ${getCmComNameInBrackets(com)} ссылка на блок ${orderTitle} сделана ` +
+            `${getOrder(com, ordw)?.o ? 'видимой' : 'невидимой'} в мини-режиме`,
 
-      if (ord == null) throw new Error('Ord not found');
+          toggleTitleVisibility: ({ orderTitle, ordw }, com) =>
+            `В песне ${getCmComNameInBrackets(com)} заголовок в порядковом блоке ${orderTitle} сделан ` +
+            `${getOrder(com, ordw)?.e ? 'видимым' : 'невидимым'}`,
 
-      modifier(ord);
+          remove: ({ orderTitle, isAnchor }, com) =>
+            `В песне ${getCmComNameInBrackets(com)} ${isAnchor ? 'удалена ссылка на' : 'удалён'} ${orderTitle}`,
 
-      return com;
-    });
-  };
+          insertNewBlock: ({ orderTitle }, com) =>
+            `В песне ${getCmComNameInBrackets(com)} добавлен новый порядковый блок ${orderTitle}`,
 
-  simpleOrdValueSetter = <Key extends keyof IExportableOrder>(key: Key) => {
-    return (ordw: CmComOrderWid, _orderTitle: string, comw: CmComWid, value: IExportableOrder[Key] | null) =>
-      this.modifyOrd(comw, ordw, ord => (ord[key] = value as never));
-  };
+          setPositionsLine: ({ orderTitle, linei, lineChangesText }, com) =>
+            `В песне ${getCmComNameInBrackets(com)} в блоке ${orderTitle} изменена аппликатура в ` +
+            `${linei + 1}-й строке: ${lineChangesText}`,
 
-  getNextOrdWid = (ords: { w: CmComOrderWid }[]) =>
-    ords.reduce((max, curr) => (curr.w > max ? curr.w : max), CmComOrderWid.def) + 1;
+          setModulationValue: ({ orderTitle, value }, com) =>
+            `В песне ${getCmComNameInBrackets(com)} установлено значение модулирования блока ${orderTitle} - ${value}`,
 
-  getOrder = (com: IExportableCom, ordw: CmComOrderWid) => com.o?.find(o => o.w === ordw);
-}
-
-export const cmComOrderServerInvocatorBase = new CmComOrderSokiInvocatorBaseServer();
+          removeRepeats: ({ orderTitle }, com) =>
+            `В песне ${getCmComNameInBrackets(com)} убраны повторения в блоке ${orderTitle}`,
+        },
+      });
+    }
+  })();

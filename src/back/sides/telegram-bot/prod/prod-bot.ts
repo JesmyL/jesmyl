@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 import { valuesFileStore } from 'back/apps/index/file-stores';
 import { backConfig } from 'back/config/backConfig';
 import { SendMessageOptions } from 'node-telegram-bot-api';

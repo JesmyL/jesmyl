@@ -76,7 +76,11 @@ export function ScheduleWidgetSortCriteria({ criteria, criteriai }: Props) {
               placeholder="Новый критерий"
               isRedact={isRenaming}
               onSend={value =>
-                schGamesSokiInvocatorClient.setCriteriaTitle(null, criteriaScopeProps, value, criteria.title)
+                schGamesSokiInvocatorClient.setCriteriaTitle({
+                  props: criteriaScopeProps,
+                  value,
+                  prevTitle: criteria.title,
+                })
               }
             />
             <LazyIcon

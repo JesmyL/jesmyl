@@ -15,6 +15,7 @@ type Props = {
   isCanRedact: boolean;
   dayEventAttScopeProps: ScheduleDayEventAttachmentScopeProps;
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   appAtt: ScheduleWidgetAppAtt<any>;
 
   appAtts: ScheduleWidgetAppAtts;
@@ -24,10 +25,10 @@ type Props = {
 };
 
 export function ScheduleWidgetDayEventAttResult({
-  attKey,
-  day,
-  dayi,
-  isCanRedact,
+  // attKey,
+  // day,
+  // dayi,
+  // isCanRedact,
   dayEventAttScopeProps,
   schedule,
   appAtt,

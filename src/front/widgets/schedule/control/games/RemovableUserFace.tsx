@@ -54,12 +54,11 @@ export function ScheduleWidgetRemovableUserFace({ user, isStriked, buttons }: Pr
           icon={isUserStriked ? 'LinkBackward' : 'Cancel02'}
           className={isUserStriked ? 'color--ok' : 'color--ko'}
           onSend={() =>
-            schGamesSokiInvocatorClient.toggleStrikedUser(
-              null,
-              scheduleScopeProps,
-              user.mi,
-              user.fio ?? user.nick ?? '',
-            )
+            schGamesSokiInvocatorClient.toggleStrikedUser({
+              props: scheduleScopeProps,
+              userMi: user.mi,
+              userName: user.fio ?? user.nick ?? '',
+            })
           }
         />
       </div>

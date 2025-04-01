@@ -7,7 +7,7 @@ import { useCallback } from 'react';
 
 export const BibleTranslationScreenAddressPanel = (props: {
   screeni: number | und;
-  wrapperRef: React.RefObject<HTMLDivElement>;
+  wrapperRef: React.RefObject<HTMLDivElement | null>;
 }) => {
   const currentConfigi = useScreenTranslationCurrentConfigi();
   const updateConfig = useUpdateBibleCurrentTranslationConfig();

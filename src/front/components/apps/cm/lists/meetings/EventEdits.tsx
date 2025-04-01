@@ -68,7 +68,13 @@ export const CmMeetingEventEdits = ({
               icon="Sent"
               prefix="Отправить"
               onSend={() =>
-                cmComExternalsClientInvocatorMethods.setInScheduleEvent(null, schw, dayi, eventMi, selectedComws, fio)
+                cmComExternalsClientInvocatorMethods.setInScheduleEvent({
+                  schw,
+                  dayi,
+                  eventMi,
+                  list: selectedComws,
+                  fio,
+                })
               }
               onSuccess={() => setIsOpenSendModal(false)}
             />

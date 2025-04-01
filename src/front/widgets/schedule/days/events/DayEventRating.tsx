@@ -113,13 +113,12 @@ export function ScheduleWidgetDayEventRating(props: {
                   icon={ratePoint < 0 ? 'Heartbreak' : ratePoint === 0 ? 'HelpCircle' : 'Favourite'}
                   onSend={async () =>
                     ratePoint !== myRate[0] &&
-                    schDayEventsSokiInvocatorClient.setRatePoint(
-                      null,
-                      props.dayEventScopeProps,
-                      myUser.mi,
-                      ratePoint,
-                      myUser.fio ?? myUser.nick ?? '??',
-                    )
+                    schDayEventsSokiInvocatorClient.setRatePoint({
+                      props: props.dayEventScopeProps,
+                      userMi: myUser.mi,
+                      ratePoint: ratePoint,
+                      userName: myUser.fio ?? myUser.nick ?? '??',
+                    })
                   }
                 />
               );
@@ -139,13 +138,12 @@ export function ScheduleWidgetDayEventRating(props: {
             setSelfRedact
             multiline
             onSend={value =>
-              schDayEventsSokiInvocatorClient.setRateComment(
-                null,
-                props.dayEventScopeProps,
-                myUser.mi,
-                value,
-                myUser.fio ?? myUser.nick ?? '??',
-              )
+              schDayEventsSokiInvocatorClient.setRateComment({
+                props: props.dayEventScopeProps,
+                userMi: myUser.mi,
+                comment: value,
+                userName: myUser.fio ?? myUser.nick ?? '??',
+              })
             }
           />
           {ratingNode}

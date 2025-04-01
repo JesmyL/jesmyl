@@ -15,7 +15,7 @@ interface Props {
   text: string;
   subUpdates: string | number | und;
   isTech: boolean | und;
-  wrapperRef: React.RefObject<HTMLDivElement>;
+  wrapperRef: React.RefObject<HTMLDivElement | null>;
   parentConfig: CmTranslationScreenConfig;
   isVisible: boolean;
 }

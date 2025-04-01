@@ -8,8 +8,8 @@ export const cmInitialInvokes = () => {
   cmSokiInvocatorBaseClient.$$register();
 
   const getFreshes = async () => {
-    const lastModified = await cmIDB.get.lastModifiedAt();
-    await cmFreshesSokiInvocatorClient.requestFreshes(null, lastModified);
+    const lastModfiedAt = await cmIDB.get.lastModifiedAt();
+    await cmFreshesSokiInvocatorClient.requestFreshes({ lastModfiedAt });
 
     onLocalComCommentsSendEvent.invoke();
   };

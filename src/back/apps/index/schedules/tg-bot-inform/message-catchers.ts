@@ -1,4 +1,4 @@
-/* eslint-disable no-throw-literal */
+/* eslint-disable no-constant-condition */
 import { jesmylTgBot } from 'back/sides/telegram-bot/bot';
 import { IScheduleWidget, IScheduleWidgetDay, ScheduleWidgetCleans } from 'shared/api';
 import { itNNull, makeRegExp } from 'shared/utils';

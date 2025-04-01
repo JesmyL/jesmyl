@@ -53,7 +53,7 @@ export const CmComEditTransposition = ({ ccom }: { ccom: EditableCom }) => {
                   className={'margin-gap-t ' + (position === initialPosition ? ' text-bold' : '')}
                   onChange={async () => {
                     setIconOnLoad(transposedChord);
-                    await cmComClientInvocatorMethods.changeTon(null, ccom.wid, position);
+                    await cmComClientInvocatorMethods.changeTon({ comw: ccom.wid, value: position });
                     close();
                     setIconOnLoad('');
                   }}

@@ -5,92 +5,124 @@ import { CmComSokiInvocatorModel } from 'shared/api/invocators/cm/com-invocators
 import { CmComOrderSokiInvocatorModel } from 'shared/api/invocators/cm/com-order-invocators.model';
 import { CmEditorSokiInvocatorModel } from 'shared/api/invocators/cm/editor-invocators.model';
 
-class CmCatSokiInvocatorClient extends SokiInvocatorClient<CmCatSokiInvocatorModel> {}
-export const cmCatClientInvocatorMethods = new CmCatSokiInvocatorClient('CmCatSokiInvocatorClient', {
-  rename: true,
+export const cmCatClientInvocatorMethods =
+  new (class CmCatSokiInvocatorClient extends SokiInvocatorClient<CmCatSokiInvocatorModel> {
+    constructor() {
+      super({
+        className: 'CmCatSokiInvocatorClient',
+        methods: {
+          rename: true,
 
-  toggleComExistence: true,
-  removeNativeComNum: true,
-  setNativeComNum: true,
-  setKind: true,
-  clearStack: true,
+          toggleComExistence: true,
+          removeNativeComNum: true,
+          setNativeComNum: true,
+          setKind: true,
+          clearStack: true,
 
-  remove: true,
-  bringBackToLife: true,
-});
+          remove: true,
+          bringBackToLife: true,
+        },
+      });
+    }
+  })();
 
-class CmComSokiInvocatorClient extends SokiInvocatorClient<CmComSokiInvocatorModel> {}
-export const cmComClientInvocatorMethods = new CmComSokiInvocatorClient('CmComSokiInvocatorClient', {
-  newCom: true,
+export const cmComClientInvocatorMethods =
+  new (class CmComSokiInvocatorClient extends SokiInvocatorClient<CmComSokiInvocatorModel> {
+    constructor() {
+      super({
+        className: 'CmComSokiInvocatorClient',
+        methods: {
+          newCom: true,
 
-  rename: true,
-  setBpM: true,
-  setMeterSize: true,
-  changeLanguage: true,
-  changeTon: true,
-  makeBemoled: true,
-  changePushKind: true,
-  setAudioLinks: true,
+          rename: true,
+          setBpM: true,
+          setMeterSize: true,
+          changeLanguage: true,
+          changeTon: true,
+          makeBemoled: true,
+          changePushKind: true,
+          setAudioLinks: true,
 
-  changeChordBlock: true,
-  changeTextBlock: true,
+          changeChordBlock: true,
+          changeTextBlock: true,
 
-  insertChordBlock: true,
-  insertTextBlock: true,
+          insertChordBlock: true,
+          insertTextBlock: true,
 
-  removeChordBlock: true,
-  removeTextBlock: true,
+          removeChordBlock: true,
+          removeTextBlock: true,
 
-  remove: true,
-  destroy: true,
-  bringBackToLife: true,
+          remove: true,
+          destroy: true,
+          bringBackToLife: true,
 
-  printComwVisit: true,
-  takeComwVisitsCount: true,
-  takeRemovedComs: true,
-  getComwVisits: true,
-});
+          printComwVisit: true,
+          takeComwVisitsCount: true,
+          takeRemovedComs: true,
+          getComwVisits: true,
+        },
+      });
+    }
+  })();
 
-class CmComExternalsSokiInvocatorClient extends SokiInvocatorClient<CmComExternalsSokiInvocatorModel> {}
-export const cmComExternalsClientInvocatorMethods = new CmComExternalsSokiInvocatorClient(
-  'CmComExternalsSokiInvocatorClient',
-  {
-    setInScheduleEvent: true,
-    getScheduleEventHistory: true,
-    removeScheduleEventHistoryItem: true,
-  },
-);
+export const cmComExternalsClientInvocatorMethods =
+  new (class CmComExternalsSokiInvocatorClient extends SokiInvocatorClient<CmComExternalsSokiInvocatorModel> {
+    constructor() {
+      super({
+        className: 'CmComExternalsSokiInvocatorClient',
+        methods: {
+          setInScheduleEvent: true,
+          getScheduleEventHistory: true,
+          removeScheduleEventHistoryItem: true,
+        },
+      });
+    }
+  })();
 
-class CmComOrderSokiInvocatorClient extends SokiInvocatorClient<CmComOrderSokiInvocatorModel> {}
-export const cmComOrderClientInvocatorMethods = new CmComOrderSokiInvocatorClient('CmComOrderSokiInvocatorClient', {
-  setRepeats: true,
-  clearOwnRepeats: true,
-  setType: true,
-  bindChordBlock: true,
-  toggleVisibility: true,
-  toggleAnchorInheritVisibility: true,
-  moveOrdAfter: true,
-  addAnchorOrder: true,
-  setTexti: true,
-  toggleVisibilityInMiniMode: true,
-  toggleTitleVisibility: true,
-  remove: true,
-  insertNewBlock: true,
-  setPositionsLine: true,
-  setModulationValue: true,
-  removeRepeats: true,
-});
+export const cmComOrderClientInvocatorMethods =
+  new (class CmComOrderSokiInvocatorClient extends SokiInvocatorClient<CmComOrderSokiInvocatorModel> {
+    constructor() {
+      super({
+        className: 'CmComOrderSokiInvocatorClient',
+        methods: {
+          setRepeats: true,
+          clearOwnRepeats: true,
+          setType: true,
+          bindChordBlock: true,
+          toggleVisibility: true,
+          toggleAnchorInheritVisibility: true,
+          moveOrdAfter: true,
+          addAnchorOrder: true,
+          setTexti: true,
+          toggleVisibilityInMiniMode: true,
+          toggleTitleVisibility: true,
+          remove: true,
+          insertNewBlock: true,
+          setPositionsLine: true,
+          setModulationValue: true,
+          removeRepeats: true,
+        },
+      });
+    }
+  })();
 
-class CmEditorSokiInvocatorClient extends SokiInvocatorClient<CmEditorSokiInvocatorModel> {}
-export const cmEditorClientInvocatorMethods = new CmEditorSokiInvocatorClient('CmEditorSokiInvocatorClient', {
-  requestFreshes: true,
+export const cmEditorClientInvocatorMethods =
+  new (class CmEditorSokiInvocatorClient extends SokiInvocatorClient<CmEditorSokiInvocatorModel> {
+    constructor() {
+      super({
+        className: 'CmEditorSokiInvocatorClient',
+        methods: {
+          requestFreshes: true,
 
-  setChords: true,
-  setEEWords: true,
-  getMp3RulesList: true,
-  setMp3Rule: true,
-  addMp3Rule: true,
-  getResourceHTMLString: true,
-  watchComBusies: true,
-  unwatchComBusies: true,
-});
+          setChords: true,
+          setEEWords: true,
+          getMp3RulesList: true,
+          setMp3Rule: true,
+          addMp3Rule: true,
+          getResourceHTMLString: true,
+          watchComBusies: true,
+          unwatchComBusies: true,
+        },
+      });
+    }
+  })();

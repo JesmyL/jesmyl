@@ -24,7 +24,7 @@ export function ScheduleWidgetSortCriterias() {
             <TheIconSendButton
               icon="PlusSign"
               confirm="Добавить новый критерий?"
-              onSend={() => schGamesSokiInvocatorClient.addCriteria(null, scheduleScopeProps)}
+              onSend={() => schGamesSokiInvocatorClient.addCriteria({ props: scheduleScopeProps })}
             />
           </h3>
 

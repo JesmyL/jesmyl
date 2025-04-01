@@ -56,7 +56,7 @@ export const ScheduleWidgetLiveCmTranslations = ({
         },
       };
 
-      schLiveSokiInvocatorClient.next(null, schedule.w, liveData);
+      schLiveSokiInvocatorClient.next({ schw: schedule.w, data: liveData });
     }, 100);
   }, [ccom, config, currTexti, fio, isCantTranslateLive, schedule.w]);
 

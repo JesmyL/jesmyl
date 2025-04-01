@@ -30,7 +30,7 @@ const fetch = (url: string) => {
 
 export const mp3ResourcesData = new FileStore<CmMp3Rule[]>('/apps/cm/mp3Rules.json', []);
 
-export const cmGetResourceHTMLString = (src: string) => {
+export const cmGetResourceHTMLString = ({ src }: { src: string }) => {
   return new Promise<CmMp3ContainsPageResult>((resolve, reject) => {
     const rules = mp3ResourcesData.getValue();
     const rule = rules.find(({ url }) => src.startsWith(url));

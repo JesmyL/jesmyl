@@ -49,14 +49,13 @@ export const OrdersRedactorOrderToolsBlockType = ({ com, ord, ordi }: OrdersReda
                         onClose();
                       }}
                       onClick={() =>
-                        cmComOrderClientInvocatorMethods.setType(
-                          null,
-                          ord.wid,
-                          ord.me.header(),
-                          com.wid,
-                          styleBlock.key,
-                          styleBlock.title[com.langi],
-                        )
+                        cmComOrderClientInvocatorMethods.setType({
+                          ordw: ord.wid,
+                          orderTitle: ord.me.header(),
+                          comw: com.wid,
+                          type: styleBlock.key,
+                          newTypeTitle: styleBlock.title[com.langi],
+                        })
                       }
                       postfix={newBlockn}
                     />

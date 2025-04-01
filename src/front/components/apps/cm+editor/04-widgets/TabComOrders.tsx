@@ -99,13 +99,12 @@ export const CmEditorTabComOrders = () => {
                   onClick={() => {
                     if (ord.me.anchorInheritIndex == null || ord.me.leadOrd == null) return;
 
-                    return cmComOrderClientInvocatorMethods.toggleAnchorInheritVisibility(
-                      null,
-                      ord.com.wid,
-                      ord.me.leadOrd.wid,
-                      ord.me.anchorInheritIndex,
-                      ord.me.leadOrd.me.header(),
-                    );
+                    return cmComOrderClientInvocatorMethods.toggleAnchorInheritVisibility({
+                      comw: ord.com.wid,
+                      leadOrderWid: ord.me.leadOrd.wid,
+                      anchorInheritIndex: ord.me.anchorInheritIndex,
+                      leadOrderTitle: ord.me.leadOrd.me.header(),
+                    });
                   }}
                 />
               ) : (

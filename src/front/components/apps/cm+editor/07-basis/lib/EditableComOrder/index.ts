@@ -92,15 +92,14 @@ export class EditableComOrder extends Order {
 
     const lineChangesText = preLabel.concat(lineSplitted).concat(postLabel).join('');
 
-    return cmComOrderClientInvocatorMethods.setPositionsLine(
-      null,
-      this.com.wid,
-      this.me.header(),
-      this.getTargetFirst('w'),
-      linei,
-      line,
-      lineChangesText,
-    );
+    return cmComOrderClientInvocatorMethods.setPositionsLine({
+      comw: this.com.wid,
+      orderTitle: this.me.header(),
+      ordw: this.getTargetFirst('w'),
+      linei: linei,
+      line: line,
+      lineChangesText: lineChangesText,
+    });
   }
 
   cutChordPositions(line: string, linei: number) {

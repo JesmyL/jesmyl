@@ -70,7 +70,9 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
 
                 <SendButton
                   title="Отправить только новые события"
-                  onSend={async () => schEventTypesSokiInvocatorClient.putMany(null, scheduleScopeProps, newTypes)}
+                  onSend={async () =>
+                    schEventTypesSokiInvocatorClient.putMany({ props: scheduleScopeProps, tatts: newTypes })
+                  }
                 />
               </>
             )}
@@ -79,7 +81,10 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
               <SendButton
                 title={`Установить время начала дня: ${ScheduleWidgetCleans.computeDayWakeUpTime(dayWup, 'string')}`}
                 onSend={async () =>
-                  schDaysSokiInvocatorClient.setBeginTime(null, { ...scheduleScopeProps, dayi }, '' + dayWup)
+                  schDaysSokiInvocatorClient.setBeginTime({
+                    props: { ...scheduleScopeProps, dayi },
+                    value: '' + dayWup,
+                  })
                 }
               />
             )}
@@ -124,7 +129,10 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
               title="Отправить расписание"
               onSuccess={() => onClose(false)}
               onSend={() =>
-                schDaysSokiInvocatorClient.setEventList(null, { ...scheduleScopeProps, dayi }, list.filter(itNNull))
+                schDaysSokiInvocatorClient.setEventList({
+                  props: { ...scheduleScopeProps, dayi },
+                  list: list.filter(itNNull),
+                })
               }
             />
           </div>,

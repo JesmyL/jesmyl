@@ -8,19 +8,19 @@ export const appInitialInvokes = () => {
   schSokiInvocatorBaseClient.$$register();
 
   const getFreshes = async () => {
-    const lastModified = await indexIDB.get.lastModifiedAt();
+    const lastModfiedAt = await indexIDB.get.lastModifiedAt();
     const localDeviceId = await indexIDB.get.deviceId();
 
     try {
       if (localDeviceId === DeviceId.def) {
-        const deviceId = await indexBasicsSokiInvocatorClient.getDeviceId(null);
+        const deviceId = await indexBasicsSokiInvocatorClient.getDeviceId();
         indexIDB.set.deviceId(deviceId);
       }
     } catch (_e) {
       //
     }
 
-    await indexBasicsSokiInvocatorClient.requestFreshes(null, lastModified);
+    await indexBasicsSokiInvocatorClient.requestFreshes({ lastModfiedAt });
   };
 
   soki.onBeforeAuthorizeEvent.listen(() => indexIDB.remove.lastModifiedAt());

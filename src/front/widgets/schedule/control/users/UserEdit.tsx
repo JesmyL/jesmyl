@@ -26,7 +26,7 @@ export function ScheduleWidgetUserEdit({ user }: { user: IScheduleWidgetUser }) 
         title="Имя"
         icon="User"
         value={user.fio || user.nick}
-        onSend={value => schUsersSokiInvocatorClient.setUserFio(null, scheduleUserScopeProps, value)}
+        onSend={value => schUsersSokiInvocatorClient.setUserFio({ props: scheduleUserScopeProps, fio: value })}
       />
       {rights.myUser && (
         <ScheduleWidgetRightControlList
@@ -41,7 +41,7 @@ export function ScheduleWidgetUserEdit({ user }: { user: IScheduleWidgetUser }) 
             (!rights.isCanTotalRedact &&
               scheduleWidgetUserRights.checkIsHasRights(user.R, ScheduleWidgetUserRoleRight.TotalRedact))
           }
-          onSend={value => schUsersSokiInvocatorClient.setUserRights(null, scheduleUserScopeProps, value)}
+          onSend={value => schUsersSokiInvocatorClient.setUserRights({ props: scheduleUserScopeProps, R: value })}
         />
       )}
     </>

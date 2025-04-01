@@ -25,7 +25,7 @@ export const ComTools = () => {
     if (ccom?.wid == null) return;
 
     (async () => {
-      const visitsCount = await cmComClientInvocatorMethods.takeComwVisitsCount(null, ccom.wid);
+      const visitsCount = await cmComClientInvocatorMethods.takeComwVisitsCount({ comw: ccom.wid });
       setVisitsCount(visitsCount);
     })();
   }, [ccom?.wid]);

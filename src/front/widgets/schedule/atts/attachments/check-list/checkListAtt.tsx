@@ -26,5 +26,7 @@ export const checkListAtt: ScheduleWidgetAppAtts<'SCH', ScheduleChListAtt> = {
     ),
     R: scheduleWidgetUserRights.includeRights(ScheduleWidgetUserRoleRight.Redact),
     U: scheduleWidgetUserRights.includeRights(ScheduleWidgetUserRoleRight.Redact),
+    ExtRoute: () => <></>,
+    useActionPanelNode: () => null,
   },
 };

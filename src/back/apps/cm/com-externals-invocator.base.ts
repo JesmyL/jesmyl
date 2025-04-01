@@ -5,67 +5,66 @@ import { schedulesFileStore } from '../index/schedules/file-stores';
 import { eventPackHistoryFileStore, eventPacksFileStore } from './file-stores';
 import { cmServerInvocatorShareMethods } from './invocator.shares';
 
-class CmComExternalsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmComExternalsSokiInvocatorModel> {
-  constructor() {
-    super(
-      'CmComExternalsSokiInvocatorBaseServer',
-      {
-        setInScheduleEvent: () => async (schw, dayi, eventMi, list, fio) => {
-          const packs = eventPacksFileStore.getValueWithAutoSave();
-          const history = eventPackHistoryFileStore.getValueWithAutoSave();
+export const cmComExternalsSokiInvocatorBaseServer =
+  new (class CmComExternalsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmComExternalsSokiInvocatorModel> {
+    constructor() {
+      super({
+        className: 'CmComExternalsSokiInvocatorBaseServer',
+        methods: {
+          setInScheduleEvent: async ({ schw, dayi, eventMi, list, fio }) => {
+            const packs = eventPacksFileStore.getValueWithAutoSave();
+            const history = eventPackHistoryFileStore.getValueWithAutoSave();
 
-          const m = Date.now() + Math.random();
-          packs[schw] ??= { pack: {}, m, schw };
-          packs[schw].m = m;
-          packs[schw].pack[dayi] ??= {};
-          packs[schw].pack[dayi][eventMi] = list;
+            const m = Date.now() + Math.random();
+            packs[schw] ??= { pack: {}, m, schw };
+            packs[schw].m = m;
+            packs[schw].pack[dayi] ??= {};
+            packs[schw].pack[dayi][eventMi] = list;
 
-          history[schw] ??= {};
-          let dayHistory = history[schw][dayi];
-          if (!smylib.isArr(dayHistory)) dayHistory = history[schw][dayi] = [];
+            history[schw] ??= {};
+            let dayHistory = history[schw][dayi];
+            if (!smylib.isArr(dayHistory)) dayHistory = history[schw][dayi] = [];
 
-          if (dayHistory.length) {
-            const today = new Date().setHours(0, 0, 0, 0);
-            const prevPachi = dayHistory.findIndex(item => item.e === eventMi && item.w > today);
-            if (prevPachi > -1) dayHistory.splice(prevPachi, 1);
-          }
+            if (dayHistory.length) {
+              const today = new Date().setHours(0, 0, 0, 0);
+              const prevPachi = dayHistory.findIndex(item => item.e === eventMi && item.w > today);
+              if (prevPachi > -1) dayHistory.splice(prevPachi, 1);
+            }
 
-          dayHistory.unshift({ s: list, w: m, e: eventMi, fio });
+            dayHistory.unshift({ s: list, w: m, e: eventMi, fio });
 
-          cmServerInvocatorShareMethods.refreshScheduleEventComPacks(null, [packs[schw]], m);
+            cmServerInvocatorShareMethods.refreshScheduleEventComPacks({ packs: [packs[schw]], modifiedAt: m });
+          },
+
+          getScheduleEventHistory: async ({ schw, dayi }) => {
+            const history = eventPackHistoryFileStore.getValue();
+
+            return history[schw]?.[dayi] ?? [];
+          },
+
+          removeScheduleEventHistoryItem: async ({ schw, dayi, writedAt }) => {
+            const history = eventPackHistoryFileStore.getValue();
+            const itemi = history[schw]?.[dayi]?.findIndex(item => item.w === writedAt);
+
+            if (itemi == null || itemi < 0) throw new Error('item not found');
+
+            history[schw]?.[dayi]?.splice(itemi, 1);
+
+            return history[schw]?.[dayi] ?? [];
+          },
         },
 
-        getScheduleEventHistory: () => async (schw, dayi) => {
-          const history = eventPackHistoryFileStore.getValue();
+        onEachFeedbackTools: {
+          setInScheduleEvent: ({ schw }) =>
+            `Обновлён список песен в расписании ` +
+            `"${schedulesFileStore.getValue().find(sch => sch.w === schw)?.title ?? '??'}"`,
 
-          return history[schw]?.[dayi] ?? [];
+          removeScheduleEventHistoryItem: ({ schw }) =>
+            `Удалена пачка песен из истории события в расписании ` +
+            `"${schedulesFileStore.getValue().find(sch => sch.w === schw)?.title ?? '??'}"`,
+
+          getScheduleEventHistory: null,
         },
-
-        removeScheduleEventHistoryItem: () => async (schw, dayi, writedAt) => {
-          const history = eventPackHistoryFileStore.getValue();
-          const itemi = history[schw]?.[dayi]?.findIndex(item => item.w === writedAt);
-
-          if (itemi == null || itemi < 0) throw new Error('item not found');
-
-          history[schw]?.[dayi]?.splice(itemi, 1);
-
-          return history[schw]?.[dayi] ?? [];
-        },
-      },
-
-      {
-        setInScheduleEvent: (_, schw) =>
-          `Обновлён список песен в расписании ` +
-          `"${schedulesFileStore.getValue().find(sch => sch.w === schw)?.title ?? '??'}"`,
-
-        removeScheduleEventHistoryItem: (_, schw) =>
-          `Удалена пачка песен из истории события в расписании ` +
-          `"${schedulesFileStore.getValue().find(sch => sch.w === schw)?.title ?? '??'}"`,
-
-        getScheduleEventHistory: null,
-      },
-    );
-  }
-}
-
-export const cmComExternalsSokiInvocatorBaseServer = new CmComExternalsSokiInvocatorBaseServer();
+      });
+    }
+  })();

@@ -137,7 +137,7 @@ export class SokiTrip {
 
   send = <InvokedResult = unknown>(
     event: OmitOwn<InvocatorClientEvent, 'requestId'>,
-    tool?: InvocatorClientTool | null,
+    tool?: InvocatorClientTool | nil | void,
   ) => {
     const requestId = '' + Date.now() + Math.random();
     const fullEvent = { ...event, requestId };

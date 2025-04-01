@@ -16,7 +16,7 @@ export const CmMeetingEventEditsHistoryModalInner = ({ dayi, schw }: { dayi: num
     null,
     async ({ aborter }) => {
       if (mylib.isNaN(schw) || mylib.isNaN(dayi)) return null;
-      return cmComExternalsClientInvocatorMethods.getScheduleEventHistory({ aborter }, schw, dayi);
+      return cmComExternalsClientInvocatorMethods.getScheduleEventHistory({ schw, dayi }, { aborter });
     },
     [schw, dayi],
   );
@@ -62,12 +62,11 @@ export const CmMeetingEventEditsHistoryModalInner = ({ dayi, schw }: { dayi: num
                   className="color--ko"
                   confirm="Удалить эту запись?"
                   onSend={async () => {
-                    const packs = await cmComExternalsClientInvocatorMethods.removeScheduleEventHistoryItem(
-                      null,
+                    const packs = await cmComExternalsClientInvocatorMethods.removeScheduleEventHistoryItem({
                       schw,
                       dayi,
-                      pack.w,
-                    );
+                      writedAt: pack.w,
+                    });
 
                     setHistoryPacks(packs);
                   }}

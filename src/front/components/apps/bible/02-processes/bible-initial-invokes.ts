@@ -9,7 +9,7 @@ export const bibleInitialInvokes = () => {
     const lastModifiedAt = await bibleTranslatesIDB.get.lastModifiedAt();
     const myTranslates = await bibleIDB.get.myTranslates();
 
-    bibleSokiInvocatorClient.requestFreshes(null, lastModifiedAt, myTranslates);
+    bibleSokiInvocatorClient.requestFreshes({ lastModifiedAt, myTranslates });
   };
 
   soki.onBeforeAuthorizeEvent.listen(() => {

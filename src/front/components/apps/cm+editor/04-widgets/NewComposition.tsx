@@ -203,7 +203,7 @@ export const NewComposition = ({ onClose }: { onClose: (is: false) => void }) =>
             chordsErrors.some(corrects => corrects.errors?.length) ||
             textsErrors.some(corrects => corrects.errors?.length)
           }
-          onSend={() => cmComClientInvocatorMethods.newCom(null, newCom)}
+          onSend={() => cmComClientInvocatorMethods.newCom({ value: newCom })}
           onSuccess={com => {
             onClose(false);
             navigate({ to: '/cm/edit/coms/$comw', params: { comw: `${com.w}` } });

@@ -47,13 +47,12 @@ export const OrdersRedactorOrderToolsMoveBlock = (props: OrdersRedactorOrderTool
             return isFoundTargetOrdPrev;
           },
           onClick: async ({ aboveLeadOrdw }) => {
-            await cmComOrderClientInvocatorMethods.moveOrdAfter(
-              null,
-              props.ord.wid,
-              props.ord.me.header(),
-              props.com.wid,
-              aboveLeadOrdw,
-            );
+            await cmComOrderClientInvocatorMethods.moveOrdAfter({
+              ordw: props.ord.wid,
+              orderTitle: props.ord.me.header(),
+              comw: props.com.wid,
+              insertAfterOrdwOrFirst: aboveLeadOrdw,
+            });
           },
         });
       }}

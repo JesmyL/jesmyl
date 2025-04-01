@@ -94,7 +94,13 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
                     }}
                     onSend={async () =>
                       movementEvent &&
-                      schDaysSokiInvocatorClient.moveEvent(null, dayScopeProps, movementEvent.mi, beforei)
+                      schDaysSokiInvocatorClient.moveEvent({
+                        props: dayScopeProps,
+                        value: {
+                          eventMi: movementEvent.mi,
+                          beforei,
+                        },
+                      })
                     }
                   >
                     {movementBox && (
@@ -182,12 +188,10 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
                         className="color--ko"
                         disabled={moveEventMi !== null}
                         onSend={() =>
-                          schDaysSokiInvocatorClient.removeEvent(
-                            null,
-                            dayScopeProps,
-                            event.mi,
-                            rights.schedule.types[event.type].title,
-                          )
+                          schDaysSokiInvocatorClient.removeEvent({
+                            props: dayScopeProps,
+                            value: { eventMi: event.mi, eventTypeTitle: rights.schedule.types[event.type].title },
+                          })
                         }
                       />
                     )}
@@ -207,7 +211,7 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
               icon="PlusSign"
               schedule={rights.schedule}
               usedCounts={usedCounts}
-              onItemSelectSend={typei => schDaysSokiInvocatorClient.addEvent(null, dayScopeProps, typei)}
+              onItemSelectSend={typei => schDaysSokiInvocatorClient.addEvent({ props: dayScopeProps, value: typei })}
             />
           )}
         </>

@@ -2,10 +2,10 @@ import { makeSokiInvocator } from 'shared/api/complect/SokiInvocator.master';
 import { SokiServerClientSelector } from './complect/soki/model';
 import { sokiServer } from './complect/soki/SokiServer';
 
-export const SokiInvocatorServer = makeSokiInvocator<'SokiInvocatorServer', SokiServerClientSelector>(
-  false,
-  'SokiInvocatorServer',
-  (invoke, clientSelector) => {
+export const SokiInvocatorServer = makeSokiInvocator<'SokiInvocatorServer', SokiServerClientSelector | nil | void>({
+  isNeedCheckClassName: false,
+  classNamePostfix: 'SokiInvocatorServer',
+  send: (invoke, clientSelector) => {
     const { promise, reject, resolve } = Promise.withResolvers();
     try {
       sokiServer.send({ invoke, requestId: '' + Date.now() + Math.random() }, clientSelector);
@@ -16,4 +16,4 @@ export const SokiInvocatorServer = makeSokiInvocator<'SokiInvocatorServer', Soki
 
     return promise;
   },
-);
+});

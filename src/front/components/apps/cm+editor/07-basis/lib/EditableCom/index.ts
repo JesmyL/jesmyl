@@ -25,7 +25,7 @@ export class EditableCom extends EditableComParseBlocks {
 
     const val = col.replace(gSimpleBemoleChordReg, chord => chordDiezEquivalent[chord] || chord);
 
-    cmComClientInvocatorMethods.changeChordBlock(null, coli, this.wid, val);
+    cmComClientInvocatorMethods.changeChordBlock({ texti: coli, comw: this.wid, value: val });
   }
 
   getRegionNextLetter() {

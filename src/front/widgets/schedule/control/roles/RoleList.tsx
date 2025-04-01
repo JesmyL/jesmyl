@@ -23,7 +23,7 @@ export function ScheduleWidgetRoleList() {
           icon="PlusSign"
           prefix="роль"
           confirm="Добавить новую роль?"
-          onSend={() => schRolesSokiInvocatorClient.createRole(null, scheduleScopeProps)}
+          onSend={() => schRolesSokiInvocatorClient.createRole({ props: scheduleScopeProps })}
         />
       ),
   );

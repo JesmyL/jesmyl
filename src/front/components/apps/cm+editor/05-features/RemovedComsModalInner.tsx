@@ -15,7 +15,7 @@ export const RemovedComsModalInner = () => {
   const [openComw, setOpenComw] = useState<CmComWid | null>(null);
   const [icoms] = useInvocatedValue(
     emptyArray,
-    ({ aborter }) => cmComClientInvocatorMethods.takeRemovedComs({ aborter }),
+    ({ aborter }) => cmComClientInvocatorMethods.takeRemovedComs(undefined, { aborter }),
     emptyArray,
   );
 
@@ -49,13 +49,13 @@ const comControls = (com: Com) => (
       icon="PlusSignCircle"
       className="color--ok"
       confirm="Восстановить эту песню?"
-      onSend={() => cmComClientInvocatorMethods.bringBackToLife(null, com.wid)}
+      onSend={() => cmComClientInvocatorMethods.bringBackToLife({ comw: com.wid })}
     />
     <TheIconSendButton
       icon="CancelCircleHalfDot"
       className="color--ko"
       confirm="Уничтожить эту песню?"
-      onSend={() => cmComClientInvocatorMethods.destroy(null, com.wid)}
+      onSend={() => cmComClientInvocatorMethods.destroy({ comw: com.wid })}
     />
   </div>
 );

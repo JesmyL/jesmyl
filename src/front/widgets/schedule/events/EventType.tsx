@@ -48,7 +48,11 @@ export function ScheduleWidgetEventType(props: {
         isImpossibleEmptyValue
         onChange={setTitle}
         onSend={value =>
-          schEventTypesSokiInvocatorClient.setTitle(null, eventTypeScopeProps, value, props.typeBox.title)
+          schEventTypesSokiInvocatorClient.setTitle({
+            props: eventTypeScopeProps,
+            value,
+            prevTitle: props.typeBox.title,
+          })
         }
       />
       {error && (
@@ -64,7 +68,7 @@ export function ScheduleWidgetEventType(props: {
         isRedact={props.isRedact}
         title="Продолжительность, мин"
         icon="Clock01"
-        onSend={value => schEventTypesSokiInvocatorClient.setTm(null, eventTypeScopeProps, +value)}
+        onSend={value => schEventTypesSokiInvocatorClient.setTm({ props: eventTypeScopeProps, tm: +value })}
       />
       {props.isRedact ? (
         <ScheduleWidgetBindAtts
@@ -88,19 +92,21 @@ export function ScheduleWidgetEventType(props: {
               items={attTranslatorTypes}
               className="margin-gap-b"
               onSend={() =>
-                schEventTypesSokiInvocatorClient.setAttImaginePeriod(
-                  null,
-                  { ...eventTypeScopeProps, attKey },
-                  attTranslatorType,
-                )
+                schEventTypesSokiInvocatorClient.setAttImaginePeriod({
+                  props: { ...eventTypeScopeProps, attKey },
+                  value: attTranslatorType,
+                })
               }
             />
           )}
           onAddAttSend={attKey =>
-            schEventTypesSokiInvocatorClient.bindAttImagine(null, { ...eventTypeScopeProps, attKey }, attTranslatorType)
+            schEventTypesSokiInvocatorClient.bindAttImagine({
+              props: { ...eventTypeScopeProps, attKey },
+              attTranslatorType,
+            })
           }
           onRemoveAttSend={async attKey => {
-            schEventTypesSokiInvocatorClient.removeAttImagine(null, { ...eventTypeScopeProps, attKey });
+            schEventTypesSokiInvocatorClient.removeAttImagine({ props: { ...eventTypeScopeProps, attKey } });
           }}
         />
       ) : (

@@ -21,7 +21,11 @@ export function ScheduleWidgetTeamGame() {
         placeholder="Командная игра"
         isRedact={isRenaming}
         onSend={value =>
-          schGamesSokiInvocatorClient.setTitle(null, { ...scheduleScopeProps, gameMi: game.mi }, value, game.title)
+          schGamesSokiInvocatorClient.setTitle({
+            props: { ...scheduleScopeProps, gameMi: game.mi },
+            value,
+            prevTitle: game.title,
+          })
         }
       />
       <LazyIcon

@@ -29,7 +29,7 @@ export const IndexTelegramInlineAuthButton = () => {
                     icon="Telegram"
                     className="color--ok"
                     onSend={async () =>
-                      await indexBasicsSokiInvocatorClient.authMeByTelegramMiniButton(null, api.initDataUnsafe.user)
+                      await indexBasicsSokiInvocatorClient.authMeByTelegramMiniButton({ user: api.initDataUnsafe.user })
                     }
                   />
                 )

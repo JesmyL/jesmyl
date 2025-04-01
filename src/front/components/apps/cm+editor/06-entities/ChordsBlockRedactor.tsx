@@ -18,7 +18,13 @@ export const CmChordsBlockRedactor = ({ text, texti, ccom }: { texti: number; te
         <TheIconButton
           icon="PlusSignCircle"
           confirm="Вставить новый блок в самое начало?"
-          onClick={() => cmComClientInvocatorMethods.insertChordBlock(null, '', ccom.wid, 0)}
+          onClick={() =>
+            cmComClientInvocatorMethods.insertChordBlock({
+              value: '',
+              comw: ccom.wid,
+              insertToi: 0,
+            })
+          }
         />
       )}
       <div className="flex between">
@@ -38,7 +44,13 @@ export const CmChordsBlockRedactor = ({ text, texti, ccom }: { texti: number; te
           <TheIconButton
             icon="Cancel01"
             confirm={`Удалить блок?\n\n${text}`}
-            onClick={() => cmComClientInvocatorMethods.removeChordBlock(null, ccom.wid, text, texti)}
+            onClick={() =>
+              cmComClientInvocatorMethods.removeChordBlock({
+                comw: ccom.wid,
+                value: text,
+                removei: texti,
+              })
+            }
           />
         </span>
       </div>
@@ -56,7 +68,13 @@ export const CmChordsBlockRedactor = ({ text, texti, ccom }: { texti: number; te
       <TheIconButton
         icon="PlusSignCircle"
         confirm="Вставить новый блок сюда?"
-        onClick={() => cmComClientInvocatorMethods.insertChordBlock(null, '', ccom.wid, texti + 1)}
+        onClick={() =>
+          cmComClientInvocatorMethods.insertChordBlock({
+            value: '',
+            comw: ccom.wid,
+            insertToi: texti + 1,
+          })
+        }
       />
     </div>
   );

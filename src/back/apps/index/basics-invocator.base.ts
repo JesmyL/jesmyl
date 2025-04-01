@@ -64,19 +64,28 @@ appVersionFileStore.watchFile(value => {
   }, 2000);
 });
 
-const authByTgUser = () => async (user: TelegramNativeAuthUserData) => {
+const authByTgUser = async ({ user }: { user: TelegramNativeAuthUserData }) => {
   const auth = await makeAuthFromUser(user);
   return { token: jwt.sign(auth, tokenSecretFileStore.getValue().token, { expiresIn: '100 D' }), auth };
 };
 
-class IndexBasicsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexBasicsSokiInvocatorModel> {
-  constructor() {
-    super(
-      'IndexBasicsSokiInvocatorBaseServer',
-      {
-        requestFreshes:
-          ({ client, auth }) =>
-          async lastModfiedAt => {
+export const indexServerInvocatorBase =
+  new (class IndexBasicsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexBasicsSokiInvocatorModel> {
+    constructor() {
+      super({
+        className: 'IndexBasicsSokiInvocatorBaseServer',
+        beforeEacheTools: {
+          getIndexValues: { minLevel: 0, minVersion: 0 },
+          getFreshAppVersion: { minLevel: 0, minVersion: 0 },
+          authMeByTelegramBotNumber: { minLevel: 0 },
+          authMeByTelegramInScheduleDay: { minLevel: 0 },
+          authMeByTelegramMiniButton: { minLevel: 0 },
+          authMeByTelegramNativeButton: { minLevel: 0 },
+          getDeviceId: { minLevel: 0 },
+          requestFreshes: { minLevel: 0 },
+        },
+        methods: {
+          requestFreshes: async ({ lastModfiedAt }, { client, auth }) => {
             const isNoAuth = auth == null;
             const someScheduleUser = (user: IScheduleWidgetUser) => user.login === auth!.login;
 
@@ -98,56 +107,55 @@ class IndexBasicsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<IndexBa
               })
               .filter(itNNull);
 
-            if (schedules.length) schServerInvocatorShareMethods.refreshSchedules(client, schedules);
+            if (schedules.length) schServerInvocatorShareMethods.refreshSchedules({ schs: schedules }, client);
           },
-        getDeviceId: () => async () => {
-          return (makeTwiceKnownName().replace(makeRegExp('/ /g'), '_') +
-            '_' +
-            Array(5)
-              .fill(0)
-              .map(() => smylib.randomItem(deviceIdPostfixSymbols))
-              .join('')) as never;
+          getDeviceId: async () => {
+            return (makeTwiceKnownName().replace(makeRegExp('/ /g'), '_') +
+              '_' +
+              Array(5)
+                .fill(0)
+                .map(() => smylib.randomItem(deviceIdPostfixSymbols))
+                .join('')) as never;
+          },
+
+          authMeByTelegramNativeButton: authByTgUser,
+          authMeByTelegramMiniButton: authByTgUser,
+          authMeByTelegramInScheduleDay: authByTgUser,
+
+          authMeByTelegramBotNumber: async ({ secretNumber }) => {
+            const user = supportTelegramAuthorizations[secretNumber]?.().from;
+            if (user == null) throw new Error('code is invalid');
+            return authByTgUser({ user });
+          },
+
+          getFreshAppVersion: async () => appVersionFileStore.getValue().num,
+          getIndexValues: async () => valuesFileStore.getValue(),
         },
+        onEachFeedbackTools: {
+          authMeByTelegramBotNumber: (_, { auth }) =>
+            `Авторизация ${auth.fio} (${auth.nick ?? '??'}) через TG-код\n\n<blockquote expandable>` +
+            `${JSON.stringify(auth, null, 1)}</blockquote>`,
 
-        authMeByTelegramNativeButton: authByTgUser,
-        authMeByTelegramMiniButton: authByTgUser,
-        authMeByTelegramInScheduleDay: authByTgUser,
+          authMeByTelegramNativeButton: (_, { auth }) =>
+            `Авторизация ${auth.fio} (${auth.nick ?? '??'}) через TG-auth-native кнопку\n\n` +
+            `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
 
-        authMeByTelegramBotNumber: () => async secretNumber => {
-          const user = supportTelegramAuthorizations[secretNumber]?.().from;
-          if (user == null) throw new Error('code is invalid');
-          return authByTgUser()(user);
+          authMeByTelegramMiniButton: (_, { auth }) =>
+            `Авторизация ${auth.fio} (${auth.nick ?? '??'}) через TG-mini-icon кнопку\n\n` +
+            `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
+
+          authMeByTelegramInScheduleDay: (_, { auth }) =>
+            `Авторизация ${auth.fio} (${auth.nick ?? '??'}) в расписании дня\n\n` +
+            `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
+
+          getDeviceId: deviceId => `Запрос DeviceId - ${deviceId}`,
+
+          requestFreshes: null,
+          getFreshAppVersion: null,
+          getIndexValues: null,
         },
-
-        getFreshAppVersion: () => async () => appVersionFileStore.getValue().num,
-        getIndexValues: () => async () => valuesFileStore.getValue(),
-      },
-      {
-        authMeByTelegramBotNumber: ({ auth }) =>
-          `Авторизация ${auth.fio} (${auth.nick ?? '??'}) через TG-код\n\n<blockquote expandable>` +
-          `${JSON.stringify(auth, null, 1)}</blockquote>`,
-
-        authMeByTelegramNativeButton: ({ auth }) =>
-          `Авторизация ${auth.fio} (${auth.nick ?? '??'}) через TG-auth-native кнопку\n\n` +
-          `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
-
-        authMeByTelegramMiniButton: ({ auth }) =>
-          `Авторизация ${auth.fio} (${auth.nick ?? '??'}) через TG-mini-icon кнопку\n\n` +
-          `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
-
-        authMeByTelegramInScheduleDay: ({ auth }) =>
-          `Авторизация ${auth.fio} (${auth.nick ?? '??'}) в расписании дня\n\n` +
-          `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
-
-        getDeviceId: deviceId => `Запрос DeviceId - ${deviceId}`,
-
-        requestFreshes: null,
-        getFreshAppVersion: null,
-        getIndexValues: null,
-      },
-    );
-  }
-}
-export const indexServerInvocatorBase = new IndexBasicsSokiInvocatorBaseServer();
+      });
+    }
+  })();
 
 schGeneralSokiInvocatorBaseServer.$$register();

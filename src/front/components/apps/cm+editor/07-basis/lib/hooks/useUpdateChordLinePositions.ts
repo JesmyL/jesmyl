@@ -31,15 +31,14 @@ export const useUpdateLinePositions = () => {
     clearTimeout(timeouts[key]);
     timeouts[key] = setTimeout(async () => {
       try {
-        await cmComOrderClientInvocatorMethods.setPositionsLine(
-          null,
-          ord.com.wid,
-          ord.me.header(),
-          ord.wid,
-          linei,
-          line,
-          textLines[linei],
-        );
+        await cmComOrderClientInvocatorMethods.setPositionsLine({
+          comw: ord.com.wid,
+          orderTitle: ord.me.header(),
+          ordw: ord.wid,
+          linei: linei,
+          line: line,
+          lineChangesText: textLines[linei],
+        });
       } catch (_e) {
         //
       }

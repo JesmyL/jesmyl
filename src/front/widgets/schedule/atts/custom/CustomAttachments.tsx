@@ -38,7 +38,7 @@ export function ScheduleWidgetCustomAttachments(props: { tatts: ScheduleWidgetAp
                 confirm="Создать шаблон вложения?"
                 disabled={props.tatts.some(att => !att.title || !att.description)}
                 disabledReason="Есть шаблоны вложений без названия или описания"
-                onSend={() => schAttachmentTypesSokiInvocatorClient.create(null, scheduleScopeProps)}
+                onSend={() => schAttachmentTypesSokiInvocatorClient.create({ props: scheduleScopeProps })}
               />
             </div>
           </ModalHeader>

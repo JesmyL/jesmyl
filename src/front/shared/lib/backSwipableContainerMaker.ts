@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { TouchEventHandler } from 'react';
 
 const maxLim = window.innerWidth;

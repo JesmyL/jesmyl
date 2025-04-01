@@ -71,13 +71,12 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
                   postfix={user?.fio || user?.nick}
                   onSuccess={() => setIsUserSetModalOpen(false)}
                   onSend={() =>
-                    schRolesSokiInvocatorClient.setRoleUser(
-                      null,
-                      roleScopeProps,
-                      user.mi,
-                      role.title,
-                      user.fio ?? user.nick ?? '?',
-                    )
+                    schRolesSokiInvocatorClient.setRoleUser({
+                      props: roleScopeProps,
+                      value: user.mi,
+                      roleTitle: role.title,
+                      userName: user.fio ?? user.nick ?? '?',
+                    })
                   }
                 />
               );
@@ -106,13 +105,12 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
                       isRedact
                       value={catName}
                       onSend={value =>
-                        schRolesSokiInvocatorClient.setRoleCategoryTitle(
-                          null,
-                          scheduleScopeProps,
-                          catNamei,
-                          value,
-                          catName,
-                        )
+                        schRolesSokiInvocatorClient.setRoleCategoryTitle({
+                          props: scheduleScopeProps,
+                          cati: catNamei,
+                          title: value,
+                          prevTitle: catName,
+                        })
                       }
                     />
                   );
@@ -126,13 +124,12 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
                       postfix={catName}
                       onSuccess={() => setIsCatSetModalOpen(false)}
                       onSend={() =>
-                        schRolesSokiInvocatorClient.setCategoryForRole(
-                          null,
-                          roleScopeProps,
-                          catNamei,
-                          role.title,
-                          catName,
-                        )
+                        schRolesSokiInvocatorClient.setCategoryForRole({
+                          props: roleScopeProps,
+                          value: catNamei,
+                          roleTitle: role.title,
+                          catTitle: catName,
+                        })
                       }
                     />
                   );
@@ -142,7 +139,7 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
             {!rights.schedule.ctrl.cats.includes('') && catsRedact.isRedact && (
               <TheIconSendButton
                 icon="FolderAdd"
-                onSend={() => schRolesSokiInvocatorClient.addRoleCategory(null, roleScopeProps)}
+                onSend={() => schRolesSokiInvocatorClient.addRoleCategory({ props: roleScopeProps })}
               />
             )}
           </ModalFooter>
@@ -160,13 +157,21 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
               value={role}
               fieldKey="title"
               postfix={roleUser && ' - ' + (roleUser.fio || roleUser.nick)}
-              onSend={value => schRolesSokiInvocatorClient.setRoleTitle(null, roleScopeProps, value, role.title)}
+              onSend={value =>
+                schRolesSokiInvocatorClient.setRoleTitle({ props: roleScopeProps, value, prevTitle: role.title })
+              }
             />
             <LazyIconConfigurator
               header={`Иконка для роли ${role.title}`}
               icon={role.icon ?? 'Github01'}
               used={rights.schedule.ctrl.roles.map(role => role.icon)}
-              onSend={icon => schRolesSokiInvocatorClient.setRoleIcon(null, roleScopeProps, icon, role.title)}
+              onSend={icon =>
+                schRolesSokiInvocatorClient.setRoleIcon({
+                  props: roleScopeProps,
+                  value: icon,
+                  roleTitle: role.title,
+                })
+              }
             />
             {rights.isCanTotalRedact && (
               <>
@@ -182,7 +187,9 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
                     }
                     postfix="Освободить роль"
                     className="flex-max margin-gap-v"
-                    onSend={() => schRolesSokiInvocatorClient.makeFreeRole(null, roleScopeProps, role.title)}
+                    onSend={() =>
+                      schRolesSokiInvocatorClient.makeFreeRole({ props: roleScopeProps, value: role.title })
+                    }
                   />
                 )}
                 {roleUser ? (

@@ -1,5 +1,4 @@
 /* eslint-disable no-constant-condition */
-/* eslint-disable no-cond-assign */
 import { cyTestAuthorize, cyTestReauthorize } from './authorize';
 import { cyTestCmActionsWithComTools } from './cm/com/actions-with-com-tools';
 import { cyTestCmCreateCom } from './cm/com/create-com.cy';

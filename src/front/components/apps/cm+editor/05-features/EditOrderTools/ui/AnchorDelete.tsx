@@ -31,7 +31,12 @@ export const OrdersRedactorOrderToolsAnchorDelete = ({ com, ord, onClose }: Orde
         )
           return;
 
-        await cmComOrderClientInvocatorMethods.remove(null, ord.me.header(), com.wid, ord.wid, ord.isAnchor);
+        await cmComOrderClientInvocatorMethods.remove({
+          orderTitle: ord.me.header(),
+          comw: com.wid,
+          ordw: ord.wid,
+          isAnchor: ord.isAnchor,
+        });
         onClose(false);
       }}
     >

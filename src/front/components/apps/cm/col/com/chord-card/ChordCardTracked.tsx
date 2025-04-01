@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { JSX, ReactNode } from 'react';
 import { ChordTrack } from 'shared/api';
 import './ChordCard.scss';
 
@@ -37,7 +37,7 @@ export function ChordCardTracked({
   const betweenLad = 80 - baseLad * 0.7;
   const isFLad = baseLad === 0;
 
-  const mutes = !mutesStr ? [] : mutesStr.split('').map(Number) ?? [];
+  const mutes = !mutesStr ? [] : (mutesStr.split('').map(Number) ?? []);
 
   const lads: number[] = [];
   for (let i = 1; i <= (track.length > 4 ? track.length - 1 : 3); i++) {

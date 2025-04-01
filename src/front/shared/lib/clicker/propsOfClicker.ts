@@ -8,7 +8,7 @@ interface Props<Elem> {
   onDblClick?: (event: React.MouseEvent<Elem, MouseEvent> | (React.TouchEvent<Elem> & ClientPoints)) => void;
 }
 
-export function propsOfClicker<Elem extends HTMLElement>({ onCtxMenu, onDblClick }: Props<Elem>) {
+export function propsOfClicker<Elem extends HTMLElement>({ onCtxMenu, onDblClick }: Props<Elem>): object {
   const mouseCallback = (event: React.MouseEvent<Elem>) => {
     event.stopPropagation();
   };
@@ -17,11 +17,11 @@ export function propsOfClicker<Elem extends HTMLElement>({ onCtxMenu, onDblClick
   };
 
   const overridableProps = {
-    onTouchStart: (event: React.TouchEvent<Elem> & ClientPoints) => {
+    onTouchStart: (event: React.TouchEvent<Elem>) => {
       touchCallback(event);
 
-      event.clientX = event.touches[0].clientX;
-      event.clientY = event.touches[0].clientY;
+      (event as never as { clientX: unknown }).clientX = event.touches[0].clientX;
+      (event as never as { clientY: unknown }).clientY = event.touches[0].clientY;
     },
     onTouchMove: touchCallback,
     onTouchEnd: touchCallback,
@@ -108,7 +108,7 @@ export function propsOfClicker<Elem extends HTMLElement>({ onCtxMenu, onDblClick
 
       if (prevClick === null) prevClick = now;
       else if (prevClick > now - 500) {
-        onDblClick(event);
+        onDblClick(event as never);
         isDblClicked = true;
       }
     };

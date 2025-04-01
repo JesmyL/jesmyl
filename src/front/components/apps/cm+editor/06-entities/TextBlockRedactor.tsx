@@ -16,7 +16,13 @@ export const CmTextBlockRedactor = ({ texti, text, ccom }: { texti: number; text
         <TheIconButton
           icon="PlusSignCircle"
           confirm="Вставить новый блок в самое начало?"
-          onClick={() => cmComClientInvocatorMethods.insertTextBlock(null, '', ccom.wid, 0)}
+          onClick={() =>
+            cmComClientInvocatorMethods.insertTextBlock({
+              value: '',
+              comw: ccom.wid,
+              insertToi: 0,
+            })
+          }
         />
       )}
       <div className="flex between">
@@ -28,7 +34,13 @@ export const CmTextBlockRedactor = ({ texti, text, ccom }: { texti: number; text
         <span className="flex flex-gap">
           <TheIconButton
             icon="Cancel01"
-            onClick={() => cmComClientInvocatorMethods.removeTextBlock(null, ccom.wid, text, texti)}
+            onClick={() =>
+              cmComClientInvocatorMethods.removeTextBlock({
+                comw: ccom.wid,
+                value: text,
+                removei: texti,
+              })
+            }
             confirm={`Удалить${text ? '' : ' новый'} блок?\n\n${text}`}
           />
         </span>
@@ -45,7 +57,13 @@ export const CmTextBlockRedactor = ({ texti, text, ccom }: { texti: number; text
       <TheIconButton
         icon="PlusSignCircle"
         confirm="Вставить новый блок сюда?"
-        onClick={() => cmComClientInvocatorMethods.insertTextBlock(null, '', ccom.wid, texti + 1)}
+        onClick={() =>
+          cmComClientInvocatorMethods.insertTextBlock({
+            value: '',
+            comw: ccom.wid,
+            insertToi: texti + 1,
+          })
+        }
       />
       <TextCorrectMessages corrects={corrects} />
     </div>

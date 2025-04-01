@@ -44,7 +44,7 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
                 <TheIconSendButton
                   icon="PlusSign"
                   confirm={`Создать новое ${cat.title}?`}
-                  onSend={() => schListsSokiInvocatorClient.createUnit(null, catScopeProps, cati)}
+                  onSend={() => schListsSokiInvocatorClient.createUnit({ props: catScopeProps, cati })}
                 />
               )}
               <LazyIcon
@@ -84,7 +84,7 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
               header={`Иконка для списка ${cat.title}`}
               icon={cat.icon}
               used={[cat.icon]}
-              onSend={icon => schListsSokiInvocatorClient.setCategoryIcon(null, catScopeProps, icon)}
+              onSend={icon => schListsSokiInvocatorClient.setCategoryIcon({ props: catScopeProps, value: icon })}
             />
             <StrongEditableField
               icon="SchoolReportCard"
@@ -92,19 +92,19 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
               value={cat}
               fieldKey="title"
               isRedact
-              onSend={value => schListsSokiInvocatorClient.setCategoryTitle(null, catScopeProps, value)}
+              onSend={value => schListsSokiInvocatorClient.setCategoryTitle({ props: catScopeProps, value })}
             />
             <StrongEditableField
               title="Заголовок руководителям"
               value={cat.titles[0]}
               isRedact
-              onSend={value => schListsSokiInvocatorClient.setCategoryMentorsTitle(null, catScopeProps, value)}
+              onSend={value => schListsSokiInvocatorClient.setCategoryMentorsTitle({ props: catScopeProps, value })}
             />
             <StrongEditableField
               title="Заголовок участникам"
               value={cat.titles[1]}
               isRedact
-              onSend={value => schListsSokiInvocatorClient.setCategoryMembersTitle(null, catScopeProps, value)}
+              onSend={value => schListsSokiInvocatorClient.setCategoryMembersTitle({ props: catScopeProps, value })}
             />
           </ModalBody>
         </Modal>

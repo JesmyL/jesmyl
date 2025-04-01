@@ -13,7 +13,7 @@ interface Props {
 export const CmRatingSortedComList = ({ coms }: Props) => {
   const [visits, isLoading] = useInvocatedValue(
     {},
-    ({ aborter }) => cmComClientInvocatorMethods.getComwVisits({ aborter }),
+    ({ aborter }) => cmComClientInvocatorMethods.getComwVisits(undefined, { aborter }),
     [],
   );
   const sortedComs = useMemo(

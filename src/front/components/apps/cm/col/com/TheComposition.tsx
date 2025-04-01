@@ -49,7 +49,7 @@ export function TheComposition() {
     return hookEffectPipe()
       .pipe(
         setTimeoutPipe(() => addLaterComw(ccom.wid), 3000),
-        setTimeoutPipe(() => cmComClientInvocatorMethods.printComwVisit(null, ccom.wid), 77_777),
+        setTimeoutPipe(() => cmComClientInvocatorMethods.printComwVisit({ comw: ccom.wid }), 77_777),
       )
       .effect();
   }, [addLaterComw, ccom?.wid]);

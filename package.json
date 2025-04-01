@@ -7,7 +7,7 @@
     "start-prod": "vite --port 3627 --host --mode prod",
     "build": "vite build --mode prod",
     "serve": "vite preview",
-    "lint": "tsc --project ./src/tsconfig.json --noEmit && eslint **/*.{ts,tsx,json} *.*",
+    "lint": "tsc --project ./tsconfig.json --noEmit && eslint **/*.{ts,tsx,json} *.*",
     "tg-dev": "nodemon tg-bot.mjs",
     "format": "prettier --write \"**/src/**/*.{tsx,ts}\"",
     "format-jsons": "prettier --write \"**/src/**/*.json\"",

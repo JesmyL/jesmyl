@@ -7,8 +7,8 @@ export const cmEditorInitialInvokes = () => {
   cmEditorSokiInvocatorBaseClient.$$register();
 
   const getFreshes = async () => {
-    const lastModified = await cmEditorIDB.get.lastModifiedAt();
-    await cmEditorClientInvocatorMethods.requestFreshes(null, lastModified);
+    const lastModfiedAt = await cmEditorIDB.get.lastModifiedAt();
+    await cmEditorClientInvocatorMethods.requestFreshes({ lastModfiedAt });
   };
 
   soki.onBeforeAuthorizeEvent.listen(() => cmEditorIDB.remove.lastModifiedAt());

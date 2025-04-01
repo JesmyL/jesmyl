@@ -28,7 +28,9 @@ export function ScheduleWidgetNewUserRegisterLevel() {
             <ScheduleWidgetRightControlList
               rightCtrl={scheduleWidgetUserRights}
               R={rights.schedule.ctrl.defu}
-              onSend={value => schGeneralSokiInvocatorClient.setDefaultUserRights(null, scheduleScopeProps, value)}
+              onSend={value =>
+                schGeneralSokiInvocatorClient.setDefaultUserRights({ props: scheduleScopeProps, R: value })
+              }
             />
           </ModalBody>
         </Modal>

@@ -15,20 +15,20 @@ export const modifySchedule = async (
   sch.m = Date.now() + Math.random();
   schedulesFileStore.saveValue();
 
-  schServerInvocatorShareMethods.editedSchedule(null, sch);
+  schServerInvocatorShareMethods.editedSchedule({ sch });
   if (isNeedRefreshTgInformTime) scheduleTgInformer.inform(sch.w);
 
   return sch;
 };
 
 export const modifyScheduleDay =
-  <Values extends unknown[]>(
+  <Value>(
     isNeedRefreshTgInformTime: boolean,
-    modifier: (day: IScheduleWidgetDay, sch: IScheduleWidget, ...values: Values) => void,
+    modifier: (day: IScheduleWidgetDay, value: Value, sch: IScheduleWidget) => void,
   ) =>
-  (props: ScheduleDayScopeProps, ...values: Values) =>
+  ({ props, value }: { props: ScheduleDayScopeProps; value: Value }) =>
     modifySchedule(isNeedRefreshTgInformTime, props, sch => {
       const day = sch.days[props.dayi];
       if (day == null) throw new Error('day not found');
-      modifier(day, sch, ...values);
+      modifier(day, value, sch);
     });

@@ -136,7 +136,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
   );
 
   const onRemoveAttSend = (attKey: ScheduleWidgetAttKey) =>
-    schDayEventsSokiInvocatorClient.removeAttachment(null, dayEventScopeProps, attKey);
+    schDayEventsSokiInvocatorClient.removeAttachment({ props: dayEventScopeProps, attKey });
 
   return (
     <>
@@ -225,7 +225,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
                 title="Содержание"
                 textClassName=" "
                 icon="File02"
-                onSend={value => schDayEventsSokiInvocatorClient.setDescription(null, dayEventScopeProps, value)}
+                onSend={value => schDayEventsSokiInvocatorClient.setDescription({ props: dayEventScopeProps, value })}
               />
             )}
             {isRedact ? (
@@ -239,7 +239,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
                     </>
                   }
                   onAddAttSend={(attKey, defaultValue) =>
-                    schDayEventsSokiInvocatorClient.addAttachment(null, dayEventScopeProps, attKey, defaultValue)
+                    schDayEventsSokiInvocatorClient.addAttachment({ props: dayEventScopeProps, attKey, defaultValue })
                   }
                   onRemoveAttSend={onRemoveAttSend}
                   inAttNodeAdds={(attKey, tatt, refs) => {
@@ -254,7 +254,11 @@ export function ScheduleWidgetDayEvent(props: Props) {
                           schedule={rights.schedule}
                           onRemoveAttSend={onRemoveAttSend}
                           onSend={attRef =>
-                            schDayEventsSokiInvocatorClient.addAttachmentRef(null, dayEventScopeProps, attKey, attRef)
+                            schDayEventsSokiInvocatorClient.addAttachmentRef({
+                              props: dayEventScopeProps,
+                              attKey,
+                              attRef,
+                            })
                           }
                         />
                       )

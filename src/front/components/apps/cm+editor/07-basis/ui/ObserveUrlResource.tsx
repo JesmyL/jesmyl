@@ -41,7 +41,7 @@ export const ObserveUrlResource = ({
           title="Обзор URL"
           disabled={!url || !!errorMessage}
           onSuccess={onSuccess}
-          onSend={() => cmEditorClientInvocatorMethods.getResourceHTMLString(null, url)}
+          onSend={() => cmEditorClientInvocatorMethods.getResourceHTMLString({ src: url })}
         />
       </div>
       {errorMessage && <div className="error-message">{errorMessage}</div>}

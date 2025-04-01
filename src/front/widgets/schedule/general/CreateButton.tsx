@@ -51,7 +51,7 @@ export function ScheduleCreateWidgetButton() {
                     return;
                   }
 
-                  return schGeneralSokiInvocatorClient.create(null, title);
+                  return schGeneralSokiInvocatorClient.create({ title });
                 }}
               />
               <TheIconButton

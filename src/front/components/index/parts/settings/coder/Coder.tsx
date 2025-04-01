@@ -40,7 +40,7 @@ export const CodeExecutionScreen = ({ onError, onLog }: Props) => {
         }
 
         execTextLines[execTextLines.length - 1] = `;data${now}.data = ${execTextLines[execTextLines.length - 1]};`;
-        // eslint-disable-next-line no-new-func
+
         new Function(`data${now}, console`, execTextLines.join('\n')).bind(null)(data, consoler);
         saveCode(code);
         onLogRef.current(data.data);

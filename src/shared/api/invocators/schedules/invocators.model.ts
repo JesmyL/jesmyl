@@ -26,14 +26,14 @@ import {
   ScheduleWidgetPhotoKey,
 } from 'shared/api/complect/schedule-widget';
 
-type Callback<Value> = (props: ScheduleScopeProps, value: Value) => IScheduleWidget;
+type Callback<Value> = (args: { props: ScheduleScopeProps; value: Value }) => IScheduleWidget;
 
 export type SchGeneralSokiInvocatorModel = {
-  create: (title: string) => IScheduleWidget;
-  remove: (props: ScheduleScopeProps) => IScheduleWidget;
-  copySchedule: (props: ScheduleScopeProps, schedule: IScheduleWidget) => IScheduleWidget;
-  setDefaultUserRights: (props: ScheduleScopeProps, R: number) => IScheduleWidget;
-  setScheduleRegisterType: (props: ScheduleScopeProps, type: number) => IScheduleWidget;
+  create: (args: { title: string }) => IScheduleWidget;
+  remove: (args: { props: ScheduleScopeProps }) => IScheduleWidget;
+  copySchedule: (args: { props: ScheduleScopeProps; schedule: IScheduleWidget }) => IScheduleWidget;
+  setDefaultUserRights: (args: { props: ScheduleScopeProps; R: number }) => IScheduleWidget;
+  setScheduleRegisterType: (args: { props: ScheduleScopeProps; type: number }) => IScheduleWidget;
 
   rename: Callback<string>;
   setTopic: Callback<string>;
@@ -45,234 +45,267 @@ export type SchGeneralSokiInvocatorModel = {
   toggleIsTgInform: Callback<void>;
   setTgInformTime: Callback<number>;
 
-  setIsTgInformMe: (props: ScheduleScopeProps, type: num) => IScheduleWidget;
+  setIsTgInformMe: (args: { props: ScheduleScopeProps; type: num }) => IScheduleWidget;
 };
 
 export type SchUsersSokiInvocatorMethods = {
-  addUsersByExcel: (props: ScheduleScopeProps, users: { fio: string }[]) => IScheduleWidget;
-  addMe: (props: ScheduleScopeProps, place: string) => IScheduleWidget;
-  setUserFio: (props: ScheduleUserScopeProps, fio: string) => IScheduleWidget;
-  setUserRights: (props: ScheduleUserScopeProps, R: number) => IScheduleWidget;
-  addUserListUnitMembership: (props: ScheduleUserListMemberScopeProps, value: number) => IScheduleWidget;
-  removeUserListUnitMembership: (props: ScheduleUserListMemberScopeProps) => IScheduleWidget;
+  addUsersByExcel: (args: { props: ScheduleScopeProps; users: { fio: string }[] }) => IScheduleWidget;
+  addMe: (args: { props: ScheduleScopeProps; place: string }) => IScheduleWidget;
+  setUserFio: (args: { props: ScheduleUserScopeProps; fio: string }) => IScheduleWidget;
+  setUserRights: (args: { props: ScheduleUserScopeProps; R: number }) => IScheduleWidget;
+  addUserListUnitMembership: (args: { props: ScheduleUserListMemberScopeProps; value: number }) => IScheduleWidget;
+  removeUserListUnitMembership: (args: { props: ScheduleUserListMemberScopeProps }) => IScheduleWidget;
 };
 
 export type SchPhotosSokiInvocatorMethods = {
-  getSharedPhotos: (schw: IScheduleWidgetWid) => { key: ScheduleWidgetPhotoKey; src: string }[];
-  putSharedPhotos: (
-    schw: IScheduleWidgetWid,
-    photoDict: Record<ScheduleWidgetPhotoKey, string>,
-  ) => { addedCount: number; loadedCount: number };
+  getSharedPhotos: (args: { schw: IScheduleWidgetWid }) => { key: ScheduleWidgetPhotoKey; src: string }[];
+  putSharedPhotos: (args: { schw: IScheduleWidgetWid; photoDict: Record<ScheduleWidgetPhotoKey, string> }) => {
+    addedCount: number;
+    loadedCount: number;
+  };
 };
 
 export type SchListsSokiInvocatorMethods = {
-  createCategory: (props: ScheduleScopeProps) => IScheduleWidget;
-  createUnit: (props: ScheduleScopeProps, cati: number) => IScheduleWidget;
-  setCategoryTitle: (props: ScheduleListCategoryScopeProps, value: string) => IScheduleWidget;
-  setCategoryIcon: (props: ScheduleListCategoryScopeProps, value: TheIconKnownName) => IScheduleWidget;
-  setCategoryMembersTitle: (props: ScheduleListCategoryScopeProps, value: string) => IScheduleWidget;
-  setCategoryMentorsTitle: (props: ScheduleListCategoryScopeProps, value: string) => IScheduleWidget;
+  createCategory: (args: { props: ScheduleScopeProps }) => IScheduleWidget;
+  createUnit: (args: { props: ScheduleScopeProps; cati: number }) => IScheduleWidget;
+  setCategoryTitle: (args: { props: ScheduleListCategoryScopeProps; value: string }) => IScheduleWidget;
+  setCategoryIcon: (args: { props: ScheduleListCategoryScopeProps; value: TheIconKnownName }) => IScheduleWidget;
+  setCategoryMembersTitle: (args: { props: ScheduleListCategoryScopeProps; value: string }) => IScheduleWidget;
+  setCategoryMentorsTitle: (args: { props: ScheduleListCategoryScopeProps; value: string }) => IScheduleWidget;
 
-  setUnitTitle: (props: ScheduleUnitScopeProps, value: string, cati: number) => IScheduleWidget;
-  setUnitDescription: (props: ScheduleUnitScopeProps, value: string, cati: number) => IScheduleWidget;
+  setUnitTitle: (args: { props: ScheduleUnitScopeProps; value: string; cati: number }) => IScheduleWidget;
+  setUnitDescription: (args: { props: ScheduleUnitScopeProps; value: string; cati: number }) => IScheduleWidget;
 };
 
 export type SchRolesSokiInvocatorMethods = {
-  createRole: (props: ScheduleScopeProps) => IScheduleWidget;
-  setRoleIcon: (props: ScheduleRoleScopeProps, icon: TheIconKnownName, roleTitle: string) => IScheduleWidget;
-  setRoleTitle: (props: ScheduleRoleScopeProps, title: string, prevTitle: string) => IScheduleWidget;
-  addRoleCategory: (props: ScheduleScopeProps) => IScheduleWidget;
-  setRoleCategoryTitle: (props: ScheduleScopeProps, cati: number, title: string, prevTitle: string) => IScheduleWidget;
+  createRole: (args: { props: ScheduleScopeProps }) => IScheduleWidget;
+  setRoleIcon: (args: { props: ScheduleRoleScopeProps; value: TheIconKnownName; roleTitle: string }) => IScheduleWidget;
+  setRoleTitle: (args: { props: ScheduleRoleScopeProps; value: string; prevTitle: string }) => IScheduleWidget;
+  addRoleCategory: (args: { props: ScheduleScopeProps }) => IScheduleWidget;
+  setRoleCategoryTitle: (args: {
+    props: ScheduleScopeProps;
+    cati: number;
+    title: string;
+    prevTitle: string;
+  }) => IScheduleWidget;
 
-  setCategoryForRole: (
-    props: ScheduleRoleScopeProps,
-    cati: number,
-    roleTitle: string,
-    catTitle: string,
-  ) => IScheduleWidget;
+  setCategoryForRole: (args: {
+    props: ScheduleRoleScopeProps;
+    value: number;
+    roleTitle: string;
+    catTitle: string;
+  }) => IScheduleWidget;
 
-  setRoleUser: (
-    props: ScheduleRoleScopeProps,
-    userMi: IScheduleWidgetUserMi,
-    roleTitle: string,
-    userName: string,
-  ) => IScheduleWidget;
-  makeFreeRole: (props: ScheduleRoleScopeProps, roleTitle: string) => IScheduleWidget;
+  setRoleUser: (args: {
+    props: ScheduleRoleScopeProps;
+    value: IScheduleWidgetUserMi;
+    roleTitle: string;
+    userName: string;
+  }) => IScheduleWidget;
+  makeFreeRole: (args: { props: ScheduleRoleScopeProps; value: string }) => IScheduleWidget;
 };
 
 export type SchGamesSokiInvocatorMethods = {
-  addGame: (props: ScheduleScopeProps) => IScheduleWidget;
-  setTeams: (props: ScheduleGameScopeProps, teams: IScheduleWidgetExportableTeam[]) => IScheduleWidget;
-  setTitle: (props: ScheduleGameScopeProps, value: string, prevTitle: string) => IScheduleWidget;
-  toggleStrikedUser: (props: ScheduleScopeProps, userMi: IScheduleWidgetUserMi, userName: string) => IScheduleWidget;
-  addCriteria: (props: ScheduleScopeProps) => IScheduleWidget;
-  setCriteriaTitle: (props: ScheduleGameCriteriaScopeProps, value: string, prevTitle: string) => IScheduleWidget;
-  setSortedDict: (
-    props: ScheduleGameCriteriaScopeProps,
-    dict: Record<IScheduleWidgetUserMi, number>,
-    criteriaTitle: string,
-  ) => IScheduleWidget;
+  addGame: (args: { props: ScheduleScopeProps }) => IScheduleWidget;
+  setTeams: (args: { props: ScheduleGameScopeProps; value: IScheduleWidgetExportableTeam[] }) => IScheduleWidget;
+  setTitle: (args: { props: ScheduleGameScopeProps; value: string; prevTitle: string }) => IScheduleWidget;
+  toggleStrikedUser: (args: {
+    props: ScheduleScopeProps;
+    userMi: IScheduleWidgetUserMi;
+    userName: string;
+  }) => IScheduleWidget;
+  addCriteria: (args: { props: ScheduleScopeProps }) => IScheduleWidget;
+  setCriteriaTitle: (args: {
+    props: ScheduleGameCriteriaScopeProps;
+    value: string;
+    prevTitle: string;
+  }) => IScheduleWidget;
+  setSortedDict: (args: {
+    props: ScheduleGameCriteriaScopeProps;
+    value: Record<IScheduleWidgetUserMi, number>;
+    criteriaTitle: string;
+  }) => IScheduleWidget;
 };
 
 export type SchDaysSokiInvocatorMethods = {
-  addDay: (props: ScheduleScopeProps) => IScheduleWidget;
-  setBeginTime: (props: ScheduleDayScopeProps, value: string) => IScheduleWidget;
-  setEventList: (props: ScheduleDayScopeProps, list: OmitOwn<IScheduleWidgetDayEvent, 'mi'>[]) => IScheduleWidget;
-  setTopic: (props: ScheduleDayScopeProps, value: string) => IScheduleWidget;
-  setDescription: (props: ScheduleDayScopeProps, value: string) => IScheduleWidget;
-  addEvent: (props: ScheduleDayScopeProps, typei: number) => IScheduleWidget;
-  removeEvent: (
-    props: ScheduleDayScopeProps,
-    eventMi: IScheduleWidgetDayEventMi,
-    eventTypeTitle: string,
-  ) => IScheduleWidget;
-  moveEvent: (props: ScheduleDayScopeProps, eventMi: IScheduleWidgetDayEventMi, beforei: number) => IScheduleWidget;
+  addDay: (args: { props: ScheduleScopeProps }) => IScheduleWidget;
+  setBeginTime: (args: { props: ScheduleDayScopeProps; value: string }) => IScheduleWidget;
+  setEventList: (args: {
+    props: ScheduleDayScopeProps;
+    list: OmitOwn<IScheduleWidgetDayEvent, 'mi'>[];
+  }) => IScheduleWidget;
+  setTopic: (args: { props: ScheduleDayScopeProps; value: string }) => IScheduleWidget;
+  setDescription: (args: { props: ScheduleDayScopeProps; value: string }) => IScheduleWidget;
+  addEvent: (args: { props: ScheduleDayScopeProps; value: number }) => IScheduleWidget;
+  removeEvent: (args: {
+    props: ScheduleDayScopeProps;
+    value: { eventMi: IScheduleWidgetDayEventMi; eventTypeTitle: string };
+  }) => IScheduleWidget;
+  moveEvent: (args: {
+    props: ScheduleDayScopeProps;
+    value: { eventMi: IScheduleWidgetDayEventMi; beforei: number };
+  }) => IScheduleWidget;
 };
 
 export type SchDayEventsSokiInvocatorMethods = {
-  setTopic: (props: ScheduleDayEventScopeProps, value: string) => IScheduleWidget;
-  setDescription: (props: ScheduleDayEventScopeProps, value: string) => IScheduleWidget;
-  setIsNeedTgInform: (props: ScheduleDayEventScopeProps, value: num) => IScheduleWidget;
-  setTm: (props: ScheduleDayEventScopeProps, value: number) => IScheduleWidget;
-  toggleIsSecret: (props: ScheduleDayEventScopeProps, value: void) => IScheduleWidget;
+  setTopic: (args: { props: ScheduleDayEventScopeProps; value: string }) => IScheduleWidget;
+  setDescription: (args: { props: ScheduleDayEventScopeProps; value: string }) => IScheduleWidget;
+  setIsNeedTgInform: (args: { props: ScheduleDayEventScopeProps; value: num }) => IScheduleWidget;
+  setTm: (args: { props: ScheduleDayEventScopeProps; value: number }) => IScheduleWidget;
+  toggleIsSecret: (args: { props: ScheduleDayEventScopeProps; value: void }) => IScheduleWidget;
 
   // attachments
-  addAttachment: (
-    props: ScheduleDayEventScopeProps,
-    attKey: ScheduleWidgetAttKey,
-    defaultValue: ScheduleWidgetAttOwnValue,
-  ) => IScheduleWidget;
+  addAttachment: (args: {
+    props: ScheduleDayEventScopeProps;
+    attKey: ScheduleWidgetAttKey;
+    defaultValue: ScheduleWidgetAttOwnValue;
+  }) => IScheduleWidget;
 
-  addAttachmentRef: (
-    props: ScheduleDayEventScopeProps,
-    attKey: ScheduleWidgetAttKey,
-    attRef: ScheduleWidgetAttRef,
-  ) => IScheduleWidget;
+  addAttachmentRef: (args: {
+    props: ScheduleDayEventScopeProps;
+    attKey: ScheduleWidgetAttKey;
+    attRef: ScheduleWidgetAttRef;
+  }) => IScheduleWidget;
 
-  removeAttachment: (props: ScheduleDayEventScopeProps, attKey: ScheduleWidgetAttKey) => IScheduleWidget;
+  removeAttachment: (args: { props: ScheduleDayEventScopeProps; attKey: ScheduleWidgetAttKey }) => IScheduleWidget;
 
-  updateCheckListAttachmentValue: (
-    props: ScheduleDayEventAttachmentScopeProps,
-    itemMi: number | null,
-    key: num | null,
-    value: string | null,
-  ) => IScheduleWidget;
+  updateCheckListAttachmentValue: (args: {
+    props: ScheduleDayEventAttachmentScopeProps;
+    itemMi: number | null;
+    key: num | null;
+    value: string | null;
+  }) => IScheduleWidget;
 
-  putKeyValueAttachment: (
-    props: ScheduleDayEventAttachmentScopeProps,
-    key: number | string | boolean,
-    value: string | number | [] | null,
-  ) => IScheduleWidget;
+  putKeyValueAttachment: (args: {
+    props: ScheduleDayEventAttachmentScopeProps;
+    key: number | string | boolean;
+    value: string | number | [] | null;
+  }) => IScheduleWidget;
 
-  setKeyValueAttachmentKey: (
-    props: ScheduleDayEventAttachmentScopeProps,
-    itemMi: number,
-    value: string | number | boolean,
-  ) => IScheduleWidget;
+  setKeyValueAttachmentKey: (args: {
+    props: ScheduleDayEventAttachmentScopeProps;
+    itemMi: number;
+    value: string | number | boolean;
+  }) => IScheduleWidget;
+  changeKeyValueAttachmentKey: (args: {
+    props: ScheduleDayEventAttachmentScopeProps;
+    key: string | number | boolean;
+    value: string | number | boolean;
+  }) => IScheduleWidget;
+  setKeyValueAttachmentValue: (args: {
+    props: ScheduleDayEventAttachmentScopeProps;
+    itemMi: number;
+    value: string | number | [] | null;
+  }) => IScheduleWidget;
+  addKeyValueAttachmentListItem: (args: {
+    props: ScheduleDayEventAttachmentScopeProps;
+    itemMi: number;
+    value: string | number;
+  }) => IScheduleWidget;
+  setKeyValueAttachmentListItemValue: (args: {
+    props: ScheduleDayEventAttachmentScopeProps;
+    itemMi: number;
+    valuei: number;
+    value: string | number;
+  }) => IScheduleWidget;
 
-  changeKeyValueAttachmentKey: (
-    props: ScheduleDayEventAttachmentScopeProps,
-    key: string | number | boolean,
-    value: string | number | boolean,
-  ) => IScheduleWidget;
+  removeKeyValueAttachmentListItemValue: (args: {
+    props: ScheduleDayEventAttachmentScopeProps;
+    itemMi: number;
+    value: string | number;
+  }) => IScheduleWidget;
 
-  setKeyValueAttachmentValue: (
-    props: ScheduleDayEventAttachmentScopeProps,
-    itemMi: number,
-    value: string | number | [] | null,
-  ) => IScheduleWidget;
+  moveKeyValueAttachment: (args: { props: ScheduleDayEventAttachmentScopeProps; itemMi: number }) => IScheduleWidget;
 
-  addKeyValueAttachmentListItem: (
-    props: ScheduleDayEventAttachmentScopeProps,
-    itemMi: number,
-    value: string | number,
-  ) => IScheduleWidget;
-
-  setKeyValueAttachmentListItemValue: (
-    props: ScheduleDayEventAttachmentScopeProps,
-    itemMi: number,
-    valuei: number,
-    value: string | number,
-  ) => IScheduleWidget;
-
-  removeKeyValueAttachmentListItemValue: (
-    props: ScheduleDayEventAttachmentScopeProps,
-    itemMi: number,
-    value: string | number,
-  ) => IScheduleWidget;
-
-  moveKeyValueAttachment: (props: ScheduleDayEventAttachmentScopeProps, itemMi: number) => IScheduleWidget;
-
-  moveKeyValueAttachmentListItem: (
-    props: ScheduleDayEventAttachmentScopeProps,
-    itemMi: number,
-    value: string | number,
-  ) => IScheduleWidget;
+  moveKeyValueAttachmentListItem: (args: {
+    props: ScheduleDayEventAttachmentScopeProps;
+    itemMi: number;
+    value: string | number;
+  }) => IScheduleWidget;
 
   // rating
-  setRatePoint: (
-    props: ScheduleDayEventScopeProps,
-    userMi: IScheduleWidgetUserMi,
-    ratePoint: number,
-    userName: string,
-  ) => IScheduleWidget;
+  setRatePoint: (args: {
+    props: ScheduleDayEventScopeProps;
+    userMi: IScheduleWidgetUserMi;
+    ratePoint: number;
+    userName: string;
+  }) => IScheduleWidget;
 
-  setRateComment: (
-    props: ScheduleDayEventScopeProps,
-    userMi: IScheduleWidgetUserMi,
-    comment: string,
-    userName: string,
-  ) => IScheduleWidget;
+  setRateComment: (args: {
+    props: ScheduleDayEventScopeProps;
+    userMi: IScheduleWidgetUserMi;
+    comment: string;
+    userName: string;
+  }) => IScheduleWidget;
 };
 
 export type SchEventTypesSokiInvocatorMethods = {
-  create: (props: ScheduleScopeProps, title: string, tm: number) => IScheduleWidget;
-  putMany: (props: ScheduleScopeProps, tatts: { title: string; tm: number }[]) => IScheduleWidget;
-  setTitle: (props: ScheduleEventTypeScopeProps, value: string, prevTitle: string) => IScheduleWidget;
-  setTm: (props: ScheduleEventTypeScopeProps, tm: number) => IScheduleWidget;
-  bindAttImagine: (
-    props: ScheduleEventTypeAttImagineScopeProps,
-    attTranslatorType: AttTranslatorType,
-  ) => IScheduleWidget;
-  removeAttImagine: (props: ScheduleEventTypeAttImagineScopeProps) => IScheduleWidget;
-  setAttImaginePeriod: (props: ScheduleEventTypeAttImagineScopeProps, value: AttTranslatorType) => IScheduleWidget;
+  create: (args: { props: ScheduleScopeProps; title: string; tm: number }) => IScheduleWidget;
+  putMany: (args: { props: ScheduleScopeProps; tatts: { title: string; tm: number }[] }) => IScheduleWidget;
+  setTitle: (args: { props: ScheduleEventTypeScopeProps; value: string; prevTitle: string }) => IScheduleWidget;
+  setTm: (args: { props: ScheduleEventTypeScopeProps; tm: number }) => IScheduleWidget;
+  bindAttImagine: (args: {
+    props: ScheduleEventTypeAttImagineScopeProps;
+    attTranslatorType: AttTranslatorType;
+  }) => IScheduleWidget;
+  removeAttImagine: (args: { props: ScheduleEventTypeAttImagineScopeProps }) => IScheduleWidget;
+  setAttImaginePeriod: (args: {
+    props: ScheduleEventTypeAttImagineScopeProps;
+    value: AttTranslatorType;
+  }) => IScheduleWidget;
 };
 
 export type SchAttachmentTypesSokiInvocatorMethods = {
-  create: (props: ScheduleScopeProps) => IScheduleWidget;
-  setTitle: (props: ScheduleAttachmentTypeScopeProps, value: string, prevTitle: string) => IScheduleWidget;
-  setDescription: (props: ScheduleAttachmentTypeScopeProps, value: string, tattTitle: string) => IScheduleWidget;
-  setIcon: (props: ScheduleAttachmentTypeScopeProps, value: TheIconKnownName, tattTitle: string) => IScheduleWidget;
-  setUse: (props: ScheduleAttachmentTypeScopeProps, value: number, tattTitle: string) => IScheduleWidget;
-  setRolesUses: (props: ScheduleAttachmentTypeScopeProps, value: number, tattTitle: string) => IScheduleWidget;
-  setListsUses: (props: ScheduleAttachmentTypeScopeProps, value: number, tattTitle: string) => IScheduleWidget;
+  create: (args: { props: ScheduleScopeProps }) => IScheduleWidget;
+  setTitle: (args: { props: ScheduleAttachmentTypeScopeProps; value: string; prevTitle: string }) => IScheduleWidget;
+  setDescription: (args: {
+    props: ScheduleAttachmentTypeScopeProps;
+    value: string;
+    tattTitle: string;
+  }) => IScheduleWidget;
+  setIcon: (args: {
+    props: ScheduleAttachmentTypeScopeProps;
+    value: TheIconKnownName;
+    tattTitle: string;
+  }) => IScheduleWidget;
+  setUse: (args: { props: ScheduleAttachmentTypeScopeProps; value: number; tattTitle: string }) => IScheduleWidget;
+  setRolesUses: (args: {
+    props: ScheduleAttachmentTypeScopeProps;
+    value: number;
+    tattTitle: string;
+  }) => IScheduleWidget;
+  setListsUses: (args: {
+    props: ScheduleAttachmentTypeScopeProps;
+    value: number;
+    tattTitle: string;
+  }) => IScheduleWidget;
 
-  createTitleValue: (
-    props: ScheduleAttachmentTypeScopeProps,
-    tattTitle: string,
-    titlesCount: number,
-  ) => IScheduleWidget;
+  createTitleValue: (args: {
+    props: ScheduleAttachmentTypeScopeProps;
+    tattTitle: string;
+    titlesCount: number;
+  }) => IScheduleWidget;
 
-  setTitleValue: (
-    props: ScheduleAttachmentTypeScopeProps,
-    titlei: number,
-    value: string,
-    tattTitle: string,
-    prevTitle: string,
-  ) => IScheduleWidget;
+  setTitleValue: (args: {
+    props: ScheduleAttachmentTypeScopeProps;
+    titlei: number;
+    value: string;
+    tattTitle: string;
+    prevTitle: string;
+  }) => IScheduleWidget;
 
-  setWhoCanLevel: (
-    props: ScheduleAttachmentTypeScopeProps,
-    rule: 'R' | 'U',
-    value: number,
-    tattTitle: string,
-  ) => IScheduleWidget;
+  setWhoCanLevel: (args: {
+    props: ScheduleAttachmentTypeScopeProps;
+    rule: 'R' | 'U';
+    value: number;
+    tattTitle: string;
+  }) => IScheduleWidget;
 
-  toggleUserWhoCan: (
-    props: ScheduleAttachmentTypeScopeProps,
-    rule: 'Rs' | 'Us',
-    userMi: IScheduleWidgetUserMi,
-    tattTitle: string,
-    userName: string,
-  ) => IScheduleWidget;
+  toggleUserWhoCan: (args: {
+    props: ScheduleAttachmentTypeScopeProps;
+    rule: 'Rs' | 'Us';
+    userMi: IScheduleWidgetUserMi;
+    tattTitle: string;
+    userName: string;
+  }) => IScheduleWidget;
 };

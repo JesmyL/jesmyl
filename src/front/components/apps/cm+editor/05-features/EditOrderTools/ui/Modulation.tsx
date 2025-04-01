@@ -47,13 +47,12 @@ export const OrdersRedactorOrderToolsModulation = ({ com, ord, ordi }: OrdersRed
                       disabled={ord.fieldValues.md === position}
                       className="margin-gap-t"
                       onClick={() =>
-                        cmComOrderClientInvocatorMethods.setModulationValue(
-                          null,
-                          com.wid,
-                          ord.me.header(),
-                          ord.wid,
-                          position,
-                        )
+                        cmComOrderClientInvocatorMethods.setModulationValue({
+                          comw: com.wid,
+                          orderTitle: ord.me.header(),
+                          ordw: ord.wid,
+                          value: position,
+                        })
                       }
                       onChange={() => {
                         setIsModalOpen(false);

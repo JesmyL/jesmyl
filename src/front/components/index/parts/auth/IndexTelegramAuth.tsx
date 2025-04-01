@@ -19,7 +19,7 @@ export const IndexTelegramAuthPage = () => {
   const [isSendTgCode, setIsSendTgCode] = useState(false);
   const [values] = useInvocatedValue(
     {},
-    ({ aborter }) => indexBasicsSokiInvocatorClient.getIndexValues({ aborter }),
+    ({ aborter }) => indexBasicsSokiInvocatorClient.getIndexValues(undefined, { aborter }),
     [],
   );
 
@@ -133,7 +133,9 @@ export const IndexTelegramAuthPage = () => {
                     }}
                     onSend={async () => {
                       setIsLoading(true);
-                      return await indexBasicsSokiInvocatorClient.authMeByTelegramBotNumber(null, +authCode);
+                      return await indexBasicsSokiInvocatorClient.authMeByTelegramBotNumber({
+                        secretNumber: +authCode,
+                      });
                     }}
                   />
                 </>

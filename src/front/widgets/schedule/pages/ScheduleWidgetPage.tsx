@@ -49,7 +49,7 @@ export const ScheduleWidgetPage = () => {
               ) : (
                 <SendButton
                   title="Буду участвовать"
-                  onSend={() => schUsersSokiInvocatorClient.addMe(null, scheduleScopeProps, 'по ссылке')}
+                  onSend={() => schUsersSokiInvocatorClient.addMe({ props: scheduleScopeProps, place: 'по ссылке' })}
                 />
               )
             ) : (

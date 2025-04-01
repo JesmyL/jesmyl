@@ -12,10 +12,10 @@ export const EditCompositionBusyInfo = ({ comw }: { comw: CmComWid }) => {
   const busies = useAtomValue(comEditorBusiesAtom);
 
   useEffect(() => {
-    cmEditorClientInvocatorMethods.watchComBusies(null, comw);
+    cmEditorClientInvocatorMethods.watchComBusies({ comw });
 
     return () => {
-      cmEditorClientInvocatorMethods.unwatchComBusies(null);
+      cmEditorClientInvocatorMethods.unwatchComBusies();
     };
   }, [comw]);
 

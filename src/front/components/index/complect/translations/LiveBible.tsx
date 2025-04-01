@@ -16,7 +16,8 @@ export const IndexScheduleWidgetBibleTranslationsControlled: React.FC<LiveTransl
 }) {
   const switchCurrApp = useSwitchCurrentTranslationTextApp();
   const onSend = useCallback(
-    (liveData: IndexSchWTranslationLiveDataValue) => schLiveSokiInvocatorClient.next(null, schedule.w, liveData),
+    (liveData: IndexSchWTranslationLiveDataValue) =>
+      schLiveSokiInvocatorClient.next({ schw: schedule.w, data: liveData }),
     [schedule.w],
   );
 

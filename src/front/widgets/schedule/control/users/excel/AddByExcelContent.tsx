@@ -165,7 +165,9 @@ export function ScheduleWidgetUserAddByExcelContent({ close }: Props) {
           disabled={!resultUsers?.length}
           title="Загрузить список"
           onSuccess={close}
-          onSend={() => schUsersSokiInvocatorClient.addUsersByExcel(null, scheduleScopeProps, resultUsers ?? [])}
+          onSend={() =>
+            schUsersSokiInvocatorClient.addUsersByExcel({ props: scheduleScopeProps, users: resultUsers ?? [] })
+          }
         />
       </div>
       {!existsUsers?.length || (

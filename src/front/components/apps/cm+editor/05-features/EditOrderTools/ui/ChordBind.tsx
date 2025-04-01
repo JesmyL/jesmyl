@@ -52,14 +52,13 @@ export const OrdersRedactorOrderToolsChordBind = ({ com, ord, ordi }: OrdersReda
                       className="margin-gap-t"
                       onChange={onClose}
                       onClick={() =>
-                        cmComOrderClientInvocatorMethods.bindChordBlock(
-                          null,
-                          ord.wid,
-                          ord.me.header(),
-                          com.wid,
-                          chordsBlocki,
-                          ord.isAnchor ? 1 : 0,
-                        )
+                        cmComOrderClientInvocatorMethods.bindChordBlock({
+                          ordw: ord.wid,
+                          orderTitle: ord.me.header(),
+                          comw: com.wid,
+                          chordi: chordsBlocki,
+                          isAnchor: ord.isAnchor ? 1 : 0,
+                        })
                       }
                       postfix={
                         <pre>

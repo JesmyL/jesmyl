@@ -47,7 +47,7 @@ const Child = ({ api, initData }: Props) => {
     return hookEffectLine()
       .setTimeout(() => {
         if (auth.level) return;
-        indexBasicsSokiInvocatorClient.authMeByTelegramInScheduleDay(null, initData.user);
+        indexBasicsSokiInvocatorClient.authMeByTelegramInScheduleDay({ user: initData.user });
       }, 300)
       .effect();
   }, [auth.level, initData.user]);

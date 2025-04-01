@@ -39,16 +39,15 @@ export const CmEditorTabComRepeats = () => {
       const keys = Object.keys(repeats);
       if (repeats['.'] === 0) delete repeats['.'];
 
-      cmComOrderClientInvocatorMethods.setRepeats(
-        null,
-        ord.wid,
-        ord.me.header(),
-        ccom.wid,
-        (keys.length ? (keys.length === 1 && keys[0] === '.' ? repeats['.'] : repeats) : 0) ?? 0,
-        ord.text
+      cmComOrderClientInvocatorMethods.setRepeats({
+        ordw: ord.wid,
+        orderTitle: ord.me.header(),
+        comw: ccom.wid,
+        value: (keys.length ? (keys.length === 1 && keys[0] === '.' ? repeats['.'] : repeats) : 0) ?? 0,
+        textValue: ord.text
           ? ord.repeatedText(repeats).replace(makeRegExp('/&nbsp;/g'), ' ')
           : ord.me.header({ repeats: ord.repeatsTitle }),
-      );
+      });
     },
     [ccom],
   );
@@ -131,13 +130,12 @@ export const CmEditorTabComRepeats = () => {
                               const isClear = await confirm('Очистить собственные правила повторения?');
 
                               if (isClear)
-                                cmComOrderClientInvocatorMethods.clearOwnRepeats(
-                                  null,
-                                  ord.wid,
-                                  ord.me.header(),
-                                  ccom.wid,
-                                  undefined,
-                                );
+                                cmComOrderClientInvocatorMethods.clearOwnRepeats({
+                                  ordw: ord.wid,
+                                  orderTitle: ord.me.header(),
+                                  comw: ccom.wid,
+                                  value: undefined,
+                                });
                             }}
                           />
                         </IconButton>

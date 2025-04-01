@@ -126,7 +126,7 @@ export const ScheduleWidgetDay = ({
                     isRedact={isRedact}
                     icon="Bookmark03"
                     title="Тема дня"
-                    onSend={value => schDaysSokiInvocatorClient.setTopic(null, dayScopeProps, value)}
+                    onSend={value => schDaysSokiInvocatorClient.setTopic({ props: dayScopeProps, value })}
                   />
                 )}
                 {(isRedact || day.dsc) && (
@@ -138,7 +138,7 @@ export const ScheduleWidgetDay = ({
                     textClassName=" "
                     icon="File02"
                     title="Описание дня"
-                    onSend={value => schDaysSokiInvocatorClient.setDescription(null, dayScopeProps, value)}
+                    onSend={value => schDaysSokiInvocatorClient.setDescription({ props: dayScopeProps, value })}
                   />
                 )}
                 {isRedact ? (

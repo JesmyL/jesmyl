@@ -20,95 +20,99 @@ const shareLiveData = (schw: IScheduleWidgetWid, streamerLogin: SokiAuthLogin) =
 
   waiters.forEach(client => {
     try {
-      schLiveSokiInvocatorSharesServer.updateData(client, data);
+      schLiveSokiInvocatorSharesServer.updateData({ data }, client);
     } catch (_error) {
       waiters.delete(client);
     }
   });
 };
 
-class SchLiveSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchLiveSokiInvocatorModel> {}
-export const schLiveSokiInvocatorServer = new SchLiveSokiInvocatorBaseServer('SchLiveSokiInvocatorBaseServer', {
-  next:
-    ({ auth }) =>
-    async (schw, data) => {
-      if (auth?.login == null) throw new Error('Не зарегистрирован');
+export const schLiveSokiInvocatorServer =
+  new (class SchLiveSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchLiveSokiInvocatorModel> {
+    constructor() {
+      super({
+        className: 'SchLiveSokiInvocatorBaseServer',
+        methods: {
+          next: async ({ schw, data }, { auth }) => {
+            if (auth?.login == null) throw new Error('Не зарегистрирован');
 
-      theLiveData[schw] ??= {};
-      theLiveData[schw][auth.login] = data;
+            theLiveData[schw] ??= {};
+            theLiveData[schw][auth.login] = data;
 
-      const streamers = SMyLib.entries(theLiveData[schw]).map(([login, data]) => {
-        return { fio: data?.fio ?? '*Завершена*', login };
+            const streamers = SMyLib.entries(theLiveData[schw]).map(([login, data]) => {
+              return { fio: data?.fio ?? '*Завершена*', login };
+            });
+
+            streamersWaiters[schw]?.forEach(client => {
+              schLiveSokiInvocatorSharesServer.streamersList({ streamers } as never, client);
+            });
+            shareLiveData(schw, auth.login);
+          },
+
+          requestStreamers: async ({ schw }, { client }) => {
+            const streamers =
+              (theLiveData[schw] &&
+                SMyLib.entries(theLiveData[schw])
+                  .map(([login, data]) => {
+                    if (data == null) return null;
+                    return { fio: data.fio, login };
+                  })
+                  .filter(itNNull)) ??
+              [];
+
+            if (streamers.length) {
+              await schLiveSokiInvocatorSharesServer.streamersList({ streamers } as never, client);
+            } else {
+              streamersWaiters[schw] ??= new Set();
+              streamersWaiters[schw].add(client);
+            }
+          },
+
+          reset: async ({ schw }, { auth }) => {
+            if (auth?.login == null) throw new Error('Не зарегистрирован');
+
+            theLiveData[schw] ??= {};
+            delete theLiveData[schw][auth.login];
+
+            const wathers = liveDataWatchers[schw]?.[auth.login];
+            if (wathers == null) return;
+
+            wathers.forEach(client => {
+              try {
+                schLiveSokiInvocatorSharesServer.updateData({ data: null }, client);
+              } catch (_error) {
+                wathers.delete(client);
+              }
+            });
+          },
+
+          watch: async ({ schw, streamerLogin }, { client }) => {
+            liveDataWatchers[schw] ??= {};
+            const watchers = (liveDataWatchers[schw][streamerLogin] ??= new Set());
+            watchers.add(client);
+
+            shareLiveData(schw, streamerLogin);
+
+            client.on('close', () => watchers.delete(client));
+          },
+
+          unwatch: async ({ schw, streamerLogin }, { client }) => {
+            liveDataWatchers[schw]?.[streamerLogin]?.delete(client);
+          },
+        },
       });
+    }
+  })();
 
-      streamersWaiters[schw]?.forEach(client => {
-        schLiveSokiInvocatorSharesServer.streamersList(client, streamers);
+export const schLiveSokiInvocatorSharesServer =
+  new (class SchLiveSokiInvocatorServer extends SokiInvocatorServer<SchLiveSokiInvocatorSharesModel> {
+    constructor() {
+      super({
+        className: 'SchLiveSokiInvocatorServer',
+        methods: {
+          updateData: true,
+          streamersList: true,
+        },
       });
-      shareLiveData(schw, auth.login);
-    },
-
-  requestStreamers:
-    ({ client }) =>
-    async schw => {
-      const streamers =
-        (theLiveData[schw] &&
-          SMyLib.entries(theLiveData[schw])
-            .map(([login, data]) => {
-              if (data == null) return null;
-              return { fio: data.fio, login };
-            })
-            .filter(itNNull)) ??
-        [];
-
-      if (streamers.length) {
-        await schLiveSokiInvocatorSharesServer.streamersList(client, streamers);
-      } else {
-        streamersWaiters[schw] ??= new Set();
-        streamersWaiters[schw].add(client);
-      }
-    },
-
-  reset:
-    ({ auth }) =>
-    async schw => {
-      if (auth?.login == null) throw new Error('Не зарегистрирован');
-
-      theLiveData[schw] ??= {};
-      delete theLiveData[schw][auth.login];
-
-      const wathers = liveDataWatchers[schw]?.[auth.login];
-      if (wathers == null) return;
-
-      wathers.forEach(client => {
-        try {
-          schLiveSokiInvocatorSharesServer.updateData(client, null);
-        } catch (_error) {
-          wathers.delete(client);
-        }
-      });
-    },
-
-  watch:
-    ({ client }) =>
-    async (schw, streamerLogin) => {
-      liveDataWatchers[schw] ??= {};
-      const watchers = (liveDataWatchers[schw][streamerLogin] ??= new Set());
-      watchers.add(client);
-
-      shareLiveData(schw, streamerLogin);
-
-      client.on('close', () => watchers.delete(client));
-    },
-
-  unwatch:
-    ({ client }) =>
-    async (schw, streamerLogin) => {
-      liveDataWatchers[schw]?.[streamerLogin]?.delete(client);
-    },
-});
-
-class SchLiveSokiInvocatorServer extends SokiInvocatorServer<SchLiveSokiInvocatorSharesModel> {}
-export const schLiveSokiInvocatorSharesServer = new SchLiveSokiInvocatorServer('SchLiveSokiInvocatorServer', {
-  updateData: true,
-  streamersList: true,
-});
+    }
+  })();

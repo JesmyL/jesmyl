@@ -1,8 +1,15 @@
 import { SokiInvocatorClient } from '#basis/lib/SokiInvocator.client';
 import { CmUserStoreSokiInvocatorModel } from 'shared/api/invocators/cm/user-store-invocators.model';
 
-class CmUserStoreSokiInvocatorClient extends SokiInvocatorClient<CmUserStoreSokiInvocatorModel> {}
-export const cmUserStoreSokiInvocatorClient = new CmUserStoreSokiInvocatorClient('CmUserStoreSokiInvocatorClient', {
-  setComComment: true,
-  setAboutComFavorites: true,
-});
+export const cmUserStoreSokiInvocatorClient =
+  new (class CmUserStoreSokiInvocatorClient extends SokiInvocatorClient<CmUserStoreSokiInvocatorModel> {
+    constructor() {
+      super({
+        className: 'CmUserStoreSokiInvocatorClient',
+        methods: {
+          setComComment: true,
+          setAboutComFavorites: true,
+        },
+      });
+    }
+  })();

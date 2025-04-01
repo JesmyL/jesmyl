@@ -52,7 +52,7 @@ export const CmEditCompositionPage = () => {
               icon="MapsRefresh"
               postfix="Восстановить"
               className="color--ok"
-              onClick={() => cmComClientInvocatorMethods.bringBackToLife(null, ccomw)}
+              onClick={() => cmComClientInvocatorMethods.bringBackToLife({ comw: ccomw })}
             />
           </div>
         }

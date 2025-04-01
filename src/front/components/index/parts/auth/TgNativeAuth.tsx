@@ -18,7 +18,7 @@ export const TgNativeAuth = () => {
     const tgAuthIframe = document.querySelector('#telegram-login-jesmylbot');
 
     win[funcName] = async (user: TelegramNativeAuthUserData) => {
-      await indexBasicsSokiInvocatorClient.authMeByTelegramNativeButton(null, user);
+      await indexBasicsSokiInvocatorClient.authMeByTelegramNativeButton({ user });
       navigate({ to: '..' });
     };
 

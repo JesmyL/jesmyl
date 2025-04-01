@@ -12,4 +12,4 @@ export const useAtomInkrement = (atom: Atom<number>) => atom.inkrement;
 
 export const useAtom = <Value>(atom: Atom<Value>) => [useAtomValue(atom), useAtomSet(atom)] as const;
 
-export const atom = <Value>(value: Value): Atom<Value> => new Atom(value);
+export const atom = <Value>(value: Value, storeKey?: `${string}:${string}`): Atom<Value> => new Atom(value, storeKey);

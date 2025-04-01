@@ -23,7 +23,7 @@ export function ScheduleWidgetLists() {
           icon="PlusSign"
           prefix="список"
           confirm="Создать новый список?"
-          onSend={() => schListsSokiInvocatorClient.createCategory(null, scheduleScopeProps)}
+          onSend={() => schListsSokiInvocatorClient.createCategory({ props: scheduleScopeProps })}
         />
       ),
   );

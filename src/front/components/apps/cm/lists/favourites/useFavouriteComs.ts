@@ -30,7 +30,7 @@ export const useFavouriteComs = () => {
 
       clearTimeout(saveTimeout);
       saveTimeout = setTimeout(() => {
-        cmUserStoreSokiInvocatorClient.setAboutComFavorites(null, { comws });
+        cmUserStoreSokiInvocatorClient.setAboutComFavorites({ comws });
       }, 1000);
     },
   };

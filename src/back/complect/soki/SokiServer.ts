@@ -126,13 +126,13 @@ export class SokiServer {
     console.info('SokiServer started!!!');
   }
 
-  send(event: InvocatorServerEvent, clientSelector: SokiServerClientSelector) {
+  send(event: InvocatorServerEvent, clientSelector: SokiServerClientSelector | nil | void) {
     if (clientSelector instanceof WebSocket) {
       clientSelector.send(JSON.stringify(event));
       return;
     }
 
-    if (clientSelector === null) {
+    if (clientSelector == null) {
       this.clients.forEach(sendToEachClient, JSON.stringify(event));
       return;
     }

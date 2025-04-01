@@ -1,60 +1,56 @@
-import { emptyFunc } from 'shared/utils';
-import { mylib } from '../my-lib';
-
 export class Atom<Value, Sunscriber extends (value: Value) => void = (value: Value) => void> {
   private value: Value;
   private subs = new Set<Sunscriber>();
-  private save: (val: Value) => void = emptyFunc;
-  private setInTopStorage: (value: Value) => void = () => {};
+  private save: (val: Value) => void = () => {};
 
   onValueChange?: (value: Value) => void;
-  onValueSetForServerUserStore?: (value: Value) => void;
-  rem: () => void;
+  readonly rem: () => void = () => {};
 
-  constructor(value: Value) {
-    this.value = value;
+  constructor(defaultValue: Value, storeKey: `${string}:${string}` | und) {
+    if (storeKey !== undefined) {
+      const key = `atom/${storeKey}`;
 
-    this.rem =
-      value == null
-        ? () => {
-            this.value = null!;
-            this.save(null!);
-          }
-        : emptyFunc;
+      this.value = key in localStorage ? JSON.parse(localStorage[key]) : defaultValue;
+      this.save = value => {
+        if (value === defaultValue) {
+          this.rem();
+          return;
+        }
+        localStorage[key] = JSON.stringify(value);
+      };
+
+      this.rem = () => {
+        this.value = defaultValue;
+        delete localStorage[key];
+      };
+    } else {
+      this.value = defaultValue;
+      this.rem = () => (this.value = defaultValue);
+    }
   }
 
-  get = () => this.value;
+  readonly get = () => this.value;
 
-  invokeSubs = (sub: Sunscriber) => sub(this.value);
+  readonly invokeSubscriber = (sub: Sunscriber) => sub(this.value);
 
-  justSet = (value: Value) => {
-    this.value = value;
-    this.subs.forEach(this.invokeSubs, this);
-    this.setInTopStorage(value);
-  };
-
-  set = (
-    value: Value | ((prev: Value) => Value),
-    isPreventSave?: boolean,
-    isRejectValueSetForServerUserStoreCallbackInvoke?: boolean,
-  ) => {
-    const val = mylib.isFunc(value) ? value(this.value) : value;
+  readonly set = (value: Value | ((prev: Value) => Value), isPreventSave?: boolean) => {
+    const val = typeof value === 'function' ? (value as (value: Value) => Value)(this.value) : value;
     if (val === this.value || val === undefined || (typeof val === 'number' && isNaN(val))) return;
 
     this.onValueChange?.(val);
-    this.justSet(val);
 
-    if (!isRejectValueSetForServerUserStoreCallbackInvoke) this.onValueSetForServerUserStore?.(val);
+    this.value = val;
+    this.subs.forEach(this.invokeSubscriber, this);
 
     if (isPreventSave === true) return;
 
     this.save(val);
   };
 
-  toggle = (is?: boolean) => this.set((is ?? ((is: boolean) => !is)) as never);
-  inkrement = (ink: number) => this.set((+this.value + ink) as never);
+  readonly toggle = (is?: boolean) => this.set((is ?? ((is: boolean) => !is)) as never);
+  readonly inkrement = (ink: number) => this.set((+this.value + ink) as never);
 
-  subscribe = (sub: Sunscriber) => {
+  readonly subscribe = (sub: Sunscriber) => {
     this.subs.add(sub);
     return () => {
       this.subs.delete(sub);

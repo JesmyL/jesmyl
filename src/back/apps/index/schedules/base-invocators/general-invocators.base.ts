@@ -88,14 +88,18 @@ onScheduleUserTgInformSetEvent.listen(({ isNotInform, schProps, userLogin }) => 
   });
 });
 
-class SchGeneralSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGeneralSokiInvocatorModel> {
-  constructor() {
-    super(
-      'SchGeneralSokiInvocatorBaseServer',
-      {
-        create:
-          ({ auth }) =>
-          async title => {
+export const schGeneralSokiInvocatorBaseServer =
+  new (class SchGeneralSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGeneralSokiInvocatorModel> {
+    constructor() {
+      const updateScheduleValue =
+        <Key extends keyof IScheduleWidget>(key: Key, isNeedRefreshTgInformTime?: boolean) =>
+        ({ props, value }: { props: ScheduleScopeProps; value: IScheduleWidget[Key] }) =>
+          modifySchedule(isNeedRefreshTgInformTime || false, props, sch => (sch[key] = value));
+
+      super({
+        className: 'SchGeneralSokiInvocatorBaseServer',
+        methods: {
+          create: async ({ title }, { auth }) => {
             if (auth == null) throw new Error('no auth');
 
             const sch = smylib.clone(newSchedule);
@@ -121,127 +125,121 @@ class SchGeneralSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGener
 
             schedulesFileStore.getValue().push(sch);
             schedulesFileStore.saveValue();
-            schServerInvocatorShareMethods.editedSchedule(null, sch);
+            schServerInvocatorShareMethods.editedSchedule({ sch });
 
             return sch;
           },
 
-        rename: () => this.updateScheduleValue('title'),
-        setTopic: () => this.updateScheduleValue('topic'),
-        setDescription: () => this.updateScheduleValue('dsc'),
-        setFirstDayAsTech: () => this.updateScheduleValue('withTech', true),
-        setTgChatRequisites: () => this.updateScheduleValue('tgChatReqs', true),
-        setTgInformTime: () => this.updateScheduleValue('tgInformTime', true),
+          rename: updateScheduleValue('title'),
+          setTopic: updateScheduleValue('topic'),
+          setDescription: updateScheduleValue('dsc'),
+          setFirstDayAsTech: updateScheduleValue('withTech', true),
+          setTgChatRequisites: updateScheduleValue('tgChatReqs', true),
+          setTgInformTime: updateScheduleValue('tgInformTime', true),
 
-        setStartTime: () => (props: ScheduleScopeProps, value) =>
-          modifySchedule(true, props, sch => {
-            sch.prevStart = sch.start;
-            sch.start = value;
-          }),
+          setStartTime: ({ props, value }) =>
+            modifySchedule(true, props, sch => {
+              sch.prevStart = sch.start;
+              sch.start = value;
+            }),
 
-        setIsTgInformMe:
-          ({ auth }) =>
-          (schProps, isNotInform) =>
+          setIsTgInformMe: ({ props: schProps, type: isNotInform }, { auth }) =>
             onScheduleUserTgInformSetEvent.invoke({ schProps, isNotInform, userLogin: auth?.login }),
 
-        toggleIsTgInform: () => props =>
-          modifySchedule(true, props, sch => (sch.tgInform = sch.tgInform === 0 ? undefined : 0)),
+          toggleIsTgInform: ({ props }) =>
+            modifySchedule(true, props, sch => (sch.tgInform = sch.tgInform === 0 ? undefined : 0)),
 
-        remove: () => props => modifySchedule(true, props, sch => (sch.isRemoved = 1)),
-        copySchedule: () => (props, copiedSchedule) =>
-          modifySchedule(false, props, sch => Object.assign(sch, copiedSchedule, { title: sch.title })),
+          remove: ({ props }) => modifySchedule(true, props, sch => (sch.isRemoved = 1)),
+          copySchedule: ({ props, schedule: copiedSchedule }) =>
+            modifySchedule(false, props, sch => Object.assign(sch, copiedSchedule, { title: sch.title })),
 
-        setScheduleRegisterType: () => (props, value) => modifySchedule(false, props, sch => (sch.ctrl.type = value)),
-        setDefaultUserRights: () => (props, value) => modifySchedule(false, props, sch => (sch.ctrl.defu = value)),
-      },
-      {
-        create: sch => `Создано новое расписание ${scheduleTitleInBrackets(sch)}`,
-        rename: sch => `Расписание ${scheduleTitleInBrackets(sch)} переименовано`,
-        setTopic: sch => `В расписании ${scheduleTitleInBrackets(sch)} изменена тема: ${sch.topic}`,
-        setDescription: sch => `В расписании ${scheduleTitleInBrackets(sch)} изменено описание: ${sch.dsc}`,
-        remove: sch => `Расписание ${scheduleTitleInBrackets(sch)} удалено`,
-        copySchedule: (_sch, _, copiedSch) =>
-          `Расписание ${scheduleTitleInBrackets(copiedSch)} скопировано в ${scheduleTitleInBrackets} `,
-
-        setDefaultUserRights: (sch, _, value) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} для новых участников установлены права по умолчанию: ` +
-          (scheduleWidgetUserRights.texts[scheduleWidgetUserRights.rightsBalance(value)].role?.[0] ?? 'Неизвестный'),
-
-        setFirstDayAsTech: sch =>
-          `В расписании ${scheduleTitleInBrackets(sch)} первый день сделан ${sch.withTech ? 'техническим' : 'обычным'}`,
-        setScheduleRegisterType: (schedule, _, value) => {
-          if (!smylib.isNum(value)) return `В расписании <b>${scheduleTitleInBrackets(schedule)}</b> изменение типа`;
-
-          const isSwPublic = scheduleWidgetRegTypeRights.checkIsHasIndividualRights(
-            value,
-            ScheduleWidgetRegType.Public,
-          );
-
-          const isSwBeforeRegistration = scheduleWidgetRegTypeRights.checkIsHasIndividualRights(
-            value,
-            ScheduleWidgetRegType.BeforeRegistration,
-          );
-
-          const isSwHideContent = scheduleWidgetRegTypeRights.checkIsHasIndividualRights(
-            value,
-            ScheduleWidgetRegType.HideContent,
-          );
-
-          try {
-            const publicRule = scheduleWidgetRegTypeTitles.find(item => item.id === ScheduleWidgetRegType.Public)!;
-            const beforeRegistrationRule = scheduleWidgetRegTypeTitles.find(
-              item => item.id === ScheduleWidgetRegType.BeforeRegistration,
-            )!;
-            const hideContentRule = scheduleWidgetRegTypeTitles.find(
-              item => item.id === ScheduleWidgetRegType.HideContent,
-            )!;
-
-            return (
-              `В расписании <b>${scheduleTitleInBrackets(schedule)}</b> изменение типа:` +
-              `\n\n${ScheduleWidgetCleans.putInTgTag(isSwPublic ? '' : 's', publicRule.title)}` +
-              `\n${ScheduleWidgetCleans.putInTgTag(
-                isSwPublic && isSwBeforeRegistration ? '' : 's',
-                beforeRegistrationRule.title,
-              )}` +
-              `\n${ScheduleWidgetCleans.putInTgTag(
-                isSwPublic && isSwBeforeRegistration && isSwHideContent ? '' : 's',
-                hideContentRule.title,
-              )}`
-            );
-          } catch (_error) {
-            return `В расписании <b>${scheduleTitleInBrackets(schedule)}</b> изменение типа`;
-          }
+          setScheduleRegisterType: ({ props, type: value }) =>
+            modifySchedule(false, props, sch => (sch.ctrl.type = value)),
+          setDefaultUserRights: ({ props, R: value }) => modifySchedule(false, props, sch => (sch.ctrl.defu = value)),
         },
-        setStartTime: sch =>
-          `В расписании ${scheduleTitleInBrackets(sch)} установлена дата начала - ` +
-          `${new Date(sch.start).toLocaleDateString('ru')}`,
+        onEachFeedbackTools: {
+          create: (_, sch) => `Создано новое расписание ${scheduleTitleInBrackets(sch)}`,
+          rename: (_, sch) => `Расписание ${scheduleTitleInBrackets(sch)} переименовано`,
+          setTopic: (_, sch) => `В расписании ${scheduleTitleInBrackets(sch)} изменена тема: ${sch.topic}`,
+          setDescription: (_, sch) => `В расписании ${scheduleTitleInBrackets(sch)} изменено описание: ${sch.dsc}`,
+          remove: (_, sch) => `Расписание ${scheduleTitleInBrackets(sch)} удалено`,
+          copySchedule: ({ schedule: copiedSch }) =>
+            `Расписание ${scheduleTitleInBrackets(copiedSch)} скопировано в ${scheduleTitleInBrackets} `,
 
-        setTgChatRequisites: sch =>
-          `В расписании ${scheduleTitleInBrackets(sch)} изменены реквизиты TG-чата: ${sch.tgChatReqs}`,
+          setDefaultUserRights: ({ R: value }, sch) =>
+            `В расписании ${scheduleTitleInBrackets(sch)} для новых участников установлены права по умолчанию: ` +
+            (scheduleWidgetUserRights.texts[scheduleWidgetUserRights.rightsBalance(value)].role?.[0] ?? 'Неизвестный'),
 
-        setTgInformTime: sch =>
-          `В расписании ${scheduleTitleInBrackets(sch)} TG-напоминания будут ` +
-          `${sch.tgInformTime ? `за ${sch.tgInformTime} минут` : 'только в начале события'} `,
+          setFirstDayAsTech: (_, sch) =>
+            `В расписании ${scheduleTitleInBrackets(sch)} первый день сделан ${sch.withTech ? 'техническим' : 'обычным'}`,
+          setScheduleRegisterType: ({ type: value }, schedule) => {
+            if (!smylib.isNum(value)) return `В расписании <b>${scheduleTitleInBrackets(schedule)}</b> изменение типа`;
 
-        toggleIsTgInform: sch =>
-          `В расписании ${scheduleTitleInBrackets(sch)} TG-напоминания ${
-            sch.tgInform === 0 ? 'отключены' : 'включены'
-          }`,
+            const isSwPublic = scheduleWidgetRegTypeRights.checkIsHasIndividualRights(
+              value,
+              ScheduleWidgetRegType.Public,
+            );
 
-        setIsTgInformMe:
-          (sch, _, isNotInform) =>
-          ({ auth }) =>
-            `В расписании ${scheduleTitleInBrackets(sch)} участник ${auth?.fio ?? '?'} (${auth?.nick ?? '?'}) ` +
-            `${isNotInform ? 'отключил' : 'включил'} TG-напоминания`,
-      },
-    );
-  }
+            const isSwBeforeRegistration = scheduleWidgetRegTypeRights.checkIsHasIndividualRights(
+              value,
+              ScheduleWidgetRegType.BeforeRegistration,
+            );
 
-  private updateScheduleValue =
-    <Key extends keyof IScheduleWidget>(key: Key, isNeedRefreshTgInformTime?: boolean) =>
-    (props: ScheduleScopeProps, value: IScheduleWidget[Key]) =>
-      modifySchedule(isNeedRefreshTgInformTime || false, props, sch => (sch[key] = value));
-}
+            const isSwHideContent = scheduleWidgetRegTypeRights.checkIsHasIndividualRights(
+              value,
+              ScheduleWidgetRegType.HideContent,
+            );
+
+            try {
+              const publicRule = scheduleWidgetRegTypeTitles.find(item => item.id === ScheduleWidgetRegType.Public)!;
+              const beforeRegistrationRule = scheduleWidgetRegTypeTitles.find(
+                item => item.id === ScheduleWidgetRegType.BeforeRegistration,
+              )!;
+              const hideContentRule = scheduleWidgetRegTypeTitles.find(
+                item => item.id === ScheduleWidgetRegType.HideContent,
+              )!;
+
+              return (
+                `В расписании <b>${scheduleTitleInBrackets(schedule)}</b> изменение типа:` +
+                `\n\n${ScheduleWidgetCleans.putInTgTag(isSwPublic ? '' : 's', publicRule.title)}` +
+                `\n${ScheduleWidgetCleans.putInTgTag(
+                  isSwPublic && isSwBeforeRegistration ? '' : 's',
+                  beforeRegistrationRule.title,
+                )}` +
+                `\n${ScheduleWidgetCleans.putInTgTag(
+                  isSwPublic && isSwBeforeRegistration && isSwHideContent ? '' : 's',
+                  hideContentRule.title,
+                )}`
+              );
+            } catch (_error) {
+              return `В расписании <b>${scheduleTitleInBrackets(schedule)}</b> изменение типа`;
+            }
+          },
+          setStartTime: (_, sch) =>
+            `В расписании ${scheduleTitleInBrackets(sch)} установлена дата начала - ` +
+            `${new Date(sch.start).toLocaleDateString('ru')}`,
+
+          setTgChatRequisites: (_, sch) =>
+            `В расписании ${scheduleTitleInBrackets(sch)} изменены реквизиты TG-чата: ${sch.tgChatReqs}`,
+
+          setTgInformTime: (_, sch) =>
+            `В расписании ${scheduleTitleInBrackets(sch)} TG-напоминания будут ` +
+            `${sch.tgInformTime ? `за ${sch.tgInformTime} минут` : 'только в начале события'} `,
+
+          toggleIsTgInform: (_, sch) =>
+            `В расписании ${scheduleTitleInBrackets(sch)} TG-напоминания ${
+              sch.tgInform === 0 ? 'отключены' : 'включены'
+            }`,
+
+          setIsTgInformMe:
+            ({ type: isNotInform }, sch) =>
+            ({ auth }) =>
+              `В расписании ${scheduleTitleInBrackets(sch)} участник ${auth?.fio ?? '?'} (${auth?.nick ?? '?'}) ` +
+              `${isNotInform ? 'отключил' : 'включил'} TG-напоминания`,
+        },
+      });
+    }
+  })();
 
 export const scheduleTitleInBrackets = (schScalar: IScheduleWidget | IScheduleWidgetWid) => {
   if (smylib.isNum(schScalar)) {
@@ -251,8 +249,6 @@ export const scheduleTitleInBrackets = (schScalar: IScheduleWidget | IScheduleWi
   }
   return `"${schScalar.title}"`;
 };
-
-export const schGeneralSokiInvocatorBaseServer = new SchGeneralSokiInvocatorBaseServer();
 
 schDaysSokiInvocatorBaseServer.$$register();
 schDayEventsSokiInvocatorBaseServer.$$register();

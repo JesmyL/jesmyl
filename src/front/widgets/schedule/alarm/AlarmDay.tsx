@@ -24,11 +24,10 @@ export function ScheduleAlarmDay(props: ScheduleWidgetDayProps) {
           title="Хочу комментить события"
           className="margin-giant-gap-t"
           onSend={() =>
-            schUsersSokiInvocatorClient.addMe(
-              null,
-              scheduleScopeProps,
-              'по кнопке "Хочу комментить события" в отдельном дне',
-            )
+            schUsersSokiInvocatorClient.addMe({
+              props: scheduleScopeProps,
+              place: 'по кнопке "Хочу комментить события" в отдельном дне',
+            })
           }
         />
       )}

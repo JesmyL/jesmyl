@@ -9,7 +9,7 @@ interface Props {
   setOnMove: (callback: ((event: MouseEvent) => void) | null) => void;
   updateConfig: (config: Partial<ScreenTranslationPositionConfig>) => void;
   rectRef: React.RefObject<HTMLDivElement | null>;
-  wrapperRef: React.RefObject<HTMLDivElement>;
+  wrapperRef: React.RefObject<HTMLDivElement | null>;
   resizeOnly?: ScreenResizerResizeOnly;
   config: ScreenTranslationPositionConfig;
   fixedResizerLines: FixedResizerLines | null;

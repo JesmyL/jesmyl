@@ -49,15 +49,14 @@ export const OrdersRedactorAdditions = ({ com, setClickBetweenOrds }: Props) => 
                     return true;
                   },
                   onClick: async ({ aboveLeadOrdw }) => {
-                    cmComOrderClientInvocatorMethods.insertNewBlock(
-                      null,
-                      com.wid,
-                      styleBlock.title[com.langi],
-                      aboveLeadOrdw,
-                      chordi,
-                      styleBlock.key,
-                      texti,
-                    );
+                    cmComOrderClientInvocatorMethods.insertNewBlock({
+                      comw: com.wid,
+                      orderTitle: styleBlock.title[com.langi],
+                      insertAfterOrdwOrFirst: aboveLeadOrdw,
+                      chordi: chordi,
+                      type: styleBlock.key,
+                      texti: texti,
+                    });
                   },
                 });
               }}

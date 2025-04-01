@@ -5,7 +5,7 @@ const minSize = 2;
 
 export const usePositionConfiguratorResizerBorderMaker = (
   rectRef: React.RefObject<HTMLDivElement | null>,
-  wrapperRef: React.RefObject<HTMLDivElement>,
+  wrapperRef: React.RefObject<HTMLDivElement | null>,
   setOnMove: (callback: ((event: MouseEvent) => void) | null) => void,
   updateConfig: (config: Partial<ScreenTranslationPositionConfig>) => void,
   config: ScreenTranslationPositionConfig,

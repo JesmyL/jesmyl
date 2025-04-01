@@ -3,17 +3,31 @@ import { SokiInvocatorBaseClient } from '#basis/lib/SokiInvocatorBase.client';
 import { liveDataAtom, liveDataStreamersAtom } from '$index/atoms';
 import { SchLiveSokiInvocatorModel, SchLiveSokiInvocatorSharesModel } from 'shared/api';
 
-class SchLiveSokiInvocatorClient extends SokiInvocatorClient<SchLiveSokiInvocatorModel> {}
-export const schLiveSokiInvocatorClient = new SchLiveSokiInvocatorClient('SchLiveSokiInvocatorClient', {
-  next: true,
-  reset: true,
-  watch: true,
-  unwatch: true,
-  requestStreamers: true,
-});
+export const schLiveSokiInvocatorClient =
+  new (class SchLiveSokiInvocatorClient extends SokiInvocatorClient<SchLiveSokiInvocatorModel> {
+    constructor() {
+      super({
+        className: 'SchLiveSokiInvocatorClient',
+        methods: {
+          next: true,
+          reset: true,
+          watch: true,
+          unwatch: true,
+          requestStreamers: true,
+        },
+      });
+    }
+  })();
 
-class SchLiveSokiInvocatorBaseClient extends SokiInvocatorBaseClient<SchLiveSokiInvocatorSharesModel> {}
-export const schLiveSokiInvocatorBaseClient = new SchLiveSokiInvocatorBaseClient('SchLiveSokiInvocatorBaseClient', {
-  updateData: () => async liveData => liveDataAtom.set(liveData),
-  streamersList: () => async streamers => liveDataStreamersAtom.set(streamers),
-});
+export const schLiveSokiInvocatorBaseClient =
+  new (class SchLiveSokiInvocatorBaseClient extends SokiInvocatorBaseClient<SchLiveSokiInvocatorSharesModel> {
+    constructor() {
+      super({
+        className: 'SchLiveSokiInvocatorBaseClient',
+        methods: {
+          updateData: async ({ data: liveData }) => liveDataAtom.set(liveData),
+          streamersList: async ({ streamers }) => liveDataStreamersAtom.set(streamers),
+        },
+      });
+    }
+  })();

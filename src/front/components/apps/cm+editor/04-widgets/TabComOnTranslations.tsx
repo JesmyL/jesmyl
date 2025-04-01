@@ -19,7 +19,7 @@ export const CmEditorTabComOnTranslations = () => {
             color={ccom.translationPushKind === kindi ? 'x7' : 'x3'}
             onClick={() => {
               if (ccom.translationPushKind === kindi) return;
-              cmComClientInvocatorMethods.changePushKind(null, ccom.wid, kindi);
+              cmComClientInvocatorMethods.changePushKind({ comw: ccom.wid, value: kindi });
             }}
           >
             {title}

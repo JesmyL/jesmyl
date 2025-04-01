@@ -38,7 +38,7 @@ export const ScheduleWidgetListUnitRedactor = ({ unit, cat, cati, shortTitles, u
           value={unit}
           fieldKey="title"
           isRedact
-          onSend={value => schListsSokiInvocatorClient.setUnitTitle(null, unitScopeData, value, cati)}
+          onSend={value => schListsSokiInvocatorClient.setUnitTitle({ props: unitScopeData, value, cati })}
         />
         <StrongEditableField
           icon="File02"
@@ -47,7 +47,7 @@ export const ScheduleWidgetListUnitRedactor = ({ unit, cat, cati, shortTitles, u
           fieldKey="dsc"
           multiline
           isRedact
-          onSend={value => schListsSokiInvocatorClient.setUnitDescription(null, unitScopeData, value, cati)}
+          onSend={value => schListsSokiInvocatorClient.setUnitDescription({ props: unitScopeData, value, cati })}
         />
         <ScheduleWidgetUserList
           title="Состав"
@@ -71,11 +71,10 @@ export const ScheduleWidgetListUnitRedactor = ({ unit, cat, cati, shortTitles, u
                       )
                     }
                     onSend={() =>
-                      schUsersSokiInvocatorClient.addUserListUnitMembership(
-                        null,
-                        { ...unitScopeData, userMi: user.mi, cati },
-                        isForMember ? unit.mi : -unit.mi,
-                      )
+                      schUsersSokiInvocatorClient.addUserListUnitMembership({
+                        props: { ...unitScopeData, userMi: user.mi, cati },
+                        value: isForMember ? unit.mi : -unit.mi,
+                      })
                     }
                   />
                 ) : (
@@ -94,10 +93,12 @@ export const ScheduleWidgetListUnitRedactor = ({ unit, cat, cati, shortTitles, u
                           : ' color--ko')
                     }
                     onSend={() =>
-                      schUsersSokiInvocatorClient.removeUserListUnitMembership(null, {
-                        ...unitScopeData,
-                        userMi: user.mi,
-                        cati,
+                      schUsersSokiInvocatorClient.removeUserListUnitMembership({
+                        props: {
+                          ...unitScopeData,
+                          userMi: user.mi,
+                          cati,
+                        },
                       })
                     }
                   />

@@ -30,12 +30,16 @@ export const CmEditorTabComCategoryBinds = () => {
               defaultValue={`${cat.dict?.[ccom.wid] || ''}`}
               onChange={value => {
                 if (!+value) {
-                  return cmCatClientInvocatorMethods.removeNativeComNum(null, ccom.wid, cat.wid);
+                  return cmCatClientInvocatorMethods.removeNativeComNum({ comw: ccom.wid, catw: cat.wid });
                 }
 
                 if (value.match(makeRegExp('/\\D/'))) return Promise.reject();
 
-                return cmCatClientInvocatorMethods.setNativeComNum(null, ccom.wid, cat.wid, +value);
+                return cmCatClientInvocatorMethods.setNativeComNum({
+                  comw: ccom.wid,
+                  catw: cat.wid,
+                  value: +value,
+                });
               }}
               onInput={emptyFunc}
             />
@@ -45,7 +49,12 @@ export const CmEditorTabComCategoryBinds = () => {
                 postfix={isNaN(cat.dict?.[ccom.wid as never]) ? 'Корректно очистить' : 'Удалить'}
                 confirm={`Очистить номер из сборника ${cat.name}?`}
                 className="pointer color--ko margin-big-gap-l margin-gap-b"
-                onClick={() => cmCatClientInvocatorMethods.removeNativeComNum(null, ccom.wid, cat.wid)}
+                onClick={() =>
+                  cmCatClientInvocatorMethods.removeNativeComNum({
+                    comw: ccom.wid,
+                    catw: cat.wid,
+                  })
+                }
               />
             )}
           </React.Fragment>
@@ -57,7 +66,12 @@ export const CmEditorTabComCategoryBinds = () => {
           <div
             key={cat.wid}
             className="flex flex-gap flex-max pointer margin-big-gap-v"
-            onClick={() => cmCatClientInvocatorMethods.toggleComExistence(null, ccom.wid, cat.wid)}
+            onClick={() =>
+              cmCatClientInvocatorMethods.toggleComExistence({
+                comw: ccom.wid,
+                catw: cat.wid,
+              })
+            }
           >
             <LazyIcon icon="ListView" />
             <span>{cat.name} </span>

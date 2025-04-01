@@ -40,12 +40,11 @@ export const CmComRepeatsRemoveButton = ({ isChordBlock, startOrd, ord, textLine
 
           if (isChordBlock) {
             if (await confirm(`Сбросить повторения блока "${startOrd.me.header() || ''}"?`, 'Сброс')) {
-              cmComOrderClientInvocatorMethods.removeRepeats(
-                null,
-                startOrd.com.wid,
-                startOrd.me.header(),
-                startOrd.wid,
-              );
+              cmComOrderClientInvocatorMethods.removeRepeats({
+                comw: startOrd.com.wid,
+                orderTitle: startOrd.me.header(),
+                ordw: startOrd.wid,
+              });
               reset();
             }
             return;

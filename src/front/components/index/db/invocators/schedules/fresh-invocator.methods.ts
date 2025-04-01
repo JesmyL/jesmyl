@@ -12,16 +12,23 @@ const tgAuthorize = async ({ auth, token }: { auth: LocalSokiAuth; token: string
   setTimeout(() => soki.onAuthorizeEvent.invoke(), 100);
 };
 
-class IndexBasicsSokiInvocatorClient extends SokiInvocatorClient<IndexBasicsSokiInvocatorModel> {}
-export const indexBasicsSokiInvocatorClient = new IndexBasicsSokiInvocatorClient('IndexBasicsSokiInvocatorClient', {
-  requestFreshes: true,
-  getDeviceId: true,
+export const indexBasicsSokiInvocatorClient =
+  new (class IndexBasicsSokiInvocatorClient extends SokiInvocatorClient<IndexBasicsSokiInvocatorModel> {
+    constructor() {
+      super({
+        className: 'IndexBasicsSokiInvocatorClient',
+        methods: {
+          requestFreshes: true,
+          getDeviceId: true,
 
-  authMeByTelegramNativeButton: tgAuthorize,
-  authMeByTelegramBotNumber: tgAuthorize,
-  authMeByTelegramMiniButton: tgAuthorize,
-  authMeByTelegramInScheduleDay: tgAuthorize,
+          authMeByTelegramNativeButton: tgAuthorize,
+          authMeByTelegramBotNumber: tgAuthorize,
+          authMeByTelegramMiniButton: tgAuthorize,
+          authMeByTelegramInScheduleDay: tgAuthorize,
 
-  getFreshAppVersion: true,
-  getIndexValues: true,
-});
+          getFreshAppVersion: true,
+          getIndexValues: true,
+        },
+      });
+    }
+  })();

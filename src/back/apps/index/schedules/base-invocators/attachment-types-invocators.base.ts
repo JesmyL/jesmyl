@@ -23,114 +23,114 @@ const newTatt = () =>
     U: scheduleWidgetUserRights.includeRights(ScheduleWidgetUserRoleRight.Redact),
   }) satisfies ScheduleWidgetAppAttCustomizable;
 
-class SchAttachmentTypesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchAttachmentTypesSokiInvocatorMethods> {
-  constructor() {
-    super(
-      'SchAttachmentTypesSokiInvocatorBaseServer',
-      {
-        create: () => props =>
-          modifySchedule(false, props, sch =>
-            sch.tatts.push({
-              ...newTatt(),
-              mi: smylib.takeNextMi(sch.tatts, IScheduleWidgetAttachmentTypeMi.def),
+export const schAttachmentTypesSokiInvocatorBaseServer =
+  new (class SchAttachmentTypesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchAttachmentTypesSokiInvocatorMethods> {
+    constructor() {
+      super({
+        className: 'SchAttachmentTypesSokiInvocatorBaseServer',
+        methods: {
+          create: ({ props }) =>
+            modifySchedule(false, props, sch =>
+              sch.tatts.push({
+                ...newTatt(),
+                mi: smylib.takeNextMi(sch.tatts, IScheduleWidgetAttachmentTypeMi.def),
+              }),
+            ),
+
+          setTitle: ({ props, value }) => this.modifyAttType(props, tatt => (tatt.title = value)),
+          setDescription: ({ props, value }) => this.modifyAttType(props, tatt => (tatt.description = value)),
+          setIcon: ({ props, value }) => this.modifyAttType(props, tatt => (tatt.icon = value)),
+          setUse: ({ props, value }) => this.modifyAttType(props, tatt => (tatt.use = value)),
+          setRolesUses: ({ props, value }) => this.modifyAttType(props, tatt => (tatt.roles = value)),
+          setListsUses: ({ props, value }) => this.modifyAttType(props, tatt => (tatt.list = value)),
+
+          setTitleValue: ({ props, titlei, value }) =>
+            this.modifyAttType(props, tatt => {
+              tatt.titles ??= [];
+              tatt.titles[titlei] = value;
             }),
-          ),
 
-        setTitle: () => (props, value) => this.modifyAttType(props, tatt => (tatt.title = value)),
-        setDescription: () => (props, value) => this.modifyAttType(props, tatt => (tatt.description = value)),
-        setIcon: () => (props, value) => this.modifyAttType(props, tatt => (tatt.icon = value)),
-        setUse: () => (props, value) => this.modifyAttType(props, tatt => (tatt.use = value)),
-        setRolesUses: () => (props, value) => this.modifyAttType(props, tatt => (tatt.roles = value)),
-        setListsUses: () => (props, value) => this.modifyAttType(props, tatt => (tatt.list = value)),
+          createTitleValue: ({ props }) =>
+            this.modifyAttType(props, tatt => {
+              tatt.titles ??= [];
+              tatt.titles.push('');
+            }),
 
-        setTitleValue: () => (props, titlei, value) =>
-          this.modifyAttType(props, tatt => {
-            tatt.titles ??= [];
-            tatt.titles[titlei] = value;
-          }),
+          setWhoCanLevel: ({ props, rule, value }) => this.modifyAttType(props, tatt => (tatt[rule] = value)),
+          toggleUserWhoCan: ({ props, rule, userMi }) =>
+            this.modifyAttType(props, tatt => {
+              const set = new Set(tatt[rule]);
 
-        createTitleValue: () => props =>
-          this.modifyAttType(props, tatt => {
-            tatt.titles ??= [];
-            tatt.titles.push('');
-          }),
+              if (set.has(userMi)) set.delete(userMi);
+              else set.add(userMi);
 
-        setWhoCanLevel: () => (props, rule, value) => this.modifyAttType(props, tatt => (tatt[rule] = value)),
-        toggleUserWhoCan: () => (props, rule, userMi) =>
-          this.modifyAttType(props, tatt => {
-            const set = new Set(tatt[rule]);
-
-            if (set.has(userMi)) set.delete(userMi);
-            else set.add(userMi);
-
-            if (set.size === 0) delete tatt[rule];
-            else tatt[rule] = Array.from(set);
-          }),
-      },
-      {
-        create: sch => `${this.inSchTitle(sch)} создан тип вложений`,
-        setTitle: (sch, _, value, prevTitle) =>
-          `${this.inSchTitle(sch)} тип вложений "${prevTitle}" переименован на "${value}"`,
-        setDescription: (sch, _, value, attTitle) =>
-          `${this.inSchTitle(sch)} описание типа вложений "${attTitle}" изменено на "${value}"`,
-        setIcon: (sch, _, value, attTitle) =>
-          `${this.inSchTitle(sch)} иконка типа вложений "${attTitle}" изменена на "${value}"`,
-        setUse: (sch, _, value, attTitle) =>
-          `${this.inSchTitle(sch)} значение использований типа вложений "${attTitle}" изменено на ${value}`,
-        setRolesUses: (sch, _, value, attTitle) =>
-          `${this.inSchTitle(sch)} значение использования ролей типа вложений "${attTitle}" изменено на ${value}`,
-        setListsUses: (sch, _, value, attTitle) =>
-          `${this.inSchTitle(sch)} значение использования списков типа вложений ` +
-          `"${attTitle}" изменено на ${value}`,
-        setTitleValue: (sch, _, titlei, value, attTitle, prevTitle) =>
-          `${this.inSchTitle(sch)} значение ${titlei + 1}-го заголовка типа вложений ` +
-          `"${attTitle}", "${prevTitle}" изменено на "${value}"`,
-        createTitleValue: (sch, _, attTitle, titlesCount) =>
-          `${this.inSchTitle(sch)} создан ${titlesCount + 1}-й заголовок для типа вложений "${attTitle}"`,
-
-        setWhoCanLevel: (sch, _, rule, value, attTitle) => {
-          const balance = scheduleWidgetUserRights.rightsBalance(value);
-          const id = scheduleWidgetUserRights.enumOrder[balance];
-          const role = scheduleWidgetUserRights.texts.find(txt => txt.id === id)?.role?.[0];
-
-          return (
-            `${this.inSchTitle(sch)} уровень доступа для ${rule === 'U' ? 'редактирования' : 'чтения'} ` +
-            `типа вложений "${attTitle}" - ${
-              balance === 0
-                ? 'имеют ВСЕ!'
-                : balance === scheduleWidgetUserRights.enumOrder.length - 1
-                  ? `имеет только ${role}`
-                  : role
-                    ? `имеет ${role} и старше`
-                    : '???'
-            }`
-          );
+              if (set.size === 0) delete tatt[rule];
+              else tatt[rule] = Array.from(set);
+            }),
         },
+        onEachFeedbackTools: {
+          create: (_, sch) => `${this.inSchTitle(sch)} создан тип вложений`,
+          setTitle: ({ value, prevTitle }, sch) =>
+            `${this.inSchTitle(sch)} тип вложений "${prevTitle}" переименован на "${value}"`,
+          setDescription: ({ value, tattTitle }, sch) =>
+            `${this.inSchTitle(sch)} описание типа вложений "${tattTitle}" изменено на "${value}"`,
+          setIcon: ({ value, tattTitle }, sch) =>
+            `${this.inSchTitle(sch)} иконка типа вложений "${tattTitle}" изменена на "${value}"`,
+          setUse: ({ value, tattTitle }, sch) =>
+            `${this.inSchTitle(sch)} значение использований типа вложений "${tattTitle}" изменено на ${value}`,
+          setRolesUses: ({ value, tattTitle }, sch) =>
+            `${this.inSchTitle(sch)} значение использования ролей типа вложений "${tattTitle}" изменено на ${value}`,
+          setListsUses: ({ value, tattTitle }, sch) =>
+            `${this.inSchTitle(sch)} значение использования списков типа вложений ` +
+            `"${tattTitle}" изменено на ${value}`,
+          setTitleValue: ({ titlei, value, tattTitle, prevTitle }, sch) =>
+            `${this.inSchTitle(sch)} значение ${titlei + 1}-го заголовка типа вложений ` +
+            `"${tattTitle}", "${prevTitle}" изменено на "${value}"`,
+          createTitleValue: ({ tattTitle, titlesCount }, sch) =>
+            `${this.inSchTitle(sch)} создан ${titlesCount + 1}-й заголовок для типа вложений "${tattTitle}"`,
 
-        toggleUserWhoCan: (sch, props, rule, userMi, tattTitle, userName) => {
-          const tatt = sch.tatts.find(tatt => tatt.mi === props.tattMi);
-          if (tatt == null) return '';
+          setWhoCanLevel: ({ rule, value, tattTitle }, sch) => {
+            const balance = scheduleWidgetUserRights.rightsBalance(value);
+            const id = scheduleWidgetUserRights.enumOrder[balance];
+            const role = scheduleWidgetUserRights.texts.find(txt => txt.id === id)?.role?.[0];
 
-          return (
-            `${this.inSchTitle(sch)} ${userName} ` +
-            `${tatt[rule]?.includes(userMi) ? 'добавлен в список' : 'удалён из списка'} ` +
-            `${rule === 'Rs' ? 'для чтения' : 'для редактирования'} вложений с типом "${tattTitle}"`
-          );
+            return (
+              `${this.inSchTitle(sch)} уровень доступа для ${rule === 'U' ? 'редактирования' : 'чтения'} ` +
+              `типа вложений "${tattTitle}" - ${
+                balance === 0
+                  ? 'имеют ВСЕ!'
+                  : balance === scheduleWidgetUserRights.enumOrder.length - 1
+                    ? `имеет только ${role}`
+                    : role
+                      ? `имеет ${role} и старше`
+                      : '???'
+              }`
+            );
+          },
+
+          toggleUserWhoCan: ({ props, rule, userMi, tattTitle, userName }, sch) => {
+            const tatt = sch.tatts.find(tatt => tatt.mi === props.tattMi);
+            if (tatt == null) return '';
+
+            return (
+              `${this.inSchTitle(sch)} ${userName} ` +
+              `${tatt[rule]?.includes(userMi) ? 'добавлен в список' : 'удалён из списка'} ` +
+              `${rule === 'Rs' ? 'для чтения' : 'для редактирования'} вложений с типом "${tattTitle}"`
+            );
+          },
         },
-      },
-    );
-  }
+      });
+    }
 
-  private modifyAttType = (
-    props: ScheduleAttachmentTypeScopeProps,
-    modifier: (tatt: ScheduleWidgetAppAttCustomized) => void,
-  ) =>
-    modifySchedule(false, props, sch => {
-      const tatt = sch.tatts.find(tatt => tatt.mi === props.tattMi);
-      if (tatt == null) throw new Error('attachment type not found');
-      modifier(tatt);
-    });
+    private modifyAttType = (
+      props: ScheduleAttachmentTypeScopeProps,
+      modifier: (tatt: ScheduleWidgetAppAttCustomized) => void,
+    ) =>
+      modifySchedule(false, props, sch => {
+        const tatt = sch.tatts.find(tatt => tatt.mi === props.tattMi);
+        if (tatt == null) throw new Error('attachment type not found');
+        modifier(tatt);
+      });
 
-  private inSchTitle = (sch: IScheduleWidget) => `В расписании ${scheduleTitleInBrackets(sch)}`;
-}
-export const schAttachmentTypesSokiInvocatorBaseServer = new SchAttachmentTypesSokiInvocatorBaseServer();
+    private inSchTitle = (sch: IScheduleWidget) => `В расписании ${scheduleTitleInBrackets(sch)}`;
+  })();

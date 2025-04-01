@@ -172,7 +172,9 @@ export function ScheduleWidgetTeamGameSetTeamsScreen() {
             title="Отправить"
             disabled={!criterias?.length || !teams.length}
             confirm="Отправить список команд?"
-            onSend={() => schGamesSokiInvocatorClient.setTeams(null, { ...scheduleScopeProps, gameMi: game.mi }, teams)}
+            onSend={() =>
+              schGamesSokiInvocatorClient.setTeams({ props: { ...scheduleScopeProps, gameMi: game.mi }, value: teams })
+            }
           />
         </>
       )}

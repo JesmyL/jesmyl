@@ -85,7 +85,11 @@ export function ScheduleWidgetTeamsCriteriaSorterScreen({
               value[user.mi] = useri;
             });
 
-            return schGamesSokiInvocatorClient.setSortedDict(null, criteriaScopeProps, value, criteria.title);
+            return schGamesSokiInvocatorClient.setSortedDict({
+              props: criteriaScopeProps,
+              value,
+              criteriaTitle: criteria.title,
+            });
           }}
         />
       </div>

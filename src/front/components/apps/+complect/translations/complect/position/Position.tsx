@@ -21,7 +21,7 @@ interface Props {
   updateConfig?: (config: Partial<ScreenTranslationPositionConfig>) => void;
   resizeOnly?: ScreenResizerResizeOnly;
   isCantMove?: boolean;
-  wrapperRef: React.RefObject<HTMLDivElement>;
+  wrapperRef: React.RefObject<HTMLDivElement | null>;
 }
 
 export const ScreenTranslateCurrentPositionConfigurators = ({

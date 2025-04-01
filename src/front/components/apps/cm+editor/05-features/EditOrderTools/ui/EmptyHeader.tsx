@@ -9,12 +9,11 @@ export const OrdersRedactorOrderToolsEmptyHeader = (props: OrdersRedactorOrderTo
         icon="Message01"
         title={`${props.ord.isEmptyHeader ? 'Вернуть' : 'Убрать'} название блока`}
         onClick={async () => {
-          await cmComOrderClientInvocatorMethods.toggleTitleVisibility(
-            null,
-            props.ord.me.header(),
-            props.com.wid,
-            props.ord.wid,
-          );
+          await cmComOrderClientInvocatorMethods.toggleTitleVisibility({
+            orderTitle: props.ord.me.header(),
+            comw: props.com.wid,
+            ordw: props.ord.wid,
+          });
           props.onClose(false);
         }}
       />

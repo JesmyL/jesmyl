@@ -23,7 +23,9 @@ export function ScheduleWidgetRegisterType() {
               className="margin-gap-l"
               isCantEdit={!rights.isCanTotalRedact}
               isDescriptionsCollect
-              onSend={value => schGeneralSokiInvocatorClient.setScheduleRegisterType(null, scheduleScopeProps, value)}
+              onSend={value =>
+                schGeneralSokiInvocatorClient.setScheduleRegisterType({ props: scheduleScopeProps, type: value })
+              }
             />
             {rights.isCanTotalRedact && <ScheduleWidgetNewUserRegisterLevel />}
           </>

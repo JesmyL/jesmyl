@@ -47,9 +47,7 @@ export class SMyLib {
 
   static entries = <T>(it: T): [keyof T, T[keyof T]][] => (it == null ? [] : Object.entries(it)) as never;
 
-  static keys<T, Key extends T extends Record<infer Key, unknown> | PRecord<infer Key, unknown> ? Key : string>(
-    it: T,
-  ): Key[] {
+  static keys<T, Key extends T extends object ? keyof T : string>(it: T): Key[] {
     if (it == null) return [];
     return Object.keys(it) as never;
   }

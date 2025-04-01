@@ -5,7 +5,6 @@ import react from '@vitejs/plugin-react';
 import dns from 'dns';
 import { defineConfig } from 'vite';
 import eslint from 'vite-plugin-eslint';
-import { VitePWA } from 'vite-plugin-pwa';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import * as tsconf from './tsconfig.json';
 
@@ -32,14 +31,14 @@ export default defineConfig(() => {
         // failOnWarning: false,
         // lintOnStart: false,
       }),
-      VitePWA({
-        injectRegister: 'auto',
-        strategies: 'generateSW',
-        registerType: 'autoUpdate',
-        workbox: {
-          cleanupOutdatedCaches: false,
-        },
-      }),
+      // VitePWA({
+      //   injectRegister: 'auto',
+      //   strategies: 'generateSW',
+      //   registerType: 'autoUpdate',
+      //   workbox: {
+      //     cleanupOutdatedCaches: false,
+      //   },
+      // }),
       tailwindcss(),
       basicSsl(),
       react(),

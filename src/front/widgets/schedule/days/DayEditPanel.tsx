@@ -32,7 +32,7 @@ export function ScheduleWidgetDayEditPanel({ day, dayi, schedule, scheduleScopeP
         takeDate="NO"
         takeTime="hour-min"
         onSend={async (isChanged, value) =>
-          isChanged && schDaysSokiInvocatorClient.setBeginTime(null, dayScopeProps, value)
+          isChanged && schDaysSokiInvocatorClient.setBeginTime({ props: dayScopeProps, value })
         }
       />
       <TheIconButton

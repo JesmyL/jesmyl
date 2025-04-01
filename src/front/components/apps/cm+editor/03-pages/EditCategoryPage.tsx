@@ -35,7 +35,7 @@ export const EditCategoryPage = () => {
               icon="MapsRefresh"
               postfix="Восстановить"
               className="color--ok"
-              onClick={() => cmCatClientInvocatorMethods.bringBackToLife(null, ccatw)}
+              onClick={() => cmCatClientInvocatorMethods.bringBackToLife({ catw: ccatw })}
             />
           </div>
         }
@@ -53,7 +53,7 @@ export const EditCategoryPage = () => {
             icon="TextFont"
             defaultValue={ccat.name}
             label="Название"
-            onChange={value => cmCatClientInvocatorMethods.rename(null, ccat.wid, value)}
+            onChange={value => cmCatClientInvocatorMethods.rename({ catw: ccat.wid, name: value })}
           />
 
           <div className="flex between">
@@ -63,7 +63,7 @@ export const EditCategoryPage = () => {
                 id={ccat.kind}
                 items={catTrackers}
                 onSelect={kind => {
-                  cmCatClientInvocatorMethods.setKind(null, ccat.wid, kind.id);
+                  cmCatClientInvocatorMethods.setKind({ catw: ccat.wid, kind: kind.id });
                 }}
               />
             </div>
@@ -72,7 +72,7 @@ export const EditCategoryPage = () => {
                 icon="Cancel01"
                 postfix="Очистить список"
                 confirm="Список восстановить не получится"
-                onClick={() => cmCatClientInvocatorMethods.clearStack(null, ccat.wid)}
+                onClick={() => cmCatClientInvocatorMethods.clearStack({ catw: ccat.wid })}
               />
             )}
           </div>
@@ -92,7 +92,7 @@ export const EditCategoryPage = () => {
               onClick={() => {
                 setRemovedCats(prev => ({ ...prev, [ccat.wid]: ccat.name }));
 
-                return cmCatClientInvocatorMethods.remove(null, ccat.wid);
+                return cmCatClientInvocatorMethods.remove({ catw: ccat.wid });
               }}
             />
           </div>

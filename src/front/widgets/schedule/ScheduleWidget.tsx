@@ -96,7 +96,9 @@ export function ScheduleWidget({
           <SendButton
             title="Буду участвовать"
             confirm="Вы будете записаны как участник"
-            onSend={() => schUsersSokiInvocatorClient.addMe(null, scheduleScopeProps, 'по кнопке в расписании')}
+            onSend={() =>
+              schUsersSokiInvocatorClient.addMe({ props: scheduleScopeProps, place: 'по кнопке в расписании' })
+            }
           />
         );
       } else if (rights.isSwHideContent)
@@ -162,7 +164,8 @@ export function ScheduleWidget({
                 takeTime="NO"
                 onComponentsChange={(_, __, ___, date) => setStartTime(date.getTime())}
                 onSend={async () =>
-                  startTime && schGeneralSokiInvocatorClient.setStartTime(null, scheduleScopeProps, startTime)
+                  startTime &&
+                  schGeneralSokiInvocatorClient.setStartTime({ props: scheduleScopeProps, value: startTime })
                 }
               />
             ) : (
@@ -184,7 +187,7 @@ export function ScheduleWidget({
                       isRedact
                       icon="SchoolReportCard"
                       title="Заголовок"
-                      onSend={value => schGeneralSokiInvocatorClient.rename(null, scheduleScopeProps, value)}
+                      onSend={value => schGeneralSokiInvocatorClient.rename({ props: scheduleScopeProps, value })}
                     />
                     <StrongEditableField
                       fieldKey="topic"
@@ -192,7 +195,7 @@ export function ScheduleWidget({
                       isRedact
                       icon="Bookmark03"
                       title="Тема"
-                      onSend={value => schGeneralSokiInvocatorClient.setTopic(null, scheduleScopeProps, value)}
+                      onSend={value => schGeneralSokiInvocatorClient.setTopic({ props: scheduleScopeProps, value })}
                     />
                   </>
                 )}
@@ -205,7 +208,7 @@ export function ScheduleWidget({
                     textClassName=" "
                     icon="File02"
                     title="Описание"
-                    onSend={value => schGeneralSokiInvocatorClient.setDescription(null, scheduleScopeProps, value)}
+                    onSend={value => schGeneralSokiInvocatorClient.setDescription({ props: scheduleScopeProps, value })}
                   />
                 )}
                 {rights.isCanReadTitles && (
@@ -246,7 +249,7 @@ export function ScheduleWidget({
                         postfix="Добавить день"
                         confirm="Дни удалять не возможно! Создать новый?"
                         className="margin-gap-v"
-                        onSend={() => schDaysSokiInvocatorClient.addDay(null, scheduleScopeProps)}
+                        onSend={() => schDaysSokiInvocatorClient.addDay({ props: scheduleScopeProps })}
                       />
                     )}
                     {auth && auth.level >= 80 && (
@@ -255,7 +258,7 @@ export function ScheduleWidget({
                         icon="Delete02"
                         confirm="Восстановить расписание будет не возможно. Продолжить?"
                         postfix="Удалить расписание"
-                        onSend={() => schGeneralSokiInvocatorClient.remove(null, scheduleScopeProps)}
+                        onSend={() => schGeneralSokiInvocatorClient.remove({ props: scheduleScopeProps })}
                       />
                     )}
                   </>
@@ -266,11 +269,10 @@ export function ScheduleWidget({
                       title="Хочу комментить события"
                       className="margin-giant-gap-t"
                       onSend={() =>
-                        schUsersSokiInvocatorClient.addMe(
-                          null,
-                          scheduleScopeProps,
-                          'по кнопке "Хочу комментить события"',
-                        )
+                        schUsersSokiInvocatorClient.addMe({
+                          props: scheduleScopeProps,
+                          place: 'по кнопке "Хочу комментить события"',
+                        })
                       }
                     />
                   ) : (

@@ -48,12 +48,13 @@ export function ScheduleWidgetDayEventEventActions({ schedule, event, onEventCut
           }
           className="flex-max color--ko margin-gap-v"
           onSend={() =>
-            schDaysSokiInvocatorClient.removeEvent(
-              null,
-              dayScopeProps,
-              event.mi,
-              rights.schedule.types[event.type].title,
-            )
+            schDaysSokiInvocatorClient.removeEvent({
+              props: dayScopeProps,
+              value: {
+                eventMi: event.mi,
+                eventTypeTitle: rights.schedule.types[event.type].title,
+              },
+            })
           }
         />
       )}

@@ -1,6 +1,6 @@
 import { ICmComComment } from 'shared/api/complect/apps';
 
 export type CmFreshSokiInvocatorModel = {
-  requestFreshes: (lastModfiedAt: number) => void;
-  exchangeFreshComComments: (modifiedComments: ICmComComment[], clientDateNow: number) => ICmComComment[];
+  requestFreshes: (args: { lastModfiedAt: number }) => void;
+  exchangeFreshComComments: (args: { modifiedComments: ICmComComment[]; clientDateNow: number }) => ICmComComment[];
 };

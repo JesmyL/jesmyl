@@ -99,7 +99,11 @@ export function ScheduleWidgetCustomAtt(props: {
             icon={props.tatt.icon}
             header={<>Иконка для вложения {props.tatt.title}</>}
             onSend={icon =>
-              schAttachmentTypesSokiInvocatorClient.setIcon(null, attachmentTypeScopeProps, icon, props.tatt.title)
+              schAttachmentTypesSokiInvocatorClient.setIcon({
+                props: attachmentTypeScopeProps,
+                value: icon,
+                tattTitle: props.tatt.title,
+              })
             }
           />
         )}
@@ -111,7 +115,11 @@ export function ScheduleWidgetCustomAtt(props: {
           icon={props.isRedact ? 'Bookmark01' : props.tatt.icon}
           title="Название"
           onSend={value =>
-            schAttachmentTypesSokiInvocatorClient.setTitle(null, attachmentTypeScopeProps, value, props.tatt.title)
+            schAttachmentTypesSokiInvocatorClient.setTitle({
+              props: attachmentTypeScopeProps,
+              value: value,
+              prevTitle: props.tatt.title,
+            })
           }
         />
         <StrongEditableField
@@ -123,12 +131,11 @@ export function ScheduleWidgetCustomAtt(props: {
           isImpossibleEmptyValue
           title="Описание вложения"
           onSend={value =>
-            schAttachmentTypesSokiInvocatorClient.setDescription(
-              null,
-              attachmentTypeScopeProps,
-              value,
-              props.tatt.title,
-            )
+            schAttachmentTypesSokiInvocatorClient.setDescription({
+              props: attachmentTypeScopeProps,
+              value: value,
+              tattTitle: props.tatt.title,
+            })
           }
         />
         {props.tatt.title && (
@@ -191,12 +198,11 @@ export function ScheduleWidgetCustomAtt(props: {
                           }
                           postfix={(top ? '' : 'Использовать ') + title}
                           onSend={() =>
-                            schAttachmentTypesSokiInvocatorClient.setUse(
-                              null,
-                              attachmentTypeScopeProps,
-                              customAttUseRights.switchRights(props.tatt.use, id),
-                              props.tatt.title,
-                            )
+                            schAttachmentTypesSokiInvocatorClient.setUse({
+                              props: attachmentTypeScopeProps,
+                              value: customAttUseRights.switchRights(props.tatt.use, id),
+                              tattTitle: props.tatt.title,
+                            })
                           }
                         />
                       )}
@@ -222,12 +228,11 @@ export function ScheduleWidgetCustomAtt(props: {
                                 }
                                 postfix={cat}
                                 onSend={() =>
-                                  schAttachmentTypesSokiInvocatorClient.setRolesUses(
-                                    null,
-                                    attachmentTypeScopeProps,
-                                    ScheduleWidgetRightsCtrl.switchRights(props.tatt.roles, cati, cata.length),
-                                    props.tatt.title,
-                                  )
+                                  schAttachmentTypesSokiInvocatorClient.setRolesUses({
+                                    props: attachmentTypeScopeProps,
+                                    value: ScheduleWidgetRightsCtrl.switchRights(props.tatt.roles, cati, cata.length),
+                                    tattTitle: props.tatt.title,
+                                  })
                                 }
                               />
                             );
@@ -255,12 +260,11 @@ export function ScheduleWidgetCustomAtt(props: {
                                 }
                                 postfix={cat.title}
                                 onSend={() =>
-                                  schAttachmentTypesSokiInvocatorClient.setListsUses(
-                                    null,
-                                    attachmentTypeScopeProps,
-                                    ScheduleWidgetRightsCtrl.switchRights(props.tatt.list, cati, cata.length),
-                                    props.tatt.title,
-                                  )
+                                  schAttachmentTypesSokiInvocatorClient.setListsUses({
+                                    props: attachmentTypeScopeProps,
+                                    value: ScheduleWidgetRightsCtrl.switchRights(props.tatt.list, cati, cata.length),
+                                    tattTitle: props.tatt.title,
+                                  })
                                 }
                               />
                             );
@@ -282,14 +286,13 @@ export function ScheduleWidgetCustomAtt(props: {
                                   CustomAttUseRights.CheckTitles,
                                 )}
                                 onSend={value =>
-                                  schAttachmentTypesSokiInvocatorClient.setTitleValue(
-                                    null,
-                                    attachmentTypeScopeProps,
-                                    titlei,
-                                    value,
-                                    props.tatt.title,
-                                    title,
-                                  )
+                                  schAttachmentTypesSokiInvocatorClient.setTitleValue({
+                                    props: attachmentTypeScopeProps,
+                                    titlei: titlei,
+                                    value: value,
+                                    tattTitle: props.tatt.title,
+                                    prevTitle: title,
+                                  })
                                 }
                               />
                             );
@@ -300,12 +303,11 @@ export function ScheduleWidgetCustomAtt(props: {
                             disabled={props.tatt.titles?.some(itNIt)}
                             disabledReason="Есть пустые заголовки"
                             onSend={() =>
-                              schAttachmentTypesSokiInvocatorClient.createTitleValue(
-                                null,
-                                attachmentTypeScopeProps,
-                                props.tatt.title,
-                                props.tatt.titles?.length ?? 0,
-                              )
+                              schAttachmentTypesSokiInvocatorClient.createTitleValue({
+                                props: attachmentTypeScopeProps,
+                                tattTitle: props.tatt.title,
+                                titlesCount: props.tatt.titles?.length ?? 0,
+                              })
                             }
                           />
                         </div>
@@ -342,13 +344,12 @@ export function ScheduleWidgetCustomAtt(props: {
               isReverse
               isDisabled={type => myBalance < scheduleWidgetUserRights.rightLevel(type.id) + 2}
               onSend={value =>
-                schAttachmentTypesSokiInvocatorClient.setWhoCanLevel(
-                  null,
-                  attachmentTypeScopeProps,
-                  whoCan.rule,
-                  value,
-                  props.tatt.title,
-                )
+                schAttachmentTypesSokiInvocatorClient.setWhoCanLevel({
+                  props: attachmentTypeScopeProps,
+                  rule: whoCan.rule,
+                  value: value,
+                  tattTitle: props.tatt.title,
+                })
               }
             />
             <h3>... или участники</h3>
@@ -368,14 +369,13 @@ export function ScheduleWidgetCustomAtt(props: {
                       : 'Square'
                   }
                   onSend={() =>
-                    schAttachmentTypesSokiInvocatorClient.toggleUserWhoCan(
-                      null,
-                      attachmentTypeScopeProps,
-                      `${whoCan.rule}s`,
-                      user.mi,
-                      props.tatt.title,
-                      user.fio ?? user.nick ?? '??',
-                    )
+                    schAttachmentTypesSokiInvocatorClient.toggleUserWhoCan({
+                      props: attachmentTypeScopeProps,
+                      rule: `${whoCan.rule}s`,
+                      userMi: user.mi,
+                      tattTitle: props.tatt.title,
+                      userName: user.fio ?? user.nick ?? '??',
+                    })
                   }
                 />
               );

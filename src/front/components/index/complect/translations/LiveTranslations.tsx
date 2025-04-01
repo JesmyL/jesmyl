@@ -33,11 +33,13 @@ export const IndexScheduleWidgetTranslations = ({ schw }: { schw: IScheduleWidge
     if (windows.some(itNNull)) setIsCantTranslateLive(false);
     else {
       setIsCantTranslateLive(true);
-      schLiveSokiInvocatorClient.reset(null, schedule.w);
+      schLiveSokiInvocatorClient.reset({ schw: schedule.w });
     }
 
     return hookEffectPipe()
-      .pipe(addEventListenerPipe(window, 'unload' as never, () => schLiveSokiInvocatorClient.reset(null, schedule.w)))
+      .pipe(
+        addEventListenerPipe(window, 'unload' as never, () => schLiveSokiInvocatorClient.reset({ schw: schedule.w })),
+      )
       .effect();
   }, [schedule?.w, windows]);
 

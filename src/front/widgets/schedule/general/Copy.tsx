@@ -75,7 +75,7 @@ export function ScheduleWidgetCopy(props: { schw: IScheduleWidgetWid }) {
                                   atts[attKey] = {
                                     ...attValue,
                                     list: attValue.list.map(att => {
-                                      return att[0] === 1 ? [0, ...att.slice(1)] : att;
+                                      return mylib.isArr(att) && att[0] === 1 ? [0, ...att.slice(1)] : att;
                                     }),
                                   };
                                 else atts[attKey] = attValue;
@@ -84,10 +84,11 @@ export function ScheduleWidgetCopy(props: { schw: IScheduleWidgetWid }) {
                                   ...attValue,
                                   values: attValue.values
                                     .map(val => {
-                                      return typeof val[1] === 'number' &&
+                                      return mylib.isArr(val) &&
+                                        typeof val[1] === 'number' &&
                                         ScheduleWidgetCleans.checkIsTaleIdUnit(val[1], CustomAttUseTaleId.Users)
                                         ? null
-                                        : val[0] === true
+                                        : mylib.isArr(val) && val[0] === true
                                           ? [false, ...val.slice(1)]
                                           : val;
                                     })
@@ -102,7 +103,7 @@ export function ScheduleWidgetCopy(props: { schw: IScheduleWidgetWid }) {
                     }),
                   };
 
-                  return schGeneralSokiInvocatorClient.copySchedule(null, { schw: props.schw }, value);
+                  return schGeneralSokiInvocatorClient.copySchedule({ props: { schw: props.schw }, schedule: value });
                 }}
               />
             </ModalBody>

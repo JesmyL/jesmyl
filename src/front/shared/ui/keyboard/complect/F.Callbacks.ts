@@ -8,7 +8,9 @@ export class KeyboardStorageCallbacks extends KeyboardStorageChanges {
   touchNavigationXStart: number | null = null;
   touchNavigationXPosition: number | null = null;
 
-  charListElementRef = (element: HTMLDivElement) => element && (this.flowCharListElement = element);
+  charListElementRef = (element: HTMLDivElement | null) => {
+    if (element) this.flowCharListElement = element;
+  };
 
   onStopPropagation = (event: KeyboardStorageEvent) => event.stopPropagation();
 

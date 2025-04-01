@@ -131,7 +131,7 @@ export const EditChordPage = () => {
           className="margin-gap"
           confirm={`Отправить аккорды ${mylib.keys(chordsToSend).join('; ')} ?`}
           onClick={async () => {
-            await cmEditorClientInvocatorMethods.setChords(null, chordsToSend);
+            await cmEditorClientInvocatorMethods.setChords({ chords: chordsToSend });
             setChordsToSend({});
             updateRedactableChords({});
           }}

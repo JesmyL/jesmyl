@@ -1,6 +1,6 @@
 import { CmComWid, TAboutComFavoriteItem } from 'shared/api/complect/apps';
 
 export type CmUserStoreSokiInvocatorModel = {
-  setComComment: (comw: CmComWid, comment: string) => void;
-  setAboutComFavorites: (value: Partial<TAboutComFavoriteItem>) => void;
+  setComComment: (args: { comw: CmComWid; comment: string }) => void;
+  setAboutComFavorites: (args: Partial<TAboutComFavoriteItem>) => void;
 };

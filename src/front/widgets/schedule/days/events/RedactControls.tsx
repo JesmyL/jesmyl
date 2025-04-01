@@ -34,14 +34,17 @@ export const DayEventRedactControls = ({
           </>
         }
         postfix="Скрытое событие"
-        onSend={() => schDayEventsSokiInvocatorClient.toggleIsSecret(null, dayEventScopeProps)}
+        onSend={() => schDayEventsSokiInvocatorClient.toggleIsSecret({ props: dayEventScopeProps, value: undefined })}
       />
 
       <DayEventIsNeedTgInformButton
         disabled={isPastEvent}
         isNeedInform={tgInform === 0 || isPastEvent}
         onSend={() =>
-          schDayEventsSokiInvocatorClient.setIsNeedTgInform(null, dayEventScopeProps, tgInform === 0 ? 1 : 0)
+          schDayEventsSokiInvocatorClient.setIsNeedTgInform({
+            props: dayEventScopeProps,
+            value: tgInform === 0 ? 1 : 0,
+          })
         }
       />
 
@@ -52,14 +55,14 @@ export const DayEventRedactControls = ({
         postfix=" мин"
         title="Продолжительность, мин"
         icon="Clock01"
-        onSend={value => schDayEventsSokiInvocatorClient.setTm(null, dayEventScopeProps, +value)}
+        onSend={value => schDayEventsSokiInvocatorClient.setTm({ props: dayEventScopeProps, value: +value })}
       />
       <StrongEditableField
         isRedact
         value={eventTopic}
         title="Тема"
         icon="Bookmark03"
-        onSend={value => schDayEventsSokiInvocatorClient.setTopic(null, dayEventScopeProps, value)}
+        onSend={value => schDayEventsSokiInvocatorClient.setTopic({ props: dayEventScopeProps, value })}
       />
     </>
   );

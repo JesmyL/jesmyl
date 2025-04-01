@@ -55,7 +55,12 @@ export const OrdersRedactorOrderToolsChangeText = ({ com, ord, ordi }: OrdersRed
                         onClose();
                       }}
                       onClick={() =>
-                        cmComOrderClientInvocatorMethods.setTexti(null, ord.me.header(), com.wid, ord.wid, texti)
+                        cmComOrderClientInvocatorMethods.setTexti({
+                          orderTitle: ord.me.header(),
+                          comw: com.wid,
+                          ordw: ord.wid,
+                          texti: texti,
+                        })
                       }
                     />
                   );

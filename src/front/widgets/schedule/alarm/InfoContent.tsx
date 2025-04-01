@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import { IScheduleWidget } from 'shared/api';
 import { ScheduleWidgetRights, useScheduleWidgetRights } from '../useScheduleWidget';
 

@@ -51,13 +51,13 @@ export const ScheduleWidgetShareButtons = function ShareButtons({ prefix }: Prop
 
           if (!mylib.keys(value).length) return;
 
-          return schPhotosSokiInvocatorClient.putSharedPhotos(null, rights.schedule.w, value);
+          return schPhotosSokiInvocatorClient.putSharedPhotos({ schw: rights.schedule.w, photoDict: value });
         }}
       />
       <TheIconSendButton
         icon="CloudDownload"
         onSuccess={photos => indexIDB.db.schedulePhotos.bulkPut(photos)}
-        onSend={() => schPhotosSokiInvocatorClient.getSharedPhotos(null, rights.schedule.w)}
+        onSend={() => schPhotosSokiInvocatorClient.getSharedPhotos({ schw: rights.schedule.w })}
       />
     </div>
   );

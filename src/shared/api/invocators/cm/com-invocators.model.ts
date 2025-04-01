@@ -1,12 +1,12 @@
 import { CmComWid, IExportableCom } from 'shared/api/complect/apps';
 
-type SimpleComValueSetter<Value> = (comw: CmComWid, value: Value) => IExportableCom;
+type SimpleComValueSetter<Value> = (args: { comw: CmComWid; value: Value }) => IExportableCom;
 
 export type CmComSokiInvocatorModel = {
-  newCom: (value: OmitOwn<IExportableCom, 'w'>) => IExportableCom;
+  newCom: (args: { value: OmitOwn<IExportableCom, 'w'> }) => IExportableCom;
 
   rename: SimpleComValueSetter<string>;
-  destroy: (comw: CmComWid) => string;
+  destroy: (args: { comw: CmComWid }) => string;
   setBpM: SimpleComValueSetter<number>;
   setMeterSize: SimpleComValueSetter<3 | 4>;
   changeLanguage: SimpleComValueSetter<number>;
@@ -15,20 +15,20 @@ export type CmComSokiInvocatorModel = {
   changePushKind: SimpleComValueSetter<number>;
   setAudioLinks: SimpleComValueSetter<string>;
 
-  changeChordBlock: (texti: number, comw: CmComWid, value: string) => IExportableCom;
-  changeTextBlock: (texti: number, comw: CmComWid, value: string) => IExportableCom;
+  changeChordBlock: (args: { texti: number; comw: CmComWid; value: string }) => IExportableCom;
+  changeTextBlock: (args: { texti: number; comw: CmComWid; value: string }) => IExportableCom;
 
-  insertChordBlock: (value: string, comw: CmComWid, insertToi: number) => IExportableCom;
-  insertTextBlock: (value: string, comw: CmComWid, insertToi: number) => IExportableCom;
+  insertChordBlock: (args: { value: string; comw: CmComWid; insertToi: number }) => IExportableCom;
+  removeChordBlock: (args: { comw: CmComWid; value: string; removei: number }) => IExportableCom;
 
-  removeTextBlock: (comw: CmComWid, value: string, removei: number) => IExportableCom;
-  removeChordBlock: (comw: CmComWid, value: string, removei: number) => IExportableCom;
+  insertTextBlock: (args: { value: string; comw: CmComWid; insertToi: number }) => IExportableCom;
+  removeTextBlock: (args: { comw: CmComWid; value: string; removei: number }) => IExportableCom;
 
-  remove: (comw: CmComWid) => IExportableCom;
-  bringBackToLife: (comw: CmComWid) => IExportableCom;
+  remove: (args: { comw: CmComWid }) => IExportableCom;
+  bringBackToLife: (args: { comw: CmComWid }) => IExportableCom;
 
-  printComwVisit: (comw: CmComWid) => void;
-  takeComwVisitsCount: (comw: CmComWid) => number;
+  printComwVisit: (args: { comw: CmComWid }) => void;
+  takeComwVisitsCount: (args: { comw: CmComWid }) => number;
   takeRemovedComs: () => IExportableCom[];
 
   getComwVisits: () => PRecord<CmComWid, number>;

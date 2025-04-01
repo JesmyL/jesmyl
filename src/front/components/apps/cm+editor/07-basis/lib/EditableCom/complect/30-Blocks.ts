@@ -8,12 +8,20 @@ export class EditableComBlocks extends EditableComOrders {
     const value = this.transposeBlock(val, 12 - (this.transPosition || 0));
     const trimmedLinesValue = value.split('\n').map(itTrim).join('\n');
 
-    return cmComClientInvocatorMethods.changeChordBlock(null, coli, this.wid, trimmedLinesValue);
+    return cmComClientInvocatorMethods.changeChordBlock({
+      texti: coli,
+      comw: this.wid,
+      value: trimmedLinesValue,
+    });
   }
 
   changeTextBlock(coli: number, value: string) {
     const trimmedLinesValue = value.split('\n').map(itTrim).join('\n');
 
-    return cmComClientInvocatorMethods.changeTextBlock(null, coli, this.wid, trimmedLinesValue);
+    return cmComClientInvocatorMethods.changeTextBlock({
+      texti: coli,
+      comw: this.wid,
+      value: trimmedLinesValue,
+    });
   }
 }

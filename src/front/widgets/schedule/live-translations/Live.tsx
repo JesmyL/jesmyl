@@ -31,23 +31,23 @@ export const ScheduleWidgetLiveTranslation = ({ onClose, schw, isShowMarkdownOnl
 
   useEffect(() => {
     if (streamerLogin != null) {
-      schLiveSokiInvocatorClient.watch(null, schw, streamerLogin);
+      schLiveSokiInvocatorClient.watch({ schw, streamerLogin });
 
       const unsubscribe = soki.onConnectionState(isConnected => {
         if (!isConnected) return;
 
-        schLiveSokiInvocatorClient.watch(null, schw, streamerLogin);
+        schLiveSokiInvocatorClient.watch({ schw, streamerLogin });
       });
 
       return () => {
         unsubscribe();
-        schLiveSokiInvocatorClient.unwatch(null, schw, streamerLogin);
+        schLiveSokiInvocatorClient.unwatch({ schw, streamerLogin });
       };
     }
 
     (async () => {
       setIsLoading(true);
-      await schLiveSokiInvocatorClient.requestStreamers(null, schw);
+      await schLiveSokiInvocatorClient.requestStreamers({ schw });
       setTimeout(setIsLoading, 1000, false);
     })();
   }, [schw, streamerLogin]);

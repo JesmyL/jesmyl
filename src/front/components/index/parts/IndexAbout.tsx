@@ -10,12 +10,12 @@ import { jversion } from 'shared/values';
 export function IndexAbout() {
   const [appVersion, isVersionLoading] = useInvocatedValue(
     0,
-    ({ aborter }) => indexBasicsSokiInvocatorClient.getFreshAppVersion({ aborter }),
+    ({ aborter }) => indexBasicsSokiInvocatorClient.getFreshAppVersion(undefined, { aborter }),
     [],
   );
   const [values] = useInvocatedValue(
     {},
-    ({ aborter }) => indexBasicsSokiInvocatorClient.getIndexValues({ aborter }),
+    ({ aborter }) => indexBasicsSokiInvocatorClient.getIndexValues(undefined, { aborter }),
     [],
   );
 

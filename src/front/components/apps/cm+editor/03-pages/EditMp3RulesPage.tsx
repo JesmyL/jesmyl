@@ -22,7 +22,7 @@ export const EditMp3RulesPage = () => {
               <Mp3RuleEditor
                 key={rule.w}
                 {...rule}
-                onComplete={newRule => cmEditorClientInvocatorMethods.setMp3Rule(null, newRule)}
+                onComplete={newRule => cmEditorClientInvocatorMethods.setMp3Rule({ rule: newRule })}
               />
             );
           })}
@@ -51,7 +51,7 @@ export const EditMp3RulesPage = () => {
                 updateNewRules([...newRules, rule]);
                 setIsOpenNewRule(false);
 
-                cmEditorClientInvocatorMethods.addMp3Rule(null, rule);
+                cmEditorClientInvocatorMethods.addMp3Rule({ rule });
               }}
             />
           )}

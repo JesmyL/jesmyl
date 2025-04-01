@@ -63,7 +63,7 @@ export function ScheduleWidgetListUnit(props: Props) {
               multiline
               setSelfRedact
               isRedact
-              onSend={value => schListsSokiInvocatorClient.setUnitDescription(null, unitScopeData, value, cati)}
+              onSend={value => schListsSokiInvocatorClient.setUnitDescription({ props: unitScopeData, value, cati })}
             />
           )}
 

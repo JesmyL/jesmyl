@@ -1,5 +1,5 @@
 import { filesStorage } from '#shared/ui/configurators/utils/storage';
-import { ChangeEvent, useCallback } from 'react';
+import { ChangeEvent, DragEventHandler, useCallback } from 'react';
 import { useAssociateTheFileType } from './associate-file';
 
 export const useAddMyFile = () => {
@@ -15,11 +15,11 @@ export const useAddMyFile = () => {
   );
 };
 
-export const useAddMyFileOnDrop = (forceUpdate: () => void) => {
+export const useAddMyFileOnDrop = (forceUpdate: () => void): DragEventHandler<HTMLDivElement> => {
   const add = useAddMyFile();
 
   return useCallback(
-    (event: DragEvent) => {
+    event => {
       event.preventDefault();
       if (event.dataTransfer?.files[0] == null) return;
       add(event.dataTransfer.files[0]);

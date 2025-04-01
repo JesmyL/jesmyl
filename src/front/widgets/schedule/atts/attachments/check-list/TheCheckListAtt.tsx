@@ -27,13 +27,12 @@ export function ScheduleCheckListAtt({
               className={'self-start relative z-index:15 color--3 ' + (isDone ? 'fade-05' : '')}
               icon={isDone ? 'CheckmarkSquare02' : 'Square'}
               onSend={() =>
-                schDayEventsSokiInvocatorClient.updateCheckListAttachmentValue(
-                  null,
-                  scheduleDayEventAttachmentScopeProps,
+                schDayEventsSokiInvocatorClient.updateCheckListAttachmentValue({
+                  props: scheduleDayEventAttachmentScopeProps,
                   itemMi,
-                  isDone ? 0 : 1,
-                  null,
-                )
+                  key: isDone ? 0 : 1,
+                  value: null,
+                })
               }
             />
             <StrongEditableField
@@ -42,13 +41,12 @@ export function ScheduleCheckListAtt({
               isRedact={isRedact}
               textClassName={'mood-for-2 relative z-index:5 color--3 ' + (isDone ? 'fade-05' : '')}
               onSend={async value =>
-                schDayEventsSokiInvocatorClient.updateCheckListAttachmentValue(
-                  null,
-                  scheduleDayEventAttachmentScopeProps,
+                schDayEventsSokiInvocatorClient.updateCheckListAttachmentValue({
+                  props: scheduleDayEventAttachmentScopeProps,
                   itemMi,
-                  null,
+                  key: null,
                   value,
-                )
+                })
               }
             />
           </div>
@@ -61,13 +59,12 @@ export function ScheduleCheckListAtt({
           disabled={value.list.some(li => !li[1])}
           disabledReason="Есть пустые пункты"
           onSend={() =>
-            schDayEventsSokiInvocatorClient.updateCheckListAttachmentValue(
-              null,
-              scheduleDayEventAttachmentScopeProps,
-              null,
-              0,
-              '',
-            )
+            schDayEventsSokiInvocatorClient.updateCheckListAttachmentValue({
+              props: scheduleDayEventAttachmentScopeProps,
+              itemMi: null,
+              key: 0,
+              value: '',
+            })
           }
         />
       )}

@@ -33,7 +33,7 @@ export const useGetScheduleOrPull = (scheduleInstance: string | IScheduleWidgetW
 
         try {
           // setSchedule(await serviceMaster('index')('takeDaySchedule', scheduleInstance));
-        } catch (_error) {
+        } catch (error) {
           setError('' + error);
         }
 

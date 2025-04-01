@@ -58,7 +58,7 @@ export const EditEERulesPage = () => {
             `Отправить ${words.length} ${mylib.declension(words.length, 'слово', 'слова', 'слов')}: ` +
             `${words.join(', ')}`
           }
-          onSend={() => cmEditorClientInvocatorMethods.setEEWords(null, editedWordsRef.current)}
+          onSend={() => cmEditorClientInvocatorMethods.setEEWords({ words: editedWordsRef.current })}
           onSuccess={() => setEditedWords({})}
         />
       }

@@ -1,6 +1,5 @@
 import { MyLib } from '#shared/lib/my-lib';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
-import { useCcom } from '$cm/basis/lib/com-selections';
 import { cmUserStoreSokiInvocatorClient } from '$cm/invocators/user-store-invocator.methods';
 import React from 'react';
 import { MigratableComToolName } from 'shared/api';
@@ -76,7 +75,6 @@ const toolKeys = MyLib.keys(toolsDict);
 
 let saveTimeout: TimeOut;
 export const useMigratableListComTools = () => {
-  const ccom = useCcom();
   const [comTopTools, setComTopTools] = cmIDB.use.comTopTools();
 
   mapToolsSelf.comTopTools = comTopTools;
@@ -87,7 +85,7 @@ export const useMigratableListComTools = () => {
 
     clearTimeout(saveTimeout);
     saveTimeout = setTimeout(() => {
-      cmUserStoreSokiInvocatorClient.setAboutComFavorites(null, { tools });
+      cmUserStoreSokiInvocatorClient.setAboutComFavorites({ tools });
     }, 1000);
   };
 

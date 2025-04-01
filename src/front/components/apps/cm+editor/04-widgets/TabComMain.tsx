@@ -38,7 +38,7 @@ export const CmEditorTabComMain = () => {
         label="Название"
         defaultValue={ccom.name}
         isError={!!nameCorrects.errors?.length}
-        onChange={value => cmComClientInvocatorMethods.rename(null, ccom.wid, value)}
+        onChange={value => cmComClientInvocatorMethods.rename({ comw: ccom.wid, value })}
         onInput={setName}
       />
       <TextCorrectMessages corrects={nameCorrects} />
@@ -48,7 +48,7 @@ export const CmEditorTabComMain = () => {
         label="Ударов в минуту"
         type="number"
         defaultValue={'' + (ccom.beatsPerMinute ?? '')}
-        onChange={value => cmComClientInvocatorMethods.setBpM(null, ccom.wid, +value)}
+        onChange={value => cmComClientInvocatorMethods.setBpM({ comw: ccom.wid, value: +value })}
         onInput={emptyFunc}
       />
       <div className="flex full-width between margin-gap-v">
@@ -58,7 +58,7 @@ export const CmEditorTabComMain = () => {
           id={ccom.meterSize}
           items={meterSizeItems}
           onSelectId={value => {
-            cmComClientInvocatorMethods.setMeterSize(null, ccom.wid, value);
+            cmComClientInvocatorMethods.setMeterSize({ comw: ccom.wid, value });
           }}
         />
       </div>
@@ -66,7 +66,7 @@ export const CmEditorTabComMain = () => {
         className="flex full-width between margin-gap-v pointer"
         onClick={event => {
           event.stopPropagation();
-          cmComClientInvocatorMethods.changeLanguage(null, ccom.wid, ccom.langi ? 0 : 1);
+          cmComClientInvocatorMethods.changeLanguage({ comw: ccom.wid, value: ccom.langi ? 0 : 1 });
         }}
       >
         <LazyIcon icon="Flag03" />
@@ -77,7 +77,7 @@ export const CmEditorTabComMain = () => {
       <div
         className="flex full-width between margin-gap-v pointer"
         onClick={() => {
-          cmComClientInvocatorMethods.makeBemoled(null, ccom.wid, ccom.isBemoled === 1 ? 0 : 1);
+          cmComClientInvocatorMethods.makeBemoled({ comw: ccom.wid, value: ccom.isBemoled === 1 ? 0 : 1 });
         }}
       >
         <LazyIcon icon="Grid" />
@@ -90,7 +90,7 @@ export const CmEditorTabComMain = () => {
           onClick={async () => {
             if (!(await confirm(`Удалить песню "${ccom.name}"?`))) return;
             setRemovedComs(prev => ({ ...prev, [ccom.wid]: ccom.name }));
-            cmComClientInvocatorMethods.remove(null, ccom.wid);
+            cmComClientInvocatorMethods.remove({ comw: ccom.wid });
           }}
         >
           <LazyIcon icon="Delete01" />

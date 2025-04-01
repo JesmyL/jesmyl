@@ -72,7 +72,7 @@ export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCount
             </>
           }
           postfix={node}
-          onSend={() => schEventTypesSokiInvocatorClient.create(null, scheduleScopeProps, title, tm)}
+          onSend={() => schEventTypesSokiInvocatorClient.create({ props: scheduleScopeProps, title, tm })}
         />
       );
     });

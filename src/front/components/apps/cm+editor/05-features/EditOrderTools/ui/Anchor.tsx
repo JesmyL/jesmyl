@@ -26,7 +26,12 @@ export const OrdersRedactorOrderToolsAnchor = ({
             onClick: async ({ aboveLeadOrdw }) => {
               if (aboveLeadOrdw == null) return;
 
-              cmComOrderClientInvocatorMethods.addAnchorOrder(null, ord.me.header(), com.wid, ord.wid, aboveLeadOrdw);
+              cmComOrderClientInvocatorMethods.addAnchorOrder({
+                orderTitle: ord.me.header(),
+                comw: com.wid,
+                targetOrdw: ord.wid,
+                insertAfterOrdw: aboveLeadOrdw,
+              });
             },
             checkIsShowButton: ({ ordAbove, ordBelow }) => {
               if (!isAboveOrdAfterTarget) isAboveOrdAfterTarget = ordAbove?.wid === ord.wid;

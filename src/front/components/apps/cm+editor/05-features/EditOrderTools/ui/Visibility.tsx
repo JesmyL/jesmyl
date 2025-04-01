@@ -25,7 +25,11 @@ export const OrdersRedactorOrderToolsVisibility = ({ onClose, ord }: OrdersRedac
       onClick={async () => {
         if (await confirm(`Скрыть блок ${ord.me.header()}?`)) {
           setIsLoading(true);
-          await cmComOrderClientInvocatorMethods.toggleVisibility(null, ord.wid, ord.me.header(), ord.com.wid);
+          await cmComOrderClientInvocatorMethods.toggleVisibility({
+            ordw: ord.wid,
+            orderTitle: ord.me.header(),
+            comw: ord.com.wid,
+          });
           setIsLoading(false);
         }
 

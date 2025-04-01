@@ -72,7 +72,7 @@ export const KEYBOARD_FLASH = memo(function ({
           setKeyInFix(key);
           onTouchStart?.(event);
         }}
-        {...propsOfClicker({ onCtxMenu: onContextMenu })}
+        {...propsOfClicker({ onCtxMenu: onContextMenu as never })}
       >
         {children}
         {icon ? (

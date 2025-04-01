@@ -17,11 +17,10 @@ onLocalComCommentsSendEvent.listen(async () => {
 
   if (!localComments.length) return;
 
-  const freshComments = await cmFreshesSokiInvocatorClient.exchangeFreshComComments(
-    null,
-    localComments.map(comment => ({ ...comment, isSavedLocal: undefined })),
-    Date.now(),
-  );
+  const freshComments = await cmFreshesSokiInvocatorClient.exchangeFreshComComments({
+    modifiedComments: localComments.map(comment => ({ ...comment, isSavedLocal: undefined })),
+    clientDateNow: Date.now(),
+  });
 
   cmIDB.tb.comComments.bulkPut(freshComments);
 });
@@ -60,7 +59,7 @@ let trySend = async (comw: CmComWid, comment: string, setIsLoading: (is: boolean
       clearTimeout(updateComCommentTimeOut[comw]);
       updateComCommentTimeOut[comw] = setTimeout(async () => {
         const timeOut = setTimeout(onCantSend, 5000);
-        await cmUserStoreSokiInvocatorClient.setComComment(null, comw, comment);
+        await cmUserStoreSokiInvocatorClient.setComComment({ comw, comment });
         clearTimeout(timeOut);
         setIsLoading(false);
       }, 1000);

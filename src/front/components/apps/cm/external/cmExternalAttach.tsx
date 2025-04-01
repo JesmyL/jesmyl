@@ -30,7 +30,7 @@ export const cmOwnAppAtts: ScheduleWidgetAppAtts<'cm', CmComBindAttach> = {
         </>
       );
     },
-    ExtRoute: props => route && <route.ComRouteComponent />,
+    ExtRoute: _props => route && <route.ComRouteComponent />,
   },
 };
 
