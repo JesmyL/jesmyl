@@ -1,5 +1,9 @@
-import { IScheduleWidget, IScheduleWidgetDayEvent, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
-import { CustomAttUseTaleId } from 'shared/api/complect/schedule-widget/complect/rights';
+import {
+  CustomAttUseTaleId,
+  IScheduleWidget,
+  IScheduleWidgetDayEvent,
+  ScheduleWidgetDayListItemTypeBox,
+} from 'shared/api';
 import { makeRegExp, SMyLib, smylib } from 'shared/utils';
 
 const singleTitleSymbols = '- ().,/';

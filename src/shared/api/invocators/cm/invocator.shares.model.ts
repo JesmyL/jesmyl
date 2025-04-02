@@ -1,11 +1,11 @@
 import {
+  ChordPack,
   ICmComComment,
   IExportableCat,
   IExportableCom,
   ScheduleComPack,
   TAboutComFavoriteItem,
 } from 'shared/api/complect/apps';
-import { ChordPack } from 'shared/api/complect/apps/cm/complect/chord-card';
 
 export type CmSokiInvocatorSharesModel = {
   editedCom: (args: { com: IExportableCom }) => unknown;

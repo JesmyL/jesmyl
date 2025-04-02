@@ -1,4 +1,4 @@
-import { useUpdateCmCurrentTranslationConfig } from 'front/components/apps/cm/translation/complect/controlled/hooks/update-config';
+import { useUpdateCmCurrentTranslationConfig } from '$cm/translation/complect/controlled/hooks/update-config';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled, { RuleSet, css } from 'styled-components';
 import { useFixedResizerLines } from '../atoms';

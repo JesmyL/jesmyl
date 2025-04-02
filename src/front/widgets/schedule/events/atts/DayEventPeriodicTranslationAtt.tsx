@@ -1,9 +1,10 @@
 import { mylib, MyLib } from '#shared/lib/my-lib';
 import { ScheduleWidgetTopicTitle } from '#widgets/schedule/complect/TopicTitle';
 import { ScheduleWidgetAppAtt } from '#widgets/schedule/ScheduleWidget.model';
-import { AttTranslatorType, attTranslatorTypes } from 'back/apps/index/schedules/attTranslatorType';
 import React, { ReactNode } from 'react';
 import {
+  AttTranslatorType,
+  attTranslatorTypes,
   IScheduleWidget,
   IScheduleWidgetDay,
   ScheduleDayEventAttachmentScopeProps,

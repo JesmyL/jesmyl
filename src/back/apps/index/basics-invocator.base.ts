@@ -10,6 +10,7 @@ import { exec } from 'child_process';
 import jwt from 'jsonwebtoken';
 import TelegramBot from 'node-telegram-bot-api';
 import {
+  DeviceInfo,
   IScheduleWidget,
   IScheduleWidgetUser,
   LocalSokiAuth,
@@ -148,7 +149,8 @@ export const indexServerInvocatorBase =
             `Авторизация ${auth.fio} (${auth.nick ?? '??'}) в расписании дня\n\n` +
             `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
 
-          getDeviceId: (_, deviceId) => `Запрос DeviceId - ${deviceId}`,
+          getDeviceId: ({ deviceInfo } = { deviceInfo: DeviceInfo.new }, deviceId) =>
+            `Запрос DeviceId - ${deviceId}\n\n${deviceInfo}`,
 
           requestFreshes: null,
           getFreshAppVersion: null,

@@ -1,5 +1,4 @@
-import { IScheduleWidget, IScheduleWidgetDayEvent, ScheduleWidgetAttKey } from 'shared/api';
-import { cmTgAttInform } from '../../apps/cm/complect/attInformCm';
+import { cmTgAttInform, IScheduleWidget, IScheduleWidgetDayEvent, ScheduleWidgetAttKey } from 'shared/api';
 
 export type AttTgInformStorage = Record<
   ScheduleWidgetAttKey,

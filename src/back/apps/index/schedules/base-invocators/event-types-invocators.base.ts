@@ -1,7 +1,7 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
+import { attTranslatorTypes } from 'shared/api';
 import { SchEventTypesSokiInvocatorMethods } from 'shared/api/invocators/schedules/invocators.model';
 import { smylib } from 'shared/utils';
-import { attTranslatorTypes } from '../attTranslatorType';
 import { modifySchedule } from '../schedule-modificators';
 import { onScheduleEventTypesAddManyEvent } from '../specific-modify-events';
 import { scheduleTitleInBrackets } from './general-invocators.base';

@@ -1,6 +1,9 @@
+import { jesmylTgBot } from 'back/sides/telegram-bot/bot';
+import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import nodeSchedule from 'node-schedule';
 import { SendMessageOptions } from 'node-telegram-bot-api';
 import {
+  attInformStorage,
   indexScheduleCheckIsDayIsPast,
   indexScheduleGetDayEventTimes,
   indexScheduleGetDayStartMs,
@@ -14,9 +17,6 @@ import {
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
 import { convertMd2HTMLMaker, SMyLib, smylib } from 'shared/utils';
-import { attInformStorage } from '../../../../../shared/api/complect/schedule-widget/complect/attInformStorage';
-import { jesmylTgBot } from '../../../../sides/telegram-bot/bot';
-import { tglogger } from '../../../../sides/telegram-bot/log/log-bot';
 import { schedulesFileStore } from '../file-stores';
 import { onScheduleDayEventIsNeedTgInformSetEvent, onScheduleUserTgInformSetEvent } from '../specific-modify-events';
 import { makeScheduleWidgetJoinTitle } from './message-catchers';

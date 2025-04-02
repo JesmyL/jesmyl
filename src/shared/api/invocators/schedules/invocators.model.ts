@@ -1,5 +1,5 @@
-import { AttTranslatorType } from 'back/apps/index/schedules/attTranslatorType';
 import {
+  AttTranslatorType,
   IScheduleWidget,
   IScheduleWidgetDayEvent,
   IScheduleWidgetDayEventMi,
@@ -24,7 +24,7 @@ import {
   ScheduleWidgetAttOwnValue,
   ScheduleWidgetAttRef,
   ScheduleWidgetPhotoKey,
-} from 'shared/api/complect/schedule-widget';
+} from 'shared/api';
 
 type Callback<Value> = (args: { props: ScheduleScopeProps; value: Value }) => IScheduleWidget;
 
