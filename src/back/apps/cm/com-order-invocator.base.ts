@@ -126,7 +126,7 @@ export const cmComOrderServerInvocatorBase =
           removeRepeats: ({ comw, ordw }) => modifyOrd(comw, ordw, ord => delete ord.r),
         },
 
-        onEachFeedbackTools: {
+        onEachFeedback: {
           clearOwnRepeats: ({ orderTitle }, com) =>
             `Сброшено значение повторений для блока ${orderTitle} в песне ${getCmComNameInBrackets(com)}`,
 

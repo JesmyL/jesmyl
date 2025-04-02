@@ -80,7 +80,7 @@ export const schGamesSokiInvocatorBaseServer =
               sch.games.strikedUsers = Array.from(userSet);
             }),
         },
-        onEachFeedbackTools: {
+        onEachFeedback: {
           addCriteria: (_, sch) =>
             `В расписании ${scheduleTitleInBrackets(sch)} добавлен новый критерий сортировки для игр`,
           addGame: (_, sch) => `В расписании ${scheduleTitleInBrackets(sch)} добавлена новая игра`,

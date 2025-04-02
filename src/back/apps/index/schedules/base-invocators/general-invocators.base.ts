@@ -157,7 +157,7 @@ export const schGeneralSokiInvocatorBaseServer =
             modifySchedule(false, props, sch => (sch.ctrl.type = value)),
           setDefaultUserRights: ({ props, R: value }) => modifySchedule(false, props, sch => (sch.ctrl.defu = value)),
         },
-        onEachFeedbackTools: {
+        onEachFeedback: {
           create: (_, sch) => `Создано новое расписание ${scheduleTitleInBrackets(sch)}`,
           rename: (_, sch) => `Расписание ${scheduleTitleInBrackets(sch)} переименовано`,
           setTopic: (_, sch) => `В расписании ${scheduleTitleInBrackets(sch)} изменена тема: ${sch.topic}`,

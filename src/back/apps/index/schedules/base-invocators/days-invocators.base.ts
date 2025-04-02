@@ -62,7 +62,7 @@ export const schDaysSokiInvocatorBaseServer =
             day.list = smylib.withInsertedBeforei(day.list, beforei, eventi);
           }),
         },
-        onEachFeedbackTools: {
+        onEachFeedback: {
           addDay: (_, sch) => `В расписании ${scheduleTitleInBrackets(sch)} добавлен день`,
           setTopic: ({ props, value }, sch) =>
             `В расписании ${scheduleTitleInBrackets(sch)}, в ${props.dayi + 1} дне установлена тема "${value}"`,

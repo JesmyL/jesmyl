@@ -50,7 +50,7 @@ export const schUsersSokiInvocatorBaseServer =
           setUserFio: ({ props, fio: value }) => this.modifyUser(props, user => (user.fio = value)),
           setUserRights: ({ props, R: value }) => this.modifyUser(props, user => (user.R = value)),
         },
-        onEachFeedbackTools: {
+        onEachFeedback: {
           addMe:
             ({ place }, sch) =>
             ({ auth }) =>

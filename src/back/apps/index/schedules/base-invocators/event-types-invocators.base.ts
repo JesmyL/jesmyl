@@ -57,7 +57,7 @@ export const schEventTypesSokiInvocatorBaseServer =
           putMany: ({ props: schProps, tatts: typeList }) =>
             onScheduleEventTypesAddManyEvent.invoke({ schProps, typeList }),
         },
-        onEachFeedbackTools: {
+        onEachFeedback: {
           create: ({ title, tm }, sch) =>
             `В расписании ${scheduleTitleInBrackets(sch)} создан тип событий ${title} продолжительностью в ${tm} мин.`,
 

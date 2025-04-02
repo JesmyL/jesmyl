@@ -31,7 +31,7 @@ export const schPhotosSokiInvocatorBaseServer =
             return photos;
           },
         },
-        onEachFeedbackTools: {
+        onEachFeedback: {
           putSharedPhotos: ({ schw }, counts) =>
             `Были отправлены фото для расписания ${scheduleTitleInBrackets(schw)}\n` +
             `Загружено: ${counts.loadedCount}\nНовых: ${counts.addedCount}`,

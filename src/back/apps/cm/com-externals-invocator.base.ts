@@ -54,7 +54,7 @@ export const cmComExternalsSokiInvocatorBaseServer =
           },
         },
 
-        onEachFeedbackTools: {
+        onEachFeedback: {
           setInScheduleEvent: ({ schw }) =>
             `Обновлён список песен в расписании ` +
             `"${schedulesFileStore.getValue().find(sch => sch.w === schw)?.title ?? '??'}"`,

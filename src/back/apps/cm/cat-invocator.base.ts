@@ -37,7 +37,7 @@ export const cmCatServerInvocatorBase =
           remove: ({ catw }) => this.modifyCat(catw, cat => (cat.isRemoved = 1)),
           bringBackToLife: ({ catw }) => this.modifyCat(catw, cat => delete cat.isRemoved),
         },
-        onEachFeedbackTools: {
+        onEachFeedback: {
           rename: (_, cat) => `Категория "${cat.n}" переименована`,
           setKind: ({ kind }, cat) => `Тип категории "${cat.n}" - ${kind}`,
           clearStack: (_, cat) => `Список песен, принадлежащих категории "${cat.n}", очищен`,

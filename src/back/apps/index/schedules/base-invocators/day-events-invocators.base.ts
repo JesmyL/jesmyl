@@ -221,7 +221,7 @@ export const schDayEventsSokiInvocatorBaseServer =
               event.rate[userMi][1] = comment;
             }),
         },
-        onEachFeedbackTools: {
+        onEachFeedback: {
           setTopic: ({ props, value }, sch) => `${inEventTypeTtileOfDay(sch, props)} установлена тема "${value}"`,
 
           setDescription: ({ props, value }, sch) =>

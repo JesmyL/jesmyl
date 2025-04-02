@@ -74,7 +74,7 @@ export const cmEditorSokiInvocatorBaseServer =
             }
           },
         },
-        onEachFeedbackTools: {
+        onEachFeedback: {
           setChords: (_, chords) => `Изменены аккорды ${smylib.keys(chords).join(', ')}`,
 
           getResourceHTMLString: null,

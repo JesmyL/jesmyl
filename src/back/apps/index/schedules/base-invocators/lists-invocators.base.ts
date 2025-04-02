@@ -62,7 +62,7 @@ export const schListsSokiInvocatorBaseServer =
           setUnitTitle: modifyUnit((unit, value) => (unit.title = value)),
           setUnitDescription: modifyUnit((unit, value) => (unit.dsc = value)),
         },
-        onEachFeedbackTools: {
+        onEachFeedback: {
           createCategory: (_, sch) => `В расписании ${scheduleTitleInBrackets(sch)} добавлена новая категория списков`,
           createUnit: ({ cati }, sch) =>
             `В расписании ${scheduleTitleInBrackets(sch)} добавлен новый список для категории ${

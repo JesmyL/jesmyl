@@ -98,7 +98,7 @@ export const cmComServerInvocatorBase =
             return name;
           },
         },
-        onEachFeedbackTools: {
+        onEachFeedback: {
           changeLanguage: ({ value }, com) =>
             `Язык песни ${getCmComNameInBrackets(com)} изменён на ${cmComLanguages[value]}`,
 

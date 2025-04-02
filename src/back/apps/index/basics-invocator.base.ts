@@ -81,7 +81,7 @@ export const indexServerInvocatorBase =
           authMeByTelegramInScheduleDay: { minLevel: 0 },
           authMeByTelegramMiniButton: { minLevel: 0 },
           authMeByTelegramNativeButton: { minLevel: 0 },
-          getDeviceId: { minLevel: 0 },
+          getDeviceId: { minLevel: 0, minVersion: 0 },
           requestFreshes: { minLevel: 0 },
         },
         methods: {
@@ -131,7 +131,7 @@ export const indexServerInvocatorBase =
           getFreshAppVersion: async () => appVersionFileStore.getValue().num,
           getIndexValues: async () => valuesFileStore.getValue(),
         },
-        onEachFeedbackTools: {
+        onEachFeedback: {
           authMeByTelegramBotNumber: (_, { auth }) =>
             `Авторизация ${auth.fio} (${auth.nick ?? '??'}) через TG-код\n\n<blockquote expandable>` +
             `${JSON.stringify(auth, null, 1)}</blockquote>`,
@@ -148,7 +148,7 @@ export const indexServerInvocatorBase =
             `Авторизация ${auth.fio} (${auth.nick ?? '??'}) в расписании дня\n\n` +
             `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
 
-          getDeviceId: deviceId => `Запрос DeviceId - ${deviceId}`,
+          getDeviceId: (_, deviceId) => `Запрос DeviceId - ${deviceId}`,
 
           requestFreshes: null,
           getFreshAppVersion: null,

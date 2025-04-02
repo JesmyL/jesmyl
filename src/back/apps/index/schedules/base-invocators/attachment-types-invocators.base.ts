@@ -68,7 +68,7 @@ export const schAttachmentTypesSokiInvocatorBaseServer =
               else tatt[rule] = Array.from(set);
             }),
         },
-        onEachFeedbackTools: {
+        onEachFeedback: {
           create: (_, sch) => `${this.inSchTitle(sch)} создан тип вложений`,
           setTitle: ({ value, prevTitle }, sch) =>
             `${this.inSchTitle(sch)} тип вложений "${prevTitle}" переименован на "${value}"`,

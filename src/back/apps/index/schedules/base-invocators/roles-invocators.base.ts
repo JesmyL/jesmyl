@@ -35,7 +35,7 @@ export const schRolesSokiInvocatorBaseServer =
           setCategoryForRole: modifyRole((role, value) => (role.cati = value)),
           makeFreeRole: modifyRole(role => delete role.userMi),
         },
-        onEachFeedbackTools: {
+        onEachFeedback: {
           createRole: (_, sch) => `В расписании ${scheduleTitleInBrackets(sch)} добавлена новая категория ролей`,
           setRoleIcon: ({ value: icon, roleTitle }, sch) =>
             `В расписании ${scheduleTitleInBrackets(sch)} для роли ${roleTitle} задана иконка ${icon}`,

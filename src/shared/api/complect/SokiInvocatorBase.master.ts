@@ -9,7 +9,7 @@ type OnEachFeedbackInvocations<M extends Methods, FeedbackRet> = {
   [K in keyof M]: ((args: Parameters<M[K]>[0], value: ReturnType<M[K]>) => FeedbackRet) | null;
 };
 
-type BeforeEaches<BeforeEachTool, Methods extends string | number | symbol> = Partial<Record<Methods, BeforeEachTool>>;
+type BeforeEaches<BeforeEachTool, Methods extends object> = Partial<{ [K in keyof Methods]: BeforeEachTool }>;
 
 export const makeSokiInvocatorBase = <
   Event extends InvocatorBaseEvent,
@@ -24,7 +24,7 @@ export const makeSokiInvocatorBase = <
   feedbackOnEach?: (onEachesRet: FeedbackRet, data: { tool: ToolParam; name: string; method: string }) => void;
   beforeEach?: (
     data: { tool: ToolParam; name: string; method: string },
-    tool: BeforeEaches<BeforeEachTool, string> | und,
+    tool: BeforeEaches<BeforeEachTool, Methods> | und,
     args: object | und,
   ) => Promise<{ isStopPropagation: boolean }>;
 }) => {
@@ -34,31 +34,29 @@ export const makeSokiInvocatorBase = <
     [K in keyof M]: (args: Parameters<M[K]>[0], tool: ToolParam) => Promise<ReturnType<M[K]>> | ReturnType<M[K]>;
   };
 
-  const registeredInvocators: PRecord<string, Invocator<Methods>> = {};
-  const registeredOnEachFeedbackInvocations: PRecord<string, OnEachFeedbackInvocations<Methods, FeedbackRet> | null> =
-    {};
+  const registeredMethods: PRecord<string, Invocator<Methods>> = {};
+  const registeredOnEachFeedbacks: PRecord<string, OnEachFeedbackInvocations<Methods, FeedbackRet> | null> = {};
   const unregisteredWaiters: PRecord<string, () => void> = {};
 
   eventerValue.listen(async ({ invoke: { name, method, args }, sendResponse, tool, requestId }) => {
     const invokeMethod = async () => {
       try {
-        if (registeredInvocators[name] === undefined) {
+        if (registeredMethods[name] === undefined) {
           throw new Error(`the name ${name} is not registered - ${method}()`);
         }
 
-        if (!smylib.isFunc(registeredInvocators[name][method]))
-          throw new Error(`the ${name} has no the ${method} method`);
+        if (!smylib.isFunc(registeredMethods[name][method])) throw new Error(`the ${name} has no the ${method} method`);
 
         const methodProps = { tool, method, name };
 
-        const invokedResult = await registeredInvocators[name][method](args, tool);
+        const invokedResult = await registeredMethods[name][method](args, tool);
 
         if (
           feedbackOnEach !== undefined &&
-          registeredOnEachFeedbackInvocations[name] != null &&
-          registeredOnEachFeedbackInvocations[name][method] != null
+          registeredOnEachFeedbacks[name] != null &&
+          registeredOnEachFeedbacks[name][method] != null
         ) {
-          const retValue = registeredOnEachFeedbackInvocations[name][method](args, invokedResult);
+          const retValue = registeredOnEachFeedbacks[name][method](args, invokedResult);
 
           feedbackOnEach(retValue, methodProps);
         }
@@ -70,7 +68,7 @@ export const makeSokiInvocatorBase = <
       }
     };
 
-    if (registeredInvocators[name] === undefined) {
+    if (registeredMethods[name] === undefined) {
       console.warn(`${name}.${method}() will invoke with delay`);
 
       unregisteredWaiters[name] = () => {
@@ -94,14 +92,14 @@ export const makeSokiInvocatorBase = <
   type Config<M extends Methods> = {
     className: ClassName;
     methods: Invocator<M>;
-    onEachFeedbackTools?: OnEachFeedbackInvocations<M, FeedbackRet>;
-    beforeEacheTools?: BeforeEaches<BeforeEachTool, keyof M>;
+    onEachFeedback?: OnEachFeedbackInvocations<M, FeedbackRet>;
+    beforeEacheTools?: BeforeEaches<BeforeEachTool, M>;
   };
 
   type SokiInvocator = new <M extends Methods>(config: Config<M>) => Invocator<M> & { $$register: () => void };
 
   return function (this: unknown, options: Config<Methods>) {
-    const { className, methods, beforeEacheTools: beforeEaches, onEachFeedbackTools: onEachInvocations } = options;
+    const { className, methods, beforeEacheTools, onEachFeedback } = options;
     const self = this as Methods;
 
     if (isNeedCheckClassName) {
@@ -117,18 +115,18 @@ export const makeSokiInvocatorBase = <
           args: Parameters<(typeof methods)[typeof method]>[0],
           tool: Parameters<(typeof methods)[typeof method]>[1],
         ) => {
-          if ((await beforeEach({ method, name, tool }, beforeEaches, args)).isStopPropagation) return;
+          if ((await beforeEach({ method, name, tool }, beforeEacheTools, args)).isStopPropagation) return;
           return methods[method](args, tool);
         }) as never;
     });
 
     self.$$register = (() => {
-      if (registeredInvocators[name] !== undefined) {
+      if (registeredMethods[name] !== undefined) {
         console.warn(`the ${className} is registered more then 1 times`);
       }
 
-      registeredInvocators[name] = self as never;
-      registeredOnEachFeedbackInvocations[name] = onEachInvocations;
+      registeredMethods[name] = self as never;
+      registeredOnEachFeedbacks[name] = onEachFeedback;
 
       unregisteredWaiters[name]?.();
     }) as never;
