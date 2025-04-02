@@ -1,9 +1,9 @@
-import { environment } from 'front/environment';
 import { InvocatorServerEvent, LocalSokiAuth, SokiVisit } from 'shared/api';
 import { makeSokiInvocatorBase } from 'shared/api/complect/SokiInvocatorBase.master';
 import { emptyFunc, smylib } from 'shared/utils';
 import { WebSocket } from 'ws';
 import { onSokiServerEventerInvocatorInvoke } from './complect/soki/eventers';
+import { backConfig } from './config/backConfig';
 import { jesmylChangesBot } from './sides/telegram-bot/control/jesmylChangesBot';
 
 export type SokiServerInvocatorTool = { client: WebSocket; auth: LocalSokiAuth | und; visit: SokiVisit | und };
@@ -19,7 +19,7 @@ export const SokiInvocatorBaseServer = makeSokiInvocatorBase<
   isNeedCheckClassName: false,
   classNamePostfix: 'SokiInvocatorBaseServer',
   eventerValue: onSokiServerEventerInvocatorInvoke,
-  feedbackOnEach: environment.isTest
+  feedbackOnEach: backConfig.isTest
     ? emptyFunc
     : (titleScalar, { tool, method, name }) => {
         if (titleScalar === '') return;
