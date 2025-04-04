@@ -14,6 +14,7 @@ import { cmComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invo
 import { cmIsShowCatBindsInCompositionAtom } from '$cm/atoms';
 import { useChordVisibleVariant } from '$cm/base/useChordVisibleVariant';
 import { useLaterComList } from '$cm/base/useLaterComList';
+import { comPlayerHeaderStickyCss } from '$cm/basis/css/com-player';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useFixedCcom } from '$cm/basis/lib/com-selections';
 import { useCmCurrentComPackContext } from '$cm/basis/lib/contexts/current-com-list';
@@ -101,8 +102,7 @@ export function TheComposition() {
           <DocTitle title={ccom.name} />
           {comAudio && (
             <ComPlayer
-              src={comAudio}
-              split
+              audioSrcs={comAudio}
               isWithEditButton
             />
           )}
@@ -170,23 +170,7 @@ const StyledComContainer = styled(PageContainerConfigurer)<{ $isInLaterList: boo
     padding-top: 150px;
     transition: padding-top 0.2s;
 
-    .composition-player {
-      --transition-speed: 0.2s;
-
-      position: absolute;
-      top: var(--header-height);
-      right: 0;
-      left: 0;
-      opacity: 0;
-      pointer-events: none;
-      z-index: 1;
-      transition:
-        width var(--transition-speed),
-        background var(--transition-speed),
-        margin var(--transition-speed),
-        margin-top var(--transition-speed),
-        opacity var(--transition-speed);
-    }
+    ${comPlayerHeaderStickyCss}
   }
 
   &.hide-metronome .com-metronome {

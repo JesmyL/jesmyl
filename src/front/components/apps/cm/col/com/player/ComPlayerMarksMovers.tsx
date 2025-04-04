@@ -1,28 +1,24 @@
+import { useAtomValue } from '#shared/lib/atom';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { MenuItem } from '@mui/material';
 import { useEffect, useRef } from 'react';
+import { comPlayerAudioElement, comPlayerPlaySrcAtom } from './controls';
 
-export const ComPlayerMarksMovers = ({
-  src,
-  audioRef,
-}: {
-  src: string;
-  audioRef: React.RefObject<HTMLAudioElement | null>;
-}) => {
+export const ComPlayerMarksMovers = ({ src }: { src: string }) => {
   const titleRef = useRef<HTMLDivElement>(null);
   const prevRef = useRef<HTMLLIElement>(null);
   const repeatRef = useRef<HTMLLIElement>(null);
   const nextRef = useRef<HTMLLIElement>(null);
+  const playSrc = useAtomValue(comPlayerPlaySrcAtom);
 
-  const audioTrackMarks = cmIDB.useAudioTrackMarks(src);
+  const audioTrackMarks = cmIDB.useAudioTrackMarks(playSrc ?? src);
 
   useEffect(() => {
-    if (titleRef.current === null || audioRef.current === null || audioTrackMarks == null) return;
+    if (titleRef.current === null || audioTrackMarks == null) return;
 
-    const audioNode = audioRef.current;
     const titleNode = titleRef.current;
     const marks = mylib.keys(audioTrackMarks.marks).map(Number);
 
@@ -30,8 +26,8 @@ export const ComPlayerMarksMovers = ({
     let repeat = 0;
     let next = 0;
 
-    const findNextTime = (num: number) => num > audioNode.currentTime;
-    const findRepeatTime = (num: number) => num <= audioNode.currentTime;
+    const findNextTime = (num: number) => num > comPlayerAudioElement.currentTime;
+    const findRepeatTime = (num: number) => num <= comPlayerAudioElement.currentTime;
 
     const updatePoints = () => {
       const repeati = marks.findLastIndex(findRepeatTime);
@@ -52,23 +48,23 @@ export const ComPlayerMarksMovers = ({
     return hookEffectPipe()
       .pipe(
         addEventListenerPipe(prevRef.current, 'click', () => {
-          audioNode.play();
-          audioNode.currentTime = prev;
+          comPlayerAudioElement.play();
+          comPlayerAudioElement.currentTime = prev;
         }),
         addEventListenerPipe(repeatRef.current, 'click', () => {
-          audioNode.play();
-          audioNode.currentTime = repeat;
+          comPlayerAudioElement.play();
+          comPlayerAudioElement.currentTime = repeat;
         }),
         addEventListenerPipe(nextRef.current, 'click', () => {
-          audioNode.play();
-          audioNode.currentTime = next;
+          comPlayerAudioElement.play();
+          comPlayerAudioElement.currentTime = next;
         }),
-        addEventListenerPipe(audioNode, 'timeupdate', () => {
+        addEventListenerPipe(comPlayerAudioElement, 'timeupdate', () => {
           updatePoints();
         }),
       )
       .effect();
-  }, [audioRef, audioTrackMarks]);
+  }, [audioTrackMarks]);
 
   if (audioTrackMarks == null) return null;
 

@@ -37,7 +37,7 @@ export class Atom<Value, Sunscriber extends (value: Value) => void = (value: Val
     const val = typeof value === 'function' ? (value as (value: Value) => Value)(this.value) : value;
     if (val === this.value || val === undefined || (typeof val === 'number' && isNaN(val))) return;
 
-    this.onValueChange?.(val);
+    if (this.value !== val && this.onValueChange !== undefined) this.onValueChange(val);
 
     this.value = val;
     this.subs.forEach(this.invokeSubscriber, this);

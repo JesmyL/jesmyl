@@ -1,34 +1,33 @@
-import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { ActualRef } from '#shared/lib/hooks/useActualRef';
+import { useAtomSet, useAtomValue } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { Slider } from '@mui/material';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
+import {
+  comPlayerAudioElement,
+  comPlayerIsPlayAtom,
+  comPlayerPlaySrcAtom,
+  isUserSlideTrackDTO,
+  useComPlayerCurrentTime,
+  useComPlayerDuration,
+} from './controls';
 
 let userChangeTimeout: TimeOut;
 
 interface Props {
   src: string;
-  player: HTMLAudioElement;
-  userChangeRef: ActualRef<boolean>;
   timeRender?: (timeNode: React.ReactNode) => React.ReactNode;
 }
 
-export const ComPlayerTrack = ({ player, userChangeRef, timeRender, src }: Props) => {
-  const trackMarks = cmIDB.useAudioTrackMarks(src);
-  const [currentTime, setCurrentTime] = useState(0);
-  const time = mylib.convertSecondsInStrTime(player.currentTime);
+export const ComPlayerTrack = ({ timeRender, src }: Props) => {
+  const playSrc = useAtomValue(comPlayerPlaySrcAtom);
+  const trackMarks = cmIDB.useAudioTrackMarks(playSrc ?? src);
+  const currentTime = useComPlayerCurrentTime();
+  const time = mylib.convertSecondsInStrTime(currentTime);
+  const duration = useComPlayerDuration();
+  const setIsPlay = useAtomSet(comPlayerIsPlayAtom);
   const marks = useMemo(() => mylib.keys(trackMarks?.marks).map(value => ({ value })), [trackMarks?.marks]);
-
-  useEffect(() => {
-    return hookEffectPipe()
-      .pipe(
-        addEventListenerPipe(player, 'timeupdate', () => {
-          setCurrentTime(player.currentTime);
-        }),
-      )
-      .effect();
-  }, [player, userChangeRef]);
+  const isOtherPlaySrc = playSrc && playSrc !== src;
 
   return (
     <>
@@ -37,23 +36,22 @@ export const ComPlayerTrack = ({ player, userChangeRef, timeRender, src }: Props
         value={currentTime || 0}
         min={0}
         step={1}
-        max={player.duration || 0.01}
-        color="x7"
-        disabled={isNaN(player.duration)}
+        max={duration || 0.01}
+        color={isOtherPlaySrc ? 'x5' : 'x7'}
+        disabled={isNaN(duration)}
         marks={marks}
         onChange={(_, value) => {
-          player.pause();
-          userChangeRef.current = true;
+          setIsPlay(false);
+          isUserSlideTrackDTO.isSlide = true;
           clearTimeout(userChangeTimeout);
           userChangeTimeout = setTimeout(() => {
-            userChangeRef.current = false;
-            player.play();
+            isUserSlideTrackDTO.isSlide = false;
+            setIsPlay(true);
           }, 300);
 
           const time = value as number;
-          setCurrentTime(time);
 
-          player.currentTime = time;
+          comPlayerAudioElement.currentTime = time;
         }}
       />
       {timeRender?.(time) ?? time}

@@ -8,12 +8,15 @@ import {
 } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { CmRatingSortedComList } from '$cm/04-widgets/RatingSortedComList';
 import { SetComListLimitsExtracterContext } from '$cm/base/SetComListLimitsExtracterContext';
+import { comPlayerHeaderStickyCss } from '$cm/basis/css/com-player';
 import { Cat } from '$cm/col/cat/Cat';
+import { ComPlayer } from '$cm/col/com/player/ComPlayer';
+import { comPlayerPlaySrcAtom } from '$cm/col/com/player/controls';
 import { CmComListSearchFilterInput } from '$cm/shared/ComListSearchFilterInput';
 import { categoryDebounceTermAtom, categoryTermAtom } from '$cm/shared/ComListSearchFilterInput/lib';
 import { FileRoutesByPath } from '@tanstack/react-router';
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
-import { emptyFunc } from 'shared/utils';
+import { emptyFunc, itIt } from 'shared/utils';
 import styled from 'styled-components';
 import { Com } from '../col/com/Com';
 import { ComFaceList } from '../col/com/face/list/ComFaceList';
@@ -35,6 +38,7 @@ export const CmCatPage = (props: Props) => {
   const categoryTitleRef = useRef<HTMLDivElement>(null);
   const debouncedTerm = useAtom(categoryDebounceTermAtom);
   const [isOpenRatingSortedComs, setIsOpenRatingSortedComs] = useState(false);
+  const playComSrc = useAtomValue(comPlayerPlaySrcAtom);
 
   useEffect(() => {
     if (listRef.current) listRef.current.scrollTop = 0;
@@ -70,6 +74,12 @@ export const CmCatPage = (props: Props) => {
         content={
           props.cat && (
             <>
+              {playComSrc && (
+                <ComPlayer
+                  audioSrcs={playComSrc}
+                  timeRender={itIt}
+                />
+              )}
               {props.topNodeRender?.(term)}
               <div
                 className="flex between sticky list-title"
@@ -116,6 +126,10 @@ const StyledCatPhaseContainer = styled(PageContainerConfigurer)`
 
   ${StyledPhaseContainerConfigurerContent} {
     padding-top: 0;
+    &:has(.composition-player) {
+      margin-top: 30px;
+      height: calc(var(--content-height) - 30px);
+    }
   }
 
   .later-com-list {
@@ -127,4 +141,6 @@ const StyledCatPhaseContainer = styled(PageContainerConfigurer)`
   .com-list {
     min-height: 110%;
   }
+
+  ${comPlayerHeaderStickyCss}
 `;

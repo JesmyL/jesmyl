@@ -19,7 +19,7 @@ export const ComAudioControlledList = ({ srcs, onToggle, icon }: Props) => {
             key={src}
             className="com-audio-track flex flex-gap margin-gap-v full-width"
           >
-            <ComPlayer src={src} />
+            <ComPlayer audioSrcs={src} />
             <TheIconLoading
               isLoading={tracksInProcess.includes(src)}
               icon={icon}

@@ -117,10 +117,7 @@ export const CmEditCompositionPage = () => {
 
           {isOpenPlayer && ccom.audio && (
             <div className="sticky com-player">
-              <ComPlayer
-                src={ccom.audio}
-                split
-              />
+              <ComPlayer audioSrcs={ccom.audio} />
             </div>
           )}
           <StyledOutlet>{TabComponent && <TabComponent />}</StyledOutlet>

@@ -1,165 +1,72 @@
-import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
-import { useActualRef } from '#shared/lib/hooks/useActualRef';
+import { useAtom } from '#shared/lib/atom';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { Button, Menu } from '@mui/material';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { emptyFunc } from 'shared/utils';
+import { useRef, useState } from 'react';
+import { itIt, makeRegExp } from 'shared/utils';
 import styled, { css, keyframes } from 'styled-components';
 import { ComPlayerMarksConfigurerEditMenuButton } from './ComPlayerMarksConfigurerEditMenuButton';
 import { ComPlayerMarksMovers } from './ComPlayerMarksMovers';
 import { ComPlayerTrack } from './ComPlayerTrack';
-
-let currentAudioNode: HTMLAudioElement | und;
-const movesMemoCallback = () => ({ prevX: 0, onEnd: emptyFunc });
+import { comPlayerIsPlayAtom, comPlayerPlaySrcAtom } from './controls';
 
 interface Props {
-  src: string;
-  split?: string | RegExp | boolean;
+  audioSrcs: string;
   timeRender?: (timeNode: React.ReactNode, currentSrc: string) => React.ReactNode;
-  audioRef?: React.RefObject<HTMLAudioElement | null>;
   isWithEditButton?: boolean;
 }
 
-export const ComPlayer = ({ src, split, timeRender, audioRef: topAudioRef, isWithEditButton }: Props) => {
-  let audioRef = useRef<HTMLAudioElement>(null);
-  if (topAudioRef) audioRef = topAudioRef;
-
+export const ComPlayer = ({ audioSrcs, timeRender, isWithEditButton }: Props) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
-
-  const player = audioRef.current;
-  const userChangeRef = useActualRef(false);
-  const [isError, setIsError] = useState(false);
-  const [isPlay, setIsPlay] = useState(false);
-  const [isCanLoad, setIsCanLoad] = useState(false);
-  const [isShowLoader, setIsShowLoader] = useState(false);
   const [currentVariant, setCurrentVariant] = useState(0);
-  const splitter = split === true ? /\n+/ : split || null;
-  const variants = splitter ? src.split(splitter).map(src => src.trim()) : [src.trim()];
-  const currentSrc = variants[currentVariant];
-  const moves = useMemo(movesMemoCallback, []);
-
-  useEffect(() => {
-    setIsPlay(false);
-    setIsShowLoader(false);
-    const timeout = setTimeout(() => setIsShowLoader(true), 300);
-    const player = audioRef.current;
-    if (player) {
-      player.pause();
-      player.currentTime = 0;
-    }
-
-    const onVisibilityChange = () => {
-      if (!document.hidden && audioRef.current) setIsPlay(!audioRef.current.paused);
-    };
-
-    document.addEventListener('visibilitychange', onVisibilityChange);
-
-    return () => {
-      clearTimeout(timeout);
-      document.removeEventListener('visibilitychange', onVisibilityChange);
-    };
-  }, [src]);
+  const variants = audioSrcs.split(makeRegExp('/\n+/')).map(src => src.trim());
+  const src = variants[currentVariant];
+  const [isPlay, setIsPlay] = useAtom(comPlayerIsPlayAtom);
+  const [playSrc, setPlaySrc] = useAtom(comPlayerPlaySrcAtom);
+  const isOtherPlaySrc = playSrc && playSrc !== src;
 
   return (
     <>
-      {player && isCanLoad ? (
-        <audio
-          ref={audioRef}
-          src={currentSrc}
-          onError={() => setIsError(true)}
-          onPause={() => {
-            if (userChangeRef.current) return;
-            setIsPlay(false);
-          }}
-          onPlay={() => {
-            if (userChangeRef.current) return;
-            setIsPlay(true);
-          }}
-          onTimeUpdate={() => {
-            if (player.duration > -1 && player.currentTime >= player.duration) {
-              setIsPlay(false);
-              if (moves.prevX === 0) {
-                player.currentTime = 0;
-                moves.onEnd = emptyFunc;
-              } else
-                moves.onEnd = () => {
-                  if (player.currentTime >= player.duration) player.currentTime = 0;
-                };
-            }
+      <StyledPlayer className="composition-player flex gap-2 px-2">
+        <LazyIcon
+          className={'pointer ' + (isOtherPlaySrc ? 'text-x5' : '')}
+          icon={isPlay ? 'Pause' : 'Play'}
+          onClick={() => {
+            setPlaySrc(src);
+            setIsPlay(!isPlay);
           }}
         />
-      ) : (
-        <audio ref={audioRef} />
-      )}
+        <ComPlayerTrack
+          src={src}
+          timeRender={
+            isOtherPlaySrc
+              ? itIt
+              : timeRender
+                ? timeNode => timeRender(timeNode, src)
+                : timeNode => (
+                    <Button
+                      ref={buttonRef}
+                      className="text-x3! bg-x1! h-6! pointer rounded-2xl!"
+                      color="x3"
+                      size="small"
+                      variant="outlined"
+                      onClick={() => setIsOpenMenu(true)}
+                    >
+                      {timeNode}
+                    </Button>
+                  )
+          }
+        />
 
-      <StyledPlayer className={'composition-player flex gap-2 px-2 ' + (player ? '' : 'center')}>
-        {player ? (
-          isError ? (
-            <span className="error-message">Файл не найден</span>
-          ) : (
-            <>
-              <LazyIcon
-                className="pointer"
-                icon={isPlay ? 'Pause' : 'Play'}
-                onClick={() => {
-                  const toggle = () => {
-                    if (isPlay) player.pause();
-                    else {
-                      currentAudioNode?.pause();
-                      currentAudioNode = player;
-                      player.play();
-                    }
-                    setIsPlay(!isPlay);
-                  };
-
-                  if (isCanLoad) toggle();
-                  else {
-                    setIsCanLoad(true);
-                    setTimeout(() => toggle());
-                  }
-                }}
-              />
-
-              <ComPlayerTrack
-                player={player}
-                userChangeRef={userChangeRef}
-                src={currentSrc}
-                timeRender={
-                  timeRender
-                    ? timeNode => timeRender(timeNode, currentSrc)
-                    : timeNode => (
-                        <Button
-                          ref={buttonRef}
-                          className="text-x3! bg-x1! h-6! pointer rounded-2xl!"
-                          color="x3"
-                          size="small"
-                          variant="outlined"
-                          onClick={() => {
-                            setIsOpenMenu(true);
-                          }}
-                        >
-                          {timeNode}
-                        </Button>
-                      )
-                }
-              />
-
-              {variants.length > 1 && (
-                <div
-                  className="current-variant-badge flex center pointer"
-                  onClick={() => {
-                    setCurrentVariant(currentVariant > variants.length - 2 ? 0 : currentVariant + 1);
-                    setIsPlay(false);
-                  }}
-                >
-                  {currentVariant + 1}
-                </div>
-              )}
-            </>
-          )
-        ) : (
-          isShowLoader && <JesmylLogo className="loading-logo rotate" />
+        {variants.length > 1 && (
+          <div
+            className="current-variant-badge flex center pointer"
+            onClick={() => {
+              setCurrentVariant(currentVariant > variants.length - 2 ? 0 : currentVariant + 1);
+            }}
+          >
+            {currentVariant + 1}
+          </div>
         )}
       </StyledPlayer>
 
@@ -169,14 +76,11 @@ export const ComPlayer = ({ src, split, timeRender, audioRef: topAudioRef, isWit
         onClose={() => setIsOpenMenu(false)}
         classes={{ list: 'bg-x2 text-x4 flex flex-col gap-3', paper: 'bg-x7', root: 'mt-1' }}
       >
-        <ComPlayerMarksMovers
-          audioRef={audioRef}
-          src={currentSrc}
-        />
+        <ComPlayerMarksMovers src={src} />
 
         {isWithEditButton && (
           <ComPlayerMarksConfigurerEditMenuButton
-            src={currentSrc}
+            src={src}
             onClick={() => setIsOpenMenu(false)}
           />
         )}

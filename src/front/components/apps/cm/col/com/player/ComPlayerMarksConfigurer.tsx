@@ -1,37 +1,23 @@
-import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { useAtomValue } from '#shared/lib/atom';
 import { mylib, MyLib } from '#shared/lib/my-lib';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { Button } from '@mui/material';
-import { useEffect, useRef, useState } from 'react';
 import { retNull } from 'shared/utils';
 import { ComPlayer } from './ComPlayer';
 import { ComPlayerMarksConfigurerTimeMark } from './ComPlayerMarksConfigurerTimeMark';
+import { comPlayerPlaySrcAtom, useComPlayerCurrentTime } from './controls';
 
 export const ComPlayerMarksConfigurer = ({ src }: { src: string }) => {
-  const audioRef = useRef<HTMLAudioElement>(null);
-  const [currentTime, setCurrentTime] = useState(0);
-  const trackMarks = cmIDB.useAudioTrackMarks(src);
-
-  useEffect(() => {
-    if (audioRef.current === null) return;
-    const player = audioRef.current;
-
-    return hookEffectPipe()
-      .pipe(
-        addEventListenerPipe(player, 'timeupdate', () => {
-          setCurrentTime(player.currentTime);
-        }),
-      )
-      .effect();
-  }, [audioRef]);
+  const playSrc = useAtomValue(comPlayerPlaySrcAtom);
+  const currentTime = useComPlayerCurrentTime();
+  const trackMarks = cmIDB.useAudioTrackMarks(playSrc ?? src);
 
   return (
     <>
       <div className="text-2xl mb-5">Настройка точек песни</div>
       <ComPlayer
-        src={src}
-        audioRef={audioRef}
+        audioSrcs={src}
         timeRender={retNull}
       />
       <Button
