@@ -3,9 +3,6 @@ import { makeRegExp } from 'shared/utils';
 import { JTgBotCallbackQuery } from '../model';
 import { JesmylTelegramBot } from '../tg-bot';
 
-const getFullName = ({ first_name, last_name }: { first_name: string; last_name?: string }) =>
-  `${first_name}${last_name === undefined ? '' : ` ${last_name}`}`;
-
 export const tgBotUrlController = async (
   targetBot: JesmylTelegramBot,
   adminBot: JesmylTelegramBot,
@@ -22,15 +19,6 @@ export const tgBotUrlController = async (
   const domainReg = makeRegExp(`/(${domainRegStr})/g`);
 
   const knownUrlsSet: Set<string> = new Set();
-  const makeUrlHyperlink = (url: string) => `<a href="http://${url}">${url}</a>`;
-
-  const message1Separation = `.
-Попытка отправить сообщение содержащее следующие неизвестные ссылки в группе `;
-  const messageJSONSeparation = `JSON-код сообщения следующего содержания:`;
-  const message2Separation = `
-Отправку такого сообщения нужно подтвердить Админу.
-
-`;
 
   const keys: (TelegramBot.InlineKeyboardButton & { cb: JTgBotCallbackQuery })[][] = [
     [
@@ -38,39 +26,13 @@ export const tgBotUrlController = async (
         text: '✅ Отправить ✅',
         callback_data: 'send-URL-message',
         cb: async (_bot, query, answer) => {
+          if (!query.message?.text || !query.message.reply_to_message?.text) return;
+
           try {
-            if (query.message === undefined) return;
-            const text = query.message.text ?? query.message.caption;
-            if (!text) return;
+            await adminBot.forwardMessage(targetBot.chatId, query.message.reply_to_message.message_id ?? 0);
+            await adminBot.editMessageText(query.message.message_id, 'Сообщение отправлено');
 
-            const jsonSplittedMessage = text.split(messageJSONSeparation);
-            const parsedMessage: TelegramBot.Message = JSON.parse(jsonSplittedMessage[1]);
-
-            const messageText = `<b>${text.split(message1Separation)[0]}</b>:\n\n${
-              jsonSplittedMessage[0].split(message2Separation)[1]
-            }`;
-
-            try {
-              await targetBot.sendMediaBased(parsedMessage, {
-                caption: messageText,
-                reply_to_message_id: parsedMessage.media_group_id ? parsedMessage.message_id + 1 : undefined,
-              });
-            } catch (_error) {
-              if (parsedMessage.media_group_id)
-                try {
-                  await targetBot.sendMediaBased(parsedMessage, { caption: messageText });
-                } catch (_error) {
-                  await targetBot.postMessage(messageText);
-                }
-              else await targetBot.postMessage(messageText);
-            }
-
-            adminBot.deleteMessage(query.message.message_id);
-            adminBot.postMessage(
-              'В чат' +
-                (chat === null ? '' : ` <b>${chat.title}</b>`) +
-                ` отправлено сообщение\n\n<blockquote expandable>${messageText}</blockquote>`,
-            );
+            answer({ text: 'Отправлено!', show_alert: true });
           } catch (error) {
             answer({ text: '' + error });
           }
@@ -80,14 +42,10 @@ export const tgBotUrlController = async (
         text: '❌ Отменить ❌',
         callback_data: `delete-URL-message`,
         cb: async (_bot, query, answer) => {
-          try {
-            if (!query.message?.text) return;
-            const messageText =
-              '<b>Отмена отправки сообщения:</b>\n\n<tg-spoiler><b>ТЕКСТ\nОТПРАВЛЕННОГО\nСООБЩЕНИЯ</b>:\n\n' +
-              query.message.text.split(message2Separation)[1] +
-              '</tg-spoiler>';
+          if (!query.message?.text) return;
 
-            await adminBot.editMessageText(query.message.message_id, messageText);
+          try {
+            await adminBot.editMessageText(query.message.message_id, 'Отмена отправки сообщения');
           } catch (error) {
             answer({ text: '' + error });
           }
@@ -124,8 +82,9 @@ export const tgBotUrlController = async (
 
   targetBot.onChatMessages(async (bot, message) => {
     if (message.from == null || message.from.is_bot) return;
-    const id = message.from.id;
-    if ((await bot.getAdmins()).some(admin => admin.user.id === id)) return;
+
+    const senderId = message.from.id;
+    if ((await bot.getAdmins()).some(admin => admin.user.id === senderId)) return;
 
     const sendText = message.text ?? message.caption;
 
@@ -145,43 +104,13 @@ export const tgBotUrlController = async (
 
     if (usedUnknownUrls.length === 0) return;
 
-    const messageFrom = message.from;
-    bot.deleteMessage(message.message_id);
+    const forwardedSentMessage = await adminBot.forwardMessage(bot.chatId, message.message_id);
 
-    const alertMessage = `Сообщения, содержащие неизвестные ссылки (не указанные в описании группы <b>${message.chat.title}</b>), должны пройти модерацию от Админов.\nСообщение, которое вы отправили будет переслано обратно в автоматическом режиме после прохождения модерации.`;
+    await adminBot.postMessage('Что делаем с сообщением?', {
+      ...botOptions,
+      reply_to_message_id: forwardedSentMessage.message_id,
+    });
 
-    try {
-      await bot.sendMessage(id, alertMessage);
-    } catch (_error) {
-      const deleteTime = 30;
-      const sentMessage = await bot.postMessage(
-        `${alertMessage}\n\n<b>Это сообщение будет удалено через ${deleteTime} секунд</b>`,
-      );
-
-      setTimeout(() => bot.deleteMessage(sentMessage.message_id), deleteTime * 1000);
-    }
-
-    try {
-      await adminBot.sendMediaBased(message, { caption: 'Это вложение содержится в следующем сообщении' });
-    } catch (_error) {
-      //
-    }
-
-    adminBot.postMessage(
-      (messageFrom.username ? `t.me/${messageFrom.username}, ` : '') +
-        getFullName(messageFrom) +
-        message1Separation +
-        `<b>${message.chat.title}</b>:\n` +
-        usedUnknownUrls.map(makeUrlHyperlink).join('\n') +
-        message2Separation +
-        '<blockquote expandable>' +
-        sendText +
-        '</blockquote>' +
-        messageJSONSeparation +
-        '<blockquote expandable>' +
-        JSON.stringify(message) +
-        '</blockquote>',
-      botOptions,
-    );
+    await bot.deleteMessage(message.message_id);
   });
 };
