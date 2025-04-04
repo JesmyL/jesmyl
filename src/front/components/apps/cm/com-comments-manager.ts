@@ -1,8 +1,8 @@
+import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { authIDB } from '$index/db/auth-idb';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { CmComWid } from 'shared/api';
 import { Eventer } from 'shared/utils';
-import { cmIDB } from './07-basis/lib/cmIDB';
 import { cmFreshesSokiInvocatorClient } from './invocators/fresh-invocator.methods';
 import { cmUserStoreSokiInvocatorClient } from './invocators/user-store-invocator.methods';
 

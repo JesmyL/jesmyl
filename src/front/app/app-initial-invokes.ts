@@ -2,34 +2,18 @@ import { schSokiInvocatorBaseClient } from '#widgets/schedule/invocators/invocat
 import { indexIDB } from '$index/db/index-idb';
 import { indexBasicsSokiInvocatorClient } from '$index/db/invocators/schedules/fresh-invocator.methods';
 import { soki } from 'front/soki';
-import { DeviceId, DeviceInfo } from 'shared/api';
-import { itIt } from 'shared/utils';
+import { DeviceId } from 'shared/api';
 
 export const appInitialInvokes = () => {
   schSokiInvocatorBaseClient.$$register();
 
   const getFreshes = async () => {
     const lastModfiedAt = await indexIDB.get.lastModifiedAt();
-    const localDeviceId = await indexIDB.get.deviceId();
+    const deviceId = await indexIDB.get.deviceId();
 
     try {
-      let deviceInfo = DeviceInfo.def;
-
-      if (navigator.mediaDevices && navigator.mediaDevices.enumerateDevices) {
-        try {
-          const devices = await navigator.mediaDevices.enumerateDevices();
-
-          deviceInfo = devices
-            .map(device => (device.label && device.deviceId ? `${device.kind}:${device.label},${device.deviceId}` : ''))
-            .filter(itIt)
-            .join('/') as DeviceInfo;
-        } catch (_error) {
-          //
-        }
-      }
-
-      if (localDeviceId === DeviceId.def) {
-        const deviceId = await indexBasicsSokiInvocatorClient.getDeviceId({ deviceInfo });
+      if (deviceId === DeviceId.def) {
+        const deviceId = await indexBasicsSokiInvocatorClient.getDeviceId();
         indexIDB.set.deviceId(deviceId);
       }
     } catch (_e) {
