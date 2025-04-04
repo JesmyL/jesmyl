@@ -5,7 +5,7 @@
   "scripts": {
     "start": "vite --port 3627 --host --mode test",
     "start-prod": "vite --port 3627 --host --mode prod",
-    "build": "vite build --mode prod",
+    "build": "vite build",
     "serve": "vite preview",
     "lint": "tsc --project ./tsconfig.json --noEmit && eslint **/*.{ts,tsx,json} *.*",
     "tg-dev": "nodemon tg-bot.mjs",
