@@ -1,18 +1,8 @@
 {
   "T166cbf17596a0c2919e4df1a6d54e66": {
-    "comws": [1534140323560, 1742107357770],
-    "m": 1743219821810.694,
-    "tools": [
-      "edit-com",
-      "com-comment",
-      "hide-metronome",
-      "mark-com",
-      "chord-images",
-      "selected-toggle",
-      "open-player",
-      "fullscreen-mode",
-      "qr-share"
-    ]
+    "comws": [1534140323560, 1742107357770, 1741283723700],
+    "m": 1743705189476.8894,
+    "tools": ["edit-com", "com-comment", "hide-metronome", "mark-com", "selected-toggle"]
   },
   "08a0e6ba7792e902569816a81b846b25": {
     "comws": [
@@ -65,7 +55,8 @@
       1658860751232, 1661361580322, 1628844861136, 1538387756136, 1611898796900, 1530446423428, 1520015756000,
       1647252965570, 1706870792872, 1713042559913
     ],
-    "m": 1742585279133.8616
+    "m": 1743699123897.49,
+    "tools": ["mark-com", "chords-variant", "chord-images"]
   },
   "T6558fe287d2ea93be3e19bbe64b5dfc": {
     "comws": [1718543236522, 1741883251071],
@@ -137,5 +128,9 @@
   },
   "T7f21a14d3133065ca2e48254f87ecf3": { "m": 1742662634785.439, "comws": [1517854709000, 1548914797644] },
   "Ta61379ef755b2009adad70843072202": { "m": 1741797131687.9072, "tools": ["mark-com", "fullscreen-mode"] },
-  "Tc67813aa70f0671b7050b09f59b676a": { "m": 1742407875555.8206, "comws": [] }
+  "Tc67813aa70f0671b7050b09f59b676a": { "m": 1742407875555.8206, "comws": [] },
+  "Td94c82a4bd597f0d408055cc1446677": {
+    "m": 1743704105818.6792,
+    "tools": ["mark-com", "chords-variant", "is-mini-anchor"]
+  }
 }
