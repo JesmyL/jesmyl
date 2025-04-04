@@ -1,6 +1,8 @@
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
+import { environment } from './environment';
+
 // This lets the app load faster on subsequent visits in production, and gives
 // it offline capabilities. However, it also means that developers (and users)
 // will only see deployed updates on subsequent visits to a page, after all the
@@ -27,8 +29,8 @@ type Config = {
   onUpdate?: (registration: ServiceWorkerRegistration) => void;
 };
 
-export function register(config?: Config) {
-  if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
+export const register = (config?: Config) => {
+  if (!environment.isTest && 'serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       const swUrl = `/service-worker.js`;
 
@@ -50,7 +52,7 @@ export function register(config?: Config) {
       }
     });
   }
-}
+};
 
 function registerValidSW(swUrl: string, config?: Config) {
   navigator.serviceWorker
