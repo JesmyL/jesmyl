@@ -39,8 +39,11 @@ export const CmEditorTabComRepeats = () => {
       const keys = Object.keys(repeats);
       if (repeats['.'] === 0) delete repeats['.'];
 
+      const ordw = ord.me.isAnchorInherit ? (ord.me.leadOrd?.wid ?? ord.wid) : ord.wid;
+
       cmComOrderClientInvocatorMethods.setRepeats({
-        ordw: ord.wid,
+        ordw,
+        inhIndex: ord.me.anchorInheritIndex,
         orderTitle: ord.me.header(),
         comw: ccom.wid,
         value: (keys.length ? (keys.length === 1 && keys[0] === '.' ? repeats['.'] : repeats) : 0) ?? 0,
@@ -134,7 +137,6 @@ export const CmEditorTabComRepeats = () => {
                                   ordw: ord.wid,
                                   orderTitle: ord.me.header(),
                                   comw: ccom.wid,
-                                  value: undefined,
                                 });
                             }}
                           />

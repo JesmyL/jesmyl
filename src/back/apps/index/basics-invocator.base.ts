@@ -75,7 +75,7 @@ export const indexServerInvocatorBase =
     constructor() {
       super({
         className: 'IndexBasicsSokiInvocatorBaseServer',
-        beforeEacheTools: {
+        beforeEachTools: {
           getIndexValues: { minLevel: 0, minVersion: 0 },
           getFreshAppVersion: { minLevel: 0, minVersion: 0 },
           authMeByTelegramBotNumber: { minLevel: 0 },
@@ -125,7 +125,8 @@ export const indexServerInvocatorBase =
 
           authMeByTelegramBotNumber: async ({ secretNumber }) => {
             const user = supportTelegramAuthorizations[secretNumber]?.().from;
-            if (user == null) throw new Error('code is invalid');
+
+            if (user == null) throw 'Не верный код';
             return authByTgUser({ user });
           },
 
@@ -134,19 +135,19 @@ export const indexServerInvocatorBase =
         },
         onEachFeedback: {
           authMeByTelegramBotNumber: (_, { auth }) =>
-            `Авторизация ${auth.fio} (${auth.nick ?? '??'}) через TG-код\n\n<blockquote expandable>` +
+            `Авторизация ${auth.fio} (@${auth.nick ?? '??'}) через TG-код\n\n<blockquote expandable>` +
             `${JSON.stringify(auth, null, 1)}</blockquote>`,
 
           authMeByTelegramNativeButton: (_, { auth }) =>
-            `Авторизация ${auth.fio} (${auth.nick ?? '??'}) через TG-auth-native кнопку\n\n` +
+            `Авторизация ${auth.fio} (@${auth.nick ?? '??'}) через TG-auth-native кнопку\n\n` +
             `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
 
           authMeByTelegramMiniButton: (_, { auth }) =>
-            `Авторизация ${auth.fio} (${auth.nick ?? '??'}) через TG-mini-icon кнопку\n\n` +
+            `Авторизация ${auth.fio} (@${auth.nick ?? '??'}) через TG-mini-icon кнопку\n\n` +
             `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
 
           authMeByTelegramInScheduleDay: (_, { auth }) =>
-            `Авторизация ${auth.fio} (${auth.nick ?? '??'}) в расписании дня\n\n` +
+            `Авторизация ${auth.fio} (@${auth.nick ?? '??'}) в расписании дня\n\n` +
             `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
 
           getDeviceId: ({ deviceInfo } = { deviceInfo: DeviceInfo.new }, deviceId) =>

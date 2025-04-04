@@ -2,6 +2,7 @@ import { useToast } from '#shared/ui/modal/useToast';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useComs } from '$cm/basis/lib/coms-selections';
 import { cmUserStoreSokiInvocatorClient } from '$cm/invocators/user-store-invocator.methods';
+import { useAuth } from '$index/atoms';
 
 let saveTimeout: TimeOut;
 const maxFavouritesCount = 30;
@@ -10,6 +11,7 @@ export const useFavouriteComs = () => {
   const favourites = cmIDB.useValue.favoriteComs();
   const favouriteSet = new Set(favourites);
   const toast = useToast();
+  const auth = useAuth();
 
   const ret = {
     favouriteComs: useComs(favourites),
@@ -28,6 +30,7 @@ export const useFavouriteComs = () => {
         return;
       }
 
+      if (auth.login == null) return;
       clearTimeout(saveTimeout);
       saveTimeout = setTimeout(() => {
         cmUserStoreSokiInvocatorClient.setAboutComFavorites({ comws });

@@ -10,6 +10,7 @@ type OnEachFeedbackInvocations<M extends Methods, FeedbackRet> = {
 };
 
 type BeforeEaches<BeforeEachTool, Methods extends object> = Partial<{ [K in keyof Methods]: BeforeEachTool }>;
+type InvokeData<ToolParam> = { tool: ToolParam; name: string; method: string };
 
 export const makeSokiInvocatorBase = <
   Event extends InvocatorBaseEvent,
@@ -21,14 +22,16 @@ export const makeSokiInvocatorBase = <
   isNeedCheckClassName: boolean;
   classNamePostfix: ClassNamePostfix;
   eventerValue: EventerListenScope<SokiInvokerTranferDto<Event, ToolParam>>;
-  feedbackOnEach?: (onEachesRet: FeedbackRet, data: { tool: ToolParam; name: string; method: string }) => void;
-  beforeEach?: (
-    data: { tool: ToolParam; name: string; method: string },
-    tool: BeforeEaches<BeforeEachTool, Methods> | und,
-    args: object | und,
-  ) => Promise<{ isStopPropagation: boolean }>;
+  feedbackOnEach?: (onEachesRet: FeedbackRet, invoke: InvokeData<ToolParam>) => void;
+  onErrorMessage: (props: { errorMessage: string; invokeData: InvokeData<ToolParam> }) => void;
+  beforeEach?: (props: {
+    invoke: InvokeData<ToolParam>;
+    beforeTools: BeforeEaches<BeforeEachTool, Methods> | und;
+    defaultTool: BeforeEachTool | und;
+    args: object | und;
+  }) => Promise<{ isStopPropagation: boolean }>;
 }) => {
-  const { classNamePostfix, eventerValue, isNeedCheckClassName, beforeEach, feedbackOnEach } = options;
+  const { classNamePostfix, eventerValue, isNeedCheckClassName, beforeEach, feedbackOnEach, onErrorMessage } = options;
 
   type Invocator<M extends Methods> = {
     [K in keyof M]: (args: Parameters<M[K]>[0], tool: ToolParam) => Promise<ReturnType<M[K]>> | ReturnType<M[K]>;
@@ -40,14 +43,14 @@ export const makeSokiInvocatorBase = <
 
   eventerValue.listen(async ({ invoke: { name, method, args }, sendResponse, tool, requestId }) => {
     const invokeMethod = async () => {
+      const invokeData = { tool, method, name };
+
       try {
         if (registeredMethods[name] === undefined) {
           throw new Error(`the name ${name} is not registered - ${method}()`);
         }
 
         if (!smylib.isFunc(registeredMethods[name][method])) throw new Error(`the ${name} has no the ${method} method`);
-
-        const methodProps = { tool, method, name };
 
         const invokedResult = await registeredMethods[name][method](args, tool);
 
@@ -58,13 +61,13 @@ export const makeSokiInvocatorBase = <
         ) {
           const retValue = registeredOnEachFeedbacks[name][method](args, invokedResult);
 
-          feedbackOnEach(retValue, methodProps);
+          feedbackOnEach(retValue, invokeData);
         }
 
         sendResponse({ invokedResult, requestId } as never, tool);
       } catch (error) {
-        console.error(error);
         sendResponse({ errorMessage: '' + error, requestId } as never, tool);
+        onErrorMessage({ errorMessage: '' + error, invokeData });
       }
     };
 
@@ -93,13 +96,14 @@ export const makeSokiInvocatorBase = <
     className: ClassName;
     methods: Invocator<M>;
     onEachFeedback?: OnEachFeedbackInvocations<M, FeedbackRet>;
-    beforeEacheTools?: BeforeEaches<BeforeEachTool, M>;
+    beforeEachTools?: BeforeEaches<BeforeEachTool, M>;
+    beforeEachDefaultTool?: BeforeEachTool;
   };
 
   type SokiInvocator = new <M extends Methods>(config: Config<M>) => Invocator<M> & { $$register: () => void };
 
   return function (this: unknown, options: Config<Methods>) {
-    const { className, methods, beforeEacheTools, onEachFeedback } = options;
+    const { className, methods, beforeEachTools, onEachFeedback, beforeEachDefaultTool } = options;
     const self = this as Methods;
 
     if (isNeedCheckClassName) {
@@ -115,8 +119,17 @@ export const makeSokiInvocatorBase = <
           args: Parameters<(typeof methods)[typeof method]>[0],
           tool: Parameters<(typeof methods)[typeof method]>[1],
         ) => {
-          if ((await beforeEach({ method, name, tool }, beforeEacheTools, args)).isStopPropagation) return;
-          return methods[method](args, tool);
+          if (
+            !(
+              await beforeEach({
+                invoke: { method, name, tool },
+                beforeTools: beforeEachTools,
+                args,
+                defaultTool: beforeEachDefaultTool,
+              })
+            ).isStopPropagation
+          )
+            return methods[method](args, tool);
         }) as never;
     });
 

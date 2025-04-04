@@ -10,6 +10,7 @@ export const cmCatServerInvocatorBase =
     constructor() {
       super({
         className: 'CmCatSokiInvocatorBaseServer',
+        beforeEachDefaultTool: { minLevel: 50 },
         methods: {
           rename: ({ catw, name }) => this.modifyCat(catw, cat => (cat.n = name)),
           setKind: ({ catw, kind }) => this.modifyCat(catw, cat => (cat.k = kind)),

@@ -7,7 +7,7 @@ export const watchEditComBusies = async (
   { comw }: { comw: CmComWid },
   { auth, client, visit }: { auth?: LocalSokiAuth; visit?: SokiVisit; client: WebSocket },
 ) => {
-  if (auth == null || auth.fio == null || auth.login == null || visit == null) throw new Error('incorrect credentials');
+  if (auth == null || auth.fio == null || auth.login == null || visit == null) throw 'Авторизация не действительна';
 
   const comBusy: ComEditBusy = {
     comw,

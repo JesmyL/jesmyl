@@ -42,7 +42,7 @@ export const cmFreshServerInvocatorBase =
     constructor() {
       super({
         className: 'CmFreshSokiInvocatorBaseServer',
-        beforeEacheTools: {
+        beforeEachTools: {
           requestFreshes: { minLevel: 0 },
         },
         methods: {

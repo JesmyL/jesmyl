@@ -58,97 +58,108 @@ export const CmComRepeatsRemoveButton = ({ isChordBlock, startOrd, ord, textLine
 
       {isOpenModal && (
         <Modal onClose={setIsOpenModal}>
-          <ModalHeader>Сброс границ</ModalHeader>
+          {({ onClose: closeModal }) => (
+            <>
+              <ModalHeader>Сброс границ</ModalHeader>
 
-          <ModalBody>
-            {ord.regions
-              ?.filter(({ startLinei, startWordi }) => textLinei === startLinei && wordi === startWordi)
-              .map((flash, flashi) => {
-                const { startLinei, startWordi, endLinei, endWordi, startOrd, endOrd, startKey, count } = flash;
-                const fill = (
-                  ord?: Order | null,
-                  l?: number | nil,
-                  w?: number | nil,
-                  isBeg?: boolean,
-                  fl?: number | und,
-                  fw?: number | und,
-                ) => {
-                  const lines = (ord?.text || '').split(makeRegExp('/\\n+/'));
-                  return (isBeg ? lines.slice(l || 0, fl == null ? fl : fl + 1) : lines.slice(0, (l || 0) + 1))
-                    .map(line =>
-                      (isBeg
-                        ? (line || '').split(makeRegExp('/ +/')).slice(w || 0, fw == null ? fw : fw + 1)
-                        : (line || '').split(makeRegExp('/ +/')).slice(0, (w || 0) + 1)
-                      ).join(' '),
-                    )
-                    .join('\n');
-                };
+              <ModalBody>
+                {ord.regions
+                  ?.filter(({ startLinei, startWordi }) => textLinei === startLinei && wordi === startWordi)
+                  .map((flash, flashi) => {
+                    const { startLinei, startWordi, endLinei, endWordi, startOrd, endOrd, startKey, count } = flash;
+                    const fill = (
+                      ord?: Order | null,
+                      l?: number | nil,
+                      w?: number | nil,
+                      isBeg?: boolean,
+                      fl?: number | und,
+                      fw?: number | und,
+                    ) => {
+                      const lines = (ord?.text || '').split(makeRegExp('/\\n+/'));
+                      return (isBeg ? lines.slice(l || 0, fl == null ? fl : fl + 1) : lines.slice(0, (l || 0) + 1))
+                        .map(line =>
+                          (isBeg
+                            ? (line || '').split(makeRegExp('/ +/')).slice(w || 0, fw == null ? fw : fw + 1)
+                            : (line || '').split(makeRegExp('/ +/')).slice(0, (w || 0) + 1)
+                          ).join(' '),
+                        )
+                        .join('\n');
+                    };
 
-                return (
-                  <pre
-                    key={flashi}
-                    onClick={() => {
-                      const { startOrd, endOrd, startKey, endKey } = flash;
-                      const srepeats = mylib.clone(startOrd?.repeats);
+                    return (
+                      <pre
+                        key={flashi}
+                        onClick={() => {
+                          const { startOrd, endOrd, startKey, endKey } = flash;
+                          const srepeats = mylib.clone(startOrd?.repeats);
 
-                      if (srepeats && typeof srepeats !== 'number') {
-                        delete srepeats[startKey];
-                        setField(startOrd, srepeats);
-                      } else setField(startOrd, 0);
+                          if (srepeats && typeof srepeats !== 'number') {
+                            delete srepeats[startKey];
+                            setField(startOrd, srepeats);
+                          } else setField(startOrd, 0);
 
-                      startOrd?.resetRegions();
+                          startOrd?.resetRegions();
 
-                      if (startOrd !== endOrd && endOrd) {
-                        const frepeats = {
-                          ...(typeof endOrd.repeats === 'number' ? { '.': endOrd.repeats } : endOrd.repeats || {}),
-                        };
+                          if (startOrd !== endOrd && endOrd) {
+                            const frepeats = {
+                              ...(typeof endOrd.repeats === 'number' ? { '.': endOrd.repeats } : endOrd.repeats || {}),
+                            };
 
-                        delete frepeats[endKey || '.'];
-                        setField(endOrd, frepeats);
-                        endOrd?.resetRegions();
-                      }
+                            delete frepeats[endKey || '.'];
+                            setField(endOrd, frepeats);
+                            endOrd?.resetRegions();
+                          }
 
-                      reset();
-                      setIsOpenModal(false);
-                    }}
-                    dangerouslySetInnerHTML={{
-                      __html:
-                        startFlash.repeat(count || 0) +
-                        flashDivider +
-                        ((startKey || '').startsWith('~')
-                          ? fill(
-                              startOrd,
-                              startLinei,
-                              startWordi,
-                              true,
-                              startLinei ?? undefined,
-                              startWordi ?? undefined,
-                            )
-                          : startOrd === endOrd
-                            ? fill(startOrd, startLinei, startWordi, true, endLinei ?? undefined, endWordi ?? undefined)
-                            : `${fill(startOrd, startLinei, startWordi, true)}\n...\n${fill(
-                                endOrd,
-                                startLinei,
-                                startWordi,
-                                false,
-                              )}`) +
-                        flashDivider +
-                        finishFlash.repeat(count || 0),
-                    }}
+                          reset();
+                          closeModal();
+                        }}
+                        dangerouslySetInnerHTML={{
+                          __html:
+                            startFlash.repeat(count || 0) +
+                            flashDivider +
+                            ((startKey || '').startsWith('~')
+                              ? fill(
+                                  startOrd,
+                                  startLinei,
+                                  startWordi,
+                                  true,
+                                  startLinei ?? undefined,
+                                  startWordi ?? undefined,
+                                )
+                              : startOrd === endOrd
+                                ? fill(
+                                    startOrd,
+                                    startLinei,
+                                    startWordi,
+                                    true,
+                                    endLinei ?? undefined,
+                                    endWordi ?? undefined,
+                                  )
+                                : `${fill(startOrd, startLinei, startWordi, true)}\n...\n${fill(
+                                    endOrd,
+                                    startLinei,
+                                    startWordi,
+                                    false,
+                                  )}`) +
+                            flashDivider +
+                            finishFlash.repeat(count || 0),
+                        }}
+                      />
+                    );
+                  })}
+              </ModalBody>
+
+              <ModalFooter>
+                <div className="flex flex-big-gap">
+                  <TheIconButton
+                    icon="Unavailable"
+                    postfix="Отмена"
+                    onClick={closeModal}
                   />
-                );
-              })}
-          </ModalBody>
-
-          <ModalFooter>
-            <div className="flex flex-big-gap">
-              <TheIconButton
-                icon="Unavailable"
-                postfix="Отмена"
-                onClick={setIsOpenModal}
-              />
-            </div>
-          </ModalFooter>
+                </div>
+              </ModalFooter>
+            </>
+          )}
         </Modal>
       )}
     </>

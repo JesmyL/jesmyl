@@ -23,6 +23,7 @@ export class SokiTrip {
   onConnectionOpenEvent = Eventer.createValue<boolean>();
   onBeforeAuthorizeEvent = Eventer.createValue<void>();
   onAuthorizeEvent = Eventer.createValue<void>();
+  onInvokeErrorMessageEvent = Eventer.createValue<string>();
   onTokenInvalidEvent = Eventer.createValue<void>();
   onConnectionState = (cb: (is: boolean) => void) => this.connectionState.listen(cb, this.isConnected);
 
@@ -85,6 +86,8 @@ export class SokiTrip {
 
         if (this.requests[event.requestId] !== undefined) {
           console.info(event);
+          if (event.errorMessage && !event.errorMessage.startsWith('#'))
+            this.onInvokeErrorMessageEvent.invoke(event.errorMessage);
 
           this.requests[event.requestId]!(event);
           delete this.requests[event.requestId];

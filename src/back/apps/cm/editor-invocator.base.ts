@@ -17,7 +17,8 @@ export const cmEditorSokiInvocatorBaseServer =
     constructor() {
       super({
         className: 'CmEditorSokiInvocatorBaseServer',
-        beforeEacheTools: {
+        beforeEachDefaultTool: { minLevel: 50 },
+        beforeEachTools: {
           addMp3Rule: { minLevel: 50 },
           requestFreshes: { minVersion: 50 },
         },

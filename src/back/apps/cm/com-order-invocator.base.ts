@@ -19,11 +19,6 @@ export const cmComOrderServerInvocatorBase =
         });
       };
 
-      const simpleOrdValueSetter = <Key extends keyof IExportableOrder>(key: Key) => {
-        return ({ comw, ordw, value }: { ordw: CmComOrderWid; comw: CmComWid; value?: IExportableOrder[Key] | null }) =>
-          modifyOrd(comw, ordw, ord => (ord[key] = value as never));
-      };
-
       const getNextOrdWid = (ords: { w: CmComOrderWid }[]) =>
         ords.reduce((max, curr) => (curr.w > max ? curr.w : max), CmComOrderWid.def) + 1;
 
@@ -31,11 +26,23 @@ export const cmComOrderServerInvocatorBase =
 
       super({
         className: 'CmComOrderSokiInvocatorBaseServer',
+        beforeEachDefaultTool: { minLevel: 50 },
         methods: {
-          clearOwnRepeats: simpleOrdValueSetter('r'),
-          setRepeats: simpleOrdValueSetter('r'),
-          setType: simpleOrdValueSetter('s'),
-          bindChordBlock: simpleOrdValueSetter('c'),
+          clearOwnRepeats: ({ comw, ordw }) => modifyOrd(comw, ordw, ord => delete ord.r),
+          setRepeats: ({ comw, ordw, value, inhIndex }) =>
+            modifyOrd(comw, ordw, ord => {
+              if (inhIndex !== undefined) {
+                ord.inh ??= {};
+                ord.inh.r ??= {};
+
+                ord.inh.r[inhIndex] = value;
+
+                if (!smylib.values(ord.inh.v).filter(itNNil).length) delete ord.inh.v;
+                if (!smylib.values(ord.inh).filter(itNNil).length) delete ord.inh;
+              } else ord.r = value;
+            }),
+          setType: ({ comw, ordw, type }) => modifyOrd(comw, ordw, ord => (ord.s = type)),
+          bindChordBlock: ({ comw, ordw, chordi }) => modifyOrd(comw, ordw, ord => (ord.c = chordi)),
 
           toggleVisibility: ({ comw, ordw }) => modifyOrd(comw, ordw, ord => (ord.v = ord.v ? 0 : 1)),
 

@@ -85,7 +85,9 @@ export class Order extends SourceBased<IExportableOrder> {
   get positions(): (number[] | null)[] | nil {
     return (
       this.me.positions ??
-      this.getInheritance('p') ??
+      this.getWatchInheritance('p') ??
+      this.getLeadInheritance('p') ??
+      this.me.source?.top.p ??
       this.me.watchOrd?.me.source?.top.p ??
       this.me.targetOrd?.me.source?.top.p ??
       (this.me.source && (this.me.source.top.p = []))
@@ -116,7 +118,10 @@ export class Order extends SourceBased<IExportableOrder> {
 
   get isVisible(): boolean {
     return this.me.isAnchorInheritPlus || this.me.isAnchorInherit
-      ? !(!this.me.leadOrd?.isVisible || this.getInheritance('v') === 0)
+      ? !(
+          !this.me.leadOrd?.isVisible ||
+          (this.getWatchInheritance('v') ?? this.getLeadInheritance('v') ?? this.me.source?.top.v) === 0
+        )
       : this.me.isInherit
         ? !(this.getBasic('v') === 0 || (this.me.leadOrd && !this.me.leadOrd.isVisible))
         : this.getBasic('v') !== 0;
@@ -150,10 +155,12 @@ export class Order extends SourceBased<IExportableOrder> {
 
   get repeats(): OrderRepeats | null {
     if (this.me.isAnchorInherit) {
-      return this.getInheritance('r') as never;
+      return (this.me.leadOrd?.me.source?.top.inh?.r?.[this.me.anchorInheritIndex || 0] ?? 0) as never;
     } else if (this.me && this.me.source && this.me.source.top.r != null) return this.me.source.top.r;
     else {
-      const repeats = this.me.repeats ?? this.getTargetFirst('r');
+      const repeats =
+        this.me.repeats ?? this.me?.targetOrd?.me.source?.top.r ?? this.getWatchInheritance('r') ?? this.top.r;
+
       const nrepeats = {} as SpecialOrderRepeats;
       const reg = makeRegExp('/[a-z]/i', true);
 
@@ -185,6 +192,21 @@ export class Order extends SourceBased<IExportableOrder> {
     if (this._regions === undefined) this.setRegions();
 
     return this._regions;
+  }
+
+  getWatchInheritance<Key extends keyof InheritancableOrder>(fieldn: Key) {
+    return (
+      this.me.isAnchorInherit
+        ? (this.me.watchOrd?.me.source?.top.inh?.[fieldn]?.[this.me.anchorInheritIndex || 0] ??
+          this.me.watchOrd?.getBasic(fieldn))
+        : null
+    ) as InheritancableOrder[Key] | nil;
+  }
+
+  getLeadInheritance<Key extends keyof InheritancableOrder>(fieldn: Key) {
+    return (
+      this.me.isAnchorInherit ? this.me.leadOrd?.me.source?.top.inh?.[fieldn]?.[this.me.anchorInheritIndex || 0] : null
+    ) as InheritancableOrder[Key] | nil;
   }
 
   resetRegions() {
@@ -387,22 +409,6 @@ export class Order extends SourceBased<IExportableOrder> {
             }
           },
         );
-  }
-
-  getInheritance<Key extends keyof InheritancableOrder>(fieldn: Key): InheritancableOrder[Key] | nil {
-    return (
-      this.me.isAnchorInherit
-        ? this.me.watchOrd?.me.source?.top.inh?.[fieldn]?.[this.me.anchorInheritIndex || 0] ??
-          this.me.watchOrd?.getBasic(fieldn) ??
-          this.me.leadOrd?.me.source?.top.inh?.[fieldn]?.[this.me.anchorInheritIndex || 0]
-        : this.me.source?.top[fieldn]
-    ) as never;
-  }
-
-  getTargetFirst<Key extends keyof IExportableOrder>(fieldn: Key): IExportableOrder[Key] {
-    return (
-      this.me?.targetOrd?.me.source?.top[fieldn] ?? (this.getInheritance(fieldn as never) as never) ?? this.top[fieldn]
-    );
   }
 
   private static _insertRepeats(

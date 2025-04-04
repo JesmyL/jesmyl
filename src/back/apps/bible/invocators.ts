@@ -13,7 +13,7 @@ export const bibleSokiInvocatorBaseServer =
     constructor() {
       super({
         className: 'BibleSokiInvocatorBaseServer',
-        beforeEacheTools: {
+        beforeEachTools: {
           requestFreshes: { minLevel: 0 },
           requestTranslate: { minLevel: 0 },
         },

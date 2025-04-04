@@ -45,6 +45,7 @@ export const cmComServerInvocatorBase =
 
       super({
         className: 'CmComSokiInvocatorBaseServer',
+        beforeEachDefaultTool: { minLevel: 50 },
         methods: {
           rename: simpleComKeyValueSetter('n'),
           setBpM: simpleComKeyValueSetter('bpm'),

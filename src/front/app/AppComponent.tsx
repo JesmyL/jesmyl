@@ -20,13 +20,20 @@ export const AppComponent = () => {
   const [isShowLogo, setIsShowLogo] = useState(true);
   const toast = useToast();
 
-  useEffect(
-    () =>
-      soki.onTokenInvalidEvent.listen(() => {
-        toast('Авторизация не действительна', { mood: 'ko' });
-      }),
-    [toast],
-  );
+  useEffect(() => {
+    const unauthListener = soki.onTokenInvalidEvent.listen(() => {
+      toast('Авторизация не действительна', { mood: 'ko' });
+    });
+
+    const errorMessageListener = soki.onInvokeErrorMessageEvent.listen(errorMessage => {
+      toast(errorMessage, { mood: 'ko' });
+    });
+
+    return () => {
+      unauthListener();
+      errorMessageListener();
+    };
+  }, [toast]);
 
   useFingersActions();
   useGlobalFontFamilySetter();

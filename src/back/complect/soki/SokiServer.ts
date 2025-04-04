@@ -9,7 +9,7 @@ import {
   SokiError,
   SokiVisit,
 } from 'shared/api';
-import { makeRegExp, smylib } from 'shared/utils';
+import { makeRegExp, smylib, userAuthStringified, userVisitStringified } from 'shared/utils';
 import WebSocket, { WebSocketServer } from 'ws';
 import { setSharedPolyfills } from '../../../shared/utils/complect/polyfills';
 import { ErrorCatcher } from '../ErrorCatcher';
@@ -65,7 +65,7 @@ export class SokiServer {
               this.visits.set(client, event.visit);
 
               if (!this.isLocalhost(event.visit.urls[0]))
-                tglogger.visit(`Не авторизованный\n\n${this.visitStringified(event.visit)}\n\n`);
+                tglogger.visit(`Не авторизованный\n\n${userVisitStringified(event.visit)}\n\n`);
             }
 
             return;
@@ -86,7 +86,7 @@ export class SokiServer {
             this.visits.set(client, event.visit);
 
             if (!this.isLocalhost(event.visit.urls[0]))
-              tglogger.visit(`${this.authStringified(auth)}\n\n${this.visitStringified(event.visit)}\n\n`);
+              tglogger.visit(`${userAuthStringified(auth)}\n\n${userVisitStringified(event.visit)}\n\n`);
           }
 
           if (auth) {
@@ -108,7 +108,7 @@ export class SokiServer {
         if (event.errorMessage !== undefined) {
           if (!this.isLocalhost(visit?.urls[0]))
             tglogger.userErrors(
-              `${event.errorMessage}\n\n${this.authStringified(auth)}\n\n${this.visitStringified(visit)}`,
+              `${event.errorMessage}\n\n${userAuthStringified(auth)}\n\n${userVisitStringified(visit)}`,
             );
         }
 
@@ -155,21 +155,6 @@ export class SokiServer {
       if (clientSelector.ignoreClient !== client) client.send(stringEvent);
     });
   }
-
-  private visitStringified = (visit: SokiVisit | nil) => {
-    if (visit == null) return '';
-    return (
-      `${visit.urls[0]}\n\n<blockquote expandable>${JSON.stringify(visit, null, 1)}\n` +
-      `Разница: ${Date.now() - visit.clientTm}мс</blockquote>`
-    );
-  };
-
-  private authStringified = (auth: LocalSokiAuth | nil) => {
-    return (
-      `${auth ? `${auth.fio}${auth.nick ? ` t.me/${auth.nick}` : ''}` : 'Неизвестный'}\n\n` +
-      `<blockquote expandable>${auth ? JSON.stringify(auth, null, 1) : ''}</blockquote>`
-    );
-  };
 
   private sendInvokeEvent = (event: InvocatorServerEvent, tool: SokiServerInvocatorTool) => {
     if (this.abortedRequestIdsSet.has(event.requestId)) {

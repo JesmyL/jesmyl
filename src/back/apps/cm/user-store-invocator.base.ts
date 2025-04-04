@@ -22,7 +22,7 @@ export const cmUserStoreSokiInvocatorBaseServer =
         ) => void | ((tool: SokiServerInvocatorTool) => void),
       ) => {
         return async (args: Args, tool: SokiServerInvocatorTool) => {
-          if (tool.auth?.login == null) throw new Error('Не авторизован для отправки user-store');
+          if (tool.auth?.login == null) throw 'Не авторизован для отправки user-store';
           const login = tool.auth.login;
 
           const ret = action(login, (_client, auth) => auth?.login === login, args);

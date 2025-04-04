@@ -1,10 +1,11 @@
 import { InvocatorServerEvent, LocalSokiAuth, SokiVisit } from 'shared/api';
 import { makeSokiInvocatorBase } from 'shared/api/complect/SokiInvocatorBase.master';
-import { emptyFunc, smylib } from 'shared/utils';
+import { emptyFunc, smylib, userAuthStringified, userVisitStringified } from 'shared/utils';
 import { WebSocket } from 'ws';
 import { onSokiServerEventerInvocatorInvoke } from './complect/soki/eventers';
 import { backConfig } from './config/backConfig';
 import { jesmylChangesBot } from './sides/telegram-bot/control/jesmylChangesBot';
+import { tglogger } from './sides/telegram-bot/log/log-bot';
 
 export type SokiServerInvocatorTool = { client: WebSocket; auth: LocalSokiAuth | und; visit: SokiVisit | und };
 export type SokiServerBeforeEachTool = { minVersion?: number; minLevel?: number };
@@ -19,6 +20,18 @@ export const SokiInvocatorBaseServer = makeSokiInvocatorBase<
   isNeedCheckClassName: false,
   classNamePostfix: 'SokiInvocatorBaseServer',
   eventerValue: onSokiServerEventerInvocatorInvoke,
+  onErrorMessage: ({
+    errorMessage,
+    invokeData: {
+      method,
+      name,
+      tool: { auth, visit },
+    },
+  }) => {
+    tglogger.userErrors(
+      `${name}.${method}()\n\n${errorMessage}\n\n${userAuthStringified(auth)}\n\n${userVisitStringified(visit)}`,
+    );
+  },
   feedbackOnEach: backConfig.isTest
     ? emptyFunc
     : (titleScalar, { tool, method, name }) => {
@@ -38,16 +51,17 @@ export const SokiInvocatorBaseServer = makeSokiInvocatorBase<
           { parse_mode: 'HTML' },
         );
       },
-  beforeEach: async ({ method, tool }, beforeTools) => {
+  beforeEach: async ({ invoke: { method, tool }, beforeTools, defaultTool }) => {
     const userVersion = tool.visit?.version ?? 0;
+    const beforeTool = beforeTools?.[method] ?? defaultTool;
 
-    if (beforeTools === undefined || beforeTools[method] === undefined) {
+    if (beforeTool === undefined) {
       return { isStopPropagation: userVersion < minAvailableUserVersion };
     } else {
-      if (tool.auth != undefined && tool.auth.level < (beforeTools[method].minLevel ?? 0))
-        throw 'Нет прав на это действие';
+      if (beforeTool.minLevel && (tool.auth == undefined || tool.auth.level < (beforeTool.minLevel ?? 0)))
+        throw `Нет прав на это действие`;
 
-      return { isStopPropagation: userVersion < (beforeTools[method].minVersion ?? minAvailableUserVersion) };
+      return { isStopPropagation: userVersion < (beforeTool.minVersion ?? minAvailableUserVersion) };
     }
   },
 });

@@ -25,38 +25,40 @@ export type EditableOrderRegion<Ord extends Order> = {
   others: number[] | null;
 };
 
-export interface IExportableOrderMe {
+export type IExportableOrderMe = {
   top: IExportableOrder;
-  source?: IExportableOrderMe;
-  init?: IExportableOrder;
-  targetOrd?: Order | nil;
-  leadOrd?: Order;
-  watchOrd?: Order | nil;
-  ord?: Order;
-  sourceOrd?: Order | nil;
-  prev?: Order | null;
-  next?: Order | null;
-  prevOrd?: Order | null;
-  nextOrd?: Order | null;
-  isAnchor?: boolean;
-  isTarget?: boolean;
-  isInherit?: boolean;
-  isAnchorInherit?: boolean;
-  isAnchorInheritPlus?: boolean;
-  text?: string;
-  chords?: string;
-  chordLabels?: string[][];
-  positions?: number[][];
-  repeats?: OrderRepeats | null; // Повторения
-  isNextInherit?: boolean;
-  isNextAnchorOrd?: boolean;
-  isPrevTargetOrd?: boolean;
-  anchorInheritIndex?: number;
-  sourceIndex?: number;
-  viewIndex?: number;
   header: (bag?: OrderTopHeaderBag | nil, isRequired?: boolean) => string;
-  style?: StyleBlock;
-}
+} & Partial<{
+  source: IExportableOrderMe;
+  init: IExportableOrder;
+
+  leadOrd: Order; // first of ord inheritance chain
+  watchOrd: Order | nil; // same ord of its ref
+  targetOrd: Order | nil; // leader of watch ord
+  ord: Order;
+
+  prev: Order | null;
+  next: Order | null;
+  prevOrd: Order | null;
+  nextOrd: Order | null;
+  isAnchor: boolean;
+  isTarget: boolean;
+  isInherit: boolean;
+  isAnchorInherit: boolean;
+  isAnchorInheritPlus: boolean;
+  text: string;
+  chords: string;
+  chordLabels: string[][];
+  positions: number[][];
+  repeats: OrderRepeats | null; // Повторения
+  isNextInherit: boolean;
+  isNextAnchorOrd: boolean;
+  isPrevTargetOrd: boolean;
+  anchorInheritIndex: number;
+  sourceIndex: number;
+  viewIndex: number;
+  style: StyleBlock;
+}>;
 
 export interface OrderTopHeaderBag {
   isEdit?: boolean;

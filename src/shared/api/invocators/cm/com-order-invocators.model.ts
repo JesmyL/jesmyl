@@ -5,11 +5,12 @@ export type CmComOrderSokiInvocatorModel = {
     ordw: CmComOrderWid;
     orderTitle: string;
     comw: CmComWid;
+    inhIndex?: number;
     value: OrderRepeats;
     textValue: string;
   }) => IExportableCom;
 
-  clearOwnRepeats: (args: { ordw: CmComOrderWid; orderTitle: string; comw: CmComWid; value: und }) => IExportableCom;
+  clearOwnRepeats: (args: { ordw: CmComOrderWid; orderTitle: string; comw: CmComWid }) => IExportableCom;
 
   setType: (args: {
     ordw: CmComOrderWid;

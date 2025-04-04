@@ -10,6 +10,7 @@ export const cmComExternalsSokiInvocatorBaseServer =
     constructor() {
       super({
         className: 'CmComExternalsSokiInvocatorBaseServer',
+        beforeEachDefaultTool: { minLevel: 50 },
         methods: {
           setInScheduleEvent: async ({ schw, dayi, eventMi, list, fio }) => {
             const packs = eventPacksFileStore.getValueWithAutoSave();
