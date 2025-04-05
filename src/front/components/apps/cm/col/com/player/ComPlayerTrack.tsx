@@ -36,9 +36,9 @@ export const ComPlayerTrack = ({ timeRender, src }: Props) => {
         value={currentTime || 0}
         min={0}
         step={1}
-        max={duration || 0.01}
+        max={duration}
         color={isOtherPlaySrc ? 'x5' : 'x7'}
-        disabled={isNaN(duration)}
+        disabled={duration < 2}
         marks={marks}
         onChange={(_, value) => {
           setIsPlay(false);

@@ -2,10 +2,9 @@ import { mylib } from '#shared/lib/my-lib';
 import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
-import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { TheButton } from '#shared/ui/TheButton';
 import { cmComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { EditableComOrder } from '$cm+editor/basis/lib/EditableComOrder';
 import { Order } from '$cm/col/com/order/Order';
@@ -67,6 +66,7 @@ export const CmComRepeatsRemoveButton = ({ isChordBlock, startOrd, ord, textLine
                   ?.filter(({ startLinei, startWordi }) => textLinei === startLinei && wordi === startWordi)
                   .map((flash, flashi) => {
                     const { startLinei, startWordi, endLinei, endWordi, startOrd, endOrd, startKey, count } = flash;
+
                     const fill = (
                       ord?: Order | null,
                       l?: number | nil,
@@ -87,77 +87,77 @@ export const CmComRepeatsRemoveButton = ({ isChordBlock, startOrd, ord, textLine
                     };
 
                     return (
-                      <pre
+                      <div
                         key={flashi}
-                        onClick={() => {
-                          const { startOrd, endOrd, startKey, endKey } = flash;
-                          const srepeats = mylib.clone(startOrd?.repeats);
-
-                          if (srepeats && typeof srepeats !== 'number') {
-                            delete srepeats[startKey];
-                            setField(startOrd, srepeats);
-                          } else setField(startOrd, 0);
-
-                          startOrd?.resetRegions();
-
-                          if (startOrd !== endOrd && endOrd) {
-                            const frepeats = {
-                              ...(typeof endOrd.repeats === 'number' ? { '.': endOrd.repeats } : endOrd.repeats || {}),
-                            };
-
-                            delete frepeats[endKey || '.'];
-                            setField(endOrd, frepeats);
-                            endOrd?.resetRegions();
-                          }
-
-                          reset();
-                          closeModal();
-                        }}
-                        dangerouslySetInnerHTML={{
-                          __html:
-                            startFlash.repeat(count || 0) +
-                            flashDivider +
-                            ((startKey || '').startsWith('~')
-                              ? fill(
-                                  startOrd,
-                                  startLinei,
-                                  startWordi,
-                                  true,
-                                  startLinei ?? undefined,
-                                  startWordi ?? undefined,
-                                )
-                              : startOrd === endOrd
+                        className="flex gap-3 flex-wrap justify-center"
+                      >
+                        <pre
+                          dangerouslySetInnerHTML={{
+                            __html:
+                              startFlash.repeat(count || 0) +
+                              flashDivider +
+                              ((startKey || '').startsWith('~')
                                 ? fill(
                                     startOrd,
                                     startLinei,
                                     startWordi,
                                     true,
-                                    endLinei ?? undefined,
-                                    endWordi ?? undefined,
+                                    startLinei ?? undefined,
+                                    startWordi ?? undefined,
                                   )
-                                : `${fill(startOrd, startLinei, startWordi, true)}\n...\n${fill(
-                                    endOrd,
-                                    startLinei,
-                                    startWordi,
-                                    false,
-                                  )}`) +
-                            flashDivider +
-                            finishFlash.repeat(count || 0),
-                        }}
-                      />
+                                : startOrd === endOrd
+                                  ? fill(
+                                      startOrd,
+                                      startLinei,
+                                      startWordi,
+                                      true,
+                                      endLinei ?? undefined,
+                                      endWordi ?? undefined,
+                                    )
+                                  : `${fill(startOrd, startLinei, startWordi, true)}\n...\n${fill(
+                                      endOrd,
+                                      startLinei,
+                                      startWordi,
+                                      false,
+                                    )}`) +
+                              ((startKey || '').startsWith('~') ? '' : flashDivider + finishFlash.repeat(count || 0)),
+                          }}
+                        />
+                        <TheButton
+                          color="x3"
+                          onClick={() => {
+                            const { startOrd, endOrd, startKey, endKey } = flash;
+                            const srepeats = mylib.clone(startOrd?.repeats);
+
+                            if (srepeats && typeof srepeats !== 'number') {
+                              delete srepeats[startKey];
+                              setField(startOrd, srepeats);
+                            } else setField(startOrd, 0);
+
+                            startOrd?.resetRegions();
+
+                            if (startOrd !== endOrd && endOrd) {
+                              const frepeats = {
+                                ...(typeof endOrd.repeats === 'number'
+                                  ? { '.': endOrd.repeats }
+                                  : endOrd.repeats || {}),
+                              };
+
+                              delete frepeats[endKey || '.'];
+                              setField(endOrd, frepeats);
+                              endOrd?.resetRegions();
+                            }
+
+                            reset();
+                            closeModal();
+                          }}
+                        >
+                          Сбросить
+                        </TheButton>
+                      </div>
                     );
                   })}
               </ModalBody>
-
-              <ModalFooter>
-                <div className="flex flex-big-gap">
-                  <TheIconButton
-                    icon="Unavailable"
-                    postfix="Отмена"
-                    onClick={closeModal}
-                  />
-                </div>
-              </ModalFooter>
             </>
           )}
         </Modal>
