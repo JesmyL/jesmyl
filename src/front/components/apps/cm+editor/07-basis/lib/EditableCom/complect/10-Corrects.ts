@@ -26,18 +26,29 @@ export class EditableComCorrects extends EditableComBase {
     return name.replace(makeRegExp('/[^а-я!]+$/i'), '');
   }
 
-  static textBlockIncorrectMessages(text: string | und, isSetAllText?: boolean) {
-    const ret = (message: string | null): ICorrects => ({ errors: message ? [{ message }] : undefined });
+  static textBlockIncorrectMessages(text: string | und = '', isSetAllText?: boolean): ICorrects {
+    const maxLength = 32;
+    const lines = text.split(makeRegExp('/[^а-я]*\n/i'));
+    const longLinei = lines.findIndex(line => line.length > maxLength);
+
+    if (longLinei > -1)
+      return {
+        errors: [
+          {
+            message: `Строка ${longLinei + 1} слишком длинная:\n${lines[longLinei].slice(0, maxLength)}/---/${lines[longLinei].slice(maxLength)}`,
+          },
+        ],
+      };
 
     let mistakes = '';
 
-    const textWithIncorrects = (text || '').replace(makeRegExp('/[^-ієїа-яё().,":;!?\\s\']+/gi'), all => {
+    const textWithIncorrects = text.replace(makeRegExp('/[^-ієїа-яё().,":;!?\\s\']+/gi'), all => {
       mistakes += all;
       return `[${all}]`;
     });
 
     if (textWithIncorrects !== text)
-      return ret(`Присутствуют недопустимые символы: ${mistakes}\n\n${textWithIncorrects}\n\n`);
+      return { errors: [{ message: `Присутствуют недопустимые символы: ${mistakes}\n\n${textWithIncorrects}\n\n` }] };
 
     const { level } = this.bracketsTransformed(text);
 
@@ -45,9 +56,13 @@ export class EditableComCorrects extends EditableComBase {
       const pre = level < 0 ? 'открывающ' : 'закрывающ';
       const text = mylib.declension(Math.abs(level), `${pre}уюся кавычку`, `${pre}ихся кавычки`, `${pre}ихся кавычек`);
 
-      return ret(
-        `В тексте присутствует непарное количество ковычек.\nНеобходимо добавить ${Math.abs(level)} ${text}\n\n`,
-      );
+      return {
+        errors: [
+          {
+            message: `В тексте присутствует непарное количество ковычек.\nНеобходимо добавить ${Math.abs(level)} ${text}\n\n`,
+          },
+        ],
+      };
     }
 
     return EditableComCorrects.textCorrects(text, isSetAllText);
