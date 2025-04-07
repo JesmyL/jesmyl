@@ -55,30 +55,34 @@ export const CmMeetingEventEdits = ({
 
       {isOpenSendModal && (
         <Modal onClose={setIsOpenSendModal}>
-          <ModalHeader>Отправить в это событие песни:</ModalHeader>
-          <ModalBody>
-            <ComFaceList
-              list={selectedComws}
-              importantOnClick={emptyFunc}
-              comDescription={(_, comi) => <MoveSelectedComButton comi={comi} />}
-            />
-          </ModalBody>
-          <ModalFooter>
-            <TheIconSendButton
-              icon="Sent"
-              prefix="Отправить"
-              onSend={() =>
-                cmComExternalsClientInvocatorMethods.setInScheduleEvent({
-                  schw,
-                  dayi,
-                  eventMi,
-                  list: selectedComws,
-                  fio,
-                })
-              }
-              onSuccess={() => setIsOpenSendModal(false)}
-            />
-          </ModalFooter>
+          {({ onClose }) => (
+            <>
+              <ModalHeader>Отправить в это событие песни:</ModalHeader>
+              <ModalBody>
+                <ComFaceList
+                  list={selectedComws}
+                  importantOnClick={emptyFunc}
+                  comDescription={(_, comi) => <MoveSelectedComButton comi={comi} />}
+                />
+              </ModalBody>
+              <ModalFooter>
+                <TheIconSendButton
+                  icon="Sent"
+                  prefix="Отправить"
+                  onSend={() =>
+                    cmComExternalsClientInvocatorMethods.setInScheduleEvent({
+                      schw,
+                      dayi,
+                      eventMi,
+                      list: selectedComws,
+                      fio,
+                    })
+                  }
+                  onSuccess={onClose}
+                />
+              </ModalFooter>
+            </>
+          )}
         </Modal>
       )}
     </>

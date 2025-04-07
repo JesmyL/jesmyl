@@ -1,6 +1,6 @@
 import { FileStore } from 'back/complect/FileStore';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
-import { ICmComComment, IExportableCat, IExportableCom } from 'shared/api';
+import { ICmComComment } from 'shared/api';
 import { CmFreshSokiInvocatorModel } from 'shared/api/invocators/cm/fresh-invocators.model';
 import { smylib } from 'shared/utils';
 import { cmCatServerInvocatorBase } from './cat-invocator.base';
@@ -8,16 +8,13 @@ import { cmComExternalsSokiInvocatorBaseServer } from './com-externals-invocator
 import { cmComServerInvocatorBase } from './com-invocator.base';
 import { cmComOrderServerInvocatorBase } from './com-order-invocator.base';
 import { chordPackFileStore, cmEditorSokiInvocatorBaseServer } from './editor-invocator.base';
-import { eventPacksFileStore } from './file-stores';
+import { catsFileStore, comsFileStore, eventPacksFileStore } from './file-stores';
 import { cmServerInvocatorShareMethods } from './invocator.shares';
 import {
   aboutComFavoritesFileStore,
   cmUserStoreSokiInvocatorBaseServer,
   comCommentsFileStore,
 } from './user-store-invocator.base';
-
-export const comsFileStore = new FileStore<IExportableCom[]>('/apps/cm/coms.json', []);
-export const catsFileStore = new FileStore<IExportableCat[]>('/apps/cm/cats.json', []);
 
 const sendFreshModifiedableList = <Item extends { m: number }>(
   lastModfiedAt: number,

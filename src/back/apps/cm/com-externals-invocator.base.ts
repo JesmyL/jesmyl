@@ -2,7 +2,7 @@ import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { CmComExternalsSokiInvocatorModel } from 'shared/api/invocators/cm/com-externals-invocators.model';
 import { smylib } from 'shared/utils';
 import { schedulesFileStore } from '../index/schedules/file-stores';
-import { eventPackHistoryFileStore, eventPacksFileStore } from './file-stores';
+import { comsFileStore, eventPackHistoryFileStore, eventPacksFileStore } from './file-stores';
 import { cmServerInvocatorShareMethods } from './invocator.shares';
 
 export const cmComExternalsSokiInvocatorBaseServer =
@@ -56,9 +56,16 @@ export const cmComExternalsSokiInvocatorBaseServer =
         },
 
         onEachFeedback: {
-          setInScheduleEvent: ({ schw }) =>
+          setInScheduleEvent: ({ schw, list }) =>
             `Обновлён список песен в расписании ` +
-            `"${schedulesFileStore.getValue().find(sch => sch.w === schw)?.title ?? '??'}"`,
+            `"${schedulesFileStore.getValue().find(sch => sch.w === schw)?.title ?? '??'}":\n\n${list
+              .map(comw => {
+                const coms = comsFileStore.getValue().filter(com => !com.isRemoved);
+                const comi = coms.findIndex(com => com.w === comw);
+                if (comi < 0) return `<s>Нет песни</s>`;
+                return `${comi + 1}. ${coms[comi].n}`;
+              })
+              .join('\n')}`,
 
           removeScheduleEventHistoryItem: ({ schw }) =>
             `Удалена пачка песен из истории события в расписании ` +

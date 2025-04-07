@@ -2,7 +2,7 @@ import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { CmCatWid, IExportableCat } from 'shared/api';
 import { CmCatSokiInvocatorModel } from 'shared/api/invocators/cm/cat-invocators.model';
 import { getCmComNameInBrackets } from './com-invocator.base';
-import { catsFileStore } from './fresh-invocator.base';
+import { catsFileStore } from './file-stores';
 import { cmServerInvocatorShareMethods } from './invocator.shares';
 
 export const cmCatServerInvocatorBase =
