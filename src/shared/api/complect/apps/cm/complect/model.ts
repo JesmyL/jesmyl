@@ -23,6 +23,7 @@ export type SpecialOrderRepeats = Record<string, number>;
 export type OrderRepeats = number | SpecialOrderRepeats;
 
 export interface InheritancableOrder {
+  w: CmComOrderWid; // Уникальный айди
   r?: OrderRepeats | null; // Повторения
   p?: (number[] | null)[] | nil; // Позиции аккордов
   v?: num; // Видимость блока
@@ -37,7 +38,6 @@ type Inheritancables<K extends keyof InheritancableOrder = keyof InheritancableO
 >;
 
 export interface IExportableOrder extends InheritancableOrder {
-  w: CmComOrderWid; // Уникальный айди
   a?: CmComOrderWid; // Ссылка на блок
   t?: number; // Текстовый блок
   c?: number; // Блок аккордов

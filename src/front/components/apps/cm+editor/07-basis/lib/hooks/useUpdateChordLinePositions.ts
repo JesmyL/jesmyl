@@ -35,8 +35,8 @@ export const useUpdateLinePositions = () => {
           comw: ord.com.wid,
           orderTitle: ord.me.header(),
           ordw: ord.wid,
-          linei: linei,
-          line: line,
+          linei,
+          line,
           lineChangesText: textLines[linei],
         });
       } catch (_e) {

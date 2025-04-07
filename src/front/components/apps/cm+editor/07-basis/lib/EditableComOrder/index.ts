@@ -48,68 +48,22 @@ export class EditableComOrder extends Order {
       : this.me.isAnchor && this.me.source?.top[key] == null;
   }
 
-  // todo: remove
-  async setChordPosition(linei: number, pos: number) {
-    const prev = [...(this.positions?.[linei] || [])].sort((a: number, b: number) => a - b);
-    const line = this.positions?.[linei] || [];
-    const posi = line.indexOf(pos);
-    const textLines = (this.text || '').split('\n');
-    const textLine = textLines[linei];
-    const lineSplitted = textLine.split('');
-    const vowels = this.com.getVowelPositions(textLine);
+  async cutChordPositions(textLine: string, linei: number) {
+    const chords = this.chords.split('\n')[linei]?.split(' ') ?? 0;
+    const line = [...(this.positions?.[linei] ?? [])];
 
-    if (posi < 0) line.push(pos);
-    else line.splice(posi, 1);
+    if (chords.length >= line.length) return;
+    const postChordi = line.indexOf(-2);
+    if (postChordi >= 0) line.splice(postChordi, 1);
+    line.length = chords.length;
 
-    const positions = line.sort((a, b) => a - b);
-    if (this.positions) this.positions[linei] = positions;
-
-    positions.forEach(pos => {
-      const vowel = lineSplitted[vowels[pos]];
-
-      if (vowel && vowel.length === 1) lineSplitted[vowels[pos]] = `[${vowel}]`;
-    });
-
-    prev.concat(positions).forEach((pos: number) => {
-      const vowel = lineSplitted[vowels[pos]];
-      if (!vowel || vowel.length !== 1) return;
-
-      const inPos = positions.indexOf(pos) > -1;
-      const inPrev = prev.indexOf(pos) > -1;
-      const [lbr, rbr] = inPos && inPrev ? ['[', ']'] : !inPrev && inPos ? ['{', '}'] : ['<', '>'];
-
-      lineSplitted[vowels[pos]] = lbr + vowel + rbr;
-    });
-
-    const preInPos = line.indexOf(-1) > -1;
-    const preInPrev = prev.indexOf(-1) > -1;
-    const postInPos = line.indexOf(-2) > -1;
-    const postInPrev = prev.indexOf(-2) > -1;
-    const preLabel =
-      preInPos && preInPrev ? ['●'] : preInPos && !preInPrev ? ['★'] : !preInPos && preInPrev ? ['☆'] : [];
-    const postLabel =
-      postInPos && postInPrev ? ['●'] : postInPos && !postInPrev ? ['★'] : !postInPos && postInPrev ? ['☆'] : [];
-
-    const lineChangesText = preLabel.concat(lineSplitted).concat(postLabel).join('');
-
-    return cmComOrderClientInvocatorMethods.setPositionsLine({
+    await cmComOrderClientInvocatorMethods.setPositionsLine({
       comw: this.com.wid,
       orderTitle: this.me.header(),
-      ordw: this.getTargetFirst('w'),
-      linei: linei,
-      line: line,
-      lineChangesText: lineChangesText,
+      ordw: this.wid,
+      linei,
+      line,
+      lineChangesText: textLine,
     });
-  }
-
-  cutChordPositions(line: string, linei: number) {
-    const letters = this.com.getVowelPositions(line);
-
-    this.positions?.[linei]?.reduceRight((stub, pos) => {
-      if (pos > letters.length - 1) {
-        this.setChordPosition(linei, pos);
-      }
-      return stub;
-    }, 0);
   }
 }
