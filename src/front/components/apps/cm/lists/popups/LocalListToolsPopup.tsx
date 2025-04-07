@@ -12,46 +12,46 @@ export const LocalListToolsPopup = ({ coms }: { coms: Com[] | und }) => {
   const [isOpenQr, setIsOpenQr] = useState(false);
   const linkToCom = useCmOpenComLinkRendererContext();
 
-  return (
-    coms && (
-      <>
-        {isOpenList && (
-          <FullContent
-            onClose={setIsOpenList}
-            containerClassName=""
-          >
-            <FullscreenExpandComList coms={coms} />
-          </FullContent>
-        )}
-        <BottomPopupItem
-          icon="BookOpen02"
-          title="Раскрыть песни списка"
-          onClick={() => setIsOpenList(true)}
-        />
-        {linkToCom({
-          children: (
-            <BottomPopupItem
-              icon={isTouchDevice ? 'Play' : 'Computer'}
-              title="Показывать слайды списка"
-            />
-          ),
-          search: {
-            comw: coms[0].wid,
-            tran: '-!-',
-          },
-        })}
-        <BottomPopupItem
-          icon="QrCode01"
-          title="Поделиться списком"
-          onClick={() => setIsOpenQr(true)}
-        />
-        {isOpenQr && (
-          <ComListQrShare
-            onClose={setIsOpenQr}
-            coms={coms}
+  return !coms || !coms.length ? (
+    <div className="flex justify-center">Список пуст</div>
+  ) : (
+    <>
+      <BottomPopupItem
+        icon="BookOpen02"
+        title="Раскрыть песни списка"
+        onClick={() => setIsOpenList(true)}
+      />
+      {linkToCom({
+        children: (
+          <BottomPopupItem
+            icon={isTouchDevice ? 'Play' : 'Computer'}
+            title="Показывать слайды списка"
           />
-        )}
-      </>
-    )
+        ),
+        search: {
+          comw: coms[0].wid,
+          tran: '-!-',
+        },
+      })}
+      <BottomPopupItem
+        icon="QrCode01"
+        title="Поделиться списком"
+        onClick={() => setIsOpenQr(true)}
+      />
+      {isOpenQr && (
+        <ComListQrShare
+          onClose={setIsOpenQr}
+          coms={coms}
+        />
+      )}
+      {isOpenList && (
+        <FullContent
+          onClose={setIsOpenList}
+          containerClassName=""
+        >
+          <FullscreenExpandComList coms={coms} />
+        </FullContent>
+      )}
+    </>
   );
 };

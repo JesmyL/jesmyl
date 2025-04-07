@@ -1,5 +1,5 @@
-import { cmIDB } from '$cm/basis/lib/cmIDB';
-import { memo, useEffect, useState } from 'react';
+import { useComNumbers } from '$cm/basis/lib/useComNumbers';
+import { memo } from 'react';
 import { CmComWid } from 'shared/api';
 
 type Props = { comw: CmComWid };
@@ -10,16 +10,4 @@ export const CmComNumber = memo(function CmComNumber(props: Props) {
   return numbers[props.comw] ?? <NumberGetter comw={props.comw} />;
 });
 
-const NumberGetter = ({ comw }: Props) => {
-  const [comNumber, setComNumber] = useState(1);
-
-  useEffect(() => {
-    (async () => {
-      const realNumber = await cmIDB.db.coms.where('w').belowOrEqual(comw).count();
-      numbers[comw] = realNumber && (realNumber > 403 || realNumber > 665) ? realNumber + 1 : realNumber;
-      setComNumber(numbers[comw]);
-    })();
-  }, [comw]);
-
-  return <>{comNumber}</>;
-};
+const NumberGetter = ({ comw }: Props) => <>{useComNumbers(comw, numbers)[comw] ?? 1}</>;
