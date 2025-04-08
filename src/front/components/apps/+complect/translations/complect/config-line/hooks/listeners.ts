@@ -2,7 +2,7 @@ import { useAtomSet } from '#shared/lib/atom';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { useEffect } from 'react';
 import { isNIs, itNNull } from 'shared/utils';
-import { useToggleIsScreenTranslationTextVisible } from '../../../atoms';
+import { useSetIsScreenTranslationTextVisible } from '../../../atoms';
 import { TranslationWindow } from '../../../hooks/windows';
 import { isShowTranslatedTextAtom, useTranslationIsInitialSlideShowSet } from '../../../initial-slide-context';
 import { ScreenTranslationConfig } from '../../../model';
@@ -16,7 +16,7 @@ export const useScreenTranslationFaceLineListeners = (
   updateConfig: (configi: number, config: Partial<ScreenTranslationConfig> | null) => void,
   windows: readonly (nil | TranslationWindow)[],
 ) => {
-  const switchIsVisible = useToggleIsScreenTranslationTextVisible();
+  const switchIsVisible = useSetIsScreenTranslationTextVisible();
   const currentConfigiRef = useActualRef(currentConfigi);
   const isInitialSlideShowSet = useTranslationIsInitialSlideShowSet();
   const setIsShowTranslatedText = useAtomSet(isShowTranslatedTextAtom);

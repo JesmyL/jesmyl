@@ -1,4 +1,5 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
+import { atom, useAtomValue } from '#shared/lib/atom';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
@@ -9,7 +10,7 @@ import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/con
 import { ScheduleWidgetRightControlList } from '#widgets/schedule/control/RightControlList';
 import { schAttachmentTypesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
-import React, { ReactNode, useMemo, useState } from 'react';
+import React, { ReactNode, useMemo } from 'react';
 import {
   CustomAttUseRights,
   ScheduleAttachmentTypeScopeProps,
@@ -31,6 +32,9 @@ enum WhoCan {
   No,
 }
 
+const whoCaniAtom = atom<WhoCan>(WhoCan.No);
+const isOpenAttRedactorAtom = atom(false);
+
 const whoCanUnits: { action: string; rule: 'R' | 'U'; icon: TheIconKnownName }[] = [
   {
     action: 'видит',
@@ -49,7 +53,6 @@ export function ScheduleWidgetCustomAtt(props: {
   isRedact?: boolean;
   topContent?: ReactNode;
 }) {
-  // const selfScope = takeStrongScopeMaker(props.scope, ' tattMi/', props.tatt.mi);
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
   const attachmentTypeScopeProps: ScheduleAttachmentTypeScopeProps = useMemo(
@@ -69,13 +72,11 @@ export function ScheduleWidgetCustomAtt(props: {
       );
     })
     .filter(itIt);
-  const [whoCani, setWhoCani] = useState(WhoCan.No);
+  const whoCani = useAtomValue(whoCaniAtom);
   const whoCan = whoCanUnits[whoCani];
   const userR = rights.myUser?.R ?? rights.schedule.ctrl.defu;
   const myBalance = scheduleWidgetUserRights.rightsBalance(userR);
   const isCanRedact = scheduleWidgetUserRights.checkIsCan(userR, props.tatt.U);
-
-  const [isOpenAttRedactor, setIsOpenAttRedactor] = useState<unknown>(false);
 
   const canReadUsers = props.tatt.Rs ?? [];
   const canUpdateUsers = props.tatt.Us ?? [];
@@ -90,7 +91,7 @@ export function ScheduleWidgetCustomAtt(props: {
               <LazyIcon
                 className="pointer"
                 icon="PencilEdit01"
-                onClick={setIsOpenAttRedactor}
+                onClick={isOpenAttRedactorAtom.toggle}
               />
             </div>
           ))}
@@ -159,7 +160,7 @@ export function ScheduleWidgetCustomAtt(props: {
                           <LazyIcon
                             className="pointer"
                             icon="Edit01"
-                            onClick={() => setWhoCani(whoCani)}
+                            onClick={() => whoCaniAtom.set(whoCani)}
                           />
                         )}
                       </div>
@@ -332,8 +333,11 @@ export function ScheduleWidgetCustomAtt(props: {
         )}
       </div>
 
-      {isCanRedact && whoCani !== WhoCan.No && (
-        <Modal onClose={() => setWhoCani(WhoCan.No)}>
+      {isCanRedact && (
+        <Modal
+          openAtom={whoCaniAtom}
+          checkIsOpen={whoCani => whoCani !== WhoCan.No}
+        >
           <ModalHeader>
             Кто {whoCan.action} вложение <span className="color--7">{props.tatt.title}</span>
           </ModalHeader>
@@ -384,8 +388,8 @@ export function ScheduleWidgetCustomAtt(props: {
         </Modal>
       )}
 
-      {isCanRedact && isOpenAttRedactor && (
-        <Modal onClose={setIsOpenAttRedactor}>
+      {isCanRedact && (
+        <Modal openAtom={isOpenAttRedactorAtom}>
           <ModalHeader>
             <span className="flex flex-gap full-width between">
               <span>

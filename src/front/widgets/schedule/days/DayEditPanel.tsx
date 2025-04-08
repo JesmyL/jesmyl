@@ -1,8 +1,8 @@
 import { StrongInputDateTimeExtracter } from '#basis/ui/strong-control/StrongDateTimeExtracter';
+import { atom } from '#shared/lib/atom';
 import { renderComponentInNewWindow } from '#shared/lib/renders';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetDay, ScheduleScopeProps } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 import { useScheduleDayScopePropsContext } from '../complect/lib/contexts';
@@ -19,8 +19,9 @@ interface Props {
   schedule: IScheduleWidget;
 }
 
+const isOpenDayListUpdaterAtom = atom(false);
+
 export function ScheduleWidgetDayEditPanel({ day, dayi, schedule, scheduleScopeProps }: Props) {
-  const [isOpenDayListUpdater, setIsOpenDayListUpdater] = useState<unknown>(false);
   const dayScopeProps = useScheduleDayScopePropsContext();
 
   return (
@@ -56,20 +57,18 @@ export function ScheduleWidgetDayEditPanel({ day, dayi, schedule, scheduleScopeP
         postfix="Загрузить текстовое расписание"
         disabled={day.list.length > 0}
         disabledReason="Расписание дня должно быть пустым"
-        onClick={setIsOpenDayListUpdater}
+        onClick={isOpenDayListUpdaterAtom.toggle}
       />
 
-      {isOpenDayListUpdater && (
-        <FullContent onClose={setIsOpenDayListUpdater}>
-          <ScheduleWidgetEventListUpdater
-            day={day}
-            dayi={dayi}
-            schedule={schedule}
-            onClose={setIsOpenDayListUpdater}
-            scheduleScopeProps={scheduleScopeProps}
-          />
-        </FullContent>
-      )}
+      <FullContent openAtom={isOpenDayListUpdaterAtom}>
+        <ScheduleWidgetEventListUpdater
+          day={day}
+          dayi={dayi}
+          schedule={schedule}
+          onClose={isOpenDayListUpdaterAtom.reset}
+          scheduleScopeProps={scheduleScopeProps}
+        />
+      </FullContent>
     </>
   );
 }

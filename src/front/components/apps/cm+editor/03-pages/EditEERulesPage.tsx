@@ -25,6 +25,7 @@ const eeEditedWordsAtom = atom<EeStorePack>({});
 const pageSizeAtom = atom(50);
 const currentPageAtom = atom(0);
 const isCheckBibleAtom = atom(false);
+const isOpenSearchWordAtom = atom(false);
 
 export const EditEERulesPage = () => {
   const [pageSize, setPageSize] = useAtom(pageSizeAtom);
@@ -33,7 +34,7 @@ export const EditEERulesPage = () => {
   const setEditedWords = useAtomSet(eeEditedWordsAtom);
   const setIgnoredWordsSet = cmEditorIDB.useSet.ignoredEESet();
   const eeStoreRef = useActualRef(cmEditorIDB.useValue.eeStore());
-  const [isOpenSearchWord, setIsOpenSearchWord] = useState(false);
+  // const [isOpenSearchWord, setIsOpenSearchWord] = useState(false);
 
   const [updates, setUpdates] = useState(0);
   const [isShowListComputer, setIsShowListComputer] = useState(false);
@@ -73,7 +74,7 @@ export const EditEERulesPage = () => {
             </TheButton>
             <TheIconButton
               icon="SearchVisual"
-              onClick={() => setIsOpenSearchWord(true)}
+              onClick={isOpenSearchWordAtom.toggle}
             />
           </div>
           <IconCheckbox
@@ -132,17 +133,15 @@ export const EditEERulesPage = () => {
             </>
           )}
 
-          {isOpenSearchWord && (
-            <Modal onClose={setIsOpenSearchWord}>
-              <EERulesWordSearchModalInner
-                setEditedWords={setEditedWords}
-                eeStoreRef={eeStoreRef}
-                ignoredWordsSetRef={ignoredWordsSetRef}
-                editedWordsRef={editedWordsRef as never}
-                setIgnoredWordsSet={setIgnoredWordsSet}
-              />
-            </Modal>
-          )}
+          <Modal openAtom={isOpenSearchWordAtom}>
+            <EERulesWordSearchModalInner
+              setEditedWords={setEditedWords}
+              eeStoreRef={eeStoreRef}
+              ignoredWordsSetRef={ignoredWordsSetRef}
+              editedWordsRef={editedWordsRef as never}
+              setIgnoredWordsSet={setIgnoredWordsSet}
+            />
+          </Modal>
         </>
       }
     />

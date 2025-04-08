@@ -1,3 +1,4 @@
+import { atom } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
@@ -11,10 +12,12 @@ import { useSelectedComs } from '$cm/base/useSelectedComs';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
 import { MoveSelectedComButton } from '$cm/entities/MoveSelectedComButton';
 import { useAuth } from '$index/atoms';
-import { useState } from 'react';
 import { CmComWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import { CmMeetingEventEditsHistoryModalInner } from './EventEditsHistoryModal';
+
+const isOpenHistoryModalAtom = atom(false);
+const isOpenSendModalAtom = atom(false);
 
 export const CmMeetingEventEdits = ({
   packComws,
@@ -24,8 +27,6 @@ export const CmMeetingEventEdits = ({
 }: { packComws: CmComWid[] } & Required<ScheduleDayEventPathProps>) => {
   const auth = useAuth();
   const { selectedComs, selectedComws } = useSelectedComs();
-  const [isOpenHistoryModal, setIsOpenHistoryModal] = useState<unknown>(false);
-  const [isOpenSendModal, setIsOpenSendModal] = useState<unknown>(false);
 
   if (auth.fio == null || mylib.isNaN(schw) || mylib.isNaN(dayi) || mylib.isNaN(eventMi)) return null;
   const fio = auth.fio;
@@ -35,56 +36,48 @@ export const CmMeetingEventEdits = ({
       {!selectedComs.length || mylib.isEq(selectedComws, packComws) || (
         <TheIconButton
           icon="Sent"
-          onClick={setIsOpenSendModal}
+          onClick={isOpenSendModalAtom.toggle}
         />
       )}
 
       <TheIconButton
         icon="WorkHistory"
-        onClick={setIsOpenHistoryModal}
+        onClick={isOpenHistoryModalAtom.toggle}
       />
 
-      {isOpenHistoryModal && (
-        <Modal onClose={setIsOpenHistoryModal}>
-          <CmMeetingEventEditsHistoryModalInner
-            dayi={dayi}
-            schw={schw}
-          />
-        </Modal>
-      )}
+      <Modal openAtom={isOpenHistoryModalAtom}>
+        <CmMeetingEventEditsHistoryModalInner
+          dayi={dayi}
+          schw={schw}
+        />
+      </Modal>
 
-      {isOpenSendModal && (
-        <Modal onClose={setIsOpenSendModal}>
-          {({ onClose }) => (
-            <>
-              <ModalHeader>Отправить в это событие песни:</ModalHeader>
-              <ModalBody>
-                <ComFaceList
-                  list={selectedComws}
-                  importantOnClick={emptyFunc}
-                  comDescription={(_, comi) => <MoveSelectedComButton comi={comi} />}
-                />
-              </ModalBody>
-              <ModalFooter>
-                <TheIconSendButton
-                  icon="Sent"
-                  prefix="Отправить"
-                  onSend={() =>
-                    cmComExternalsClientInvocatorMethods.setInScheduleEvent({
-                      schw,
-                      dayi,
-                      eventMi,
-                      list: selectedComws,
-                      fio,
-                    })
-                  }
-                  onSuccess={onClose}
-                />
-              </ModalFooter>
-            </>
-          )}
-        </Modal>
-      )}
+      <Modal openAtom={isOpenSendModalAtom}>
+        <ModalHeader>Отправить в это событие песни:</ModalHeader>
+        <ModalBody>
+          <ComFaceList
+            list={selectedComws}
+            importantOnClick={emptyFunc}
+            comDescription={(_, comi) => <MoveSelectedComButton comi={comi} />}
+          />
+        </ModalBody>
+        <ModalFooter>
+          <TheIconSendButton
+            icon="Sent"
+            prefix="Отправить"
+            onSend={() =>
+              cmComExternalsClientInvocatorMethods.setInScheduleEvent({
+                schw,
+                dayi,
+                eventMi,
+                list: selectedComws,
+                fio,
+              })
+            }
+            onSuccess={isOpenSendModalAtom.reset}
+          />
+        </ModalFooter>
+      </Modal>
     </>
   );
 };

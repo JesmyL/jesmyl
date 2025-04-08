@@ -1,5 +1,6 @@
+import { atom, useAtomValue } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import { Modal } from './modal/Modal/Modal';
 import { ModalBody } from './modal/Modal/ModalBody';
 import { ModalHeader } from './modal/Modal/ModalHeader';
@@ -10,6 +11,8 @@ type PrepareResult = {
   title?: string;
   text?: string | (() => string | und);
 };
+
+const bodyNodeAtom = atom<React.ReactNode>(null);
 
 export function TheIconShareButton({
   text,
@@ -25,7 +28,7 @@ export function TheIconShareButton({
   className?: string;
   prepare?: () => und | PrepareResult;
 }) {
-  const [bodyNode, setBodyNode] = useState<React.ReactNode>();
+  const bodyNode = useAtomValue(bodyNodeAtom);
 
   return (
     <>
@@ -56,7 +59,7 @@ export function TheIconShareButton({
               text: mylib.isStr(prepared.text) ? prepared.text : prepared.text?.(),
             });
           } catch (_e) {
-            setBodyNode(
+            bodyNodeAtom.set(
               <div className="user-select-all">
                 {(prepared.title || '') +
                   (prepared.text ? '\n\n' + prepared.text : '') +
@@ -67,12 +70,10 @@ export function TheIconShareButton({
         }}
       />
 
-      {bodyNode && (
-        <Modal onClose={setBodyNode}>
-          <ModalHeader>Не удалось поделиться:</ModalHeader>
-          <ModalBody>{bodyNode}</ModalBody>
-        </Modal>
-      )}
+      <Modal openAtom={bodyNodeAtom}>
+        <ModalHeader>Не удалось поделиться:</ModalHeader>
+        <ModalBody>{bodyNode}</ModalBody>
+      </Modal>
     </>
   );
 }

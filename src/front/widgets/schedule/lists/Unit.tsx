@@ -1,8 +1,9 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
+import { atom } from '#shared/lib/atom';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { IScheduleWidgetListCat, IScheduleWidgetListUnit, IScheduleWidgetUserCati } from 'shared/api';
 import styled from 'styled-components';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
@@ -18,6 +19,8 @@ type Props = {
   shortTitles: [string, string];
 };
 
+const isModalOpenAtom = atom(false);
+
 export function ScheduleWidgetListUnit(props: Props) {
   const { unit, cat, cati } = props;
   const rights = useScheduleWidgetRightsContext();
@@ -25,18 +28,8 @@ export function ScheduleWidgetListUnit(props: Props) {
   const title = <>{unit.title || <span className="text-italic">Без названия</span>}</>;
   const unitScopeData = useMemo(() => ({ ...scheduleScopeProps, unitMi: unit.mi }), [scheduleScopeProps, unit.mi]);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   return (
     <>
-      {isModalOpen && (
-        <Modal onClose={setIsModalOpen}>
-          <ScheduleWidgetListUnitRedactor
-            {...props}
-            unitScopeData={unitScopeData}
-          />
-        </Modal>
-      )}
       <div className="margin-big-gap-t">
         <ExpandableContent
           HeaderNode={ExpHeader}
@@ -48,7 +41,7 @@ export function ScheduleWidgetListUnit(props: Props) {
                     <LazyIcon
                       className="pointer"
                       icon="Edit02"
-                      onClick={() => setIsModalOpen(true)}
+                      onClick={isModalOpenAtom.toggle}
                     />
                   )
               : null
@@ -80,6 +73,13 @@ export function ScheduleWidgetListUnit(props: Props) {
           </div>
         </ExpandableContent>
       </div>
+
+      <Modal openAtom={isModalOpenAtom}>
+        <ScheduleWidgetListUnitRedactor
+          {...props}
+          unitScopeData={unitScopeData}
+        />
+      </Modal>
     </>
   );
 }

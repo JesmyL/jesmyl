@@ -1,7 +1,6 @@
 import { useScheduleCurrentSchwContext } from '#widgets/schedule/complect/lib/contexts';
 import { ScheduleWidgetLiveTranslation } from '#widgets/schedule/live-translations/Live';
 import { useIndexSchedules } from '$index/atoms';
-import { emptyFunc } from 'shared/utils';
 import { useIsCanShowTextTranslation } from './atoms';
 
 interface Props {
@@ -24,7 +23,6 @@ const Screen = ({ children }: Props) => {
 
   return (
     <ScheduleWidgetLiveTranslation
-      onClose={emptyFunc}
       schw={schedule.w}
       isShowMarkdownOnly
     />

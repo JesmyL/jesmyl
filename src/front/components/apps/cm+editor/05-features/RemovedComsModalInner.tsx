@@ -1,4 +1,5 @@
 import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
+import { atom, useAtomValue } from '#shared/lib/atom';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
@@ -7,12 +8,15 @@ import { cmComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invo
 import { Com } from '$cm/col/com/Com';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
 import { TheCom } from '$cm/col/com/TheCom';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { CmComWid } from 'shared/api';
 import { emptyArray } from 'shared/utils';
 
+const openComwAtom = atom<CmComWid | null>(null);
+
 export const RemovedComsModalInner = () => {
-  const [openComw, setOpenComw] = useState<CmComWid | null>(null);
+  const openComw = useAtomValue(openComwAtom);
+
   const [icoms] = useInvocatedValue(
     emptyArray,
     ({ aborter }) => cmComClientInvocatorMethods.takeRemovedComs(undefined, { aborter }),
@@ -27,18 +31,16 @@ export const RemovedComsModalInner = () => {
       <ModalBody>
         <ComFaceList
           list={coms}
-          importantOnClick={({ com }) => setOpenComw(com.wid)}
+          importantOnClick={({ com }) => openComwAtom.set(com.wid)}
           comDescription={comControls}
         />
       </ModalBody>
 
-      {openComw && (
-        <Modal onClose={() => setOpenComw(null)}>
-          <ModalBody>
-            <TheCom com={coms.find(com => com.wid === openComw)} />
-          </ModalBody>
-        </Modal>
-      )}
+      <Modal openAtom={openComwAtom}>
+        <ModalBody>
+          <TheCom com={coms.find(com => com.wid === openComw)} />
+        </ModalBody>
+      </Modal>
     </>
   );
 };

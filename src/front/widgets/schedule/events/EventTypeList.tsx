@@ -6,7 +6,7 @@ import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { ReactNode, useMemo, useState } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { IScheduleWidget, ScheduleWidgetCleans, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
 import { emptyArray } from 'shared/utils';
 import styled from 'styled-components';
@@ -22,6 +22,8 @@ type Props = {
   usedCounts?: Record<number, number>;
   onItemSelectSend?: (typei: number) => Promise<unknown>;
 };
+
+const isModalOpenAtom = atom(false);
 
 const itemIt = <Item,>({ item }: { item: Item }) => item;
 const eqByTitle = (a: { title: string }, b: { title: string }) => (a.title > b.title ? 1 : b.title < a.title ? -1 : 0);
@@ -78,53 +80,50 @@ export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCount
     });
   }, [error, scheduleScopeProps, sortedTypes, term]);
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   return (
     <>
-      {isModalOpen && (
-        <Modal onClose={setIsModalOpen}>
-          <ModalHeader>
-            <div>Шаблоны событий</div>
-            <DebouncedSearchInput
-              className="debounced-searcher round-styled"
-              placeholder="Фильтр по названию"
-              termAtom={termAtom}
-            />
-          </ModalHeader>
-          <ModalBody>
-            {sortedTypes.length !== 1 && typesToAdd}
-            {sortedTypes.map(typeBox => {
-              const typei = types.indexOf(typeBox);
+      <Modal openAtom={isModalOpenAtom}>
+        <ModalHeader>
+          <div>Шаблоны событий</div>
+          <DebouncedSearchInput
+            className="debounced-searcher round-styled"
+            placeholder="Фильтр по названию"
+            termAtom={termAtom}
+          />
+        </ModalHeader>
+        <ModalBody>
+          {sortedTypes.length !== 1 && typesToAdd}
+          {sortedTypes.map(typeBox => {
+            const typei = types.indexOf(typeBox);
 
-              return (
-                <StyledItem key={typei}>
-                  <ScheduleWidgetEventType
-                    onSelect={() => setIsModalOpen(false)}
-                    schedule={schedule}
-                    typeBox={typeBox}
-                    typei={typei}
-                    onItemSelectSend={onItemSelectSend}
-                  />
-                  {usedCounts ? (
-                    <div className={'text-right' + (usedCounts[typei] ? '' : ' error-message')}>
-                      {typeBox.title}
-                      {usedCounts[typei]
-                        ? ` исп. ${ScheduleWidgetCleans.termsToText(usedCounts[typei])}`
-                        : ' не используется'}
-                    </div>
-                  ) : null}
-                </StyledItem>
-              );
-            })}
-            {sortedTypes.length === 1 && typesToAdd}
-          </ModalBody>
-        </Modal>
-      )}
+            return (
+              <StyledItem key={typei}>
+                <ScheduleWidgetEventType
+                  onSelect={isModalOpenAtom.reset}
+                  schedule={schedule}
+                  typeBox={typeBox}
+                  typei={typei}
+                  onItemSelectSend={onItemSelectSend}
+                />
+                {usedCounts ? (
+                  <div className={'text-right' + (usedCounts[typei] ? '' : ' error-message')}>
+                    {typeBox.title}
+                    {usedCounts[typei]
+                      ? ` исп. ${ScheduleWidgetCleans.termsToText(usedCounts[typei])}`
+                      : ' не используется'}
+                  </div>
+                ) : null}
+              </StyledItem>
+            );
+          })}
+          {sortedTypes.length === 1 && typesToAdd}
+        </ModalBody>
+      </Modal>
+
       <TheIconButton
         icon={icon}
         postfix={postfix}
-        onClick={() => setIsModalOpen(true)}
+        onClick={isModalOpenAtom.toggle}
       />
     </>
   );

@@ -1,18 +1,20 @@
+import { atom, useAtom } from '#shared/lib/atom';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useLiveQuery } from 'dexie-react-hooks';
-import React, { useState } from 'react';
+import React from 'react';
 import { complectIDB } from '../../../_idb/complectIDB';
 import { defaultAlertLineConfig } from '../../consts';
 import { AlertLineConfigSettingsInner } from './AlertLineConfigSettings';
 
 const LazyAlertLineConfigIcon = React.lazy(() => import('./AlertLineConfigIcon'));
+const editConfigIdAtom = atom<number | null>(null);
 
 export const AlertLineSettingsModalInner = () => {
   const configs = useLiveQuery(() => complectIDB.tb.alertLineConfigs.toArray());
-  const [editConfigId, setEditConfigId] = useState<number | null>(null);
+  const [editConfigId, setEditConfigId] = useAtom(editConfigIdAtom);
 
   return (
     <>
@@ -41,11 +43,9 @@ export const AlertLineSettingsModalInner = () => {
         />
       </ModalBody>
 
-      {editConfigId == null || (
-        <FullContent onClose={() => setEditConfigId(null)}>
-          <AlertLineConfigSettingsInner configId={editConfigId} />
-        </FullContent>
-      )}
+      <FullContent openAtom={editConfigIdAtom}>
+        {editConfigId == null || <AlertLineConfigSettingsInner configId={editConfigId} />}
+      </FullContent>
     </>
   );
 };

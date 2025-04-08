@@ -1,5 +1,6 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { StrongDiv } from '#basis/ui/strong-control/StrongDiv';
+import { atom } from '#shared/lib/atom';
 import { MyLib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
@@ -15,6 +16,8 @@ import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { schEventTypesSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useAttTypeTitleError } from './useAttTypeTitleError';
 
+const isRedactModalOpenAtom = atom(false);
+
 export function ScheduleWidgetEventType(props: {
   schedule: IScheduleWidget;
   typei: number;
@@ -26,7 +29,6 @@ export function ScheduleWidgetEventType(props: {
   const [title, setTitle] = useState(props.typeBox.title);
   const error = useAttTypeTitleError(title, props.schedule, props.isRedact, props.typei);
   const [attTranslatorType, setAttTranslatorType] = useState(AttTranslatorType.Today);
-  const [isRedactModalOpen, setIsRedactModalOpen] = useState<unknown>(false);
 
   const attEntries = (props.typeBox.atts ? MyLib.keys(props.typeBox.atts) : []).length;
 
@@ -127,7 +129,7 @@ export function ScheduleWidgetEventType(props: {
         <div className="flex flex-end full-width absolute pos-top pos-right margin-sm-gap z-index:5">
           <LazyIcon
             icon="Edit02"
-            onClick={setIsRedactModalOpen}
+            onClick={isRedactModalOpenAtom.toggle}
           />
         </div>
       )}
@@ -147,24 +149,22 @@ export function ScheduleWidgetEventType(props: {
         </SelectItem>
       )}
 
-      {!isRedactModalOpen || (
-        <Modal onClose={setIsRedactModalOpen}>
-          <ModalHeader>
-            <span className="flex flex-gap full-width between">
-              <span>
-                <span className="color--7">{props.typeBox.title} </span>- Редактирование шаблона
-              </span>
+      <Modal openAtom={isRedactModalOpenAtom}>
+        <ModalHeader>
+          <span className="flex flex-gap full-width between">
+            <span>
+              <span className="color--7">{props.typeBox.title} </span>- Редактирование шаблона
             </span>
-          </ModalHeader>
+          </span>
+        </ModalHeader>
 
-          <ModalBody>
-            <ScheduleWidgetEventType
-              {...props}
-              isRedact
-            />
-          </ModalBody>
-        </Modal>
-      )}
+        <ModalBody>
+          <ScheduleWidgetEventType
+            {...props}
+            isRedact
+          />
+        </ModalBody>
+      </Modal>
     </div>
   );
 }

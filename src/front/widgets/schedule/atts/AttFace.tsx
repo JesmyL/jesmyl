@@ -1,9 +1,10 @@
+import { atom } from '#shared/lib/atom';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import { ScheduleWidgetAttKey, scheduleWidgetUserRights } from 'shared/api';
 import styled from 'styled-components';
 import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
@@ -20,6 +21,8 @@ type Props = {
   onRemoveAttSend: (attKey: ScheduleWidgetAttKey) => Promise<unknown>;
 };
 
+const isModalOpenAtom = atom(false);
+
 export function ScheduleWidgetAttFace({
   tatt,
   typeTitle,
@@ -31,7 +34,6 @@ export function ScheduleWidgetAttFace({
 }: Props) {
   const rights = useScheduleWidgetRightsContext();
   const myUserR = rights.myUser?.R ?? rights.schedule.ctrl.defu;
-  const [isModalOpen, setIsModalOpen] = useState<unknown>(false);
 
   if (!scheduleWidgetUserRights.checkIsCan(myUserR, tatt?.R)) return null;
 
@@ -41,7 +43,7 @@ export function ScheduleWidgetAttFace({
     <>
       <Tatt
         className={'relative flex center column' + (isCanRedact && tatt?.isCustomize ? ' color--7 pointer' : '')}
-        onClick={isCanRedact && tatt?.isCustomize ? setIsModalOpen : undefined}
+        onClick={isCanRedact && tatt?.isCustomize ? isModalOpenAtom.toggle : undefined}
       >
         {isLink && (
           <LazyIcon
@@ -78,8 +80,8 @@ export function ScheduleWidgetAttFace({
           </>
         )}
       </Tatt>
-      {!tatt || !isModalOpen || (
-        <Modal onClose={setIsModalOpen}>
+      {!tatt || (
+        <Modal openAtom={isModalOpenAtom}>
           <ModalHeader>
             Вложение <span className="color--7">{tatt.title}</span>
           </ModalHeader>

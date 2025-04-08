@@ -1,3 +1,4 @@
+import { Atom } from '#shared/lib/atom';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { MyLib } from '#shared/lib/my-lib';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
@@ -19,7 +20,7 @@ import { CmComMod, CmComWid, CmMp3Rule, IExportableCom } from 'shared/api';
 import { itIt, itNNil, makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
 
-export const NewComposition = ({ onClose }: { onClose: (is: false) => void }) => {
+export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
   const navigate = useNavigate();
   const [value, setValue] = useState('');
   const [isTakeName, setIsTakeName] = useState(true);
@@ -205,7 +206,7 @@ export const NewComposition = ({ onClose }: { onClose: (is: false) => void }) =>
           }
           onSend={() => cmComClientInvocatorMethods.newCom({ value: newCom })}
           onSuccess={com => {
-            onClose(false);
+            openAtom.set(false);
             navigate({ to: '/cm/edit/coms/$comw', params: { comw: `${com.w}` } });
           }}
         />

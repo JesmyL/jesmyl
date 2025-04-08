@@ -1,21 +1,21 @@
-import { useAtom } from '#shared/lib/atom';
+import { atom, useAtom } from '#shared/lib/atom';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useLiveQuery } from 'dexie-react-hooks';
-import React, { useState } from 'react';
+import React from 'react';
 import { complectIDB } from '../../../_idb/complectIDB';
 import { translationShowAlertLineConfigIdAtom } from '../../initial-slide-context';
 import { AlertLineSettingsModalInner } from './AlertLineSettings';
 
 const LazyAlertLineConfigIcon = React.lazy(() => import('./AlertLineConfigIcon'));
+const isOpenSettingsModalAtom = atom(false);
 
 export const AlertLineInput = () => {
   const configs = useLiveQuery(() => complectIDB.tb.alertLineConfigs.toArray());
   const [alertLine, setAlertLine] = complectIDB.use.translationAlertLine();
   const [showAlertConfigId, setShowAlertConfigId] = useAtom(translationShowAlertLineConfigIdAtom);
-  const [isOpenSettingsModal, setIsOpenSettingsModal] = useState<unknown>(false);
 
   return (
     <>
@@ -23,7 +23,7 @@ export const AlertLineInput = () => {
         <LazyIcon
           className="pointer"
           icon="Settings01"
-          onClick={setIsOpenSettingsModal}
+          onClick={isOpenSettingsModalAtom.toggle}
         />
 
         <KeyboardInput
@@ -43,11 +43,9 @@ export const AlertLineInput = () => {
         ))}
       </div>
 
-      {isOpenSettingsModal && (
-        <Modal onClose={setIsOpenSettingsModal}>
-          <AlertLineSettingsModalInner />
-        </Modal>
-      )}
+      <Modal openAtom={isOpenSettingsModalAtom}>
+        <AlertLineSettingsModalInner />
+      </Modal>
     </>
   );
 };

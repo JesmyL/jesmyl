@@ -38,7 +38,7 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>(props:
               ) : (
                 <CmTranslations />
               )
-            ) : com ? (
+            ) : com || comw !== undefined ? (
               <TheComposition />
             ) : (
               <props.RouteComponent />

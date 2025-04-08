@@ -1,3 +1,4 @@
+import { atom } from '#shared/lib/atom';
 import { excel2jsonParserBox } from '#shared/lib/parseExcel2Json';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { Script } from '#shared/ui/tags/Script';
@@ -5,6 +6,8 @@ import { ContentOnLoad } from '#shared/ui/the-icon/ContentOnLoad';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useEffect, useState } from 'react';
 import { ScheduleWidgetUserAddByExcelContent } from './AddByExcelContent';
+
+const isOpenFullContentAtom = atom(false);
 
 export function ScheduleWidgetUserAddByExcel() {
   const [error, setError] = useState('');
@@ -23,8 +26,6 @@ export function ScheduleWidgetUserAddByExcel() {
     })();
   }, []);
 
-  const [isOpenContent, setIsOpenContent] = useState<unknown>(false);
-
   return (
     <>
       <Script
@@ -39,22 +40,21 @@ export function ScheduleWidgetUserAddByExcel() {
       <LazyIcon
         className="pointer"
         icon="FileImport"
-        onClick={setIsOpenContent}
+        onClick={isOpenFullContentAtom.toggle}
       />
-      {isOpenContent && (
-        <FullContent onClose={setIsOpenContent}>
-          <ContentOnLoad isLoading={isLoading}>
-            {error ? (
-              <div className="color--ko">
-                <h3>Ошибка!</h3>
-                <p>{error}</p>
-              </div>
-            ) : (
-              <ScheduleWidgetUserAddByExcelContent close={() => setIsOpenContent(false)} />
-            )}
-          </ContentOnLoad>
-        </FullContent>
-      )}
+
+      <FullContent openAtom={isOpenFullContentAtom}>
+        <ContentOnLoad isLoading={isLoading}>
+          {error ? (
+            <div className="color--ko">
+              <h3>Ошибка!</h3>
+              <p>{error}</p>
+            </div>
+          ) : (
+            <ScheduleWidgetUserAddByExcelContent close={isOpenFullContentAtom.reset} />
+          )}
+        </ContentOnLoad>
+      </FullContent>
     </>
   );
 }

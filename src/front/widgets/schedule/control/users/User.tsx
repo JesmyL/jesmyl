@@ -1,3 +1,4 @@
+import { atom } from '#shared/lib/atom';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
@@ -5,7 +6,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ScheduleUserScopePropsContext, useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
-import { ReactNode, useMemo, useState } from 'react';
+import { ReactNode, useMemo } from 'react';
 import {
   IScheduleWidgetUser,
   ScheduleUserScopeProps,
@@ -35,14 +36,14 @@ export const ScheduleWidgetUser = (props: Props) => {
   );
 };
 
+const isRedactModalOpenAtom = atom(false);
+
 const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props) => {
   const rights = useScheduleWidgetRightsContext();
   const userName =
     user.nick === undefined
       ? user.fio || <span className="color--7 text-italic">Ссылка</span>
       : `${user.fio && user.fio !== user.nick ? `${user.fio} (${user.nick})` : user.nick} `;
-
-  const [isRedactModalOpen, setIsRedactModalOpen] = useState(false);
 
   const userNode = (
     <div className="flex flex-gap between margin-gap-v">
@@ -74,7 +75,7 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
             <LazyIcon
               icon="Edit02"
               className="pointer flex between full-width"
-              onClick={() => setIsRedactModalOpen(true)}
+              onClick={isRedactModalOpenAtom.toggle}
             />
           </span>
         </>
@@ -84,50 +85,49 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
 
   return (
     <>
-      {isRedactModalOpen && (
-        <Modal onClose={setIsRedactModalOpen}>
-          <ModalHeader>
-            <div className="flex between flex-gap">
-              <span>
-                {userName}
-                {'- '}
-                {balance < 0
-                  ? user.R == null
-                    ? 'Новый'
-                    : 'в блоке'
-                  : scheduleWidgetUserRights.texts[balance]?.role?.[0] || 'Неизвестный'}
-              </span>
-              <span className="flex flex-gap">
-                <ScheduleWidgetUserTakePhoto user={user} />
-              </span>
+      <Modal openAtom={isRedactModalOpenAtom}>
+        <ModalHeader>
+          <div className="flex between flex-gap">
+            <span>
+              {userName}
+              {'- '}
+              {balance < 0
+                ? user.R == null
+                  ? 'Новый'
+                  : 'в блоке'
+                : scheduleWidgetUserRights.texts[balance]?.role?.[0] || 'Неизвестный'}
+            </span>
+            <span className="flex flex-gap">
+              <ScheduleWidgetUserTakePhoto user={user} />
+            </span>
+          </div>
+        </ModalHeader>
+        <ModalBody>
+          <ScheduleWidgetUserEdit user={user} />
+          {user.tgId != null && (
+            <div className="margin-big-gap-t">
+              {user.tgInform === 0 ||
+              !scheduleWidgetUserRights.checkIsHasRights(user.R, ScheduleWidgetUserRoleRight.Read) ? (
+                <TheIconButton
+                  icon="NotificationOff01"
+                  postfix="Участник не получает TG-уведомления"
+                  disabled
+                />
+              ) : (
+                <TheIconButton
+                  icon="Notification01"
+                  postfix="Участник получает TG-уведомления"
+                  disabled
+                />
+              )}
             </div>
-          </ModalHeader>
-          <ModalBody>
-            <ScheduleWidgetUserEdit user={user} />
-            {user.tgId != null && (
-              <div className="margin-big-gap-t">
-                {user.tgInform === 0 ||
-                !scheduleWidgetUserRights.checkIsHasRights(user.R, ScheduleWidgetUserRoleRight.Read) ? (
-                  <TheIconButton
-                    icon="NotificationOff01"
-                    postfix="Участник не получает TG-уведомления"
-                    disabled
-                  />
-                ) : (
-                  <TheIconButton
-                    icon="Notification01"
-                    postfix="Участник получает TG-уведомления"
-                    disabled
-                  />
-                )}
-              </div>
-            )}
-            <div className="flex center full-width margin-big-gap-t">
-              <ScheduleWidgetUserPhoto user={user} />
-            </div>
-          </ModalBody>
-        </Modal>
-      )}
+          )}
+          <div className="flex center full-width margin-big-gap-t">
+            <ScheduleWidgetUserPhoto user={user} />
+          </div>
+        </ModalBody>
+      </Modal>
+
       {asUserPlusPrefix === undefined ? userNode : asUserPlusPrefix(userNode, user, balance)}
     </>
   );

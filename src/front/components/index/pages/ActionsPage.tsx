@@ -1,15 +1,16 @@
 import { useAppNameContext } from '#basis/lib/contexts';
+import { atom } from '#shared/lib/atom';
 import { LinkAppActionFabric } from '#shared/lib/link-app-actions';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { QrReader } from '#shared/ui/qr-code/useQrReader';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { Link } from '@tanstack/react-router';
-import { useState } from 'react';
 import { hosts } from 'shared/api';
 
+const isOpenAtom = atom(false);
+
 export function IndexActionsPage() {
-  const [isQrOpen, setIsQrOpen] = useState(false);
   const onHrefData = LinkAppActionFabric.useOnHrefData();
   const appName = useAppNameContext();
 
@@ -20,21 +21,10 @@ export function IndexActionsPage() {
       contentClass="flex column padding-gap"
       content={
         <>
-          {isQrOpen && (
-            <QrReader
-              onClose={setIsQrOpen}
-              onReadData={value => {
-                if (value.data.startsWith(hosts.host)) {
-                  onHrefData(value.data);
-                  setIsQrOpen(false);
-                }
-              }}
-            />
-          )}
           <BrutalItem
             iconNode={<LazyIcon icon="QrCode01" />}
             title="Читать QR"
-            onClick={() => setIsQrOpen(true)}
+            onClick={isOpenAtom.toggle}
           />
           <Link
             to="/!other/$appName/actions/files"
@@ -47,6 +37,16 @@ export function IndexActionsPage() {
               idPostfix="files"
             />
           </Link>
+
+          <QrReader
+            openAtom={isOpenAtom}
+            onReadData={value => {
+              if (value.data.startsWith(hosts.host)) {
+                onHrefData(value.data);
+                isOpenAtom.set(false);
+              }
+            }}
+          />
         </>
       }
     />

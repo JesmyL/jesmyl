@@ -1,28 +1,28 @@
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 
+import { atom } from '#shared/lib/atom';
 import { TheButton } from '#shared/ui/TheButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
-import { useState } from 'react';
 import { ScheduleWidgetTeamGameSetTeamsScreen } from './SetTeamsScreen';
+
+const isOpenFullContentAtom = atom(false);
 
 export function ScheduleWidgetTeamGameSetTeamsButton() {
   const rights = useScheduleWidgetRightsContext();
   const criterias = rights.schedule.games?.criterias;
-  const [isOpen, setIsOpen] = useState<unknown>(false);
 
   return (
     <>
       <TheButton
         disabled={!criterias?.length}
-        onClick={setIsOpen}
+        onClick={isOpenFullContentAtom.toggle}
       >
         Сформировать команды
       </TheButton>
-      {isOpen && (
-        <FullContent onClose={setIsOpen}>
-          <ScheduleWidgetTeamGameSetTeamsScreen />
-        </FullContent>
-      )}
+
+      <FullContent openAtom={isOpenFullContentAtom}>
+        <ScheduleWidgetTeamGameSetTeamsScreen />
+      </FullContent>
     </>
   );
 }

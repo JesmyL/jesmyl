@@ -85,6 +85,12 @@ export const StyledModal = styled.div`
   bottom: 0;
   left: 0;
   z-index: 999;
+  opacity: 1;
+  transition: opacity 0.2s;
+
+  @starting-style {
+    opacity: 0;
+  }
 
   &.force-hidden {
     animation: modal-blur 0.3s forwards;

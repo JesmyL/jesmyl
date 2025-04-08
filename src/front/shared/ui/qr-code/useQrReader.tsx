@@ -1,3 +1,4 @@
+import { Atom } from '#shared/lib/atom';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import QrScanner from 'qr-scanner';
 import { useEffect, useRef } from 'react';
@@ -7,10 +8,10 @@ import { FullContent } from '../fullscreen-content/FullContent';
 interface Props {
   facingMode?: 'user' | 'environment';
   onReadData: (result: QrScanner.ScanResult) => void;
-  onClose: (isOpen: false) => void;
+  openAtom: Atom<boolean>;
 }
 
-export const QrReader = ({ facingMode = 'environment', onReadData, onClose }: Props) => {
+export const QrReader = ({ facingMode = 'environment', onReadData, openAtom }: Props) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const onReadDataRef = useActualRef(onReadData);
 
@@ -20,8 +21,8 @@ export const QrReader = ({ facingMode = 'environment', onReadData, onClose }: Pr
     const qrScanner = new QrScanner(videoRef.current, onReadDataRef.current, {
       preferredCamera: facingMode,
     });
-    qrScanner.start();
 
+    qrScanner.start();
     qrScanner.setInversionMode('both');
 
     return () => {
@@ -31,7 +32,7 @@ export const QrReader = ({ facingMode = 'environment', onReadData, onClose }: Pr
 
   return (
     <FullContent
-      onClose={onClose}
+      openAtom={openAtom}
       className=" "
       closable
     >

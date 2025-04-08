@@ -1,15 +1,19 @@
+import { atom } from '#shared/lib/atom';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { RemovedComsModalInner } from '$cm+editor/features/RemovedComsModalInner';
 import { NewComposition } from '$cm+editor/widgets/NewComposition';
 import { useAuth } from '$index/atoms';
-import { useState } from 'react';
+import { useEffect } from 'react';
 
-export const EditCompositionsMore = ({ onClose }: { onClose(is: false): void }) => {
-  const [isComCreatorOpen, setIsComCreatorOpen] = useState(false);
-  const [isRemovedComsOpen, setIsRemovedComsOpen] = useState(false);
+const isRemovedComsOpenAtom = atom(false);
+const isComCreatorOpenAtom = atom(false);
+
+export const EditCompositionsMore = ({ onClose }: { onClose(is: boolean): void }) => {
   const auth = useAuth();
+
+  useEffect(() => isComCreatorOpenAtom.subscribe(onClose), [onClose]);
 
   return (
     <>
@@ -17,28 +21,21 @@ export const EditCompositionsMore = ({ onClose }: { onClose(is: false): void }) 
         id="create-com-button"
         icon="PlusSignCircle"
         title="Новая песня"
-        onClick={() => setIsComCreatorOpen(true)}
+        onClick={isComCreatorOpenAtom.toggle}
       />
       <BottomPopupItem
         id="create-com-button"
         icon="FileRemove"
         title="Удалённые песни"
-        onClick={() => setIsRemovedComsOpen(true)}
+        onClick={isRemovedComsOpenAtom.toggle}
       />
 
-      {isComCreatorOpen && (
-        <FullContent
-          onClose={() => {
-            setIsComCreatorOpen(false);
-            onClose(false);
-          }}
-        >
-          {close => <NewComposition onClose={close} />}
-        </FullContent>
-      )}
+      <FullContent openAtom={isComCreatorOpenAtom}>
+        <NewComposition openAtom={isComCreatorOpenAtom} />
+      </FullContent>
 
-      {auth.level >= 80 && isRemovedComsOpen && (
-        <Modal onClose={setIsRemovedComsOpen}>
+      {auth.level >= 80 && (
+        <Modal openAtom={isRemovedComsOpenAtom}>
           <RemovedComsModalInner />
         </Modal>
       )}

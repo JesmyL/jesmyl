@@ -1,22 +1,23 @@
+import { atom } from '#shared/lib/atom';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { useCcom } from '$cm/basis/lib/com-selections';
-import { useState } from 'react';
 import { ChordImagesList } from '../../chord-card/ChordImagesList';
 import { ComTool } from '../ComTool';
 
+const isOpenAtom = atom(false);
+
 export const ChordImagesComTool = () => {
   const ccom = useCcom();
-  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
       <ComTool
         title="Изображения аккордов"
         icon="ImageCompositionOval"
-        onClick={() => setIsOpen(true)}
+        onClick={isOpenAtom.toggle}
       />
 
-      {isOpen && <FullContent onClose={setIsOpen}>{ccom && <ChordImagesList comw={ccom.wid} />}</FullContent>}
+      <FullContent openAtom={isOpenAtom}>{ccom && <ChordImagesList comw={ccom.wid} />}</FullContent>
     </>
   );
 };

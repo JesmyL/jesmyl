@@ -1,50 +1,53 @@
 import { propagationStopper } from '#shared/lib/event-funcs';
 
+import { Atom, useAtomValue } from '#shared/lib/atom';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
-import { mylib } from '#shared/lib/my-lib';
 import { RootAnchoredContent } from '#shared/ui/RootAnchoredContent';
-import { useEffect, useMemo } from 'react';
-import { emptyFunc } from 'shared/utils';
+import { Portal } from '@mui/material';
+import { useEffect } from 'react';
 import { StyledModal, StyledModalScreen, StyledModalScreenWrapper } from '../styled';
 
-export interface Props {
+export interface Props<Value> {
+  openAtom: Atom<Value>;
+  checkIsOpen?: (value: Value) => boolean;
   mood?: 'ok' | 'ko';
-  children?: React.ReactNode | ((props: { onClose: () => void }) => React.ReactNode);
+  children?: React.ReactNode;
   onClose?: (isOpen: false) => void;
   isRenderHere?: boolean;
 }
 
-export function Modal({ mood, children, onClose, isRenderHere }: Props) {
-  const onCloseRef = useMemo(() => ({ current: emptyFunc }), []);
-  const close = () => {
-    onCloseRef.current();
-    onClose?.(false);
-  };
+export const Modal = <Value,>({ mood, children, isRenderHere, openAtom, checkIsOpen }: Props<Value>) => {
+  const isOpenValue = useAtomValue(openAtom);
+  const isOpen = checkIsOpen === undefined ? !!isOpenValue : checkIsOpen(isOpenValue);
 
   const modalNode = (
-    <StyledModal
-      className="type_screen"
-      onClick={event => {
-        event.stopPropagation();
-        close();
-      }}
-    >
-      <EscapableModal onClose={close} />
-      <StyledModalScreenWrapper className="type_screen">
-        <StyledModalScreen
-          className={'type_screen mood mood_' + mood}
-          onClick={propagationStopper}
+    <Portal>
+      {isOpen && (
+        <StyledModal
+          className="type_screen"
+          onClick={event => {
+            event.stopPropagation();
+            openAtom.reset();
+          }}
         >
-          {mylib.isFunc(children) ? children({ onClose: close }) : children}
-        </StyledModalScreen>
-      </StyledModalScreenWrapper>
-    </StyledModal>
+          <EscapableModal onClose={openAtom.reset} />
+          <StyledModalScreenWrapper className="type_screen">
+            <StyledModalScreen
+              className={'type_screen mood mood_' + mood}
+              onClick={propagationStopper}
+            >
+              {children}
+            </StyledModalScreen>
+          </StyledModalScreenWrapper>
+        </StyledModal>
+      )}
+    </Portal>
   );
 
   if (isRenderHere) return modalNode;
 
-  return <RootAnchoredContent onCloseRef={onCloseRef}>{modalNode}</RootAnchoredContent>;
-}
+  return <RootAnchoredContent openAtom={openAtom}>{modalNode}</RootAnchoredContent>;
+};
 
 const EscapableModal = ({ onClose }: { onClose: () => void }) => {
   useEffect(() => {

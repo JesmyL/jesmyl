@@ -1,6 +1,7 @@
 import { useAppNameContext } from '#basis/lib/contexts';
 import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
 import { appNames } from '#basis/model/App.model';
+import { atom } from '#shared/lib/atom';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { BrutalScreen } from '#shared/ui/brutal-screen/BrutalScreen';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
@@ -32,8 +33,10 @@ export const IndexOtherPage = () => {
     [],
   );
 
+  const isAboutOpenAtom = atom(false);
+
   const [cacheNames, setCacheNames] = useState<string[]>([]);
-  const [isAboutOpen, setIsAboutOpen] = useState<unknown>(false);
+  // const [isAboutOpen, setIsAboutOpen] = useState<unknown>(false);
   const [isRefreshProcess, setIsRefreshProcess] = useState(false);
   const isOnline = useIsOnline();
 
@@ -104,7 +107,7 @@ export const IndexOtherPage = () => {
           <BrutalItem
             iconNode={<LazyIcon icon="InformationCircle" />}
             title="О приложении"
-            onClick={setIsAboutOpen}
+            onClick={isAboutOpenAtom.toggle}
             box={
               isOnline ? (
                 isRefreshProcess || isVersionLoading ? (
@@ -150,14 +153,12 @@ export const IndexOtherPage = () => {
             </BrutalScreen>
           )}
 
-          {isAboutOpen && (
-            <FullContent
-              onClose={setIsAboutOpen}
-              closable
-            >
-              <IndexAbout />
-            </FullContent>
-          )}
+          <FullContent
+            closable
+            openAtom={isAboutOpenAtom}
+          >
+            <IndexAbout />
+          </FullContent>
         </>
       }
     />

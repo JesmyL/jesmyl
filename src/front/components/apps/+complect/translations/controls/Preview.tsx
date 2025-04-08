@@ -1,6 +1,6 @@
+import { atom } from '#shared/lib/atom';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useScreenTranslationCurrentConfig } from '../hooks/configs';
 import { TranslationScreen } from '../TranslationScreen';
@@ -9,26 +9,13 @@ interface Props {
   isPreview?: boolean;
 }
 
+const isSettingsOpenAtom = atom(false);
+
 export const TranslationSlidePreview = ({ isPreview = true }: Props) => {
   const currentConfig = useScreenTranslationCurrentConfig();
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   return (
     <Wrapper className="pointer">
-      {isSettingsOpen && currentConfig && (
-        <FullContent onClose={setIsSettingsOpen}>
-          <div className="flex center margin-big-gap-t">
-            <FullContainer className="flex center bgcolor--3">
-              <ScreenWithBackground $proportion={currentConfig.proportion}>
-                <TranslationScreen
-                  isTech
-                  isPreview={isPreview}
-                />
-              </ScreenWithBackground>
-            </FullContainer>
-          </div>
-        </FullContent>
-      )}
       {currentConfig === undefined ? (
         <TranslationScreen
           win={window}
@@ -46,10 +33,25 @@ export const TranslationSlidePreview = ({ isPreview = true }: Props) => {
           </div>
           <FullButton
             icon="PencilEdit02"
-            onClick={() => setIsSettingsOpen(true)}
+            onClick={isSettingsOpenAtom.toggle}
           />
         </>
       )}
+
+      <FullContent openAtom={isSettingsOpenAtom}>
+        <div className="flex center margin-big-gap-t">
+          <FullContainer className="flex center bgcolor--3">
+            {currentConfig && (
+              <ScreenWithBackground $proportion={currentConfig.proportion}>
+                <TranslationScreen
+                  isTech
+                  isPreview={isPreview}
+                />
+              </ScreenWithBackground>
+            )}
+          </FullContainer>
+        </div>
+      </FullContent>
     </Wrapper>
   );
 };

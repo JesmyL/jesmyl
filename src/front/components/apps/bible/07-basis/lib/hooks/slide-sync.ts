@@ -3,7 +3,7 @@ import { bibleIDB } from '$bible/basis/lib/bibleIDB';
 import { BibleTranslationAnyAddress } from '$bible/basis/model/base';
 import { useBibleTranslationAddToHistory } from '$bible/translations/archive/history/hooks/history';
 import { useCallback } from 'react';
-import { useToggleIsScreenTranslationTextVisible } from '../../../../+complect/translations/atoms';
+import { useSetIsScreenTranslationTextVisible } from '../../../../+complect/translations/atoms';
 
 const showAddressCodeAtom = atom<BibleTranslationAnyAddress | nil>(null);
 
@@ -22,12 +22,12 @@ export const useBibleShowSlideAddressCode = () => useAtomValue(showAddressCodeAt
 
 export const useBibleTranslationSlideSyncContentSetter = () => {
   const addToHistory = useBibleTranslationAddToHistory();
-  const switchIsVisible = useToggleIsScreenTranslationTextVisible();
+  const setIsVisible = useSetIsScreenTranslationTextVisible();
   const printShowAddress = useBiblePrintShowSlideAddressCode();
 
   return useCallback(
     (isReplaceFirstNearVersei = false) => {
-      switchIsVisible(true);
+      setIsVisible(true);
 
       setTimeout(async () => {
         addToHistory(
@@ -41,6 +41,6 @@ export const useBibleTranslationSlideSyncContentSetter = () => {
         printShowAddress();
       });
     },
-    [addToHistory, printShowAddress, switchIsVisible],
+    [addToHistory, printShowAddress, setIsVisible],
   );
 };

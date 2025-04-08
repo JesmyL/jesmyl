@@ -1,9 +1,9 @@
+import { Atom, useAtomValue } from '#shared/lib/atom';
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
-import { mylib } from '#shared/lib/my-lib';
-import { HTMLAttributes, ReactNode, useEffect, useMemo } from 'react';
-import { Eventer, EventerListeners, emptyFunc } from 'shared/utils';
+import { HTMLAttributes, ReactNode, useEffect } from 'react';
+import { Eventer, EventerListeners } from 'shared/utils';
 import styled from 'styled-components';
 import { RootAnchoredContent } from '../RootAnchoredContent';
 import { TheIconButton } from '../the-icon/TheIconButton';
@@ -15,48 +15,40 @@ const swiper = backSwipableContainerMaker(() => Eventer.invoke(swipeEvents, unde
 export type FullContentOpenMode = null | 'open' | 'closable';
 export type FullContentValue<PassValue = unknown> = (close: () => void, passValue?: PassValue) => ReactNode;
 
-interface Props {
-  onClose?: (isOpen: false) => void;
+interface Props<Value> {
+  openAtom: Atom<Value>;
+  checkIsOpen?: (value: Value) => boolean;
   closable?: boolean;
-  children: ((close: () => void) => React.ReactNode) | React.ReactNode;
+  children?: React.ReactNode;
   className?: string;
   containerClassName?: string;
-  onCloseRef?: { current: () => void };
 }
 
-export function FullContent(props: Props) {
-  const subClose = useMemo(() => ({ current: emptyFunc }), []);
-  const close = () => {
-    subClose.current();
-    props.onClose?.(false);
-  };
-
-  if (props.onCloseRef !== undefined) props.onCloseRef.current = close;
+export const FullContent = <Value,>(props: Props<Value>) => {
+  const isOpenValue = useAtomValue(props.openAtom);
+  const isOpen = props.checkIsOpen === undefined ? !!isOpenValue : props.checkIsOpen(isOpenValue);
 
   return (
-    <RootAnchoredContent
-      onCloseRef={subClose}
-      children={
+    <RootAnchoredContent openAtom={props.openAtom}>
+      {isOpen && (
         <Swiped
-          close={close}
-          onClick={props.closable ? close : propagationStopper}
+          close={props.openAtom.reset}
+          onClick={props.closable ? props.openAtom.reset : propagationStopper}
           className={props.className}
         >
           {props.closable || (
             <StyledCloseButton
               icon="Cancel01"
               className="pointer close-button"
-              onClick={close}
+              onClick={props.openAtom.reset}
             />
           )}
-          <StyledContainer className={props.containerClassName ?? 'p-5'}>
-            {mylib.isFunc(props.children) ? props.children(close) : props.children}
-          </StyledContainer>
+          <StyledContainer className={props.containerClassName ?? 'p-5'}>{props.children}</StyledContainer>
         </Swiped>
-      }
-    />
+      )}
+    </RootAnchoredContent>
   );
-}
+};
 
 const Swiped = ({ close, ...props }: { close: () => void } & HTMLAttributes<HTMLDivElement>) => {
   useEffect(() => {

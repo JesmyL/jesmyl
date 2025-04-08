@@ -1,10 +1,15 @@
+import { atom } from '#shared/lib/atom';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useLocation, useNavigate } from '@tanstack/react-router';
+import { useEffect } from 'react';
 import { IScheduleWidgetWid } from 'shared/api';
 import { ScheduleWidgetLiveTranslation } from './Live';
 
 const queryKey = 'follow';
+
+const isOpenAtom = atom(false);
+isOpenAtom.set(true);
 
 export const ScheduleWidgetWatchLiveTranslationButton = ({
   schw,
@@ -16,30 +21,29 @@ export const ScheduleWidgetWatchLiveTranslationButton = ({
   const loc = useLocation();
   const navigate = useNavigate();
 
-  const setIsOpen = (isOpen: unknown) => {
-    navigate({ to: '.', search: prev => ({ ...prev, [queryKey]: isOpen ? 'inner' : undefined }) });
-  };
+  useEffect(() => isOpenAtom.set(!!loc.search[queryKey as never]), [loc.search]);
+
+  useEffect(() => {
+    isOpenAtom.subscribe(isOpen => {
+      navigate({ to: '.', search: prev => ({ ...prev, [queryKey]: isOpen ? 'inner' : undefined }) });
+    });
+  }, [navigate]);
 
   return (
     <>
       <TheIconButton
         icon="ComputerPhoneSync"
-        onClick={setIsOpen}
+        onClick={isOpenAtom.toggle}
         className="margin-gap-v"
         postfix={postfix}
       />
 
-      {loc.search[queryKey as never] && (
-        <FullContent
-          onClose={setIsOpen}
-          containerClassName=""
-        >
-          <ScheduleWidgetLiveTranslation
-            onClose={setIsOpen}
-            schw={schw}
-          />
-        </FullContent>
-      )}
+      <FullContent
+        openAtom={isOpenAtom}
+        containerClassName=""
+      >
+        <ScheduleWidgetLiveTranslation schw={schw} />
+      </FullContent>
     </>
   );
 };

@@ -1,4 +1,5 @@
-import { ReactNode, useState } from 'react';
+import { atom, useAtomValue } from '#shared/lib/atom';
+import { ReactNode } from 'react';
 import { Modal } from './modal/Modal/Modal';
 import { ModalBody } from './modal/Modal/ModalBody';
 import { ModalHeader } from './modal/Modal/ModalHeader';
@@ -15,9 +16,11 @@ interface Props {
   onClose?: () => void;
 }
 
+const textToCopyAtom = atom('');
+
 export function CopyTextButton({ text, disabled, description, className, message, withoutIcon, onClose }: Props) {
   const toast = useToast();
-  const [textToCopy, setTextToCopy] = useState('');
+  const textToCopy = useAtomValue(textToCopyAtom);
 
   return (
     <>
@@ -33,7 +36,7 @@ export function CopyTextButton({ text, disabled, description, className, message
             toast(message ?? 'Текст скопирован');
             onClose?.();
           } catch (_e) {
-            setTextToCopy(textToWrite);
+            textToCopyAtom.set(textToWrite);
           }
         }}
       >
@@ -46,12 +49,10 @@ export function CopyTextButton({ text, disabled, description, className, message
         )}
       </span>
 
-      {textToCopy && (
-        <Modal onClose={() => setTextToCopy('')}>
-          <ModalHeader>Не удалось скопировать текст:</ModalHeader>
-          <ModalBody className="user-select-all">{textToCopy}</ModalBody>
-        </Modal>
-      )}
+      <Modal openAtom={textToCopyAtom}>
+        <ModalHeader>Не удалось скопировать текст:</ModalHeader>
+        <ModalBody className="user-select-all">{textToCopy}</ModalBody>
+      </Modal>
     </>
   );
 }

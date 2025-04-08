@@ -1,15 +1,15 @@
+import { atom } from '#shared/lib/atom';
 import { QrCodeFullScreen } from '#shared/ui/qr-code/QrCodeFullScreen';
 import { cmAppActions } from '$cm/app-actions/cm-app-actions';
 import { useCcom } from '$cm/basis/lib/com-selections';
 import { useComNumbers } from '$cm/basis/lib/useComNumbers';
-import { useState } from 'react';
 import { CmComWid } from 'shared/api';
-import { itNIt } from 'shared/utils';
 import { ComTool } from '../ComTool';
+
+const isOpenQrAtom = atom(false);
 
 export const QrComShareComTool = () => {
   const ccom = useCcom();
-  const [isOpenQr, setIsOpenQr] = useState(false);
   const comw = ccom?.wid ?? CmComWid.def;
   const comNumber = useComNumbers(comw)[comw];
 
@@ -21,15 +21,14 @@ export const QrComShareComTool = () => {
       <ComTool
         title="Поделиться по QR"
         icon="QrCode"
-        onClick={() => setIsOpenQr(itNIt)}
+        onClick={isOpenQrAtom.toggle}
       />
-      {isOpenQr && (
-        <QrCodeFullScreen
-          onClose={setIsOpenQr}
-          text={link}
-          copyText={`${link} - ${comNumber == null ? '' : `${comNumber}. `}${ccom.name}`}
-        />
-      )}
+
+      <QrCodeFullScreen
+        openAtom={isOpenQrAtom}
+        text={link}
+        copyText={`${link} - ${comNumber == null ? '' : `${comNumber}. `}${ccom.name}`}
+      />
     </>
   );
 };

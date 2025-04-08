@@ -23,12 +23,12 @@ interface Props {
 
 const itemIt = <Item,>({ item }: { item: Item }) => item;
 const termAtom = atom('');
+const isOpenAtom = atom(false);
 
 export function ScheduleWidgetSortCriteria({ criteria, criteriai }: Props) {
   const term = useAtomValue(termAtom);
   const rights = useScheduleWidgetRightsContext();
   const [isRenaming, setIsRenaming] = useState(false);
-  const [isOpenSorter, setIsOpenSorter] = useState<unknown>(false);
   const [insertUser, setInsertUser] = useState<IScheduleWidgetUser | null>(null);
   const scheduleScopeProps = useScheduleScopePropsContext();
   const criteriaScopeProps: ScheduleGameCriteriaScopeProps = useMemo(
@@ -109,7 +109,7 @@ export function ScheduleWidgetSortCriteria({ criteria, criteriai }: Props) {
                       className="pointer"
                       icon="SortingAZ01"
                       onClick={() => {
-                        setIsOpenSorter(true);
+                        isOpenAtom.set(true);
                         setInsertUser(user);
                       }}
                     />
@@ -128,21 +128,20 @@ export function ScheduleWidgetSortCriteria({ criteria, criteriai }: Props) {
                 user={user}
               />
             ))}
-            <TheButton onClick={setIsOpenSorter}>Распределить</TheButton>
+            <TheButton onClick={isOpenAtom.toggle}>Распределить</TheButton>
           </>
         )}
-        {!isOpenSorter || (
-          <FullContent onClose={setIsOpenSorter}>
-            <ScheduleWidgetTeamsCriteriaSorterScreen
-              criteria={criteria}
-              criteriaScopeProps={criteriaScopeProps}
-              uncriteriedUsers={uncriteriedUsers}
-              usersForSort={usersForSort}
-              onClose={setIsOpenSorter}
-              singleInsertUser={insertUser}
-            />
-          </FullContent>
-        )}
+
+        <FullContent openAtom={isOpenAtom}>
+          <ScheduleWidgetTeamsCriteriaSorterScreen
+            openAtom={isOpenAtom}
+            criteria={criteria}
+            criteriaScopeProps={criteriaScopeProps}
+            uncriteriedUsers={uncriteriedUsers}
+            usersForSort={usersForSort}
+            singleInsertUser={insertUser}
+          />
+        </FullContent>
       </ExpandableContent>
     </>
   );

@@ -1,5 +1,6 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { StrongInputDateTimeExtracter } from '#basis/ui/strong-control/StrongDateTimeExtracter';
+import { atom } from '#shared/lib/atom';
 import { useIsRedactArea } from '#shared/lib/hooks/useIsRedactArea';
 import { mylib } from '#shared/lib/my-lib';
 import { QrCodeFullScreen } from '#shared/ui/qr-code/QrCodeFullScreen';
@@ -32,6 +33,7 @@ import { ScheduleWidgetMyUserTgInform } from './tg-inform/UserTgInform';
 import { ScheduleWidgetRights, useScheduleWidgetRights } from './useScheduleWidget';
 
 const msInMin = mylib.howMs.inMin;
+const isOpenInviteQrAtom = atom(false);
 
 export function ScheduleWidget({
   schedule,
@@ -50,7 +52,6 @@ export function ScheduleWidget({
 
   const { editIcon, isRedact } = useIsRedactArea(true, null, rights.isCanRedact, true);
   const [startTime, setStartTime] = useState(schedule?.start);
-  const [isOpenInviteQr, setIsOpenInviteQr] = useState(false);
 
   const titleNode = (
     <div className="flex full-width between">
@@ -63,7 +64,7 @@ export function ScheduleWidget({
       <span className="flex flex-gap">
         <LazyIcon
           icon="QrCode"
-          onClick={() => setIsOpenInviteQr(true)}
+          onClick={isOpenInviteQrAtom.toggle}
         />
         {editIcon}
       </span>
@@ -146,12 +147,11 @@ export function ScheduleWidget({
       rights={rights}
     >
       <ScheduleScopePropsContext.Provider value={scheduleScopeProps}>
-        {isOpenInviteQr && (
-          <QrCodeFullScreen
-            text={schLinkAction.makeLink({ inviteSch: schedule.w })}
-            onClose={setIsOpenInviteQr}
-          />
-        )}
+        <QrCodeFullScreen
+          openAtom={isOpenInviteQrAtom}
+          text={schLinkAction.makeLink({ inviteSch: schedule.w })}
+        />
+
         <Widget className={'schedule-widget'}>
           {titleNode}
           <div className="margin-big-gap-v">

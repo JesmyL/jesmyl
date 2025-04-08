@@ -1,3 +1,4 @@
+import { atom } from '#shared/lib/atom';
 import { checkIsCssRuleSupports } from '#shared/lib/checkIsCssSupports';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
@@ -17,11 +18,11 @@ import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
 
 const HashSwitcherIcon = 'Note03';
+const isShowInfoModalAtom = atom(false);
 
 export const CmComCommentModalInner = ({ com }: { com: Com }) => {
   const [isLoading, setIsLoading] = useState(false);
   const comComment = useComComment(com.wid);
-  const [isShowInfoModal, setIsShowInfoModal] = useState(false);
 
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -82,19 +83,17 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
           className="pointer flex full-width between color--7 margin-gap-v"
           onClick={event => {
             propagationStopper(event);
-            setIsShowInfoModal(true);
+            isShowInfoModalAtom.set(true);
           }}
         />
       </ModalFooter>
 
-      {isShowInfoModal && (
-        <Modal onClose={setIsShowInfoModal}>
-          <ModalHeader>Заметки к песне</ModalHeader>
-          <ModalBody>
-            <TheComCommentInfo HashSwitcherIcon={HashSwitcherIcon} />
-          </ModalBody>
-        </Modal>
-      )}
+      <Modal openAtom={isShowInfoModalAtom}>
+        <ModalHeader>Заметки к песне</ModalHeader>
+        <ModalBody>
+          <TheComCommentInfo HashSwitcherIcon={HashSwitcherIcon} />
+        </ModalBody>
+      </Modal>
     </>
   );
 };

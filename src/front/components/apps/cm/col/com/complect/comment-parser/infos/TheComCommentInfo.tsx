@@ -1,12 +1,13 @@
+import { atom } from '#shared/lib/atom';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useState } from 'react';
 import { TheComCommentForExample } from './ForExample';
 import { TheComCommentBibleTextsInfo } from './TheComCommentBibleTextsInfo';
 
+const isOpenBibleInfoAtom = atom(false);
+
 export function TheComCommentInfo({ HashSwitcherIcon }: { HashSwitcherIcon: TheIconKnownName }) {
   const italicBlockNumber_ = <i>номер блока</i>;
-  const [isOpenBibleInfo, setIsOpenBibleInfo] = useState<unknown>(false);
 
   return (
     <div className="">
@@ -33,7 +34,7 @@ export function TheComCommentInfo({ HashSwitcherIcon }: { HashSwitcherIcon: TheI
         {'Оно может содержать Библейские '}
         <span
           className="pointer color--7 text-underline text-italic"
-          onClick={setIsOpenBibleInfo}
+          onClick={isOpenBibleInfoAtom.toggle}
         >
           тексты
         </span>
@@ -103,13 +104,9 @@ export function TheComCommentInfo({ HashSwitcherIcon }: { HashSwitcherIcon: TheI
         целевом блоке. Эти тексты вставляются и редактируются автоматически
       </p>
 
-      <>
-        {isOpenBibleInfo && (
-          <Modal onClose={setIsOpenBibleInfo}>
-            <TheComCommentBibleTextsInfo />
-          </Modal>
-        )}
-      </>
+      <Modal openAtom={isOpenBibleInfoAtom}>
+        <TheComCommentBibleTextsInfo />
+      </Modal>
     </div>
   );
 }

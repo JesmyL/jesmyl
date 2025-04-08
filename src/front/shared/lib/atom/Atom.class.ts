@@ -20,23 +20,31 @@ export class Atom<Value> {
       };
 
       this.reset = () => {
-        this.value = defaultValue;
         delete localStorage[key];
+        this.set(defaultValue, true);
       };
     } else {
       this.value = defaultValue;
-      this.reset = () => (this.value = defaultValue);
+      this.reset = () => {
+        this.set(defaultValue, true);
+        this.subscribers.forEach(this.invokeSubscriber, this);
+      };
     }
+
+    if (typeof defaultValue !== 'boolean') this.toggle = () => {};
+    if (typeof defaultValue !== 'number') this.inkrement = () => {};
   }
 
   readonly get = () => this.value;
   readonly reset: () => void;
-  readonly toggle = (is?: boolean) => this.set((is ?? ((is: boolean) => !is)) as never);
-  readonly inkrement = (ink: number) => this.set((+this.value + ink) as never);
+  readonly toggle = () => this.set(!this.value as never);
+  readonly inkrement = (delta: number) => this.set(((this.value as number) + delta) as never);
 
   readonly subscribe = (sub: Sunscriber<Value>) => {
     this.subscribers.add(sub);
-    return () => this.subscribers.delete(sub);
+    return () => {
+      this.subscribers.delete(sub);
+    };
   };
 
   readonly set = (value: Value | ((prev: Value) => Value), isPreventSave?: boolean) => {

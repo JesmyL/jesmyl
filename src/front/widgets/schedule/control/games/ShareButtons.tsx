@@ -1,3 +1,4 @@
+import { atom } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
@@ -6,7 +7,6 @@ import { schPhotosSokiInvocatorClient } from '#widgets/schedule/invocators/invoc
 import { getScheduleWidgetUserPhotoStorageKey } from '#widgets/schedule/storage';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import { indexIDB } from '$index/db/index-idb';
-import { useState } from 'react';
 import { ScheduleWidgetPhotoKey } from 'shared/api';
 import { ScheduleWidgetPhotoGalery } from './PhotoGalery';
 import { checkIsUserPhotoable } from './utils';
@@ -15,22 +15,19 @@ interface Props {
   prefix?: React.ReactNode;
 }
 
+const isOpenGaleryAtom = atom(false);
+
 export const ScheduleWidgetShareButtons = function ShareButtons({ prefix }: Props) {
   const rights = useScheduleWidgetRightsContext();
-  const [isOpenGalery, setIsOpenGalery] = useState(false);
 
   return (
     <div className="flex flex-gap">
       {prefix}
-      {isOpenGalery && (
-        <Modal onClose={setIsOpenGalery}>
-          <ScheduleWidgetPhotoGalery />
-        </Modal>
-      )}
+
       <LazyIcon
         className="pointer"
         icon="Eye"
-        onClick={() => setIsOpenGalery(true)}
+        onClick={isOpenGaleryAtom.toggle}
       />
       <TheIconSendButton
         icon="CloudUpload"
@@ -59,6 +56,10 @@ export const ScheduleWidgetShareButtons = function ShareButtons({ prefix }: Prop
         onSuccess={photos => indexIDB.db.schedulePhotos.bulkPut(photos)}
         onSend={() => schPhotosSokiInvocatorClient.getSharedPhotos({ schw: rights.schedule.w })}
       />
+
+      <Modal openAtom={isOpenGaleryAtom}>
+        <ScheduleWidgetPhotoGalery />
+      </Modal>
     </div>
   );
 };

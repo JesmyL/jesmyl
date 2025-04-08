@@ -1,3 +1,4 @@
+import { Atom, useAtomValue } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { TheButton } from '#shared/ui/TheButton';
@@ -9,18 +10,17 @@ import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
 
 export const CmSharedComListActionInterpretator = ({
-  comws,
-  onClose,
+  comListOnActionAtom,
 }: {
-  comws: CmComWid[];
-  onClose: (comws: null) => void;
+  comListOnActionAtom: Atom<CmComWid[] | null>;
 }) => {
+  const comws = useAtomValue(comListOnActionAtom);
   const navigate = useNavigate();
   const { setSelectedComws, selectedComws } = useSelectedComs();
   const incomingComwsSet = new Set(comws);
   const localComwsSet = new Set(selectedComws);
   const close = (isNavigate: boolean) => {
-    onClose(null);
+    comListOnActionAtom.set(null);
     if (isNavigate) navigate({ to: '/cm/li/sel' });
   };
 
@@ -29,7 +29,7 @@ export const CmSharedComListActionInterpretator = ({
 
   return (
     <>
-      <FullContent onClose={close}>
+      <FullContent openAtom={comListOnActionAtom}>
         <h3>С вами поделились списком</h3>
         <ComFaceList
           list={comws}
@@ -49,15 +49,17 @@ export const CmSharedComListActionInterpretator = ({
             Добавится {addComsCount} {mylib.declension(addComsCount, 'песня', 'песни', 'песен')}
           </StyledButtonDescription>
 
-          <TheButton
-            disabled={lessComsCount === 0 && addComsCount === 0}
-            onClick={() => {
-              setSelectedComws(comws);
-              close(true);
-            }}
-          >
-            Заменить выбранные
-          </TheButton>
+          {comws && (
+            <TheButton
+              disabled={lessComsCount === 0 && addComsCount === 0}
+              onClick={() => {
+                setSelectedComws(comws);
+                close(true);
+              }}
+            >
+              Заменить выбранные
+            </TheButton>
+          )}
 
           <StyledButtonDescription>
             Потеряется {lessComsCount} {mylib.declension(lessComsCount, 'песня', 'песни', 'песен')}

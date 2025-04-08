@@ -1,3 +1,4 @@
+import { atom } from '#shared/lib/atom';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -6,10 +7,11 @@ import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWid
 import { useMemo, useState } from 'react';
 import { useScheduleGameContext } from '../lib/contexts';
 
+const isOpenFullContentAtom = atom(false);
+
 export const ScheduleWidgetTeamGameTranslateTeamsButton = function TranslateTeamsButton() {
   const rights = useScheduleWidgetRightsContext();
 
-  const [isOpenFull, setIsOpenFull] = useState(false);
   const game = useScheduleGameContext();
   const [cols, setCols] = useState(Math.floor(game.teams.length / 2));
 
@@ -75,30 +77,29 @@ export const ScheduleWidgetTeamGameTranslateTeamsButton = function TranslateTeam
 
   return (
     <>
-      {isOpenFull && (
-        <FullContent onClose={setIsOpenFull}>
-          <div className="flex full-width around">
-            <TheIconButton
-              icon="DashboardSquareRemove"
-              disabled={cols < 2}
-              onClick={() => setCols(cols - 1)}
-            />
-            <TheIconButton
-              icon="DashboardSquareAdd"
-              disabled={game.teams.length <= cols}
-              onClick={() => setCols(cols + 1)}
-            />
-          </div>
-          <ScheduleWidgetMarkdownTranslation md={grid} />
-        </FullContent>
-      )}
       <LazyIcon
         icon="TvSmart"
         onClick={event => {
           event.stopPropagation();
-          setIsOpenFull(true);
+          isOpenFullContentAtom.set(true);
         }}
       />
+
+      <FullContent openAtom={isOpenFullContentAtom}>
+        <div className="flex full-width around">
+          <TheIconButton
+            icon="DashboardSquareRemove"
+            disabled={cols < 2}
+            onClick={() => setCols(cols - 1)}
+          />
+          <TheIconButton
+            icon="DashboardSquareAdd"
+            disabled={game.teams.length <= cols}
+            onClick={() => setCols(cols + 1)}
+          />
+        </div>
+        <ScheduleWidgetMarkdownTranslation md={grid} />
+      </FullContent>
     </>
   );
 };

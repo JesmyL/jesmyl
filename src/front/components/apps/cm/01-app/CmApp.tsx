@@ -1,3 +1,4 @@
+import { atom } from '#shared/lib/atom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { useToast } from '#shared/ui/modal/useToast';
 import { Outlet } from '@tanstack/react-router';
@@ -11,16 +12,16 @@ import { CmFooter } from '../routing/CmFooter';
 
 const maxSelectedComsCount = 50;
 const CmEditorPage = React.lazy(() => import('$cm+editor/app/EditorPage').then(m => ({ default: m.CmEditorPage })));
+const comListOnActionAtom = atom<CmComWid[] | null>(null);
 
 export const CmApp = () => {
   const auth = useAuth();
-  const [comListOnAction, setComListOnAction] = useState<CmComWid[] | null>(null);
 
   const { selectedComws, setSelectedComws } = useSelectedComs();
   const toast = useToast();
 
   cmAppActions.useOnAction(({ props, navigateFromRoot }) => {
-    if (props.comws?.length) setComListOnAction(props.comws);
+    if (props.comws?.length) comListOnActionAtom.set(props.comws);
     if (props.comw != null) navigateFromRoot({ to: '/cm/i', search: { comw: props.comw } });
   });
 
@@ -40,12 +41,7 @@ export const CmApp = () => {
 
       {auth.level >= 50 && <RenderEditorOnce />}
 
-      {comListOnAction && (
-        <CmSharedComListActionInterpretator
-          comws={comListOnAction}
-          onClose={setComListOnAction}
-        />
-      )}
+      <CmSharedComListActionInterpretator comListOnActionAtom={comListOnActionAtom} />
     </>
   );
 };

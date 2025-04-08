@@ -1,4 +1,4 @@
-import { useAtom, useAtomValue } from '#shared/lib/atom';
+import { atom, useAtom, useAtomValue } from '#shared/lib/atom';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LoadIndicatedContent } from '#shared/ui/load-indicated-content/LoadIndicatedContent';
 import {
@@ -6,7 +6,6 @@ import {
   StyledPhaseContainerConfigurerContent,
   StyledPhaseContainerConfigurerHead,
 } from '#shared/ui/phase-container/PageContainerConfigurer';
-import { CmRatingSortedComList } from '$cm/04-widgets/RatingSortedComList';
 import { SetComListLimitsExtracterContext } from '$cm/base/SetComListLimitsExtracterContext';
 import { comPlayerHeaderStickyCss } from '$cm/basis/css/com-player';
 import { Cat } from '$cm/col/cat/Cat';
@@ -14,6 +13,7 @@ import { ComPlayer } from '$cm/col/com/player/ComPlayer';
 import { comPlayerPlaySrcAtom } from '$cm/col/com/player/controls';
 import { CmComListSearchFilterInput } from '$cm/shared/ComListSearchFilterInput';
 import { categoryDebounceTermAtom, categoryTermAtom } from '$cm/shared/ComListSearchFilterInput/lib';
+import { CmRatingSortedComList } from '$cm/widgets/RatingSortedComList';
 import { FileRoutesByPath } from '@tanstack/react-router';
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { emptyFunc, itIt } from 'shared/utils';
@@ -30,6 +30,8 @@ interface Props {
   coms: Com[];
 }
 
+const isOpenRatingSortedComsAtom = atom(false);
+
 export const CmCatPage = (props: Props) => {
   const term = useAtomValue(categoryTermAtom);
   const [searchedComs, setSearchedComs] = useState<Com[]>([]);
@@ -37,7 +39,6 @@ export const CmCatPage = (props: Props) => {
   const listRef = useRef<HTMLDivElement>(null);
   const categoryTitleRef = useRef<HTMLDivElement>(null);
   const debouncedTerm = useAtom(categoryDebounceTermAtom);
-  const [isOpenRatingSortedComs, setIsOpenRatingSortedComs] = useState(false);
   const playComSrc = useAtomValue(comPlayerPlaySrcAtom);
 
   useEffect(() => {
@@ -62,7 +63,7 @@ export const CmCatPage = (props: Props) => {
         withoutBackButton={props.withoutBackButton}
         headClass="flex between full-width"
         backButtonPath={props.backButtonPath}
-        onMoreClick={() => setIsOpenRatingSortedComs(true)}
+        onMoreClick={isOpenRatingSortedComsAtom.toggle}
         head={
           <CmComListSearchFilterInput
             Constructor={Com}
@@ -101,12 +102,11 @@ export const CmCatPage = (props: Props) => {
                   />
                 </SetComListLimitsExtracterContext.Provider>
               </div>
-              {isOpenRatingSortedComs && (
-                <FullContent onClose={setIsOpenRatingSortedComs}>
-                  <div className="sticky top-0 py-5 bg-x5">Рейтинг</div>
-                  <CmRatingSortedComList coms={props.coms} />
-                </FullContent>
-              )}
+
+              <FullContent openAtom={isOpenRatingSortedComsAtom}>
+                <div className="sticky top-0 py-5 bg-x5">Рейтинг</div>
+                <CmRatingSortedComList coms={props.coms} />
+              </FullContent>
             </>
           )
         }

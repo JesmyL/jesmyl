@@ -1,8 +1,7 @@
-import { useAtom, useAtomSet } from '#shared/lib/atom';
+import { useAtomSet, useAtomValue } from '#shared/lib/atom';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { useEffect } from 'react';
-import { itNIt } from 'shared/utils';
 import styled from 'styled-components';
 import { metronomeIsOpenAtom, metronomeUserBpmAtom, metronomeUserMeterSizeAtom } from '../lib/atoms';
 import { useMetronomePlayStateController } from '../lib/useMetronomePlayStateController';
@@ -19,7 +18,7 @@ interface Props {
 export default function LazyMetronome({ meterSize = 4, bpm = 120 }: Props) {
   const setUserBpm = useAtomSet(metronomeUserBpmAtom);
   const setUserMeterSize = useAtomSet(metronomeUserMeterSizeAtom);
-  const [isOpen, setIsOpen] = useAtom(metronomeIsOpenAtom);
+  const isOpen = useAtomValue(metronomeIsOpenAtom);
 
   useMetronomePlayStateController();
 
@@ -28,7 +27,7 @@ export default function LazyMetronome({ meterSize = 4, bpm = 120 }: Props) {
 
   return (
     isOpen && (
-      <Modal onClose={() => setIsOpen(itNIt)}>
+      <Modal openAtom={metronomeIsOpenAtom}>
         <StyledModalBody className="flex column between">
           <div className="flex between full-width">
             <MetronomeTouchBpmButton />

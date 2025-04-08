@@ -1,6 +1,7 @@
 import { defaultPreventer } from '#shared/lib/event-funcs';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 
+import { atom } from '#shared/lib/atom';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { getScheduleWidgetUserPhotoStorageKey } from '#widgets/schedule/storage';
@@ -16,25 +17,24 @@ interface Props {
   user: IScheduleWidgetUser;
 }
 
-export function ScheduleWidgetUserTakePhoto({ user }: Props) {
-  const [isFullNodeOpen, setIsFullNodeOpen] = useState(false);
+const isOpenFullContentAtom = atom(false);
 
+export function ScheduleWidgetUserTakePhoto({ user }: Props) {
   return (
     <>
-      {isFullNodeOpen && (
-        <FullContent onClose={setIsFullNodeOpen}>
-          <Camera
-            close={() => setIsFullNodeOpen(false)}
-            user={user}
-          />
-        </FullContent>
-      )}
+      <FullContent openAtom={isOpenFullContentAtom}>
+        <Camera
+          close={isOpenFullContentAtom.reset}
+          user={user}
+        />
+      </FullContent>
+
       <LazyIcon
         className="pointer"
         icon="Camera01"
         onClick={event => {
           event.stopPropagation();
-          setIsFullNodeOpen(true);
+          isOpenFullContentAtom.set(true);
         }}
       />
     </>

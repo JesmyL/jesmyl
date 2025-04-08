@@ -1,4 +1,4 @@
-import { useAtomValue } from '#shared/lib/atom';
+import { atom, useAtomValue } from '#shared/lib/atom';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
@@ -18,12 +18,13 @@ import { IScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
 import { ScheduleWidgetMarkdownLiveTranslation } from './MarkdownLive';
 
 interface Props {
-  onClose: (isOpen: boolean) => void;
   schw: IScheduleWidgetWid;
   isShowMarkdownOnly?: boolean;
 }
 
-export const ScheduleWidgetLiveTranslation = ({ onClose, schw, isShowMarkdownOnly }: Props) => {
+const isSelectStreamerModalAtom = atom(false);
+
+export const ScheduleWidgetLiveTranslation = ({ schw, isShowMarkdownOnly }: Props) => {
   const liveData = useAtomValue(liveDataAtom);
   const [streamerLogin, setStreamerLogin] = useState<SokiAuthLogin | null>(null);
   const streamers = useAtomValue(liveDataStreamersAtom);
@@ -53,16 +54,46 @@ export const ScheduleWidgetLiveTranslation = ({ onClose, schw, isShowMarkdownOnl
   }, [schw, streamerLogin]);
 
   useEffect(() => {
-    if (streamerLogin != null || streamers == null) return;
-    if (streamers.length === 1) setStreamerLogin(streamers[0].login);
-  }, [streamerLogin, streamers]);
+    isSelectStreamerModalAtom.set(!!streamers?.length && !streamerLogin);
 
-  if (streamers && !streamerLogin) {
+    if (streamerLogin != null || streamers == null || streamers.length !== 1) return;
+
+    setStreamerLogin(streamers[0].login);
+  }, [setStreamerLogin, streamerLogin, streamers]);
+
+  if (isLoading)
     return (
-      <Modal onClose={() => onClose(false)}>
+      <div className="flex center full-size">
+        <TheIconLoading />
+      </div>
+    );
+
+  return (
+    <>
+      {liveData == null ? (
+        <div className="flex center full-size">
+          {streamerLogin == null ? 'Трансляция не началась' : 'Трансляция завершена'}
+        </div>
+      ) : (
+        <>
+          {liveData.markdown ? (
+            <ScheduleWidgetMarkdownLiveTranslation md={liveData.markdown} />
+          ) : isShowMarkdownOnly ? (
+            <div className="full-size flex center">
+              <ScreenTranslationControlPanelShowMdButton />
+            </div>
+          ) : liveData.cm !== undefined ? (
+            <CmLiveTranslationScreen {...liveData.cm} />
+          ) : liveData.bible !== undefined ? (
+            <BibleTranslationSlide {...liveData.bible} />
+          ) : null}
+        </>
+      )}
+
+      <Modal openAtom={isSelectStreamerModalAtom}>
         <ModalHeader>Выбери стримера</ModalHeader>
         <ModalBody>
-          {streamers.map(({ fio, login }) => {
+          {streamers?.map(({ fio, login }) => {
             return (
               <div key={login}>
                 <TheIconButton
@@ -72,37 +103,9 @@ export const ScheduleWidgetLiveTranslation = ({ onClose, schw, isShowMarkdownOnl
                 />
               </div>
             );
-          })}
+          }) ?? 'Список пуст'}
         </ModalBody>
       </Modal>
-    );
-  }
-
-  if (isLoading)
-    return (
-      <div className="flex center full-size">
-        <TheIconLoading />
-      </div>
-    );
-
-  if (liveData == null) {
-    if (streamerLogin == null) return <div className="flex center full-size">Трансляция не началась</div>;
-    return <div className="flex center full-size">Трансляция завершена</div>;
-  }
-
-  return (
-    <>
-      {liveData.markdown ? (
-        <ScheduleWidgetMarkdownLiveTranslation md={liveData.markdown} />
-      ) : isShowMarkdownOnly ? (
-        <div className="full-size flex center">
-          <ScreenTranslationControlPanelShowMdButton />
-        </div>
-      ) : liveData.cm !== undefined ? (
-        <CmLiveTranslationScreen {...liveData.cm} />
-      ) : liveData.bible !== undefined ? (
-        <BibleTranslationSlide {...liveData.bible} />
-      ) : null}
     </>
   );
 };

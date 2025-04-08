@@ -1,3 +1,4 @@
+import { Atom } from '#shared/lib/atom';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { useCallback, useState } from 'react';
@@ -10,10 +11,10 @@ import {
 import { ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes } from './SortBoxes';
 
 interface Props {
+  openAtom: Atom<boolean>;
   criteria: IScheduleWidgetTeamCriteria;
   uncriteriedUsers: IScheduleWidgetUser[];
   usersForSort: IScheduleWidgetUser[];
-  onClose: (isOpen: false) => void;
   singleInsertUser?: IScheduleWidgetUser | nil;
   criteriaScopeProps: ScheduleGameCriteriaScopeProps;
 }
@@ -22,9 +23,9 @@ export function ScheduleWidgetTeamsCriteriaSorterScreen({
   criteria,
   uncriteriedUsers,
   usersForSort,
-  onClose,
   singleInsertUser,
   criteriaScopeProps,
+  openAtom,
 }: Props) {
   const [sortedUsers, setSortedUsers] = useState(() => {
     const users = [...usersForSort]
@@ -76,7 +77,7 @@ export function ScheduleWidgetTeamsCriteriaSorterScreen({
       <div className="full-width flex center">
         <SendButton
           title="Отправить"
-          onSuccess={() => onClose(false)}
+          onSuccess={openAtom.reset}
           onSend={() => {
             const value = {} as Record<IScheduleWidgetUserMi, number>;
 

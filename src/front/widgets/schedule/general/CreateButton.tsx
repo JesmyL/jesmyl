@@ -1,3 +1,4 @@
+import { atom } from '#shared/lib/atom';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
@@ -9,9 +10,10 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useState } from 'react';
 import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 
+const isModalOpenAtom = atom(false);
+
 export function ScheduleCreateWidgetButton() {
   const [title, setTitle] = useState('');
-  const [isOpenModal, setIsOpenModal] = useState(false);
 
   return (
     <>
@@ -19,54 +21,52 @@ export function ScheduleCreateWidgetButton() {
         title="Создать расписание"
         onSend={() => {
           setTitle('');
-          setIsOpenModal(true);
+          isModalOpenAtom.set(true);
         }}
       />
 
-      {isOpenModal && (
-        <Modal onClose={setIsOpenModal}>
-          <ModalHeader>Новое расписание</ModalHeader>
-          <ModalBody>
-            <div>Создать расписание с названием</div>
-            <div>
-              <KeyboardInput
-                value={title}
-                onChange={setTitle}
-              />
-            </div>
-          </ModalBody>
-          <ModalFooter>
-            <div className="flex flex-gap">
-              <TheIconSendButton
-                icon="PlusSign"
-                className="color--ok"
-                postfix="Создать"
-                disabled={!title}
-                onSuccess={() => {
-                  setTitle('');
-                  setIsOpenModal(false);
-                }}
-                onSend={() => {
-                  if (!title) {
-                    return;
-                  }
+      <Modal openAtom={isModalOpenAtom}>
+        <ModalHeader>Новое расписание</ModalHeader>
+        <ModalBody>
+          <div>Создать расписание с названием</div>
+          <div>
+            <KeyboardInput
+              value={title}
+              onChange={setTitle}
+            />
+          </div>
+        </ModalBody>
+        <ModalFooter>
+          <div className="flex flex-gap">
+            <TheIconSendButton
+              icon="PlusSign"
+              className="color--ok"
+              postfix="Создать"
+              disabled={!title}
+              onSuccess={() => {
+                setTitle('');
+                isModalOpenAtom.set(false);
+              }}
+              onSend={() => {
+                if (!title) {
+                  return;
+                }
 
-                  return schGeneralSokiInvocatorClient.create({ title });
-                }}
-              />
-              <TheIconButton
-                icon="Cancel01"
-                postfix="Отменить"
-                className="color--ko"
-                onClick={() => {
-                  setTitle('');
-                  setIsOpenModal(false);
-                }}
-              />
-            </div>
-          </ModalFooter>
-        </Modal>
-      )}
+                return schGeneralSokiInvocatorClient.create({ title });
+              }}
+            />
+            <TheIconButton
+              icon="Cancel01"
+              postfix="Отменить"
+              className="color--ko"
+              onClick={() => {
+                setTitle('');
+                isModalOpenAtom.set(false);
+              }}
+            />
+          </div>
+        </ModalFooter>
+      </Modal>
     </>
   );
 }

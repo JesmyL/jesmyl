@@ -1,16 +1,17 @@
+import { atom } from '#shared/lib/atom';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { useState } from 'react';
 import { scheduleWidgetUserRights } from 'shared/api';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import { ScheduleWidgetRightControlList } from './RightControlList';
 
+const isModalOpenAtom = atom(false);
+
 export function ScheduleWidgetNewUserRegisterLevel() {
   const rights = useScheduleWidgetRightsContext();
-  const [isOpenModal, setIsOpenModal] = useState<unknown>(false);
   const scheduleScopeProps = useScheduleScopePropsContext();
 
   return (
@@ -19,22 +20,20 @@ export function ScheduleWidgetNewUserRegisterLevel() {
         icon="ArrowRight01"
         className="margin-big-gap-v margin-gap-l"
         prefix="Права по умолчанию"
-        onClick={setIsOpenModal}
+        onClick={isModalOpenAtom.toggle}
       />
 
-      {isOpenModal && (
-        <Modal onClose={setIsOpenModal}>
-          <ModalBody>
-            <ScheduleWidgetRightControlList
-              rightCtrl={scheduleWidgetUserRights}
-              R={rights.schedule.ctrl.defu}
-              onSend={value =>
-                schGeneralSokiInvocatorClient.setDefaultUserRights({ props: scheduleScopeProps, R: value })
-              }
-            />
-          </ModalBody>
-        </Modal>
-      )}
+      <Modal openAtom={isModalOpenAtom}>
+        <ModalBody>
+          <ScheduleWidgetRightControlList
+            rightCtrl={scheduleWidgetUserRights}
+            R={rights.schedule.ctrl.defu}
+            onSend={value =>
+              schGeneralSokiInvocatorClient.setDefaultUserRights({ props: scheduleScopeProps, R: value })
+            }
+          />
+        </ModalBody>
+      </Modal>
     </>
   );
 }

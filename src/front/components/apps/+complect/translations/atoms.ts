@@ -1,4 +1,4 @@
-import { atom, useAtom, useAtomSet, useAtomToggle, useAtomValue } from '#shared/lib/atom';
+import { atom, useAtom, useAtomSet, useAtomValue } from '#shared/lib/atom';
 import { complectIDB } from '../_idb/complectIDB';
 
 const isCanShowTextTranslationAtom = atom(false);
@@ -11,7 +11,7 @@ export const useCurrentTranslationConfigiValue = () => useAtomValue(currentTrans
 const isTranslationTextVisibleAtom = atom(true);
 export const useIsScreenTranslationTextVisible = () => useAtomValue(isTranslationTextVisibleAtom);
 
-export const useToggleIsScreenTranslationTextVisible = () => useAtomToggle(isTranslationTextVisibleAtom);
+export const useSetIsScreenTranslationTextVisible = () => useAtomSet(isTranslationTextVisibleAtom);
 
 export const useScreenTranslationConfigsSet = () => complectIDB.useSet.screenTranslationConfigs();
 export const useScreenTranslationConfigsValue = () => complectIDB.useValue.screenTranslationConfigs();

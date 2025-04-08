@@ -1,4 +1,5 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
+import { atom } from '#shared/lib/atom';
 import { useIsRedactArea } from '#shared/lib/hooks/useIsRedactArea';
 import { mylib, MyLib } from '#shared/lib/my-lib';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
@@ -36,6 +37,8 @@ const defaultPrint = {
   title: true,
 };
 
+const isFullDayOpenAtom = atom(false);
+
 export const ScheduleWidgetDay = ({
   day,
   dayi,
@@ -53,7 +56,6 @@ export const ScheduleWidgetDay = ({
   const rights = useScheduleWidgetRightsContext();
   const { editIcon, isRedact } = useIsRedactArea(true, null, rights.isCanRedact, true);
   const [print, setPrint] = useState(defaultPrint);
-  const [isFullDayOpen, setIsFullDayOpen] = useState<unknown>(false);
   const dayScopeProps: ScheduleDayScopeProps = useMemo(
     () => ({ ...scheduleScopeProps, dayi }),
     [dayi, scheduleScopeProps],
@@ -78,7 +80,7 @@ export const ScheduleWidgetDay = ({
       >
         <div
           className={'day-title flex flex-gap padding-gap-v sticky pos-top' + (print.title ? '' : ' not-printable')}
-          onClick={isCanOpenFull ? setIsFullDayOpen : undefined}
+          onClick={isCanOpenFull ? isFullDayOpenAtom.toggle : undefined}
         >
           {title}
           {schedule.withTech ? (
@@ -167,16 +169,15 @@ export const ScheduleWidgetDay = ({
           </>
         )}
       </StyledScheduleWidgetDay>
-      {!isFullDayOpen || (
-        <FullContent onClose={setIsFullDayOpen}>
-          <ScheduleAlarmDay
-            day={day}
-            dayi={dayi}
-            schedule={schedule}
-            scheduleScopeProps={scheduleScopeProps}
-          />
-        </FullContent>
-      )}
+
+      <FullContent openAtom={isFullDayOpenAtom}>
+        <ScheduleAlarmDay
+          day={day}
+          dayi={dayi}
+          schedule={schedule}
+          scheduleScopeProps={scheduleScopeProps}
+        />
+      </FullContent>
     </ScheduleDayScopePropsContext.Provider>
   );
 };

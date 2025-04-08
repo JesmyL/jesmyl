@@ -1,38 +1,35 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useSetAppRootAnchorNodesContext } from '#basis/lib/App.contexts';
 import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
+import { Atom } from '#shared/lib/atom';
 import { useWid } from '#shared/lib/hooks/useWid';
-import { useCallback } from 'react';
-import { Portal } from './Portal';
+import { useCallback, useEffect } from 'react';
 
-export const useSetRootAnchoredContent = (
-  onCloseRef: { current: () => void },
-  topContent?: React.ReactNode,
-  topClassNames?: string[],
-) => {
+export const useSetRootAnchoredContent = (openAtom: Atom<any>, topContent?: React.ReactNode) => {
   const updateContent = useSetAppRootAnchorNodesContext();
   const wid = useWid();
 
-  onCloseRef.current = () => {
-    updateContent(prev => {
-      const map = new Map(prev);
-      map.delete(wid);
-      return map;
-    });
-  };
+  useEffect(() => {
+    const unsubscribe = openAtom.subscribe(isOpen => {
+      if (isOpen) return;
 
-  return useCallback(
-    (content?: React.ReactNode, classNames?: string[]) => {
+      unsubscribe();
       updateContent(prev => {
         const map = new Map(prev);
-        map.set(
-          wid,
-          <AppDialogProvider title="inner">
-            <Portal classNames={classNames ?? topClassNames}>{content ?? topContent}</Portal>
-          </AppDialogProvider>,
-        );
+        map.delete(wid);
+        return map;
+      });
+    });
+  }, [openAtom, updateContent, wid]);
+
+  return useCallback(
+    (content?: React.ReactNode) => {
+      updateContent(prev => {
+        const map = new Map(prev);
+        map.set(wid, <AppDialogProvider title="inner">{content ?? topContent}</AppDialogProvider>);
         return map;
       });
     },
-    [topClassNames, topContent, updateContent, wid],
+    [topContent, updateContent, wid],
   );
 };

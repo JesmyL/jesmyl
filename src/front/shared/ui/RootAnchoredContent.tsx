@@ -1,16 +1,16 @@
+import { Atom } from '#shared/lib/atom';
 import { useEffect } from 'react';
 import { useSetRootAnchoredContent } from './useSetRootAnchoredContent';
 
-interface Props {
+interface Props<Value> {
   children: React.ReactNode;
-  onCloseRef: { current: () => void };
-  classNames?: string[];
+  openAtom: Atom<Value>;
 }
 
-export const RootAnchoredContent = ({ children, onCloseRef, classNames }: Props) => {
-  const setContent = useSetRootAnchoredContent(onCloseRef, children, classNames);
+export const RootAnchoredContent = <Value,>({ children, openAtom }: Props<Value>) => {
+  const setContent = useSetRootAnchoredContent(openAtom, children);
 
-  useEffect(() => setContent(), [children, classNames, setContent]);
+  useEffect(() => setContent(), [children, setContent]);
 
   return <></>;
 };

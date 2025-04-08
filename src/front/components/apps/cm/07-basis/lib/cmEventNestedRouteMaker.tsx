@@ -1,7 +1,9 @@
+import { isTouchDevice } from '#shared/lib/device-differences';
 import { mylib } from '#shared/lib/my-lib';
 import { ScheduleDayEventPathProps } from '#widgets/schedule/ScheduleWidget.model';
 import { TheMeetingsEvent } from '$cm/lists/meetings/TheMeetingsEvent';
 import { useMeetingComFaceList } from '$cm/lists/meetings/useMeetingComFaceList';
+import { TranslationFullscreen } from '$cm/translation/complect/fullscreen/TranslationFullscreen';
 import { IndexScheduleWidgetTranslations } from '$index/complect/translations/LiveTranslations';
 import { FileRoutesByPath, Link, useParams, useSearch } from '@tanstack/react-router';
 import { JSX, useMemo } from 'react';
@@ -68,7 +70,7 @@ export const makeCmEventNestedRoute = <Path extends keyof FileRoutesByPath>(prop
       const { schw: paramSchw } = useParams({ from: props.path }) as { schw?: `${IScheduleWidgetWid}` };
       const { schw = paramSchw } = useSearch({ from: props.path }) as Search;
 
-      return <IndexScheduleWidgetTranslations schw={+schw!} />;
+      return isTouchDevice ? <TranslationFullscreen /> : <IndexScheduleWidgetTranslations schw={+schw!} />;
     },
   });
 

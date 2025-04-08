@@ -1,4 +1,4 @@
-import { useAtom, useAtomValue } from '#shared/lib/atom';
+import { useAtomValue } from '#shared/lib/atom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import {
@@ -33,7 +33,6 @@ import { useMigratableTopComTools } from './tools/lib/useMigratableComTools';
 import { CmComCatMentions } from './useGetCatMentions';
 
 export function TheComposition() {
-  const [isCommentRedact, setIsCommentRedact] = useAtom(isComCommentRedactAtom);
   const [chordVisibleVariant] = useChordVisibleVariant();
   const ccom = useFixedCcom();
   const { addLaterComw, laterComws } = useLaterComList();
@@ -114,14 +113,12 @@ export function TheComposition() {
 
           {controlledComNode}
 
-          {isCommentRedact && (
-            <Modal
-              key="com-comment"
-              onClose={setIsCommentRedact}
-            >
-              <CmComCommentModalInner com={ccom} />
-            </Modal>
-          )}
+          <Modal
+            key="com-comment"
+            openAtom={isComCommentRedactAtom}
+          >
+            <CmComCommentModalInner com={ccom} />
+          </Modal>
 
           <Metronome
             meterSize={ccom.meterSize}

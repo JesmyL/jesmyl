@@ -1,3 +1,4 @@
+import { atom } from '#shared/lib/atom';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BibleTranslatesContextProvider } from '$bible/basis/contexts/TranslatesContext';
@@ -23,6 +24,10 @@ export function BibleReaderCurrentBookPage() {
   );
 }
 
+const isOpenBookSelectorAtom = atom(false);
+const isOpenChapterSelectorAtom = atom(false);
+const isOpenVerseSelectorAtom = atom(false);
+
 function Content() {
   const currentBooki = useBibleAddressBooki();
   const currentChapteri = useBibleAddressChapteri();
@@ -36,10 +41,6 @@ function Content() {
   const onBookCloseRef = useRef(emptyFunc);
   const onChapterCloseRef = useRef(emptyFunc);
 
-  const [isOpenBookSelector, setIsOpenBookSelector] = useState(false);
-  const [isOpenChapterSelector, setIsOpenChapterSelector] = useState(false);
-  const [isOpenVerseSelector, setIsOpenVerseSelector] = useState(false);
-
   useEffect(() => {
     if (currentBooki) setSelectedBooki(booki => booki || currentBooki);
     if (currentChapteri) setSelectedChapteri(chapteri => chapteri || currentChapteri);
@@ -52,7 +53,7 @@ function Content() {
       headTitle={
         <span
           className="pointer"
-          onClick={() => setIsOpenBookSelector(true)}
+          onClick={isOpenBookSelectorAtom.toggle}
         >
           <BibleAddressSingle />
         </span>
@@ -69,79 +70,71 @@ function Content() {
             />
           )}
 
-          {isOpenBookSelector && (
-            <FullContent onCloseRef={onBookCloseRef}>
-              {bookTitles.map(([bookTitle], booki) => {
-                return (
-                  <div
-                    key={bookTitle}
-                    className={
-                      'margin-big-gap-v margin-gap-l pointer' +
-                      (booki === selectedBooki ? ' color--7' : '') +
-                      (booki === currentBooki ? ' text-underline' : '') +
-                      (booki === 38 ? ' margin-giant-gap-b' : '')
-                    }
-                    onClick={() => {
-                      setSelectedBooki(booki);
-                      setIsOpenChapterSelector(true);
-                    }}
-                  >
-                    {bookTitle}
-                  </div>
-                );
-              })}
-            </FullContent>
-          )}
+          <FullContent openAtom={isOpenBookSelectorAtom}>
+            {bookTitles.map(([bookTitle], booki) => {
+              return (
+                <div
+                  key={bookTitle}
+                  className={
+                    'margin-big-gap-v margin-gap-l pointer' +
+                    (booki === selectedBooki ? ' color--7' : '') +
+                    (booki === currentBooki ? ' text-underline' : '') +
+                    (booki === 38 ? ' margin-giant-gap-b' : '')
+                  }
+                  onClick={() => {
+                    setSelectedBooki(booki);
+                    isOpenChapterSelectorAtom.set(true);
+                  }}
+                >
+                  {bookTitle}
+                </div>
+              );
+            })}
+          </FullContent>
 
-          {isOpenChapterSelector && (
-            <FullContent onCloseRef={onChapterCloseRef}>
-              {chapters?.[selectedBooki]?.map((chapter, chapteri) => {
-                return (
-                  <ItemFace
-                    key={chapteri}
-                    className={
-                      'inline-flex center pointer' +
-                      (chapteri === selectedChapteri ? ' bgcolor--7 color--1' : ' bgcolor--2 color--3') +
-                      (chapteri === currentChapteri ? ' text-bold text-underline' : '')
-                    }
-                    chapter-length={chapter?.length}
-                    onClick={() => {
-                      setSelectedChapteri(chapteri);
-                      setIsOpenVerseSelector(true);
-                    }}
-                  >
-                    {chapteri + 1}
-                  </ItemFace>
-                );
-              })}
-            </FullContent>
-          )}
+          <FullContent openAtom={isOpenChapterSelectorAtom}>
+            {chapters?.[selectedBooki]?.map((chapter, chapteri) => {
+              return (
+                <ItemFace
+                  key={chapteri}
+                  className={
+                    'inline-flex center pointer' +
+                    (chapteri === selectedChapteri ? ' bgcolor--7 color--1' : ' bgcolor--2 color--3') +
+                    (chapteri === currentChapteri ? ' text-bold text-underline' : '')
+                  }
+                  chapter-length={chapter?.length}
+                  onClick={() => {
+                    setSelectedChapteri(chapteri);
+                    isOpenVerseSelectorAtom.set(true);
+                  }}
+                >
+                  {chapteri + 1}
+                </ItemFace>
+              );
+            })}
+          </FullContent>
 
-          {isOpenVerseSelector && (
-            <FullContent onClose={setIsOpenVerseSelector}>
-              {close =>
-                chapters?.[selectedBooki]?.[selectedChapteri]?.map((_, versei) => {
-                  return (
-                    <ItemFace
-                      key={versei}
-                      className={
-                        'inline-flex center pointer bgcolor--2 color--3' +
-                        (versei === currentVersei ? ' color--7 text-bold  text-underline' : '')
-                      }
-                      onClick={() => {
-                        setAddress(selectedBooki, selectedChapteri, versei);
-                        onBookCloseRef.current();
-                        onChapterCloseRef.current();
-                        close();
-                      }}
-                    >
-                      {versei + 1}
-                    </ItemFace>
-                  );
-                })
-              }
-            </FullContent>
-          )}
+          <FullContent openAtom={isOpenVerseSelectorAtom}>
+            {chapters?.[selectedBooki]?.[selectedChapteri]?.map((_, versei) => {
+              return (
+                <ItemFace
+                  key={versei}
+                  className={
+                    'inline-flex center pointer bgcolor--2 color--3' +
+                    (versei === currentVersei ? ' color--7 text-bold  text-underline' : '')
+                  }
+                  onClick={() => {
+                    setAddress(selectedBooki, selectedChapteri, versei);
+                    onBookCloseRef.current();
+                    onChapterCloseRef.current();
+                    isOpenVerseSelectorAtom.reset();
+                  }}
+                >
+                  {versei + 1}
+                </ItemFace>
+              );
+            })}
+          </FullContent>
         </>
       }
     />

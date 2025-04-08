@@ -1,18 +1,19 @@
+import { Atom } from '#shared/lib/atom';
 import { CopyTextButton } from '../CopyTextButton';
 import { FullContent } from '../fullscreen-content/FullContent';
 import { QRCode } from './QRCode';
 
 interface Props {
   text: string;
-  onClose: (isOpen: false) => void;
+  openAtom: Atom<boolean>;
   copyText?: string;
 }
 
-export const QrCodeFullScreen = ({ text, onClose, copyText }: Props) => {
+export const QrCodeFullScreen = ({ text, copyText, openAtom }: Props) => {
   return (
     <FullContent
-      onClose={onClose}
       closable
+      openAtom={openAtom}
       containerClassName="flex center column flex-gap full-size"
     >
       <QRCode
