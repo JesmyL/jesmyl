@@ -28,8 +28,10 @@ export const deployTheCode = async (front, back) => {
     const [num, resetVersion] = await updateVersion(isIgnoreVersionUpdate);
 
     try {
-      console.info(`Build ${num} is running...`);
+      console.info(`Lint check for v${num} is running...`);
+      await execAsync('npm run lint');
 
+      console.info(`Build v${num} is running...`);
       await execAsync('npm run build');
 
       console.info(`...Build ${num} is finished`);
