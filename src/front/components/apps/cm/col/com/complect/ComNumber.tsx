@@ -10,4 +10,4 @@ export const CmComNumber = memo(function CmComNumber(props: Props) {
   return numbers[props.comw] ?? <NumberGetter comw={props.comw} />;
 });
 
-const NumberGetter = ({ comw }: Props) => <>{useComNumbers(comw, numbers)[comw] ?? 1}</>;
+const NumberGetter = ({ comw }: Props) => <>{useComNumbers(comw, numbers)[comw]}</>;
