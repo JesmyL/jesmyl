@@ -26,6 +26,7 @@ import { Route as BibleSearchImport } from './front/routes/bible/search'
 import { Route as BibleIImport } from './front/routes/bible/i'
 import { Route as CmEditRouteImport } from './front/routes/cm/edit/route'
 import { Route as otherAppNameRouteImport } from './front/routes/!other.$appName/route'
+import { Route as CmPlayerIndexImport } from './front/routes/cm/player/index'
 import { Route as CmLiIndexImport } from './front/routes/cm/li/index'
 import { Route as CmIIndexImport } from './front/routes/cm/i/index'
 import { Route as otherAppNameIndexImport } from './front/routes/!other.$appName/index'
@@ -149,6 +150,12 @@ const CmEditIndexLazyRoute = CmEditIndexLazyImport.update({
 } as any).lazy(() =>
   import('./front/routes/cm/edit/index.lazy').then((d) => d.Route),
 )
+
+const CmPlayerIndexRoute = CmPlayerIndexImport.update({
+  id: '/player/',
+  path: '/player/',
+  getParentRoute: () => CmRouteRoute,
+} as any)
 
 const CmLiIndexRoute = CmLiIndexImport.update({
   id: '/li/',
@@ -456,6 +463,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CmLiIndexImport
       parentRoute: typeof CmRouteImport
     }
+    '/cm/player/': {
+      id: '/cm/player/'
+      path: '/player'
+      fullPath: '/cm/player'
+      preLoaderRoute: typeof CmPlayerIndexImport
+      parentRoute: typeof CmRouteImport
+    }
     '/cm/edit/': {
       id: '/cm/edit/'
       path: '/'
@@ -617,6 +631,7 @@ interface CmRouteRouteChildren {
   CmLiSelRoute: typeof CmLiSelRoute
   CmIIndexRoute: typeof CmIIndexRoute
   CmLiIndexRoute: typeof CmLiIndexRoute
+  CmPlayerIndexRoute: typeof CmPlayerIndexRoute
   CmLiCatCatwRoute: typeof CmLiCatCatwRoute
 }
 
@@ -628,6 +643,7 @@ const CmRouteRouteChildren: CmRouteRouteChildren = {
   CmLiSelRoute: CmLiSelRoute,
   CmIIndexRoute: CmIIndexRoute,
   CmLiIndexRoute: CmLiIndexRoute,
+  CmPlayerIndexRoute: CmPlayerIndexRoute,
   CmLiCatCatwRoute: CmLiCatCatwRoute,
 }
 
@@ -696,6 +712,7 @@ export interface FileRoutesByFullPath {
   '/!other/$appName/': typeof otherAppNameIndexRoute
   '/cm/i': typeof CmIIndexRoute
   '/cm/li': typeof CmLiIndexRoute
+  '/cm/player': typeof CmPlayerIndexRoute
   '/cm/edit/': typeof CmEditIndexLazyRoute
   '/cm/edit/coms/$comw': typeof CmEditComsComwRouteRouteWithChildren
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
@@ -731,6 +748,7 @@ export interface FileRoutesByTo {
   '/!other/$appName': typeof otherAppNameIndexRoute
   '/cm/i': typeof CmIIndexRoute
   '/cm/li': typeof CmLiIndexRoute
+  '/cm/player': typeof CmPlayerIndexRoute
   '/cm/edit': typeof CmEditIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/cm/edit/cats/$catw': typeof CmEditCatsCatwRoute
@@ -771,6 +789,7 @@ export interface FileRoutesById {
   '/!other/$appName/': typeof otherAppNameIndexRoute
   '/cm/i/': typeof CmIIndexRoute
   '/cm/li/': typeof CmLiIndexRoute
+  '/cm/player/': typeof CmPlayerIndexRoute
   '/cm/edit/': typeof CmEditIndexLazyRoute
   '/cm/edit/coms/$comw': typeof CmEditComsComwRouteRouteWithChildren
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
@@ -813,6 +832,7 @@ export interface FileRouteTypes {
     | '/!other/$appName/'
     | '/cm/i'
     | '/cm/li'
+    | '/cm/player'
     | '/cm/edit/'
     | '/cm/edit/coms/$comw'
     | '/!other/$appName/settings/console'
@@ -847,6 +867,7 @@ export interface FileRouteTypes {
     | '/!other/$appName'
     | '/cm/i'
     | '/cm/li'
+    | '/cm/player'
     | '/cm/edit'
     | '/!other/$appName/settings/console'
     | '/cm/edit/cats/$catw'
@@ -885,6 +906,7 @@ export interface FileRouteTypes {
     | '/!other/$appName/'
     | '/cm/i/'
     | '/cm/li/'
+    | '/cm/player/'
     | '/cm/edit/'
     | '/cm/edit/coms/$comw'
     | '/!other/$appName/settings/console'
@@ -959,6 +981,7 @@ export const routeTree = rootRoute
         "/cm/li/sel",
         "/cm/i/",
         "/cm/li/",
+        "/cm/player/",
         "/cm/li/cat/$catw"
       ]
     },
@@ -1065,6 +1088,10 @@ export const routeTree = rootRoute
     },
     "/cm/li/": {
       "filePath": "cm/li/index.tsx",
+      "parent": "/cm"
+    },
+    "/cm/player/": {
+      "filePath": "cm/player/index.tsx",
       "parent": "/cm"
     },
     "/cm/edit/": {

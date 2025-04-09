@@ -19,6 +19,15 @@ export const CmFooter = () => {
         title="Списки"
         icon="Playlist01"
       />
+      {auth.level >= 3 && (
+        <AppFooterItem
+          idPostfix="cm-player"
+          to="/cm/player/"
+          title="Плеер"
+          icon="PlayListFavourite02"
+        />
+      )}
+
       {auth.level >= 50 && (
         <AppFooterItem
           idPostfix="cm-edit"
