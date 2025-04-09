@@ -1,3 +1,4 @@
+import { appVersionFileStore } from 'back/apps/index/file-stores';
 import { LocalSokiAuth, SokiVisit } from 'shared/api';
 import { makeRegExp } from './makeRegExp';
 
@@ -30,8 +31,11 @@ export const escapeText = (text: string) =>
 export const userVisitStringified = (visit: SokiVisit | nil) => {
   if (visit == null) return '';
   return (
-    `${visit.urls[0]}\n\n<blockquote expandable>${JSON.stringify(visit, null, 1)}\n` +
-    `Разница: ${Date.now() - visit.clientTm}мс</blockquote>`
+    `${visit.urls[0]}\n\n<blockquote expandable>${JSON.stringify(
+      { ...visit, version: `${visit.version}/${appVersionFileStore.getValue().num}` },
+      null,
+      1,
+    )}\n` + `Разница: ${Date.now() - visit.clientTm}мс</blockquote>`
   );
 };
 
