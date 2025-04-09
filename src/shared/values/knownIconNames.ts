@@ -8,6 +8,8 @@ export const knownIconNames = [
   'FileRemove',
   'Edit02',
   'StarCircle',
+  'PlayListFavourite01',
+  'PlayListFavourite02',
   'FileSearch',
   'MusicNote03',
   'DashboardSpeed01',

@@ -158,6 +158,8 @@ import { iconPackOfPin } from './icons/pin';
 import { iconPackOfPlay } from './icons/play';
 import { iconPackOfPlayCircle } from './icons/play-circle';
 import { iconPackOfPlayCircle02 } from './icons/play-circle-02';
+import { iconPackOfPlayListFavourite01 } from './icons/play-list-favourite-01';
+import { iconPackOfPlayListFavourite02 } from './icons/play-list-favourite-02';
 import { iconPackOfPlaylist01 } from './icons/playlist-01';
 import { iconPackOfPlaylist02 } from './icons/playlist-02';
 import { iconPackOfPlaylist03 } from './icons/playlist-03';
@@ -390,6 +392,8 @@ export const theIconKnownPack: Record<TheIconKnownName, TheIconSelfPack> = {
   Playlist01: iconPackOfPlaylist01,
   Playlist02: iconPackOfPlaylist02,
   Playlist03: iconPackOfPlaylist03,
+  PlayListFavourite01: iconPackOfPlayListFavourite01,
+  PlayListFavourite02: iconPackOfPlayListFavourite02,
   PlusSign: iconPackOfPlusSign,
   PlusSignCircle: iconPackOfPlusSignCircle,
   Printer: iconPackOfPrinter,
