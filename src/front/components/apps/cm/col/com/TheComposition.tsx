@@ -26,7 +26,7 @@ import { ComNotFoundPage } from './ComNotFoundPage';
 import { isComCommentRedactAtom } from './complect/comment-parser/complect';
 import { useCheckIsComCommentIncludesBibleAddress } from './complect/comment-parser/useCheckIsComCommentIncludesBibleAddress';
 import { CmComNumber } from './complect/ComNumber';
-import { ComPlayer } from './player/ComPlayer';
+import { ComPlayerWithPoints } from './player/ComPlayerWithPoints';
 import { TheControlledCom } from './TheControlledCom';
 import { ComTools } from './tools/ComTools';
 import { useMigratableTopComTools } from './tools/lib/useMigratableComTools';
@@ -99,12 +99,7 @@ export function TheComposition() {
       content={
         <>
           <DocTitle title={ccom.name} />
-          {comAudio && (
-            <ComPlayer
-              audioSrcs={comAudio}
-              isWithEditButton
-            />
-          )}
+          {comAudio && <ComPlayerWithPoints audioSrcs={comAudio} />}
           {isShowCatBinds && (
             <div className="fade-05 full-width color--7">
               <CmComCatMentions com={ccom} />
