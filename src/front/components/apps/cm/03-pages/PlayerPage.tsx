@@ -41,7 +41,7 @@ export const CmPlayerPage = () => {
   );
   const search = useSearch({ from: '/cm/player/' });
   const lastOpenComw = cmIDB.useValue.lastOpenComw();
-  const com = useCom(search.comw ?? lastOpenComw);
+  const com = useCom(search.comw ?? lastOpenComw) ?? (coms[0] as Com | und);
   const navigate = useNavigate();
   const endedTick = useAtomValue(comPlayerEndedTickAtom);
   const errorTick = useAtomValue(comPlayerErrorTickAtom);
