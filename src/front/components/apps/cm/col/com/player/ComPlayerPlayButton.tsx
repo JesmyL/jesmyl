@@ -12,8 +12,9 @@ export const ComPlayerPlayButton = ({ src, className = '' }: Props) => {
 
   return (
     <LazyIcon
-      className={className + ' pointer ' + (playSrc && playSrc !== src ? 'text-x5' : '')}
       icon={useAtomValue(comPlayerIsPlayAtom) ? 'Pause' : 'Play'}
+      className={className + ' pointer ' + (playSrc && playSrc !== src ? 'text-x5' : '')}
+      withoutAnimation
       onClick={() => {
         comPlayerPlaySrcAtom.set(src);
         comPlayerIsPlayAtom.toggle();
