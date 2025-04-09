@@ -44,44 +44,17 @@ export interface TelegramNativeAuthUserData extends OmitOwn<User, 'language_code
   hash?: string;
 }
 
-export interface SokiVisitor {
-  fio: string;
-  nick: string;
-  version: string | number;
-  deviceId?: string;
-  browser?: string;
-  time?: string;
-  tgId?: number;
-  urls: string[];
-}
-
-export interface SokiStatistic {
-  online: number;
-  authed: number;
-  usages: Partial<Record<SokiAppName, SokiVisitor[]>>;
-  visits: SokiVisitor[];
-  pastVisits: Record<string, number>;
-}
-
 export const enum SokiAuthLogin {
   def = '{SokiAuthLogin}',
 }
 
-export interface SokiAuth extends BaseSokiAuth {
+export interface LocalSokiAuth {
   level: number;
-  passw: string;
-}
-
-export interface BaseSokiAuth {
-  fio: string;
+  fio?: string;
   nick?: string;
-  login: SokiAuthLogin;
-  tgId: number;
+  login?: SokiAuthLogin;
+  tgId?: number;
   tgAva?: string;
-}
-
-export interface LocalSokiAuth extends Partial<BaseSokiAuth> {
-  level: number;
 }
 
 export interface IndexValues {
