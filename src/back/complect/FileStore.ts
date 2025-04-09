@@ -1,6 +1,5 @@
 import { backConfig } from 'back/config/backConfig';
 import fs, { StatsListener } from 'fs';
-import { itIt } from 'shared/utils';
 
 const registeredPaths = new Set<string>();
 
@@ -38,7 +37,7 @@ export class FileStore<Value> {
         let prev = splits[0] === '' ? '/' : '';
 
         splits
-          .filter(itIt)
+          .filter(it => it)
           .slice(0, -1)
           .forEach(pathPart => {
             const path = `${prev}${pathPart}`;

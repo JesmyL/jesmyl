@@ -1,5 +1,5 @@
 import { makeTwiceKnownName } from 'back/complect/makeTwiceKnownName';
-import { tokenSecretFileStore } from 'back/complect/soki/SokiServer';
+import { tokenSecretFileStore } from 'back/complect/soki/file-stores';
 import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { supportTelegramAuthorizations } from 'back/sides/telegram-bot/prod/authorize';
 import { prodTelegramBot } from 'back/sides/telegram-bot/prod/prod-bot';

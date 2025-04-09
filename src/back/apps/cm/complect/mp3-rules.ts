@@ -1,6 +1,6 @@
-import { FileStore } from 'back/complect/FileStore';
 import https from 'https';
-import { CmMp3ContainsPageResult, CmMp3Rule } from 'shared/api';
+import { CmMp3ContainsPageResult } from 'shared/api';
+import { mp3ResourcesData } from '../file-stores';
 
 const fetch = (url: string) => {
   return new Promise<string>((resolve, reject) => {
@@ -27,8 +27,6 @@ const fetch = (url: string) => {
       });
   });
 };
-
-export const mp3ResourcesData = new FileStore<CmMp3Rule[]>('/apps/cm/mp3Rules.json', []);
 
 export const cmGetResourceHTMLString = ({ src }: { src: string }) => {
   return new Promise<CmMp3ContainsPageResult>((resolve, reject) => {

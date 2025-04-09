@@ -1,16 +1,11 @@
-import { FileStore } from 'back/complect/FileStore';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
-import { EeStorePack } from 'shared/api';
-import { ChordPack } from 'shared/api/complect/apps/cm/complect/chord-card';
 import { CmEditorSokiInvocatorModel } from 'shared/api/invocators/cm/editor-invocators.model';
 import { smylib } from 'shared/utils';
 import { unwatchEditComBusies, watchEditComBusies } from './complect/edit-com-busy';
-import { cmGetResourceHTMLString, mp3ResourcesData } from './complect/mp3-rules';
+import { cmGetResourceHTMLString } from './complect/mp3-rules';
 import { cmEditorServerInvocatorShareMethods } from './editor-invocator.shares';
+import { chordPackFileStore, eePackFileStore, mp3ResourcesData } from './file-stores';
 import { cmServerInvocatorShareMethods } from './invocator.shares';
-
-export const chordPackFileStore = new FileStore<ChordPack>('/apps/cm/chordTracks.json', {});
-export const eePackFileStore = new FileStore<EeStorePack>('/apps/cm/eeStorage.json', {});
 
 export const cmEditorSokiInvocatorBaseServer =
   new (class CmEditorSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmEditorSokiInvocatorModel> {

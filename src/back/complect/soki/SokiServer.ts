@@ -9,16 +9,12 @@ import {
   SokiError,
   SokiVisit,
 } from 'shared/api';
-import { makeRegExp, smylib, userAuthStringified, userVisitStringified } from 'shared/utils';
+import { makeRegExp, setSharedPolyfills, smylib, userAuthStringified, userVisitStringified } from 'shared/utils';
 import WebSocket, { WebSocketServer } from 'ws';
-import { setSharedPolyfills } from '../../../shared/utils/complect/polyfills';
 import { ErrorCatcher } from '../ErrorCatcher';
-import { FileStore } from '../FileStore';
 import { onSokiServerEventerInvocatorInvoke } from './eventers';
+import { tokenSecretFileStore } from './file-stores';
 import { SokiServerClientSelector } from './model';
-
-export const tokenSecretFileStore = new FileStore<{ token: string }>('/.tokenSecret', { token: '' });
-// tokenSecretFileStore.setValue({ token: randomBytes(60).toString('hex') });
 
 setSharedPolyfills();
 ErrorCatcher.logAllErrors();
