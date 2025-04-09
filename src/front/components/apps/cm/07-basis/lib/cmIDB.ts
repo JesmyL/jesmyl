@@ -17,10 +17,6 @@ import { defaultCmConfig } from '../../translation/complect/controlled/hooks/con
 import { CmTranslationScreenConfig } from '../../translation/complect/controlled/model';
 
 export interface CmIDBStorage {
-  // todo: remove it 2:
-  eeStore: unknown;
-  ignoredEESet: unknown;
-
   chordPack: ChordPack;
   favoriteComs: CmComWid[];
   comTopTools: MigratableComToolName[];
@@ -58,8 +54,6 @@ class CmIDB extends DexieDB<CmIDBStorage> {
     super('cm', {
       chordPack: { $byDefault: {} },
       lastModifiedAt: { $byDefault: 0 },
-      eeStore: { $byDefault: {} },
-      ignoredEESet: { $byDefault: new Set() },
       favoriteComs: { $byDefault: [] },
       selectedComws: { $byDefault: [] },
       comTopTools: { $byDefault: ['mark-com', 'fullscreen-mode', 'chords-variant'] as never },
@@ -131,6 +125,3 @@ class CmIDB extends DexieDB<CmIDBStorage> {
 }
 
 export const cmIDB = new CmIDB();
-
-cmIDB.remove.eeStore();
-cmIDB.remove.ignoredEESet();
