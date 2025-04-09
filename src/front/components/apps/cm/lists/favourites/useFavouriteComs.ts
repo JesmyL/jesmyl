@@ -9,18 +9,19 @@ const maxFavouritesCount = 30;
 
 export const useFavouriteComs = () => {
   const favourites = cmIDB.useValue.favoriteComs();
-  const favouriteSet = new Set(favourites);
+  const favouriteComsSet = new Set(favourites);
   const toast = useToast();
   const auth = useAuth();
 
   const ret = {
     favouriteComs: useComs(favourites),
-    isFavourite: (comw: number) => favouriteSet.has(comw),
+    favouriteComsSet,
+    isFavourite: (comw: number) => favouriteComsSet.has(comw),
     toggleFavourite: (comw: number) => {
-      if (ret.isFavourite(comw)) favouriteSet.delete(comw);
-      else favouriteSet.add(comw);
+      if (ret.isFavourite(comw)) favouriteComsSet.delete(comw);
+      else favouriteComsSet.add(comw);
 
-      const comws = Array.from(favouriteSet);
+      const comws = Array.from(favouriteComsSet);
       const isOverLimit = comws.length > maxFavouritesCount;
 
       cmIDB.set.favoriteComs(comws.slice(0, maxFavouritesCount));
