@@ -1,6 +1,6 @@
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { onLocalComCommentsSendEvent } from '$cm/com-comments-manager';
-import { cmFreshesSokiInvocatorClient } from '$cm/invocators/fresh-invocator.methods';
+import { cmBasicSokiInvocatorClient } from '$cm/invocators/basic-invocator.methods';
 import { cmSokiInvocatorBaseClient } from '$cm/invocators/invocator.shares.base';
 import { soki } from 'front/soki';
 
@@ -9,7 +9,7 @@ export const cmInitialInvokes = () => {
 
   const getFreshes = async () => {
     const lastModfiedAt = await cmIDB.get.lastModifiedAt();
-    await cmFreshesSokiInvocatorClient.requestFreshes({ lastModfiedAt });
+    await cmBasicSokiInvocatorClient.requestFreshes({ lastModfiedAt });
 
     onLocalComCommentsSendEvent.invoke();
   };

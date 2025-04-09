@@ -1,8 +1,8 @@
 import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
-import { cmComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { Com } from '$cm/col/com/Com';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
+import { cmBasicSokiInvocatorClient } from '$cm/invocators/basic-invocator.methods';
 import { useMemo } from 'react';
 import { emptyFunc } from 'shared/utils';
 
@@ -13,7 +13,7 @@ interface Props {
 export const CmRatingSortedComList = ({ coms }: Props) => {
   const [visits, isLoading] = useInvocatedValue(
     {},
-    ({ aborter }) => cmComClientInvocatorMethods.getComwVisits(undefined, { aborter }),
+    ({ aborter }) => cmBasicSokiInvocatorClient.getComwVisits(undefined, { aborter }),
     [],
   );
   const sortedComs = useMemo(

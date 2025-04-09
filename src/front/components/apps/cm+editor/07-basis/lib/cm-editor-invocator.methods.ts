@@ -56,10 +56,7 @@ export const cmComClientInvocatorMethods =
           destroy: true,
           bringBackToLife: true,
 
-          printComwVisit: true,
-          takeComwVisitsCount: true,
           takeRemovedComs: true,
-          getComwVisits: true,
         },
       });
     }

@@ -3,7 +3,7 @@ import { authIDB } from '$index/db/auth-idb';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { CmComWid } from 'shared/api';
 import { Eventer } from 'shared/utils';
-import { cmFreshesSokiInvocatorClient } from './invocators/fresh-invocator.methods';
+import { cmBasicSokiInvocatorClient } from './invocators/basic-invocator.methods';
 import { cmUserStoreSokiInvocatorClient } from './invocators/user-store-invocator.methods';
 
 export const useComCommentText = (comw: CmComWid) =>
@@ -17,7 +17,7 @@ onLocalComCommentsSendEvent.listen(async () => {
 
   if (!localComments.length) return;
 
-  const freshComments = await cmFreshesSokiInvocatorClient.exchangeFreshComComments({
+  const freshComments = await cmBasicSokiInvocatorClient.exchangeFreshComComments({
     modifiedComments: localComments.map(comment => ({ ...comment, isSavedLocal: undefined })),
     clientDateNow: Date.now(),
   });

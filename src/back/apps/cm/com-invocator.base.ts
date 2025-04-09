@@ -3,7 +3,7 @@ import { CmComWid, IExportableCom } from 'shared/api';
 import { CmComSokiInvocatorModel } from 'shared/api/invocators/cm/com-invocators.model';
 import { smylib } from 'shared/utils';
 import { cmComLanguages } from 'shared/values/values';
-import { comsFileStore, comwVisitsFileStore } from './file-stores';
+import { comsFileStore } from './file-stores';
 import { cmServerInvocatorShareMethods } from './invocator.shares';
 
 export const cmComServerInvocatorBase =
@@ -76,15 +76,6 @@ export const cmComServerInvocatorBase =
           remove: ({ comw }) => modifyInvocableCom(comw, com => (com.isRemoved = 1)),
           bringBackToLife: ({ comw }) => modifyInvocableCom(comw, com => delete com.isRemoved),
 
-          printComwVisit: async ({ comw }) => {
-            const marks = comwVisitsFileStore.getValueWithAutoSave();
-            marks[comw] ??= 0;
-            marks[comw]++;
-          },
-
-          takeComwVisitsCount: async ({ comw }) => comwVisitsFileStore.getValue()[comw] ?? 0,
-          getComwVisits: async () => comwVisitsFileStore.getValue(),
-
           takeRemovedComs: async () => comsFileStore.getValue().filter(com => com.isRemoved),
           destroy: async ({ comw }) => {
             const coms = comsFileStore.getValueWithAutoSave();
@@ -145,10 +136,7 @@ export const cmComServerInvocatorBase =
           destroy: (_, comName) => `Песня ${comName} уничтожена`,
           bringBackToLife: (_, com) => `Удалённая песня ${getCmComNameInBrackets(com)} возвращена`,
 
-          printComwVisit: null,
-          takeComwVisitsCount: null,
           takeRemovedComs: null,
-          getComwVisits: null,
         },
       });
     }

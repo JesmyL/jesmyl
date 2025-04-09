@@ -10,7 +10,6 @@ import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { DocTitle } from '#shared/ui/tags/DocTitle';
 import { Metronome } from '#widgets/metronome';
 import { BibleTranslatesContextProvider } from '$bible/basis/contexts/TranslatesContext';
-import { cmComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { cmIsShowCatBindsInCompositionAtom } from '$cm/atoms';
 import { useChordVisibleVariant } from '$cm/base/useChordVisibleVariant';
 import { useLaterComList } from '$cm/base/useLaterComList';
@@ -18,6 +17,7 @@ import { comPlayerHeaderStickyCss } from '$cm/basis/css/com-player';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useFixedCcom } from '$cm/basis/lib/com-selections';
 import { useCmCurrentComPackContext } from '$cm/basis/lib/contexts/current-com-list';
+import { cmBasicSokiInvocatorClient } from '$cm/invocators/basic-invocator.methods';
 import { Link } from '@tanstack/react-router';
 import { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
@@ -49,7 +49,7 @@ export function TheComposition() {
     return hookEffectPipe()
       .pipe(
         setTimeoutPipe(() => addLaterComw(ccom.wid), 3000),
-        setTimeoutPipe(() => cmComClientInvocatorMethods.printComwVisit({ comw: ccom.wid }), 77_777),
+        setTimeoutPipe(() => cmBasicSokiInvocatorClient.printComwVisit({ comw: ccom.wid }), 77_777),
       )
       .effect();
   }, [addLaterComw, ccom?.wid]);

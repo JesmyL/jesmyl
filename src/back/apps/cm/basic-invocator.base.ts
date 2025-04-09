@@ -1,7 +1,7 @@
 import { FileStore } from 'back/complect/FileStore';
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { ICmComComment } from 'shared/api';
-import { CmFreshSokiInvocatorModel } from 'shared/api/invocators/cm/fresh-invocators.model';
+import { CmBasicSokiInvocatorModel } from 'shared/api/invocators/cm/basic-invocators.model';
 import { smylib } from 'shared/utils';
 import { cmCatServerInvocatorBase } from './cat-invocator.base';
 import { cmComExternalsSokiInvocatorBaseServer } from './com-externals-invocator.base';
@@ -14,6 +14,7 @@ import {
   chordPackFileStore,
   comCommentsFileStore,
   comsFileStore,
+  comwVisitsFileStore,
   eventPacksFileStore,
 } from './file-stores';
 import { cmServerInvocatorShareMethods } from './invocator.shares';
@@ -37,11 +38,11 @@ const sendFreshModifiedableList = <Item extends { m: number }>(
   }
 };
 
-export const cmFreshServerInvocatorBase =
-  new (class CmFreshSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmFreshSokiInvocatorModel> {
+export const cmBasicServerInvocatorBase =
+  new (class CmBasicSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmBasicSokiInvocatorModel> {
     constructor() {
       super({
-        className: 'CmFreshSokiInvocatorBaseServer',
+        className: 'CmBasicSokiInvocatorBaseServer',
         beforeEachTools: {
           requestFreshes: { minLevel: 0 },
         },
@@ -138,6 +139,15 @@ export const cmFreshServerInvocatorBase =
 
             return resultComments;
           },
+
+          printComwVisit: async ({ comw }) => {
+            const marks = comwVisitsFileStore.getValueWithAutoSave();
+            marks[comw] ??= 0;
+            marks[comw]++;
+          },
+
+          takeComwVisitsCount: async ({ comw }) => comwVisitsFileStore.getValue()[comw] ?? 0,
+          getComwVisits: async () => comwVisitsFileStore.getValue(),
         },
       });
     }

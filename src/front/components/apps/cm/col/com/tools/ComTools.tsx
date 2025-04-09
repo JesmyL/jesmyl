@@ -2,11 +2,11 @@ import { mylib } from '#shared/lib/my-lib';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { cmComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { useChordVisibleVariant } from '$cm/base/useChordVisibleVariant';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useFixedCcom } from '$cm/basis/lib/com-selections';
 import { ChordVisibleVariant } from '$cm/Cm.model';
+import { cmBasicSokiInvocatorClient } from '$cm/invocators/basic-invocator.methods';
 import { Chip, useMediaQuery } from '@mui/material';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
@@ -25,7 +25,7 @@ export const ComTools = () => {
     if (ccom?.wid == null) return;
 
     (async () => {
-      const visitsCount = await cmComClientInvocatorMethods.takeComwVisitsCount({ comw: ccom.wid });
+      const visitsCount = await cmBasicSokiInvocatorClient.takeComwVisitsCount({ comw: ccom.wid });
       setVisitsCount(visitsCount);
     })();
   }, [ccom?.wid]);

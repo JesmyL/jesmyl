@@ -1,5 +1,5 @@
 import { bibleSokiInvocatorBaseServer } from './apps/bible/invocators';
-import { cmFreshServerInvocatorBase } from './apps/cm/fresh-invocator.base';
+import { cmBasicServerInvocatorBase } from './apps/cm/basic-invocator.base';
 import { indexServerInvocatorBase } from './apps/index/basics-invocator.base';
 import { startCrTgAlarm } from './apps/index/crTgAlarm';
 import { scheduleWidgetMessageCatcher } from './apps/index/schedules/tg-bot-inform/message-catchers';
@@ -10,7 +10,7 @@ import { baseMessagesCatcher } from './sides/telegram-bot/complect/message-catch
 sokiServer.start();
 
 bibleSokiInvocatorBaseServer.$$register();
-cmFreshServerInvocatorBase.$$register();
+cmBasicServerInvocatorBase.$$register();
 indexServerInvocatorBase.$$register();
 
 initTgScheduleInform();
