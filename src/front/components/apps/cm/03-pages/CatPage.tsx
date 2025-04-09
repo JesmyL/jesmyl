@@ -16,7 +16,7 @@ import { categoryDebounceTermAtom, categoryTermAtom } from '$cm/shared/ComListSe
 import { CmRatingSortedComList } from '$cm/widgets/RatingSortedComList';
 import { FileRoutesByPath } from '@tanstack/react-router';
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
-import { emptyFunc, itIt } from 'shared/utils';
+import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
 import { Com } from '../col/com/Com';
 import { ComFaceList } from '../col/com/face/list/ComFaceList';
@@ -75,12 +75,7 @@ export const CmCatPage = (props: Props) => {
         content={
           props.cat && (
             <>
-              {playComSrc && (
-                <ComPlayer
-                  audioSrcs={playComSrc}
-                  timeRender={itIt}
-                />
-              )}
+              {playComSrc && <ComPlayer audioSrcs={playComSrc} />}
               {props.topNodeRender?.(term)}
               <div
                 className="flex between sticky list-title"

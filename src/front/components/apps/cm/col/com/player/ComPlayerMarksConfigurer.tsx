@@ -3,7 +3,6 @@ import { mylib, MyLib } from '#shared/lib/my-lib';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { Button } from '@mui/material';
-import { retNull } from 'shared/utils';
 import { ComPlayer } from './ComPlayer';
 import { ComPlayerMarksConfigurerTimeMark } from './ComPlayerMarksConfigurerTimeMark';
 import { comPlayerPlaySrcAtom, useComPlayerCurrentTime } from './controls';
@@ -16,10 +15,7 @@ export const ComPlayerMarksConfigurer = ({ src }: { src: string }) => {
   return (
     <>
       <div className="text-2xl mb-5">Настройка точек песни</div>
-      <ComPlayer
-        audioSrcs={src}
-        timeRender={retNull}
-      />
+      <ComPlayer audioSrcs={src} />
       <Button
         startIcon={<LazyIcon icon="PlusSign" />}
         color="x1"

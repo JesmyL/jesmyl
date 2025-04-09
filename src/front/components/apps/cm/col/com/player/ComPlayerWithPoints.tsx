@@ -1,40 +1,50 @@
-import { useState } from 'react';
-import { itIt, makeRegExp } from 'shared/utils';
+import { Button, Menu } from '@mui/material';
+import { useRef, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
-import { ComPlayerPlayButton } from './ComPlayerPlayButton';
-import { ComPlayerTrack } from './ComPlayerTrack';
+import { ComPlayer } from './ComPlayer';
+import { ComPlayerMarksConfigurerEditMenuButton } from './ComPlayerMarksConfigurerEditMenuButton';
+import { ComPlayerMarksMovers } from './ComPlayerMarksMovers';
 
 interface Props {
   audioSrcs: string;
-  timeRender?: (timeNode: React.ReactNode, currentSrc: string) => React.ReactNode;
 }
 
-export const ComPlayer = ({ audioSrcs, timeRender }: Props) => {
-  const [currentVariant, setCurrentVariant] = useState(0);
-  const variants = audioSrcs.split(makeRegExp('/\n+/')).map(src => src.trim());
-  const src = variants[currentVariant];
+export const ComPlayerWithPoints = ({ audioSrcs }: Props) => {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [isOpenMenu, setIsOpenMenu] = useState(false);
 
   return (
-    <>
-      <StyledPlayer className="composition-player flex gap-2 px-2">
-        <ComPlayerPlayButton src={src} />
-        <ComPlayerTrack
-          src={src}
-          timeRender={timeRender ? timeNode => timeRender(timeNode, src) : itIt}
-        />
-
-        {variants.length > 1 && (
-          <div
-            className="current-variant-badge flex center pointer"
-            onClick={() => {
-              setCurrentVariant(currentVariant > variants.length - 2 ? 0 : currentVariant + 1);
-            }}
+    <ComPlayer
+      audioSrcs={audioSrcs}
+      timeRender={(timeNode, currentSrc) => (
+        <>
+          <Button
+            ref={buttonRef}
+            className="text-x3! bg-x1! h-6! pointer rounded-2xl!"
+            color="x3"
+            size="small"
+            variant="outlined"
+            onClick={() => setIsOpenMenu(true)}
           >
-            {currentVariant + 1}
-          </div>
-        )}
-      </StyledPlayer>
-    </>
+            {timeNode}
+          </Button>
+
+          <Menu
+            open={isOpenMenu}
+            anchorEl={buttonRef.current}
+            onClose={() => setIsOpenMenu(false)}
+            classes={{ list: 'bg-x2 text-x4 flex flex-col gap-3', paper: 'bg-x7', root: 'mt-1' }}
+          >
+            <ComPlayerMarksMovers src={currentSrc} />
+
+            <ComPlayerMarksConfigurerEditMenuButton
+              src={currentSrc}
+              onClick={() => setIsOpenMenu(false)}
+            />
+          </Menu>
+        </>
+      )}
+    />
   );
 };
 
