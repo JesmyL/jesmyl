@@ -1,15 +1,15 @@
 import { SokiInvocatorClient } from '#basis/lib/SokiInvocator.client';
-import { CmCatSokiInvocatorModel } from 'shared/api/invocators/cm/cat-invocators.model';
-import { CmComExternalsSokiInvocatorModel } from 'shared/api/invocators/cm/com-externals-invocators.model';
-import { CmComSokiInvocatorModel } from 'shared/api/invocators/cm/com-invocators.model';
-import { CmComOrderSokiInvocatorModel } from 'shared/api/invocators/cm/com-order-invocators.model';
+import { CmEditCatSokiInvocatorModel } from 'shared/api/invocators/cm/edit-cat-invocators.model';
+import { CmEditComExternalsSokiInvocatorModel } from 'shared/api/invocators/cm/edit-com-externals-invocators.model';
+import { CmEditComSokiInvocatorModel } from 'shared/api/invocators/cm/edit-com-invocators.model';
+import { CmEditComOrderSokiInvocatorModel } from 'shared/api/invocators/cm/edit-com-order-invocators.model';
 import { CmEditorSokiInvocatorModel } from 'shared/api/invocators/cm/editor-invocators.model';
 
-export const cmCatClientInvocatorMethods =
-  new (class CmCatSokiInvocatorClient extends SokiInvocatorClient<CmCatSokiInvocatorModel> {
+export const cmEditCatClientInvocatorMethods =
+  new (class CmEditCat extends SokiInvocatorClient<CmEditCatSokiInvocatorModel> {
     constructor() {
       super({
-        className: 'CmCatSokiInvocatorClient',
+        scope: 'CmEditCat',
         methods: {
           rename: true,
 
@@ -26,11 +26,11 @@ export const cmCatClientInvocatorMethods =
     }
   })();
 
-export const cmComClientInvocatorMethods =
-  new (class CmComSokiInvocatorClient extends SokiInvocatorClient<CmComSokiInvocatorModel> {
+export const cmEditComClientInvocatorMethods =
+  new (class CmEditCom extends SokiInvocatorClient<CmEditComSokiInvocatorModel> {
     constructor() {
       super({
-        className: 'CmComSokiInvocatorClient',
+        scope: 'CmEditCom',
         methods: {
           newCom: true,
 
@@ -62,11 +62,11 @@ export const cmComClientInvocatorMethods =
     }
   })();
 
-export const cmComExternalsClientInvocatorMethods =
-  new (class CmComExternalsSokiInvocatorClient extends SokiInvocatorClient<CmComExternalsSokiInvocatorModel> {
+export const cmEditComExternalsClientInvocatorMethods =
+  new (class CmEditComExternals extends SokiInvocatorClient<CmEditComExternalsSokiInvocatorModel> {
     constructor() {
       super({
-        className: 'CmComExternalsSokiInvocatorClient',
+        scope: 'CmEditComExternals',
         methods: {
           setInScheduleEvent: true,
           getScheduleEventHistory: true,
@@ -76,11 +76,11 @@ export const cmComExternalsClientInvocatorMethods =
     }
   })();
 
-export const cmComOrderClientInvocatorMethods =
-  new (class CmComOrderSokiInvocatorClient extends SokiInvocatorClient<CmComOrderSokiInvocatorModel> {
+export const cmEditComOrderClientInvocatorMethods =
+  new (class CmEditComOrder extends SokiInvocatorClient<CmEditComOrderSokiInvocatorModel> {
     constructor() {
       super({
-        className: 'CmComOrderSokiInvocatorClient',
+        scope: 'CmEditComOrder',
         methods: {
           setRepeats: true,
           clearOwnRepeats: true,
@@ -104,10 +104,10 @@ export const cmComOrderClientInvocatorMethods =
   })();
 
 export const cmEditorClientInvocatorMethods =
-  new (class CmEditorSokiInvocatorClient extends SokiInvocatorClient<CmEditorSokiInvocatorModel> {
+  new (class CmEditor extends SokiInvocatorClient<CmEditorSokiInvocatorModel> {
     constructor() {
       super({
-        className: 'CmEditorSokiInvocatorClient',
+        scope: 'CmEditor',
         methods: {
           requestFreshes: true,
 

@@ -24,10 +24,10 @@ const newTatt = () =>
   }) satisfies ScheduleWidgetAppAttCustomizable;
 
 export const schAttachmentTypesSokiInvocatorBaseServer =
-  new (class SchAttachmentTypesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchAttachmentTypesSokiInvocatorMethods> {
+  new (class SchAttachmentTypes extends SokiInvocatorBaseServer<SchAttachmentTypesSokiInvocatorMethods> {
     constructor() {
       super({
-        className: 'SchAttachmentTypesSokiInvocatorBaseServer',
+        scope: 'SchAttachmentTypes',
         methods: {
           create: ({ props }) =>
             modifySchedule(false, props, sch =>

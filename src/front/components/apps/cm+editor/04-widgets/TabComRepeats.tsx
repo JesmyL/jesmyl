@@ -1,6 +1,6 @@
 import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { cmComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { EditableComOrder } from '$cm+editor/basis/lib/EditableComOrder';
 import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { IEditableComLineProps } from '$cm+editor/basis/model/Repeats';
@@ -41,7 +41,7 @@ export const CmEditorTabComRepeats = () => {
 
       const ordw = ord.me.isAnchorInherit ? (ord.me.leadOrd?.wid ?? ord.wid) : ord.wid;
 
-      cmComOrderClientInvocatorMethods.setRepeats({
+      cmEditComOrderClientInvocatorMethods.setRepeats({
         ordw,
         inhIndex: ord.me.anchorInheritIndex,
         orderTitle: ord.me.header(),
@@ -133,7 +133,7 @@ export const CmEditorTabComRepeats = () => {
                               const isClear = await confirm('Очистить собственные правила повторения?');
 
                               if (isClear)
-                                cmComOrderClientInvocatorMethods.clearOwnRepeats({
+                                cmEditComOrderClientInvocatorMethods.clearOwnRepeats({
                                   ordw: ord.wid,
                                   orderTitle: ord.me.header(),
                                   comw: ccom.wid,

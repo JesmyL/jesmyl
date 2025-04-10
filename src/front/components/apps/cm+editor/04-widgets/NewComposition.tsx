@@ -4,7 +4,7 @@ import { MyLib } from '#shared/lib/my-lib';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TheButton } from '#shared/ui/TheButton';
-import { cmComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { useCmExtractHrefsFromHTML } from '$cm+editor/basis/lib/hooks/useCmExtractHrefsFromHTML';
 import { ObserveUrlResource } from '$cm+editor/basis/ui/ObserveUrlResource';
@@ -204,7 +204,7 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
             chordsErrors.some(corrects => corrects.errors?.length) ||
             textsErrors.some(corrects => corrects.errors?.length)
           }
-          onSend={() => cmComClientInvocatorMethods.newCom({ value: newCom })}
+          onSend={() => cmEditComClientInvocatorMethods.newCom({ value: newCom })}
           onSuccess={com => {
             openAtom.set(false);
             navigate({ to: '/cm/edit/coms/$comw', params: { comw: `${com.w}` } });

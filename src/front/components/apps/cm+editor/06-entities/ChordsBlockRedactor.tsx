@@ -1,6 +1,6 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { cmComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { CmTextableBlockAnchorTitles } from '$cm+editor/entities/TextableBlockAnchorTitles';
 import { TextCorrectMessages } from '$cm+editor/entities/TextBlockIncorrectMessages';
@@ -19,7 +19,7 @@ export const CmChordsBlockRedactor = ({ text, texti, ccom }: { texti: number; te
           icon="PlusSignCircle"
           confirm="Вставить новый блок в самое начало?"
           onClick={() =>
-            cmComClientInvocatorMethods.insertChordBlock({
+            cmEditComClientInvocatorMethods.insertChordBlock({
               value: '',
               comw: ccom.wid,
               insertToi: 0,
@@ -45,7 +45,7 @@ export const CmChordsBlockRedactor = ({ text, texti, ccom }: { texti: number; te
             icon="Cancel01"
             confirm={`Удалить блок?\n\n${text}`}
             onClick={() =>
-              cmComClientInvocatorMethods.removeChordBlock({
+              cmEditComClientInvocatorMethods.removeChordBlock({
                 comw: ccom.wid,
                 value: text,
                 removei: texti,
@@ -69,7 +69,7 @@ export const CmChordsBlockRedactor = ({ text, texti, ccom }: { texti: number; te
         icon="PlusSignCircle"
         confirm="Вставить новый блок сюда?"
         onClick={() =>
-          cmComClientInvocatorMethods.insertChordBlock({
+          cmEditComClientInvocatorMethods.insertChordBlock({
             value: '',
             comw: ccom.wid,
             insertToi: texti + 1,

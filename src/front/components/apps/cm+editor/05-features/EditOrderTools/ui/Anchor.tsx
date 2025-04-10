@@ -1,5 +1,5 @@
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
-import { cmComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { OrdersRedactorOrderToolsProps } from '../model';
 
 export const OrdersRedactorOrderToolsAnchor = ({
@@ -26,7 +26,7 @@ export const OrdersRedactorOrderToolsAnchor = ({
             onClick: async ({ aboveLeadOrdw }) => {
               if (aboveLeadOrdw == null) return;
 
-              cmComOrderClientInvocatorMethods.addAnchorOrder({
+              cmEditComOrderClientInvocatorMethods.addAnchorOrder({
                 orderTitle: ord.me.header(),
                 comw: com.wid,
                 targetOrdw: ord.wid,

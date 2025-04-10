@@ -6,7 +6,7 @@ import { useChordVisibleVariant } from '$cm/base/useChordVisibleVariant';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useFixedCcom } from '$cm/basis/lib/com-selections';
 import { ChordVisibleVariant } from '$cm/Cm.model';
-import { cmBasicSokiInvocatorClient } from '$cm/invocators/basic-invocator.methods';
+import { cmSokiInvocatorClient } from '$cm/invocators/basic-invocator.methods';
 import { Chip, useMediaQuery } from '@mui/material';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
@@ -25,7 +25,7 @@ export const ComTools = () => {
     if (ccom?.wid == null) return;
 
     (async () => {
-      const visitsCount = await cmBasicSokiInvocatorClient.takeComwVisitsCount({ comw: ccom.wid });
+      const visitsCount = await cmSokiInvocatorClient.takeComwVisitsCount({ comw: ccom.wid });
       setVisitsCount(visitsCount);
     })();
   }, [ccom?.wid]);

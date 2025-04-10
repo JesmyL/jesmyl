@@ -13,7 +13,7 @@ import { modifySchedule } from '../schedule-modificators';
 import { scheduleTitleInBrackets } from './general-invocators.base';
 
 export const schGamesSokiInvocatorBaseServer =
-  new (class SchGamesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGamesSokiInvocatorMethods> {
+  new (class SchGames extends SokiInvocatorBaseServer<SchGamesSokiInvocatorMethods> {
     constructor() {
       const modifyGame =
         <Value>(modifier: (game: IScheduleWidgetTeamGame, value: Value) => void) =>
@@ -34,7 +34,7 @@ export const schGamesSokiInvocatorBaseServer =
           });
 
       super({
-        className: 'SchGamesSokiInvocatorBaseServer',
+        scope: 'SchGames',
         methods: {
           addGame: ({ props }) =>
             modifySchedule(false, props, sch => {

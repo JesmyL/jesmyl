@@ -11,7 +11,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ScheduleWidgetAlarm } from '#widgets/schedule/alarm/Alarm';
 import { routingApps } from '$app/lib/configs';
 import { useAuth } from '$index/atoms';
-import { indexBasicsSokiInvocatorClient } from '$index/db/invocators/schedules/fresh-invocator.methods';
+import { indexSokiInvocatorClientMethods } from '$index/invocator.methods';
 import { IndexAbout } from '$index/parts/IndexAbout';
 import { IndexTelegramInlineAuthButton } from '$index/parts/auth/IndexTelegramInlineAuthButton';
 import { AppFace } from '$index/parts/main/AppFace';
@@ -29,7 +29,7 @@ export const IndexOtherPage = () => {
 
   const [newVersion, isVersionLoading] = useInvocatedValue(
     0,
-    ({ aborter }) => indexBasicsSokiInvocatorClient.getFreshAppVersion(undefined, { aborter }),
+    ({ aborter }) => indexSokiInvocatorClientMethods.getFreshAppVersion(undefined, { aborter }),
     [],
   );
 

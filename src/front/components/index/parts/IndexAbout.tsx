@@ -4,18 +4,18 @@ import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
 import { QRCode } from '#shared/ui/qr-code/QRCode';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { indexBasicsSokiInvocatorClient } from '$index/db/invocators/schedules/fresh-invocator.methods';
+import { indexSokiInvocatorClientMethods } from '$index/invocator.methods';
 import { jversion } from 'shared/values';
 
 export function IndexAbout() {
   const [appVersion, isVersionLoading] = useInvocatedValue(
     0,
-    ({ aborter }) => indexBasicsSokiInvocatorClient.getFreshAppVersion(undefined, { aborter }),
+    ({ aborter }) => indexSokiInvocatorClientMethods.getFreshAppVersion(undefined, { aborter }),
     [],
   );
   const [values] = useInvocatedValue(
     {},
-    ({ aborter }) => indexBasicsSokiInvocatorClient.getIndexValues(undefined, { aborter }),
+    ({ aborter }) => indexSokiInvocatorClientMethods.getIndexValues(undefined, { aborter }),
     [],
   );
 

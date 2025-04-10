@@ -2,7 +2,7 @@ import { CmComWid, EeStorePack } from 'shared/api/complect/apps';
 import { DeviceId } from 'shared/api/complect/enums';
 import { SokiAuthLogin } from 'shared/api/complect/soki.model';
 
-export type CmEditorSokiInvocatorSharesModel = {
+export type CmShareEditorSokiInvocatorModel = {
   editedEEWords: (args: { words: EeStorePack; modifiedAt: number }) => unknown;
   refreshEEPack: (args: { pack: EeStorePack; modifiedAt: number }) => unknown;
   comBusies: (args: { busies: ComEditBusy[] }) => unknown;

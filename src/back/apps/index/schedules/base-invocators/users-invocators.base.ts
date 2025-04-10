@@ -11,10 +11,10 @@ import { modifySchedule } from '../schedule-modificators';
 import { scheduleTitleInBrackets } from './general-invocators.base';
 
 export const schUsersSokiInvocatorBaseServer =
-  new (class SchUsersSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchUsersSokiInvocatorMethods> {
+  new (class SchUsers extends SokiInvocatorBaseServer<SchUsersSokiInvocatorMethods> {
     constructor() {
       super({
-        className: 'SchUsersSokiInvocatorBaseServer',
+        scope: 'SchUsers',
         methods: {
           addUsersByExcel: ({ props, users }) =>
             modifySchedule(false, props, sch => {

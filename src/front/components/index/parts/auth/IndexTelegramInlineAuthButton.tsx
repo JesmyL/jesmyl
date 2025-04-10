@@ -3,7 +3,7 @@ import { TelegramWebAppApiOr } from '#basis/ui/tg-app/getTgApi';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { indexBasicsSokiInvocatorClient } from '$index/db/invocators/schedules/fresh-invocator.methods';
+import { indexSokiInvocatorClientMethods } from '$index/invocator.methods';
 import { Link } from '@tanstack/react-router';
 
 export const IndexTelegramInlineAuthButton = () => {
@@ -29,7 +29,9 @@ export const IndexTelegramInlineAuthButton = () => {
                     icon="Telegram"
                     className="color--ok"
                     onSend={async () =>
-                      await indexBasicsSokiInvocatorClient.authMeByTelegramMiniButton({ user: api.initDataUnsafe.user })
+                      await indexSokiInvocatorClientMethods.authMeByTelegramMiniButton({
+                        user: api.initDataUnsafe.user,
+                      })
                     }
                   />
                 )

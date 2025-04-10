@@ -1,6 +1,6 @@
 import { schSokiInvocatorBaseClient } from '#widgets/schedule/invocators/invocator.base';
 import { indexIDB } from '$index/db/index-idb';
-import { indexBasicsSokiInvocatorClient } from '$index/db/invocators/schedules/fresh-invocator.methods';
+import { indexSokiInvocatorClientMethods } from '$index/invocator.methods';
 import { soki } from 'front/soki';
 import { DeviceId } from 'shared/api';
 
@@ -13,14 +13,14 @@ export const appInitialInvokes = () => {
 
     try {
       if (deviceId === DeviceId.def) {
-        const deviceId = await indexBasicsSokiInvocatorClient.getDeviceId();
+        const deviceId = await indexSokiInvocatorClientMethods.getDeviceId();
         indexIDB.set.deviceId(deviceId);
       }
     } catch (_e) {
       //
     }
 
-    await indexBasicsSokiInvocatorClient.requestFreshes({ lastModfiedAt });
+    await indexSokiInvocatorClientMethods.requestFreshes({ lastModfiedAt });
   };
 
   soki.onBeforeAuthorizeEvent.listen(() => indexIDB.remove.lastModifiedAt());

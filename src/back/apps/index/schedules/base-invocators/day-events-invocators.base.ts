@@ -30,7 +30,7 @@ const modifyEvent = (
   })({ props, value: undefined });
 
 export const schDayEventsSokiInvocatorBaseServer =
-  new (class SchDayEventsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchDayEventsSokiInvocatorMethods> {
+  new (class SchDayEvents extends SokiInvocatorBaseServer<SchDayEventsSokiInvocatorMethods> {
     constructor() {
       const setEventValue =
         <Key extends keyof IScheduleWidgetDayEvent, Value extends IScheduleWidgetDayEvent[Key]>(key: Key) =>
@@ -101,7 +101,7 @@ export const schDayEventsSokiInvocatorBaseServer =
       };
 
       super({
-        className: 'SchDayEventsSokiInvocatorBaseServer',
+        scope: 'SchDayEvents',
         methods: {
           setTopic: setEventValue('topic'),
           setDescription: setEventValue('dsc'),

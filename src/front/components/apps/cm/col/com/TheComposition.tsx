@@ -17,7 +17,7 @@ import { comPlayerHeaderStickyCss } from '$cm/basis/css/com-player';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useFixedCcom } from '$cm/basis/lib/com-selections';
 import { useCmCurrentComPackContext } from '$cm/basis/lib/contexts/current-com-list';
-import { cmBasicSokiInvocatorClient } from '$cm/invocators/basic-invocator.methods';
+import { cmSokiInvocatorClient } from '$cm/invocators/basic-invocator.methods';
 import { Link } from '@tanstack/react-router';
 import { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
@@ -49,7 +49,7 @@ export function TheComposition() {
     return hookEffectPipe()
       .pipe(
         setTimeoutPipe(() => addLaterComw(ccom.wid), 3000),
-        setTimeoutPipe(() => cmBasicSokiInvocatorClient.printComwVisit({ comw: ccom.wid }), 77_777),
+        setTimeoutPipe(() => cmSokiInvocatorClient.printComwVisit({ comw: ccom.wid }), 77_777),
       )
       .effect();
   }, [addLaterComw, ccom?.wid]);

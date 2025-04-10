@@ -1,4 +1,4 @@
-import { InvocatorServerEvent, LocalSokiAuth, SokiVisit } from 'shared/api';
+import { LocalSokiAuth, SokiVisit } from 'shared/api';
 import { makeSokiInvocatorBase } from 'shared/api/complect/SokiInvocatorBase.master';
 import { emptyFunc, smylib } from 'shared/utils';
 import { WebSocket } from 'ws';
@@ -12,36 +12,25 @@ export type SokiServerInvocatorTool = { client: WebSocket; auth: LocalSokiAuth |
 export type SokiServerBeforeEachTool = { minVersion?: number; minLevel?: number };
 
 export const SokiInvocatorBaseServer = makeSokiInvocatorBase<
-  InvocatorServerEvent,
-  'SokiInvocatorBaseServer',
   SokiServerInvocatorTool,
   string | ((tool: SokiServerInvocatorTool) => string),
   SokiServerBeforeEachTool
 >({
-  isNeedCheckClassName: false,
-  classNamePostfix: 'SokiInvocatorBaseServer',
   eventerValue: onSokiServerEventerInvocatorInvoke,
-  onErrorMessage: ({
-    errorMessage,
-    invokeData: {
-      method,
-      name,
-      tool: { auth, visit },
-    },
-  }) => {
+  onErrorMessage: ({ errorMessage, invoke: { method, scope }, tool: { auth, visit } }) => {
     tglogger.userErrors(
-      `${name}.${method}()\n\n${errorMessage}\n\n${userAuthStringified(auth)}\n\n${userVisitStringified(visit)}`,
+      `${scope}.${method}()\n\n${errorMessage}\n\n${userAuthStringified(auth)}\n\n${userVisitStringified(visit)}`,
     );
   },
   feedbackOnEach: backConfig.isTest
     ? emptyFunc
-    : (titleScalar, { tool, method, name }) => {
-        if (titleScalar === '') return;
+    : ({ onEachesRet, invoke: { method, scope }, tool }) => {
+        if (onEachesRet === '') return;
 
-        const title = smylib.isFunc(titleScalar) ? titleScalar(tool) : titleScalar;
+        const title = smylib.isFunc(onEachesRet) ? onEachesRet(tool) : onEachesRet;
 
         if (title === '') return;
-        const text = `<code>${name}.${method}</code>\n\n<b>${title}</b>`;
+        const text = `<code>${scope}.${method}</code>\n\n<b>${title}</b>`;
 
         jesmylChangesBot.postMessage(
           tool.auth
@@ -52,9 +41,9 @@ export const SokiInvocatorBaseServer = makeSokiInvocatorBase<
           { parse_mode: 'HTML' },
         );
       },
-  beforeEach: async ({ invoke: { method, tool }, beforeTools, defaultTool }) => {
+  beforeEach: async ({ invoke: { method }, tool, beforeEachTools, defaultBeforeEachTool }) => {
     const userVersion = tool.visit?.version ?? 0;
-    const beforeTool = beforeTools?.[method] ?? defaultTool;
+    const beforeTool = beforeEachTools?.[method] ?? defaultBeforeEachTool;
 
     if (beforeTool === undefined) {
       return { isStopPropagation: userVersion < minAvailableUserVersion };
@@ -67,4 +56,4 @@ export const SokiInvocatorBaseServer = makeSokiInvocatorBase<
   },
 });
 
-const minAvailableUserVersion = 958;
+const minAvailableUserVersion = 970;

@@ -1,16 +1,16 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
-import { CmComExternalsSokiInvocatorModel } from 'shared/api/invocators/cm/com-externals-invocators.model';
+import { CmEditComExternalsSokiInvocatorModel } from 'shared/api/invocators/cm/edit-com-externals-invocators.model';
 import { smylib } from 'shared/utils';
 import { schedulesFileStore } from '../index/schedules/file-stores';
 import { comsFileStore, eventPackHistoryFileStore, eventPacksFileStore } from './file-stores';
-import { cmServerInvocatorShareMethods } from './invocator.shares';
+import { cmShareServerInvocatorMethods } from './invocator.shares';
 
-export const cmComExternalsSokiInvocatorBaseServer =
-  new (class CmComExternalsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmComExternalsSokiInvocatorModel> {
+export const cmEditComExternalsSokiInvocatorBaseServer =
+  new (class CmEditComExternals extends SokiInvocatorBaseServer<CmEditComExternalsSokiInvocatorModel> {
     constructor() {
       super({
-        className: 'CmComExternalsSokiInvocatorBaseServer',
-        beforeEachDefaultTool: { minLevel: 50 },
+        scope: 'CmEditComExternals',
+        defaultBeforeEachTool: { minLevel: 50 },
         methods: {
           setInScheduleEvent: async ({ schw, dayi, eventMi, list, fio }) => {
             const packs = eventPacksFileStore.getValueWithAutoSave();
@@ -34,7 +34,7 @@ export const cmComExternalsSokiInvocatorBaseServer =
 
             dayHistory.unshift({ s: list, w: m, e: eventMi, fio });
 
-            cmServerInvocatorShareMethods.refreshScheduleEventComPacks({ packs: [packs[schw]], modifiedAt: m });
+            cmShareServerInvocatorMethods.refreshScheduleEventComPacks({ packs: [packs[schw]], modifiedAt: m });
           },
 
           getScheduleEventHistory: async ({ schw, dayi }) => {

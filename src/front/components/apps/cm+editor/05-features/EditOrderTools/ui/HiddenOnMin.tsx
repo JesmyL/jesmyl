@@ -1,5 +1,5 @@
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
-import { cmComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { OrdersRedactorOrderToolsProps } from '../model';
 
 export const OrdersRedactorOrderToolsHiddenOnMin = (props: OrdersRedactorOrderToolsProps) => {
@@ -9,7 +9,7 @@ export const OrdersRedactorOrderToolsHiddenOnMin = (props: OrdersRedactorOrderTo
         icon="Link02"
         title={`${props.ord.isOpened ? 'Скрывать' : 'Показывать'} в свёрнутом режиме`}
         onClick={async () => {
-          await cmComOrderClientInvocatorMethods.toggleVisibilityInMiniMode({
+          await cmEditComOrderClientInvocatorMethods.toggleVisibilityInMiniMode({
             orderTitle: props.ord.me.header(),
             comw: props.com.wid,
             ordw: props.ord.wid,

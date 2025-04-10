@@ -5,7 +5,7 @@ import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { cmComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { ComOrders } from '$cm/col/com/orders/ComOrders';
@@ -53,7 +53,7 @@ export const CmComEditTransposition = ({ ccom }: { ccom: EditableCom }) => {
                 className={'margin-gap-t ' + (position === initialPosition ? ' text-bold' : '')}
                 onChange={async () => {
                   setIconOnLoad(transposedChord);
-                  await cmComClientInvocatorMethods.changeTon({ comw: ccom.wid, value: position });
+                  await cmEditComClientInvocatorMethods.changeTon({ comw: ccom.wid, value: position });
                   isOpenModalAtom.reset();
                   setIconOnLoad('');
                 }}

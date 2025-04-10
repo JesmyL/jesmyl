@@ -1,7 +1,7 @@
 import { atom, useAtomValue } from '#shared/lib/atom';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
-import { cmComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { CmComOrderOnClickBetweenData } from '$cm+editor/basis/model/Orders';
 import { CmNewOrderMakeEtap } from '../model';
@@ -50,7 +50,7 @@ export const OrdersRedactorAdditions = ({ com, setClickBetweenOrds }: Props) => 
                   return true;
                 },
                 onClick: async ({ aboveLeadOrdw }) => {
-                  cmComOrderClientInvocatorMethods.insertNewBlock({
+                  cmEditComOrderClientInvocatorMethods.insertNewBlock({
                     comw: com.wid,
                     orderTitle: styleBlock.title[com.langi],
                     insertAfterOrdwOrFirst: aboveLeadOrdw,

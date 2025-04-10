@@ -1,26 +1,25 @@
 import { SokiInvocatorServer } from 'back/SokiInvocator.server';
-import { CmSokiInvocatorSharesModel } from 'shared/api/invocators/cm/invocator.shares.model';
+import { CmShareSokiInvocatorModel } from 'shared/api/invocators/cm/share-invocator.model';
 
-export const cmServerInvocatorShareMethods =
-  new (class CmSokiInvocatorServer extends SokiInvocatorServer<CmSokiInvocatorSharesModel> {
-    constructor() {
-      super({
-        className: 'CmSokiInvocatorServer',
-        methods: {
-          editedCom: true,
-          refreshComList: true,
+export const cmShareServerInvocatorMethods = new (class CmShare extends SokiInvocatorServer<CmShareSokiInvocatorModel> {
+  constructor() {
+    super({
+      scope: 'CmShare',
+      methods: {
+        editedCom: true,
+        refreshComList: true,
 
-          editedCat: true,
-          refreshCatList: true,
+        editedCat: true,
+        refreshCatList: true,
 
-          editedChords: true,
-          refreshChordPack: true,
+        editedChords: true,
+        refreshChordPack: true,
 
-          refreshComComments: true,
-          refreshAboutComFavorites: true,
+        refreshComComments: true,
+        refreshAboutComFavorites: true,
 
-          refreshScheduleEventComPacks: true,
-        },
-      });
-    }
-  })();
+        refreshScheduleEventComPacks: true,
+      },
+    });
+  }
+})();

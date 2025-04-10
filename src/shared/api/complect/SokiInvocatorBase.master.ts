@@ -1,5 +1,5 @@
 import { EventerListenScope, smylib } from 'shared/utils';
-import { SokiInvokerTranferDto } from './invocator.master.model';
+import { SokiInvokerData, SokiInvokerTranferDto } from './invocator.master.model';
 import { InvocatorBaseEvent } from './soki.model';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -10,28 +10,20 @@ type OnEachFeedbackInvocations<M extends Methods, FeedbackRet> = {
 };
 
 type BeforeEaches<BeforeEachTool, Methods extends object> = Partial<{ [K in keyof Methods]: BeforeEachTool }>;
-type InvokeData<ToolParam> = { tool: ToolParam; name: string; method: string };
 
-export const makeSokiInvocatorBase = <
-  Event extends InvocatorBaseEvent,
-  ClassNamePostfix extends string,
-  ToolParam = und,
-  FeedbackRet = void,
-  BeforeEachTool = void,
->(options: {
-  isNeedCheckClassName: boolean;
-  classNamePostfix: ClassNamePostfix;
-  eventerValue: EventerListenScope<SokiInvokerTranferDto<Event, ToolParam>>;
-  feedbackOnEach?: (onEachesRet: FeedbackRet, invoke: InvokeData<ToolParam>) => void;
-  onErrorMessage: (props: { errorMessage: string; invokeData: InvokeData<ToolParam> }) => void;
+export const makeSokiInvocatorBase = <ToolParam = und, FeedbackRet = void, BeforeEachTool = void>(options: {
+  eventerValue: EventerListenScope<SokiInvokerTranferDto<InvocatorBaseEvent, ToolParam>>;
+  feedbackOnEach?: (props: { onEachesRet: FeedbackRet; invoke: SokiInvokerData; tool: ToolParam }) => void;
+  onErrorMessage: (props: { errorMessage: string; invoke: SokiInvokerData; tool: ToolParam }) => void;
   beforeEach?: (props: {
-    invoke: InvokeData<ToolParam>;
-    beforeTools: BeforeEaches<BeforeEachTool, Methods> | und;
-    defaultTool: BeforeEachTool | und;
+    invoke: SokiInvokerData;
+    tool: ToolParam;
     args: object | und;
+    beforeEachTools?: BeforeEaches<BeforeEachTool, Methods> | und;
+    defaultBeforeEachTool?: BeforeEachTool | und;
   }) => Promise<{ isStopPropagation: boolean }>;
 }) => {
-  const { classNamePostfix, eventerValue, isNeedCheckClassName, beforeEach, feedbackOnEach, onErrorMessage } = options;
+  const { eventerValue, beforeEach, feedbackOnEach, onErrorMessage } = options;
 
   type Invocator<M extends Methods> = {
     [K in keyof M]: (args: Parameters<M[K]>[0], tool: ToolParam) => Promise<ReturnType<M[K]>> | ReturnType<M[K]>;
@@ -41,46 +33,57 @@ export const makeSokiInvocatorBase = <
   const registeredOnEachFeedbacks: PRecord<string, OnEachFeedbackInvocations<Methods, FeedbackRet> | null> = {};
   const unregisteredWaiters: PRecord<string, () => void> = {};
 
-  eventerValue.listen(async ({ invoke: { name, method, args }, sendResponse, tool, requestId }) => {
-    const invokeMethod = async () => {
-      const invokeData = { tool, method, name };
+  type Config<M extends Methods> = {
+    scope: string;
+    methods: Invocator<M>;
+    onEachFeedback?: OnEachFeedbackInvocations<M, FeedbackRet>;
+    beforeEachTools?: BeforeEaches<BeforeEachTool, M>;
+    defaultBeforeEachTool?: BeforeEachTool;
+  };
 
+  type SokiInvocator = new <M extends Methods>(config: Config<M>) => Invocator<M> & { $$register: () => void };
+
+  eventerValue.listen(async ({ invoke: { scope, method, args }, invoke, sendResponse, tool, requestId }) => {
+    const invokeMethod = async () => {
       try {
-        if (registeredMethods[name] === undefined) {
-          throw new Error(`the name ${name} is not registered - ${method}()`);
+        if (beforeEach !== undefined && (await beforeEach({ invoke, args, tool })).isStopPropagation) return;
+
+        if (registeredMethods[scope] === undefined) {
+          throw new Error(`the scope ${scope} is not registered - ${method}()`);
         }
 
-        if (!smylib.isFunc(registeredMethods[name][method])) throw new Error(`the ${name} has no the ${method} method`);
+        if (!smylib.isFunc(registeredMethods[scope][method]))
+          throw new Error(`the ${scope} has no the ${method} method`);
 
-        const invokedResult = await registeredMethods[name][method](args, tool);
+        const invokedResult = await registeredMethods[scope][method](args, tool);
 
         if (
           feedbackOnEach !== undefined &&
-          registeredOnEachFeedbacks[name] != null &&
-          registeredOnEachFeedbacks[name][method] != null
+          registeredOnEachFeedbacks[scope] != null &&
+          registeredOnEachFeedbacks[scope][method] != null
         ) {
-          const retValue = registeredOnEachFeedbacks[name][method](args, invokedResult);
+          const onEachesRet = registeredOnEachFeedbacks[scope][method](args, invokedResult);
 
-          feedbackOnEach(retValue, invokeData);
+          feedbackOnEach({ onEachesRet, invoke, tool });
         }
 
-        sendResponse({ invokedResult, requestId } as never, tool);
+        sendResponse({ invokedResult, requestId }, tool);
       } catch (error) {
-        sendResponse({ errorMessage: '' + error, requestId } as never, tool);
-        onErrorMessage({ errorMessage: '' + error, invokeData });
+        sendResponse({ errorMessage: '' + error, requestId }, tool);
+        onErrorMessage({ errorMessage: '' + error, invoke, tool });
       }
     };
 
-    if (registeredMethods[name] === undefined) {
-      console.warn(`${name}.${method}() will invoke with delay`);
+    if (registeredMethods[scope] === undefined) {
+      console.warn(`${scope}.${method}() will invoke with delay`);
 
-      unregisteredWaiters[name] = () => {
-        console.warn(`${name}.${method}() invoked with delay`);
+      unregisteredWaiters[scope] = () => {
+        console.warn(`${scope}.${method}() invoked with delay`);
         invokeMethod();
       };
 
       setTimeout(() => {
-        delete unregisteredWaiters[name];
+        delete unregisteredWaiters[scope];
         invokeMethod();
       }, 10_000);
 
@@ -90,27 +93,9 @@ export const makeSokiInvocatorBase = <
     invokeMethod();
   });
 
-  type ClassName = `${string}${string}${typeof classNamePostfix}`;
-
-  type Config<M extends Methods> = {
-    className: ClassName;
-    methods: Invocator<M>;
-    onEachFeedback?: OnEachFeedbackInvocations<M, FeedbackRet>;
-    beforeEachTools?: BeforeEaches<BeforeEachTool, M>;
-    beforeEachDefaultTool?: BeforeEachTool;
-  };
-
-  type SokiInvocator = new <M extends Methods>(config: Config<M>) => Invocator<M> & { $$register: () => void };
-
   return function (this: unknown, options: Config<Methods>) {
-    const { className, methods, beforeEachTools, onEachFeedback, beforeEachDefaultTool } = options;
+    const { scope, methods, beforeEachTools, onEachFeedback, defaultBeforeEachTool } = options;
     const self = this as Methods;
-
-    if (isNeedCheckClassName) {
-      if (self.constructor.name !== className)
-        throw new Error(`${self.constructor.name} error. constructor name and className must equal`);
-    }
-    const name = className.slice(0, -classNamePostfix.length);
 
     Object.keys(methods).forEach(method => {
       if (beforeEach === undefined) self[method] = methods[method] as never;
@@ -122,10 +107,11 @@ export const makeSokiInvocatorBase = <
           if (
             !(
               await beforeEach({
-                invoke: { method, name, tool },
-                beforeTools: beforeEachTools,
+                invoke: { method, scope, args },
+                tool,
                 args,
-                defaultTool: beforeEachDefaultTool,
+                beforeEachTools,
+                defaultBeforeEachTool,
               })
             ).isStopPropagation
           )
@@ -134,14 +120,14 @@ export const makeSokiInvocatorBase = <
     });
 
     self.$$register = (() => {
-      if (registeredMethods[name] !== undefined) {
-        console.warn(`the ${className} is registered more then 1 times`);
+      if (registeredMethods[scope] !== undefined) {
+        console.warn(`the ${scope} is registered more then 1 times`);
       }
 
-      registeredMethods[name] = self as never;
-      registeredOnEachFeedbacks[name] = onEachFeedback;
+      registeredMethods[scope] = self as never;
+      registeredOnEachFeedbacks[scope] = onEachFeedback;
 
-      unregisteredWaiters[name]?.();
+      unregisteredWaiters[scope]?.();
     }) as never;
 
     return this;

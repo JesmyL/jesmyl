@@ -7,10 +7,10 @@ import { scheduleTitleInBrackets } from './general-invocators.base';
 const sharedPhotoDict = {} as Record<ScheduleWidgetPhotoKey, string>;
 
 export const schPhotosSokiInvocatorBaseServer =
-  new (class SchPhotosSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchPhotosSokiInvocatorMethods> {
+  new (class SchPhotos extends SokiInvocatorBaseServer<SchPhotosSokiInvocatorMethods> {
     constructor() {
       super({
-        className: 'SchPhotosSokiInvocatorBaseServer',
+        scope: 'SchPhotos',
         methods: {
           putSharedPhotos: async ({ photoDict }) => {
             const loadedCount = smylib.keys(photoDict).length;

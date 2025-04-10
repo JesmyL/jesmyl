@@ -1,4 +1,4 @@
-import { cmComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { Order } from '$cm/col/com/order/Order';
 import { useState } from 'react';
 import { CmComOrderWid } from 'shared/api';
@@ -31,7 +31,7 @@ export const useUpdateLinePositions = () => {
     clearTimeout(timeouts[key]);
     timeouts[key] = setTimeout(async () => {
       try {
-        await cmComOrderClientInvocatorMethods.setPositionsLine({
+        await cmEditComOrderClientInvocatorMethods.setPositionsLine({
           comw: ord.com.wid,
           orderTitle: ord.me.header(),
           ordw: ord.wid,

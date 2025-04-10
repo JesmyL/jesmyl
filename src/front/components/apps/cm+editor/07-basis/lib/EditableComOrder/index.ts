@@ -1,4 +1,4 @@
-import { cmComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { Order } from '$cm/col/com/order/Order';
 import { EditableOrderRegion, IExportableOrderMe } from '$cm/col/com/order/Order.model';
 import { InheritancableOrder, OrderRepeats } from 'shared/api';
@@ -57,7 +57,7 @@ export class EditableComOrder extends Order {
     if (postChordi >= 0) line.splice(postChordi, 1);
     line.length = chords.length;
 
-    await cmComOrderClientInvocatorMethods.setPositionsLine({
+    await cmEditComOrderClientInvocatorMethods.setPositionsLine({
       comw: this.com.wid,
       orderTitle: this.me.header(),
       ordw: this.wid,

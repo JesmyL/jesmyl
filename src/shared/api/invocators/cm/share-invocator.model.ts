@@ -7,7 +7,7 @@ import {
   TAboutComFavoriteItem,
 } from 'shared/api/complect/apps';
 
-export type CmSokiInvocatorSharesModel = {
+export type CmShareSokiInvocatorModel = {
   editedCom: (args: { com: IExportableCom }) => unknown;
   refreshComList: (args: { coms: IExportableCom[]; modifiedAt: number }) => unknown;
 

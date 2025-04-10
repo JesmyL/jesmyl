@@ -11,7 +11,7 @@ import { modifySchedule } from '../schedule-modificators';
 import { scheduleTitleInBrackets } from './general-invocators.base';
 
 export const schListsSokiInvocatorBaseServer =
-  new (class SchListsSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchListsSokiInvocatorMethods> {
+  new (class SchLists extends SokiInvocatorBaseServer<SchListsSokiInvocatorMethods> {
     constructor() {
       const modifyCategory =
         <Value>(modifier: (cat: IScheduleWidgetListCat, value: Value) => void) =>
@@ -32,7 +32,7 @@ export const schListsSokiInvocatorBaseServer =
           });
 
       super({
-        className: 'SchListsSokiInvocatorBaseServer',
+        scope: 'SchLists',
         methods: {
           createCategory: ({ props }) =>
             modifySchedule(false, props, sch =>

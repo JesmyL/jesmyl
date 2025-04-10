@@ -1,7 +1,7 @@
 import { CmComWid, ScheduleComPackHistoryItem } from 'shared/api/complect/apps';
 import { IScheduleWidgetDayEventMi, IScheduleWidgetWid } from 'shared/api/complect/schedule-widget';
 
-export type CmComExternalsSokiInvocatorModel = {
+export type CmEditComExternalsSokiInvocatorModel = {
   setInScheduleEvent: (args: {
     schw: IScheduleWidgetWid;
     dayi: number;

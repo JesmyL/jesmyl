@@ -1,7 +1,7 @@
 import { DisabledArea } from '#shared/ui/DisabledArea';
 import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
-import { cmComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { OrdersRedactorOrderToolsProps } from '../model';
 
 export const OrdersRedactorOrderToolsAnchorDelete = ({ com, ord, onClose }: OrdersRedactorOrderToolsProps) => {
@@ -31,7 +31,7 @@ export const OrdersRedactorOrderToolsAnchorDelete = ({ com, ord, onClose }: Orde
         )
           return;
 
-        await cmComOrderClientInvocatorMethods.remove({
+        await cmEditComOrderClientInvocatorMethods.remove({
           orderTitle: ord.me.header(),
           comw: com.wid,
           ordw: ord.wid,

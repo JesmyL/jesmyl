@@ -1,7 +1,7 @@
 import { InvocatorBaseEvent } from './soki.model';
 
 export type SokiInvokerData = {
-  name: string;
+  scope: string;
   method: string;
   args: object;
   token?: string | nil;

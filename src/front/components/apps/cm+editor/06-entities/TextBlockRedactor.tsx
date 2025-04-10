@@ -1,5 +1,5 @@
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { cmComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { TextCorrectMessages } from '$cm+editor/entities/TextBlockIncorrectMessages';
 import { InputWithLoadingIcon } from '$cm/base/InputWithLoadingIcon';
@@ -17,7 +17,7 @@ export const CmTextBlockRedactor = ({ texti, text, ccom }: { texti: number; text
           icon="PlusSignCircle"
           confirm="Вставить новый блок в самое начало?"
           onClick={() =>
-            cmComClientInvocatorMethods.insertTextBlock({
+            cmEditComClientInvocatorMethods.insertTextBlock({
               value: '',
               comw: ccom.wid,
               insertToi: 0,
@@ -35,7 +35,7 @@ export const CmTextBlockRedactor = ({ texti, text, ccom }: { texti: number; text
           <TheIconButton
             icon="Cancel01"
             onClick={() =>
-              cmComClientInvocatorMethods.removeTextBlock({
+              cmEditComClientInvocatorMethods.removeTextBlock({
                 comw: ccom.wid,
                 value: text,
                 removei: texti,
@@ -58,7 +58,7 @@ export const CmTextBlockRedactor = ({ texti, text, ccom }: { texti: number; text
         icon="PlusSignCircle"
         confirm="Вставить новый блок сюда?"
         onClick={() =>
-          cmComClientInvocatorMethods.insertTextBlock({
+          cmEditComClientInvocatorMethods.insertTextBlock({
             value: '',
             comw: ccom.wid,
             insertToi: texti + 1,

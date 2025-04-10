@@ -1,32 +1,15 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { CmComOrderWid, CmComWid, IExportableCom, IExportableOrder } from 'shared/api';
-import { CmComOrderSokiInvocatorModel } from 'shared/api/invocators/cm/com-order-invocators.model';
+import { CmEditComOrderSokiInvocatorModel } from 'shared/api/invocators/cm/edit-com-order-invocators.model';
 import { itNNil, smylib } from 'shared/utils';
-import { getCmComNameInBrackets, modifyInvocableCom } from './com-invocator.base';
+import { getCmComNameInBrackets, modifyInvocableCom } from './edit-com-invocator.base';
 
-export const cmComOrderServerInvocatorBase =
-  new (class CmComOrderSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmComOrderSokiInvocatorModel> {
+export const cmEditComOrderServerInvocatorBase =
+  new (class CmEditComOrder extends SokiInvocatorBaseServer<CmEditComOrderSokiInvocatorModel> {
     constructor() {
-      const modifyOrd = (comw: CmComWid, ordw: CmComOrderWid, modifier: (ord: IExportableOrder) => void) => {
-        return modifyInvocableCom(comw, com => {
-          const ord = com.o?.find(ord => ord.w === ordw);
-
-          if (ord == null) throw new Error('Ord not found');
-
-          modifier(ord);
-
-          return com;
-        });
-      };
-
-      const getNextOrdWid = (ords: { w: CmComOrderWid }[]) =>
-        ords.reduce((max, curr) => (curr.w > max ? curr.w : max), CmComOrderWid.def) + 1;
-
-      const getOrder = (com: IExportableCom, ordw: CmComOrderWid) => com.o?.find(o => o.w === ordw);
-
       super({
-        className: 'CmComOrderSokiInvocatorBaseServer',
-        beforeEachDefaultTool: { minLevel: 50 },
+        scope: 'CmEditComOrder',
+        defaultBeforeEachTool: { minLevel: 50 },
         methods: {
           clearOwnRepeats: ({ comw, ordw }) => modifyOrd(comw, ordw, ord => delete ord.r),
           setRepeats: ({ comw, ordw, value, inhIndex }) =>
@@ -191,3 +174,20 @@ export const cmComOrderServerInvocatorBase =
       });
     }
   })();
+
+const modifyOrd = (comw: CmComWid, ordw: CmComOrderWid, modifier: (ord: IExportableOrder) => void) => {
+  return modifyInvocableCom(comw, com => {
+    const ord = com.o?.find(ord => ord.w === ordw);
+
+    if (ord == null) throw new Error('Ord not found');
+
+    modifier(ord);
+
+    return com;
+  });
+};
+
+const getNextOrdWid = (ords: { w: CmComOrderWid }[]) =>
+  ords.reduce((max, curr) => (curr.w > max ? curr.w : max), CmComOrderWid.def) + 1;
+
+const getOrder = (com: IExportableCom, ordw: CmComOrderWid) => com.o?.find(o => o.w === ordw);

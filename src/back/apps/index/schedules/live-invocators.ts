@@ -28,10 +28,10 @@ const shareLiveData = (schw: IScheduleWidgetWid, streamerLogin: SokiAuthLogin) =
 };
 
 export const schLiveSokiInvocatorServer =
-  new (class SchLiveSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchLiveSokiInvocatorModel> {
+  new (class SchLive extends SokiInvocatorBaseServer<SchLiveSokiInvocatorModel> {
     constructor() {
       super({
-        className: 'SchLiveSokiInvocatorBaseServer',
+        scope: 'SchLive',
         methods: {
           next: async ({ schw, data }, { auth }) => {
             if (auth?.login == null) throw new Error('Не зарегистрирован');
@@ -105,10 +105,10 @@ export const schLiveSokiInvocatorServer =
   })();
 
 export const schLiveSokiInvocatorSharesServer =
-  new (class SchLiveSokiInvocatorServer extends SokiInvocatorServer<SchLiveSokiInvocatorSharesModel> {
+  new (class SchLive extends SokiInvocatorServer<SchLiveSokiInvocatorSharesModel> {
     constructor() {
       super({
-        className: 'SchLiveSokiInvocatorServer',
+        scope: 'SchLive',
         methods: {
           updateData: true,
           streamersList: true,

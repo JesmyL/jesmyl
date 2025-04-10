@@ -4,7 +4,7 @@ import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheButton } from '#shared/ui/TheButton';
-import { cmComExternalsClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComExternalsClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
 import { useState } from 'react';
 import { IScheduleWidgetWid } from 'shared/api';
@@ -16,7 +16,7 @@ export const CmMeetingEventEditsHistoryModalInner = ({ dayi, schw }: { dayi: num
     null,
     async ({ aborter }) => {
       if (mylib.isNaN(schw) || mylib.isNaN(dayi)) return null;
-      return cmComExternalsClientInvocatorMethods.getScheduleEventHistory({ schw, dayi }, { aborter });
+      return cmEditComExternalsClientInvocatorMethods.getScheduleEventHistory({ schw, dayi }, { aborter });
     },
     [schw, dayi],
   );
@@ -62,7 +62,7 @@ export const CmMeetingEventEditsHistoryModalInner = ({ dayi, schw }: { dayi: num
                   className="color--ko"
                   confirm="Удалить эту запись?"
                   onSend={async () => {
-                    const packs = await cmComExternalsClientInvocatorMethods.removeScheduleEventHistoryItem({
+                    const packs = await cmEditComExternalsClientInvocatorMethods.removeScheduleEventHistoryItem({
                       schw,
                       dayi,
                       writedAt: pack.w,

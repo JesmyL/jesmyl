@@ -1,6 +1,6 @@
 import { CmComOrderWid, CmComWid, IExportableCom, OrderRepeats } from 'shared/api/complect/apps';
 
-export type CmComOrderSokiInvocatorModel = {
+export type CmEditComOrderSokiInvocatorModel = {
   setRepeats: (args: {
     ordw: CmComOrderWid;
     orderTitle: string;

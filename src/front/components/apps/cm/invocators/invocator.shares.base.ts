@@ -1,12 +1,12 @@
 import { SokiInvocatorBaseClient } from '#basis/lib/SokiInvocatorBase.client';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
-import { CmSokiInvocatorSharesModel } from 'shared/api/invocators/cm/invocator.shares.model';
+import { CmShareSokiInvocatorModel } from 'shared/api/invocators/cm/share-invocator.model';
 
-export const cmSokiInvocatorBaseClient =
-  new (class CmSokiInvocatorBaseClient extends SokiInvocatorBaseClient<CmSokiInvocatorSharesModel> {
+export const cmShareSokiInvocatorBaseClient =
+  new (class CmShareSokiInvocatorBaseClient extends SokiInvocatorBaseClient<CmShareSokiInvocatorModel> {
     constructor() {
       super({
-        className: 'CmSokiInvocatorBaseClient',
+        scope: 'CmShare',
         methods: {
           editedCom: async ({ com }) => {
             cmIDB.db.coms.put(com);

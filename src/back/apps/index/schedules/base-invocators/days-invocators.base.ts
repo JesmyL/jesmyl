@@ -22,10 +22,10 @@ onScheduleDayBeginTimeSetEvent.listen(({ dayProps, strWup }) => {
 });
 
 export const schDaysSokiInvocatorBaseServer =
-  new (class SchDaysSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchDaysSokiInvocatorMethods> {
+  new (class SchDays extends SokiInvocatorBaseServer<SchDaysSokiInvocatorMethods> {
     constructor() {
       super({
-        className: 'SchDaysSokiInvocatorBaseServer',
+        scope: 'SchDays',
         methods: {
           addDay: ({ props }) =>
             modifySchedule(true, props, sch =>

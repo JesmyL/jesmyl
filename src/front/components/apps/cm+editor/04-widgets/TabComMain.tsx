@@ -4,7 +4,7 @@ import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
 import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { removedCompositionsAtom } from '$cm+editor/basis/lib/atoms/com';
-import { cmComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { TextCorrectMessages } from '$cm+editor/entities/TextBlockIncorrectMessages';
@@ -38,7 +38,7 @@ export const CmEditorTabComMain = () => {
         label="Название"
         defaultValue={ccom.name}
         isError={!!nameCorrects.errors?.length}
-        onChange={value => cmComClientInvocatorMethods.rename({ comw: ccom.wid, value })}
+        onChange={value => cmEditComClientInvocatorMethods.rename({ comw: ccom.wid, value })}
         onInput={setName}
       />
       <TextCorrectMessages corrects={nameCorrects} />
@@ -48,7 +48,7 @@ export const CmEditorTabComMain = () => {
         label="Ударов в минуту"
         type="number"
         defaultValue={'' + (ccom.beatsPerMinute ?? '')}
-        onChange={value => cmComClientInvocatorMethods.setBpM({ comw: ccom.wid, value: +value })}
+        onChange={value => cmEditComClientInvocatorMethods.setBpM({ comw: ccom.wid, value: +value })}
         onInput={emptyFunc}
       />
       <div className="flex full-width between margin-gap-v">
@@ -58,7 +58,7 @@ export const CmEditorTabComMain = () => {
           id={ccom.meterSize}
           items={meterSizeItems}
           onSelectId={value => {
-            cmComClientInvocatorMethods.setMeterSize({ comw: ccom.wid, value });
+            cmEditComClientInvocatorMethods.setMeterSize({ comw: ccom.wid, value });
           }}
         />
       </div>
@@ -66,7 +66,7 @@ export const CmEditorTabComMain = () => {
         className="flex full-width between margin-gap-v pointer"
         onClick={event => {
           event.stopPropagation();
-          cmComClientInvocatorMethods.changeLanguage({ comw: ccom.wid, value: ccom.langi ? 0 : 1 });
+          cmEditComClientInvocatorMethods.changeLanguage({ comw: ccom.wid, value: ccom.langi ? 0 : 1 });
         }}
       >
         <LazyIcon icon="Flag03" />
@@ -77,7 +77,7 @@ export const CmEditorTabComMain = () => {
       <div
         className="flex full-width between margin-gap-v pointer"
         onClick={() => {
-          cmComClientInvocatorMethods.makeBemoled({ comw: ccom.wid, value: ccom.isBemoled === 1 ? 0 : 1 });
+          cmEditComClientInvocatorMethods.makeBemoled({ comw: ccom.wid, value: ccom.isBemoled === 1 ? 0 : 1 });
         }}
       >
         <LazyIcon icon="Grid" />
@@ -90,7 +90,7 @@ export const CmEditorTabComMain = () => {
           onClick={async () => {
             if (!(await confirm(`Удалить песню "${ccom.name}"?`))) return;
             setRemovedComs(prev => ({ ...prev, [ccom.wid]: ccom.name }));
-            cmComClientInvocatorMethods.remove({ comw: ccom.wid });
+            cmEditComClientInvocatorMethods.remove({ comw: ccom.wid });
           }}
         >
           <LazyIcon icon="Delete01" />

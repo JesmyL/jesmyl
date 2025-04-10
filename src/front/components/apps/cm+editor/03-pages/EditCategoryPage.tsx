@@ -4,7 +4,7 @@ import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { LoadIndicatedContent } from '#shared/ui/load-indicated-content/LoadIndicatedContent';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { removedCategoriesAtom } from '$cm+editor/basis/lib/atoms/cat';
-import { cmCatClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditCatClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { useEditableCcat } from '$cm+editor/basis/lib/hooks/useEditableCat';
 import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer';
 import { InputWithLoadingIcon } from '$cm/base/InputWithLoadingIcon';
@@ -35,7 +35,7 @@ export const EditCategoryPage = () => {
               icon="MapsRefresh"
               postfix="Восстановить"
               className="color--ok"
-              onClick={() => cmCatClientInvocatorMethods.bringBackToLife({ catw: ccatw })}
+              onClick={() => cmEditCatClientInvocatorMethods.bringBackToLife({ catw: ccatw })}
             />
           </div>
         }
@@ -53,7 +53,7 @@ export const EditCategoryPage = () => {
             icon="TextFont"
             defaultValue={ccat.name}
             label="Название"
-            onChange={value => cmCatClientInvocatorMethods.rename({ catw: ccat.wid, name: value })}
+            onChange={value => cmEditCatClientInvocatorMethods.rename({ catw: ccat.wid, name: value })}
           />
 
           <div className="flex between">
@@ -63,7 +63,7 @@ export const EditCategoryPage = () => {
                 id={ccat.kind}
                 items={catTrackers}
                 onSelect={kind => {
-                  cmCatClientInvocatorMethods.setKind({ catw: ccat.wid, kind: kind.id });
+                  cmEditCatClientInvocatorMethods.setKind({ catw: ccat.wid, kind: kind.id });
                 }}
               />
             </div>
@@ -72,7 +72,7 @@ export const EditCategoryPage = () => {
                 icon="Cancel01"
                 postfix="Очистить список"
                 confirm="Список восстановить не получится"
-                onClick={() => cmCatClientInvocatorMethods.clearStack({ catw: ccat.wid })}
+                onClick={() => cmEditCatClientInvocatorMethods.clearStack({ catw: ccat.wid })}
               />
             )}
           </div>
@@ -92,7 +92,7 @@ export const EditCategoryPage = () => {
               onClick={() => {
                 setRemovedCats(prev => ({ ...prev, [ccat.wid]: ccat.name }));
 
-                return cmCatClientInvocatorMethods.remove({ catw: ccat.wid });
+                return cmEditCatClientInvocatorMethods.remove({ catw: ccat.wid });
               }}
             />
           </div>

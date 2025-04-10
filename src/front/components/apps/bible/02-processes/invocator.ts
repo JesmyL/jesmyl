@@ -4,24 +4,23 @@ import { bibleIDB, bibleTranslatesIDB } from '$bible/basis/lib/bibleIDB';
 import { BibleTranslate } from '$bible/basis/model/base';
 import { BibleSokiInvocatorBaseModel, BibleSokiInvocatorModel } from 'shared/api/invocators/bible/invocators.model';
 
-export const bibleSokiInvocatorClient =
-  new (class BibleSokiInvocatorClient extends SokiInvocatorClient<BibleSokiInvocatorModel> {
-    constructor() {
-      super({
-        className: 'BibleSokiInvocatorClient',
-        methods: {
-          requestFreshes: true,
-          requestTranslate: true,
-        },
-      });
-    }
-  })();
+export const bibleSokiInvocatorClient = new (class Bible extends SokiInvocatorClient<BibleSokiInvocatorModel> {
+  constructor() {
+    super({
+      scope: 'Bible',
+      methods: {
+        requestFreshes: true,
+        requestTranslate: true,
+      },
+    });
+  }
+})();
 
 export const bibleSokiInvocatorBaseClient =
   new (class BibleSokiInvocatorBaseClient extends SokiInvocatorBaseClient<BibleSokiInvocatorBaseModel> {
     constructor() {
       super({
-        className: 'BibleSokiInvocatorBaseClient',
+        scope: 'Bible',
         methods: {
           refreshTranslate: async ({ tName, stringifiedTranslate, modifiedAt }) => {
             const translate: BibleTranslate = JSON.parse(stringifiedTranslate);

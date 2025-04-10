@@ -7,7 +7,7 @@ export const schSokiInvocatorBaseClient =
   new (class SchSokiInvocatorBaseClient extends SokiInvocatorBaseClient<SchSokiInvocatorSharesModel> {
     constructor() {
       super({
-        className: 'SchSokiInvocatorBaseClient',
+        scope: 'Sch',
         methods: {
           editedSchedule: async ({ sch }) => {
             if (sch.isRemoved) {

@@ -3,12 +3,11 @@ import { SokiInvokerData } from './invocator.master.model';
 
 const registeredClasses = new Set<string>();
 
-export const makeSokiInvocator = <ClassNamePostfix extends string, ToolParam = null>(options: {
+export const makeSokiInvocator = <ToolParam = null>(options: {
   isNeedCheckClassName: boolean;
-  classNamePostfix: ClassNamePostfix;
   send: (data: SokiInvokerData, tool: ToolParam) => Promise<unknown>;
 }) => {
-  const { classNamePostfix, isNeedCheckClassName, send } = options;
+  const { isNeedCheckClassName, send } = options;
 
   type Methods = Record<string, (args: any | void, tool: ToolParam) => unknown>;
 
@@ -23,30 +22,25 @@ export const makeSokiInvocator = <ClassNamePostfix extends string, ToolParam = n
     ) => Promise<ReturnType<M[K]>>;
   };
 
-  type ClassName = `${string}${string}${typeof classNamePostfix}`;
-
   type Config<M extends Methods> = {
-    className: ClassName;
+    scope: string;
     methods: ResultListeners<M>;
   };
   type SokiInvocator = new <M extends Methods>(config: Config<M>) => RegisteredMethods<M>;
 
-  return function (this: unknown, { className, methods }: Config<Methods>) {
+  return function (this: unknown, { scope, methods }: Config<Methods>) {
     const self = this as Methods;
 
     if (isNeedCheckClassName) {
-      if (self.constructor.name !== className) throw new Error(`constructor name and className must equal`);
-      if (registeredClasses.has(className)) throw new Error(`The invoker class ${className} was created again`);
-      registeredClasses.add(className);
+      if (registeredClasses.has(scope)) throw new Error(`The invoker class ${scope} was created again`);
+      registeredClasses.add(scope);
     }
-
-    const name = className.slice(0, -classNamePostfix.length);
 
     Object.keys(methods).forEach(method => {
       self[method] = (args: any, tool: ToolParam) => {
         const { promise, reject, resolve } = Promise.withResolvers();
 
-        send({ name, method, args }, tool).then(
+        send({ scope, method, args }, tool).then(
           methods[method] === true
             ? resolve
             : value => {

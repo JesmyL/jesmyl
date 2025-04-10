@@ -3,16 +3,16 @@ import { CmEditorSokiInvocatorModel } from 'shared/api/invocators/cm/editor-invo
 import { smylib } from 'shared/utils';
 import { unwatchEditComBusies, watchEditComBusies } from './complect/edit-com-busy';
 import { cmGetResourceHTMLString } from './complect/mp3-rules';
-import { cmEditorServerInvocatorShareMethods } from './editor-invocator.shares';
+import { cmShareEditorServerInvocatorMethods } from './editor-invocator.shares';
 import { chordPackFileStore, eePackFileStore, mp3ResourcesData } from './file-stores';
-import { cmServerInvocatorShareMethods } from './invocator.shares';
+import { cmShareServerInvocatorMethods } from './invocator.shares';
 
 export const cmEditorSokiInvocatorBaseServer =
-  new (class CmEditorSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmEditorSokiInvocatorModel> {
+  new (class CmEditor extends SokiInvocatorBaseServer<CmEditorSokiInvocatorModel> {
     constructor() {
       super({
-        className: 'CmEditorSokiInvocatorBaseServer',
-        beforeEachDefaultTool: { minLevel: 50 },
+        scope: 'CmEditor',
+        defaultBeforeEachTool: { minLevel: 50 },
         beforeEachTools: {
           addMp3Rule: { minLevel: 50 },
           requestFreshes: { minVersion: 50 },
@@ -21,7 +21,7 @@ export const cmEditorSokiInvocatorBaseServer =
           setChords: async ({ chords }) => {
             chordPackFileStore.setValue({ ...chordPackFileStore.getValue(), ...chords });
             const modifiedAt = chordPackFileStore.fileModifiedAt();
-            cmServerInvocatorShareMethods.editedChords({ chords, modifiedAt });
+            cmShareServerInvocatorMethods.editedChords({ chords, modifiedAt });
 
             return chords;
           },
@@ -29,7 +29,7 @@ export const cmEditorSokiInvocatorBaseServer =
           setEEWords: async ({ words }) => {
             eePackFileStore.setValue({ ...eePackFileStore.getValue(), ...words });
             const modifiedAt = eePackFileStore.fileModifiedAt();
-            cmEditorServerInvocatorShareMethods.editedEEWords(
+            cmShareEditorServerInvocatorMethods.editedEEWords(
               {
                 words,
                 modifiedAt,
@@ -59,7 +59,7 @@ export const cmEditorSokiInvocatorBaseServer =
             if (auth && auth.level >= 50) {
               const eePackModifiedAt = eePackFileStore.fileModifiedAt();
               if (eePackModifiedAt > lastModfiedAt) {
-                cmEditorServerInvocatorShareMethods.refreshEEPack(
+                cmShareEditorServerInvocatorMethods.refreshEEPack(
                   {
                     modifiedAt: eePackModifiedAt,
                     pack: eePackFileStore.getValue(),

@@ -1,7 +1,7 @@
 import { CmComWid, LocalSokiAuth, SokiVisit } from 'shared/api';
 import { ComEditBusy } from 'shared/api/invocators/cm/editor-invocator.shares.model';
 import { WebSocket } from 'ws';
-import { cmEditorServerInvocatorShareMethods } from '../editor-invocator.shares';
+import { cmShareEditorServerInvocatorMethods } from '../editor-invocator.shares';
 
 export const watchEditComBusies = async (
   { comw }: { comw: CmComWid },
@@ -32,7 +32,7 @@ export const unwatchEditComBusies = async (_: unknown, { client }: { client: Web
 const clientToBusyMap = new Map<WebSocket, ComEditBusy>();
 
 const share = () =>
-  cmEditorServerInvocatorShareMethods.comBusies(
+  cmShareEditorServerInvocatorMethods.comBusies(
     { busies: Array.from(clientToBusyMap.values()) },
     clientToBusyMap.keys(),
   );

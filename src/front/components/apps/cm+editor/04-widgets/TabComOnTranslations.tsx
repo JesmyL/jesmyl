@@ -1,4 +1,4 @@
-import { cmComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { translationPushKinds } from '$cm/col/com/Com.complect';
 import { useCmScreenTranslationCurrentConfig } from '$cm/translation/complect/controlled/hooks/configs';
@@ -19,7 +19,7 @@ export const CmEditorTabComOnTranslations = () => {
             color={ccom.translationPushKind === kindi ? 'x7' : 'x3'}
             onClick={() => {
               if (ccom.translationPushKind === kindi) return;
-              cmComClientInvocatorMethods.changePushKind({ comw: ccom.wid, value: kindi });
+              cmEditComClientInvocatorMethods.changePushKind({ comw: ccom.wid, value: kindi });
             }}
           >
             {title}

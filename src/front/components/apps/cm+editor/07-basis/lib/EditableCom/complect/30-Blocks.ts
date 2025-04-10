@@ -1,4 +1,4 @@
-import { cmComClientInvocatorMethods } from '../../cm-editor-invocator.methods';
+import { cmEditComClientInvocatorMethods } from '../../cm-editor-invocator.methods';
 import { EditableComOrders } from './20-Orders';
 
 const itTrim = (it: string) => it.trim();
@@ -8,7 +8,7 @@ export class EditableComBlocks extends EditableComOrders {
     const value = this.transposeBlock(val, 12 - (this.transPosition || 0));
     const trimmedLinesValue = value.split('\n').map(itTrim).join('\n');
 
-    return cmComClientInvocatorMethods.changeChordBlock({
+    return cmEditComClientInvocatorMethods.changeChordBlock({
       texti: coli,
       comw: this.wid,
       value: trimmedLinesValue,
@@ -18,7 +18,7 @@ export class EditableComBlocks extends EditableComOrders {
   changeTextBlock(coli: number, value: string) {
     const trimmedLinesValue = value.split('\n').map(itTrim).join('\n');
 
-    return cmComClientInvocatorMethods.changeTextBlock({
+    return cmEditComClientInvocatorMethods.changeTextBlock({
       texti: coli,
       comw: this.wid,
       value: trimmedLinesValue,

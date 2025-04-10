@@ -1,16 +1,16 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { CmCatWid, IExportableCat } from 'shared/api';
-import { CmCatSokiInvocatorModel } from 'shared/api/invocators/cm/cat-invocators.model';
-import { getCmComNameInBrackets } from './com-invocator.base';
+import { CmEditCatSokiInvocatorModel } from 'shared/api/invocators/cm/edit-cat-invocators.model';
+import { getCmComNameInBrackets } from './edit-com-invocator.base';
 import { catsFileStore } from './file-stores';
-import { cmServerInvocatorShareMethods } from './invocator.shares';
+import { cmShareServerInvocatorMethods } from './invocator.shares';
 
-export const cmCatServerInvocatorBase =
-  new (class CmCatSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmCatSokiInvocatorModel> {
+export const cmEditCatServerInvocatorBase =
+  new (class CmEditCat extends SokiInvocatorBaseServer<CmEditCatSokiInvocatorModel> {
     constructor() {
       super({
-        className: 'CmCatSokiInvocatorBaseServer',
-        beforeEachDefaultTool: { minLevel: 50 },
+        scope: 'CmEditCat',
+        defaultBeforeEachTool: { minLevel: 50 },
         methods: {
           rename: ({ catw, name }) => this.modifyCat(catw, cat => (cat.n = name)),
           setKind: ({ catw, kind }) => this.modifyCat(catw, cat => (cat.k = kind)),
@@ -67,7 +67,7 @@ export const cmCatServerInvocatorBase =
 
       modifier(cat);
       cat.m = Date.now();
-      cmServerInvocatorShareMethods.editedCat({ cat });
+      cmShareServerInvocatorMethods.editedCat({ cat });
 
       return cat;
     };

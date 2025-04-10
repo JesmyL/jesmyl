@@ -89,7 +89,7 @@ onScheduleUserTgInformSetEvent.listen(({ isNotInform, schProps, userLogin }) => 
 });
 
 export const schGeneralSokiInvocatorBaseServer =
-  new (class SchGeneralSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchGeneralSokiInvocatorModel> {
+  new (class SchGeneral extends SokiInvocatorBaseServer<SchGeneralSokiInvocatorModel> {
     constructor() {
       const updateScheduleValue =
         <Key extends keyof IScheduleWidget>(key: Key, isNeedRefreshTgInformTime?: boolean) =>
@@ -97,7 +97,7 @@ export const schGeneralSokiInvocatorBaseServer =
           modifySchedule(isNeedRefreshTgInformTime || false, props, sch => (sch[key] = value));
 
       super({
-        className: 'SchGeneralSokiInvocatorBaseServer',
+        scope: 'SchGeneral',
         methods: {
           create: async ({ title }, { auth }) => {
             if (auth == null) throw new Error('no auth');

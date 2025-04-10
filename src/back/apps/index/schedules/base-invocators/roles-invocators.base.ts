@@ -5,20 +5,20 @@ import { smylib } from 'shared/utils';
 import { modifySchedule } from '../schedule-modificators';
 import { scheduleTitleInBrackets } from './general-invocators.base';
 
-export const schRolesSokiInvocatorBaseServer =
-  new (class SchRolesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchRolesSokiInvocatorMethods> {
-    constructor() {
-      const modifyRole =
-        <Value>(modifier: (role: IScheduleWidgetRole, value: Value) => void) =>
-        ({ props, value }: { props: ScheduleRoleScopeProps; value: Value }) =>
-          modifySchedule(false, props, sch => {
-            const role = sch.ctrl.roles.find(role => role.mi === props.roleMi);
-            if (role == null) throw new Error('role not found');
-            modifier(role, value);
-          });
+const modifyRole =
+  <Value>(modifier: (role: IScheduleWidgetRole, value: Value) => void) =>
+  ({ props, value }: { props: ScheduleRoleScopeProps; value: Value }) =>
+    modifySchedule(false, props, sch => {
+      const role = sch.ctrl.roles.find(role => role.mi === props.roleMi);
+      if (role == null) throw new Error('role not found');
+      modifier(role, value);
+    });
 
+export const schRolesSokiInvocatorBaseServer =
+  new (class SchRoles extends SokiInvocatorBaseServer<SchRolesSokiInvocatorMethods> {
+    constructor() {
       super({
-        className: 'SchRolesSokiInvocatorBaseServer',
+        scope: 'SchRoles',
         methods: {
           createRole: ({ props }) =>
             modifySchedule(false, props, sch =>

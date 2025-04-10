@@ -13,10 +13,10 @@ import {
 } from 'shared/api';
 
 export const schGeneralSokiInvocatorClient =
-  new (class SchGeneralSokiInvocatorClient extends SokiInvocatorClient<SchGeneralSokiInvocatorModel> {
+  new (class SchGeneral extends SokiInvocatorClient<SchGeneralSokiInvocatorModel> {
     constructor() {
       super({
-        className: 'SchGeneralSokiInvocatorClient',
+        scope: 'SchGeneral',
         methods: {
           create: true,
           remove: true,
@@ -37,31 +37,30 @@ export const schGeneralSokiInvocatorClient =
     }
   })();
 
-export const schDaysSokiInvocatorClient =
-  new (class SchDaysSokiInvocatorClient extends SokiInvocatorClient<SchDaysSokiInvocatorMethods> {
-    constructor() {
-      super({
-        className: 'SchDaysSokiInvocatorClient',
-        methods: {
-          addDay: true,
-          setBeginTime: true,
+export const schDaysSokiInvocatorClient = new (class SchDays extends SokiInvocatorClient<SchDaysSokiInvocatorMethods> {
+  constructor() {
+    super({
+      scope: 'SchDays',
+      methods: {
+        addDay: true,
+        setBeginTime: true,
 
-          setTopic: true,
-          setDescription: true,
-          addEvent: true,
-          removeEvent: true,
-          moveEvent: true,
-          setEventList: true,
-        },
-      });
-    }
-  })();
+        setTopic: true,
+        setDescription: true,
+        addEvent: true,
+        removeEvent: true,
+        moveEvent: true,
+        setEventList: true,
+      },
+    });
+  }
+})();
 
 export const schDayEventsSokiInvocatorClient =
-  new (class SchDayEventsSokiInvocatorClient extends SokiInvocatorClient<SchDayEventsSokiInvocatorMethods> {
+  new (class SchDayEvents extends SokiInvocatorClient<SchDayEventsSokiInvocatorMethods> {
     constructor() {
       super({
-        className: 'SchDayEventsSokiInvocatorClient',
+        scope: 'SchDayEvents',
         methods: {
           setTopic: true,
           setTm: true,
@@ -89,10 +88,10 @@ export const schDayEventsSokiInvocatorClient =
   })();
 
 export const schEventTypesSokiInvocatorClient =
-  new (class SchEventTypesSokiInvocatorClient extends SokiInvocatorClient<SchEventTypesSokiInvocatorMethods> {
+  new (class SchEventTypes extends SokiInvocatorClient<SchEventTypesSokiInvocatorMethods> {
     constructor() {
       super({
-        className: 'SchEventTypesSokiInvocatorClient',
+        scope: 'SchEventTypes',
         methods: {
           create: true,
           setTitle: true,
@@ -107,10 +106,10 @@ export const schEventTypesSokiInvocatorClient =
   })();
 
 export const schAttachmentTypesSokiInvocatorClient =
-  new (class SchAttachmentTypesSokiInvocatorClient extends SokiInvocatorClient<SchAttachmentTypesSokiInvocatorMethods> {
+  new (class SchAttachmentTypes extends SokiInvocatorClient<SchAttachmentTypesSokiInvocatorMethods> {
     constructor() {
       super({
-        className: 'SchAttachmentTypesSokiInvocatorClient',
+        scope: 'SchAttachmentTypes',
         methods: {
           create: true,
           setTitle: true,
@@ -129,10 +128,10 @@ export const schAttachmentTypesSokiInvocatorClient =
   })();
 
 export const schPhotosSokiInvocatorClient =
-  new (class SchPhotosSokiInvocatorClient extends SokiInvocatorClient<SchPhotosSokiInvocatorMethods> {
+  new (class SchPhotos extends SokiInvocatorClient<SchPhotosSokiInvocatorMethods> {
     constructor() {
       super({
-        className: 'SchPhotosSokiInvocatorClient',
+        scope: 'SchPhotos',
         methods: {
           putSharedPhotos: true,
           getSharedPhotos: true,
@@ -142,10 +141,10 @@ export const schPhotosSokiInvocatorClient =
   })();
 
 export const schUsersSokiInvocatorClient =
-  new (class SchUsersSokiInvocatorClient extends SokiInvocatorClient<SchUsersSokiInvocatorMethods> {
+  new (class SchUsers extends SokiInvocatorClient<SchUsersSokiInvocatorMethods> {
     constructor() {
       super({
-        className: 'SchUsersSokiInvocatorClient',
+        scope: 'SchUsers',
         methods: {
           addUsersByExcel: true,
           addMe: true,
@@ -159,10 +158,10 @@ export const schUsersSokiInvocatorClient =
   })();
 
 export const schRolesSokiInvocatorClient =
-  new (class SchRolesSokiInvocatorClient extends SokiInvocatorClient<SchRolesSokiInvocatorMethods> {
+  new (class SchRoles extends SokiInvocatorClient<SchRolesSokiInvocatorMethods> {
     constructor() {
       super({
-        className: 'SchRolesSokiInvocatorClient',
+        scope: 'SchRoles',
         methods: {
           createRole: true,
           setRoleIcon: true,
@@ -178,10 +177,10 @@ export const schRolesSokiInvocatorClient =
   })();
 
 export const schListsSokiInvocatorClient =
-  new (class SchListsSokiInvocatorClient extends SokiInvocatorClient<SchListsSokiInvocatorMethods> {
+  new (class SchLists extends SokiInvocatorClient<SchListsSokiInvocatorMethods> {
     constructor() {
       super({
-        className: 'SchListsSokiInvocatorClient',
+        scope: 'SchLists',
         methods: {
           createCategory: true,
           setCategoryTitle: true,
@@ -197,10 +196,10 @@ export const schListsSokiInvocatorClient =
   })();
 
 export const schGamesSokiInvocatorClient =
-  new (class SchGamesSokiInvocatorClient extends SokiInvocatorClient<SchGamesSokiInvocatorMethods> {
+  new (class SchGames extends SokiInvocatorClient<SchGamesSokiInvocatorMethods> {
     constructor() {
       super({
-        className: 'SchGamesSokiInvocatorClient',
+        scope: 'SchGames',
         methods: {
           addCriteria: true,
           setCriteriaTitle: true,

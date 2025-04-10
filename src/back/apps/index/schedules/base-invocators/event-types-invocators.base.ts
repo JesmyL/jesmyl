@@ -11,10 +11,10 @@ onScheduleEventTypesAddManyEvent.listen(({ schProps, typeList }) => {
 });
 
 export const schEventTypesSokiInvocatorBaseServer =
-  new (class SchEventTypesSokiInvocatorBaseServer extends SokiInvocatorBaseServer<SchEventTypesSokiInvocatorMethods> {
+  new (class SchEventTypes extends SokiInvocatorBaseServer<SchEventTypesSokiInvocatorMethods> {
     constructor() {
       super({
-        className: 'SchEventTypesSokiInvocatorBaseServer',
+        scope: 'SchEventTypes',
         methods: {
           create: ({ props, title, tm }) => modifySchedule(false, props, sch => sch.types.push({ title, tm })),
           setTitle: ({ props, value: title }) =>

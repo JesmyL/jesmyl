@@ -5,7 +5,7 @@ import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
-import { cmComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { TheOrder } from '$cm/col/com/order/TheOrder';
 import { OrdersRedactorOrderToolsProps } from '../model';
@@ -44,7 +44,7 @@ export const OrdersRedactorOrderToolsModulation = ({ com, ord, ordi }: OrdersRed
                 disabled={ord.fieldValues.md === position}
                 className="margin-gap-t"
                 onClick={() =>
-                  cmComOrderClientInvocatorMethods.setModulationValue({
+                  cmEditComOrderClientInvocatorMethods.setModulationValue({
                     comw: com.wid,
                     orderTitle: ord.me.header(),
                     ordw: ord.wid,

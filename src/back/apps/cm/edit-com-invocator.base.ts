@@ -1,48 +1,62 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { CmComWid, IExportableCom } from 'shared/api';
-import { CmComSokiInvocatorModel } from 'shared/api/invocators/cm/com-invocators.model';
+import { CmEditComSokiInvocatorModel } from 'shared/api/invocators/cm/edit-com-invocators.model';
 import { smylib } from 'shared/utils';
 import { cmComLanguages } from 'shared/values/values';
 import { comsFileStore } from './file-stores';
-import { cmServerInvocatorShareMethods } from './invocator.shares';
+import { cmShareServerInvocatorMethods } from './invocator.shares';
 
-export const cmComServerInvocatorBase =
-  new (class CmComSokiInvocatorBaseServer extends SokiInvocatorBaseServer<CmComSokiInvocatorModel> {
+export const modifyInvocableCom = async (comw: CmComWid, mapper: (com: IExportableCom) => void) => {
+  const com = comsFileStore.getValue().find(com => com.w === comw);
+
+  if (com === undefined) throw new Error(`Песня не найдена`);
+
+  mapper(com);
+  com.m = Date.now() + Math.random();
+
+  comsFileStore.saveValue();
+  cmShareServerInvocatorMethods.editedCom({ com });
+
+  return com;
+};
+
+const simpleComKeyValueSetter = <Key extends keyof IExportableCom>(key: Key) => {
+  return ({ comw, value }: { comw: CmComWid; value: IExportableCom[Key] }) =>
+    modifyInvocableCom(comw, com => (com[key] = value));
+};
+
+const insertInTextableBlock =
+  (coln: 'c' | 't') =>
+  ({ comw, insertToi, value }: { value: string; comw: CmComWid; insertToi: number }) =>
+    modifyInvocableCom(comw, com => {
+      if (com[coln] == null) return;
+      const list = com[coln];
+
+      list.splice(insertToi, 0, value);
+      com.o?.forEach(ord => {
+        if (ord[coln] != null && ord[coln] >= insertToi) ord[coln]++;
+      });
+    });
+
+const removeTextableBlock =
+  (coln: 'c' | 't') =>
+  ({ comw, removei }: { comw: CmComWid; removei: number }) =>
+    modifyInvocableCom(comw, com => {
+      if (com[coln] == null) return;
+      const list = com[coln];
+
+      list.splice(removei, 1);
+      com.o?.forEach(ord => {
+        if (ord[coln] != null && ord[coln] >= removei) ord[coln]--;
+      });
+    });
+
+export const cmEditComServerInvocatorBase =
+  new (class CmEditCom extends SokiInvocatorBaseServer<CmEditComSokiInvocatorModel> {
     constructor() {
-      const simpleComKeyValueSetter = <Key extends keyof IExportableCom>(key: Key) => {
-        return ({ comw, value }: { comw: CmComWid; value: IExportableCom[Key] }) =>
-          modifyInvocableCom(comw, com => (com[key] = value));
-      };
-
-      const insertInTextableBlock =
-        (coln: 'c' | 't') =>
-        ({ comw, insertToi, value }: { value: string; comw: CmComWid; insertToi: number }) =>
-          modifyInvocableCom(comw, com => {
-            if (com[coln] == null) return;
-            const list = com[coln];
-
-            list.splice(insertToi, 0, value);
-            com.o?.forEach(ord => {
-              if (ord[coln] != null && ord[coln] >= insertToi) ord[coln]++;
-            });
-          });
-
-      const removeTextableBlock =
-        (coln: 'c' | 't') =>
-        ({ comw, removei }: { comw: CmComWid; removei: number }) =>
-          modifyInvocableCom(comw, com => {
-            if (com[coln] == null) return;
-            const list = com[coln];
-
-            list.splice(removei, 1);
-            com.o?.forEach(ord => {
-              if (ord[coln] != null && ord[coln] >= removei) ord[coln]--;
-            });
-          });
-
       super({
-        className: 'CmComSokiInvocatorBaseServer',
-        beforeEachDefaultTool: { minLevel: 50 },
+        scope: 'CmEditCom',
+        defaultBeforeEachTool: { minLevel: 50 },
         methods: {
           rename: simpleComKeyValueSetter('n'),
           setBpM: simpleComKeyValueSetter('bpm'),
@@ -68,7 +82,7 @@ export const cmComServerInvocatorBase =
             const com = { ...newCom, w: Date.now(), m: Date.now() };
             comsFileStore.getValue().push(com);
             comsFileStore.saveValue();
-            cmServerInvocatorShareMethods.editedCom({ com });
+            cmShareServerInvocatorMethods.editedCom({ com });
 
             return com;
           },
@@ -150,18 +164,4 @@ export const getCmComNameInBrackets = (comScalar: CmComWid | IExportableCom) => 
   }
 
   return `"${comScalar.n}"`;
-};
-
-export const modifyInvocableCom = async (comw: CmComWid, mapper: (com: IExportableCom) => void) => {
-  const com = comsFileStore.getValue().find(com => com.w === comw);
-
-  if (com === undefined) throw new Error(`Песня не найдена`);
-
-  mapper(com);
-  com.m = Date.now() + Math.random();
-
-  comsFileStore.saveValue();
-  cmServerInvocatorShareMethods.editedCom({ com });
-
-  return com;
 };

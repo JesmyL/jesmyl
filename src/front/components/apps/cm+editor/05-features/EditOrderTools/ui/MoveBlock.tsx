@@ -1,7 +1,7 @@
 import { DisabledArea } from '#shared/ui/DisabledArea';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { cmComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { OrdersRedactorOrderToolsProps } from '../model';
 
 export const OrdersRedactorOrderToolsMoveBlock = (props: OrdersRedactorOrderToolsProps) => {
@@ -47,7 +47,7 @@ export const OrdersRedactorOrderToolsMoveBlock = (props: OrdersRedactorOrderTool
             return isFoundTargetOrdPrev;
           },
           onClick: async ({ aboveLeadOrdw }) => {
-            await cmComOrderClientInvocatorMethods.moveOrdAfter({
+            await cmEditComOrderClientInvocatorMethods.moveOrdAfter({
               ordw: props.ord.wid,
               orderTitle: props.ord.me.header(),
               comw: props.com.wid,
