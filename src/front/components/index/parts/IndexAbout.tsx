@@ -4,10 +4,19 @@ import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
 import { QRCode } from '#shared/ui/qr-code/QRCode';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { indexSokiInvocatorClientMethods } from '$index/invocator.methods';
+import { useConnectionState, useIsOnline } from '$index/useConnectionState';
+import { checkIsThereNewSW } from 'front/serviceWorkerRegistration';
+import { useEffect, useState } from 'react';
 import { jversion } from 'shared/values';
 
 export function IndexAbout() {
+  const [cacheNames, setCacheNames] = useState<string[]>([]);
+  const connectionStateNode = useConnectionState();
+  const [isRefreshProcess, setIsRefreshProcess] = useState(false);
+  const isOnline = useIsOnline();
+
   const [appVersion, isVersionLoading] = useInvocatedValue(
     0,
     ({ aborter }) => indexSokiInvocatorClientMethods.getFreshAppVersion(undefined, { aborter }),
@@ -18,6 +27,13 @@ export function IndexAbout() {
     ({ aborter }) => indexSokiInvocatorClientMethods.getIndexValues(undefined, { aborter }),
     [],
   );
+
+  useEffect(() => {
+    (async () => {
+      const cacheNames = await caches.keys();
+      setCacheNames(cacheNames);
+    })();
+  }, []);
 
   return (
     <div className="flex center">
@@ -52,12 +68,44 @@ export function IndexAbout() {
           <TheIconLoading />
         ) : appVersion ? (
           jversion.num === appVersion ? (
-            '- Актуальная'
+            ' - Актуальная'
           ) : (
-            `(Новая - v${appVersion})`
+            ` (Новая - v${appVersion})`
           )
         ) : (
           ''
+        )}
+        {isOnline ? (
+          isRefreshProcess ? (
+            <TheIconLoading />
+          ) : (
+            <TheIconButton
+              icon="Refresh"
+              confirm="Это действие требует немедленного обновления сразу после своего завершения. Убедитесь, пожалуйста, что у вас есть интернет-соединение, ибо, в противном случае, возникнет проблема"
+              onClick={event => {
+                event.stopPropagation();
+                setIsRefreshProcess(true);
+
+                const clearCache = async () => {
+                  try {
+                    await Promise.all(cacheNames.map(cacheName => caches.delete(cacheName)));
+                    window.location.reload();
+                  } catch (_error) {
+                    //
+                  }
+
+                  setIsRefreshProcess(false);
+                };
+
+                checkIsThereNewSW(reg => {
+                  reg?.waiting?.postMessage({ type: 'SKIP_WAITING' });
+                  setTimeout(clearCache, 1000);
+                }, clearCache);
+              }}
+            />
+          )
+        ) : (
+          connectionStateNode
         )}
       </div>
     </div>
