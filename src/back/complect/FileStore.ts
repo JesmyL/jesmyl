@@ -19,15 +19,15 @@ export class FileStore<Value> {
     registeredPaths.add(path);
   }
 
-  private readValue(defaultValue: Value) {
+  private readValue = (defaultValue: Value) => {
     try {
       return JSON.parse('' + fs.readFileSync(this.filePath));
     } catch (_error) {
       return defaultValue;
     }
-  }
+  };
 
-  private writeValue(value: Value) {
+  private writeValue = (value: Value) => {
     try {
       fs.writeFileSync(this.filePath, JSON.stringify(value));
       return true;
@@ -52,25 +52,25 @@ export class FileStore<Value> {
         return false;
       }
     }
-  }
+  };
 
-  getValue(): Value {
+  getValue = (): Value => {
     return this.value;
-  }
+  };
 
-  getValueWithAutoSave(): Value {
+  getValueWithAutoSave = (): Value => {
     Promise.resolve().then(() => this.saveValue());
     return this.value;
-  }
+  };
 
-  setValue(value: Value) {
+  setValue = (value: Value) => {
     this.value = value;
     this.writeValue(value);
-  }
+  };
 
-  saveValue() {
+  saveValue = () => {
     this.writeValue(this.value);
-  }
+  };
 
   fileModifiedAt = (): number => {
     try {
@@ -84,7 +84,7 @@ export class FileStore<Value> {
 
   private watchFileTries = 2;
 
-  watchFile(cb: (value: Value, ...args: Parameters<StatsListener>) => void) {
+  watchFile = (cb: (value: Value, ...args: Parameters<StatsListener>) => void) => {
     try {
       fs.watchFile(this.filePath, (curr, prev) => {
         this.value = this.readValue(this.defaultValue);
@@ -95,5 +95,5 @@ export class FileStore<Value> {
       if (this.watchFileTries-- < 0) return;
       this.watchFile(cb);
     }
-  }
+  };
 }
