@@ -19,28 +19,19 @@ export const IconFileUploadStrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="file-upload-stroke-rounded IconFileUploadStrokeRounded"
+      the-icon="FileUpload StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -50,33 +41,23 @@ export const IconFileUploadDuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="file-upload-duotone-rounded IconFileUploadDuotoneRounded"
+      the-icon="FileUpload DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -86,29 +67,19 @@ export const IconFileUploadTwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="file-upload-twotone-rounded IconFileUploadTwotoneRounded"
+      the-icon="FileUpload TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -118,15 +89,15 @@ export const IconFileUploadSolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="file-upload-solid-rounded IconFileUploadSolidRounded"
+      the-icon="FileUpload SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -136,16 +107,15 @@ export const IconFileUploadBulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="file-upload-bulk-rounded IconFileUploadBulkRounded"
+      the-icon="FileUpload BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -155,17 +125,15 @@ export const IconFileUploadStrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="file-upload-stroke-sharp IconFileUploadStrokeSharp"
+      the-icon="FileUpload StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -175,29 +143,27 @@ export const IconFileUploadSolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="file-upload-solid-sharp IconFileUploadSolidSharp"
+      the-icon="FileUpload SolidSharp"
     >
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfFileUpload: TheIconSelfPack = {
-  name: 'FileUpload',
-  StrokeRounded: IconFileUploadStrokeRounded,
-  DuotoneRounded: IconFileUploadDuotoneRounded,
-  TwotoneRounded: IconFileUploadTwotoneRounded,
-  SolidRounded: IconFileUploadSolidRounded,
-  BulkRounded: IconFileUploadBulkRounded,
-  StrokeSharp: IconFileUploadStrokeSharp,
-  SolidSharp: IconFileUploadSolidSharp,
-};
+export const iconPackOfFileUpload: TheIconSelfPack = [
+  'FileUpload',
+  IconFileUploadStrokeRounded,
+  IconFileUploadDuotoneRounded,
+  IconFileUploadTwotoneRounded,
+  IconFileUploadSolidRounded,
+  IconFileUploadBulkRounded,
+  IconFileUploadStrokeSharp,
+  IconFileUploadSolidSharp,
+];

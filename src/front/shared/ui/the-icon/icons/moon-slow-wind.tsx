@@ -17,20 +17,15 @@ export const IconMoonSlowWindStrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="moon-slow-wind-stroke-rounded IconMoonSlowWindStrokeRounded"
+      the-icon="MoonSlowWind StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -40,25 +35,19 @@ export const IconMoonSlowWindDuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="moon-slow-wind-duotone-rounded IconMoonSlowWindDuotoneRounded"
+      the-icon="MoonSlowWind DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -68,21 +57,15 @@ export const IconMoonSlowWindTwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="moon-slow-wind-twotone-rounded IconMoonSlowWindTwotoneRounded"
+      the-icon="MoonSlowWind TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -92,17 +75,15 @@ export const IconMoonSlowWindSolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="moon-slow-wind-solid-rounded IconMoonSlowWindSolidRounded"
+      the-icon="MoonSlowWind SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -112,18 +93,15 @@ export const IconMoonSlowWindBulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="moon-slow-wind-bulk-rounded IconMoonSlowWindBulkRounded"
+      the-icon="MoonSlowWind BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -133,18 +111,15 @@ export const IconMoonSlowWindStrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="moon-slow-wind-stroke-sharp IconMoonSlowWindStrokeSharp"
+      the-icon="MoonSlowWind StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -154,31 +129,31 @@ export const IconMoonSlowWindSolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="moon-slow-wind-solid-sharp IconMoonSlowWindSolidSharp"
+      the-icon="MoonSlowWind SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMoonSlowWind: TheIconSelfPack = {
-  name: 'MoonSlowWind',
-  StrokeRounded: IconMoonSlowWindStrokeRounded,
-  DuotoneRounded: IconMoonSlowWindDuotoneRounded,
-  TwotoneRounded: IconMoonSlowWindTwotoneRounded,
-  SolidRounded: IconMoonSlowWindSolidRounded,
-  BulkRounded: IconMoonSlowWindBulkRounded,
-  StrokeSharp: IconMoonSlowWindStrokeSharp,
-  SolidSharp: IconMoonSlowWindSolidSharp,
-};
+export const iconPackOfMoonSlowWind: TheIconSelfPack = [
+  'MoonSlowWind',
+  IconMoonSlowWindStrokeRounded,
+  IconMoonSlowWindDuotoneRounded,
+  IconMoonSlowWindTwotoneRounded,
+  IconMoonSlowWindSolidRounded,
+  IconMoonSlowWindBulkRounded,
+  IconMoonSlowWindStrokeSharp,
+  IconMoonSlowWindSolidSharp,
+];

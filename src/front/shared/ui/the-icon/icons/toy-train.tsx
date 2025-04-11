@@ -43,72 +43,47 @@ export const IconToyTrainStrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="toy-train-stroke-rounded IconToyTrainStrokeRounded"
+      the-icon="ToyTrain StrokeRounded"
     >
       <circle 
-        cx="7" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="7"
+        cy="18"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="17" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        cx="17"
+        cy="18"
+        r="2"
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d7}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -118,78 +93,52 @@ export const IconToyTrainDuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="toy-train-duotone-rounded IconToyTrainDuotoneRounded"
+      the-icon="ToyTrain DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="7" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="7"
+        cy="18"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="17" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="17"
+        cy="18"
+        r="2"
+        i-c="s sj sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -198,75 +147,47 @@ export const IconToyTrainTwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="toy-train-twotone-rounded IconToyTrainTwotoneRounded"
+      the-icon="ToyTrain TwotoneRounded"
     >
       <circle 
-        cx="7" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="7"
+        cy="18"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="17" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        cx="17"
+        cy="18"
+        r="2"
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d7}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -276,49 +197,42 @@ export const IconToyTrainSolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="toy-train-solid-rounded IconToyTrainSolidRounded"
+      the-icon="ToyTrain SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="c f fr"
       />
       <path 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        d={d.d15}
+        i-c="c f fr"
       />
       <circle 
-        cx="17" 
-        cy="18" 
-        r="2.25" 
-        fill="var(--icon-fill)"></circle>
+        cx="17"
+        cy="18"
+        r="2.25"
+        i-c="f"
+      />
     </TheIconWrapper>
   );
 };
@@ -327,55 +241,46 @@ export const IconToyTrainBulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="toy-train-bulk-rounded IconToyTrainBulkRounded"
+      the-icon="ToyTrain BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d17} 
-        fill="var(--icon-fill)" 
+        d={d.d17}
+        i-c="c f fr"
       />
       <path 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        d={d.d15}
+        i-c="c f fr"
       />
       <circle 
-        cx="17" 
-        cy="18" 
-        r="2.25" 
-        fill="var(--icon-fill)"></circle>
+        cx="17"
+        cy="18"
+        r="2.25"
+        i-c="f"
+      />
     </TheIconWrapper>
   );
 };
@@ -384,59 +289,43 @@ export const IconToyTrainStrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="toy-train-stroke-sharp IconToyTrainStrokeSharp"
+      the-icon="ToyTrain StrokeSharp"
     >
       <path 
-        d={d.d18} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d18}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d19} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d19}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d20} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d20}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d21} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d21}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d22} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d22}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d23} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d23}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d24} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d24}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d25} 
-        fill="var(--icon-fill)" 
+        d={d.d25}
+        i-c="f"
       />
       <path 
-        d={d.d26} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d26}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -446,63 +335,51 @@ export const IconToyTrainSolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="toy-train-solid-sharp IconToyTrainSolidSharp"
+      the-icon="ToyTrain SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d27} 
-        fill="var(--icon-fill)" 
+        d={d.d27}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d28} 
-        fill="var(--icon-fill)" 
+        d={d.d28}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d29} 
-        fill="var(--icon-fill)" 
+        d={d.d29}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d30} 
-        fill="var(--icon-fill)" 
+        d={d.d30}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d31} 
-        fill="var(--icon-fill)" 
+        d={d.d31}
+        i-c="c f fr"
       />
       <path 
-        d={d.d32} 
-        fill="var(--icon-fill)" 
+        d={d.d32}
+        i-c="f"
       />
       <path 
-        d={d.d33} 
-        fill="var(--icon-fill)" 
+        d={d.d33}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d34} 
-        fill="var(--icon-fill)" 
+        d={d.d34}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfToyTrain: TheIconSelfPack = {
-  name: 'ToyTrain',
-  StrokeRounded: IconToyTrainStrokeRounded,
-  DuotoneRounded: IconToyTrainDuotoneRounded,
-  TwotoneRounded: IconToyTrainTwotoneRounded,
-  SolidRounded: IconToyTrainSolidRounded,
-  BulkRounded: IconToyTrainBulkRounded,
-  StrokeSharp: IconToyTrainStrokeSharp,
-  SolidSharp: IconToyTrainSolidSharp,
-};
+export const iconPackOfToyTrain: TheIconSelfPack = [
+  'ToyTrain',
+  IconToyTrainStrokeRounded,
+  IconToyTrainDuotoneRounded,
+  IconToyTrainTwotoneRounded,
+  IconToyTrainSolidRounded,
+  IconToyTrainBulkRounded,
+  IconToyTrainStrokeSharp,
+  IconToyTrainSolidSharp,
+];

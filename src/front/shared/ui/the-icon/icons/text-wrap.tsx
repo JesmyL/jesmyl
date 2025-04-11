@@ -26,35 +26,23 @@ export const IconTextWrapStrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="text-wrap-stroke-rounded IconTextWrapStrokeRounded"
+      the-icon="TextWrap StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -64,40 +52,27 @@ export const IconTextWrapDuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="text-wrap-duotone-rounded IconTextWrapDuotoneRounded"
+      the-icon="TextWrap DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -107,37 +82,23 @@ export const IconTextWrapTwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="text-wrap-twotone-rounded IconTextWrapTwotoneRounded"
+      the-icon="TextWrap TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -147,29 +108,23 @@ export const IconTextWrapSolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="text-wrap-solid-rounded IconTextWrapSolidRounded"
+      the-icon="TextWrap SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -179,32 +134,23 @@ export const IconTextWrapBulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="text-wrap-bulk-rounded IconTextWrapBulkRounded"
+      the-icon="TextWrap BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -214,33 +160,23 @@ export const IconTextWrapStrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="text-wrap-stroke-sharp IconTextWrapStrokeSharp"
+      the-icon="TextWrap StrokeSharp"
     >
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj ss sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round" 
+        d={d.d11}
+        i-c="s sj ss sw"
       />
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round" 
+        d={d.d12}
+        i-c="s sj ss sw"
       />
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d13}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -250,43 +186,35 @@ export const IconTextWrapSolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="text-wrap-solid-sharp IconTextWrapSolidSharp"
+      the-icon="TextWrap SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        d={d.d15}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d17} 
-        fill="var(--icon-fill)" 
+        d={d.d17}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTextWrap: TheIconSelfPack = {
-  name: 'TextWrap',
-  StrokeRounded: IconTextWrapStrokeRounded,
-  DuotoneRounded: IconTextWrapDuotoneRounded,
-  TwotoneRounded: IconTextWrapTwotoneRounded,
-  SolidRounded: IconTextWrapSolidRounded,
-  BulkRounded: IconTextWrapBulkRounded,
-  StrokeSharp: IconTextWrapStrokeSharp,
-  SolidSharp: IconTextWrapSolidSharp,
-};
+export const iconPackOfTextWrap: TheIconSelfPack = [
+  'TextWrap',
+  IconTextWrapStrokeRounded,
+  IconTextWrapDuotoneRounded,
+  IconTextWrapTwotoneRounded,
+  IconTextWrapSolidRounded,
+  IconTextWrapBulkRounded,
+  IconTextWrapStrokeSharp,
+  IconTextWrapSolidSharp,
+];

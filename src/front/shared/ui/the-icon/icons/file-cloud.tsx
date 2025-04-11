@@ -17,28 +17,19 @@ export const IconFileCloudStrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="file-cloud-stroke-rounded IconFileCloudStrokeRounded"
+      the-icon="FileCloud StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -48,33 +39,23 @@ export const IconFileCloudDuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="file-cloud-duotone-rounded IconFileCloudDuotoneRounded"
+      the-icon="FileCloud DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -84,29 +65,19 @@ export const IconFileCloudTwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="file-cloud-twotone-rounded IconFileCloudTwotoneRounded"
+      the-icon="FileCloud TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -116,15 +87,15 @@ export const IconFileCloudSolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="file-cloud-solid-rounded IconFileCloudSolidRounded"
+      the-icon="FileCloud SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -134,16 +105,15 @@ export const IconFileCloudBulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="file-cloud-bulk-rounded IconFileCloudBulkRounded"
+      the-icon="FileCloud BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -153,18 +123,15 @@ export const IconFileCloudStrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="file-cloud-stroke-sharp IconFileCloudStrokeSharp"
+      the-icon="FileCloud StrokeSharp"
     >
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -174,27 +141,27 @@ export const IconFileCloudSolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="file-cloud-solid-sharp IconFileCloudSolidSharp"
+      the-icon="FileCloud SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfFileCloud: TheIconSelfPack = {
-  name: 'FileCloud',
-  StrokeRounded: IconFileCloudStrokeRounded,
-  DuotoneRounded: IconFileCloudDuotoneRounded,
-  TwotoneRounded: IconFileCloudTwotoneRounded,
-  SolidRounded: IconFileCloudSolidRounded,
-  BulkRounded: IconFileCloudBulkRounded,
-  StrokeSharp: IconFileCloudStrokeSharp,
-  SolidSharp: IconFileCloudSolidSharp,
-};
+export const iconPackOfFileCloud: TheIconSelfPack = [
+  'FileCloud',
+  IconFileCloudStrokeRounded,
+  IconFileCloudDuotoneRounded,
+  IconFileCloudTwotoneRounded,
+  IconFileCloudSolidRounded,
+  IconFileCloudBulkRounded,
+  IconFileCloudStrokeSharp,
+  IconFileCloudSolidSharp,
+];

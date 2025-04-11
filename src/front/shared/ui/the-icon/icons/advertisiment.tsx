@@ -23,28 +23,19 @@ export const IconAdvertisimentStrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="advertisiment-stroke-rounded IconAdvertisimentStrokeRounded"
+      the-icon="Advertisiment StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,33 +45,23 @@ export const IconAdvertisimentDuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="advertisiment-duotone-rounded IconAdvertisimentDuotoneRounded"
+      the-icon="Advertisiment DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -90,22 +71,15 @@ export const IconAdvertisimentTwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="advertisiment-twotone-rounded IconAdvertisimentTwotoneRounded"
+      the-icon="Advertisiment TwotoneRounded"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -115,13 +89,11 @@ export const IconAdvertisimentSolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="advertisiment-solid-rounded IconAdvertisimentSolidRounded"
+      the-icon="Advertisiment SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -131,18 +103,15 @@ export const IconAdvertisimentBulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="advertisiment-bulk-rounded IconAdvertisimentBulkRounded"
+      the-icon="Advertisiment BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -152,29 +121,23 @@ export const IconAdvertisimentStrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="advertisiment-stroke-sharp IconAdvertisimentStrokeSharp"
+      the-icon="Advertisiment StrokeSharp"
     >
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="bevel" 
+        d={d.d11}
+        i-c="s sb sw"
       />
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d12}
+        i-c="s sw"
       />
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d13}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -184,25 +147,23 @@ export const IconAdvertisimentSolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="advertisiment-solid-sharp IconAdvertisimentSolidSharp"
+      the-icon="Advertisiment SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAdvertisiment: TheIconSelfPack = {
-  name: 'Advertisiment',
-  StrokeRounded: IconAdvertisimentStrokeRounded,
-  DuotoneRounded: IconAdvertisimentDuotoneRounded,
-  TwotoneRounded: IconAdvertisimentTwotoneRounded,
-  SolidRounded: IconAdvertisimentSolidRounded,
-  BulkRounded: IconAdvertisimentBulkRounded,
-  StrokeSharp: IconAdvertisimentStrokeSharp,
-  SolidSharp: IconAdvertisimentSolidSharp,
-};
+export const iconPackOfAdvertisiment: TheIconSelfPack = [
+  'Advertisiment',
+  IconAdvertisimentStrokeRounded,
+  IconAdvertisimentDuotoneRounded,
+  IconAdvertisimentTwotoneRounded,
+  IconAdvertisimentSolidRounded,
+  IconAdvertisimentBulkRounded,
+  IconAdvertisimentStrokeSharp,
+  IconAdvertisimentSolidSharp,
+];

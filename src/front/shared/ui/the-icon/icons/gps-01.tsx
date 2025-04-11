@@ -25,45 +25,31 @@ export const IconGps01StrokeRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="gps-01-stroke-rounded IconGps01StrokeRounded"
+      the-icon="Gps01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -73,52 +59,35 @@ export const IconGps01DuotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="gps-01-duotone-rounded IconGps01DuotoneRounded"
+      the-icon="Gps01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -128,46 +97,31 @@ export const IconGps01TwotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="gps-01-twotone-rounded IconGps01TwotoneRounded"
+      the-icon="Gps01 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="o7 s sw"
       />
     </TheIconWrapper>
   );
@@ -177,23 +131,19 @@ export const IconGps01SolidRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="gps-01-solid-rounded IconGps01SolidRounded"
+      the-icon="Gps01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -203,25 +153,19 @@ export const IconGps01BulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="gps-01-bulk-rounded IconGps01BulkRounded"
+      the-icon="Gps01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -231,43 +175,31 @@ export const IconGps01StrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="gps-01-stroke-sharp IconGps01StrokeSharp"
+      the-icon="Gps01 StrokeSharp"
     >
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d11}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d12}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d13}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d14} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d14}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d15} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d15}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -277,29 +209,27 @@ export const IconGps01SolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="gps-01-solid-sharp IconGps01SolidSharp"
+      the-icon="Gps01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="c f fr"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfGps01: TheIconSelfPack = {
-  name: 'Gps01',
-  StrokeRounded: IconGps01StrokeRounded,
-  DuotoneRounded: IconGps01DuotoneRounded,
-  TwotoneRounded: IconGps01TwotoneRounded,
-  SolidRounded: IconGps01SolidRounded,
-  BulkRounded: IconGps01BulkRounded,
-  StrokeSharp: IconGps01StrokeSharp,
-  SolidSharp: IconGps01SolidSharp,
-};
+export const iconPackOfGps01: TheIconSelfPack = [
+  'Gps01',
+  IconGps01StrokeRounded,
+  IconGps01DuotoneRounded,
+  IconGps01TwotoneRounded,
+  IconGps01SolidRounded,
+  IconGps01BulkRounded,
+  IconGps01StrokeSharp,
+  IconGps01SolidSharp,
+];

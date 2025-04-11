@@ -30,34 +30,27 @@ export const IconGridTableStrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="grid-table-stroke-rounded IconGridTableStrokeRounded"
+      the-icon="GridTable StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d4}
+        i-c="s sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -67,39 +60,31 @@ export const IconGridTableDuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="grid-table-duotone-rounded IconGridTableDuotoneRounded"
+      the-icon="GridTable DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d4}
+        i-c="s sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -109,36 +94,27 @@ export const IconGridTableTwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="grid-table-twotone-rounded IconGridTableTwotoneRounded"
+      the-icon="GridTable TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d4}
+        i-c="o7 s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="o7 s sw"
       />
     </TheIconWrapper>
   );
@@ -148,37 +124,27 @@ export const IconGridTableSolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="grid-table-solid-rounded IconGridTableSolidRounded"
+      the-icon="GridTable SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -188,39 +154,27 @@ export const IconGridTableBulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="grid-table-bulk-rounded IconGridTableBulkRounded"
+      the-icon="GridTable BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr o7"
       />
     </TheIconWrapper>
   );
@@ -230,33 +184,27 @@ export const IconGridTableStrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="grid-table-stroke-sharp IconGridTableStrokeSharp"
+      the-icon="GridTable StrokeSharp"
     >
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d12}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d13}
+        i-c="s sw"
       />
       <path 
-        d={d.d14} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d14}
+        i-c="s sw"
       />
       <path 
-        d={d.d15} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d15}
+        i-c="s sw"
       />
       <path 
-        d={d.d16} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d16}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -266,49 +214,39 @@ export const IconGridTableSolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="grid-table-solid-sharp IconGridTableSolidSharp"
+      the-icon="GridTable SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d17} 
-        fill="var(--icon-fill)" 
+        d={d.d17}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d18} 
-        fill="var(--icon-fill)" 
+        d={d.d18}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d19} 
-        fill="var(--icon-fill)" 
+        d={d.d19}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d20} 
-        fill="var(--icon-fill)" 
+        d={d.d20}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d21} 
-        fill="var(--icon-fill)" 
+        d={d.d21}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfGridTable: TheIconSelfPack = {
-  name: 'GridTable',
-  StrokeRounded: IconGridTableStrokeRounded,
-  DuotoneRounded: IconGridTableDuotoneRounded,
-  TwotoneRounded: IconGridTableTwotoneRounded,
-  SolidRounded: IconGridTableSolidRounded,
-  BulkRounded: IconGridTableBulkRounded,
-  StrokeSharp: IconGridTableStrokeSharp,
-  SolidSharp: IconGridTableSolidSharp,
-};
+export const iconPackOfGridTable: TheIconSelfPack = [
+  'GridTable',
+  IconGridTableStrokeRounded,
+  IconGridTableDuotoneRounded,
+  IconGridTableTwotoneRounded,
+  IconGridTableSolidRounded,
+  IconGridTableBulkRounded,
+  IconGridTableStrokeSharp,
+  IconGridTableSolidSharp,
+];

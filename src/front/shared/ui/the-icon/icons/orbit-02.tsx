@@ -25,25 +25,19 @@ export const IconOrbit02StrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="orbit-02-stroke-rounded IconOrbit02StrokeRounded"
+      the-icon="Orbit02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -53,40 +47,31 @@ export const IconOrbit02DuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="orbit-02-duotone-rounded IconOrbit02DuotoneRounded"
+      the-icon="Orbit02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -96,39 +81,27 @@ export const IconOrbit02TwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="orbit-02-twotone-rounded IconOrbit02TwotoneRounded"
+      the-icon="Orbit02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d6}
+        i-c="o7 s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d7}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d5}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -138,31 +111,27 @@ export const IconOrbit02SolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="orbit-02-solid-rounded IconOrbit02SolidRounded"
+      the-icon="Orbit02 SolidRounded"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -172,33 +141,32 @@ export const IconOrbit02BulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="orbit-02-bulk-rounded IconOrbit02BulkRounded"
+      the-icon="Orbit02 BulkRounded"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
-      />
-      <path 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f"
       />
       <path 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="f"
+      />
+      <path 
+        d={d.d15}
+        i-c="f"
       />
       </g>
     </TheIconWrapper>
@@ -209,22 +177,19 @@ export const IconOrbit02StrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="orbit-02-stroke-sharp IconOrbit02StrokeSharp"
+      the-icon="Orbit02 StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -234,37 +199,35 @@ export const IconOrbit02SolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="orbit-02-solid-sharp IconOrbit02SolidSharp"
+      the-icon="Orbit02 SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="c f fr"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfOrbit02: TheIconSelfPack = {
-  name: 'Orbit02',
-  StrokeRounded: IconOrbit02StrokeRounded,
-  DuotoneRounded: IconOrbit02DuotoneRounded,
-  TwotoneRounded: IconOrbit02TwotoneRounded,
-  SolidRounded: IconOrbit02SolidRounded,
-  BulkRounded: IconOrbit02BulkRounded,
-  StrokeSharp: IconOrbit02StrokeSharp,
-  SolidSharp: IconOrbit02SolidSharp,
-};
+export const iconPackOfOrbit02: TheIconSelfPack = [
+  'Orbit02',
+  IconOrbit02StrokeRounded,
+  IconOrbit02DuotoneRounded,
+  IconOrbit02TwotoneRounded,
+  IconOrbit02SolidRounded,
+  IconOrbit02BulkRounded,
+  IconOrbit02StrokeSharp,
+  IconOrbit02SolidSharp,
+];

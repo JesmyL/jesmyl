@@ -19,26 +19,19 @@ export const IconQuoraStrokeRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="quora-stroke-rounded IconQuoraStrokeRounded"
+      the-icon="Quora StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -48,31 +41,23 @@ export const IconQuoraDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="quora-duotone-rounded IconQuoraDuotoneRounded"
+      the-icon="Quora DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -82,27 +67,19 @@ export const IconQuoraTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="quora-twotone-rounded IconQuoraTwotoneRounded"
+      the-icon="Quora TwotoneRounded"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -112,15 +89,15 @@ export const IconQuoraSolidRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="quora-solid-rounded IconQuoraSolidRounded"
+      the-icon="Quora SolidRounded"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -130,16 +107,15 @@ export const IconQuoraBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="quora-bulk-rounded IconQuoraBulkRounded"
+      the-icon="Quora BulkRounded"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -149,25 +125,19 @@ export const IconQuoraStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="quora-stroke-sharp IconQuoraStrokeSharp"
+      the-icon="Quora StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -177,27 +147,27 @@ export const IconQuoraSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="quora-solid-sharp IconQuoraSolidSharp"
+      the-icon="Quora SolidSharp"
     >
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfQuora: TheIconSelfPack = {
-  name: 'Quora',
-  StrokeRounded: IconQuoraStrokeRounded,
-  DuotoneRounded: IconQuoraDuotoneRounded,
-  TwotoneRounded: IconQuoraTwotoneRounded,
-  SolidRounded: IconQuoraSolidRounded,
-  BulkRounded: IconQuoraBulkRounded,
-  StrokeSharp: IconQuoraStrokeSharp,
-  SolidSharp: IconQuoraSolidSharp,
-};
+export const iconPackOfQuora: TheIconSelfPack = [
+  'Quora',
+  IconQuoraStrokeRounded,
+  IconQuoraDuotoneRounded,
+  IconQuoraTwotoneRounded,
+  IconQuoraSolidRounded,
+  IconQuoraBulkRounded,
+  IconQuoraStrokeSharp,
+  IconQuoraSolidSharp,
+];

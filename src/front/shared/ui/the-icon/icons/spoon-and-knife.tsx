@@ -25,37 +25,27 @@ export const IconSpoonAndKnifeStrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="spoon-and-knife-stroke-rounded IconSpoonAndKnifeStrokeRounded"
+      the-icon="SpoonAndKnife StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -65,52 +55,39 @@ export const IconSpoonAndKnifeDuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="spoon-and-knife-duotone-rounded IconSpoonAndKnifeDuotoneRounded"
+      the-icon="SpoonAndKnife DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -120,33 +97,23 @@ export const IconSpoonAndKnifeTwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="spoon-and-knife-twotone-rounded IconSpoonAndKnifeTwotoneRounded"
+      the-icon="SpoonAndKnife TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d7}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -156,21 +123,19 @@ export const IconSpoonAndKnifeSolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="spoon-and-knife-solid-rounded IconSpoonAndKnifeSolidRounded"
+      the-icon="SpoonAndKnife SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -180,26 +145,23 @@ export const IconSpoonAndKnifeBulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="spoon-and-knife-bulk-rounded IconSpoonAndKnifeBulkRounded"
+      the-icon="SpoonAndKnife BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f o7"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -209,37 +171,27 @@ export const IconSpoonAndKnifeStrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="spoon-and-knife-stroke-sharp IconSpoonAndKnifeStrokeSharp"
+      the-icon="SpoonAndKnife StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d1}
+        i-c="s ss sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d2}
+        i-c="s ss sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d3}
+        i-c="s ss sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d4}
+        i-c="s ss sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d5}
+        i-c="s ss sw"
       />
     </TheIconWrapper>
   );
@@ -249,37 +201,35 @@ export const IconSpoonAndKnifeSolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="spoon-and-knife-solid-sharp IconSpoonAndKnifeSolidSharp"
+      the-icon="SpoonAndKnife SolidSharp"
     >
       <path 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr"
       />
       <path 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        d={d.d15}
+        i-c="f"
       />
       <path 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSpoonAndKnife: TheIconSelfPack = {
-  name: 'SpoonAndKnife',
-  StrokeRounded: IconSpoonAndKnifeStrokeRounded,
-  DuotoneRounded: IconSpoonAndKnifeDuotoneRounded,
-  TwotoneRounded: IconSpoonAndKnifeTwotoneRounded,
-  SolidRounded: IconSpoonAndKnifeSolidRounded,
-  BulkRounded: IconSpoonAndKnifeBulkRounded,
-  StrokeSharp: IconSpoonAndKnifeStrokeSharp,
-  SolidSharp: IconSpoonAndKnifeSolidSharp,
-};
+export const iconPackOfSpoonAndKnife: TheIconSelfPack = [
+  'SpoonAndKnife',
+  IconSpoonAndKnifeStrokeRounded,
+  IconSpoonAndKnifeDuotoneRounded,
+  IconSpoonAndKnifeTwotoneRounded,
+  IconSpoonAndKnifeSolidRounded,
+  IconSpoonAndKnifeBulkRounded,
+  IconSpoonAndKnifeStrokeSharp,
+  IconSpoonAndKnifeSolidSharp,
+];

@@ -17,17 +17,15 @@ export const IconSetting07StrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="setting-07-stroke-rounded IconSetting07StrokeRounded"
+      the-icon="Setting07 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -37,24 +35,19 @@ export const IconSetting07DuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="setting-07-duotone-rounded IconSetting07DuotoneRounded"
+      the-icon="Setting07 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -64,18 +57,15 @@ export const IconSetting07TwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="setting-07-twotone-rounded IconSetting07TwotoneRounded"
+      the-icon="Setting07 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="o7 s sw"
       />
     </TheIconWrapper>
   );
@@ -85,13 +75,11 @@ export const IconSetting07SolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="setting-07-solid-rounded IconSetting07SolidRounded"
+      the-icon="Setting07 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -101,16 +89,15 @@ export const IconSetting07BulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="setting-07-bulk-rounded IconSetting07BulkRounded"
+      the-icon="Setting07 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -120,18 +107,15 @@ export const IconSetting07StrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="setting-07-stroke-sharp IconSetting07StrokeSharp"
+      the-icon="Setting07 StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -141,25 +125,23 @@ export const IconSetting07SolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="setting-07-solid-sharp IconSetting07SolidSharp"
+      the-icon="Setting07 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSetting07: TheIconSelfPack = {
-  name: 'Setting07',
-  StrokeRounded: IconSetting07StrokeRounded,
-  DuotoneRounded: IconSetting07DuotoneRounded,
-  TwotoneRounded: IconSetting07TwotoneRounded,
-  SolidRounded: IconSetting07SolidRounded,
-  BulkRounded: IconSetting07BulkRounded,
-  StrokeSharp: IconSetting07StrokeSharp,
-  SolidSharp: IconSetting07SolidSharp,
-};
+export const iconPackOfSetting07: TheIconSelfPack = [
+  'Setting07',
+  IconSetting07StrokeRounded,
+  IconSetting07DuotoneRounded,
+  IconSetting07TwotoneRounded,
+  IconSetting07SolidRounded,
+  IconSetting07BulkRounded,
+  IconSetting07StrokeSharp,
+  IconSetting07SolidSharp,
+];

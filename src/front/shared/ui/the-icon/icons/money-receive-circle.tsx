@@ -27,26 +27,19 @@ export const IconMoneyReceiveCircleStrokeRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="money-receive-circle-stroke-rounded IconMoneyReceiveCircleStrokeRounded"
+      the-icon="MoneyReceiveCircle StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -56,31 +49,23 @@ export const IconMoneyReceiveCircleDuotoneRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="money-receive-circle-duotone-rounded IconMoneyReceiveCircleDuotoneRounded"
+      the-icon="MoneyReceiveCircle DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d5}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d6}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -90,27 +75,19 @@ export const IconMoneyReceiveCircleTwotoneRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="money-receive-circle-twotone-rounded IconMoneyReceiveCircleTwotoneRounded"
+      the-icon="MoneyReceiveCircle TwotoneRounded"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d7}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d8}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -120,23 +97,19 @@ export const IconMoneyReceiveCircleSolidRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="money-receive-circle-solid-rounded IconMoneyReceiveCircleSolidRounded"
+      the-icon="MoneyReceiveCircle SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -146,25 +119,19 @@ export const IconMoneyReceiveCircleBulkRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="money-receive-circle-bulk-rounded IconMoneyReceiveCircleBulkRounded"
+      the-icon="MoneyReceiveCircle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -174,24 +141,19 @@ export const IconMoneyReceiveCircleStrokeSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="money-receive-circle-stroke-sharp IconMoneyReceiveCircleStrokeSharp"
+      the-icon="MoneyReceiveCircle StrokeSharp"
     >
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d13}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d14} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d14}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d15} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d15}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -201,37 +163,31 @@ export const IconMoneyReceiveCircleSolidSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="money-receive-circle-solid-sharp IconMoneyReceiveCircleSolidSharp"
+      the-icon="MoneyReceiveCircle SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d17} 
-        fill="var(--icon-fill)" 
+        d={d.d17}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d18} 
-        fill="var(--icon-fill)" 
+        d={d.d18}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMoneyReceiveCircle: TheIconSelfPack = {
-  name: 'MoneyReceiveCircle',
-  StrokeRounded: IconMoneyReceiveCircleStrokeRounded,
-  DuotoneRounded: IconMoneyReceiveCircleDuotoneRounded,
-  TwotoneRounded: IconMoneyReceiveCircleTwotoneRounded,
-  SolidRounded: IconMoneyReceiveCircleSolidRounded,
-  BulkRounded: IconMoneyReceiveCircleBulkRounded,
-  StrokeSharp: IconMoneyReceiveCircleStrokeSharp,
-  SolidSharp: IconMoneyReceiveCircleSolidSharp,
-};
+export const iconPackOfMoneyReceiveCircle: TheIconSelfPack = [
+  'MoneyReceiveCircle',
+  IconMoneyReceiveCircleStrokeRounded,
+  IconMoneyReceiveCircleDuotoneRounded,
+  IconMoneyReceiveCircleTwotoneRounded,
+  IconMoneyReceiveCircleSolidRounded,
+  IconMoneyReceiveCircleBulkRounded,
+  IconMoneyReceiveCircleStrokeSharp,
+  IconMoneyReceiveCircleSolidSharp,
+];

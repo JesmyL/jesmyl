@@ -42,84 +42,51 @@ export const IconBookshelf03StrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="bookshelf-03-stroke-rounded IconBookshelf03StrokeRounded"
+      the-icon="Bookshelf03 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d11}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -129,94 +96,59 @@ export const IconBookshelf03DuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="bookshelf-03-duotone-rounded IconBookshelf03DuotoneRounded"
+      the-icon="Bookshelf03 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d11}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -226,90 +158,51 @@ export const IconBookshelf03TwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="bookshelf-03-twotone-rounded IconBookshelf03TwotoneRounded"
+      the-icon="Bookshelf03 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d11}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -319,25 +212,19 @@ export const IconBookshelf03SolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="bookshelf-03-solid-rounded IconBookshelf03SolidRounded"
+      the-icon="Bookshelf03 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        d={d.d15}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -347,50 +234,43 @@ export const IconBookshelf03BulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="bookshelf-03-bulk-rounded IconBookshelf03BulkRounded"
+      the-icon="Bookshelf03 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d17} 
-        fill="var(--icon-fill)" 
+        d={d.d17}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d18} 
-        fill="var(--icon-fill)" 
+        d={d.d18}
+        i-c="f"
       />
       <path 
-        d={d.d19} 
-        fill="var(--icon-fill)" 
+        d={d.d19}
+        i-c="f"
       />
       <path 
-        d={d.d20} 
-        fill="var(--icon-fill)" 
+        d={d.d20}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d21} 
-        fill="var(--icon-fill)" 
+        d={d.d21}
+        i-c="c f fr"
       />
       <path 
-        d={d.d22} 
-        fill="var(--icon-fill)" 
+        d={d.d22}
+        i-c="f"
       />
       <path 
-        d={d.d23} 
-        fill="var(--icon-fill)" 
+        d={d.d23}
+        i-c="f"
       />
       <path 
-        d={d.d24} 
-        fill="var(--icon-fill)" 
+        d={d.d24}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -400,44 +280,31 @@ export const IconBookshelf03StrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="bookshelf-03-stroke-sharp IconBookshelf03StrokeSharp"
+      the-icon="Bookshelf03 StrokeSharp"
     >
       <path 
-        d={d.d25} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d25}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d26} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d26}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d27} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d27}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d28} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d28}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d29} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d29}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d30} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d30}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -447,37 +314,31 @@ export const IconBookshelf03SolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="bookshelf-03-solid-sharp IconBookshelf03SolidSharp"
+      the-icon="Bookshelf03 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d31} 
-        fill="var(--icon-fill)" 
+        d={d.d31}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d32} 
-        fill="var(--icon-fill)" 
+        d={d.d32}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d33} 
-        fill="var(--icon-fill)" 
+        d={d.d33}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBookshelf03: TheIconSelfPack = {
-  name: 'Bookshelf03',
-  StrokeRounded: IconBookshelf03StrokeRounded,
-  DuotoneRounded: IconBookshelf03DuotoneRounded,
-  TwotoneRounded: IconBookshelf03TwotoneRounded,
-  SolidRounded: IconBookshelf03SolidRounded,
-  BulkRounded: IconBookshelf03BulkRounded,
-  StrokeSharp: IconBookshelf03StrokeSharp,
-  SolidSharp: IconBookshelf03SolidSharp,
-};
+export const iconPackOfBookshelf03: TheIconSelfPack = [
+  'Bookshelf03',
+  IconBookshelf03StrokeRounded,
+  IconBookshelf03DuotoneRounded,
+  IconBookshelf03TwotoneRounded,
+  IconBookshelf03SolidRounded,
+  IconBookshelf03BulkRounded,
+  IconBookshelf03StrokeSharp,
+  IconBookshelf03SolidSharp,
+];

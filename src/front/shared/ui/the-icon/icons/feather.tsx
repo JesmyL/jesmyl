@@ -20,28 +20,19 @@ export const IconFeatherStrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="feather-stroke-rounded IconFeatherStrokeRounded"
+      the-icon="Feather StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -51,33 +42,23 @@ export const IconFeatherDuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="feather-duotone-rounded IconFeatherDuotoneRounded"
+      the-icon="Feather DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -87,29 +68,19 @@ export const IconFeatherTwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="feather-twotone-rounded IconFeatherTwotoneRounded"
+      the-icon="Feather TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -119,15 +90,15 @@ export const IconFeatherSolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="feather-solid-rounded IconFeatherSolidRounded"
+      the-icon="Feather SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -137,18 +108,15 @@ export const IconFeatherBulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="feather-bulk-rounded IconFeatherBulkRounded"
+      the-icon="Feather BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -158,19 +126,15 @@ export const IconFeatherStrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="feather-stroke-sharp IconFeatherStrokeSharp"
+      the-icon="Feather StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d8}
+        i-c="s ss sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d9}
+        i-c="s ss sw"
       />
     </TheIconWrapper>
   );
@@ -180,27 +144,27 @@ export const IconFeatherSolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="feather-solid-sharp IconFeatherSolidSharp"
+      the-icon="Feather SolidSharp"
     >
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfFeather: TheIconSelfPack = {
-  name: 'Feather',
-  StrokeRounded: IconFeatherStrokeRounded,
-  DuotoneRounded: IconFeatherDuotoneRounded,
-  TwotoneRounded: IconFeatherTwotoneRounded,
-  SolidRounded: IconFeatherSolidRounded,
-  BulkRounded: IconFeatherBulkRounded,
-  StrokeSharp: IconFeatherStrokeSharp,
-  SolidSharp: IconFeatherSolidSharp,
-};
+export const iconPackOfFeather: TheIconSelfPack = [
+  'Feather',
+  IconFeatherStrokeRounded,
+  IconFeatherDuotoneRounded,
+  IconFeatherTwotoneRounded,
+  IconFeatherSolidRounded,
+  IconFeatherBulkRounded,
+  IconFeatherStrokeSharp,
+  IconFeatherSolidSharp,
+];

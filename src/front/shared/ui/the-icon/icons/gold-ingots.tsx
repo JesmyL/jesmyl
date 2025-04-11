@@ -22,24 +22,19 @@ export const IconGoldIngotsStrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="gold-ingots-stroke-rounded IconGoldIngotsStrokeRounded"
+      the-icon="GoldIngots StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -49,34 +44,27 @@ export const IconGoldIngotsDuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="gold-ingots-duotone-rounded IconGoldIngotsDuotoneRounded"
+      the-icon="GoldIngots DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -86,25 +74,19 @@ export const IconGoldIngotsTwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="gold-ingots-twotone-rounded IconGoldIngotsTwotoneRounded"
+      the-icon="GoldIngots TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -114,19 +96,19 @@ export const IconGoldIngotsSolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="gold-ingots-solid-rounded IconGoldIngotsSolidRounded"
+      the-icon="GoldIngots SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -136,20 +118,19 @@ export const IconGoldIngotsBulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="gold-ingots-bulk-rounded IconGoldIngotsBulkRounded"
+      the-icon="GoldIngots BulkRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -159,25 +140,19 @@ export const IconGoldIngotsStrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="gold-ingots-stroke-sharp IconGoldIngotsStrokeSharp"
+      the-icon="GoldIngots StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -187,31 +162,31 @@ export const IconGoldIngotsSolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="gold-ingots-solid-sharp IconGoldIngotsSolidSharp"
+      the-icon="GoldIngots SolidSharp"
     >
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
       <path 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfGoldIngots: TheIconSelfPack = {
-  name: 'GoldIngots',
-  StrokeRounded: IconGoldIngotsStrokeRounded,
-  DuotoneRounded: IconGoldIngotsDuotoneRounded,
-  TwotoneRounded: IconGoldIngotsTwotoneRounded,
-  SolidRounded: IconGoldIngotsSolidRounded,
-  BulkRounded: IconGoldIngotsBulkRounded,
-  StrokeSharp: IconGoldIngotsStrokeSharp,
-  SolidSharp: IconGoldIngotsSolidSharp,
-};
+export const iconPackOfGoldIngots: TheIconSelfPack = [
+  'GoldIngots',
+  IconGoldIngotsStrokeRounded,
+  IconGoldIngotsDuotoneRounded,
+  IconGoldIngotsTwotoneRounded,
+  IconGoldIngotsSolidRounded,
+  IconGoldIngotsBulkRounded,
+  IconGoldIngotsStrokeSharp,
+  IconGoldIngotsSolidSharp,
+];

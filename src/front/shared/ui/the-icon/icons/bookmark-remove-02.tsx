@@ -17,21 +17,15 @@ export const IconBookmarkRemove02StrokeRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="bookmark-remove-02-stroke-rounded IconBookmarkRemove02StrokeRounded"
+      the-icon="BookmarkRemove02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -41,26 +35,19 @@ export const IconBookmarkRemove02DuotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="bookmark-remove-02-duotone-rounded IconBookmarkRemove02DuotoneRounded"
+      the-icon="BookmarkRemove02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -70,22 +57,15 @@ export const IconBookmarkRemove02TwotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="bookmark-remove-02-twotone-rounded IconBookmarkRemove02TwotoneRounded"
+      the-icon="BookmarkRemove02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -95,17 +75,15 @@ export const IconBookmarkRemove02SolidRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="bookmark-remove-02-solid-rounded IconBookmarkRemove02SolidRounded"
+      the-icon="BookmarkRemove02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -115,18 +93,15 @@ export const IconBookmarkRemove02BulkRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="bookmark-remove-02-bulk-rounded IconBookmarkRemove02BulkRounded"
+      the-icon="BookmarkRemove02 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -136,18 +111,15 @@ export const IconBookmarkRemove02StrokeSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="bookmark-remove-02-stroke-sharp IconBookmarkRemove02StrokeSharp"
+      the-icon="BookmarkRemove02 StrokeSharp"
     >
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -157,29 +129,27 @@ export const IconBookmarkRemove02SolidSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="bookmark-remove-02-solid-sharp IconBookmarkRemove02SolidSharp"
+      the-icon="BookmarkRemove02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBookmarkRemove02: TheIconSelfPack = {
-  name: 'BookmarkRemove02',
-  StrokeRounded: IconBookmarkRemove02StrokeRounded,
-  DuotoneRounded: IconBookmarkRemove02DuotoneRounded,
-  TwotoneRounded: IconBookmarkRemove02TwotoneRounded,
-  SolidRounded: IconBookmarkRemove02SolidRounded,
-  BulkRounded: IconBookmarkRemove02BulkRounded,
-  StrokeSharp: IconBookmarkRemove02StrokeSharp,
-  SolidSharp: IconBookmarkRemove02SolidSharp,
-};
+export const iconPackOfBookmarkRemove02: TheIconSelfPack = [
+  'BookmarkRemove02',
+  IconBookmarkRemove02StrokeRounded,
+  IconBookmarkRemove02DuotoneRounded,
+  IconBookmarkRemove02TwotoneRounded,
+  IconBookmarkRemove02SolidRounded,
+  IconBookmarkRemove02BulkRounded,
+  IconBookmarkRemove02StrokeSharp,
+  IconBookmarkRemove02SolidSharp,
+];

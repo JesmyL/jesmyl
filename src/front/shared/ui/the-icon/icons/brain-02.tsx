@@ -17,21 +17,15 @@ export const IconBrain02StrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="brain-02-stroke-rounded IconBrain02StrokeRounded"
+      the-icon="Brain02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -41,28 +35,19 @@ export const IconBrain02DuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="brain-02-duotone-rounded IconBrain02DuotoneRounded"
+      the-icon="Brain02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -72,22 +57,15 @@ export const IconBrain02TwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="brain-02-twotone-rounded IconBrain02TwotoneRounded"
+      the-icon="Brain02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -97,13 +75,11 @@ export const IconBrain02SolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="brain-02-solid-rounded IconBrain02SolidRounded"
+      the-icon="Brain02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -113,18 +89,15 @@ export const IconBrain02BulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="brain-02-bulk-rounded IconBrain02BulkRounded"
+      the-icon="Brain02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -134,12 +107,11 @@ export const IconBrain02StrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="brain-02-stroke-sharp IconBrain02StrokeSharp"
+      the-icon="Brain02 StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -149,25 +121,23 @@ export const IconBrain02SolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="brain-02-solid-sharp IconBrain02SolidSharp"
+      the-icon="Brain02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBrain02: TheIconSelfPack = {
-  name: 'Brain02',
-  StrokeRounded: IconBrain02StrokeRounded,
-  DuotoneRounded: IconBrain02DuotoneRounded,
-  TwotoneRounded: IconBrain02TwotoneRounded,
-  SolidRounded: IconBrain02SolidRounded,
-  BulkRounded: IconBrain02BulkRounded,
-  StrokeSharp: IconBrain02StrokeSharp,
-  SolidSharp: IconBrain02SolidSharp,
-};
+export const iconPackOfBrain02: TheIconSelfPack = [
+  'Brain02',
+  IconBrain02StrokeRounded,
+  IconBrain02DuotoneRounded,
+  IconBrain02TwotoneRounded,
+  IconBrain02SolidRounded,
+  IconBrain02BulkRounded,
+  IconBrain02StrokeSharp,
+  IconBrain02SolidSharp,
+];

@@ -22,53 +22,44 @@ export const IconChartRelationshipStrokeRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="chart-relationship-stroke-rounded IconChartRelationshipStrokeRounded"
+      the-icon="ChartRelationship StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="6.44444" 
-        cy="6.44444" 
-        r="4.44444" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.44444"
+        cy="6.44444"
+        r="4.44444"
+        i-c="s sw"
+      />
       <circle 
-        cx="5" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="5"
+        cy="20"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="16" 
-        cy="16" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="16"
+        cy="16"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="20" 
-        cy="5" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="20"
+        cy="5"
+        r="2"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -77,59 +68,50 @@ export const IconChartRelationshipDuotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="chart-relationship-duotone-rounded IconChartRelationshipDuotoneRounded"
+      the-icon="ChartRelationship DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="6.44444" 
-        cy="6.44444" 
-        r="4.44444" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.44444"
+        cy="6.44444"
+        r="4.44444"
+        i-c="s sw"
+      />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="6.44444" 
-        cy="6.44444" 
-        r="4.44444" 
-        fill="var(--icon-fill)"></circle>
+        cx="6.44444"
+        cy="6.44444"
+        r="4.44444"
+        i-c="f o7"
+      />
       <circle 
-        cx="5" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="5"
+        cy="20"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="16" 
-        cy="16" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="16"
+        cy="16"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="20" 
-        cy="5" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="20"
+        cy="5"
+        r="2"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -138,56 +120,44 @@ export const IconChartRelationshipTwotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="chart-relationship-twotone-rounded IconChartRelationshipTwotoneRounded"
+      the-icon="ChartRelationship TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
       <circle 
-        cx="6.44444" 
-        cy="6.44444" 
-        r="4.44444" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.44444"
+        cy="6.44444"
+        r="4.44444"
+        i-c="s sw"
+      />
       <circle 
-        cx="5" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="5"
+        cy="20"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="16" 
-        cy="16" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="16"
+        cy="16"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="20" 
-        cy="5" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="20"
+        cy="5"
+        r="2"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -196,43 +166,39 @@ export const IconChartRelationshipSolidRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="chart-relationship-solid-rounded IconChartRelationshipSolidRounded"
+      the-icon="ChartRelationship SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <circle 
-        cx="5.94444" 
-        cy="5.94444" 
-        r="4.44444" 
-        fill="var(--icon-fill)"></circle>
+        cx="5.94444"
+        cy="5.94444"
+        r="4.44444"
+        i-c="f"
+      />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <circle 
-        cx="16" 
-        cy="16" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="16"
+        cy="16"
+        r="2.5"
+        i-c="f"
+      />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -242,46 +208,39 @@ export const IconChartRelationshipBulkRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="chart-relationship-bulk-rounded IconChartRelationshipBulkRounded"
+      the-icon="ChartRelationship BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr o7"
       />
       <circle 
-        cx="5.94444" 
-        cy="5.94444" 
-        r="4.44444" 
-        fill="var(--icon-fill)"></circle>
+        cx="5.94444"
+        cy="5.94444"
+        r="4.44444"
+        i-c="f"
+      />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <circle 
-        cx="16" 
-        cy="16" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="16"
+        cy="16"
+        r="2.5"
+        i-c="f"
+      />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -291,57 +250,44 @@ export const IconChartRelationshipStrokeSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="chart-relationship-stroke-sharp IconChartRelationshipStrokeSharp"
+      the-icon="ChartRelationship StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="6.44444" 
-        cy="6.44444" 
-        r="4.44444" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="6.44444"
+        cy="6.44444"
+        r="4.44444"
+        i-c="s sj sw"
+      />
       <circle 
-        cx="5" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="5"
+        cy="20"
+        r="2"
+        i-c="s sj sw"
+      />
       <circle 
-        cx="16" 
-        cy="16" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="16"
+        cy="16"
+        r="2"
+        i-c="s sj sw"
+      />
       <circle 
-        cx="20" 
-        cy="5" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="20"
+        cy="5"
+        r="2"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -350,41 +296,39 @@ export const IconChartRelationshipSolidSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="chart-relationship-solid-sharp IconChartRelationshipSolidSharp"
+      the-icon="ChartRelationship SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
       <path 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfChartRelationship: TheIconSelfPack = {
-  name: 'ChartRelationship',
-  StrokeRounded: IconChartRelationshipStrokeRounded,
-  DuotoneRounded: IconChartRelationshipDuotoneRounded,
-  TwotoneRounded: IconChartRelationshipTwotoneRounded,
-  SolidRounded: IconChartRelationshipSolidRounded,
-  BulkRounded: IconChartRelationshipBulkRounded,
-  StrokeSharp: IconChartRelationshipStrokeSharp,
-  SolidSharp: IconChartRelationshipSolidSharp,
-};
+export const iconPackOfChartRelationship: TheIconSelfPack = [
+  'ChartRelationship',
+  IconChartRelationshipStrokeRounded,
+  IconChartRelationshipDuotoneRounded,
+  IconChartRelationshipTwotoneRounded,
+  IconChartRelationshipSolidRounded,
+  IconChartRelationshipBulkRounded,
+  IconChartRelationshipStrokeSharp,
+  IconChartRelationshipSolidSharp,
+];

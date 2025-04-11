@@ -25,47 +25,35 @@ export const IconEarRings03StrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="ear-rings-03-stroke-rounded IconEarRings03StrokeRounded"
+      the-icon="EarRings03 StrokeRounded"
     >
       <circle 
-        cx="17" 
-        cy="7" 
-        r="4" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17"
+        cy="7"
+        r="4"
+        i-c="s sw"
+      />
       <circle 
-        cx="7" 
-        cy="17" 
-        r="4" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        cx="7"
+        cy="17"
+        r="4"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -75,53 +63,41 @@ export const IconEarRings03DuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="ear-rings-03-duotone-rounded IconEarRings03DuotoneRounded"
+      the-icon="EarRings03 DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="7" 
-        cy="17" 
-        r="4" 
-        fill="var(--icon-fill)"></circle>
+        cx="7"
+        cy="17"
+        r="4"
+        i-c="f o7"
+      />
       <circle 
-        cx="17" 
-        cy="7" 
-        r="4" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17"
+        cy="7"
+        r="4"
+        i-c="s sw"
+      />
       <circle 
-        cx="7" 
-        cy="17" 
-        r="4" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        cx="7"
+        cy="17"
+        r="4"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -131,35 +107,25 @@ export const IconEarRings03TwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="ear-rings-03-twotone-rounded IconEarRings03TwotoneRounded"
+      the-icon="EarRings03 TwotoneRounded"
     >
       <circle 
-        cx="17" 
-        cy="7" 
-        r="4" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        cx="17"
+        cy="7"
+        r="4"
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d5}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -169,19 +135,15 @@ export const IconEarRings03SolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="ear-rings-03-solid-rounded IconEarRings03SolidRounded"
+      the-icon="EarRings03 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -191,29 +153,23 @@ export const IconEarRings03BulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="ear-rings-03-bulk-rounded IconEarRings03BulkRounded"
+      the-icon="EarRings03 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -223,43 +179,35 @@ export const IconEarRings03StrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="ear-rings-03-stroke-sharp IconEarRings03StrokeSharp"
+      the-icon="EarRings03 StrokeSharp"
     >
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d12}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d13}
+        i-c="s sj sw"
       />
       <circle 
-        cx="17" 
-        cy="7" 
-        r="4" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17"
+        cy="7"
+        r="4"
+        i-c="s sw"
+      />
       <circle 
-        cx="7" 
-        cy="17" 
-        r="4" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        cx="7"
+        cy="17"
+        r="4"
+        i-c="s sw"
       />
       <path 
-        d={d.d14} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
+      />
+      <path 
+        d={d.d14}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -269,35 +217,35 @@ export const IconEarRings03SolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="ear-rings-03-solid-sharp IconEarRings03SolidSharp"
+      the-icon="EarRings03 SolidSharp"
     >
       <path 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        d={d.d15}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
       <path 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfEarRings03: TheIconSelfPack = {
-  name: 'EarRings03',
-  StrokeRounded: IconEarRings03StrokeRounded,
-  DuotoneRounded: IconEarRings03DuotoneRounded,
-  TwotoneRounded: IconEarRings03TwotoneRounded,
-  SolidRounded: IconEarRings03SolidRounded,
-  BulkRounded: IconEarRings03BulkRounded,
-  StrokeSharp: IconEarRings03StrokeSharp,
-  SolidSharp: IconEarRings03SolidSharp,
-};
+export const iconPackOfEarRings03: TheIconSelfPack = [
+  'EarRings03',
+  IconEarRings03StrokeRounded,
+  IconEarRings03DuotoneRounded,
+  IconEarRings03TwotoneRounded,
+  IconEarRings03SolidRounded,
+  IconEarRings03BulkRounded,
+  IconEarRings03StrokeSharp,
+  IconEarRings03SolidSharp,
+];

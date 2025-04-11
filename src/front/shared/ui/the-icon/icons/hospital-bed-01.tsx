@@ -40,47 +40,35 @@ export const IconHospitalBed01StrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="hospital-bed-01-stroke-rounded IconHospitalBed01StrokeRounded"
+      the-icon="HospitalBed01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d7}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -90,52 +78,39 @@ export const IconHospitalBed01DuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="hospital-bed-01-duotone-rounded IconHospitalBed01DuotoneRounded"
+      the-icon="HospitalBed01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d7}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -145,37 +120,27 @@ export const IconHospitalBed01TwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="hospital-bed-01-twotone-rounded IconHospitalBed01TwotoneRounded"
+      the-icon="HospitalBed01 TwotoneRounded"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d8}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d7}
+        i-c="o7 s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d9}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -185,47 +150,35 @@ export const IconHospitalBed01SolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="hospital-bed-01-solid-rounded IconHospitalBed01SolidRounded"
+      the-icon="HospitalBed01 SolidRounded"
     >
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        d={d.d15}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -235,44 +188,35 @@ export const IconHospitalBed01BulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="hospital-bed-01-bulk-rounded IconHospitalBed01BulkRounded"
+      the-icon="HospitalBed01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
       <path 
-        d={d.d17} 
-        fill="var(--icon-fill)" 
+        d={d.d17}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        d={d.d15}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d18} 
-        fill="var(--icon-fill)" 
+        d={d.d18}
+        i-c="f"
       />
       <path 
-        d={d.d19} 
-        fill="var(--icon-fill)" 
+        d={d.d19}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -282,44 +226,35 @@ export const IconHospitalBed01StrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="hospital-bed-01-stroke-sharp IconHospitalBed01StrokeSharp"
+      the-icon="HospitalBed01 StrokeSharp"
     >
       <path 
-        d={d.d20} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d20}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d21} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d21}
+        i-c="s sw"
       />
       <path 
-        d={d.d22} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d22}
+        i-c="s sw"
       />
       <path 
-        d={d.d23} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d23}
+        i-c="s sw"
       />
       <path 
-        d={d.d24} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d24}
+        i-c="s sw"
       />
       <path 
-        d={d.d25} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d25}
+        i-c="s sw"
       />
       <path 
-        d={d.d26} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d26}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -329,47 +264,39 @@ export const IconHospitalBed01SolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="hospital-bed-01-solid-sharp IconHospitalBed01SolidSharp"
+      the-icon="HospitalBed01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d27} 
-        fill="var(--icon-fill)" 
+        d={d.d27}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d28} 
-        fill="var(--icon-fill)" 
+        d={d.d28}
+        i-c="c f fr"
       />
       <path 
-        d={d.d29} 
-        fill="var(--icon-fill)" 
+        d={d.d29}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d30} 
-        fill="var(--icon-fill)" 
+        d={d.d30}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d31} 
-        fill="var(--icon-fill)" 
+        d={d.d31}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfHospitalBed01: TheIconSelfPack = {
-  name: 'HospitalBed01',
-  StrokeRounded: IconHospitalBed01StrokeRounded,
-  DuotoneRounded: IconHospitalBed01DuotoneRounded,
-  TwotoneRounded: IconHospitalBed01TwotoneRounded,
-  SolidRounded: IconHospitalBed01SolidRounded,
-  BulkRounded: IconHospitalBed01BulkRounded,
-  StrokeSharp: IconHospitalBed01StrokeSharp,
-  SolidSharp: IconHospitalBed01SolidSharp,
-};
+export const iconPackOfHospitalBed01: TheIconSelfPack = [
+  'HospitalBed01',
+  IconHospitalBed01StrokeRounded,
+  IconHospitalBed01DuotoneRounded,
+  IconHospitalBed01TwotoneRounded,
+  IconHospitalBed01SolidRounded,
+  IconHospitalBed01BulkRounded,
+  IconHospitalBed01StrokeSharp,
+  IconHospitalBed01SolidSharp,
+];

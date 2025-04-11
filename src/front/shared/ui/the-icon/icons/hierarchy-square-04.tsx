@@ -29,29 +29,23 @@ export const IconHierarchySquare04StrokeRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="hierarchy-square-04-stroke-rounded IconHierarchySquare04StrokeRounded"
+      the-icon="HierarchySquare04 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -61,34 +55,27 @@ export const IconHierarchySquare04DuotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="hierarchy-square-04-duotone-rounded IconHierarchySquare04DuotoneRounded"
+      the-icon="HierarchySquare04 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -98,30 +85,23 @@ export const IconHierarchySquare04TwotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="hierarchy-square-04-twotone-rounded IconHierarchySquare04TwotoneRounded"
+      the-icon="HierarchySquare04 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -131,25 +111,23 @@ export const IconHierarchySquare04SolidRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="hierarchy-square-04-solid-rounded IconHierarchySquare04SolidRounded"
+      the-icon="HierarchySquare04 SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -159,25 +137,24 @@ export const IconHierarchySquare04BulkRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="hierarchy-square-04-bulk-rounded IconHierarchySquare04BulkRounded"
+      the-icon="HierarchySquare04 BulkRounded"
     >
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
-      />
-      <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
+      />
+      <path 
+        d={d.d12}
+        i-c="f"
       />
       </g>
     </TheIconWrapper>
@@ -188,31 +165,23 @@ export const IconHierarchySquare04StrokeSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="hierarchy-square-04-stroke-sharp IconHierarchySquare04StrokeSharp"
+      the-icon="HierarchySquare04 StrokeSharp"
     >
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d13}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d14} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d14}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d15} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d15}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d16} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d16}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -222,37 +191,35 @@ export const IconHierarchySquare04SolidSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="hierarchy-square-04-solid-sharp IconHierarchySquare04SolidSharp"
+      the-icon="HierarchySquare04 SolidSharp"
     >
       <path 
-        d={d.d17} 
-        fill="var(--icon-fill)" 
+        d={d.d17}
+        i-c="f"
       />
       <path 
-        d={d.d18} 
-        fill="var(--icon-fill)" 
+        d={d.d18}
+        i-c="f"
       />
       <path 
-        d={d.d19} 
-        fill="var(--icon-fill)" 
+        d={d.d19}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d20} 
-        fill="var(--icon-fill)" 
+        d={d.d20}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfHierarchySquare04: TheIconSelfPack = {
-  name: 'HierarchySquare04',
-  StrokeRounded: IconHierarchySquare04StrokeRounded,
-  DuotoneRounded: IconHierarchySquare04DuotoneRounded,
-  TwotoneRounded: IconHierarchySquare04TwotoneRounded,
-  SolidRounded: IconHierarchySquare04SolidRounded,
-  BulkRounded: IconHierarchySquare04BulkRounded,
-  StrokeSharp: IconHierarchySquare04StrokeSharp,
-  SolidSharp: IconHierarchySquare04SolidSharp,
-};
+export const iconPackOfHierarchySquare04: TheIconSelfPack = [
+  'HierarchySquare04',
+  IconHierarchySquare04StrokeRounded,
+  IconHierarchySquare04DuotoneRounded,
+  IconHierarchySquare04TwotoneRounded,
+  IconHierarchySquare04SolidRounded,
+  IconHierarchySquare04BulkRounded,
+  IconHierarchySquare04StrokeSharp,
+  IconHierarchySquare04SolidSharp,
+];

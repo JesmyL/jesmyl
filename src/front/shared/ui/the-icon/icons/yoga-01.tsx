@@ -25,38 +25,27 @@ export const IconYoga01StrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="yoga-01-stroke-rounded IconYoga01StrokeRounded"
+      the-icon="Yoga01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -66,41 +55,31 @@ export const IconYoga01DuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="yoga-01-duotone-rounded IconYoga01DuotoneRounded"
+      the-icon="Yoga01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -110,27 +89,19 @@ export const IconYoga01TwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="yoga-01-twotone-rounded IconYoga01TwotoneRounded"
+      the-icon="Yoga01 TwotoneRounded"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="o7 s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="o7 s sj sw"
       />
     </TheIconWrapper>
   );
@@ -140,19 +111,19 @@ export const IconYoga01SolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="yoga-01-solid-rounded IconYoga01SolidRounded"
+      the-icon="Yoga01 SolidRounded"
     >
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -162,20 +133,19 @@ export const IconYoga01BulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="yoga-01-bulk-rounded IconYoga01BulkRounded"
+      the-icon="Yoga01 BulkRounded"
     >
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -185,27 +155,23 @@ export const IconYoga01StrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="yoga-01-stroke-sharp IconYoga01StrokeSharp"
+      the-icon="Yoga01 StrokeSharp"
     >
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d12}
+        i-c="s sw"
       />
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d13}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -215,31 +181,31 @@ export const IconYoga01SolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="yoga-01-solid-sharp IconYoga01SolidSharp"
+      the-icon="Yoga01 SolidSharp"
     >
       <path 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="f"
       />
       <path 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        d={d.d15}
+        i-c="f"
       />
       <path 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfYoga01: TheIconSelfPack = {
-  name: 'Yoga01',
-  StrokeRounded: IconYoga01StrokeRounded,
-  DuotoneRounded: IconYoga01DuotoneRounded,
-  TwotoneRounded: IconYoga01TwotoneRounded,
-  SolidRounded: IconYoga01SolidRounded,
-  BulkRounded: IconYoga01BulkRounded,
-  StrokeSharp: IconYoga01StrokeSharp,
-  SolidSharp: IconYoga01SolidSharp,
-};
+export const iconPackOfYoga01: TheIconSelfPack = [
+  'Yoga01',
+  IconYoga01StrokeRounded,
+  IconYoga01DuotoneRounded,
+  IconYoga01TwotoneRounded,
+  IconYoga01SolidRounded,
+  IconYoga01BulkRounded,
+  IconYoga01StrokeSharp,
+  IconYoga01SolidSharp,
+];

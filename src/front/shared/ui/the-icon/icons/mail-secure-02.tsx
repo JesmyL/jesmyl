@@ -23,28 +23,19 @@ export const IconMailSecure02StrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="mail-secure-02-stroke-rounded IconMailSecure02StrokeRounded"
+      the-icon="MailSecure02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,33 +45,23 @@ export const IconMailSecure02DuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="mail-secure-02-duotone-rounded IconMailSecure02DuotoneRounded"
+      the-icon="MailSecure02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -90,29 +71,19 @@ export const IconMailSecure02TwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="mail-secure-02-twotone-rounded IconMailSecure02TwotoneRounded"
+      the-icon="MailSecure02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -122,17 +93,15 @@ export const IconMailSecure02SolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="mail-secure-02-solid-rounded IconMailSecure02SolidRounded"
+      the-icon="MailSecure02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -142,20 +111,19 @@ export const IconMailSecure02BulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="mail-secure-02-bulk-rounded IconMailSecure02BulkRounded"
+      the-icon="MailSecure02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o7"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -165,23 +133,19 @@ export const IconMailSecure02StrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="mail-secure-02-stroke-sharp IconMailSecure02StrokeSharp"
+      the-icon="MailSecure02 StrokeSharp"
     >
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d11}
+        i-c="s sw"
       />
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d12}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -191,29 +155,27 @@ export const IconMailSecure02SolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="mail-secure-02-solid-sharp IconMailSecure02SolidSharp"
+      the-icon="MailSecure02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="c f fr"
       />
       <path 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMailSecure02: TheIconSelfPack = {
-  name: 'MailSecure02',
-  StrokeRounded: IconMailSecure02StrokeRounded,
-  DuotoneRounded: IconMailSecure02DuotoneRounded,
-  TwotoneRounded: IconMailSecure02TwotoneRounded,
-  SolidRounded: IconMailSecure02SolidRounded,
-  BulkRounded: IconMailSecure02BulkRounded,
-  StrokeSharp: IconMailSecure02StrokeSharp,
-  SolidSharp: IconMailSecure02SolidSharp,
-};
+export const iconPackOfMailSecure02: TheIconSelfPack = [
+  'MailSecure02',
+  IconMailSecure02StrokeRounded,
+  IconMailSecure02DuotoneRounded,
+  IconMailSecure02TwotoneRounded,
+  IconMailSecure02SolidRounded,
+  IconMailSecure02BulkRounded,
+  IconMailSecure02StrokeSharp,
+  IconMailSecure02SolidSharp,
+];

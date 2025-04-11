@@ -21,27 +21,19 @@ export const IconAdobeAfterEffectStrokeRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="adobe-after-effect-stroke-rounded IconAdobeAfterEffectStrokeRounded"
+      the-icon="AdobeAfterEffect StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -51,32 +43,23 @@ export const IconAdobeAfterEffectDuotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="adobe-after-effect-duotone-rounded IconAdobeAfterEffectDuotoneRounded"
+      the-icon="AdobeAfterEffect DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -86,21 +69,15 @@ export const IconAdobeAfterEffectTwotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="adobe-after-effect-twotone-rounded IconAdobeAfterEffectTwotoneRounded"
+      the-icon="AdobeAfterEffect TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -110,13 +87,11 @@ export const IconAdobeAfterEffectSolidRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="adobe-after-effect-solid-rounded IconAdobeAfterEffectSolidRounded"
+      the-icon="AdobeAfterEffect SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -126,18 +101,15 @@ export const IconAdobeAfterEffectBulkRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="adobe-after-effect-bulk-rounded IconAdobeAfterEffectBulkRounded"
+      the-icon="AdobeAfterEffect BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -147,24 +119,19 @@ export const IconAdobeAfterEffectStrokeSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="adobe-after-effect-stroke-sharp IconAdobeAfterEffectStrokeSharp"
+      the-icon="AdobeAfterEffect StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="bevel" 
+        d={d.d10}
+        i-c="s sb sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d11}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -174,25 +141,23 @@ export const IconAdobeAfterEffectSolidSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="adobe-after-effect-solid-sharp IconAdobeAfterEffectSolidSharp"
+      the-icon="AdobeAfterEffect SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAdobeAfterEffect: TheIconSelfPack = {
-  name: 'AdobeAfterEffect',
-  StrokeRounded: IconAdobeAfterEffectStrokeRounded,
-  DuotoneRounded: IconAdobeAfterEffectDuotoneRounded,
-  TwotoneRounded: IconAdobeAfterEffectTwotoneRounded,
-  SolidRounded: IconAdobeAfterEffectSolidRounded,
-  BulkRounded: IconAdobeAfterEffectBulkRounded,
-  StrokeSharp: IconAdobeAfterEffectStrokeSharp,
-  SolidSharp: IconAdobeAfterEffectSolidSharp,
-};
+export const iconPackOfAdobeAfterEffect: TheIconSelfPack = [
+  'AdobeAfterEffect',
+  IconAdobeAfterEffectStrokeRounded,
+  IconAdobeAfterEffectDuotoneRounded,
+  IconAdobeAfterEffectTwotoneRounded,
+  IconAdobeAfterEffectSolidRounded,
+  IconAdobeAfterEffectBulkRounded,
+  IconAdobeAfterEffectStrokeSharp,
+  IconAdobeAfterEffectSolidSharp,
+];

@@ -24,32 +24,23 @@ export const IconAtm02StrokeRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="atm-02-stroke-rounded IconAtm02StrokeRounded"
+      the-icon="Atm02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeMiterlimit="10" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="m1 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -59,37 +50,27 @@ export const IconAtm02DuotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="atm-02-duotone-rounded IconAtm02DuotoneRounded"
+      the-icon="Atm02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeMiterlimit="10" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="m1 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -99,34 +80,23 @@ export const IconAtm02TwotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="atm-02-twotone-rounded IconAtm02TwotoneRounded"
+      the-icon="Atm02 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeMiterlimit="10" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="m1 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="o7 s sw"
       />
     </TheIconWrapper>
   );
@@ -136,19 +106,15 @@ export const IconAtm02SolidRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="atm-02-solid-rounded IconAtm02SolidRounded"
+      the-icon="Atm02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -158,28 +124,23 @@ export const IconAtm02BulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="atm-02-bulk-rounded IconAtm02BulkRounded"
+      the-icon="Atm02 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o7"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -189,34 +150,23 @@ export const IconAtm02StrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="atm-02-stroke-sharp IconAtm02StrokeSharp"
+      the-icon="Atm02 StrokeSharp"
     >
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round" 
+        d={d.d11}
+        i-c="s sj ss sw"
       />
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d12}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d13}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeMiterlimit="10" 
-        strokeLinecap="square" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="m1 s sj ss sw"
       />
     </TheIconWrapper>
   );
@@ -226,31 +176,27 @@ export const IconAtm02SolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="atm-02-solid-sharp IconAtm02SolidSharp"
+      the-icon="Atm02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        d={d.d15}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAtm02: TheIconSelfPack = {
-  name: 'Atm02',
-  StrokeRounded: IconAtm02StrokeRounded,
-  DuotoneRounded: IconAtm02DuotoneRounded,
-  TwotoneRounded: IconAtm02TwotoneRounded,
-  SolidRounded: IconAtm02SolidRounded,
-  BulkRounded: IconAtm02BulkRounded,
-  StrokeSharp: IconAtm02StrokeSharp,
-  SolidSharp: IconAtm02SolidSharp,
-};
+export const iconPackOfAtm02: TheIconSelfPack = [
+  'Atm02',
+  IconAtm02StrokeRounded,
+  IconAtm02DuotoneRounded,
+  IconAtm02TwotoneRounded,
+  IconAtm02SolidRounded,
+  IconAtm02BulkRounded,
+  IconAtm02StrokeSharp,
+  IconAtm02SolidSharp,
+];

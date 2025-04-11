@@ -15,14 +15,11 @@ export const IconHold03StrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="hold-03-stroke-rounded IconHold03StrokeRounded"
+      the-icon="Hold03 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -32,19 +29,15 @@ export const IconHold03DuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="hold-03-duotone-rounded IconHold03DuotoneRounded"
+      the-icon="Hold03 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,22 +47,15 @@ export const IconHold03TwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="hold-03-twotone-rounded IconHold03TwotoneRounded"
+      the-icon="Hold03 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -79,11 +65,11 @@ export const IconHold03SolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="hold-03-solid-rounded IconHold03SolidRounded"
+      the-icon="Hold03 SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -93,12 +79,11 @@ export const IconHold03BulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="hold-03-bulk-rounded IconHold03BulkRounded"
+      the-icon="Hold03 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -108,12 +93,11 @@ export const IconHold03StrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="hold-03-stroke-sharp IconHold03StrokeSharp"
+      the-icon="Hold03 StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -123,23 +107,23 @@ export const IconHold03SolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="hold-03-solid-sharp IconHold03SolidSharp"
+      the-icon="Hold03 SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfHold03: TheIconSelfPack = {
-  name: 'Hold03',
-  StrokeRounded: IconHold03StrokeRounded,
-  DuotoneRounded: IconHold03DuotoneRounded,
-  TwotoneRounded: IconHold03TwotoneRounded,
-  SolidRounded: IconHold03SolidRounded,
-  BulkRounded: IconHold03BulkRounded,
-  StrokeSharp: IconHold03StrokeSharp,
-  SolidSharp: IconHold03SolidSharp,
-};
+export const iconPackOfHold03: TheIconSelfPack = [
+  'Hold03',
+  IconHold03StrokeRounded,
+  IconHold03DuotoneRounded,
+  IconHold03TwotoneRounded,
+  IconHold03SolidRounded,
+  IconHold03BulkRounded,
+  IconHold03StrokeSharp,
+  IconHold03SolidSharp,
+];

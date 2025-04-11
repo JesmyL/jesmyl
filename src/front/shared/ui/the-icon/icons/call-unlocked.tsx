@@ -20,19 +20,15 @@ export const IconCallUnlockedStrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="call-unlocked-stroke-rounded IconCallUnlockedStrokeRounded"
+      the-icon="CallUnlocked StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -42,30 +38,25 @@ export const IconCallUnlockedDuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="call-unlocked-duotone-rounded IconCallUnlockedDuotoneRounded"
+      the-icon="CallUnlocked DuotoneRounded"
     >
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       </g>
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -75,20 +66,15 @@ export const IconCallUnlockedTwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="call-unlocked-twotone-rounded IconCallUnlockedTwotoneRounded"
+      the-icon="CallUnlocked TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -98,15 +84,15 @@ export const IconCallUnlockedSolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="call-unlocked-solid-rounded IconCallUnlockedSolidRounded"
+      the-icon="CallUnlocked SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -116,16 +102,15 @@ export const IconCallUnlockedBulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="call-unlocked-bulk-rounded IconCallUnlockedBulkRounded"
+      the-icon="CallUnlocked BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -135,17 +120,15 @@ export const IconCallUnlockedStrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="call-unlocked-stroke-sharp IconCallUnlockedStrokeSharp"
+      the-icon="CallUnlocked StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -155,27 +138,27 @@ export const IconCallUnlockedSolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="call-unlocked-solid-sharp IconCallUnlockedSolidSharp"
+      the-icon="CallUnlocked SolidSharp"
     >
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCallUnlocked: TheIconSelfPack = {
-  name: 'CallUnlocked',
-  StrokeRounded: IconCallUnlockedStrokeRounded,
-  DuotoneRounded: IconCallUnlockedDuotoneRounded,
-  TwotoneRounded: IconCallUnlockedTwotoneRounded,
-  SolidRounded: IconCallUnlockedSolidRounded,
-  BulkRounded: IconCallUnlockedBulkRounded,
-  StrokeSharp: IconCallUnlockedStrokeSharp,
-  SolidSharp: IconCallUnlockedSolidSharp,
-};
+export const iconPackOfCallUnlocked: TheIconSelfPack = [
+  'CallUnlocked',
+  IconCallUnlockedStrokeRounded,
+  IconCallUnlockedDuotoneRounded,
+  IconCallUnlockedTwotoneRounded,
+  IconCallUnlockedSolidRounded,
+  IconCallUnlockedBulkRounded,
+  IconCallUnlockedStrokeSharp,
+  IconCallUnlockedSolidSharp,
+];

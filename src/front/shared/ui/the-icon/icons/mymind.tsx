@@ -18,29 +18,22 @@ export const IconMymindStrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="mymind-stroke-rounded IconMymindStrokeRounded"
+      the-icon="Mymind StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="8.5" 
-        cy="11" 
-        r="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="8.5"
+        cy="11"
+        r="1"
+        i-c="s sj sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -49,36 +42,26 @@ export const IconMymindDuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="mymind-duotone-rounded IconMymindDuotoneRounded"
+      the-icon="Mymind DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="8.5" 
-        cy="11" 
-        r="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="8.5"
+        cy="11"
+        r="1"
+        i-c="s sj sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -87,31 +70,22 @@ export const IconMymindTwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="mymind-twotone-rounded IconMymindTwotoneRounded"
+      the-icon="Mymind TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="8.5" 
-        cy="11" 
-        r="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="8.5"
+        cy="11"
+        r="1"
+        i-c="o7 s sj sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -120,13 +94,11 @@ export const IconMymindSolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="mymind-solid-rounded IconMymindSolidRounded"
+      the-icon="Mymind SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -136,20 +108,19 @@ export const IconMymindBulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="mymind-bulk-rounded IconMymindBulkRounded"
+      the-icon="Mymind BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -159,29 +130,22 @@ export const IconMymindStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="mymind-stroke-sharp IconMymindStrokeSharp"
+      the-icon="Mymind StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="8.5" 
-        cy="11" 
-        r="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="8.5"
+        cy="11"
+        r="1"
+        i-c="s sj sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -190,25 +154,23 @@ export const IconMymindSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="mymind-solid-sharp IconMymindSolidSharp"
+      the-icon="Mymind SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMymind: TheIconSelfPack = {
-  name: 'Mymind',
-  StrokeRounded: IconMymindStrokeRounded,
-  DuotoneRounded: IconMymindDuotoneRounded,
-  TwotoneRounded: IconMymindTwotoneRounded,
-  SolidRounded: IconMymindSolidRounded,
-  BulkRounded: IconMymindBulkRounded,
-  StrokeSharp: IconMymindStrokeSharp,
-  SolidSharp: IconMymindSolidSharp,
-};
+export const iconPackOfMymind: TheIconSelfPack = [
+  'Mymind',
+  IconMymindStrokeRounded,
+  IconMymindDuotoneRounded,
+  IconMymindTwotoneRounded,
+  IconMymindSolidRounded,
+  IconMymindBulkRounded,
+  IconMymindStrokeSharp,
+  IconMymindSolidSharp,
+];

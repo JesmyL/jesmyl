@@ -28,40 +28,27 @@ export const IconRoot3rdBracketStrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="root-3rd-bracket-stroke-rounded IconRoot3rdBracketStrokeRounded"
+      the-icon="Root3rdBracket StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -71,34 +58,23 @@ export const IconRoot3rdBracketDuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="root-3rd-bracket-duotone-rounded IconRoot3rdBracketDuotoneRounded"
+      the-icon="Root3rdBracket DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d8}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d9}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -108,29 +84,19 @@ export const IconRoot3rdBracketTwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="root-3rd-bracket-twotone-rounded IconRoot3rdBracketTwotoneRounded"
+      the-icon="Root3rdBracket TwotoneRounded"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -140,27 +106,23 @@ export const IconRoot3rdBracketSolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="root-3rd-bracket-solid-rounded IconRoot3rdBracketSolidRounded"
+      the-icon="Root3rdBracket SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
       <path 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -170,30 +132,25 @@ export const IconRoot3rdBracketBulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="root-3rd-bracket-bulk-rounded IconRoot3rdBracketBulkRounded"
+      the-icon="Root3rdBracket BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
       <path 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f"
       />
       </g>
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -203,16 +160,15 @@ export const IconRoot3rdBracketStrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="root-3rd-bracket-stroke-sharp IconRoot3rdBracketStrokeSharp"
+      the-icon="Root3rdBracket StrokeSharp"
     >
       <path 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        d={d.d15}
+        i-c="f"
       />
       <path 
-        d={d.d16} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d16}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -222,37 +178,31 @@ export const IconRoot3rdBracketSolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="root-3rd-bracket-solid-sharp IconRoot3rdBracketSolidSharp"
+      the-icon="Root3rdBracket SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d17} 
-        fill="var(--icon-fill)" 
+        d={d.d17}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d18} 
-        fill="var(--icon-fill)" 
+        d={d.d18}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d19} 
-        fill="var(--icon-fill)" 
+        d={d.d19}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfRoot3rdBracket: TheIconSelfPack = {
-  name: 'Root3rdBracket',
-  StrokeRounded: IconRoot3rdBracketStrokeRounded,
-  DuotoneRounded: IconRoot3rdBracketDuotoneRounded,
-  TwotoneRounded: IconRoot3rdBracketTwotoneRounded,
-  SolidRounded: IconRoot3rdBracketSolidRounded,
-  BulkRounded: IconRoot3rdBracketBulkRounded,
-  StrokeSharp: IconRoot3rdBracketStrokeSharp,
-  SolidSharp: IconRoot3rdBracketSolidSharp,
-};
+export const iconPackOfRoot3rdBracket: TheIconSelfPack = [
+  'Root3rdBracket',
+  IconRoot3rdBracketStrokeRounded,
+  IconRoot3rdBracketDuotoneRounded,
+  IconRoot3rdBracketTwotoneRounded,
+  IconRoot3rdBracketSolidRounded,
+  IconRoot3rdBracketBulkRounded,
+  IconRoot3rdBracketStrokeSharp,
+  IconRoot3rdBracketSolidSharp,
+];

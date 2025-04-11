@@ -19,21 +19,15 @@ export const IconColorPickerStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="color-picker-stroke-rounded IconColorPickerStrokeRounded"
+      the-icon="ColorPicker StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -43,31 +37,23 @@ export const IconColorPickerDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="color-picker-duotone-rounded IconColorPickerDuotoneRounded"
+      the-icon="ColorPicker DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -77,22 +63,15 @@ export const IconColorPickerTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="color-picker-twotone-rounded IconColorPickerTwotoneRounded"
+      the-icon="ColorPicker TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -102,15 +81,15 @@ export const IconColorPickerSolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="color-picker-solid-rounded IconColorPickerSolidRounded"
+      the-icon="ColorPicker SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -120,16 +99,15 @@ export const IconColorPickerBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="color-picker-bulk-rounded IconColorPickerBulkRounded"
+      the-icon="ColorPicker BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -139,17 +117,15 @@ export const IconColorPickerStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="color-picker-stroke-sharp IconColorPickerStrokeSharp"
+      the-icon="ColorPicker StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -159,27 +135,27 @@ export const IconColorPickerSolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="color-picker-solid-sharp IconColorPickerSolidSharp"
+      the-icon="ColorPicker SolidSharp"
     >
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfColorPicker: TheIconSelfPack = {
-  name: 'ColorPicker',
-  StrokeRounded: IconColorPickerStrokeRounded,
-  DuotoneRounded: IconColorPickerDuotoneRounded,
-  TwotoneRounded: IconColorPickerTwotoneRounded,
-  SolidRounded: IconColorPickerSolidRounded,
-  BulkRounded: IconColorPickerBulkRounded,
-  StrokeSharp: IconColorPickerStrokeSharp,
-  SolidSharp: IconColorPickerSolidSharp,
-};
+export const iconPackOfColorPicker: TheIconSelfPack = [
+  'ColorPicker',
+  IconColorPickerStrokeRounded,
+  IconColorPickerDuotoneRounded,
+  IconColorPickerTwotoneRounded,
+  IconColorPickerSolidRounded,
+  IconColorPickerBulkRounded,
+  IconColorPickerStrokeSharp,
+  IconColorPickerSolidSharp,
+];

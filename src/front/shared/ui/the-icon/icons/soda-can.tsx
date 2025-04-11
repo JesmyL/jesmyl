@@ -26,36 +26,30 @@ export const IconSodaCanStrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="soda-can-stroke-rounded IconSodaCanStrokeRounded"
+      the-icon="SodaCan StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="s sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="2.5"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -64,43 +58,34 @@ export const IconSodaCanDuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="soda-can-duotone-rounded IconSodaCanDuotoneRounded"
+      the-icon="SodaCan DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="s sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="2.5"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -109,38 +94,30 @@ export const IconSodaCanTwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="soda-can-twotone-rounded IconSodaCanTwotoneRounded"
+      the-icon="SodaCan TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="o7 s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="s sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="2.5"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -149,25 +126,19 @@ export const IconSodaCanSolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="soda-can-solid-rounded IconSodaCanSolidRounded"
+      the-icon="SodaCan SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -177,28 +148,23 @@ export const IconSodaCanBulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="soda-can-bulk-rounded IconSodaCanBulkRounded"
+      the-icon="SodaCan BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -208,45 +174,34 @@ export const IconSodaCanStrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="soda-can-stroke-sharp IconSodaCanStrokeSharp"
+      the-icon="SodaCan StrokeSharp"
     >
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d11}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d12}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d13}
+        i-c="s sj sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="2.5"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -255,41 +210,35 @@ export const IconSodaCanSolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="soda-can-solid-sharp IconSodaCanSolidSharp"
+      the-icon="SodaCan SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        d={d.d15}
+        i-c="c f fr"
       />
       <path 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d17} 
-        fill="var(--icon-fill)" 
+        d={d.d17}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSodaCan: TheIconSelfPack = {
-  name: 'SodaCan',
-  StrokeRounded: IconSodaCanStrokeRounded,
-  DuotoneRounded: IconSodaCanDuotoneRounded,
-  TwotoneRounded: IconSodaCanTwotoneRounded,
-  SolidRounded: IconSodaCanSolidRounded,
-  BulkRounded: IconSodaCanBulkRounded,
-  StrokeSharp: IconSodaCanStrokeSharp,
-  SolidSharp: IconSodaCanSolidSharp,
-};
+export const iconPackOfSodaCan: TheIconSelfPack = [
+  'SodaCan',
+  IconSodaCanStrokeRounded,
+  IconSodaCanDuotoneRounded,
+  IconSodaCanTwotoneRounded,
+  IconSodaCanSolidRounded,
+  IconSodaCanBulkRounded,
+  IconSodaCanStrokeSharp,
+  IconSodaCanSolidSharp,
+];

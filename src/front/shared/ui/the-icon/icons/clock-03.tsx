@@ -17,21 +17,15 @@ export const IconClock03StrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="clock-03-stroke-rounded IconClock03StrokeRounded"
+      the-icon="Clock03 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -41,27 +35,21 @@ export const IconClock03DuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="clock-03-duotone-rounded IconClock03DuotoneRounded"
+      the-icon="Clock03 DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        fill="var(--icon-fill)"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="f o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -71,22 +59,15 @@ export const IconClock03TwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="clock-03-twotone-rounded IconClock03TwotoneRounded"
+      the-icon="Clock03 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -96,17 +77,15 @@ export const IconClock03SolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="clock-03-solid-rounded IconClock03SolidRounded"
+      the-icon="Clock03 SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -116,18 +95,15 @@ export const IconClock03BulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="clock-03-bulk-rounded IconClock03BulkRounded"
+      the-icon="Clock03 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -137,18 +113,15 @@ export const IconClock03StrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="clock-03-stroke-sharp IconClock03StrokeSharp"
+      the-icon="Clock03 StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -158,31 +131,27 @@ export const IconClock03SolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="clock-03-solid-sharp IconClock03SolidSharp"
+      the-icon="Clock03 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfClock03: TheIconSelfPack = {
-  name: 'Clock03',
-  StrokeRounded: IconClock03StrokeRounded,
-  DuotoneRounded: IconClock03DuotoneRounded,
-  TwotoneRounded: IconClock03TwotoneRounded,
-  SolidRounded: IconClock03SolidRounded,
-  BulkRounded: IconClock03BulkRounded,
-  StrokeSharp: IconClock03StrokeSharp,
-  SolidSharp: IconClock03SolidSharp,
-};
+export const iconPackOfClock03: TheIconSelfPack = [
+  'Clock03',
+  IconClock03StrokeRounded,
+  IconClock03DuotoneRounded,
+  IconClock03TwotoneRounded,
+  IconClock03SolidRounded,
+  IconClock03BulkRounded,
+  IconClock03StrokeSharp,
+  IconClock03SolidSharp,
+];

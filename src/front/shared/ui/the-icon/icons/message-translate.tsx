@@ -17,20 +17,15 @@ export const IconMessageTranslateStrokeRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="message-translate-stroke-rounded IconMessageTranslateStrokeRounded"
+      the-icon="MessageTranslate StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -40,25 +35,19 @@ export const IconMessageTranslateDuotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="message-translate-duotone-rounded IconMessageTranslateDuotoneRounded"
+      the-icon="MessageTranslate DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -68,21 +57,15 @@ export const IconMessageTranslateTwotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="message-translate-twotone-rounded IconMessageTranslateTwotoneRounded"
+      the-icon="MessageTranslate TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -92,13 +75,11 @@ export const IconMessageTranslateSolidRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="message-translate-solid-rounded IconMessageTranslateSolidRounded"
+      the-icon="MessageTranslate SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -108,18 +89,15 @@ export const IconMessageTranslateBulkRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="message-translate-bulk-rounded IconMessageTranslateBulkRounded"
+      the-icon="MessageTranslate BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -129,18 +107,15 @@ export const IconMessageTranslateStrokeSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="message-translate-stroke-sharp IconMessageTranslateStrokeSharp"
+      the-icon="MessageTranslate StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -150,25 +125,23 @@ export const IconMessageTranslateSolidSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="message-translate-solid-sharp IconMessageTranslateSolidSharp"
+      the-icon="MessageTranslate SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMessageTranslate: TheIconSelfPack = {
-  name: 'MessageTranslate',
-  StrokeRounded: IconMessageTranslateStrokeRounded,
-  DuotoneRounded: IconMessageTranslateDuotoneRounded,
-  TwotoneRounded: IconMessageTranslateTwotoneRounded,
-  SolidRounded: IconMessageTranslateSolidRounded,
-  BulkRounded: IconMessageTranslateBulkRounded,
-  StrokeSharp: IconMessageTranslateStrokeSharp,
-  SolidSharp: IconMessageTranslateSolidSharp,
-};
+export const iconPackOfMessageTranslate: TheIconSelfPack = [
+  'MessageTranslate',
+  IconMessageTranslateStrokeRounded,
+  IconMessageTranslateDuotoneRounded,
+  IconMessageTranslateTwotoneRounded,
+  IconMessageTranslateSolidRounded,
+  IconMessageTranslateBulkRounded,
+  IconMessageTranslateStrokeSharp,
+  IconMessageTranslateSolidSharp,
+];

@@ -18,20 +18,15 @@ export const IconTouchpad03StrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="touchpad-03-stroke-rounded IconTouchpad03StrokeRounded"
+      the-icon="Touchpad03 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -41,25 +36,19 @@ export const IconTouchpad03DuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="touchpad-03-duotone-rounded IconTouchpad03DuotoneRounded"
+      the-icon="Touchpad03 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -69,21 +58,15 @@ export const IconTouchpad03TwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="touchpad-03-twotone-rounded IconTouchpad03TwotoneRounded"
+      the-icon="Touchpad03 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -93,15 +76,15 @@ export const IconTouchpad03SolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="touchpad-03-solid-rounded IconTouchpad03SolidRounded"
+      the-icon="Touchpad03 SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -111,16 +94,15 @@ export const IconTouchpad03BulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="touchpad-03-bulk-rounded IconTouchpad03BulkRounded"
+      the-icon="Touchpad03 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -130,18 +112,15 @@ export const IconTouchpad03StrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="touchpad-03-stroke-sharp IconTouchpad03StrokeSharp"
+      the-icon="Touchpad03 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -151,29 +130,27 @@ export const IconTouchpad03SolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="touchpad-03-solid-sharp IconTouchpad03SolidSharp"
+      the-icon="Touchpad03 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTouchpad03: TheIconSelfPack = {
-  name: 'Touchpad03',
-  StrokeRounded: IconTouchpad03StrokeRounded,
-  DuotoneRounded: IconTouchpad03DuotoneRounded,
-  TwotoneRounded: IconTouchpad03TwotoneRounded,
-  SolidRounded: IconTouchpad03SolidRounded,
-  BulkRounded: IconTouchpad03BulkRounded,
-  StrokeSharp: IconTouchpad03StrokeSharp,
-  SolidSharp: IconTouchpad03SolidSharp,
-};
+export const iconPackOfTouchpad03: TheIconSelfPack = [
+  'Touchpad03',
+  IconTouchpad03StrokeRounded,
+  IconTouchpad03DuotoneRounded,
+  IconTouchpad03TwotoneRounded,
+  IconTouchpad03SolidRounded,
+  IconTouchpad03BulkRounded,
+  IconTouchpad03StrokeSharp,
+  IconTouchpad03SolidSharp,
+];

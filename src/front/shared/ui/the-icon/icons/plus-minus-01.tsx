@@ -15,21 +15,15 @@ export const IconPlusMinus01StrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="plus-minus-01-stroke-rounded IconPlusMinus01StrokeRounded"
+      the-icon="PlusMinus01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -39,23 +33,15 @@ export const IconPlusMinus01DuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="plus-minus-01-duotone-rounded IconPlusMinus01DuotoneRounded"
+      the-icon="PlusMinus01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -65,22 +51,15 @@ export const IconPlusMinus01TwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="plus-minus-01-twotone-rounded IconPlusMinus01TwotoneRounded"
+      the-icon="PlusMinus01 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -90,19 +69,15 @@ export const IconPlusMinus01SolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="plus-minus-01-solid-rounded IconPlusMinus01SolidRounded"
+      the-icon="PlusMinus01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -112,20 +87,15 @@ export const IconPlusMinus01BulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="plus-minus-01-bulk-rounded IconPlusMinus01BulkRounded"
+      the-icon="PlusMinus01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -135,19 +105,15 @@ export const IconPlusMinus01StrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="plus-minus-01-stroke-sharp IconPlusMinus01StrokeSharp"
+      the-icon="PlusMinus01 StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -157,31 +123,27 @@ export const IconPlusMinus01SolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="plus-minus-01-solid-sharp IconPlusMinus01SolidSharp"
+      the-icon="PlusMinus01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPlusMinus01: TheIconSelfPack = {
-  name: 'PlusMinus01',
-  StrokeRounded: IconPlusMinus01StrokeRounded,
-  DuotoneRounded: IconPlusMinus01DuotoneRounded,
-  TwotoneRounded: IconPlusMinus01TwotoneRounded,
-  SolidRounded: IconPlusMinus01SolidRounded,
-  BulkRounded: IconPlusMinus01BulkRounded,
-  StrokeSharp: IconPlusMinus01StrokeSharp,
-  SolidSharp: IconPlusMinus01SolidSharp,
-};
+export const iconPackOfPlusMinus01: TheIconSelfPack = [
+  'PlusMinus01',
+  IconPlusMinus01StrokeRounded,
+  IconPlusMinus01DuotoneRounded,
+  IconPlusMinus01TwotoneRounded,
+  IconPlusMinus01SolidRounded,
+  IconPlusMinus01BulkRounded,
+  IconPlusMinus01StrokeSharp,
+  IconPlusMinus01SolidSharp,
+];

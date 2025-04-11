@@ -22,21 +22,15 @@ export const IconSwipeRight01StrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="swipe-right-01-stroke-rounded IconSwipeRight01StrokeRounded"
+      the-icon="SwipeRight01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -46,26 +40,19 @@ export const IconSwipeRight01DuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="swipe-right-01-duotone-rounded IconSwipeRight01DuotoneRounded"
+      the-icon="SwipeRight01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -75,22 +62,15 @@ export const IconSwipeRight01TwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="swipe-right-01-twotone-rounded IconSwipeRight01TwotoneRounded"
+      the-icon="SwipeRight01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -100,15 +80,15 @@ export const IconSwipeRight01SolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="swipe-right-01-solid-rounded IconSwipeRight01SolidRounded"
+      the-icon="SwipeRight01 SolidRounded"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -118,16 +98,15 @@ export const IconSwipeRight01BulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="swipe-right-01-bulk-rounded IconSwipeRight01BulkRounded"
+      the-icon="SwipeRight01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o7"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -137,17 +116,15 @@ export const IconSwipeRight01StrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="swipe-right-01-stroke-sharp IconSwipeRight01StrokeSharp"
+      the-icon="SwipeRight01 StrokeSharp"
     >
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d10}
+        i-c="s sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d11}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -157,29 +134,27 @@ export const IconSwipeRight01SolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="swipe-right-01-solid-sharp IconSwipeRight01SolidSharp"
+      the-icon="SwipeRight01 SolidSharp"
     >
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSwipeRight01: TheIconSelfPack = {
-  name: 'SwipeRight01',
-  StrokeRounded: IconSwipeRight01StrokeRounded,
-  DuotoneRounded: IconSwipeRight01DuotoneRounded,
-  TwotoneRounded: IconSwipeRight01TwotoneRounded,
-  SolidRounded: IconSwipeRight01SolidRounded,
-  BulkRounded: IconSwipeRight01BulkRounded,
-  StrokeSharp: IconSwipeRight01StrokeSharp,
-  SolidSharp: IconSwipeRight01SolidSharp,
-};
+export const iconPackOfSwipeRight01: TheIconSelfPack = [
+  'SwipeRight01',
+  IconSwipeRight01StrokeRounded,
+  IconSwipeRight01DuotoneRounded,
+  IconSwipeRight01TwotoneRounded,
+  IconSwipeRight01SolidRounded,
+  IconSwipeRight01BulkRounded,
+  IconSwipeRight01StrokeSharp,
+  IconSwipeRight01SolidSharp,
+];

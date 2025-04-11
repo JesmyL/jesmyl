@@ -18,20 +18,15 @@ export const IconCourtLawStrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="court-law-stroke-rounded IconCourtLawStrokeRounded"
+      the-icon="CourtLaw StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -41,27 +36,19 @@ export const IconCourtLawDuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="court-law-duotone-rounded IconCourtLawDuotoneRounded"
+      the-icon="CourtLaw DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -71,21 +58,15 @@ export const IconCourtLawTwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="court-law-twotone-rounded IconCourtLawTwotoneRounded"
+      the-icon="CourtLaw TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -95,13 +76,11 @@ export const IconCourtLawSolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="court-law-solid-rounded IconCourtLawSolidRounded"
+      the-icon="CourtLaw SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -111,16 +90,15 @@ export const IconCourtLawBulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="court-law-bulk-rounded IconCourtLawBulkRounded"
+      the-icon="CourtLaw BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -130,19 +108,15 @@ export const IconCourtLawStrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="court-law-stroke-sharp IconCourtLawStrokeSharp"
+      the-icon="CourtLaw StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -152,25 +126,23 @@ export const IconCourtLawSolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="court-law-solid-sharp IconCourtLawSolidSharp"
+      the-icon="CourtLaw SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCourtLaw: TheIconSelfPack = {
-  name: 'CourtLaw',
-  StrokeRounded: IconCourtLawStrokeRounded,
-  DuotoneRounded: IconCourtLawDuotoneRounded,
-  TwotoneRounded: IconCourtLawTwotoneRounded,
-  SolidRounded: IconCourtLawSolidRounded,
-  BulkRounded: IconCourtLawBulkRounded,
-  StrokeSharp: IconCourtLawStrokeSharp,
-  SolidSharp: IconCourtLawSolidSharp,
-};
+export const iconPackOfCourtLaw: TheIconSelfPack = [
+  'CourtLaw',
+  IconCourtLawStrokeRounded,
+  IconCourtLawDuotoneRounded,
+  IconCourtLawTwotoneRounded,
+  IconCourtLawSolidRounded,
+  IconCourtLawBulkRounded,
+  IconCourtLawStrokeSharp,
+  IconCourtLawSolidSharp,
+];

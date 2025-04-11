@@ -18,18 +18,15 @@ export const IconBitcoinCircleStrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-circle-stroke-rounded IconBitcoinCircleStrokeRounded"
+      the-icon="BitcoinCircle StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -39,25 +36,19 @@ export const IconBitcoinCircleDuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-circle-duotone-rounded IconBitcoinCircleDuotoneRounded"
+      the-icon="BitcoinCircle DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -67,19 +58,15 @@ export const IconBitcoinCircleTwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-circle-twotone-rounded IconBitcoinCircleTwotoneRounded"
+      the-icon="BitcoinCircle TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -89,13 +76,11 @@ export const IconBitcoinCircleSolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-circle-solid-rounded IconBitcoinCircleSolidRounded"
+      the-icon="BitcoinCircle SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -105,18 +90,15 @@ export const IconBitcoinCircleBulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-circle-bulk-rounded IconBitcoinCircleBulkRounded"
+      the-icon="BitcoinCircle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -126,18 +108,15 @@ export const IconBitcoinCircleStrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-circle-stroke-sharp IconBitcoinCircleStrokeSharp"
+      the-icon="BitcoinCircle StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -147,25 +126,23 @@ export const IconBitcoinCircleSolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-circle-solid-sharp IconBitcoinCircleSolidSharp"
+      the-icon="BitcoinCircle SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBitcoinCircle: TheIconSelfPack = {
-  name: 'BitcoinCircle',
-  StrokeRounded: IconBitcoinCircleStrokeRounded,
-  DuotoneRounded: IconBitcoinCircleDuotoneRounded,
-  TwotoneRounded: IconBitcoinCircleTwotoneRounded,
-  SolidRounded: IconBitcoinCircleSolidRounded,
-  BulkRounded: IconBitcoinCircleBulkRounded,
-  StrokeSharp: IconBitcoinCircleStrokeSharp,
-  SolidSharp: IconBitcoinCircleSolidSharp,
-};
+export const iconPackOfBitcoinCircle: TheIconSelfPack = [
+  'BitcoinCircle',
+  IconBitcoinCircleStrokeRounded,
+  IconBitcoinCircleDuotoneRounded,
+  IconBitcoinCircleTwotoneRounded,
+  IconBitcoinCircleSolidRounded,
+  IconBitcoinCircleBulkRounded,
+  IconBitcoinCircleStrokeSharp,
+  IconBitcoinCircleSolidSharp,
+];

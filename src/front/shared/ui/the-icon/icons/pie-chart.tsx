@@ -17,18 +17,15 @@ export const IconPieChartStrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="pie-chart-stroke-rounded IconPieChartStrokeRounded"
+      the-icon="PieChart StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -38,23 +35,19 @@ export const IconPieChartDuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="pie-chart-duotone-rounded IconPieChartDuotoneRounded"
+      the-icon="PieChart DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -64,19 +57,15 @@ export const IconPieChartTwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="pie-chart-twotone-rounded IconPieChartTwotoneRounded"
+      the-icon="PieChart TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="o7 s sw"
       />
     </TheIconWrapper>
   );
@@ -86,15 +75,15 @@ export const IconPieChartSolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="pie-chart-solid-rounded IconPieChartSolidRounded"
+      the-icon="PieChart SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -104,16 +93,15 @@ export const IconPieChartBulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="pie-chart-bulk-rounded IconPieChartBulkRounded"
+      the-icon="PieChart BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -123,18 +111,15 @@ export const IconPieChartStrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="pie-chart-stroke-sharp IconPieChartStrokeSharp"
+      the-icon="PieChart StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -144,27 +129,27 @@ export const IconPieChartSolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="pie-chart-solid-sharp IconPieChartSolidSharp"
+      the-icon="PieChart SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPieChart: TheIconSelfPack = {
-  name: 'PieChart',
-  StrokeRounded: IconPieChartStrokeRounded,
-  DuotoneRounded: IconPieChartDuotoneRounded,
-  TwotoneRounded: IconPieChartTwotoneRounded,
-  SolidRounded: IconPieChartSolidRounded,
-  BulkRounded: IconPieChartBulkRounded,
-  StrokeSharp: IconPieChartStrokeSharp,
-  SolidSharp: IconPieChartSolidSharp,
-};
+export const iconPackOfPieChart: TheIconSelfPack = [
+  'PieChart',
+  IconPieChartStrokeRounded,
+  IconPieChartDuotoneRounded,
+  IconPieChartTwotoneRounded,
+  IconPieChartSolidRounded,
+  IconPieChartBulkRounded,
+  IconPieChartStrokeSharp,
+  IconPieChartSolidSharp,
+];

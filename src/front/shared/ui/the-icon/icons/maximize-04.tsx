@@ -23,21 +23,15 @@ export const IconMaximize04StrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="maximize-04-stroke-rounded IconMaximize04StrokeRounded"
+      the-icon="Maximize04 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -47,26 +41,19 @@ export const IconMaximize04DuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="maximize-04-duotone-rounded IconMaximize04DuotoneRounded"
+      the-icon="Maximize04 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -76,22 +63,15 @@ export const IconMaximize04TwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="maximize-04-twotone-rounded IconMaximize04TwotoneRounded"
+      the-icon="Maximize04 TwotoneRounded"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -101,19 +81,19 @@ export const IconMaximize04SolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="maximize-04-solid-rounded IconMaximize04SolidRounded"
+      the-icon="Maximize04 SolidRounded"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -123,20 +103,19 @@ export const IconMaximize04BulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="maximize-04-bulk-rounded IconMaximize04BulkRounded"
+      the-icon="Maximize04 BulkRounded"
     >
       <path 
-        opacity="0.5" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o4"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -146,17 +125,15 @@ export const IconMaximize04StrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="maximize-04-stroke-sharp IconMaximize04StrokeSharp"
+      the-icon="Maximize04 StrokeSharp"
     >
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d11}
+        i-c="s sw"
       />
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d12}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -166,29 +143,27 @@ export const IconMaximize04SolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="maximize-04-solid-sharp IconMaximize04SolidSharp"
+      the-icon="Maximize04 SolidSharp"
     >
       <path 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMaximize04: TheIconSelfPack = {
-  name: 'Maximize04',
-  StrokeRounded: IconMaximize04StrokeRounded,
-  DuotoneRounded: IconMaximize04DuotoneRounded,
-  TwotoneRounded: IconMaximize04TwotoneRounded,
-  SolidRounded: IconMaximize04SolidRounded,
-  BulkRounded: IconMaximize04BulkRounded,
-  StrokeSharp: IconMaximize04StrokeSharp,
-  SolidSharp: IconMaximize04SolidSharp,
-};
+export const iconPackOfMaximize04: TheIconSelfPack = [
+  'Maximize04',
+  IconMaximize04StrokeRounded,
+  IconMaximize04DuotoneRounded,
+  IconMaximize04TwotoneRounded,
+  IconMaximize04SolidRounded,
+  IconMaximize04BulkRounded,
+  IconMaximize04StrokeSharp,
+  IconMaximize04SolidSharp,
+];

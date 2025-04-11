@@ -17,18 +17,15 @@ export const IconAlphaCircleStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="alpha-circle-stroke-rounded IconAlphaCircleStrokeRounded"
+      the-icon="AlphaCircle StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -38,24 +35,19 @@ export const IconAlphaCircleDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="alpha-circle-duotone-rounded IconAlphaCircleDuotoneRounded"
+      the-icon="AlphaCircle DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -65,19 +57,15 @@ export const IconAlphaCircleTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="alpha-circle-twotone-rounded IconAlphaCircleTwotoneRounded"
+      the-icon="AlphaCircle TwotoneRounded"
     >
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -87,13 +75,11 @@ export const IconAlphaCircleSolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="alpha-circle-solid-rounded IconAlphaCircleSolidRounded"
+      the-icon="AlphaCircle SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -103,18 +89,15 @@ export const IconAlphaCircleBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="alpha-circle-bulk-rounded IconAlphaCircleBulkRounded"
+      the-icon="AlphaCircle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -124,18 +107,15 @@ export const IconAlphaCircleStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="alpha-circle-stroke-sharp IconAlphaCircleStrokeSharp"
+      the-icon="AlphaCircle StrokeSharp"
     >
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -145,29 +125,27 @@ export const IconAlphaCircleSolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="alpha-circle-solid-sharp IconAlphaCircleSolidSharp"
+      the-icon="AlphaCircle SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAlphaCircle: TheIconSelfPack = {
-  name: 'AlphaCircle',
-  StrokeRounded: IconAlphaCircleStrokeRounded,
-  DuotoneRounded: IconAlphaCircleDuotoneRounded,
-  TwotoneRounded: IconAlphaCircleTwotoneRounded,
-  SolidRounded: IconAlphaCircleSolidRounded,
-  BulkRounded: IconAlphaCircleBulkRounded,
-  StrokeSharp: IconAlphaCircleStrokeSharp,
-  SolidSharp: IconAlphaCircleSolidSharp,
-};
+export const iconPackOfAlphaCircle: TheIconSelfPack = [
+  'AlphaCircle',
+  IconAlphaCircleStrokeRounded,
+  IconAlphaCircleDuotoneRounded,
+  IconAlphaCircleTwotoneRounded,
+  IconAlphaCircleSolidRounded,
+  IconAlphaCircleBulkRounded,
+  IconAlphaCircleStrokeSharp,
+  IconAlphaCircleSolidSharp,
+];

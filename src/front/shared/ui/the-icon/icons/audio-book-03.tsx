@@ -26,27 +26,19 @@ export const IconAudioBook03StrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="audio-book-03-stroke-rounded IconAudioBook03StrokeRounded"
+      the-icon="AudioBook03 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -56,36 +48,27 @@ export const IconAudioBook03DuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="audio-book-03-duotone-rounded IconAudioBook03DuotoneRounded"
+      the-icon="AudioBook03 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d7}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -95,29 +78,19 @@ export const IconAudioBook03TwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="audio-book-03-twotone-rounded IconAudioBook03TwotoneRounded"
+      the-icon="AudioBook03 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d11}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -127,15 +100,15 @@ export const IconAudioBook03SolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="audio-book-03-solid-rounded IconAudioBook03SolidRounded"
+      the-icon="AudioBook03 SolidRounded"
     >
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
       <path 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -145,16 +118,15 @@ export const IconAudioBook03BulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="audio-book-03-bulk-rounded IconAudioBook03BulkRounded"
+      the-icon="AudioBook03 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f o7"
       />
       <path 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -164,17 +136,15 @@ export const IconAudioBook03StrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="audio-book-03-stroke-sharp IconAudioBook03StrokeSharp"
+      the-icon="AudioBook03 StrokeSharp"
     >
       <path 
-        d={d.d14} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d14}
+        i-c="s sw"
       />
       <path 
-        d={d.d15} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d15}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -184,27 +154,27 @@ export const IconAudioBook03SolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="audio-book-03-solid-sharp IconAudioBook03SolidSharp"
+      the-icon="AudioBook03 SolidSharp"
     >
       <path 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="f"
       />
       <path 
-        d={d.d17} 
-        fill="var(--icon-fill)" 
+        d={d.d17}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAudioBook03: TheIconSelfPack = {
-  name: 'AudioBook03',
-  StrokeRounded: IconAudioBook03StrokeRounded,
-  DuotoneRounded: IconAudioBook03DuotoneRounded,
-  TwotoneRounded: IconAudioBook03TwotoneRounded,
-  SolidRounded: IconAudioBook03SolidRounded,
-  BulkRounded: IconAudioBook03BulkRounded,
-  StrokeSharp: IconAudioBook03StrokeSharp,
-  SolidSharp: IconAudioBook03SolidSharp,
-};
+export const iconPackOfAudioBook03: TheIconSelfPack = [
+  'AudioBook03',
+  IconAudioBook03StrokeRounded,
+  IconAudioBook03DuotoneRounded,
+  IconAudioBook03TwotoneRounded,
+  IconAudioBook03SolidRounded,
+  IconAudioBook03BulkRounded,
+  IconAudioBook03StrokeSharp,
+  IconAudioBook03SolidSharp,
+];

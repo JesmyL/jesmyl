@@ -21,36 +21,30 @@ export const IconDatabase02StrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="database-02-stroke-rounded IconDatabase02StrokeRounded"
+      the-icon="Database02 StrokeRounded"
     >
       <ellipse 
-        cx="12" 
-        cy="5" 
-        rx="8" 
-        ry="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        cx="12"
+        cy="5"
+        rx="8"
+        ry="3"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
+      />
+      <path 
+        d={d.d4}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -60,46 +54,38 @@ export const IconDatabase02DuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="database-02-duotone-rounded IconDatabase02DuotoneRounded"
+      the-icon="Database02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <ellipse 
-        cx="12" 
-        cy="5" 
-        rx="8" 
-        ry="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        cx="12"
+        cy="5"
+        rx="8"
+        ry="3"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
+      />
+      <path 
+        d={d.d4}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -109,38 +95,30 @@ export const IconDatabase02TwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="database-02-twotone-rounded IconDatabase02TwotoneRounded"
+      the-icon="Database02 TwotoneRounded"
     >
       <ellipse 
-        cx="12" 
-        cy="5" 
-        rx="8" 
-        ry="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        cx="12"
+        cy="5"
+        rx="8"
+        ry="3"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="o7 s sr sw"
+      />
+      <path 
+        d={d.d4}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -150,17 +128,15 @@ export const IconDatabase02SolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="database-02-solid-rounded IconDatabase02SolidRounded"
+      the-icon="Database02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -170,18 +146,15 @@ export const IconDatabase02BulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="database-02-bulk-rounded IconDatabase02BulkRounded"
+      the-icon="Database02 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -191,34 +164,30 @@ export const IconDatabase02StrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="database-02-stroke-sharp IconDatabase02StrokeSharp"
+      the-icon="Database02 StrokeSharp"
     >
       <ellipse 
-        cx="12" 
-        cy="5" 
-        rx="8" 
-        ry="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        cx="12"
+        cy="5"
+        rx="8"
+        ry="3"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
+      />
+      <path 
+        d={d.d10}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -228,29 +197,27 @@ export const IconDatabase02SolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="database-02-solid-sharp IconDatabase02SolidSharp"
+      the-icon="Database02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfDatabase02: TheIconSelfPack = {
-  name: 'Database02',
-  StrokeRounded: IconDatabase02StrokeRounded,
-  DuotoneRounded: IconDatabase02DuotoneRounded,
-  TwotoneRounded: IconDatabase02TwotoneRounded,
-  SolidRounded: IconDatabase02SolidRounded,
-  BulkRounded: IconDatabase02BulkRounded,
-  StrokeSharp: IconDatabase02StrokeSharp,
-  SolidSharp: IconDatabase02SolidSharp,
-};
+export const iconPackOfDatabase02: TheIconSelfPack = [
+  'Database02',
+  IconDatabase02StrokeRounded,
+  IconDatabase02DuotoneRounded,
+  IconDatabase02TwotoneRounded,
+  IconDatabase02SolidRounded,
+  IconDatabase02BulkRounded,
+  IconDatabase02StrokeSharp,
+  IconDatabase02SolidSharp,
+];

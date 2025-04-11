@@ -19,18 +19,15 @@ export const IconStickyNote02StrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="sticky-note-02-stroke-rounded IconStickyNote02StrokeRounded"
+      the-icon="StickyNote02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -40,28 +37,23 @@ export const IconStickyNote02DuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="sticky-note-02-duotone-rounded IconStickyNote02DuotoneRounded"
+      the-icon="StickyNote02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -71,19 +63,15 @@ export const IconStickyNote02TwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="sticky-note-02-twotone-rounded IconStickyNote02TwotoneRounded"
+      the-icon="StickyNote02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="o7 s sw"
       />
     </TheIconWrapper>
   );
@@ -93,17 +81,15 @@ export const IconStickyNote02SolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="sticky-note-02-solid-rounded IconStickyNote02SolidRounded"
+      the-icon="StickyNote02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -113,18 +99,15 @@ export const IconStickyNote02BulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="sticky-note-02-bulk-rounded IconStickyNote02BulkRounded"
+      the-icon="StickyNote02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -134,19 +117,15 @@ export const IconStickyNote02StrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="sticky-note-02-stroke-sharp IconStickyNote02StrokeSharp"
+      the-icon="StickyNote02 StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -156,29 +135,27 @@ export const IconStickyNote02SolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="sticky-note-02-solid-sharp IconStickyNote02SolidSharp"
+      the-icon="StickyNote02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfStickyNote02: TheIconSelfPack = {
-  name: 'StickyNote02',
-  StrokeRounded: IconStickyNote02StrokeRounded,
-  DuotoneRounded: IconStickyNote02DuotoneRounded,
-  TwotoneRounded: IconStickyNote02TwotoneRounded,
-  SolidRounded: IconStickyNote02SolidRounded,
-  BulkRounded: IconStickyNote02BulkRounded,
-  StrokeSharp: IconStickyNote02StrokeSharp,
-  SolidSharp: IconStickyNote02SolidSharp,
-};
+export const iconPackOfStickyNote02: TheIconSelfPack = [
+  'StickyNote02',
+  IconStickyNote02StrokeRounded,
+  IconStickyNote02DuotoneRounded,
+  IconStickyNote02TwotoneRounded,
+  IconStickyNote02SolidRounded,
+  IconStickyNote02BulkRounded,
+  IconStickyNote02StrokeSharp,
+  IconStickyNote02SolidSharp,
+];

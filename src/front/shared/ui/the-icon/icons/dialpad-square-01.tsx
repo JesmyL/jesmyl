@@ -45,52 +45,43 @@ export const IconDialpadSquare01StrokeRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="dialpad-square-01-stroke-rounded IconDialpadSquare01StrokeRounded"
+      the-icon="DialpadSquare01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d4}
+        i-c="s sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -100,67 +91,57 @@ export const IconDialpadSquare01DuotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="dialpad-square-01-duotone-rounded IconDialpadSquare01DuotoneRounded"
+      the-icon="DialpadSquare01 DuotoneRounded"
     >
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       </g>
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d4}
+        i-c="s sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -170,55 +151,43 @@ export const IconDialpadSquare01TwotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="dialpad-square-01-twotone-rounded IconDialpadSquare01TwotoneRounded"
+      the-icon="DialpadSquare01 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d4}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -228,43 +197,43 @@ export const IconDialpadSquare01SolidRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="dialpad-square-01-solid-rounded IconDialpadSquare01SolidRounded"
+      the-icon="DialpadSquare01 SolidRounded"
     >
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
       <path 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f"
       />
       <path 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="f"
       />
       <path 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        d={d.d15}
+        i-c="f"
       />
       <path 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="f"
       />
       <path 
-        d={d.d17} 
-        fill="var(--icon-fill)" 
+        d={d.d17}
+        i-c="f"
       />
       <path 
-        d={d.d18} 
-        fill="var(--icon-fill)" 
+        d={d.d18}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -274,47 +243,43 @@ export const IconDialpadSquare01BulkRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="dialpad-square-01-bulk-rounded IconDialpadSquare01BulkRounded"
+      the-icon="DialpadSquare01 BulkRounded"
     >
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f o7"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f o7"
       />
       <path 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="f"
       />
       <path 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        d={d.d15}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d17} 
-        fill="var(--icon-fill)" 
+        d={d.d17}
+        i-c="f o7"
       />
       <path 
-        d={d.d18} 
-        fill="var(--icon-fill)" 
+        d={d.d18}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -324,61 +289,43 @@ export const IconDialpadSquare01StrokeSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="dialpad-square-01-stroke-sharp IconDialpadSquare01StrokeSharp"
+      the-icon="DialpadSquare01 StrokeSharp"
     >
       <path 
-        d={d.d19} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d19}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d20} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d20}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d21} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d21}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d22} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d22}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d23} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d23}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d24} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d24}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d25} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d25}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d26} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d26}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d27} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d27}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -388,55 +335,55 @@ export const IconDialpadSquare01SolidSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="dialpad-square-01-solid-sharp IconDialpadSquare01SolidSharp"
+      the-icon="DialpadSquare01 SolidSharp"
     >
       <path 
-        d={d.d28} 
-        fill="var(--icon-fill)" 
+        d={d.d28}
+        i-c="f"
       />
       <path 
-        d={d.d29} 
-        fill="var(--icon-fill)" 
+        d={d.d29}
+        i-c="f"
       />
       <path 
-        d={d.d30} 
-        fill="var(--icon-fill)" 
+        d={d.d30}
+        i-c="f"
       />
       <path 
-        d={d.d31} 
-        fill="var(--icon-fill)" 
+        d={d.d31}
+        i-c="f"
       />
       <path 
-        d={d.d32} 
-        fill="var(--icon-fill)" 
+        d={d.d32}
+        i-c="f"
       />
       <path 
-        d={d.d33} 
-        fill="var(--icon-fill)" 
+        d={d.d33}
+        i-c="f"
       />
       <path 
-        d={d.d34} 
-        fill="var(--icon-fill)" 
+        d={d.d34}
+        i-c="f"
       />
       <path 
-        d={d.d35} 
-        fill="var(--icon-fill)" 
+        d={d.d35}
+        i-c="f"
       />
       <path 
-        d={d.d36} 
-        fill="var(--icon-fill)" 
+        d={d.d36}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfDialpadSquare01: TheIconSelfPack = {
-  name: 'DialpadSquare01',
-  StrokeRounded: IconDialpadSquare01StrokeRounded,
-  DuotoneRounded: IconDialpadSquare01DuotoneRounded,
-  TwotoneRounded: IconDialpadSquare01TwotoneRounded,
-  SolidRounded: IconDialpadSquare01SolidRounded,
-  BulkRounded: IconDialpadSquare01BulkRounded,
-  StrokeSharp: IconDialpadSquare01StrokeSharp,
-  SolidSharp: IconDialpadSquare01SolidSharp,
-};
+export const iconPackOfDialpadSquare01: TheIconSelfPack = [
+  'DialpadSquare01',
+  IconDialpadSquare01StrokeRounded,
+  IconDialpadSquare01DuotoneRounded,
+  IconDialpadSquare01TwotoneRounded,
+  IconDialpadSquare01SolidRounded,
+  IconDialpadSquare01BulkRounded,
+  IconDialpadSquare01StrokeSharp,
+  IconDialpadSquare01SolidSharp,
+];

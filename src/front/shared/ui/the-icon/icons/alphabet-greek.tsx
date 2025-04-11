@@ -16,14 +16,11 @@ export const IconAlphabetGreekStrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-greek-stroke-rounded IconAlphabetGreekStrokeRounded"
+      the-icon="AlphabetGreek StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -33,19 +30,15 @@ export const IconAlphabetGreekDuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-greek-duotone-rounded IconAlphabetGreekDuotoneRounded"
+      the-icon="AlphabetGreek DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -55,22 +48,15 @@ export const IconAlphabetGreekTwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-greek-twotone-rounded IconAlphabetGreekTwotoneRounded"
+      the-icon="AlphabetGreek TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -80,11 +66,11 @@ export const IconAlphabetGreekSolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-greek-solid-rounded IconAlphabetGreekSolidRounded"
+      the-icon="AlphabetGreek SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -94,16 +80,15 @@ export const IconAlphabetGreekBulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-greek-bulk-rounded IconAlphabetGreekBulkRounded"
+      the-icon="AlphabetGreek BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -113,12 +98,11 @@ export const IconAlphabetGreekStrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-greek-stroke-sharp IconAlphabetGreekStrokeSharp"
+      the-icon="AlphabetGreek StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -128,25 +112,23 @@ export const IconAlphabetGreekSolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-greek-solid-sharp IconAlphabetGreekSolidSharp"
+      the-icon="AlphabetGreek SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAlphabetGreek: TheIconSelfPack = {
-  name: 'AlphabetGreek',
-  StrokeRounded: IconAlphabetGreekStrokeRounded,
-  DuotoneRounded: IconAlphabetGreekDuotoneRounded,
-  TwotoneRounded: IconAlphabetGreekTwotoneRounded,
-  SolidRounded: IconAlphabetGreekSolidRounded,
-  BulkRounded: IconAlphabetGreekBulkRounded,
-  StrokeSharp: IconAlphabetGreekStrokeSharp,
-  SolidSharp: IconAlphabetGreekSolidSharp,
-};
+export const iconPackOfAlphabetGreek: TheIconSelfPack = [
+  'AlphabetGreek',
+  IconAlphabetGreekStrokeRounded,
+  IconAlphabetGreekDuotoneRounded,
+  IconAlphabetGreekTwotoneRounded,
+  IconAlphabetGreekSolidRounded,
+  IconAlphabetGreekBulkRounded,
+  IconAlphabetGreekStrokeSharp,
+  IconAlphabetGreekSolidSharp,
+];

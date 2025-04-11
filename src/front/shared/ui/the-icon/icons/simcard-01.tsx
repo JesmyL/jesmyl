@@ -17,19 +17,15 @@ export const IconSimcard01StrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="simcard-01-stroke-rounded IconSimcard01StrokeRounded"
+      the-icon="Simcard01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -39,24 +35,19 @@ export const IconSimcard01DuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="simcard-01-duotone-rounded IconSimcard01DuotoneRounded"
+      the-icon="Simcard01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -66,20 +57,15 @@ export const IconSimcard01TwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="simcard-01-twotone-rounded IconSimcard01TwotoneRounded"
+      the-icon="Simcard01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -89,13 +75,11 @@ export const IconSimcard01SolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="simcard-01-solid-rounded IconSimcard01SolidRounded"
+      the-icon="Simcard01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -105,18 +89,15 @@ export const IconSimcard01BulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="simcard-01-bulk-rounded IconSimcard01BulkRounded"
+      the-icon="Simcard01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -126,17 +107,15 @@ export const IconSimcard01StrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="simcard-01-stroke-sharp IconSimcard01StrokeSharp"
+      the-icon="Simcard01 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -146,25 +125,23 @@ export const IconSimcard01SolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="simcard-01-solid-sharp IconSimcard01SolidSharp"
+      the-icon="Simcard01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSimcard01: TheIconSelfPack = {
-  name: 'Simcard01',
-  StrokeRounded: IconSimcard01StrokeRounded,
-  DuotoneRounded: IconSimcard01DuotoneRounded,
-  TwotoneRounded: IconSimcard01TwotoneRounded,
-  SolidRounded: IconSimcard01SolidRounded,
-  BulkRounded: IconSimcard01BulkRounded,
-  StrokeSharp: IconSimcard01StrokeSharp,
-  SolidSharp: IconSimcard01SolidSharp,
-};
+export const iconPackOfSimcard01: TheIconSelfPack = [
+  'Simcard01',
+  IconSimcard01StrokeRounded,
+  IconSimcard01DuotoneRounded,
+  IconSimcard01TwotoneRounded,
+  IconSimcard01SolidRounded,
+  IconSimcard01BulkRounded,
+  IconSimcard01StrokeSharp,
+  IconSimcard01SolidSharp,
+];

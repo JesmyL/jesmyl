@@ -15,13 +15,11 @@ export const IconTriangleStrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="triangle-stroke-rounded IconTriangleStrokeRounded"
+      the-icon="Triangle StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -31,18 +29,15 @@ export const IconTriangleDuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="triangle-duotone-rounded IconTriangleDuotoneRounded"
+      the-icon="Triangle DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -52,21 +47,15 @@ export const IconTriangleTwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="triangle-twotone-rounded IconTriangleTwotoneRounded"
+      the-icon="Triangle TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -76,13 +65,11 @@ export const IconTriangleSolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="triangle-solid-rounded IconTriangleSolidRounded"
+      the-icon="Triangle SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -92,18 +79,15 @@ export const IconTriangleBulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="triangle-bulk-rounded IconTriangleBulkRounded"
+      the-icon="Triangle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -113,13 +97,11 @@ export const IconTriangleStrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="triangle-stroke-sharp IconTriangleStrokeSharp"
+      the-icon="Triangle StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -129,23 +111,23 @@ export const IconTriangleSolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="triangle-solid-sharp IconTriangleSolidSharp"
+      the-icon="Triangle SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTriangle: TheIconSelfPack = {
-  name: 'Triangle',
-  StrokeRounded: IconTriangleStrokeRounded,
-  DuotoneRounded: IconTriangleDuotoneRounded,
-  TwotoneRounded: IconTriangleTwotoneRounded,
-  SolidRounded: IconTriangleSolidRounded,
-  BulkRounded: IconTriangleBulkRounded,
-  StrokeSharp: IconTriangleStrokeSharp,
-  SolidSharp: IconTriangleSolidSharp,
-};
+export const iconPackOfTriangle: TheIconSelfPack = [
+  'Triangle',
+  IconTriangleStrokeRounded,
+  IconTriangleDuotoneRounded,
+  IconTriangleTwotoneRounded,
+  IconTriangleSolidRounded,
+  IconTriangleBulkRounded,
+  IconTriangleStrokeSharp,
+  IconTriangleSolidSharp,
+];

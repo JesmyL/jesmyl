@@ -19,20 +19,15 @@ export const IconZoomOutAreaStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="zoom-out-area-stroke-rounded IconZoomOutAreaStrokeRounded"
+      the-icon="ZoomOutArea StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -42,27 +37,19 @@ export const IconZoomOutAreaDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="zoom-out-area-duotone-rounded IconZoomOutAreaDuotoneRounded"
+      the-icon="ZoomOutArea DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -72,21 +59,15 @@ export const IconZoomOutAreaTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="zoom-out-area-twotone-rounded IconZoomOutAreaTwotoneRounded"
+      the-icon="ZoomOutArea TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -96,19 +77,15 @@ export const IconZoomOutAreaSolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="zoom-out-area-solid-rounded IconZoomOutAreaSolidRounded"
+      the-icon="ZoomOutArea SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -118,20 +95,15 @@ export const IconZoomOutAreaBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="zoom-out-area-bulk-rounded IconZoomOutAreaBulkRounded"
+      the-icon="ZoomOutArea BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr o7"
       />
     </TheIconWrapper>
   );
@@ -141,19 +113,15 @@ export const IconZoomOutAreaStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="zoom-out-area-stroke-sharp IconZoomOutAreaStrokeSharp"
+      the-icon="ZoomOutArea StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -163,37 +131,31 @@ export const IconZoomOutAreaSolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="zoom-out-area-solid-sharp IconZoomOutAreaSolidSharp"
+      the-icon="ZoomOutArea SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfZoomOutArea: TheIconSelfPack = {
-  name: 'ZoomOutArea',
-  StrokeRounded: IconZoomOutAreaStrokeRounded,
-  DuotoneRounded: IconZoomOutAreaDuotoneRounded,
-  TwotoneRounded: IconZoomOutAreaTwotoneRounded,
-  SolidRounded: IconZoomOutAreaSolidRounded,
-  BulkRounded: IconZoomOutAreaBulkRounded,
-  StrokeSharp: IconZoomOutAreaStrokeSharp,
-  SolidSharp: IconZoomOutAreaSolidSharp,
-};
+export const iconPackOfZoomOutArea: TheIconSelfPack = [
+  'ZoomOutArea',
+  IconZoomOutAreaStrokeRounded,
+  IconZoomOutAreaDuotoneRounded,
+  IconZoomOutAreaTwotoneRounded,
+  IconZoomOutAreaSolidRounded,
+  IconZoomOutAreaBulkRounded,
+  IconZoomOutAreaStrokeSharp,
+  IconZoomOutAreaSolidSharp,
+];

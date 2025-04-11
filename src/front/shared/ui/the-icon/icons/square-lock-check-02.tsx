@@ -28,25 +28,19 @@ export const IconSquareLockCheck02StrokeRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="square-lock-check-02-stroke-rounded IconSquareLockCheck02StrokeRounded"
+      the-icon="SquareLockCheck02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -56,31 +50,23 @@ export const IconSquareLockCheck02DuotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="square-lock-check-02-duotone-rounded IconSquareLockCheck02DuotoneRounded"
+      the-icon="SquareLockCheck02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d5}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d7}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -90,28 +76,19 @@ export const IconSquareLockCheck02TwotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="square-lock-check-02-twotone-rounded IconSquareLockCheck02TwotoneRounded"
+      the-icon="SquareLockCheck02 TwotoneRounded"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d8}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d10}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -121,23 +98,19 @@ export const IconSquareLockCheck02SolidRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="square-lock-check-02-solid-rounded IconSquareLockCheck02SolidRounded"
+      the-icon="SquareLockCheck02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
       <path 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -147,22 +120,19 @@ export const IconSquareLockCheck02BulkRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="square-lock-check-02-bulk-rounded IconSquareLockCheck02BulkRounded"
+      the-icon="SquareLockCheck02 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f o7"
       />
       <path 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -172,17 +142,15 @@ export const IconSquareLockCheck02StrokeSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="square-lock-check-02-stroke-sharp IconSquareLockCheck02StrokeSharp"
+      the-icon="SquareLockCheck02 StrokeSharp"
     >
       <path 
-        d={d.d15} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d15}
+        i-c="s sw"
       />
       <path 
-        d={d.d16} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d16}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -192,35 +160,31 @@ export const IconSquareLockCheck02SolidSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="square-lock-check-02-solid-sharp IconSquareLockCheck02SolidSharp"
+      the-icon="SquareLockCheck02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d17} 
-        fill="var(--icon-fill)" 
+        d={d.d17}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d18} 
-        fill="var(--icon-fill)" 
+        d={d.d18}
+        i-c="c f fr"
       />
       <path 
-        d={d.d19} 
-        fill="var(--icon-fill)" 
+        d={d.d19}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSquareLockCheck02: TheIconSelfPack = {
-  name: 'SquareLockCheck02',
-  StrokeRounded: IconSquareLockCheck02StrokeRounded,
-  DuotoneRounded: IconSquareLockCheck02DuotoneRounded,
-  TwotoneRounded: IconSquareLockCheck02TwotoneRounded,
-  SolidRounded: IconSquareLockCheck02SolidRounded,
-  BulkRounded: IconSquareLockCheck02BulkRounded,
-  StrokeSharp: IconSquareLockCheck02StrokeSharp,
-  SolidSharp: IconSquareLockCheck02SolidSharp,
-};
+export const iconPackOfSquareLockCheck02: TheIconSelfPack = [
+  'SquareLockCheck02',
+  IconSquareLockCheck02StrokeRounded,
+  IconSquareLockCheck02DuotoneRounded,
+  IconSquareLockCheck02TwotoneRounded,
+  IconSquareLockCheck02SolidRounded,
+  IconSquareLockCheck02BulkRounded,
+  IconSquareLockCheck02StrokeSharp,
+  IconSquareLockCheck02SolidSharp,
+];

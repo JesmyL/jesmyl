@@ -20,20 +20,15 @@ export const IconCallOutgoing02StrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="call-outgoing-02-stroke-rounded IconCallOutgoing02StrokeRounded"
+      the-icon="CallOutgoing02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -43,31 +38,25 @@ export const IconCallOutgoing02DuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="call-outgoing-02-duotone-rounded IconCallOutgoing02DuotoneRounded"
+      the-icon="CallOutgoing02 DuotoneRounded"
     >
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       </g>
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -77,21 +66,15 @@ export const IconCallOutgoing02TwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="call-outgoing-02-twotone-rounded IconCallOutgoing02TwotoneRounded"
+      the-icon="CallOutgoing02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -101,15 +84,15 @@ export const IconCallOutgoing02SolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="call-outgoing-02-solid-rounded IconCallOutgoing02SolidRounded"
+      the-icon="CallOutgoing02 SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -119,16 +102,15 @@ export const IconCallOutgoing02BulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="call-outgoing-02-bulk-rounded IconCallOutgoing02BulkRounded"
+      the-icon="CallOutgoing02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -138,17 +120,15 @@ export const IconCallOutgoing02StrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="call-outgoing-02-stroke-sharp IconCallOutgoing02StrokeSharp"
+      the-icon="CallOutgoing02 StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -158,29 +138,27 @@ export const IconCallOutgoing02SolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="call-outgoing-02-solid-sharp IconCallOutgoing02SolidSharp"
+      the-icon="CallOutgoing02 SolidSharp"
     >
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCallOutgoing02: TheIconSelfPack = {
-  name: 'CallOutgoing02',
-  StrokeRounded: IconCallOutgoing02StrokeRounded,
-  DuotoneRounded: IconCallOutgoing02DuotoneRounded,
-  TwotoneRounded: IconCallOutgoing02TwotoneRounded,
-  SolidRounded: IconCallOutgoing02SolidRounded,
-  BulkRounded: IconCallOutgoing02BulkRounded,
-  StrokeSharp: IconCallOutgoing02StrokeSharp,
-  SolidSharp: IconCallOutgoing02SolidSharp,
-};
+export const iconPackOfCallOutgoing02: TheIconSelfPack = [
+  'CallOutgoing02',
+  IconCallOutgoing02StrokeRounded,
+  IconCallOutgoing02DuotoneRounded,
+  IconCallOutgoing02TwotoneRounded,
+  IconCallOutgoing02SolidRounded,
+  IconCallOutgoing02BulkRounded,
+  IconCallOutgoing02StrokeSharp,
+  IconCallOutgoing02SolidSharp,
+];

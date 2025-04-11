@@ -18,19 +18,15 @@ export const IconFramerStrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="framer-stroke-rounded IconFramerStrokeRounded"
+      the-icon="Framer StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -40,29 +36,23 @@ export const IconFramerDuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="framer-duotone-rounded IconFramerDuotoneRounded"
+      the-icon="Framer DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -72,20 +62,15 @@ export const IconFramerTwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="framer-twotone-rounded IconFramerTwotoneRounded"
+      the-icon="Framer TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sw"
       />
     </TheIconWrapper>
   );
@@ -95,13 +80,11 @@ export const IconFramerSolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="framer-solid-rounded IconFramerSolidRounded"
+      the-icon="Framer SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -111,16 +94,15 @@ export const IconFramerBulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="framer-bulk-rounded IconFramerBulkRounded"
+      the-icon="Framer BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -130,18 +112,15 @@ export const IconFramerStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="framer-stroke-sharp IconFramerStrokeSharp"
+      the-icon="Framer StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -151,27 +130,27 @@ export const IconFramerSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="framer-solid-sharp IconFramerSolidSharp"
+      the-icon="Framer SolidSharp"
     >
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfFramer: TheIconSelfPack = {
-  name: 'Framer',
-  StrokeRounded: IconFramerStrokeRounded,
-  DuotoneRounded: IconFramerDuotoneRounded,
-  TwotoneRounded: IconFramerTwotoneRounded,
-  SolidRounded: IconFramerSolidRounded,
-  BulkRounded: IconFramerBulkRounded,
-  StrokeSharp: IconFramerStrokeSharp,
-  SolidSharp: IconFramerSolidSharp,
-};
+export const iconPackOfFramer: TheIconSelfPack = [
+  'Framer',
+  IconFramerStrokeRounded,
+  IconFramerDuotoneRounded,
+  IconFramerTwotoneRounded,
+  IconFramerSolidRounded,
+  IconFramerBulkRounded,
+  IconFramerStrokeSharp,
+  IconFramerSolidSharp,
+];

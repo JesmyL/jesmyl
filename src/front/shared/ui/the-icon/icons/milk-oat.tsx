@@ -28,19 +28,15 @@ export const IconMilkOatStrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="milk-oat-stroke-rounded IconMilkOatStrokeRounded"
+      the-icon="MilkOat StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -50,34 +46,27 @@ export const IconMilkOatDuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="milk-oat-duotone-rounded IconMilkOatDuotoneRounded"
+      the-icon="MilkOat DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -87,20 +76,15 @@ export const IconMilkOatTwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="milk-oat-twotone-rounded IconMilkOatTwotoneRounded"
+      the-icon="MilkOat TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -110,21 +94,19 @@ export const IconMilkOatSolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="milk-oat-solid-rounded IconMilkOatSolidRounded"
+      the-icon="MilkOat SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -134,22 +116,19 @@ export const IconMilkOatBulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="milk-oat-bulk-rounded IconMilkOatBulkRounded"
+      the-icon="MilkOat BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -159,18 +138,15 @@ export const IconMilkOatStrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="milk-oat-stroke-sharp IconMilkOatStrokeSharp"
+      the-icon="MilkOat StrokeSharp"
     >
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d13}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d14} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d14}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -180,39 +156,39 @@ export const IconMilkOatSolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="milk-oat-solid-sharp IconMilkOatSolidSharp"
+      the-icon="MilkOat SolidSharp"
     >
       <path 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        d={d.d15}
+        i-c="f"
       />
       <path 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="f"
       />
       <path 
-        d={d.d17} 
-        fill="var(--icon-fill)" 
+        d={d.d17}
+        i-c="f"
       />
       <path 
-        d={d.d18} 
-        fill="var(--icon-fill)" 
+        d={d.d18}
+        i-c="f"
       />
       <path 
-        d={d.d19} 
-        fill="var(--icon-fill)" 
+        d={d.d19}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMilkOat: TheIconSelfPack = {
-  name: 'MilkOat',
-  StrokeRounded: IconMilkOatStrokeRounded,
-  DuotoneRounded: IconMilkOatDuotoneRounded,
-  TwotoneRounded: IconMilkOatTwotoneRounded,
-  SolidRounded: IconMilkOatSolidRounded,
-  BulkRounded: IconMilkOatBulkRounded,
-  StrokeSharp: IconMilkOatStrokeSharp,
-  SolidSharp: IconMilkOatSolidSharp,
-};
+export const iconPackOfMilkOat: TheIconSelfPack = [
+  'MilkOat',
+  IconMilkOatStrokeRounded,
+  IconMilkOatDuotoneRounded,
+  IconMilkOatTwotoneRounded,
+  IconMilkOatSolidRounded,
+  IconMilkOatBulkRounded,
+  IconMilkOatStrokeSharp,
+  IconMilkOatSolidSharp,
+];

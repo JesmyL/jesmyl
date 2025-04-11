@@ -17,21 +17,15 @@ export const IconArrowTurnDownStrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="arrow-turn-down-stroke-rounded IconArrowTurnDownStrokeRounded"
+      the-icon="ArrowTurnDown StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -41,15 +35,11 @@ export const IconArrowTurnDownDuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="arrow-turn-down-duotone-rounded IconArrowTurnDownDuotoneRounded"
+      the-icon="ArrowTurnDown DuotoneRounded"
     >
       <path 
-        opacity="0.5" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o4 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -59,22 +49,15 @@ export const IconArrowTurnDownTwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="arrow-turn-down-twotone-rounded IconArrowTurnDownTwotoneRounded"
+      the-icon="ArrowTurnDown TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -84,11 +67,11 @@ export const IconArrowTurnDownSolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="arrow-turn-down-solid-rounded IconArrowTurnDownSolidRounded"
+      the-icon="ArrowTurnDown SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -98,16 +81,15 @@ export const IconArrowTurnDownBulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="arrow-turn-down-bulk-rounded IconArrowTurnDownBulkRounded"
+      the-icon="ArrowTurnDown BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -117,12 +99,11 @@ export const IconArrowTurnDownStrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="arrow-turn-down-stroke-sharp IconArrowTurnDownStrokeSharp"
+      the-icon="ArrowTurnDown StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -132,25 +113,23 @@ export const IconArrowTurnDownSolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="arrow-turn-down-solid-sharp IconArrowTurnDownSolidSharp"
+      the-icon="ArrowTurnDown SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfArrowTurnDown: TheIconSelfPack = {
-  name: 'ArrowTurnDown',
-  StrokeRounded: IconArrowTurnDownStrokeRounded,
-  DuotoneRounded: IconArrowTurnDownDuotoneRounded,
-  TwotoneRounded: IconArrowTurnDownTwotoneRounded,
-  SolidRounded: IconArrowTurnDownSolidRounded,
-  BulkRounded: IconArrowTurnDownBulkRounded,
-  StrokeSharp: IconArrowTurnDownStrokeSharp,
-  SolidSharp: IconArrowTurnDownSolidSharp,
-};
+export const iconPackOfArrowTurnDown: TheIconSelfPack = [
+  'ArrowTurnDown',
+  IconArrowTurnDownStrokeRounded,
+  IconArrowTurnDownDuotoneRounded,
+  IconArrowTurnDownTwotoneRounded,
+  IconArrowTurnDownSolidRounded,
+  IconArrowTurnDownBulkRounded,
+  IconArrowTurnDownStrokeSharp,
+  IconArrowTurnDownSolidSharp,
+];

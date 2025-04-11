@@ -18,19 +18,15 @@ export const IconAirplayLineStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="airplay-line-stroke-rounded IconAirplayLineStrokeRounded"
+      the-icon="AirplayLine StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -40,24 +36,19 @@ export const IconAirplayLineDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="airplay-line-duotone-rounded IconAirplayLineDuotoneRounded"
+      the-icon="AirplayLine DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -67,20 +58,15 @@ export const IconAirplayLineTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="airplay-line-twotone-rounded IconAirplayLineTwotoneRounded"
+      the-icon="AirplayLine TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -90,15 +76,15 @@ export const IconAirplayLineSolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="airplay-line-solid-rounded IconAirplayLineSolidRounded"
+      the-icon="AirplayLine SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -108,16 +94,15 @@ export const IconAirplayLineBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="airplay-line-bulk-rounded IconAirplayLineBulkRounded"
+      the-icon="AirplayLine BulkRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -127,19 +112,15 @@ export const IconAirplayLineStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="airplay-line-stroke-sharp IconAirplayLineStrokeSharp"
+      the-icon="AirplayLine StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -149,29 +130,27 @@ export const IconAirplayLineSolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="airplay-line-solid-sharp IconAirplayLineSolidSharp"
+      the-icon="AirplayLine SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAirplayLine: TheIconSelfPack = {
-  name: 'AirplayLine',
-  StrokeRounded: IconAirplayLineStrokeRounded,
-  DuotoneRounded: IconAirplayLineDuotoneRounded,
-  TwotoneRounded: IconAirplayLineTwotoneRounded,
-  SolidRounded: IconAirplayLineSolidRounded,
-  BulkRounded: IconAirplayLineBulkRounded,
-  StrokeSharp: IconAirplayLineStrokeSharp,
-  SolidSharp: IconAirplayLineSolidSharp,
-};
+export const iconPackOfAirplayLine: TheIconSelfPack = [
+  'AirplayLine',
+  IconAirplayLineStrokeRounded,
+  IconAirplayLineDuotoneRounded,
+  IconAirplayLineTwotoneRounded,
+  IconAirplayLineSolidRounded,
+  IconAirplayLineBulkRounded,
+  IconAirplayLineStrokeSharp,
+  IconAirplayLineSolidSharp,
+];

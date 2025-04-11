@@ -15,19 +15,15 @@ export const IconChickenThighsStrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="chicken-thighs-stroke-rounded IconChickenThighsStrokeRounded"
+      the-icon="ChickenThighs StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -37,24 +33,19 @@ export const IconChickenThighsDuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="chicken-thighs-duotone-rounded IconChickenThighsDuotoneRounded"
+      the-icon="ChickenThighs DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -64,20 +55,15 @@ export const IconChickenThighsTwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="chicken-thighs-twotone-rounded IconChickenThighsTwotoneRounded"
+      the-icon="ChickenThighs TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -87,15 +73,15 @@ export const IconChickenThighsSolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="chicken-thighs-solid-rounded IconChickenThighsSolidRounded"
+      the-icon="ChickenThighs SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -105,16 +91,15 @@ export const IconChickenThighsBulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="chicken-thighs-bulk-rounded IconChickenThighsBulkRounded"
+      the-icon="ChickenThighs BulkRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -124,18 +109,15 @@ export const IconChickenThighsStrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="chicken-thighs-stroke-sharp IconChickenThighsStrokeSharp"
+      the-icon="ChickenThighs StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -145,27 +127,27 @@ export const IconChickenThighsSolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="chicken-thighs-solid-sharp IconChickenThighsSolidSharp"
+      the-icon="ChickenThighs SolidSharp"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfChickenThighs: TheIconSelfPack = {
-  name: 'ChickenThighs',
-  StrokeRounded: IconChickenThighsStrokeRounded,
-  DuotoneRounded: IconChickenThighsDuotoneRounded,
-  TwotoneRounded: IconChickenThighsTwotoneRounded,
-  SolidRounded: IconChickenThighsSolidRounded,
-  BulkRounded: IconChickenThighsBulkRounded,
-  StrokeSharp: IconChickenThighsStrokeSharp,
-  SolidSharp: IconChickenThighsSolidSharp,
-};
+export const iconPackOfChickenThighs: TheIconSelfPack = [
+  'ChickenThighs',
+  IconChickenThighsStrokeRounded,
+  IconChickenThighsDuotoneRounded,
+  IconChickenThighsTwotoneRounded,
+  IconChickenThighsSolidRounded,
+  IconChickenThighsBulkRounded,
+  IconChickenThighsStrokeSharp,
+  IconChickenThighsSolidSharp,
+];

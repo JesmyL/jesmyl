@@ -15,14 +15,11 @@ export const IconBetaStrokeRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="beta-stroke-rounded IconBetaStrokeRounded"
+      the-icon="Beta StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -32,19 +29,15 @@ export const IconBetaDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="beta-duotone-rounded IconBetaDuotoneRounded"
+      the-icon="Beta DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,22 +47,15 @@ export const IconBetaTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="beta-twotone-rounded IconBetaTwotoneRounded"
+      the-icon="Beta TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -79,13 +65,11 @@ export const IconBetaSolidRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="beta-solid-rounded IconBetaSolidRounded"
+      the-icon="Beta SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -95,18 +79,15 @@ export const IconBetaBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="beta-bulk-rounded IconBetaBulkRounded"
+      the-icon="Beta BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -116,13 +97,11 @@ export const IconBetaStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="beta-stroke-sharp IconBetaStrokeSharp"
+      the-icon="Beta StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -132,25 +111,23 @@ export const IconBetaSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.E
   return (
     <TheIconWrapper
       {...props}
-      name="beta-solid-sharp IconBetaSolidSharp"
+      the-icon="Beta SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBeta: TheIconSelfPack = {
-  name: 'Beta',
-  StrokeRounded: IconBetaStrokeRounded,
-  DuotoneRounded: IconBetaDuotoneRounded,
-  TwotoneRounded: IconBetaTwotoneRounded,
-  SolidRounded: IconBetaSolidRounded,
-  BulkRounded: IconBetaBulkRounded,
-  StrokeSharp: IconBetaStrokeSharp,
-  SolidSharp: IconBetaSolidSharp,
-};
+export const iconPackOfBeta: TheIconSelfPack = [
+  'Beta',
+  IconBetaStrokeRounded,
+  IconBetaDuotoneRounded,
+  IconBetaTwotoneRounded,
+  IconBetaSolidRounded,
+  IconBetaBulkRounded,
+  IconBetaStrokeSharp,
+  IconBetaSolidSharp,
+];

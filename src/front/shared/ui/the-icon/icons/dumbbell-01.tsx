@@ -39,31 +39,23 @@ export const IconDumbbell01StrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="dumbbell-01-stroke-rounded IconDumbbell01StrokeRounded"
+      the-icon="Dumbbell01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -73,46 +65,35 @@ export const IconDumbbell01DuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="dumbbell-01-duotone-rounded IconDumbbell01DuotoneRounded"
+      the-icon="Dumbbell01 DuotoneRounded"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f o7"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -122,39 +103,27 @@ export const IconDumbbell01TwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="dumbbell-01-twotone-rounded IconDumbbell01TwotoneRounded"
+      the-icon="Dumbbell01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d11}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d12}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d13}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d14} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d14}
+        i-c="s sw"
       />
       <path 
-        d={d.d15} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d15}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -164,31 +133,27 @@ export const IconDumbbell01SolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="dumbbell-01-solid-rounded IconDumbbell01SolidRounded"
+      the-icon="Dumbbell01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d17} 
-        fill="var(--icon-fill)" 
+        d={d.d17}
+        i-c="c f fr"
       />
       <path 
-        d={d.d18} 
-        fill="var(--icon-fill)" 
+        d={d.d18}
+        i-c="f"
       />
       <path 
-        d={d.d19} 
-        fill="var(--icon-fill)" 
+        d={d.d19}
+        i-c="f"
       />
       <path 
-        d={d.d20} 
-        fill="var(--icon-fill)" 
+        d={d.d20}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -198,34 +163,27 @@ export const IconDumbbell01BulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="dumbbell-01-bulk-rounded IconDumbbell01BulkRounded"
+      the-icon="Dumbbell01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="c f fr o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d17} 
-        fill="var(--icon-fill)" 
+        d={d.d17}
+        i-c="c f fr o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d20} 
-        fill="var(--icon-fill)" 
+        d={d.d20}
+        i-c="f o7"
       />
       <path 
-        d={d.d18} 
-        fill="var(--icon-fill)" 
+        d={d.d18}
+        i-c="f"
       />
       <path 
-        d={d.d19} 
-        fill="var(--icon-fill)" 
+        d={d.d19}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -235,35 +193,27 @@ export const IconDumbbell01StrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="dumbbell-01-stroke-sharp IconDumbbell01StrokeSharp"
+      the-icon="Dumbbell01 StrokeSharp"
     >
       <path 
-        d={d.d21} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d21}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d22} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d22}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d23} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d23}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d24} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d24}
+        i-c="s sw"
       />
       <path 
-        d={d.d25} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d25}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -273,39 +223,39 @@ export const IconDumbbell01SolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="dumbbell-01-solid-sharp IconDumbbell01SolidSharp"
+      the-icon="Dumbbell01 SolidSharp"
     >
       <path 
-        d={d.d26} 
-        fill="var(--icon-fill)" 
+        d={d.d26}
+        i-c="f"
       />
       <path 
-        d={d.d27} 
-        fill="var(--icon-fill)" 
+        d={d.d27}
+        i-c="f"
       />
       <path 
-        d={d.d28} 
-        fill="var(--icon-fill)" 
+        d={d.d28}
+        i-c="f"
       />
       <path 
-        d={d.d29} 
-        fill="var(--icon-fill)" 
+        d={d.d29}
+        i-c="f"
       />
       <path 
-        d={d.d30} 
-        fill="var(--icon-fill)" 
+        d={d.d30}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfDumbbell01: TheIconSelfPack = {
-  name: 'Dumbbell01',
-  StrokeRounded: IconDumbbell01StrokeRounded,
-  DuotoneRounded: IconDumbbell01DuotoneRounded,
-  TwotoneRounded: IconDumbbell01TwotoneRounded,
-  SolidRounded: IconDumbbell01SolidRounded,
-  BulkRounded: IconDumbbell01BulkRounded,
-  StrokeSharp: IconDumbbell01StrokeSharp,
-  SolidSharp: IconDumbbell01SolidSharp,
-};
+export const iconPackOfDumbbell01: TheIconSelfPack = [
+  'Dumbbell01',
+  IconDumbbell01StrokeRounded,
+  IconDumbbell01DuotoneRounded,
+  IconDumbbell01TwotoneRounded,
+  IconDumbbell01SolidRounded,
+  IconDumbbell01BulkRounded,
+  IconDumbbell01StrokeSharp,
+  IconDumbbell01SolidSharp,
+];

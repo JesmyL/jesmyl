@@ -16,18 +16,15 @@ export const IconCursorProgress04StrokeRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-progress-04-stroke-rounded IconCursorProgress04StrokeRounded"
+      the-icon="CursorProgress04 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -37,23 +34,19 @@ export const IconCursorProgress04DuotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-progress-04-duotone-rounded IconCursorProgress04DuotoneRounded"
+      the-icon="CursorProgress04 DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -63,19 +56,15 @@ export const IconCursorProgress04TwotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-progress-04-twotone-rounded IconCursorProgress04TwotoneRounded"
+      the-icon="CursorProgress04 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -85,17 +74,15 @@ export const IconCursorProgress04SolidRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-progress-04-solid-rounded IconCursorProgress04SolidRounded"
+      the-icon="CursorProgress04 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -105,18 +92,15 @@ export const IconCursorProgress04BulkRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-progress-04-bulk-rounded IconCursorProgress04BulkRounded"
+      the-icon="CursorProgress04 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -126,19 +110,15 @@ export const IconCursorProgress04StrokeSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-progress-04-stroke-sharp IconCursorProgress04StrokeSharp"
+      the-icon="CursorProgress04 StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -148,29 +128,27 @@ export const IconCursorProgress04SolidSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-progress-04-solid-sharp IconCursorProgress04SolidSharp"
+      the-icon="CursorProgress04 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCursorProgress04: TheIconSelfPack = {
-  name: 'CursorProgress04',
-  StrokeRounded: IconCursorProgress04StrokeRounded,
-  DuotoneRounded: IconCursorProgress04DuotoneRounded,
-  TwotoneRounded: IconCursorProgress04TwotoneRounded,
-  SolidRounded: IconCursorProgress04SolidRounded,
-  BulkRounded: IconCursorProgress04BulkRounded,
-  StrokeSharp: IconCursorProgress04StrokeSharp,
-  SolidSharp: IconCursorProgress04SolidSharp,
-};
+export const iconPackOfCursorProgress04: TheIconSelfPack = [
+  'CursorProgress04',
+  IconCursorProgress04StrokeRounded,
+  IconCursorProgress04DuotoneRounded,
+  IconCursorProgress04TwotoneRounded,
+  IconCursorProgress04SolidRounded,
+  IconCursorProgress04BulkRounded,
+  IconCursorProgress04StrokeSharp,
+  IconCursorProgress04SolidSharp,
+];

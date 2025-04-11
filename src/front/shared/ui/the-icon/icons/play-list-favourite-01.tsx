@@ -30,37 +30,27 @@ export const IconPlayListFavourite01StrokeRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="play-list-favourite-01-stroke-rounded IconPlayListFavourite01StrokeRounded"
+      the-icon="PlayListFavourite01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d5}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -70,42 +60,31 @@ export const IconPlayListFavourite01DuotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="play-list-favourite-01-duotone-rounded IconPlayListFavourite01DuotoneRounded"
+      the-icon="PlayListFavourite01 DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d5}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -115,38 +94,27 @@ export const IconPlayListFavourite01TwotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="play-list-favourite-01-twotone-rounded IconPlayListFavourite01TwotoneRounded"
+      the-icon="PlayListFavourite01 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d5}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -156,27 +124,27 @@ export const IconPlayListFavourite01SolidRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="play-list-favourite-01-solid-rounded IconPlayListFavourite01SolidRounded"
+      the-icon="PlayListFavourite01 SolidRounded"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -186,30 +154,29 @@ export const IconPlayListFavourite01BulkRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="play-list-favourite-01-bulk-rounded IconPlayListFavourite01BulkRounded"
+      the-icon="PlayListFavourite01 BulkRounded"
     >
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       </g>
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -219,37 +186,27 @@ export const IconPlayListFavourite01StrokeSharp: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="play-list-favourite-01-stroke-sharp IconPlayListFavourite01StrokeSharp"
+      the-icon="PlayListFavourite01 StrokeSharp"
     >
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d12}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d13}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d14} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d14}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d15} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d15}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d16} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d16}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -259,39 +216,39 @@ export const IconPlayListFavourite01SolidSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="play-list-favourite-01-solid-sharp IconPlayListFavourite01SolidSharp"
+      the-icon="PlayListFavourite01 SolidSharp"
     >
       <path 
-        d={d.d17} 
-        fill="var(--icon-fill)" 
+        d={d.d17}
+        i-c="f"
       />
       <path 
-        d={d.d18} 
-        fill="var(--icon-fill)" 
+        d={d.d18}
+        i-c="f"
       />
       <path 
-        d={d.d19} 
-        fill="var(--icon-fill)" 
+        d={d.d19}
+        i-c="f"
       />
       <path 
-        d={d.d20} 
-        fill="var(--icon-fill)" 
+        d={d.d20}
+        i-c="f"
       />
       <path 
-        d={d.d21} 
-        fill="var(--icon-fill)" 
+        d={d.d21}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPlayListFavourite01: TheIconSelfPack = {
-  name: 'PlayListFavourite01',
-  StrokeRounded: IconPlayListFavourite01StrokeRounded,
-  DuotoneRounded: IconPlayListFavourite01DuotoneRounded,
-  TwotoneRounded: IconPlayListFavourite01TwotoneRounded,
-  SolidRounded: IconPlayListFavourite01SolidRounded,
-  BulkRounded: IconPlayListFavourite01BulkRounded,
-  StrokeSharp: IconPlayListFavourite01StrokeSharp,
-  SolidSharp: IconPlayListFavourite01SolidSharp,
-};
+export const iconPackOfPlayListFavourite01: TheIconSelfPack = [
+  'PlayListFavourite01',
+  IconPlayListFavourite01StrokeRounded,
+  IconPlayListFavourite01DuotoneRounded,
+  IconPlayListFavourite01TwotoneRounded,
+  IconPlayListFavourite01SolidRounded,
+  IconPlayListFavourite01BulkRounded,
+  IconPlayListFavourite01StrokeSharp,
+  IconPlayListFavourite01SolidSharp,
+];

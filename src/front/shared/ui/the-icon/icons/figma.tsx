@@ -14,41 +14,29 @@ export const IconFigmaStrokeRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="figma-stroke-rounded IconFigmaStrokeRounded"
+      the-icon="Figma StrokeRounded"
     >
       <circle 
-        cx="15" 
-        cy="12" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        cx="15"
+        cy="12"
+        r="3"
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -58,61 +46,43 @@ export const IconFigmaDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="figma-duotone-rounded IconFigmaDuotoneRounded"
+      the-icon="Figma DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="15" 
-        cy="12" 
-        r="3" 
-        fill="var(--icon-fill)"></circle>
+        cx="15"
+        cy="12"
+        r="3"
+        i-c="f o7"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <circle 
-        cx="15" 
-        cy="12" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        cx="15"
+        cy="12"
+        r="3"
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="f o7 s sj sr sw"
+      />
+      <path 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -122,44 +92,29 @@ export const IconFigmaTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="figma-twotone-rounded IconFigmaTwotoneRounded"
+      the-icon="Figma TwotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="15" 
-        cy="12" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
-      <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        cx="15"
+        cy="12"
+        r="3"
+        i-c="o7 s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
+      />
+      <path 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -169,16 +124,17 @@ export const IconFigmaSolidRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="figma-solid-rounded IconFigmaSolidRounded"
+      the-icon="Figma SolidRounded"
     >
       <circle 
-        cx="15.5" 
-        cy="12.1641" 
-        r="3.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="15.5"
+        cy="12.1641"
+        r="3.5"
+        i-c="f"
+      />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -188,17 +144,17 @@ export const IconFigmaBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="figma-bulk-rounded IconFigmaBulkRounded"
+      the-icon="Figma BulkRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="15.5" 
-        cy="12.1641" 
-        r="3.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="15.5"
+        cy="12.1641"
+        r="3.5"
+        i-c="f o7"
+      />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -208,41 +164,29 @@ export const IconFigmaStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="figma-stroke-sharp IconFigmaStrokeSharp"
+      the-icon="Figma StrokeSharp"
     >
       <circle 
-        cx="15" 
-        cy="12" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        cx="15"
+        cy="12"
+        r="3"
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -252,40 +196,41 @@ export const IconFigmaSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="figma-solid-sharp IconFigmaSolidSharp"
+      the-icon="Figma SolidSharp"
     >
       <circle 
-        cx="15" 
-        cy="12" 
-        r="3" 
-        fill="var(--icon-fill)"></circle>
-      <path 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        cx="15"
+        cy="12"
+        r="3"
+        i-c="f"
       />
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
+      />
+      <path 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfFigma: TheIconSelfPack = {
-  name: 'Figma',
-  StrokeRounded: IconFigmaStrokeRounded,
-  DuotoneRounded: IconFigmaDuotoneRounded,
-  TwotoneRounded: IconFigmaTwotoneRounded,
-  SolidRounded: IconFigmaSolidRounded,
-  BulkRounded: IconFigmaBulkRounded,
-  StrokeSharp: IconFigmaStrokeSharp,
-  SolidSharp: IconFigmaSolidSharp,
-};
+export const iconPackOfFigma: TheIconSelfPack = [
+  'Figma',
+  IconFigmaStrokeRounded,
+  IconFigmaDuotoneRounded,
+  IconFigmaTwotoneRounded,
+  IconFigmaSolidRounded,
+  IconFigmaBulkRounded,
+  IconFigmaStrokeSharp,
+  IconFigmaSolidSharp,
+];

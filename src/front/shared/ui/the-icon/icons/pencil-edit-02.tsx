@@ -20,20 +20,15 @@ export const IconPencilEdit02StrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="pencil-edit-02-stroke-rounded IconPencilEdit02StrokeRounded"
+      the-icon="PencilEdit02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -43,25 +38,19 @@ export const IconPencilEdit02DuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="pencil-edit-02-duotone-rounded IconPencilEdit02DuotoneRounded"
+      the-icon="PencilEdit02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -71,21 +60,15 @@ export const IconPencilEdit02TwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="pencil-edit-02-twotone-rounded IconPencilEdit02TwotoneRounded"
+      the-icon="PencilEdit02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -95,19 +78,15 @@ export const IconPencilEdit02SolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="pencil-edit-02-solid-rounded IconPencilEdit02SolidRounded"
+      the-icon="PencilEdit02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -117,22 +96,19 @@ export const IconPencilEdit02BulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="pencil-edit-02-bulk-rounded IconPencilEdit02BulkRounded"
+      the-icon="PencilEdit02 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -142,19 +118,15 @@ export const IconPencilEdit02StrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="pencil-edit-02-stroke-sharp IconPencilEdit02StrokeSharp"
+      the-icon="PencilEdit02 StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -164,31 +136,27 @@ export const IconPencilEdit02SolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="pencil-edit-02-solid-sharp IconPencilEdit02SolidSharp"
+      the-icon="PencilEdit02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPencilEdit02: TheIconSelfPack = {
-  name: 'PencilEdit02',
-  StrokeRounded: IconPencilEdit02StrokeRounded,
-  DuotoneRounded: IconPencilEdit02DuotoneRounded,
-  TwotoneRounded: IconPencilEdit02TwotoneRounded,
-  SolidRounded: IconPencilEdit02SolidRounded,
-  BulkRounded: IconPencilEdit02BulkRounded,
-  StrokeSharp: IconPencilEdit02StrokeSharp,
-  SolidSharp: IconPencilEdit02SolidSharp,
-};
+export const iconPackOfPencilEdit02: TheIconSelfPack = [
+  'PencilEdit02',
+  IconPencilEdit02StrokeRounded,
+  IconPencilEdit02DuotoneRounded,
+  IconPencilEdit02TwotoneRounded,
+  IconPencilEdit02SolidRounded,
+  IconPencilEdit02BulkRounded,
+  IconPencilEdit02StrokeSharp,
+  IconPencilEdit02SolidSharp,
+];

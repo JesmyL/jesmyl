@@ -26,39 +26,32 @@ export const IconShoppingCart01StrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="shopping-cart-01-stroke-rounded IconShoppingCart01StrokeRounded"
+      the-icon="ShoppingCart01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="10.5" 
-        cy="20.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="10.5"
+        cy="20.5"
+        r="1.5"
+        i-c="s sw"
+      />
       <circle 
-        cx="17.5" 
-        cy="20.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17.5"
+        cy="20.5"
+        r="1.5"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -67,44 +60,36 @@ export const IconShoppingCart01DuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="shopping-cart-01-duotone-rounded IconShoppingCart01DuotoneRounded"
+      the-icon="ShoppingCart01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="10.5" 
-        cy="20.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="10.5"
+        cy="20.5"
+        r="1.5"
+        i-c="s sw"
+      />
       <circle 
-        cx="17.5" 
-        cy="20.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17.5"
+        cy="20.5"
+        r="1.5"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -113,46 +98,36 @@ export const IconShoppingCart01TwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="shopping-cart-01-twotone-rounded IconShoppingCart01TwotoneRounded"
+      the-icon="ShoppingCart01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d5}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="10.5" 
-        cy="20.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="10.5"
+        cy="20.5"
+        r="1.5"
+        i-c="s sw"
+      />
       <circle 
-        cx="17.5" 
-        cy="20.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17.5"
+        cy="20.5"
+        r="1.5"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -161,25 +136,19 @@ export const IconShoppingCart01SolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="shopping-cart-01-solid-rounded IconShoppingCart01SolidRounded"
+      the-icon="ShoppingCart01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -189,27 +158,20 @@ export const IconShoppingCart01BulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="shopping-cart-01-bulk-rounded IconShoppingCart01BulkRounded"
+      the-icon="ShoppingCart01 BulkRounded"
     >
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
       </g>
     </TheIconWrapper>
@@ -220,28 +182,23 @@ export const IconShoppingCart01StrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="shopping-cart-01-stroke-sharp IconShoppingCart01StrokeSharp"
+      the-icon="ShoppingCart01 StrokeSharp"
     >
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d13}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d14} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d14}
+        i-c="s sw"
       />
       <path 
-        d={d.d15} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d15}
+        i-c="s sw"
       />
       <path 
-        d={d.d16} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d16}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -251,25 +208,23 @@ export const IconShoppingCart01SolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="shopping-cart-01-solid-sharp IconShoppingCart01SolidSharp"
+      the-icon="ShoppingCart01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d17} 
-        fill="var(--icon-fill)" 
+        d={d.d17}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfShoppingCart01: TheIconSelfPack = {
-  name: 'ShoppingCart01',
-  StrokeRounded: IconShoppingCart01StrokeRounded,
-  DuotoneRounded: IconShoppingCart01DuotoneRounded,
-  TwotoneRounded: IconShoppingCart01TwotoneRounded,
-  SolidRounded: IconShoppingCart01SolidRounded,
-  BulkRounded: IconShoppingCart01BulkRounded,
-  StrokeSharp: IconShoppingCart01StrokeSharp,
-  SolidSharp: IconShoppingCart01SolidSharp,
-};
+export const iconPackOfShoppingCart01: TheIconSelfPack = [
+  'ShoppingCart01',
+  IconShoppingCart01StrokeRounded,
+  IconShoppingCart01DuotoneRounded,
+  IconShoppingCart01TwotoneRounded,
+  IconShoppingCart01SolidRounded,
+  IconShoppingCart01BulkRounded,
+  IconShoppingCart01StrokeSharp,
+  IconShoppingCart01SolidSharp,
+];

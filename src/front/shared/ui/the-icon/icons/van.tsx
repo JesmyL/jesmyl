@@ -20,34 +20,28 @@ export const IconVanStrokeRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="van-stroke-rounded IconVanStrokeRounded"
+      the-icon="Van StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="17" 
-        cy="17" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17"
+        cy="17"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="7" 
-        cy="17" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="7"
+        cy="17"
+        r="2"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -56,39 +50,32 @@ export const IconVanDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="van-duotone-rounded IconVanDuotoneRounded"
+      the-icon="Van DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="17" 
-        cy="17" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17"
+        cy="17"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="7" 
-        cy="17" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="7"
+        cy="17"
+        r="2"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -97,35 +84,28 @@ export const IconVanTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="van-twotone-rounded IconVanTwotoneRounded"
+      the-icon="Van TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="17" 
-        cy="17" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17"
+        cy="17"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="7" 
-        cy="17" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="7"
+        cy="17"
+        r="2"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -134,23 +114,23 @@ export const IconVanSolidRounded: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="van-solid-rounded IconVanSolidRounded"
+      the-icon="Van SolidRounded"
     >
       <circle 
-        cx="17" 
-        cy="16.875" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="17"
+        cy="16.875"
+        r="2.5"
+        i-c="f"
+      />
       <circle 
-        cx="7" 
-        cy="16.875" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="7"
+        cy="16.875"
+        r="2.5"
+        i-c="f"
+      />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -160,28 +140,27 @@ export const IconVanBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX.E
   return (
     <TheIconWrapper
       {...props}
-      name="van-bulk-rounded IconVanBulkRounded"
+      the-icon="Van BulkRounded"
     >
       <circle 
-        cx="17" 
-        cy="16.875" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="17"
+        cy="16.875"
+        r="2.5"
+        i-c="f"
+      />
       <circle 
-        cx="7" 
-        cy="16.875" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
-      <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        cx="7"
+        cy="16.875"
+        r="2.5"
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
+      />
+      <path 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -191,34 +170,28 @@ export const IconVanStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX.E
   return (
     <TheIconWrapper
       {...props}
-      name="van-stroke-sharp IconVanStrokeSharp"
+      the-icon="Van StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sw"
       />
       <circle 
-        cx="17" 
-        cy="17" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="17"
+        cy="17"
+        r="2"
+        i-c="s sj sw"
+      />
       <circle 
-        cx="7" 
-        cy="17" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="7"
+        cy="17"
+        r="2"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -227,33 +200,31 @@ export const IconVanSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.El
   return (
     <TheIconWrapper
       {...props}
-      name="van-solid-sharp IconVanSolidSharp"
+      the-icon="Van SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfVan: TheIconSelfPack = {
-  name: 'Van',
-  StrokeRounded: IconVanStrokeRounded,
-  DuotoneRounded: IconVanDuotoneRounded,
-  TwotoneRounded: IconVanTwotoneRounded,
-  SolidRounded: IconVanSolidRounded,
-  BulkRounded: IconVanBulkRounded,
-  StrokeSharp: IconVanStrokeSharp,
-  SolidSharp: IconVanSolidSharp,
-};
+export const iconPackOfVan: TheIconSelfPack = [
+  'Van',
+  IconVanStrokeRounded,
+  IconVanDuotoneRounded,
+  IconVanTwotoneRounded,
+  IconVanSolidRounded,
+  IconVanBulkRounded,
+  IconVanStrokeSharp,
+  IconVanSolidSharp,
+];

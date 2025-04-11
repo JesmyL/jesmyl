@@ -15,13 +15,11 @@ export const IconZapStrokeRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="zap-stroke-rounded IconZapStrokeRounded"
+      the-icon="Zap StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -31,18 +29,15 @@ export const IconZapDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="zap-duotone-rounded IconZapDuotoneRounded"
+      the-icon="Zap DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -52,21 +47,15 @@ export const IconZapTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="zap-twotone-rounded IconZapTwotoneRounded"
+      the-icon="Zap TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -76,11 +65,11 @@ export const IconZapSolidRounded: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="zap-solid-rounded IconZapSolidRounded"
+      the-icon="Zap SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -90,12 +79,11 @@ export const IconZapBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX.E
   return (
     <TheIconWrapper
       {...props}
-      name="zap-bulk-rounded IconZapBulkRounded"
+      the-icon="Zap BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -105,12 +93,11 @@ export const IconZapStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX.E
   return (
     <TheIconWrapper
       {...props}
-      name="zap-stroke-sharp IconZapStrokeSharp"
+      the-icon="Zap StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -120,23 +107,23 @@ export const IconZapSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.El
   return (
     <TheIconWrapper
       {...props}
-      name="zap-solid-sharp IconZapSolidSharp"
+      the-icon="Zap SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfZap: TheIconSelfPack = {
-  name: 'Zap',
-  StrokeRounded: IconZapStrokeRounded,
-  DuotoneRounded: IconZapDuotoneRounded,
-  TwotoneRounded: IconZapTwotoneRounded,
-  SolidRounded: IconZapSolidRounded,
-  BulkRounded: IconZapBulkRounded,
-  StrokeSharp: IconZapStrokeSharp,
-  SolidSharp: IconZapSolidSharp,
-};
+export const iconPackOfZap: TheIconSelfPack = [
+  'Zap',
+  IconZapStrokeRounded,
+  IconZapDuotoneRounded,
+  IconZapTwotoneRounded,
+  IconZapSolidRounded,
+  IconZapBulkRounded,
+  IconZapStrokeSharp,
+  IconZapSolidSharp,
+];

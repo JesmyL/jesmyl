@@ -25,33 +25,23 @@ export const IconAutomotiveBattery02StrokeRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="automotive-battery-02-stroke-rounded IconAutomotiveBattery02StrokeRounded"
+      the-icon="AutomotiveBattery02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -61,31 +51,23 @@ export const IconAutomotiveBattery02DuotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="automotive-battery-02-duotone-rounded IconAutomotiveBattery02DuotoneRounded"
+      the-icon="AutomotiveBattery02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -95,36 +77,23 @@ export const IconAutomotiveBattery02TwotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="automotive-battery-02-twotone-rounded IconAutomotiveBattery02TwotoneRounded"
+      the-icon="AutomotiveBattery02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -134,21 +103,19 @@ export const IconAutomotiveBattery02SolidRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="automotive-battery-02-solid-rounded IconAutomotiveBattery02SolidRounded"
+      the-icon="AutomotiveBattery02 SolidRounded"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -158,26 +125,23 @@ export const IconAutomotiveBattery02BulkRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="automotive-battery-02-bulk-rounded IconAutomotiveBattery02BulkRounded"
+      the-icon="AutomotiveBattery02 BulkRounded"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -187,33 +151,23 @@ export const IconAutomotiveBattery02StrokeSharp: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="automotive-battery-02-stroke-sharp IconAutomotiveBattery02StrokeSharp"
+      the-icon="AutomotiveBattery02 StrokeSharp"
     >
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d2}
+        i-c="s ss sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d11}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d12}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d13}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -223,37 +177,31 @@ export const IconAutomotiveBattery02SolidSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="automotive-battery-02-solid-sharp IconAutomotiveBattery02SolidSharp"
+      the-icon="AutomotiveBattery02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        d={d.d15}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAutomotiveBattery02: TheIconSelfPack = {
-  name: 'AutomotiveBattery02',
-  StrokeRounded: IconAutomotiveBattery02StrokeRounded,
-  DuotoneRounded: IconAutomotiveBattery02DuotoneRounded,
-  TwotoneRounded: IconAutomotiveBattery02TwotoneRounded,
-  SolidRounded: IconAutomotiveBattery02SolidRounded,
-  BulkRounded: IconAutomotiveBattery02BulkRounded,
-  StrokeSharp: IconAutomotiveBattery02StrokeSharp,
-  SolidSharp: IconAutomotiveBattery02SolidSharp,
-};
+export const iconPackOfAutomotiveBattery02: TheIconSelfPack = [
+  'AutomotiveBattery02',
+  IconAutomotiveBattery02StrokeRounded,
+  IconAutomotiveBattery02DuotoneRounded,
+  IconAutomotiveBattery02TwotoneRounded,
+  IconAutomotiveBattery02SolidRounded,
+  IconAutomotiveBattery02BulkRounded,
+  IconAutomotiveBattery02StrokeSharp,
+  IconAutomotiveBattery02SolidSharp,
+];

@@ -17,19 +17,15 @@ export const IconWorkoutKickingStrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="workout-kicking-stroke-rounded IconWorkoutKickingStrokeRounded"
+      the-icon="WorkoutKicking StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -39,24 +35,19 @@ export const IconWorkoutKickingDuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="workout-kicking-duotone-rounded IconWorkoutKickingDuotoneRounded"
+      the-icon="WorkoutKicking DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -66,20 +57,15 @@ export const IconWorkoutKickingTwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="workout-kicking-twotone-rounded IconWorkoutKickingTwotoneRounded"
+      the-icon="WorkoutKicking TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -89,15 +75,15 @@ export const IconWorkoutKickingSolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="workout-kicking-solid-rounded IconWorkoutKickingSolidRounded"
+      the-icon="WorkoutKicking SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -107,16 +93,15 @@ export const IconWorkoutKickingBulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="workout-kicking-bulk-rounded IconWorkoutKickingBulkRounded"
+      the-icon="WorkoutKicking BulkRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -126,19 +111,15 @@ export const IconWorkoutKickingStrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="workout-kicking-stroke-sharp IconWorkoutKickingStrokeSharp"
+      the-icon="WorkoutKicking StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -148,27 +129,27 @@ export const IconWorkoutKickingSolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="workout-kicking-solid-sharp IconWorkoutKickingSolidSharp"
+      the-icon="WorkoutKicking SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfWorkoutKicking: TheIconSelfPack = {
-  name: 'WorkoutKicking',
-  StrokeRounded: IconWorkoutKickingStrokeRounded,
-  DuotoneRounded: IconWorkoutKickingDuotoneRounded,
-  TwotoneRounded: IconWorkoutKickingTwotoneRounded,
-  SolidRounded: IconWorkoutKickingSolidRounded,
-  BulkRounded: IconWorkoutKickingBulkRounded,
-  StrokeSharp: IconWorkoutKickingStrokeSharp,
-  SolidSharp: IconWorkoutKickingSolidSharp,
-};
+export const iconPackOfWorkoutKicking: TheIconSelfPack = [
+  'WorkoutKicking',
+  IconWorkoutKickingStrokeRounded,
+  IconWorkoutKickingDuotoneRounded,
+  IconWorkoutKickingTwotoneRounded,
+  IconWorkoutKickingSolidRounded,
+  IconWorkoutKickingBulkRounded,
+  IconWorkoutKickingStrokeSharp,
+  IconWorkoutKickingSolidSharp,
+];

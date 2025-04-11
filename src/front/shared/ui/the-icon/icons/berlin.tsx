@@ -54,14 +54,11 @@ export const IconBerlinStrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="berlin-stroke-rounded IconBerlinStrokeRounded"
+      the-icon="Berlin StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -71,113 +68,71 @@ export const IconBerlinDuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="berlin-duotone-rounded IconBerlinDuotoneRounded"
+      the-icon="Berlin DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d11}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d12}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d13}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d14} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d14}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d15} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d15}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d16} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d16}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d17} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d17}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -187,104 +142,59 @@ export const IconBerlinTwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="berlin-twotone-rounded IconBerlinTwotoneRounded"
+      the-icon="Berlin TwotoneRounded"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d11}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d12}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d13}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d14} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d14}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d15} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d15}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d16} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d16}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d17} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d17}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -294,23 +204,23 @@ export const IconBerlinSolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="berlin-solid-rounded IconBerlinSolidRounded"
+      the-icon="Berlin SolidRounded"
     >
       <path 
-        d={d.d18} 
-        fill="var(--icon-fill)" 
+        d={d.d18}
+        i-c="f"
       />
       <path 
-        d={d.d19} 
-        fill="var(--icon-fill)" 
+        d={d.d19}
+        i-c="f"
       />
       <path 
-        d={d.d20} 
-        fill="var(--icon-fill)" 
+        d={d.d20}
+        i-c="f"
       />
       <path 
-        d={d.d21} 
-        fill="var(--icon-fill)" 
+        d={d.d21}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -320,45 +230,43 @@ export const IconBerlinBulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="berlin-bulk-rounded IconBerlinBulkRounded"
+      the-icon="Berlin BulkRounded"
     >
       <path 
-        d={d.d18} 
-        fill="var(--icon-fill)" 
+        d={d.d18}
+        i-c="f"
       />
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d22} 
-        fill="var(--icon-fill)" 
+        d={d.d22}
+        i-c="f"
       />
       <path 
-        d={d.d23} 
-        fill="var(--icon-fill)" 
+        d={d.d23}
+        i-c="f"
       />
       </g>
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d24} 
-        fill="var(--icon-fill)" 
+        d={d.d24}
+        i-c="f"
       />
       <path 
-        d={d.d25} 
-        fill="var(--icon-fill)" 
+        d={d.d25}
+        i-c="f"
       />
       </g>
       <path 
-        d={d.d26} 
-        fill="var(--icon-fill)" 
+        d={d.d26}
+        i-c="f"
       />
       <path 
-        d={d.d27} 
-        fill="var(--icon-fill)" 
+        d={d.d27}
+        i-c="f"
       />
       <path 
-        d={d.d28} 
-        fill="var(--icon-fill)" 
+        d={d.d28}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -368,79 +276,55 @@ export const IconBerlinStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="berlin-stroke-sharp IconBerlinStrokeSharp"
+      the-icon="Berlin StrokeSharp"
     >
       <path 
-        d={d.d29} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d29}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d30} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d30}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d31} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d31}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d32} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d32}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d33} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d33}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d34} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d34}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d35} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d35}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d36} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d36}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d37} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d37}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d17} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d17}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -450,53 +334,51 @@ export const IconBerlinSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="berlin-solid-sharp IconBerlinSolidSharp"
+      the-icon="Berlin SolidSharp"
     >
       <path 
-        d={d.d38} 
-        fill="var(--icon-fill)" 
+        d={d.d38}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d39} 
-        fill="var(--icon-fill)" 
+        d={d.d39}
+        i-c="c f fr"
       />
       <path 
-        d={d.d40} 
-        fill="var(--icon-fill)" 
+        d={d.d40}
+        i-c="f"
       />
       <path 
-        d={d.d41} 
-        fill="var(--icon-fill)" 
+        d={d.d41}
+        i-c="f"
       />
       <path 
-        d={d.d42} 
-        fill="var(--icon-fill)" 
+        d={d.d42}
+        i-c="f"
       />
       <path 
-        d={d.d43} 
-        fill="var(--icon-fill)" 
+        d={d.d43}
+        i-c="f"
       />
       <path 
-        d={d.d44} 
-        fill="var(--icon-fill)" 
+        d={d.d44}
+        i-c="f"
       />
       <path 
-        d={d.d45} 
-        fill="var(--icon-fill)" 
+        d={d.d45}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBerlin: TheIconSelfPack = {
-  name: 'Berlin',
-  StrokeRounded: IconBerlinStrokeRounded,
-  DuotoneRounded: IconBerlinDuotoneRounded,
-  TwotoneRounded: IconBerlinTwotoneRounded,
-  SolidRounded: IconBerlinSolidRounded,
-  BulkRounded: IconBerlinBulkRounded,
-  StrokeSharp: IconBerlinStrokeSharp,
-  SolidSharp: IconBerlinSolidSharp,
-};
+export const iconPackOfBerlin: TheIconSelfPack = [
+  'Berlin',
+  IconBerlinStrokeRounded,
+  IconBerlinDuotoneRounded,
+  IconBerlinTwotoneRounded,
+  IconBerlinSolidRounded,
+  IconBerlinBulkRounded,
+  IconBerlinStrokeSharp,
+  IconBerlinSolidSharp,
+];

@@ -15,14 +15,11 @@ export const IconStarStrokeRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="star-stroke-rounded IconStarStrokeRounded"
+      the-icon="Star StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -32,19 +29,15 @@ export const IconStarDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="star-duotone-rounded IconStarDuotoneRounded"
+      the-icon="Star DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,22 +47,15 @@ export const IconStarTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="star-twotone-rounded IconStarTwotoneRounded"
+      the-icon="Star TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -79,11 +65,11 @@ export const IconStarSolidRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="star-solid-rounded IconStarSolidRounded"
+      the-icon="Star SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -93,16 +79,15 @@ export const IconStarBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="star-bulk-rounded IconStarBulkRounded"
+      the-icon="Star BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -112,12 +97,11 @@ export const IconStarStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="star-stroke-sharp IconStarStrokeSharp"
+      the-icon="Star StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -127,23 +111,23 @@ export const IconStarSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.E
   return (
     <TheIconWrapper
       {...props}
-      name="star-solid-sharp IconStarSolidSharp"
+      the-icon="Star SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfStar: TheIconSelfPack = {
-  name: 'Star',
-  StrokeRounded: IconStarStrokeRounded,
-  DuotoneRounded: IconStarDuotoneRounded,
-  TwotoneRounded: IconStarTwotoneRounded,
-  SolidRounded: IconStarSolidRounded,
-  BulkRounded: IconStarBulkRounded,
-  StrokeSharp: IconStarStrokeSharp,
-  SolidSharp: IconStarSolidSharp,
-};
+export const iconPackOfStar: TheIconSelfPack = [
+  'Star',
+  IconStarStrokeRounded,
+  IconStarDuotoneRounded,
+  IconStarTwotoneRounded,
+  IconStarSolidRounded,
+  IconStarBulkRounded,
+  IconStarStrokeSharp,
+  IconStarSolidSharp,
+];

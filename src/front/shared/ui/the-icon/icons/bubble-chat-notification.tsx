@@ -22,26 +22,19 @@ export const IconBubbleChatNotificationStrokeRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="bubble-chat-notification-stroke-rounded IconBubbleChatNotificationStrokeRounded"
+      the-icon="BubbleChatNotification StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -51,31 +44,23 @@ export const IconBubbleChatNotificationDuotoneRounded: FC<TheIconProps> = (props
   return (
     <TheIconWrapper
       {...props}
-      name="bubble-chat-notification-duotone-rounded IconBubbleChatNotificationDuotoneRounded"
+      the-icon="BubbleChatNotification DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -85,27 +70,19 @@ export const IconBubbleChatNotificationTwotoneRounded: FC<TheIconProps> = (props
   return (
     <TheIconWrapper
       {...props}
-      name="bubble-chat-notification-twotone-rounded IconBubbleChatNotificationTwotoneRounded"
+      the-icon="BubbleChatNotification TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -115,17 +92,15 @@ export const IconBubbleChatNotificationSolidRounded: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="bubble-chat-notification-solid-rounded IconBubbleChatNotificationSolidRounded"
+      the-icon="BubbleChatNotification SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -135,22 +110,19 @@ export const IconBubbleChatNotificationBulkRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="bubble-chat-notification-bulk-rounded IconBubbleChatNotificationBulkRounded"
+      the-icon="BubbleChatNotification BulkRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -160,24 +132,19 @@ export const IconBubbleChatNotificationStrokeSharp: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="bubble-chat-notification-stroke-sharp IconBubbleChatNotificationStrokeSharp"
+      the-icon="BubbleChatNotification StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj ss sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d11}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -187,29 +154,27 @@ export const IconBubbleChatNotificationSolidSharp: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="bubble-chat-notification-solid-sharp IconBubbleChatNotificationSolidSharp"
+      the-icon="BubbleChatNotification SolidSharp"
     >
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBubbleChatNotification: TheIconSelfPack = {
-  name: 'BubbleChatNotification',
-  StrokeRounded: IconBubbleChatNotificationStrokeRounded,
-  DuotoneRounded: IconBubbleChatNotificationDuotoneRounded,
-  TwotoneRounded: IconBubbleChatNotificationTwotoneRounded,
-  SolidRounded: IconBubbleChatNotificationSolidRounded,
-  BulkRounded: IconBubbleChatNotificationBulkRounded,
-  StrokeSharp: IconBubbleChatNotificationStrokeSharp,
-  SolidSharp: IconBubbleChatNotificationSolidSharp,
-};
+export const iconPackOfBubbleChatNotification: TheIconSelfPack = [
+  'BubbleChatNotification',
+  IconBubbleChatNotificationStrokeRounded,
+  IconBubbleChatNotificationDuotoneRounded,
+  IconBubbleChatNotificationTwotoneRounded,
+  IconBubbleChatNotificationSolidRounded,
+  IconBubbleChatNotificationBulkRounded,
+  IconBubbleChatNotificationStrokeSharp,
+  IconBubbleChatNotificationSolidSharp,
+];

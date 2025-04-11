@@ -17,19 +17,15 @@ export const IconTextSmallcapsStrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="text-smallcaps-stroke-rounded IconTextSmallcapsStrokeRounded"
+      the-icon="TextSmallcaps StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -39,20 +35,15 @@ export const IconTextSmallcapsDuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="text-smallcaps-duotone-rounded IconTextSmallcapsDuotoneRounded"
+      the-icon="TextSmallcaps DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -62,20 +53,15 @@ export const IconTextSmallcapsTwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="text-smallcaps-twotone-rounded IconTextSmallcapsTwotoneRounded"
+      the-icon="TextSmallcaps TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -85,19 +71,15 @@ export const IconTextSmallcapsSolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="text-smallcaps-solid-rounded IconTextSmallcapsSolidRounded"
+      the-icon="TextSmallcaps SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -107,20 +89,15 @@ export const IconTextSmallcapsBulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="text-smallcaps-bulk-rounded IconTextSmallcapsBulkRounded"
+      the-icon="TextSmallcaps BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -130,19 +107,15 @@ export const IconTextSmallcapsStrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="text-smallcaps-stroke-sharp IconTextSmallcapsStrokeSharp"
+      the-icon="TextSmallcaps StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -152,31 +125,27 @@ export const IconTextSmallcapsSolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="text-smallcaps-solid-sharp IconTextSmallcapsSolidSharp"
+      the-icon="TextSmallcaps SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTextSmallcaps: TheIconSelfPack = {
-  name: 'TextSmallcaps',
-  StrokeRounded: IconTextSmallcapsStrokeRounded,
-  DuotoneRounded: IconTextSmallcapsDuotoneRounded,
-  TwotoneRounded: IconTextSmallcapsTwotoneRounded,
-  SolidRounded: IconTextSmallcapsSolidRounded,
-  BulkRounded: IconTextSmallcapsBulkRounded,
-  StrokeSharp: IconTextSmallcapsStrokeSharp,
-  SolidSharp: IconTextSmallcapsSolidSharp,
-};
+export const iconPackOfTextSmallcaps: TheIconSelfPack = [
+  'TextSmallcaps',
+  IconTextSmallcapsStrokeRounded,
+  IconTextSmallcapsDuotoneRounded,
+  IconTextSmallcapsTwotoneRounded,
+  IconTextSmallcapsSolidRounded,
+  IconTextSmallcapsBulkRounded,
+  IconTextSmallcapsStrokeSharp,
+  IconTextSmallcapsSolidSharp,
+];

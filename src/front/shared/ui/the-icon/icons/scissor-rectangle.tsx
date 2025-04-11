@@ -17,19 +17,15 @@ export const IconScissorRectangleStrokeRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="scissor-rectangle-stroke-rounded IconScissorRectangleStrokeRounded"
+      the-icon="ScissorRectangle StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -39,26 +35,19 @@ export const IconScissorRectangleDuotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="scissor-rectangle-duotone-rounded IconScissorRectangleDuotoneRounded"
+      the-icon="ScissorRectangle DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -68,20 +57,15 @@ export const IconScissorRectangleTwotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="scissor-rectangle-twotone-rounded IconScissorRectangleTwotoneRounded"
+      the-icon="ScissorRectangle TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -91,13 +75,11 @@ export const IconScissorRectangleSolidRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="scissor-rectangle-solid-rounded IconScissorRectangleSolidRounded"
+      the-icon="ScissorRectangle SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -107,18 +89,15 @@ export const IconScissorRectangleBulkRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="scissor-rectangle-bulk-rounded IconScissorRectangleBulkRounded"
+      the-icon="ScissorRectangle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -128,19 +107,15 @@ export const IconScissorRectangleStrokeSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="scissor-rectangle-stroke-sharp IconScissorRectangleStrokeSharp"
+      the-icon="ScissorRectangle StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -150,25 +125,23 @@ export const IconScissorRectangleSolidSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="scissor-rectangle-solid-sharp IconScissorRectangleSolidSharp"
+      the-icon="ScissorRectangle SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfScissorRectangle: TheIconSelfPack = {
-  name: 'ScissorRectangle',
-  StrokeRounded: IconScissorRectangleStrokeRounded,
-  DuotoneRounded: IconScissorRectangleDuotoneRounded,
-  TwotoneRounded: IconScissorRectangleTwotoneRounded,
-  SolidRounded: IconScissorRectangleSolidRounded,
-  BulkRounded: IconScissorRectangleBulkRounded,
-  StrokeSharp: IconScissorRectangleStrokeSharp,
-  SolidSharp: IconScissorRectangleSolidSharp,
-};
+export const iconPackOfScissorRectangle: TheIconSelfPack = [
+  'ScissorRectangle',
+  IconScissorRectangleStrokeRounded,
+  IconScissorRectangleDuotoneRounded,
+  IconScissorRectangleTwotoneRounded,
+  IconScissorRectangleSolidRounded,
+  IconScissorRectangleBulkRounded,
+  IconScissorRectangleStrokeSharp,
+  IconScissorRectangleSolidSharp,
+];

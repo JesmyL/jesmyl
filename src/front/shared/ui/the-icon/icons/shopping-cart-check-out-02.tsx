@@ -25,50 +25,39 @@ export const IconShoppingCartCheckOut02StrokeRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="shopping-cart-check-out-02-stroke-rounded IconShoppingCartCheckOut02StrokeRounded"
+      the-icon="ShoppingCartCheckOut02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="6" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6"
+        cy="20"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="17" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        cx="17"
+        cy="20"
+        r="2"
+        i-c="s sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="s sr sw"
+      />
+      <path 
+        d={d.d5}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -78,55 +67,43 @@ export const IconShoppingCartCheckOut02DuotoneRounded: FC<TheIconProps> = (props
   return (
     <TheIconWrapper
       {...props}
-      name="shopping-cart-check-out-02-duotone-rounded IconShoppingCartCheckOut02DuotoneRounded"
+      the-icon="ShoppingCartCheckOut02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="6" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6"
+        cy="20"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="17" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        cx="17"
+        cy="20"
+        r="2"
+        i-c="s sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="s sr sw"
+      />
+      <path 
+        d={d.d5}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -136,52 +113,39 @@ export const IconShoppingCartCheckOut02TwotoneRounded: FC<TheIconProps> = (props
   return (
     <TheIconWrapper
       {...props}
-      name="shopping-cart-check-out-02-twotone-rounded IconShoppingCartCheckOut02TwotoneRounded"
+      the-icon="ShoppingCartCheckOut02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
       <circle 
-        cx="6" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6"
+        cy="20"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="17" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        cx="17"
+        cy="20"
+        r="2"
+        i-c="s sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="o7 s sr sw"
+      />
+      <path 
+        d={d.d5}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -191,13 +155,11 @@ export const IconShoppingCartCheckOut02SolidRounded: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="shopping-cart-check-out-02-solid-rounded IconShoppingCartCheckOut02SolidRounded"
+      the-icon="ShoppingCartCheckOut02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -207,18 +169,15 @@ export const IconShoppingCartCheckOut02BulkRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="shopping-cart-check-out-02-bulk-rounded IconShoppingCartCheckOut02BulkRounded"
+      the-icon="ShoppingCartCheckOut02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -228,46 +187,39 @@ export const IconShoppingCartCheckOut02StrokeSharp: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="shopping-cart-check-out-02-stroke-sharp IconShoppingCartCheckOut02StrokeSharp"
+      the-icon="ShoppingCartCheckOut02 StrokeSharp"
     >
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d11}
+        i-c="s sw"
       />
       <circle 
-        cx="6" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6"
+        cy="20"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="17" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        cx="17"
+        cy="20"
+        r="2"
+        i-c="s sw"
       />
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sw"
       />
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d12}
+        i-c="s sj sw"
+      />
+      <path 
+        d={d.d13}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -277,35 +229,31 @@ export const IconShoppingCartCheckOut02SolidSharp: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="shopping-cart-check-out-02-solid-sharp IconShoppingCartCheckOut02SolidSharp"
+      the-icon="ShoppingCartCheckOut02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr"
       />
       <path 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        d={d.d15}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfShoppingCartCheckOut02: TheIconSelfPack = {
-  name: 'ShoppingCartCheckOut02',
-  StrokeRounded: IconShoppingCartCheckOut02StrokeRounded,
-  DuotoneRounded: IconShoppingCartCheckOut02DuotoneRounded,
-  TwotoneRounded: IconShoppingCartCheckOut02TwotoneRounded,
-  SolidRounded: IconShoppingCartCheckOut02SolidRounded,
-  BulkRounded: IconShoppingCartCheckOut02BulkRounded,
-  StrokeSharp: IconShoppingCartCheckOut02StrokeSharp,
-  SolidSharp: IconShoppingCartCheckOut02SolidSharp,
-};
+export const iconPackOfShoppingCartCheckOut02: TheIconSelfPack = [
+  'ShoppingCartCheckOut02',
+  IconShoppingCartCheckOut02StrokeRounded,
+  IconShoppingCartCheckOut02DuotoneRounded,
+  IconShoppingCartCheckOut02TwotoneRounded,
+  IconShoppingCartCheckOut02SolidRounded,
+  IconShoppingCartCheckOut02BulkRounded,
+  IconShoppingCartCheckOut02StrokeSharp,
+  IconShoppingCartCheckOut02SolidSharp,
+];

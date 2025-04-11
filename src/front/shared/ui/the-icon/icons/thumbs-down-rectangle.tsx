@@ -17,20 +17,15 @@ export const IconThumbsDownRectangleStrokeRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="thumbs-down-rectangle-stroke-rounded IconThumbsDownRectangleStrokeRounded"
+      the-icon="ThumbsDownRectangle StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -40,27 +35,19 @@ export const IconThumbsDownRectangleDuotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="thumbs-down-rectangle-duotone-rounded IconThumbsDownRectangleDuotoneRounded"
+      the-icon="ThumbsDownRectangle DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -70,21 +57,15 @@ export const IconThumbsDownRectangleTwotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="thumbs-down-rectangle-twotone-rounded IconThumbsDownRectangleTwotoneRounded"
+      the-icon="ThumbsDownRectangle TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -94,13 +75,11 @@ export const IconThumbsDownRectangleSolidRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="thumbs-down-rectangle-solid-rounded IconThumbsDownRectangleSolidRounded"
+      the-icon="ThumbsDownRectangle SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -110,16 +89,15 @@ export const IconThumbsDownRectangleBulkRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="thumbs-down-rectangle-bulk-rounded IconThumbsDownRectangleBulkRounded"
+      the-icon="ThumbsDownRectangle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -129,20 +107,15 @@ export const IconThumbsDownRectangleStrokeSharp: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="thumbs-down-rectangle-stroke-sharp IconThumbsDownRectangleStrokeSharp"
+      the-icon="ThumbsDownRectangle StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -152,25 +125,23 @@ export const IconThumbsDownRectangleSolidSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="thumbs-down-rectangle-solid-sharp IconThumbsDownRectangleSolidSharp"
+      the-icon="ThumbsDownRectangle SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfThumbsDownRectangle: TheIconSelfPack = {
-  name: 'ThumbsDownRectangle',
-  StrokeRounded: IconThumbsDownRectangleStrokeRounded,
-  DuotoneRounded: IconThumbsDownRectangleDuotoneRounded,
-  TwotoneRounded: IconThumbsDownRectangleTwotoneRounded,
-  SolidRounded: IconThumbsDownRectangleSolidRounded,
-  BulkRounded: IconThumbsDownRectangleBulkRounded,
-  StrokeSharp: IconThumbsDownRectangleStrokeSharp,
-  SolidSharp: IconThumbsDownRectangleSolidSharp,
-};
+export const iconPackOfThumbsDownRectangle: TheIconSelfPack = [
+  'ThumbsDownRectangle',
+  IconThumbsDownRectangleStrokeRounded,
+  IconThumbsDownRectangleDuotoneRounded,
+  IconThumbsDownRectangleTwotoneRounded,
+  IconThumbsDownRectangleSolidRounded,
+  IconThumbsDownRectangleBulkRounded,
+  IconThumbsDownRectangleStrokeSharp,
+  IconThumbsDownRectangleSolidSharp,
+];

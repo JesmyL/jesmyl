@@ -18,33 +18,25 @@ export const IconGlobe02StrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="globe-02-stroke-rounded IconGlobe02StrokeRounded"
+      the-icon="Globe02 StrokeRounded"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,39 +46,31 @@ export const IconGlobe02DuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="globe-02-duotone-rounded IconGlobe02DuotoneRounded"
+      the-icon="Globe02 DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="f o7"
+      />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -96,35 +80,25 @@ export const IconGlobe02TwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="globe-02-twotone-rounded IconGlobe02TwotoneRounded"
+      the-icon="Globe02 TwotoneRounded"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -134,13 +108,11 @@ export const IconGlobe02SolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="globe-02-solid-rounded IconGlobe02SolidRounded"
+      the-icon="Globe02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -150,28 +122,27 @@ export const IconGlobe02BulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="globe-02-bulk-rounded IconGlobe02BulkRounded"
+      the-icon="Globe02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -181,36 +152,25 @@ export const IconGlobe02StrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="globe-02-stroke-sharp IconGlobe02StrokeSharp"
+      the-icon="Globe02 StrokeSharp"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round" 
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj ss sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj ss sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj ss sw"
+      />
+      <path 
+        d={d.d3}
+        i-c="s sj ss sw"
       />
     </TheIconWrapper>
   );
@@ -220,25 +180,23 @@ export const IconGlobe02SolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="globe-02-solid-sharp IconGlobe02SolidSharp"
+      the-icon="Globe02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfGlobe02: TheIconSelfPack = {
-  name: 'Globe02',
-  StrokeRounded: IconGlobe02StrokeRounded,
-  DuotoneRounded: IconGlobe02DuotoneRounded,
-  TwotoneRounded: IconGlobe02TwotoneRounded,
-  SolidRounded: IconGlobe02SolidRounded,
-  BulkRounded: IconGlobe02BulkRounded,
-  StrokeSharp: IconGlobe02StrokeSharp,
-  SolidSharp: IconGlobe02SolidSharp,
-};
+export const iconPackOfGlobe02: TheIconSelfPack = [
+  'Globe02',
+  IconGlobe02StrokeRounded,
+  IconGlobe02DuotoneRounded,
+  IconGlobe02TwotoneRounded,
+  IconGlobe02SolidRounded,
+  IconGlobe02BulkRounded,
+  IconGlobe02StrokeSharp,
+  IconGlobe02SolidSharp,
+];

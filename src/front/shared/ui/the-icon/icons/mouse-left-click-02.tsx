@@ -20,34 +20,26 @@ export const IconMouseLeftClick02StrokeRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="mouse-left-click-02-stroke-rounded IconMouseLeftClick02StrokeRounded"
+      the-icon="MouseLeftClick02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="5.5" 
-        cy="5" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="5.5"
+        cy="5"
+        r="2.5"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -56,44 +48,35 @@ export const IconMouseLeftClick02DuotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="mouse-left-click-02-duotone-rounded IconMouseLeftClick02DuotoneRounded"
+      the-icon="MouseLeftClick02 DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="5.5" 
-        cy="5" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
-      <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        cx="5.5"
+        cy="5"
+        r="2.5"
+        i-c="f o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="5.5" 
-        cy="5" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="5.5"
+        cy="5"
+        r="2.5"
+        i-c="s sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -103,36 +86,26 @@ export const IconMouseLeftClick02TwotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="mouse-left-click-02-twotone-rounded IconMouseLeftClick02TwotoneRounded"
+      the-icon="MouseLeftClick02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="5.5" 
-        cy="5" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="5.5"
+        cy="5"
+        r="2.5"
+        i-c="o7 s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -141,17 +114,15 @@ export const IconMouseLeftClick02SolidRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="mouse-left-click-02-solid-rounded IconMouseLeftClick02SolidRounded"
+      the-icon="MouseLeftClick02 SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -161,18 +132,15 @@ export const IconMouseLeftClick02BulkRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="mouse-left-click-02-bulk-rounded IconMouseLeftClick02BulkRounded"
+      the-icon="MouseLeftClick02 BulkRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr o7"
       />
     </TheIconWrapper>
   );
@@ -182,25 +150,19 @@ export const IconMouseLeftClick02StrokeSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="mouse-left-click-02-stroke-sharp IconMouseLeftClick02StrokeSharp"
+      the-icon="MouseLeftClick02 StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -210,29 +172,27 @@ export const IconMouseLeftClick02SolidSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="mouse-left-click-02-solid-sharp IconMouseLeftClick02SolidSharp"
+      the-icon="MouseLeftClick02 SolidSharp"
     >
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMouseLeftClick02: TheIconSelfPack = {
-  name: 'MouseLeftClick02',
-  StrokeRounded: IconMouseLeftClick02StrokeRounded,
-  DuotoneRounded: IconMouseLeftClick02DuotoneRounded,
-  TwotoneRounded: IconMouseLeftClick02TwotoneRounded,
-  SolidRounded: IconMouseLeftClick02SolidRounded,
-  BulkRounded: IconMouseLeftClick02BulkRounded,
-  StrokeSharp: IconMouseLeftClick02StrokeSharp,
-  SolidSharp: IconMouseLeftClick02SolidSharp,
-};
+export const iconPackOfMouseLeftClick02: TheIconSelfPack = [
+  'MouseLeftClick02',
+  IconMouseLeftClick02StrokeRounded,
+  IconMouseLeftClick02DuotoneRounded,
+  IconMouseLeftClick02TwotoneRounded,
+  IconMouseLeftClick02SolidRounded,
+  IconMouseLeftClick02BulkRounded,
+  IconMouseLeftClick02StrokeSharp,
+  IconMouseLeftClick02SolidSharp,
+];

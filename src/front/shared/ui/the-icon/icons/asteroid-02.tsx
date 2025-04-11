@@ -16,19 +16,15 @@ export const IconAsteroid02StrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="asteroid-02-stroke-rounded IconAsteroid02StrokeRounded"
+      the-icon="Asteroid02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -38,24 +34,19 @@ export const IconAsteroid02DuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="asteroid-02-duotone-rounded IconAsteroid02DuotoneRounded"
+      the-icon="Asteroid02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -65,20 +56,15 @@ export const IconAsteroid02TwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="asteroid-02-twotone-rounded IconAsteroid02TwotoneRounded"
+      the-icon="Asteroid02 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -88,13 +74,11 @@ export const IconAsteroid02SolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="asteroid-02-solid-rounded IconAsteroid02SolidRounded"
+      the-icon="Asteroid02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -104,18 +88,15 @@ export const IconAsteroid02BulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="asteroid-02-bulk-rounded IconAsteroid02BulkRounded"
+      the-icon="Asteroid02 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -125,17 +106,15 @@ export const IconAsteroid02StrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="asteroid-02-stroke-sharp IconAsteroid02StrokeSharp"
+      the-icon="Asteroid02 StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -145,25 +124,23 @@ export const IconAsteroid02SolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="asteroid-02-solid-sharp IconAsteroid02SolidSharp"
+      the-icon="Asteroid02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAsteroid02: TheIconSelfPack = {
-  name: 'Asteroid02',
-  StrokeRounded: IconAsteroid02StrokeRounded,
-  DuotoneRounded: IconAsteroid02DuotoneRounded,
-  TwotoneRounded: IconAsteroid02TwotoneRounded,
-  SolidRounded: IconAsteroid02SolidRounded,
-  BulkRounded: IconAsteroid02BulkRounded,
-  StrokeSharp: IconAsteroid02StrokeSharp,
-  SolidSharp: IconAsteroid02SolidSharp,
-};
+export const iconPackOfAsteroid02: TheIconSelfPack = [
+  'Asteroid02',
+  IconAsteroid02StrokeRounded,
+  IconAsteroid02DuotoneRounded,
+  IconAsteroid02TwotoneRounded,
+  IconAsteroid02SolidRounded,
+  IconAsteroid02BulkRounded,
+  IconAsteroid02StrokeSharp,
+  IconAsteroid02SolidSharp,
+];

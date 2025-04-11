@@ -14,14 +14,11 @@ export const IconFiverrStrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="fiverr-stroke-rounded IconFiverrStrokeRounded"
+      the-icon="Fiverr StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -31,19 +28,15 @@ export const IconFiverrDuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="fiverr-duotone-rounded IconFiverrDuotoneRounded"
+      the-icon="Fiverr DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -53,22 +46,15 @@ export const IconFiverrTwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="fiverr-twotone-rounded IconFiverrTwotoneRounded"
+      the-icon="Fiverr TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -78,11 +64,11 @@ export const IconFiverrSolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="fiverr-solid-rounded IconFiverrSolidRounded"
+      the-icon="Fiverr SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -92,16 +78,15 @@ export const IconFiverrBulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="fiverr-bulk-rounded IconFiverrBulkRounded"
+      the-icon="Fiverr BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -111,13 +96,11 @@ export const IconFiverrStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="fiverr-stroke-sharp IconFiverrStrokeSharp"
+      the-icon="Fiverr StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d5}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -127,23 +110,23 @@ export const IconFiverrSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="fiverr-solid-sharp IconFiverrSolidSharp"
+      the-icon="Fiverr SolidSharp"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfFiverr: TheIconSelfPack = {
-  name: 'Fiverr',
-  StrokeRounded: IconFiverrStrokeRounded,
-  DuotoneRounded: IconFiverrDuotoneRounded,
-  TwotoneRounded: IconFiverrTwotoneRounded,
-  SolidRounded: IconFiverrSolidRounded,
-  BulkRounded: IconFiverrBulkRounded,
-  StrokeSharp: IconFiverrStrokeSharp,
-  SolidSharp: IconFiverrSolidSharp,
-};
+export const iconPackOfFiverr: TheIconSelfPack = [
+  'Fiverr',
+  IconFiverrStrokeRounded,
+  IconFiverrDuotoneRounded,
+  IconFiverrTwotoneRounded,
+  IconFiverrSolidRounded,
+  IconFiverrBulkRounded,
+  IconFiverrStrokeSharp,
+  IconFiverrSolidSharp,
+];

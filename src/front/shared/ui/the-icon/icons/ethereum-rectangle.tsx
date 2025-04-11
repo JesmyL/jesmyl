@@ -18,20 +18,15 @@ export const IconEthereumRectangleStrokeRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="ethereum-rectangle-stroke-rounded IconEthereumRectangleStrokeRounded"
+      the-icon="EthereumRectangle StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -41,27 +36,19 @@ export const IconEthereumRectangleDuotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="ethereum-rectangle-duotone-rounded IconEthereumRectangleDuotoneRounded"
+      the-icon="EthereumRectangle DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -71,21 +58,15 @@ export const IconEthereumRectangleTwotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="ethereum-rectangle-twotone-rounded IconEthereumRectangleTwotoneRounded"
+      the-icon="EthereumRectangle TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -95,13 +76,11 @@ export const IconEthereumRectangleSolidRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="ethereum-rectangle-solid-rounded IconEthereumRectangleSolidRounded"
+      the-icon="EthereumRectangle SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -111,20 +90,19 @@ export const IconEthereumRectangleBulkRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="ethereum-rectangle-bulk-rounded IconEthereumRectangleBulkRounded"
+      the-icon="EthereumRectangle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -134,21 +112,15 @@ export const IconEthereumRectangleStrokeSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="ethereum-rectangle-stroke-sharp IconEthereumRectangleStrokeSharp"
+      the-icon="EthereumRectangle StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -158,25 +130,23 @@ export const IconEthereumRectangleSolidSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="ethereum-rectangle-solid-sharp IconEthereumRectangleSolidSharp"
+      the-icon="EthereumRectangle SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfEthereumRectangle: TheIconSelfPack = {
-  name: 'EthereumRectangle',
-  StrokeRounded: IconEthereumRectangleStrokeRounded,
-  DuotoneRounded: IconEthereumRectangleDuotoneRounded,
-  TwotoneRounded: IconEthereumRectangleTwotoneRounded,
-  SolidRounded: IconEthereumRectangleSolidRounded,
-  BulkRounded: IconEthereumRectangleBulkRounded,
-  StrokeSharp: IconEthereumRectangleStrokeSharp,
-  SolidSharp: IconEthereumRectangleSolidSharp,
-};
+export const iconPackOfEthereumRectangle: TheIconSelfPack = [
+  'EthereumRectangle',
+  IconEthereumRectangleStrokeRounded,
+  IconEthereumRectangleDuotoneRounded,
+  IconEthereumRectangleTwotoneRounded,
+  IconEthereumRectangleSolidRounded,
+  IconEthereumRectangleBulkRounded,
+  IconEthereumRectangleStrokeSharp,
+  IconEthereumRectangleSolidSharp,
+];

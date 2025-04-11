@@ -18,14 +18,11 @@ export const IconServiceStrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="service-stroke-rounded IconServiceStrokeRounded"
+      the-icon="Service StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -35,19 +32,15 @@ export const IconServiceDuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="service-duotone-rounded IconServiceDuotoneRounded"
+      the-icon="Service DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -57,22 +50,15 @@ export const IconServiceTwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="service-twotone-rounded IconServiceTwotoneRounded"
+      the-icon="Service TwotoneRounded"
     >
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -82,17 +68,15 @@ export const IconServiceSolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="service-solid-rounded IconServiceSolidRounded"
+      the-icon="Service SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -102,18 +86,15 @@ export const IconServiceBulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="service-bulk-rounded IconServiceBulkRounded"
+      the-icon="Service BulkRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr o7"
       />
     </TheIconWrapper>
   );
@@ -123,13 +104,11 @@ export const IconServiceStrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="service-stroke-sharp IconServiceStrokeSharp"
+      the-icon="Service StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d7}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -139,27 +118,27 @@ export const IconServiceSolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="service-solid-sharp IconServiceSolidSharp"
+      the-icon="Service SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfService: TheIconSelfPack = {
-  name: 'Service',
-  StrokeRounded: IconServiceStrokeRounded,
-  DuotoneRounded: IconServiceDuotoneRounded,
-  TwotoneRounded: IconServiceTwotoneRounded,
-  SolidRounded: IconServiceSolidRounded,
-  BulkRounded: IconServiceBulkRounded,
-  StrokeSharp: IconServiceStrokeSharp,
-  SolidSharp: IconServiceSolidSharp,
-};
+export const iconPackOfService: TheIconSelfPack = [
+  'Service',
+  IconServiceStrokeRounded,
+  IconServiceDuotoneRounded,
+  IconServiceTwotoneRounded,
+  IconServiceSolidRounded,
+  IconServiceBulkRounded,
+  IconServiceStrokeSharp,
+  IconServiceSolidSharp,
+];

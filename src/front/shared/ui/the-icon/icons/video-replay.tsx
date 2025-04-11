@@ -18,20 +18,15 @@ export const IconVideoReplayStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="video-replay-stroke-rounded IconVideoReplayStrokeRounded"
+      the-icon="VideoReplay StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -41,27 +36,19 @@ export const IconVideoReplayDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="video-replay-duotone-rounded IconVideoReplayDuotoneRounded"
+      the-icon="VideoReplay DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -71,21 +58,15 @@ export const IconVideoReplayTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="video-replay-twotone-rounded IconVideoReplayTwotoneRounded"
+      the-icon="VideoReplay TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sw"
       />
     </TheIconWrapper>
   );
@@ -95,17 +76,15 @@ export const IconVideoReplaySolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="video-replay-solid-rounded IconVideoReplaySolidRounded"
+      the-icon="VideoReplay SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -115,18 +94,15 @@ export const IconVideoReplayBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="video-replay-bulk-rounded IconVideoReplayBulkRounded"
+      the-icon="VideoReplay BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -136,19 +112,15 @@ export const IconVideoReplayStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="video-replay-stroke-sharp IconVideoReplayStrokeSharp"
+      the-icon="VideoReplay StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -158,29 +130,27 @@ export const IconVideoReplaySolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="video-replay-solid-sharp IconVideoReplaySolidSharp"
+      the-icon="VideoReplay SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfVideoReplay: TheIconSelfPack = {
-  name: 'VideoReplay',
-  StrokeRounded: IconVideoReplayStrokeRounded,
-  DuotoneRounded: IconVideoReplayDuotoneRounded,
-  TwotoneRounded: IconVideoReplayTwotoneRounded,
-  SolidRounded: IconVideoReplaySolidRounded,
-  BulkRounded: IconVideoReplayBulkRounded,
-  StrokeSharp: IconVideoReplayStrokeSharp,
-  SolidSharp: IconVideoReplaySolidSharp,
-};
+export const iconPackOfVideoReplay: TheIconSelfPack = [
+  'VideoReplay',
+  IconVideoReplayStrokeRounded,
+  IconVideoReplayDuotoneRounded,
+  IconVideoReplayTwotoneRounded,
+  IconVideoReplaySolidRounded,
+  IconVideoReplayBulkRounded,
+  IconVideoReplayStrokeSharp,
+  IconVideoReplaySolidSharp,
+];

@@ -19,25 +19,19 @@ export const IconPathfinderMinusBackStrokeRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-minus-back-stroke-rounded IconPathfinderMinusBackStrokeRounded"
+      the-icon="PathfinderMinusBack StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -47,30 +41,23 @@ export const IconPathfinderMinusBackDuotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-minus-back-duotone-rounded IconPathfinderMinusBackDuotoneRounded"
+      the-icon="PathfinderMinusBack DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -80,26 +67,19 @@ export const IconPathfinderMinusBackTwotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-minus-back-twotone-rounded IconPathfinderMinusBackTwotoneRounded"
+      the-icon="PathfinderMinusBack TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -109,17 +89,15 @@ export const IconPathfinderMinusBackSolidRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-minus-back-solid-rounded IconPathfinderMinusBackSolidRounded"
+      the-icon="PathfinderMinusBack SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -129,18 +107,15 @@ export const IconPathfinderMinusBackBulkRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-minus-back-bulk-rounded IconPathfinderMinusBackBulkRounded"
+      the-icon="PathfinderMinusBack BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -150,18 +125,15 @@ export const IconPathfinderMinusBackStrokeSharp: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-minus-back-stroke-sharp IconPathfinderMinusBackStrokeSharp"
+      the-icon="PathfinderMinusBack StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -171,29 +143,27 @@ export const IconPathfinderMinusBackSolidSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-minus-back-solid-sharp IconPathfinderMinusBackSolidSharp"
+      the-icon="PathfinderMinusBack SolidSharp"
     >
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPathfinderMinusBack: TheIconSelfPack = {
-  name: 'PathfinderMinusBack',
-  StrokeRounded: IconPathfinderMinusBackStrokeRounded,
-  DuotoneRounded: IconPathfinderMinusBackDuotoneRounded,
-  TwotoneRounded: IconPathfinderMinusBackTwotoneRounded,
-  SolidRounded: IconPathfinderMinusBackSolidRounded,
-  BulkRounded: IconPathfinderMinusBackBulkRounded,
-  StrokeSharp: IconPathfinderMinusBackStrokeSharp,
-  SolidSharp: IconPathfinderMinusBackSolidSharp,
-};
+export const iconPackOfPathfinderMinusBack: TheIconSelfPack = [
+  'PathfinderMinusBack',
+  IconPathfinderMinusBackStrokeRounded,
+  IconPathfinderMinusBackDuotoneRounded,
+  IconPathfinderMinusBackTwotoneRounded,
+  IconPathfinderMinusBackSolidRounded,
+  IconPathfinderMinusBackBulkRounded,
+  IconPathfinderMinusBackStrokeSharp,
+  IconPathfinderMinusBackSolidSharp,
+];

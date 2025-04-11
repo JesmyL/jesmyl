@@ -18,17 +18,15 @@ export const IconToggleOnStrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="toggle-on-stroke-rounded IconToggleOnStrokeRounded"
+      the-icon="ToggleOn StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -38,24 +36,19 @@ export const IconToggleOnDuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="toggle-on-duotone-rounded IconToggleOnDuotoneRounded"
+      the-icon="ToggleOn DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -65,18 +58,15 @@ export const IconToggleOnTwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="toggle-on-twotone-rounded IconToggleOnTwotoneRounded"
+      the-icon="ToggleOn TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -86,13 +76,11 @@ export const IconToggleOnSolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="toggle-on-solid-rounded IconToggleOnSolidRounded"
+      the-icon="ToggleOn SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -102,16 +90,15 @@ export const IconToggleOnBulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="toggle-on-bulk-rounded IconToggleOnBulkRounded"
+      the-icon="ToggleOn BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -121,18 +108,15 @@ export const IconToggleOnStrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="toggle-on-stroke-sharp IconToggleOnStrokeSharp"
+      the-icon="ToggleOn StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -142,25 +126,23 @@ export const IconToggleOnSolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="toggle-on-solid-sharp IconToggleOnSolidSharp"
+      the-icon="ToggleOn SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfToggleOn: TheIconSelfPack = {
-  name: 'ToggleOn',
-  StrokeRounded: IconToggleOnStrokeRounded,
-  DuotoneRounded: IconToggleOnDuotoneRounded,
-  TwotoneRounded: IconToggleOnTwotoneRounded,
-  SolidRounded: IconToggleOnSolidRounded,
-  BulkRounded: IconToggleOnBulkRounded,
-  StrokeSharp: IconToggleOnStrokeSharp,
-  SolidSharp: IconToggleOnSolidSharp,
-};
+export const iconPackOfToggleOn: TheIconSelfPack = [
+  'ToggleOn',
+  IconToggleOnStrokeRounded,
+  IconToggleOnDuotoneRounded,
+  IconToggleOnTwotoneRounded,
+  IconToggleOnSolidRounded,
+  IconToggleOnBulkRounded,
+  IconToggleOnStrokeSharp,
+  IconToggleOnSolidSharp,
+];

@@ -15,12 +15,11 @@ export const IconSealStrokeRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="seal-stroke-rounded IconSealStrokeRounded"
+      the-icon="Seal StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -30,17 +29,15 @@ export const IconSealDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="seal-duotone-rounded IconSealDuotoneRounded"
+      the-icon="Seal DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -50,19 +47,15 @@ export const IconSealTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="seal-twotone-rounded IconSealTwotoneRounded"
+      the-icon="Seal TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -72,13 +65,11 @@ export const IconSealSolidRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="seal-solid-rounded IconSealSolidRounded"
+      the-icon="Seal SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -88,18 +79,15 @@ export const IconSealBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="seal-bulk-rounded IconSealBulkRounded"
+      the-icon="Seal BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -109,12 +97,11 @@ export const IconSealStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="seal-stroke-sharp IconSealStrokeSharp"
+      the-icon="Seal StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -124,23 +111,23 @@ export const IconSealSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.E
   return (
     <TheIconWrapper
       {...props}
-      name="seal-solid-sharp IconSealSolidSharp"
+      the-icon="Seal SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSeal: TheIconSelfPack = {
-  name: 'Seal',
-  StrokeRounded: IconSealStrokeRounded,
-  DuotoneRounded: IconSealDuotoneRounded,
-  TwotoneRounded: IconSealTwotoneRounded,
-  SolidRounded: IconSealSolidRounded,
-  BulkRounded: IconSealBulkRounded,
-  StrokeSharp: IconSealStrokeSharp,
-  SolidSharp: IconSealSolidSharp,
-};
+export const iconPackOfSeal: TheIconSelfPack = [
+  'Seal',
+  IconSealStrokeRounded,
+  IconSealDuotoneRounded,
+  IconSealTwotoneRounded,
+  IconSealSolidRounded,
+  IconSealBulkRounded,
+  IconSealStrokeSharp,
+  IconSealSolidSharp,
+];

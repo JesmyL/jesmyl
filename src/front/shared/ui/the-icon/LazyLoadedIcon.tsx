@@ -1,5 +1,5 @@
 import { HTMLAttributes } from 'react';
-import { theIconKnownPack } from './pack';
+import { takeIconFromKnownPack } from './utils';
 
 export type LazyIconProps = HTMLAttributes<HTMLOrSVGElement> & {
   icon: TheIconKnownName;
@@ -8,10 +8,8 @@ export type LazyIconProps = HTMLAttributes<HTMLOrSVGElement> & {
 };
 
 export default function TheIconLazy({ icon, kind, ...props }: LazyIconProps) {
-  const pack = theIconKnownPack[icon];
-  if (pack === undefined) return null;
-
-  const Icon = pack[kind ?? 'StrokeRounded'];
+  const Icon = takeIconFromKnownPack(icon, kind);
+  if (Icon === undefined) return null;
 
   return <Icon {...props} />;
 }

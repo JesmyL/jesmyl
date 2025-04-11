@@ -20,14 +20,11 @@ export const IconBread01StrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="bread-01-stroke-rounded IconBread01StrokeRounded"
+      the-icon="Bread01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -37,19 +34,15 @@ export const IconBread01DuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="bread-01-duotone-rounded IconBread01DuotoneRounded"
+      the-icon="Bread01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -59,22 +52,15 @@ export const IconBread01TwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="bread-01-twotone-rounded IconBread01TwotoneRounded"
+      the-icon="Bread01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -84,11 +70,11 @@ export const IconBread01SolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="bread-01-solid-rounded IconBread01SolidRounded"
+      the-icon="Bread01 SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -98,24 +84,23 @@ export const IconBread01BulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="bread-01-bulk-rounded IconBread01BulkRounded"
+      the-icon="Bread01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -125,13 +110,11 @@ export const IconBread01StrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="bread-01-stroke-sharp IconBread01StrokeSharp"
+      the-icon="Bread01 StrokeSharp"
     >
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -141,23 +124,23 @@ export const IconBread01SolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="bread-01-solid-sharp IconBread01SolidSharp"
+      the-icon="Bread01 SolidSharp"
     >
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBread01: TheIconSelfPack = {
-  name: 'Bread01',
-  StrokeRounded: IconBread01StrokeRounded,
-  DuotoneRounded: IconBread01DuotoneRounded,
-  TwotoneRounded: IconBread01TwotoneRounded,
-  SolidRounded: IconBread01SolidRounded,
-  BulkRounded: IconBread01BulkRounded,
-  StrokeSharp: IconBread01StrokeSharp,
-  SolidSharp: IconBread01SolidSharp,
-};
+export const iconPackOfBread01: TheIconSelfPack = [
+  'Bread01',
+  IconBread01StrokeRounded,
+  IconBread01DuotoneRounded,
+  IconBread01TwotoneRounded,
+  IconBread01SolidRounded,
+  IconBread01BulkRounded,
+  IconBread01StrokeSharp,
+  IconBread01SolidSharp,
+];

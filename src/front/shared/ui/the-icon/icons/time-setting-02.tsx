@@ -17,20 +17,15 @@ export const IconTimeSetting02StrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="time-setting-02-stroke-rounded IconTimeSetting02StrokeRounded"
+      the-icon="TimeSetting02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -40,25 +35,19 @@ export const IconTimeSetting02DuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="time-setting-02-duotone-rounded IconTimeSetting02DuotoneRounded"
+      the-icon="TimeSetting02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -68,21 +57,15 @@ export const IconTimeSetting02TwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="time-setting-02-twotone-rounded IconTimeSetting02TwotoneRounded"
+      the-icon="TimeSetting02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -92,13 +75,11 @@ export const IconTimeSetting02SolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="time-setting-02-solid-rounded IconTimeSetting02SolidRounded"
+      the-icon="TimeSetting02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -108,18 +89,15 @@ export const IconTimeSetting02BulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="time-setting-02-bulk-rounded IconTimeSetting02BulkRounded"
+      the-icon="TimeSetting02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -129,18 +107,15 @@ export const IconTimeSetting02StrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="time-setting-02-stroke-sharp IconTimeSetting02StrokeSharp"
+      the-icon="TimeSetting02 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -150,25 +125,23 @@ export const IconTimeSetting02SolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="time-setting-02-solid-sharp IconTimeSetting02SolidSharp"
+      the-icon="TimeSetting02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTimeSetting02: TheIconSelfPack = {
-  name: 'TimeSetting02',
-  StrokeRounded: IconTimeSetting02StrokeRounded,
-  DuotoneRounded: IconTimeSetting02DuotoneRounded,
-  TwotoneRounded: IconTimeSetting02TwotoneRounded,
-  SolidRounded: IconTimeSetting02SolidRounded,
-  BulkRounded: IconTimeSetting02BulkRounded,
-  StrokeSharp: IconTimeSetting02StrokeSharp,
-  SolidSharp: IconTimeSetting02SolidSharp,
-};
+export const iconPackOfTimeSetting02: TheIconSelfPack = [
+  'TimeSetting02',
+  IconTimeSetting02StrokeRounded,
+  IconTimeSetting02DuotoneRounded,
+  IconTimeSetting02TwotoneRounded,
+  IconTimeSetting02SolidRounded,
+  IconTimeSetting02BulkRounded,
+  IconTimeSetting02StrokeSharp,
+  IconTimeSetting02SolidSharp,
+];

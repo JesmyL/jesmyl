@@ -14,14 +14,11 @@ export const IconTwoFinger01StrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="two-finger-01-stroke-rounded IconTwoFinger01StrokeRounded"
+      the-icon="TwoFinger01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -31,19 +28,15 @@ export const IconTwoFinger01DuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="two-finger-01-duotone-rounded IconTwoFinger01DuotoneRounded"
+      the-icon="TwoFinger01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -53,14 +46,11 @@ export const IconTwoFinger01TwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="two-finger-01-twotone-rounded IconTwoFinger01TwotoneRounded"
+      the-icon="TwoFinger01 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -70,11 +60,11 @@ export const IconTwoFinger01SolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="two-finger-01-solid-rounded IconTwoFinger01SolidRounded"
+      the-icon="TwoFinger01 SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -84,12 +74,11 @@ export const IconTwoFinger01BulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="two-finger-01-bulk-rounded IconTwoFinger01BulkRounded"
+      the-icon="TwoFinger01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -99,12 +88,11 @@ export const IconTwoFinger01StrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="two-finger-01-stroke-sharp IconTwoFinger01StrokeSharp"
+      the-icon="TwoFinger01 StrokeSharp"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d4}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -114,23 +102,23 @@ export const IconTwoFinger01SolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="two-finger-01-solid-sharp IconTwoFinger01SolidSharp"
+      the-icon="TwoFinger01 SolidSharp"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTwoFinger01: TheIconSelfPack = {
-  name: 'TwoFinger01',
-  StrokeRounded: IconTwoFinger01StrokeRounded,
-  DuotoneRounded: IconTwoFinger01DuotoneRounded,
-  TwotoneRounded: IconTwoFinger01TwotoneRounded,
-  SolidRounded: IconTwoFinger01SolidRounded,
-  BulkRounded: IconTwoFinger01BulkRounded,
-  StrokeSharp: IconTwoFinger01StrokeSharp,
-  SolidSharp: IconTwoFinger01SolidSharp,
-};
+export const iconPackOfTwoFinger01: TheIconSelfPack = [
+  'TwoFinger01',
+  IconTwoFinger01StrokeRounded,
+  IconTwoFinger01DuotoneRounded,
+  IconTwoFinger01TwotoneRounded,
+  IconTwoFinger01SolidRounded,
+  IconTwoFinger01BulkRounded,
+  IconTwoFinger01StrokeSharp,
+  IconTwoFinger01SolidSharp,
+];

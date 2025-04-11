@@ -17,19 +17,15 @@ export const IconSquareArrowDiagonal02StrokeRounded: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="square-arrow-diagonal-02-stroke-rounded IconSquareArrowDiagonal02StrokeRounded"
+      the-icon="SquareArrowDiagonal02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -39,24 +35,19 @@ export const IconSquareArrowDiagonal02DuotoneRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="square-arrow-diagonal-02-duotone-rounded IconSquareArrowDiagonal02DuotoneRounded"
+      the-icon="SquareArrowDiagonal02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -66,20 +57,15 @@ export const IconSquareArrowDiagonal02TwotoneRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="square-arrow-diagonal-02-twotone-rounded IconSquareArrowDiagonal02TwotoneRounded"
+      the-icon="SquareArrowDiagonal02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -89,13 +75,11 @@ export const IconSquareArrowDiagonal02SolidRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="square-arrow-diagonal-02-solid-rounded IconSquareArrowDiagonal02SolidRounded"
+      the-icon="SquareArrowDiagonal02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -105,16 +89,15 @@ export const IconSquareArrowDiagonal02BulkRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="square-arrow-diagonal-02-bulk-rounded IconSquareArrowDiagonal02BulkRounded"
+      the-icon="SquareArrowDiagonal02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -124,18 +107,15 @@ export const IconSquareArrowDiagonal02StrokeSharp: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="square-arrow-diagonal-02-stroke-sharp IconSquareArrowDiagonal02StrokeSharp"
+      the-icon="SquareArrowDiagonal02 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -145,25 +125,23 @@ export const IconSquareArrowDiagonal02SolidSharp: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="square-arrow-diagonal-02-solid-sharp IconSquareArrowDiagonal02SolidSharp"
+      the-icon="SquareArrowDiagonal02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSquareArrowDiagonal02: TheIconSelfPack = {
-  name: 'SquareArrowDiagonal02',
-  StrokeRounded: IconSquareArrowDiagonal02StrokeRounded,
-  DuotoneRounded: IconSquareArrowDiagonal02DuotoneRounded,
-  TwotoneRounded: IconSquareArrowDiagonal02TwotoneRounded,
-  SolidRounded: IconSquareArrowDiagonal02SolidRounded,
-  BulkRounded: IconSquareArrowDiagonal02BulkRounded,
-  StrokeSharp: IconSquareArrowDiagonal02StrokeSharp,
-  SolidSharp: IconSquareArrowDiagonal02SolidSharp,
-};
+export const iconPackOfSquareArrowDiagonal02: TheIconSelfPack = [
+  'SquareArrowDiagonal02',
+  IconSquareArrowDiagonal02StrokeRounded,
+  IconSquareArrowDiagonal02DuotoneRounded,
+  IconSquareArrowDiagonal02TwotoneRounded,
+  IconSquareArrowDiagonal02SolidRounded,
+  IconSquareArrowDiagonal02BulkRounded,
+  IconSquareArrowDiagonal02StrokeSharp,
+  IconSquareArrowDiagonal02SolidSharp,
+];

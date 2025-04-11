@@ -19,28 +19,21 @@ export const IconTag01StrokeRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="tag-01-stroke-rounded IconTag01StrokeRounded"
+      the-icon="Tag01 StrokeRounded"
     >
       <circle 
-        cx="1.5" 
-        cy="1.5" 
-        r="1.5" 
-        transform="matrix(1 0 0 1 16 8)" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        cx="1.5"
+        cy="1.5"
+        r="1.5"
+        i-c="s sj sr sw t1"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -50,35 +43,25 @@ export const IconTag01DuotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="tag-01-duotone-rounded IconTag01DuotoneRounded"
+      the-icon="Tag01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <circle 
-        cx="1.5" 
-        cy="1.5" 
-        r="1.5" 
-        transform="matrix(1 0 0 1 16 8)" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        cx="1.5"
+        cy="1.5"
+        r="1.5"
+        i-c="s sj sr sw t1"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -88,29 +71,21 @@ export const IconTag01TwotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="tag-01-twotone-rounded IconTag01TwotoneRounded"
+      the-icon="Tag01 TwotoneRounded"
     >
       <circle 
-        cx="1.5" 
-        cy="1.5" 
-        r="1.5" 
-        transform="matrix(1 0 0 1 16 8)" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        cx="1.5"
+        cy="1.5"
+        r="1.5"
+        i-c="s sj sr sw t1"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -120,13 +95,11 @@ export const IconTag01SolidRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="tag-01-solid-rounded IconTag01SolidRounded"
+      the-icon="Tag01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -136,24 +109,21 @@ export const IconTag01BulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="tag-01-bulk-rounded IconTag01BulkRounded"
+      the-icon="Tag01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <circle 
-        cx="1.5" 
-        cy="1.5" 
-        r="1.5" 
-        transform="matrix(1 0 0 1 16 8)" 
-        fill="var(--icon-fill)"></circle>
+        cx="1.5"
+        cy="1.5"
+        r="1.5"
+        i-c="f t1"
+      />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -163,24 +133,19 @@ export const IconTag01StrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="tag-01-stroke-sharp IconTag01StrokeSharp"
+      the-icon="Tag01 StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -190,25 +155,23 @@ export const IconTag01SolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="tag-01-solid-sharp IconTag01SolidSharp"
+      the-icon="Tag01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTag01: TheIconSelfPack = {
-  name: 'Tag01',
-  StrokeRounded: IconTag01StrokeRounded,
-  DuotoneRounded: IconTag01DuotoneRounded,
-  TwotoneRounded: IconTag01TwotoneRounded,
-  SolidRounded: IconTag01SolidRounded,
-  BulkRounded: IconTag01BulkRounded,
-  StrokeSharp: IconTag01StrokeSharp,
-  SolidSharp: IconTag01SolidSharp,
-};
+export const iconPackOfTag01: TheIconSelfPack = [
+  'Tag01',
+  IconTag01StrokeRounded,
+  IconTag01DuotoneRounded,
+  IconTag01TwotoneRounded,
+  IconTag01SolidRounded,
+  IconTag01BulkRounded,
+  IconTag01StrokeSharp,
+  IconTag01SolidSharp,
+];

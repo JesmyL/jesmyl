@@ -15,14 +15,11 @@ export const IconUpworkStrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="upwork-stroke-rounded IconUpworkStrokeRounded"
+      the-icon="Upwork StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -32,15 +29,11 @@ export const IconUpworkDuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="upwork-duotone-rounded IconUpworkDuotoneRounded"
+      the-icon="Upwork DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -50,22 +43,15 @@ export const IconUpworkTwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="upwork-twotone-rounded IconUpworkTwotoneRounded"
+      the-icon="Upwork TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -75,13 +61,11 @@ export const IconUpworkSolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="upwork-solid-rounded IconUpworkSolidRounded"
+      the-icon="Upwork SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -91,20 +75,15 @@ export const IconUpworkBulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="upwork-bulk-rounded IconUpworkBulkRounded"
+      the-icon="Upwork BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -114,13 +93,11 @@ export const IconUpworkStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="upwork-stroke-sharp IconUpworkStrokeSharp"
+      the-icon="Upwork StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -130,25 +107,23 @@ export const IconUpworkSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="upwork-solid-sharp IconUpworkSolidSharp"
+      the-icon="Upwork SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfUpwork: TheIconSelfPack = {
-  name: 'Upwork',
-  StrokeRounded: IconUpworkStrokeRounded,
-  DuotoneRounded: IconUpworkDuotoneRounded,
-  TwotoneRounded: IconUpworkTwotoneRounded,
-  SolidRounded: IconUpworkSolidRounded,
-  BulkRounded: IconUpworkBulkRounded,
-  StrokeSharp: IconUpworkStrokeSharp,
-  SolidSharp: IconUpworkSolidSharp,
-};
+export const iconPackOfUpwork: TheIconSelfPack = [
+  'Upwork',
+  IconUpworkStrokeRounded,
+  IconUpworkDuotoneRounded,
+  IconUpworkTwotoneRounded,
+  IconUpworkSolidRounded,
+  IconUpworkBulkRounded,
+  IconUpworkStrokeSharp,
+  IconUpworkSolidSharp,
+];

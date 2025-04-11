@@ -15,14 +15,11 @@ export const IconHandPointingRight02StrokeRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="hand-pointing-right-02-stroke-rounded IconHandPointingRight02StrokeRounded"
+      the-icon="HandPointingRight02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -32,19 +29,15 @@ export const IconHandPointingRight02DuotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="hand-pointing-right-02-duotone-rounded IconHandPointingRight02DuotoneRounded"
+      the-icon="HandPointingRight02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,22 +47,15 @@ export const IconHandPointingRight02TwotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="hand-pointing-right-02-twotone-rounded IconHandPointingRight02TwotoneRounded"
+      the-icon="HandPointingRight02 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -79,11 +65,11 @@ export const IconHandPointingRight02SolidRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="hand-pointing-right-02-solid-rounded IconHandPointingRight02SolidRounded"
+      the-icon="HandPointingRight02 SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -93,12 +79,11 @@ export const IconHandPointingRight02BulkRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="hand-pointing-right-02-bulk-rounded IconHandPointingRight02BulkRounded"
+      the-icon="HandPointingRight02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -108,12 +93,11 @@ export const IconHandPointingRight02StrokeSharp: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="hand-pointing-right-02-stroke-sharp IconHandPointingRight02StrokeSharp"
+      the-icon="HandPointingRight02 StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -123,23 +107,23 @@ export const IconHandPointingRight02SolidSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="hand-pointing-right-02-solid-sharp IconHandPointingRight02SolidSharp"
+      the-icon="HandPointingRight02 SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfHandPointingRight02: TheIconSelfPack = {
-  name: 'HandPointingRight02',
-  StrokeRounded: IconHandPointingRight02StrokeRounded,
-  DuotoneRounded: IconHandPointingRight02DuotoneRounded,
-  TwotoneRounded: IconHandPointingRight02TwotoneRounded,
-  SolidRounded: IconHandPointingRight02SolidRounded,
-  BulkRounded: IconHandPointingRight02BulkRounded,
-  StrokeSharp: IconHandPointingRight02StrokeSharp,
-  SolidSharp: IconHandPointingRight02SolidSharp,
-};
+export const iconPackOfHandPointingRight02: TheIconSelfPack = [
+  'HandPointingRight02',
+  IconHandPointingRight02StrokeRounded,
+  IconHandPointingRight02DuotoneRounded,
+  IconHandPointingRight02TwotoneRounded,
+  IconHandPointingRight02SolidRounded,
+  IconHandPointingRight02BulkRounded,
+  IconHandPointingRight02StrokeSharp,
+  IconHandPointingRight02SolidSharp,
+];

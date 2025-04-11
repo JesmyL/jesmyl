@@ -17,19 +17,15 @@ export const IconTableTennisBatStrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="table-tennis-bat-stroke-rounded IconTableTennisBatStrokeRounded"
+      the-icon="TableTennisBat StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -39,24 +35,19 @@ export const IconTableTennisBatDuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="table-tennis-bat-duotone-rounded IconTableTennisBatDuotoneRounded"
+      the-icon="TableTennisBat DuotoneRounded"
     >
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -66,20 +57,15 @@ export const IconTableTennisBatTwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="table-tennis-bat-twotone-rounded IconTableTennisBatTwotoneRounded"
+      the-icon="TableTennisBat TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -89,17 +75,15 @@ export const IconTableTennisBatSolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="table-tennis-bat-solid-rounded IconTableTennisBatSolidRounded"
+      the-icon="TableTennisBat SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -109,18 +93,15 @@ export const IconTableTennisBatBulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="table-tennis-bat-bulk-rounded IconTableTennisBatBulkRounded"
+      the-icon="TableTennisBat BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -130,18 +111,15 @@ export const IconTableTennisBatStrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="table-tennis-bat-stroke-sharp IconTableTennisBatStrokeSharp"
+      the-icon="TableTennisBat StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -151,25 +129,23 @@ export const IconTableTennisBatSolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="table-tennis-bat-solid-sharp IconTableTennisBatSolidSharp"
+      the-icon="TableTennisBat SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTableTennisBat: TheIconSelfPack = {
-  name: 'TableTennisBat',
-  StrokeRounded: IconTableTennisBatStrokeRounded,
-  DuotoneRounded: IconTableTennisBatDuotoneRounded,
-  TwotoneRounded: IconTableTennisBatTwotoneRounded,
-  SolidRounded: IconTableTennisBatSolidRounded,
-  BulkRounded: IconTableTennisBatBulkRounded,
-  StrokeSharp: IconTableTennisBatStrokeSharp,
-  SolidSharp: IconTableTennisBatSolidSharp,
-};
+export const iconPackOfTableTennisBat: TheIconSelfPack = [
+  'TableTennisBat',
+  IconTableTennisBatStrokeRounded,
+  IconTableTennisBatDuotoneRounded,
+  IconTableTennisBatTwotoneRounded,
+  IconTableTennisBatSolidRounded,
+  IconTableTennisBatBulkRounded,
+  IconTableTennisBatStrokeSharp,
+  IconTableTennisBatSolidSharp,
+];

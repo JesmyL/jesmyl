@@ -17,19 +17,15 @@ export const IconCursorMagicSelection01StrokeRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-magic-selection-01-stroke-rounded IconCursorMagicSelection01StrokeRounded"
+      the-icon="CursorMagicSelection01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -39,24 +35,19 @@ export const IconCursorMagicSelection01DuotoneRounded: FC<TheIconProps> = (props
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-magic-selection-01-duotone-rounded IconCursorMagicSelection01DuotoneRounded"
+      the-icon="CursorMagicSelection01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -66,20 +57,15 @@ export const IconCursorMagicSelection01TwotoneRounded: FC<TheIconProps> = (props
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-magic-selection-01-twotone-rounded IconCursorMagicSelection01TwotoneRounded"
+      the-icon="CursorMagicSelection01 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -89,17 +75,15 @@ export const IconCursorMagicSelection01SolidRounded: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-magic-selection-01-solid-rounded IconCursorMagicSelection01SolidRounded"
+      the-icon="CursorMagicSelection01 SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -109,18 +93,15 @@ export const IconCursorMagicSelection01BulkRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-magic-selection-01-bulk-rounded IconCursorMagicSelection01BulkRounded"
+      the-icon="CursorMagicSelection01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -130,20 +111,15 @@ export const IconCursorMagicSelection01StrokeSharp: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-magic-selection-01-stroke-sharp IconCursorMagicSelection01StrokeSharp"
+      the-icon="CursorMagicSelection01 StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -153,29 +129,27 @@ export const IconCursorMagicSelection01SolidSharp: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-magic-selection-01-solid-sharp IconCursorMagicSelection01SolidSharp"
+      the-icon="CursorMagicSelection01 SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCursorMagicSelection01: TheIconSelfPack = {
-  name: 'CursorMagicSelection01',
-  StrokeRounded: IconCursorMagicSelection01StrokeRounded,
-  DuotoneRounded: IconCursorMagicSelection01DuotoneRounded,
-  TwotoneRounded: IconCursorMagicSelection01TwotoneRounded,
-  SolidRounded: IconCursorMagicSelection01SolidRounded,
-  BulkRounded: IconCursorMagicSelection01BulkRounded,
-  StrokeSharp: IconCursorMagicSelection01StrokeSharp,
-  SolidSharp: IconCursorMagicSelection01SolidSharp,
-};
+export const iconPackOfCursorMagicSelection01: TheIconSelfPack = [
+  'CursorMagicSelection01',
+  IconCursorMagicSelection01StrokeRounded,
+  IconCursorMagicSelection01DuotoneRounded,
+  IconCursorMagicSelection01TwotoneRounded,
+  IconCursorMagicSelection01SolidRounded,
+  IconCursorMagicSelection01BulkRounded,
+  IconCursorMagicSelection01StrokeSharp,
+  IconCursorMagicSelection01SolidSharp,
+];

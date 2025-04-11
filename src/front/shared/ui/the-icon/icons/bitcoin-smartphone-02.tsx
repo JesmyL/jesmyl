@@ -18,27 +18,19 @@ export const IconBitcoinSmartphone02StrokeRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-smartphone-02-stroke-rounded IconBitcoinSmartphone02StrokeRounded"
+      the-icon="BitcoinSmartphone02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -48,32 +40,23 @@ export const IconBitcoinSmartphone02DuotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-smartphone-02-duotone-rounded IconBitcoinSmartphone02DuotoneRounded"
+      the-icon="BitcoinSmartphone02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -83,28 +66,19 @@ export const IconBitcoinSmartphone02TwotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-smartphone-02-twotone-rounded IconBitcoinSmartphone02TwotoneRounded"
+      the-icon="BitcoinSmartphone02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -114,13 +88,11 @@ export const IconBitcoinSmartphone02SolidRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-smartphone-02-solid-rounded IconBitcoinSmartphone02SolidRounded"
+      the-icon="BitcoinSmartphone02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -130,24 +102,19 @@ export const IconBitcoinSmartphone02BulkRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-smartphone-02-bulk-rounded IconBitcoinSmartphone02BulkRounded"
+      the-icon="BitcoinSmartphone02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -157,26 +124,19 @@ export const IconBitcoinSmartphone02StrokeSharp: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-smartphone-02-stroke-sharp IconBitcoinSmartphone02StrokeSharp"
+      the-icon="BitcoinSmartphone02 StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d8}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d2}
+        i-c="s ss sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj ss sw"
       />
     </TheIconWrapper>
   );
@@ -186,25 +146,23 @@ export const IconBitcoinSmartphone02SolidSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-smartphone-02-solid-sharp IconBitcoinSmartphone02SolidSharp"
+      the-icon="BitcoinSmartphone02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBitcoinSmartphone02: TheIconSelfPack = {
-  name: 'BitcoinSmartphone02',
-  StrokeRounded: IconBitcoinSmartphone02StrokeRounded,
-  DuotoneRounded: IconBitcoinSmartphone02DuotoneRounded,
-  TwotoneRounded: IconBitcoinSmartphone02TwotoneRounded,
-  SolidRounded: IconBitcoinSmartphone02SolidRounded,
-  BulkRounded: IconBitcoinSmartphone02BulkRounded,
-  StrokeSharp: IconBitcoinSmartphone02StrokeSharp,
-  SolidSharp: IconBitcoinSmartphone02SolidSharp,
-};
+export const iconPackOfBitcoinSmartphone02: TheIconSelfPack = [
+  'BitcoinSmartphone02',
+  IconBitcoinSmartphone02StrokeRounded,
+  IconBitcoinSmartphone02DuotoneRounded,
+  IconBitcoinSmartphone02TwotoneRounded,
+  IconBitcoinSmartphone02SolidRounded,
+  IconBitcoinSmartphone02BulkRounded,
+  IconBitcoinSmartphone02StrokeSharp,
+  IconBitcoinSmartphone02SolidSharp,
+];

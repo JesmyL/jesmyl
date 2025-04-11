@@ -18,25 +18,21 @@ export const IconPowerSocket01StrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="power-socket-01-stroke-rounded IconPowerSocket01StrokeRounded"
+      the-icon="PowerSocket01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="6" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="6"
+        i-c="s sw"
+      />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -46,32 +42,25 @@ export const IconPowerSocket01DuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="power-socket-01-duotone-rounded IconPowerSocket01DuotoneRounded"
+      the-icon="PowerSocket01 DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="6" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="6"
+        i-c="s sw"
+      />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -81,26 +70,21 @@ export const IconPowerSocket01TwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="power-socket-01-twotone-rounded IconPowerSocket01TwotoneRounded"
+      the-icon="PowerSocket01 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="6" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="6"
+        i-c="o7 s sw"
+      />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -110,19 +94,15 @@ export const IconPowerSocket01SolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="power-socket-01-solid-rounded IconPowerSocket01SolidRounded"
+      the-icon="PowerSocket01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -132,18 +112,15 @@ export const IconPowerSocket01BulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="power-socket-01-bulk-rounded IconPowerSocket01BulkRounded"
+      the-icon="PowerSocket01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -153,26 +130,21 @@ export const IconPowerSocket01StrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="power-socket-01-stroke-sharp IconPowerSocket01StrokeSharp"
+      the-icon="PowerSocket01 StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="6" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="6"
+        i-c="s sw"
+      />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -182,31 +154,27 @@ export const IconPowerSocket01SolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="power-socket-01-solid-sharp IconPowerSocket01SolidSharp"
+      the-icon="PowerSocket01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPowerSocket01: TheIconSelfPack = {
-  name: 'PowerSocket01',
-  StrokeRounded: IconPowerSocket01StrokeRounded,
-  DuotoneRounded: IconPowerSocket01DuotoneRounded,
-  TwotoneRounded: IconPowerSocket01TwotoneRounded,
-  SolidRounded: IconPowerSocket01SolidRounded,
-  BulkRounded: IconPowerSocket01BulkRounded,
-  StrokeSharp: IconPowerSocket01StrokeSharp,
-  SolidSharp: IconPowerSocket01SolidSharp,
-};
+export const iconPackOfPowerSocket01: TheIconSelfPack = [
+  'PowerSocket01',
+  IconPowerSocket01StrokeRounded,
+  IconPowerSocket01DuotoneRounded,
+  IconPowerSocket01TwotoneRounded,
+  IconPowerSocket01SolidRounded,
+  IconPowerSocket01BulkRounded,
+  IconPowerSocket01StrokeSharp,
+  IconPowerSocket01SolidSharp,
+];

@@ -21,28 +21,19 @@ export const IconDiagonalScrollPoint01StrokeRounded: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="diagonal-scroll-point-01-stroke-rounded IconDiagonalScrollPoint01StrokeRounded"
+      the-icon="DiagonalScrollPoint01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -52,33 +43,23 @@ export const IconDiagonalScrollPoint01DuotoneRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="diagonal-scroll-point-01-duotone-rounded IconDiagonalScrollPoint01DuotoneRounded"
+      the-icon="DiagonalScrollPoint01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -88,29 +69,19 @@ export const IconDiagonalScrollPoint01TwotoneRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="diagonal-scroll-point-01-twotone-rounded IconDiagonalScrollPoint01TwotoneRounded"
+      the-icon="DiagonalScrollPoint01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -120,19 +91,19 @@ export const IconDiagonalScrollPoint01SolidRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="diagonal-scroll-point-01-solid-rounded IconDiagonalScrollPoint01SolidRounded"
+      the-icon="DiagonalScrollPoint01 SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -142,20 +113,19 @@ export const IconDiagonalScrollPoint01BulkRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="diagonal-scroll-point-01-bulk-rounded IconDiagonalScrollPoint01BulkRounded"
+      the-icon="DiagonalScrollPoint01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -165,22 +135,19 @@ export const IconDiagonalScrollPoint01StrokeSharp: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="diagonal-scroll-point-01-stroke-sharp IconDiagonalScrollPoint01StrokeSharp"
+      the-icon="DiagonalScrollPoint01 StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -190,35 +157,31 @@ export const IconDiagonalScrollPoint01SolidSharp: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="diagonal-scroll-point-01-solid-sharp IconDiagonalScrollPoint01SolidSharp"
+      the-icon="DiagonalScrollPoint01 SolidSharp"
     >
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfDiagonalScrollPoint01: TheIconSelfPack = {
-  name: 'DiagonalScrollPoint01',
-  StrokeRounded: IconDiagonalScrollPoint01StrokeRounded,
-  DuotoneRounded: IconDiagonalScrollPoint01DuotoneRounded,
-  TwotoneRounded: IconDiagonalScrollPoint01TwotoneRounded,
-  SolidRounded: IconDiagonalScrollPoint01SolidRounded,
-  BulkRounded: IconDiagonalScrollPoint01BulkRounded,
-  StrokeSharp: IconDiagonalScrollPoint01StrokeSharp,
-  SolidSharp: IconDiagonalScrollPoint01SolidSharp,
-};
+export const iconPackOfDiagonalScrollPoint01: TheIconSelfPack = [
+  'DiagonalScrollPoint01',
+  IconDiagonalScrollPoint01StrokeRounded,
+  IconDiagonalScrollPoint01DuotoneRounded,
+  IconDiagonalScrollPoint01TwotoneRounded,
+  IconDiagonalScrollPoint01SolidRounded,
+  IconDiagonalScrollPoint01BulkRounded,
+  IconDiagonalScrollPoint01StrokeSharp,
+  IconDiagonalScrollPoint01SolidSharp,
+];

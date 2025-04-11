@@ -17,19 +17,15 @@ export const IconStrokeInsideStrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="stroke-inside-stroke-rounded IconStrokeInsideStrokeRounded"
+      the-icon="StrokeInside StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -39,24 +35,19 @@ export const IconStrokeInsideDuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="stroke-inside-duotone-rounded IconStrokeInsideDuotoneRounded"
+      the-icon="StrokeInside DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -66,20 +57,15 @@ export const IconStrokeInsideTwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="stroke-inside-twotone-rounded IconStrokeInsideTwotoneRounded"
+      the-icon="StrokeInside TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -89,15 +75,15 @@ export const IconStrokeInsideSolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="stroke-inside-solid-rounded IconStrokeInsideSolidRounded"
+      the-icon="StrokeInside SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -107,16 +93,15 @@ export const IconStrokeInsideBulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="stroke-inside-bulk-rounded IconStrokeInsideBulkRounded"
+      the-icon="StrokeInside BulkRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -126,18 +111,15 @@ export const IconStrokeInsideStrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="stroke-inside-stroke-sharp IconStrokeInsideStrokeSharp"
+      the-icon="StrokeInside StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -147,27 +129,27 @@ export const IconStrokeInsideSolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="stroke-inside-solid-sharp IconStrokeInsideSolidSharp"
+      the-icon="StrokeInside SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfStrokeInside: TheIconSelfPack = {
-  name: 'StrokeInside',
-  StrokeRounded: IconStrokeInsideStrokeRounded,
-  DuotoneRounded: IconStrokeInsideDuotoneRounded,
-  TwotoneRounded: IconStrokeInsideTwotoneRounded,
-  SolidRounded: IconStrokeInsideSolidRounded,
-  BulkRounded: IconStrokeInsideBulkRounded,
-  StrokeSharp: IconStrokeInsideStrokeSharp,
-  SolidSharp: IconStrokeInsideSolidSharp,
-};
+export const iconPackOfStrokeInside: TheIconSelfPack = [
+  'StrokeInside',
+  IconStrokeInsideStrokeRounded,
+  IconStrokeInsideDuotoneRounded,
+  IconStrokeInsideTwotoneRounded,
+  IconStrokeInsideSolidRounded,
+  IconStrokeInsideBulkRounded,
+  IconStrokeInsideStrokeSharp,
+  IconStrokeInsideSolidSharp,
+];

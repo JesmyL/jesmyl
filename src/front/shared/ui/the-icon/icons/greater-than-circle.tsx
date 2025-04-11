@@ -15,21 +15,18 @@ export const IconGreaterThanCircleStrokeRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="greater-than-circle-stroke-rounded IconGreaterThanCircleStrokeRounded"
+      the-icon="GreaterThanCircle StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -38,27 +35,23 @@ export const IconGreaterThanCircleDuotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="greater-than-circle-duotone-rounded IconGreaterThanCircleDuotoneRounded"
+      the-icon="GreaterThanCircle DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="f o7"
+      />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -68,22 +61,18 @@ export const IconGreaterThanCircleTwotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="greater-than-circle-twotone-rounded IconGreaterThanCircleTwotoneRounded"
+      the-icon="GreaterThanCircle TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -92,13 +81,11 @@ export const IconGreaterThanCircleSolidRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="greater-than-circle-solid-rounded IconGreaterThanCircleSolidRounded"
+      the-icon="GreaterThanCircle SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -108,18 +95,15 @@ export const IconGreaterThanCircleBulkRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="greater-than-circle-bulk-rounded IconGreaterThanCircleBulkRounded"
+      the-icon="GreaterThanCircle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -129,19 +113,18 @@ export const IconGreaterThanCircleStrokeSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="greater-than-circle-stroke-sharp IconGreaterThanCircleStrokeSharp"
+      the-icon="GreaterThanCircle StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -150,25 +133,23 @@ export const IconGreaterThanCircleSolidSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="greater-than-circle-solid-sharp IconGreaterThanCircleSolidSharp"
+      the-icon="GreaterThanCircle SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfGreaterThanCircle: TheIconSelfPack = {
-  name: 'GreaterThanCircle',
-  StrokeRounded: IconGreaterThanCircleStrokeRounded,
-  DuotoneRounded: IconGreaterThanCircleDuotoneRounded,
-  TwotoneRounded: IconGreaterThanCircleTwotoneRounded,
-  SolidRounded: IconGreaterThanCircleSolidRounded,
-  BulkRounded: IconGreaterThanCircleBulkRounded,
-  StrokeSharp: IconGreaterThanCircleStrokeSharp,
-  SolidSharp: IconGreaterThanCircleSolidSharp,
-};
+export const iconPackOfGreaterThanCircle: TheIconSelfPack = [
+  'GreaterThanCircle',
+  IconGreaterThanCircleStrokeRounded,
+  IconGreaterThanCircleDuotoneRounded,
+  IconGreaterThanCircleTwotoneRounded,
+  IconGreaterThanCircleSolidRounded,
+  IconGreaterThanCircleBulkRounded,
+  IconGreaterThanCircleStrokeSharp,
+  IconGreaterThanCircleSolidSharp,
+];

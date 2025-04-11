@@ -19,13 +19,11 @@ export const IconEarthStrokeRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="earth-stroke-rounded IconEarthStrokeRounded"
+      the-icon="Earth StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -35,18 +33,15 @@ export const IconEarthDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="earth-duotone-rounded IconEarthDuotoneRounded"
+      the-icon="Earth DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -56,20 +51,15 @@ export const IconEarthTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="earth-twotone-rounded IconEarthTwotoneRounded"
+      the-icon="Earth TwotoneRounded"
     >
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="o7 s sj sw"
       />
     </TheIconWrapper>
   );
@@ -79,19 +69,19 @@ export const IconEarthSolidRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="earth-solid-rounded IconEarthSolidRounded"
+      the-icon="Earth SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -101,20 +91,19 @@ export const IconEarthBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="earth-bulk-rounded IconEarthBulkRounded"
+      the-icon="Earth BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o7"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -124,12 +113,11 @@ export const IconEarthStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="earth-stroke-sharp IconEarthStrokeSharp"
+      the-icon="Earth StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -139,31 +127,31 @@ export const IconEarthSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="earth-solid-sharp IconEarthSolidSharp"
+      the-icon="Earth SolidSharp"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfEarth: TheIconSelfPack = {
-  name: 'Earth',
-  StrokeRounded: IconEarthStrokeRounded,
-  DuotoneRounded: IconEarthDuotoneRounded,
-  TwotoneRounded: IconEarthTwotoneRounded,
-  SolidRounded: IconEarthSolidRounded,
-  BulkRounded: IconEarthBulkRounded,
-  StrokeSharp: IconEarthStrokeSharp,
-  SolidSharp: IconEarthSolidSharp,
-};
+export const iconPackOfEarth: TheIconSelfPack = [
+  'Earth',
+  IconEarthStrokeRounded,
+  IconEarthDuotoneRounded,
+  IconEarthTwotoneRounded,
+  IconEarthSolidRounded,
+  IconEarthBulkRounded,
+  IconEarthStrokeSharp,
+  IconEarthSolidSharp,
+];

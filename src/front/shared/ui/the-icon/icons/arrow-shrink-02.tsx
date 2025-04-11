@@ -28,14 +28,11 @@ export const IconArrowShrink02StrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="arrow-shrink-02-stroke-rounded IconArrowShrink02StrokeRounded"
+      the-icon="ArrowShrink02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -45,22 +42,15 @@ export const IconArrowShrink02DuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="arrow-shrink-02-duotone-rounded IconArrowShrink02DuotoneRounded"
+      the-icon="ArrowShrink02 DuotoneRounded"
     >
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="0.5" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o4 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -70,31 +60,23 @@ export const IconArrowShrink02TwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="arrow-shrink-02-twotone-rounded IconArrowShrink02TwotoneRounded"
+      the-icon="ArrowShrink02 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -104,15 +86,15 @@ export const IconArrowShrink02SolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="arrow-shrink-02-solid-rounded IconArrowShrink02SolidRounded"
+      the-icon="ArrowShrink02 SolidRounded"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -122,25 +104,23 @@ export const IconArrowShrink02BulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="arrow-shrink-02-bulk-rounded IconArrowShrink02BulkRounded"
+      the-icon="ArrowShrink02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f o7"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f o7"
       />
       <path 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -150,29 +130,23 @@ export const IconArrowShrink02StrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="arrow-shrink-02-stroke-sharp IconArrowShrink02StrokeSharp"
+      the-icon="ArrowShrink02 StrokeSharp"
     >
       <path 
-        d={d.d14} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d14}
+        i-c="s sw"
       />
       <path 
-        d={d.d15} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d15}
+        i-c="s sw"
       />
       <path 
-        d={d.d16} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d16}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d17} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d17}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -182,27 +156,27 @@ export const IconArrowShrink02SolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="arrow-shrink-02-solid-sharp IconArrowShrink02SolidSharp"
+      the-icon="ArrowShrink02 SolidSharp"
     >
       <path 
-        d={d.d18} 
-        fill="var(--icon-fill)" 
+        d={d.d18}
+        i-c="f"
       />
       <path 
-        d={d.d19} 
-        fill="var(--icon-fill)" 
+        d={d.d19}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfArrowShrink02: TheIconSelfPack = {
-  name: 'ArrowShrink02',
-  StrokeRounded: IconArrowShrink02StrokeRounded,
-  DuotoneRounded: IconArrowShrink02DuotoneRounded,
-  TwotoneRounded: IconArrowShrink02TwotoneRounded,
-  SolidRounded: IconArrowShrink02SolidRounded,
-  BulkRounded: IconArrowShrink02BulkRounded,
-  StrokeSharp: IconArrowShrink02StrokeSharp,
-  SolidSharp: IconArrowShrink02SolidSharp,
-};
+export const iconPackOfArrowShrink02: TheIconSelfPack = [
+  'ArrowShrink02',
+  IconArrowShrink02StrokeRounded,
+  IconArrowShrink02DuotoneRounded,
+  IconArrowShrink02TwotoneRounded,
+  IconArrowShrink02SolidRounded,
+  IconArrowShrink02BulkRounded,
+  IconArrowShrink02StrokeSharp,
+  IconArrowShrink02SolidSharp,
+];

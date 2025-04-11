@@ -23,26 +23,19 @@ export const IconGoForward30SecStrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="go-forward-30-sec-stroke-rounded IconGoForward30SecStrokeRounded"
+      the-icon="GoForward30Sec StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -52,33 +45,23 @@ export const IconGoForward30SecDuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="go-forward-30-sec-duotone-rounded IconGoForward30SecDuotoneRounded"
+      the-icon="GoForward30Sec DuotoneRounded"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -88,21 +71,15 @@ export const IconGoForward30SecTwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="go-forward-30-sec-twotone-rounded IconGoForward30SecTwotoneRounded"
+      the-icon="GoForward30Sec TwotoneRounded"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d7}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -112,17 +89,15 @@ export const IconGoForward30SecSolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="go-forward-30-sec-solid-rounded IconGoForward30SecSolidRounded"
+      the-icon="GoForward30Sec SolidRounded"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -132,18 +107,15 @@ export const IconGoForward30SecBulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="go-forward-30-sec-bulk-rounded IconGoForward30SecBulkRounded"
+      the-icon="GoForward30Sec BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -153,18 +125,15 @@ export const IconGoForward30SecStrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="go-forward-30-sec-stroke-sharp IconGoForward30SecStrokeSharp"
+      the-icon="GoForward30Sec StrokeSharp"
     >
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d11}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -174,37 +143,31 @@ export const IconGoForward30SecSolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="go-forward-30-sec-solid-sharp IconGoForward30SecSolidSharp"
+      the-icon="GoForward30Sec SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfGoForward30Sec: TheIconSelfPack = {
-  name: 'GoForward30Sec',
-  StrokeRounded: IconGoForward30SecStrokeRounded,
-  DuotoneRounded: IconGoForward30SecDuotoneRounded,
-  TwotoneRounded: IconGoForward30SecTwotoneRounded,
-  SolidRounded: IconGoForward30SecSolidRounded,
-  BulkRounded: IconGoForward30SecBulkRounded,
-  StrokeSharp: IconGoForward30SecStrokeSharp,
-  SolidSharp: IconGoForward30SecSolidSharp,
-};
+export const iconPackOfGoForward30Sec: TheIconSelfPack = [
+  'GoForward30Sec',
+  IconGoForward30SecStrokeRounded,
+  IconGoForward30SecDuotoneRounded,
+  IconGoForward30SecTwotoneRounded,
+  IconGoForward30SecSolidRounded,
+  IconGoForward30SecBulkRounded,
+  IconGoForward30SecStrokeSharp,
+  IconGoForward30SecSolidSharp,
+];

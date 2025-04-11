@@ -17,18 +17,15 @@ export const IconRainDoubleDropStrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="rain-double-drop-stroke-rounded IconRainDoubleDropStrokeRounded"
+      the-icon="RainDoubleDrop StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -38,23 +35,19 @@ export const IconRainDoubleDropDuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="rain-double-drop-duotone-rounded IconRainDoubleDropDuotoneRounded"
+      the-icon="RainDoubleDrop DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -64,19 +57,15 @@ export const IconRainDoubleDropTwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="rain-double-drop-twotone-rounded IconRainDoubleDropTwotoneRounded"
+      the-icon="RainDoubleDrop TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -86,17 +75,15 @@ export const IconRainDoubleDropSolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="rain-double-drop-solid-rounded IconRainDoubleDropSolidRounded"
+      the-icon="RainDoubleDrop SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -106,18 +93,15 @@ export const IconRainDoubleDropBulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="rain-double-drop-bulk-rounded IconRainDoubleDropBulkRounded"
+      the-icon="RainDoubleDrop BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -127,17 +111,15 @@ export const IconRainDoubleDropStrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="rain-double-drop-stroke-sharp IconRainDoubleDropStrokeSharp"
+      the-icon="RainDoubleDrop StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -147,27 +129,27 @@ export const IconRainDoubleDropSolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="rain-double-drop-solid-sharp IconRainDoubleDropSolidSharp"
+      the-icon="RainDoubleDrop SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfRainDoubleDrop: TheIconSelfPack = {
-  name: 'RainDoubleDrop',
-  StrokeRounded: IconRainDoubleDropStrokeRounded,
-  DuotoneRounded: IconRainDoubleDropDuotoneRounded,
-  TwotoneRounded: IconRainDoubleDropTwotoneRounded,
-  SolidRounded: IconRainDoubleDropSolidRounded,
-  BulkRounded: IconRainDoubleDropBulkRounded,
-  StrokeSharp: IconRainDoubleDropStrokeSharp,
-  SolidSharp: IconRainDoubleDropSolidSharp,
-};
+export const iconPackOfRainDoubleDrop: TheIconSelfPack = [
+  'RainDoubleDrop',
+  IconRainDoubleDropStrokeRounded,
+  IconRainDoubleDropDuotoneRounded,
+  IconRainDoubleDropTwotoneRounded,
+  IconRainDoubleDropSolidRounded,
+  IconRainDoubleDropBulkRounded,
+  IconRainDoubleDropStrokeSharp,
+  IconRainDoubleDropSolidSharp,
+];

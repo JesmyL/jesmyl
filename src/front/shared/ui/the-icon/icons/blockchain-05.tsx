@@ -20,19 +20,15 @@ export const IconBlockchain05StrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="blockchain-05-stroke-rounded IconBlockchain05StrokeRounded"
+      the-icon="Blockchain05 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -42,29 +38,23 @@ export const IconBlockchain05DuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="blockchain-05-duotone-rounded IconBlockchain05DuotoneRounded"
+      the-icon="Blockchain05 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -74,20 +64,15 @@ export const IconBlockchain05TwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="blockchain-05-twotone-rounded IconBlockchain05TwotoneRounded"
+      the-icon="Blockchain05 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -97,19 +82,19 @@ export const IconBlockchain05SolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="blockchain-05-solid-rounded IconBlockchain05SolidRounded"
+      the-icon="Blockchain05 SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -119,20 +104,19 @@ export const IconBlockchain05BulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="blockchain-05-bulk-rounded IconBlockchain05BulkRounded"
+      the-icon="Blockchain05 BulkRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -142,19 +126,15 @@ export const IconBlockchain05StrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="blockchain-05-stroke-sharp IconBlockchain05StrokeSharp"
+      the-icon="Blockchain05 StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d9}
+        i-c="s ss sw"
       />
     </TheIconWrapper>
   );
@@ -164,31 +144,27 @@ export const IconBlockchain05SolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="blockchain-05-solid-sharp IconBlockchain05SolidSharp"
+      the-icon="Blockchain05 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBlockchain05: TheIconSelfPack = {
-  name: 'Blockchain05',
-  StrokeRounded: IconBlockchain05StrokeRounded,
-  DuotoneRounded: IconBlockchain05DuotoneRounded,
-  TwotoneRounded: IconBlockchain05TwotoneRounded,
-  SolidRounded: IconBlockchain05SolidRounded,
-  BulkRounded: IconBlockchain05BulkRounded,
-  StrokeSharp: IconBlockchain05StrokeSharp,
-  SolidSharp: IconBlockchain05SolidSharp,
-};
+export const iconPackOfBlockchain05: TheIconSelfPack = [
+  'Blockchain05',
+  IconBlockchain05StrokeRounded,
+  IconBlockchain05DuotoneRounded,
+  IconBlockchain05TwotoneRounded,
+  IconBlockchain05SolidRounded,
+  IconBlockchain05BulkRounded,
+  IconBlockchain05StrokeSharp,
+  IconBlockchain05SolidSharp,
+];

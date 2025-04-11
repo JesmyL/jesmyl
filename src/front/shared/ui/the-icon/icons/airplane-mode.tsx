@@ -15,14 +15,11 @@ export const IconAirplaneModeStrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="airplane-mode-stroke-rounded IconAirplaneModeStrokeRounded"
+      the-icon="AirplaneMode StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -32,19 +29,15 @@ export const IconAirplaneModeDuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="airplane-mode-duotone-rounded IconAirplaneModeDuotoneRounded"
+      the-icon="AirplaneMode DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,22 +47,15 @@ export const IconAirplaneModeTwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="airplane-mode-twotone-rounded IconAirplaneModeTwotoneRounded"
+      the-icon="AirplaneMode TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -79,11 +65,11 @@ export const IconAirplaneModeSolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="airplane-mode-solid-rounded IconAirplaneModeSolidRounded"
+      the-icon="AirplaneMode SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -93,16 +79,15 @@ export const IconAirplaneModeBulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="airplane-mode-bulk-rounded IconAirplaneModeBulkRounded"
+      the-icon="AirplaneMode BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -112,12 +97,11 @@ export const IconAirplaneModeStrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="airplane-mode-stroke-sharp IconAirplaneModeStrokeSharp"
+      the-icon="AirplaneMode StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -127,23 +111,23 @@ export const IconAirplaneModeSolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="airplane-mode-solid-sharp IconAirplaneModeSolidSharp"
+      the-icon="AirplaneMode SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAirplaneMode: TheIconSelfPack = {
-  name: 'AirplaneMode',
-  StrokeRounded: IconAirplaneModeStrokeRounded,
-  DuotoneRounded: IconAirplaneModeDuotoneRounded,
-  TwotoneRounded: IconAirplaneModeTwotoneRounded,
-  SolidRounded: IconAirplaneModeSolidRounded,
-  BulkRounded: IconAirplaneModeBulkRounded,
-  StrokeSharp: IconAirplaneModeStrokeSharp,
-  SolidSharp: IconAirplaneModeSolidSharp,
-};
+export const iconPackOfAirplaneMode: TheIconSelfPack = [
+  'AirplaneMode',
+  IconAirplaneModeStrokeRounded,
+  IconAirplaneModeDuotoneRounded,
+  IconAirplaneModeTwotoneRounded,
+  IconAirplaneModeSolidRounded,
+  IconAirplaneModeBulkRounded,
+  IconAirplaneModeStrokeSharp,
+  IconAirplaneModeSolidSharp,
+];

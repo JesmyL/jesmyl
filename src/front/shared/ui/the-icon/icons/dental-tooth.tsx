@@ -15,14 +15,11 @@ export const IconDentalToothStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="dental-tooth-stroke-rounded IconDentalToothStrokeRounded"
+      the-icon="DentalTooth StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -32,19 +29,15 @@ export const IconDentalToothDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="dental-tooth-duotone-rounded IconDentalToothDuotoneRounded"
+      the-icon="DentalTooth DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,22 +47,15 @@ export const IconDentalToothTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="dental-tooth-twotone-rounded IconDentalToothTwotoneRounded"
+      the-icon="DentalTooth TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -79,11 +65,11 @@ export const IconDentalToothSolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="dental-tooth-solid-rounded IconDentalToothSolidRounded"
+      the-icon="DentalTooth SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -93,12 +79,11 @@ export const IconDentalToothBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="dental-tooth-bulk-rounded IconDentalToothBulkRounded"
+      the-icon="DentalTooth BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -108,13 +93,11 @@ export const IconDentalToothStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="dental-tooth-stroke-sharp IconDentalToothStrokeSharp"
+      the-icon="DentalTooth StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -124,23 +107,23 @@ export const IconDentalToothSolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="dental-tooth-solid-sharp IconDentalToothSolidSharp"
+      the-icon="DentalTooth SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfDentalTooth: TheIconSelfPack = {
-  name: 'DentalTooth',
-  StrokeRounded: IconDentalToothStrokeRounded,
-  DuotoneRounded: IconDentalToothDuotoneRounded,
-  TwotoneRounded: IconDentalToothTwotoneRounded,
-  SolidRounded: IconDentalToothSolidRounded,
-  BulkRounded: IconDentalToothBulkRounded,
-  StrokeSharp: IconDentalToothStrokeSharp,
-  SolidSharp: IconDentalToothSolidSharp,
-};
+export const iconPackOfDentalTooth: TheIconSelfPack = [
+  'DentalTooth',
+  IconDentalToothStrokeRounded,
+  IconDentalToothDuotoneRounded,
+  IconDentalToothTwotoneRounded,
+  IconDentalToothSolidRounded,
+  IconDentalToothBulkRounded,
+  IconDentalToothStrokeSharp,
+  IconDentalToothSolidSharp,
+];

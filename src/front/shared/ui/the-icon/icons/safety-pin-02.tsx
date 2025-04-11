@@ -19,29 +19,21 @@ export const IconSafetyPin02StrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="safety-pin-02-stroke-rounded IconSafetyPin02StrokeRounded"
+      the-icon="SafetyPin02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="4.5" 
-        cy="19.5" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="4.5"
+        cy="19.5"
+        r="2.5"
+        i-c="s sj sr sw"
+      />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -51,40 +43,31 @@ export const IconSafetyPin02DuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="safety-pin-02-duotone-rounded IconSafetyPin02DuotoneRounded"
+      the-icon="SafetyPin02 DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="4.5" 
-        cy="19.5" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
-      <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        cx="4.5"
+        cy="19.5"
+        r="2.5"
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="f o7"
+      />
+      <path 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="4.5" 
-        cy="19.5" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="4.5"
+        cy="19.5"
+        r="2.5"
+        i-c="s sj sr sw"
+      />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -94,30 +77,21 @@ export const IconSafetyPin02TwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="safety-pin-02-twotone-rounded IconSafetyPin02TwotoneRounded"
+      the-icon="SafetyPin02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="4.5" 
-        cy="19.5" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="4.5"
+        cy="19.5"
+        r="2.5"
+        i-c="s sj sr sw"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -127,23 +101,19 @@ export const IconSafetyPin02SolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="safety-pin-02-solid-rounded IconSafetyPin02SolidRounded"
+      the-icon="SafetyPin02 SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -153,24 +123,19 @@ export const IconSafetyPin02BulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="safety-pin-02-bulk-rounded IconSafetyPin02BulkRounded"
+      the-icon="SafetyPin02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -180,27 +145,21 @@ export const IconSafetyPin02StrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="safety-pin-02-stroke-sharp IconSafetyPin02StrokeSharp"
+      the-icon="SafetyPin02 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d6}
+        i-c="s sr sw"
       />
       <circle 
-        cx="4.5" 
-        cy="19.5" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="4.5"
+        cy="19.5"
+        r="2.5"
+        i-c="s sj sr sw"
+      />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -210,35 +169,31 @@ export const IconSafetyPin02SolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="safety-pin-02-solid-sharp IconSafetyPin02SolidSharp"
+      the-icon="SafetyPin02 SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSafetyPin02: TheIconSelfPack = {
-  name: 'SafetyPin02',
-  StrokeRounded: IconSafetyPin02StrokeRounded,
-  DuotoneRounded: IconSafetyPin02DuotoneRounded,
-  TwotoneRounded: IconSafetyPin02TwotoneRounded,
-  SolidRounded: IconSafetyPin02SolidRounded,
-  BulkRounded: IconSafetyPin02BulkRounded,
-  StrokeSharp: IconSafetyPin02StrokeSharp,
-  SolidSharp: IconSafetyPin02SolidSharp,
-};
+export const iconPackOfSafetyPin02: TheIconSelfPack = [
+  'SafetyPin02',
+  IconSafetyPin02StrokeRounded,
+  IconSafetyPin02DuotoneRounded,
+  IconSafetyPin02TwotoneRounded,
+  IconSafetyPin02SolidRounded,
+  IconSafetyPin02BulkRounded,
+  IconSafetyPin02StrokeSharp,
+  IconSafetyPin02SolidSharp,
+];

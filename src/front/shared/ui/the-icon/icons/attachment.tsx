@@ -17,14 +17,11 @@ export const IconAttachmentStrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="attachment-stroke-rounded IconAttachmentStrokeRounded"
+      the-icon="Attachment StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -34,19 +31,15 @@ export const IconAttachmentDuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="attachment-duotone-rounded IconAttachmentDuotoneRounded"
+      the-icon="Attachment DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -56,22 +49,15 @@ export const IconAttachmentTwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="attachment-twotone-rounded IconAttachmentTwotoneRounded"
+      the-icon="Attachment TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -81,13 +67,11 @@ export const IconAttachmentSolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="attachment-solid-rounded IconAttachmentSolidRounded"
+      the-icon="Attachment SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -97,16 +81,15 @@ export const IconAttachmentBulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="attachment-bulk-rounded IconAttachmentBulkRounded"
+      the-icon="Attachment BulkRounded"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -116,13 +99,11 @@ export const IconAttachmentStrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="attachment-stroke-sharp IconAttachmentStrokeSharp"
+      the-icon="Attachment StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -132,25 +113,23 @@ export const IconAttachmentSolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="attachment-solid-sharp IconAttachmentSolidSharp"
+      the-icon="Attachment SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAttachment: TheIconSelfPack = {
-  name: 'Attachment',
-  StrokeRounded: IconAttachmentStrokeRounded,
-  DuotoneRounded: IconAttachmentDuotoneRounded,
-  TwotoneRounded: IconAttachmentTwotoneRounded,
-  SolidRounded: IconAttachmentSolidRounded,
-  BulkRounded: IconAttachmentBulkRounded,
-  StrokeSharp: IconAttachmentStrokeSharp,
-  SolidSharp: IconAttachmentSolidSharp,
-};
+export const iconPackOfAttachment: TheIconSelfPack = [
+  'Attachment',
+  IconAttachmentStrokeRounded,
+  IconAttachmentDuotoneRounded,
+  IconAttachmentTwotoneRounded,
+  IconAttachmentSolidRounded,
+  IconAttachmentBulkRounded,
+  IconAttachmentStrokeSharp,
+  IconAttachmentSolidSharp,
+];

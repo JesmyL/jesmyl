@@ -18,19 +18,15 @@ export const IconFolderRemoveStrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="folder-remove-stroke-rounded IconFolderRemoveStrokeRounded"
+      the-icon="FolderRemove StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -40,24 +36,19 @@ export const IconFolderRemoveDuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="folder-remove-duotone-rounded IconFolderRemoveDuotoneRounded"
+      the-icon="FolderRemove DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -67,20 +58,15 @@ export const IconFolderRemoveTwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="folder-remove-twotone-rounded IconFolderRemoveTwotoneRounded"
+      the-icon="FolderRemove TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -90,17 +76,15 @@ export const IconFolderRemoveSolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="folder-remove-solid-rounded IconFolderRemoveSolidRounded"
+      the-icon="FolderRemove SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -110,18 +94,15 @@ export const IconFolderRemoveBulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="folder-remove-bulk-rounded IconFolderRemoveBulkRounded"
+      the-icon="FolderRemove BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -131,18 +112,15 @@ export const IconFolderRemoveStrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="folder-remove-stroke-sharp IconFolderRemoveStrokeSharp"
+      the-icon="FolderRemove StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -152,29 +130,27 @@ export const IconFolderRemoveSolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="folder-remove-solid-sharp IconFolderRemoveSolidSharp"
+      the-icon="FolderRemove SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfFolderRemove: TheIconSelfPack = {
-  name: 'FolderRemove',
-  StrokeRounded: IconFolderRemoveStrokeRounded,
-  DuotoneRounded: IconFolderRemoveDuotoneRounded,
-  TwotoneRounded: IconFolderRemoveTwotoneRounded,
-  SolidRounded: IconFolderRemoveSolidRounded,
-  BulkRounded: IconFolderRemoveBulkRounded,
-  StrokeSharp: IconFolderRemoveStrokeSharp,
-  SolidSharp: IconFolderRemoveSolidSharp,
-};
+export const iconPackOfFolderRemove: TheIconSelfPack = [
+  'FolderRemove',
+  IconFolderRemoveStrokeRounded,
+  IconFolderRemoveDuotoneRounded,
+  IconFolderRemoveTwotoneRounded,
+  IconFolderRemoveSolidRounded,
+  IconFolderRemoveBulkRounded,
+  IconFolderRemoveStrokeSharp,
+  IconFolderRemoveSolidSharp,
+];

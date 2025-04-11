@@ -22,27 +22,19 @@ export const IconBubbleChatFavouriteStrokeRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="bubble-chat-favourite-stroke-rounded IconBubbleChatFavouriteStrokeRounded"
+      the-icon="BubbleChatFavourite StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -52,32 +44,23 @@ export const IconBubbleChatFavouriteDuotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="bubble-chat-favourite-duotone-rounded IconBubbleChatFavouriteDuotoneRounded"
+      the-icon="BubbleChatFavourite DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -87,28 +70,19 @@ export const IconBubbleChatFavouriteTwotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="bubble-chat-favourite-twotone-rounded IconBubbleChatFavouriteTwotoneRounded"
+      the-icon="BubbleChatFavourite TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -118,17 +92,15 @@ export const IconBubbleChatFavouriteSolidRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="bubble-chat-favourite-solid-rounded IconBubbleChatFavouriteSolidRounded"
+      the-icon="BubbleChatFavourite SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -138,22 +110,19 @@ export const IconBubbleChatFavouriteBulkRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="bubble-chat-favourite-bulk-rounded IconBubbleChatFavouriteBulkRounded"
+      the-icon="BubbleChatFavourite BulkRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -163,25 +132,19 @@ export const IconBubbleChatFavouriteStrokeSharp: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="bubble-chat-favourite-stroke-sharp IconBubbleChatFavouriteStrokeSharp"
+      the-icon="BubbleChatFavourite StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d9}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj ss sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d11}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -191,29 +154,27 @@ export const IconBubbleChatFavouriteSolidSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="bubble-chat-favourite-solid-sharp IconBubbleChatFavouriteSolidSharp"
+      the-icon="BubbleChatFavourite SolidSharp"
     >
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBubbleChatFavourite: TheIconSelfPack = {
-  name: 'BubbleChatFavourite',
-  StrokeRounded: IconBubbleChatFavouriteStrokeRounded,
-  DuotoneRounded: IconBubbleChatFavouriteDuotoneRounded,
-  TwotoneRounded: IconBubbleChatFavouriteTwotoneRounded,
-  SolidRounded: IconBubbleChatFavouriteSolidRounded,
-  BulkRounded: IconBubbleChatFavouriteBulkRounded,
-  StrokeSharp: IconBubbleChatFavouriteStrokeSharp,
-  SolidSharp: IconBubbleChatFavouriteSolidSharp,
-};
+export const iconPackOfBubbleChatFavourite: TheIconSelfPack = [
+  'BubbleChatFavourite',
+  IconBubbleChatFavouriteStrokeRounded,
+  IconBubbleChatFavouriteDuotoneRounded,
+  IconBubbleChatFavouriteTwotoneRounded,
+  IconBubbleChatFavouriteSolidRounded,
+  IconBubbleChatFavouriteBulkRounded,
+  IconBubbleChatFavouriteStrokeSharp,
+  IconBubbleChatFavouriteSolidSharp,
+];

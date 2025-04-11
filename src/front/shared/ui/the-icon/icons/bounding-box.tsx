@@ -35,71 +35,54 @@ export const IconBoundingBoxStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="bounding-box-stroke-rounded IconBoundingBoxStrokeRounded"
+      the-icon="BoundingBox StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="4" 
-        cy="4" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="4"
+        cy="4"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="4" 
-        cy="12" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="4"
+        cy="12"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="12" 
-        cy="4" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="4"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="20" 
-        cy="12" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="20"
+        cy="12"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="12" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="20"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="20" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="20"
+        cy="20"
+        r="2"
+        i-c="s sj sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -108,82 +91,64 @@ export const IconBoundingBoxDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="bounding-box-duotone-rounded IconBoundingBoxDuotoneRounded"
+      the-icon="BoundingBox DuotoneRounded"
     >
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       </g>
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="4" 
-        cy="4" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="4"
+        cy="4"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="4" 
-        cy="12" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="4"
+        cy="12"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="12" 
-        cy="4" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="4"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="20" 
-        cy="12" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="20"
+        cy="12"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="12" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="20"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="20" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="20"
+        cy="20"
+        r="2"
+        i-c="s sj sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -192,72 +157,54 @@ export const IconBoundingBoxTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="bounding-box-twotone-rounded IconBoundingBoxTwotoneRounded"
+      the-icon="BoundingBox TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <circle 
-        cx="4" 
-        cy="4" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="4"
+        cy="4"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="4" 
-        cy="12" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="4"
+        cy="12"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="12" 
-        cy="4" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="4"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="20" 
-        cy="12" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="20"
+        cy="12"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="12" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="20"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="20" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="20"
+        cy="20"
+        r="2"
+        i-c="s sj sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -266,41 +213,39 @@ export const IconBoundingBoxSolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="bounding-box-solid-rounded IconBoundingBoxSolidRounded"
+      the-icon="BoundingBox SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -310,42 +255,39 @@ export const IconBoundingBoxBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="bounding-box-bulk-rounded IconBoundingBoxBulkRounded"
+      the-icon="BoundingBox BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -355,47 +297,39 @@ export const IconBoundingBoxStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="bounding-box-stroke-sharp IconBoundingBoxStrokeSharp"
+      the-icon="BoundingBox StrokeSharp"
     >
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d12}
+        i-c="s sw"
       />
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d13}
+        i-c="s sw"
       />
       <path 
-        d={d.d14} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d14}
+        i-c="s sw"
       />
       <path 
-        d={d.d15} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d15}
+        i-c="s sw"
       />
       <path 
-        d={d.d16} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d16}
+        i-c="s sw"
       />
       <path 
-        d={d.d17} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d17}
+        i-c="s sw"
       />
       <path 
-        d={d.d18} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d18}
+        i-c="s sw"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -405,53 +339,51 @@ export const IconBoundingBoxSolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="bounding-box-solid-sharp IconBoundingBoxSolidSharp"
+      the-icon="BoundingBox SolidSharp"
     >
       <path 
-        d={d.d19} 
-        fill="var(--icon-fill)" 
+        d={d.d19}
+        i-c="f"
       />
       <path 
-        d={d.d20} 
-        fill="var(--icon-fill)" 
+        d={d.d20}
+        i-c="f"
       />
       <path 
-        d={d.d21} 
-        fill="var(--icon-fill)" 
+        d={d.d21}
+        i-c="f"
       />
       <path 
-        d={d.d22} 
-        fill="var(--icon-fill)" 
+        d={d.d22}
+        i-c="f"
       />
       <path 
-        d={d.d23} 
-        fill="var(--icon-fill)" 
+        d={d.d23}
+        i-c="f"
       />
       <path 
-        d={d.d24} 
-        fill="var(--icon-fill)" 
+        d={d.d24}
+        i-c="f"
       />
       <path 
-        d={d.d25} 
-        fill="var(--icon-fill)" 
+        d={d.d25}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d26} 
-        fill="var(--icon-fill)" 
+        d={d.d26}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBoundingBox: TheIconSelfPack = {
-  name: 'BoundingBox',
-  StrokeRounded: IconBoundingBoxStrokeRounded,
-  DuotoneRounded: IconBoundingBoxDuotoneRounded,
-  TwotoneRounded: IconBoundingBoxTwotoneRounded,
-  SolidRounded: IconBoundingBoxSolidRounded,
-  BulkRounded: IconBoundingBoxBulkRounded,
-  StrokeSharp: IconBoundingBoxStrokeSharp,
-  SolidSharp: IconBoundingBoxSolidSharp,
-};
+export const iconPackOfBoundingBox: TheIconSelfPack = [
+  'BoundingBox',
+  IconBoundingBoxStrokeRounded,
+  IconBoundingBoxDuotoneRounded,
+  IconBoundingBoxTwotoneRounded,
+  IconBoundingBoxSolidRounded,
+  IconBoundingBoxBulkRounded,
+  IconBoundingBoxStrokeSharp,
+  IconBoundingBoxSolidSharp,
+];

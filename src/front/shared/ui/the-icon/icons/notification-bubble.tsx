@@ -18,19 +18,15 @@ export const IconNotificationBubbleStrokeRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="notification-bubble-stroke-rounded IconNotificationBubbleStrokeRounded"
+      the-icon="NotificationBubble StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -40,29 +36,23 @@ export const IconNotificationBubbleDuotoneRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="notification-bubble-duotone-rounded IconNotificationBubbleDuotoneRounded"
+      the-icon="NotificationBubble DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -72,20 +62,15 @@ export const IconNotificationBubbleTwotoneRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="notification-bubble-twotone-rounded IconNotificationBubbleTwotoneRounded"
+      the-icon="NotificationBubble TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="o7 s sw"
       />
     </TheIconWrapper>
   );
@@ -95,15 +80,15 @@ export const IconNotificationBubbleSolidRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="notification-bubble-solid-rounded IconNotificationBubbleSolidRounded"
+      the-icon="NotificationBubble SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -113,16 +98,15 @@ export const IconNotificationBubbleBulkRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="notification-bubble-bulk-rounded IconNotificationBubbleBulkRounded"
+      the-icon="NotificationBubble BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -132,18 +116,15 @@ export const IconNotificationBubbleStrokeSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="notification-bubble-stroke-sharp IconNotificationBubbleStrokeSharp"
+      the-icon="NotificationBubble StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -153,27 +134,27 @@ export const IconNotificationBubbleSolidSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="notification-bubble-solid-sharp IconNotificationBubbleSolidSharp"
+      the-icon="NotificationBubble SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfNotificationBubble: TheIconSelfPack = {
-  name: 'NotificationBubble',
-  StrokeRounded: IconNotificationBubbleStrokeRounded,
-  DuotoneRounded: IconNotificationBubbleDuotoneRounded,
-  TwotoneRounded: IconNotificationBubbleTwotoneRounded,
-  SolidRounded: IconNotificationBubbleSolidRounded,
-  BulkRounded: IconNotificationBubbleBulkRounded,
-  StrokeSharp: IconNotificationBubbleStrokeSharp,
-  SolidSharp: IconNotificationBubbleSolidSharp,
-};
+export const iconPackOfNotificationBubble: TheIconSelfPack = [
+  'NotificationBubble',
+  IconNotificationBubbleStrokeRounded,
+  IconNotificationBubbleDuotoneRounded,
+  IconNotificationBubbleTwotoneRounded,
+  IconNotificationBubbleSolidRounded,
+  IconNotificationBubbleBulkRounded,
+  IconNotificationBubbleStrokeSharp,
+  IconNotificationBubbleSolidSharp,
+];

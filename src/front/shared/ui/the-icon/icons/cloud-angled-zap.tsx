@@ -18,21 +18,15 @@ export const IconCloudAngledZapStrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-angled-zap-stroke-rounded IconCloudAngledZapStrokeRounded"
+      the-icon="CloudAngledZap StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -42,26 +36,19 @@ export const IconCloudAngledZapDuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-angled-zap-duotone-rounded IconCloudAngledZapDuotoneRounded"
+      the-icon="CloudAngledZap DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -71,22 +58,15 @@ export const IconCloudAngledZapTwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-angled-zap-twotone-rounded IconCloudAngledZapTwotoneRounded"
+      the-icon="CloudAngledZap TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -96,21 +76,19 @@ export const IconCloudAngledZapSolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-angled-zap-solid-rounded IconCloudAngledZapSolidRounded"
+      the-icon="CloudAngledZap SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -120,22 +98,19 @@ export const IconCloudAngledZapBulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-angled-zap-bulk-rounded IconCloudAngledZapBulkRounded"
+      the-icon="CloudAngledZap BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -145,18 +120,15 @@ export const IconCloudAngledZapStrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-angled-zap-stroke-sharp IconCloudAngledZapStrokeSharp"
+      the-icon="CloudAngledZap StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -166,29 +138,27 @@ export const IconCloudAngledZapSolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-angled-zap-solid-sharp IconCloudAngledZapSolidSharp"
+      the-icon="CloudAngledZap SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCloudAngledZap: TheIconSelfPack = {
-  name: 'CloudAngledZap',
-  StrokeRounded: IconCloudAngledZapStrokeRounded,
-  DuotoneRounded: IconCloudAngledZapDuotoneRounded,
-  TwotoneRounded: IconCloudAngledZapTwotoneRounded,
-  SolidRounded: IconCloudAngledZapSolidRounded,
-  BulkRounded: IconCloudAngledZapBulkRounded,
-  StrokeSharp: IconCloudAngledZapStrokeSharp,
-  SolidSharp: IconCloudAngledZapSolidSharp,
-};
+export const iconPackOfCloudAngledZap: TheIconSelfPack = [
+  'CloudAngledZap',
+  IconCloudAngledZapStrokeRounded,
+  IconCloudAngledZapDuotoneRounded,
+  IconCloudAngledZapTwotoneRounded,
+  IconCloudAngledZapSolidRounded,
+  IconCloudAngledZapBulkRounded,
+  IconCloudAngledZapStrokeSharp,
+  IconCloudAngledZapSolidSharp,
+];

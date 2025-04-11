@@ -14,19 +14,17 @@ export const IconEqualSignCircleStrokeRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="equal-sign-circle-stroke-rounded IconEqualSignCircleStrokeRounded"
+      the-icon="EqualSignCircle StrokeRounded"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -36,26 +34,23 @@ export const IconEqualSignCircleDuotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="equal-sign-circle-duotone-rounded IconEqualSignCircleDuotoneRounded"
+      the-icon="EqualSignCircle DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="f o7"
+      />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -65,20 +60,17 @@ export const IconEqualSignCircleTwotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="equal-sign-circle-twotone-rounded IconEqualSignCircleTwotoneRounded"
+      the-icon="EqualSignCircle TwotoneRounded"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -88,13 +80,11 @@ export const IconEqualSignCircleSolidRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="equal-sign-circle-solid-rounded IconEqualSignCircleSolidRounded"
+      the-icon="EqualSignCircle SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -104,18 +94,15 @@ export const IconEqualSignCircleBulkRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="equal-sign-circle-bulk-rounded IconEqualSignCircleBulkRounded"
+      the-icon="EqualSignCircle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -125,20 +112,17 @@ export const IconEqualSignCircleStrokeSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="equal-sign-circle-stroke-sharp IconEqualSignCircleStrokeSharp"
+      the-icon="EqualSignCircle StrokeSharp"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -148,25 +132,23 @@ export const IconEqualSignCircleSolidSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="equal-sign-circle-solid-sharp IconEqualSignCircleSolidSharp"
+      the-icon="EqualSignCircle SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfEqualSignCircle: TheIconSelfPack = {
-  name: 'EqualSignCircle',
-  StrokeRounded: IconEqualSignCircleStrokeRounded,
-  DuotoneRounded: IconEqualSignCircleDuotoneRounded,
-  TwotoneRounded: IconEqualSignCircleTwotoneRounded,
-  SolidRounded: IconEqualSignCircleSolidRounded,
-  BulkRounded: IconEqualSignCircleBulkRounded,
-  StrokeSharp: IconEqualSignCircleStrokeSharp,
-  SolidSharp: IconEqualSignCircleSolidSharp,
-};
+export const iconPackOfEqualSignCircle: TheIconSelfPack = [
+  'EqualSignCircle',
+  IconEqualSignCircleStrokeRounded,
+  IconEqualSignCircleDuotoneRounded,
+  IconEqualSignCircleTwotoneRounded,
+  IconEqualSignCircleSolidRounded,
+  IconEqualSignCircleBulkRounded,
+  IconEqualSignCircleStrokeSharp,
+  IconEqualSignCircleSolidSharp,
+];

@@ -21,26 +21,19 @@ export const IconPathfinderExcludeStrokeRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-exclude-stroke-rounded IconPathfinderExcludeStrokeRounded"
+      the-icon="PathfinderExclude StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -50,36 +43,27 @@ export const IconPathfinderExcludeDuotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-exclude-duotone-rounded IconPathfinderExcludeDuotoneRounded"
+      the-icon="PathfinderExclude DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -89,27 +73,19 @@ export const IconPathfinderExcludeTwotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-exclude-twotone-rounded IconPathfinderExcludeTwotoneRounded"
+      the-icon="PathfinderExclude TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -119,13 +95,11 @@ export const IconPathfinderExcludeSolidRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-exclude-solid-rounded IconPathfinderExcludeSolidRounded"
+      the-icon="PathfinderExclude SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -135,18 +109,15 @@ export const IconPathfinderExcludeBulkRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-exclude-bulk-rounded IconPathfinderExcludeBulkRounded"
+      the-icon="PathfinderExclude BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -156,24 +127,19 @@ export const IconPathfinderExcludeStrokeSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-exclude-stroke-sharp IconPathfinderExcludeStrokeSharp"
+      the-icon="PathfinderExclude StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d11}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -183,25 +149,23 @@ export const IconPathfinderExcludeSolidSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-exclude-solid-sharp IconPathfinderExcludeSolidSharp"
+      the-icon="PathfinderExclude SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPathfinderExclude: TheIconSelfPack = {
-  name: 'PathfinderExclude',
-  StrokeRounded: IconPathfinderExcludeStrokeRounded,
-  DuotoneRounded: IconPathfinderExcludeDuotoneRounded,
-  TwotoneRounded: IconPathfinderExcludeTwotoneRounded,
-  SolidRounded: IconPathfinderExcludeSolidRounded,
-  BulkRounded: IconPathfinderExcludeBulkRounded,
-  StrokeSharp: IconPathfinderExcludeStrokeSharp,
-  SolidSharp: IconPathfinderExcludeSolidSharp,
-};
+export const iconPackOfPathfinderExclude: TheIconSelfPack = [
+  'PathfinderExclude',
+  IconPathfinderExcludeStrokeRounded,
+  IconPathfinderExcludeDuotoneRounded,
+  IconPathfinderExcludeTwotoneRounded,
+  IconPathfinderExcludeSolidRounded,
+  IconPathfinderExcludeBulkRounded,
+  IconPathfinderExcludeStrokeSharp,
+  IconPathfinderExcludeSolidSharp,
+];

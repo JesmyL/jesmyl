@@ -18,20 +18,15 @@ export const IconBubbleChatTranslateStrokeRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="bubble-chat-translate-stroke-rounded IconBubbleChatTranslateStrokeRounded"
+      the-icon="BubbleChatTranslate StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -41,25 +36,19 @@ export const IconBubbleChatTranslateDuotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="bubble-chat-translate-duotone-rounded IconBubbleChatTranslateDuotoneRounded"
+      the-icon="BubbleChatTranslate DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -69,21 +58,15 @@ export const IconBubbleChatTranslateTwotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="bubble-chat-translate-twotone-rounded IconBubbleChatTranslateTwotoneRounded"
+      the-icon="BubbleChatTranslate TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -93,13 +76,11 @@ export const IconBubbleChatTranslateSolidRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="bubble-chat-translate-solid-rounded IconBubbleChatTranslateSolidRounded"
+      the-icon="BubbleChatTranslate SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -109,18 +90,15 @@ export const IconBubbleChatTranslateBulkRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="bubble-chat-translate-bulk-rounded IconBubbleChatTranslateBulkRounded"
+      the-icon="BubbleChatTranslate BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -130,18 +108,15 @@ export const IconBubbleChatTranslateStrokeSharp: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="bubble-chat-translate-stroke-sharp IconBubbleChatTranslateStrokeSharp"
+      the-icon="BubbleChatTranslate StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -151,25 +126,23 @@ export const IconBubbleChatTranslateSolidSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="bubble-chat-translate-solid-sharp IconBubbleChatTranslateSolidSharp"
+      the-icon="BubbleChatTranslate SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBubbleChatTranslate: TheIconSelfPack = {
-  name: 'BubbleChatTranslate',
-  StrokeRounded: IconBubbleChatTranslateStrokeRounded,
-  DuotoneRounded: IconBubbleChatTranslateDuotoneRounded,
-  TwotoneRounded: IconBubbleChatTranslateTwotoneRounded,
-  SolidRounded: IconBubbleChatTranslateSolidRounded,
-  BulkRounded: IconBubbleChatTranslateBulkRounded,
-  StrokeSharp: IconBubbleChatTranslateStrokeSharp,
-  SolidSharp: IconBubbleChatTranslateSolidSharp,
-};
+export const iconPackOfBubbleChatTranslate: TheIconSelfPack = [
+  'BubbleChatTranslate',
+  IconBubbleChatTranslateStrokeRounded,
+  IconBubbleChatTranslateDuotoneRounded,
+  IconBubbleChatTranslateTwotoneRounded,
+  IconBubbleChatTranslateSolidRounded,
+  IconBubbleChatTranslateBulkRounded,
+  IconBubbleChatTranslateStrokeSharp,
+  IconBubbleChatTranslateSolidSharp,
+];

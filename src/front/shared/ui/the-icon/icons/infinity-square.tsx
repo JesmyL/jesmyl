@@ -18,18 +18,15 @@ export const IconInfinitySquareStrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="infinity-square-stroke-rounded IconInfinitySquareStrokeRounded"
+      the-icon="InfinitySquare StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -39,23 +36,19 @@ export const IconInfinitySquareDuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="infinity-square-duotone-rounded IconInfinitySquareDuotoneRounded"
+      the-icon="InfinitySquare DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -65,19 +58,15 @@ export const IconInfinitySquareTwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="infinity-square-twotone-rounded IconInfinitySquareTwotoneRounded"
+      the-icon="InfinitySquare TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -87,13 +76,11 @@ export const IconInfinitySquareSolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="infinity-square-solid-rounded IconInfinitySquareSolidRounded"
+      the-icon="InfinitySquare SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -103,18 +90,15 @@ export const IconInfinitySquareBulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="infinity-square-bulk-rounded IconInfinitySquareBulkRounded"
+      the-icon="InfinitySquare BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -124,19 +108,15 @@ export const IconInfinitySquareStrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="infinity-square-stroke-sharp IconInfinitySquareStrokeSharp"
+      the-icon="InfinitySquare StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -146,33 +126,31 @@ export const IconInfinitySquareSolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="infinity-square-solid-sharp IconInfinitySquareSolidSharp"
+      the-icon="InfinitySquare SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfInfinitySquare: TheIconSelfPack = {
-  name: 'InfinitySquare',
-  StrokeRounded: IconInfinitySquareStrokeRounded,
-  DuotoneRounded: IconInfinitySquareDuotoneRounded,
-  TwotoneRounded: IconInfinitySquareTwotoneRounded,
-  SolidRounded: IconInfinitySquareSolidRounded,
-  BulkRounded: IconInfinitySquareBulkRounded,
-  StrokeSharp: IconInfinitySquareStrokeSharp,
-  SolidSharp: IconInfinitySquareSolidSharp,
-};
+export const iconPackOfInfinitySquare: TheIconSelfPack = [
+  'InfinitySquare',
+  IconInfinitySquareStrokeRounded,
+  IconInfinitySquareDuotoneRounded,
+  IconInfinitySquareTwotoneRounded,
+  IconInfinitySquareSolidRounded,
+  IconInfinitySquareBulkRounded,
+  IconInfinitySquareStrokeSharp,
+  IconInfinitySquareSolidSharp,
+];

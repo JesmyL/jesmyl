@@ -1,4 +1,5 @@
 import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
+import { IconProvider } from '#shared/ui/the-icon/IconProvider';
 import { authIDB } from '$index/db/auth-idb';
 import { ThemeProvider } from '@mui/material';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
@@ -22,14 +23,16 @@ export const App = () => {
   const isDarkMode = complectIDB.useValue.isDarkMode();
 
   return (
-    <AppDialogProvider title="app">
-      <ThemeProvider
-        theme={isDarkMode ? muiDarkThemePalette : muiLightThemePalette}
-        defaultMode="light"
-      >
-        <RouterProvider router={router} />
-      </ThemeProvider>
-    </AppDialogProvider>
+    <IconProvider>
+      <AppDialogProvider title="app">
+        <ThemeProvider
+          theme={isDarkMode ? muiDarkThemePalette : muiLightThemePalette}
+          defaultMode="light"
+        >
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </AppDialogProvider>
+    </IconProvider>
   );
 };
 

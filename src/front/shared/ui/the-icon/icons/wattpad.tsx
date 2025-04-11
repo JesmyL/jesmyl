@@ -13,14 +13,11 @@ export const IconWattpadStrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="wattpad-stroke-rounded IconWattpadStrokeRounded"
+      the-icon="Wattpad StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -30,19 +27,15 @@ export const IconWattpadDuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="wattpad-duotone-rounded IconWattpadDuotoneRounded"
+      the-icon="Wattpad DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -52,14 +45,11 @@ export const IconWattpadTwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="wattpad-twotone-rounded IconWattpadTwotoneRounded"
+      the-icon="Wattpad TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -69,11 +59,11 @@ export const IconWattpadSolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="wattpad-solid-rounded IconWattpadSolidRounded"
+      the-icon="Wattpad SolidRounded"
     >
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -83,16 +73,15 @@ export const IconWattpadBulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="wattpad-bulk-rounded IconWattpadBulkRounded"
+      the-icon="Wattpad BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -102,14 +91,11 @@ export const IconWattpadStrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="wattpad-stroke-sharp IconWattpadStrokeSharp"
+      the-icon="Wattpad StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -119,23 +105,23 @@ export const IconWattpadSolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="wattpad-solid-sharp IconWattpadSolidSharp"
+      the-icon="Wattpad SolidSharp"
     >
       <path 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfWattpad: TheIconSelfPack = {
-  name: 'Wattpad',
-  StrokeRounded: IconWattpadStrokeRounded,
-  DuotoneRounded: IconWattpadDuotoneRounded,
-  TwotoneRounded: IconWattpadTwotoneRounded,
-  SolidRounded: IconWattpadSolidRounded,
-  BulkRounded: IconWattpadBulkRounded,
-  StrokeSharp: IconWattpadStrokeSharp,
-  SolidSharp: IconWattpadSolidSharp,
-};
+export const iconPackOfWattpad: TheIconSelfPack = [
+  'Wattpad',
+  IconWattpadStrokeRounded,
+  IconWattpadDuotoneRounded,
+  IconWattpadTwotoneRounded,
+  IconWattpadSolidRounded,
+  IconWattpadBulkRounded,
+  IconWattpadStrokeSharp,
+  IconWattpadSolidSharp,
+];

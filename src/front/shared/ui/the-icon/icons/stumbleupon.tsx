@@ -17,19 +17,15 @@ export const IconStumbleuponStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="stumbleupon-stroke-rounded IconStumbleuponStrokeRounded"
+      the-icon="Stumbleupon StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -39,24 +35,19 @@ export const IconStumbleuponDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="stumbleupon-duotone-rounded IconStumbleuponDuotoneRounded"
+      the-icon="Stumbleupon DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -66,20 +57,15 @@ export const IconStumbleuponTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="stumbleupon-twotone-rounded IconStumbleuponTwotoneRounded"
+      the-icon="Stumbleupon TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -89,13 +75,11 @@ export const IconStumbleuponSolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="stumbleupon-solid-rounded IconStumbleuponSolidRounded"
+      the-icon="Stumbleupon SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -105,20 +89,19 @@ export const IconStumbleuponBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="stumbleupon-bulk-rounded IconStumbleuponBulkRounded"
+      the-icon="Stumbleupon BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -128,19 +111,15 @@ export const IconStumbleuponStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="stumbleupon-stroke-sharp IconStumbleuponStrokeSharp"
+      the-icon="Stumbleupon StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -150,25 +129,23 @@ export const IconStumbleuponSolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="stumbleupon-solid-sharp IconStumbleuponSolidSharp"
+      the-icon="Stumbleupon SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfStumbleupon: TheIconSelfPack = {
-  name: 'Stumbleupon',
-  StrokeRounded: IconStumbleuponStrokeRounded,
-  DuotoneRounded: IconStumbleuponDuotoneRounded,
-  TwotoneRounded: IconStumbleuponTwotoneRounded,
-  SolidRounded: IconStumbleuponSolidRounded,
-  BulkRounded: IconStumbleuponBulkRounded,
-  StrokeSharp: IconStumbleuponStrokeSharp,
-  SolidSharp: IconStumbleuponSolidSharp,
-};
+export const iconPackOfStumbleupon: TheIconSelfPack = [
+  'Stumbleupon',
+  IconStumbleuponStrokeRounded,
+  IconStumbleuponDuotoneRounded,
+  IconStumbleuponTwotoneRounded,
+  IconStumbleuponSolidRounded,
+  IconStumbleuponBulkRounded,
+  IconStumbleuponStrokeSharp,
+  IconStumbleuponSolidSharp,
+];

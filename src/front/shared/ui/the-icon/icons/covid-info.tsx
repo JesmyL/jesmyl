@@ -17,21 +17,17 @@ export const IconCovidInfoStrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="covid-info-stroke-rounded IconCovidInfoStrokeRounded"
+      the-icon="CovidInfo StrokeRounded"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sr sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -41,28 +37,21 @@ export const IconCovidInfoDuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="covid-info-duotone-rounded IconCovidInfoDuotoneRounded"
+      the-icon="CovidInfo DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr o7"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sr sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -72,23 +61,18 @@ export const IconCovidInfoTwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="covid-info-twotone-rounded IconCovidInfoTwotoneRounded"
+      the-icon="CovidInfo TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -97,13 +81,11 @@ export const IconCovidInfoSolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="covid-info-solid-rounded IconCovidInfoSolidRounded"
+      the-icon="CovidInfo SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -113,20 +95,19 @@ export const IconCovidInfoBulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="covid-info-bulk-rounded IconCovidInfoBulkRounded"
+      the-icon="CovidInfo BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -136,19 +117,17 @@ export const IconCovidInfoStrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="covid-info-stroke-sharp IconCovidInfoStrokeSharp"
+      the-icon="CovidInfo StrokeSharp"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sw"
+      />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -158,23 +137,23 @@ export const IconCovidInfoSolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="covid-info-solid-sharp IconCovidInfoSolidSharp"
+      the-icon="CovidInfo SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCovidInfo: TheIconSelfPack = {
-  name: 'CovidInfo',
-  StrokeRounded: IconCovidInfoStrokeRounded,
-  DuotoneRounded: IconCovidInfoDuotoneRounded,
-  TwotoneRounded: IconCovidInfoTwotoneRounded,
-  SolidRounded: IconCovidInfoSolidRounded,
-  BulkRounded: IconCovidInfoBulkRounded,
-  StrokeSharp: IconCovidInfoStrokeSharp,
-  SolidSharp: IconCovidInfoSolidSharp,
-};
+export const iconPackOfCovidInfo: TheIconSelfPack = [
+  'CovidInfo',
+  IconCovidInfoStrokeRounded,
+  IconCovidInfoDuotoneRounded,
+  IconCovidInfoTwotoneRounded,
+  IconCovidInfoSolidRounded,
+  IconCovidInfoBulkRounded,
+  IconCovidInfoStrokeSharp,
+  IconCovidInfoSolidSharp,
+];

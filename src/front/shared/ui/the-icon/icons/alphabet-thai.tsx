@@ -16,14 +16,11 @@ export const IconAlphabetThaiStrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-thai-stroke-rounded IconAlphabetThaiStrokeRounded"
+      the-icon="AlphabetThai StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -33,19 +30,15 @@ export const IconAlphabetThaiDuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-thai-duotone-rounded IconAlphabetThaiDuotoneRounded"
+      the-icon="AlphabetThai DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -55,22 +48,15 @@ export const IconAlphabetThaiTwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-thai-twotone-rounded IconAlphabetThaiTwotoneRounded"
+      the-icon="AlphabetThai TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -80,13 +66,11 @@ export const IconAlphabetThaiSolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-thai-solid-rounded IconAlphabetThaiSolidRounded"
+      the-icon="AlphabetThai SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -96,20 +80,15 @@ export const IconAlphabetThaiBulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-thai-bulk-rounded IconAlphabetThaiBulkRounded"
+      the-icon="AlphabetThai BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -119,13 +98,11 @@ export const IconAlphabetThaiStrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-thai-stroke-sharp IconAlphabetThaiStrokeSharp"
+      the-icon="AlphabetThai StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -135,23 +112,23 @@ export const IconAlphabetThaiSolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-thai-solid-sharp IconAlphabetThaiSolidSharp"
+      the-icon="AlphabetThai SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAlphabetThai: TheIconSelfPack = {
-  name: 'AlphabetThai',
-  StrokeRounded: IconAlphabetThaiStrokeRounded,
-  DuotoneRounded: IconAlphabetThaiDuotoneRounded,
-  TwotoneRounded: IconAlphabetThaiTwotoneRounded,
-  SolidRounded: IconAlphabetThaiSolidRounded,
-  BulkRounded: IconAlphabetThaiBulkRounded,
-  StrokeSharp: IconAlphabetThaiStrokeSharp,
-  SolidSharp: IconAlphabetThaiSolidSharp,
-};
+export const iconPackOfAlphabetThai: TheIconSelfPack = [
+  'AlphabetThai',
+  IconAlphabetThaiStrokeRounded,
+  IconAlphabetThaiDuotoneRounded,
+  IconAlphabetThaiTwotoneRounded,
+  IconAlphabetThaiSolidRounded,
+  IconAlphabetThaiBulkRounded,
+  IconAlphabetThaiStrokeSharp,
+  IconAlphabetThaiSolidSharp,
+];

@@ -20,21 +20,15 @@ export const IconDress06StrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="dress-06-stroke-rounded IconDress06StrokeRounded"
+      the-icon="Dress06 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -44,26 +38,19 @@ export const IconDress06DuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="dress-06-duotone-rounded IconDress06DuotoneRounded"
+      the-icon="Dress06 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -73,22 +60,15 @@ export const IconDress06TwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="dress-06-twotone-rounded IconDress06TwotoneRounded"
+      the-icon="Dress06 TwotoneRounded"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -98,11 +78,11 @@ export const IconDress06SolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="dress-06-solid-rounded IconDress06SolidRounded"
+      the-icon="Dress06 SolidRounded"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -112,12 +92,11 @@ export const IconDress06BulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="dress-06-bulk-rounded IconDress06BulkRounded"
+      the-icon="Dress06 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -127,17 +106,15 @@ export const IconDress06StrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="dress-06-stroke-sharp IconDress06StrokeSharp"
+      the-icon="Dress06 StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d10}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -147,23 +124,23 @@ export const IconDress06SolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="dress-06-solid-sharp IconDress06SolidSharp"
+      the-icon="Dress06 SolidSharp"
     >
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfDress06: TheIconSelfPack = {
-  name: 'Dress06',
-  StrokeRounded: IconDress06StrokeRounded,
-  DuotoneRounded: IconDress06DuotoneRounded,
-  TwotoneRounded: IconDress06TwotoneRounded,
-  SolidRounded: IconDress06SolidRounded,
-  BulkRounded: IconDress06BulkRounded,
-  StrokeSharp: IconDress06StrokeSharp,
-  SolidSharp: IconDress06SolidSharp,
-};
+export const iconPackOfDress06: TheIconSelfPack = [
+  'Dress06',
+  IconDress06StrokeRounded,
+  IconDress06DuotoneRounded,
+  IconDress06TwotoneRounded,
+  IconDress06SolidRounded,
+  IconDress06BulkRounded,
+  IconDress06StrokeSharp,
+  IconDress06SolidSharp,
+];

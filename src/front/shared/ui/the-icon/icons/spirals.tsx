@@ -15,14 +15,11 @@ export const IconSpiralsStrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="spirals-stroke-rounded IconSpiralsStrokeRounded"
+      the-icon="Spirals StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -32,15 +29,11 @@ export const IconSpiralsDuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="spirals-duotone-rounded IconSpiralsDuotoneRounded"
+      the-icon="Spirals DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -50,22 +43,15 @@ export const IconSpiralsTwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="spirals-twotone-rounded IconSpiralsTwotoneRounded"
+      the-icon="Spirals TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -75,13 +61,11 @@ export const IconSpiralsSolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="spirals-solid-rounded IconSpiralsSolidRounded"
+      the-icon="Spirals SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -91,18 +75,15 @@ export const IconSpiralsBulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="spirals-bulk-rounded IconSpiralsBulkRounded"
+      the-icon="Spirals BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -112,13 +93,11 @@ export const IconSpiralsStrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="spirals-stroke-sharp IconSpiralsStrokeSharp"
+      the-icon="Spirals StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -128,25 +107,23 @@ export const IconSpiralsSolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="spirals-solid-sharp IconSpiralsSolidSharp"
+      the-icon="Spirals SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSpirals: TheIconSelfPack = {
-  name: 'Spirals',
-  StrokeRounded: IconSpiralsStrokeRounded,
-  DuotoneRounded: IconSpiralsDuotoneRounded,
-  TwotoneRounded: IconSpiralsTwotoneRounded,
-  SolidRounded: IconSpiralsSolidRounded,
-  BulkRounded: IconSpiralsBulkRounded,
-  StrokeSharp: IconSpiralsStrokeSharp,
-  SolidSharp: IconSpiralsSolidSharp,
-};
+export const iconPackOfSpirals: TheIconSelfPack = [
+  'Spirals',
+  IconSpiralsStrokeRounded,
+  IconSpiralsDuotoneRounded,
+  IconSpiralsTwotoneRounded,
+  IconSpiralsSolidRounded,
+  IconSpiralsBulkRounded,
+  IconSpiralsStrokeSharp,
+  IconSpiralsSolidSharp,
+];

@@ -20,26 +20,19 @@ export const IconTabletConnectedBluetoothStrokeRounded: FC<TheIconProps> = (prop
   return (
     <TheIconWrapper
       {...props}
-      name="tablet-connected-bluetooth-stroke-rounded IconTabletConnectedBluetoothStrokeRounded"
+      the-icon="TabletConnectedBluetooth StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -49,33 +42,23 @@ export const IconTabletConnectedBluetoothDuotoneRounded: FC<TheIconProps> = (pro
   return (
     <TheIconWrapper
       {...props}
-      name="tablet-connected-bluetooth-duotone-rounded IconTabletConnectedBluetoothDuotoneRounded"
+      the-icon="TabletConnectedBluetooth DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -85,27 +68,19 @@ export const IconTabletConnectedBluetoothTwotoneRounded: FC<TheIconProps> = (pro
   return (
     <TheIconWrapper
       {...props}
-      name="tablet-connected-bluetooth-twotone-rounded IconTabletConnectedBluetoothTwotoneRounded"
+      the-icon="TabletConnectedBluetooth TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -115,17 +90,15 @@ export const IconTabletConnectedBluetoothSolidRounded: FC<TheIconProps> = (props
   return (
     <TheIconWrapper
       {...props}
-      name="tablet-connected-bluetooth-solid-rounded IconTabletConnectedBluetoothSolidRounded"
+      the-icon="TabletConnectedBluetooth SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -135,18 +108,15 @@ export const IconTabletConnectedBluetoothBulkRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="tablet-connected-bluetooth-bulk-rounded IconTabletConnectedBluetoothBulkRounded"
+      the-icon="TabletConnectedBluetooth BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -156,25 +126,19 @@ export const IconTabletConnectedBluetoothStrokeSharp: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="tablet-connected-bluetooth-stroke-sharp IconTabletConnectedBluetoothStrokeSharp"
+      the-icon="TabletConnectedBluetooth StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -184,29 +148,27 @@ export const IconTabletConnectedBluetoothSolidSharp: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="tablet-connected-bluetooth-solid-sharp IconTabletConnectedBluetoothSolidSharp"
+      the-icon="TabletConnectedBluetooth SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTabletConnectedBluetooth: TheIconSelfPack = {
-  name: 'TabletConnectedBluetooth',
-  StrokeRounded: IconTabletConnectedBluetoothStrokeRounded,
-  DuotoneRounded: IconTabletConnectedBluetoothDuotoneRounded,
-  TwotoneRounded: IconTabletConnectedBluetoothTwotoneRounded,
-  SolidRounded: IconTabletConnectedBluetoothSolidRounded,
-  BulkRounded: IconTabletConnectedBluetoothBulkRounded,
-  StrokeSharp: IconTabletConnectedBluetoothStrokeSharp,
-  SolidSharp: IconTabletConnectedBluetoothSolidSharp,
-};
+export const iconPackOfTabletConnectedBluetooth: TheIconSelfPack = [
+  'TabletConnectedBluetooth',
+  IconTabletConnectedBluetoothStrokeRounded,
+  IconTabletConnectedBluetoothDuotoneRounded,
+  IconTabletConnectedBluetoothTwotoneRounded,
+  IconTabletConnectedBluetoothSolidRounded,
+  IconTabletConnectedBluetoothBulkRounded,
+  IconTabletConnectedBluetoothStrokeSharp,
+  IconTabletConnectedBluetoothSolidSharp,
+];

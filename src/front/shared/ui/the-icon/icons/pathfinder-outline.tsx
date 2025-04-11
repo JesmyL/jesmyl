@@ -23,19 +23,15 @@ export const IconPathfinderOutlineStrokeRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-outline-stroke-rounded IconPathfinderOutlineStrokeRounded"
+      the-icon="PathfinderOutline StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -45,29 +41,23 @@ export const IconPathfinderOutlineDuotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-outline-duotone-rounded IconPathfinderOutlineDuotoneRounded"
+      the-icon="PathfinderOutline DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -77,20 +67,15 @@ export const IconPathfinderOutlineTwotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-outline-twotone-rounded IconPathfinderOutlineTwotoneRounded"
+      the-icon="PathfinderOutline TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -100,19 +85,15 @@ export const IconPathfinderOutlineSolidRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-outline-solid-rounded IconPathfinderOutlineSolidRounded"
+      the-icon="PathfinderOutline SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -122,33 +103,23 @@ export const IconPathfinderOutlineBulkRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-outline-bulk-rounded IconPathfinderOutlineBulkRounded"
+      the-icon="PathfinderOutline BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -158,17 +129,15 @@ export const IconPathfinderOutlineStrokeSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-outline-stroke-sharp IconPathfinderOutlineStrokeSharp"
+      the-icon="PathfinderOutline StrokeSharp"
     >
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d11}
+        i-c="s sw"
       />
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d12}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -178,31 +147,27 @@ export const IconPathfinderOutlineSolidSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-outline-solid-sharp IconPathfinderOutlineSolidSharp"
+      the-icon="PathfinderOutline SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPathfinderOutline: TheIconSelfPack = {
-  name: 'PathfinderOutline',
-  StrokeRounded: IconPathfinderOutlineStrokeRounded,
-  DuotoneRounded: IconPathfinderOutlineDuotoneRounded,
-  TwotoneRounded: IconPathfinderOutlineTwotoneRounded,
-  SolidRounded: IconPathfinderOutlineSolidRounded,
-  BulkRounded: IconPathfinderOutlineBulkRounded,
-  StrokeSharp: IconPathfinderOutlineStrokeSharp,
-  SolidSharp: IconPathfinderOutlineSolidSharp,
-};
+export const iconPackOfPathfinderOutline: TheIconSelfPack = [
+  'PathfinderOutline',
+  IconPathfinderOutlineStrokeRounded,
+  IconPathfinderOutlineDuotoneRounded,
+  IconPathfinderOutlineTwotoneRounded,
+  IconPathfinderOutlineSolidRounded,
+  IconPathfinderOutlineBulkRounded,
+  IconPathfinderOutlineStrokeSharp,
+  IconPathfinderOutlineSolidSharp,
+];

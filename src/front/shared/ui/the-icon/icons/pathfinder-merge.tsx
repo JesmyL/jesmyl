@@ -15,13 +15,11 @@ export const IconPathfinderMergeStrokeRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-merge-stroke-rounded IconPathfinderMergeStrokeRounded"
+      the-icon="PathfinderMerge StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -31,18 +29,15 @@ export const IconPathfinderMergeDuotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-merge-duotone-rounded IconPathfinderMergeDuotoneRounded"
+      the-icon="PathfinderMerge DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -52,20 +47,15 @@ export const IconPathfinderMergeTwotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-merge-twotone-rounded IconPathfinderMergeTwotoneRounded"
+      the-icon="PathfinderMerge TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -75,11 +65,11 @@ export const IconPathfinderMergeSolidRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-merge-solid-rounded IconPathfinderMergeSolidRounded"
+      the-icon="PathfinderMerge SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -89,12 +79,11 @@ export const IconPathfinderMergeBulkRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-merge-bulk-rounded IconPathfinderMergeBulkRounded"
+      the-icon="PathfinderMerge BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -104,16 +93,15 @@ export const IconPathfinderMergeStrokeSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-merge-stroke-sharp IconPathfinderMergeStrokeSharp"
+      the-icon="PathfinderMerge StrokeSharp"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -123,23 +111,23 @@ export const IconPathfinderMergeSolidSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-merge-solid-sharp IconPathfinderMergeSolidSharp"
+      the-icon="PathfinderMerge SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPathfinderMerge: TheIconSelfPack = {
-  name: 'PathfinderMerge',
-  StrokeRounded: IconPathfinderMergeStrokeRounded,
-  DuotoneRounded: IconPathfinderMergeDuotoneRounded,
-  TwotoneRounded: IconPathfinderMergeTwotoneRounded,
-  SolidRounded: IconPathfinderMergeSolidRounded,
-  BulkRounded: IconPathfinderMergeBulkRounded,
-  StrokeSharp: IconPathfinderMergeStrokeSharp,
-  SolidSharp: IconPathfinderMergeSolidSharp,
-};
+export const iconPackOfPathfinderMerge: TheIconSelfPack = [
+  'PathfinderMerge',
+  IconPathfinderMergeStrokeRounded,
+  IconPathfinderMergeDuotoneRounded,
+  IconPathfinderMergeTwotoneRounded,
+  IconPathfinderMergeSolidRounded,
+  IconPathfinderMergeBulkRounded,
+  IconPathfinderMergeStrokeSharp,
+  IconPathfinderMergeSolidSharp,
+];

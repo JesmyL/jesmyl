@@ -25,35 +25,27 @@ export const IconBriefcase08StrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="briefcase-08-stroke-rounded IconBriefcase08StrokeRounded"
+      the-icon="Briefcase08 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d4}
+        i-c="s sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -63,62 +55,47 @@ export const IconBriefcase08DuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="briefcase-08-duotone-rounded IconBriefcase08DuotoneRounded"
+      the-icon="Briefcase08 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <rect 
-        opacity="var(--icon-opacity)" 
-        x="5" 
-        y="2.5" 
-        width="4" 
-        height="3" 
-        rx="1" 
-        fill="var(--icon-fill)"></rect>
-      <rect 
-        opacity="var(--icon-opacity)" 
-        x="15" 
-        y="2.5" 
-        width="4" 
-        height="3" 
-        rx="1" 
-        fill="var(--icon-fill)"></rect>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-      />
-      <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        x="5"
+        y="2.5"
+        rx="1"
+        i-c="f h7 o7 w_"
       />
       <rect 
-        x="5" 
-        y="2.5" 
-        width="4" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
-      <rect 
-        x="15" 
-        y="2.5" 
-        width="4" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="15"
+        y="2.5"
+        rx="1"
+        i-c="f h7 o7 w_"
+      />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sw"
+      />
+      <rect 
+        x="5"
+        y="2.5"
+        rx="1"
+        i-c="h7 s sw w_"
+      />
+      <rect 
+        x="15"
+        y="2.5"
+        rx="1"
+        i-c="h7 s sw w_"
+      />
+      <path 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -128,43 +105,31 @@ export const IconBriefcase08TwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="briefcase-08-twotone-rounded IconBriefcase08TwotoneRounded"
+      the-icon="Briefcase08 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <rect 
-        x="5" 
-        y="2.5" 
-        width="4" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="5"
+        y="2.5"
+        rx="1"
+        i-c="h7 s sw w_"
+      />
       <rect 
-        x="15" 
-        y="2.5" 
-        width="4" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="15"
+        y="2.5"
+        rx="1"
+        i-c="h7 s sw w_"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -174,25 +139,23 @@ export const IconBriefcase08SolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="briefcase-08-solid-rounded IconBriefcase08SolidRounded"
+      the-icon="Briefcase08 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -202,30 +165,27 @@ export const IconBriefcase08BulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="briefcase-08-bulk-rounded IconBriefcase08BulkRounded"
+      the-icon="Briefcase08 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -235,41 +195,29 @@ export const IconBriefcase08StrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="briefcase-08-stroke-sharp IconBriefcase08StrokeSharp"
+      the-icon="Briefcase08 StrokeSharp"
     >
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d13}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d14} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d14}
+        i-c="s sj sw"
       />
       <rect 
-        x="5" 
-        y="2.5" 
-        width="4" 
-        height="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></rect>
+        x="5"
+        y="2.5"
+        i-c="h7 s sj sw w_"
+      />
       <rect 
-        x="15" 
-        y="2.5" 
-        width="4" 
-        height="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></rect>
+        x="15"
+        y="2.5"
+        i-c="h7 s sj sw w_"
+      />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -279,41 +227,37 @@ export const IconBriefcase08SolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="briefcase-08-solid-sharp IconBriefcase08SolidSharp"
+      the-icon="Briefcase08 SolidSharp"
     >
       <rect 
-        x="5" 
-        y="1.75" 
-        width="4" 
-        height="3" 
-        fill="var(--icon-fill)"></rect>
+        x="5"
+        y="1.75"
+        i-c="f h7 w_"
+      />
       <rect 
-        x="15" 
-        y="1.75" 
-        width="4" 
-        height="3" 
-        fill="var(--icon-fill)"></rect>
-      <path 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        x="15"
+        y="1.75"
+        i-c="f h7 w_"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d15}
+        i-c="f"
+      />
+      <path 
+        d={d.d16}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBriefcase08: TheIconSelfPack = {
-  name: 'Briefcase08',
-  StrokeRounded: IconBriefcase08StrokeRounded,
-  DuotoneRounded: IconBriefcase08DuotoneRounded,
-  TwotoneRounded: IconBriefcase08TwotoneRounded,
-  SolidRounded: IconBriefcase08SolidRounded,
-  BulkRounded: IconBriefcase08BulkRounded,
-  StrokeSharp: IconBriefcase08StrokeSharp,
-  SolidSharp: IconBriefcase08SolidSharp,
-};
+export const iconPackOfBriefcase08: TheIconSelfPack = [
+  'Briefcase08',
+  IconBriefcase08StrokeRounded,
+  IconBriefcase08DuotoneRounded,
+  IconBriefcase08TwotoneRounded,
+  IconBriefcase08SolidRounded,
+  IconBriefcase08BulkRounded,
+  IconBriefcase08StrokeSharp,
+  IconBriefcase08SolidSharp,
+];

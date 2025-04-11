@@ -16,20 +16,17 @@ export const IconBluetoothCircleStrokeRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="bluetooth-circle-stroke-rounded IconBluetoothCircleStrokeRounded"
+      the-icon="BluetoothCircle StrokeRounded"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -39,27 +36,21 @@ export const IconBluetoothCircleDuotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="bluetooth-circle-duotone-rounded IconBluetoothCircleDuotoneRounded"
+      the-icon="BluetoothCircle DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr o7"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -69,21 +60,17 @@ export const IconBluetoothCircleTwotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="bluetooth-circle-twotone-rounded IconBluetoothCircleTwotoneRounded"
+      the-icon="BluetoothCircle TwotoneRounded"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -93,13 +80,11 @@ export const IconBluetoothCircleSolidRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="bluetooth-circle-solid-rounded IconBluetoothCircleSolidRounded"
+      the-icon="BluetoothCircle SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -109,18 +94,15 @@ export const IconBluetoothCircleBulkRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="bluetooth-circle-bulk-rounded IconBluetoothCircleBulkRounded"
+      the-icon="BluetoothCircle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -130,19 +112,17 @@ export const IconBluetoothCircleStrokeSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="bluetooth-circle-stroke-sharp IconBluetoothCircleStrokeSharp"
+      the-icon="BluetoothCircle StrokeSharp"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -152,25 +132,23 @@ export const IconBluetoothCircleSolidSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="bluetooth-circle-solid-sharp IconBluetoothCircleSolidSharp"
+      the-icon="BluetoothCircle SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBluetoothCircle: TheIconSelfPack = {
-  name: 'BluetoothCircle',
-  StrokeRounded: IconBluetoothCircleStrokeRounded,
-  DuotoneRounded: IconBluetoothCircleDuotoneRounded,
-  TwotoneRounded: IconBluetoothCircleTwotoneRounded,
-  SolidRounded: IconBluetoothCircleSolidRounded,
-  BulkRounded: IconBluetoothCircleBulkRounded,
-  StrokeSharp: IconBluetoothCircleStrokeSharp,
-  SolidSharp: IconBluetoothCircleSolidSharp,
-};
+export const iconPackOfBluetoothCircle: TheIconSelfPack = [
+  'BluetoothCircle',
+  IconBluetoothCircleStrokeRounded,
+  IconBluetoothCircleDuotoneRounded,
+  IconBluetoothCircleTwotoneRounded,
+  IconBluetoothCircleSolidRounded,
+  IconBluetoothCircleBulkRounded,
+  IconBluetoothCircleStrokeSharp,
+  IconBluetoothCircleSolidSharp,
+];

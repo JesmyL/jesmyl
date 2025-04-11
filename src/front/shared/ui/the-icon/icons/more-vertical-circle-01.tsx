@@ -21,22 +21,19 @@ export const IconMoreVerticalCircle01StrokeRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="more-vertical-circle-01-stroke-rounded IconMoreVerticalCircle01StrokeRounded"
+      the-icon="MoreVerticalCircle01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -46,37 +43,33 @@ export const IconMoreVerticalCircle01DuotoneRounded: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="more-vertical-circle-01-duotone-rounded IconMoreVerticalCircle01DuotoneRounded"
+      the-icon="MoreVerticalCircle01 DuotoneRounded"
     >
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f"
       />
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       </g>
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -86,23 +79,19 @@ export const IconMoreVerticalCircle01TwotoneRounded: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="more-vertical-circle-01-twotone-rounded IconMoreVerticalCircle01TwotoneRounded"
+      the-icon="MoreVerticalCircle01 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -112,25 +101,19 @@ export const IconMoreVerticalCircle01SolidRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="more-vertical-circle-01-solid-rounded IconMoreVerticalCircle01SolidRounded"
+      the-icon="MoreVerticalCircle01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -140,26 +123,19 @@ export const IconMoreVerticalCircle01BulkRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="more-vertical-circle-01-bulk-rounded IconMoreVerticalCircle01BulkRounded"
+      the-icon="MoreVerticalCircle01 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -169,22 +145,19 @@ export const IconMoreVerticalCircle01StrokeSharp: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="more-vertical-circle-01-stroke-sharp IconMoreVerticalCircle01StrokeSharp"
+      the-icon="MoreVerticalCircle01 StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -194,37 +167,31 @@ export const IconMoreVerticalCircle01SolidSharp: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="more-vertical-circle-01-solid-sharp IconMoreVerticalCircle01SolidSharp"
+      the-icon="MoreVerticalCircle01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMoreVerticalCircle01: TheIconSelfPack = {
-  name: 'MoreVerticalCircle01',
-  StrokeRounded: IconMoreVerticalCircle01StrokeRounded,
-  DuotoneRounded: IconMoreVerticalCircle01DuotoneRounded,
-  TwotoneRounded: IconMoreVerticalCircle01TwotoneRounded,
-  SolidRounded: IconMoreVerticalCircle01SolidRounded,
-  BulkRounded: IconMoreVerticalCircle01BulkRounded,
-  StrokeSharp: IconMoreVerticalCircle01StrokeSharp,
-  SolidSharp: IconMoreVerticalCircle01SolidSharp,
-};
+export const iconPackOfMoreVerticalCircle01: TheIconSelfPack = [
+  'MoreVerticalCircle01',
+  IconMoreVerticalCircle01StrokeRounded,
+  IconMoreVerticalCircle01DuotoneRounded,
+  IconMoreVerticalCircle01TwotoneRounded,
+  IconMoreVerticalCircle01SolidRounded,
+  IconMoreVerticalCircle01BulkRounded,
+  IconMoreVerticalCircle01StrokeSharp,
+  IconMoreVerticalCircle01SolidSharp,
+];

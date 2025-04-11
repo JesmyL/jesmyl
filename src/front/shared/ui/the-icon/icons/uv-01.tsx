@@ -14,12 +14,11 @@ export const IconUv01StrokeRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="uv-01-stroke-rounded IconUv01StrokeRounded"
+      the-icon="Uv01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -29,17 +28,15 @@ export const IconUv01DuotoneRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="uv-01-duotone-rounded IconUv01DuotoneRounded"
+      the-icon="Uv01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -49,19 +46,15 @@ export const IconUv01TwotoneRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="uv-01-twotone-rounded IconUv01TwotoneRounded"
+      the-icon="Uv01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -71,11 +64,11 @@ export const IconUv01SolidRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="uv-01-solid-rounded IconUv01SolidRounded"
+      the-icon="Uv01 SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -85,12 +78,11 @@ export const IconUv01BulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="uv-01-bulk-rounded IconUv01BulkRounded"
+      the-icon="Uv01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -100,12 +92,11 @@ export const IconUv01StrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="uv-01-stroke-sharp IconUv01StrokeSharp"
+      the-icon="Uv01 StrokeSharp"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d4}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -115,23 +106,23 @@ export const IconUv01SolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.E
   return (
     <TheIconWrapper
       {...props}
-      name="uv-01-solid-sharp IconUv01SolidSharp"
+      the-icon="Uv01 SolidSharp"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfUv01: TheIconSelfPack = {
-  name: 'Uv01',
-  StrokeRounded: IconUv01StrokeRounded,
-  DuotoneRounded: IconUv01DuotoneRounded,
-  TwotoneRounded: IconUv01TwotoneRounded,
-  SolidRounded: IconUv01SolidRounded,
-  BulkRounded: IconUv01BulkRounded,
-  StrokeSharp: IconUv01StrokeSharp,
-  SolidSharp: IconUv01SolidSharp,
-};
+export const iconPackOfUv01: TheIconSelfPack = [
+  'Uv01',
+  IconUv01StrokeRounded,
+  IconUv01DuotoneRounded,
+  IconUv01TwotoneRounded,
+  IconUv01SolidRounded,
+  IconUv01BulkRounded,
+  IconUv01StrokeSharp,
+  IconUv01SolidSharp,
+];

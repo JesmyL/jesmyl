@@ -16,21 +16,18 @@ export const IconSummationCircleStrokeRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="summation-circle-stroke-rounded IconSummationCircleStrokeRounded"
+      the-icon="SummationCircle StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -39,27 +36,23 @@ export const IconSummationCircleDuotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="summation-circle-duotone-rounded IconSummationCircleDuotoneRounded"
+      the-icon="SummationCircle DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="f o7"
+      />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -69,22 +62,18 @@ export const IconSummationCircleTwotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="summation-circle-twotone-rounded IconSummationCircleTwotoneRounded"
+      the-icon="SummationCircle TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -93,13 +82,11 @@ export const IconSummationCircleSolidRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="summation-circle-solid-rounded IconSummationCircleSolidRounded"
+      the-icon="SummationCircle SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -109,16 +96,15 @@ export const IconSummationCircleBulkRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="summation-circle-bulk-rounded IconSummationCircleBulkRounded"
+      the-icon="SummationCircle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -128,17 +114,15 @@ export const IconSummationCircleStrokeSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="summation-circle-stroke-sharp IconSummationCircleStrokeSharp"
+      the-icon="SummationCircle StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -148,25 +132,23 @@ export const IconSummationCircleSolidSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="summation-circle-solid-sharp IconSummationCircleSolidSharp"
+      the-icon="SummationCircle SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSummationCircle: TheIconSelfPack = {
-  name: 'SummationCircle',
-  StrokeRounded: IconSummationCircleStrokeRounded,
-  DuotoneRounded: IconSummationCircleDuotoneRounded,
-  TwotoneRounded: IconSummationCircleTwotoneRounded,
-  SolidRounded: IconSummationCircleSolidRounded,
-  BulkRounded: IconSummationCircleBulkRounded,
-  StrokeSharp: IconSummationCircleStrokeSharp,
-  SolidSharp: IconSummationCircleSolidSharp,
-};
+export const iconPackOfSummationCircle: TheIconSelfPack = [
+  'SummationCircle',
+  IconSummationCircleStrokeRounded,
+  IconSummationCircleDuotoneRounded,
+  IconSummationCircleTwotoneRounded,
+  IconSummationCircleSolidRounded,
+  IconSummationCircleBulkRounded,
+  IconSummationCircleStrokeSharp,
+  IconSummationCircleSolidSharp,
+];

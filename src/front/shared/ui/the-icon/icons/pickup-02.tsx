@@ -42,52 +42,35 @@ export const IconPickup02StrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="pickup-02-stroke-rounded IconPickup02StrokeRounded"
+      the-icon="Pickup02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -97,57 +80,39 @@ export const IconPickup02DuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="pickup-02-duotone-rounded IconPickup02DuotoneRounded"
+      the-icon="Pickup02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o7"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d11}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d12}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d13}
+        i-c="s sw"
       />
       <path 
-        d={d.d14} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d14}
+        i-c="s sw"
       />
       <path 
-        d={d.d15} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d15}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -157,54 +122,35 @@ export const IconPickup02TwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="pickup-02-twotone-rounded IconPickup02TwotoneRounded"
+      the-icon="Pickup02 TwotoneRounded"
     >
       <path 
-        d={d.d16} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d16}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d17} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d17}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d18} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d18}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d19} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d19}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d20} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d20}
+        i-c="s sw"
       />
       <path 
-        d={d.d21} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d21}
+        i-c="s sw"
       />
       <path 
-        d={d.d22} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d22}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -214,24 +160,24 @@ export const IconPickup02SolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="pickup-02-solid-rounded IconPickup02SolidRounded"
+      the-icon="Pickup02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d23} 
-        fill="var(--icon-fill)" 
+        d={d.d23}
+        i-c="c f fr"
       />
       <circle 
-        cx="17.002" 
-        cy="17.875" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="17.002"
+        cy="17.875"
+        r="2.5"
+        i-c="f"
+      />
       <circle 
-        cx="7.00195" 
-        cy="17.875" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="7.00195"
+        cy="17.875"
+        r="2.5"
+        i-c="f"
+      />
     </TheIconWrapper>
   );
 };
@@ -240,33 +186,32 @@ export const IconPickup02BulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="pickup-02-bulk-rounded IconPickup02BulkRounded"
+      the-icon="Pickup02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d24} 
-        fill="var(--icon-fill)" 
+        d={d.d24}
+        i-c="f o7"
       />
       <path 
-        d={d.d25} 
-        fill="var(--icon-fill)" 
+        d={d.d25}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d26} 
-        fill="var(--icon-fill)" 
+        d={d.d26}
+        i-c="c f fr"
       />
       <circle 
-        cx="17.002" 
-        cy="17.875" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="17.002"
+        cy="17.875"
+        r="2.5"
+        i-c="f"
+      />
       <circle 
-        cx="7.00195" 
-        cy="17.875" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="7.00195"
+        cy="17.875"
+        r="2.5"
+        i-c="f"
+      />
     </TheIconWrapper>
   );
 };
@@ -275,41 +220,31 @@ export const IconPickup02StrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="pickup-02-stroke-sharp IconPickup02StrokeSharp"
+      the-icon="Pickup02 StrokeSharp"
     >
       <path 
-        d={d.d27} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d27}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d20} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d20}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d21} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d21}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d28} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d28}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d29} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d29}
+        i-c="s sw"
       />
       <path 
-        d={d.d30} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d30}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -319,33 +254,31 @@ export const IconPickup02SolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="pickup-02-solid-sharp IconPickup02SolidSharp"
+      the-icon="Pickup02 SolidSharp"
     >
       <path 
-        d={d.d31} 
-        fill="var(--icon-fill)" 
+        d={d.d31}
+        i-c="f"
       />
       <path 
-        d={d.d32} 
-        fill="var(--icon-fill)" 
+        d={d.d32}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d33} 
-        fill="var(--icon-fill)" 
+        d={d.d33}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPickup02: TheIconSelfPack = {
-  name: 'Pickup02',
-  StrokeRounded: IconPickup02StrokeRounded,
-  DuotoneRounded: IconPickup02DuotoneRounded,
-  TwotoneRounded: IconPickup02TwotoneRounded,
-  SolidRounded: IconPickup02SolidRounded,
-  BulkRounded: IconPickup02BulkRounded,
-  StrokeSharp: IconPickup02StrokeSharp,
-  SolidSharp: IconPickup02SolidSharp,
-};
+export const iconPackOfPickup02: TheIconSelfPack = [
+  'Pickup02',
+  IconPickup02StrokeRounded,
+  IconPickup02DuotoneRounded,
+  IconPickup02TwotoneRounded,
+  IconPickup02SolidRounded,
+  IconPickup02BulkRounded,
+  IconPickup02StrokeSharp,
+  IconPickup02SolidSharp,
+];

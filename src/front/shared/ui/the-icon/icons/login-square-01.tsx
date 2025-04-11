@@ -17,19 +17,15 @@ export const IconLoginSquare01StrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="login-square-01-stroke-rounded IconLoginSquare01StrokeRounded"
+      the-icon="LoginSquare01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -39,24 +35,19 @@ export const IconLoginSquare01DuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="login-square-01-duotone-rounded IconLoginSquare01DuotoneRounded"
+      the-icon="LoginSquare01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -66,20 +57,15 @@ export const IconLoginSquare01TwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="login-square-01-twotone-rounded IconLoginSquare01TwotoneRounded"
+      the-icon="LoginSquare01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -89,13 +75,11 @@ export const IconLoginSquare01SolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="login-square-01-solid-rounded IconLoginSquare01SolidRounded"
+      the-icon="LoginSquare01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -105,16 +89,15 @@ export const IconLoginSquare01BulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="login-square-01-bulk-rounded IconLoginSquare01BulkRounded"
+      the-icon="LoginSquare01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -124,18 +107,15 @@ export const IconLoginSquare01StrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="login-square-01-stroke-sharp IconLoginSquare01StrokeSharp"
+      the-icon="LoginSquare01 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -145,25 +125,23 @@ export const IconLoginSquare01SolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="login-square-01-solid-sharp IconLoginSquare01SolidSharp"
+      the-icon="LoginSquare01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfLoginSquare01: TheIconSelfPack = {
-  name: 'LoginSquare01',
-  StrokeRounded: IconLoginSquare01StrokeRounded,
-  DuotoneRounded: IconLoginSquare01DuotoneRounded,
-  TwotoneRounded: IconLoginSquare01TwotoneRounded,
-  SolidRounded: IconLoginSquare01SolidRounded,
-  BulkRounded: IconLoginSquare01BulkRounded,
-  StrokeSharp: IconLoginSquare01StrokeSharp,
-  SolidSharp: IconLoginSquare01SolidSharp,
-};
+export const iconPackOfLoginSquare01: TheIconSelfPack = [
+  'LoginSquare01',
+  IconLoginSquare01StrokeRounded,
+  IconLoginSquare01DuotoneRounded,
+  IconLoginSquare01TwotoneRounded,
+  IconLoginSquare01SolidRounded,
+  IconLoginSquare01BulkRounded,
+  IconLoginSquare01StrokeSharp,
+  IconLoginSquare01SolidSharp,
+];

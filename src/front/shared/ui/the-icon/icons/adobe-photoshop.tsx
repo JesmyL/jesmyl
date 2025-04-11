@@ -21,26 +21,19 @@ export const IconAdobePhotoshopStrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="adobe-photoshop-stroke-rounded IconAdobePhotoshopStrokeRounded"
+      the-icon="AdobePhotoshop StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -50,31 +43,23 @@ export const IconAdobePhotoshopDuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="adobe-photoshop-duotone-rounded IconAdobePhotoshopDuotoneRounded"
+      the-icon="AdobePhotoshop DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -84,21 +69,15 @@ export const IconAdobePhotoshopTwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="adobe-photoshop-twotone-rounded IconAdobePhotoshopTwotoneRounded"
+      the-icon="AdobePhotoshop TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -108,13 +87,11 @@ export const IconAdobePhotoshopSolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="adobe-photoshop-solid-rounded IconAdobePhotoshopSolidRounded"
+      the-icon="AdobePhotoshop SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -124,24 +101,19 @@ export const IconAdobePhotoshopBulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="adobe-photoshop-bulk-rounded IconAdobePhotoshopBulkRounded"
+      the-icon="AdobePhotoshop BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -151,25 +123,19 @@ export const IconAdobePhotoshopStrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="adobe-photoshop-stroke-sharp IconAdobePhotoshopStrokeSharp"
+      the-icon="AdobePhotoshop StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj ss sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d10}
+        i-c="s ss sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d11}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -179,25 +145,23 @@ export const IconAdobePhotoshopSolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="adobe-photoshop-solid-sharp IconAdobePhotoshopSolidSharp"
+      the-icon="AdobePhotoshop SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAdobePhotoshop: TheIconSelfPack = {
-  name: 'AdobePhotoshop',
-  StrokeRounded: IconAdobePhotoshopStrokeRounded,
-  DuotoneRounded: IconAdobePhotoshopDuotoneRounded,
-  TwotoneRounded: IconAdobePhotoshopTwotoneRounded,
-  SolidRounded: IconAdobePhotoshopSolidRounded,
-  BulkRounded: IconAdobePhotoshopBulkRounded,
-  StrokeSharp: IconAdobePhotoshopStrokeSharp,
-  SolidSharp: IconAdobePhotoshopSolidSharp,
-};
+export const iconPackOfAdobePhotoshop: TheIconSelfPack = [
+  'AdobePhotoshop',
+  IconAdobePhotoshopStrokeRounded,
+  IconAdobePhotoshopDuotoneRounded,
+  IconAdobePhotoshopTwotoneRounded,
+  IconAdobePhotoshopSolidRounded,
+  IconAdobePhotoshopBulkRounded,
+  IconAdobePhotoshopStrokeSharp,
+  IconAdobePhotoshopSolidSharp,
+];

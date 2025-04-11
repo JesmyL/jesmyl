@@ -18,21 +18,15 @@ export const IconPoliceBadgeStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="police-badge-stroke-rounded IconPoliceBadgeStrokeRounded"
+      the-icon="PoliceBadge StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -42,28 +36,19 @@ export const IconPoliceBadgeDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="police-badge-duotone-rounded IconPoliceBadgeDuotoneRounded"
+      the-icon="PoliceBadge DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -73,22 +58,15 @@ export const IconPoliceBadgeTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="police-badge-twotone-rounded IconPoliceBadgeTwotoneRounded"
+      the-icon="PoliceBadge TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -98,13 +76,11 @@ export const IconPoliceBadgeSolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="police-badge-solid-rounded IconPoliceBadgeSolidRounded"
+      the-icon="PoliceBadge SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -114,16 +90,15 @@ export const IconPoliceBadgeBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="police-badge-bulk-rounded IconPoliceBadgeBulkRounded"
+      the-icon="PoliceBadge BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -133,18 +108,15 @@ export const IconPoliceBadgeStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="police-badge-stroke-sharp IconPoliceBadgeStrokeSharp"
+      the-icon="PoliceBadge StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d7}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -154,25 +126,23 @@ export const IconPoliceBadgeSolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="police-badge-solid-sharp IconPoliceBadgeSolidSharp"
+      the-icon="PoliceBadge SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPoliceBadge: TheIconSelfPack = {
-  name: 'PoliceBadge',
-  StrokeRounded: IconPoliceBadgeStrokeRounded,
-  DuotoneRounded: IconPoliceBadgeDuotoneRounded,
-  TwotoneRounded: IconPoliceBadgeTwotoneRounded,
-  SolidRounded: IconPoliceBadgeSolidRounded,
-  BulkRounded: IconPoliceBadgeBulkRounded,
-  StrokeSharp: IconPoliceBadgeStrokeSharp,
-  SolidSharp: IconPoliceBadgeSolidSharp,
-};
+export const iconPackOfPoliceBadge: TheIconSelfPack = [
+  'PoliceBadge',
+  IconPoliceBadgeStrokeRounded,
+  IconPoliceBadgeDuotoneRounded,
+  IconPoliceBadgeTwotoneRounded,
+  IconPoliceBadgeSolidRounded,
+  IconPoliceBadgeBulkRounded,
+  IconPoliceBadgeStrokeSharp,
+  IconPoliceBadgeSolidSharp,
+];

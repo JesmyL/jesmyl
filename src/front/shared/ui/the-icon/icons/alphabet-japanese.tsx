@@ -17,25 +17,19 @@ export const IconAlphabetJapaneseStrokeRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-japanese-stroke-rounded IconAlphabetJapaneseStrokeRounded"
+      the-icon="AlphabetJapanese StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -45,30 +39,23 @@ export const IconAlphabetJapaneseDuotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-japanese-duotone-rounded IconAlphabetJapaneseDuotoneRounded"
+      the-icon="AlphabetJapanese DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d5}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -78,26 +65,19 @@ export const IconAlphabetJapaneseTwotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-japanese-twotone-rounded IconAlphabetJapaneseTwotoneRounded"
+      the-icon="AlphabetJapanese TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -107,19 +87,15 @@ export const IconAlphabetJapaneseSolidRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-japanese-solid-rounded IconAlphabetJapaneseSolidRounded"
+      the-icon="AlphabetJapanese SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -129,20 +105,15 @@ export const IconAlphabetJapaneseBulkRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-japanese-bulk-rounded IconAlphabetJapaneseBulkRounded"
+      the-icon="AlphabetJapanese BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -152,25 +123,19 @@ export const IconAlphabetJapaneseStrokeSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-japanese-stroke-sharp IconAlphabetJapaneseStrokeSharp"
+      the-icon="AlphabetJapanese StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -180,25 +145,23 @@ export const IconAlphabetJapaneseSolidSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-japanese-solid-sharp IconAlphabetJapaneseSolidSharp"
+      the-icon="AlphabetJapanese SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAlphabetJapanese: TheIconSelfPack = {
-  name: 'AlphabetJapanese',
-  StrokeRounded: IconAlphabetJapaneseStrokeRounded,
-  DuotoneRounded: IconAlphabetJapaneseDuotoneRounded,
-  TwotoneRounded: IconAlphabetJapaneseTwotoneRounded,
-  SolidRounded: IconAlphabetJapaneseSolidRounded,
-  BulkRounded: IconAlphabetJapaneseBulkRounded,
-  StrokeSharp: IconAlphabetJapaneseStrokeSharp,
-  SolidSharp: IconAlphabetJapaneseSolidSharp,
-};
+export const iconPackOfAlphabetJapanese: TheIconSelfPack = [
+  'AlphabetJapanese',
+  IconAlphabetJapaneseStrokeRounded,
+  IconAlphabetJapaneseDuotoneRounded,
+  IconAlphabetJapaneseTwotoneRounded,
+  IconAlphabetJapaneseSolidRounded,
+  IconAlphabetJapaneseBulkRounded,
+  IconAlphabetJapaneseStrokeSharp,
+  IconAlphabetJapaneseSolidSharp,
+];

@@ -15,31 +15,24 @@ export const IconSurpriseStrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="surprise-stroke-rounded IconSurpriseStrokeRounded"
+      the-icon="Surprise StrokeRounded"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sr sw"
+      />
       <ellipse 
-        cx="12" 
-        cy="15.5" 
-        rx="2" 
-        ry="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></ellipse>
+        cx="12"
+        cy="15.5"
+        rx="2"
+        ry="2.5"
+        i-c="s sj sr sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -49,38 +42,28 @@ export const IconSurpriseDuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="surprise-duotone-rounded IconSurpriseDuotoneRounded"
+      the-icon="Surprise DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr o7"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sr sw"
+      />
       <ellipse 
-        cx="12" 
-        cy="15.5" 
-        rx="2" 
-        ry="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></ellipse>
+        cx="12"
+        cy="15.5"
+        rx="2"
+        ry="2.5"
+        i-c="s sj sr sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -90,33 +73,24 @@ export const IconSurpriseTwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="surprise-twotone-rounded IconSurpriseTwotoneRounded"
+      the-icon="Surprise TwotoneRounded"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sr sw"
+      />
       <ellipse 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="15.5" 
-        rx="2" 
-        ry="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></ellipse>
+        cx="12"
+        cy="15.5"
+        rx="2"
+        ry="2.5"
+        i-c="o7 s sj sr sw"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -126,13 +100,11 @@ export const IconSurpriseSolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="surprise-solid-rounded IconSurpriseSolidRounded"
+      the-icon="Surprise SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -142,24 +114,19 @@ export const IconSurpriseBulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="surprise-bulk-rounded IconSurpriseBulkRounded"
+      the-icon="Surprise BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -169,31 +136,24 @@ export const IconSurpriseStrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="surprise-stroke-sharp IconSurpriseStrokeSharp"
+      the-icon="Surprise StrokeSharp"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sr sw"
+      />
       <ellipse 
-        cx="12" 
-        cy="15.5" 
-        rx="2" 
-        ry="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></ellipse>
+        cx="12"
+        cy="15.5"
+        rx="2"
+        ry="2.5"
+        i-c="s sj sr sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -203,25 +163,23 @@ export const IconSurpriseSolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="surprise-solid-sharp IconSurpriseSolidSharp"
+      the-icon="Surprise SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSurprise: TheIconSelfPack = {
-  name: 'Surprise',
-  StrokeRounded: IconSurpriseStrokeRounded,
-  DuotoneRounded: IconSurpriseDuotoneRounded,
-  TwotoneRounded: IconSurpriseTwotoneRounded,
-  SolidRounded: IconSurpriseSolidRounded,
-  BulkRounded: IconSurpriseBulkRounded,
-  StrokeSharp: IconSurpriseStrokeSharp,
-  SolidSharp: IconSurpriseSolidSharp,
-};
+export const iconPackOfSurprise: TheIconSelfPack = [
+  'Surprise',
+  IconSurpriseStrokeRounded,
+  IconSurpriseDuotoneRounded,
+  IconSurpriseTwotoneRounded,
+  IconSurpriseSolidRounded,
+  IconSurpriseBulkRounded,
+  IconSurpriseStrokeSharp,
+  IconSurpriseSolidSharp,
+];

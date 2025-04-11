@@ -14,14 +14,11 @@ export const IconShaka01StrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="shaka-01-stroke-rounded IconShaka01StrokeRounded"
+      the-icon="Shaka01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -31,19 +28,15 @@ export const IconShaka01DuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="shaka-01-duotone-rounded IconShaka01DuotoneRounded"
+      the-icon="Shaka01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -53,22 +46,15 @@ export const IconShaka01TwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="shaka-01-twotone-rounded IconShaka01TwotoneRounded"
+      the-icon="Shaka01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -78,11 +64,11 @@ export const IconShaka01SolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="shaka-01-solid-rounded IconShaka01SolidRounded"
+      the-icon="Shaka01 SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -92,12 +78,11 @@ export const IconShaka01BulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="shaka-01-bulk-rounded IconShaka01BulkRounded"
+      the-icon="Shaka01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -107,13 +92,11 @@ export const IconShaka01StrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="shaka-01-stroke-sharp IconShaka01StrokeSharp"
+      the-icon="Shaka01 StrokeSharp"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -123,23 +106,23 @@ export const IconShaka01SolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="shaka-01-solid-sharp IconShaka01SolidSharp"
+      the-icon="Shaka01 SolidSharp"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfShaka01: TheIconSelfPack = {
-  name: 'Shaka01',
-  StrokeRounded: IconShaka01StrokeRounded,
-  DuotoneRounded: IconShaka01DuotoneRounded,
-  TwotoneRounded: IconShaka01TwotoneRounded,
-  SolidRounded: IconShaka01SolidRounded,
-  BulkRounded: IconShaka01BulkRounded,
-  StrokeSharp: IconShaka01StrokeSharp,
-  SolidSharp: IconShaka01SolidSharp,
-};
+export const iconPackOfShaka01: TheIconSelfPack = [
+  'Shaka01',
+  IconShaka01StrokeRounded,
+  IconShaka01DuotoneRounded,
+  IconShaka01TwotoneRounded,
+  IconShaka01SolidRounded,
+  IconShaka01BulkRounded,
+  IconShaka01StrokeSharp,
+  IconShaka01SolidSharp,
+];

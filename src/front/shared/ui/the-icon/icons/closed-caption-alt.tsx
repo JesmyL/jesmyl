@@ -19,25 +19,19 @@ export const IconClosedCaptionAltStrokeRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="closed-caption-alt-stroke-rounded IconClosedCaptionAltStrokeRounded"
+      the-icon="ClosedCaptionAlt StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -47,30 +41,23 @@ export const IconClosedCaptionAltDuotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="closed-caption-alt-duotone-rounded IconClosedCaptionAltDuotoneRounded"
+      the-icon="ClosedCaptionAlt DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -80,27 +67,19 @@ export const IconClosedCaptionAltTwotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="closed-caption-alt-twotone-rounded IconClosedCaptionAltTwotoneRounded"
+      the-icon="ClosedCaptionAlt TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -110,13 +89,11 @@ export const IconClosedCaptionAltSolidRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="closed-caption-alt-solid-rounded IconClosedCaptionAltSolidRounded"
+      the-icon="ClosedCaptionAlt SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -126,26 +103,19 @@ export const IconClosedCaptionAltBulkRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="closed-caption-alt-bulk-rounded IconClosedCaptionAltBulkRounded"
+      the-icon="ClosedCaptionAlt BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -155,18 +125,15 @@ export const IconClosedCaptionAltStrokeSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="closed-caption-alt-stroke-sharp IconClosedCaptionAltStrokeSharp"
+      the-icon="ClosedCaptionAlt StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -176,25 +143,23 @@ export const IconClosedCaptionAltSolidSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="closed-caption-alt-solid-sharp IconClosedCaptionAltSolidSharp"
+      the-icon="ClosedCaptionAlt SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfClosedCaptionAlt: TheIconSelfPack = {
-  name: 'ClosedCaptionAlt',
-  StrokeRounded: IconClosedCaptionAltStrokeRounded,
-  DuotoneRounded: IconClosedCaptionAltDuotoneRounded,
-  TwotoneRounded: IconClosedCaptionAltTwotoneRounded,
-  SolidRounded: IconClosedCaptionAltSolidRounded,
-  BulkRounded: IconClosedCaptionAltBulkRounded,
-  StrokeSharp: IconClosedCaptionAltStrokeSharp,
-  SolidSharp: IconClosedCaptionAltSolidSharp,
-};
+export const iconPackOfClosedCaptionAlt: TheIconSelfPack = [
+  'ClosedCaptionAlt',
+  IconClosedCaptionAltStrokeRounded,
+  IconClosedCaptionAltDuotoneRounded,
+  IconClosedCaptionAltTwotoneRounded,
+  IconClosedCaptionAltSolidRounded,
+  IconClosedCaptionAltBulkRounded,
+  IconClosedCaptionAltStrokeSharp,
+  IconClosedCaptionAltSolidSharp,
+];

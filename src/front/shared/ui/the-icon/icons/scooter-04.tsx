@@ -20,30 +20,23 @@ export const IconScooter04StrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="scooter-04-stroke-rounded IconScooter04StrokeRounded"
+      the-icon="Scooter04 StrokeRounded"
     >
       <circle 
-        cx="4" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="4"
+        cy="18"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="20" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="20"
+        cy="18"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -53,36 +46,28 @@ export const IconScooter04DuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="scooter-04-duotone-rounded IconScooter04DuotoneRounded"
+      the-icon="Scooter04 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="4" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="4"
+        cy="18"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="20" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="20"
+        cy="18"
+        r="2"
+        i-c="s sj sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -91,38 +76,27 @@ export const IconScooter04TwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="scooter-04-twotone-rounded IconScooter04TwotoneRounded"
+      the-icon="Scooter04 TwotoneRounded"
     >
       <circle 
-        cx="4" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="4"
+        cy="18"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="20" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
-      <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        cx="20"
+        cy="18"
+        r="2"
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d4}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -132,23 +106,19 @@ export const IconScooter04SolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="scooter-04-solid-rounded IconScooter04SolidRounded"
+      the-icon="Scooter04 SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -158,24 +128,19 @@ export const IconScooter04BulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="scooter-04-bulk-rounded IconScooter04BulkRounded"
+      the-icon="Scooter04 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -185,27 +150,23 @@ export const IconScooter04StrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="scooter-04-stroke-sharp IconScooter04StrokeSharp"
+      the-icon="Scooter04 StrokeSharp"
     >
       <circle 
-        cx="4" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="4"
+        cy="18"
+        r="2"
+        i-c="s sj sw"
+      />
       <circle 
-        cx="20" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="20"
+        cy="18"
+        r="2"
+        i-c="s sj sw"
+      />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -215,35 +176,31 @@ export const IconScooter04SolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="scooter-04-solid-sharp IconScooter04SolidSharp"
+      the-icon="Scooter04 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfScooter04: TheIconSelfPack = {
-  name: 'Scooter04',
-  StrokeRounded: IconScooter04StrokeRounded,
-  DuotoneRounded: IconScooter04DuotoneRounded,
-  TwotoneRounded: IconScooter04TwotoneRounded,
-  SolidRounded: IconScooter04SolidRounded,
-  BulkRounded: IconScooter04BulkRounded,
-  StrokeSharp: IconScooter04StrokeSharp,
-  SolidSharp: IconScooter04SolidSharp,
-};
+export const iconPackOfScooter04: TheIconSelfPack = [
+  'Scooter04',
+  IconScooter04StrokeRounded,
+  IconScooter04DuotoneRounded,
+  IconScooter04TwotoneRounded,
+  IconScooter04SolidRounded,
+  IconScooter04BulkRounded,
+  IconScooter04StrokeSharp,
+  IconScooter04SolidSharp,
+];

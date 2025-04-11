@@ -16,19 +16,15 @@ export const IconCancelCircleStrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="cancel-circle-stroke-rounded IconCancelCircleStrokeRounded"
+      the-icon="CancelCircle StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -38,24 +34,19 @@ export const IconCancelCircleDuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="cancel-circle-duotone-rounded IconCancelCircleDuotoneRounded"
+      the-icon="CancelCircle DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -65,20 +56,15 @@ export const IconCancelCircleTwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="cancel-circle-twotone-rounded IconCancelCircleTwotoneRounded"
+      the-icon="CancelCircle TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -88,13 +74,11 @@ export const IconCancelCircleSolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="cancel-circle-solid-rounded IconCancelCircleSolidRounded"
+      the-icon="CancelCircle SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -104,18 +88,15 @@ export const IconCancelCircleBulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="cancel-circle-bulk-rounded IconCancelCircleBulkRounded"
+      the-icon="CancelCircle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -125,19 +106,15 @@ export const IconCancelCircleStrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="cancel-circle-stroke-sharp IconCancelCircleStrokeSharp"
+      the-icon="CancelCircle StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -147,25 +124,23 @@ export const IconCancelCircleSolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="cancel-circle-solid-sharp IconCancelCircleSolidSharp"
+      the-icon="CancelCircle SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCancelCircle: TheIconSelfPack = {
-  name: 'CancelCircle',
-  StrokeRounded: IconCancelCircleStrokeRounded,
-  DuotoneRounded: IconCancelCircleDuotoneRounded,
-  TwotoneRounded: IconCancelCircleTwotoneRounded,
-  SolidRounded: IconCancelCircleSolidRounded,
-  BulkRounded: IconCancelCircleBulkRounded,
-  StrokeSharp: IconCancelCircleStrokeSharp,
-  SolidSharp: IconCancelCircleSolidSharp,
-};
+export const iconPackOfCancelCircle: TheIconSelfPack = [
+  'CancelCircle',
+  IconCancelCircleStrokeRounded,
+  IconCancelCircleDuotoneRounded,
+  IconCancelCircleTwotoneRounded,
+  IconCancelCircleSolidRounded,
+  IconCancelCircleBulkRounded,
+  IconCancelCircleStrokeSharp,
+  IconCancelCircleSolidSharp,
+];

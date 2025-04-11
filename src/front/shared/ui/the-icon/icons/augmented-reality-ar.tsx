@@ -18,20 +18,15 @@ export const IconAugmentedRealityArStrokeRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="augmented-reality-ar-stroke-rounded IconAugmentedRealityArStrokeRounded"
+      the-icon="AugmentedRealityAr StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -41,25 +36,19 @@ export const IconAugmentedRealityArDuotoneRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="augmented-reality-ar-duotone-rounded IconAugmentedRealityArDuotoneRounded"
+      the-icon="AugmentedRealityAr DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -69,21 +58,15 @@ export const IconAugmentedRealityArTwotoneRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="augmented-reality-ar-twotone-rounded IconAugmentedRealityArTwotoneRounded"
+      the-icon="AugmentedRealityAr TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -93,13 +76,11 @@ export const IconAugmentedRealityArSolidRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="augmented-reality-ar-solid-rounded IconAugmentedRealityArSolidRounded"
+      the-icon="AugmentedRealityAr SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -109,22 +90,19 @@ export const IconAugmentedRealityArBulkRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="augmented-reality-ar-bulk-rounded IconAugmentedRealityArBulkRounded"
+      the-icon="AugmentedRealityAr BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -134,18 +112,15 @@ export const IconAugmentedRealityArStrokeSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="augmented-reality-ar-stroke-sharp IconAugmentedRealityArStrokeSharp"
+      the-icon="AugmentedRealityAr StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -155,25 +130,23 @@ export const IconAugmentedRealityArSolidSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="augmented-reality-ar-solid-sharp IconAugmentedRealityArSolidSharp"
+      the-icon="AugmentedRealityAr SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAugmentedRealityAr: TheIconSelfPack = {
-  name: 'AugmentedRealityAr',
-  StrokeRounded: IconAugmentedRealityArStrokeRounded,
-  DuotoneRounded: IconAugmentedRealityArDuotoneRounded,
-  TwotoneRounded: IconAugmentedRealityArTwotoneRounded,
-  SolidRounded: IconAugmentedRealityArSolidRounded,
-  BulkRounded: IconAugmentedRealityArBulkRounded,
-  StrokeSharp: IconAugmentedRealityArStrokeSharp,
-  SolidSharp: IconAugmentedRealityArSolidSharp,
-};
+export const iconPackOfAugmentedRealityAr: TheIconSelfPack = [
+  'AugmentedRealityAr',
+  IconAugmentedRealityArStrokeRounded,
+  IconAugmentedRealityArDuotoneRounded,
+  IconAugmentedRealityArTwotoneRounded,
+  IconAugmentedRealityArSolidRounded,
+  IconAugmentedRealityArBulkRounded,
+  IconAugmentedRealityArStrokeSharp,
+  IconAugmentedRealityArSolidSharp,
+];

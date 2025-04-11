@@ -15,14 +15,11 @@ export const IconJoinBevelStrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="join-bevel-stroke-rounded IconJoinBevelStrokeRounded"
+      the-icon="JoinBevel StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -32,19 +29,15 @@ export const IconJoinBevelDuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="join-bevel-duotone-rounded IconJoinBevelDuotoneRounded"
+      the-icon="JoinBevel DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,22 +47,15 @@ export const IconJoinBevelTwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="join-bevel-twotone-rounded IconJoinBevelTwotoneRounded"
+      the-icon="JoinBevel TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -79,11 +65,11 @@ export const IconJoinBevelSolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="join-bevel-solid-rounded IconJoinBevelSolidRounded"
+      the-icon="JoinBevel SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -93,12 +79,11 @@ export const IconJoinBevelBulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="join-bevel-bulk-rounded IconJoinBevelBulkRounded"
+      the-icon="JoinBevel BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -108,12 +93,11 @@ export const IconJoinBevelStrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="join-bevel-stroke-sharp IconJoinBevelStrokeSharp"
+      the-icon="JoinBevel StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -123,23 +107,23 @@ export const IconJoinBevelSolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="join-bevel-solid-sharp IconJoinBevelSolidSharp"
+      the-icon="JoinBevel SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfJoinBevel: TheIconSelfPack = {
-  name: 'JoinBevel',
-  StrokeRounded: IconJoinBevelStrokeRounded,
-  DuotoneRounded: IconJoinBevelDuotoneRounded,
-  TwotoneRounded: IconJoinBevelTwotoneRounded,
-  SolidRounded: IconJoinBevelSolidRounded,
-  BulkRounded: IconJoinBevelBulkRounded,
-  StrokeSharp: IconJoinBevelStrokeSharp,
-  SolidSharp: IconJoinBevelSolidSharp,
-};
+export const iconPackOfJoinBevel: TheIconSelfPack = [
+  'JoinBevel',
+  IconJoinBevelStrokeRounded,
+  IconJoinBevelDuotoneRounded,
+  IconJoinBevelTwotoneRounded,
+  IconJoinBevelSolidRounded,
+  IconJoinBevelBulkRounded,
+  IconJoinBevelStrokeSharp,
+  IconJoinBevelSolidSharp,
+];

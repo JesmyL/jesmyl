@@ -15,14 +15,11 @@ export const IconJoinStraightStrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="join-straight-stroke-rounded IconJoinStraightStrokeRounded"
+      the-icon="JoinStraight StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -32,19 +29,15 @@ export const IconJoinStraightDuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="join-straight-duotone-rounded IconJoinStraightDuotoneRounded"
+      the-icon="JoinStraight DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,22 +47,15 @@ export const IconJoinStraightTwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="join-straight-twotone-rounded IconJoinStraightTwotoneRounded"
+      the-icon="JoinStraight TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -79,11 +65,11 @@ export const IconJoinStraightSolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="join-straight-solid-rounded IconJoinStraightSolidRounded"
+      the-icon="JoinStraight SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -93,12 +79,11 @@ export const IconJoinStraightBulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="join-straight-bulk-rounded IconJoinStraightBulkRounded"
+      the-icon="JoinStraight BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -108,12 +93,11 @@ export const IconJoinStraightStrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="join-straight-stroke-sharp IconJoinStraightStrokeSharp"
+      the-icon="JoinStraight StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -123,23 +107,23 @@ export const IconJoinStraightSolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="join-straight-solid-sharp IconJoinStraightSolidSharp"
+      the-icon="JoinStraight SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfJoinStraight: TheIconSelfPack = {
-  name: 'JoinStraight',
-  StrokeRounded: IconJoinStraightStrokeRounded,
-  DuotoneRounded: IconJoinStraightDuotoneRounded,
-  TwotoneRounded: IconJoinStraightTwotoneRounded,
-  SolidRounded: IconJoinStraightSolidRounded,
-  BulkRounded: IconJoinStraightBulkRounded,
-  StrokeSharp: IconJoinStraightStrokeSharp,
-  SolidSharp: IconJoinStraightSolidSharp,
-};
+export const iconPackOfJoinStraight: TheIconSelfPack = [
+  'JoinStraight',
+  IconJoinStraightStrokeRounded,
+  IconJoinStraightDuotoneRounded,
+  IconJoinStraightTwotoneRounded,
+  IconJoinStraightSolidRounded,
+  IconJoinStraightBulkRounded,
+  IconJoinStraightStrokeSharp,
+  IconJoinStraightSolidSharp,
+];

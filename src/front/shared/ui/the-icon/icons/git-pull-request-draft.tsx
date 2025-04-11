@@ -18,39 +18,33 @@ export const IconGitPullRequestDraftStrokeRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="git-pull-request-draft-stroke-rounded IconGitPullRequestDraftStrokeRounded"
+      the-icon="GitPullRequestDraft StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="6" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6"
+        cy="18"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="6" 
-        cy="6" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6"
+        cy="6"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="18" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="18"
+        cy="18"
+        r="2"
+        i-c="s sw"
+      />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -60,57 +54,51 @@ export const IconGitPullRequestDraftDuotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="git-pull-request-draft-duotone-rounded IconGitPullRequestDraftDuotoneRounded"
+      the-icon="GitPullRequestDraft DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="6" 
-        cy="18" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="6"
+        cy="18"
+        r="2"
+        i-c="f o7"
+      />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="6" 
-        cy="6" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="6"
+        cy="6"
+        r="2"
+        i-c="f o7"
+      />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="18" 
-        cy="18" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="18"
+        cy="18"
+        r="2"
+        i-c="f o7"
+      />
       <circle 
-        cx="6" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6"
+        cy="18"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="6" 
-        cy="6" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6"
+        cy="6"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="18" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        cx="18"
+        cy="18"
+        r="2"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -120,41 +108,33 @@ export const IconGitPullRequestDraftTwotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="git-pull-request-draft-twotone-rounded IconGitPullRequestDraftTwotoneRounded"
+      the-icon="GitPullRequestDraft TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <circle 
-        cx="6" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6"
+        cy="18"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="6" 
-        cy="6" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6"
+        cy="6"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="18" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="18"
+        cy="18"
+        r="2"
+        i-c="s sw"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -164,37 +144,27 @@ export const IconGitPullRequestDraftSolidRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="git-pull-request-draft-solid-rounded IconGitPullRequestDraftSolidRounded"
+      the-icon="GitPullRequestDraft SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -204,38 +174,27 @@ export const IconGitPullRequestDraftBulkRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="git-pull-request-draft-bulk-rounded IconGitPullRequestDraftBulkRounded"
+      the-icon="GitPullRequestDraft BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -245,44 +204,33 @@ export const IconGitPullRequestDraftStrokeSharp: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="git-pull-request-draft-stroke-sharp IconGitPullRequestDraftStrokeSharp"
+      the-icon="GitPullRequestDraft StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <circle 
-        cx="6" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round"></circle>
+        cx="6"
+        cy="18"
+        r="2"
+        i-c="s sj ss sw"
+      />
       <circle 
-        cx="6" 
-        cy="6" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round"></circle>
+        cx="6"
+        cy="6"
+        r="2"
+        i-c="s sj ss sw"
+      />
       <circle 
-        cx="18" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round"></circle>
+        cx="18"
+        cy="18"
+        r="2"
+        i-c="s sj ss sw"
+      />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj ss sw"
       />
     </TheIconWrapper>
   );
@@ -292,43 +240,39 @@ export const IconGitPullRequestDraftSolidSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="git-pull-request-draft-solid-sharp IconGitPullRequestDraftSolidSharp"
+      the-icon="GitPullRequestDraft SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfGitPullRequestDraft: TheIconSelfPack = {
-  name: 'GitPullRequestDraft',
-  StrokeRounded: IconGitPullRequestDraftStrokeRounded,
-  DuotoneRounded: IconGitPullRequestDraftDuotoneRounded,
-  TwotoneRounded: IconGitPullRequestDraftTwotoneRounded,
-  SolidRounded: IconGitPullRequestDraftSolidRounded,
-  BulkRounded: IconGitPullRequestDraftBulkRounded,
-  StrokeSharp: IconGitPullRequestDraftStrokeSharp,
-  SolidSharp: IconGitPullRequestDraftSolidSharp,
-};
+export const iconPackOfGitPullRequestDraft: TheIconSelfPack = [
+  'GitPullRequestDraft',
+  IconGitPullRequestDraftStrokeRounded,
+  IconGitPullRequestDraftDuotoneRounded,
+  IconGitPullRequestDraftTwotoneRounded,
+  IconGitPullRequestDraftSolidRounded,
+  IconGitPullRequestDraftBulkRounded,
+  IconGitPullRequestDraftStrokeSharp,
+  IconGitPullRequestDraftSolidSharp,
+];

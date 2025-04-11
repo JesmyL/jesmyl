@@ -19,26 +19,19 @@ export const IconKeyframeAlignVerticalStrokeRounded: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="keyframe-align-vertical-stroke-rounded IconKeyframeAlignVerticalStrokeRounded"
+      the-icon="KeyframeAlignVertical StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -48,31 +41,23 @@ export const IconKeyframeAlignVerticalDuotoneRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="keyframe-align-vertical-duotone-rounded IconKeyframeAlignVerticalDuotoneRounded"
+      the-icon="KeyframeAlignVertical DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -82,28 +67,19 @@ export const IconKeyframeAlignVerticalTwotoneRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="keyframe-align-vertical-twotone-rounded IconKeyframeAlignVerticalTwotoneRounded"
+      the-icon="KeyframeAlignVertical TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -113,23 +89,19 @@ export const IconKeyframeAlignVerticalSolidRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="keyframe-align-vertical-solid-rounded IconKeyframeAlignVerticalSolidRounded"
+      the-icon="KeyframeAlignVertical SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -139,25 +111,19 @@ export const IconKeyframeAlignVerticalBulkRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="keyframe-align-vertical-bulk-rounded IconKeyframeAlignVerticalBulkRounded"
+      the-icon="KeyframeAlignVertical BulkRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr o7"
       />
     </TheIconWrapper>
   );
@@ -167,22 +133,19 @@ export const IconKeyframeAlignVerticalStrokeSharp: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="keyframe-align-vertical-stroke-sharp IconKeyframeAlignVerticalStrokeSharp"
+      the-icon="KeyframeAlignVertical StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -192,35 +155,31 @@ export const IconKeyframeAlignVerticalSolidSharp: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="keyframe-align-vertical-solid-sharp IconKeyframeAlignVerticalSolidSharp"
+      the-icon="KeyframeAlignVertical SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfKeyframeAlignVertical: TheIconSelfPack = {
-  name: 'KeyframeAlignVertical',
-  StrokeRounded: IconKeyframeAlignVerticalStrokeRounded,
-  DuotoneRounded: IconKeyframeAlignVerticalDuotoneRounded,
-  TwotoneRounded: IconKeyframeAlignVerticalTwotoneRounded,
-  SolidRounded: IconKeyframeAlignVerticalSolidRounded,
-  BulkRounded: IconKeyframeAlignVerticalBulkRounded,
-  StrokeSharp: IconKeyframeAlignVerticalStrokeSharp,
-  SolidSharp: IconKeyframeAlignVerticalSolidSharp,
-};
+export const iconPackOfKeyframeAlignVertical: TheIconSelfPack = [
+  'KeyframeAlignVertical',
+  IconKeyframeAlignVerticalStrokeRounded,
+  IconKeyframeAlignVerticalDuotoneRounded,
+  IconKeyframeAlignVerticalTwotoneRounded,
+  IconKeyframeAlignVerticalSolidRounded,
+  IconKeyframeAlignVerticalBulkRounded,
+  IconKeyframeAlignVerticalStrokeSharp,
+  IconKeyframeAlignVerticalSolidSharp,
+];

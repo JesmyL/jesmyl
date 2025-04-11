@@ -23,26 +23,19 @@ export const IconSunCloudLittleRain02StrokeRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="sun-cloud-little-rain-02-stroke-rounded IconSunCloudLittleRain02StrokeRounded"
+      the-icon="SunCloudLittleRain02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -52,31 +45,23 @@ export const IconSunCloudLittleRain02DuotoneRounded: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="sun-cloud-little-rain-02-duotone-rounded IconSunCloudLittleRain02DuotoneRounded"
+      the-icon="SunCloudLittleRain02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -86,28 +71,19 @@ export const IconSunCloudLittleRain02TwotoneRounded: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="sun-cloud-little-rain-02-twotone-rounded IconSunCloudLittleRain02TwotoneRounded"
+      the-icon="SunCloudLittleRain02 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -117,23 +93,19 @@ export const IconSunCloudLittleRain02SolidRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="sun-cloud-little-rain-02-solid-rounded IconSunCloudLittleRain02SolidRounded"
+      the-icon="SunCloudLittleRain02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -143,22 +115,19 @@ export const IconSunCloudLittleRain02BulkRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="sun-cloud-little-rain-02-bulk-rounded IconSunCloudLittleRain02BulkRounded"
+      the-icon="SunCloudLittleRain02 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f o7"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -168,25 +137,19 @@ export const IconSunCloudLittleRain02StrokeSharp: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="sun-cloud-little-rain-02-stroke-sharp IconSunCloudLittleRain02StrokeSharp"
+      the-icon="SunCloudLittleRain02 StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d11}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -196,35 +159,31 @@ export const IconSunCloudLittleRain02SolidSharp: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="sun-cloud-little-rain-02-solid-sharp IconSunCloudLittleRain02SolidSharp"
+      the-icon="SunCloudLittleRain02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
       <path 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSunCloudLittleRain02: TheIconSelfPack = {
-  name: 'SunCloudLittleRain02',
-  StrokeRounded: IconSunCloudLittleRain02StrokeRounded,
-  DuotoneRounded: IconSunCloudLittleRain02DuotoneRounded,
-  TwotoneRounded: IconSunCloudLittleRain02TwotoneRounded,
-  SolidRounded: IconSunCloudLittleRain02SolidRounded,
-  BulkRounded: IconSunCloudLittleRain02BulkRounded,
-  StrokeSharp: IconSunCloudLittleRain02StrokeSharp,
-  SolidSharp: IconSunCloudLittleRain02SolidSharp,
-};
+export const iconPackOfSunCloudLittleRain02: TheIconSelfPack = [
+  'SunCloudLittleRain02',
+  IconSunCloudLittleRain02StrokeRounded,
+  IconSunCloudLittleRain02DuotoneRounded,
+  IconSunCloudLittleRain02TwotoneRounded,
+  IconSunCloudLittleRain02SolidRounded,
+  IconSunCloudLittleRain02BulkRounded,
+  IconSunCloudLittleRain02StrokeSharp,
+  IconSunCloudLittleRain02SolidSharp,
+];

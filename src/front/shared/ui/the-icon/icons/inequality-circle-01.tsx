@@ -20,26 +20,19 @@ export const IconInequalityCircle01StrokeRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="inequality-circle-01-stroke-rounded IconInequalityCircle01StrokeRounded"
+      the-icon="InequalityCircle01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -49,32 +42,23 @@ export const IconInequalityCircle01DuotoneRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="inequality-circle-01-duotone-rounded IconInequalityCircle01DuotoneRounded"
+      the-icon="InequalityCircle01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -84,20 +68,15 @@ export const IconInequalityCircle01TwotoneRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="inequality-circle-01-twotone-rounded IconInequalityCircle01TwotoneRounded"
+      the-icon="InequalityCircle01 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -107,13 +86,11 @@ export const IconInequalityCircle01SolidRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="inequality-circle-01-solid-rounded IconInequalityCircle01SolidRounded"
+      the-icon="InequalityCircle01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -123,18 +100,15 @@ export const IconInequalityCircle01BulkRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="inequality-circle-01-bulk-rounded IconInequalityCircle01BulkRounded"
+      the-icon="InequalityCircle01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -144,19 +118,17 @@ export const IconInequalityCircle01StrokeSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="inequality-circle-01-stroke-sharp IconInequalityCircle01StrokeSharp"
+      the-icon="InequalityCircle01 StrokeSharp"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -166,25 +138,23 @@ export const IconInequalityCircle01SolidSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="inequality-circle-01-solid-sharp IconInequalityCircle01SolidSharp"
+      the-icon="InequalityCircle01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfInequalityCircle01: TheIconSelfPack = {
-  name: 'InequalityCircle01',
-  StrokeRounded: IconInequalityCircle01StrokeRounded,
-  DuotoneRounded: IconInequalityCircle01DuotoneRounded,
-  TwotoneRounded: IconInequalityCircle01TwotoneRounded,
-  SolidRounded: IconInequalityCircle01SolidRounded,
-  BulkRounded: IconInequalityCircle01BulkRounded,
-  StrokeSharp: IconInequalityCircle01StrokeSharp,
-  SolidSharp: IconInequalityCircle01SolidSharp,
-};
+export const iconPackOfInequalityCircle01: TheIconSelfPack = [
+  'InequalityCircle01',
+  IconInequalityCircle01StrokeRounded,
+  IconInequalityCircle01DuotoneRounded,
+  IconInequalityCircle01TwotoneRounded,
+  IconInequalityCircle01SolidRounded,
+  IconInequalityCircle01BulkRounded,
+  IconInequalityCircle01StrokeSharp,
+  IconInequalityCircle01SolidSharp,
+];

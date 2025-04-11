@@ -22,26 +22,19 @@ export const IconSmartPhoneLandscapeStrokeRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="smart-phone-landscape-stroke-rounded IconSmartPhoneLandscapeStrokeRounded"
+      the-icon="SmartPhoneLandscape StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -51,37 +44,29 @@ export const IconSmartPhoneLandscapeDuotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="smart-phone-landscape-duotone-rounded IconSmartPhoneLandscapeDuotoneRounded"
+      the-icon="SmartPhoneLandscape DuotoneRounded"
     >
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       </g>
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -91,28 +76,19 @@ export const IconSmartPhoneLandscapeTwotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="smart-phone-landscape-twotone-rounded IconSmartPhoneLandscapeTwotoneRounded"
+      the-icon="SmartPhoneLandscape TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sw"
       />
     </TheIconWrapper>
   );
@@ -122,13 +98,11 @@ export const IconSmartPhoneLandscapeSolidRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="smart-phone-landscape-solid-rounded IconSmartPhoneLandscapeSolidRounded"
+      the-icon="SmartPhoneLandscape SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -138,22 +112,19 @@ export const IconSmartPhoneLandscapeBulkRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="smart-phone-landscape-bulk-rounded IconSmartPhoneLandscapeBulkRounded"
+      the-icon="SmartPhoneLandscape BulkRounded"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        opacity="0.5" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o4"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -163,24 +134,19 @@ export const IconSmartPhoneLandscapeStrokeSharp: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="smart-phone-landscape-stroke-sharp IconSmartPhoneLandscapeStrokeSharp"
+      the-icon="SmartPhoneLandscape StrokeSharp"
     >
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d11}
+        i-c="s sw"
       />
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d12}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -190,25 +156,23 @@ export const IconSmartPhoneLandscapeSolidSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="smart-phone-landscape-solid-sharp IconSmartPhoneLandscapeSolidSharp"
+      the-icon="SmartPhoneLandscape SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSmartPhoneLandscape: TheIconSelfPack = {
-  name: 'SmartPhoneLandscape',
-  StrokeRounded: IconSmartPhoneLandscapeStrokeRounded,
-  DuotoneRounded: IconSmartPhoneLandscapeDuotoneRounded,
-  TwotoneRounded: IconSmartPhoneLandscapeTwotoneRounded,
-  SolidRounded: IconSmartPhoneLandscapeSolidRounded,
-  BulkRounded: IconSmartPhoneLandscapeBulkRounded,
-  StrokeSharp: IconSmartPhoneLandscapeStrokeSharp,
-  SolidSharp: IconSmartPhoneLandscapeSolidSharp,
-};
+export const iconPackOfSmartPhoneLandscape: TheIconSelfPack = [
+  'SmartPhoneLandscape',
+  IconSmartPhoneLandscapeStrokeRounded,
+  IconSmartPhoneLandscapeDuotoneRounded,
+  IconSmartPhoneLandscapeTwotoneRounded,
+  IconSmartPhoneLandscapeSolidRounded,
+  IconSmartPhoneLandscapeBulkRounded,
+  IconSmartPhoneLandscapeStrokeSharp,
+  IconSmartPhoneLandscapeSolidSharp,
+];

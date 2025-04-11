@@ -22,26 +22,19 @@ export const IconGoBackward10SecStrokeRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="go-backward-10-sec-stroke-rounded IconGoBackward10SecStrokeRounded"
+      the-icon="GoBackward10Sec StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -51,38 +44,27 @@ export const IconGoBackward10SecDuotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="go-backward-10-sec-duotone-rounded IconGoBackward10SecDuotoneRounded"
+      the-icon="GoBackward10Sec DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d5}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d6}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -92,21 +74,15 @@ export const IconGoBackward10SecTwotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="go-backward-10-sec-twotone-rounded IconGoBackward10SecTwotoneRounded"
+      the-icon="GoBackward10Sec TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d7}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -116,17 +92,15 @@ export const IconGoBackward10SecSolidRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="go-backward-10-sec-solid-rounded IconGoBackward10SecSolidRounded"
+      the-icon="GoBackward10Sec SolidRounded"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -136,18 +110,15 @@ export const IconGoBackward10SecBulkRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="go-backward-10-sec-bulk-rounded IconGoBackward10SecBulkRounded"
+      the-icon="GoBackward10Sec BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -157,18 +128,15 @@ export const IconGoBackward10SecStrokeSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="go-backward-10-sec-stroke-sharp IconGoBackward10SecStrokeSharp"
+      the-icon="GoBackward10Sec StrokeSharp"
     >
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d11}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -178,31 +146,27 @@ export const IconGoBackward10SecSolidSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="go-backward-10-sec-solid-sharp IconGoBackward10SecSolidSharp"
+      the-icon="GoBackward10Sec SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfGoBackward10Sec: TheIconSelfPack = {
-  name: 'GoBackward10Sec',
-  StrokeRounded: IconGoBackward10SecStrokeRounded,
-  DuotoneRounded: IconGoBackward10SecDuotoneRounded,
-  TwotoneRounded: IconGoBackward10SecTwotoneRounded,
-  SolidRounded: IconGoBackward10SecSolidRounded,
-  BulkRounded: IconGoBackward10SecBulkRounded,
-  StrokeSharp: IconGoBackward10SecStrokeSharp,
-  SolidSharp: IconGoBackward10SecSolidSharp,
-};
+export const iconPackOfGoBackward10Sec: TheIconSelfPack = [
+  'GoBackward10Sec',
+  IconGoBackward10SecStrokeRounded,
+  IconGoBackward10SecDuotoneRounded,
+  IconGoBackward10SecTwotoneRounded,
+  IconGoBackward10SecSolidRounded,
+  IconGoBackward10SecBulkRounded,
+  IconGoBackward10SecStrokeSharp,
+  IconGoBackward10SecSolidSharp,
+];

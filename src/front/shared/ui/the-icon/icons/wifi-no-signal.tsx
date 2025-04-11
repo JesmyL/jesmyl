@@ -15,12 +15,11 @@ export const IconWifiNoSignalStrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="wifi-no-signal-stroke-rounded IconWifiNoSignalStrokeRounded"
+      the-icon="WifiNoSignal StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -30,17 +29,15 @@ export const IconWifiNoSignalDuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="wifi-no-signal-duotone-rounded IconWifiNoSignalDuotoneRounded"
+      the-icon="WifiNoSignal DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -50,19 +47,15 @@ export const IconWifiNoSignalTwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="wifi-no-signal-twotone-rounded IconWifiNoSignalTwotoneRounded"
+      the-icon="WifiNoSignal TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -72,11 +65,11 @@ export const IconWifiNoSignalSolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="wifi-no-signal-solid-rounded IconWifiNoSignalSolidRounded"
+      the-icon="WifiNoSignal SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -86,16 +79,15 @@ export const IconWifiNoSignalBulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="wifi-no-signal-bulk-rounded IconWifiNoSignalBulkRounded"
+      the-icon="WifiNoSignal BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -105,11 +97,11 @@ export const IconWifiNoSignalStrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="wifi-no-signal-stroke-sharp IconWifiNoSignalStrokeSharp"
+      the-icon="WifiNoSignal StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -119,23 +111,23 @@ export const IconWifiNoSignalSolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="wifi-no-signal-solid-sharp IconWifiNoSignalSolidSharp"
+      the-icon="WifiNoSignal SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfWifiNoSignal: TheIconSelfPack = {
-  name: 'WifiNoSignal',
-  StrokeRounded: IconWifiNoSignalStrokeRounded,
-  DuotoneRounded: IconWifiNoSignalDuotoneRounded,
-  TwotoneRounded: IconWifiNoSignalTwotoneRounded,
-  SolidRounded: IconWifiNoSignalSolidRounded,
-  BulkRounded: IconWifiNoSignalBulkRounded,
-  StrokeSharp: IconWifiNoSignalStrokeSharp,
-  SolidSharp: IconWifiNoSignalSolidSharp,
-};
+export const iconPackOfWifiNoSignal: TheIconSelfPack = [
+  'WifiNoSignal',
+  IconWifiNoSignalStrokeRounded,
+  IconWifiNoSignalDuotoneRounded,
+  IconWifiNoSignalTwotoneRounded,
+  IconWifiNoSignalSolidRounded,
+  IconWifiNoSignalBulkRounded,
+  IconWifiNoSignalStrokeSharp,
+  IconWifiNoSignalSolidSharp,
+];

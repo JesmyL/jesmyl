@@ -17,19 +17,15 @@ export const IconPeriscopeStrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="periscope-stroke-rounded IconPeriscopeStrokeRounded"
+      the-icon="Periscope StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -39,26 +35,19 @@ export const IconPeriscopeDuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="periscope-duotone-rounded IconPeriscopeDuotoneRounded"
+      the-icon="Periscope DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -68,20 +57,15 @@ export const IconPeriscopeTwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="periscope-twotone-rounded IconPeriscopeTwotoneRounded"
+      the-icon="Periscope TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sw"
       />
     </TheIconWrapper>
   );
@@ -91,13 +75,11 @@ export const IconPeriscopeSolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="periscope-solid-rounded IconPeriscopeSolidRounded"
+      the-icon="Periscope SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -107,16 +89,15 @@ export const IconPeriscopeBulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="periscope-bulk-rounded IconPeriscopeBulkRounded"
+      the-icon="Periscope BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -126,19 +107,15 @@ export const IconPeriscopeStrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="periscope-stroke-sharp IconPeriscopeStrokeSharp"
+      the-icon="Periscope StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -148,25 +125,23 @@ export const IconPeriscopeSolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="periscope-solid-sharp IconPeriscopeSolidSharp"
+      the-icon="Periscope SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPeriscope: TheIconSelfPack = {
-  name: 'Periscope',
-  StrokeRounded: IconPeriscopeStrokeRounded,
-  DuotoneRounded: IconPeriscopeDuotoneRounded,
-  TwotoneRounded: IconPeriscopeTwotoneRounded,
-  SolidRounded: IconPeriscopeSolidRounded,
-  BulkRounded: IconPeriscopeBulkRounded,
-  StrokeSharp: IconPeriscopeStrokeSharp,
-  SolidSharp: IconPeriscopeSolidSharp,
-};
+export const iconPackOfPeriscope: TheIconSelfPack = [
+  'Periscope',
+  IconPeriscopeStrokeRounded,
+  IconPeriscopeDuotoneRounded,
+  IconPeriscopeTwotoneRounded,
+  IconPeriscopeSolidRounded,
+  IconPeriscopeBulkRounded,
+  IconPeriscopeStrokeSharp,
+  IconPeriscopeSolidSharp,
+];

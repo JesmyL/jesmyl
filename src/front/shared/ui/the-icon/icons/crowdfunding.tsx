@@ -21,43 +21,39 @@ export const IconCrowdfundingStrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="crowdfunding-stroke-rounded IconCrowdfundingStrokeRounded"
+      the-icon="Crowdfunding StrokeRounded"
     >
       <circle 
-        cx="12" 
-        cy="5" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="5"
+        r="3"
+        i-c="s sw"
+      />
       <circle 
-        cx="12" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="20"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="20" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="20"
+        cy="20"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="4" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        cx="4"
+        cy="20"
+        r="2"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -67,61 +63,57 @@ export const IconCrowdfundingDuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="crowdfunding-duotone-rounded IconCrowdfundingDuotoneRounded"
+      the-icon="Crowdfunding DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="5" 
-        r="3" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="5"
+        r="3"
+        i-c="f o7"
+      />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="20" 
-        cy="20" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="20"
+        cy="20"
+        r="2"
+        i-c="f o7"
+      />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="4" 
-        cy="20" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="4"
+        cy="20"
+        r="2"
+        i-c="f o7"
+      />
       <circle 
-        cx="12" 
-        cy="5" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="5"
+        r="3"
+        i-c="s sw"
+      />
       <circle 
-        cx="12" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="20"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="20" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="20"
+        cy="20"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="4" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        cx="4"
+        cy="20"
+        r="2"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -131,38 +123,35 @@ export const IconCrowdfundingTwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="crowdfunding-twotone-rounded IconCrowdfundingTwotoneRounded"
+      the-icon="Crowdfunding TwotoneRounded"
     >
       <circle 
-        cx="12" 
-        cy="5" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="5"
+        r="3"
+        i-c="s sw"
+      />
       <circle 
-        cx="12" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="20"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="20" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="20"
+        cy="20"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="4" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="4"
+        cy="20"
+        r="2"
+        i-c="s sw"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -172,32 +161,33 @@ export const IconCrowdfundingSolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="crowdfunding-solid-rounded IconCrowdfundingSolidRounded"
+      the-icon="Crowdfunding SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <circle 
-        cx="12" 
-        cy="20.5" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="20.5"
+        r="2"
+        i-c="f"
+      />
       <circle 
-        cx="20" 
-        cy="20.5" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="20"
+        cy="20.5"
+        r="2"
+        i-c="f"
+      />
       <circle 
-        cx="4" 
-        cy="20.5" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="4"
+        cy="20.5"
+        r="2"
+        i-c="f"
+      />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -207,33 +197,33 @@ export const IconCrowdfundingBulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="crowdfunding-bulk-rounded IconCrowdfundingBulkRounded"
+      the-icon="Crowdfunding BulkRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <circle 
-        cx="12" 
-        cy="20.5" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="20.5"
+        r="2"
+        i-c="f"
+      />
       <circle 
-        cx="20" 
-        cy="20.5" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="20"
+        cy="20.5"
+        r="2"
+        i-c="f"
+      />
       <circle 
-        cx="4" 
-        cy="20.5" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="4"
+        cy="20.5"
+        r="2"
+        i-c="f"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr o7"
       />
     </TheIconWrapper>
   );
@@ -243,47 +233,39 @@ export const IconCrowdfundingStrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="crowdfunding-stroke-sharp IconCrowdfundingStrokeSharp"
+      the-icon="Crowdfunding StrokeSharp"
     >
       <circle 
-        cx="12" 
-        cy="5" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="5"
+        r="3"
+        i-c="s sj sw"
+      />
       <circle 
-        cx="12" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="20"
+        r="2"
+        i-c="s sj sw"
+      />
       <circle 
-        cx="20" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="20"
+        cy="20"
+        r="2"
+        i-c="s sj sw"
+      />
       <circle 
-        cx="4" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
-      <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        cx="4"
+        cy="20"
+        r="2"
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
+      />
+      <path 
+        d={d.d7}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -293,41 +275,39 @@ export const IconCrowdfundingSolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="crowdfunding-solid-sharp IconCrowdfundingSolidSharp"
+      the-icon="Crowdfunding SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCrowdfunding: TheIconSelfPack = {
-  name: 'Crowdfunding',
-  StrokeRounded: IconCrowdfundingStrokeRounded,
-  DuotoneRounded: IconCrowdfundingDuotoneRounded,
-  TwotoneRounded: IconCrowdfundingTwotoneRounded,
-  SolidRounded: IconCrowdfundingSolidRounded,
-  BulkRounded: IconCrowdfundingBulkRounded,
-  StrokeSharp: IconCrowdfundingStrokeSharp,
-  SolidSharp: IconCrowdfundingSolidSharp,
-};
+export const iconPackOfCrowdfunding: TheIconSelfPack = [
+  'Crowdfunding',
+  IconCrowdfundingStrokeRounded,
+  IconCrowdfundingDuotoneRounded,
+  IconCrowdfundingTwotoneRounded,
+  IconCrowdfundingSolidRounded,
+  IconCrowdfundingBulkRounded,
+  IconCrowdfundingStrokeSharp,
+  IconCrowdfundingSolidSharp,
+];

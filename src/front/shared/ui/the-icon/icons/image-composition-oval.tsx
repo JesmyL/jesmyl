@@ -18,33 +18,26 @@ export const IconImageCompositionOvalStrokeRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="image-composition-oval-stroke-rounded IconImageCompositionOvalStrokeRounded"
+      the-icon="ImageCompositionOval StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sw"
       />
       <circle 
-        cx="6.5" 
-        cy="7.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="6.5"
+        cy="7.5"
+        r="1.5"
+        i-c="s sj sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -53,40 +46,30 @@ export const IconImageCompositionOvalDuotoneRounded: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="image-composition-oval-duotone-rounded IconImageCompositionOvalDuotoneRounded"
+      the-icon="ImageCompositionOval DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sw"
       />
       <circle 
-        cx="6.5" 
-        cy="7.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="6.5"
+        cy="7.5"
+        r="1.5"
+        i-c="s sj sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -95,35 +78,26 @@ export const IconImageCompositionOvalTwotoneRounded: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="image-composition-oval-twotone-rounded IconImageCompositionOvalTwotoneRounded"
+      the-icon="ImageCompositionOval TwotoneRounded"
     >
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sw"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="6.5" 
-        cy="7.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="6.5"
+        cy="7.5"
+        r="1.5"
+        i-c="o7 s sj sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -132,23 +106,19 @@ export const IconImageCompositionOvalSolidRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="image-composition-oval-solid-rounded IconImageCompositionOvalSolidRounded"
+      the-icon="ImageCompositionOval SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -158,25 +128,19 @@ export const IconImageCompositionOvalBulkRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="image-composition-oval-bulk-rounded IconImageCompositionOvalBulkRounded"
+      the-icon="ImageCompositionOval BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr o7"
       />
     </TheIconWrapper>
   );
@@ -186,33 +150,26 @@ export const IconImageCompositionOvalStrokeSharp: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="image-composition-oval-stroke-sharp IconImageCompositionOvalStrokeSharp"
+      the-icon="ImageCompositionOval StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sw"
       />
       <circle 
-        cx="7.5" 
-        cy="8.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="7.5"
+        cy="8.5"
+        r="1.5"
+        i-c="s sj sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -221,30 +178,29 @@ export const IconImageCompositionOvalSolidSharp: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="image-composition-oval-solid-sharp IconImageCompositionOvalSolidSharp"
+      the-icon="ImageCompositionOval SolidSharp"
     >
       <circle 
-        cx="8" 
-        cy="9" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="8"
+        cy="9"
+        r="2"
+        i-c="f"
+      />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfImageCompositionOval: TheIconSelfPack = {
-  name: 'ImageCompositionOval',
-  StrokeRounded: IconImageCompositionOvalStrokeRounded,
-  DuotoneRounded: IconImageCompositionOvalDuotoneRounded,
-  TwotoneRounded: IconImageCompositionOvalTwotoneRounded,
-  SolidRounded: IconImageCompositionOvalSolidRounded,
-  BulkRounded: IconImageCompositionOvalBulkRounded,
-  StrokeSharp: IconImageCompositionOvalStrokeSharp,
-  SolidSharp: IconImageCompositionOvalSolidSharp,
-};
+export const iconPackOfImageCompositionOval: TheIconSelfPack = [
+  'ImageCompositionOval',
+  IconImageCompositionOvalStrokeRounded,
+  IconImageCompositionOvalDuotoneRounded,
+  IconImageCompositionOvalTwotoneRounded,
+  IconImageCompositionOvalSolidRounded,
+  IconImageCompositionOvalBulkRounded,
+  IconImageCompositionOvalStrokeSharp,
+  IconImageCompositionOvalSolidSharp,
+];

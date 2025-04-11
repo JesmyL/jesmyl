@@ -18,20 +18,15 @@ export const IconWavingHand01StrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="waving-hand-01-stroke-rounded IconWavingHand01StrokeRounded"
+      the-icon="WavingHand01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -41,25 +36,19 @@ export const IconWavingHand01DuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="waving-hand-01-duotone-rounded IconWavingHand01DuotoneRounded"
+      the-icon="WavingHand01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -69,21 +58,15 @@ export const IconWavingHand01TwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="waving-hand-01-twotone-rounded IconWavingHand01TwotoneRounded"
+      the-icon="WavingHand01 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -93,17 +76,15 @@ export const IconWavingHand01SolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="waving-hand-01-solid-rounded IconWavingHand01SolidRounded"
+      the-icon="WavingHand01 SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -113,18 +94,15 @@ export const IconWavingHand01BulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="waving-hand-01-bulk-rounded IconWavingHand01BulkRounded"
+      the-icon="WavingHand01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -134,17 +112,15 @@ export const IconWavingHand01StrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="waving-hand-01-stroke-sharp IconWavingHand01StrokeSharp"
+      the-icon="WavingHand01 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -154,29 +130,27 @@ export const IconWavingHand01SolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="waving-hand-01-solid-sharp IconWavingHand01SolidSharp"
+      the-icon="WavingHand01 SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfWavingHand01: TheIconSelfPack = {
-  name: 'WavingHand01',
-  StrokeRounded: IconWavingHand01StrokeRounded,
-  DuotoneRounded: IconWavingHand01DuotoneRounded,
-  TwotoneRounded: IconWavingHand01TwotoneRounded,
-  SolidRounded: IconWavingHand01SolidRounded,
-  BulkRounded: IconWavingHand01BulkRounded,
-  StrokeSharp: IconWavingHand01StrokeSharp,
-  SolidSharp: IconWavingHand01SolidSharp,
-};
+export const iconPackOfWavingHand01: TheIconSelfPack = [
+  'WavingHand01',
+  IconWavingHand01StrokeRounded,
+  IconWavingHand01DuotoneRounded,
+  IconWavingHand01TwotoneRounded,
+  IconWavingHand01SolidRounded,
+  IconWavingHand01BulkRounded,
+  IconWavingHand01StrokeSharp,
+  IconWavingHand01SolidSharp,
+];

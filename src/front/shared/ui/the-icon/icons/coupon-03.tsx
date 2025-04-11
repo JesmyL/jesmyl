@@ -14,13 +14,11 @@ export const IconCoupon03StrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="coupon-03-stroke-rounded IconCoupon03StrokeRounded"
+      the-icon="Coupon03 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -30,18 +28,15 @@ export const IconCoupon03DuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="coupon-03-duotone-rounded IconCoupon03DuotoneRounded"
+      the-icon="Coupon03 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -51,21 +46,15 @@ export const IconCoupon03TwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="coupon-03-twotone-rounded IconCoupon03TwotoneRounded"
+      the-icon="Coupon03 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -75,11 +64,11 @@ export const IconCoupon03SolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="coupon-03-solid-rounded IconCoupon03SolidRounded"
+      the-icon="Coupon03 SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -89,12 +78,11 @@ export const IconCoupon03BulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="coupon-03-bulk-rounded IconCoupon03BulkRounded"
+      the-icon="Coupon03 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -104,12 +92,11 @@ export const IconCoupon03StrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="coupon-03-stroke-sharp IconCoupon03StrokeSharp"
+      the-icon="Coupon03 StrokeSharp"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d4}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -119,23 +106,23 @@ export const IconCoupon03SolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="coupon-03-solid-sharp IconCoupon03SolidSharp"
+      the-icon="Coupon03 SolidSharp"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCoupon03: TheIconSelfPack = {
-  name: 'Coupon03',
-  StrokeRounded: IconCoupon03StrokeRounded,
-  DuotoneRounded: IconCoupon03DuotoneRounded,
-  TwotoneRounded: IconCoupon03TwotoneRounded,
-  SolidRounded: IconCoupon03SolidRounded,
-  BulkRounded: IconCoupon03BulkRounded,
-  StrokeSharp: IconCoupon03StrokeSharp,
-  SolidSharp: IconCoupon03SolidSharp,
-};
+export const iconPackOfCoupon03: TheIconSelfPack = [
+  'Coupon03',
+  IconCoupon03StrokeRounded,
+  IconCoupon03DuotoneRounded,
+  IconCoupon03TwotoneRounded,
+  IconCoupon03SolidRounded,
+  IconCoupon03BulkRounded,
+  IconCoupon03StrokeSharp,
+  IconCoupon03SolidSharp,
+];

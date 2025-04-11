@@ -19,26 +19,22 @@ export const IconMarketingStrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="marketing-stroke-rounded IconMarketingStrokeRounded"
+      the-icon="Marketing StrokeRounded"
     >
       <ellipse 
-        cx="18" 
-        cy="10" 
-        rx="4" 
-        ry="8" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        cx="18"
+        cy="10"
+        rx="4"
+        ry="8"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -48,31 +44,26 @@ export const IconMarketingDuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="marketing-duotone-rounded IconMarketingDuotoneRounded"
+      the-icon="Marketing DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <ellipse 
-        cx="18" 
-        cy="10" 
-        rx="4" 
-        ry="8" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        cx="18"
+        cy="10"
+        rx="4"
+        ry="8"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -82,27 +73,22 @@ export const IconMarketingTwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="marketing-twotone-rounded IconMarketingTwotoneRounded"
+      the-icon="Marketing TwotoneRounded"
     >
       <ellipse 
-        cx="18" 
-        cy="10" 
-        rx="4" 
-        ry="8" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        cx="18"
+        cy="10"
+        rx="4"
+        ry="8"
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -112,23 +98,19 @@ export const IconMarketingSolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="marketing-solid-rounded IconMarketingSolidRounded"
+      the-icon="Marketing SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -138,22 +120,19 @@ export const IconMarketingBulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="marketing-bulk-rounded IconMarketingBulkRounded"
+      the-icon="Marketing BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f o7"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -163,25 +142,22 @@ export const IconMarketingStrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="marketing-stroke-sharp IconMarketingStrokeSharp"
+      the-icon="Marketing StrokeSharp"
     >
       <ellipse 
-        cx="18" 
-        cy="10" 
-        rx="4" 
-        ry="8" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        cx="18"
+        cy="10"
+        rx="4"
+        ry="8"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -191,31 +167,27 @@ export const IconMarketingSolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="marketing-solid-sharp IconMarketingSolidSharp"
+      the-icon="Marketing SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMarketing: TheIconSelfPack = {
-  name: 'Marketing',
-  StrokeRounded: IconMarketingStrokeRounded,
-  DuotoneRounded: IconMarketingDuotoneRounded,
-  TwotoneRounded: IconMarketingTwotoneRounded,
-  SolidRounded: IconMarketingSolidRounded,
-  BulkRounded: IconMarketingBulkRounded,
-  StrokeSharp: IconMarketingStrokeSharp,
-  SolidSharp: IconMarketingSolidSharp,
-};
+export const iconPackOfMarketing: TheIconSelfPack = [
+  'Marketing',
+  IconMarketingStrokeRounded,
+  IconMarketingDuotoneRounded,
+  IconMarketingTwotoneRounded,
+  IconMarketingSolidRounded,
+  IconMarketingBulkRounded,
+  IconMarketingStrokeSharp,
+  IconMarketingSolidSharp,
+];

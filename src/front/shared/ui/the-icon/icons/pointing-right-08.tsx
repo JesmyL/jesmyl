@@ -20,21 +20,15 @@ export const IconPointingRight08StrokeRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="pointing-right-08-stroke-rounded IconPointingRight08StrokeRounded"
+      the-icon="PointingRight08 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -44,26 +38,19 @@ export const IconPointingRight08DuotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="pointing-right-08-duotone-rounded IconPointingRight08DuotoneRounded"
+      the-icon="PointingRight08 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -73,22 +60,15 @@ export const IconPointingRight08TwotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="pointing-right-08-twotone-rounded IconPointingRight08TwotoneRounded"
+      the-icon="PointingRight08 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -98,15 +78,15 @@ export const IconPointingRight08SolidRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="pointing-right-08-solid-rounded IconPointingRight08SolidRounded"
+      the-icon="PointingRight08 SolidRounded"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -116,16 +96,15 @@ export const IconPointingRight08BulkRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="pointing-right-08-bulk-rounded IconPointingRight08BulkRounded"
+      the-icon="PointingRight08 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -135,17 +114,15 @@ export const IconPointingRight08StrokeSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="pointing-right-08-stroke-sharp IconPointingRight08StrokeSharp"
+      the-icon="PointingRight08 StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -155,29 +132,27 @@ export const IconPointingRight08SolidSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="pointing-right-08-solid-sharp IconPointingRight08SolidSharp"
+      the-icon="PointingRight08 SolidSharp"
     >
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPointingRight08: TheIconSelfPack = {
-  name: 'PointingRight08',
-  StrokeRounded: IconPointingRight08StrokeRounded,
-  DuotoneRounded: IconPointingRight08DuotoneRounded,
-  TwotoneRounded: IconPointingRight08TwotoneRounded,
-  SolidRounded: IconPointingRight08SolidRounded,
-  BulkRounded: IconPointingRight08BulkRounded,
-  StrokeSharp: IconPointingRight08StrokeSharp,
-  SolidSharp: IconPointingRight08SolidSharp,
-};
+export const iconPackOfPointingRight08: TheIconSelfPack = [
+  'PointingRight08',
+  IconPointingRight08StrokeRounded,
+  IconPointingRight08DuotoneRounded,
+  IconPointingRight08TwotoneRounded,
+  IconPointingRight08SolidRounded,
+  IconPointingRight08BulkRounded,
+  IconPointingRight08StrokeSharp,
+  IconPointingRight08SolidSharp,
+];

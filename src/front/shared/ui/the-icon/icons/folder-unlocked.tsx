@@ -18,19 +18,15 @@ export const IconFolderUnlockedStrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="folder-unlocked-stroke-rounded IconFolderUnlockedStrokeRounded"
+      the-icon="FolderUnlocked StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -40,24 +36,19 @@ export const IconFolderUnlockedDuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="folder-unlocked-duotone-rounded IconFolderUnlockedDuotoneRounded"
+      the-icon="FolderUnlocked DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -67,20 +58,15 @@ export const IconFolderUnlockedTwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="folder-unlocked-twotone-rounded IconFolderUnlockedTwotoneRounded"
+      the-icon="FolderUnlocked TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -90,15 +76,15 @@ export const IconFolderUnlockedSolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="folder-unlocked-solid-rounded IconFolderUnlockedSolidRounded"
+      the-icon="FolderUnlocked SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -108,16 +94,15 @@ export const IconFolderUnlockedBulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="folder-unlocked-bulk-rounded IconFolderUnlockedBulkRounded"
+      the-icon="FolderUnlocked BulkRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -127,17 +112,15 @@ export const IconFolderUnlockedStrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="folder-unlocked-stroke-sharp IconFolderUnlockedStrokeSharp"
+      the-icon="FolderUnlocked StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -147,27 +130,27 @@ export const IconFolderUnlockedSolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="folder-unlocked-solid-sharp IconFolderUnlockedSolidSharp"
+      the-icon="FolderUnlocked SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfFolderUnlocked: TheIconSelfPack = {
-  name: 'FolderUnlocked',
-  StrokeRounded: IconFolderUnlockedStrokeRounded,
-  DuotoneRounded: IconFolderUnlockedDuotoneRounded,
-  TwotoneRounded: IconFolderUnlockedTwotoneRounded,
-  SolidRounded: IconFolderUnlockedSolidRounded,
-  BulkRounded: IconFolderUnlockedBulkRounded,
-  StrokeSharp: IconFolderUnlockedStrokeSharp,
-  SolidSharp: IconFolderUnlockedSolidSharp,
-};
+export const iconPackOfFolderUnlocked: TheIconSelfPack = [
+  'FolderUnlocked',
+  IconFolderUnlockedStrokeRounded,
+  IconFolderUnlockedDuotoneRounded,
+  IconFolderUnlockedTwotoneRounded,
+  IconFolderUnlockedSolidRounded,
+  IconFolderUnlockedBulkRounded,
+  IconFolderUnlockedStrokeSharp,
+  IconFolderUnlockedSolidSharp,
+];

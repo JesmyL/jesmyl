@@ -18,27 +18,22 @@ export const IconRubElHizbStrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="rub-el-hizb-stroke-rounded IconRubElHizbStrokeRounded"
+      the-icon="RubElHizb StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="12"
+        cy="12"
+        r="2"
+        i-c="s sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -47,34 +42,26 @@ export const IconRubElHizbDuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="rub-el-hizb-duotone-rounded IconRubElHizbDuotoneRounded"
+      the-icon="RubElHizb DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="12"
+        cy="12"
+        r="2"
+        i-c="s sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -83,28 +70,22 @@ export const IconRubElHizbTwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="rub-el-hizb-twotone-rounded IconRubElHizbTwotoneRounded"
+      the-icon="RubElHizb TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="12"
+        cy="12"
+        r="2"
+        i-c="o7 s sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -113,13 +94,11 @@ export const IconRubElHizbSolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="rub-el-hizb-solid-rounded IconRubElHizbSolidRounded"
+      the-icon="RubElHizb SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -129,18 +108,15 @@ export const IconRubElHizbBulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="rub-el-hizb-bulk-rounded IconRubElHizbBulkRounded"
+      the-icon="RubElHizb BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -150,29 +126,22 @@ export const IconRubElHizbStrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="rub-el-hizb-stroke-sharp IconRubElHizbStrokeSharp"
+      the-icon="RubElHizb StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="12"
+        cy="12"
+        r="2"
+        i-c="s sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -181,25 +150,23 @@ export const IconRubElHizbSolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="rub-el-hizb-solid-sharp IconRubElHizbSolidSharp"
+      the-icon="RubElHizb SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfRubElHizb: TheIconSelfPack = {
-  name: 'RubElHizb',
-  StrokeRounded: IconRubElHizbStrokeRounded,
-  DuotoneRounded: IconRubElHizbDuotoneRounded,
-  TwotoneRounded: IconRubElHizbTwotoneRounded,
-  SolidRounded: IconRubElHizbSolidRounded,
-  BulkRounded: IconRubElHizbBulkRounded,
-  StrokeSharp: IconRubElHizbStrokeSharp,
-  SolidSharp: IconRubElHizbSolidSharp,
-};
+export const iconPackOfRubElHizb: TheIconSelfPack = [
+  'RubElHizb',
+  IconRubElHizbStrokeRounded,
+  IconRubElHizbDuotoneRounded,
+  IconRubElHizbTwotoneRounded,
+  IconRubElHizbSolidRounded,
+  IconRubElHizbBulkRounded,
+  IconRubElHizbStrokeSharp,
+  IconRubElHizbSolidSharp,
+];

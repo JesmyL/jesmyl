@@ -22,21 +22,15 @@ export const IconCharacterPhoneticStrokeRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="character-phonetic-stroke-rounded IconCharacterPhoneticStrokeRounded"
+      the-icon="CharacterPhonetic StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -46,31 +40,23 @@ export const IconCharacterPhoneticDuotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="character-phonetic-duotone-rounded IconCharacterPhoneticDuotoneRounded"
+      the-icon="CharacterPhonetic DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -80,22 +66,15 @@ export const IconCharacterPhoneticTwotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="character-phonetic-twotone-rounded IconCharacterPhoneticTwotoneRounded"
+      the-icon="CharacterPhonetic TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -105,19 +84,15 @@ export const IconCharacterPhoneticSolidRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="character-phonetic-solid-rounded IconCharacterPhoneticSolidRounded"
+      the-icon="CharacterPhonetic SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -127,20 +102,15 @@ export const IconCharacterPhoneticBulkRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="character-phonetic-bulk-rounded IconCharacterPhoneticBulkRounded"
+      the-icon="CharacterPhonetic BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -150,17 +120,15 @@ export const IconCharacterPhoneticStrokeSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="character-phonetic-stroke-sharp IconCharacterPhoneticStrokeSharp"
+      the-icon="CharacterPhonetic StrokeSharp"
     >
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d11}
+        i-c="s sw"
       />
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d12}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -170,25 +138,23 @@ export const IconCharacterPhoneticSolidSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="character-phonetic-solid-sharp IconCharacterPhoneticSolidSharp"
+      the-icon="CharacterPhonetic SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCharacterPhonetic: TheIconSelfPack = {
-  name: 'CharacterPhonetic',
-  StrokeRounded: IconCharacterPhoneticStrokeRounded,
-  DuotoneRounded: IconCharacterPhoneticDuotoneRounded,
-  TwotoneRounded: IconCharacterPhoneticTwotoneRounded,
-  SolidRounded: IconCharacterPhoneticSolidRounded,
-  BulkRounded: IconCharacterPhoneticBulkRounded,
-  StrokeSharp: IconCharacterPhoneticStrokeSharp,
-  SolidSharp: IconCharacterPhoneticSolidSharp,
-};
+export const iconPackOfCharacterPhonetic: TheIconSelfPack = [
+  'CharacterPhonetic',
+  IconCharacterPhoneticStrokeRounded,
+  IconCharacterPhoneticDuotoneRounded,
+  IconCharacterPhoneticTwotoneRounded,
+  IconCharacterPhoneticSolidRounded,
+  IconCharacterPhoneticBulkRounded,
+  IconCharacterPhoneticStrokeSharp,
+  IconCharacterPhoneticSolidSharp,
+];

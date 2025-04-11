@@ -17,14 +17,11 @@ export const IconExchange01StrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="exchange-01-stroke-rounded IconExchange01StrokeRounded"
+      the-icon="Exchange01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -34,20 +31,17 @@ export const IconExchange01DuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="exchange-01-duotone-rounded IconExchange01DuotoneRounded"
+      the-icon="Exchange01 DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="9" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="12"
+        r="9"
+        i-c="f o7"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -57,22 +51,15 @@ export const IconExchange01TwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="exchange-01-twotone-rounded IconExchange01TwotoneRounded"
+      the-icon="Exchange01 TwotoneRounded"
     >
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -82,13 +69,11 @@ export const IconExchange01SolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="exchange-01-solid-rounded IconExchange01SolidRounded"
+      the-icon="Exchange01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -98,20 +83,15 @@ export const IconExchange01BulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="exchange-01-bulk-rounded IconExchange01BulkRounded"
+      the-icon="Exchange01 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr o7"
       />
     </TheIconWrapper>
   );
@@ -121,13 +101,11 @@ export const IconExchange01StrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="exchange-01-stroke-sharp IconExchange01StrokeSharp"
+      the-icon="Exchange01 StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d7}
+        i-c="s ss sw"
       />
     </TheIconWrapper>
   );
@@ -137,25 +115,23 @@ export const IconExchange01SolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="exchange-01-solid-sharp IconExchange01SolidSharp"
+      the-icon="Exchange01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfExchange01: TheIconSelfPack = {
-  name: 'Exchange01',
-  StrokeRounded: IconExchange01StrokeRounded,
-  DuotoneRounded: IconExchange01DuotoneRounded,
-  TwotoneRounded: IconExchange01TwotoneRounded,
-  SolidRounded: IconExchange01SolidRounded,
-  BulkRounded: IconExchange01BulkRounded,
-  StrokeSharp: IconExchange01StrokeSharp,
-  SolidSharp: IconExchange01SolidSharp,
-};
+export const iconPackOfExchange01: TheIconSelfPack = [
+  'Exchange01',
+  IconExchange01StrokeRounded,
+  IconExchange01DuotoneRounded,
+  IconExchange01TwotoneRounded,
+  IconExchange01SolidRounded,
+  IconExchange01BulkRounded,
+  IconExchange01StrokeSharp,
+  IconExchange01SolidSharp,
+];

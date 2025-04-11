@@ -18,20 +18,15 @@ export const IconShieldBlockchainStrokeRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="shield-blockchain-stroke-rounded IconShieldBlockchainStrokeRounded"
+      the-icon="ShieldBlockchain StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -41,27 +36,19 @@ export const IconShieldBlockchainDuotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="shield-blockchain-duotone-rounded IconShieldBlockchainDuotoneRounded"
+      the-icon="ShieldBlockchain DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -71,21 +58,15 @@ export const IconShieldBlockchainTwotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="shield-blockchain-twotone-rounded IconShieldBlockchainTwotoneRounded"
+      the-icon="ShieldBlockchain TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sw"
       />
     </TheIconWrapper>
   );
@@ -95,13 +76,11 @@ export const IconShieldBlockchainSolidRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="shield-blockchain-solid-rounded IconShieldBlockchainSolidRounded"
+      the-icon="ShieldBlockchain SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -111,18 +90,15 @@ export const IconShieldBlockchainBulkRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="shield-blockchain-bulk-rounded IconShieldBlockchainBulkRounded"
+      the-icon="ShieldBlockchain BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -132,18 +108,15 @@ export const IconShieldBlockchainStrokeSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="shield-blockchain-stroke-sharp IconShieldBlockchainStrokeSharp"
+      the-icon="ShieldBlockchain StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -153,25 +126,23 @@ export const IconShieldBlockchainSolidSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="shield-blockchain-solid-sharp IconShieldBlockchainSolidSharp"
+      the-icon="ShieldBlockchain SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfShieldBlockchain: TheIconSelfPack = {
-  name: 'ShieldBlockchain',
-  StrokeRounded: IconShieldBlockchainStrokeRounded,
-  DuotoneRounded: IconShieldBlockchainDuotoneRounded,
-  TwotoneRounded: IconShieldBlockchainTwotoneRounded,
-  SolidRounded: IconShieldBlockchainSolidRounded,
-  BulkRounded: IconShieldBlockchainBulkRounded,
-  StrokeSharp: IconShieldBlockchainStrokeSharp,
-  SolidSharp: IconShieldBlockchainSolidSharp,
-};
+export const iconPackOfShieldBlockchain: TheIconSelfPack = [
+  'ShieldBlockchain',
+  IconShieldBlockchainStrokeRounded,
+  IconShieldBlockchainDuotoneRounded,
+  IconShieldBlockchainTwotoneRounded,
+  IconShieldBlockchainSolidRounded,
+  IconShieldBlockchainBulkRounded,
+  IconShieldBlockchainStrokeSharp,
+  IconShieldBlockchainSolidSharp,
+];

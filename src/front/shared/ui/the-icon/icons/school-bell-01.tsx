@@ -23,34 +23,28 @@ export const IconSchoolBell01StrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="school-bell-01-stroke-rounded IconSchoolBell01StrokeRounded"
+      the-icon="SchoolBell01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="19" 
-        cy="12.5" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="19"
+        cy="12.5"
+        r="2.5"
+        i-c="s sw"
+      />
       <circle 
-        cx="10.5" 
-        cy="10" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="10.5"
+        cy="10"
+        r="2"
+        i-c="s sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -59,41 +53,32 @@ export const IconSchoolBell01DuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="school-bell-01-duotone-rounded IconSchoolBell01DuotoneRounded"
+      the-icon="SchoolBell01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="19" 
-        cy="12.5" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="19"
+        cy="12.5"
+        r="2.5"
+        i-c="s sw"
+      />
       <circle 
-        cx="10.5" 
-        cy="10" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="10.5"
+        cy="10"
+        r="2"
+        i-c="s sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -102,27 +87,19 @@ export const IconSchoolBell01TwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="school-bell-01-twotone-rounded IconSchoolBell01TwotoneRounded"
+      the-icon="SchoolBell01 TwotoneRounded"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d5}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -132,17 +109,15 @@ export const IconSchoolBell01SolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="school-bell-01-solid-rounded IconSchoolBell01SolidRounded"
+      the-icon="SchoolBell01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -152,24 +127,22 @@ export const IconSchoolBell01BulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="school-bell-01-bulk-rounded IconSchoolBell01BulkRounded"
+      the-icon="SchoolBell01 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f o7"
       />
       <circle 
-        cx="10.5" 
-        cy="10" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="10.5"
+        cy="10"
+        r="2"
+        i-c="f"
+      />
     </TheIconWrapper>
   );
 };
@@ -178,31 +151,25 @@ export const IconSchoolBell01StrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="school-bell-01-stroke-sharp IconSchoolBell01StrokeSharp"
+      the-icon="SchoolBell01 StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d11}
+        i-c="s sw"
       />
       <circle 
-        cx="19" 
-        cy="12.5" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="19"
+        cy="12.5"
+        r="2.5"
+        i-c="s sj sw"
+      />
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d12}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -212,29 +179,27 @@ export const IconSchoolBell01SolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="school-bell-01-solid-sharp IconSchoolBell01SolidSharp"
+      the-icon="SchoolBell01 SolidSharp"
     >
       <path 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSchoolBell01: TheIconSelfPack = {
-  name: 'SchoolBell01',
-  StrokeRounded: IconSchoolBell01StrokeRounded,
-  DuotoneRounded: IconSchoolBell01DuotoneRounded,
-  TwotoneRounded: IconSchoolBell01TwotoneRounded,
-  SolidRounded: IconSchoolBell01SolidRounded,
-  BulkRounded: IconSchoolBell01BulkRounded,
-  StrokeSharp: IconSchoolBell01StrokeSharp,
-  SolidSharp: IconSchoolBell01SolidSharp,
-};
+export const iconPackOfSchoolBell01: TheIconSelfPack = [
+  'SchoolBell01',
+  IconSchoolBell01StrokeRounded,
+  IconSchoolBell01DuotoneRounded,
+  IconSchoolBell01TwotoneRounded,
+  IconSchoolBell01SolidRounded,
+  IconSchoolBell01BulkRounded,
+  IconSchoolBell01StrokeSharp,
+  IconSchoolBell01SolidSharp,
+];

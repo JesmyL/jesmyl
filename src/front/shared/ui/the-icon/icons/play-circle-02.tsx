@@ -15,17 +15,17 @@ export const IconPlayCircle02StrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="play-circle-02-stroke-rounded IconPlayCircle02StrokeRounded"
+      the-icon="PlayCircle02 StrokeRounded"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -35,23 +35,23 @@ export const IconPlayCircle02DuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="play-circle-02-duotone-rounded IconPlayCircle02DuotoneRounded"
+      the-icon="PlayCircle02 DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="f o7"
+      />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -61,18 +61,17 @@ export const IconPlayCircle02TwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="play-circle-02-twotone-rounded IconPlayCircle02TwotoneRounded"
+      the-icon="PlayCircle02 TwotoneRounded"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -82,13 +81,11 @@ export const IconPlayCircle02SolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="play-circle-02-solid-rounded IconPlayCircle02SolidRounded"
+      the-icon="PlayCircle02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -98,16 +95,15 @@ export const IconPlayCircle02BulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="play-circle-02-bulk-rounded IconPlayCircle02BulkRounded"
+      the-icon="PlayCircle02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -117,17 +113,17 @@ export const IconPlayCircle02StrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="play-circle-02-stroke-sharp IconPlayCircle02StrokeSharp"
+      the-icon="PlayCircle02 StrokeSharp"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -137,25 +133,23 @@ export const IconPlayCircle02SolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="play-circle-02-solid-sharp IconPlayCircle02SolidSharp"
+      the-icon="PlayCircle02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPlayCircle02: TheIconSelfPack = {
-  name: 'PlayCircle02',
-  StrokeRounded: IconPlayCircle02StrokeRounded,
-  DuotoneRounded: IconPlayCircle02DuotoneRounded,
-  TwotoneRounded: IconPlayCircle02TwotoneRounded,
-  SolidRounded: IconPlayCircle02SolidRounded,
-  BulkRounded: IconPlayCircle02BulkRounded,
-  StrokeSharp: IconPlayCircle02StrokeSharp,
-  SolidSharp: IconPlayCircle02SolidSharp,
-};
+export const iconPackOfPlayCircle02: TheIconSelfPack = [
+  'PlayCircle02',
+  IconPlayCircle02StrokeRounded,
+  IconPlayCircle02DuotoneRounded,
+  IconPlayCircle02TwotoneRounded,
+  IconPlayCircle02SolidRounded,
+  IconPlayCircle02BulkRounded,
+  IconPlayCircle02StrokeSharp,
+  IconPlayCircle02SolidSharp,
+];

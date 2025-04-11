@@ -17,17 +17,15 @@ export const IconLocation01StrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="location-01-stroke-rounded IconLocation01StrokeRounded"
+      the-icon="Location01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -37,24 +35,19 @@ export const IconLocation01DuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="location-01-duotone-rounded IconLocation01DuotoneRounded"
+      the-icon="Location01 DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -64,18 +57,15 @@ export const IconLocation01TwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="location-01-twotone-rounded IconLocation01TwotoneRounded"
+      the-icon="Location01 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="o7 s sw"
       />
     </TheIconWrapper>
   );
@@ -85,13 +75,11 @@ export const IconLocation01SolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="location-01-solid-rounded IconLocation01SolidRounded"
+      the-icon="Location01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -101,16 +89,15 @@ export const IconLocation01BulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="location-01-bulk-rounded IconLocation01BulkRounded"
+      the-icon="Location01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -120,17 +107,15 @@ export const IconLocation01StrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="location-01-stroke-sharp IconLocation01StrokeSharp"
+      the-icon="Location01 StrokeSharp"
     >
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -140,25 +125,23 @@ export const IconLocation01SolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="location-01-solid-sharp IconLocation01SolidSharp"
+      the-icon="Location01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfLocation01: TheIconSelfPack = {
-  name: 'Location01',
-  StrokeRounded: IconLocation01StrokeRounded,
-  DuotoneRounded: IconLocation01DuotoneRounded,
-  TwotoneRounded: IconLocation01TwotoneRounded,
-  SolidRounded: IconLocation01SolidRounded,
-  BulkRounded: IconLocation01BulkRounded,
-  StrokeSharp: IconLocation01StrokeSharp,
-  SolidSharp: IconLocation01SolidSharp,
-};
+export const iconPackOfLocation01: TheIconSelfPack = [
+  'Location01',
+  IconLocation01StrokeRounded,
+  IconLocation01DuotoneRounded,
+  IconLocation01TwotoneRounded,
+  IconLocation01SolidRounded,
+  IconLocation01BulkRounded,
+  IconLocation01StrokeSharp,
+  IconLocation01SolidSharp,
+];

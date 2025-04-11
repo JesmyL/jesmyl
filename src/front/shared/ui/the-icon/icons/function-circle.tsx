@@ -14,21 +14,18 @@ export const IconFunctionCircleStrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="function-circle-stroke-rounded IconFunctionCircleStrokeRounded"
+      the-icon="FunctionCircle StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -37,27 +34,23 @@ export const IconFunctionCircleDuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="function-circle-duotone-rounded IconFunctionCircleDuotoneRounded"
+      the-icon="FunctionCircle DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="f o7"
+      />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -67,22 +60,18 @@ export const IconFunctionCircleTwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="function-circle-twotone-rounded IconFunctionCircleTwotoneRounded"
+      the-icon="FunctionCircle TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -91,13 +80,11 @@ export const IconFunctionCircleSolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="function-circle-solid-rounded IconFunctionCircleSolidRounded"
+      the-icon="FunctionCircle SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -107,16 +94,15 @@ export const IconFunctionCircleBulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="function-circle-bulk-rounded IconFunctionCircleBulkRounded"
+      the-icon="FunctionCircle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -126,21 +112,18 @@ export const IconFunctionCircleStrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="function-circle-stroke-sharp IconFunctionCircleStrokeSharp"
+      the-icon="FunctionCircle StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -149,25 +132,23 @@ export const IconFunctionCircleSolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="function-circle-solid-sharp IconFunctionCircleSolidSharp"
+      the-icon="FunctionCircle SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfFunctionCircle: TheIconSelfPack = {
-  name: 'FunctionCircle',
-  StrokeRounded: IconFunctionCircleStrokeRounded,
-  DuotoneRounded: IconFunctionCircleDuotoneRounded,
-  TwotoneRounded: IconFunctionCircleTwotoneRounded,
-  SolidRounded: IconFunctionCircleSolidRounded,
-  BulkRounded: IconFunctionCircleBulkRounded,
-  StrokeSharp: IconFunctionCircleStrokeSharp,
-  SolidSharp: IconFunctionCircleSolidSharp,
-};
+export const iconPackOfFunctionCircle: TheIconSelfPack = [
+  'FunctionCircle',
+  IconFunctionCircleStrokeRounded,
+  IconFunctionCircleDuotoneRounded,
+  IconFunctionCircleTwotoneRounded,
+  IconFunctionCircleSolidRounded,
+  IconFunctionCircleBulkRounded,
+  IconFunctionCircleStrokeSharp,
+  IconFunctionCircleSolidSharp,
+];

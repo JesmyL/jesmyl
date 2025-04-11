@@ -19,32 +19,30 @@ export const IconDashboardCircleSettingsStrokeRounded: FC<TheIconProps> = (props
   return (
     <TheIconWrapper
       {...props}
-      name="dashboard-circle-settings-stroke-rounded IconDashboardCircleSettingsStrokeRounded"
+      the-icon="DashboardCircleSettings StrokeRounded"
     >
       <circle 
-        cx="6.25" 
-        cy="6.25" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.25"
+        cy="6.25"
+        r="4.25"
+        i-c="s sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <circle 
-        cx="17.75" 
-        cy="17.75" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17.75"
+        cy="17.75"
+        r="4.25"
+        i-c="s sw"
+      />
       <circle 
-        cx="6.25" 
-        cy="17.75" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.25"
+        cy="17.75"
+        r="4.25"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -53,44 +51,42 @@ export const IconDashboardCircleSettingsDuotoneRounded: FC<TheIconProps> = (prop
   return (
     <TheIconWrapper
       {...props}
-      name="dashboard-circle-settings-duotone-rounded IconDashboardCircleSettingsDuotoneRounded"
+      the-icon="DashboardCircleSettings DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="6.25" 
-        cy="6.25" 
-        r="4.25" 
-        fill="var(--icon-fill)"></circle>
-      <circle 
-        opacity="var(--icon-opacity)" 
-        cx="17.75" 
-        cy="17.75" 
-        r="4.25" 
-        fill="var(--icon-fill)"></circle>
-      <circle 
-        cx="6.25" 
-        cy="6.25" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        cx="6.25"
+        cy="6.25"
+        r="4.25"
+        i-c="f o7"
       />
       <circle 
-        cx="17.75" 
-        cy="17.75" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17.75"
+        cy="17.75"
+        r="4.25"
+        i-c="f o7"
+      />
       <circle 
-        cx="6.25" 
-        cy="17.75" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.25"
+        cy="6.25"
+        r="4.25"
+        i-c="s sw"
+      />
+      <path 
+        d={d.d1}
+        i-c="s sr sw"
+      />
+      <circle 
+        cx="17.75"
+        cy="17.75"
+        r="4.25"
+        i-c="s sw"
+      />
+      <circle 
+        cx="6.25"
+        cy="17.75"
+        r="4.25"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -99,33 +95,30 @@ export const IconDashboardCircleSettingsTwotoneRounded: FC<TheIconProps> = (prop
   return (
     <TheIconWrapper
       {...props}
-      name="dashboard-circle-settings-twotone-rounded IconDashboardCircleSettingsTwotoneRounded"
+      the-icon="DashboardCircleSettings TwotoneRounded"
     >
       <circle 
-        cx="6.25" 
-        cy="6.25" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.25"
+        cy="6.25"
+        r="4.25"
+        i-c="s sw"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
       <circle 
-        cx="17.75" 
-        cy="17.75" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17.75"
+        cy="17.75"
+        r="4.25"
+        i-c="s sw"
+      />
       <circle 
-        cx="6.25" 
-        cy="17.75" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.25"
+        cy="17.75"
+        r="4.25"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -134,25 +127,23 @@ export const IconDashboardCircleSettingsSolidRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="dashboard-circle-settings-solid-rounded IconDashboardCircleSettingsSolidRounded"
+      the-icon="DashboardCircleSettings SolidRounded"
     >
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -162,27 +153,23 @@ export const IconDashboardCircleSettingsBulkRounded: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="dashboard-circle-settings-bulk-rounded IconDashboardCircleSettingsBulkRounded"
+      the-icon="DashboardCircleSettings BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -192,30 +179,29 @@ export const IconDashboardCircleSettingsStrokeSharp: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="dashboard-circle-settings-stroke-sharp IconDashboardCircleSettingsStrokeSharp"
+      the-icon="DashboardCircleSettings StrokeSharp"
     >
       <circle 
-        cx="6.25" 
-        cy="6.25" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.25"
+        cy="6.25"
+        r="4.25"
+        i-c="s sw"
+      />
       <circle 
-        cx="17.75" 
-        cy="17.75" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17.75"
+        cy="17.75"
+        r="4.25"
+        i-c="s sw"
+      />
       <circle 
-        cx="6.25" 
-        cy="17.75" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.25"
+        cy="17.75"
+        r="4.25"
+        i-c="s sw"
+      />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -225,37 +211,35 @@ export const IconDashboardCircleSettingsSolidSharp: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="dashboard-circle-settings-solid-sharp IconDashboardCircleSettingsSolidSharp"
+      the-icon="DashboardCircleSettings SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfDashboardCircleSettings: TheIconSelfPack = {
-  name: 'DashboardCircleSettings',
-  StrokeRounded: IconDashboardCircleSettingsStrokeRounded,
-  DuotoneRounded: IconDashboardCircleSettingsDuotoneRounded,
-  TwotoneRounded: IconDashboardCircleSettingsTwotoneRounded,
-  SolidRounded: IconDashboardCircleSettingsSolidRounded,
-  BulkRounded: IconDashboardCircleSettingsBulkRounded,
-  StrokeSharp: IconDashboardCircleSettingsStrokeSharp,
-  SolidSharp: IconDashboardCircleSettingsSolidSharp,
-};
+export const iconPackOfDashboardCircleSettings: TheIconSelfPack = [
+  'DashboardCircleSettings',
+  IconDashboardCircleSettingsStrokeRounded,
+  IconDashboardCircleSettingsDuotoneRounded,
+  IconDashboardCircleSettingsTwotoneRounded,
+  IconDashboardCircleSettingsSolidRounded,
+  IconDashboardCircleSettingsBulkRounded,
+  IconDashboardCircleSettingsStrokeSharp,
+  IconDashboardCircleSettingsSolidSharp,
+];

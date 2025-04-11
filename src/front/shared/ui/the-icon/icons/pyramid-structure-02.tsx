@@ -22,19 +22,15 @@ export const IconPyramidStructure02StrokeRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="pyramid-structure-02-stroke-rounded IconPyramidStructure02StrokeRounded"
+      the-icon="PyramidStructure02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -44,30 +40,25 @@ export const IconPyramidStructure02DuotoneRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="pyramid-structure-02-duotone-rounded IconPyramidStructure02DuotoneRounded"
+      the-icon="PyramidStructure02 DuotoneRounded"
     >
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       </g>
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -77,20 +68,15 @@ export const IconPyramidStructure02TwotoneRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="pyramid-structure-02-twotone-rounded IconPyramidStructure02TwotoneRounded"
+      the-icon="PyramidStructure02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sw"
       />
     </TheIconWrapper>
   );
@@ -100,13 +86,11 @@ export const IconPyramidStructure02SolidRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="pyramid-structure-02-solid-rounded IconPyramidStructure02SolidRounded"
+      the-icon="PyramidStructure02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -116,22 +100,21 @@ export const IconPyramidStructure02BulkRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="pyramid-structure-02-bulk-rounded IconPyramidStructure02BulkRounded"
+      the-icon="PyramidStructure02 BulkRounded"
     >
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       </g>
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -141,17 +124,15 @@ export const IconPyramidStructure02StrokeSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="pyramid-structure-02-stroke-sharp IconPyramidStructure02StrokeSharp"
+      the-icon="PyramidStructure02 StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d10}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -161,31 +142,31 @@ export const IconPyramidStructure02SolidSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="pyramid-structure-02-solid-sharp IconPyramidStructure02SolidSharp"
+      the-icon="PyramidStructure02 SolidSharp"
     >
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
       <path 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPyramidStructure02: TheIconSelfPack = {
-  name: 'PyramidStructure02',
-  StrokeRounded: IconPyramidStructure02StrokeRounded,
-  DuotoneRounded: IconPyramidStructure02DuotoneRounded,
-  TwotoneRounded: IconPyramidStructure02TwotoneRounded,
-  SolidRounded: IconPyramidStructure02SolidRounded,
-  BulkRounded: IconPyramidStructure02BulkRounded,
-  StrokeSharp: IconPyramidStructure02StrokeSharp,
-  SolidSharp: IconPyramidStructure02SolidSharp,
-};
+export const iconPackOfPyramidStructure02: TheIconSelfPack = [
+  'PyramidStructure02',
+  IconPyramidStructure02StrokeRounded,
+  IconPyramidStructure02DuotoneRounded,
+  IconPyramidStructure02TwotoneRounded,
+  IconPyramidStructure02SolidRounded,
+  IconPyramidStructure02BulkRounded,
+  IconPyramidStructure02StrokeSharp,
+  IconPyramidStructure02SolidSharp,
+];

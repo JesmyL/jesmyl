@@ -17,14 +17,11 @@ export const IconSalahStrokeRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="salah-stroke-rounded IconSalahStrokeRounded"
+      the-icon="Salah StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -34,19 +31,15 @@ export const IconSalahDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="salah-duotone-rounded IconSalahDuotoneRounded"
+      the-icon="Salah DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -56,22 +49,15 @@ export const IconSalahTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="salah-twotone-rounded IconSalahTwotoneRounded"
+      the-icon="Salah TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -81,13 +67,11 @@ export const IconSalahSolidRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="salah-solid-rounded IconSalahSolidRounded"
+      the-icon="Salah SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -97,18 +81,15 @@ export const IconSalahBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="salah-bulk-rounded IconSalahBulkRounded"
+      the-icon="Salah BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -118,13 +99,11 @@ export const IconSalahStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="salah-stroke-sharp IconSalahStrokeSharp"
+      the-icon="Salah StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -134,25 +113,23 @@ export const IconSalahSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="salah-solid-sharp IconSalahSolidSharp"
+      the-icon="Salah SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSalah: TheIconSelfPack = {
-  name: 'Salah',
-  StrokeRounded: IconSalahStrokeRounded,
-  DuotoneRounded: IconSalahDuotoneRounded,
-  TwotoneRounded: IconSalahTwotoneRounded,
-  SolidRounded: IconSalahSolidRounded,
-  BulkRounded: IconSalahBulkRounded,
-  StrokeSharp: IconSalahStrokeSharp,
-  SolidSharp: IconSalahSolidSharp,
-};
+export const iconPackOfSalah: TheIconSelfPack = [
+  'Salah',
+  IconSalahStrokeRounded,
+  IconSalahDuotoneRounded,
+  IconSalahTwotoneRounded,
+  IconSalahSolidRounded,
+  IconSalahBulkRounded,
+  IconSalahStrokeSharp,
+  IconSalahSolidSharp,
+];

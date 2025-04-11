@@ -19,14 +19,11 @@ export const IconReloadStrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="reload-stroke-rounded IconReloadStrokeRounded"
+      the-icon="Reload StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -36,19 +33,15 @@ export const IconReloadDuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="reload-duotone-rounded IconReloadDuotoneRounded"
+      the-icon="Reload DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -58,22 +51,15 @@ export const IconReloadTwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="reload-twotone-rounded IconReloadTwotoneRounded"
+      the-icon="Reload TwotoneRounded"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -83,15 +69,15 @@ export const IconReloadSolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="reload-solid-rounded IconReloadSolidRounded"
+      the-icon="Reload SolidRounded"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -101,16 +87,15 @@ export const IconReloadBulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="reload-bulk-rounded IconReloadBulkRounded"
+      the-icon="Reload BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -120,13 +105,11 @@ export const IconReloadStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="reload-stroke-sharp IconReloadStrokeSharp"
+      the-icon="Reload StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -136,25 +119,23 @@ export const IconReloadSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="reload-solid-sharp IconReloadSolidSharp"
+      the-icon="Reload SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfReload: TheIconSelfPack = {
-  name: 'Reload',
-  StrokeRounded: IconReloadStrokeRounded,
-  DuotoneRounded: IconReloadDuotoneRounded,
-  TwotoneRounded: IconReloadTwotoneRounded,
-  SolidRounded: IconReloadSolidRounded,
-  BulkRounded: IconReloadBulkRounded,
-  StrokeSharp: IconReloadStrokeSharp,
-  SolidSharp: IconReloadSolidSharp,
-};
+export const iconPackOfReload: TheIconSelfPack = [
+  'Reload',
+  IconReloadStrokeRounded,
+  IconReloadDuotoneRounded,
+  IconReloadTwotoneRounded,
+  IconReloadSolidRounded,
+  IconReloadBulkRounded,
+  IconReloadStrokeSharp,
+  IconReloadSolidSharp,
+];

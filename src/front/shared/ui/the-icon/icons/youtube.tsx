@@ -18,18 +18,15 @@ export const IconYoutubeStrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="youtube-stroke-rounded IconYoutubeStrokeRounded"
+      the-icon="Youtube StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -39,25 +36,19 @@ export const IconYoutubeDuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="youtube-duotone-rounded IconYoutubeDuotoneRounded"
+      the-icon="Youtube DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -67,19 +58,15 @@ export const IconYoutubeTwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="youtube-twotone-rounded IconYoutubeTwotoneRounded"
+      the-icon="Youtube TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sw"
       />
     </TheIconWrapper>
   );
@@ -89,13 +76,11 @@ export const IconYoutubeSolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="youtube-solid-rounded IconYoutubeSolidRounded"
+      the-icon="Youtube SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -105,16 +90,15 @@ export const IconYoutubeBulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="youtube-bulk-rounded IconYoutubeBulkRounded"
+      the-icon="Youtube BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -124,18 +108,15 @@ export const IconYoutubeStrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="youtube-stroke-sharp IconYoutubeStrokeSharp"
+      the-icon="Youtube StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -145,25 +126,23 @@ export const IconYoutubeSolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="youtube-solid-sharp IconYoutubeSolidSharp"
+      the-icon="Youtube SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfYoutube: TheIconSelfPack = {
-  name: 'Youtube',
-  StrokeRounded: IconYoutubeStrokeRounded,
-  DuotoneRounded: IconYoutubeDuotoneRounded,
-  TwotoneRounded: IconYoutubeTwotoneRounded,
-  SolidRounded: IconYoutubeSolidRounded,
-  BulkRounded: IconYoutubeBulkRounded,
-  StrokeSharp: IconYoutubeStrokeSharp,
-  SolidSharp: IconYoutubeSolidSharp,
-};
+export const iconPackOfYoutube: TheIconSelfPack = [
+  'Youtube',
+  IconYoutubeStrokeRounded,
+  IconYoutubeDuotoneRounded,
+  IconYoutubeTwotoneRounded,
+  IconYoutubeSolidRounded,
+  IconYoutubeBulkRounded,
+  IconYoutubeStrokeSharp,
+  IconYoutubeSolidSharp,
+];

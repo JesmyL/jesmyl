@@ -18,14 +18,11 @@ export const IconGithub01StrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="github-01-stroke-rounded IconGithub01StrokeRounded"
+      the-icon="Github01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -35,19 +32,15 @@ export const IconGithub01DuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="github-01-duotone-rounded IconGithub01DuotoneRounded"
+      the-icon="Github01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -57,22 +50,15 @@ export const IconGithub01TwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="github-01-twotone-rounded IconGithub01TwotoneRounded"
+      the-icon="Github01 TwotoneRounded"
     >
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -82,11 +68,11 @@ export const IconGithub01SolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="github-01-solid-rounded IconGithub01SolidRounded"
+      the-icon="Github01 SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -96,16 +82,15 @@ export const IconGithub01BulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="github-01-bulk-rounded IconGithub01BulkRounded"
+      the-icon="Github01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -115,20 +100,18 @@ export const IconGithub01StrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="github-01-stroke-sharp IconGithub01StrokeSharp"
+      the-icon="Github01 StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -137,23 +120,23 @@ export const IconGithub01SolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="github-01-solid-sharp IconGithub01SolidSharp"
+      the-icon="Github01 SolidSharp"
     >
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfGithub01: TheIconSelfPack = {
-  name: 'Github01',
-  StrokeRounded: IconGithub01StrokeRounded,
-  DuotoneRounded: IconGithub01DuotoneRounded,
-  TwotoneRounded: IconGithub01TwotoneRounded,
-  SolidRounded: IconGithub01SolidRounded,
-  BulkRounded: IconGithub01BulkRounded,
-  StrokeSharp: IconGithub01StrokeSharp,
-  SolidSharp: IconGithub01SolidSharp,
-};
+export const iconPackOfGithub01: TheIconSelfPack = [
+  'Github01',
+  IconGithub01StrokeRounded,
+  IconGithub01DuotoneRounded,
+  IconGithub01TwotoneRounded,
+  IconGithub01SolidRounded,
+  IconGithub01BulkRounded,
+  IconGithub01StrokeSharp,
+  IconGithub01SolidSharp,
+];

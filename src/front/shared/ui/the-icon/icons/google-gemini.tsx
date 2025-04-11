@@ -16,13 +16,11 @@ export const IconGoogleGeminiStrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="google-gemini-stroke-rounded IconGoogleGeminiStrokeRounded"
+      the-icon="GoogleGemini StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -32,18 +30,15 @@ export const IconGoogleGeminiDuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="google-gemini-duotone-rounded IconGoogleGeminiDuotoneRounded"
+      the-icon="GoogleGemini DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -53,22 +48,15 @@ export const IconGoogleGeminiTwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="google-gemini-twotone-rounded IconGoogleGeminiTwotoneRounded"
+      the-icon="GoogleGemini TwotoneRounded"
     >
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -78,11 +66,11 @@ export const IconGoogleGeminiSolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="google-gemini-solid-rounded IconGoogleGeminiSolidRounded"
+      the-icon="GoogleGemini SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -92,16 +80,15 @@ export const IconGoogleGeminiBulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="google-gemini-bulk-rounded IconGoogleGeminiBulkRounded"
+      the-icon="GoogleGemini BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -111,12 +98,11 @@ export const IconGoogleGeminiStrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="google-gemini-stroke-sharp IconGoogleGeminiStrokeSharp"
+      the-icon="GoogleGemini StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -126,23 +112,23 @@ export const IconGoogleGeminiSolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="google-gemini-solid-sharp IconGoogleGeminiSolidSharp"
+      the-icon="GoogleGemini SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfGoogleGemini: TheIconSelfPack = {
-  name: 'GoogleGemini',
-  StrokeRounded: IconGoogleGeminiStrokeRounded,
-  DuotoneRounded: IconGoogleGeminiDuotoneRounded,
-  TwotoneRounded: IconGoogleGeminiTwotoneRounded,
-  SolidRounded: IconGoogleGeminiSolidRounded,
-  BulkRounded: IconGoogleGeminiBulkRounded,
-  StrokeSharp: IconGoogleGeminiStrokeSharp,
-  SolidSharp: IconGoogleGeminiSolidSharp,
-};
+export const iconPackOfGoogleGemini: TheIconSelfPack = [
+  'GoogleGemini',
+  IconGoogleGeminiStrokeRounded,
+  IconGoogleGeminiDuotoneRounded,
+  IconGoogleGeminiTwotoneRounded,
+  IconGoogleGeminiSolidRounded,
+  IconGoogleGeminiBulkRounded,
+  IconGoogleGeminiStrokeSharp,
+  IconGoogleGeminiSolidSharp,
+];

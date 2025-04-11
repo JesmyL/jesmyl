@@ -15,22 +15,17 @@ export const IconCelsiusStrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="celsius-stroke-rounded IconCelsiusStrokeRounded"
+      the-icon="Celsius StrokeRounded"
     >
       <circle 
-        cx="5" 
-        cy="6" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="5"
+        cy="6"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -40,28 +35,23 @@ export const IconCelsiusDuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="celsius-duotone-rounded IconCelsiusDuotoneRounded"
+      the-icon="Celsius DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="5" 
-        cy="6" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="5"
+        cy="6"
+        r="2"
+        i-c="f o7"
+      />
       <circle 
-        cx="5" 
-        cy="6" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="5"
+        cy="6"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -71,23 +61,17 @@ export const IconCelsiusTwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="celsius-twotone-rounded IconCelsiusTwotoneRounded"
+      the-icon="Celsius TwotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="5" 
-        cy="6" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="5"
+        cy="6"
+        r="2"
+        i-c="o7 s sj sr sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -97,19 +81,15 @@ export const IconCelsiusSolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="celsius-solid-rounded IconCelsiusSolidRounded"
+      the-icon="Celsius SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -119,20 +99,15 @@ export const IconCelsiusBulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="celsius-bulk-rounded IconCelsiusBulkRounded"
+      the-icon="Celsius BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
     </TheIconWrapper>
   );
@@ -142,19 +117,15 @@ export const IconCelsiusStrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="celsius-stroke-sharp IconCelsiusStrokeSharp"
+      the-icon="Celsius StrokeSharp"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -164,31 +135,27 @@ export const IconCelsiusSolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="celsius-solid-sharp IconCelsiusSolidSharp"
+      the-icon="Celsius SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCelsius: TheIconSelfPack = {
-  name: 'Celsius',
-  StrokeRounded: IconCelsiusStrokeRounded,
-  DuotoneRounded: IconCelsiusDuotoneRounded,
-  TwotoneRounded: IconCelsiusTwotoneRounded,
-  SolidRounded: IconCelsiusSolidRounded,
-  BulkRounded: IconCelsiusBulkRounded,
-  StrokeSharp: IconCelsiusStrokeSharp,
-  SolidSharp: IconCelsiusSolidSharp,
-};
+export const iconPackOfCelsius: TheIconSelfPack = [
+  'Celsius',
+  IconCelsiusStrokeRounded,
+  IconCelsiusDuotoneRounded,
+  IconCelsiusTwotoneRounded,
+  IconCelsiusSolidRounded,
+  IconCelsiusBulkRounded,
+  IconCelsiusStrokeSharp,
+  IconCelsiusSolidSharp,
+];

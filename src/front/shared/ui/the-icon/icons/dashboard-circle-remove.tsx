@@ -18,32 +18,29 @@ export const IconDashboardCircleRemoveStrokeRounded: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="dashboard-circle-remove-stroke-rounded IconDashboardCircleRemoveStrokeRounded"
+      the-icon="DashboardCircleRemove StrokeRounded"
     >
       <circle 
-        cx="6.25" 
-        cy="6.25" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.25"
+        cy="6.25"
+        r="4.25"
+        i-c="s sw"
+      />
       <circle 
-        cx="17.75" 
-        cy="17.75" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17.75"
+        cy="17.75"
+        r="4.25"
+        i-c="s sw"
+      />
       <circle 
-        cx="6.25" 
-        cy="17.75" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.25"
+        cy="17.75"
+        r="4.25"
+        i-c="s sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -53,50 +50,47 @@ export const IconDashboardCircleRemoveDuotoneRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="dashboard-circle-remove-duotone-rounded IconDashboardCircleRemoveDuotoneRounded"
+      the-icon="DashboardCircleRemove DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="6.25" 
-        cy="6.25" 
-        r="4.25" 
-        fill="var(--icon-fill)"></circle>
+        cx="6.25"
+        cy="6.25"
+        r="4.25"
+        i-c="f o7"
+      />
       <circle 
-        cx="6.25" 
-        cy="6.25" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.25"
+        cy="6.25"
+        r="4.25"
+        i-c="s sw"
+      />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="17.75" 
-        cy="17.75" 
-        r="4.25" 
-        fill="var(--icon-fill)"></circle>
+        cx="17.75"
+        cy="17.75"
+        r="4.25"
+        i-c="f o7"
+      />
       <circle 
-        cx="17.75" 
-        cy="17.75" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17.75"
+        cy="17.75"
+        r="4.25"
+        i-c="s sw"
+      />
       <circle 
-        cx="17.75" 
-        cy="17.75" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17.75"
+        cy="17.75"
+        r="4.25"
+        i-c="s sw"
+      />
       <circle 
-        cx="6.25" 
-        cy="17.75" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.25"
+        cy="17.75"
+        r="4.25"
+        i-c="s sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -106,33 +100,29 @@ export const IconDashboardCircleRemoveTwotoneRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="dashboard-circle-remove-twotone-rounded IconDashboardCircleRemoveTwotoneRounded"
+      the-icon="DashboardCircleRemove TwotoneRounded"
     >
       <circle 
-        cx="6.25" 
-        cy="6.25" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.25"
+        cy="6.25"
+        r="4.25"
+        i-c="s sw"
+      />
       <circle 
-        cx="17.75" 
-        cy="17.75" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17.75"
+        cy="17.75"
+        r="4.25"
+        i-c="s sw"
+      />
       <circle 
-        cx="6.25" 
-        cy="17.75" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.25"
+        cy="17.75"
+        r="4.25"
+        i-c="s sw"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -142,23 +132,23 @@ export const IconDashboardCircleRemoveSolidRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="dashboard-circle-remove-solid-rounded IconDashboardCircleRemoveSolidRounded"
+      the-icon="DashboardCircleRemove SolidRounded"
     >
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -168,25 +158,23 @@ export const IconDashboardCircleRemoveBulkRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="dashboard-circle-remove-bulk-rounded IconDashboardCircleRemoveBulkRounded"
+      the-icon="DashboardCircleRemove BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -196,31 +184,29 @@ export const IconDashboardCircleRemoveStrokeSharp: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="dashboard-circle-remove-stroke-sharp IconDashboardCircleRemoveStrokeSharp"
+      the-icon="DashboardCircleRemove StrokeSharp"
     >
       <circle 
-        cx="6.25" 
-        cy="6.25" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.25"
+        cy="6.25"
+        r="4.25"
+        i-c="s sw"
+      />
       <circle 
-        cx="17.75" 
-        cy="17.75" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17.75"
+        cy="17.75"
+        r="4.25"
+        i-c="s sw"
+      />
       <circle 
-        cx="6.25" 
-        cy="17.75" 
-        r="4.25" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.25"
+        cy="17.75"
+        r="4.25"
+        i-c="s sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -230,37 +216,35 @@ export const IconDashboardCircleRemoveSolidSharp: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="dashboard-circle-remove-solid-sharp IconDashboardCircleRemoveSolidSharp"
+      the-icon="DashboardCircleRemove SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfDashboardCircleRemove: TheIconSelfPack = {
-  name: 'DashboardCircleRemove',
-  StrokeRounded: IconDashboardCircleRemoveStrokeRounded,
-  DuotoneRounded: IconDashboardCircleRemoveDuotoneRounded,
-  TwotoneRounded: IconDashboardCircleRemoveTwotoneRounded,
-  SolidRounded: IconDashboardCircleRemoveSolidRounded,
-  BulkRounded: IconDashboardCircleRemoveBulkRounded,
-  StrokeSharp: IconDashboardCircleRemoveStrokeSharp,
-  SolidSharp: IconDashboardCircleRemoveSolidSharp,
-};
+export const iconPackOfDashboardCircleRemove: TheIconSelfPack = [
+  'DashboardCircleRemove',
+  IconDashboardCircleRemoveStrokeRounded,
+  IconDashboardCircleRemoveDuotoneRounded,
+  IconDashboardCircleRemoveTwotoneRounded,
+  IconDashboardCircleRemoveSolidRounded,
+  IconDashboardCircleRemoveBulkRounded,
+  IconDashboardCircleRemoveStrokeSharp,
+  IconDashboardCircleRemoveSolidSharp,
+];

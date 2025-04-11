@@ -25,24 +25,19 @@ export const IconCameraMicrophone01StrokeRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="camera-microphone-01-stroke-rounded IconCameraMicrophone01StrokeRounded"
+      the-icon="CameraMicrophone01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -52,38 +47,27 @@ export const IconCameraMicrophone01DuotoneRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="camera-microphone-01-duotone-rounded IconCameraMicrophone01DuotoneRounded"
+      the-icon="CameraMicrophone01 DuotoneRounded"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d6}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -93,34 +77,23 @@ export const IconCameraMicrophone01TwotoneRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="camera-microphone-01-twotone-rounded IconCameraMicrophone01TwotoneRounded"
+      the-icon="CameraMicrophone01 TwotoneRounded"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="o7 s sw"
       />
     </TheIconWrapper>
   );
@@ -130,13 +103,11 @@ export const IconCameraMicrophone01SolidRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="camera-microphone-01-solid-rounded IconCameraMicrophone01SolidRounded"
+      the-icon="CameraMicrophone01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -146,20 +117,19 @@ export const IconCameraMicrophone01BulkRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="camera-microphone-01-bulk-rounded IconCameraMicrophone01BulkRounded"
+      the-icon="CameraMicrophone01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f o7"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
       <path 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -169,17 +139,15 @@ export const IconCameraMicrophone01StrokeSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="camera-microphone-01-stroke-sharp IconCameraMicrophone01StrokeSharp"
+      the-icon="CameraMicrophone01 StrokeSharp"
     >
       <path 
-        d={d.d14} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d14}
+        i-c="s sw"
       />
       <path 
-        d={d.d15} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d15}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -189,25 +157,23 @@ export const IconCameraMicrophone01SolidSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="camera-microphone-01-solid-sharp IconCameraMicrophone01SolidSharp"
+      the-icon="CameraMicrophone01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCameraMicrophone01: TheIconSelfPack = {
-  name: 'CameraMicrophone01',
-  StrokeRounded: IconCameraMicrophone01StrokeRounded,
-  DuotoneRounded: IconCameraMicrophone01DuotoneRounded,
-  TwotoneRounded: IconCameraMicrophone01TwotoneRounded,
-  SolidRounded: IconCameraMicrophone01SolidRounded,
-  BulkRounded: IconCameraMicrophone01BulkRounded,
-  StrokeSharp: IconCameraMicrophone01StrokeSharp,
-  SolidSharp: IconCameraMicrophone01SolidSharp,
-};
+export const iconPackOfCameraMicrophone01: TheIconSelfPack = [
+  'CameraMicrophone01',
+  IconCameraMicrophone01StrokeRounded,
+  IconCameraMicrophone01DuotoneRounded,
+  IconCameraMicrophone01TwotoneRounded,
+  IconCameraMicrophone01SolidRounded,
+  IconCameraMicrophone01BulkRounded,
+  IconCameraMicrophone01StrokeSharp,
+  IconCameraMicrophone01SolidSharp,
+];

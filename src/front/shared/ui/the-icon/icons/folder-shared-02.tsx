@@ -18,18 +18,15 @@ export const IconFolderShared02StrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="folder-shared-02-stroke-rounded IconFolderShared02StrokeRounded"
+      the-icon="FolderShared02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -39,25 +36,19 @@ export const IconFolderShared02DuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="folder-shared-02-duotone-rounded IconFolderShared02DuotoneRounded"
+      the-icon="FolderShared02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -67,19 +58,15 @@ export const IconFolderShared02TwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="folder-shared-02-twotone-rounded IconFolderShared02TwotoneRounded"
+      the-icon="FolderShared02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="o7 s sw"
       />
     </TheIconWrapper>
   );
@@ -89,15 +76,15 @@ export const IconFolderShared02SolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="folder-shared-02-solid-rounded IconFolderShared02SolidRounded"
+      the-icon="FolderShared02 SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -107,16 +94,15 @@ export const IconFolderShared02BulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="folder-shared-02-bulk-rounded IconFolderShared02BulkRounded"
+      the-icon="FolderShared02 BulkRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -126,17 +112,15 @@ export const IconFolderShared02StrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="folder-shared-02-stroke-sharp IconFolderShared02StrokeSharp"
+      the-icon="FolderShared02 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -146,27 +130,27 @@ export const IconFolderShared02SolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="folder-shared-02-solid-sharp IconFolderShared02SolidSharp"
+      the-icon="FolderShared02 SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfFolderShared02: TheIconSelfPack = {
-  name: 'FolderShared02',
-  StrokeRounded: IconFolderShared02StrokeRounded,
-  DuotoneRounded: IconFolderShared02DuotoneRounded,
-  TwotoneRounded: IconFolderShared02TwotoneRounded,
-  SolidRounded: IconFolderShared02SolidRounded,
-  BulkRounded: IconFolderShared02BulkRounded,
-  StrokeSharp: IconFolderShared02StrokeSharp,
-  SolidSharp: IconFolderShared02SolidSharp,
-};
+export const iconPackOfFolderShared02: TheIconSelfPack = [
+  'FolderShared02',
+  IconFolderShared02StrokeRounded,
+  IconFolderShared02DuotoneRounded,
+  IconFolderShared02TwotoneRounded,
+  IconFolderShared02SolidRounded,
+  IconFolderShared02BulkRounded,
+  IconFolderShared02StrokeSharp,
+  IconFolderShared02SolidSharp,
+];

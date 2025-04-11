@@ -18,14 +18,11 @@ export const IconFlag01StrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="flag-01-stroke-rounded IconFlag01StrokeRounded"
+      the-icon="Flag01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -35,19 +32,15 @@ export const IconFlag01DuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="flag-01-duotone-rounded IconFlag01DuotoneRounded"
+      the-icon="Flag01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -57,22 +50,15 @@ export const IconFlag01TwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="flag-01-twotone-rounded IconFlag01TwotoneRounded"
+      the-icon="Flag01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -82,11 +68,11 @@ export const IconFlag01SolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="flag-01-solid-rounded IconFlag01SolidRounded"
+      the-icon="Flag01 SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -96,16 +82,15 @@ export const IconFlag01BulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="flag-01-bulk-rounded IconFlag01BulkRounded"
+      the-icon="Flag01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -115,12 +100,11 @@ export const IconFlag01StrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="flag-01-stroke-sharp IconFlag01StrokeSharp"
+      the-icon="Flag01 StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -130,23 +114,23 @@ export const IconFlag01SolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="flag-01-solid-sharp IconFlag01SolidSharp"
+      the-icon="Flag01 SolidSharp"
     >
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfFlag01: TheIconSelfPack = {
-  name: 'Flag01',
-  StrokeRounded: IconFlag01StrokeRounded,
-  DuotoneRounded: IconFlag01DuotoneRounded,
-  TwotoneRounded: IconFlag01TwotoneRounded,
-  SolidRounded: IconFlag01SolidRounded,
-  BulkRounded: IconFlag01BulkRounded,
-  StrokeSharp: IconFlag01StrokeSharp,
-  SolidSharp: IconFlag01SolidSharp,
-};
+export const iconPackOfFlag01: TheIconSelfPack = [
+  'Flag01',
+  IconFlag01StrokeRounded,
+  IconFlag01DuotoneRounded,
+  IconFlag01TwotoneRounded,
+  IconFlag01SolidRounded,
+  IconFlag01BulkRounded,
+  IconFlag01StrokeSharp,
+  IconFlag01SolidSharp,
+];

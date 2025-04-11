@@ -19,17 +19,15 @@ export const IconWifiLowSignalStrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="wifi-low-signal-stroke-rounded IconWifiLowSignalStrokeRounded"
+      the-icon="WifiLowSignal StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -39,37 +37,31 @@ export const IconWifiLowSignalDuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="wifi-low-signal-duotone-rounded IconWifiLowSignalDuotoneRounded"
+      the-icon="WifiLowSignal DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -79,18 +71,15 @@ export const IconWifiLowSignalTwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="wifi-low-signal-twotone-rounded IconWifiLowSignalTwotoneRounded"
+      the-icon="WifiLowSignal TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="o7 s sw"
       />
     </TheIconWrapper>
   );
@@ -100,13 +89,11 @@ export const IconWifiLowSignalSolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="wifi-low-signal-solid-rounded IconWifiLowSignalSolidRounded"
+      the-icon="WifiLowSignal SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -116,18 +103,15 @@ export const IconWifiLowSignalBulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="wifi-low-signal-bulk-rounded IconWifiLowSignalBulkRounded"
+      the-icon="WifiLowSignal BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -137,15 +121,15 @@ export const IconWifiLowSignalStrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="wifi-low-signal-stroke-sharp IconWifiLowSignalStrokeSharp"
+      the-icon="WifiLowSignal StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -155,27 +139,27 @@ export const IconWifiLowSignalSolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="wifi-low-signal-solid-sharp IconWifiLowSignalSolidSharp"
+      the-icon="WifiLowSignal SolidSharp"
     >
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfWifiLowSignal: TheIconSelfPack = {
-  name: 'WifiLowSignal',
-  StrokeRounded: IconWifiLowSignalStrokeRounded,
-  DuotoneRounded: IconWifiLowSignalDuotoneRounded,
-  TwotoneRounded: IconWifiLowSignalTwotoneRounded,
-  SolidRounded: IconWifiLowSignalSolidRounded,
-  BulkRounded: IconWifiLowSignalBulkRounded,
-  StrokeSharp: IconWifiLowSignalStrokeSharp,
-  SolidSharp: IconWifiLowSignalSolidSharp,
-};
+export const iconPackOfWifiLowSignal: TheIconSelfPack = [
+  'WifiLowSignal',
+  IconWifiLowSignalStrokeRounded,
+  IconWifiLowSignalDuotoneRounded,
+  IconWifiLowSignalTwotoneRounded,
+  IconWifiLowSignalSolidRounded,
+  IconWifiLowSignalBulkRounded,
+  IconWifiLowSignalStrokeSharp,
+  IconWifiLowSignalSolidSharp,
+];

@@ -17,14 +17,11 @@ export const IconTelegramStrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="telegram-stroke-rounded IconTelegramStrokeRounded"
+      the-icon="Telegram StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -34,19 +31,15 @@ export const IconTelegramDuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="telegram-duotone-rounded IconTelegramDuotoneRounded"
+      the-icon="Telegram DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -56,22 +49,15 @@ export const IconTelegramTwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="telegram-twotone-rounded IconTelegramTwotoneRounded"
+      the-icon="Telegram TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -81,11 +67,11 @@ export const IconTelegramSolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="telegram-solid-rounded IconTelegramSolidRounded"
+      the-icon="Telegram SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -95,16 +81,15 @@ export const IconTelegramBulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="telegram-bulk-rounded IconTelegramBulkRounded"
+      the-icon="Telegram BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -114,12 +99,11 @@ export const IconTelegramStrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="telegram-stroke-sharp IconTelegramStrokeSharp"
+      the-icon="Telegram StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -129,23 +113,23 @@ export const IconTelegramSolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="telegram-solid-sharp IconTelegramSolidSharp"
+      the-icon="Telegram SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTelegram: TheIconSelfPack = {
-  name: 'Telegram',
-  StrokeRounded: IconTelegramStrokeRounded,
-  DuotoneRounded: IconTelegramDuotoneRounded,
-  TwotoneRounded: IconTelegramTwotoneRounded,
-  SolidRounded: IconTelegramSolidRounded,
-  BulkRounded: IconTelegramBulkRounded,
-  StrokeSharp: IconTelegramStrokeSharp,
-  SolidSharp: IconTelegramSolidSharp,
-};
+export const iconPackOfTelegram: TheIconSelfPack = [
+  'Telegram',
+  IconTelegramStrokeRounded,
+  IconTelegramDuotoneRounded,
+  IconTelegramTwotoneRounded,
+  IconTelegramSolidRounded,
+  IconTelegramBulkRounded,
+  IconTelegramStrokeSharp,
+  IconTelegramSolidSharp,
+];

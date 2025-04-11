@@ -15,15 +15,11 @@ export const IconFacebook02StrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="facebook-02-stroke-rounded IconFacebook02StrokeRounded"
+      the-icon="Facebook02 StrokeRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="c fr s sj sw"
       />
     </TheIconWrapper>
   );
@@ -33,22 +29,15 @@ export const IconFacebook02DuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="facebook-02-duotone-rounded IconFacebook02DuotoneRounded"
+      the-icon="Facebook02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="c fr s sj sw"
       />
     </TheIconWrapper>
   );
@@ -58,23 +47,15 @@ export const IconFacebook02TwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="facebook-02-twotone-rounded IconFacebook02TwotoneRounded"
+      the-icon="Facebook02 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="c fr o7 s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -84,13 +65,11 @@ export const IconFacebook02SolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="facebook-02-solid-rounded IconFacebook02SolidRounded"
+      the-icon="Facebook02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -100,16 +79,15 @@ export const IconFacebook02BulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="facebook-02-bulk-rounded IconFacebook02BulkRounded"
+      the-icon="Facebook02 BulkRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -119,12 +97,11 @@ export const IconFacebook02StrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="facebook-02-stroke-sharp IconFacebook02StrokeSharp"
+      the-icon="Facebook02 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -134,23 +111,23 @@ export const IconFacebook02SolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="facebook-02-solid-sharp IconFacebook02SolidSharp"
+      the-icon="Facebook02 SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfFacebook02: TheIconSelfPack = {
-  name: 'Facebook02',
-  StrokeRounded: IconFacebook02StrokeRounded,
-  DuotoneRounded: IconFacebook02DuotoneRounded,
-  TwotoneRounded: IconFacebook02TwotoneRounded,
-  SolidRounded: IconFacebook02SolidRounded,
-  BulkRounded: IconFacebook02BulkRounded,
-  StrokeSharp: IconFacebook02StrokeSharp,
-  SolidSharp: IconFacebook02SolidSharp,
-};
+export const iconPackOfFacebook02: TheIconSelfPack = [
+  'Facebook02',
+  IconFacebook02StrokeRounded,
+  IconFacebook02DuotoneRounded,
+  IconFacebook02TwotoneRounded,
+  IconFacebook02SolidRounded,
+  IconFacebook02BulkRounded,
+  IconFacebook02StrokeSharp,
+  IconFacebook02SolidSharp,
+];

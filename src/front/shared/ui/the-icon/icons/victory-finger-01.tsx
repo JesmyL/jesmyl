@@ -17,14 +17,11 @@ export const IconVictoryFinger01StrokeRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="victory-finger-01-stroke-rounded IconVictoryFinger01StrokeRounded"
+      the-icon="VictoryFinger01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -34,19 +31,15 @@ export const IconVictoryFinger01DuotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="victory-finger-01-duotone-rounded IconVictoryFinger01DuotoneRounded"
+      the-icon="VictoryFinger01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -56,22 +49,15 @@ export const IconVictoryFinger01TwotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="victory-finger-01-twotone-rounded IconVictoryFinger01TwotoneRounded"
+      the-icon="VictoryFinger01 TwotoneRounded"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -81,11 +67,11 @@ export const IconVictoryFinger01SolidRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="victory-finger-01-solid-rounded IconVictoryFinger01SolidRounded"
+      the-icon="VictoryFinger01 SolidRounded"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -95,12 +81,11 @@ export const IconVictoryFinger01BulkRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="victory-finger-01-bulk-rounded IconVictoryFinger01BulkRounded"
+      the-icon="VictoryFinger01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -110,12 +95,11 @@ export const IconVictoryFinger01StrokeSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="victory-finger-01-stroke-sharp IconVictoryFinger01StrokeSharp"
+      the-icon="VictoryFinger01 StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -125,23 +109,23 @@ export const IconVictoryFinger01SolidSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="victory-finger-01-solid-sharp IconVictoryFinger01SolidSharp"
+      the-icon="VictoryFinger01 SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfVictoryFinger01: TheIconSelfPack = {
-  name: 'VictoryFinger01',
-  StrokeRounded: IconVictoryFinger01StrokeRounded,
-  DuotoneRounded: IconVictoryFinger01DuotoneRounded,
-  TwotoneRounded: IconVictoryFinger01TwotoneRounded,
-  SolidRounded: IconVictoryFinger01SolidRounded,
-  BulkRounded: IconVictoryFinger01BulkRounded,
-  StrokeSharp: IconVictoryFinger01StrokeSharp,
-  SolidSharp: IconVictoryFinger01SolidSharp,
-};
+export const iconPackOfVictoryFinger01: TheIconSelfPack = [
+  'VictoryFinger01',
+  IconVictoryFinger01StrokeRounded,
+  IconVictoryFinger01DuotoneRounded,
+  IconVictoryFinger01TwotoneRounded,
+  IconVictoryFinger01SolidRounded,
+  IconVictoryFinger01BulkRounded,
+  IconVictoryFinger01StrokeSharp,
+  IconVictoryFinger01SolidSharp,
+];

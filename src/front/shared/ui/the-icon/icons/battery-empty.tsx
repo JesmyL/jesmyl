@@ -18,19 +18,15 @@ export const IconBatteryEmptyStrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="battery-empty-stroke-rounded IconBatteryEmptyStrokeRounded"
+      the-icon="BatteryEmpty StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -40,24 +36,19 @@ export const IconBatteryEmptyDuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="battery-empty-duotone-rounded IconBatteryEmptyDuotoneRounded"
+      the-icon="BatteryEmpty DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -67,20 +58,15 @@ export const IconBatteryEmptyTwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="battery-empty-twotone-rounded IconBatteryEmptyTwotoneRounded"
+      the-icon="BatteryEmpty TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -90,13 +76,11 @@ export const IconBatteryEmptySolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="battery-empty-solid-rounded IconBatteryEmptySolidRounded"
+      the-icon="BatteryEmpty SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -106,16 +90,15 @@ export const IconBatteryEmptyBulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="battery-empty-bulk-rounded IconBatteryEmptyBulkRounded"
+      the-icon="BatteryEmpty BulkRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -125,19 +108,15 @@ export const IconBatteryEmptyStrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="battery-empty-stroke-sharp IconBatteryEmptyStrokeSharp"
+      the-icon="BatteryEmpty StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d7}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -147,29 +126,27 @@ export const IconBatteryEmptySolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="battery-empty-solid-sharp IconBatteryEmptySolidSharp"
+      the-icon="BatteryEmpty SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBatteryEmpty: TheIconSelfPack = {
-  name: 'BatteryEmpty',
-  StrokeRounded: IconBatteryEmptyStrokeRounded,
-  DuotoneRounded: IconBatteryEmptyDuotoneRounded,
-  TwotoneRounded: IconBatteryEmptyTwotoneRounded,
-  SolidRounded: IconBatteryEmptySolidRounded,
-  BulkRounded: IconBatteryEmptyBulkRounded,
-  StrokeSharp: IconBatteryEmptyStrokeSharp,
-  SolidSharp: IconBatteryEmptySolidSharp,
-};
+export const iconPackOfBatteryEmpty: TheIconSelfPack = [
+  'BatteryEmpty',
+  IconBatteryEmptyStrokeRounded,
+  IconBatteryEmptyDuotoneRounded,
+  IconBatteryEmptyTwotoneRounded,
+  IconBatteryEmptySolidRounded,
+  IconBatteryEmptyBulkRounded,
+  IconBatteryEmptyStrokeSharp,
+  IconBatteryEmptySolidSharp,
+];

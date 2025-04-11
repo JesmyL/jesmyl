@@ -19,28 +19,19 @@ export const IconKeyGeneratorFobStrokeRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="key-generator-fob-stroke-rounded IconKeyGeneratorFobStrokeRounded"
+      the-icon="KeyGeneratorFob StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -50,35 +41,23 @@ export const IconKeyGeneratorFobDuotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="key-generator-fob-duotone-rounded IconKeyGeneratorFobDuotoneRounded"
+      the-icon="KeyGeneratorFob DuotoneRounded"
     >
       <path 
-        opacity="0.5" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr o4"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -88,30 +67,19 @@ export const IconKeyGeneratorFobTwotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="key-generator-fob-twotone-rounded IconKeyGeneratorFobTwotoneRounded"
+      the-icon="KeyGeneratorFob TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -121,13 +89,11 @@ export const IconKeyGeneratorFobSolidRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="key-generator-fob-solid-rounded IconKeyGeneratorFobSolidRounded"
+      the-icon="KeyGeneratorFob SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -137,24 +103,19 @@ export const IconKeyGeneratorFobBulkRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="key-generator-fob-bulk-rounded IconKeyGeneratorFobBulkRounded"
+      the-icon="KeyGeneratorFob BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -164,25 +125,19 @@ export const IconKeyGeneratorFobStrokeSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="key-generator-fob-stroke-sharp IconKeyGeneratorFobStrokeSharp"
+      the-icon="KeyGeneratorFob StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d9}
+        i-c="s ss sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d2}
+        i-c="s ss sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d3}
+        i-c="s ss sw"
       />
     </TheIconWrapper>
   );
@@ -192,25 +147,23 @@ export const IconKeyGeneratorFobSolidSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="key-generator-fob-solid-sharp IconKeyGeneratorFobSolidSharp"
+      the-icon="KeyGeneratorFob SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfKeyGeneratorFob: TheIconSelfPack = {
-  name: 'KeyGeneratorFob',
-  StrokeRounded: IconKeyGeneratorFobStrokeRounded,
-  DuotoneRounded: IconKeyGeneratorFobDuotoneRounded,
-  TwotoneRounded: IconKeyGeneratorFobTwotoneRounded,
-  SolidRounded: IconKeyGeneratorFobSolidRounded,
-  BulkRounded: IconKeyGeneratorFobBulkRounded,
-  StrokeSharp: IconKeyGeneratorFobStrokeSharp,
-  SolidSharp: IconKeyGeneratorFobSolidSharp,
-};
+export const iconPackOfKeyGeneratorFob: TheIconSelfPack = [
+  'KeyGeneratorFob',
+  IconKeyGeneratorFobStrokeRounded,
+  IconKeyGeneratorFobDuotoneRounded,
+  IconKeyGeneratorFobTwotoneRounded,
+  IconKeyGeneratorFobSolidRounded,
+  IconKeyGeneratorFobBulkRounded,
+  IconKeyGeneratorFobStrokeSharp,
+  IconKeyGeneratorFobSolidSharp,
+];

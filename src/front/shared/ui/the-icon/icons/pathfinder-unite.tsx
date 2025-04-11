@@ -16,12 +16,11 @@ export const IconPathfinderUniteStrokeRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-unite-stroke-rounded IconPathfinderUniteStrokeRounded"
+      the-icon="PathfinderUnite StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -31,17 +30,15 @@ export const IconPathfinderUniteDuotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-unite-duotone-rounded IconPathfinderUniteDuotoneRounded"
+      the-icon="PathfinderUnite DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -51,19 +48,15 @@ export const IconPathfinderUniteTwotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-unite-twotone-rounded IconPathfinderUniteTwotoneRounded"
+      the-icon="PathfinderUnite TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -73,11 +66,11 @@ export const IconPathfinderUniteSolidRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-unite-solid-rounded IconPathfinderUniteSolidRounded"
+      the-icon="PathfinderUnite SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -87,18 +80,15 @@ export const IconPathfinderUniteBulkRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-unite-bulk-rounded IconPathfinderUniteBulkRounded"
+      the-icon="PathfinderUnite BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -108,12 +98,11 @@ export const IconPathfinderUniteStrokeSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-unite-stroke-sharp IconPathfinderUniteStrokeSharp"
+      the-icon="PathfinderUnite StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -123,23 +112,23 @@ export const IconPathfinderUniteSolidSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-unite-solid-sharp IconPathfinderUniteSolidSharp"
+      the-icon="PathfinderUnite SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPathfinderUnite: TheIconSelfPack = {
-  name: 'PathfinderUnite',
-  StrokeRounded: IconPathfinderUniteStrokeRounded,
-  DuotoneRounded: IconPathfinderUniteDuotoneRounded,
-  TwotoneRounded: IconPathfinderUniteTwotoneRounded,
-  SolidRounded: IconPathfinderUniteSolidRounded,
-  BulkRounded: IconPathfinderUniteBulkRounded,
-  StrokeSharp: IconPathfinderUniteStrokeSharp,
-  SolidSharp: IconPathfinderUniteSolidSharp,
-};
+export const iconPackOfPathfinderUnite: TheIconSelfPack = [
+  'PathfinderUnite',
+  IconPathfinderUniteStrokeRounded,
+  IconPathfinderUniteDuotoneRounded,
+  IconPathfinderUniteTwotoneRounded,
+  IconPathfinderUniteSolidRounded,
+  IconPathfinderUniteBulkRounded,
+  IconPathfinderUniteStrokeSharp,
+  IconPathfinderUniteSolidSharp,
+];

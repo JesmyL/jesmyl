@@ -16,13 +16,11 @@ export const IconEnvatoStrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="envato-stroke-rounded IconEnvatoStrokeRounded"
+      the-icon="Envato StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -32,18 +30,15 @@ export const IconEnvatoDuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="envato-duotone-rounded IconEnvatoDuotoneRounded"
+      the-icon="Envato DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -53,21 +48,15 @@ export const IconEnvatoTwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="envato-twotone-rounded IconEnvatoTwotoneRounded"
+      the-icon="Envato TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -77,11 +66,11 @@ export const IconEnvatoSolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="envato-solid-rounded IconEnvatoSolidRounded"
+      the-icon="Envato SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -91,16 +80,15 @@ export const IconEnvatoBulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="envato-bulk-rounded IconEnvatoBulkRounded"
+      the-icon="Envato BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -110,13 +98,11 @@ export const IconEnvatoStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="envato-stroke-sharp IconEnvatoStrokeSharp"
+      the-icon="Envato StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -126,23 +112,23 @@ export const IconEnvatoSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="envato-solid-sharp IconEnvatoSolidSharp"
+      the-icon="Envato SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfEnvato: TheIconSelfPack = {
-  name: 'Envato',
-  StrokeRounded: IconEnvatoStrokeRounded,
-  DuotoneRounded: IconEnvatoDuotoneRounded,
-  TwotoneRounded: IconEnvatoTwotoneRounded,
-  SolidRounded: IconEnvatoSolidRounded,
-  BulkRounded: IconEnvatoBulkRounded,
-  StrokeSharp: IconEnvatoStrokeSharp,
-  SolidSharp: IconEnvatoSolidSharp,
-};
+export const iconPackOfEnvato: TheIconSelfPack = [
+  'Envato',
+  IconEnvatoStrokeRounded,
+  IconEnvatoDuotoneRounded,
+  IconEnvatoTwotoneRounded,
+  IconEnvatoSolidRounded,
+  IconEnvatoBulkRounded,
+  IconEnvatoStrokeSharp,
+  IconEnvatoSolidSharp,
+];

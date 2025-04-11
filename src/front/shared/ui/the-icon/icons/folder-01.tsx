@@ -16,13 +16,11 @@ export const IconFolder01StrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="folder-01-stroke-rounded IconFolder01StrokeRounded"
+      the-icon="Folder01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -32,18 +30,15 @@ export const IconFolder01DuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="folder-01-duotone-rounded IconFolder01DuotoneRounded"
+      the-icon="Folder01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -53,20 +48,15 @@ export const IconFolder01TwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="folder-01-twotone-rounded IconFolder01TwotoneRounded"
+      the-icon="Folder01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -76,11 +66,11 @@ export const IconFolder01SolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="folder-01-solid-rounded IconFolder01SolidRounded"
+      the-icon="Folder01 SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -90,12 +80,11 @@ export const IconFolder01BulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="folder-01-bulk-rounded IconFolder01BulkRounded"
+      the-icon="Folder01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -105,12 +94,11 @@ export const IconFolder01StrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="folder-01-stroke-sharp IconFolder01StrokeSharp"
+      the-icon="Folder01 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -120,23 +108,23 @@ export const IconFolder01SolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="folder-01-solid-sharp IconFolder01SolidSharp"
+      the-icon="Folder01 SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfFolder01: TheIconSelfPack = {
-  name: 'Folder01',
-  StrokeRounded: IconFolder01StrokeRounded,
-  DuotoneRounded: IconFolder01DuotoneRounded,
-  TwotoneRounded: IconFolder01TwotoneRounded,
-  SolidRounded: IconFolder01SolidRounded,
-  BulkRounded: IconFolder01BulkRounded,
-  StrokeSharp: IconFolder01StrokeSharp,
-  SolidSharp: IconFolder01SolidSharp,
-};
+export const iconPackOfFolder01: TheIconSelfPack = [
+  'Folder01',
+  IconFolder01StrokeRounded,
+  IconFolder01DuotoneRounded,
+  IconFolder01TwotoneRounded,
+  IconFolder01SolidRounded,
+  IconFolder01BulkRounded,
+  IconFolder01StrokeSharp,
+  IconFolder01SolidSharp,
+];

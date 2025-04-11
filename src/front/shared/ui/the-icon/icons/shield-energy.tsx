@@ -18,21 +18,15 @@ export const IconShieldEnergyStrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="shield-energy-stroke-rounded IconShieldEnergyStrokeRounded"
+      the-icon="ShieldEnergy StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -42,28 +36,19 @@ export const IconShieldEnergyDuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="shield-energy-duotone-rounded IconShieldEnergyDuotoneRounded"
+      the-icon="ShieldEnergy DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -73,22 +58,15 @@ export const IconShieldEnergyTwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="shield-energy-twotone-rounded IconShieldEnergyTwotoneRounded"
+      the-icon="ShieldEnergy TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -98,13 +76,11 @@ export const IconShieldEnergySolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="shield-energy-solid-rounded IconShieldEnergySolidRounded"
+      the-icon="ShieldEnergy SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -114,16 +90,15 @@ export const IconShieldEnergyBulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="shield-energy-bulk-rounded IconShieldEnergyBulkRounded"
+      the-icon="ShieldEnergy BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -133,19 +108,15 @@ export const IconShieldEnergyStrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="shield-energy-stroke-sharp IconShieldEnergyStrokeSharp"
+      the-icon="ShieldEnergy StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -155,25 +126,23 @@ export const IconShieldEnergySolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="shield-energy-solid-sharp IconShieldEnergySolidSharp"
+      the-icon="ShieldEnergy SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfShieldEnergy: TheIconSelfPack = {
-  name: 'ShieldEnergy',
-  StrokeRounded: IconShieldEnergyStrokeRounded,
-  DuotoneRounded: IconShieldEnergyDuotoneRounded,
-  TwotoneRounded: IconShieldEnergyTwotoneRounded,
-  SolidRounded: IconShieldEnergySolidRounded,
-  BulkRounded: IconShieldEnergyBulkRounded,
-  StrokeSharp: IconShieldEnergyStrokeSharp,
-  SolidSharp: IconShieldEnergySolidSharp,
-};
+export const iconPackOfShieldEnergy: TheIconSelfPack = [
+  'ShieldEnergy',
+  IconShieldEnergyStrokeRounded,
+  IconShieldEnergyDuotoneRounded,
+  IconShieldEnergyTwotoneRounded,
+  IconShieldEnergySolidRounded,
+  IconShieldEnergyBulkRounded,
+  IconShieldEnergyStrokeSharp,
+  IconShieldEnergySolidSharp,
+];

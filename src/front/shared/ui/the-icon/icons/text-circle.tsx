@@ -19,19 +19,15 @@ export const IconTextCircleStrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="text-circle-stroke-rounded IconTextCircleStrokeRounded"
+      the-icon="TextCircle StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -41,24 +37,19 @@ export const IconTextCircleDuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="text-circle-duotone-rounded IconTextCircleDuotoneRounded"
+      the-icon="TextCircle DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -68,20 +59,15 @@ export const IconTextCircleTwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="text-circle-twotone-rounded IconTextCircleTwotoneRounded"
+      the-icon="TextCircle TwotoneRounded"
     >
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -91,13 +77,11 @@ export const IconTextCircleSolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="text-circle-solid-rounded IconTextCircleSolidRounded"
+      the-icon="TextCircle SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -107,16 +91,15 @@ export const IconTextCircleBulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="text-circle-bulk-rounded IconTextCircleBulkRounded"
+      the-icon="TextCircle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f o7"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -126,18 +109,15 @@ export const IconTextCircleStrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="text-circle-stroke-sharp IconTextCircleStrokeSharp"
+      the-icon="TextCircle StrokeSharp"
     >
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -147,25 +127,23 @@ export const IconTextCircleSolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="text-circle-solid-sharp IconTextCircleSolidSharp"
+      the-icon="TextCircle SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTextCircle: TheIconSelfPack = {
-  name: 'TextCircle',
-  StrokeRounded: IconTextCircleStrokeRounded,
-  DuotoneRounded: IconTextCircleDuotoneRounded,
-  TwotoneRounded: IconTextCircleTwotoneRounded,
-  SolidRounded: IconTextCircleSolidRounded,
-  BulkRounded: IconTextCircleBulkRounded,
-  StrokeSharp: IconTextCircleStrokeSharp,
-  SolidSharp: IconTextCircleSolidSharp,
-};
+export const iconPackOfTextCircle: TheIconSelfPack = [
+  'TextCircle',
+  IconTextCircleStrokeRounded,
+  IconTextCircleDuotoneRounded,
+  IconTextCircleTwotoneRounded,
+  IconTextCircleSolidRounded,
+  IconTextCircleBulkRounded,
+  IconTextCircleStrokeSharp,
+  IconTextCircleSolidSharp,
+];

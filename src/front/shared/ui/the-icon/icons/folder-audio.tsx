@@ -19,20 +19,15 @@ export const IconFolderAudioStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="folder-audio-stroke-rounded IconFolderAudioStrokeRounded"
+      the-icon="FolderAudio StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -42,25 +37,19 @@ export const IconFolderAudioDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="folder-audio-duotone-rounded IconFolderAudioDuotoneRounded"
+      the-icon="FolderAudio DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -70,21 +59,15 @@ export const IconFolderAudioTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="folder-audio-twotone-rounded IconFolderAudioTwotoneRounded"
+      the-icon="FolderAudio TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -94,15 +77,15 @@ export const IconFolderAudioSolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="folder-audio-solid-rounded IconFolderAudioSolidRounded"
+      the-icon="FolderAudio SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -112,16 +95,15 @@ export const IconFolderAudioBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="folder-audio-bulk-rounded IconFolderAudioBulkRounded"
+      the-icon="FolderAudio BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -131,21 +113,19 @@ export const IconFolderAudioStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="folder-audio-stroke-sharp IconFolderAudioStrokeSharp"
+      the-icon="FolderAudio StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -155,27 +135,27 @@ export const IconFolderAudioSolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="folder-audio-solid-sharp IconFolderAudioSolidSharp"
+      the-icon="FolderAudio SolidSharp"
     >
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfFolderAudio: TheIconSelfPack = {
-  name: 'FolderAudio',
-  StrokeRounded: IconFolderAudioStrokeRounded,
-  DuotoneRounded: IconFolderAudioDuotoneRounded,
-  TwotoneRounded: IconFolderAudioTwotoneRounded,
-  SolidRounded: IconFolderAudioSolidRounded,
-  BulkRounded: IconFolderAudioBulkRounded,
-  StrokeSharp: IconFolderAudioStrokeSharp,
-  SolidSharp: IconFolderAudioSolidSharp,
-};
+export const iconPackOfFolderAudio: TheIconSelfPack = [
+  'FolderAudio',
+  IconFolderAudioStrokeRounded,
+  IconFolderAudioDuotoneRounded,
+  IconFolderAudioTwotoneRounded,
+  IconFolderAudioSolidRounded,
+  IconFolderAudioBulkRounded,
+  IconFolderAudioStrokeSharp,
+  IconFolderAudioSolidSharp,
+];

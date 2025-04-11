@@ -16,29 +16,21 @@ export const IconFahrenheitStrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="fahrenheit-stroke-rounded IconFahrenheitStrokeRounded"
+      the-icon="Fahrenheit StrokeRounded"
     >
       <circle 
-        cx="5" 
-        cy="6" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        cx="5"
+        cy="6"
+        r="2"
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -48,35 +40,27 @@ export const IconFahrenheitDuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="fahrenheit-duotone-rounded IconFahrenheitDuotoneRounded"
+      the-icon="Fahrenheit DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="5" 
-        cy="6" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="5"
+        cy="6"
+        r="2"
+        i-c="f o7"
+      />
       <circle 
-        cx="5" 
-        cy="6" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        cx="5"
+        cy="6"
+        r="2"
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -86,30 +70,21 @@ export const IconFahrenheitTwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="fahrenheit-twotone-rounded IconFahrenheitTwotoneRounded"
+      the-icon="Fahrenheit TwotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="5" 
-        cy="6" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        cx="5"
+        cy="6"
+        r="2"
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -119,17 +94,15 @@ export const IconFahrenheitSolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="fahrenheit-solid-rounded IconFahrenheitSolidRounded"
+      the-icon="Fahrenheit SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -139,18 +112,15 @@ export const IconFahrenheitBulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="fahrenheit-bulk-rounded IconFahrenheitBulkRounded"
+      the-icon="Fahrenheit BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -160,25 +130,21 @@ export const IconFahrenheitStrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="fahrenheit-stroke-sharp IconFahrenheitStrokeSharp"
+      the-icon="Fahrenheit StrokeSharp"
     >
       <circle 
-        cx="5" 
-        cy="6" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
-      <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        cx="5"
+        cy="6"
+        r="2"
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -188,29 +154,27 @@ export const IconFahrenheitSolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="fahrenheit-solid-sharp IconFahrenheitSolidSharp"
+      the-icon="Fahrenheit SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfFahrenheit: TheIconSelfPack = {
-  name: 'Fahrenheit',
-  StrokeRounded: IconFahrenheitStrokeRounded,
-  DuotoneRounded: IconFahrenheitDuotoneRounded,
-  TwotoneRounded: IconFahrenheitTwotoneRounded,
-  SolidRounded: IconFahrenheitSolidRounded,
-  BulkRounded: IconFahrenheitBulkRounded,
-  StrokeSharp: IconFahrenheitStrokeSharp,
-  SolidSharp: IconFahrenheitSolidSharp,
-};
+export const iconPackOfFahrenheit: TheIconSelfPack = [
+  'Fahrenheit',
+  IconFahrenheitStrokeRounded,
+  IconFahrenheitDuotoneRounded,
+  IconFahrenheitTwotoneRounded,
+  IconFahrenheitSolidRounded,
+  IconFahrenheitBulkRounded,
+  IconFahrenheitStrokeSharp,
+  IconFahrenheitSolidSharp,
+];

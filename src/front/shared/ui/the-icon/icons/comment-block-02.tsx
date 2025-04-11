@@ -17,19 +17,15 @@ export const IconCommentBlock02StrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="comment-block-02-stroke-rounded IconCommentBlock02StrokeRounded"
+      the-icon="CommentBlock02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -39,24 +35,19 @@ export const IconCommentBlock02DuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="comment-block-02-duotone-rounded IconCommentBlock02DuotoneRounded"
+      the-icon="CommentBlock02 DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -66,20 +57,15 @@ export const IconCommentBlock02TwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="comment-block-02-twotone-rounded IconCommentBlock02TwotoneRounded"
+      the-icon="CommentBlock02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -89,17 +75,15 @@ export const IconCommentBlock02SolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="comment-block-02-solid-rounded IconCommentBlock02SolidRounded"
+      the-icon="CommentBlock02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -109,18 +93,15 @@ export const IconCommentBlock02BulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="comment-block-02-bulk-rounded IconCommentBlock02BulkRounded"
+      the-icon="CommentBlock02 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -130,17 +111,15 @@ export const IconCommentBlock02StrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="comment-block-02-stroke-sharp IconCommentBlock02StrokeSharp"
+      the-icon="CommentBlock02 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -150,29 +129,27 @@ export const IconCommentBlock02SolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="comment-block-02-solid-sharp IconCommentBlock02SolidSharp"
+      the-icon="CommentBlock02 SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCommentBlock02: TheIconSelfPack = {
-  name: 'CommentBlock02',
-  StrokeRounded: IconCommentBlock02StrokeRounded,
-  DuotoneRounded: IconCommentBlock02DuotoneRounded,
-  TwotoneRounded: IconCommentBlock02TwotoneRounded,
-  SolidRounded: IconCommentBlock02SolidRounded,
-  BulkRounded: IconCommentBlock02BulkRounded,
-  StrokeSharp: IconCommentBlock02StrokeSharp,
-  SolidSharp: IconCommentBlock02SolidSharp,
-};
+export const iconPackOfCommentBlock02: TheIconSelfPack = [
+  'CommentBlock02',
+  IconCommentBlock02StrokeRounded,
+  IconCommentBlock02DuotoneRounded,
+  IconCommentBlock02TwotoneRounded,
+  IconCommentBlock02SolidRounded,
+  IconCommentBlock02BulkRounded,
+  IconCommentBlock02StrokeSharp,
+  IconCommentBlock02SolidSharp,
+];

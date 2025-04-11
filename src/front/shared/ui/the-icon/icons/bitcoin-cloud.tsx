@@ -16,21 +16,15 @@ export const IconBitcoinCloudStrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-cloud-stroke-rounded IconBitcoinCloudStrokeRounded"
+      the-icon="BitcoinCloud StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -40,26 +34,19 @@ export const IconBitcoinCloudDuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-cloud-duotone-rounded IconBitcoinCloudDuotoneRounded"
+      the-icon="BitcoinCloud DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -69,22 +56,15 @@ export const IconBitcoinCloudTwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-cloud-twotone-rounded IconBitcoinCloudTwotoneRounded"
+      the-icon="BitcoinCloud TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -94,17 +74,15 @@ export const IconBitcoinCloudSolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-cloud-solid-rounded IconBitcoinCloudSolidRounded"
+      the-icon="BitcoinCloud SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -114,18 +92,15 @@ export const IconBitcoinCloudBulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-cloud-bulk-rounded IconBitcoinCloudBulkRounded"
+      the-icon="BitcoinCloud BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -135,18 +110,15 @@ export const IconBitcoinCloudStrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-cloud-stroke-sharp IconBitcoinCloudStrokeSharp"
+      the-icon="BitcoinCloud StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d2}
+        i-c="s ss sw"
       />
     </TheIconWrapper>
   );
@@ -156,29 +128,27 @@ export const IconBitcoinCloudSolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-cloud-solid-sharp IconBitcoinCloudSolidSharp"
+      the-icon="BitcoinCloud SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBitcoinCloud: TheIconSelfPack = {
-  name: 'BitcoinCloud',
-  StrokeRounded: IconBitcoinCloudStrokeRounded,
-  DuotoneRounded: IconBitcoinCloudDuotoneRounded,
-  TwotoneRounded: IconBitcoinCloudTwotoneRounded,
-  SolidRounded: IconBitcoinCloudSolidRounded,
-  BulkRounded: IconBitcoinCloudBulkRounded,
-  StrokeSharp: IconBitcoinCloudStrokeSharp,
-  SolidSharp: IconBitcoinCloudSolidSharp,
-};
+export const iconPackOfBitcoinCloud: TheIconSelfPack = [
+  'BitcoinCloud',
+  IconBitcoinCloudStrokeRounded,
+  IconBitcoinCloudDuotoneRounded,
+  IconBitcoinCloudTwotoneRounded,
+  IconBitcoinCloudSolidRounded,
+  IconBitcoinCloudBulkRounded,
+  IconBitcoinCloudStrokeSharp,
+  IconBitcoinCloudSolidSharp,
+];

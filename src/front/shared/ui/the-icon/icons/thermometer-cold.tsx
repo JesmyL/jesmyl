@@ -15,21 +15,15 @@ export const IconThermometerColdStrokeRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="thermometer-cold-stroke-rounded IconThermometerColdStrokeRounded"
+      the-icon="ThermometerCold StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -39,26 +33,19 @@ export const IconThermometerColdDuotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="thermometer-cold-duotone-rounded IconThermometerColdDuotoneRounded"
+      the-icon="ThermometerCold DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -68,22 +55,15 @@ export const IconThermometerColdTwotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="thermometer-cold-twotone-rounded IconThermometerColdTwotoneRounded"
+      the-icon="ThermometerCold TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -93,17 +73,15 @@ export const IconThermometerColdSolidRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="thermometer-cold-solid-rounded IconThermometerColdSolidRounded"
+      the-icon="ThermometerCold SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -113,18 +91,15 @@ export const IconThermometerColdBulkRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="thermometer-cold-bulk-rounded IconThermometerColdBulkRounded"
+      the-icon="ThermometerCold BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -134,18 +109,15 @@ export const IconThermometerColdStrokeSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="thermometer-cold-stroke-sharp IconThermometerColdStrokeSharp"
+      the-icon="ThermometerCold StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -155,29 +127,27 @@ export const IconThermometerColdSolidSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="thermometer-cold-solid-sharp IconThermometerColdSolidSharp"
+      the-icon="ThermometerCold SolidSharp"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfThermometerCold: TheIconSelfPack = {
-  name: 'ThermometerCold',
-  StrokeRounded: IconThermometerColdStrokeRounded,
-  DuotoneRounded: IconThermometerColdDuotoneRounded,
-  TwotoneRounded: IconThermometerColdTwotoneRounded,
-  SolidRounded: IconThermometerColdSolidRounded,
-  BulkRounded: IconThermometerColdBulkRounded,
-  StrokeSharp: IconThermometerColdStrokeSharp,
-  SolidSharp: IconThermometerColdSolidSharp,
-};
+export const iconPackOfThermometerCold: TheIconSelfPack = [
+  'ThermometerCold',
+  IconThermometerColdStrokeRounded,
+  IconThermometerColdDuotoneRounded,
+  IconThermometerColdTwotoneRounded,
+  IconThermometerColdSolidRounded,
+  IconThermometerColdBulkRounded,
+  IconThermometerColdStrokeSharp,
+  IconThermometerColdSolidSharp,
+];

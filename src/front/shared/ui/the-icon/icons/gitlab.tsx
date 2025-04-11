@@ -16,16 +16,11 @@ export const IconGitlabStrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="gitlab-stroke-rounded IconGitlabStrokeRounded"
+      the-icon="Gitlab StrokeRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="c fr s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -35,23 +30,15 @@ export const IconGitlabDuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="gitlab-duotone-rounded IconGitlabDuotoneRounded"
+      the-icon="Gitlab DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="c fr s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -61,24 +48,15 @@ export const IconGitlabTwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="gitlab-twotone-rounded IconGitlabTwotoneRounded"
+      the-icon="Gitlab TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="c fr o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -88,13 +66,11 @@ export const IconGitlabSolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="gitlab-solid-rounded IconGitlabSolidRounded"
+      the-icon="Gitlab SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -104,18 +80,15 @@ export const IconGitlabBulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="gitlab-bulk-rounded IconGitlabBulkRounded"
+      the-icon="Gitlab BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -125,12 +98,11 @@ export const IconGitlabStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="gitlab-stroke-sharp IconGitlabStrokeSharp"
+      the-icon="Gitlab StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -140,23 +112,23 @@ export const IconGitlabSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="gitlab-solid-sharp IconGitlabSolidSharp"
+      the-icon="Gitlab SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfGitlab: TheIconSelfPack = {
-  name: 'Gitlab',
-  StrokeRounded: IconGitlabStrokeRounded,
-  DuotoneRounded: IconGitlabDuotoneRounded,
-  TwotoneRounded: IconGitlabTwotoneRounded,
-  SolidRounded: IconGitlabSolidRounded,
-  BulkRounded: IconGitlabBulkRounded,
-  StrokeSharp: IconGitlabStrokeSharp,
-  SolidSharp: IconGitlabSolidSharp,
-};
+export const iconPackOfGitlab: TheIconSelfPack = [
+  'Gitlab',
+  IconGitlabStrokeRounded,
+  IconGitlabDuotoneRounded,
+  IconGitlabTwotoneRounded,
+  IconGitlabSolidRounded,
+  IconGitlabBulkRounded,
+  IconGitlabStrokeSharp,
+  IconGitlabSolidSharp,
+];

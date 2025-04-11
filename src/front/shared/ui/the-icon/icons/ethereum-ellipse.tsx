@@ -16,21 +16,18 @@ export const IconEthereumEllipseStrokeRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="ethereum-ellipse-stroke-rounded IconEthereumEllipseStrokeRounded"
+      the-icon="EthereumEllipse StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -39,28 +36,22 @@ export const IconEthereumEllipseDuotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="ethereum-ellipse-duotone-rounded IconEthereumEllipseDuotoneRounded"
+      the-icon="EthereumEllipse DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -69,22 +60,18 @@ export const IconEthereumEllipseTwotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="ethereum-ellipse-twotone-rounded IconEthereumEllipseTwotoneRounded"
+      the-icon="EthereumEllipse TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -93,13 +80,11 @@ export const IconEthereumEllipseSolidRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="ethereum-ellipse-solid-rounded IconEthereumEllipseSolidRounded"
+      the-icon="EthereumEllipse SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -109,20 +94,19 @@ export const IconEthereumEllipseBulkRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="ethereum-ellipse-bulk-rounded IconEthereumEllipseBulkRounded"
+      the-icon="EthereumEllipse BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -132,21 +116,18 @@ export const IconEthereumEllipseStrokeSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="ethereum-ellipse-stroke-sharp IconEthereumEllipseStrokeSharp"
+      the-icon="EthereumEllipse StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -155,25 +136,23 @@ export const IconEthereumEllipseSolidSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="ethereum-ellipse-solid-sharp IconEthereumEllipseSolidSharp"
+      the-icon="EthereumEllipse SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfEthereumEllipse: TheIconSelfPack = {
-  name: 'EthereumEllipse',
-  StrokeRounded: IconEthereumEllipseStrokeRounded,
-  DuotoneRounded: IconEthereumEllipseDuotoneRounded,
-  TwotoneRounded: IconEthereumEllipseTwotoneRounded,
-  SolidRounded: IconEthereumEllipseSolidRounded,
-  BulkRounded: IconEthereumEllipseBulkRounded,
-  StrokeSharp: IconEthereumEllipseStrokeSharp,
-  SolidSharp: IconEthereumEllipseSolidSharp,
-};
+export const iconPackOfEthereumEllipse: TheIconSelfPack = [
+  'EthereumEllipse',
+  IconEthereumEllipseStrokeRounded,
+  IconEthereumEllipseDuotoneRounded,
+  IconEthereumEllipseTwotoneRounded,
+  IconEthereumEllipseSolidRounded,
+  IconEthereumEllipseBulkRounded,
+  IconEthereumEllipseStrokeSharp,
+  IconEthereumEllipseSolidSharp,
+];

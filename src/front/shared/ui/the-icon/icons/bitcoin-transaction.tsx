@@ -18,21 +18,15 @@ export const IconBitcoinTransactionStrokeRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-transaction-stroke-rounded IconBitcoinTransactionStrokeRounded"
+      the-icon="BitcoinTransaction StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -42,26 +36,19 @@ export const IconBitcoinTransactionDuotoneRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-transaction-duotone-rounded IconBitcoinTransactionDuotoneRounded"
+      the-icon="BitcoinTransaction DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -71,22 +58,15 @@ export const IconBitcoinTransactionTwotoneRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-transaction-twotone-rounded IconBitcoinTransactionTwotoneRounded"
+      the-icon="BitcoinTransaction TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -96,19 +76,15 @@ export const IconBitcoinTransactionSolidRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-transaction-solid-rounded IconBitcoinTransactionSolidRounded"
+      the-icon="BitcoinTransaction SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -118,20 +94,15 @@ export const IconBitcoinTransactionBulkRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-transaction-bulk-rounded IconBitcoinTransactionBulkRounded"
+      the-icon="BitcoinTransaction BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -141,19 +112,15 @@ export const IconBitcoinTransactionStrokeSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-transaction-stroke-sharp IconBitcoinTransactionStrokeSharp"
+      the-icon="BitcoinTransaction StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d6}
+        i-c="s ss sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d7}
+        i-c="s ss sw"
       />
     </TheIconWrapper>
   );
@@ -163,31 +130,27 @@ export const IconBitcoinTransactionSolidSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-transaction-solid-sharp IconBitcoinTransactionSolidSharp"
+      the-icon="BitcoinTransaction SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBitcoinTransaction: TheIconSelfPack = {
-  name: 'BitcoinTransaction',
-  StrokeRounded: IconBitcoinTransactionStrokeRounded,
-  DuotoneRounded: IconBitcoinTransactionDuotoneRounded,
-  TwotoneRounded: IconBitcoinTransactionTwotoneRounded,
-  SolidRounded: IconBitcoinTransactionSolidRounded,
-  BulkRounded: IconBitcoinTransactionBulkRounded,
-  StrokeSharp: IconBitcoinTransactionStrokeSharp,
-  SolidSharp: IconBitcoinTransactionSolidSharp,
-};
+export const iconPackOfBitcoinTransaction: TheIconSelfPack = [
+  'BitcoinTransaction',
+  IconBitcoinTransactionStrokeRounded,
+  IconBitcoinTransactionDuotoneRounded,
+  IconBitcoinTransactionTwotoneRounded,
+  IconBitcoinTransactionSolidRounded,
+  IconBitcoinTransactionBulkRounded,
+  IconBitcoinTransactionStrokeSharp,
+  IconBitcoinTransactionSolidSharp,
+];

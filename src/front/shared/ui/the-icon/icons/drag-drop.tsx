@@ -14,14 +14,11 @@ export const IconDragDropStrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="drag-drop-stroke-rounded IconDragDropStrokeRounded"
+      the-icon="DragDrop StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -31,16 +28,12 @@ export const IconDragDropDuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="drag-drop-duotone-rounded IconDragDropDuotoneRounded"
+      the-icon="DragDrop DuotoneRounded"
     >
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       </g>
     </TheIconWrapper>
@@ -51,14 +44,11 @@ export const IconDragDropTwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="drag-drop-twotone-rounded IconDragDropTwotoneRounded"
+      the-icon="DragDrop TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -68,13 +58,11 @@ export const IconDragDropSolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="drag-drop-solid-rounded IconDragDropSolidRounded"
+      the-icon="DragDrop SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -84,20 +72,15 @@ export const IconDragDropBulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="drag-drop-bulk-rounded IconDragDropBulkRounded"
+      the-icon="DragDrop BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -107,14 +90,11 @@ export const IconDragDropStrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="drag-drop-stroke-sharp IconDragDropStrokeSharp"
+      the-icon="DragDrop StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj ss sw"
       />
     </TheIconWrapper>
   );
@@ -124,25 +104,23 @@ export const IconDragDropSolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="drag-drop-solid-sharp IconDragDropSolidSharp"
+      the-icon="DragDrop SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfDragDrop: TheIconSelfPack = {
-  name: 'DragDrop',
-  StrokeRounded: IconDragDropStrokeRounded,
-  DuotoneRounded: IconDragDropDuotoneRounded,
-  TwotoneRounded: IconDragDropTwotoneRounded,
-  SolidRounded: IconDragDropSolidRounded,
-  BulkRounded: IconDragDropBulkRounded,
-  StrokeSharp: IconDragDropStrokeSharp,
-  SolidSharp: IconDragDropSolidSharp,
-};
+export const iconPackOfDragDrop: TheIconSelfPack = [
+  'DragDrop',
+  IconDragDropStrokeRounded,
+  IconDragDropDuotoneRounded,
+  IconDragDropTwotoneRounded,
+  IconDragDropSolidRounded,
+  IconDragDropBulkRounded,
+  IconDragDropStrokeSharp,
+  IconDragDropSolidSharp,
+];

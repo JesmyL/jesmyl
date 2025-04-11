@@ -16,13 +16,11 @@ export const IconVineStrokeRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="vine-stroke-rounded IconVineStrokeRounded"
+      the-icon="Vine StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -32,18 +30,15 @@ export const IconVineDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="vine-duotone-rounded IconVineDuotoneRounded"
+      the-icon="Vine DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -53,21 +48,15 @@ export const IconVineTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="vine-twotone-rounded IconVineTwotoneRounded"
+      the-icon="Vine TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -77,11 +66,11 @@ export const IconVineSolidRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="vine-solid-rounded IconVineSolidRounded"
+      the-icon="Vine SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -91,16 +80,15 @@ export const IconVineBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="vine-bulk-rounded IconVineBulkRounded"
+      the-icon="Vine BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -110,12 +98,11 @@ export const IconVineStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="vine-stroke-sharp IconVineStrokeSharp"
+      the-icon="Vine StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -125,23 +112,23 @@ export const IconVineSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.E
   return (
     <TheIconWrapper
       {...props}
-      name="vine-solid-sharp IconVineSolidSharp"
+      the-icon="Vine SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfVine: TheIconSelfPack = {
-  name: 'Vine',
-  StrokeRounded: IconVineStrokeRounded,
-  DuotoneRounded: IconVineDuotoneRounded,
-  TwotoneRounded: IconVineTwotoneRounded,
-  SolidRounded: IconVineSolidRounded,
-  BulkRounded: IconVineBulkRounded,
-  StrokeSharp: IconVineStrokeSharp,
-  SolidSharp: IconVineSolidSharp,
-};
+export const iconPackOfVine: TheIconSelfPack = [
+  'Vine',
+  IconVineStrokeRounded,
+  IconVineDuotoneRounded,
+  IconVineTwotoneRounded,
+  IconVineSolidRounded,
+  IconVineBulkRounded,
+  IconVineStrokeSharp,
+  IconVineSolidSharp,
+];

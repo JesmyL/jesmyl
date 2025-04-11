@@ -23,20 +23,15 @@ export const IconElectricHome02StrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="electric-home-02-stroke-rounded IconElectricHome02StrokeRounded"
+      the-icon="ElectricHome02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -46,36 +41,23 @@ export const IconElectricHome02DuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="electric-home-02-duotone-rounded IconElectricHome02DuotoneRounded"
+      the-icon="ElectricHome02 DuotoneRounded"
     >
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="c f fr o7 s sj sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -85,22 +67,15 @@ export const IconElectricHome02TwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="electric-home-02-twotone-rounded IconElectricHome02TwotoneRounded"
+      the-icon="ElectricHome02 TwotoneRounded"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -110,13 +85,11 @@ export const IconElectricHome02SolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="electric-home-02-solid-rounded IconElectricHome02SolidRounded"
+      the-icon="ElectricHome02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -126,16 +99,15 @@ export const IconElectricHome02BulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="electric-home-02-bulk-rounded IconElectricHome02BulkRounded"
+      the-icon="ElectricHome02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f o7"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -145,17 +117,15 @@ export const IconElectricHome02StrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="electric-home-02-stroke-sharp IconElectricHome02StrokeSharp"
+      the-icon="ElectricHome02 StrokeSharp"
     >
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d12}
+        i-c="s sw"
       />
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d13}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -165,25 +135,23 @@ export const IconElectricHome02SolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="electric-home-02-solid-sharp IconElectricHome02SolidSharp"
+      the-icon="ElectricHome02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfElectricHome02: TheIconSelfPack = {
-  name: 'ElectricHome02',
-  StrokeRounded: IconElectricHome02StrokeRounded,
-  DuotoneRounded: IconElectricHome02DuotoneRounded,
-  TwotoneRounded: IconElectricHome02TwotoneRounded,
-  SolidRounded: IconElectricHome02SolidRounded,
-  BulkRounded: IconElectricHome02BulkRounded,
-  StrokeSharp: IconElectricHome02StrokeSharp,
-  SolidSharp: IconElectricHome02SolidSharp,
-};
+export const iconPackOfElectricHome02: TheIconSelfPack = [
+  'ElectricHome02',
+  IconElectricHome02StrokeRounded,
+  IconElectricHome02DuotoneRounded,
+  IconElectricHome02TwotoneRounded,
+  IconElectricHome02SolidRounded,
+  IconElectricHome02BulkRounded,
+  IconElectricHome02StrokeSharp,
+  IconElectricHome02SolidSharp,
+];

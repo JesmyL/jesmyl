@@ -16,20 +16,15 @@ export const IconFolderCloudStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="folder-cloud-stroke-rounded IconFolderCloudStrokeRounded"
+      the-icon="FolderCloud StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -39,25 +34,19 @@ export const IconFolderCloudDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="folder-cloud-duotone-rounded IconFolderCloudDuotoneRounded"
+      the-icon="FolderCloud DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -67,21 +56,15 @@ export const IconFolderCloudTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="folder-cloud-twotone-rounded IconFolderCloudTwotoneRounded"
+      the-icon="FolderCloud TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -91,15 +74,15 @@ export const IconFolderCloudSolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="folder-cloud-solid-rounded IconFolderCloudSolidRounded"
+      the-icon="FolderCloud SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -109,16 +92,15 @@ export const IconFolderCloudBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="folder-cloud-bulk-rounded IconFolderCloudBulkRounded"
+      the-icon="FolderCloud BulkRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -128,18 +110,15 @@ export const IconFolderCloudStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="folder-cloud-stroke-sharp IconFolderCloudStrokeSharp"
+      the-icon="FolderCloud StrokeSharp"
     >
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -149,27 +128,27 @@ export const IconFolderCloudSolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="folder-cloud-solid-sharp IconFolderCloudSolidSharp"
+      the-icon="FolderCloud SolidSharp"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfFolderCloud: TheIconSelfPack = {
-  name: 'FolderCloud',
-  StrokeRounded: IconFolderCloudStrokeRounded,
-  DuotoneRounded: IconFolderCloudDuotoneRounded,
-  TwotoneRounded: IconFolderCloudTwotoneRounded,
-  SolidRounded: IconFolderCloudSolidRounded,
-  BulkRounded: IconFolderCloudBulkRounded,
-  StrokeSharp: IconFolderCloudStrokeSharp,
-  SolidSharp: IconFolderCloudSolidSharp,
-};
+export const iconPackOfFolderCloud: TheIconSelfPack = [
+  'FolderCloud',
+  IconFolderCloudStrokeRounded,
+  IconFolderCloudDuotoneRounded,
+  IconFolderCloudTwotoneRounded,
+  IconFolderCloudSolidRounded,
+  IconFolderCloudBulkRounded,
+  IconFolderCloudStrokeSharp,
+  IconFolderCloudSolidSharp,
+];

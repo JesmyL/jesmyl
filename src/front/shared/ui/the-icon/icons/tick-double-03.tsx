@@ -17,18 +17,15 @@ export const IconTickDouble03StrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="tick-double-03-stroke-rounded IconTickDouble03StrokeRounded"
+      the-icon="TickDouble03 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -38,23 +35,19 @@ export const IconTickDouble03DuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="tick-double-03-duotone-rounded IconTickDouble03DuotoneRounded"
+      the-icon="TickDouble03 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -64,19 +57,15 @@ export const IconTickDouble03TwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="tick-double-03-twotone-rounded IconTickDouble03TwotoneRounded"
+      the-icon="TickDouble03 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -86,17 +75,15 @@ export const IconTickDouble03SolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="tick-double-03-solid-rounded IconTickDouble03SolidRounded"
+      the-icon="TickDouble03 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -106,18 +93,15 @@ export const IconTickDouble03BulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="tick-double-03-bulk-rounded IconTickDouble03BulkRounded"
+      the-icon="TickDouble03 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -127,18 +111,15 @@ export const IconTickDouble03StrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="tick-double-03-stroke-sharp IconTickDouble03StrokeSharp"
+      the-icon="TickDouble03 StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -148,29 +129,27 @@ export const IconTickDouble03SolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="tick-double-03-solid-sharp IconTickDouble03SolidSharp"
+      the-icon="TickDouble03 SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTickDouble03: TheIconSelfPack = {
-  name: 'TickDouble03',
-  StrokeRounded: IconTickDouble03StrokeRounded,
-  DuotoneRounded: IconTickDouble03DuotoneRounded,
-  TwotoneRounded: IconTickDouble03TwotoneRounded,
-  SolidRounded: IconTickDouble03SolidRounded,
-  BulkRounded: IconTickDouble03BulkRounded,
-  StrokeSharp: IconTickDouble03StrokeSharp,
-  SolidSharp: IconTickDouble03SolidSharp,
-};
+export const iconPackOfTickDouble03: TheIconSelfPack = [
+  'TickDouble03',
+  IconTickDouble03StrokeRounded,
+  IconTickDouble03DuotoneRounded,
+  IconTickDouble03TwotoneRounded,
+  IconTickDouble03SolidRounded,
+  IconTickDouble03BulkRounded,
+  IconTickDouble03StrokeSharp,
+  IconTickDouble03SolidSharp,
+];

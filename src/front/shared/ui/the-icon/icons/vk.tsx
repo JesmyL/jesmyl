@@ -16,14 +16,11 @@ export const IconVkStrokeRounded: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="vk-stroke-rounded IconVkStrokeRounded"
+      the-icon="Vk StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -33,19 +30,15 @@ export const IconVkDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="vk-duotone-rounded IconVkDuotoneRounded"
+      the-icon="Vk DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -55,22 +48,15 @@ export const IconVkTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="vk-twotone-rounded IconVkTwotoneRounded"
+      the-icon="Vk TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -80,11 +66,11 @@ export const IconVkSolidRounded: FC<TheIconProps> = (props: TheIconProps): JSX.E
   return (
     <TheIconWrapper
       {...props}
-      name="vk-solid-rounded IconVkSolidRounded"
+      the-icon="Vk SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -94,16 +80,15 @@ export const IconVkBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX.El
   return (
     <TheIconWrapper
       {...props}
-      name="vk-bulk-rounded IconVkBulkRounded"
+      the-icon="Vk BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -113,12 +98,11 @@ export const IconVkStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX.El
   return (
     <TheIconWrapper
       {...props}
-      name="vk-stroke-sharp IconVkStrokeSharp"
+      the-icon="Vk StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -128,23 +112,23 @@ export const IconVkSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.Ele
   return (
     <TheIconWrapper
       {...props}
-      name="vk-solid-sharp IconVkSolidSharp"
+      the-icon="Vk SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfVk: TheIconSelfPack = {
-  name: 'Vk',
-  StrokeRounded: IconVkStrokeRounded,
-  DuotoneRounded: IconVkDuotoneRounded,
-  TwotoneRounded: IconVkTwotoneRounded,
-  SolidRounded: IconVkSolidRounded,
-  BulkRounded: IconVkBulkRounded,
-  StrokeSharp: IconVkStrokeSharp,
-  SolidSharp: IconVkSolidSharp,
-};
+export const iconPackOfVk: TheIconSelfPack = [
+  'Vk',
+  IconVkStrokeRounded,
+  IconVkDuotoneRounded,
+  IconVkTwotoneRounded,
+  IconVkSolidRounded,
+  IconVkBulkRounded,
+  IconVkStrokeSharp,
+  IconVkSolidSharp,
+];

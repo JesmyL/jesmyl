@@ -17,19 +17,15 @@ export const IconWifiDisconnected04StrokeRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="wifi-disconnected-04-stroke-rounded IconWifiDisconnected04StrokeRounded"
+      the-icon="WifiDisconnected04 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -39,24 +35,19 @@ export const IconWifiDisconnected04DuotoneRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="wifi-disconnected-04-duotone-rounded IconWifiDisconnected04DuotoneRounded"
+      the-icon="WifiDisconnected04 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -66,20 +57,15 @@ export const IconWifiDisconnected04TwotoneRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="wifi-disconnected-04-twotone-rounded IconWifiDisconnected04TwotoneRounded"
+      the-icon="WifiDisconnected04 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -89,17 +75,15 @@ export const IconWifiDisconnected04SolidRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="wifi-disconnected-04-solid-rounded IconWifiDisconnected04SolidRounded"
+      the-icon="WifiDisconnected04 SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -109,18 +93,15 @@ export const IconWifiDisconnected04BulkRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="wifi-disconnected-04-bulk-rounded IconWifiDisconnected04BulkRounded"
+      the-icon="WifiDisconnected04 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -130,17 +111,15 @@ export const IconWifiDisconnected04StrokeSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="wifi-disconnected-04-stroke-sharp IconWifiDisconnected04StrokeSharp"
+      the-icon="WifiDisconnected04 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -150,29 +129,27 @@ export const IconWifiDisconnected04SolidSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="wifi-disconnected-04-solid-sharp IconWifiDisconnected04SolidSharp"
+      the-icon="WifiDisconnected04 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfWifiDisconnected04: TheIconSelfPack = {
-  name: 'WifiDisconnected04',
-  StrokeRounded: IconWifiDisconnected04StrokeRounded,
-  DuotoneRounded: IconWifiDisconnected04DuotoneRounded,
-  TwotoneRounded: IconWifiDisconnected04TwotoneRounded,
-  SolidRounded: IconWifiDisconnected04SolidRounded,
-  BulkRounded: IconWifiDisconnected04BulkRounded,
-  StrokeSharp: IconWifiDisconnected04StrokeSharp,
-  SolidSharp: IconWifiDisconnected04SolidSharp,
-};
+export const iconPackOfWifiDisconnected04: TheIconSelfPack = [
+  'WifiDisconnected04',
+  IconWifiDisconnected04StrokeRounded,
+  IconWifiDisconnected04DuotoneRounded,
+  IconWifiDisconnected04TwotoneRounded,
+  IconWifiDisconnected04SolidRounded,
+  IconWifiDisconnected04BulkRounded,
+  IconWifiDisconnected04StrokeSharp,
+  IconWifiDisconnected04SolidSharp,
+];

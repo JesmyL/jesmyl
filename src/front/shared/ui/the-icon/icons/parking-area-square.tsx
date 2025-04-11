@@ -17,19 +17,15 @@ export const IconParkingAreaSquareStrokeRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="parking-area-square-stroke-rounded IconParkingAreaSquareStrokeRounded"
+      the-icon="ParkingAreaSquare StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -39,24 +35,19 @@ export const IconParkingAreaSquareDuotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="parking-area-square-duotone-rounded IconParkingAreaSquareDuotoneRounded"
+      the-icon="ParkingAreaSquare DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -66,20 +57,15 @@ export const IconParkingAreaSquareTwotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="parking-area-square-twotone-rounded IconParkingAreaSquareTwotoneRounded"
+      the-icon="ParkingAreaSquare TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -89,13 +75,11 @@ export const IconParkingAreaSquareSolidRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="parking-area-square-solid-rounded IconParkingAreaSquareSolidRounded"
+      the-icon="ParkingAreaSquare SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -105,18 +89,15 @@ export const IconParkingAreaSquareBulkRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="parking-area-square-bulk-rounded IconParkingAreaSquareBulkRounded"
+      the-icon="ParkingAreaSquare BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -126,19 +107,15 @@ export const IconParkingAreaSquareStrokeSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="parking-area-square-stroke-sharp IconParkingAreaSquareStrokeSharp"
+      the-icon="ParkingAreaSquare StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -148,25 +125,23 @@ export const IconParkingAreaSquareSolidSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="parking-area-square-solid-sharp IconParkingAreaSquareSolidSharp"
+      the-icon="ParkingAreaSquare SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfParkingAreaSquare: TheIconSelfPack = {
-  name: 'ParkingAreaSquare',
-  StrokeRounded: IconParkingAreaSquareStrokeRounded,
-  DuotoneRounded: IconParkingAreaSquareDuotoneRounded,
-  TwotoneRounded: IconParkingAreaSquareTwotoneRounded,
-  SolidRounded: IconParkingAreaSquareSolidRounded,
-  BulkRounded: IconParkingAreaSquareBulkRounded,
-  StrokeSharp: IconParkingAreaSquareStrokeSharp,
-  SolidSharp: IconParkingAreaSquareSolidSharp,
-};
+export const iconPackOfParkingAreaSquare: TheIconSelfPack = [
+  'ParkingAreaSquare',
+  IconParkingAreaSquareStrokeRounded,
+  IconParkingAreaSquareDuotoneRounded,
+  IconParkingAreaSquareTwotoneRounded,
+  IconParkingAreaSquareSolidRounded,
+  IconParkingAreaSquareBulkRounded,
+  IconParkingAreaSquareStrokeSharp,
+  IconParkingAreaSquareSolidSharp,
+];

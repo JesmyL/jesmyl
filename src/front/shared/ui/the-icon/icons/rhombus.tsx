@@ -15,13 +15,11 @@ export const IconRhombusStrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="rhombus-stroke-rounded IconRhombusStrokeRounded"
+      the-icon="Rhombus StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -31,18 +29,15 @@ export const IconRhombusDuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="rhombus-duotone-rounded IconRhombusDuotoneRounded"
+      the-icon="Rhombus DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -52,21 +47,15 @@ export const IconRhombusTwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="rhombus-twotone-rounded IconRhombusTwotoneRounded"
+      the-icon="Rhombus TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -76,11 +65,11 @@ export const IconRhombusSolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="rhombus-solid-rounded IconRhombusSolidRounded"
+      the-icon="Rhombus SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -90,16 +79,15 @@ export const IconRhombusBulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="rhombus-bulk-rounded IconRhombusBulkRounded"
+      the-icon="Rhombus BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -109,13 +97,11 @@ export const IconRhombusStrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="rhombus-stroke-sharp IconRhombusStrokeSharp"
+      the-icon="Rhombus StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -125,23 +111,23 @@ export const IconRhombusSolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="rhombus-solid-sharp IconRhombusSolidSharp"
+      the-icon="Rhombus SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfRhombus: TheIconSelfPack = {
-  name: 'Rhombus',
-  StrokeRounded: IconRhombusStrokeRounded,
-  DuotoneRounded: IconRhombusDuotoneRounded,
-  TwotoneRounded: IconRhombusTwotoneRounded,
-  SolidRounded: IconRhombusSolidRounded,
-  BulkRounded: IconRhombusBulkRounded,
-  StrokeSharp: IconRhombusStrokeSharp,
-  SolidSharp: IconRhombusSolidSharp,
-};
+export const iconPackOfRhombus: TheIconSelfPack = [
+  'Rhombus',
+  IconRhombusStrokeRounded,
+  IconRhombusDuotoneRounded,
+  IconRhombusTwotoneRounded,
+  IconRhombusSolidRounded,
+  IconRhombusBulkRounded,
+  IconRhombusStrokeSharp,
+  IconRhombusSolidSharp,
+];

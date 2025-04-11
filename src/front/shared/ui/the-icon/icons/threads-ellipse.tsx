@@ -16,18 +16,15 @@ export const IconThreadsEllipseStrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="threads-ellipse-stroke-rounded IconThreadsEllipseStrokeRounded"
+      the-icon="ThreadsEllipse StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -37,23 +34,19 @@ export const IconThreadsEllipseDuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="threads-ellipse-duotone-rounded IconThreadsEllipseDuotoneRounded"
+      the-icon="ThreadsEllipse DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -63,19 +56,15 @@ export const IconThreadsEllipseTwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="threads-ellipse-twotone-rounded IconThreadsEllipseTwotoneRounded"
+      the-icon="ThreadsEllipse TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -85,17 +74,15 @@ export const IconThreadsEllipseSolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="threads-ellipse-solid-rounded IconThreadsEllipseSolidRounded"
+      the-icon="ThreadsEllipse SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -105,18 +92,15 @@ export const IconThreadsEllipseBulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="threads-ellipse-bulk-rounded IconThreadsEllipseBulkRounded"
+      the-icon="ThreadsEllipse BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -126,17 +110,15 @@ export const IconThreadsEllipseStrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="threads-ellipse-stroke-sharp IconThreadsEllipseStrokeSharp"
+      the-icon="ThreadsEllipse StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -146,25 +128,23 @@ export const IconThreadsEllipseSolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="threads-ellipse-solid-sharp IconThreadsEllipseSolidSharp"
+      the-icon="ThreadsEllipse SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfThreadsEllipse: TheIconSelfPack = {
-  name: 'ThreadsEllipse',
-  StrokeRounded: IconThreadsEllipseStrokeRounded,
-  DuotoneRounded: IconThreadsEllipseDuotoneRounded,
-  TwotoneRounded: IconThreadsEllipseTwotoneRounded,
-  SolidRounded: IconThreadsEllipseSolidRounded,
-  BulkRounded: IconThreadsEllipseBulkRounded,
-  StrokeSharp: IconThreadsEllipseStrokeSharp,
-  SolidSharp: IconThreadsEllipseSolidSharp,
-};
+export const iconPackOfThreadsEllipse: TheIconSelfPack = [
+  'ThreadsEllipse',
+  IconThreadsEllipseStrokeRounded,
+  IconThreadsEllipseDuotoneRounded,
+  IconThreadsEllipseTwotoneRounded,
+  IconThreadsEllipseSolidRounded,
+  IconThreadsEllipseBulkRounded,
+  IconThreadsEllipseStrokeSharp,
+  IconThreadsEllipseSolidSharp,
+];

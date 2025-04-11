@@ -17,21 +17,15 @@ export const IconArrowDataTransferDiagonalStrokeRounded: FC<TheIconProps> = (pro
   return (
     <TheIconWrapper
       {...props}
-      name="arrow-data-transfer-diagonal-stroke-rounded IconArrowDataTransferDiagonalStrokeRounded"
+      the-icon="ArrowDataTransferDiagonal StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -41,23 +35,15 @@ export const IconArrowDataTransferDiagonalDuotoneRounded: FC<TheIconProps> = (pr
   return (
     <TheIconWrapper
       {...props}
-      name="arrow-data-transfer-diagonal-duotone-rounded IconArrowDataTransferDiagonalDuotoneRounded"
+      the-icon="ArrowDataTransferDiagonal DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -67,22 +53,15 @@ export const IconArrowDataTransferDiagonalTwotoneRounded: FC<TheIconProps> = (pr
   return (
     <TheIconWrapper
       {...props}
-      name="arrow-data-transfer-diagonal-twotone-rounded IconArrowDataTransferDiagonalTwotoneRounded"
+      the-icon="ArrowDataTransferDiagonal TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -92,15 +71,15 @@ export const IconArrowDataTransferDiagonalSolidRounded: FC<TheIconProps> = (prop
   return (
     <TheIconWrapper
       {...props}
-      name="arrow-data-transfer-diagonal-solid-rounded IconArrowDataTransferDiagonalSolidRounded"
+      the-icon="ArrowDataTransferDiagonal SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -110,16 +89,15 @@ export const IconArrowDataTransferDiagonalBulkRounded: FC<TheIconProps> = (props
   return (
     <TheIconWrapper
       {...props}
-      name="arrow-data-transfer-diagonal-bulk-rounded IconArrowDataTransferDiagonalBulkRounded"
+      the-icon="ArrowDataTransferDiagonal BulkRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -129,19 +107,15 @@ export const IconArrowDataTransferDiagonalStrokeSharp: FC<TheIconProps> = (props
   return (
     <TheIconWrapper
       {...props}
-      name="arrow-data-transfer-diagonal-stroke-sharp IconArrowDataTransferDiagonalStrokeSharp"
+      the-icon="ArrowDataTransferDiagonal StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -151,31 +125,27 @@ export const IconArrowDataTransferDiagonalSolidSharp: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="arrow-data-transfer-diagonal-solid-sharp IconArrowDataTransferDiagonalSolidSharp"
+      the-icon="ArrowDataTransferDiagonal SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfArrowDataTransferDiagonal: TheIconSelfPack = {
-  name: 'ArrowDataTransferDiagonal',
-  StrokeRounded: IconArrowDataTransferDiagonalStrokeRounded,
-  DuotoneRounded: IconArrowDataTransferDiagonalDuotoneRounded,
-  TwotoneRounded: IconArrowDataTransferDiagonalTwotoneRounded,
-  SolidRounded: IconArrowDataTransferDiagonalSolidRounded,
-  BulkRounded: IconArrowDataTransferDiagonalBulkRounded,
-  StrokeSharp: IconArrowDataTransferDiagonalStrokeSharp,
-  SolidSharp: IconArrowDataTransferDiagonalSolidSharp,
-};
+export const iconPackOfArrowDataTransferDiagonal: TheIconSelfPack = [
+  'ArrowDataTransferDiagonal',
+  IconArrowDataTransferDiagonalStrokeRounded,
+  IconArrowDataTransferDiagonalDuotoneRounded,
+  IconArrowDataTransferDiagonalTwotoneRounded,
+  IconArrowDataTransferDiagonalSolidRounded,
+  IconArrowDataTransferDiagonalBulkRounded,
+  IconArrowDataTransferDiagonalStrokeSharp,
+  IconArrowDataTransferDiagonalSolidSharp,
+];

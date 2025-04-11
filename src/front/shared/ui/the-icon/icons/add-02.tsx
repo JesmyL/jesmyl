@@ -18,14 +18,11 @@ export const IconAdd02StrokeRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="add-02-stroke-rounded IconAdd02StrokeRounded"
+      the-icon="Add02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -35,19 +32,15 @@ export const IconAdd02DuotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="add-02-duotone-rounded IconAdd02DuotoneRounded"
+      the-icon="Add02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -57,22 +50,15 @@ export const IconAdd02TwotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="add-02-twotone-rounded IconAdd02TwotoneRounded"
+      the-icon="Add02 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -82,11 +68,11 @@ export const IconAdd02SolidRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="add-02-solid-rounded IconAdd02SolidRounded"
+      the-icon="Add02 SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -96,16 +82,15 @@ export const IconAdd02BulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="add-02-bulk-rounded IconAdd02BulkRounded"
+      the-icon="Add02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -115,12 +100,11 @@ export const IconAdd02StrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="add-02-stroke-sharp IconAdd02StrokeSharp"
+      the-icon="Add02 StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -130,23 +114,23 @@ export const IconAdd02SolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="add-02-solid-sharp IconAdd02SolidSharp"
+      the-icon="Add02 SolidSharp"
     >
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAdd02: TheIconSelfPack = {
-  name: 'Add02',
-  StrokeRounded: IconAdd02StrokeRounded,
-  DuotoneRounded: IconAdd02DuotoneRounded,
-  TwotoneRounded: IconAdd02TwotoneRounded,
-  SolidRounded: IconAdd02SolidRounded,
-  BulkRounded: IconAdd02BulkRounded,
-  StrokeSharp: IconAdd02StrokeSharp,
-  SolidSharp: IconAdd02SolidSharp,
-};
+export const iconPackOfAdd02: TheIconSelfPack = [
+  'Add02',
+  IconAdd02StrokeRounded,
+  IconAdd02DuotoneRounded,
+  IconAdd02TwotoneRounded,
+  IconAdd02SolidRounded,
+  IconAdd02BulkRounded,
+  IconAdd02StrokeSharp,
+  IconAdd02SolidSharp,
+];

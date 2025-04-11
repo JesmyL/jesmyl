@@ -18,19 +18,15 @@ export const IconMusicNoteSquare01StrokeRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="music-note-square-01-stroke-rounded IconMusicNoteSquare01StrokeRounded"
+      the-icon="MusicNoteSquare01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -40,26 +36,19 @@ export const IconMusicNoteSquare01DuotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="music-note-square-01-duotone-rounded IconMusicNoteSquare01DuotoneRounded"
+      the-icon="MusicNoteSquare01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -69,20 +58,15 @@ export const IconMusicNoteSquare01TwotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="music-note-square-01-twotone-rounded IconMusicNoteSquare01TwotoneRounded"
+      the-icon="MusicNoteSquare01 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -92,13 +76,11 @@ export const IconMusicNoteSquare01SolidRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="music-note-square-01-solid-rounded IconMusicNoteSquare01SolidRounded"
+      the-icon="MusicNoteSquare01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -108,16 +90,15 @@ export const IconMusicNoteSquare01BulkRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="music-note-square-01-bulk-rounded IconMusicNoteSquare01BulkRounded"
+      the-icon="MusicNoteSquare01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -127,19 +108,15 @@ export const IconMusicNoteSquare01StrokeSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="music-note-square-01-stroke-sharp IconMusicNoteSquare01StrokeSharp"
+      the-icon="MusicNoteSquare01 StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -149,25 +126,23 @@ export const IconMusicNoteSquare01SolidSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="music-note-square-01-solid-sharp IconMusicNoteSquare01SolidSharp"
+      the-icon="MusicNoteSquare01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMusicNoteSquare01: TheIconSelfPack = {
-  name: 'MusicNoteSquare01',
-  StrokeRounded: IconMusicNoteSquare01StrokeRounded,
-  DuotoneRounded: IconMusicNoteSquare01DuotoneRounded,
-  TwotoneRounded: IconMusicNoteSquare01TwotoneRounded,
-  SolidRounded: IconMusicNoteSquare01SolidRounded,
-  BulkRounded: IconMusicNoteSquare01BulkRounded,
-  StrokeSharp: IconMusicNoteSquare01StrokeSharp,
-  SolidSharp: IconMusicNoteSquare01SolidSharp,
-};
+export const iconPackOfMusicNoteSquare01: TheIconSelfPack = [
+  'MusicNoteSquare01',
+  IconMusicNoteSquare01StrokeRounded,
+  IconMusicNoteSquare01DuotoneRounded,
+  IconMusicNoteSquare01TwotoneRounded,
+  IconMusicNoteSquare01SolidRounded,
+  IconMusicNoteSquare01BulkRounded,
+  IconMusicNoteSquare01StrokeSharp,
+  IconMusicNoteSquare01SolidSharp,
+];

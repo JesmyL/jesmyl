@@ -15,13 +15,11 @@ export const IconTwitterStrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="twitter-stroke-rounded IconTwitterStrokeRounded"
+      the-icon="Twitter StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -31,18 +29,15 @@ export const IconTwitterDuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="twitter-duotone-rounded IconTwitterDuotoneRounded"
+      the-icon="Twitter DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -52,21 +47,15 @@ export const IconTwitterTwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="twitter-twotone-rounded IconTwitterTwotoneRounded"
+      the-icon="Twitter TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -76,11 +65,11 @@ export const IconTwitterSolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="twitter-solid-rounded IconTwitterSolidRounded"
+      the-icon="Twitter SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -90,16 +79,15 @@ export const IconTwitterBulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="twitter-bulk-rounded IconTwitterBulkRounded"
+      the-icon="Twitter BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -109,12 +97,11 @@ export const IconTwitterStrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="twitter-stroke-sharp IconTwitterStrokeSharp"
+      the-icon="Twitter StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -124,23 +111,23 @@ export const IconTwitterSolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="twitter-solid-sharp IconTwitterSolidSharp"
+      the-icon="Twitter SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTwitter: TheIconSelfPack = {
-  name: 'Twitter',
-  StrokeRounded: IconTwitterStrokeRounded,
-  DuotoneRounded: IconTwitterDuotoneRounded,
-  TwotoneRounded: IconTwitterTwotoneRounded,
-  SolidRounded: IconTwitterSolidRounded,
-  BulkRounded: IconTwitterBulkRounded,
-  StrokeSharp: IconTwitterStrokeSharp,
-  SolidSharp: IconTwitterSolidSharp,
-};
+export const iconPackOfTwitter: TheIconSelfPack = [
+  'Twitter',
+  IconTwitterStrokeRounded,
+  IconTwitterDuotoneRounded,
+  IconTwitterTwotoneRounded,
+  IconTwitterSolidRounded,
+  IconTwitterBulkRounded,
+  IconTwitterStrokeSharp,
+  IconTwitterSolidSharp,
+];

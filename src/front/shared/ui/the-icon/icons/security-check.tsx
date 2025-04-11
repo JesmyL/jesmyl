@@ -17,21 +17,15 @@ export const IconSecurityCheckStrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="security-check-stroke-rounded IconSecurityCheckStrokeRounded"
+      the-icon="SecurityCheck StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -41,26 +35,19 @@ export const IconSecurityCheckDuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="security-check-duotone-rounded IconSecurityCheckDuotoneRounded"
+      the-icon="SecurityCheck DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -70,22 +57,15 @@ export const IconSecurityCheckTwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="security-check-twotone-rounded IconSecurityCheckTwotoneRounded"
+      the-icon="SecurityCheck TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -95,13 +75,11 @@ export const IconSecurityCheckSolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="security-check-solid-rounded IconSecurityCheckSolidRounded"
+      the-icon="SecurityCheck SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -111,16 +89,15 @@ export const IconSecurityCheckBulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="security-check-bulk-rounded IconSecurityCheckBulkRounded"
+      the-icon="SecurityCheck BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -130,17 +107,15 @@ export const IconSecurityCheckStrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="security-check-stroke-sharp IconSecurityCheckStrokeSharp"
+      the-icon="SecurityCheck StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -150,25 +125,23 @@ export const IconSecurityCheckSolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="security-check-solid-sharp IconSecurityCheckSolidSharp"
+      the-icon="SecurityCheck SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSecurityCheck: TheIconSelfPack = {
-  name: 'SecurityCheck',
-  StrokeRounded: IconSecurityCheckStrokeRounded,
-  DuotoneRounded: IconSecurityCheckDuotoneRounded,
-  TwotoneRounded: IconSecurityCheckTwotoneRounded,
-  SolidRounded: IconSecurityCheckSolidRounded,
-  BulkRounded: IconSecurityCheckBulkRounded,
-  StrokeSharp: IconSecurityCheckStrokeSharp,
-  SolidSharp: IconSecurityCheckSolidSharp,
-};
+export const iconPackOfSecurityCheck: TheIconSelfPack = [
+  'SecurityCheck',
+  IconSecurityCheckStrokeRounded,
+  IconSecurityCheckDuotoneRounded,
+  IconSecurityCheckTwotoneRounded,
+  IconSecurityCheckSolidRounded,
+  IconSecurityCheckBulkRounded,
+  IconSecurityCheckStrokeSharp,
+  IconSecurityCheckSolidSharp,
+];

@@ -16,13 +16,11 @@ export const IconTouch06StrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="touch-06-stroke-rounded IconTouch06StrokeRounded"
+      the-icon="Touch06 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -32,18 +30,15 @@ export const IconTouch06DuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="touch-06-duotone-rounded IconTouch06DuotoneRounded"
+      the-icon="Touch06 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -53,11 +48,11 @@ export const IconTouch06TwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="touch-06-twotone-rounded IconTouch06TwotoneRounded"
+      the-icon="Touch06 TwotoneRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -67,11 +62,11 @@ export const IconTouch06SolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="touch-06-solid-rounded IconTouch06SolidRounded"
+      the-icon="Touch06 SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -81,12 +76,11 @@ export const IconTouch06BulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="touch-06-bulk-rounded IconTouch06BulkRounded"
+      the-icon="Touch06 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -96,12 +90,11 @@ export const IconTouch06StrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="touch-06-stroke-sharp IconTouch06StrokeSharp"
+      the-icon="Touch06 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -111,23 +104,23 @@ export const IconTouch06SolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="touch-06-solid-sharp IconTouch06SolidSharp"
+      the-icon="Touch06 SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTouch06: TheIconSelfPack = {
-  name: 'Touch06',
-  StrokeRounded: IconTouch06StrokeRounded,
-  DuotoneRounded: IconTouch06DuotoneRounded,
-  TwotoneRounded: IconTouch06TwotoneRounded,
-  SolidRounded: IconTouch06SolidRounded,
-  BulkRounded: IconTouch06BulkRounded,
-  StrokeSharp: IconTouch06StrokeSharp,
-  SolidSharp: IconTouch06SolidSharp,
-};
+export const iconPackOfTouch06: TheIconSelfPack = [
+  'Touch06',
+  IconTouch06StrokeRounded,
+  IconTouch06DuotoneRounded,
+  IconTouch06TwotoneRounded,
+  IconTouch06SolidRounded,
+  IconTouch06BulkRounded,
+  IconTouch06StrokeSharp,
+  IconTouch06SolidSharp,
+];

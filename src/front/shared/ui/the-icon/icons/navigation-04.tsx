@@ -16,17 +16,15 @@ export const IconNavigation04StrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="navigation-04-stroke-rounded IconNavigation04StrokeRounded"
+      the-icon="Navigation04 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -36,24 +34,19 @@ export const IconNavigation04DuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="navigation-04-duotone-rounded IconNavigation04DuotoneRounded"
+      the-icon="Navigation04 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -63,18 +56,15 @@ export const IconNavigation04TwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="navigation-04-twotone-rounded IconNavigation04TwotoneRounded"
+      the-icon="Navigation04 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -84,13 +74,11 @@ export const IconNavigation04SolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="navigation-04-solid-rounded IconNavigation04SolidRounded"
+      the-icon="Navigation04 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -100,16 +88,15 @@ export const IconNavigation04BulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="navigation-04-bulk-rounded IconNavigation04BulkRounded"
+      the-icon="Navigation04 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -119,18 +106,15 @@ export const IconNavigation04StrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="navigation-04-stroke-sharp IconNavigation04StrokeSharp"
+      the-icon="Navigation04 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -140,25 +124,23 @@ export const IconNavigation04SolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="navigation-04-solid-sharp IconNavigation04SolidSharp"
+      the-icon="Navigation04 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfNavigation04: TheIconSelfPack = {
-  name: 'Navigation04',
-  StrokeRounded: IconNavigation04StrokeRounded,
-  DuotoneRounded: IconNavigation04DuotoneRounded,
-  TwotoneRounded: IconNavigation04TwotoneRounded,
-  SolidRounded: IconNavigation04SolidRounded,
-  BulkRounded: IconNavigation04BulkRounded,
-  StrokeSharp: IconNavigation04StrokeSharp,
-  SolidSharp: IconNavigation04SolidSharp,
-};
+export const iconPackOfNavigation04: TheIconSelfPack = [
+  'Navigation04',
+  IconNavigation04StrokeRounded,
+  IconNavigation04DuotoneRounded,
+  IconNavigation04TwotoneRounded,
+  IconNavigation04SolidRounded,
+  IconNavigation04BulkRounded,
+  IconNavigation04StrokeSharp,
+  IconNavigation04SolidSharp,
+];

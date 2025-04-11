@@ -15,14 +15,11 @@ export const IconBorderAll02StrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="border-all-02-stroke-rounded IconBorderAll02StrokeRounded"
+      the-icon="BorderAll02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -32,19 +29,15 @@ export const IconBorderAll02DuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="border-all-02-duotone-rounded IconBorderAll02DuotoneRounded"
+      the-icon="BorderAll02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,22 +47,15 @@ export const IconBorderAll02TwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="border-all-02-twotone-rounded IconBorderAll02TwotoneRounded"
+      the-icon="BorderAll02 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -79,13 +65,11 @@ export const IconBorderAll02SolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="border-all-02-solid-rounded IconBorderAll02SolidRounded"
+      the-icon="BorderAll02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -95,18 +79,15 @@ export const IconBorderAll02BulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="border-all-02-bulk-rounded IconBorderAll02BulkRounded"
+      the-icon="BorderAll02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -116,13 +97,11 @@ export const IconBorderAll02StrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="border-all-02-stroke-sharp IconBorderAll02StrokeSharp"
+      the-icon="BorderAll02 StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -132,25 +111,23 @@ export const IconBorderAll02SolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="border-all-02-solid-sharp IconBorderAll02SolidSharp"
+      the-icon="BorderAll02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBorderAll02: TheIconSelfPack = {
-  name: 'BorderAll02',
-  StrokeRounded: IconBorderAll02StrokeRounded,
-  DuotoneRounded: IconBorderAll02DuotoneRounded,
-  TwotoneRounded: IconBorderAll02TwotoneRounded,
-  SolidRounded: IconBorderAll02SolidRounded,
-  BulkRounded: IconBorderAll02BulkRounded,
-  StrokeSharp: IconBorderAll02StrokeSharp,
-  SolidSharp: IconBorderAll02SolidSharp,
-};
+export const iconPackOfBorderAll02: TheIconSelfPack = [
+  'BorderAll02',
+  IconBorderAll02StrokeRounded,
+  IconBorderAll02DuotoneRounded,
+  IconBorderAll02TwotoneRounded,
+  IconBorderAll02SolidRounded,
+  IconBorderAll02BulkRounded,
+  IconBorderAll02StrokeSharp,
+  IconBorderAll02SolidSharp,
+];

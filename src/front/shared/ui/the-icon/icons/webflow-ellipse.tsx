@@ -14,20 +14,17 @@ export const IconWebflowEllipseStrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="webflow-ellipse-stroke-rounded IconWebflowEllipseStrokeRounded"
+      the-icon="WebflowEllipse StrokeRounded"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -37,26 +34,23 @@ export const IconWebflowEllipseDuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="webflow-ellipse-duotone-rounded IconWebflowEllipseDuotoneRounded"
+      the-icon="WebflowEllipse DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="f o7"
+      />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -66,21 +60,17 @@ export const IconWebflowEllipseTwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="webflow-ellipse-twotone-rounded IconWebflowEllipseTwotoneRounded"
+      the-icon="WebflowEllipse TwotoneRounded"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -90,13 +80,11 @@ export const IconWebflowEllipseSolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="webflow-ellipse-solid-rounded IconWebflowEllipseSolidRounded"
+      the-icon="WebflowEllipse SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -106,18 +94,15 @@ export const IconWebflowEllipseBulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="webflow-ellipse-bulk-rounded IconWebflowEllipseBulkRounded"
+      the-icon="WebflowEllipse BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -127,19 +112,17 @@ export const IconWebflowEllipseStrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="webflow-ellipse-stroke-sharp IconWebflowEllipseStrokeSharp"
+      the-icon="WebflowEllipse StrokeSharp"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d1}
+        i-c="s ss sw"
       />
     </TheIconWrapper>
   );
@@ -149,25 +132,23 @@ export const IconWebflowEllipseSolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="webflow-ellipse-solid-sharp IconWebflowEllipseSolidSharp"
+      the-icon="WebflowEllipse SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfWebflowEllipse: TheIconSelfPack = {
-  name: 'WebflowEllipse',
-  StrokeRounded: IconWebflowEllipseStrokeRounded,
-  DuotoneRounded: IconWebflowEllipseDuotoneRounded,
-  TwotoneRounded: IconWebflowEllipseTwotoneRounded,
-  SolidRounded: IconWebflowEllipseSolidRounded,
-  BulkRounded: IconWebflowEllipseBulkRounded,
-  StrokeSharp: IconWebflowEllipseStrokeSharp,
-  SolidSharp: IconWebflowEllipseSolidSharp,
-};
+export const iconPackOfWebflowEllipse: TheIconSelfPack = [
+  'WebflowEllipse',
+  IconWebflowEllipseStrokeRounded,
+  IconWebflowEllipseDuotoneRounded,
+  IconWebflowEllipseTwotoneRounded,
+  IconWebflowEllipseSolidRounded,
+  IconWebflowEllipseBulkRounded,
+  IconWebflowEllipseStrokeSharp,
+  IconWebflowEllipseSolidSharp,
+];

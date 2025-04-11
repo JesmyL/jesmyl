@@ -15,20 +15,15 @@ export const IconThreadsRectangleStrokeRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="threads-rectangle-stroke-rounded IconThreadsRectangleStrokeRounded"
+      the-icon="ThreadsRectangle StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -38,25 +33,19 @@ export const IconThreadsRectangleDuotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="threads-rectangle-duotone-rounded IconThreadsRectangleDuotoneRounded"
+      the-icon="ThreadsRectangle DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -66,21 +55,15 @@ export const IconThreadsRectangleTwotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="threads-rectangle-twotone-rounded IconThreadsRectangleTwotoneRounded"
+      the-icon="ThreadsRectangle TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -90,13 +73,11 @@ export const IconThreadsRectangleSolidRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="threads-rectangle-solid-rounded IconThreadsRectangleSolidRounded"
+      the-icon="ThreadsRectangle SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -106,18 +87,15 @@ export const IconThreadsRectangleBulkRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="threads-rectangle-bulk-rounded IconThreadsRectangleBulkRounded"
+      the-icon="ThreadsRectangle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -127,20 +105,16 @@ export const IconThreadsRectangleStrokeSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="threads-rectangle-stroke-sharp IconThreadsRectangleStrokeSharp"
+      the-icon="ThreadsRectangle StrokeSharp"
     >
       <rect 
-        x="3" 
-        y="3" 
-        width="18" 
-        height="18" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></rect>
+        x="3"
+        y="3"
+        i-c="h4 s sj sw w7"
+      />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -150,25 +124,23 @@ export const IconThreadsRectangleSolidSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="threads-rectangle-solid-sharp IconThreadsRectangleSolidSharp"
+      the-icon="ThreadsRectangle SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfThreadsRectangle: TheIconSelfPack = {
-  name: 'ThreadsRectangle',
-  StrokeRounded: IconThreadsRectangleStrokeRounded,
-  DuotoneRounded: IconThreadsRectangleDuotoneRounded,
-  TwotoneRounded: IconThreadsRectangleTwotoneRounded,
-  SolidRounded: IconThreadsRectangleSolidRounded,
-  BulkRounded: IconThreadsRectangleBulkRounded,
-  StrokeSharp: IconThreadsRectangleStrokeSharp,
-  SolidSharp: IconThreadsRectangleSolidSharp,
-};
+export const iconPackOfThreadsRectangle: TheIconSelfPack = [
+  'ThreadsRectangle',
+  IconThreadsRectangleStrokeRounded,
+  IconThreadsRectangleDuotoneRounded,
+  IconThreadsRectangleTwotoneRounded,
+  IconThreadsRectangleSolidRounded,
+  IconThreadsRectangleBulkRounded,
+  IconThreadsRectangleStrokeSharp,
+  IconThreadsRectangleSolidSharp,
+];

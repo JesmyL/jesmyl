@@ -28,54 +28,39 @@ export const IconHangingClockStrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="hanging-clock-stroke-rounded IconHangingClockStrokeRounded"
+      the-icon="HangingClock StrokeRounded"
     >
       <circle 
-        cx="17.5" 
-        cy="4.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17.5"
+        cy="4.5"
+        r="1.5"
+        i-c="s sw"
+      />
       <circle 
-        cx="17.5" 
-        cy="15.5" 
-        r="4.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="bevel" 
+        cx="17.5"
+        cy="15.5"
+        r="4.5"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="bevel" 
+        d={d.d1}
+        i-c="s sb sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="bevel" 
+        d={d.d2}
+        i-c="s sb sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="bevel" 
+        d={d.d3}
+        i-c="s sb sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sb sr sw"
+      />
+      <path 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -85,52 +70,43 @@ export const IconHangingClockDuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="hanging-clock-duotone-rounded IconHangingClockDuotoneRounded"
+      the-icon="HangingClock DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="17.5" 
-        cy="4.5" 
-        r="1.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="17.5"
+        cy="4.5"
+        r="1.5"
+        i-c="f o7"
+      />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="17.5" 
-        cy="15.5" 
-        r="4.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="17.5"
+        cy="15.5"
+        r="4.5"
+        i-c="f o7"
+      />
       <circle 
-        cx="17.5" 
-        cy="4.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17.5"
+        cy="4.5"
+        r="1.5"
+        i-c="s sw"
+      />
       <circle 
-        cx="17.5" 
-        cy="15.5" 
-        r="4.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="bevel" 
+        cx="17.5"
+        cy="15.5"
+        r="4.5"
+        i-c="s sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="bevel" 
+        d={d.d2}
+        i-c="s sb sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sb sr sw"
+      />
+      <path 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -140,56 +116,39 @@ export const IconHangingClockTwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="hanging-clock-twotone-rounded IconHangingClockTwotoneRounded"
+      the-icon="HangingClock TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="bevel" 
+        d={d.d1}
+        i-c="s sb sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="bevel" 
+        d={d.d3}
+        i-c="s sb sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="bevel" 
+        d={d.d4}
+        i-c="o7 s sb sr sw"
       />
       <circle 
-        cx="17.5" 
-        cy="4.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17.5"
+        cy="4.5"
+        r="1.5"
+        i-c="s sw"
+      />
       <circle 
-        cx="17.5" 
-        cy="15.5" 
-        r="4.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="bevel" 
+        cx="17.5"
+        cy="15.5"
+        r="4.5"
+        i-c="s sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sb sr sw"
+      />
+      <path 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -199,31 +158,27 @@ export const IconHangingClockSolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="hanging-clock-solid-rounded IconHangingClockSolidRounded"
+      the-icon="HangingClock SolidRounded"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -233,35 +188,31 @@ export const IconHangingClockBulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="hanging-clock-bulk-rounded IconHangingClockBulkRounded"
+      the-icon="HangingClock BulkRounded"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o7"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="c f fr"
       />
       <path 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -271,51 +222,39 @@ export const IconHangingClockStrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="hanging-clock-stroke-sharp IconHangingClockStrokeSharp"
+      the-icon="HangingClock StrokeSharp"
     >
       <circle 
-        cx="17.5" 
-        cy="4.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="17.5"
+        cy="4.5"
+        r="1.5"
+        i-c="s sj sw"
+      />
       <circle 
-        cx="17.5" 
-        cy="15.5" 
-        r="4.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
-      <path 
-        d={d.d15} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        cx="17.5"
+        cy="15.5"
+        r="4.5"
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d15}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d16} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d16}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d4}
+        i-c="s sj sw"
+      />
+      <path 
+        d={d.d5}
+        i-c="s ss sw"
       />
     </TheIconWrapper>
   );
@@ -325,35 +264,31 @@ export const IconHangingClockSolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="hanging-clock-solid-sharp IconHangingClockSolidSharp"
+      the-icon="HangingClock SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d17} 
-        fill="var(--icon-fill)" 
+        d={d.d17}
+        i-c="c f fr"
       />
       <path 
-        d={d.d18} 
-        fill="var(--icon-fill)" 
+        d={d.d18}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d19} 
-        fill="var(--icon-fill)" 
+        d={d.d19}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfHangingClock: TheIconSelfPack = {
-  name: 'HangingClock',
-  StrokeRounded: IconHangingClockStrokeRounded,
-  DuotoneRounded: IconHangingClockDuotoneRounded,
-  TwotoneRounded: IconHangingClockTwotoneRounded,
-  SolidRounded: IconHangingClockSolidRounded,
-  BulkRounded: IconHangingClockBulkRounded,
-  StrokeSharp: IconHangingClockStrokeSharp,
-  SolidSharp: IconHangingClockSolidSharp,
-};
+export const iconPackOfHangingClock: TheIconSelfPack = [
+  'HangingClock',
+  IconHangingClockStrokeRounded,
+  IconHangingClockDuotoneRounded,
+  IconHangingClockTwotoneRounded,
+  IconHangingClockSolidRounded,
+  IconHangingClockBulkRounded,
+  IconHangingClockStrokeSharp,
+  IconHangingClockSolidSharp,
+];

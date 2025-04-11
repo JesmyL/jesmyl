@@ -17,19 +17,15 @@ export const IconTwitterSquareStrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="twitter-square-stroke-rounded IconTwitterSquareStrokeRounded"
+      the-icon="TwitterSquare StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -39,26 +35,19 @@ export const IconTwitterSquareDuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="twitter-square-duotone-rounded IconTwitterSquareDuotoneRounded"
+      the-icon="TwitterSquare DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -68,20 +57,15 @@ export const IconTwitterSquareTwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="twitter-square-twotone-rounded IconTwitterSquareTwotoneRounded"
+      the-icon="TwitterSquare TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -91,13 +75,11 @@ export const IconTwitterSquareSolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="twitter-square-solid-rounded IconTwitterSquareSolidRounded"
+      the-icon="TwitterSquare SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -107,16 +89,15 @@ export const IconTwitterSquareBulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="twitter-square-bulk-rounded IconTwitterSquareBulkRounded"
+      the-icon="TwitterSquare BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -126,19 +107,15 @@ export const IconTwitterSquareStrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="twitter-square-stroke-sharp IconTwitterSquareStrokeSharp"
+      the-icon="TwitterSquare StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -148,25 +125,23 @@ export const IconTwitterSquareSolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="twitter-square-solid-sharp IconTwitterSquareSolidSharp"
+      the-icon="TwitterSquare SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTwitterSquare: TheIconSelfPack = {
-  name: 'TwitterSquare',
-  StrokeRounded: IconTwitterSquareStrokeRounded,
-  DuotoneRounded: IconTwitterSquareDuotoneRounded,
-  TwotoneRounded: IconTwitterSquareTwotoneRounded,
-  SolidRounded: IconTwitterSquareSolidRounded,
-  BulkRounded: IconTwitterSquareBulkRounded,
-  StrokeSharp: IconTwitterSquareStrokeSharp,
-  SolidSharp: IconTwitterSquareSolidSharp,
-};
+export const iconPackOfTwitterSquare: TheIconSelfPack = [
+  'TwitterSquare',
+  IconTwitterSquareStrokeRounded,
+  IconTwitterSquareDuotoneRounded,
+  IconTwitterSquareTwotoneRounded,
+  IconTwitterSquareSolidRounded,
+  IconTwitterSquareBulkRounded,
+  IconTwitterSquareStrokeSharp,
+  IconTwitterSquareSolidSharp,
+];

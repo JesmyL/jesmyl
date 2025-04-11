@@ -19,30 +19,19 @@ export const IconMapingStrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="maping-stroke-rounded IconMapingStrokeRounded"
+      the-icon="Maping StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
-        strokeDasharray="1 3" 
+        d={d.d2}
+        i-c="s s2 sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
-        strokeDasharray="1 3" 
+        d={d.d3}
+        i-c="s s2 sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -52,41 +41,29 @@ export const IconMapingDuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="maping-duotone-rounded IconMapingDuotoneRounded"
+      the-icon="Maping DuotoneRounded"
     >
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       </g>
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
-        strokeDasharray="1 3" 
+        d={d.d2}
+        i-c="s s2 sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
-        strokeDasharray="1 3" 
+        d={d.d3}
+        i-c="s s2 sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -96,32 +73,19 @@ export const IconMapingTwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="maping-twotone-rounded IconMapingTwotoneRounded"
+      the-icon="Maping TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
-        strokeDasharray="1 3" 
+        d={d.d2}
+        i-c="o7 s s2 sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
-        strokeDasharray="1 3" 
+        d={d.d3}
+        i-c="o7 s s2 sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -131,13 +95,11 @@ export const IconMapingSolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="maping-solid-rounded IconMapingSolidRounded"
+      the-icon="Maping SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -147,18 +109,15 @@ export const IconMapingBulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="maping-bulk-rounded IconMapingBulkRounded"
+      the-icon="Maping BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -168,28 +127,19 @@ export const IconMapingStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="maping-stroke-sharp IconMapingStrokeSharp"
+      the-icon="Maping StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
-        strokeDasharray="1 3" 
+        d={d.d2}
+        i-c="s s2 sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
-        strokeDasharray="1 3" 
+        d={d.d3}
+        i-c="s s2 sj sw"
       />
     </TheIconWrapper>
   );
@@ -199,25 +149,23 @@ export const IconMapingSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="maping-solid-sharp IconMapingSolidSharp"
+      the-icon="Maping SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMaping: TheIconSelfPack = {
-  name: 'Maping',
-  StrokeRounded: IconMapingStrokeRounded,
-  DuotoneRounded: IconMapingDuotoneRounded,
-  TwotoneRounded: IconMapingTwotoneRounded,
-  SolidRounded: IconMapingSolidRounded,
-  BulkRounded: IconMapingBulkRounded,
-  StrokeSharp: IconMapingStrokeSharp,
-  SolidSharp: IconMapingSolidSharp,
-};
+export const iconPackOfMaping: TheIconSelfPack = [
+  'Maping',
+  IconMapingStrokeRounded,
+  IconMapingDuotoneRounded,
+  IconMapingTwotoneRounded,
+  IconMapingSolidRounded,
+  IconMapingBulkRounded,
+  IconMapingStrokeSharp,
+  IconMapingSolidSharp,
+];

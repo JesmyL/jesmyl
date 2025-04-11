@@ -18,14 +18,11 @@ export const IconGreenHouseStrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="green-house-stroke-rounded IconGreenHouseStrokeRounded"
+      the-icon="GreenHouse StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -35,21 +32,15 @@ export const IconGreenHouseDuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="green-house-duotone-rounded IconGreenHouseDuotoneRounded"
+      the-icon="GreenHouse DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -59,22 +50,15 @@ export const IconGreenHouseTwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="green-house-twotone-rounded IconGreenHouseTwotoneRounded"
+      the-icon="GreenHouse TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -84,11 +68,11 @@ export const IconGreenHouseSolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="green-house-solid-rounded IconGreenHouseSolidRounded"
+      the-icon="GreenHouse SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -98,16 +82,15 @@ export const IconGreenHouseBulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="green-house-bulk-rounded IconGreenHouseBulkRounded"
+      the-icon="GreenHouse BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -117,12 +100,11 @@ export const IconGreenHouseStrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="green-house-stroke-sharp IconGreenHouseStrokeSharp"
+      the-icon="GreenHouse StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -132,23 +114,23 @@ export const IconGreenHouseSolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="green-house-solid-sharp IconGreenHouseSolidSharp"
+      the-icon="GreenHouse SolidSharp"
     >
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfGreenHouse: TheIconSelfPack = {
-  name: 'GreenHouse',
-  StrokeRounded: IconGreenHouseStrokeRounded,
-  DuotoneRounded: IconGreenHouseDuotoneRounded,
-  TwotoneRounded: IconGreenHouseTwotoneRounded,
-  SolidRounded: IconGreenHouseSolidRounded,
-  BulkRounded: IconGreenHouseBulkRounded,
-  StrokeSharp: IconGreenHouseStrokeSharp,
-  SolidSharp: IconGreenHouseSolidSharp,
-};
+export const iconPackOfGreenHouse: TheIconSelfPack = [
+  'GreenHouse',
+  IconGreenHouseStrokeRounded,
+  IconGreenHouseDuotoneRounded,
+  IconGreenHouseTwotoneRounded,
+  IconGreenHouseSolidRounded,
+  IconGreenHouseBulkRounded,
+  IconGreenHouseStrokeSharp,
+  IconGreenHouseSolidSharp,
+];

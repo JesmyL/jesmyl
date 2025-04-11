@@ -12,15 +12,14 @@ export const IconRecordStrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="record-stroke-rounded IconRecordStrokeRounded"
+      the-icon="Record StrokeRounded"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="8" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="8"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -29,21 +28,20 @@ export const IconRecordDuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="record-duotone-rounded IconRecordDuotoneRounded"
+      the-icon="Record DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="8" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="12"
+        r="8"
+        i-c="f o7"
+      />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="8" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="8"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -52,23 +50,17 @@ export const IconRecordTwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="record-twotone-rounded IconRecordTwotoneRounded"
+      the-icon="Record TwotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="8" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="8"
+        i-c="o7 s sj sr sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -78,11 +70,11 @@ export const IconRecordSolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="record-solid-rounded IconRecordSolidRounded"
+      the-icon="Record SolidRounded"
     >
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -92,16 +84,15 @@ export const IconRecordBulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="record-bulk-rounded IconRecordBulkRounded"
+      the-icon="Record BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -111,15 +102,14 @@ export const IconRecordStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="record-stroke-sharp IconRecordStrokeSharp"
+      the-icon="Record StrokeSharp"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="8" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="8"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -128,23 +118,23 @@ export const IconRecordSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="record-solid-sharp IconRecordSolidSharp"
+      the-icon="Record SolidSharp"
     >
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfRecord: TheIconSelfPack = {
-  name: 'Record',
-  StrokeRounded: IconRecordStrokeRounded,
-  DuotoneRounded: IconRecordDuotoneRounded,
-  TwotoneRounded: IconRecordTwotoneRounded,
-  SolidRounded: IconRecordSolidRounded,
-  BulkRounded: IconRecordBulkRounded,
-  StrokeSharp: IconRecordStrokeSharp,
-  SolidSharp: IconRecordSolidSharp,
-};
+export const iconPackOfRecord: TheIconSelfPack = [
+  'Record',
+  IconRecordStrokeRounded,
+  IconRecordDuotoneRounded,
+  IconRecordTwotoneRounded,
+  IconRecordSolidRounded,
+  IconRecordBulkRounded,
+  IconRecordStrokeSharp,
+  IconRecordSolidSharp,
+];

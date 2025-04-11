@@ -13,21 +13,18 @@ export const IconGitCommitStrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="git-commit-stroke-rounded IconGitCommitStrokeRounded"
+      the-icon="GitCommit StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="3"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -36,27 +33,24 @@ export const IconGitCommitDuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="git-commit-duotone-rounded IconGitCommitDuotoneRounded"
+      the-icon="GitCommit DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="3" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="12"
+        r="3"
+        i-c="f o7"
+      />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="3"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -65,22 +59,18 @@ export const IconGitCommitTwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="git-commit-twotone-rounded IconGitCommitTwotoneRounded"
+      the-icon="GitCommit TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="3"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -89,19 +79,15 @@ export const IconGitCommitSolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="git-commit-solid-rounded IconGitCommitSolidRounded"
+      the-icon="GitCommit SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -111,20 +97,15 @@ export const IconGitCommitBulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="git-commit-bulk-rounded IconGitCommitBulkRounded"
+      the-icon="GitCommit BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -134,21 +115,18 @@ export const IconGitCommitStrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="git-commit-stroke-sharp IconGitCommitStrokeSharp"
+      the-icon="GitCommit StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="3"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -157,29 +135,27 @@ export const IconGitCommitSolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="git-commit-solid-sharp IconGitCommitSolidSharp"
+      the-icon="GitCommit SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfGitCommit: TheIconSelfPack = {
-  name: 'GitCommit',
-  StrokeRounded: IconGitCommitStrokeRounded,
-  DuotoneRounded: IconGitCommitDuotoneRounded,
-  TwotoneRounded: IconGitCommitTwotoneRounded,
-  SolidRounded: IconGitCommitSolidRounded,
-  BulkRounded: IconGitCommitBulkRounded,
-  StrokeSharp: IconGitCommitStrokeSharp,
-  SolidSharp: IconGitCommitSolidSharp,
-};
+export const iconPackOfGitCommit: TheIconSelfPack = [
+  'GitCommit',
+  IconGitCommitStrokeRounded,
+  IconGitCommitDuotoneRounded,
+  IconGitCommitTwotoneRounded,
+  IconGitCommitSolidRounded,
+  IconGitCommitBulkRounded,
+  IconGitCommitStrokeSharp,
+  IconGitCommitSolidSharp,
+];

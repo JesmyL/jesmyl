@@ -19,20 +19,15 @@ export const IconAcuteStrokeRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="acute-stroke-rounded IconAcuteStrokeRounded"
+      the-icon="Acute StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -42,25 +37,19 @@ export const IconAcuteDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="acute-duotone-rounded IconAcuteDuotoneRounded"
+      the-icon="Acute DuotoneRounded"
     >
       <path 
-        opacity="0.5" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o4"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -70,21 +59,15 @@ export const IconAcuteTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="acute-twotone-rounded IconAcuteTwotoneRounded"
+      the-icon="Acute TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -94,11 +77,11 @@ export const IconAcuteSolidRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="acute-solid-rounded IconAcuteSolidRounded"
+      the-icon="Acute SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -108,16 +91,15 @@ export const IconAcuteBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="acute-bulk-rounded IconAcuteBulkRounded"
+      the-icon="Acute BulkRounded"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -127,18 +109,15 @@ export const IconAcuteStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="acute-stroke-sharp IconAcuteStrokeSharp"
+      the-icon="Acute StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -148,23 +127,23 @@ export const IconAcuteSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="acute-solid-sharp IconAcuteSolidSharp"
+      the-icon="Acute SolidSharp"
     >
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAcute: TheIconSelfPack = {
-  name: 'Acute',
-  StrokeRounded: IconAcuteStrokeRounded,
-  DuotoneRounded: IconAcuteDuotoneRounded,
-  TwotoneRounded: IconAcuteTwotoneRounded,
-  SolidRounded: IconAcuteSolidRounded,
-  BulkRounded: IconAcuteBulkRounded,
-  StrokeSharp: IconAcuteStrokeSharp,
-  SolidSharp: IconAcuteSolidSharp,
-};
+export const iconPackOfAcute: TheIconSelfPack = [
+  'Acute',
+  IconAcuteStrokeRounded,
+  IconAcuteDuotoneRounded,
+  IconAcuteTwotoneRounded,
+  IconAcuteSolidRounded,
+  IconAcuteBulkRounded,
+  IconAcuteStrokeSharp,
+  IconAcuteSolidSharp,
+];

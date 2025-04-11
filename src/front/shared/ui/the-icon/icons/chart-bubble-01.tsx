@@ -16,32 +16,30 @@ export const IconChartBubble01StrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="chart-bubble-01-stroke-rounded IconChartBubble01StrokeRounded"
+      the-icon="ChartBubble01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <circle 
-        cx="8" 
-        cy="8" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="8"
+        cy="8"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="11.5" 
-        cy="15.5" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="11.5"
+        cy="15.5"
+        r="2.5"
+        i-c="s sw"
+      />
       <circle 
-        cx="17.5" 
-        cy="7.5" 
-        r="3.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17.5"
+        cy="7.5"
+        r="3.5"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -50,50 +48,48 @@ export const IconChartBubble01DuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="chart-bubble-01-duotone-rounded IconChartBubble01DuotoneRounded"
+      the-icon="ChartBubble01 DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="8" 
-        cy="8" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="8"
+        cy="8"
+        r="2"
+        i-c="f o7"
+      />
       <circle 
-        cx="8" 
-        cy="8" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="8"
+        cy="8"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="11.5" 
-        cy="15.5" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="11.5"
+        cy="15.5"
+        r="2.5"
+        i-c="f o7"
+      />
       <circle 
-        cx="11.5" 
-        cy="15.5" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="11.5"
+        cy="15.5"
+        r="2.5"
+        i-c="s sw"
+      />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="17.5" 
-        cy="7.5" 
-        r="3.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="17.5"
+        cy="7.5"
+        r="3.5"
+        i-c="f o7"
+      />
       <circle 
-        cx="17.5" 
-        cy="7.5" 
-        r="3.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17.5"
+        cy="7.5"
+        r="3.5"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -102,35 +98,30 @@ export const IconChartBubble01TwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="chart-bubble-01-twotone-rounded IconChartBubble01TwotoneRounded"
+      the-icon="ChartBubble01 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="8" 
-        cy="8" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="8"
+        cy="8"
+        r="2"
+        i-c="o7 s sw"
+      />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="11.5" 
-        cy="15.5" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="11.5"
+        cy="15.5"
+        r="2.5"
+        i-c="o7 s sw"
+      />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="17.5" 
-        cy="7.5" 
-        r="3.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17.5"
+        cy="7.5"
+        r="3.5"
+        i-c="o7 s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -139,29 +130,30 @@ export const IconChartBubble01SolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="chart-bubble-01-solid-rounded IconChartBubble01SolidRounded"
+      the-icon="ChartBubble01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr"
       />
       <circle 
-        cx="8" 
-        cy="8" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="8"
+        cy="8"
+        r="2"
+        i-c="f"
+      />
       <circle 
-        cx="11.5" 
-        cy="15.5" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="11.5"
+        cy="15.5"
+        r="2.5"
+        i-c="f"
+      />
       <circle 
-        cx="17.5" 
-        cy="7.5" 
-        r="3.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="17.5"
+        cy="7.5"
+        r="3.5"
+        i-c="f"
+      />
     </TheIconWrapper>
   );
 };
@@ -170,26 +162,23 @@ export const IconChartBubble01BulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="chart-bubble-01-bulk-rounded IconChartBubble01BulkRounded"
+      the-icon="ChartBubble01 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -199,35 +188,30 @@ export const IconChartBubble01StrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="chart-bubble-01-stroke-sharp IconChartBubble01StrokeSharp"
+      the-icon="ChartBubble01 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <circle 
-        cx="8" 
-        cy="8" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="8"
+        cy="8"
+        r="2"
+        i-c="s sj sw"
+      />
       <circle 
-        cx="11.5" 
-        cy="15.5" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="11.5"
+        cy="15.5"
+        r="2.5"
+        i-c="s sj sw"
+      />
       <circle 
-        cx="17.5" 
-        cy="7.5" 
-        r="3.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="17.5"
+        cy="7.5"
+        r="3.5"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -236,40 +220,41 @@ export const IconChartBubble01SolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="chart-bubble-01-solid-sharp IconChartBubble01SolidSharp"
+      the-icon="ChartBubble01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
       <circle 
-        cx="8.5" 
-        cy="7.5" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="8.5"
+        cy="7.5"
+        r="2"
+        i-c="f"
+      />
       <circle 
-        cx="12" 
-        cy="15" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="15"
+        r="2.5"
+        i-c="f"
+      />
       <circle 
-        cx="18" 
-        cy="7" 
-        r="3.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="18"
+        cy="7"
+        r="3.5"
+        i-c="f"
+      />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfChartBubble01: TheIconSelfPack = {
-  name: 'ChartBubble01',
-  StrokeRounded: IconChartBubble01StrokeRounded,
-  DuotoneRounded: IconChartBubble01DuotoneRounded,
-  TwotoneRounded: IconChartBubble01TwotoneRounded,
-  SolidRounded: IconChartBubble01SolidRounded,
-  BulkRounded: IconChartBubble01BulkRounded,
-  StrokeSharp: IconChartBubble01StrokeSharp,
-  SolidSharp: IconChartBubble01SolidSharp,
-};
+export const iconPackOfChartBubble01: TheIconSelfPack = [
+  'ChartBubble01',
+  IconChartBubble01StrokeRounded,
+  IconChartBubble01DuotoneRounded,
+  IconChartBubble01TwotoneRounded,
+  IconChartBubble01SolidRounded,
+  IconChartBubble01BulkRounded,
+  IconChartBubble01StrokeSharp,
+  IconChartBubble01SolidSharp,
+];

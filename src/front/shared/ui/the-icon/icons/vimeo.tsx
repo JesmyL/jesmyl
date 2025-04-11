@@ -15,14 +15,11 @@ export const IconVimeoStrokeRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="vimeo-stroke-rounded IconVimeoStrokeRounded"
+      the-icon="Vimeo StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -32,19 +29,15 @@ export const IconVimeoDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="vimeo-duotone-rounded IconVimeoDuotoneRounded"
+      the-icon="Vimeo DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,22 +47,15 @@ export const IconVimeoTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="vimeo-twotone-rounded IconVimeoTwotoneRounded"
+      the-icon="Vimeo TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -79,11 +65,11 @@ export const IconVimeoSolidRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="vimeo-solid-rounded IconVimeoSolidRounded"
+      the-icon="Vimeo SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -93,16 +79,15 @@ export const IconVimeoBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="vimeo-bulk-rounded IconVimeoBulkRounded"
+      the-icon="Vimeo BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -112,12 +97,11 @@ export const IconVimeoStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="vimeo-stroke-sharp IconVimeoStrokeSharp"
+      the-icon="Vimeo StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -127,23 +111,23 @@ export const IconVimeoSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="vimeo-solid-sharp IconVimeoSolidSharp"
+      the-icon="Vimeo SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfVimeo: TheIconSelfPack = {
-  name: 'Vimeo',
-  StrokeRounded: IconVimeoStrokeRounded,
-  DuotoneRounded: IconVimeoDuotoneRounded,
-  TwotoneRounded: IconVimeoTwotoneRounded,
-  SolidRounded: IconVimeoSolidRounded,
-  BulkRounded: IconVimeoBulkRounded,
-  StrokeSharp: IconVimeoStrokeSharp,
-  SolidSharp: IconVimeoSolidSharp,
-};
+export const iconPackOfVimeo: TheIconSelfPack = [
+  'Vimeo',
+  IconVimeoStrokeRounded,
+  IconVimeoDuotoneRounded,
+  IconVimeoTwotoneRounded,
+  IconVimeoSolidRounded,
+  IconVimeoBulkRounded,
+  IconVimeoStrokeSharp,
+  IconVimeoSolidSharp,
+];

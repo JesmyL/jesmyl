@@ -17,28 +17,21 @@ export const IconHockeyStrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="hockey-stroke-rounded IconHockeyStrokeRounded"
+      the-icon="Hockey StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="18.5" 
-        cy="19.5" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="18.5"
+        cy="19.5"
+        r="2.5"
+        i-c="s sj sw"
+      />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -48,40 +41,29 @@ export const IconHockeyDuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="hockey-duotone-rounded IconHockeyDuotoneRounded"
+      the-icon="Hockey DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="18.5" 
-        cy="19.5" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="18.5"
+        cy="19.5"
+        r="2.5"
+        i-c="s sj sw"
+      />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -91,30 +73,21 @@ export const IconHockeyTwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="hockey-twotone-rounded IconHockeyTwotoneRounded"
+      the-icon="Hockey TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="18.5" 
-        cy="19.5" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="18.5"
+        cy="19.5"
+        r="2.5"
+        i-c="o7 s sj sw"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -124,22 +97,21 @@ export const IconHockeySolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="hockey-solid-rounded IconHockeySolidRounded"
+      the-icon="Hockey SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <circle 
-        cx="18.5" 
-        cy="19.5" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="18.5"
+        cy="19.5"
+        r="2.5"
+        i-c="f"
+      />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -149,23 +121,21 @@ export const IconHockeyBulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="hockey-bulk-rounded IconHockeyBulkRounded"
+      the-icon="Hockey BulkRounded"
     >
       <circle 
-        cx="18.5" 
-        cy="19.5" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
-      <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        cx="18.5"
+        cy="19.5"
+        r="2.5"
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
+      />
+      <path 
+        d={d.d5}
+        i-c="c f fr o7"
       />
     </TheIconWrapper>
   );
@@ -175,26 +145,21 @@ export const IconHockeyStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="hockey-stroke-sharp IconHockeyStrokeSharp"
+      the-icon="Hockey StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <circle 
-        cx="18.5" 
-        cy="19.5" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="18.5"
+        cy="19.5"
+        r="2.5"
+        i-c="s sj sw"
+      />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -204,29 +169,27 @@ export const IconHockeySolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="hockey-solid-sharp IconHockeySolidSharp"
+      the-icon="Hockey SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfHockey: TheIconSelfPack = {
-  name: 'Hockey',
-  StrokeRounded: IconHockeyStrokeRounded,
-  DuotoneRounded: IconHockeyDuotoneRounded,
-  TwotoneRounded: IconHockeyTwotoneRounded,
-  SolidRounded: IconHockeySolidRounded,
-  BulkRounded: IconHockeyBulkRounded,
-  StrokeSharp: IconHockeyStrokeSharp,
-  SolidSharp: IconHockeySolidSharp,
-};
+export const iconPackOfHockey: TheIconSelfPack = [
+  'Hockey',
+  IconHockeyStrokeRounded,
+  IconHockeyDuotoneRounded,
+  IconHockeyTwotoneRounded,
+  IconHockeySolidRounded,
+  IconHockeyBulkRounded,
+  IconHockeyStrokeSharp,
+  IconHockeySolidSharp,
+];

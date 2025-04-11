@@ -15,13 +15,11 @@ export const IconBeboStrokeRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="bebo-stroke-rounded IconBeboStrokeRounded"
+      the-icon="Bebo StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -31,18 +29,15 @@ export const IconBeboDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="bebo-duotone-rounded IconBeboDuotoneRounded"
+      the-icon="Bebo DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -52,21 +47,15 @@ export const IconBeboTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="bebo-twotone-rounded IconBeboTwotoneRounded"
+      the-icon="Bebo TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -76,11 +65,11 @@ export const IconBeboSolidRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="bebo-solid-rounded IconBeboSolidRounded"
+      the-icon="Bebo SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -90,16 +79,15 @@ export const IconBeboBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="bebo-bulk-rounded IconBeboBulkRounded"
+      the-icon="Bebo BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -109,12 +97,11 @@ export const IconBeboStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="bebo-stroke-sharp IconBeboStrokeSharp"
+      the-icon="Bebo StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -124,23 +111,23 @@ export const IconBeboSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.E
   return (
     <TheIconWrapper
       {...props}
-      name="bebo-solid-sharp IconBeboSolidSharp"
+      the-icon="Bebo SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBebo: TheIconSelfPack = {
-  name: 'Bebo',
-  StrokeRounded: IconBeboStrokeRounded,
-  DuotoneRounded: IconBeboDuotoneRounded,
-  TwotoneRounded: IconBeboTwotoneRounded,
-  SolidRounded: IconBeboSolidRounded,
-  BulkRounded: IconBeboBulkRounded,
-  StrokeSharp: IconBeboStrokeSharp,
-  SolidSharp: IconBeboSolidSharp,
-};
+export const iconPackOfBebo: TheIconSelfPack = [
+  'Bebo',
+  IconBeboStrokeRounded,
+  IconBeboDuotoneRounded,
+  IconBeboTwotoneRounded,
+  IconBeboSolidRounded,
+  IconBeboBulkRounded,
+  IconBeboStrokeSharp,
+  IconBeboSolidSharp,
+];

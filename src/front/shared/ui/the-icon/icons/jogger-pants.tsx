@@ -18,20 +18,15 @@ export const IconJoggerPantsStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="jogger-pants-stroke-rounded IconJoggerPantsStrokeRounded"
+      the-icon="JoggerPants StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -41,25 +36,19 @@ export const IconJoggerPantsDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="jogger-pants-duotone-rounded IconJoggerPantsDuotoneRounded"
+      the-icon="JoggerPants DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -69,21 +58,15 @@ export const IconJoggerPantsTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="jogger-pants-twotone-rounded IconJoggerPantsTwotoneRounded"
+      the-icon="JoggerPants TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -93,13 +76,11 @@ export const IconJoggerPantsSolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="jogger-pants-solid-rounded IconJoggerPantsSolidRounded"
+      the-icon="JoggerPants SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -109,24 +90,19 @@ export const IconJoggerPantsBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="jogger-pants-bulk-rounded IconJoggerPantsBulkRounded"
+      the-icon="JoggerPants BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -136,18 +112,15 @@ export const IconJoggerPantsStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="jogger-pants-stroke-sharp IconJoggerPantsStrokeSharp"
+      the-icon="JoggerPants StrokeSharp"
     >
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -157,25 +130,23 @@ export const IconJoggerPantsSolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="jogger-pants-solid-sharp IconJoggerPantsSolidSharp"
+      the-icon="JoggerPants SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfJoggerPants: TheIconSelfPack = {
-  name: 'JoggerPants',
-  StrokeRounded: IconJoggerPantsStrokeRounded,
-  DuotoneRounded: IconJoggerPantsDuotoneRounded,
-  TwotoneRounded: IconJoggerPantsTwotoneRounded,
-  SolidRounded: IconJoggerPantsSolidRounded,
-  BulkRounded: IconJoggerPantsBulkRounded,
-  StrokeSharp: IconJoggerPantsStrokeSharp,
-  SolidSharp: IconJoggerPantsSolidSharp,
-};
+export const iconPackOfJoggerPants: TheIconSelfPack = [
+  'JoggerPants',
+  IconJoggerPantsStrokeRounded,
+  IconJoggerPantsDuotoneRounded,
+  IconJoggerPantsTwotoneRounded,
+  IconJoggerPantsSolidRounded,
+  IconJoggerPantsBulkRounded,
+  IconJoggerPantsStrokeSharp,
+  IconJoggerPantsSolidSharp,
+];

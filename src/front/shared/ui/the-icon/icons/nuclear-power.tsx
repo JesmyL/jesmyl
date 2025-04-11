@@ -22,19 +22,15 @@ export const IconNuclearPowerStrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="nuclear-power-stroke-rounded IconNuclearPowerStrokeRounded"
+      the-icon="NuclearPower StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -44,34 +40,29 @@ export const IconNuclearPowerDuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="nuclear-power-duotone-rounded IconNuclearPowerDuotoneRounded"
+      the-icon="NuclearPower DuotoneRounded"
     >
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       </g>
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -81,20 +72,15 @@ export const IconNuclearPowerTwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="nuclear-power-twotone-rounded IconNuclearPowerTwotoneRounded"
+      the-icon="NuclearPower TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -104,23 +90,23 @@ export const IconNuclearPowerSolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="nuclear-power-solid-rounded IconNuclearPowerSolidRounded"
+      the-icon="NuclearPower SolidRounded"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -130,25 +116,24 @@ export const IconNuclearPowerBulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="nuclear-power-bulk-rounded IconNuclearPowerBulkRounded"
+      the-icon="NuclearPower BulkRounded"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
-      />
-      <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
+      />
+      <path 
+        d={d.d9}
+        i-c="f"
       />
       </g>
     </TheIconWrapper>
@@ -159,19 +144,15 @@ export const IconNuclearPowerStrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="nuclear-power-stroke-sharp IconNuclearPowerStrokeSharp"
+      the-icon="NuclearPower StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj ss sw"
       />
     </TheIconWrapper>
   );
@@ -181,35 +162,35 @@ export const IconNuclearPowerSolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="nuclear-power-solid-sharp IconNuclearPowerSolidSharp"
+      the-icon="NuclearPower SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
       <path 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfNuclearPower: TheIconSelfPack = {
-  name: 'NuclearPower',
-  StrokeRounded: IconNuclearPowerStrokeRounded,
-  DuotoneRounded: IconNuclearPowerDuotoneRounded,
-  TwotoneRounded: IconNuclearPowerTwotoneRounded,
-  SolidRounded: IconNuclearPowerSolidRounded,
-  BulkRounded: IconNuclearPowerBulkRounded,
-  StrokeSharp: IconNuclearPowerStrokeSharp,
-  SolidSharp: IconNuclearPowerSolidSharp,
-};
+export const iconPackOfNuclearPower: TheIconSelfPack = [
+  'NuclearPower',
+  IconNuclearPowerStrokeRounded,
+  IconNuclearPowerDuotoneRounded,
+  IconNuclearPowerTwotoneRounded,
+  IconNuclearPowerSolidRounded,
+  IconNuclearPowerBulkRounded,
+  IconNuclearPowerStrokeSharp,
+  IconNuclearPowerSolidSharp,
+];

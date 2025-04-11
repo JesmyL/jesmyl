@@ -19,15 +19,15 @@ export const IconCloudSavingDone02StrokeRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-saving-done-02-stroke-rounded IconCloudSavingDone02StrokeRounded"
+      the-icon="CloudSavingDone02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f"
       />
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -37,20 +37,19 @@ export const IconCloudSavingDone02DuotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-saving-done-02-duotone-rounded IconCloudSavingDone02DuotoneRounded"
+      the-icon="CloudSavingDone02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f"
       />
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -60,22 +59,15 @@ export const IconCloudSavingDone02TwotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-saving-done-02-twotone-rounded IconCloudSavingDone02TwotoneRounded"
+      the-icon="CloudSavingDone02 TwotoneRounded"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -85,17 +77,15 @@ export const IconCloudSavingDone02SolidRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-saving-done-02-solid-rounded IconCloudSavingDone02SolidRounded"
+      the-icon="CloudSavingDone02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -105,18 +95,15 @@ export const IconCloudSavingDone02BulkRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-saving-done-02-bulk-rounded IconCloudSavingDone02BulkRounded"
+      the-icon="CloudSavingDone02 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -126,15 +113,15 @@ export const IconCloudSavingDone02StrokeSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-saving-done-02-stroke-sharp IconCloudSavingDone02StrokeSharp"
+      the-icon="CloudSavingDone02 StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -144,29 +131,27 @@ export const IconCloudSavingDone02SolidSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-saving-done-02-solid-sharp IconCloudSavingDone02SolidSharp"
+      the-icon="CloudSavingDone02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCloudSavingDone02: TheIconSelfPack = {
-  name: 'CloudSavingDone02',
-  StrokeRounded: IconCloudSavingDone02StrokeRounded,
-  DuotoneRounded: IconCloudSavingDone02DuotoneRounded,
-  TwotoneRounded: IconCloudSavingDone02TwotoneRounded,
-  SolidRounded: IconCloudSavingDone02SolidRounded,
-  BulkRounded: IconCloudSavingDone02BulkRounded,
-  StrokeSharp: IconCloudSavingDone02StrokeSharp,
-  SolidSharp: IconCloudSavingDone02SolidSharp,
-};
+export const iconPackOfCloudSavingDone02: TheIconSelfPack = [
+  'CloudSavingDone02',
+  IconCloudSavingDone02StrokeRounded,
+  IconCloudSavingDone02DuotoneRounded,
+  IconCloudSavingDone02TwotoneRounded,
+  IconCloudSavingDone02SolidRounded,
+  IconCloudSavingDone02BulkRounded,
+  IconCloudSavingDone02StrokeSharp,
+  IconCloudSavingDone02SolidSharp,
+];

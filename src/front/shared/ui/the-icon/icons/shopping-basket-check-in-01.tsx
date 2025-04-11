@@ -21,25 +21,19 @@ export const IconShoppingBasketCheckIn01StrokeRounded: FC<TheIconProps> = (props
   return (
     <TheIconWrapper
       {...props}
-      name="shopping-basket-check-in-01-stroke-rounded IconShoppingBasketCheckIn01StrokeRounded"
+      the-icon="ShoppingBasketCheckIn01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -49,30 +43,23 @@ export const IconShoppingBasketCheckIn01DuotoneRounded: FC<TheIconProps> = (prop
   return (
     <TheIconWrapper
       {...props}
-      name="shopping-basket-check-in-01-duotone-rounded IconShoppingBasketCheckIn01DuotoneRounded"
+      the-icon="ShoppingBasketCheckIn01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -82,27 +69,19 @@ export const IconShoppingBasketCheckIn01TwotoneRounded: FC<TheIconProps> = (prop
   return (
     <TheIconWrapper
       {...props}
-      name="shopping-basket-check-in-01-twotone-rounded IconShoppingBasketCheckIn01TwotoneRounded"
+      the-icon="ShoppingBasketCheckIn01 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="o7 s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -112,23 +91,19 @@ export const IconShoppingBasketCheckIn01SolidRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="shopping-basket-check-in-01-solid-rounded IconShoppingBasketCheckIn01SolidRounded"
+      the-icon="ShoppingBasketCheckIn01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -138,24 +113,19 @@ export const IconShoppingBasketCheckIn01BulkRounded: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="shopping-basket-check-in-01-bulk-rounded IconShoppingBasketCheckIn01BulkRounded"
+      the-icon="ShoppingBasketCheckIn01 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -165,22 +135,19 @@ export const IconShoppingBasketCheckIn01StrokeSharp: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="shopping-basket-check-in-01-stroke-sharp IconShoppingBasketCheckIn01StrokeSharp"
+      the-icon="ShoppingBasketCheckIn01 StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d10}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -190,31 +157,27 @@ export const IconShoppingBasketCheckIn01SolidSharp: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="shopping-basket-check-in-01-solid-sharp IconShoppingBasketCheckIn01SolidSharp"
+      the-icon="ShoppingBasketCheckIn01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfShoppingBasketCheckIn01: TheIconSelfPack = {
-  name: 'ShoppingBasketCheckIn01',
-  StrokeRounded: IconShoppingBasketCheckIn01StrokeRounded,
-  DuotoneRounded: IconShoppingBasketCheckIn01DuotoneRounded,
-  TwotoneRounded: IconShoppingBasketCheckIn01TwotoneRounded,
-  SolidRounded: IconShoppingBasketCheckIn01SolidRounded,
-  BulkRounded: IconShoppingBasketCheckIn01BulkRounded,
-  StrokeSharp: IconShoppingBasketCheckIn01StrokeSharp,
-  SolidSharp: IconShoppingBasketCheckIn01SolidSharp,
-};
+export const iconPackOfShoppingBasketCheckIn01: TheIconSelfPack = [
+  'ShoppingBasketCheckIn01',
+  IconShoppingBasketCheckIn01StrokeRounded,
+  IconShoppingBasketCheckIn01DuotoneRounded,
+  IconShoppingBasketCheckIn01TwotoneRounded,
+  IconShoppingBasketCheckIn01SolidRounded,
+  IconShoppingBasketCheckIn01BulkRounded,
+  IconShoppingBasketCheckIn01StrokeSharp,
+  IconShoppingBasketCheckIn01SolidSharp,
+];

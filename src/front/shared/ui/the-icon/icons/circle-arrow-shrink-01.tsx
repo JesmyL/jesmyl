@@ -16,20 +16,17 @@ export const IconCircleArrowShrink01StrokeRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="circle-arrow-shrink-01-stroke-rounded IconCircleArrowShrink01StrokeRounded"
+      the-icon="CircleArrowShrink01 StrokeRounded"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -39,26 +36,23 @@ export const IconCircleArrowShrink01DuotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="circle-arrow-shrink-01-duotone-rounded IconCircleArrowShrink01DuotoneRounded"
+      the-icon="CircleArrowShrink01 DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="f o7"
+      />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -68,21 +62,17 @@ export const IconCircleArrowShrink01TwotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="circle-arrow-shrink-01-twotone-rounded IconCircleArrowShrink01TwotoneRounded"
+      the-icon="CircleArrowShrink01 TwotoneRounded"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -92,13 +82,11 @@ export const IconCircleArrowShrink01SolidRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="circle-arrow-shrink-01-solid-rounded IconCircleArrowShrink01SolidRounded"
+      the-icon="CircleArrowShrink01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -108,20 +96,19 @@ export const IconCircleArrowShrink01BulkRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="circle-arrow-shrink-01-bulk-rounded IconCircleArrowShrink01BulkRounded"
+      the-icon="CircleArrowShrink01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -131,20 +118,17 @@ export const IconCircleArrowShrink01StrokeSharp: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="circle-arrow-shrink-01-stroke-sharp IconCircleArrowShrink01StrokeSharp"
+      the-icon="CircleArrowShrink01 StrokeSharp"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj ss sw"
+      />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -154,25 +138,23 @@ export const IconCircleArrowShrink01SolidSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="circle-arrow-shrink-01-solid-sharp IconCircleArrowShrink01SolidSharp"
+      the-icon="CircleArrowShrink01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCircleArrowShrink01: TheIconSelfPack = {
-  name: 'CircleArrowShrink01',
-  StrokeRounded: IconCircleArrowShrink01StrokeRounded,
-  DuotoneRounded: IconCircleArrowShrink01DuotoneRounded,
-  TwotoneRounded: IconCircleArrowShrink01TwotoneRounded,
-  SolidRounded: IconCircleArrowShrink01SolidRounded,
-  BulkRounded: IconCircleArrowShrink01BulkRounded,
-  StrokeSharp: IconCircleArrowShrink01StrokeSharp,
-  SolidSharp: IconCircleArrowShrink01SolidSharp,
-};
+export const iconPackOfCircleArrowShrink01: TheIconSelfPack = [
+  'CircleArrowShrink01',
+  IconCircleArrowShrink01StrokeRounded,
+  IconCircleArrowShrink01DuotoneRounded,
+  IconCircleArrowShrink01TwotoneRounded,
+  IconCircleArrowShrink01SolidRounded,
+  IconCircleArrowShrink01BulkRounded,
+  IconCircleArrowShrink01StrokeSharp,
+  IconCircleArrowShrink01SolidSharp,
+];

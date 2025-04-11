@@ -18,17 +18,15 @@ export const IconChangeScreenModeStrokeRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="change-screen-mode-stroke-rounded IconChangeScreenModeStrokeRounded"
+      the-icon="ChangeScreenMode StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -38,22 +36,19 @@ export const IconChangeScreenModeDuotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="change-screen-mode-duotone-rounded IconChangeScreenModeDuotoneRounded"
+      the-icon="ChangeScreenMode DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -63,18 +58,15 @@ export const IconChangeScreenModeTwotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="change-screen-mode-twotone-rounded IconChangeScreenModeTwotoneRounded"
+      the-icon="ChangeScreenMode TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="o7 s sw"
       />
     </TheIconWrapper>
   );
@@ -84,17 +76,15 @@ export const IconChangeScreenModeSolidRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="change-screen-mode-solid-rounded IconChangeScreenModeSolidRounded"
+      the-icon="ChangeScreenMode SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -104,16 +94,15 @@ export const IconChangeScreenModeBulkRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="change-screen-mode-bulk-rounded IconChangeScreenModeBulkRounded"
+      the-icon="ChangeScreenMode BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -123,20 +112,15 @@ export const IconChangeScreenModeStrokeSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="change-screen-mode-stroke-sharp IconChangeScreenModeStrokeSharp"
+      the-icon="ChangeScreenMode StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -146,29 +130,27 @@ export const IconChangeScreenModeSolidSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="change-screen-mode-solid-sharp IconChangeScreenModeSolidSharp"
+      the-icon="ChangeScreenMode SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfChangeScreenMode: TheIconSelfPack = {
-  name: 'ChangeScreenMode',
-  StrokeRounded: IconChangeScreenModeStrokeRounded,
-  DuotoneRounded: IconChangeScreenModeDuotoneRounded,
-  TwotoneRounded: IconChangeScreenModeTwotoneRounded,
-  SolidRounded: IconChangeScreenModeSolidRounded,
-  BulkRounded: IconChangeScreenModeBulkRounded,
-  StrokeSharp: IconChangeScreenModeStrokeSharp,
-  SolidSharp: IconChangeScreenModeSolidSharp,
-};
+export const iconPackOfChangeScreenMode: TheIconSelfPack = [
+  'ChangeScreenMode',
+  IconChangeScreenModeStrokeRounded,
+  IconChangeScreenModeDuotoneRounded,
+  IconChangeScreenModeTwotoneRounded,
+  IconChangeScreenModeSolidRounded,
+  IconChangeScreenModeBulkRounded,
+  IconChangeScreenModeStrokeSharp,
+  IconChangeScreenModeSolidSharp,
+];

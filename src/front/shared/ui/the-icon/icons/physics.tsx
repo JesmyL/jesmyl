@@ -14,20 +14,18 @@ export const IconPhysicsStrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="physics-stroke-rounded IconPhysicsStrokeRounded"
+      the-icon="Physics StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="2"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -36,27 +34,22 @@ export const IconPhysicsDuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="physics-duotone-rounded IconPhysicsDuotoneRounded"
+      the-icon="Physics DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="2"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -65,21 +58,18 @@ export const IconPhysicsTwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="physics-twotone-rounded IconPhysicsTwotoneRounded"
+      the-icon="Physics TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="2"
+        i-c="o7 s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -88,19 +78,18 @@ export const IconPhysicsSolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="physics-solid-rounded IconPhysicsSolidRounded"
+      the-icon="Physics SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="12"
+        r="2"
+        i-c="f"
+      />
     </TheIconWrapper>
   );
 };
@@ -109,20 +98,18 @@ export const IconPhysicsBulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="physics-bulk-rounded IconPhysicsBulkRounded"
+      the-icon="Physics BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="12"
+        r="2"
+        i-c="f"
+      />
     </TheIconWrapper>
   );
 };
@@ -131,21 +118,18 @@ export const IconPhysicsStrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="physics-stroke-sharp IconPhysicsStrokeSharp"
+      the-icon="Physics StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="2"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -154,29 +138,27 @@ export const IconPhysicsSolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="physics-solid-sharp IconPhysicsSolidSharp"
+      the-icon="Physics SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPhysics: TheIconSelfPack = {
-  name: 'Physics',
-  StrokeRounded: IconPhysicsStrokeRounded,
-  DuotoneRounded: IconPhysicsDuotoneRounded,
-  TwotoneRounded: IconPhysicsTwotoneRounded,
-  SolidRounded: IconPhysicsSolidRounded,
-  BulkRounded: IconPhysicsBulkRounded,
-  StrokeSharp: IconPhysicsStrokeSharp,
-  SolidSharp: IconPhysicsSolidSharp,
-};
+export const iconPackOfPhysics: TheIconSelfPack = [
+  'Physics',
+  IconPhysicsStrokeRounded,
+  IconPhysicsDuotoneRounded,
+  IconPhysicsTwotoneRounded,
+  IconPhysicsSolidRounded,
+  IconPhysicsBulkRounded,
+  IconPhysicsStrokeSharp,
+  IconPhysicsSolidSharp,
+];

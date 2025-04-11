@@ -16,13 +16,11 @@ export const IconSnailStrokeRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="snail-stroke-rounded IconSnailStrokeRounded"
+      the-icon="Snail StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -32,18 +30,15 @@ export const IconSnailDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="snail-duotone-rounded IconSnailDuotoneRounded"
+      the-icon="Snail DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -53,20 +48,15 @@ export const IconSnailTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="snail-twotone-rounded IconSnailTwotoneRounded"
+      the-icon="Snail TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -76,11 +66,11 @@ export const IconSnailSolidRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="snail-solid-rounded IconSnailSolidRounded"
+      the-icon="Snail SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -90,16 +80,15 @@ export const IconSnailBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="snail-bulk-rounded IconSnailBulkRounded"
+      the-icon="Snail BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -109,12 +98,11 @@ export const IconSnailStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="snail-stroke-sharp IconSnailStrokeSharp"
+      the-icon="Snail StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -124,23 +112,23 @@ export const IconSnailSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="snail-solid-sharp IconSnailSolidSharp"
+      the-icon="Snail SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSnail: TheIconSelfPack = {
-  name: 'Snail',
-  StrokeRounded: IconSnailStrokeRounded,
-  DuotoneRounded: IconSnailDuotoneRounded,
-  TwotoneRounded: IconSnailTwotoneRounded,
-  SolidRounded: IconSnailSolidRounded,
-  BulkRounded: IconSnailBulkRounded,
-  StrokeSharp: IconSnailStrokeSharp,
-  SolidSharp: IconSnailSolidSharp,
-};
+export const iconPackOfSnail: TheIconSelfPack = [
+  'Snail',
+  IconSnailStrokeRounded,
+  IconSnailDuotoneRounded,
+  IconSnailTwotoneRounded,
+  IconSnailSolidRounded,
+  IconSnailBulkRounded,
+  IconSnailStrokeSharp,
+  IconSnailSolidSharp,
+];

@@ -15,16 +15,11 @@ export const IconSingleFireStrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="single-fire-stroke-rounded IconSingleFireStrokeRounded"
+      the-icon="SingleFire StrokeRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="c fr s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -34,23 +29,15 @@ export const IconSingleFireDuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="single-fire-duotone-rounded IconSingleFireDuotoneRounded"
+      the-icon="SingleFire DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="c fr s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -60,24 +47,15 @@ export const IconSingleFireTwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="single-fire-twotone-rounded IconSingleFireTwotoneRounded"
+      the-icon="SingleFire TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="c fr o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -87,11 +65,11 @@ export const IconSingleFireSolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="single-fire-solid-rounded IconSingleFireSolidRounded"
+      the-icon="SingleFire SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -101,16 +79,15 @@ export const IconSingleFireBulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="single-fire-bulk-rounded IconSingleFireBulkRounded"
+      the-icon="SingleFire BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -120,12 +97,11 @@ export const IconSingleFireStrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="single-fire-stroke-sharp IconSingleFireStrokeSharp"
+      the-icon="SingleFire StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -135,25 +111,23 @@ export const IconSingleFireSolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="single-fire-solid-sharp IconSingleFireSolidSharp"
+      the-icon="SingleFire SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSingleFire: TheIconSelfPack = {
-  name: 'SingleFire',
-  StrokeRounded: IconSingleFireStrokeRounded,
-  DuotoneRounded: IconSingleFireDuotoneRounded,
-  TwotoneRounded: IconSingleFireTwotoneRounded,
-  SolidRounded: IconSingleFireSolidRounded,
-  BulkRounded: IconSingleFireBulkRounded,
-  StrokeSharp: IconSingleFireStrokeSharp,
-  SolidSharp: IconSingleFireSolidSharp,
-};
+export const iconPackOfSingleFire: TheIconSelfPack = [
+  'SingleFire',
+  IconSingleFireStrokeRounded,
+  IconSingleFireDuotoneRounded,
+  IconSingleFireTwotoneRounded,
+  IconSingleFireSolidRounded,
+  IconSingleFireBulkRounded,
+  IconSingleFireStrokeSharp,
+  IconSingleFireSolidSharp,
+];

@@ -20,30 +20,28 @@ export const IconShare02StrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="share-02-stroke-rounded IconShare02StrokeRounded"
+      the-icon="Share02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <circle 
-        cx="5" 
-        cy="19" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="5"
+        cy="19"
+        r="3"
+        i-c="s sw"
+      />
       <circle 
-        cx="19" 
-        cy="19" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="19"
+        cy="19"
+        r="3"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -52,35 +50,32 @@ export const IconShare02DuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="share-02-duotone-rounded IconShare02DuotoneRounded"
+      the-icon="Share02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <circle 
-        cx="5" 
-        cy="19" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="5"
+        cy="19"
+        r="3"
+        i-c="s sw"
+      />
       <circle 
-        cx="19" 
-        cy="19" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="19"
+        cy="19"
+        r="3"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -89,31 +84,28 @@ export const IconShare02TwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="share-02-twotone-rounded IconShare02TwotoneRounded"
+      the-icon="Share02 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <circle 
-        cx="5" 
-        cy="19" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="5"
+        cy="19"
+        r="3"
+        i-c="s sw"
+      />
       <circle 
-        cx="19" 
-        cy="19" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="19"
+        cy="19"
+        r="3"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -122,25 +114,23 @@ export const IconShare02SolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="share-02-solid-rounded IconShare02SolidRounded"
+      the-icon="Share02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -150,26 +140,23 @@ export const IconShare02BulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="share-02-bulk-rounded IconShare02BulkRounded"
+      the-icon="Share02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -179,34 +166,28 @@ export const IconShare02StrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="share-02-stroke-sharp IconShare02StrokeSharp"
+      the-icon="Share02 StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <circle 
-        cx="5" 
-        cy="19" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="5"
+        cy="19"
+        r="3"
+        i-c="s sj sw"
+      />
       <circle 
-        cx="19" 
-        cy="19" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="19"
+        cy="19"
+        r="3"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -215,37 +196,35 @@ export const IconShare02SolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="share-02-solid-sharp IconShare02SolidSharp"
+      the-icon="Share02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfShare02: TheIconSelfPack = {
-  name: 'Share02',
-  StrokeRounded: IconShare02StrokeRounded,
-  DuotoneRounded: IconShare02DuotoneRounded,
-  TwotoneRounded: IconShare02TwotoneRounded,
-  SolidRounded: IconShare02SolidRounded,
-  BulkRounded: IconShare02BulkRounded,
-  StrokeSharp: IconShare02StrokeSharp,
-  SolidSharp: IconShare02SolidSharp,
-};
+export const iconPackOfShare02: TheIconSelfPack = [
+  'Share02',
+  IconShare02StrokeRounded,
+  IconShare02DuotoneRounded,
+  IconShare02TwotoneRounded,
+  IconShare02SolidRounded,
+  IconShare02BulkRounded,
+  IconShare02StrokeSharp,
+  IconShare02SolidSharp,
+];

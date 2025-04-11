@@ -15,13 +15,11 @@ export const IconPolygonStrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="polygon-stroke-rounded IconPolygonStrokeRounded"
+      the-icon="Polygon StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -31,18 +29,15 @@ export const IconPolygonDuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="polygon-duotone-rounded IconPolygonDuotoneRounded"
+      the-icon="Polygon DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -52,20 +47,15 @@ export const IconPolygonTwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="polygon-twotone-rounded IconPolygonTwotoneRounded"
+      the-icon="Polygon TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -75,11 +65,11 @@ export const IconPolygonSolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="polygon-solid-rounded IconPolygonSolidRounded"
+      the-icon="Polygon SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -89,16 +79,15 @@ export const IconPolygonBulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="polygon-bulk-rounded IconPolygonBulkRounded"
+      the-icon="Polygon BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -108,12 +97,11 @@ export const IconPolygonStrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="polygon-stroke-sharp IconPolygonStrokeSharp"
+      the-icon="Polygon StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -123,23 +111,23 @@ export const IconPolygonSolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="polygon-solid-sharp IconPolygonSolidSharp"
+      the-icon="Polygon SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPolygon: TheIconSelfPack = {
-  name: 'Polygon',
-  StrokeRounded: IconPolygonStrokeRounded,
-  DuotoneRounded: IconPolygonDuotoneRounded,
-  TwotoneRounded: IconPolygonTwotoneRounded,
-  SolidRounded: IconPolygonSolidRounded,
-  BulkRounded: IconPolygonBulkRounded,
-  StrokeSharp: IconPolygonStrokeSharp,
-  SolidSharp: IconPolygonSolidSharp,
-};
+export const iconPackOfPolygon: TheIconSelfPack = [
+  'Polygon',
+  IconPolygonStrokeRounded,
+  IconPolygonDuotoneRounded,
+  IconPolygonTwotoneRounded,
+  IconPolygonSolidRounded,
+  IconPolygonBulkRounded,
+  IconPolygonStrokeSharp,
+  IconPolygonSolidSharp,
+];

@@ -17,12 +17,11 @@ export const IconPentagon01StrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="pentagon-01-stroke-rounded IconPentagon01StrokeRounded"
+      the-icon="Pentagon01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -32,17 +31,15 @@ export const IconPentagon01DuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="pentagon-01-duotone-rounded IconPentagon01DuotoneRounded"
+      the-icon="Pentagon01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -52,19 +49,15 @@ export const IconPentagon01TwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="pentagon-01-twotone-rounded IconPentagon01TwotoneRounded"
+      the-icon="Pentagon01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -74,11 +67,11 @@ export const IconPentagon01SolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="pentagon-01-solid-rounded IconPentagon01SolidRounded"
+      the-icon="Pentagon01 SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -88,16 +81,15 @@ export const IconPentagon01BulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="pentagon-01-bulk-rounded IconPentagon01BulkRounded"
+      the-icon="Pentagon01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -107,13 +99,11 @@ export const IconPentagon01StrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="pentagon-01-stroke-sharp IconPentagon01StrokeSharp"
+      the-icon="Pentagon01 StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -123,23 +113,23 @@ export const IconPentagon01SolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="pentagon-01-solid-sharp IconPentagon01SolidSharp"
+      the-icon="Pentagon01 SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPentagon01: TheIconSelfPack = {
-  name: 'Pentagon01',
-  StrokeRounded: IconPentagon01StrokeRounded,
-  DuotoneRounded: IconPentagon01DuotoneRounded,
-  TwotoneRounded: IconPentagon01TwotoneRounded,
-  SolidRounded: IconPentagon01SolidRounded,
-  BulkRounded: IconPentagon01BulkRounded,
-  StrokeSharp: IconPentagon01StrokeSharp,
-  SolidSharp: IconPentagon01SolidSharp,
-};
+export const iconPackOfPentagon01: TheIconSelfPack = [
+  'Pentagon01',
+  IconPentagon01StrokeRounded,
+  IconPentagon01DuotoneRounded,
+  IconPentagon01TwotoneRounded,
+  IconPentagon01SolidRounded,
+  IconPentagon01BulkRounded,
+  IconPentagon01StrokeSharp,
+  IconPentagon01SolidSharp,
+];

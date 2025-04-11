@@ -21,33 +21,26 @@ export const IconCricketBatStrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="cricket-bat-stroke-rounded IconCricketBatStrokeRounded"
+      the-icon="CricketBat StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sw"
       />
       <circle 
-        cx="2.5" 
-        cy="2.5" 
-        r="2.5" 
-        transform="matrix(1 0 0 1 21 16)" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="2.5"
+        cy="2.5"
+        r="2.5"
+        i-c="s sj sw t4"
+      />
     </TheIconWrapper>
   );
 };
@@ -56,45 +49,36 @@ export const IconCricketBatDuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="cricket-bat-duotone-rounded IconCricketBatDuotoneRounded"
+      the-icon="CricketBat DuotoneRounded"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="2.5" 
-        cy="2.5" 
-        r="2.5" 
-        transform="matrix(1 0 0 1 21 16)" 
-        fill="var(--icon-fill)"></circle>
+        cx="2.5"
+        cy="2.5"
+        r="2.5"
+        i-c="f o7 t4"
+      />
       <circle 
-        cx="2.5" 
-        cy="2.5" 
-        r="2.5" 
-        transform="matrix(1 0 0 1 21 16)" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="2.5"
+        cy="2.5"
+        r="2.5"
+        i-c="s sj sw t4"
+      />
     </TheIconWrapper>
   );
 };
@@ -103,35 +87,26 @@ export const IconCricketBatTwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="cricket-bat-twotone-rounded IconCricketBatTwotoneRounded"
+      the-icon="CricketBat TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sw"
       />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="2.5" 
-        cy="2.5" 
-        r="2.5" 
-        transform="matrix(1 0 0 1 21 16)" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="2.5"
+        cy="2.5"
+        r="2.5"
+        i-c="o7 s sj sw t4"
+      />
     </TheIconWrapper>
   );
 };
@@ -140,21 +115,19 @@ export const IconCricketBatSolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="cricket-bat-solid-rounded IconCricketBatSolidRounded"
+      the-icon="CricketBat SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -164,22 +137,19 @@ export const IconCricketBatBulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="cricket-bat-bulk-rounded IconCricketBatBulkRounded"
+      the-icon="CricketBat BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -189,34 +159,26 @@ export const IconCricketBatStrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="cricket-bat-stroke-sharp IconCricketBatStrokeSharp"
+      the-icon="CricketBat StrokeSharp"
     >
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sw"
       />
       <circle 
-        cx="2.5" 
-        cy="2.5" 
-        r="2.5" 
-        transform="matrix(1 0 0 1 21 16)" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="2.5"
+        cy="2.5"
+        r="2.5"
+        i-c="s sj sw t4"
+      />
     </TheIconWrapper>
   );
 };
@@ -225,29 +187,27 @@ export const IconCricketBatSolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="cricket-bat-solid-sharp IconCricketBatSolidSharp"
+      the-icon="CricketBat SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCricketBat: TheIconSelfPack = {
-  name: 'CricketBat',
-  StrokeRounded: IconCricketBatStrokeRounded,
-  DuotoneRounded: IconCricketBatDuotoneRounded,
-  TwotoneRounded: IconCricketBatTwotoneRounded,
-  SolidRounded: IconCricketBatSolidRounded,
-  BulkRounded: IconCricketBatBulkRounded,
-  StrokeSharp: IconCricketBatStrokeSharp,
-  SolidSharp: IconCricketBatSolidSharp,
-};
+export const iconPackOfCricketBat: TheIconSelfPack = [
+  'CricketBat',
+  IconCricketBatStrokeRounded,
+  IconCricketBatDuotoneRounded,
+  IconCricketBatTwotoneRounded,
+  IconCricketBatSolidRounded,
+  IconCricketBatBulkRounded,
+  IconCricketBatStrokeSharp,
+  IconCricketBatSolidSharp,
+];

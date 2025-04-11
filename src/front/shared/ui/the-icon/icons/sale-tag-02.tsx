@@ -24,26 +24,19 @@ export const IconSaleTag02StrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="sale-tag-02-stroke-rounded IconSaleTag02StrokeRounded"
+      the-icon="SaleTag02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -53,33 +46,23 @@ export const IconSaleTag02DuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="sale-tag-02-duotone-rounded IconSaleTag02DuotoneRounded"
+      the-icon="SaleTag02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -89,26 +72,21 @@ export const IconSaleTag02TwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="sale-tag-02-twotone-rounded IconSaleTag02TwotoneRounded"
+      the-icon="SaleTag02 TwotoneRounded"
     >
       <circle 
-        cx="1.5" 
-        cy="1.5" 
-        r="1.5" 
-        transform="matrix(1 0 0 1 16 8)" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
-      <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        cx="1.5"
+        cy="1.5"
+        r="1.5"
+        i-c="s sj sr sw t1"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="s sw"
+      />
+      <path 
+        d={d.d8}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -118,13 +96,11 @@ export const IconSaleTag02SolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="sale-tag-02-solid-rounded IconSaleTag02SolidRounded"
+      the-icon="SaleTag02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -134,20 +110,15 @@ export const IconSaleTag02BulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="sale-tag-02-bulk-rounded IconSaleTag02BulkRounded"
+      the-icon="SaleTag02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -157,25 +128,19 @@ export const IconSaleTag02StrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="sale-tag-02-stroke-sharp IconSaleTag02StrokeSharp"
+      the-icon="SaleTag02 StrokeSharp"
     >
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d12}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d13}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d14} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d14}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -185,25 +150,23 @@ export const IconSaleTag02SolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="sale-tag-02-solid-sharp IconSaleTag02SolidSharp"
+      the-icon="SaleTag02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        d={d.d15}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSaleTag02: TheIconSelfPack = {
-  name: 'SaleTag02',
-  StrokeRounded: IconSaleTag02StrokeRounded,
-  DuotoneRounded: IconSaleTag02DuotoneRounded,
-  TwotoneRounded: IconSaleTag02TwotoneRounded,
-  SolidRounded: IconSaleTag02SolidRounded,
-  BulkRounded: IconSaleTag02BulkRounded,
-  StrokeSharp: IconSaleTag02StrokeSharp,
-  SolidSharp: IconSaleTag02SolidSharp,
-};
+export const iconPackOfSaleTag02: TheIconSelfPack = [
+  'SaleTag02',
+  IconSaleTag02StrokeRounded,
+  IconSaleTag02DuotoneRounded,
+  IconSaleTag02TwotoneRounded,
+  IconSaleTag02SolidRounded,
+  IconSaleTag02BulkRounded,
+  IconSaleTag02StrokeSharp,
+  IconSaleTag02SolidSharp,
+];

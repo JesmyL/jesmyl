@@ -15,13 +15,11 @@ export const IconTumblrStrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="tumblr-stroke-rounded IconTumblrStrokeRounded"
+      the-icon="Tumblr StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -31,18 +29,15 @@ export const IconTumblrDuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="tumblr-duotone-rounded IconTumblrDuotoneRounded"
+      the-icon="Tumblr DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -52,21 +47,15 @@ export const IconTumblrTwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="tumblr-twotone-rounded IconTumblrTwotoneRounded"
+      the-icon="Tumblr TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -76,11 +65,11 @@ export const IconTumblrSolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="tumblr-solid-rounded IconTumblrSolidRounded"
+      the-icon="Tumblr SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -90,16 +79,15 @@ export const IconTumblrBulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="tumblr-bulk-rounded IconTumblrBulkRounded"
+      the-icon="Tumblr BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -109,12 +97,11 @@ export const IconTumblrStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="tumblr-stroke-sharp IconTumblrStrokeSharp"
+      the-icon="Tumblr StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -124,23 +111,23 @@ export const IconTumblrSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="tumblr-solid-sharp IconTumblrSolidSharp"
+      the-icon="Tumblr SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTumblr: TheIconSelfPack = {
-  name: 'Tumblr',
-  StrokeRounded: IconTumblrStrokeRounded,
-  DuotoneRounded: IconTumblrDuotoneRounded,
-  TwotoneRounded: IconTumblrTwotoneRounded,
-  SolidRounded: IconTumblrSolidRounded,
-  BulkRounded: IconTumblrBulkRounded,
-  StrokeSharp: IconTumblrStrokeSharp,
-  SolidSharp: IconTumblrSolidSharp,
-};
+export const iconPackOfTumblr: TheIconSelfPack = [
+  'Tumblr',
+  IconTumblrStrokeRounded,
+  IconTumblrDuotoneRounded,
+  IconTumblrTwotoneRounded,
+  IconTumblrSolidRounded,
+  IconTumblrBulkRounded,
+  IconTumblrStrokeSharp,
+  IconTumblrSolidSharp,
+];

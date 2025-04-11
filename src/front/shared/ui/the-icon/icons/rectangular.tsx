@@ -15,13 +15,11 @@ export const IconRectangularStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="rectangular-stroke-rounded IconRectangularStrokeRounded"
+      the-icon="Rectangular StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -31,18 +29,15 @@ export const IconRectangularDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="rectangular-duotone-rounded IconRectangularDuotoneRounded"
+      the-icon="Rectangular DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -52,21 +47,15 @@ export const IconRectangularTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="rectangular-twotone-rounded IconRectangularTwotoneRounded"
+      the-icon="Rectangular TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -76,13 +65,11 @@ export const IconRectangularSolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="rectangular-solid-rounded IconRectangularSolidRounded"
+      the-icon="Rectangular SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -92,18 +79,15 @@ export const IconRectangularBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="rectangular-bulk-rounded IconRectangularBulkRounded"
+      the-icon="Rectangular BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -113,13 +97,11 @@ export const IconRectangularStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="rectangular-stroke-sharp IconRectangularStrokeSharp"
+      the-icon="Rectangular StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -129,23 +111,23 @@ export const IconRectangularSolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="rectangular-solid-sharp IconRectangularSolidSharp"
+      the-icon="Rectangular SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfRectangular: TheIconSelfPack = {
-  name: 'Rectangular',
-  StrokeRounded: IconRectangularStrokeRounded,
-  DuotoneRounded: IconRectangularDuotoneRounded,
-  TwotoneRounded: IconRectangularTwotoneRounded,
-  SolidRounded: IconRectangularSolidRounded,
-  BulkRounded: IconRectangularBulkRounded,
-  StrokeSharp: IconRectangularStrokeSharp,
-  SolidSharp: IconRectangularSolidSharp,
-};
+export const iconPackOfRectangular: TheIconSelfPack = [
+  'Rectangular',
+  IconRectangularStrokeRounded,
+  IconRectangularDuotoneRounded,
+  IconRectangularTwotoneRounded,
+  IconRectangularSolidRounded,
+  IconRectangularBulkRounded,
+  IconRectangularStrokeSharp,
+  IconRectangularSolidSharp,
+];

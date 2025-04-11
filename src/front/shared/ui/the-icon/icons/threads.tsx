@@ -17,13 +17,11 @@ export const IconThreadsStrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="threads-stroke-rounded IconThreadsStrokeRounded"
+      the-icon="Threads StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -33,18 +31,15 @@ export const IconThreadsDuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="threads-duotone-rounded IconThreadsDuotoneRounded"
+      the-icon="Threads DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,20 +49,15 @@ export const IconThreadsTwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="threads-twotone-rounded IconThreadsTwotoneRounded"
+      the-icon="Threads TwotoneRounded"
     >
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -77,13 +67,11 @@ export const IconThreadsSolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="threads-solid-rounded IconThreadsSolidRounded"
+      the-icon="Threads SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -93,18 +81,15 @@ export const IconThreadsBulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="threads-bulk-rounded IconThreadsBulkRounded"
+      the-icon="Threads BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -114,12 +99,11 @@ export const IconThreadsStrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="threads-stroke-sharp IconThreadsStrokeSharp"
+      the-icon="Threads StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -129,25 +113,23 @@ export const IconThreadsSolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="threads-solid-sharp IconThreadsSolidSharp"
+      the-icon="Threads SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfThreads: TheIconSelfPack = {
-  name: 'Threads',
-  StrokeRounded: IconThreadsStrokeRounded,
-  DuotoneRounded: IconThreadsDuotoneRounded,
-  TwotoneRounded: IconThreadsTwotoneRounded,
-  SolidRounded: IconThreadsSolidRounded,
-  BulkRounded: IconThreadsBulkRounded,
-  StrokeSharp: IconThreadsStrokeSharp,
-  SolidSharp: IconThreadsSolidSharp,
-};
+export const iconPackOfThreads: TheIconSelfPack = [
+  'Threads',
+  IconThreadsStrokeRounded,
+  IconThreadsDuotoneRounded,
+  IconThreadsTwotoneRounded,
+  IconThreadsSolidRounded,
+  IconThreadsBulkRounded,
+  IconThreadsStrokeSharp,
+  IconThreadsSolidSharp,
+];

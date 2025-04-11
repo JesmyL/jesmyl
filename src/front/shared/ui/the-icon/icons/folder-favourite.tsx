@@ -18,19 +18,15 @@ export const IconFolderFavouriteStrokeRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="folder-favourite-stroke-rounded IconFolderFavouriteStrokeRounded"
+      the-icon="FolderFavourite StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -40,24 +36,19 @@ export const IconFolderFavouriteDuotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="folder-favourite-duotone-rounded IconFolderFavouriteDuotoneRounded"
+      the-icon="FolderFavourite DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -67,20 +58,15 @@ export const IconFolderFavouriteTwotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="folder-favourite-twotone-rounded IconFolderFavouriteTwotoneRounded"
+      the-icon="FolderFavourite TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -90,15 +76,15 @@ export const IconFolderFavouriteSolidRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="folder-favourite-solid-rounded IconFolderFavouriteSolidRounded"
+      the-icon="FolderFavourite SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -108,16 +94,15 @@ export const IconFolderFavouriteBulkRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="folder-favourite-bulk-rounded IconFolderFavouriteBulkRounded"
+      the-icon="FolderFavourite BulkRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -127,18 +112,15 @@ export const IconFolderFavouriteStrokeSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="folder-favourite-stroke-sharp IconFolderFavouriteStrokeSharp"
+      the-icon="FolderFavourite StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d6}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -148,27 +130,27 @@ export const IconFolderFavouriteSolidSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="folder-favourite-solid-sharp IconFolderFavouriteSolidSharp"
+      the-icon="FolderFavourite SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfFolderFavourite: TheIconSelfPack = {
-  name: 'FolderFavourite',
-  StrokeRounded: IconFolderFavouriteStrokeRounded,
-  DuotoneRounded: IconFolderFavouriteDuotoneRounded,
-  TwotoneRounded: IconFolderFavouriteTwotoneRounded,
-  SolidRounded: IconFolderFavouriteSolidRounded,
-  BulkRounded: IconFolderFavouriteBulkRounded,
-  StrokeSharp: IconFolderFavouriteStrokeSharp,
-  SolidSharp: IconFolderFavouriteSolidSharp,
-};
+export const iconPackOfFolderFavourite: TheIconSelfPack = [
+  'FolderFavourite',
+  IconFolderFavouriteStrokeRounded,
+  IconFolderFavouriteDuotoneRounded,
+  IconFolderFavouriteTwotoneRounded,
+  IconFolderFavouriteSolidRounded,
+  IconFolderFavouriteBulkRounded,
+  IconFolderFavouriteStrokeSharp,
+  IconFolderFavouriteSolidSharp,
+];

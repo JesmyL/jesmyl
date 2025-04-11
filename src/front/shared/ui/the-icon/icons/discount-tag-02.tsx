@@ -21,35 +21,25 @@ export const IconDiscountTag02StrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="discount-tag-02-stroke-rounded IconDiscountTag02StrokeRounded"
+      the-icon="DiscountTag02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="1.5" 
-        cy="1.5" 
-        r="1.5" 
-        transform="matrix(1 0 0 1 16 8)" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="1.5"
+        cy="1.5"
+        r="1.5"
+        i-c="s sj sr sw t1"
+      />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -59,42 +49,29 @@ export const IconDiscountTag02DuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="discount-tag-02-duotone-rounded IconDiscountTag02DuotoneRounded"
+      the-icon="DiscountTag02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="1.5" 
-        cy="1.5" 
-        r="1.5" 
-        transform="matrix(1 0 0 1 16 8)" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="1.5"
+        cy="1.5"
+        r="1.5"
+        i-c="s sj sr sw t1"
+      />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -104,37 +81,25 @@ export const IconDiscountTag02TwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="discount-tag-02-twotone-rounded IconDiscountTag02TwotoneRounded"
+      the-icon="DiscountTag02 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
       <circle 
-        cx="1.5" 
-        cy="1.5" 
-        r="1.5" 
-        transform="matrix(1 0 0 1 16 8)" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="1.5"
+        cy="1.5"
+        r="1.5"
+        i-c="s sj sr sw t1"
+      />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -144,13 +109,11 @@ export const IconDiscountTag02SolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="discount-tag-02-solid-rounded IconDiscountTag02SolidRounded"
+      the-icon="DiscountTag02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -160,26 +123,19 @@ export const IconDiscountTag02BulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="discount-tag-02-bulk-rounded IconDiscountTag02BulkRounded"
+      the-icon="DiscountTag02 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr o7"
       />
     </TheIconWrapper>
   );
@@ -189,35 +145,25 @@ export const IconDiscountTag02StrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="discount-tag-02-stroke-sharp IconDiscountTag02StrokeSharp"
+      the-icon="DiscountTag02 StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj ss sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj sw"
       />
       <circle 
-        cx="1.5" 
-        cy="1.5" 
-        r="1.5" 
-        transform="matrix(1 0 0 1 16 8)" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="1.5"
+        cy="1.5"
+        r="1.5"
+        i-c="s sj sr sw t1"
+      />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d11}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -227,25 +173,23 @@ export const IconDiscountTag02SolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="discount-tag-02-solid-sharp IconDiscountTag02SolidSharp"
+      the-icon="DiscountTag02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfDiscountTag02: TheIconSelfPack = {
-  name: 'DiscountTag02',
-  StrokeRounded: IconDiscountTag02StrokeRounded,
-  DuotoneRounded: IconDiscountTag02DuotoneRounded,
-  TwotoneRounded: IconDiscountTag02TwotoneRounded,
-  SolidRounded: IconDiscountTag02SolidRounded,
-  BulkRounded: IconDiscountTag02BulkRounded,
-  StrokeSharp: IconDiscountTag02StrokeSharp,
-  SolidSharp: IconDiscountTag02SolidSharp,
-};
+export const iconPackOfDiscountTag02: TheIconSelfPack = [
+  'DiscountTag02',
+  IconDiscountTag02StrokeRounded,
+  IconDiscountTag02DuotoneRounded,
+  IconDiscountTag02TwotoneRounded,
+  IconDiscountTag02SolidRounded,
+  IconDiscountTag02BulkRounded,
+  IconDiscountTag02StrokeSharp,
+  IconDiscountTag02SolidSharp,
+];

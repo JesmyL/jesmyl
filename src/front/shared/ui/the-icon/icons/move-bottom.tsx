@@ -15,22 +15,18 @@ export const IconMoveBottomStrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="move-bottom-stroke-rounded IconMoveBottomStrokeRounded"
+      the-icon="MoveBottom StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="3" 
-        cy="3" 
-        r="3" 
-        transform="matrix(4.37114e08 1 1 4.37114e08 9 2)" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="3"
+        cy="3"
+        r="3"
+        i-c="s sw t"
+      />
     </TheIconWrapper>
   );
 };
@@ -39,29 +35,24 @@ export const IconMoveBottomDuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="move-bottom-duotone-rounded IconMoveBottomDuotoneRounded"
+      the-icon="MoveBottom DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="3" 
-        cy="3" 
-        r="3" 
-        transform="matrix(4.37114e08 1 1 4.37114e08 15 8)" 
-        fill="var(--icon-fill)"></circle>
+        cx="3"
+        cy="3"
+        r="3"
+        i-c="f o7 t8"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="3" 
-        cy="3" 
-        r="3" 
-        transform="matrix(4.37114e08 1 1 4.37114e08 9 2)" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="3"
+        cy="3"
+        r="3"
+        i-c="s sw t"
+      />
     </TheIconWrapper>
   );
 };
@@ -70,23 +61,18 @@ export const IconMoveBottomTwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="move-bottom-twotone-rounded IconMoveBottomTwotoneRounded"
+      the-icon="MoveBottom TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="3" 
-        cy="3" 
-        r="3" 
-        transform="matrix(4.37114e08 1 1 4.37114e08 9 2)" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="3"
+        cy="3"
+        r="3"
+        i-c="o7 s sw t"
+      />
     </TheIconWrapper>
   );
 };
@@ -95,15 +81,15 @@ export const IconMoveBottomSolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="move-bottom-solid-rounded IconMoveBottomSolidRounded"
+      the-icon="MoveBottom SolidRounded"
     >
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -113,16 +99,15 @@ export const IconMoveBottomBulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="move-bottom-bulk-rounded IconMoveBottomBulkRounded"
+      the-icon="MoveBottom BulkRounded"
     >
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -132,21 +117,18 @@ export const IconMoveBottomStrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="move-bottom-stroke-sharp IconMoveBottomStrokeSharp"
+      the-icon="MoveBottom StrokeSharp"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d4}
+        i-c="s sw"
       />
       <circle 
-        cx="3" 
-        cy="3" 
-        r="3" 
-        transform="matrix(4.37114e08 1 1 4.37114e08 9 2)" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="3"
+        cy="3"
+        r="3"
+        i-c="s sj sw t"
+      />
     </TheIconWrapper>
   );
 };
@@ -155,29 +137,27 @@ export const IconMoveBottomSolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="move-bottom-solid-sharp IconMoveBottomSolidSharp"
+      the-icon="MoveBottom SolidSharp"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMoveBottom: TheIconSelfPack = {
-  name: 'MoveBottom',
-  StrokeRounded: IconMoveBottomStrokeRounded,
-  DuotoneRounded: IconMoveBottomDuotoneRounded,
-  TwotoneRounded: IconMoveBottomTwotoneRounded,
-  SolidRounded: IconMoveBottomSolidRounded,
-  BulkRounded: IconMoveBottomBulkRounded,
-  StrokeSharp: IconMoveBottomStrokeSharp,
-  SolidSharp: IconMoveBottomSolidSharp,
-};
+export const iconPackOfMoveBottom: TheIconSelfPack = [
+  'MoveBottom',
+  IconMoveBottomStrokeRounded,
+  IconMoveBottomDuotoneRounded,
+  IconMoveBottomTwotoneRounded,
+  IconMoveBottomSolidRounded,
+  IconMoveBottomBulkRounded,
+  IconMoveBottomStrokeSharp,
+  IconMoveBottomSolidSharp,
+];

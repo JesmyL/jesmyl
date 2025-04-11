@@ -22,26 +22,19 @@ export const IconBitcoinTagStrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-tag-stroke-rounded IconBitcoinTagStrokeRounded"
+      the-icon="BitcoinTag StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -51,32 +44,25 @@ export const IconBitcoinTagDuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-tag-duotone-rounded IconBitcoinTagDuotoneRounded"
+      the-icon="BitcoinTag DuotoneRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr o7"
       />
       <circle 
-        cx="1.5" 
-        cy="1.5" 
-        r="1.5" 
-        transform="matrix(1 0 0 1 16 8)" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="1.5"
+        cy="1.5"
+        r="1.5"
+        i-c="s sj sr sw t1"
+      />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -86,27 +72,19 @@ export const IconBitcoinTagTwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-tag-twotone-rounded IconBitcoinTagTwotoneRounded"
+      the-icon="BitcoinTag TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -116,13 +94,11 @@ export const IconBitcoinTagSolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-tag-solid-rounded IconBitcoinTagSolidRounded"
+      the-icon="BitcoinTag SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -132,22 +108,19 @@ export const IconBitcoinTagBulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-tag-bulk-rounded IconBitcoinTagBulkRounded"
+      the-icon="BitcoinTag BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -157,26 +130,19 @@ export const IconBitcoinTagStrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-tag-stroke-sharp IconBitcoinTagStrokeSharp"
+      the-icon="BitcoinTag StrokeSharp"
     >
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d11}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d12}
+        i-c="s ss sw"
       />
     </TheIconWrapper>
   );
@@ -186,25 +152,23 @@ export const IconBitcoinTagSolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="bitcoin-tag-solid-sharp IconBitcoinTagSolidSharp"
+      the-icon="BitcoinTag SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBitcoinTag: TheIconSelfPack = {
-  name: 'BitcoinTag',
-  StrokeRounded: IconBitcoinTagStrokeRounded,
-  DuotoneRounded: IconBitcoinTagDuotoneRounded,
-  TwotoneRounded: IconBitcoinTagTwotoneRounded,
-  SolidRounded: IconBitcoinTagSolidRounded,
-  BulkRounded: IconBitcoinTagBulkRounded,
-  StrokeSharp: IconBitcoinTagStrokeSharp,
-  SolidSharp: IconBitcoinTagSolidSharp,
-};
+export const iconPackOfBitcoinTag: TheIconSelfPack = [
+  'BitcoinTag',
+  IconBitcoinTagStrokeRounded,
+  IconBitcoinTagDuotoneRounded,
+  IconBitcoinTagTwotoneRounded,
+  IconBitcoinTagSolidRounded,
+  IconBitcoinTagBulkRounded,
+  IconBitcoinTagStrokeSharp,
+  IconBitcoinTagSolidSharp,
+];

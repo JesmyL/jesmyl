@@ -14,14 +14,11 @@ export const IconVolumeMute01StrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="volume-mute-01-stroke-rounded IconVolumeMute01StrokeRounded"
+      the-icon="VolumeMute01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -31,19 +28,15 @@ export const IconVolumeMute01DuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="volume-mute-01-duotone-rounded IconVolumeMute01DuotoneRounded"
+      the-icon="VolumeMute01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -53,22 +46,15 @@ export const IconVolumeMute01TwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="volume-mute-01-twotone-rounded IconVolumeMute01TwotoneRounded"
+      the-icon="VolumeMute01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -78,11 +64,11 @@ export const IconVolumeMute01SolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="volume-mute-01-solid-rounded IconVolumeMute01SolidRounded"
+      the-icon="VolumeMute01 SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -92,12 +78,11 @@ export const IconVolumeMute01BulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="volume-mute-01-bulk-rounded IconVolumeMute01BulkRounded"
+      the-icon="VolumeMute01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -107,12 +92,11 @@ export const IconVolumeMute01StrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="volume-mute-01-stroke-sharp IconVolumeMute01StrokeSharp"
+      the-icon="VolumeMute01 StrokeSharp"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d4}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -122,23 +106,23 @@ export const IconVolumeMute01SolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="volume-mute-01-solid-sharp IconVolumeMute01SolidSharp"
+      the-icon="VolumeMute01 SolidSharp"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfVolumeMute01: TheIconSelfPack = {
-  name: 'VolumeMute01',
-  StrokeRounded: IconVolumeMute01StrokeRounded,
-  DuotoneRounded: IconVolumeMute01DuotoneRounded,
-  TwotoneRounded: IconVolumeMute01TwotoneRounded,
-  SolidRounded: IconVolumeMute01SolidRounded,
-  BulkRounded: IconVolumeMute01BulkRounded,
-  StrokeSharp: IconVolumeMute01StrokeSharp,
-  SolidSharp: IconVolumeMute01SolidSharp,
-};
+export const iconPackOfVolumeMute01: TheIconSelfPack = [
+  'VolumeMute01',
+  IconVolumeMute01StrokeRounded,
+  IconVolumeMute01DuotoneRounded,
+  IconVolumeMute01TwotoneRounded,
+  IconVolumeMute01SolidRounded,
+  IconVolumeMute01BulkRounded,
+  IconVolumeMute01StrokeSharp,
+  IconVolumeMute01SolidSharp,
+];

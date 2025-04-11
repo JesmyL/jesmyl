@@ -18,21 +18,15 @@ export const IconEaseOutControlPointStrokeRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="ease-out-control-point-stroke-rounded IconEaseOutControlPointStrokeRounded"
+      the-icon="EaseOutControlPoint StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -42,26 +36,19 @@ export const IconEaseOutControlPointDuotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="ease-out-control-point-duotone-rounded IconEaseOutControlPointDuotoneRounded"
+      the-icon="EaseOutControlPoint DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -71,22 +58,15 @@ export const IconEaseOutControlPointTwotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="ease-out-control-point-twotone-rounded IconEaseOutControlPointTwotoneRounded"
+      the-icon="EaseOutControlPoint TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -96,21 +76,19 @@ export const IconEaseOutControlPointSolidRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="ease-out-control-point-solid-rounded IconEaseOutControlPointSolidRounded"
+      the-icon="EaseOutControlPoint SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -120,23 +98,20 @@ export const IconEaseOutControlPointBulkRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="ease-out-control-point-bulk-rounded IconEaseOutControlPointBulkRounded"
+      the-icon="EaseOutControlPoint BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       </g>
     </TheIconWrapper>
@@ -147,19 +122,15 @@ export const IconEaseOutControlPointStrokeSharp: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="ease-out-control-point-stroke-sharp IconEaseOutControlPointStrokeSharp"
+      the-icon="EaseOutControlPoint StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -169,31 +140,31 @@ export const IconEaseOutControlPointSolidSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="ease-out-control-point-solid-sharp IconEaseOutControlPointSolidSharp"
+      the-icon="EaseOutControlPoint SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfEaseOutControlPoint: TheIconSelfPack = {
-  name: 'EaseOutControlPoint',
-  StrokeRounded: IconEaseOutControlPointStrokeRounded,
-  DuotoneRounded: IconEaseOutControlPointDuotoneRounded,
-  TwotoneRounded: IconEaseOutControlPointTwotoneRounded,
-  SolidRounded: IconEaseOutControlPointSolidRounded,
-  BulkRounded: IconEaseOutControlPointBulkRounded,
-  StrokeSharp: IconEaseOutControlPointStrokeSharp,
-  SolidSharp: IconEaseOutControlPointSolidSharp,
-};
+export const iconPackOfEaseOutControlPoint: TheIconSelfPack = [
+  'EaseOutControlPoint',
+  IconEaseOutControlPointStrokeRounded,
+  IconEaseOutControlPointDuotoneRounded,
+  IconEaseOutControlPointTwotoneRounded,
+  IconEaseOutControlPointSolidRounded,
+  IconEaseOutControlPointBulkRounded,
+  IconEaseOutControlPointStrokeSharp,
+  IconEaseOutControlPointSolidSharp,
+];

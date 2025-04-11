@@ -22,41 +22,35 @@ export const IconSkewStrokeRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="skew-stroke-rounded IconSkewStrokeRounded"
+      the-icon="Skew StrokeRounded"
     >
       <circle 
-        cx="9" 
-        cy="4" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="9"
+        cy="4"
+        r="2"
+        i-c="s sr sw"
+      />
       <circle 
-        cx="19" 
-        cy="7" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="19"
+        cy="7"
+        r="2"
+        i-c="s sr sw"
+      />
       <circle 
-        cx="20" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="20"
+        cy="20"
+        r="2"
+        i-c="s sr sw"
+      />
       <circle 
-        cx="4" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="4"
+        cy="18"
+        r="2"
+        i-c="s sr sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -66,46 +60,39 @@ export const IconSkewDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="skew-duotone-rounded IconSkewDuotoneRounded"
+      the-icon="Skew DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <circle 
-        cx="9" 
-        cy="4" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="9"
+        cy="4"
+        r="2"
+        i-c="s sr sw"
+      />
       <circle 
-        cx="19" 
-        cy="7" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="19"
+        cy="7"
+        r="2"
+        i-c="s sr sw"
+      />
       <circle 
-        cx="20" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="20"
+        cy="20"
+        r="2"
+        i-c="s sr sw"
+      />
       <circle 
-        cx="4" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="4"
+        cy="18"
+        r="2"
+        i-c="s sr sw"
+      />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -115,42 +102,35 @@ export const IconSkewTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="skew-twotone-rounded IconSkewTwotoneRounded"
+      the-icon="Skew TwotoneRounded"
     >
       <circle 
-        cx="9" 
-        cy="4" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="9"
+        cy="4"
+        r="2"
+        i-c="s sr sw"
+      />
       <circle 
-        cx="19" 
-        cy="7" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="19"
+        cy="7"
+        r="2"
+        i-c="s sr sw"
+      />
       <circle 
-        cx="20" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="20"
+        cy="20"
+        r="2"
+        i-c="s sr sw"
+      />
       <circle 
-        cx="4" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="4"
+        cy="18"
+        r="2"
+        i-c="s sr sw"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -160,29 +140,27 @@ export const IconSkewSolidRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="skew-solid-rounded IconSkewSolidRounded"
+      the-icon="Skew SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -192,41 +170,40 @@ export const IconSkewBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="skew-bulk-rounded IconSkewBulkRounded"
+      the-icon="Skew BulkRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
-      <g 
-        opacity="0.44">
+      <g    i-c="o3">
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
-      />
-      <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
+      />
+      <path 
+        d={d.d12}
+        i-c="f"
       />
       </g>
     </TheIconWrapper>
@@ -237,41 +214,35 @@ export const IconSkewStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="skew-stroke-sharp IconSkewStrokeSharp"
+      the-icon="Skew StrokeSharp"
     >
       <circle 
-        cx="9" 
-        cy="4" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="9"
+        cy="4"
+        r="2"
+        i-c="s sj sw"
+      />
       <circle 
-        cx="19" 
-        cy="7" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="19"
+        cy="7"
+        r="2"
+        i-c="s sj sw"
+      />
       <circle 
-        cx="20" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="20"
+        cy="20"
+        r="2"
+        i-c="s sj sw"
+      />
       <circle 
-        cx="4" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="4"
+        cy="18"
+        r="2"
+        i-c="s sj sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -281,41 +252,39 @@ export const IconSkewSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.E
   return (
     <TheIconWrapper
       {...props}
-      name="skew-solid-sharp IconSkewSolidSharp"
+      the-icon="Skew SolidSharp"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSkew: TheIconSelfPack = {
-  name: 'Skew',
-  StrokeRounded: IconSkewStrokeRounded,
-  DuotoneRounded: IconSkewDuotoneRounded,
-  TwotoneRounded: IconSkewTwotoneRounded,
-  SolidRounded: IconSkewSolidRounded,
-  BulkRounded: IconSkewBulkRounded,
-  StrokeSharp: IconSkewStrokeSharp,
-  SolidSharp: IconSkewSolidSharp,
-};
+export const iconPackOfSkew: TheIconSelfPack = [
+  'Skew',
+  IconSkewStrokeRounded,
+  IconSkewDuotoneRounded,
+  IconSkewTwotoneRounded,
+  IconSkewSolidRounded,
+  IconSkewBulkRounded,
+  IconSkewStrokeSharp,
+  IconSkewSolidSharp,
+];

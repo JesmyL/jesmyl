@@ -23,31 +23,23 @@ export const IconMoreOrLessSquareStrokeRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="more-or-less-square-stroke-rounded IconMoreOrLessSquareStrokeRounded"
+      the-icon="MoreOrLessSquare StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -57,36 +49,27 @@ export const IconMoreOrLessSquareDuotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="more-or-less-square-duotone-rounded IconMoreOrLessSquareDuotoneRounded"
+      the-icon="MoreOrLessSquare DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d5}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -96,20 +79,15 @@ export const IconMoreOrLessSquareTwotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="more-or-less-square-twotone-rounded IconMoreOrLessSquareTwotoneRounded"
+      the-icon="MoreOrLessSquare TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d6}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -119,13 +97,11 @@ export const IconMoreOrLessSquareSolidRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="more-or-less-square-solid-rounded IconMoreOrLessSquareSolidRounded"
+      the-icon="MoreOrLessSquare SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -135,24 +111,23 @@ export const IconMoreOrLessSquareBulkRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="more-or-less-square-bulk-rounded IconMoreOrLessSquareBulkRounded"
+      the-icon="MoreOrLessSquare BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o7"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -162,19 +137,15 @@ export const IconMoreOrLessSquareStrokeSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="more-or-less-square-stroke-sharp IconMoreOrLessSquareStrokeSharp"
+      the-icon="MoreOrLessSquare StrokeSharp"
     >
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d12}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d13}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -184,25 +155,23 @@ export const IconMoreOrLessSquareSolidSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="more-or-less-square-solid-sharp IconMoreOrLessSquareSolidSharp"
+      the-icon="MoreOrLessSquare SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMoreOrLessSquare: TheIconSelfPack = {
-  name: 'MoreOrLessSquare',
-  StrokeRounded: IconMoreOrLessSquareStrokeRounded,
-  DuotoneRounded: IconMoreOrLessSquareDuotoneRounded,
-  TwotoneRounded: IconMoreOrLessSquareTwotoneRounded,
-  SolidRounded: IconMoreOrLessSquareSolidRounded,
-  BulkRounded: IconMoreOrLessSquareBulkRounded,
-  StrokeSharp: IconMoreOrLessSquareStrokeSharp,
-  SolidSharp: IconMoreOrLessSquareSolidSharp,
-};
+export const iconPackOfMoreOrLessSquare: TheIconSelfPack = [
+  'MoreOrLessSquare',
+  IconMoreOrLessSquareStrokeRounded,
+  IconMoreOrLessSquareDuotoneRounded,
+  IconMoreOrLessSquareTwotoneRounded,
+  IconMoreOrLessSquareSolidRounded,
+  IconMoreOrLessSquareBulkRounded,
+  IconMoreOrLessSquareStrokeSharp,
+  IconMoreOrLessSquareSolidSharp,
+];

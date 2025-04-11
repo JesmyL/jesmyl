@@ -15,21 +15,15 @@ export const IconGibbousMoonStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="gibbous-moon-stroke-rounded IconGibbousMoonStrokeRounded"
+      the-icon="GibbousMoon StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -39,26 +33,19 @@ export const IconGibbousMoonDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="gibbous-moon-duotone-rounded IconGibbousMoonDuotoneRounded"
+      the-icon="GibbousMoon DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -68,22 +55,15 @@ export const IconGibbousMoonTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="gibbous-moon-twotone-rounded IconGibbousMoonTwotoneRounded"
+      the-icon="GibbousMoon TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -93,17 +73,15 @@ export const IconGibbousMoonSolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="gibbous-moon-solid-rounded IconGibbousMoonSolidRounded"
+      the-icon="GibbousMoon SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -113,18 +91,15 @@ export const IconGibbousMoonBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="gibbous-moon-bulk-rounded IconGibbousMoonBulkRounded"
+      the-icon="GibbousMoon BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -134,19 +109,15 @@ export const IconGibbousMoonStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="gibbous-moon-stroke-sharp IconGibbousMoonStrokeSharp"
+      the-icon="GibbousMoon StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -156,29 +127,27 @@ export const IconGibbousMoonSolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="gibbous-moon-solid-sharp IconGibbousMoonSolidSharp"
+      the-icon="GibbousMoon SolidSharp"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfGibbousMoon: TheIconSelfPack = {
-  name: 'GibbousMoon',
-  StrokeRounded: IconGibbousMoonStrokeRounded,
-  DuotoneRounded: IconGibbousMoonDuotoneRounded,
-  TwotoneRounded: IconGibbousMoonTwotoneRounded,
-  SolidRounded: IconGibbousMoonSolidRounded,
-  BulkRounded: IconGibbousMoonBulkRounded,
-  StrokeSharp: IconGibbousMoonStrokeSharp,
-  SolidSharp: IconGibbousMoonSolidSharp,
-};
+export const iconPackOfGibbousMoon: TheIconSelfPack = [
+  'GibbousMoon',
+  IconGibbousMoonStrokeRounded,
+  IconGibbousMoonDuotoneRounded,
+  IconGibbousMoonTwotoneRounded,
+  IconGibbousMoonSolidRounded,
+  IconGibbousMoonBulkRounded,
+  IconGibbousMoonStrokeSharp,
+  IconGibbousMoonSolidSharp,
+];

@@ -15,13 +15,11 @@ export const IconDiamondStrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="diamond-stroke-rounded IconDiamondStrokeRounded"
+      the-icon="Diamond StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -31,18 +29,15 @@ export const IconDiamondDuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="diamond-duotone-rounded IconDiamondDuotoneRounded"
+      the-icon="Diamond DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -52,21 +47,15 @@ export const IconDiamondTwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="diamond-twotone-rounded IconDiamondTwotoneRounded"
+      the-icon="Diamond TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -76,11 +65,11 @@ export const IconDiamondSolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="diamond-solid-rounded IconDiamondSolidRounded"
+      the-icon="Diamond SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -90,16 +79,15 @@ export const IconDiamondBulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="diamond-bulk-rounded IconDiamondBulkRounded"
+      the-icon="Diamond BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -109,13 +97,11 @@ export const IconDiamondStrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="diamond-stroke-sharp IconDiamondStrokeSharp"
+      the-icon="Diamond StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -125,23 +111,23 @@ export const IconDiamondSolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="diamond-solid-sharp IconDiamondSolidSharp"
+      the-icon="Diamond SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfDiamond: TheIconSelfPack = {
-  name: 'Diamond',
-  StrokeRounded: IconDiamondStrokeRounded,
-  DuotoneRounded: IconDiamondDuotoneRounded,
-  TwotoneRounded: IconDiamondTwotoneRounded,
-  SolidRounded: IconDiamondSolidRounded,
-  BulkRounded: IconDiamondBulkRounded,
-  StrokeSharp: IconDiamondStrokeSharp,
-  SolidSharp: IconDiamondSolidSharp,
-};
+export const iconPackOfDiamond: TheIconSelfPack = [
+  'Diamond',
+  IconDiamondStrokeRounded,
+  IconDiamondDuotoneRounded,
+  IconDiamondTwotoneRounded,
+  IconDiamondSolidRounded,
+  IconDiamondBulkRounded,
+  IconDiamondStrokeSharp,
+  IconDiamondSolidSharp,
+];

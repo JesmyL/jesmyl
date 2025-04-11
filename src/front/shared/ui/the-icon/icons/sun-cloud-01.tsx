@@ -15,19 +15,15 @@ export const IconSunCloud01StrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="sun-cloud-01-stroke-rounded IconSunCloud01StrokeRounded"
+      the-icon="SunCloud01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -37,24 +33,19 @@ export const IconSunCloud01DuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="sun-cloud-01-duotone-rounded IconSunCloud01DuotoneRounded"
+      the-icon="SunCloud01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -64,20 +55,15 @@ export const IconSunCloud01TwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="sun-cloud-01-twotone-rounded IconSunCloud01TwotoneRounded"
+      the-icon="SunCloud01 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="o7 s sw"
       />
     </TheIconWrapper>
   );
@@ -87,15 +73,15 @@ export const IconSunCloud01SolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="sun-cloud-01-solid-rounded IconSunCloud01SolidRounded"
+      the-icon="SunCloud01 SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -105,16 +91,15 @@ export const IconSunCloud01BulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="sun-cloud-01-bulk-rounded IconSunCloud01BulkRounded"
+      the-icon="SunCloud01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -124,18 +109,15 @@ export const IconSunCloud01StrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="sun-cloud-01-stroke-sharp IconSunCloud01StrokeSharp"
+      the-icon="SunCloud01 StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -145,25 +127,23 @@ export const IconSunCloud01SolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="sun-cloud-01-solid-sharp IconSunCloud01SolidSharp"
+      the-icon="SunCloud01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSunCloud01: TheIconSelfPack = {
-  name: 'SunCloud01',
-  StrokeRounded: IconSunCloud01StrokeRounded,
-  DuotoneRounded: IconSunCloud01DuotoneRounded,
-  TwotoneRounded: IconSunCloud01TwotoneRounded,
-  SolidRounded: IconSunCloud01SolidRounded,
-  BulkRounded: IconSunCloud01BulkRounded,
-  StrokeSharp: IconSunCloud01StrokeSharp,
-  SolidSharp: IconSunCloud01SolidSharp,
-};
+export const iconPackOfSunCloud01: TheIconSelfPack = [
+  'SunCloud01',
+  IconSunCloud01StrokeRounded,
+  IconSunCloud01DuotoneRounded,
+  IconSunCloud01TwotoneRounded,
+  IconSunCloud01SolidRounded,
+  IconSunCloud01BulkRounded,
+  IconSunCloud01StrokeSharp,
+  IconSunCloud01SolidSharp,
+];

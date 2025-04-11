@@ -15,12 +15,11 @@ export const IconKeyframeStrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="keyframe-stroke-rounded IconKeyframeStrokeRounded"
+      the-icon="Keyframe StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -30,17 +29,15 @@ export const IconKeyframeDuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="keyframe-duotone-rounded IconKeyframeDuotoneRounded"
+      the-icon="Keyframe DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -50,19 +47,15 @@ export const IconKeyframeTwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="keyframe-twotone-rounded IconKeyframeTwotoneRounded"
+      the-icon="Keyframe TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -72,11 +65,11 @@ export const IconKeyframeSolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="keyframe-solid-rounded IconKeyframeSolidRounded"
+      the-icon="Keyframe SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -86,16 +79,15 @@ export const IconKeyframeBulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="keyframe-bulk-rounded IconKeyframeBulkRounded"
+      the-icon="Keyframe BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -105,12 +97,11 @@ export const IconKeyframeStrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="keyframe-stroke-sharp IconKeyframeStrokeSharp"
+      the-icon="Keyframe StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -120,23 +111,23 @@ export const IconKeyframeSolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="keyframe-solid-sharp IconKeyframeSolidSharp"
+      the-icon="Keyframe SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfKeyframe: TheIconSelfPack = {
-  name: 'Keyframe',
-  StrokeRounded: IconKeyframeStrokeRounded,
-  DuotoneRounded: IconKeyframeDuotoneRounded,
-  TwotoneRounded: IconKeyframeTwotoneRounded,
-  SolidRounded: IconKeyframeSolidRounded,
-  BulkRounded: IconKeyframeBulkRounded,
-  StrokeSharp: IconKeyframeStrokeSharp,
-  SolidSharp: IconKeyframeSolidSharp,
-};
+export const iconPackOfKeyframe: TheIconSelfPack = [
+  'Keyframe',
+  IconKeyframeStrokeRounded,
+  IconKeyframeDuotoneRounded,
+  IconKeyframeTwotoneRounded,
+  IconKeyframeSolidRounded,
+  IconKeyframeBulkRounded,
+  IconKeyframeStrokeSharp,
+  IconKeyframeSolidSharp,
+];

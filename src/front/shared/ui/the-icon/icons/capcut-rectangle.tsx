@@ -17,21 +17,15 @@ export const IconCapcutRectangleStrokeRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="capcut-rectangle-stroke-rounded IconCapcutRectangleStrokeRounded"
+      the-icon="CapcutRectangle StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -41,28 +35,19 @@ export const IconCapcutRectangleDuotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="capcut-rectangle-duotone-rounded IconCapcutRectangleDuotoneRounded"
+      the-icon="CapcutRectangle DuotoneRounded"
     >
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -72,22 +57,15 @@ export const IconCapcutRectangleTwotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="capcut-rectangle-twotone-rounded IconCapcutRectangleTwotoneRounded"
+      the-icon="CapcutRectangle TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -97,13 +75,11 @@ export const IconCapcutRectangleSolidRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="capcut-rectangle-solid-rounded IconCapcutRectangleSolidRounded"
+      the-icon="CapcutRectangle SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -113,18 +89,15 @@ export const IconCapcutRectangleBulkRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="capcut-rectangle-bulk-rounded IconCapcutRectangleBulkRounded"
+      the-icon="CapcutRectangle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -134,21 +107,17 @@ export const IconCapcutRectangleStrokeSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="capcut-rectangle-stroke-sharp IconCapcutRectangleStrokeSharp"
+      the-icon="CapcutRectangle StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
       <rect 
-        x="2.99998" 
-        y="3" 
-        width="18" 
-        height="18" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></rect>
+        x="2.99998"
+        y="3"
+        i-c="h4 s sj sw w7"
+      />
     </TheIconWrapper>
   );
 };
@@ -157,25 +126,23 @@ export const IconCapcutRectangleSolidSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="capcut-rectangle-solid-sharp IconCapcutRectangleSolidSharp"
+      the-icon="CapcutRectangle SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCapcutRectangle: TheIconSelfPack = {
-  name: 'CapcutRectangle',
-  StrokeRounded: IconCapcutRectangleStrokeRounded,
-  DuotoneRounded: IconCapcutRectangleDuotoneRounded,
-  TwotoneRounded: IconCapcutRectangleTwotoneRounded,
-  SolidRounded: IconCapcutRectangleSolidRounded,
-  BulkRounded: IconCapcutRectangleBulkRounded,
-  StrokeSharp: IconCapcutRectangleStrokeSharp,
-  SolidSharp: IconCapcutRectangleSolidSharp,
-};
+export const iconPackOfCapcutRectangle: TheIconSelfPack = [
+  'CapcutRectangle',
+  IconCapcutRectangleStrokeRounded,
+  IconCapcutRectangleDuotoneRounded,
+  IconCapcutRectangleTwotoneRounded,
+  IconCapcutRectangleSolidRounded,
+  IconCapcutRectangleBulkRounded,
+  IconCapcutRectangleStrokeSharp,
+  IconCapcutRectangleSolidSharp,
+];

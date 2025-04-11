@@ -17,14 +17,11 @@ export const IconEnergyStrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="energy-stroke-rounded IconEnergyStrokeRounded"
+      the-icon="Energy StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -34,19 +31,15 @@ export const IconEnergyDuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="energy-duotone-rounded IconEnergyDuotoneRounded"
+      the-icon="Energy DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -56,22 +49,15 @@ export const IconEnergyTwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="energy-twotone-rounded IconEnergyTwotoneRounded"
+      the-icon="Energy TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -81,11 +67,11 @@ export const IconEnergySolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="energy-solid-rounded IconEnergySolidRounded"
+      the-icon="Energy SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -95,16 +81,15 @@ export const IconEnergyBulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="energy-bulk-rounded IconEnergyBulkRounded"
+      the-icon="Energy BulkRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -114,14 +99,11 @@ export const IconEnergyStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="energy-stroke-sharp IconEnergyStrokeSharp"
+      the-icon="Energy StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -131,23 +113,23 @@ export const IconEnergySolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="energy-solid-sharp IconEnergySolidSharp"
+      the-icon="Energy SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfEnergy: TheIconSelfPack = {
-  name: 'Energy',
-  StrokeRounded: IconEnergyStrokeRounded,
-  DuotoneRounded: IconEnergyDuotoneRounded,
-  TwotoneRounded: IconEnergyTwotoneRounded,
-  SolidRounded: IconEnergySolidRounded,
-  BulkRounded: IconEnergyBulkRounded,
-  StrokeSharp: IconEnergyStrokeSharp,
-  SolidSharp: IconEnergySolidSharp,
-};
+export const iconPackOfEnergy: TheIconSelfPack = [
+  'Energy',
+  IconEnergyStrokeRounded,
+  IconEnergyDuotoneRounded,
+  IconEnergyTwotoneRounded,
+  IconEnergySolidRounded,
+  IconEnergyBulkRounded,
+  IconEnergyStrokeSharp,
+  IconEnergySolidSharp,
+];

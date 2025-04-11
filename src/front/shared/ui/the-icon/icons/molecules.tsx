@@ -20,46 +20,35 @@ export const IconMoleculesStrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="molecules-stroke-rounded IconMoleculesStrokeRounded"
+      the-icon="Molecules StrokeRounded"
     >
       <circle 
-        cx="12" 
-        cy="13" 
-        r="4" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="13"
+        r="4"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="12" 
-        cy="4" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="4"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="4" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="4"
+        cy="20"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="20" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="20"
+        cy="20"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -69,52 +58,41 @@ export const IconMoleculesDuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="molecules-duotone-rounded IconMoleculesDuotoneRounded"
+      the-icon="Molecules DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="13" 
-        r="4" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="13"
+        r="4"
+        i-c="f o7"
+      />
       <circle 
-        cx="12" 
-        cy="13" 
-        r="4" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="13"
+        r="4"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="12" 
-        cy="4" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="4"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="4" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="4"
+        cy="20"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="20" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="20"
+        cy="20"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -124,47 +102,35 @@ export const IconMoleculesTwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="molecules-twotone-rounded IconMoleculesTwotoneRounded"
+      the-icon="Molecules TwotoneRounded"
     >
       <circle 
-        cx="12" 
-        cy="13" 
-        r="4" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="13"
+        r="4"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="12" 
-        cy="4" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="4"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="4" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="4"
+        cy="20"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="20" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="20"
+        cy="20"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -174,29 +140,27 @@ export const IconMoleculesSolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="molecules-solid-rounded IconMoleculesSolidRounded"
+      the-icon="Molecules SolidRounded"
     >
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -206,37 +170,36 @@ export const IconMoleculesBulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="molecules-bulk-rounded IconMoleculesBulkRounded"
+      the-icon="Molecules BulkRounded"
     >
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
-      />
-      <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
+      />
+      <path 
+        d={d.d9}
+        i-c="f"
       />
       </g>
     </TheIconWrapper>
@@ -247,41 +210,35 @@ export const IconMoleculesStrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="molecules-stroke-sharp IconMoleculesStrokeSharp"
+      the-icon="Molecules StrokeSharp"
     >
       <circle 
-        cx="12" 
-        cy="13" 
-        r="4" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="13"
+        r="4"
+        i-c="s sj sw"
+      />
       <circle 
-        cx="12" 
-        cy="4" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="4"
+        r="2"
+        i-c="s sj sw"
+      />
       <circle 
-        cx="4" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="4"
+        cy="20"
+        r="2"
+        i-c="s sj sw"
+      />
       <circle 
-        cx="20" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="20"
+        cy="20"
+        r="2"
+        i-c="s sj sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -291,41 +248,39 @@ export const IconMoleculesSolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="molecules-solid-sharp IconMoleculesSolidSharp"
+      the-icon="Molecules SolidSharp"
     >
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMolecules: TheIconSelfPack = {
-  name: 'Molecules',
-  StrokeRounded: IconMoleculesStrokeRounded,
-  DuotoneRounded: IconMoleculesDuotoneRounded,
-  TwotoneRounded: IconMoleculesTwotoneRounded,
-  SolidRounded: IconMoleculesSolidRounded,
-  BulkRounded: IconMoleculesBulkRounded,
-  StrokeSharp: IconMoleculesStrokeSharp,
-  SolidSharp: IconMoleculesSolidSharp,
-};
+export const iconPackOfMolecules: TheIconSelfPack = [
+  'Molecules',
+  IconMoleculesStrokeRounded,
+  IconMoleculesDuotoneRounded,
+  IconMoleculesTwotoneRounded,
+  IconMoleculesSolidRounded,
+  IconMoleculesBulkRounded,
+  IconMoleculesStrokeSharp,
+  IconMoleculesSolidSharp,
+];

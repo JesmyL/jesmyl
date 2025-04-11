@@ -20,23 +20,21 @@ export const IconBlendStrokeRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="blend-stroke-rounded IconBlendStrokeRounded"
+      the-icon="Blend StrokeRounded"
     >
       <circle 
-        cx="17" 
-        cy="17" 
-        r="5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        cx="17"
+        cy="17"
+        r="5"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -46,34 +44,31 @@ export const IconBlendDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="blend-duotone-rounded IconBlendDuotoneRounded"
+      the-icon="Blend DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="17" 
-        cy="17" 
-        r="5" 
-        fill="var(--icon-fill)"></circle>
+        cx="17"
+        cy="17"
+        r="5"
+        i-c="f o7"
+      />
       <circle 
-        cx="17" 
-        cy="17" 
-        r="5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        cx="17"
+        cy="17"
+        r="5"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -83,20 +78,15 @@ export const IconBlendTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="blend-twotone-rounded IconBlendTwotoneRounded"
+      the-icon="Blend TwotoneRounded"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d4}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -106,21 +96,19 @@ export const IconBlendSolidRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="blend-solid-rounded IconBlendSolidRounded"
+      the-icon="Blend SolidRounded"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -130,21 +118,19 @@ export const IconBlendBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="blend-bulk-rounded IconBlendBulkRounded"
+      the-icon="Blend BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o7"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -154,24 +140,21 @@ export const IconBlendStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="blend-stroke-sharp IconBlendStrokeSharp"
+      the-icon="Blend StrokeSharp"
     >
       <circle 
-        cx="17" 
-        cy="17" 
-        r="5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        cx="17"
+        cy="17"
+        r="5"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d10}
+        i-c="s sj sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -181,25 +164,23 @@ export const IconBlendSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="blend-solid-sharp IconBlendSolidSharp"
+      the-icon="Blend SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBlend: TheIconSelfPack = {
-  name: 'Blend',
-  StrokeRounded: IconBlendStrokeRounded,
-  DuotoneRounded: IconBlendDuotoneRounded,
-  TwotoneRounded: IconBlendTwotoneRounded,
-  SolidRounded: IconBlendSolidRounded,
-  BulkRounded: IconBlendBulkRounded,
-  StrokeSharp: IconBlendStrokeSharp,
-  SolidSharp: IconBlendSolidSharp,
-};
+export const iconPackOfBlend: TheIconSelfPack = [
+  'Blend',
+  IconBlendStrokeRounded,
+  IconBlendDuotoneRounded,
+  IconBlendTwotoneRounded,
+  IconBlendSolidRounded,
+  IconBlendBulkRounded,
+  IconBlendStrokeSharp,
+  IconBlendSolidSharp,
+];

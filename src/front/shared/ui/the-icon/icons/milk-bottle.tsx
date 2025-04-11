@@ -17,20 +17,15 @@ export const IconMilkBottleStrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="milk-bottle-stroke-rounded IconMilkBottleStrokeRounded"
+      the-icon="MilkBottle StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -40,25 +35,19 @@ export const IconMilkBottleDuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="milk-bottle-duotone-rounded IconMilkBottleDuotoneRounded"
+      the-icon="MilkBottle DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -68,21 +57,15 @@ export const IconMilkBottleTwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="milk-bottle-twotone-rounded IconMilkBottleTwotoneRounded"
+      the-icon="MilkBottle TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sw"
       />
     </TheIconWrapper>
   );
@@ -92,17 +75,15 @@ export const IconMilkBottleSolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="milk-bottle-solid-rounded IconMilkBottleSolidRounded"
+      the-icon="MilkBottle SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -112,18 +93,15 @@ export const IconMilkBottleBulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="milk-bottle-bulk-rounded IconMilkBottleBulkRounded"
+      the-icon="MilkBottle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -133,19 +111,15 @@ export const IconMilkBottleStrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="milk-bottle-stroke-sharp IconMilkBottleStrokeSharp"
+      the-icon="MilkBottle StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -155,25 +129,23 @@ export const IconMilkBottleSolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="milk-bottle-solid-sharp IconMilkBottleSolidSharp"
+      the-icon="MilkBottle SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMilkBottle: TheIconSelfPack = {
-  name: 'MilkBottle',
-  StrokeRounded: IconMilkBottleStrokeRounded,
-  DuotoneRounded: IconMilkBottleDuotoneRounded,
-  TwotoneRounded: IconMilkBottleTwotoneRounded,
-  SolidRounded: IconMilkBottleSolidRounded,
-  BulkRounded: IconMilkBottleBulkRounded,
-  StrokeSharp: IconMilkBottleStrokeSharp,
-  SolidSharp: IconMilkBottleSolidSharp,
-};
+export const iconPackOfMilkBottle: TheIconSelfPack = [
+  'MilkBottle',
+  IconMilkBottleStrokeRounded,
+  IconMilkBottleDuotoneRounded,
+  IconMilkBottleTwotoneRounded,
+  IconMilkBottleSolidRounded,
+  IconMilkBottleBulkRounded,
+  IconMilkBottleStrokeSharp,
+  IconMilkBottleSolidSharp,
+];

@@ -17,13 +17,11 @@ export const IconTap08StrokeRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="tap-08-stroke-rounded IconTap08StrokeRounded"
+      the-icon="Tap08 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -33,18 +31,15 @@ export const IconTap08DuotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="tap-08-duotone-rounded IconTap08DuotoneRounded"
+      the-icon="Tap08 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,20 +49,15 @@ export const IconTap08TwotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="tap-08-twotone-rounded IconTap08TwotoneRounded"
+      the-icon="Tap08 TwotoneRounded"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d5}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -77,11 +67,11 @@ export const IconTap08SolidRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="tap-08-solid-rounded IconTap08SolidRounded"
+      the-icon="Tap08 SolidRounded"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -91,12 +81,11 @@ export const IconTap08BulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="tap-08-bulk-rounded IconTap08BulkRounded"
+      the-icon="Tap08 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -106,12 +95,11 @@ export const IconTap08StrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="tap-08-stroke-sharp IconTap08StrokeSharp"
+      the-icon="Tap08 StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -121,23 +109,23 @@ export const IconTap08SolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="tap-08-solid-sharp IconTap08SolidSharp"
+      the-icon="Tap08 SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTap08: TheIconSelfPack = {
-  name: 'Tap08',
-  StrokeRounded: IconTap08StrokeRounded,
-  DuotoneRounded: IconTap08DuotoneRounded,
-  TwotoneRounded: IconTap08TwotoneRounded,
-  SolidRounded: IconTap08SolidRounded,
-  BulkRounded: IconTap08BulkRounded,
-  StrokeSharp: IconTap08StrokeSharp,
-  SolidSharp: IconTap08SolidSharp,
-};
+export const iconPackOfTap08: TheIconSelfPack = [
+  'Tap08',
+  IconTap08StrokeRounded,
+  IconTap08DuotoneRounded,
+  IconTap08TwotoneRounded,
+  IconTap08SolidRounded,
+  IconTap08BulkRounded,
+  IconTap08StrokeSharp,
+  IconTap08SolidSharp,
+];

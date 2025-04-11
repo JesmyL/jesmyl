@@ -19,19 +19,15 @@ export const IconShuffleSquareStrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="shuffle-square-stroke-rounded IconShuffleSquareStrokeRounded"
+      the-icon="ShuffleSquare StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -41,24 +37,19 @@ export const IconShuffleSquareDuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="shuffle-square-duotone-rounded IconShuffleSquareDuotoneRounded"
+      the-icon="ShuffleSquare DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -68,20 +59,15 @@ export const IconShuffleSquareTwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="shuffle-square-twotone-rounded IconShuffleSquareTwotoneRounded"
+      the-icon="ShuffleSquare TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -91,13 +77,11 @@ export const IconShuffleSquareSolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="shuffle-square-solid-rounded IconShuffleSquareSolidRounded"
+      the-icon="ShuffleSquare SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -107,24 +91,23 @@ export const IconShuffleSquareBulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="shuffle-square-bulk-rounded IconShuffleSquareBulkRounded"
+      the-icon="ShuffleSquare BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -134,19 +117,15 @@ export const IconShuffleSquareStrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="shuffle-square-stroke-sharp IconShuffleSquareStrokeSharp"
+      the-icon="ShuffleSquare StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -156,25 +135,23 @@ export const IconShuffleSquareSolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="shuffle-square-solid-sharp IconShuffleSquareSolidSharp"
+      the-icon="ShuffleSquare SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfShuffleSquare: TheIconSelfPack = {
-  name: 'ShuffleSquare',
-  StrokeRounded: IconShuffleSquareStrokeRounded,
-  DuotoneRounded: IconShuffleSquareDuotoneRounded,
-  TwotoneRounded: IconShuffleSquareTwotoneRounded,
-  SolidRounded: IconShuffleSquareSolidRounded,
-  BulkRounded: IconShuffleSquareBulkRounded,
-  StrokeSharp: IconShuffleSquareStrokeSharp,
-  SolidSharp: IconShuffleSquareSolidSharp,
-};
+export const iconPackOfShuffleSquare: TheIconSelfPack = [
+  'ShuffleSquare',
+  IconShuffleSquareStrokeRounded,
+  IconShuffleSquareDuotoneRounded,
+  IconShuffleSquareTwotoneRounded,
+  IconShuffleSquareSolidRounded,
+  IconShuffleSquareBulkRounded,
+  IconShuffleSquareStrokeSharp,
+  IconShuffleSquareSolidSharp,
+];

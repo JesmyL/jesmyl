@@ -15,14 +15,11 @@ export const IconKnife02StrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="knife-02-stroke-rounded IconKnife02StrokeRounded"
+      the-icon="Knife02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -32,19 +29,15 @@ export const IconKnife02DuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="knife-02-duotone-rounded IconKnife02DuotoneRounded"
+      the-icon="Knife02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,22 +47,15 @@ export const IconKnife02TwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="knife-02-twotone-rounded IconKnife02TwotoneRounded"
+      the-icon="Knife02 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -79,11 +65,11 @@ export const IconKnife02SolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="knife-02-solid-rounded IconKnife02SolidRounded"
+      the-icon="Knife02 SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -93,16 +79,15 @@ export const IconKnife02BulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="knife-02-bulk-rounded IconKnife02BulkRounded"
+      the-icon="Knife02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -112,12 +97,11 @@ export const IconKnife02StrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="knife-02-stroke-sharp IconKnife02StrokeSharp"
+      the-icon="Knife02 StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -127,23 +111,23 @@ export const IconKnife02SolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="knife-02-solid-sharp IconKnife02SolidSharp"
+      the-icon="Knife02 SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfKnife02: TheIconSelfPack = {
-  name: 'Knife02',
-  StrokeRounded: IconKnife02StrokeRounded,
-  DuotoneRounded: IconKnife02DuotoneRounded,
-  TwotoneRounded: IconKnife02TwotoneRounded,
-  SolidRounded: IconKnife02SolidRounded,
-  BulkRounded: IconKnife02BulkRounded,
-  StrokeSharp: IconKnife02StrokeSharp,
-  SolidSharp: IconKnife02SolidSharp,
-};
+export const iconPackOfKnife02: TheIconSelfPack = [
+  'Knife02',
+  IconKnife02StrokeRounded,
+  IconKnife02DuotoneRounded,
+  IconKnife02TwotoneRounded,
+  IconKnife02SolidRounded,
+  IconKnife02BulkRounded,
+  IconKnife02StrokeSharp,
+  IconKnife02SolidSharp,
+];

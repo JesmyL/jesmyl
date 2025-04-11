@@ -18,27 +18,22 @@ export const IconTableRoundStrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="table-round-stroke-rounded IconTableRoundStrokeRounded"
+      the-icon="TableRound StrokeRounded"
     >
       <ellipse 
-        cx="12" 
-        cy="6.5" 
-        rx="10" 
-        ry="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        cx="12"
+        cy="6.5"
+        rx="10"
+        ry="3"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -48,34 +43,29 @@ export const IconTableRoundDuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="table-round-duotone-rounded IconTableRoundDuotoneRounded"
+      the-icon="TableRound DuotoneRounded"
     >
       <ellipse 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="6.5" 
-        rx="10" 
-        ry="3" 
-        fill="var(--icon-fill)"></ellipse>
+        cx="12"
+        cy="6.5"
+        rx="10"
+        ry="3"
+        i-c="f o7"
+      />
       <ellipse 
-        cx="12" 
-        cy="6.5" 
-        rx="10" 
-        ry="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        cx="12"
+        cy="6.5"
+        rx="10"
+        ry="3"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -85,28 +75,22 @@ export const IconTableRoundTwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="table-round-twotone-rounded IconTableRoundTwotoneRounded"
+      the-icon="TableRound TwotoneRounded"
     >
       <ellipse 
-        cx="12" 
-        cy="6.5" 
-        rx="10" 
-        ry="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        cx="12"
+        cy="6.5"
+        rx="10"
+        ry="3"
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -116,21 +100,19 @@ export const IconTableRoundSolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="table-round-solid-rounded IconTableRoundSolidRounded"
+      the-icon="TableRound SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -140,20 +122,19 @@ export const IconTableRoundBulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="table-round-bulk-rounded IconTableRoundBulkRounded"
+      the-icon="TableRound BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -163,27 +144,22 @@ export const IconTableRoundStrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="table-round-stroke-sharp IconTableRoundStrokeSharp"
+      the-icon="TableRound StrokeSharp"
     >
       <ellipse 
-        cx="12" 
-        cy="6.5" 
-        rx="10" 
-        ry="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></ellipse>
-      <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        cx="12"
+        cy="6.5"
+        rx="10"
+        ry="3"
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -193,33 +169,31 @@ export const IconTableRoundSolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="table-round-solid-sharp IconTableRoundSolidSharp"
+      the-icon="TableRound SolidSharp"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTableRound: TheIconSelfPack = {
-  name: 'TableRound',
-  StrokeRounded: IconTableRoundStrokeRounded,
-  DuotoneRounded: IconTableRoundDuotoneRounded,
-  TwotoneRounded: IconTableRoundTwotoneRounded,
-  SolidRounded: IconTableRoundSolidRounded,
-  BulkRounded: IconTableRoundBulkRounded,
-  StrokeSharp: IconTableRoundStrokeSharp,
-  SolidSharp: IconTableRoundSolidSharp,
-};
+export const iconPackOfTableRound: TheIconSelfPack = [
+  'TableRound',
+  IconTableRoundStrokeRounded,
+  IconTableRoundDuotoneRounded,
+  IconTableRoundTwotoneRounded,
+  IconTableRoundSolidRounded,
+  IconTableRoundBulkRounded,
+  IconTableRoundStrokeSharp,
+  IconTableRoundSolidSharp,
+];

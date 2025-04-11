@@ -16,14 +16,11 @@ export const IconAirbnbStrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="airbnb-stroke-rounded IconAirbnbStrokeRounded"
+      the-icon="Airbnb StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -33,19 +30,15 @@ export const IconAirbnbDuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="airbnb-duotone-rounded IconAirbnbDuotoneRounded"
+      the-icon="Airbnb DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -55,22 +48,15 @@ export const IconAirbnbTwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="airbnb-twotone-rounded IconAirbnbTwotoneRounded"
+      the-icon="Airbnb TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -80,13 +66,11 @@ export const IconAirbnbSolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="airbnb-solid-rounded IconAirbnbSolidRounded"
+      the-icon="Airbnb SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -96,18 +80,15 @@ export const IconAirbnbBulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="airbnb-bulk-rounded IconAirbnbBulkRounded"
+      the-icon="Airbnb BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -117,14 +98,11 @@ export const IconAirbnbStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="airbnb-stroke-sharp IconAirbnbStrokeSharp"
+      the-icon="Airbnb StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -134,25 +112,23 @@ export const IconAirbnbSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="airbnb-solid-sharp IconAirbnbSolidSharp"
+      the-icon="Airbnb SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAirbnb: TheIconSelfPack = {
-  name: 'Airbnb',
-  StrokeRounded: IconAirbnbStrokeRounded,
-  DuotoneRounded: IconAirbnbDuotoneRounded,
-  TwotoneRounded: IconAirbnbTwotoneRounded,
-  SolidRounded: IconAirbnbSolidRounded,
-  BulkRounded: IconAirbnbBulkRounded,
-  StrokeSharp: IconAirbnbStrokeSharp,
-  SolidSharp: IconAirbnbSolidSharp,
-};
+export const iconPackOfAirbnb: TheIconSelfPack = [
+  'Airbnb',
+  IconAirbnbStrokeRounded,
+  IconAirbnbDuotoneRounded,
+  IconAirbnbTwotoneRounded,
+  IconAirbnbSolidRounded,
+  IconAirbnbBulkRounded,
+  IconAirbnbStrokeSharp,
+  IconAirbnbSolidSharp,
+];

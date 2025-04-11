@@ -18,21 +18,15 @@ export const IconCursorRemoveSelection01StrokeRounded: FC<TheIconProps> = (props
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-remove-selection-01-stroke-rounded IconCursorRemoveSelection01StrokeRounded"
+      the-icon="CursorRemoveSelection01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -42,26 +36,19 @@ export const IconCursorRemoveSelection01DuotoneRounded: FC<TheIconProps> = (prop
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-remove-selection-01-duotone-rounded IconCursorRemoveSelection01DuotoneRounded"
+      the-icon="CursorRemoveSelection01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -71,22 +58,15 @@ export const IconCursorRemoveSelection01TwotoneRounded: FC<TheIconProps> = (prop
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-remove-selection-01-twotone-rounded IconCursorRemoveSelection01TwotoneRounded"
+      the-icon="CursorRemoveSelection01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -96,17 +76,15 @@ export const IconCursorRemoveSelection01SolidRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-remove-selection-01-solid-rounded IconCursorRemoveSelection01SolidRounded"
+      the-icon="CursorRemoveSelection01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -116,18 +94,15 @@ export const IconCursorRemoveSelection01BulkRounded: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-remove-selection-01-bulk-rounded IconCursorRemoveSelection01BulkRounded"
+      the-icon="CursorRemoveSelection01 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -137,18 +112,15 @@ export const IconCursorRemoveSelection01StrokeSharp: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-remove-selection-01-stroke-sharp IconCursorRemoveSelection01StrokeSharp"
+      the-icon="CursorRemoveSelection01 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -158,29 +130,27 @@ export const IconCursorRemoveSelection01SolidSharp: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-remove-selection-01-solid-sharp IconCursorRemoveSelection01SolidSharp"
+      the-icon="CursorRemoveSelection01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCursorRemoveSelection01: TheIconSelfPack = {
-  name: 'CursorRemoveSelection01',
-  StrokeRounded: IconCursorRemoveSelection01StrokeRounded,
-  DuotoneRounded: IconCursorRemoveSelection01DuotoneRounded,
-  TwotoneRounded: IconCursorRemoveSelection01TwotoneRounded,
-  SolidRounded: IconCursorRemoveSelection01SolidRounded,
-  BulkRounded: IconCursorRemoveSelection01BulkRounded,
-  StrokeSharp: IconCursorRemoveSelection01StrokeSharp,
-  SolidSharp: IconCursorRemoveSelection01SolidSharp,
-};
+export const iconPackOfCursorRemoveSelection01: TheIconSelfPack = [
+  'CursorRemoveSelection01',
+  IconCursorRemoveSelection01StrokeRounded,
+  IconCursorRemoveSelection01DuotoneRounded,
+  IconCursorRemoveSelection01TwotoneRounded,
+  IconCursorRemoveSelection01SolidRounded,
+  IconCursorRemoveSelection01BulkRounded,
+  IconCursorRemoveSelection01StrokeSharp,
+  IconCursorRemoveSelection01SolidSharp,
+];

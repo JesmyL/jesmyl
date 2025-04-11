@@ -18,18 +18,15 @@ export const IconLogoutCircle02StrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="logout-circle-02-stroke-rounded IconLogoutCircle02StrokeRounded"
+      the-icon="LogoutCircle02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -39,23 +36,19 @@ export const IconLogoutCircle02DuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="logout-circle-02-duotone-rounded IconLogoutCircle02DuotoneRounded"
+      the-icon="LogoutCircle02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -65,19 +58,15 @@ export const IconLogoutCircle02TwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="logout-circle-02-twotone-rounded IconLogoutCircle02TwotoneRounded"
+      the-icon="LogoutCircle02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -87,13 +76,11 @@ export const IconLogoutCircle02SolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="logout-circle-02-solid-rounded IconLogoutCircle02SolidRounded"
+      the-icon="LogoutCircle02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -103,22 +90,19 @@ export const IconLogoutCircle02BulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="logout-circle-02-bulk-rounded IconLogoutCircle02BulkRounded"
+      the-icon="LogoutCircle02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -128,17 +112,15 @@ export const IconLogoutCircle02StrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="logout-circle-02-stroke-sharp IconLogoutCircle02StrokeSharp"
+      the-icon="LogoutCircle02 StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -148,25 +130,23 @@ export const IconLogoutCircle02SolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="logout-circle-02-solid-sharp IconLogoutCircle02SolidSharp"
+      the-icon="LogoutCircle02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfLogoutCircle02: TheIconSelfPack = {
-  name: 'LogoutCircle02',
-  StrokeRounded: IconLogoutCircle02StrokeRounded,
-  DuotoneRounded: IconLogoutCircle02DuotoneRounded,
-  TwotoneRounded: IconLogoutCircle02TwotoneRounded,
-  SolidRounded: IconLogoutCircle02SolidRounded,
-  BulkRounded: IconLogoutCircle02BulkRounded,
-  StrokeSharp: IconLogoutCircle02StrokeSharp,
-  SolidSharp: IconLogoutCircle02SolidSharp,
-};
+export const iconPackOfLogoutCircle02: TheIconSelfPack = [
+  'LogoutCircle02',
+  IconLogoutCircle02StrokeRounded,
+  IconLogoutCircle02DuotoneRounded,
+  IconLogoutCircle02TwotoneRounded,
+  IconLogoutCircle02SolidRounded,
+  IconLogoutCircle02BulkRounded,
+  IconLogoutCircle02StrokeSharp,
+  IconLogoutCircle02SolidSharp,
+];

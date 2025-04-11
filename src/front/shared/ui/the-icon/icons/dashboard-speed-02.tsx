@@ -19,25 +19,21 @@ export const IconDashboardSpeed02StrokeRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="dashboard-speed-02-stroke-rounded IconDashboardSpeed02StrokeRounded"
+      the-icon="DashboardSpeed02 StrokeRounded"
     >
       <circle 
-        cx="12" 
-        cy="18" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        cx="12"
+        cy="18"
+        r="3"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -47,31 +43,27 @@ export const IconDashboardSpeed02DuotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="dashboard-speed-02-duotone-rounded IconDashboardSpeed02DuotoneRounded"
+      the-icon="DashboardSpeed02 DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="18" 
-        r="3" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="18"
+        r="3"
+        i-c="f o7"
+      />
       <circle 
-        cx="12" 
-        cy="18" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        cx="12"
+        cy="18"
+        r="3"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -81,20 +73,15 @@ export const IconDashboardSpeed02TwotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="dashboard-speed-02-twotone-rounded IconDashboardSpeed02TwotoneRounded"
+      the-icon="DashboardSpeed02 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -104,17 +91,15 @@ export const IconDashboardSpeed02SolidRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="dashboard-speed-02-solid-rounded IconDashboardSpeed02SolidRounded"
+      the-icon="DashboardSpeed02 SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -124,18 +109,15 @@ export const IconDashboardSpeed02BulkRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="dashboard-speed-02-bulk-rounded IconDashboardSpeed02BulkRounded"
+      the-icon="DashboardSpeed02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -145,23 +127,21 @@ export const IconDashboardSpeed02StrokeSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="dashboard-speed-02-stroke-sharp IconDashboardSpeed02StrokeSharp"
+      the-icon="DashboardSpeed02 StrokeSharp"
     >
       <circle 
-        cx="12" 
-        cy="17" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        cx="12"
+        cy="17"
+        r="3"
+        i-c="s sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
+      />
+      <path 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -171,35 +151,31 @@ export const IconDashboardSpeed02SolidSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="dashboard-speed-02-solid-sharp IconDashboardSpeed02SolidSharp"
+      the-icon="DashboardSpeed02 SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfDashboardSpeed02: TheIconSelfPack = {
-  name: 'DashboardSpeed02',
-  StrokeRounded: IconDashboardSpeed02StrokeRounded,
-  DuotoneRounded: IconDashboardSpeed02DuotoneRounded,
-  TwotoneRounded: IconDashboardSpeed02TwotoneRounded,
-  SolidRounded: IconDashboardSpeed02SolidRounded,
-  BulkRounded: IconDashboardSpeed02BulkRounded,
-  StrokeSharp: IconDashboardSpeed02StrokeSharp,
-  SolidSharp: IconDashboardSpeed02SolidSharp,
-};
+export const iconPackOfDashboardSpeed02: TheIconSelfPack = [
+  'DashboardSpeed02',
+  IconDashboardSpeed02StrokeRounded,
+  IconDashboardSpeed02DuotoneRounded,
+  IconDashboardSpeed02TwotoneRounded,
+  IconDashboardSpeed02SolidRounded,
+  IconDashboardSpeed02BulkRounded,
+  IconDashboardSpeed02StrokeSharp,
+  IconDashboardSpeed02SolidSharp,
+];

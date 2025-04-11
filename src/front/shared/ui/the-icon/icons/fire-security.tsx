@@ -21,20 +21,15 @@ export const IconFireSecurityStrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="fire-security-stroke-rounded IconFireSecurityStrokeRounded"
+      the-icon="FireSecurity StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -44,25 +39,19 @@ export const IconFireSecurityDuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="fire-security-duotone-rounded IconFireSecurityDuotoneRounded"
+      the-icon="FireSecurity DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d5}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -72,21 +61,15 @@ export const IconFireSecurityTwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="fire-security-twotone-rounded IconFireSecurityTwotoneRounded"
+      the-icon="FireSecurity TwotoneRounded"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d7}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -96,17 +79,15 @@ export const IconFireSecuritySolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="fire-security-solid-rounded IconFireSecuritySolidRounded"
+      the-icon="FireSecurity SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -116,18 +97,15 @@ export const IconFireSecurityBulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="fire-security-bulk-rounded IconFireSecurityBulkRounded"
+      the-icon="FireSecurity BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -137,18 +115,15 @@ export const IconFireSecurityStrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="fire-security-stroke-sharp IconFireSecurityStrokeSharp"
+      the-icon="FireSecurity StrokeSharp"
     >
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d10}
+        i-c="s sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -158,29 +133,27 @@ export const IconFireSecuritySolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="fire-security-solid-sharp IconFireSecuritySolidSharp"
+      the-icon="FireSecurity SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfFireSecurity: TheIconSelfPack = {
-  name: 'FireSecurity',
-  StrokeRounded: IconFireSecurityStrokeRounded,
-  DuotoneRounded: IconFireSecurityDuotoneRounded,
-  TwotoneRounded: IconFireSecurityTwotoneRounded,
-  SolidRounded: IconFireSecuritySolidRounded,
-  BulkRounded: IconFireSecurityBulkRounded,
-  StrokeSharp: IconFireSecurityStrokeSharp,
-  SolidSharp: IconFireSecuritySolidSharp,
-};
+export const iconPackOfFireSecurity: TheIconSelfPack = [
+  'FireSecurity',
+  IconFireSecurityStrokeRounded,
+  IconFireSecurityDuotoneRounded,
+  IconFireSecurityTwotoneRounded,
+  IconFireSecuritySolidRounded,
+  IconFireSecurityBulkRounded,
+  IconFireSecurityStrokeSharp,
+  IconFireSecuritySolidSharp,
+];

@@ -13,16 +13,14 @@ export const IconPayoneerStrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="payoneer-stroke-rounded IconPayoneerStrokeRounded"
+      the-icon="Payoneer StrokeRounded"
     >
       <circle 
-        cx="11.9999" 
-        cy="12" 
-        r="9.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="11.9999"
+        cy="12"
+        r="9.5"
+        i-c="s sj sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -31,22 +29,20 @@ export const IconPayoneerDuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="payoneer-duotone-rounded IconPayoneerDuotoneRounded"
+      the-icon="Payoneer DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="11.9999" 
-        cy="12" 
-        r="9.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="11.9999"
+        cy="12"
+        r="9.5"
+        i-c="f o7"
+      />
       <circle 
-        cx="11.9999" 
-        cy="12" 
-        r="9.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="11.9999"
+        cy="12"
+        r="9.5"
+        i-c="s sj sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -55,23 +51,17 @@ export const IconPayoneerTwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="payoneer-twotone-rounded IconPayoneerTwotoneRounded"
+      the-icon="Payoneer TwotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="11.9999" 
-        cy="12" 
-        r="9.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="11.9999"
+        cy="12"
+        r="9.5"
+        i-c="o7 s sj sr sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -81,13 +71,11 @@ export const IconPayoneerSolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="payoneer-solid-rounded IconPayoneerSolidRounded"
+      the-icon="Payoneer SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -97,18 +85,15 @@ export const IconPayoneerBulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="payoneer-bulk-rounded IconPayoneerBulkRounded"
+      the-icon="Payoneer BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -118,16 +103,14 @@ export const IconPayoneerStrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="payoneer-stroke-sharp IconPayoneerStrokeSharp"
+      the-icon="Payoneer StrokeSharp"
     >
       <circle 
-        cx="11.9999" 
-        cy="12" 
-        r="9.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="11.9999"
+        cy="12"
+        r="9.5"
+        i-c="s sj sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -136,25 +119,23 @@ export const IconPayoneerSolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="payoneer-solid-sharp IconPayoneerSolidSharp"
+      the-icon="Payoneer SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPayoneer: TheIconSelfPack = {
-  name: 'Payoneer',
-  StrokeRounded: IconPayoneerStrokeRounded,
-  DuotoneRounded: IconPayoneerDuotoneRounded,
-  TwotoneRounded: IconPayoneerTwotoneRounded,
-  SolidRounded: IconPayoneerSolidRounded,
-  BulkRounded: IconPayoneerBulkRounded,
-  StrokeSharp: IconPayoneerStrokeSharp,
-  SolidSharp: IconPayoneerSolidSharp,
-};
+export const iconPackOfPayoneer: TheIconSelfPack = [
+  'Payoneer',
+  IconPayoneerStrokeRounded,
+  IconPayoneerDuotoneRounded,
+  IconPayoneerTwotoneRounded,
+  IconPayoneerSolidRounded,
+  IconPayoneerBulkRounded,
+  IconPayoneerStrokeSharp,
+  IconPayoneerSolidSharp,
+];

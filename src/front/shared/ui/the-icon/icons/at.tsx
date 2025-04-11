@@ -18,13 +18,11 @@ export const IconAtStrokeRounded: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="at-stroke-rounded IconAtStrokeRounded"
+      the-icon="At StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -34,20 +32,15 @@ export const IconAtDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="at-duotone-rounded IconAtDuotoneRounded"
+      the-icon="At DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -57,20 +50,15 @@ export const IconAtTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="at-twotone-rounded IconAtTwotoneRounded"
+      the-icon="At TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -80,13 +68,11 @@ export const IconAtSolidRounded: FC<TheIconProps> = (props: TheIconProps): JSX.E
   return (
     <TheIconWrapper
       {...props}
-      name="at-solid-rounded IconAtSolidRounded"
+      the-icon="At SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -96,18 +82,15 @@ export const IconAtBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX.El
   return (
     <TheIconWrapper
       {...props}
-      name="at-bulk-rounded IconAtBulkRounded"
+      the-icon="At BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -117,12 +100,11 @@ export const IconAtStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX.El
   return (
     <TheIconWrapper
       {...props}
-      name="at-stroke-sharp IconAtStrokeSharp"
+      the-icon="At StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -132,25 +114,23 @@ export const IconAtSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.Ele
   return (
     <TheIconWrapper
       {...props}
-      name="at-solid-sharp IconAtSolidSharp"
+      the-icon="At SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAt: TheIconSelfPack = {
-  name: 'At',
-  StrokeRounded: IconAtStrokeRounded,
-  DuotoneRounded: IconAtDuotoneRounded,
-  TwotoneRounded: IconAtTwotoneRounded,
-  SolidRounded: IconAtSolidRounded,
-  BulkRounded: IconAtBulkRounded,
-  StrokeSharp: IconAtStrokeSharp,
-  SolidSharp: IconAtSolidSharp,
-};
+export const iconPackOfAt: TheIconSelfPack = [
+  'At',
+  IconAtStrokeRounded,
+  IconAtDuotoneRounded,
+  IconAtTwotoneRounded,
+  IconAtSolidRounded,
+  IconAtBulkRounded,
+  IconAtStrokeSharp,
+  IconAtSolidSharp,
+];

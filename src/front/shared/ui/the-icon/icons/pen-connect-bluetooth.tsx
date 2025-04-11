@@ -20,21 +20,15 @@ export const IconPenConnectBluetoothStrokeRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="pen-connect-bluetooth-stroke-rounded IconPenConnectBluetoothStrokeRounded"
+      the-icon="PenConnectBluetooth StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -44,26 +38,19 @@ export const IconPenConnectBluetoothDuotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="pen-connect-bluetooth-duotone-rounded IconPenConnectBluetoothDuotoneRounded"
+      the-icon="PenConnectBluetooth DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -73,22 +60,15 @@ export const IconPenConnectBluetoothTwotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="pen-connect-bluetooth-twotone-rounded IconPenConnectBluetoothTwotoneRounded"
+      the-icon="PenConnectBluetooth TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -98,21 +78,19 @@ export const IconPenConnectBluetoothSolidRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="pen-connect-bluetooth-solid-rounded IconPenConnectBluetoothSolidRounded"
+      the-icon="PenConnectBluetooth SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -122,23 +100,20 @@ export const IconPenConnectBluetoothBulkRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="pen-connect-bluetooth-bulk-rounded IconPenConnectBluetoothBulkRounded"
+      the-icon="PenConnectBluetooth BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       </g>
     </TheIconWrapper>
@@ -149,18 +124,15 @@ export const IconPenConnectBluetoothStrokeSharp: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="pen-connect-bluetooth-stroke-sharp IconPenConnectBluetoothStrokeSharp"
+      the-icon="PenConnectBluetooth StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -170,33 +142,31 @@ export const IconPenConnectBluetoothSolidSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="pen-connect-bluetooth-solid-sharp IconPenConnectBluetoothSolidSharp"
+      the-icon="PenConnectBluetooth SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPenConnectBluetooth: TheIconSelfPack = {
-  name: 'PenConnectBluetooth',
-  StrokeRounded: IconPenConnectBluetoothStrokeRounded,
-  DuotoneRounded: IconPenConnectBluetoothDuotoneRounded,
-  TwotoneRounded: IconPenConnectBluetoothTwotoneRounded,
-  SolidRounded: IconPenConnectBluetoothSolidRounded,
-  BulkRounded: IconPenConnectBluetoothBulkRounded,
-  StrokeSharp: IconPenConnectBluetoothStrokeSharp,
-  SolidSharp: IconPenConnectBluetoothSolidSharp,
-};
+export const iconPackOfPenConnectBluetooth: TheIconSelfPack = [
+  'PenConnectBluetooth',
+  IconPenConnectBluetoothStrokeRounded,
+  IconPenConnectBluetoothDuotoneRounded,
+  IconPenConnectBluetoothTwotoneRounded,
+  IconPenConnectBluetoothSolidRounded,
+  IconPenConnectBluetoothBulkRounded,
+  IconPenConnectBluetoothStrokeSharp,
+  IconPenConnectBluetoothSolidSharp,
+];

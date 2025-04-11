@@ -13,14 +13,11 @@ export const IconNikeStrokeRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="nike-stroke-rounded IconNikeStrokeRounded"
+      the-icon="Nike StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -30,19 +27,15 @@ export const IconNikeDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="nike-duotone-rounded IconNikeDuotoneRounded"
+      the-icon="Nike DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -52,22 +45,15 @@ export const IconNikeTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="nike-twotone-rounded IconNikeTwotoneRounded"
+      the-icon="Nike TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -77,11 +63,11 @@ export const IconNikeSolidRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="nike-solid-rounded IconNikeSolidRounded"
+      the-icon="Nike SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -91,16 +77,15 @@ export const IconNikeBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="nike-bulk-rounded IconNikeBulkRounded"
+      the-icon="Nike BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -110,14 +95,11 @@ export const IconNikeStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="nike-stroke-sharp IconNikeStrokeSharp"
+      the-icon="Nike StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -127,23 +109,23 @@ export const IconNikeSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.E
   return (
     <TheIconWrapper
       {...props}
-      name="nike-solid-sharp IconNikeSolidSharp"
+      the-icon="Nike SolidSharp"
     >
       <path 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfNike: TheIconSelfPack = {
-  name: 'Nike',
-  StrokeRounded: IconNikeStrokeRounded,
-  DuotoneRounded: IconNikeDuotoneRounded,
-  TwotoneRounded: IconNikeTwotoneRounded,
-  SolidRounded: IconNikeSolidRounded,
-  BulkRounded: IconNikeBulkRounded,
-  StrokeSharp: IconNikeStrokeSharp,
-  SolidSharp: IconNikeSolidSharp,
-};
+export const iconPackOfNike: TheIconSelfPack = [
+  'Nike',
+  IconNikeStrokeRounded,
+  IconNikeDuotoneRounded,
+  IconNikeTwotoneRounded,
+  IconNikeSolidRounded,
+  IconNikeBulkRounded,
+  IconNikeStrokeSharp,
+  IconNikeSolidSharp,
+];

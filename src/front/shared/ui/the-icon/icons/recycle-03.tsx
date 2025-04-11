@@ -18,14 +18,11 @@ export const IconRecycle03StrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="recycle-03-stroke-rounded IconRecycle03StrokeRounded"
+      the-icon="Recycle03 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -35,19 +32,15 @@ export const IconRecycle03DuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="recycle-03-duotone-rounded IconRecycle03DuotoneRounded"
+      the-icon="Recycle03 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -57,22 +50,15 @@ export const IconRecycle03TwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="recycle-03-twotone-rounded IconRecycle03TwotoneRounded"
+      the-icon="Recycle03 TwotoneRounded"
     >
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -82,13 +68,11 @@ export const IconRecycle03SolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="recycle-03-solid-rounded IconRecycle03SolidRounded"
+      the-icon="Recycle03 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -98,20 +82,15 @@ export const IconRecycle03BulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="recycle-03-bulk-rounded IconRecycle03BulkRounded"
+      the-icon="Recycle03 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -121,13 +100,11 @@ export const IconRecycle03StrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="recycle-03-stroke-sharp IconRecycle03StrokeSharp"
+      the-icon="Recycle03 StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d8}
+        i-c="s ss sw"
       />
     </TheIconWrapper>
   );
@@ -137,25 +114,23 @@ export const IconRecycle03SolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="recycle-03-solid-sharp IconRecycle03SolidSharp"
+      the-icon="Recycle03 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfRecycle03: TheIconSelfPack = {
-  name: 'Recycle03',
-  StrokeRounded: IconRecycle03StrokeRounded,
-  DuotoneRounded: IconRecycle03DuotoneRounded,
-  TwotoneRounded: IconRecycle03TwotoneRounded,
-  SolidRounded: IconRecycle03SolidRounded,
-  BulkRounded: IconRecycle03BulkRounded,
-  StrokeSharp: IconRecycle03StrokeSharp,
-  SolidSharp: IconRecycle03SolidSharp,
-};
+export const iconPackOfRecycle03: TheIconSelfPack = [
+  'Recycle03',
+  IconRecycle03StrokeRounded,
+  IconRecycle03DuotoneRounded,
+  IconRecycle03TwotoneRounded,
+  IconRecycle03SolidRounded,
+  IconRecycle03BulkRounded,
+  IconRecycle03StrokeSharp,
+  IconRecycle03SolidSharp,
+];

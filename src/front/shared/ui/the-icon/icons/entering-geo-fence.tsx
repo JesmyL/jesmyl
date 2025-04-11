@@ -16,20 +16,15 @@ export const IconEnteringGeoFenceStrokeRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="entering-geo-fence-stroke-rounded IconEnteringGeoFenceStrokeRounded"
+      the-icon="EnteringGeoFence StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -39,27 +34,22 @@ export const IconEnteringGeoFenceDuotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="entering-geo-fence-duotone-rounded IconEnteringGeoFenceDuotoneRounded"
+      the-icon="EnteringGeoFence DuotoneRounded"
     >
       <ellipse 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="17.5" 
-        rx="9" 
-        ry="3.5" 
-        fill="var(--icon-fill)"></ellipse>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        cx="12"
+        cy="17.5"
+        rx="9"
+        ry="3.5"
+        i-c="f o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -69,21 +59,15 @@ export const IconEnteringGeoFenceTwotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="entering-geo-fence-twotone-rounded IconEnteringGeoFenceTwotoneRounded"
+      the-icon="EnteringGeoFence TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -93,17 +77,15 @@ export const IconEnteringGeoFenceSolidRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="entering-geo-fence-solid-rounded IconEnteringGeoFenceSolidRounded"
+      the-icon="EnteringGeoFence SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -113,18 +95,15 @@ export const IconEnteringGeoFenceBulkRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="entering-geo-fence-bulk-rounded IconEnteringGeoFenceBulkRounded"
+      the-icon="EnteringGeoFence BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -134,18 +113,15 @@ export const IconEnteringGeoFenceStrokeSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="entering-geo-fence-stroke-sharp IconEnteringGeoFenceStrokeSharp"
+      the-icon="EnteringGeoFence StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -155,31 +131,27 @@ export const IconEnteringGeoFenceSolidSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="entering-geo-fence-solid-sharp IconEnteringGeoFenceSolidSharp"
+      the-icon="EnteringGeoFence SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfEnteringGeoFence: TheIconSelfPack = {
-  name: 'EnteringGeoFence',
-  StrokeRounded: IconEnteringGeoFenceStrokeRounded,
-  DuotoneRounded: IconEnteringGeoFenceDuotoneRounded,
-  TwotoneRounded: IconEnteringGeoFenceTwotoneRounded,
-  SolidRounded: IconEnteringGeoFenceSolidRounded,
-  BulkRounded: IconEnteringGeoFenceBulkRounded,
-  StrokeSharp: IconEnteringGeoFenceStrokeSharp,
-  SolidSharp: IconEnteringGeoFenceSolidSharp,
-};
+export const iconPackOfEnteringGeoFence: TheIconSelfPack = [
+  'EnteringGeoFence',
+  IconEnteringGeoFenceStrokeRounded,
+  IconEnteringGeoFenceDuotoneRounded,
+  IconEnteringGeoFenceTwotoneRounded,
+  IconEnteringGeoFenceSolidRounded,
+  IconEnteringGeoFenceBulkRounded,
+  IconEnteringGeoFenceStrokeSharp,
+  IconEnteringGeoFenceSolidSharp,
+];

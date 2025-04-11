@@ -17,13 +17,11 @@ export const IconThreeFinger04StrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="three-finger-04-stroke-rounded IconThreeFinger04StrokeRounded"
+      the-icon="ThreeFinger04 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -33,18 +31,15 @@ export const IconThreeFinger04DuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="three-finger-04-duotone-rounded IconThreeFinger04DuotoneRounded"
+      the-icon="ThreeFinger04 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,20 +49,15 @@ export const IconThreeFinger04TwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="three-finger-04-twotone-rounded IconThreeFinger04TwotoneRounded"
+      the-icon="ThreeFinger04 TwotoneRounded"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d5}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -77,11 +67,11 @@ export const IconThreeFinger04SolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="three-finger-04-solid-rounded IconThreeFinger04SolidRounded"
+      the-icon="ThreeFinger04 SolidRounded"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -91,12 +81,11 @@ export const IconThreeFinger04BulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="three-finger-04-bulk-rounded IconThreeFinger04BulkRounded"
+      the-icon="ThreeFinger04 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -106,12 +95,11 @@ export const IconThreeFinger04StrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="three-finger-04-stroke-sharp IconThreeFinger04StrokeSharp"
+      the-icon="ThreeFinger04 StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -121,23 +109,23 @@ export const IconThreeFinger04SolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="three-finger-04-solid-sharp IconThreeFinger04SolidSharp"
+      the-icon="ThreeFinger04 SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfThreeFinger04: TheIconSelfPack = {
-  name: 'ThreeFinger04',
-  StrokeRounded: IconThreeFinger04StrokeRounded,
-  DuotoneRounded: IconThreeFinger04DuotoneRounded,
-  TwotoneRounded: IconThreeFinger04TwotoneRounded,
-  SolidRounded: IconThreeFinger04SolidRounded,
-  BulkRounded: IconThreeFinger04BulkRounded,
-  StrokeSharp: IconThreeFinger04StrokeSharp,
-  SolidSharp: IconThreeFinger04SolidSharp,
-};
+export const iconPackOfThreeFinger04: TheIconSelfPack = [
+  'ThreeFinger04',
+  IconThreeFinger04StrokeRounded,
+  IconThreeFinger04DuotoneRounded,
+  IconThreeFinger04TwotoneRounded,
+  IconThreeFinger04SolidRounded,
+  IconThreeFinger04BulkRounded,
+  IconThreeFinger04StrokeSharp,
+  IconThreeFinger04SolidSharp,
+];

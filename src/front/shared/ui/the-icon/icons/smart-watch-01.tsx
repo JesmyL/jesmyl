@@ -17,27 +17,21 @@ export const IconSmartWatch01StrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="smart-watch-01-stroke-rounded IconSmartWatch01StrokeRounded"
+      the-icon="SmartWatch01 StrokeRounded"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="6" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        cx="12"
+        cy="12"
+        r="6"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -47,33 +41,27 @@ export const IconSmartWatch01DuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="smart-watch-01-duotone-rounded IconSmartWatch01DuotoneRounded"
+      the-icon="SmartWatch01 DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="6" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="12"
+        r="6"
+        i-c="f o7"
+      />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="6" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        cx="12"
+        cy="12"
+        r="6"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -83,29 +71,21 @@ export const IconSmartWatch01TwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="smart-watch-01-twotone-rounded IconSmartWatch01TwotoneRounded"
+      the-icon="SmartWatch01 TwotoneRounded"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="6" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        cx="12"
+        cy="12"
+        r="6"
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -115,17 +95,15 @@ export const IconSmartWatch01SolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="smart-watch-01-solid-rounded IconSmartWatch01SolidRounded"
+      the-icon="SmartWatch01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -135,18 +113,15 @@ export const IconSmartWatch01BulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="smart-watch-01-bulk-rounded IconSmartWatch01BulkRounded"
+      the-icon="SmartWatch01 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -156,25 +131,21 @@ export const IconSmartWatch01StrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="smart-watch-01-stroke-sharp IconSmartWatch01StrokeSharp"
+      the-icon="SmartWatch01 StrokeSharp"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="6" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        cx="12"
+        cy="12"
+        r="6"
+        i-c="s sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d5}
+        i-c="s sr sw"
+      />
+      <path 
+        d={d.d6}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -184,29 +155,27 @@ export const IconSmartWatch01SolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="smart-watch-01-solid-sharp IconSmartWatch01SolidSharp"
+      the-icon="SmartWatch01 SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSmartWatch01: TheIconSelfPack = {
-  name: 'SmartWatch01',
-  StrokeRounded: IconSmartWatch01StrokeRounded,
-  DuotoneRounded: IconSmartWatch01DuotoneRounded,
-  TwotoneRounded: IconSmartWatch01TwotoneRounded,
-  SolidRounded: IconSmartWatch01SolidRounded,
-  BulkRounded: IconSmartWatch01BulkRounded,
-  StrokeSharp: IconSmartWatch01StrokeSharp,
-  SolidSharp: IconSmartWatch01SolidSharp,
-};
+export const iconPackOfSmartWatch01: TheIconSelfPack = [
+  'SmartWatch01',
+  IconSmartWatch01StrokeRounded,
+  IconSmartWatch01DuotoneRounded,
+  IconSmartWatch01TwotoneRounded,
+  IconSmartWatch01SolidRounded,
+  IconSmartWatch01BulkRounded,
+  IconSmartWatch01StrokeSharp,
+  IconSmartWatch01SolidSharp,
+];

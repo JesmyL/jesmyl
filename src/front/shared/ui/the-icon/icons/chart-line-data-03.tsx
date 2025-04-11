@@ -17,19 +17,15 @@ export const IconChartLineData03StrokeRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="chart-line-data-03-stroke-rounded IconChartLineData03StrokeRounded"
+      the-icon="ChartLineData03 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -39,20 +35,15 @@ export const IconChartLineData03DuotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="chart-line-data-03-duotone-rounded IconChartLineData03DuotoneRounded"
+      the-icon="ChartLineData03 DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -62,20 +53,15 @@ export const IconChartLineData03TwotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="chart-line-data-03-twotone-rounded IconChartLineData03TwotoneRounded"
+      the-icon="ChartLineData03 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -85,13 +71,11 @@ export const IconChartLineData03SolidRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="chart-line-data-03-solid-rounded IconChartLineData03SolidRounded"
+      the-icon="ChartLineData03 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -101,20 +85,15 @@ export const IconChartLineData03BulkRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="chart-line-data-03-bulk-rounded IconChartLineData03BulkRounded"
+      the-icon="ChartLineData03 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -124,19 +103,15 @@ export const IconChartLineData03StrokeSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="chart-line-data-03-stroke-sharp IconChartLineData03StrokeSharp"
+      the-icon="ChartLineData03 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -146,23 +121,23 @@ export const IconChartLineData03SolidSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="chart-line-data-03-solid-sharp IconChartLineData03SolidSharp"
+      the-icon="ChartLineData03 SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfChartLineData03: TheIconSelfPack = {
-  name: 'ChartLineData03',
-  StrokeRounded: IconChartLineData03StrokeRounded,
-  DuotoneRounded: IconChartLineData03DuotoneRounded,
-  TwotoneRounded: IconChartLineData03TwotoneRounded,
-  SolidRounded: IconChartLineData03SolidRounded,
-  BulkRounded: IconChartLineData03BulkRounded,
-  StrokeSharp: IconChartLineData03StrokeSharp,
-  SolidSharp: IconChartLineData03SolidSharp,
-};
+export const iconPackOfChartLineData03: TheIconSelfPack = [
+  'ChartLineData03',
+  IconChartLineData03StrokeRounded,
+  IconChartLineData03DuotoneRounded,
+  IconChartLineData03TwotoneRounded,
+  IconChartLineData03SolidRounded,
+  IconChartLineData03BulkRounded,
+  IconChartLineData03StrokeSharp,
+  IconChartLineData03SolidSharp,
+];

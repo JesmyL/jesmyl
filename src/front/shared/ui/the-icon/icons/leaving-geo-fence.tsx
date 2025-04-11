@@ -16,20 +16,15 @@ export const IconLeavingGeoFenceStrokeRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="leaving-geo-fence-stroke-rounded IconLeavingGeoFenceStrokeRounded"
+      the-icon="LeavingGeoFence StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -39,27 +34,22 @@ export const IconLeavingGeoFenceDuotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="leaving-geo-fence-duotone-rounded IconLeavingGeoFenceDuotoneRounded"
+      the-icon="LeavingGeoFence DuotoneRounded"
     >
       <ellipse 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="17.5" 
-        rx="9" 
-        ry="3.5" 
-        fill="var(--icon-fill)"></ellipse>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        cx="12"
+        cy="17.5"
+        rx="9"
+        ry="3.5"
+        i-c="f o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -69,21 +59,15 @@ export const IconLeavingGeoFenceTwotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="leaving-geo-fence-twotone-rounded IconLeavingGeoFenceTwotoneRounded"
+      the-icon="LeavingGeoFence TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -93,17 +77,15 @@ export const IconLeavingGeoFenceSolidRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="leaving-geo-fence-solid-rounded IconLeavingGeoFenceSolidRounded"
+      the-icon="LeavingGeoFence SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -113,18 +95,15 @@ export const IconLeavingGeoFenceBulkRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="leaving-geo-fence-bulk-rounded IconLeavingGeoFenceBulkRounded"
+      the-icon="LeavingGeoFence BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -134,18 +113,15 @@ export const IconLeavingGeoFenceStrokeSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="leaving-geo-fence-stroke-sharp IconLeavingGeoFenceStrokeSharp"
+      the-icon="LeavingGeoFence StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -155,31 +131,27 @@ export const IconLeavingGeoFenceSolidSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="leaving-geo-fence-solid-sharp IconLeavingGeoFenceSolidSharp"
+      the-icon="LeavingGeoFence SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfLeavingGeoFence: TheIconSelfPack = {
-  name: 'LeavingGeoFence',
-  StrokeRounded: IconLeavingGeoFenceStrokeRounded,
-  DuotoneRounded: IconLeavingGeoFenceDuotoneRounded,
-  TwotoneRounded: IconLeavingGeoFenceTwotoneRounded,
-  SolidRounded: IconLeavingGeoFenceSolidRounded,
-  BulkRounded: IconLeavingGeoFenceBulkRounded,
-  StrokeSharp: IconLeavingGeoFenceStrokeSharp,
-  SolidSharp: IconLeavingGeoFenceSolidSharp,
-};
+export const iconPackOfLeavingGeoFence: TheIconSelfPack = [
+  'LeavingGeoFence',
+  IconLeavingGeoFenceStrokeRounded,
+  IconLeavingGeoFenceDuotoneRounded,
+  IconLeavingGeoFenceTwotoneRounded,
+  IconLeavingGeoFenceSolidRounded,
+  IconLeavingGeoFenceBulkRounded,
+  IconLeavingGeoFenceStrokeSharp,
+  IconLeavingGeoFenceSolidSharp,
+];

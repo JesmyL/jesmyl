@@ -16,11 +16,11 @@ export const IconHold04StrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="hold-04-stroke-rounded IconHold04StrokeRounded"
+      the-icon="Hold04 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -30,18 +30,15 @@ export const IconHold04DuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="hold-04-duotone-rounded IconHold04DuotoneRounded"
+      the-icon="Hold04 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -51,16 +48,15 @@ export const IconHold04TwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="hold-04-twotone-rounded IconHold04TwotoneRounded"
+      the-icon="Hold04 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -70,11 +66,11 @@ export const IconHold04SolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="hold-04-solid-rounded IconHold04SolidRounded"
+      the-icon="Hold04 SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -84,12 +80,11 @@ export const IconHold04BulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="hold-04-bulk-rounded IconHold04BulkRounded"
+      the-icon="Hold04 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -99,12 +94,11 @@ export const IconHold04StrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="hold-04-stroke-sharp IconHold04StrokeSharp"
+      the-icon="Hold04 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -114,23 +108,23 @@ export const IconHold04SolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="hold-04-solid-sharp IconHold04SolidSharp"
+      the-icon="Hold04 SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfHold04: TheIconSelfPack = {
-  name: 'Hold04',
-  StrokeRounded: IconHold04StrokeRounded,
-  DuotoneRounded: IconHold04DuotoneRounded,
-  TwotoneRounded: IconHold04TwotoneRounded,
-  SolidRounded: IconHold04SolidRounded,
-  BulkRounded: IconHold04BulkRounded,
-  StrokeSharp: IconHold04StrokeSharp,
-  SolidSharp: IconHold04SolidSharp,
-};
+export const iconPackOfHold04: TheIconSelfPack = [
+  'Hold04',
+  IconHold04StrokeRounded,
+  IconHold04DuotoneRounded,
+  IconHold04TwotoneRounded,
+  IconHold04SolidRounded,
+  IconHold04BulkRounded,
+  IconHold04StrokeSharp,
+  IconHold04SolidSharp,
+];

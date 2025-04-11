@@ -18,33 +18,31 @@ export const IconMediumSquareStrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="medium-square-stroke-rounded IconMediumSquareStrokeRounded"
+      the-icon="MediumSquare StrokeRounded"
     >
       <circle 
-        cx="7.5" 
-        cy="12.5" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="7.5"
+        cy="12.5"
+        r="2.5"
+        i-c="s sw"
+      />
       <ellipse 
-        cx="13.5" 
-        cy="12.5" 
-        rx="1.5" 
-        ry="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
+        cx="13.5"
+        cy="12.5"
+        rx="1.5"
+        ry="2.5"
+        i-c="s sw"
+      />
       <ellipse 
-        cx="18" 
-        cy="12.5" 
-        rx="1" 
-        ry="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
+        cx="18"
+        cy="12.5"
+        rx="1"
+        ry="2.5"
+        i-c="s sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -54,40 +52,35 @@ export const IconMediumSquareDuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="medium-square-duotone-rounded IconMediumSquareDuotoneRounded"
+      the-icon="MediumSquare DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr o7"
       />
       <circle 
-        cx="7.5" 
-        cy="12.5" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="7.5"
+        cy="12.5"
+        r="2.5"
+        i-c="s sw"
+      />
       <ellipse 
-        cx="13.5" 
-        cy="12.5" 
-        rx="1.5" 
-        ry="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
+        cx="13.5"
+        cy="12.5"
+        rx="1.5"
+        ry="2.5"
+        i-c="s sw"
+      />
       <ellipse 
-        cx="18" 
-        cy="12.5" 
-        rx="1" 
-        ry="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
+        cx="18"
+        cy="12.5"
+        rx="1"
+        ry="2.5"
+        i-c="s sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -97,36 +90,31 @@ export const IconMediumSquareTwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="medium-square-twotone-rounded IconMediumSquareTwotoneRounded"
+      the-icon="MediumSquare TwotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="7.5" 
-        cy="12.5" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="7.5"
+        cy="12.5"
+        r="2.5"
+        i-c="o7 s sw"
+      />
       <ellipse 
-        opacity="var(--icon-opacity)" 
-        cx="13.5" 
-        cy="12.5" 
-        rx="1.5" 
-        ry="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
+        cx="13.5"
+        cy="12.5"
+        rx="1.5"
+        ry="2.5"
+        i-c="o7 s sw"
+      />
       <ellipse 
-        opacity="var(--icon-opacity)" 
-        cx="18" 
-        cy="12.5" 
-        rx="1" 
-        ry="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
+        cx="18"
+        cy="12.5"
+        rx="1"
+        ry="2.5"
+        i-c="o7 s sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -136,13 +124,11 @@ export const IconMediumSquareSolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="medium-square-solid-rounded IconMediumSquareSolidRounded"
+      the-icon="MediumSquare SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -152,24 +138,23 @@ export const IconMediumSquareBulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="medium-square-bulk-rounded IconMediumSquareBulkRounded"
+      the-icon="MediumSquare BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -179,34 +164,31 @@ export const IconMediumSquareStrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="medium-square-stroke-sharp IconMediumSquareStrokeSharp"
+      the-icon="MediumSquare StrokeSharp"
     >
       <circle 
-        cx="7.5" 
-        cy="12.5" 
-        r="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="7.5"
+        cy="12.5"
+        r="2.5"
+        i-c="s sw"
+      />
       <ellipse 
-        cx="13.5" 
-        cy="12.5" 
-        rx="1.5" 
-        ry="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
+        cx="13.5"
+        cy="12.5"
+        rx="1.5"
+        ry="2.5"
+        i-c="s sw"
+      />
       <ellipse 
-        cx="18" 
-        cy="12.5" 
-        rx="1" 
-        ry="2.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
+        cx="18"
+        cy="12.5"
+        rx="1"
+        ry="2.5"
+        i-c="s sw"
+      />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj ss sw"
       />
     </TheIconWrapper>
   );
@@ -216,25 +198,23 @@ export const IconMediumSquareSolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="medium-square-solid-sharp IconMediumSquareSolidSharp"
+      the-icon="MediumSquare SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMediumSquare: TheIconSelfPack = {
-  name: 'MediumSquare',
-  StrokeRounded: IconMediumSquareStrokeRounded,
-  DuotoneRounded: IconMediumSquareDuotoneRounded,
-  TwotoneRounded: IconMediumSquareTwotoneRounded,
-  SolidRounded: IconMediumSquareSolidRounded,
-  BulkRounded: IconMediumSquareBulkRounded,
-  StrokeSharp: IconMediumSquareStrokeSharp,
-  SolidSharp: IconMediumSquareSolidSharp,
-};
+export const iconPackOfMediumSquare: TheIconSelfPack = [
+  'MediumSquare',
+  IconMediumSquareStrokeRounded,
+  IconMediumSquareDuotoneRounded,
+  IconMediumSquareTwotoneRounded,
+  IconMediumSquareSolidRounded,
+  IconMediumSquareBulkRounded,
+  IconMediumSquareStrokeSharp,
+  IconMediumSquareSolidSharp,
+];

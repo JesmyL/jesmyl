@@ -20,21 +20,15 @@ export const IconFileCorruptStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="file-corrupt-stroke-rounded IconFileCorruptStrokeRounded"
+      the-icon="FileCorrupt StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -44,26 +38,19 @@ export const IconFileCorruptDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="file-corrupt-duotone-rounded IconFileCorruptDuotoneRounded"
+      the-icon="FileCorrupt DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -73,22 +60,15 @@ export const IconFileCorruptTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="file-corrupt-twotone-rounded IconFileCorruptTwotoneRounded"
+      the-icon="FileCorrupt TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -98,11 +78,11 @@ export const IconFileCorruptSolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="file-corrupt-solid-rounded IconFileCorruptSolidRounded"
+      the-icon="FileCorrupt SolidRounded"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -112,16 +92,15 @@ export const IconFileCorruptBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="file-corrupt-bulk-rounded IconFileCorruptBulkRounded"
+      the-icon="FileCorrupt BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o7"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -131,12 +110,11 @@ export const IconFileCorruptStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="file-corrupt-stroke-sharp IconFileCorruptStrokeSharp"
+      the-icon="FileCorrupt StrokeSharp"
     >
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d10}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -146,23 +124,23 @@ export const IconFileCorruptSolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="file-corrupt-solid-sharp IconFileCorruptSolidSharp"
+      the-icon="FileCorrupt SolidSharp"
     >
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfFileCorrupt: TheIconSelfPack = {
-  name: 'FileCorrupt',
-  StrokeRounded: IconFileCorruptStrokeRounded,
-  DuotoneRounded: IconFileCorruptDuotoneRounded,
-  TwotoneRounded: IconFileCorruptTwotoneRounded,
-  SolidRounded: IconFileCorruptSolidRounded,
-  BulkRounded: IconFileCorruptBulkRounded,
-  StrokeSharp: IconFileCorruptStrokeSharp,
-  SolidSharp: IconFileCorruptSolidSharp,
-};
+export const iconPackOfFileCorrupt: TheIconSelfPack = [
+  'FileCorrupt',
+  IconFileCorruptStrokeRounded,
+  IconFileCorruptDuotoneRounded,
+  IconFileCorruptTwotoneRounded,
+  IconFileCorruptSolidRounded,
+  IconFileCorruptBulkRounded,
+  IconFileCorruptStrokeSharp,
+  IconFileCorruptSolidSharp,
+];

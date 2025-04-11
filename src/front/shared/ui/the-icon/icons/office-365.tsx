@@ -18,14 +18,11 @@ export const IconOffice365StrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="office-365-stroke-rounded IconOffice365StrokeRounded"
+      the-icon="Office365 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -35,19 +32,15 @@ export const IconOffice365DuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="office-365-duotone-rounded IconOffice365DuotoneRounded"
+      the-icon="Office365 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -57,22 +50,15 @@ export const IconOffice365TwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="office-365-twotone-rounded IconOffice365TwotoneRounded"
+      the-icon="Office365 TwotoneRounded"
     >
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -82,13 +68,11 @@ export const IconOffice365SolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="office-365-solid-rounded IconOffice365SolidRounded"
+      the-icon="Office365 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -98,18 +82,15 @@ export const IconOffice365BulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="office-365-bulk-rounded IconOffice365BulkRounded"
+      the-icon="Office365 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -119,13 +100,11 @@ export const IconOffice365StrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="office-365-stroke-sharp IconOffice365StrokeSharp"
+      the-icon="Office365 StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d8}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -135,25 +114,23 @@ export const IconOffice365SolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="office-365-solid-sharp IconOffice365SolidSharp"
+      the-icon="Office365 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfOffice365: TheIconSelfPack = {
-  name: 'Office365',
-  StrokeRounded: IconOffice365StrokeRounded,
-  DuotoneRounded: IconOffice365DuotoneRounded,
-  TwotoneRounded: IconOffice365TwotoneRounded,
-  SolidRounded: IconOffice365SolidRounded,
-  BulkRounded: IconOffice365BulkRounded,
-  StrokeSharp: IconOffice365StrokeSharp,
-  SolidSharp: IconOffice365SolidSharp,
-};
+export const iconPackOfOffice365: TheIconSelfPack = [
+  'Office365',
+  IconOffice365StrokeRounded,
+  IconOffice365DuotoneRounded,
+  IconOffice365TwotoneRounded,
+  IconOffice365SolidRounded,
+  IconOffice365BulkRounded,
+  IconOffice365StrokeSharp,
+  IconOffice365SolidSharp,
+];

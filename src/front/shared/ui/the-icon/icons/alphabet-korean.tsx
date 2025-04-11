@@ -18,19 +18,15 @@ export const IconAlphabetKoreanStrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-korean-stroke-rounded IconAlphabetKoreanStrokeRounded"
+      the-icon="AlphabetKorean StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -40,24 +36,19 @@ export const IconAlphabetKoreanDuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-korean-duotone-rounded IconAlphabetKoreanDuotoneRounded"
+      the-icon="AlphabetKorean DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -67,20 +58,15 @@ export const IconAlphabetKoreanTwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-korean-twotone-rounded IconAlphabetKoreanTwotoneRounded"
+      the-icon="AlphabetKorean TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -90,19 +76,15 @@ export const IconAlphabetKoreanSolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-korean-solid-rounded IconAlphabetKoreanSolidRounded"
+      the-icon="AlphabetKorean SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -112,20 +94,15 @@ export const IconAlphabetKoreanBulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-korean-bulk-rounded IconAlphabetKoreanBulkRounded"
+      the-icon="AlphabetKorean BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -135,18 +112,15 @@ export const IconAlphabetKoreanStrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-korean-stroke-sharp IconAlphabetKoreanStrokeSharp"
+      the-icon="AlphabetKorean StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -156,31 +130,27 @@ export const IconAlphabetKoreanSolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="alphabet-korean-solid-sharp IconAlphabetKoreanSolidSharp"
+      the-icon="AlphabetKorean SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAlphabetKorean: TheIconSelfPack = {
-  name: 'AlphabetKorean',
-  StrokeRounded: IconAlphabetKoreanStrokeRounded,
-  DuotoneRounded: IconAlphabetKoreanDuotoneRounded,
-  TwotoneRounded: IconAlphabetKoreanTwotoneRounded,
-  SolidRounded: IconAlphabetKoreanSolidRounded,
-  BulkRounded: IconAlphabetKoreanBulkRounded,
-  StrokeSharp: IconAlphabetKoreanStrokeSharp,
-  SolidSharp: IconAlphabetKoreanSolidSharp,
-};
+export const iconPackOfAlphabetKorean: TheIconSelfPack = [
+  'AlphabetKorean',
+  IconAlphabetKoreanStrokeRounded,
+  IconAlphabetKoreanDuotoneRounded,
+  IconAlphabetKoreanTwotoneRounded,
+  IconAlphabetKoreanSolidRounded,
+  IconAlphabetKoreanBulkRounded,
+  IconAlphabetKoreanStrokeSharp,
+  IconAlphabetKoreanSolidSharp,
+];

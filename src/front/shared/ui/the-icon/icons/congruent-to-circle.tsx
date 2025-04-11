@@ -14,21 +14,18 @@ export const IconCongruentToCircleStrokeRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="congruent-to-circle-stroke-rounded IconCongruentToCircleStrokeRounded"
+      the-icon="CongruentToCircle StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -37,27 +34,23 @@ export const IconCongruentToCircleDuotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="congruent-to-circle-duotone-rounded IconCongruentToCircleDuotoneRounded"
+      the-icon="CongruentToCircle DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="f o7"
+      />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -67,22 +60,18 @@ export const IconCongruentToCircleTwotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="congruent-to-circle-twotone-rounded IconCongruentToCircleTwotoneRounded"
+      the-icon="CongruentToCircle TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -91,13 +80,11 @@ export const IconCongruentToCircleSolidRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="congruent-to-circle-solid-rounded IconCongruentToCircleSolidRounded"
+      the-icon="CongruentToCircle SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -107,18 +94,15 @@ export const IconCongruentToCircleBulkRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="congruent-to-circle-bulk-rounded IconCongruentToCircleBulkRounded"
+      the-icon="CongruentToCircle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -128,21 +112,18 @@ export const IconCongruentToCircleStrokeSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="congruent-to-circle-stroke-sharp IconCongruentToCircleStrokeSharp"
+      the-icon="CongruentToCircle StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -151,25 +132,23 @@ export const IconCongruentToCircleSolidSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="congruent-to-circle-solid-sharp IconCongruentToCircleSolidSharp"
+      the-icon="CongruentToCircle SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCongruentToCircle: TheIconSelfPack = {
-  name: 'CongruentToCircle',
-  StrokeRounded: IconCongruentToCircleStrokeRounded,
-  DuotoneRounded: IconCongruentToCircleDuotoneRounded,
-  TwotoneRounded: IconCongruentToCircleTwotoneRounded,
-  SolidRounded: IconCongruentToCircleSolidRounded,
-  BulkRounded: IconCongruentToCircleBulkRounded,
-  StrokeSharp: IconCongruentToCircleStrokeSharp,
-  SolidSharp: IconCongruentToCircleSolidSharp,
-};
+export const iconPackOfCongruentToCircle: TheIconSelfPack = [
+  'CongruentToCircle',
+  IconCongruentToCircleStrokeRounded,
+  IconCongruentToCircleDuotoneRounded,
+  IconCongruentToCircleTwotoneRounded,
+  IconCongruentToCircleSolidRounded,
+  IconCongruentToCircleBulkRounded,
+  IconCongruentToCircleStrokeSharp,
+  IconCongruentToCircleSolidSharp,
+];

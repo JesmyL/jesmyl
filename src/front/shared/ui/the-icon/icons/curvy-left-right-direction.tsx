@@ -21,14 +21,11 @@ export const IconCurvyLeftRightDirectionStrokeRounded: FC<TheIconProps> = (props
   return (
     <TheIconWrapper
       {...props}
-      name="curvy-left-right-direction-stroke-rounded IconCurvyLeftRightDirectionStrokeRounded"
+      the-icon="CurvyLeftRightDirection StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -38,15 +35,11 @@ export const IconCurvyLeftRightDirectionDuotoneRounded: FC<TheIconProps> = (prop
   return (
     <TheIconWrapper
       {...props}
-      name="curvy-left-right-direction-duotone-rounded IconCurvyLeftRightDirectionDuotoneRounded"
+      the-icon="CurvyLeftRightDirection DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -56,26 +49,19 @@ export const IconCurvyLeftRightDirectionTwotoneRounded: FC<TheIconProps> = (prop
   return (
     <TheIconWrapper
       {...props}
-      name="curvy-left-right-direction-twotone-rounded IconCurvyLeftRightDirectionTwotoneRounded"
+      the-icon="CurvyLeftRightDirection TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -85,11 +71,11 @@ export const IconCurvyLeftRightDirectionSolidRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="curvy-left-right-direction-solid-rounded IconCurvyLeftRightDirectionSolidRounded"
+      the-icon="CurvyLeftRightDirection SolidRounded"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -99,20 +85,19 @@ export const IconCurvyLeftRightDirectionBulkRounded: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="curvy-left-right-direction-bulk-rounded IconCurvyLeftRightDirectionBulkRounded"
+      the-icon="CurvyLeftRightDirection BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -122,23 +107,19 @@ export const IconCurvyLeftRightDirectionStrokeSharp: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="curvy-left-right-direction-stroke-sharp IconCurvyLeftRightDirectionStrokeSharp"
+      the-icon="CurvyLeftRightDirection StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d10}
+        i-c="s sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d11}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -148,25 +129,23 @@ export const IconCurvyLeftRightDirectionSolidSharp: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="curvy-left-right-direction-solid-sharp IconCurvyLeftRightDirectionSolidSharp"
+      the-icon="CurvyLeftRightDirection SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCurvyLeftRightDirection: TheIconSelfPack = {
-  name: 'CurvyLeftRightDirection',
-  StrokeRounded: IconCurvyLeftRightDirectionStrokeRounded,
-  DuotoneRounded: IconCurvyLeftRightDirectionDuotoneRounded,
-  TwotoneRounded: IconCurvyLeftRightDirectionTwotoneRounded,
-  SolidRounded: IconCurvyLeftRightDirectionSolidRounded,
-  BulkRounded: IconCurvyLeftRightDirectionBulkRounded,
-  StrokeSharp: IconCurvyLeftRightDirectionStrokeSharp,
-  SolidSharp: IconCurvyLeftRightDirectionSolidSharp,
-};
+export const iconPackOfCurvyLeftRightDirection: TheIconSelfPack = [
+  'CurvyLeftRightDirection',
+  IconCurvyLeftRightDirectionStrokeRounded,
+  IconCurvyLeftRightDirectionDuotoneRounded,
+  IconCurvyLeftRightDirectionTwotoneRounded,
+  IconCurvyLeftRightDirectionSolidRounded,
+  IconCurvyLeftRightDirectionBulkRounded,
+  IconCurvyLeftRightDirectionStrokeSharp,
+  IconCurvyLeftRightDirectionSolidSharp,
+];

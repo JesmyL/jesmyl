@@ -17,13 +17,11 @@ export const IconTouch08StrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="touch-08-stroke-rounded IconTouch08StrokeRounded"
+      the-icon="Touch08 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -33,18 +31,15 @@ export const IconTouch08DuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="touch-08-duotone-rounded IconTouch08DuotoneRounded"
+      the-icon="Touch08 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,20 +49,15 @@ export const IconTouch08TwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="touch-08-twotone-rounded IconTouch08TwotoneRounded"
+      the-icon="Touch08 TwotoneRounded"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d5}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -77,11 +67,11 @@ export const IconTouch08SolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="touch-08-solid-rounded IconTouch08SolidRounded"
+      the-icon="Touch08 SolidRounded"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -91,12 +81,11 @@ export const IconTouch08BulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="touch-08-bulk-rounded IconTouch08BulkRounded"
+      the-icon="Touch08 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -106,12 +95,11 @@ export const IconTouch08StrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="touch-08-stroke-sharp IconTouch08StrokeSharp"
+      the-icon="Touch08 StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -121,23 +109,23 @@ export const IconTouch08SolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="touch-08-solid-sharp IconTouch08SolidSharp"
+      the-icon="Touch08 SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTouch08: TheIconSelfPack = {
-  name: 'Touch08',
-  StrokeRounded: IconTouch08StrokeRounded,
-  DuotoneRounded: IconTouch08DuotoneRounded,
-  TwotoneRounded: IconTouch08TwotoneRounded,
-  SolidRounded: IconTouch08SolidRounded,
-  BulkRounded: IconTouch08BulkRounded,
-  StrokeSharp: IconTouch08StrokeSharp,
-  SolidSharp: IconTouch08SolidSharp,
-};
+export const iconPackOfTouch08: TheIconSelfPack = [
+  'Touch08',
+  IconTouch08StrokeRounded,
+  IconTouch08DuotoneRounded,
+  IconTouch08TwotoneRounded,
+  IconTouch08SolidRounded,
+  IconTouch08BulkRounded,
+  IconTouch08StrokeSharp,
+  IconTouch08SolidSharp,
+];

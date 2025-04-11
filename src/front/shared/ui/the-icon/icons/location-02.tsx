@@ -15,12 +15,11 @@ export const IconLocation02StrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="location-02-stroke-rounded IconLocation02StrokeRounded"
+      the-icon="Location02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -30,17 +29,15 @@ export const IconLocation02DuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="location-02-duotone-rounded IconLocation02DuotoneRounded"
+      the-icon="Location02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -50,19 +47,15 @@ export const IconLocation02TwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="location-02-twotone-rounded IconLocation02TwotoneRounded"
+      the-icon="Location02 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -72,11 +65,11 @@ export const IconLocation02SolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="location-02-solid-rounded IconLocation02SolidRounded"
+      the-icon="Location02 SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -86,16 +79,15 @@ export const IconLocation02BulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="location-02-bulk-rounded IconLocation02BulkRounded"
+      the-icon="Location02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -105,12 +97,11 @@ export const IconLocation02StrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="location-02-stroke-sharp IconLocation02StrokeSharp"
+      the-icon="Location02 StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -120,23 +111,23 @@ export const IconLocation02SolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="location-02-solid-sharp IconLocation02SolidSharp"
+      the-icon="Location02 SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfLocation02: TheIconSelfPack = {
-  name: 'Location02',
-  StrokeRounded: IconLocation02StrokeRounded,
-  DuotoneRounded: IconLocation02DuotoneRounded,
-  TwotoneRounded: IconLocation02TwotoneRounded,
-  SolidRounded: IconLocation02SolidRounded,
-  BulkRounded: IconLocation02BulkRounded,
-  StrokeSharp: IconLocation02StrokeSharp,
-  SolidSharp: IconLocation02SolidSharp,
-};
+export const iconPackOfLocation02: TheIconSelfPack = [
+  'Location02',
+  IconLocation02StrokeRounded,
+  IconLocation02DuotoneRounded,
+  IconLocation02TwotoneRounded,
+  IconLocation02SolidRounded,
+  IconLocation02BulkRounded,
+  IconLocation02StrokeSharp,
+  IconLocation02SolidSharp,
+];

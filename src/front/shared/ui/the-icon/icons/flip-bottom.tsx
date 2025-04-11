@@ -18,18 +18,15 @@ export const IconFlipBottomStrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="flip-bottom-stroke-rounded IconFlipBottomStrokeRounded"
+      the-icon="FlipBottom StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -39,23 +36,19 @@ export const IconFlipBottomDuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="flip-bottom-duotone-rounded IconFlipBottomDuotoneRounded"
+      the-icon="FlipBottom DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -65,19 +58,15 @@ export const IconFlipBottomTwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="flip-bottom-twotone-rounded IconFlipBottomTwotoneRounded"
+      the-icon="FlipBottom TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -87,17 +76,15 @@ export const IconFlipBottomSolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="flip-bottom-solid-rounded IconFlipBottomSolidRounded"
+      the-icon="FlipBottom SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -107,18 +94,15 @@ export const IconFlipBottomBulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="flip-bottom-bulk-rounded IconFlipBottomBulkRounded"
+      the-icon="FlipBottom BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -128,18 +112,15 @@ export const IconFlipBottomStrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="flip-bottom-stroke-sharp IconFlipBottomStrokeSharp"
+      the-icon="FlipBottom StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -149,29 +130,27 @@ export const IconFlipBottomSolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="flip-bottom-solid-sharp IconFlipBottomSolidSharp"
+      the-icon="FlipBottom SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfFlipBottom: TheIconSelfPack = {
-  name: 'FlipBottom',
-  StrokeRounded: IconFlipBottomStrokeRounded,
-  DuotoneRounded: IconFlipBottomDuotoneRounded,
-  TwotoneRounded: IconFlipBottomTwotoneRounded,
-  SolidRounded: IconFlipBottomSolidRounded,
-  BulkRounded: IconFlipBottomBulkRounded,
-  StrokeSharp: IconFlipBottomStrokeSharp,
-  SolidSharp: IconFlipBottomSolidSharp,
-};
+export const iconPackOfFlipBottom: TheIconSelfPack = [
+  'FlipBottom',
+  IconFlipBottomStrokeRounded,
+  IconFlipBottomDuotoneRounded,
+  IconFlipBottomTwotoneRounded,
+  IconFlipBottomSolidRounded,
+  IconFlipBottomBulkRounded,
+  IconFlipBottomStrokeSharp,
+  IconFlipBottomSolidSharp,
+];

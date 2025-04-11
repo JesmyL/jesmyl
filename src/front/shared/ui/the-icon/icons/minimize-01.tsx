@@ -22,21 +22,15 @@ export const IconMinimize01StrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="minimize-01-stroke-rounded IconMinimize01StrokeRounded"
+      the-icon="Minimize01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -46,20 +40,19 @@ export const IconMinimize01DuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="minimize-01-duotone-rounded IconMinimize01DuotoneRounded"
+      the-icon="Minimize01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -69,16 +62,15 @@ export const IconMinimize01TwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="minimize-01-twotone-rounded IconMinimize01TwotoneRounded"
+      the-icon="Minimize01 TwotoneRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -88,19 +80,19 @@ export const IconMinimize01SolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="minimize-01-solid-rounded IconMinimize01SolidRounded"
+      the-icon="Minimize01 SolidRounded"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -110,20 +102,19 @@ export const IconMinimize01BulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="minimize-01-bulk-rounded IconMinimize01BulkRounded"
+      the-icon="Minimize01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -133,17 +124,15 @@ export const IconMinimize01StrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="minimize-01-stroke-sharp IconMinimize01StrokeSharp"
+      the-icon="Minimize01 StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d10}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -153,31 +142,31 @@ export const IconMinimize01SolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="minimize-01-solid-sharp IconMinimize01SolidSharp"
+      the-icon="Minimize01 SolidSharp"
     >
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
       <path 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMinimize01: TheIconSelfPack = {
-  name: 'Minimize01',
-  StrokeRounded: IconMinimize01StrokeRounded,
-  DuotoneRounded: IconMinimize01DuotoneRounded,
-  TwotoneRounded: IconMinimize01TwotoneRounded,
-  SolidRounded: IconMinimize01SolidRounded,
-  BulkRounded: IconMinimize01BulkRounded,
-  StrokeSharp: IconMinimize01StrokeSharp,
-  SolidSharp: IconMinimize01SolidSharp,
-};
+export const iconPackOfMinimize01: TheIconSelfPack = [
+  'Minimize01',
+  IconMinimize01StrokeRounded,
+  IconMinimize01DuotoneRounded,
+  IconMinimize01TwotoneRounded,
+  IconMinimize01SolidRounded,
+  IconMinimize01BulkRounded,
+  IconMinimize01StrokeSharp,
+  IconMinimize01SolidSharp,
+];

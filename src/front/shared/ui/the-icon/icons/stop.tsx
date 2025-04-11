@@ -16,12 +16,11 @@ export const IconStopStrokeRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="stop-stroke-rounded IconStopStrokeRounded"
+      the-icon="Stop StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -31,17 +30,15 @@ export const IconStopDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="stop-duotone-rounded IconStopDuotoneRounded"
+      the-icon="Stop DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -51,20 +48,15 @@ export const IconStopTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="stop-twotone-rounded IconStopTwotoneRounded"
+      the-icon="Stop TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -74,11 +66,11 @@ export const IconStopSolidRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="stop-solid-rounded IconStopSolidRounded"
+      the-icon="Stop SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -88,16 +80,15 @@ export const IconStopBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="stop-bulk-rounded IconStopBulkRounded"
+      the-icon="Stop BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -107,13 +98,11 @@ export const IconStopStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="stop-stroke-sharp IconStopStrokeSharp"
+      the-icon="Stop StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -123,23 +112,23 @@ export const IconStopSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.E
   return (
     <TheIconWrapper
       {...props}
-      name="stop-solid-sharp IconStopSolidSharp"
+      the-icon="Stop SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfStop: TheIconSelfPack = {
-  name: 'Stop',
-  StrokeRounded: IconStopStrokeRounded,
-  DuotoneRounded: IconStopDuotoneRounded,
-  TwotoneRounded: IconStopTwotoneRounded,
-  SolidRounded: IconStopSolidRounded,
-  BulkRounded: IconStopBulkRounded,
-  StrokeSharp: IconStopStrokeSharp,
-  SolidSharp: IconStopSolidSharp,
-};
+export const iconPackOfStop: TheIconSelfPack = [
+  'Stop',
+  IconStopStrokeRounded,
+  IconStopDuotoneRounded,
+  IconStopTwotoneRounded,
+  IconStopSolidRounded,
+  IconStopBulkRounded,
+  IconStopStrokeSharp,
+  IconStopSolidSharp,
+];

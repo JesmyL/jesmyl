@@ -16,21 +16,15 @@ export const IconCheckUnread03StrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="check-unread-03-stroke-rounded IconCheckUnread03StrokeRounded"
+      the-icon="CheckUnread03 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -40,21 +34,15 @@ export const IconCheckUnread03DuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="check-unread-03-duotone-rounded IconCheckUnread03DuotoneRounded"
+      the-icon="CheckUnread03 DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -64,22 +52,15 @@ export const IconCheckUnread03TwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="check-unread-03-twotone-rounded IconCheckUnread03TwotoneRounded"
+      the-icon="CheckUnread03 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -89,19 +70,15 @@ export const IconCheckUnread03SolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="check-unread-03-solid-rounded IconCheckUnread03SolidRounded"
+      the-icon="CheckUnread03 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -111,20 +88,15 @@ export const IconCheckUnread03BulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="check-unread-03-bulk-rounded IconCheckUnread03BulkRounded"
+      the-icon="CheckUnread03 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -134,19 +106,15 @@ export const IconCheckUnread03StrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="check-unread-03-stroke-sharp IconCheckUnread03StrokeSharp"
+      the-icon="CheckUnread03 StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d5}
+        i-c="s ss sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d2}
+        i-c="s ss sw"
       />
     </TheIconWrapper>
   );
@@ -156,31 +124,27 @@ export const IconCheckUnread03SolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="check-unread-03-solid-sharp IconCheckUnread03SolidSharp"
+      the-icon="CheckUnread03 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCheckUnread03: TheIconSelfPack = {
-  name: 'CheckUnread03',
-  StrokeRounded: IconCheckUnread03StrokeRounded,
-  DuotoneRounded: IconCheckUnread03DuotoneRounded,
-  TwotoneRounded: IconCheckUnread03TwotoneRounded,
-  SolidRounded: IconCheckUnread03SolidRounded,
-  BulkRounded: IconCheckUnread03BulkRounded,
-  StrokeSharp: IconCheckUnread03StrokeSharp,
-  SolidSharp: IconCheckUnread03SolidSharp,
-};
+export const iconPackOfCheckUnread03: TheIconSelfPack = [
+  'CheckUnread03',
+  IconCheckUnread03StrokeRounded,
+  IconCheckUnread03DuotoneRounded,
+  IconCheckUnread03TwotoneRounded,
+  IconCheckUnread03SolidRounded,
+  IconCheckUnread03BulkRounded,
+  IconCheckUnread03StrokeSharp,
+  IconCheckUnread03SolidSharp,
+];

@@ -12,28 +12,28 @@ export const IconMediumStrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="medium-stroke-rounded IconMediumStrokeRounded"
+      the-icon="Medium StrokeRounded"
     >
       <circle 
-        cx="6.5" 
-        cy="12" 
-        r="4.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.5"
+        cy="12"
+        r="4.5"
+        i-c="s sw"
+      />
       <ellipse 
-        cx="15.5" 
-        cy="12" 
-        rx="2.5" 
-        ry="4.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
+        cx="15.5"
+        cy="12"
+        rx="2.5"
+        ry="4.5"
+        i-c="s sw"
+      />
       <ellipse 
-        cx="21" 
-        cy="12" 
-        rx="1" 
-        ry="4.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
+        cx="21"
+        cy="12"
+        rx="1"
+        ry="4.5"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -42,41 +42,41 @@ export const IconMediumDuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="medium-duotone-rounded IconMediumDuotoneRounded"
+      the-icon="Medium DuotoneRounded"
     >
       <ellipse 
-        opacity="var(--icon-opacity)" 
-        cx="21" 
-        cy="12" 
-        rx="1" 
-        ry="4.5" 
-        fill="var(--icon-fill)"></ellipse>
+        cx="21"
+        cy="12"
+        rx="1"
+        ry="4.5"
+        i-c="f o7"
+      />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="6.5" 
-        cy="12" 
-        r="4.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="6.5"
+        cy="12"
+        r="4.5"
+        i-c="f o7"
+      />
       <circle 
-        cx="6.5" 
-        cy="12" 
-        r="4.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.5"
+        cy="12"
+        r="4.5"
+        i-c="s sw"
+      />
       <ellipse 
-        cx="15.5" 
-        cy="12" 
-        rx="2.5" 
-        ry="4.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
+        cx="15.5"
+        cy="12"
+        rx="2.5"
+        ry="4.5"
+        i-c="s sw"
+      />
       <ellipse 
-        cx="21" 
-        cy="12" 
-        rx="1" 
-        ry="4.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
+        cx="21"
+        cy="12"
+        rx="1"
+        ry="4.5"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -85,29 +85,28 @@ export const IconMediumTwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="medium-twotone-rounded IconMediumTwotoneRounded"
+      the-icon="Medium TwotoneRounded"
     >
       <circle 
-        cx="6.5" 
-        cy="12" 
-        r="4.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.5"
+        cy="12"
+        r="4.5"
+        i-c="s sw"
+      />
       <ellipse 
-        cx="15.5" 
-        cy="12" 
-        rx="2.5" 
-        ry="4.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
+        cx="15.5"
+        cy="12"
+        rx="2.5"
+        ry="4.5"
+        i-c="s sw"
+      />
       <ellipse 
-        opacity="var(--icon-opacity)" 
-        cx="21" 
-        cy="12" 
-        rx="1" 
-        ry="4.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
+        cx="21"
+        cy="12"
+        rx="1"
+        ry="4.5"
+        i-c="o7 s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -116,19 +115,19 @@ export const IconMediumSolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="medium-solid-rounded IconMediumSolidRounded"
+      the-icon="Medium SolidRounded"
     >
       <path 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f"
       />
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -138,21 +137,19 @@ export const IconMediumBulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="medium-bulk-rounded IconMediumBulkRounded"
+      the-icon="Medium BulkRounded"
     >
       <path 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -162,28 +159,28 @@ export const IconMediumStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="medium-stroke-sharp IconMediumStrokeSharp"
+      the-icon="Medium StrokeSharp"
     >
       <circle 
-        cx="6.5" 
-        cy="12" 
-        r="4.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.5"
+        cy="12"
+        r="4.5"
+        i-c="s sw"
+      />
       <ellipse 
-        cx="15.5" 
-        cy="12" 
-        rx="2.5" 
-        ry="4.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
+        cx="15.5"
+        cy="12"
+        rx="2.5"
+        ry="4.5"
+        i-c="s sw"
+      />
       <ellipse 
-        cx="21" 
-        cy="12" 
-        rx="1" 
-        ry="4.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></ellipse>
+        cx="21"
+        cy="12"
+        rx="1"
+        ry="4.5"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -192,31 +189,31 @@ export const IconMediumSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="medium-solid-sharp IconMediumSolidSharp"
+      the-icon="Medium SolidSharp"
     >
       <path 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f"
       />
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMedium: TheIconSelfPack = {
-  name: 'Medium',
-  StrokeRounded: IconMediumStrokeRounded,
-  DuotoneRounded: IconMediumDuotoneRounded,
-  TwotoneRounded: IconMediumTwotoneRounded,
-  SolidRounded: IconMediumSolidRounded,
-  BulkRounded: IconMediumBulkRounded,
-  StrokeSharp: IconMediumStrokeSharp,
-  SolidSharp: IconMediumSolidSharp,
-};
+export const iconPackOfMedium: TheIconSelfPack = [
+  'Medium',
+  IconMediumStrokeRounded,
+  IconMediumDuotoneRounded,
+  IconMediumTwotoneRounded,
+  IconMediumSolidRounded,
+  IconMediumBulkRounded,
+  IconMediumStrokeSharp,
+  IconMediumSolidSharp,
+];

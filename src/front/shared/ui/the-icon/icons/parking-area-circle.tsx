@@ -15,20 +15,17 @@ export const IconParkingAreaCircleStrokeRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="parking-area-circle-stroke-rounded IconParkingAreaCircleStrokeRounded"
+      the-icon="ParkingAreaCircle StrokeRounded"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -38,26 +35,23 @@ export const IconParkingAreaCircleDuotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="parking-area-circle-duotone-rounded IconParkingAreaCircleDuotoneRounded"
+      the-icon="ParkingAreaCircle DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="f o7"
+      />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -67,21 +61,17 @@ export const IconParkingAreaCircleTwotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="parking-area-circle-twotone-rounded IconParkingAreaCircleTwotoneRounded"
+      the-icon="ParkingAreaCircle TwotoneRounded"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -91,13 +81,11 @@ export const IconParkingAreaCircleSolidRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="parking-area-circle-solid-rounded IconParkingAreaCircleSolidRounded"
+      the-icon="ParkingAreaCircle SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -107,18 +95,15 @@ export const IconParkingAreaCircleBulkRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="parking-area-circle-bulk-rounded IconParkingAreaCircleBulkRounded"
+      the-icon="ParkingAreaCircle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -128,18 +113,17 @@ export const IconParkingAreaCircleStrokeSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="parking-area-circle-stroke-sharp IconParkingAreaCircleStrokeSharp"
+      the-icon="ParkingAreaCircle StrokeSharp"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -149,25 +133,23 @@ export const IconParkingAreaCircleSolidSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="parking-area-circle-solid-sharp IconParkingAreaCircleSolidSharp"
+      the-icon="ParkingAreaCircle SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfParkingAreaCircle: TheIconSelfPack = {
-  name: 'ParkingAreaCircle',
-  StrokeRounded: IconParkingAreaCircleStrokeRounded,
-  DuotoneRounded: IconParkingAreaCircleDuotoneRounded,
-  TwotoneRounded: IconParkingAreaCircleTwotoneRounded,
-  SolidRounded: IconParkingAreaCircleSolidRounded,
-  BulkRounded: IconParkingAreaCircleBulkRounded,
-  StrokeSharp: IconParkingAreaCircleStrokeSharp,
-  SolidSharp: IconParkingAreaCircleSolidSharp,
-};
+export const iconPackOfParkingAreaCircle: TheIconSelfPack = [
+  'ParkingAreaCircle',
+  IconParkingAreaCircleStrokeRounded,
+  IconParkingAreaCircleDuotoneRounded,
+  IconParkingAreaCircleTwotoneRounded,
+  IconParkingAreaCircleSolidRounded,
+  IconParkingAreaCircleBulkRounded,
+  IconParkingAreaCircleStrokeSharp,
+  IconParkingAreaCircleSolidSharp,
+];

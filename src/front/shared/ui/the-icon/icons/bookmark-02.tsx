@@ -15,14 +15,11 @@ export const IconBookmark02StrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="bookmark-02-stroke-rounded IconBookmark02StrokeRounded"
+      the-icon="Bookmark02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -32,19 +29,15 @@ export const IconBookmark02DuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="bookmark-02-duotone-rounded IconBookmark02DuotoneRounded"
+      the-icon="Bookmark02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,22 +47,15 @@ export const IconBookmark02TwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="bookmark-02-twotone-rounded IconBookmark02TwotoneRounded"
+      the-icon="Bookmark02 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -79,11 +65,11 @@ export const IconBookmark02SolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="bookmark-02-solid-rounded IconBookmark02SolidRounded"
+      the-icon="Bookmark02 SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -93,16 +79,15 @@ export const IconBookmark02BulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="bookmark-02-bulk-rounded IconBookmark02BulkRounded"
+      the-icon="Bookmark02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -112,13 +97,11 @@ export const IconBookmark02StrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="bookmark-02-stroke-sharp IconBookmark02StrokeSharp"
+      the-icon="Bookmark02 StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -128,23 +111,23 @@ export const IconBookmark02SolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="bookmark-02-solid-sharp IconBookmark02SolidSharp"
+      the-icon="Bookmark02 SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBookmark02: TheIconSelfPack = {
-  name: 'Bookmark02',
-  StrokeRounded: IconBookmark02StrokeRounded,
-  DuotoneRounded: IconBookmark02DuotoneRounded,
-  TwotoneRounded: IconBookmark02TwotoneRounded,
-  SolidRounded: IconBookmark02SolidRounded,
-  BulkRounded: IconBookmark02BulkRounded,
-  StrokeSharp: IconBookmark02StrokeSharp,
-  SolidSharp: IconBookmark02SolidSharp,
-};
+export const iconPackOfBookmark02: TheIconSelfPack = [
+  'Bookmark02',
+  IconBookmark02StrokeRounded,
+  IconBookmark02DuotoneRounded,
+  IconBookmark02TwotoneRounded,
+  IconBookmark02SolidRounded,
+  IconBookmark02BulkRounded,
+  IconBookmark02StrokeSharp,
+  IconBookmark02SolidSharp,
+];

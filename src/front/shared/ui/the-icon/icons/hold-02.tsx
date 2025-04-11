@@ -15,13 +15,11 @@ export const IconHold02StrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="hold-02-stroke-rounded IconHold02StrokeRounded"
+      the-icon="Hold02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -31,18 +29,15 @@ export const IconHold02DuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="hold-02-duotone-rounded IconHold02DuotoneRounded"
+      the-icon="Hold02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -52,21 +47,15 @@ export const IconHold02TwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="hold-02-twotone-rounded IconHold02TwotoneRounded"
+      the-icon="Hold02 TwotoneRounded"
     >
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -76,11 +65,11 @@ export const IconHold02SolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="hold-02-solid-rounded IconHold02SolidRounded"
+      the-icon="Hold02 SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -90,12 +79,11 @@ export const IconHold02BulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="hold-02-bulk-rounded IconHold02BulkRounded"
+      the-icon="Hold02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -105,12 +93,11 @@ export const IconHold02StrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="hold-02-stroke-sharp IconHold02StrokeSharp"
+      the-icon="Hold02 StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -120,23 +107,23 @@ export const IconHold02SolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="hold-02-solid-sharp IconHold02SolidSharp"
+      the-icon="Hold02 SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfHold02: TheIconSelfPack = {
-  name: 'Hold02',
-  StrokeRounded: IconHold02StrokeRounded,
-  DuotoneRounded: IconHold02DuotoneRounded,
-  TwotoneRounded: IconHold02TwotoneRounded,
-  SolidRounded: IconHold02SolidRounded,
-  BulkRounded: IconHold02BulkRounded,
-  StrokeSharp: IconHold02StrokeSharp,
-  SolidSharp: IconHold02SolidSharp,
-};
+export const iconPackOfHold02: TheIconSelfPack = [
+  'Hold02',
+  IconHold02StrokeRounded,
+  IconHold02DuotoneRounded,
+  IconHold02TwotoneRounded,
+  IconHold02SolidRounded,
+  IconHold02BulkRounded,
+  IconHold02StrokeSharp,
+  IconHold02SolidSharp,
+];

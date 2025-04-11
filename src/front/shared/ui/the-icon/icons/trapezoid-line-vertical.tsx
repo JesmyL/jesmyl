@@ -22,18 +22,15 @@ export const IconTrapezoidLineVerticalStrokeRounded: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="trapezoid-line-vertical-stroke-rounded IconTrapezoidLineVerticalStrokeRounded"
+      the-icon="TrapezoidLineVertical StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -43,23 +40,19 @@ export const IconTrapezoidLineVerticalDuotoneRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="trapezoid-line-vertical-duotone-rounded IconTrapezoidLineVerticalDuotoneRounded"
+      the-icon="TrapezoidLineVertical DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -69,19 +62,15 @@ export const IconTrapezoidLineVerticalTwotoneRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="trapezoid-line-vertical-twotone-rounded IconTrapezoidLineVerticalTwotoneRounded"
+      the-icon="TrapezoidLineVertical TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -91,23 +80,23 @@ export const IconTrapezoidLineVerticalSolidRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="trapezoid-line-vertical-solid-rounded IconTrapezoidLineVerticalSolidRounded"
+      the-icon="TrapezoidLineVertical SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -117,16 +106,15 @@ export const IconTrapezoidLineVerticalBulkRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="trapezoid-line-vertical-bulk-rounded IconTrapezoidLineVerticalBulkRounded"
+      the-icon="TrapezoidLineVertical BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f o7"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -136,19 +124,15 @@ export const IconTrapezoidLineVerticalStrokeSharp: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="trapezoid-line-vertical-stroke-sharp IconTrapezoidLineVerticalStrokeSharp"
+      the-icon="TrapezoidLineVertical StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -158,35 +142,35 @@ export const IconTrapezoidLineVerticalSolidSharp: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="trapezoid-line-vertical-solid-sharp IconTrapezoidLineVerticalSolidSharp"
+      the-icon="TrapezoidLineVertical SolidSharp"
     >
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
       <path 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTrapezoidLineVertical: TheIconSelfPack = {
-  name: 'TrapezoidLineVertical',
-  StrokeRounded: IconTrapezoidLineVerticalStrokeRounded,
-  DuotoneRounded: IconTrapezoidLineVerticalDuotoneRounded,
-  TwotoneRounded: IconTrapezoidLineVerticalTwotoneRounded,
-  SolidRounded: IconTrapezoidLineVerticalSolidRounded,
-  BulkRounded: IconTrapezoidLineVerticalBulkRounded,
-  StrokeSharp: IconTrapezoidLineVerticalStrokeSharp,
-  SolidSharp: IconTrapezoidLineVerticalSolidSharp,
-};
+export const iconPackOfTrapezoidLineVertical: TheIconSelfPack = [
+  'TrapezoidLineVertical',
+  IconTrapezoidLineVerticalStrokeRounded,
+  IconTrapezoidLineVerticalDuotoneRounded,
+  IconTrapezoidLineVerticalTwotoneRounded,
+  IconTrapezoidLineVerticalSolidRounded,
+  IconTrapezoidLineVerticalBulkRounded,
+  IconTrapezoidLineVerticalStrokeSharp,
+  IconTrapezoidLineVerticalSolidSharp,
+];

@@ -16,14 +16,11 @@ export const IconPlaxoStrokeRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="plaxo-stroke-rounded IconPlaxoStrokeRounded"
+      the-icon="Plaxo StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -33,21 +30,15 @@ export const IconPlaxoDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="plaxo-duotone-rounded IconPlaxoDuotoneRounded"
+      the-icon="Plaxo DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -57,22 +48,15 @@ export const IconPlaxoTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="plaxo-twotone-rounded IconPlaxoTwotoneRounded"
+      the-icon="Plaxo TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -82,13 +66,11 @@ export const IconPlaxoSolidRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="plaxo-solid-rounded IconPlaxoSolidRounded"
+      the-icon="Plaxo SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -98,16 +80,15 @@ export const IconPlaxoBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="plaxo-bulk-rounded IconPlaxoBulkRounded"
+      the-icon="Plaxo BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -117,12 +98,11 @@ export const IconPlaxoStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="plaxo-stroke-sharp IconPlaxoStrokeSharp"
+      the-icon="Plaxo StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -132,23 +112,23 @@ export const IconPlaxoSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="plaxo-solid-sharp IconPlaxoSolidSharp"
+      the-icon="Plaxo SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPlaxo: TheIconSelfPack = {
-  name: 'Plaxo',
-  StrokeRounded: IconPlaxoStrokeRounded,
-  DuotoneRounded: IconPlaxoDuotoneRounded,
-  TwotoneRounded: IconPlaxoTwotoneRounded,
-  SolidRounded: IconPlaxoSolidRounded,
-  BulkRounded: IconPlaxoBulkRounded,
-  StrokeSharp: IconPlaxoStrokeSharp,
-  SolidSharp: IconPlaxoSolidSharp,
-};
+export const iconPackOfPlaxo: TheIconSelfPack = [
+  'Plaxo',
+  IconPlaxoStrokeRounded,
+  IconPlaxoDuotoneRounded,
+  IconPlaxoTwotoneRounded,
+  IconPlaxoSolidRounded,
+  IconPlaxoBulkRounded,
+  IconPlaxoStrokeSharp,
+  IconPlaxoSolidSharp,
+];

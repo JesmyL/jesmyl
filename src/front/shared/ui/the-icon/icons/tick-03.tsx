@@ -16,12 +16,11 @@ export const IconTick03StrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="tick-03-stroke-rounded IconTick03StrokeRounded"
+      the-icon="Tick03 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -31,17 +30,15 @@ export const IconTick03DuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="tick-03-duotone-rounded IconTick03DuotoneRounded"
+      the-icon="Tick03 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -51,19 +48,15 @@ export const IconTick03TwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="tick-03-twotone-rounded IconTick03TwotoneRounded"
+      the-icon="Tick03 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -73,11 +66,11 @@ export const IconTick03SolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="tick-03-solid-rounded IconTick03SolidRounded"
+      the-icon="Tick03 SolidRounded"
     >
       <path 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -87,16 +80,15 @@ export const IconTick03BulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="tick-03-bulk-rounded IconTick03BulkRounded"
+      the-icon="Tick03 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -106,12 +98,11 @@ export const IconTick03StrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="tick-03-stroke-sharp IconTick03StrokeSharp"
+      the-icon="Tick03 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -121,23 +112,23 @@ export const IconTick03SolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="tick-03-solid-sharp IconTick03SolidSharp"
+      the-icon="Tick03 SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTick03: TheIconSelfPack = {
-  name: 'Tick03',
-  StrokeRounded: IconTick03StrokeRounded,
-  DuotoneRounded: IconTick03DuotoneRounded,
-  TwotoneRounded: IconTick03TwotoneRounded,
-  SolidRounded: IconTick03SolidRounded,
-  BulkRounded: IconTick03BulkRounded,
-  StrokeSharp: IconTick03StrokeSharp,
-  SolidSharp: IconTick03SolidSharp,
-};
+export const iconPackOfTick03: TheIconSelfPack = [
+  'Tick03',
+  IconTick03StrokeRounded,
+  IconTick03DuotoneRounded,
+  IconTick03TwotoneRounded,
+  IconTick03SolidRounded,
+  IconTick03BulkRounded,
+  IconTick03StrokeSharp,
+  IconTick03SolidSharp,
+];

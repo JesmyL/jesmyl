@@ -19,25 +19,22 @@ export const IconVideo01StrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="video-01-stroke-rounded IconVideo01StrokeRounded"
+      the-icon="Video01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <circle 
-        cx="11.5" 
-        cy="9.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="11.5"
+        cy="9.5"
+        r="1.5"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -46,32 +43,26 @@ export const IconVideo01DuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="video-01-duotone-rounded IconVideo01DuotoneRounded"
+      the-icon="Video01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <circle 
-        cx="11.5" 
-        cy="9.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="11.5"
+        cy="9.5"
+        r="1.5"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -80,27 +71,22 @@ export const IconVideo01TwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="video-01-twotone-rounded IconVideo01TwotoneRounded"
+      the-icon="Video01 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="11.5" 
-        cy="9.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="11.5"
+        cy="9.5"
+        r="1.5"
+        i-c="o7 s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -109,17 +95,15 @@ export const IconVideo01SolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="video-01-solid-rounded IconVideo01SolidRounded"
+      the-icon="Video01 SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -129,22 +113,22 @@ export const IconVideo01BulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="video-01-bulk-rounded IconVideo01BulkRounded"
+      the-icon="Video01 BulkRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <circle 
-        cx="11.5" 
-        cy="9.5" 
-        r="1.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="11.5"
+        cy="9.5"
+        r="1.5"
+        i-c="f"
+      />
     </TheIconWrapper>
   );
 };
@@ -153,24 +137,19 @@ export const IconVideo01StrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="video-01-stroke-sharp IconVideo01StrokeSharp"
+      the-icon="Video01 StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -180,25 +159,23 @@ export const IconVideo01SolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="video-01-solid-sharp IconVideo01SolidSharp"
+      the-icon="Video01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfVideo01: TheIconSelfPack = {
-  name: 'Video01',
-  StrokeRounded: IconVideo01StrokeRounded,
-  DuotoneRounded: IconVideo01DuotoneRounded,
-  TwotoneRounded: IconVideo01TwotoneRounded,
-  SolidRounded: IconVideo01SolidRounded,
-  BulkRounded: IconVideo01BulkRounded,
-  StrokeSharp: IconVideo01StrokeSharp,
-  SolidSharp: IconVideo01SolidSharp,
-};
+export const iconPackOfVideo01: TheIconSelfPack = [
+  'Video01',
+  IconVideo01StrokeRounded,
+  IconVideo01DuotoneRounded,
+  IconVideo01TwotoneRounded,
+  IconVideo01SolidRounded,
+  IconVideo01BulkRounded,
+  IconVideo01StrokeSharp,
+  IconVideo01SolidSharp,
+];

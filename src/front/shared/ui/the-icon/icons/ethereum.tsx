@@ -19,14 +19,11 @@ export const IconEthereumStrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="ethereum-stroke-rounded IconEthereumStrokeRounded"
+      the-icon="Ethereum StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -36,19 +33,15 @@ export const IconEthereumDuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="ethereum-duotone-rounded IconEthereumDuotoneRounded"
+      the-icon="Ethereum DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -58,22 +51,15 @@ export const IconEthereumTwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="ethereum-twotone-rounded IconEthereumTwotoneRounded"
+      the-icon="Ethereum TwotoneRounded"
     >
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -83,15 +69,15 @@ export const IconEthereumSolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="ethereum-solid-rounded IconEthereumSolidRounded"
+      the-icon="Ethereum SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -101,16 +87,15 @@ export const IconEthereumBulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="ethereum-bulk-rounded IconEthereumBulkRounded"
+      the-icon="Ethereum BulkRounded"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -120,14 +105,11 @@ export const IconEthereumStrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="ethereum-stroke-sharp IconEthereumStrokeSharp"
+      the-icon="Ethereum StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -137,25 +119,23 @@ export const IconEthereumSolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="ethereum-solid-sharp IconEthereumSolidSharp"
+      the-icon="Ethereum SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfEthereum: TheIconSelfPack = {
-  name: 'Ethereum',
-  StrokeRounded: IconEthereumStrokeRounded,
-  DuotoneRounded: IconEthereumDuotoneRounded,
-  TwotoneRounded: IconEthereumTwotoneRounded,
-  SolidRounded: IconEthereumSolidRounded,
-  BulkRounded: IconEthereumBulkRounded,
-  StrokeSharp: IconEthereumStrokeSharp,
-  SolidSharp: IconEthereumSolidSharp,
-};
+export const iconPackOfEthereum: TheIconSelfPack = [
+  'Ethereum',
+  IconEthereumStrokeRounded,
+  IconEthereumDuotoneRounded,
+  IconEthereumTwotoneRounded,
+  IconEthereumSolidRounded,
+  IconEthereumBulkRounded,
+  IconEthereumStrokeSharp,
+  IconEthereumSolidSharp,
+];

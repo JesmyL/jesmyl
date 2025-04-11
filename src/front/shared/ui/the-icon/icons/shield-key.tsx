@@ -20,25 +20,19 @@ export const IconShieldKeyStrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="shield-key-stroke-rounded IconShieldKeyStrokeRounded"
+      the-icon="ShieldKey StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -48,24 +42,19 @@ export const IconShieldKeyDuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="shield-key-duotone-rounded IconShieldKeyDuotoneRounded"
+      the-icon="ShieldKey DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -75,18 +64,15 @@ export const IconShieldKeyTwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="shield-key-twotone-rounded IconShieldKeyTwotoneRounded"
+      the-icon="ShieldKey TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -96,13 +82,11 @@ export const IconShieldKeySolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="shield-key-solid-rounded IconShieldKeySolidRounded"
+      the-icon="ShieldKey SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -112,18 +96,15 @@ export const IconShieldKeyBulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="shield-key-bulk-rounded IconShieldKeyBulkRounded"
+      the-icon="ShieldKey BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -133,18 +114,15 @@ export const IconShieldKeyStrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="shield-key-stroke-sharp IconShieldKeyStrokeSharp"
+      the-icon="ShieldKey StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
+        d={d.d10}
+        i-c="s ss sw"
       />
     </TheIconWrapper>
   );
@@ -154,25 +132,23 @@ export const IconShieldKeySolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="shield-key-solid-sharp IconShieldKeySolidSharp"
+      the-icon="ShieldKey SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfShieldKey: TheIconSelfPack = {
-  name: 'ShieldKey',
-  StrokeRounded: IconShieldKeyStrokeRounded,
-  DuotoneRounded: IconShieldKeyDuotoneRounded,
-  TwotoneRounded: IconShieldKeyTwotoneRounded,
-  SolidRounded: IconShieldKeySolidRounded,
-  BulkRounded: IconShieldKeyBulkRounded,
-  StrokeSharp: IconShieldKeyStrokeSharp,
-  SolidSharp: IconShieldKeySolidSharp,
-};
+export const iconPackOfShieldKey: TheIconSelfPack = [
+  'ShieldKey',
+  IconShieldKeyStrokeRounded,
+  IconShieldKeyDuotoneRounded,
+  IconShieldKeyTwotoneRounded,
+  IconShieldKeySolidRounded,
+  IconShieldKeyBulkRounded,
+  IconShieldKeyStrokeSharp,
+  IconShieldKeySolidSharp,
+];

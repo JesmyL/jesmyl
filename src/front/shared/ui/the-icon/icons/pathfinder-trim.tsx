@@ -17,17 +17,15 @@ export const IconPathfinderTrimStrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-trim-stroke-rounded IconPathfinderTrimStrokeRounded"
+      the-icon="PathfinderTrim StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -37,22 +35,19 @@ export const IconPathfinderTrimDuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-trim-duotone-rounded IconPathfinderTrimDuotoneRounded"
+      the-icon="PathfinderTrim DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -62,18 +57,15 @@ export const IconPathfinderTrimTwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-trim-twotone-rounded IconPathfinderTrimTwotoneRounded"
+      the-icon="PathfinderTrim TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -83,15 +75,15 @@ export const IconPathfinderTrimSolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-trim-solid-rounded IconPathfinderTrimSolidRounded"
+      the-icon="PathfinderTrim SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -101,16 +93,15 @@ export const IconPathfinderTrimBulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-trim-bulk-rounded IconPathfinderTrimBulkRounded"
+      the-icon="PathfinderTrim BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -120,19 +111,15 @@ export const IconPathfinderTrimStrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-trim-stroke-sharp IconPathfinderTrimStrokeSharp"
+      the-icon="PathfinderTrim StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -142,27 +129,27 @@ export const IconPathfinderTrimSolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="pathfinder-trim-solid-sharp IconPathfinderTrimSolidSharp"
+      the-icon="PathfinderTrim SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPathfinderTrim: TheIconSelfPack = {
-  name: 'PathfinderTrim',
-  StrokeRounded: IconPathfinderTrimStrokeRounded,
-  DuotoneRounded: IconPathfinderTrimDuotoneRounded,
-  TwotoneRounded: IconPathfinderTrimTwotoneRounded,
-  SolidRounded: IconPathfinderTrimSolidRounded,
-  BulkRounded: IconPathfinderTrimBulkRounded,
-  StrokeSharp: IconPathfinderTrimStrokeSharp,
-  SolidSharp: IconPathfinderTrimSolidSharp,
-};
+export const iconPackOfPathfinderTrim: TheIconSelfPack = [
+  'PathfinderTrim',
+  IconPathfinderTrimStrokeRounded,
+  IconPathfinderTrimDuotoneRounded,
+  IconPathfinderTrimTwotoneRounded,
+  IconPathfinderTrimSolidRounded,
+  IconPathfinderTrimBulkRounded,
+  IconPathfinderTrimStrokeSharp,
+  IconPathfinderTrimSolidSharp,
+];

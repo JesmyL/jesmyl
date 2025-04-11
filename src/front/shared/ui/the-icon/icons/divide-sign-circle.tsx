@@ -16,20 +16,18 @@ export const IconDivideSignCircleStrokeRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="divide-sign-circle-stroke-rounded IconDivideSignCircleStrokeRounded"
+      the-icon="DivideSignCircle StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -38,26 +36,23 @@ export const IconDivideSignCircleDuotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="divide-sign-circle-duotone-rounded IconDivideSignCircleDuotoneRounded"
+      the-icon="DivideSignCircle DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="f o7"
+      />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -67,21 +62,18 @@ export const IconDivideSignCircleTwotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="divide-sign-circle-twotone-rounded IconDivideSignCircleTwotoneRounded"
+      the-icon="DivideSignCircle TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -90,13 +82,11 @@ export const IconDivideSignCircleSolidRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="divide-sign-circle-solid-rounded IconDivideSignCircleSolidRounded"
+      the-icon="DivideSignCircle SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -106,26 +96,23 @@ export const IconDivideSignCircleBulkRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="divide-sign-circle-bulk-rounded IconDivideSignCircleBulkRounded"
+      the-icon="DivideSignCircle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -135,21 +122,18 @@ export const IconDivideSignCircleStrokeSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="divide-sign-circle-stroke-sharp IconDivideSignCircleStrokeSharp"
+      the-icon="DivideSignCircle StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -158,25 +142,23 @@ export const IconDivideSignCircleSolidSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="divide-sign-circle-solid-sharp IconDivideSignCircleSolidSharp"
+      the-icon="DivideSignCircle SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfDivideSignCircle: TheIconSelfPack = {
-  name: 'DivideSignCircle',
-  StrokeRounded: IconDivideSignCircleStrokeRounded,
-  DuotoneRounded: IconDivideSignCircleDuotoneRounded,
-  TwotoneRounded: IconDivideSignCircleTwotoneRounded,
-  SolidRounded: IconDivideSignCircleSolidRounded,
-  BulkRounded: IconDivideSignCircleBulkRounded,
-  StrokeSharp: IconDivideSignCircleStrokeSharp,
-  SolidSharp: IconDivideSignCircleSolidSharp,
-};
+export const iconPackOfDivideSignCircle: TheIconSelfPack = [
+  'DivideSignCircle',
+  IconDivideSignCircleStrokeRounded,
+  IconDivideSignCircleDuotoneRounded,
+  IconDivideSignCircleTwotoneRounded,
+  IconDivideSignCircleSolidRounded,
+  IconDivideSignCircleBulkRounded,
+  IconDivideSignCircleStrokeSharp,
+  IconDivideSignCircleSolidSharp,
+];

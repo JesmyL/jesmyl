@@ -18,14 +18,11 @@ export const IconWpsOfficeStrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="wps-office-stroke-rounded IconWpsOfficeStrokeRounded"
+      the-icon="WpsOffice StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -35,19 +32,15 @@ export const IconWpsOfficeDuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="wps-office-duotone-rounded IconWpsOfficeDuotoneRounded"
+      the-icon="WpsOffice DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -57,22 +50,15 @@ export const IconWpsOfficeTwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="wps-office-twotone-rounded IconWpsOfficeTwotoneRounded"
+      the-icon="WpsOffice TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -82,11 +68,11 @@ export const IconWpsOfficeSolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="wps-office-solid-rounded IconWpsOfficeSolidRounded"
+      the-icon="WpsOffice SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -96,16 +82,15 @@ export const IconWpsOfficeBulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="wps-office-bulk-rounded IconWpsOfficeBulkRounded"
+      the-icon="WpsOffice BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -115,12 +100,11 @@ export const IconWpsOfficeStrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="wps-office-stroke-sharp IconWpsOfficeStrokeSharp"
+      the-icon="WpsOffice StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -130,23 +114,23 @@ export const IconWpsOfficeSolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="wps-office-solid-sharp IconWpsOfficeSolidSharp"
+      the-icon="WpsOffice SolidSharp"
     >
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfWpsOffice: TheIconSelfPack = {
-  name: 'WpsOffice',
-  StrokeRounded: IconWpsOfficeStrokeRounded,
-  DuotoneRounded: IconWpsOfficeDuotoneRounded,
-  TwotoneRounded: IconWpsOfficeTwotoneRounded,
-  SolidRounded: IconWpsOfficeSolidRounded,
-  BulkRounded: IconWpsOfficeBulkRounded,
-  StrokeSharp: IconWpsOfficeStrokeSharp,
-  SolidSharp: IconWpsOfficeSolidSharp,
-};
+export const iconPackOfWpsOffice: TheIconSelfPack = [
+  'WpsOffice',
+  IconWpsOfficeStrokeRounded,
+  IconWpsOfficeDuotoneRounded,
+  IconWpsOfficeTwotoneRounded,
+  IconWpsOfficeSolidRounded,
+  IconWpsOfficeBulkRounded,
+  IconWpsOfficeStrokeSharp,
+  IconWpsOfficeSolidSharp,
+];

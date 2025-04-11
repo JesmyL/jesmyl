@@ -17,20 +17,15 @@ export const IconTeamviewerStrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="teamviewer-stroke-rounded IconTeamviewerStrokeRounded"
+      the-icon="Teamviewer StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -40,27 +35,19 @@ export const IconTeamviewerDuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="teamviewer-duotone-rounded IconTeamviewerDuotoneRounded"
+      the-icon="Teamviewer DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -70,21 +57,15 @@ export const IconTeamviewerTwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="teamviewer-twotone-rounded IconTeamviewerTwotoneRounded"
+      the-icon="Teamviewer TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -94,13 +75,11 @@ export const IconTeamviewerSolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="teamviewer-solid-rounded IconTeamviewerSolidRounded"
+      the-icon="Teamviewer SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -110,16 +89,15 @@ export const IconTeamviewerBulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="teamviewer-bulk-rounded IconTeamviewerBulkRounded"
+      the-icon="Teamviewer BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -129,18 +107,15 @@ export const IconTeamviewerStrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="teamviewer-stroke-sharp IconTeamviewerStrokeSharp"
+      the-icon="Teamviewer StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -150,25 +125,23 @@ export const IconTeamviewerSolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="teamviewer-solid-sharp IconTeamviewerSolidSharp"
+      the-icon="Teamviewer SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTeamviewer: TheIconSelfPack = {
-  name: 'Teamviewer',
-  StrokeRounded: IconTeamviewerStrokeRounded,
-  DuotoneRounded: IconTeamviewerDuotoneRounded,
-  TwotoneRounded: IconTeamviewerTwotoneRounded,
-  SolidRounded: IconTeamviewerSolidRounded,
-  BulkRounded: IconTeamviewerBulkRounded,
-  StrokeSharp: IconTeamviewerStrokeSharp,
-  SolidSharp: IconTeamviewerSolidSharp,
-};
+export const iconPackOfTeamviewer: TheIconSelfPack = [
+  'Teamviewer',
+  IconTeamviewerStrokeRounded,
+  IconTeamviewerDuotoneRounded,
+  IconTeamviewerTwotoneRounded,
+  IconTeamviewerSolidRounded,
+  IconTeamviewerBulkRounded,
+  IconTeamviewerStrokeSharp,
+  IconTeamviewerSolidSharp,
+];

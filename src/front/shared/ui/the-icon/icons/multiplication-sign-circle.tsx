@@ -14,21 +14,18 @@ export const IconMultiplicationSignCircleStrokeRounded: FC<TheIconProps> = (prop
   return (
     <TheIconWrapper
       {...props}
-      name="multiplication-sign-circle-stroke-rounded IconMultiplicationSignCircleStrokeRounded"
+      the-icon="MultiplicationSignCircle StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -37,27 +34,23 @@ export const IconMultiplicationSignCircleDuotoneRounded: FC<TheIconProps> = (pro
   return (
     <TheIconWrapper
       {...props}
-      name="multiplication-sign-circle-duotone-rounded IconMultiplicationSignCircleDuotoneRounded"
+      the-icon="MultiplicationSignCircle DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="f o7"
+      />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -67,22 +60,18 @@ export const IconMultiplicationSignCircleTwotoneRounded: FC<TheIconProps> = (pro
   return (
     <TheIconWrapper
       {...props}
-      name="multiplication-sign-circle-twotone-rounded IconMultiplicationSignCircleTwotoneRounded"
+      the-icon="MultiplicationSignCircle TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -91,13 +80,11 @@ export const IconMultiplicationSignCircleSolidRounded: FC<TheIconProps> = (props
   return (
     <TheIconWrapper
       {...props}
-      name="multiplication-sign-circle-solid-rounded IconMultiplicationSignCircleSolidRounded"
+      the-icon="MultiplicationSignCircle SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -107,18 +94,15 @@ export const IconMultiplicationSignCircleBulkRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="multiplication-sign-circle-bulk-rounded IconMultiplicationSignCircleBulkRounded"
+      the-icon="MultiplicationSignCircle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -128,21 +112,18 @@ export const IconMultiplicationSignCircleStrokeSharp: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="multiplication-sign-circle-stroke-sharp IconMultiplicationSignCircleStrokeSharp"
+      the-icon="MultiplicationSignCircle StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -151,25 +132,23 @@ export const IconMultiplicationSignCircleSolidSharp: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="multiplication-sign-circle-solid-sharp IconMultiplicationSignCircleSolidSharp"
+      the-icon="MultiplicationSignCircle SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMultiplicationSignCircle: TheIconSelfPack = {
-  name: 'MultiplicationSignCircle',
-  StrokeRounded: IconMultiplicationSignCircleStrokeRounded,
-  DuotoneRounded: IconMultiplicationSignCircleDuotoneRounded,
-  TwotoneRounded: IconMultiplicationSignCircleTwotoneRounded,
-  SolidRounded: IconMultiplicationSignCircleSolidRounded,
-  BulkRounded: IconMultiplicationSignCircleBulkRounded,
-  StrokeSharp: IconMultiplicationSignCircleStrokeSharp,
-  SolidSharp: IconMultiplicationSignCircleSolidSharp,
-};
+export const iconPackOfMultiplicationSignCircle: TheIconSelfPack = [
+  'MultiplicationSignCircle',
+  IconMultiplicationSignCircleStrokeRounded,
+  IconMultiplicationSignCircleDuotoneRounded,
+  IconMultiplicationSignCircleTwotoneRounded,
+  IconMultiplicationSignCircleSolidRounded,
+  IconMultiplicationSignCircleBulkRounded,
+  IconMultiplicationSignCircleStrokeSharp,
+  IconMultiplicationSignCircleSolidSharp,
+];

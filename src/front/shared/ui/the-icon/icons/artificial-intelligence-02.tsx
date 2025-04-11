@@ -18,21 +18,15 @@ export const IconArtificialIntelligence02StrokeRounded: FC<TheIconProps> = (prop
   return (
     <TheIconWrapper
       {...props}
-      name="artificial-intelligence-02-stroke-rounded IconArtificialIntelligence02StrokeRounded"
+      the-icon="ArtificialIntelligence02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -42,26 +36,19 @@ export const IconArtificialIntelligence02DuotoneRounded: FC<TheIconProps> = (pro
   return (
     <TheIconWrapper
       {...props}
-      name="artificial-intelligence-02-duotone-rounded IconArtificialIntelligence02DuotoneRounded"
+      the-icon="ArtificialIntelligence02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -71,22 +58,15 @@ export const IconArtificialIntelligence02TwotoneRounded: FC<TheIconProps> = (pro
   return (
     <TheIconWrapper
       {...props}
-      name="artificial-intelligence-02-twotone-rounded IconArtificialIntelligence02TwotoneRounded"
+      the-icon="ArtificialIntelligence02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -96,13 +76,11 @@ export const IconArtificialIntelligence02SolidRounded: FC<TheIconProps> = (props
   return (
     <TheIconWrapper
       {...props}
-      name="artificial-intelligence-02-solid-rounded IconArtificialIntelligence02SolidRounded"
+      the-icon="ArtificialIntelligence02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -112,18 +90,15 @@ export const IconArtificialIntelligence02BulkRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="artificial-intelligence-02-bulk-rounded IconArtificialIntelligence02BulkRounded"
+      the-icon="ArtificialIntelligence02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -133,18 +108,15 @@ export const IconArtificialIntelligence02StrokeSharp: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="artificial-intelligence-02-stroke-sharp IconArtificialIntelligence02StrokeSharp"
+      the-icon="ArtificialIntelligence02 StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="bevel" 
+        d={d.d8}
+        i-c="s sb sw"
       />
     </TheIconWrapper>
   );
@@ -154,25 +126,23 @@ export const IconArtificialIntelligence02SolidSharp: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="artificial-intelligence-02-solid-sharp IconArtificialIntelligence02SolidSharp"
+      the-icon="ArtificialIntelligence02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfArtificialIntelligence02: TheIconSelfPack = {
-  name: 'ArtificialIntelligence02',
-  StrokeRounded: IconArtificialIntelligence02StrokeRounded,
-  DuotoneRounded: IconArtificialIntelligence02DuotoneRounded,
-  TwotoneRounded: IconArtificialIntelligence02TwotoneRounded,
-  SolidRounded: IconArtificialIntelligence02SolidRounded,
-  BulkRounded: IconArtificialIntelligence02BulkRounded,
-  StrokeSharp: IconArtificialIntelligence02StrokeSharp,
-  SolidSharp: IconArtificialIntelligence02SolidSharp,
-};
+export const iconPackOfArtificialIntelligence02: TheIconSelfPack = [
+  'ArtificialIntelligence02',
+  IconArtificialIntelligence02StrokeRounded,
+  IconArtificialIntelligence02DuotoneRounded,
+  IconArtificialIntelligence02TwotoneRounded,
+  IconArtificialIntelligence02SolidRounded,
+  IconArtificialIntelligence02BulkRounded,
+  IconArtificialIntelligence02StrokeSharp,
+  IconArtificialIntelligence02SolidSharp,
+];

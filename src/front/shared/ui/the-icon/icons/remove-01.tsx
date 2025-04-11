@@ -14,14 +14,11 @@ export const IconRemove01StrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="remove-01-stroke-rounded IconRemove01StrokeRounded"
+      the-icon="Remove01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -31,15 +28,11 @@ export const IconRemove01DuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="remove-01-duotone-rounded IconRemove01DuotoneRounded"
+      the-icon="Remove01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -49,22 +42,15 @@ export const IconRemove01TwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="remove-01-twotone-rounded IconRemove01TwotoneRounded"
+      the-icon="Remove01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -74,13 +60,11 @@ export const IconRemove01SolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="remove-01-solid-rounded IconRemove01SolidRounded"
+      the-icon="Remove01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -90,20 +74,15 @@ export const IconRemove01BulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="remove-01-bulk-rounded IconRemove01BulkRounded"
+      the-icon="Remove01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -113,13 +92,11 @@ export const IconRemove01StrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="remove-01-stroke-sharp IconRemove01StrokeSharp"
+      the-icon="Remove01 StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -129,25 +106,23 @@ export const IconRemove01SolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="remove-01-solid-sharp IconRemove01SolidSharp"
+      the-icon="Remove01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfRemove01: TheIconSelfPack = {
-  name: 'Remove01',
-  StrokeRounded: IconRemove01StrokeRounded,
-  DuotoneRounded: IconRemove01DuotoneRounded,
-  TwotoneRounded: IconRemove01TwotoneRounded,
-  SolidRounded: IconRemove01SolidRounded,
-  BulkRounded: IconRemove01BulkRounded,
-  StrokeSharp: IconRemove01StrokeSharp,
-  SolidSharp: IconRemove01SolidSharp,
-};
+export const iconPackOfRemove01: TheIconSelfPack = [
+  'Remove01',
+  IconRemove01StrokeRounded,
+  IconRemove01DuotoneRounded,
+  IconRemove01TwotoneRounded,
+  IconRemove01SolidRounded,
+  IconRemove01BulkRounded,
+  IconRemove01StrokeSharp,
+  IconRemove01SolidSharp,
+];

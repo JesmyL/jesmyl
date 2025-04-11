@@ -17,20 +17,18 @@ export const IconTropicalStormTracks01StrokeRounded: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="tropical-storm-tracks-01-stroke-rounded IconTropicalStormTracks01StrokeRounded"
+      the-icon="TropicalStormTracks01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="3"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -39,27 +37,22 @@ export const IconTropicalStormTracks01DuotoneRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="tropical-storm-tracks-01-duotone-rounded IconTropicalStormTracks01DuotoneRounded"
+      the-icon="TropicalStormTracks01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="3"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -68,21 +61,18 @@ export const IconTropicalStormTracks01TwotoneRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="tropical-storm-tracks-01-twotone-rounded IconTropicalStormTracks01TwotoneRounded"
+      the-icon="TropicalStormTracks01 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="3"
+        i-c="o7 s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -91,13 +81,11 @@ export const IconTropicalStormTracks01SolidRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="tropical-storm-tracks-01-solid-rounded IconTropicalStormTracks01SolidRounded"
+      the-icon="TropicalStormTracks01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -107,18 +95,15 @@ export const IconTropicalStormTracks01BulkRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="tropical-storm-tracks-01-bulk-rounded IconTropicalStormTracks01BulkRounded"
+      the-icon="TropicalStormTracks01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -128,17 +113,15 @@ export const IconTropicalStormTracks01StrokeSharp: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="tropical-storm-tracks-01-stroke-sharp IconTropicalStormTracks01StrokeSharp"
+      the-icon="TropicalStormTracks01 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -148,25 +131,23 @@ export const IconTropicalStormTracks01SolidSharp: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="tropical-storm-tracks-01-solid-sharp IconTropicalStormTracks01SolidSharp"
+      the-icon="TropicalStormTracks01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTropicalStormTracks01: TheIconSelfPack = {
-  name: 'TropicalStormTracks01',
-  StrokeRounded: IconTropicalStormTracks01StrokeRounded,
-  DuotoneRounded: IconTropicalStormTracks01DuotoneRounded,
-  TwotoneRounded: IconTropicalStormTracks01TwotoneRounded,
-  SolidRounded: IconTropicalStormTracks01SolidRounded,
-  BulkRounded: IconTropicalStormTracks01BulkRounded,
-  StrokeSharp: IconTropicalStormTracks01StrokeSharp,
-  SolidSharp: IconTropicalStormTracks01SolidSharp,
-};
+export const iconPackOfTropicalStormTracks01: TheIconSelfPack = [
+  'TropicalStormTracks01',
+  IconTropicalStormTracks01StrokeRounded,
+  IconTropicalStormTracks01DuotoneRounded,
+  IconTropicalStormTracks01TwotoneRounded,
+  IconTropicalStormTracks01SolidRounded,
+  IconTropicalStormTracks01BulkRounded,
+  IconTropicalStormTracks01StrokeSharp,
+  IconTropicalStormTracks01SolidSharp,
+];

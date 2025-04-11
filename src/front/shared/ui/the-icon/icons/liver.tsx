@@ -14,13 +14,11 @@ export const IconLiverStrokeRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="liver-stroke-rounded IconLiverStrokeRounded"
+      the-icon="Liver StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -30,18 +28,15 @@ export const IconLiverDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="liver-duotone-rounded IconLiverDuotoneRounded"
+      the-icon="Liver DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -51,20 +46,15 @@ export const IconLiverTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="liver-twotone-rounded IconLiverTwotoneRounded"
+      the-icon="Liver TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -74,11 +64,11 @@ export const IconLiverSolidRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="liver-solid-rounded IconLiverSolidRounded"
+      the-icon="Liver SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -88,12 +78,11 @@ export const IconLiverBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="liver-bulk-rounded IconLiverBulkRounded"
+      the-icon="Liver BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -103,13 +92,11 @@ export const IconLiverStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="liver-stroke-sharp IconLiverStrokeSharp"
+      the-icon="Liver StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -119,23 +106,23 @@ export const IconLiverSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="liver-solid-sharp IconLiverSolidSharp"
+      the-icon="Liver SolidSharp"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfLiver: TheIconSelfPack = {
-  name: 'Liver',
-  StrokeRounded: IconLiverStrokeRounded,
-  DuotoneRounded: IconLiverDuotoneRounded,
-  TwotoneRounded: IconLiverTwotoneRounded,
-  SolidRounded: IconLiverSolidRounded,
-  BulkRounded: IconLiverBulkRounded,
-  StrokeSharp: IconLiverStrokeSharp,
-  SolidSharp: IconLiverSolidSharp,
-};
+export const iconPackOfLiver: TheIconSelfPack = [
+  'Liver',
+  IconLiverStrokeRounded,
+  IconLiverDuotoneRounded,
+  IconLiverTwotoneRounded,
+  IconLiverSolidRounded,
+  IconLiverBulkRounded,
+  IconLiverStrokeSharp,
+  IconLiverSolidSharp,
+];

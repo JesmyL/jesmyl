@@ -16,16 +16,11 @@ export const IconDeviantartStrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="deviantart-stroke-rounded IconDeviantartStrokeRounded"
+      the-icon="Deviantart StrokeRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="c fr s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -35,23 +30,15 @@ export const IconDeviantartDuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="deviantart-duotone-rounded IconDeviantartDuotoneRounded"
+      the-icon="Deviantart DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="c fr s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -61,24 +48,15 @@ export const IconDeviantartTwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="deviantart-twotone-rounded IconDeviantartTwotoneRounded"
+      the-icon="Deviantart TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="c fr o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -88,13 +66,11 @@ export const IconDeviantartSolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="deviantart-solid-rounded IconDeviantartSolidRounded"
+      the-icon="Deviantart SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -104,16 +80,15 @@ export const IconDeviantartBulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="deviantart-bulk-rounded IconDeviantartBulkRounded"
+      the-icon="Deviantart BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -123,13 +98,11 @@ export const IconDeviantartStrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="deviantart-stroke-sharp IconDeviantartStrokeSharp"
+      the-icon="Deviantart StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d6}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -139,23 +112,23 @@ export const IconDeviantartSolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="deviantart-solid-sharp IconDeviantartSolidSharp"
+      the-icon="Deviantart SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfDeviantart: TheIconSelfPack = {
-  name: 'Deviantart',
-  StrokeRounded: IconDeviantartStrokeRounded,
-  DuotoneRounded: IconDeviantartDuotoneRounded,
-  TwotoneRounded: IconDeviantartTwotoneRounded,
-  SolidRounded: IconDeviantartSolidRounded,
-  BulkRounded: IconDeviantartBulkRounded,
-  StrokeSharp: IconDeviantartStrokeSharp,
-  SolidSharp: IconDeviantartSolidSharp,
-};
+export const iconPackOfDeviantart: TheIconSelfPack = [
+  'Deviantart',
+  IconDeviantartStrokeRounded,
+  IconDeviantartDuotoneRounded,
+  IconDeviantartTwotoneRounded,
+  IconDeviantartSolidRounded,
+  IconDeviantartBulkRounded,
+  IconDeviantartStrokeSharp,
+  IconDeviantartSolidSharp,
+];

@@ -18,21 +18,15 @@ export const IconCheckmarkBadge04StrokeRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="checkmark-badge-04-stroke-rounded IconCheckmarkBadge04StrokeRounded"
+      the-icon="CheckmarkBadge04 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -42,26 +36,19 @@ export const IconCheckmarkBadge04DuotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="checkmark-badge-04-duotone-rounded IconCheckmarkBadge04DuotoneRounded"
+      the-icon="CheckmarkBadge04 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -71,22 +58,15 @@ export const IconCheckmarkBadge04TwotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="checkmark-badge-04-twotone-rounded IconCheckmarkBadge04TwotoneRounded"
+      the-icon="CheckmarkBadge04 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -96,15 +76,15 @@ export const IconCheckmarkBadge04SolidRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="checkmark-badge-04-solid-rounded IconCheckmarkBadge04SolidRounded"
+      the-icon="CheckmarkBadge04 SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -114,18 +94,15 @@ export const IconCheckmarkBadge04BulkRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="checkmark-badge-04-bulk-rounded IconCheckmarkBadge04BulkRounded"
+      the-icon="CheckmarkBadge04 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -135,17 +112,15 @@ export const IconCheckmarkBadge04StrokeSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="checkmark-badge-04-stroke-sharp IconCheckmarkBadge04StrokeSharp"
+      the-icon="CheckmarkBadge04 StrokeSharp"
     >
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -155,23 +130,23 @@ export const IconCheckmarkBadge04SolidSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="checkmark-badge-04-solid-sharp IconCheckmarkBadge04SolidSharp"
+      the-icon="CheckmarkBadge04 SolidSharp"
     >
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCheckmarkBadge04: TheIconSelfPack = {
-  name: 'CheckmarkBadge04',
-  StrokeRounded: IconCheckmarkBadge04StrokeRounded,
-  DuotoneRounded: IconCheckmarkBadge04DuotoneRounded,
-  TwotoneRounded: IconCheckmarkBadge04TwotoneRounded,
-  SolidRounded: IconCheckmarkBadge04SolidRounded,
-  BulkRounded: IconCheckmarkBadge04BulkRounded,
-  StrokeSharp: IconCheckmarkBadge04StrokeSharp,
-  SolidSharp: IconCheckmarkBadge04SolidSharp,
-};
+export const iconPackOfCheckmarkBadge04: TheIconSelfPack = [
+  'CheckmarkBadge04',
+  IconCheckmarkBadge04StrokeRounded,
+  IconCheckmarkBadge04DuotoneRounded,
+  IconCheckmarkBadge04TwotoneRounded,
+  IconCheckmarkBadge04SolidRounded,
+  IconCheckmarkBadge04BulkRounded,
+  IconCheckmarkBadge04StrokeSharp,
+  IconCheckmarkBadge04SolidSharp,
+];

@@ -17,19 +17,15 @@ export const IconYenSquareStrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="yen-square-stroke-rounded IconYenSquareStrokeRounded"
+      the-icon="YenSquare StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -39,30 +35,23 @@ export const IconYenSquareDuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="yen-square-duotone-rounded IconYenSquareDuotoneRounded"
+      the-icon="YenSquare DuotoneRounded"
     >
       <rect 
-        opacity="var(--icon-opacity)" 
-        x="2.5" 
-        y="2.5" 
-        width="19" 
-        height="19" 
-        rx="5" 
-        fill="var(--icon-fill)"></rect>
+        x="2.5"
+        y="2.5"
+        rx="5"
+        i-c="f h5 o7 w8"
+      />
       <rect 
-        x="2.5" 
-        y="2.5" 
-        width="19" 
-        height="19" 
-        rx="5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="2.5"
+        y="2.5"
+        rx="5"
+        i-c="h5 s sw w8"
+      />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -72,23 +61,17 @@ export const IconYenSquareTwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="yen-square-twotone-rounded IconYenSquareTwotoneRounded"
+      the-icon="YenSquare TwotoneRounded"
     >
       <rect 
-        x="2.5" 
-        y="2.5" 
-        width="19" 
-        height="19" 
-        rx="5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="2.5"
+        y="2.5"
+        rx="5"
+        i-c="h5 s sw w8"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -98,13 +81,11 @@ export const IconYenSquareSolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="yen-square-solid-rounded IconYenSquareSolidRounded"
+      the-icon="YenSquare SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -114,18 +95,15 @@ export const IconYenSquareBulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="yen-square-bulk-rounded IconYenSquareBulkRounded"
+      the-icon="YenSquare BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -135,19 +113,15 @@ export const IconYenSquareStrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="yen-square-stroke-sharp IconYenSquareStrokeSharp"
+      the-icon="YenSquare StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -157,25 +131,23 @@ export const IconYenSquareSolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="yen-square-solid-sharp IconYenSquareSolidSharp"
+      the-icon="YenSquare SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfYenSquare: TheIconSelfPack = {
-  name: 'YenSquare',
-  StrokeRounded: IconYenSquareStrokeRounded,
-  DuotoneRounded: IconYenSquareDuotoneRounded,
-  TwotoneRounded: IconYenSquareTwotoneRounded,
-  SolidRounded: IconYenSquareSolidRounded,
-  BulkRounded: IconYenSquareBulkRounded,
-  StrokeSharp: IconYenSquareStrokeSharp,
-  SolidSharp: IconYenSquareSolidSharp,
-};
+export const iconPackOfYenSquare: TheIconSelfPack = [
+  'YenSquare',
+  IconYenSquareStrokeRounded,
+  IconYenSquareDuotoneRounded,
+  IconYenSquareTwotoneRounded,
+  IconYenSquareSolidRounded,
+  IconYenSquareBulkRounded,
+  IconYenSquareStrokeSharp,
+  IconYenSquareSolidSharp,
+];

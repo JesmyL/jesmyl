@@ -15,14 +15,11 @@ export const IconOkFingerStrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="ok-finger-stroke-rounded IconOkFingerStrokeRounded"
+      the-icon="OkFinger StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -32,19 +29,15 @@ export const IconOkFingerDuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="ok-finger-duotone-rounded IconOkFingerDuotoneRounded"
+      the-icon="OkFinger DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,22 +47,15 @@ export const IconOkFingerTwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="ok-finger-twotone-rounded IconOkFingerTwotoneRounded"
+      the-icon="OkFinger TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -79,11 +65,11 @@ export const IconOkFingerSolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="ok-finger-solid-rounded IconOkFingerSolidRounded"
+      the-icon="OkFinger SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -93,12 +79,11 @@ export const IconOkFingerBulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="ok-finger-bulk-rounded IconOkFingerBulkRounded"
+      the-icon="OkFinger BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -108,12 +93,11 @@ export const IconOkFingerStrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="ok-finger-stroke-sharp IconOkFingerStrokeSharp"
+      the-icon="OkFinger StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -123,23 +107,23 @@ export const IconOkFingerSolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="ok-finger-solid-sharp IconOkFingerSolidSharp"
+      the-icon="OkFinger SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfOkFinger: TheIconSelfPack = {
-  name: 'OkFinger',
-  StrokeRounded: IconOkFingerStrokeRounded,
-  DuotoneRounded: IconOkFingerDuotoneRounded,
-  TwotoneRounded: IconOkFingerTwotoneRounded,
-  SolidRounded: IconOkFingerSolidRounded,
-  BulkRounded: IconOkFingerBulkRounded,
-  StrokeSharp: IconOkFingerStrokeSharp,
-  SolidSharp: IconOkFingerSolidSharp,
-};
+export const iconPackOfOkFinger: TheIconSelfPack = [
+  'OkFinger',
+  IconOkFingerStrokeRounded,
+  IconOkFingerDuotoneRounded,
+  IconOkFingerTwotoneRounded,
+  IconOkFingerSolidRounded,
+  IconOkFingerBulkRounded,
+  IconOkFingerStrokeSharp,
+  IconOkFingerSolidSharp,
+];

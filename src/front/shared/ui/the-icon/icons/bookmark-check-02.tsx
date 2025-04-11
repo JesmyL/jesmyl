@@ -17,21 +17,15 @@ export const IconBookmarkCheck02StrokeRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="bookmark-check-02-stroke-rounded IconBookmarkCheck02StrokeRounded"
+      the-icon="BookmarkCheck02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -41,26 +35,19 @@ export const IconBookmarkCheck02DuotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="bookmark-check-02-duotone-rounded IconBookmarkCheck02DuotoneRounded"
+      the-icon="BookmarkCheck02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -70,22 +57,15 @@ export const IconBookmarkCheck02TwotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="bookmark-check-02-twotone-rounded IconBookmarkCheck02TwotoneRounded"
+      the-icon="BookmarkCheck02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -95,13 +75,11 @@ export const IconBookmarkCheck02SolidRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="bookmark-check-02-solid-rounded IconBookmarkCheck02SolidRounded"
+      the-icon="BookmarkCheck02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -111,16 +89,15 @@ export const IconBookmarkCheck02BulkRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="bookmark-check-02-bulk-rounded IconBookmarkCheck02BulkRounded"
+      the-icon="BookmarkCheck02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -130,17 +107,15 @@ export const IconBookmarkCheck02StrokeSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="bookmark-check-02-stroke-sharp IconBookmarkCheck02StrokeSharp"
+      the-icon="BookmarkCheck02 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -150,25 +125,23 @@ export const IconBookmarkCheck02SolidSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="bookmark-check-02-solid-sharp IconBookmarkCheck02SolidSharp"
+      the-icon="BookmarkCheck02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBookmarkCheck02: TheIconSelfPack = {
-  name: 'BookmarkCheck02',
-  StrokeRounded: IconBookmarkCheck02StrokeRounded,
-  DuotoneRounded: IconBookmarkCheck02DuotoneRounded,
-  TwotoneRounded: IconBookmarkCheck02TwotoneRounded,
-  SolidRounded: IconBookmarkCheck02SolidRounded,
-  BulkRounded: IconBookmarkCheck02BulkRounded,
-  StrokeSharp: IconBookmarkCheck02StrokeSharp,
-  SolidSharp: IconBookmarkCheck02SolidSharp,
-};
+export const iconPackOfBookmarkCheck02: TheIconSelfPack = [
+  'BookmarkCheck02',
+  IconBookmarkCheck02StrokeRounded,
+  IconBookmarkCheck02DuotoneRounded,
+  IconBookmarkCheck02TwotoneRounded,
+  IconBookmarkCheck02SolidRounded,
+  IconBookmarkCheck02BulkRounded,
+  IconBookmarkCheck02StrokeSharp,
+  IconBookmarkCheck02SolidSharp,
+];

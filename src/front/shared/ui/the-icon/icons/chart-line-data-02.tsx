@@ -23,38 +23,33 @@ export const IconChartLineData02StrokeRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="chart-line-data-02-stroke-rounded IconChartLineData02StrokeRounded"
+      the-icon="ChartLineData02 StrokeRounded"
     >
       <circle 
-        cx="8.5" 
-        cy="10.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="8.5"
+        cy="10.5"
+        r="1.5"
+        i-c="s sw"
+      />
       <circle 
-        cx="14.5" 
-        cy="15.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="14.5"
+        cy="15.5"
+        r="1.5"
+        i-c="s sw"
+      />
       <circle 
-        cx="18.5" 
-        cy="7.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        cx="18.5"
+        cy="7.5"
+        r="1.5"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -64,53 +59,47 @@ export const IconChartLineData02DuotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="chart-line-data-02-duotone-rounded IconChartLineData02DuotoneRounded"
+      the-icon="ChartLineData02 DuotoneRounded"
     >
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       </g>
       <circle 
-        cx="8.5" 
-        cy="10.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="8.5"
+        cy="10.5"
+        r="1.5"
+        i-c="s sw"
+      />
       <circle 
-        cx="14.5" 
-        cy="15.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="14.5"
+        cy="15.5"
+        r="1.5"
+        i-c="s sw"
+      />
       <circle 
-        cx="18.5" 
-        cy="7.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        cx="18.5"
+        cy="7.5"
+        r="1.5"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -120,39 +109,33 @@ export const IconChartLineData02TwotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="chart-line-data-02-twotone-rounded IconChartLineData02TwotoneRounded"
+      the-icon="ChartLineData02 TwotoneRounded"
     >
       <circle 
-        cx="8.5" 
-        cy="10.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="8.5"
+        cy="10.5"
+        r="1.5"
+        i-c="s sw"
+      />
       <circle 
-        cx="14.5" 
-        cy="15.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="14.5"
+        cy="15.5"
+        r="1.5"
+        i-c="s sw"
+      />
       <circle 
-        cx="18.5" 
-        cy="7.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        cx="18.5"
+        cy="7.5"
+        r="1.5"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -162,11 +145,11 @@ export const IconChartLineData02SolidRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="chart-line-data-02-solid-rounded IconChartLineData02SolidRounded"
+      the-icon="ChartLineData02 SolidRounded"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -176,20 +159,15 @@ export const IconChartLineData02BulkRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="chart-line-data-02-bulk-rounded IconChartLineData02BulkRounded"
+      the-icon="ChartLineData02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -199,40 +177,33 @@ export const IconChartLineData02StrokeSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="chart-line-data-02-stroke-sharp IconChartLineData02StrokeSharp"
+      the-icon="ChartLineData02 StrokeSharp"
     >
       <circle 
-        cx="8.5" 
-        cy="10.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="8.5"
+        cy="10.5"
+        r="1.5"
+        i-c="s sj sw"
+      />
       <circle 
-        cx="14.5" 
-        cy="15.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="14.5"
+        cy="15.5"
+        r="1.5"
+        i-c="s sj sw"
+      />
       <circle 
-        cx="18.5" 
-        cy="7.5" 
-        r="1.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
-      <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        cx="18.5"
+        cy="7.5"
+        r="1.5"
+        i-c="s sj sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sw"
+      />
+      <path 
+        d={d.d10}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -242,37 +213,35 @@ export const IconChartLineData02SolidSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="chart-line-data-02-solid-sharp IconChartLineData02SolidSharp"
+      the-icon="ChartLineData02 SolidSharp"
     >
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
       <path 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfChartLineData02: TheIconSelfPack = {
-  name: 'ChartLineData02',
-  StrokeRounded: IconChartLineData02StrokeRounded,
-  DuotoneRounded: IconChartLineData02DuotoneRounded,
-  TwotoneRounded: IconChartLineData02TwotoneRounded,
-  SolidRounded: IconChartLineData02SolidRounded,
-  BulkRounded: IconChartLineData02BulkRounded,
-  StrokeSharp: IconChartLineData02StrokeSharp,
-  SolidSharp: IconChartLineData02SolidSharp,
-};
+export const iconPackOfChartLineData02: TheIconSelfPack = [
+  'ChartLineData02',
+  IconChartLineData02StrokeRounded,
+  IconChartLineData02DuotoneRounded,
+  IconChartLineData02TwotoneRounded,
+  IconChartLineData02SolidRounded,
+  IconChartLineData02BulkRounded,
+  IconChartLineData02StrokeSharp,
+  IconChartLineData02SolidSharp,
+];

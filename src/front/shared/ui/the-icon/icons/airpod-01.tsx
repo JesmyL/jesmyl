@@ -21,26 +21,22 @@ export const IconAirpod01StrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="airpod-01-stroke-rounded IconAirpod01StrokeRounded"
+      the-icon="Airpod01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <rect 
-        x="7" 
-        y="7" 
-        width="10" 
-        height="4" 
-        rx="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="7"
+        y="7"
+        rx="2"
+        i-c="h8 s sw w1"
+      />
     </TheIconWrapper>
   );
 };
@@ -49,31 +45,26 @@ export const IconAirpod01DuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="airpod-01-duotone-rounded IconAirpod01DuotoneRounded"
+      the-icon="Airpod01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <rect 
-        x="7" 
-        y="7" 
-        width="10" 
-        height="4" 
-        rx="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="7"
+        y="7"
+        rx="2"
+        i-c="h8 s sw w1"
+      />
     </TheIconWrapper>
   );
 };
@@ -82,27 +73,22 @@ export const IconAirpod01TwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="airpod-01-twotone-rounded IconAirpod01TwotoneRounded"
+      the-icon="Airpod01 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="o7 s sw"
       />
       <rect 
-        x="7" 
-        y="7" 
-        width="10" 
-        height="4" 
-        rx="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="7"
+        y="7"
+        rx="2"
+        i-c="h8 s sw w1"
+      />
     </TheIconWrapper>
   );
 };
@@ -111,13 +97,11 @@ export const IconAirpod01SolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="airpod-01-solid-rounded IconAirpod01SolidRounded"
+      the-icon="Airpod01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -127,20 +111,19 @@ export const IconAirpod01BulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="airpod-01-bulk-rounded IconAirpod01BulkRounded"
+      the-icon="Airpod01 BulkRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -150,26 +133,21 @@ export const IconAirpod01StrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="airpod-01-stroke-sharp IconAirpod01StrokeSharp"
+      the-icon="Airpod01 StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
       <rect 
-        x="7" 
-        y="7" 
-        width="10" 
-        height="4" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="7"
+        y="7"
+        i-c="h8 s sw w1"
+      />
     </TheIconWrapper>
   );
 };
@@ -178,31 +156,31 @@ export const IconAirpod01SolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="airpod-01-solid-sharp IconAirpod01SolidSharp"
+      the-icon="Airpod01 SolidSharp"
     >
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAirpod01: TheIconSelfPack = {
-  name: 'Airpod01',
-  StrokeRounded: IconAirpod01StrokeRounded,
-  DuotoneRounded: IconAirpod01DuotoneRounded,
-  TwotoneRounded: IconAirpod01TwotoneRounded,
-  SolidRounded: IconAirpod01SolidRounded,
-  BulkRounded: IconAirpod01BulkRounded,
-  StrokeSharp: IconAirpod01StrokeSharp,
-  SolidSharp: IconAirpod01SolidSharp,
-};
+export const iconPackOfAirpod01: TheIconSelfPack = [
+  'Airpod01',
+  IconAirpod01StrokeRounded,
+  IconAirpod01DuotoneRounded,
+  IconAirpod01TwotoneRounded,
+  IconAirpod01SolidRounded,
+  IconAirpod01BulkRounded,
+  IconAirpod01StrokeSharp,
+  IconAirpod01SolidSharp,
+];

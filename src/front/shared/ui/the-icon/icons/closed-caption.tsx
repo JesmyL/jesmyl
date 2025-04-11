@@ -17,19 +17,15 @@ export const IconClosedCaptionStrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="closed-caption-stroke-rounded IconClosedCaptionStrokeRounded"
+      the-icon="ClosedCaption StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -39,24 +35,19 @@ export const IconClosedCaptionDuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="closed-caption-duotone-rounded IconClosedCaptionDuotoneRounded"
+      the-icon="ClosedCaption DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -66,20 +57,15 @@ export const IconClosedCaptionTwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="closed-caption-twotone-rounded IconClosedCaptionTwotoneRounded"
+      the-icon="ClosedCaption TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -89,13 +75,11 @@ export const IconClosedCaptionSolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="closed-caption-solid-rounded IconClosedCaptionSolidRounded"
+      the-icon="ClosedCaption SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -105,18 +89,15 @@ export const IconClosedCaptionBulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="closed-caption-bulk-rounded IconClosedCaptionBulkRounded"
+      the-icon="ClosedCaption BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -126,18 +107,15 @@ export const IconClosedCaptionStrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="closed-caption-stroke-sharp IconClosedCaptionStrokeSharp"
+      the-icon="ClosedCaption StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -147,25 +125,23 @@ export const IconClosedCaptionSolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="closed-caption-solid-sharp IconClosedCaptionSolidSharp"
+      the-icon="ClosedCaption SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfClosedCaption: TheIconSelfPack = {
-  name: 'ClosedCaption',
-  StrokeRounded: IconClosedCaptionStrokeRounded,
-  DuotoneRounded: IconClosedCaptionDuotoneRounded,
-  TwotoneRounded: IconClosedCaptionTwotoneRounded,
-  SolidRounded: IconClosedCaptionSolidRounded,
-  BulkRounded: IconClosedCaptionBulkRounded,
-  StrokeSharp: IconClosedCaptionStrokeSharp,
-  SolidSharp: IconClosedCaptionSolidSharp,
-};
+export const iconPackOfClosedCaption: TheIconSelfPack = [
+  'ClosedCaption',
+  IconClosedCaptionStrokeRounded,
+  IconClosedCaptionDuotoneRounded,
+  IconClosedCaptionTwotoneRounded,
+  IconClosedCaptionSolidRounded,
+  IconClosedCaptionBulkRounded,
+  IconClosedCaptionStrokeSharp,
+  IconClosedCaptionSolidSharp,
+];

@@ -15,14 +15,11 @@ export const IconSignLanguageCStrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="sign-language-c-stroke-rounded IconSignLanguageCStrokeRounded"
+      the-icon="SignLanguageC StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -32,19 +29,15 @@ export const IconSignLanguageCDuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="sign-language-c-duotone-rounded IconSignLanguageCDuotoneRounded"
+      the-icon="SignLanguageC DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,22 +47,15 @@ export const IconSignLanguageCTwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="sign-language-c-twotone-rounded IconSignLanguageCTwotoneRounded"
+      the-icon="SignLanguageC TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -79,11 +65,11 @@ export const IconSignLanguageCSolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="sign-language-c-solid-rounded IconSignLanguageCSolidRounded"
+      the-icon="SignLanguageC SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -93,12 +79,11 @@ export const IconSignLanguageCBulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="sign-language-c-bulk-rounded IconSignLanguageCBulkRounded"
+      the-icon="SignLanguageC BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -108,13 +93,11 @@ export const IconSignLanguageCStrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="sign-language-c-stroke-sharp IconSignLanguageCStrokeSharp"
+      the-icon="SignLanguageC StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -124,23 +107,23 @@ export const IconSignLanguageCSolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="sign-language-c-solid-sharp IconSignLanguageCSolidSharp"
+      the-icon="SignLanguageC SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSignLanguageC: TheIconSelfPack = {
-  name: 'SignLanguageC',
-  StrokeRounded: IconSignLanguageCStrokeRounded,
-  DuotoneRounded: IconSignLanguageCDuotoneRounded,
-  TwotoneRounded: IconSignLanguageCTwotoneRounded,
-  SolidRounded: IconSignLanguageCSolidRounded,
-  BulkRounded: IconSignLanguageCBulkRounded,
-  StrokeSharp: IconSignLanguageCStrokeSharp,
-  SolidSharp: IconSignLanguageCSolidSharp,
-};
+export const iconPackOfSignLanguageC: TheIconSelfPack = [
+  'SignLanguageC',
+  IconSignLanguageCStrokeRounded,
+  IconSignLanguageCDuotoneRounded,
+  IconSignLanguageCTwotoneRounded,
+  IconSignLanguageCSolidRounded,
+  IconSignLanguageCBulkRounded,
+  IconSignLanguageCStrokeSharp,
+  IconSignLanguageCSolidSharp,
+];

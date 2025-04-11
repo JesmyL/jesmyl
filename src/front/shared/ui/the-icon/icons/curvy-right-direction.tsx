@@ -18,14 +18,11 @@ export const IconCurvyRightDirectionStrokeRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="curvy-right-direction-stroke-rounded IconCurvyRightDirectionStrokeRounded"
+      the-icon="CurvyRightDirection StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -35,15 +32,11 @@ export const IconCurvyRightDirectionDuotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="curvy-right-direction-duotone-rounded IconCurvyRightDirectionDuotoneRounded"
+      the-icon="CurvyRightDirection DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -53,19 +46,15 @@ export const IconCurvyRightDirectionTwotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="curvy-right-direction-twotone-rounded IconCurvyRightDirectionTwotoneRounded"
+      the-icon="CurvyRightDirection TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -75,11 +64,11 @@ export const IconCurvyRightDirectionSolidRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="curvy-right-direction-solid-rounded IconCurvyRightDirectionSolidRounded"
+      the-icon="CurvyRightDirection SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -89,16 +78,15 @@ export const IconCurvyRightDirectionBulkRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="curvy-right-direction-bulk-rounded IconCurvyRightDirectionBulkRounded"
+      the-icon="CurvyRightDirection BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -108,18 +96,15 @@ export const IconCurvyRightDirectionStrokeSharp: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="curvy-right-direction-stroke-sharp IconCurvyRightDirectionStrokeSharp"
+      the-icon="CurvyRightDirection StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -129,25 +114,23 @@ export const IconCurvyRightDirectionSolidSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="curvy-right-direction-solid-sharp IconCurvyRightDirectionSolidSharp"
+      the-icon="CurvyRightDirection SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCurvyRightDirection: TheIconSelfPack = {
-  name: 'CurvyRightDirection',
-  StrokeRounded: IconCurvyRightDirectionStrokeRounded,
-  DuotoneRounded: IconCurvyRightDirectionDuotoneRounded,
-  TwotoneRounded: IconCurvyRightDirectionTwotoneRounded,
-  SolidRounded: IconCurvyRightDirectionSolidRounded,
-  BulkRounded: IconCurvyRightDirectionBulkRounded,
-  StrokeSharp: IconCurvyRightDirectionStrokeSharp,
-  SolidSharp: IconCurvyRightDirectionSolidSharp,
-};
+export const iconPackOfCurvyRightDirection: TheIconSelfPack = [
+  'CurvyRightDirection',
+  IconCurvyRightDirectionStrokeRounded,
+  IconCurvyRightDirectionDuotoneRounded,
+  IconCurvyRightDirectionTwotoneRounded,
+  IconCurvyRightDirectionSolidRounded,
+  IconCurvyRightDirectionBulkRounded,
+  IconCurvyRightDirectionStrokeSharp,
+  IconCurvyRightDirectionSolidSharp,
+];

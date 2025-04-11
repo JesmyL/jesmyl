@@ -14,14 +14,11 @@ export const IconLessThanStrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="less-than-stroke-rounded IconLessThanStrokeRounded"
+      the-icon="LessThan StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -31,15 +28,11 @@ export const IconLessThanDuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="less-than-duotone-rounded IconLessThanDuotoneRounded"
+      the-icon="LessThan DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -49,22 +42,15 @@ export const IconLessThanTwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="less-than-twotone-rounded IconLessThanTwotoneRounded"
+      the-icon="LessThan TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -74,11 +60,11 @@ export const IconLessThanSolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="less-than-solid-rounded IconLessThanSolidRounded"
+      the-icon="LessThan SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -88,12 +74,11 @@ export const IconLessThanBulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="less-than-bulk-rounded IconLessThanBulkRounded"
+      the-icon="LessThan BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -103,12 +88,11 @@ export const IconLessThanStrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="less-than-stroke-sharp IconLessThanStrokeSharp"
+      the-icon="LessThan StrokeSharp"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d4}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -118,25 +102,23 @@ export const IconLessThanSolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="less-than-solid-sharp IconLessThanSolidSharp"
+      the-icon="LessThan SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfLessThan: TheIconSelfPack = {
-  name: 'LessThan',
-  StrokeRounded: IconLessThanStrokeRounded,
-  DuotoneRounded: IconLessThanDuotoneRounded,
-  TwotoneRounded: IconLessThanTwotoneRounded,
-  SolidRounded: IconLessThanSolidRounded,
-  BulkRounded: IconLessThanBulkRounded,
-  StrokeSharp: IconLessThanStrokeSharp,
-  SolidSharp: IconLessThanSolidSharp,
-};
+export const iconPackOfLessThan: TheIconSelfPack = [
+  'LessThan',
+  IconLessThanStrokeRounded,
+  IconLessThanDuotoneRounded,
+  IconLessThanTwotoneRounded,
+  IconLessThanSolidRounded,
+  IconLessThanBulkRounded,
+  IconLessThanStrokeSharp,
+  IconLessThanSolidSharp,
+];

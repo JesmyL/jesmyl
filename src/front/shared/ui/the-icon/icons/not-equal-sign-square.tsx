@@ -16,19 +16,15 @@ export const IconNotEqualSignSquareStrokeRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="not-equal-sign-square-stroke-rounded IconNotEqualSignSquareStrokeRounded"
+      the-icon="NotEqualSignSquare StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -38,24 +34,19 @@ export const IconNotEqualSignSquareDuotoneRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="not-equal-sign-square-duotone-rounded IconNotEqualSignSquareDuotoneRounded"
+      the-icon="NotEqualSignSquare DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -65,20 +56,15 @@ export const IconNotEqualSignSquareTwotoneRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="not-equal-sign-square-twotone-rounded IconNotEqualSignSquareTwotoneRounded"
+      the-icon="NotEqualSignSquare TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -88,13 +74,11 @@ export const IconNotEqualSignSquareSolidRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="not-equal-sign-square-solid-rounded IconNotEqualSignSquareSolidRounded"
+      the-icon="NotEqualSignSquare SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -104,18 +88,15 @@ export const IconNotEqualSignSquareBulkRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="not-equal-sign-square-bulk-rounded IconNotEqualSignSquareBulkRounded"
+      the-icon="NotEqualSignSquare BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -125,19 +106,15 @@ export const IconNotEqualSignSquareStrokeSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="not-equal-sign-square-stroke-sharp IconNotEqualSignSquareStrokeSharp"
+      the-icon="NotEqualSignSquare StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -147,25 +124,23 @@ export const IconNotEqualSignSquareSolidSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="not-equal-sign-square-solid-sharp IconNotEqualSignSquareSolidSharp"
+      the-icon="NotEqualSignSquare SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfNotEqualSignSquare: TheIconSelfPack = {
-  name: 'NotEqualSignSquare',
-  StrokeRounded: IconNotEqualSignSquareStrokeRounded,
-  DuotoneRounded: IconNotEqualSignSquareDuotoneRounded,
-  TwotoneRounded: IconNotEqualSignSquareTwotoneRounded,
-  SolidRounded: IconNotEqualSignSquareSolidRounded,
-  BulkRounded: IconNotEqualSignSquareBulkRounded,
-  StrokeSharp: IconNotEqualSignSquareStrokeSharp,
-  SolidSharp: IconNotEqualSignSquareSolidSharp,
-};
+export const iconPackOfNotEqualSignSquare: TheIconSelfPack = [
+  'NotEqualSignSquare',
+  IconNotEqualSignSquareStrokeRounded,
+  IconNotEqualSignSquareDuotoneRounded,
+  IconNotEqualSignSquareTwotoneRounded,
+  IconNotEqualSignSquareSolidRounded,
+  IconNotEqualSignSquareBulkRounded,
+  IconNotEqualSignSquareStrokeSharp,
+  IconNotEqualSignSquareSolidSharp,
+];

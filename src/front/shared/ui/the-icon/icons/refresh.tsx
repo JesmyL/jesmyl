@@ -16,14 +16,11 @@ export const IconRefreshStrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="refresh-stroke-rounded IconRefreshStrokeRounded"
+      the-icon="Refresh StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -33,19 +30,15 @@ export const IconRefreshDuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="refresh-duotone-rounded IconRefreshDuotoneRounded"
+      the-icon="Refresh DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -55,22 +48,15 @@ export const IconRefreshTwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="refresh-twotone-rounded IconRefreshTwotoneRounded"
+      the-icon="Refresh TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -80,11 +66,11 @@ export const IconRefreshSolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="refresh-solid-rounded IconRefreshSolidRounded"
+      the-icon="Refresh SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -94,16 +80,15 @@ export const IconRefreshBulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="refresh-bulk-rounded IconRefreshBulkRounded"
+      the-icon="Refresh BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -113,13 +98,11 @@ export const IconRefreshStrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="refresh-stroke-sharp IconRefreshStrokeSharp"
+      the-icon="Refresh StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -129,25 +112,23 @@ export const IconRefreshSolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="refresh-solid-sharp IconRefreshSolidSharp"
+      the-icon="Refresh SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfRefresh: TheIconSelfPack = {
-  name: 'Refresh',
-  StrokeRounded: IconRefreshStrokeRounded,
-  DuotoneRounded: IconRefreshDuotoneRounded,
-  TwotoneRounded: IconRefreshTwotoneRounded,
-  SolidRounded: IconRefreshSolidRounded,
-  BulkRounded: IconRefreshBulkRounded,
-  StrokeSharp: IconRefreshStrokeSharp,
-  SolidSharp: IconRefreshSolidSharp,
-};
+export const iconPackOfRefresh: TheIconSelfPack = [
+  'Refresh',
+  IconRefreshStrokeRounded,
+  IconRefreshDuotoneRounded,
+  IconRefreshTwotoneRounded,
+  IconRefreshSolidRounded,
+  IconRefreshBulkRounded,
+  IconRefreshStrokeSharp,
+  IconRefreshSolidSharp,
+];

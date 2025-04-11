@@ -18,18 +18,15 @@ export const IconGreekHelmetStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="greek-helmet-stroke-rounded IconGreekHelmetStrokeRounded"
+      the-icon="GreekHelmet StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -39,23 +36,19 @@ export const IconGreekHelmetDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="greek-helmet-duotone-rounded IconGreekHelmetDuotoneRounded"
+      the-icon="GreekHelmet DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -65,19 +58,15 @@ export const IconGreekHelmetTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="greek-helmet-twotone-rounded IconGreekHelmetTwotoneRounded"
+      the-icon="GreekHelmet TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -87,15 +76,15 @@ export const IconGreekHelmetSolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="greek-helmet-solid-rounded IconGreekHelmetSolidRounded"
+      the-icon="GreekHelmet SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -105,16 +94,15 @@ export const IconGreekHelmetBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="greek-helmet-bulk-rounded IconGreekHelmetBulkRounded"
+      the-icon="GreekHelmet BulkRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -124,17 +112,15 @@ export const IconGreekHelmetStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="greek-helmet-stroke-sharp IconGreekHelmetStrokeSharp"
+      the-icon="GreekHelmet StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -144,27 +130,27 @@ export const IconGreekHelmetSolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="greek-helmet-solid-sharp IconGreekHelmetSolidSharp"
+      the-icon="GreekHelmet SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfGreekHelmet: TheIconSelfPack = {
-  name: 'GreekHelmet',
-  StrokeRounded: IconGreekHelmetStrokeRounded,
-  DuotoneRounded: IconGreekHelmetDuotoneRounded,
-  TwotoneRounded: IconGreekHelmetTwotoneRounded,
-  SolidRounded: IconGreekHelmetSolidRounded,
-  BulkRounded: IconGreekHelmetBulkRounded,
-  StrokeSharp: IconGreekHelmetStrokeSharp,
-  SolidSharp: IconGreekHelmetSolidSharp,
-};
+export const iconPackOfGreekHelmet: TheIconSelfPack = [
+  'GreekHelmet',
+  IconGreekHelmetStrokeRounded,
+  IconGreekHelmetDuotoneRounded,
+  IconGreekHelmetTwotoneRounded,
+  IconGreekHelmetSolidRounded,
+  IconGreekHelmetBulkRounded,
+  IconGreekHelmetStrokeSharp,
+  IconGreekHelmetSolidSharp,
+];

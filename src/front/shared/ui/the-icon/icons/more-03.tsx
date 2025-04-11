@@ -45,80 +45,62 @@ export const IconMore03StrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="more-03-stroke-rounded IconMore03StrokeRounded"
+      the-icon="More03 StrokeRounded"
     >
       <rect 
-        x="18" 
-        y="18" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="18"
+        y="18"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="18" 
-        y="10.5" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="18"
+        y="10.5"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="18" 
-        y="3" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="18"
+        y="3"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="10.5" 
-        y="18" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="10.5"
+        y="18"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="10.5" 
-        y="10.5" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="10.5"
+        y="10.5"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="10.5" 
-        y="3" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="10.5"
+        y="3"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="3" 
-        y="18" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="3"
+        y="18"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="3" 
-        y="10.5" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="3"
+        y="10.5"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="3" 
-        y="3" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="3"
+        y="3"
+        rx="1"
+        i-c="h7 s sw w"
+      />
     </TheIconWrapper>
   );
 };
@@ -127,119 +109,100 @@ export const IconMore03DuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="more-03-duotone-rounded IconMore03DuotoneRounded"
+      the-icon="More03 DuotoneRounded"
     >
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f"
       />
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       </g>
       <rect 
-        x="18" 
-        y="18" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="18"
+        y="18"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="18" 
-        y="10.5" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="18"
+        y="10.5"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="18" 
-        y="3" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="18"
+        y="3"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="10.5" 
-        y="18" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="10.5"
+        y="18"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="10.5" 
-        y="10.5" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="10.5"
+        y="10.5"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="10.5" 
-        y="3" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="10.5"
+        y="3"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="3" 
-        y="18" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="3"
+        y="18"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="3" 
-        y="10.5" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="3"
+        y="10.5"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="3" 
-        y="3" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="3"
+        y="3"
+        rx="1"
+        i-c="h7 s sw w"
+      />
     </TheIconWrapper>
   );
 };
@@ -248,83 +211,62 @@ export const IconMore03TwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="more-03-twotone-rounded IconMore03TwotoneRounded"
+      the-icon="More03 TwotoneRounded"
     >
       <rect 
-        x="18" 
-        y="18" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="18"
+        y="18"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="18" 
-        y="10.5" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="18"
+        y="10.5"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="18" 
-        y="3" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="18"
+        y="3"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        opacity="var(--icon-opacity)" 
-        x="10.5" 
-        y="18" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="10.5"
+        y="18"
+        rx="1"
+        i-c="h7 o7 s sw w"
+      />
       <rect 
-        opacity="var(--icon-opacity)" 
-        x="10.5" 
-        y="10.5" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="10.5"
+        y="10.5"
+        rx="1"
+        i-c="h7 o7 s sw w"
+      />
       <rect 
-        opacity="var(--icon-opacity)" 
-        x="10.5" 
-        y="3" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="10.5"
+        y="3"
+        rx="1"
+        i-c="h7 o7 s sw w"
+      />
       <rect 
-        x="3" 
-        y="18" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="3"
+        y="18"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="3" 
-        y="10.5" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="3"
+        y="10.5"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="3" 
-        y="3" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="3"
+        y="3"
+        rx="1"
+        i-c="h7 s sw w"
+      />
     </TheIconWrapper>
   );
 };
@@ -333,61 +275,43 @@ export const IconMore03SolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="more-03-solid-rounded IconMore03SolidRounded"
+      the-icon="More03 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        d={d.d15}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d17} 
-        fill="var(--icon-fill)" 
+        d={d.d17}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d18} 
-        fill="var(--icon-fill)" 
+        d={d.d18}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -397,64 +321,43 @@ export const IconMore03BulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="more-03-bulk-rounded IconMore03BulkRounded"
+      the-icon="More03 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        d={d.d15}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d17} 
-        fill="var(--icon-fill)" 
+        d={d.d17}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d18} 
-        fill="var(--icon-fill)" 
+        d={d.d18}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -464,52 +367,43 @@ export const IconMore03StrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="more-03-stroke-sharp IconMore03StrokeSharp"
+      the-icon="More03 StrokeSharp"
     >
       <path 
-        d={d.d19} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d19}
+        i-c="s sw"
       />
       <path 
-        d={d.d20} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d20}
+        i-c="s sw"
       />
       <path 
-        d={d.d21} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d21}
+        i-c="s sw"
       />
       <path 
-        d={d.d22} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d22}
+        i-c="s sw"
       />
       <path 
-        d={d.d23} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d23}
+        i-c="s sw"
       />
       <path 
-        d={d.d24} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d24}
+        i-c="s sw"
       />
       <path 
-        d={d.d25} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d25}
+        i-c="s sw"
       />
       <path 
-        d={d.d26} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d26}
+        i-c="s sw"
       />
       <path 
-        d={d.d27} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d27}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -519,55 +413,55 @@ export const IconMore03SolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="more-03-solid-sharp IconMore03SolidSharp"
+      the-icon="More03 SolidSharp"
     >
       <path 
-        d={d.d28} 
-        fill="var(--icon-fill)" 
+        d={d.d28}
+        i-c="f"
       />
       <path 
-        d={d.d29} 
-        fill="var(--icon-fill)" 
+        d={d.d29}
+        i-c="f"
       />
       <path 
-        d={d.d30} 
-        fill="var(--icon-fill)" 
+        d={d.d30}
+        i-c="f"
       />
       <path 
-        d={d.d31} 
-        fill="var(--icon-fill)" 
+        d={d.d31}
+        i-c="f"
       />
       <path 
-        d={d.d32} 
-        fill="var(--icon-fill)" 
+        d={d.d32}
+        i-c="f"
       />
       <path 
-        d={d.d33} 
-        fill="var(--icon-fill)" 
+        d={d.d33}
+        i-c="f"
       />
       <path 
-        d={d.d34} 
-        fill="var(--icon-fill)" 
+        d={d.d34}
+        i-c="f"
       />
       <path 
-        d={d.d35} 
-        fill="var(--icon-fill)" 
+        d={d.d35}
+        i-c="f"
       />
       <path 
-        d={d.d36} 
-        fill="var(--icon-fill)" 
+        d={d.d36}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMore03: TheIconSelfPack = {
-  name: 'More03',
-  StrokeRounded: IconMore03StrokeRounded,
-  DuotoneRounded: IconMore03DuotoneRounded,
-  TwotoneRounded: IconMore03TwotoneRounded,
-  SolidRounded: IconMore03SolidRounded,
-  BulkRounded: IconMore03BulkRounded,
-  StrokeSharp: IconMore03StrokeSharp,
-  SolidSharp: IconMore03SolidSharp,
-};
+export const iconPackOfMore03: TheIconSelfPack = [
+  'More03',
+  IconMore03StrokeRounded,
+  IconMore03DuotoneRounded,
+  IconMore03TwotoneRounded,
+  IconMore03SolidRounded,
+  IconMore03BulkRounded,
+  IconMore03StrokeSharp,
+  IconMore03SolidSharp,
+];

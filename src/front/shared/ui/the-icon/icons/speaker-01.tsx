@@ -19,24 +19,21 @@ export const IconSpeaker01StrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="speaker-01-stroke-rounded IconSpeaker01StrokeRounded"
+      the-icon="Speaker01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <circle 
-        cx="12" 
-        cy="14.5" 
-        r="3.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="14.5"
+        r="3.5"
+        i-c="s sw"
+      />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -46,31 +43,25 @@ export const IconSpeaker01DuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="speaker-01-duotone-rounded IconSpeaker01DuotoneRounded"
+      the-icon="Speaker01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <circle 
-        cx="12" 
-        cy="14.5" 
-        r="3.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="14.5"
+        r="3.5"
+        i-c="s sw"
+      />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -80,26 +71,21 @@ export const IconSpeaker01TwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="speaker-01-twotone-rounded IconSpeaker01TwotoneRounded"
+      the-icon="Speaker01 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="14.5" 
-        r="3.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="14.5"
+        r="3.5"
+        i-c="o7 s sw"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -109,13 +95,11 @@ export const IconSpeaker01SolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="speaker-01-solid-rounded IconSpeaker01SolidRounded"
+      the-icon="Speaker01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -125,22 +109,19 @@ export const IconSpeaker01BulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="speaker-01-bulk-rounded IconSpeaker01BulkRounded"
+      the-icon="Speaker01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -150,24 +131,21 @@ export const IconSpeaker01StrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="speaker-01-stroke-sharp IconSpeaker01StrokeSharp"
+      the-icon="Speaker01 StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sw"
       />
       <circle 
-        cx="12" 
-        cy="14.5" 
-        r="3.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="14.5"
+        r="3.5"
+        i-c="s sw"
+      />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -177,25 +155,23 @@ export const IconSpeaker01SolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="speaker-01-solid-sharp IconSpeaker01SolidSharp"
+      the-icon="Speaker01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSpeaker01: TheIconSelfPack = {
-  name: 'Speaker01',
-  StrokeRounded: IconSpeaker01StrokeRounded,
-  DuotoneRounded: IconSpeaker01DuotoneRounded,
-  TwotoneRounded: IconSpeaker01TwotoneRounded,
-  SolidRounded: IconSpeaker01SolidRounded,
-  BulkRounded: IconSpeaker01BulkRounded,
-  StrokeSharp: IconSpeaker01StrokeSharp,
-  SolidSharp: IconSpeaker01SolidSharp,
-};
+export const iconPackOfSpeaker01: TheIconSelfPack = [
+  'Speaker01',
+  IconSpeaker01StrokeRounded,
+  IconSpeaker01DuotoneRounded,
+  IconSpeaker01TwotoneRounded,
+  IconSpeaker01SolidRounded,
+  IconSpeaker01BulkRounded,
+  IconSpeaker01StrokeSharp,
+  IconSpeaker01SolidSharp,
+];

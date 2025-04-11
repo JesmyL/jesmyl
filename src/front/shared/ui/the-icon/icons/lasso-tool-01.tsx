@@ -17,13 +17,11 @@ export const IconLassoTool01StrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="lasso-tool-01-stroke-rounded IconLassoTool01StrokeRounded"
+      the-icon="LassoTool01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -33,18 +31,15 @@ export const IconLassoTool01DuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="lasso-tool-01-duotone-rounded IconLassoTool01DuotoneRounded"
+      the-icon="LassoTool01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,20 +49,15 @@ export const IconLassoTool01TwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="lasso-tool-01-twotone-rounded IconLassoTool01TwotoneRounded"
+      the-icon="LassoTool01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -77,13 +67,11 @@ export const IconLassoTool01SolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="lasso-tool-01-solid-rounded IconLassoTool01SolidRounded"
+      the-icon="LassoTool01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -93,20 +81,15 @@ export const IconLassoTool01BulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="lasso-tool-01-bulk-rounded IconLassoTool01BulkRounded"
+      the-icon="LassoTool01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -116,12 +99,11 @@ export const IconLassoTool01StrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="lasso-tool-01-stroke-sharp IconLassoTool01StrokeSharp"
+      the-icon="LassoTool01 StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -131,25 +113,23 @@ export const IconLassoTool01SolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="lasso-tool-01-solid-sharp IconLassoTool01SolidSharp"
+      the-icon="LassoTool01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfLassoTool01: TheIconSelfPack = {
-  name: 'LassoTool01',
-  StrokeRounded: IconLassoTool01StrokeRounded,
-  DuotoneRounded: IconLassoTool01DuotoneRounded,
-  TwotoneRounded: IconLassoTool01TwotoneRounded,
-  SolidRounded: IconLassoTool01SolidRounded,
-  BulkRounded: IconLassoTool01BulkRounded,
-  StrokeSharp: IconLassoTool01StrokeSharp,
-  SolidSharp: IconLassoTool01SolidSharp,
-};
+export const iconPackOfLassoTool01: TheIconSelfPack = [
+  'LassoTool01',
+  IconLassoTool01StrokeRounded,
+  IconLassoTool01DuotoneRounded,
+  IconLassoTool01TwotoneRounded,
+  IconLassoTool01SolidRounded,
+  IconLassoTool01BulkRounded,
+  IconLassoTool01StrokeSharp,
+  IconLassoTool01SolidSharp,
+];

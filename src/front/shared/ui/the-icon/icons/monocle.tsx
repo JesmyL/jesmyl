@@ -18,30 +18,23 @@ export const IconMonocleStrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="monocle-stroke-rounded IconMonocleStrokeRounded"
+      the-icon="Monocle StrokeRounded"
     >
       <circle 
-        cx="8" 
-        cy="8.49561" 
-        r="6" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="8"
+        cy="8.49561"
+        r="6"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="16" 
-        cy="8.49561" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="16"
+        cy="8.49561"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -51,36 +44,29 @@ export const IconMonocleDuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="monocle-duotone-rounded IconMonocleDuotoneRounded"
+      the-icon="Monocle DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="8" 
-        cy="8.49561" 
-        r="6" 
-        fill="var(--icon-fill)"></circle>
+        cx="8"
+        cy="8.49561"
+        r="6"
+        i-c="f o7"
+      />
       <circle 
-        cx="8" 
-        cy="8.49561" 
-        r="6" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="8"
+        cy="8.49561"
+        r="6"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="16" 
-        cy="8.49561" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="16"
+        cy="8.49561"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -90,31 +76,23 @@ export const IconMonocleTwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="monocle-twotone-rounded IconMonocleTwotoneRounded"
+      the-icon="Monocle TwotoneRounded"
     >
       <circle 
-        cx="8" 
-        cy="8.49561" 
-        r="6" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="8"
+        cy="8.49561"
+        r="6"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="16" 
-        cy="8.49561" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="16"
+        cy="8.49561"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -124,17 +102,15 @@ export const IconMonocleSolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="monocle-solid-rounded IconMonocleSolidRounded"
+      the-icon="Monocle SolidRounded"
     >
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -144,24 +120,19 @@ export const IconMonocleBulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="monocle-bulk-rounded IconMonocleBulkRounded"
+      the-icon="Monocle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -171,30 +142,23 @@ export const IconMonocleStrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="monocle-stroke-sharp IconMonocleStrokeSharp"
+      the-icon="Monocle StrokeSharp"
     >
       <circle 
-        cx="8" 
-        cy="8.49561" 
-        r="6" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="8"
+        cy="8.49561"
+        r="6"
+        i-c="s sj sr sw"
+      />
       <circle 
-        cx="16" 
-        cy="8.49561" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="16"
+        cy="8.49561"
+        r="2"
+        i-c="s sj sr sw"
+      />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj ss sw"
       />
     </TheIconWrapper>
   );
@@ -204,35 +168,31 @@ export const IconMonocleSolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="monocle-solid-sharp IconMonocleSolidSharp"
+      the-icon="Monocle SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMonocle: TheIconSelfPack = {
-  name: 'Monocle',
-  StrokeRounded: IconMonocleStrokeRounded,
-  DuotoneRounded: IconMonocleDuotoneRounded,
-  TwotoneRounded: IconMonocleTwotoneRounded,
-  SolidRounded: IconMonocleSolidRounded,
-  BulkRounded: IconMonocleBulkRounded,
-  StrokeSharp: IconMonocleStrokeSharp,
-  SolidSharp: IconMonocleSolidSharp,
-};
+export const iconPackOfMonocle: TheIconSelfPack = [
+  'Monocle',
+  IconMonocleStrokeRounded,
+  IconMonocleDuotoneRounded,
+  IconMonocleTwotoneRounded,
+  IconMonocleSolidRounded,
+  IconMonocleBulkRounded,
+  IconMonocleStrokeSharp,
+  IconMonocleSolidSharp,
+];

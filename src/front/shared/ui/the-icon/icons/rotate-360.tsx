@@ -19,14 +19,11 @@ export const IconRotate360StrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="rotate-360-stroke-rounded IconRotate360StrokeRounded"
+      the-icon="Rotate360 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -36,19 +33,15 @@ export const IconRotate360DuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="rotate-360-duotone-rounded IconRotate360DuotoneRounded"
+      the-icon="Rotate360 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -58,22 +51,15 @@ export const IconRotate360TwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="rotate-360-twotone-rounded IconRotate360TwotoneRounded"
+      the-icon="Rotate360 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -83,11 +69,11 @@ export const IconRotate360SolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="rotate-360-solid-rounded IconRotate360SolidRounded"
+      the-icon="Rotate360 SolidRounded"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -97,20 +83,19 @@ export const IconRotate360BulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="rotate-360-bulk-rounded IconRotate360BulkRounded"
+      the-icon="Rotate360 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -120,12 +105,11 @@ export const IconRotate360StrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="rotate-360-stroke-sharp IconRotate360StrokeSharp"
+      the-icon="Rotate360 StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -135,25 +119,23 @@ export const IconRotate360SolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="rotate-360-solid-sharp IconRotate360SolidSharp"
+      the-icon="Rotate360 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfRotate360: TheIconSelfPack = {
-  name: 'Rotate360',
-  StrokeRounded: IconRotate360StrokeRounded,
-  DuotoneRounded: IconRotate360DuotoneRounded,
-  TwotoneRounded: IconRotate360TwotoneRounded,
-  SolidRounded: IconRotate360SolidRounded,
-  BulkRounded: IconRotate360BulkRounded,
-  StrokeSharp: IconRotate360StrokeSharp,
-  SolidSharp: IconRotate360SolidSharp,
-};
+export const iconPackOfRotate360: TheIconSelfPack = [
+  'Rotate360',
+  IconRotate360StrokeRounded,
+  IconRotate360DuotoneRounded,
+  IconRotate360TwotoneRounded,
+  IconRotate360SolidRounded,
+  IconRotate360BulkRounded,
+  IconRotate360StrokeSharp,
+  IconRotate360SolidSharp,
+];

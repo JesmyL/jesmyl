@@ -14,21 +14,18 @@ export const IconApproximatelyEqualCircleStrokeRounded: FC<TheIconProps> = (prop
   return (
     <TheIconWrapper
       {...props}
-      name="approximately-equal-circle-stroke-rounded IconApproximatelyEqualCircleStrokeRounded"
+      the-icon="ApproximatelyEqualCircle StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -37,27 +34,23 @@ export const IconApproximatelyEqualCircleDuotoneRounded: FC<TheIconProps> = (pro
   return (
     <TheIconWrapper
       {...props}
-      name="approximately-equal-circle-duotone-rounded IconApproximatelyEqualCircleDuotoneRounded"
+      the-icon="ApproximatelyEqualCircle DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="f o7"
+      />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -67,22 +60,18 @@ export const IconApproximatelyEqualCircleTwotoneRounded: FC<TheIconProps> = (pro
   return (
     <TheIconWrapper
       {...props}
-      name="approximately-equal-circle-twotone-rounded IconApproximatelyEqualCircleTwotoneRounded"
+      the-icon="ApproximatelyEqualCircle TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -91,13 +80,11 @@ export const IconApproximatelyEqualCircleSolidRounded: FC<TheIconProps> = (props
   return (
     <TheIconWrapper
       {...props}
-      name="approximately-equal-circle-solid-rounded IconApproximatelyEqualCircleSolidRounded"
+      the-icon="ApproximatelyEqualCircle SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -107,18 +94,15 @@ export const IconApproximatelyEqualCircleBulkRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="approximately-equal-circle-bulk-rounded IconApproximatelyEqualCircleBulkRounded"
+      the-icon="ApproximatelyEqualCircle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -128,21 +112,18 @@ export const IconApproximatelyEqualCircleStrokeSharp: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="approximately-equal-circle-stroke-sharp IconApproximatelyEqualCircleStrokeSharp"
+      the-icon="ApproximatelyEqualCircle StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -151,25 +132,23 @@ export const IconApproximatelyEqualCircleSolidSharp: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="approximately-equal-circle-solid-sharp IconApproximatelyEqualCircleSolidSharp"
+      the-icon="ApproximatelyEqualCircle SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfApproximatelyEqualCircle: TheIconSelfPack = {
-  name: 'ApproximatelyEqualCircle',
-  StrokeRounded: IconApproximatelyEqualCircleStrokeRounded,
-  DuotoneRounded: IconApproximatelyEqualCircleDuotoneRounded,
-  TwotoneRounded: IconApproximatelyEqualCircleTwotoneRounded,
-  SolidRounded: IconApproximatelyEqualCircleSolidRounded,
-  BulkRounded: IconApproximatelyEqualCircleBulkRounded,
-  StrokeSharp: IconApproximatelyEqualCircleStrokeSharp,
-  SolidSharp: IconApproximatelyEqualCircleSolidSharp,
-};
+export const iconPackOfApproximatelyEqualCircle: TheIconSelfPack = [
+  'ApproximatelyEqualCircle',
+  IconApproximatelyEqualCircleStrokeRounded,
+  IconApproximatelyEqualCircleDuotoneRounded,
+  IconApproximatelyEqualCircleTwotoneRounded,
+  IconApproximatelyEqualCircleSolidRounded,
+  IconApproximatelyEqualCircleBulkRounded,
+  IconApproximatelyEqualCircleStrokeSharp,
+  IconApproximatelyEqualCircleSolidSharp,
+];

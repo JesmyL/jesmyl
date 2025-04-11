@@ -17,14 +17,11 @@ export const IconSolidLine01StrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="solid-line-01-stroke-rounded IconSolidLine01StrokeRounded"
+      the-icon="SolidLine01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -34,14 +31,11 @@ export const IconSolidLine01DuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="solid-line-01-duotone-rounded IconSolidLine01DuotoneRounded"
+      the-icon="SolidLine01 DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -51,22 +45,15 @@ export const IconSolidLine01TwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="solid-line-01-twotone-rounded IconSolidLine01TwotoneRounded"
+      the-icon="SolidLine01 TwotoneRounded"
     >
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -76,13 +63,11 @@ export const IconSolidLine01SolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="solid-line-01-solid-rounded IconSolidLine01SolidRounded"
+      the-icon="SolidLine01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -92,16 +77,15 @@ export const IconSolidLine01BulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="solid-line-01-bulk-rounded IconSolidLine01BulkRounded"
+      the-icon="SolidLine01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -111,13 +95,11 @@ export const IconSolidLine01StrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="solid-line-01-stroke-sharp IconSolidLine01StrokeSharp"
+      the-icon="SolidLine01 StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -127,25 +109,23 @@ export const IconSolidLine01SolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="solid-line-01-solid-sharp IconSolidLine01SolidSharp"
+      the-icon="SolidLine01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSolidLine01: TheIconSelfPack = {
-  name: 'SolidLine01',
-  StrokeRounded: IconSolidLine01StrokeRounded,
-  DuotoneRounded: IconSolidLine01DuotoneRounded,
-  TwotoneRounded: IconSolidLine01TwotoneRounded,
-  SolidRounded: IconSolidLine01SolidRounded,
-  BulkRounded: IconSolidLine01BulkRounded,
-  StrokeSharp: IconSolidLine01StrokeSharp,
-  SolidSharp: IconSolidLine01SolidSharp,
-};
+export const iconPackOfSolidLine01: TheIconSelfPack = [
+  'SolidLine01',
+  IconSolidLine01StrokeRounded,
+  IconSolidLine01DuotoneRounded,
+  IconSolidLine01TwotoneRounded,
+  IconSolidLine01SolidRounded,
+  IconSolidLine01BulkRounded,
+  IconSolidLine01StrokeSharp,
+  IconSolidLine01SolidSharp,
+];

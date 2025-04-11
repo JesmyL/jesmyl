@@ -14,12 +14,11 @@ export const IconRainDropStrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="rain-drop-stroke-rounded IconRainDropStrokeRounded"
+      the-icon="RainDrop StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -29,17 +28,15 @@ export const IconRainDropDuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="rain-drop-duotone-rounded IconRainDropDuotoneRounded"
+      the-icon="RainDrop DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -49,19 +46,15 @@ export const IconRainDropTwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="rain-drop-twotone-rounded IconRainDropTwotoneRounded"
+      the-icon="RainDrop TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -71,11 +64,11 @@ export const IconRainDropSolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="rain-drop-solid-rounded IconRainDropSolidRounded"
+      the-icon="RainDrop SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -85,12 +78,11 @@ export const IconRainDropBulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="rain-drop-bulk-rounded IconRainDropBulkRounded"
+      the-icon="RainDrop BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -100,13 +92,11 @@ export const IconRainDropStrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="rain-drop-stroke-sharp IconRainDropStrokeSharp"
+      the-icon="RainDrop StrokeSharp"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -116,23 +106,23 @@ export const IconRainDropSolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="rain-drop-solid-sharp IconRainDropSolidSharp"
+      the-icon="RainDrop SolidSharp"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfRainDrop: TheIconSelfPack = {
-  name: 'RainDrop',
-  StrokeRounded: IconRainDropStrokeRounded,
-  DuotoneRounded: IconRainDropDuotoneRounded,
-  TwotoneRounded: IconRainDropTwotoneRounded,
-  SolidRounded: IconRainDropSolidRounded,
-  BulkRounded: IconRainDropBulkRounded,
-  StrokeSharp: IconRainDropStrokeSharp,
-  SolidSharp: IconRainDropSolidSharp,
-};
+export const iconPackOfRainDrop: TheIconSelfPack = [
+  'RainDrop',
+  IconRainDropStrokeRounded,
+  IconRainDropDuotoneRounded,
+  IconRainDropTwotoneRounded,
+  IconRainDropSolidRounded,
+  IconRainDropBulkRounded,
+  IconRainDropStrokeSharp,
+  IconRainDropSolidSharp,
+];

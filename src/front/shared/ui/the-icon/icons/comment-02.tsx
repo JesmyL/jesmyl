@@ -15,13 +15,11 @@ export const IconComment02StrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="comment-02-stroke-rounded IconComment02StrokeRounded"
+      the-icon="Comment02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -31,18 +29,15 @@ export const IconComment02DuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="comment-02-duotone-rounded IconComment02DuotoneRounded"
+      the-icon="Comment02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -52,20 +47,15 @@ export const IconComment02TwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="comment-02-twotone-rounded IconComment02TwotoneRounded"
+      the-icon="Comment02 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -75,11 +65,11 @@ export const IconComment02SolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="comment-02-solid-rounded IconComment02SolidRounded"
+      the-icon="Comment02 SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -89,12 +79,11 @@ export const IconComment02BulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="comment-02-bulk-rounded IconComment02BulkRounded"
+      the-icon="Comment02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -104,12 +93,11 @@ export const IconComment02StrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="comment-02-stroke-sharp IconComment02StrokeSharp"
+      the-icon="Comment02 StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -119,23 +107,23 @@ export const IconComment02SolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="comment-02-solid-sharp IconComment02SolidSharp"
+      the-icon="Comment02 SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfComment02: TheIconSelfPack = {
-  name: 'Comment02',
-  StrokeRounded: IconComment02StrokeRounded,
-  DuotoneRounded: IconComment02DuotoneRounded,
-  TwotoneRounded: IconComment02TwotoneRounded,
-  SolidRounded: IconComment02SolidRounded,
-  BulkRounded: IconComment02BulkRounded,
-  StrokeSharp: IconComment02StrokeSharp,
-  SolidSharp: IconComment02SolidSharp,
-};
+export const iconPackOfComment02: TheIconSelfPack = [
+  'Comment02',
+  IconComment02StrokeRounded,
+  IconComment02DuotoneRounded,
+  IconComment02TwotoneRounded,
+  IconComment02SolidRounded,
+  IconComment02BulkRounded,
+  IconComment02StrokeSharp,
+  IconComment02SolidSharp,
+];

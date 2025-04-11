@@ -25,18 +25,15 @@ export const IconPenConnectUsbStrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="pen-connect-usb-stroke-rounded IconPenConnectUsbStrokeRounded"
+      the-icon="PenConnectUsb StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -46,53 +43,40 @@ export const IconPenConnectUsbDuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="pen-connect-usb-duotone-rounded IconPenConnectUsbDuotoneRounded"
+      the-icon="PenConnectUsb DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="11.0684" 
-        cy="5" 
-        r="1" 
-        fill="var(--icon-fill)"></circle>
-      <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        cx="11.0684"
+        cy="5"
+        r="1"
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
+      />
+      <path 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="11.0684" 
-        cy="5" 
-        r="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="11.0684"
+        cy="5"
+        r="1"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -101,22 +85,15 @@ export const IconPenConnectUsbTwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="pen-connect-usb-twotone-rounded IconPenConnectUsbTwotoneRounded"
+      the-icon="PenConnectUsb TwotoneRounded"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -126,21 +103,19 @@ export const IconPenConnectUsbSolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="pen-connect-usb-solid-rounded IconPenConnectUsbSolidRounded"
+      the-icon="PenConnectUsb SolidRounded"
     >
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -150,24 +125,21 @@ export const IconPenConnectUsbBulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="pen-connect-usb-bulk-rounded IconPenConnectUsbBulkRounded"
+      the-icon="PenConnectUsb BulkRounded"
     >
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       </g>
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -177,17 +149,15 @@ export const IconPenConnectUsbStrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="pen-connect-usb-stroke-sharp IconPenConnectUsbStrokeSharp"
+      the-icon="PenConnectUsb StrokeSharp"
     >
       <path 
-        d={d.d12} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d12}
+        i-c="s sw"
       />
       <path 
-        d={d.d13} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d13}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -197,31 +167,31 @@ export const IconPenConnectUsbSolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="pen-connect-usb-solid-sharp IconPenConnectUsbSolidSharp"
+      the-icon="PenConnectUsb SolidSharp"
     >
       <path 
-        d={d.d14} 
-        fill="var(--icon-fill)" 
+        d={d.d14}
+        i-c="f"
       />
       <path 
-        d={d.d15} 
-        fill="var(--icon-fill)" 
+        d={d.d15}
+        i-c="f"
       />
       <path 
-        d={d.d16} 
-        fill="var(--icon-fill)" 
+        d={d.d16}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPenConnectUsb: TheIconSelfPack = {
-  name: 'PenConnectUsb',
-  StrokeRounded: IconPenConnectUsbStrokeRounded,
-  DuotoneRounded: IconPenConnectUsbDuotoneRounded,
-  TwotoneRounded: IconPenConnectUsbTwotoneRounded,
-  SolidRounded: IconPenConnectUsbSolidRounded,
-  BulkRounded: IconPenConnectUsbBulkRounded,
-  StrokeSharp: IconPenConnectUsbStrokeSharp,
-  SolidSharp: IconPenConnectUsbSolidSharp,
-};
+export const iconPackOfPenConnectUsb: TheIconSelfPack = [
+  'PenConnectUsb',
+  IconPenConnectUsbStrokeRounded,
+  IconPenConnectUsbDuotoneRounded,
+  IconPenConnectUsbTwotoneRounded,
+  IconPenConnectUsbSolidRounded,
+  IconPenConnectUsbBulkRounded,
+  IconPenConnectUsbStrokeSharp,
+  IconPenConnectUsbSolidSharp,
+];

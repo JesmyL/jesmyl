@@ -19,23 +19,21 @@ export const IconGeometricShapes02StrokeRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="geometric-shapes-02-stroke-rounded IconGeometricShapes02StrokeRounded"
+      the-icon="GeometricShapes02 StrokeRounded"
     >
       <circle 
-        cx="6.5" 
-        cy="6.5" 
-        r="4.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        cx="6.5"
+        cy="6.5"
+        r="4.5"
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -45,29 +43,26 @@ export const IconGeometricShapes02DuotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="geometric-shapes-02-duotone-rounded IconGeometricShapes02DuotoneRounded"
+      the-icon="GeometricShapes02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <circle 
-        cx="6.5" 
-        cy="6.5" 
-        r="4.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="6.5"
+        cy="6.5"
+        r="4.5"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -76,24 +71,21 @@ export const IconGeometricShapes02TwotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="geometric-shapes-02-twotone-rounded IconGeometricShapes02TwotoneRounded"
+      the-icon="GeometricShapes02 TwotoneRounded"
     >
       <circle 
-        cx="6.5" 
-        cy="6.5" 
-        r="4.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        cx="6.5"
+        cy="6.5"
+        r="4.5"
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="o7 s sw"
       />
     </TheIconWrapper>
   );
@@ -103,24 +95,21 @@ export const IconGeometricShapes02SolidRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="geometric-shapes-02-solid-rounded IconGeometricShapes02SolidRounded"
+      the-icon="GeometricShapes02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <circle 
-        cx="5.94141" 
-        cy="5.99219" 
-        r="4.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="5.94141"
+        cy="5.99219"
+        r="4.5"
+        i-c="f"
+      />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -130,26 +119,21 @@ export const IconGeometricShapes02BulkRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="geometric-shapes-02-bulk-rounded IconGeometricShapes02BulkRounded"
+      the-icon="GeometricShapes02 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="5.94141" 
-        cy="5.99219" 
-        r="4.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="5.94141"
+        cy="5.99219"
+        r="4.5"
+        i-c="f o7"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr o7"
       />
     </TheIconWrapper>
   );
@@ -159,24 +143,21 @@ export const IconGeometricShapes02StrokeSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="geometric-shapes-02-stroke-sharp IconGeometricShapes02StrokeSharp"
+      the-icon="GeometricShapes02 StrokeSharp"
     >
       <circle 
-        cx="6.5" 
-        cy="6.5" 
-        r="4.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
-      <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        cx="6.5"
+        cy="6.5"
+        r="4.5"
+        i-c="s sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sj sw"
+      />
+      <path 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -186,31 +167,31 @@ export const IconGeometricShapes02SolidSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="geometric-shapes-02-solid-sharp IconGeometricShapes02SolidSharp"
+      the-icon="GeometricShapes02 SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfGeometricShapes02: TheIconSelfPack = {
-  name: 'GeometricShapes02',
-  StrokeRounded: IconGeometricShapes02StrokeRounded,
-  DuotoneRounded: IconGeometricShapes02DuotoneRounded,
-  TwotoneRounded: IconGeometricShapes02TwotoneRounded,
-  SolidRounded: IconGeometricShapes02SolidRounded,
-  BulkRounded: IconGeometricShapes02BulkRounded,
-  StrokeSharp: IconGeometricShapes02StrokeSharp,
-  SolidSharp: IconGeometricShapes02SolidSharp,
-};
+export const iconPackOfGeometricShapes02: TheIconSelfPack = [
+  'GeometricShapes02',
+  IconGeometricShapes02StrokeRounded,
+  IconGeometricShapes02DuotoneRounded,
+  IconGeometricShapes02TwotoneRounded,
+  IconGeometricShapes02SolidRounded,
+  IconGeometricShapes02BulkRounded,
+  IconGeometricShapes02StrokeSharp,
+  IconGeometricShapes02SolidSharp,
+];

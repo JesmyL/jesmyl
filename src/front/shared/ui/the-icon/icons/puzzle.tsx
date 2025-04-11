@@ -15,13 +15,11 @@ export const IconPuzzleStrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="puzzle-stroke-rounded IconPuzzleStrokeRounded"
+      the-icon="Puzzle StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -31,18 +29,15 @@ export const IconPuzzleDuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="puzzle-duotone-rounded IconPuzzleDuotoneRounded"
+      the-icon="Puzzle DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -52,21 +47,15 @@ export const IconPuzzleTwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="puzzle-twotone-rounded IconPuzzleTwotoneRounded"
+      the-icon="Puzzle TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -76,11 +65,11 @@ export const IconPuzzleSolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="puzzle-solid-rounded IconPuzzleSolidRounded"
+      the-icon="Puzzle SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -90,16 +79,15 @@ export const IconPuzzleBulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="puzzle-bulk-rounded IconPuzzleBulkRounded"
+      the-icon="Puzzle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -109,12 +97,11 @@ export const IconPuzzleStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="puzzle-stroke-sharp IconPuzzleStrokeSharp"
+      the-icon="Puzzle StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -124,23 +111,23 @@ export const IconPuzzleSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="puzzle-solid-sharp IconPuzzleSolidSharp"
+      the-icon="Puzzle SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPuzzle: TheIconSelfPack = {
-  name: 'Puzzle',
-  StrokeRounded: IconPuzzleStrokeRounded,
-  DuotoneRounded: IconPuzzleDuotoneRounded,
-  TwotoneRounded: IconPuzzleTwotoneRounded,
-  SolidRounded: IconPuzzleSolidRounded,
-  BulkRounded: IconPuzzleBulkRounded,
-  StrokeSharp: IconPuzzleStrokeSharp,
-  SolidSharp: IconPuzzleSolidSharp,
-};
+export const iconPackOfPuzzle: TheIconSelfPack = [
+  'Puzzle',
+  IconPuzzleStrokeRounded,
+  IconPuzzleDuotoneRounded,
+  IconPuzzleTwotoneRounded,
+  IconPuzzleSolidRounded,
+  IconPuzzleBulkRounded,
+  IconPuzzleStrokeSharp,
+  IconPuzzleSolidSharp,
+];

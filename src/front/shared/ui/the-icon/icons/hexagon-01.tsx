@@ -16,12 +16,11 @@ export const IconHexagon01StrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="hexagon-01-stroke-rounded IconHexagon01StrokeRounded"
+      the-icon="Hexagon01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -31,17 +30,15 @@ export const IconHexagon01DuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="hexagon-01-duotone-rounded IconHexagon01DuotoneRounded"
+      the-icon="Hexagon01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -51,19 +48,15 @@ export const IconHexagon01TwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="hexagon-01-twotone-rounded IconHexagon01TwotoneRounded"
+      the-icon="Hexagon01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -73,11 +66,11 @@ export const IconHexagon01SolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="hexagon-01-solid-rounded IconHexagon01SolidRounded"
+      the-icon="Hexagon01 SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -87,16 +80,15 @@ export const IconHexagon01BulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="hexagon-01-bulk-rounded IconHexagon01BulkRounded"
+      the-icon="Hexagon01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -106,12 +98,11 @@ export const IconHexagon01StrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="hexagon-01-stroke-sharp IconHexagon01StrokeSharp"
+      the-icon="Hexagon01 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -121,23 +112,23 @@ export const IconHexagon01SolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="hexagon-01-solid-sharp IconHexagon01SolidSharp"
+      the-icon="Hexagon01 SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfHexagon01: TheIconSelfPack = {
-  name: 'Hexagon01',
-  StrokeRounded: IconHexagon01StrokeRounded,
-  DuotoneRounded: IconHexagon01DuotoneRounded,
-  TwotoneRounded: IconHexagon01TwotoneRounded,
-  SolidRounded: IconHexagon01SolidRounded,
-  BulkRounded: IconHexagon01BulkRounded,
-  StrokeSharp: IconHexagon01StrokeSharp,
-  SolidSharp: IconHexagon01SolidSharp,
-};
+export const iconPackOfHexagon01: TheIconSelfPack = [
+  'Hexagon01',
+  IconHexagon01StrokeRounded,
+  IconHexagon01DuotoneRounded,
+  IconHexagon01TwotoneRounded,
+  IconHexagon01SolidRounded,
+  IconHexagon01BulkRounded,
+  IconHexagon01StrokeSharp,
+  IconHexagon01SolidSharp,
+];

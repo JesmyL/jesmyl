@@ -22,21 +22,15 @@ export const IconTouchInteraction01StrokeRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="touch-interaction-01-stroke-rounded IconTouchInteraction01StrokeRounded"
+      the-icon="TouchInteraction01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -46,26 +40,19 @@ export const IconTouchInteraction01DuotoneRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="touch-interaction-01-duotone-rounded IconTouchInteraction01DuotoneRounded"
+      the-icon="TouchInteraction01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -75,22 +62,15 @@ export const IconTouchInteraction01TwotoneRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="touch-interaction-01-twotone-rounded IconTouchInteraction01TwotoneRounded"
+      the-icon="TouchInteraction01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -100,15 +80,15 @@ export const IconTouchInteraction01SolidRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="touch-interaction-01-solid-rounded IconTouchInteraction01SolidRounded"
+      the-icon="TouchInteraction01 SolidRounded"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -118,16 +98,15 @@ export const IconTouchInteraction01BulkRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="touch-interaction-01-bulk-rounded IconTouchInteraction01BulkRounded"
+      the-icon="TouchInteraction01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o7"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -137,18 +116,15 @@ export const IconTouchInteraction01StrokeSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="touch-interaction-01-stroke-sharp IconTouchInteraction01StrokeSharp"
+      the-icon="TouchInteraction01 StrokeSharp"
     >
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d11}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -158,29 +134,27 @@ export const IconTouchInteraction01SolidSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="touch-interaction-01-solid-sharp IconTouchInteraction01SolidSharp"
+      the-icon="TouchInteraction01 SolidSharp"
     >
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTouchInteraction01: TheIconSelfPack = {
-  name: 'TouchInteraction01',
-  StrokeRounded: IconTouchInteraction01StrokeRounded,
-  DuotoneRounded: IconTouchInteraction01DuotoneRounded,
-  TwotoneRounded: IconTouchInteraction01TwotoneRounded,
-  SolidRounded: IconTouchInteraction01SolidRounded,
-  BulkRounded: IconTouchInteraction01BulkRounded,
-  StrokeSharp: IconTouchInteraction01StrokeSharp,
-  SolidSharp: IconTouchInteraction01SolidSharp,
-};
+export const iconPackOfTouchInteraction01: TheIconSelfPack = [
+  'TouchInteraction01',
+  IconTouchInteraction01StrokeRounded,
+  IconTouchInteraction01DuotoneRounded,
+  IconTouchInteraction01TwotoneRounded,
+  IconTouchInteraction01SolidRounded,
+  IconTouchInteraction01BulkRounded,
+  IconTouchInteraction01StrokeSharp,
+  IconTouchInteraction01SolidSharp,
+];

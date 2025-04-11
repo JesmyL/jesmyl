@@ -13,14 +13,11 @@ export const IconMoon02StrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="moon-02-stroke-rounded IconMoon02StrokeRounded"
+      the-icon="Moon02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -30,19 +27,15 @@ export const IconMoon02DuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="moon-02-duotone-rounded IconMoon02DuotoneRounded"
+      the-icon="Moon02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -52,22 +45,15 @@ export const IconMoon02TwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="moon-02-twotone-rounded IconMoon02TwotoneRounded"
+      the-icon="Moon02 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -77,11 +63,11 @@ export const IconMoon02SolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="moon-02-solid-rounded IconMoon02SolidRounded"
+      the-icon="Moon02 SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -91,12 +77,11 @@ export const IconMoon02BulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="moon-02-bulk-rounded IconMoon02BulkRounded"
+      the-icon="Moon02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -106,14 +91,11 @@ export const IconMoon02StrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="moon-02-stroke-sharp IconMoon02StrokeSharp"
+      the-icon="Moon02 StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -123,23 +105,23 @@ export const IconMoon02SolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="moon-02-solid-sharp IconMoon02SolidSharp"
+      the-icon="Moon02 SolidSharp"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMoon02: TheIconSelfPack = {
-  name: 'Moon02',
-  StrokeRounded: IconMoon02StrokeRounded,
-  DuotoneRounded: IconMoon02DuotoneRounded,
-  TwotoneRounded: IconMoon02TwotoneRounded,
-  SolidRounded: IconMoon02SolidRounded,
-  BulkRounded: IconMoon02BulkRounded,
-  StrokeSharp: IconMoon02StrokeSharp,
-  SolidSharp: IconMoon02SolidSharp,
-};
+export const iconPackOfMoon02: TheIconSelfPack = [
+  'Moon02',
+  IconMoon02StrokeRounded,
+  IconMoon02DuotoneRounded,
+  IconMoon02TwotoneRounded,
+  IconMoon02SolidRounded,
+  IconMoon02BulkRounded,
+  IconMoon02StrokeSharp,
+  IconMoon02SolidSharp,
+];

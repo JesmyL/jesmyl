@@ -14,14 +14,11 @@ export const IconEaseInOutStrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="ease-in-out-stroke-rounded IconEaseInOutStrokeRounded"
+      the-icon="EaseInOut StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -31,15 +28,11 @@ export const IconEaseInOutDuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="ease-in-out-duotone-rounded IconEaseInOutDuotoneRounded"
+      the-icon="EaseInOut DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -49,22 +42,15 @@ export const IconEaseInOutTwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="ease-in-out-twotone-rounded IconEaseInOutTwotoneRounded"
+      the-icon="EaseInOut TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -74,13 +60,11 @@ export const IconEaseInOutSolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="ease-in-out-solid-rounded IconEaseInOutSolidRounded"
+      the-icon="EaseInOut SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -90,20 +74,15 @@ export const IconEaseInOutBulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="ease-in-out-bulk-rounded IconEaseInOutBulkRounded"
+      the-icon="EaseInOut BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -113,13 +92,11 @@ export const IconEaseInOutStrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="ease-in-out-stroke-sharp IconEaseInOutStrokeSharp"
+      the-icon="EaseInOut StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -129,25 +106,23 @@ export const IconEaseInOutSolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="ease-in-out-solid-sharp IconEaseInOutSolidSharp"
+      the-icon="EaseInOut SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfEaseInOut: TheIconSelfPack = {
-  name: 'EaseInOut',
-  StrokeRounded: IconEaseInOutStrokeRounded,
-  DuotoneRounded: IconEaseInOutDuotoneRounded,
-  TwotoneRounded: IconEaseInOutTwotoneRounded,
-  SolidRounded: IconEaseInOutSolidRounded,
-  BulkRounded: IconEaseInOutBulkRounded,
-  StrokeSharp: IconEaseInOutStrokeSharp,
-  SolidSharp: IconEaseInOutSolidSharp,
-};
+export const iconPackOfEaseInOut: TheIconSelfPack = [
+  'EaseInOut',
+  IconEaseInOutStrokeRounded,
+  IconEaseInOutDuotoneRounded,
+  IconEaseInOutTwotoneRounded,
+  IconEaseInOutSolidRounded,
+  IconEaseInOutBulkRounded,
+  IconEaseInOutStrokeSharp,
+  IconEaseInOutSolidSharp,
+];

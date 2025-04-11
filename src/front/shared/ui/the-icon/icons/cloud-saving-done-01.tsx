@@ -18,21 +18,15 @@ export const IconCloudSavingDone01StrokeRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-saving-done-01-stroke-rounded IconCloudSavingDone01StrokeRounded"
+      the-icon="CloudSavingDone01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -42,26 +36,19 @@ export const IconCloudSavingDone01DuotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-saving-done-01-duotone-rounded IconCloudSavingDone01DuotoneRounded"
+      the-icon="CloudSavingDone01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -71,22 +58,15 @@ export const IconCloudSavingDone01TwotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-saving-done-01-twotone-rounded IconCloudSavingDone01TwotoneRounded"
+      the-icon="CloudSavingDone01 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -96,15 +76,15 @@ export const IconCloudSavingDone01SolidRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-saving-done-01-solid-rounded IconCloudSavingDone01SolidRounded"
+      the-icon="CloudSavingDone01 SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -114,16 +94,15 @@ export const IconCloudSavingDone01BulkRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-saving-done-01-bulk-rounded IconCloudSavingDone01BulkRounded"
+      the-icon="CloudSavingDone01 BulkRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -133,18 +112,15 @@ export const IconCloudSavingDone01StrokeSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-saving-done-01-stroke-sharp IconCloudSavingDone01StrokeSharp"
+      the-icon="CloudSavingDone01 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -154,29 +130,27 @@ export const IconCloudSavingDone01SolidSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-saving-done-01-solid-sharp IconCloudSavingDone01SolidSharp"
+      the-icon="CloudSavingDone01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCloudSavingDone01: TheIconSelfPack = {
-  name: 'CloudSavingDone01',
-  StrokeRounded: IconCloudSavingDone01StrokeRounded,
-  DuotoneRounded: IconCloudSavingDone01DuotoneRounded,
-  TwotoneRounded: IconCloudSavingDone01TwotoneRounded,
-  SolidRounded: IconCloudSavingDone01SolidRounded,
-  BulkRounded: IconCloudSavingDone01BulkRounded,
-  StrokeSharp: IconCloudSavingDone01StrokeSharp,
-  SolidSharp: IconCloudSavingDone01SolidSharp,
-};
+export const iconPackOfCloudSavingDone01: TheIconSelfPack = [
+  'CloudSavingDone01',
+  IconCloudSavingDone01StrokeRounded,
+  IconCloudSavingDone01DuotoneRounded,
+  IconCloudSavingDone01TwotoneRounded,
+  IconCloudSavingDone01SolidRounded,
+  IconCloudSavingDone01BulkRounded,
+  IconCloudSavingDone01StrokeSharp,
+  IconCloudSavingDone01SolidSharp,
+];

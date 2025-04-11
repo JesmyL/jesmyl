@@ -20,14 +20,11 @@ export const IconLoveKoreanFingerStrokeRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="love-korean-finger-stroke-rounded IconLoveKoreanFingerStrokeRounded"
+      the-icon="LoveKoreanFinger StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -37,19 +34,15 @@ export const IconLoveKoreanFingerDuotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="love-korean-finger-duotone-rounded IconLoveKoreanFingerDuotoneRounded"
+      the-icon="LoveKoreanFinger DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -59,22 +52,15 @@ export const IconLoveKoreanFingerTwotoneRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="love-korean-finger-twotone-rounded IconLoveKoreanFingerTwotoneRounded"
+      the-icon="LoveKoreanFinger TwotoneRounded"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -84,15 +70,15 @@ export const IconLoveKoreanFingerSolidRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="love-korean-finger-solid-rounded IconLoveKoreanFingerSolidRounded"
+      the-icon="LoveKoreanFinger SolidRounded"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -102,22 +88,21 @@ export const IconLoveKoreanFingerBulkRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="love-korean-finger-bulk-rounded IconLoveKoreanFingerBulkRounded"
+      the-icon="LoveKoreanFinger BulkRounded"
     >
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       </g>
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -127,12 +112,11 @@ export const IconLoveKoreanFingerStrokeSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="love-korean-finger-stroke-sharp IconLoveKoreanFingerStrokeSharp"
+      the-icon="LoveKoreanFinger StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -142,27 +126,27 @@ export const IconLoveKoreanFingerSolidSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="love-korean-finger-solid-sharp IconLoveKoreanFingerSolidSharp"
+      the-icon="LoveKoreanFinger SolidSharp"
     >
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfLoveKoreanFinger: TheIconSelfPack = {
-  name: 'LoveKoreanFinger',
-  StrokeRounded: IconLoveKoreanFingerStrokeRounded,
-  DuotoneRounded: IconLoveKoreanFingerDuotoneRounded,
-  TwotoneRounded: IconLoveKoreanFingerTwotoneRounded,
-  SolidRounded: IconLoveKoreanFingerSolidRounded,
-  BulkRounded: IconLoveKoreanFingerBulkRounded,
-  StrokeSharp: IconLoveKoreanFingerStrokeSharp,
-  SolidSharp: IconLoveKoreanFingerSolidSharp,
-};
+export const iconPackOfLoveKoreanFinger: TheIconSelfPack = [
+  'LoveKoreanFinger',
+  IconLoveKoreanFingerStrokeRounded,
+  IconLoveKoreanFingerDuotoneRounded,
+  IconLoveKoreanFingerTwotoneRounded,
+  IconLoveKoreanFingerSolidRounded,
+  IconLoveKoreanFingerBulkRounded,
+  IconLoveKoreanFingerStrokeSharp,
+  IconLoveKoreanFingerSolidSharp,
+];

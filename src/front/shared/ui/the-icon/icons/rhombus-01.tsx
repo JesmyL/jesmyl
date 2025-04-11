@@ -16,13 +16,11 @@ export const IconRhombus01StrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="rhombus-01-stroke-rounded IconRhombus01StrokeRounded"
+      the-icon="Rhombus01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -32,18 +30,15 @@ export const IconRhombus01DuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="rhombus-01-duotone-rounded IconRhombus01DuotoneRounded"
+      the-icon="Rhombus01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -53,21 +48,15 @@ export const IconRhombus01TwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="rhombus-01-twotone-rounded IconRhombus01TwotoneRounded"
+      the-icon="Rhombus01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -77,11 +66,11 @@ export const IconRhombus01SolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="rhombus-01-solid-rounded IconRhombus01SolidRounded"
+      the-icon="Rhombus01 SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -91,16 +80,15 @@ export const IconRhombus01BulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="rhombus-01-bulk-rounded IconRhombus01BulkRounded"
+      the-icon="Rhombus01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -110,13 +98,11 @@ export const IconRhombus01StrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="rhombus-01-stroke-sharp IconRhombus01StrokeSharp"
+      the-icon="Rhombus01 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -126,23 +112,23 @@ export const IconRhombus01SolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="rhombus-01-solid-sharp IconRhombus01SolidSharp"
+      the-icon="Rhombus01 SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfRhombus01: TheIconSelfPack = {
-  name: 'Rhombus01',
-  StrokeRounded: IconRhombus01StrokeRounded,
-  DuotoneRounded: IconRhombus01DuotoneRounded,
-  TwotoneRounded: IconRhombus01TwotoneRounded,
-  SolidRounded: IconRhombus01SolidRounded,
-  BulkRounded: IconRhombus01BulkRounded,
-  StrokeSharp: IconRhombus01StrokeSharp,
-  SolidSharp: IconRhombus01SolidSharp,
-};
+export const iconPackOfRhombus01: TheIconSelfPack = [
+  'Rhombus01',
+  IconRhombus01StrokeRounded,
+  IconRhombus01DuotoneRounded,
+  IconRhombus01TwotoneRounded,
+  IconRhombus01SolidRounded,
+  IconRhombus01BulkRounded,
+  IconRhombus01StrokeSharp,
+  IconRhombus01SolidSharp,
+];

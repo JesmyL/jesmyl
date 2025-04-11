@@ -14,27 +14,23 @@ export const IconBendToolStrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="bend-tool-stroke-rounded IconBendToolStrokeRounded"
+      the-icon="BendTool StrokeRounded"
     >
       <circle 
-        cx="19" 
-        cy="4" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="19"
+        cy="4"
+        r="2"
+        i-c="s sr sw"
+      />
       <circle 
-        cx="5" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="5"
+        cy="20"
+        r="2"
+        i-c="s sr sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -44,39 +40,35 @@ export const IconBendToolDuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="bend-tool-duotone-rounded IconBendToolDuotoneRounded"
+      the-icon="BendTool DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="19" 
-        cy="4" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="19"
+        cy="4"
+        r="2"
+        i-c="f o7"
+      />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="5" 
-        cy="20" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="5"
+        cy="20"
+        r="2"
+        i-c="f o7"
+      />
       <circle 
-        cx="19" 
-        cy="4" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="19"
+        cy="4"
+        r="2"
+        i-c="s sr sw"
+      />
       <circle 
-        cx="5" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="5"
+        cy="20"
+        r="2"
+        i-c="s sr sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -86,28 +78,23 @@ export const IconBendToolTwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="bend-tool-twotone-rounded IconBendToolTwotoneRounded"
+      the-icon="BendTool TwotoneRounded"
     >
       <circle 
-        cx="19" 
-        cy="4" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="19"
+        cy="4"
+        r="2"
+        i-c="s sr sw"
+      />
       <circle 
-        cx="5" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round"></circle>
+        cx="5"
+        cy="20"
+        r="2"
+        i-c="s sr sw"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -117,21 +104,19 @@ export const IconBendToolSolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="bend-tool-solid-rounded IconBendToolSolidRounded"
+      the-icon="BendTool SolidRounded"
     >
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -141,22 +126,19 @@ export const IconBendToolBulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="bend-tool-bulk-rounded IconBendToolBulkRounded"
+      the-icon="BendTool BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -166,27 +148,23 @@ export const IconBendToolStrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="bend-tool-stroke-sharp IconBendToolStrokeSharp"
+      the-icon="BendTool StrokeSharp"
     >
       <circle 
-        cx="19" 
-        cy="4" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="19"
+        cy="4"
+        r="2"
+        i-c="s sj sw"
+      />
       <circle 
-        cx="5" 
-        cy="20" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="5"
+        cy="20"
+        r="2"
+        i-c="s sj sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -196,33 +174,31 @@ export const IconBendToolSolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="bend-tool-solid-sharp IconBendToolSolidSharp"
+      the-icon="BendTool SolidSharp"
     >
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBendTool: TheIconSelfPack = {
-  name: 'BendTool',
-  StrokeRounded: IconBendToolStrokeRounded,
-  DuotoneRounded: IconBendToolDuotoneRounded,
-  TwotoneRounded: IconBendToolTwotoneRounded,
-  SolidRounded: IconBendToolSolidRounded,
-  BulkRounded: IconBendToolBulkRounded,
-  StrokeSharp: IconBendToolStrokeSharp,
-  SolidSharp: IconBendToolSolidSharp,
-};
+export const iconPackOfBendTool: TheIconSelfPack = [
+  'BendTool',
+  IconBendToolStrokeRounded,
+  IconBendToolDuotoneRounded,
+  IconBendToolTwotoneRounded,
+  IconBendToolSolidRounded,
+  IconBendToolBulkRounded,
+  IconBendToolStrokeSharp,
+  IconBendToolSolidSharp,
+];

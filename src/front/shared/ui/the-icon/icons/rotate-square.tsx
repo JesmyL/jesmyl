@@ -16,14 +16,11 @@ export const IconRotateSquareStrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="rotate-square-stroke-rounded IconRotateSquareStrokeRounded"
+      the-icon="RotateSquare StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -33,19 +30,15 @@ export const IconRotateSquareDuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="rotate-square-duotone-rounded IconRotateSquareDuotoneRounded"
+      the-icon="RotateSquare DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -55,22 +48,15 @@ export const IconRotateSquareTwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="rotate-square-twotone-rounded IconRotateSquareTwotoneRounded"
+      the-icon="RotateSquare TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -80,11 +66,11 @@ export const IconRotateSquareSolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="rotate-square-solid-rounded IconRotateSquareSolidRounded"
+      the-icon="RotateSquare SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -94,16 +80,15 @@ export const IconRotateSquareBulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="rotate-square-bulk-rounded IconRotateSquareBulkRounded"
+      the-icon="RotateSquare BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -113,13 +98,11 @@ export const IconRotateSquareStrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="rotate-square-stroke-sharp IconRotateSquareStrokeSharp"
+      the-icon="RotateSquare StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -129,25 +112,23 @@ export const IconRotateSquareSolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="rotate-square-solid-sharp IconRotateSquareSolidSharp"
+      the-icon="RotateSquare SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfRotateSquare: TheIconSelfPack = {
-  name: 'RotateSquare',
-  StrokeRounded: IconRotateSquareStrokeRounded,
-  DuotoneRounded: IconRotateSquareDuotoneRounded,
-  TwotoneRounded: IconRotateSquareTwotoneRounded,
-  SolidRounded: IconRotateSquareSolidRounded,
-  BulkRounded: IconRotateSquareBulkRounded,
-  StrokeSharp: IconRotateSquareStrokeSharp,
-  SolidSharp: IconRotateSquareSolidSharp,
-};
+export const iconPackOfRotateSquare: TheIconSelfPack = [
+  'RotateSquare',
+  IconRotateSquareStrokeRounded,
+  IconRotateSquareDuotoneRounded,
+  IconRotateSquareTwotoneRounded,
+  IconRotateSquareSolidRounded,
+  IconRotateSquareBulkRounded,
+  IconRotateSquareStrokeSharp,
+  IconRotateSquareSolidSharp,
+];

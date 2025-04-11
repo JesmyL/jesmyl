@@ -16,19 +16,15 @@ export const IconThumbsUpEllipseStrokeRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="thumbs-up-ellipse-stroke-rounded IconThumbsUpEllipseStrokeRounded"
+      the-icon="ThumbsUpEllipse StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -38,26 +34,19 @@ export const IconThumbsUpEllipseDuotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="thumbs-up-ellipse-duotone-rounded IconThumbsUpEllipseDuotoneRounded"
+      the-icon="ThumbsUpEllipse DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -67,20 +56,15 @@ export const IconThumbsUpEllipseTwotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="thumbs-up-ellipse-twotone-rounded IconThumbsUpEllipseTwotoneRounded"
+      the-icon="ThumbsUpEllipse TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -90,13 +74,11 @@ export const IconThumbsUpEllipseSolidRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="thumbs-up-ellipse-solid-rounded IconThumbsUpEllipseSolidRounded"
+      the-icon="ThumbsUpEllipse SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -106,16 +88,15 @@ export const IconThumbsUpEllipseBulkRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="thumbs-up-ellipse-bulk-rounded IconThumbsUpEllipseBulkRounded"
+      the-icon="ThumbsUpEllipse BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -125,19 +106,15 @@ export const IconThumbsUpEllipseStrokeSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="thumbs-up-ellipse-stroke-sharp IconThumbsUpEllipseStrokeSharp"
+      the-icon="ThumbsUpEllipse StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -147,25 +124,23 @@ export const IconThumbsUpEllipseSolidSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="thumbs-up-ellipse-solid-sharp IconThumbsUpEllipseSolidSharp"
+      the-icon="ThumbsUpEllipse SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfThumbsUpEllipse: TheIconSelfPack = {
-  name: 'ThumbsUpEllipse',
-  StrokeRounded: IconThumbsUpEllipseStrokeRounded,
-  DuotoneRounded: IconThumbsUpEllipseDuotoneRounded,
-  TwotoneRounded: IconThumbsUpEllipseTwotoneRounded,
-  SolidRounded: IconThumbsUpEllipseSolidRounded,
-  BulkRounded: IconThumbsUpEllipseBulkRounded,
-  StrokeSharp: IconThumbsUpEllipseStrokeSharp,
-  SolidSharp: IconThumbsUpEllipseSolidSharp,
-};
+export const iconPackOfThumbsUpEllipse: TheIconSelfPack = [
+  'ThumbsUpEllipse',
+  IconThumbsUpEllipseStrokeRounded,
+  IconThumbsUpEllipseDuotoneRounded,
+  IconThumbsUpEllipseTwotoneRounded,
+  IconThumbsUpEllipseSolidRounded,
+  IconThumbsUpEllipseBulkRounded,
+  IconThumbsUpEllipseStrokeSharp,
+  IconThumbsUpEllipseSolidSharp,
+];

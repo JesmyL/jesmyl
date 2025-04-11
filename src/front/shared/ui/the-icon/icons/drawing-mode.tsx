@@ -17,17 +17,15 @@ export const IconDrawingModeStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="drawing-mode-stroke-rounded IconDrawingModeStrokeRounded"
+      the-icon="DrawingMode StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -37,22 +35,19 @@ export const IconDrawingModeDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="drawing-mode-duotone-rounded IconDrawingModeDuotoneRounded"
+      the-icon="DrawingMode DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -62,18 +57,15 @@ export const IconDrawingModeTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="drawing-mode-twotone-rounded IconDrawingModeTwotoneRounded"
+      the-icon="DrawingMode TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -83,17 +75,15 @@ export const IconDrawingModeSolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="drawing-mode-solid-rounded IconDrawingModeSolidRounded"
+      the-icon="DrawingMode SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -103,16 +93,15 @@ export const IconDrawingModeBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="drawing-mode-bulk-rounded IconDrawingModeBulkRounded"
+      the-icon="DrawingMode BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -122,19 +111,15 @@ export const IconDrawingModeStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="drawing-mode-stroke-sharp IconDrawingModeStrokeSharp"
+      the-icon="DrawingMode StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -144,29 +129,27 @@ export const IconDrawingModeSolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="drawing-mode-solid-sharp IconDrawingModeSolidSharp"
+      the-icon="DrawingMode SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfDrawingMode: TheIconSelfPack = {
-  name: 'DrawingMode',
-  StrokeRounded: IconDrawingModeStrokeRounded,
-  DuotoneRounded: IconDrawingModeDuotoneRounded,
-  TwotoneRounded: IconDrawingModeTwotoneRounded,
-  SolidRounded: IconDrawingModeSolidRounded,
-  BulkRounded: IconDrawingModeBulkRounded,
-  StrokeSharp: IconDrawingModeStrokeSharp,
-  SolidSharp: IconDrawingModeSolidSharp,
-};
+export const iconPackOfDrawingMode: TheIconSelfPack = [
+  'DrawingMode',
+  IconDrawingModeStrokeRounded,
+  IconDrawingModeDuotoneRounded,
+  IconDrawingModeTwotoneRounded,
+  IconDrawingModeSolidRounded,
+  IconDrawingModeBulkRounded,
+  IconDrawingModeStrokeSharp,
+  IconDrawingModeSolidSharp,
+];

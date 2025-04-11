@@ -19,20 +19,15 @@ export const IconMicrosoftAdminStrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="microsoft-admin-stroke-rounded IconMicrosoftAdminStrokeRounded"
+      the-icon="MicrosoftAdmin StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -42,30 +37,23 @@ export const IconMicrosoftAdminDuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="microsoft-admin-duotone-rounded IconMicrosoftAdminDuotoneRounded"
+      the-icon="MicrosoftAdmin DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -75,21 +63,15 @@ export const IconMicrosoftAdminTwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="microsoft-admin-twotone-rounded IconMicrosoftAdminTwotoneRounded"
+      the-icon="MicrosoftAdmin TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -99,13 +81,11 @@ export const IconMicrosoftAdminSolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="microsoft-admin-solid-rounded IconMicrosoftAdminSolidRounded"
+      the-icon="MicrosoftAdmin SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -115,18 +95,15 @@ export const IconMicrosoftAdminBulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="microsoft-admin-bulk-rounded IconMicrosoftAdminBulkRounded"
+      the-icon="MicrosoftAdmin BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -136,18 +113,15 @@ export const IconMicrosoftAdminStrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="microsoft-admin-stroke-sharp IconMicrosoftAdminStrokeSharp"
+      the-icon="MicrosoftAdmin StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -157,25 +131,23 @@ export const IconMicrosoftAdminSolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="microsoft-admin-solid-sharp IconMicrosoftAdminSolidSharp"
+      the-icon="MicrosoftAdmin SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMicrosoftAdmin: TheIconSelfPack = {
-  name: 'MicrosoftAdmin',
-  StrokeRounded: IconMicrosoftAdminStrokeRounded,
-  DuotoneRounded: IconMicrosoftAdminDuotoneRounded,
-  TwotoneRounded: IconMicrosoftAdminTwotoneRounded,
-  SolidRounded: IconMicrosoftAdminSolidRounded,
-  BulkRounded: IconMicrosoftAdminBulkRounded,
-  StrokeSharp: IconMicrosoftAdminStrokeSharp,
-  SolidSharp: IconMicrosoftAdminSolidSharp,
-};
+export const iconPackOfMicrosoftAdmin: TheIconSelfPack = [
+  'MicrosoftAdmin',
+  IconMicrosoftAdminStrokeRounded,
+  IconMicrosoftAdminDuotoneRounded,
+  IconMicrosoftAdminTwotoneRounded,
+  IconMicrosoftAdminSolidRounded,
+  IconMicrosoftAdminBulkRounded,
+  IconMicrosoftAdminStrokeSharp,
+  IconMicrosoftAdminSolidSharp,
+];

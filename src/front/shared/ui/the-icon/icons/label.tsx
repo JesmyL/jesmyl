@@ -15,12 +15,11 @@ export const IconLabelStrokeRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="label-stroke-rounded IconLabelStrokeRounded"
+      the-icon="Label StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -30,17 +29,15 @@ export const IconLabelDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="label-duotone-rounded IconLabelDuotoneRounded"
+      the-icon="Label DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -50,20 +47,15 @@ export const IconLabelTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="label-twotone-rounded IconLabelTwotoneRounded"
+      the-icon="Label TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -73,11 +65,11 @@ export const IconLabelSolidRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="label-solid-rounded IconLabelSolidRounded"
+      the-icon="Label SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -87,12 +79,11 @@ export const IconLabelBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="label-bulk-rounded IconLabelBulkRounded"
+      the-icon="Label BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -102,13 +93,11 @@ export const IconLabelStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="label-stroke-sharp IconLabelStrokeSharp"
+      the-icon="Label StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -118,23 +107,23 @@ export const IconLabelSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="label-solid-sharp IconLabelSolidSharp"
+      the-icon="Label SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfLabel: TheIconSelfPack = {
-  name: 'Label',
-  StrokeRounded: IconLabelStrokeRounded,
-  DuotoneRounded: IconLabelDuotoneRounded,
-  TwotoneRounded: IconLabelTwotoneRounded,
-  SolidRounded: IconLabelSolidRounded,
-  BulkRounded: IconLabelBulkRounded,
-  StrokeSharp: IconLabelStrokeSharp,
-  SolidSharp: IconLabelSolidSharp,
-};
+export const iconPackOfLabel: TheIconSelfPack = [
+  'Label',
+  IconLabelStrokeRounded,
+  IconLabelDuotoneRounded,
+  IconLabelTwotoneRounded,
+  IconLabelSolidRounded,
+  IconLabelBulkRounded,
+  IconLabelStrokeSharp,
+  IconLabelSolidSharp,
+];

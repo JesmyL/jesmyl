@@ -21,25 +21,19 @@ export const IconVirtualRealityVr01StrokeRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="virtual-reality-vr-01-stroke-rounded IconVirtualRealityVr01StrokeRounded"
+      the-icon="VirtualRealityVr01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -49,30 +43,23 @@ export const IconVirtualRealityVr01DuotoneRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="virtual-reality-vr-01-duotone-rounded IconVirtualRealityVr01DuotoneRounded"
+      the-icon="VirtualRealityVr01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -82,27 +69,19 @@ export const IconVirtualRealityVr01TwotoneRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="virtual-reality-vr-01-twotone-rounded IconVirtualRealityVr01TwotoneRounded"
+      the-icon="VirtualRealityVr01 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -112,19 +91,15 @@ export const IconVirtualRealityVr01SolidRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="virtual-reality-vr-01-solid-rounded IconVirtualRealityVr01SolidRounded"
+      the-icon="VirtualRealityVr01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -134,24 +109,19 @@ export const IconVirtualRealityVr01BulkRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="virtual-reality-vr-01-bulk-rounded IconVirtualRealityVr01BulkRounded"
+      the-icon="VirtualRealityVr01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -161,23 +131,19 @@ export const IconVirtualRealityVr01StrokeSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="virtual-reality-vr-01-stroke-sharp IconVirtualRealityVr01StrokeSharp"
+      the-icon="VirtualRealityVr01 StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d10}
+        i-c="s sr sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d11}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -187,25 +153,23 @@ export const IconVirtualRealityVr01SolidSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="virtual-reality-vr-01-solid-sharp IconVirtualRealityVr01SolidSharp"
+      the-icon="VirtualRealityVr01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfVirtualRealityVr01: TheIconSelfPack = {
-  name: 'VirtualRealityVr01',
-  StrokeRounded: IconVirtualRealityVr01StrokeRounded,
-  DuotoneRounded: IconVirtualRealityVr01DuotoneRounded,
-  TwotoneRounded: IconVirtualRealityVr01TwotoneRounded,
-  SolidRounded: IconVirtualRealityVr01SolidRounded,
-  BulkRounded: IconVirtualRealityVr01BulkRounded,
-  StrokeSharp: IconVirtualRealityVr01StrokeSharp,
-  SolidSharp: IconVirtualRealityVr01SolidSharp,
-};
+export const iconPackOfVirtualRealityVr01: TheIconSelfPack = [
+  'VirtualRealityVr01',
+  IconVirtualRealityVr01StrokeRounded,
+  IconVirtualRealityVr01DuotoneRounded,
+  IconVirtualRealityVr01TwotoneRounded,
+  IconVirtualRealityVr01SolidRounded,
+  IconVirtualRealityVr01BulkRounded,
+  IconVirtualRealityVr01StrokeSharp,
+  IconVirtualRealityVr01SolidSharp,
+];

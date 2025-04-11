@@ -15,23 +15,18 @@ export const IconBounceRightStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="bounce-right-stroke-rounded IconBounceRightStrokeRounded"
+      the-icon="BounceRight StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="18" 
-        cy="5" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="18"
+        cy="5"
+        r="2"
+        i-c="s sj sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -40,29 +35,24 @@ export const IconBounceRightDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="bounce-right-duotone-rounded IconBounceRightDuotoneRounded"
+      the-icon="BounceRight DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="18" 
-        cy="5" 
-        r="2" 
-        fill="var(--icon-fill)"></circle>
+        cx="18"
+        cy="5"
+        r="2"
+        i-c="f o7"
+      />
       <circle 
-        cx="18" 
-        cy="5" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="18"
+        cy="5"
+        r="2"
+        i-c="s sj sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -71,24 +61,18 @@ export const IconBounceRightTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="bounce-right-twotone-rounded IconBounceRightTwotoneRounded"
+      the-icon="BounceRight TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="18" 
-        cy="5" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round"></circle>
+        cx="18"
+        cy="5"
+        r="2"
+        i-c="o7 s sj sr sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -97,17 +81,15 @@ export const IconBounceRightSolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="bounce-right-solid-rounded IconBounceRightSolidRounded"
+      the-icon="BounceRight SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -117,18 +99,15 @@ export const IconBounceRightBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="bounce-right-bulk-rounded IconBounceRightBulkRounded"
+      the-icon="BounceRight BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -138,19 +117,15 @@ export const IconBounceRightStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="bounce-right-stroke-sharp IconBounceRightStrokeSharp"
+      the-icon="BounceRight StrokeSharp"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -160,29 +135,27 @@ export const IconBounceRightSolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="bounce-right-solid-sharp IconBounceRightSolidSharp"
+      the-icon="BounceRight SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBounceRight: TheIconSelfPack = {
-  name: 'BounceRight',
-  StrokeRounded: IconBounceRightStrokeRounded,
-  DuotoneRounded: IconBounceRightDuotoneRounded,
-  TwotoneRounded: IconBounceRightTwotoneRounded,
-  SolidRounded: IconBounceRightSolidRounded,
-  BulkRounded: IconBounceRightBulkRounded,
-  StrokeSharp: IconBounceRightStrokeSharp,
-  SolidSharp: IconBounceRightSolidSharp,
-};
+export const iconPackOfBounceRight: TheIconSelfPack = [
+  'BounceRight',
+  IconBounceRightStrokeRounded,
+  IconBounceRightDuotoneRounded,
+  IconBounceRightTwotoneRounded,
+  IconBounceRightSolidRounded,
+  IconBounceRightBulkRounded,
+  IconBounceRightStrokeSharp,
+  IconBounceRightSolidSharp,
+];

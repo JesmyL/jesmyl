@@ -14,12 +14,11 @@ export const IconNavigation03StrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="navigation-03-stroke-rounded IconNavigation03StrokeRounded"
+      the-icon="Navigation03 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -29,17 +28,15 @@ export const IconNavigation03DuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="navigation-03-duotone-rounded IconNavigation03DuotoneRounded"
+      the-icon="Navigation03 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -49,19 +46,15 @@ export const IconNavigation03TwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="navigation-03-twotone-rounded IconNavigation03TwotoneRounded"
+      the-icon="Navigation03 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -71,11 +64,11 @@ export const IconNavigation03SolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="navigation-03-solid-rounded IconNavigation03SolidRounded"
+      the-icon="Navigation03 SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -85,16 +78,15 @@ export const IconNavigation03BulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="navigation-03-bulk-rounded IconNavigation03BulkRounded"
+      the-icon="Navigation03 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -104,13 +96,11 @@ export const IconNavigation03StrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="navigation-03-stroke-sharp IconNavigation03StrokeSharp"
+      the-icon="Navigation03 StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -120,23 +110,23 @@ export const IconNavigation03SolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="navigation-03-solid-sharp IconNavigation03SolidSharp"
+      the-icon="Navigation03 SolidSharp"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfNavigation03: TheIconSelfPack = {
-  name: 'Navigation03',
-  StrokeRounded: IconNavigation03StrokeRounded,
-  DuotoneRounded: IconNavigation03DuotoneRounded,
-  TwotoneRounded: IconNavigation03TwotoneRounded,
-  SolidRounded: IconNavigation03SolidRounded,
-  BulkRounded: IconNavigation03BulkRounded,
-  StrokeSharp: IconNavigation03StrokeSharp,
-  SolidSharp: IconNavigation03SolidSharp,
-};
+export const iconPackOfNavigation03: TheIconSelfPack = [
+  'Navigation03',
+  IconNavigation03StrokeRounded,
+  IconNavigation03DuotoneRounded,
+  IconNavigation03TwotoneRounded,
+  IconNavigation03SolidRounded,
+  IconNavigation03BulkRounded,
+  IconNavigation03StrokeSharp,
+  IconNavigation03SolidSharp,
+];

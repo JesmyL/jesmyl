@@ -18,19 +18,15 @@ export const IconCloudBigRainStrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-big-rain-stroke-rounded IconCloudBigRainStrokeRounded"
+      the-icon="CloudBigRain StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -40,24 +36,19 @@ export const IconCloudBigRainDuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-big-rain-duotone-rounded IconCloudBigRainDuotoneRounded"
+      the-icon="CloudBigRain DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d4}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -67,20 +58,15 @@ export const IconCloudBigRainTwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-big-rain-twotone-rounded IconCloudBigRainTwotoneRounded"
+      the-icon="CloudBigRain TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="0.44" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d4}
+        i-c="o3 s sw"
       />
     </TheIconWrapper>
   );
@@ -90,15 +76,15 @@ export const IconCloudBigRainSolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-big-rain-solid-rounded IconCloudBigRainSolidRounded"
+      the-icon="CloudBigRain SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -108,16 +94,15 @@ export const IconCloudBigRainBulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-big-rain-bulk-rounded IconCloudBigRainBulkRounded"
+      the-icon="CloudBigRain BulkRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -127,18 +112,15 @@ export const IconCloudBigRainStrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-big-rain-stroke-sharp IconCloudBigRainStrokeSharp"
+      the-icon="CloudBigRain StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -148,27 +130,27 @@ export const IconCloudBigRainSolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="cloud-big-rain-solid-sharp IconCloudBigRainSolidSharp"
+      the-icon="CloudBigRain SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCloudBigRain: TheIconSelfPack = {
-  name: 'CloudBigRain',
-  StrokeRounded: IconCloudBigRainStrokeRounded,
-  DuotoneRounded: IconCloudBigRainDuotoneRounded,
-  TwotoneRounded: IconCloudBigRainTwotoneRounded,
-  SolidRounded: IconCloudBigRainSolidRounded,
-  BulkRounded: IconCloudBigRainBulkRounded,
-  StrokeSharp: IconCloudBigRainStrokeSharp,
-  SolidSharp: IconCloudBigRainSolidSharp,
-};
+export const iconPackOfCloudBigRain: TheIconSelfPack = [
+  'CloudBigRain',
+  IconCloudBigRainStrokeRounded,
+  IconCloudBigRainDuotoneRounded,
+  IconCloudBigRainTwotoneRounded,
+  IconCloudBigRainSolidRounded,
+  IconCloudBigRainBulkRounded,
+  IconCloudBigRainStrokeSharp,
+  IconCloudBigRainSolidSharp,
+];

@@ -16,21 +16,18 @@ export const IconCircleArrowDataTransferDiagonalStrokeRounded: FC<TheIconProps> 
   return (
     <TheIconWrapper
       {...props}
-      name="circle-arrow-data-transfer-diagonal-stroke-rounded IconCircleArrowDataTransferDiagonalStrokeRounded"
+      the-icon="CircleArrowDataTransferDiagonal StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -39,27 +36,24 @@ export const IconCircleArrowDataTransferDiagonalDuotoneRounded: FC<TheIconProps>
   return (
     <TheIconWrapper
       {...props}
-      name="circle-arrow-data-transfer-diagonal-duotone-rounded IconCircleArrowDataTransferDiagonalDuotoneRounded"
+      the-icon="CircleArrowDataTransferDiagonal DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        fill="var(--icon-fill)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="f o7"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -68,22 +62,18 @@ export const IconCircleArrowDataTransferDiagonalTwotoneRounded: FC<TheIconProps>
   return (
     <TheIconWrapper
       {...props}
-      name="circle-arrow-data-transfer-diagonal-twotone-rounded IconCircleArrowDataTransferDiagonalTwotoneRounded"
+      the-icon="CircleArrowDataTransferDiagonal TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -92,13 +82,11 @@ export const IconCircleArrowDataTransferDiagonalSolidRounded: FC<TheIconProps> =
   return (
     <TheIconWrapper
       {...props}
-      name="circle-arrow-data-transfer-diagonal-solid-rounded IconCircleArrowDataTransferDiagonalSolidRounded"
+      the-icon="CircleArrowDataTransferDiagonal SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -108,20 +96,19 @@ export const IconCircleArrowDataTransferDiagonalBulkRounded: FC<TheIconProps> = 
   return (
     <TheIconWrapper
       {...props}
-      name="circle-arrow-data-transfer-diagonal-bulk-rounded IconCircleArrowDataTransferDiagonalBulkRounded"
+      the-icon="CircleArrowDataTransferDiagonal BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -131,21 +118,18 @@ export const IconCircleArrowDataTransferDiagonalStrokeSharp: FC<TheIconProps> = 
   return (
     <TheIconWrapper
       {...props}
-      name="circle-arrow-data-transfer-diagonal-stroke-sharp IconCircleArrowDataTransferDiagonalStrokeSharp"
+      the-icon="CircleArrowDataTransferDiagonal StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -154,25 +138,23 @@ export const IconCircleArrowDataTransferDiagonalSolidSharp: FC<TheIconProps> = (
   return (
     <TheIconWrapper
       {...props}
-      name="circle-arrow-data-transfer-diagonal-solid-sharp IconCircleArrowDataTransferDiagonalSolidSharp"
+      the-icon="CircleArrowDataTransferDiagonal SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCircleArrowDataTransferDiagonal: TheIconSelfPack = {
-  name: 'CircleArrowDataTransferDiagonal',
-  StrokeRounded: IconCircleArrowDataTransferDiagonalStrokeRounded,
-  DuotoneRounded: IconCircleArrowDataTransferDiagonalDuotoneRounded,
-  TwotoneRounded: IconCircleArrowDataTransferDiagonalTwotoneRounded,
-  SolidRounded: IconCircleArrowDataTransferDiagonalSolidRounded,
-  BulkRounded: IconCircleArrowDataTransferDiagonalBulkRounded,
-  StrokeSharp: IconCircleArrowDataTransferDiagonalStrokeSharp,
-  SolidSharp: IconCircleArrowDataTransferDiagonalSolidSharp,
-};
+export const iconPackOfCircleArrowDataTransferDiagonal: TheIconSelfPack = [
+  'CircleArrowDataTransferDiagonal',
+  IconCircleArrowDataTransferDiagonalStrokeRounded,
+  IconCircleArrowDataTransferDiagonalDuotoneRounded,
+  IconCircleArrowDataTransferDiagonalTwotoneRounded,
+  IconCircleArrowDataTransferDiagonalSolidRounded,
+  IconCircleArrowDataTransferDiagonalBulkRounded,
+  IconCircleArrowDataTransferDiagonalStrokeSharp,
+  IconCircleArrowDataTransferDiagonalSolidSharp,
+];

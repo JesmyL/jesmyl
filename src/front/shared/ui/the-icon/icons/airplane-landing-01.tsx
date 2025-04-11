@@ -22,20 +22,15 @@ export const IconAirplaneLanding01StrokeRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="airplane-landing-01-stroke-rounded IconAirplaneLanding01StrokeRounded"
+      the-icon="AirplaneLanding01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -45,25 +40,19 @@ export const IconAirplaneLanding01DuotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="airplane-landing-01-duotone-rounded IconAirplaneLanding01DuotoneRounded"
+      the-icon="AirplaneLanding01 DuotoneRounded"
     >
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d5}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -73,21 +62,15 @@ export const IconAirplaneLanding01TwotoneRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="airplane-landing-01-twotone-rounded IconAirplaneLanding01TwotoneRounded"
+      the-icon="AirplaneLanding01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d7}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -97,17 +80,15 @@ export const IconAirplaneLanding01SolidRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="airplane-landing-01-solid-rounded IconAirplaneLanding01SolidRounded"
+      the-icon="AirplaneLanding01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -117,18 +98,15 @@ export const IconAirplaneLanding01BulkRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="airplane-landing-01-bulk-rounded IconAirplaneLanding01BulkRounded"
+      the-icon="AirplaneLanding01 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -138,18 +116,15 @@ export const IconAirplaneLanding01StrokeSharp: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="airplane-landing-01-stroke-sharp IconAirplaneLanding01StrokeSharp"
+      the-icon="AirplaneLanding01 StrokeSharp"
     >
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d10}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d11} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d11}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -159,29 +134,27 @@ export const IconAirplaneLanding01SolidSharp: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="airplane-landing-01-solid-sharp IconAirplaneLanding01SolidSharp"
+      the-icon="AirplaneLanding01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
       <path 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAirplaneLanding01: TheIconSelfPack = {
-  name: 'AirplaneLanding01',
-  StrokeRounded: IconAirplaneLanding01StrokeRounded,
-  DuotoneRounded: IconAirplaneLanding01DuotoneRounded,
-  TwotoneRounded: IconAirplaneLanding01TwotoneRounded,
-  SolidRounded: IconAirplaneLanding01SolidRounded,
-  BulkRounded: IconAirplaneLanding01BulkRounded,
-  StrokeSharp: IconAirplaneLanding01StrokeSharp,
-  SolidSharp: IconAirplaneLanding01SolidSharp,
-};
+export const iconPackOfAirplaneLanding01: TheIconSelfPack = [
+  'AirplaneLanding01',
+  IconAirplaneLanding01StrokeRounded,
+  IconAirplaneLanding01DuotoneRounded,
+  IconAirplaneLanding01TwotoneRounded,
+  IconAirplaneLanding01SolidRounded,
+  IconAirplaneLanding01BulkRounded,
+  IconAirplaneLanding01StrokeSharp,
+  IconAirplaneLanding01SolidSharp,
+];

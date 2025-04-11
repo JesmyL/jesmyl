@@ -31,48 +31,36 @@ export const IconAmbulanceStrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="ambulance-stroke-rounded IconAmbulanceStrokeRounded"
+      the-icon="Ambulance StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="17" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17"
+        cy="18"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="7" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="7"
+        cy="18"
+        r="2"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -81,53 +69,40 @@ export const IconAmbulanceDuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="ambulance-duotone-rounded IconAmbulanceDuotoneRounded"
+      the-icon="Ambulance DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="17" 
-        cy="17.5" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17"
+        cy="17.5"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="7" 
-        cy="17.5" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="7"
+        cy="17.5"
+        r="2"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -136,50 +111,36 @@ export const IconAmbulanceTwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="ambulance-twotone-rounded IconAmbulanceTwotoneRounded"
+      the-icon="Ambulance TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="o7 s sj sr sw"
       />
       <circle 
-        cx="17" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="17"
+        cy="18"
+        r="2"
+        i-c="s sw"
+      />
       <circle 
-        cx="7" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="7"
+        cy="18"
+        r="2"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -188,24 +149,24 @@ export const IconAmbulanceSolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="ambulance-solid-rounded IconAmbulanceSolidRounded"
+      the-icon="Ambulance SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
       <circle 
-        cx="17.001" 
-        cy="17.625" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="17.001"
+        cy="17.625"
+        r="2.5"
+        i-c="f"
+      />
       <circle 
-        cx="7.00098" 
-        cy="17.625" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="7.00098"
+        cy="17.625"
+        r="2.5"
+        i-c="f"
+      />
     </TheIconWrapper>
   );
 };
@@ -214,33 +175,32 @@ export const IconAmbulanceBulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="ambulance-bulk-rounded IconAmbulanceBulkRounded"
+      the-icon="Ambulance BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f o7"
       />
       <path 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d13} 
-        fill="var(--icon-fill)" 
+        d={d.d13}
+        i-c="c f fr"
       />
       <circle 
-        cx="16.998" 
-        cy="17.625" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="16.998"
+        cy="17.625"
+        r="2.5"
+        i-c="f"
+      />
       <circle 
-        cx="6.99805" 
-        cy="17.625" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="6.99805"
+        cy="17.625"
+        r="2.5"
+        i-c="f"
+      />
     </TheIconWrapper>
   );
 };
@@ -249,41 +209,31 @@ export const IconAmbulanceStrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="ambulance-stroke-sharp IconAmbulanceStrokeSharp"
+      the-icon="Ambulance StrokeSharp"
     >
       <path 
-        d={d.d14} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d14}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d15} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d15}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d16} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d16}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d17} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d17}
+        i-c="s sw"
       />
       <path 
-        d={d.d18} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d18}
+        i-c="s sw"
       />
       <path 
-        d={d.d19} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d19}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -293,33 +243,31 @@ export const IconAmbulanceSolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="ambulance-solid-sharp IconAmbulanceSolidSharp"
+      the-icon="Ambulance SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d20} 
-        fill="var(--icon-fill)" 
+        d={d.d20}
+        i-c="c f fr"
       />
       <path 
-        d={d.d21} 
-        fill="var(--icon-fill)" 
+        d={d.d21}
+        i-c="f"
       />
       <path 
-        d={d.d22} 
-        fill="var(--icon-fill)" 
+        d={d.d22}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAmbulance: TheIconSelfPack = {
-  name: 'Ambulance',
-  StrokeRounded: IconAmbulanceStrokeRounded,
-  DuotoneRounded: IconAmbulanceDuotoneRounded,
-  TwotoneRounded: IconAmbulanceTwotoneRounded,
-  SolidRounded: IconAmbulanceSolidRounded,
-  BulkRounded: IconAmbulanceBulkRounded,
-  StrokeSharp: IconAmbulanceStrokeSharp,
-  SolidSharp: IconAmbulanceSolidSharp,
-};
+export const iconPackOfAmbulance: TheIconSelfPack = [
+  'Ambulance',
+  IconAmbulanceStrokeRounded,
+  IconAmbulanceDuotoneRounded,
+  IconAmbulanceTwotoneRounded,
+  IconAmbulanceSolidRounded,
+  IconAmbulanceBulkRounded,
+  IconAmbulanceStrokeSharp,
+  IconAmbulanceSolidSharp,
+];

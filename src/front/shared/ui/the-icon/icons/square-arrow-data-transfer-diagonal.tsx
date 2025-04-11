@@ -19,26 +19,19 @@ export const IconSquareArrowDataTransferDiagonalStrokeRounded: FC<TheIconProps> 
   return (
     <TheIconWrapper
       {...props}
-      name="square-arrow-data-transfer-diagonal-stroke-rounded IconSquareArrowDataTransferDiagonalStrokeRounded"
+      the-icon="SquareArrowDataTransferDiagonal StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -48,31 +41,23 @@ export const IconSquareArrowDataTransferDiagonalDuotoneRounded: FC<TheIconProps>
   return (
     <TheIconWrapper
       {...props}
-      name="square-arrow-data-transfer-diagonal-duotone-rounded IconSquareArrowDataTransferDiagonalDuotoneRounded"
+      the-icon="SquareArrowDataTransferDiagonal DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -82,28 +67,19 @@ export const IconSquareArrowDataTransferDiagonalTwotoneRounded: FC<TheIconProps>
   return (
     <TheIconWrapper
       {...props}
-      name="square-arrow-data-transfer-diagonal-twotone-rounded IconSquareArrowDataTransferDiagonalTwotoneRounded"
+      the-icon="SquareArrowDataTransferDiagonal TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d3}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -113,13 +89,11 @@ export const IconSquareArrowDataTransferDiagonalSolidRounded: FC<TheIconProps> =
   return (
     <TheIconWrapper
       {...props}
-      name="square-arrow-data-transfer-diagonal-solid-rounded IconSquareArrowDataTransferDiagonalSolidRounded"
+      the-icon="SquareArrowDataTransferDiagonal SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -129,20 +103,19 @@ export const IconSquareArrowDataTransferDiagonalBulkRounded: FC<TheIconProps> = 
   return (
     <TheIconWrapper
       {...props}
-      name="square-arrow-data-transfer-diagonal-bulk-rounded IconSquareArrowDataTransferDiagonalBulkRounded"
+      the-icon="SquareArrowDataTransferDiagonal BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -152,19 +125,15 @@ export const IconSquareArrowDataTransferDiagonalStrokeSharp: FC<TheIconProps> = 
   return (
     <TheIconWrapper
       {...props}
-      name="square-arrow-data-transfer-diagonal-stroke-sharp IconSquareArrowDataTransferDiagonalStrokeSharp"
+      the-icon="SquareArrowDataTransferDiagonal StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -174,25 +143,23 @@ export const IconSquareArrowDataTransferDiagonalSolidSharp: FC<TheIconProps> = (
   return (
     <TheIconWrapper
       {...props}
-      name="square-arrow-data-transfer-diagonal-solid-sharp IconSquareArrowDataTransferDiagonalSolidSharp"
+      the-icon="SquareArrowDataTransferDiagonal SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSquareArrowDataTransferDiagonal: TheIconSelfPack = {
-  name: 'SquareArrowDataTransferDiagonal',
-  StrokeRounded: IconSquareArrowDataTransferDiagonalStrokeRounded,
-  DuotoneRounded: IconSquareArrowDataTransferDiagonalDuotoneRounded,
-  TwotoneRounded: IconSquareArrowDataTransferDiagonalTwotoneRounded,
-  SolidRounded: IconSquareArrowDataTransferDiagonalSolidRounded,
-  BulkRounded: IconSquareArrowDataTransferDiagonalBulkRounded,
-  StrokeSharp: IconSquareArrowDataTransferDiagonalStrokeSharp,
-  SolidSharp: IconSquareArrowDataTransferDiagonalSolidSharp,
-};
+export const iconPackOfSquareArrowDataTransferDiagonal: TheIconSelfPack = [
+  'SquareArrowDataTransferDiagonal',
+  IconSquareArrowDataTransferDiagonalStrokeRounded,
+  IconSquareArrowDataTransferDiagonalDuotoneRounded,
+  IconSquareArrowDataTransferDiagonalTwotoneRounded,
+  IconSquareArrowDataTransferDiagonalSolidRounded,
+  IconSquareArrowDataTransferDiagonalBulkRounded,
+  IconSquareArrowDataTransferDiagonalStrokeSharp,
+  IconSquareArrowDataTransferDiagonalSolidSharp,
+];

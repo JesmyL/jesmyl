@@ -15,14 +15,11 @@ export const IconKickstarter01StrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="kickstarter-01-stroke-rounded IconKickstarter01StrokeRounded"
+      the-icon="Kickstarter01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -32,19 +29,15 @@ export const IconKickstarter01DuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="kickstarter-01-duotone-rounded IconKickstarter01DuotoneRounded"
+      the-icon="Kickstarter01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,22 +47,15 @@ export const IconKickstarter01TwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="kickstarter-01-twotone-rounded IconKickstarter01TwotoneRounded"
+      the-icon="Kickstarter01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -79,11 +65,11 @@ export const IconKickstarter01SolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="kickstarter-01-solid-rounded IconKickstarter01SolidRounded"
+      the-icon="Kickstarter01 SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -93,16 +79,15 @@ export const IconKickstarter01BulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="kickstarter-01-bulk-rounded IconKickstarter01BulkRounded"
+      the-icon="Kickstarter01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -112,12 +97,11 @@ export const IconKickstarter01StrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="kickstarter-01-stroke-sharp IconKickstarter01StrokeSharp"
+      the-icon="Kickstarter01 StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -127,23 +111,23 @@ export const IconKickstarter01SolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="kickstarter-01-solid-sharp IconKickstarter01SolidSharp"
+      the-icon="Kickstarter01 SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfKickstarter01: TheIconSelfPack = {
-  name: 'Kickstarter01',
-  StrokeRounded: IconKickstarter01StrokeRounded,
-  DuotoneRounded: IconKickstarter01DuotoneRounded,
-  TwotoneRounded: IconKickstarter01TwotoneRounded,
-  SolidRounded: IconKickstarter01SolidRounded,
-  BulkRounded: IconKickstarter01BulkRounded,
-  StrokeSharp: IconKickstarter01StrokeSharp,
-  SolidSharp: IconKickstarter01SolidSharp,
-};
+export const iconPackOfKickstarter01: TheIconSelfPack = [
+  'Kickstarter01',
+  IconKickstarter01StrokeRounded,
+  IconKickstarter01DuotoneRounded,
+  IconKickstarter01TwotoneRounded,
+  IconKickstarter01SolidRounded,
+  IconKickstarter01BulkRounded,
+  IconKickstarter01StrokeSharp,
+  IconKickstarter01SolidSharp,
+];

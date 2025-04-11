@@ -14,14 +14,11 @@ export const IconGreaterThanStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="greater-than-stroke-rounded IconGreaterThanStrokeRounded"
+      the-icon="GreaterThan StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -31,15 +28,11 @@ export const IconGreaterThanDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="greater-than-duotone-rounded IconGreaterThanDuotoneRounded"
+      the-icon="GreaterThan DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -49,22 +42,15 @@ export const IconGreaterThanTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="greater-than-twotone-rounded IconGreaterThanTwotoneRounded"
+      the-icon="GreaterThan TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -74,11 +60,11 @@ export const IconGreaterThanSolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="greater-than-solid-rounded IconGreaterThanSolidRounded"
+      the-icon="GreaterThan SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -88,12 +74,11 @@ export const IconGreaterThanBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="greater-than-bulk-rounded IconGreaterThanBulkRounded"
+      the-icon="GreaterThan BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -103,12 +88,11 @@ export const IconGreaterThanStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="greater-than-stroke-sharp IconGreaterThanStrokeSharp"
+      the-icon="GreaterThan StrokeSharp"
     >
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d4}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -118,25 +102,23 @@ export const IconGreaterThanSolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="greater-than-solid-sharp IconGreaterThanSolidSharp"
+      the-icon="GreaterThan SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfGreaterThan: TheIconSelfPack = {
-  name: 'GreaterThan',
-  StrokeRounded: IconGreaterThanStrokeRounded,
-  DuotoneRounded: IconGreaterThanDuotoneRounded,
-  TwotoneRounded: IconGreaterThanTwotoneRounded,
-  SolidRounded: IconGreaterThanSolidRounded,
-  BulkRounded: IconGreaterThanBulkRounded,
-  StrokeSharp: IconGreaterThanStrokeSharp,
-  SolidSharp: IconGreaterThanSolidSharp,
-};
+export const iconPackOfGreaterThan: TheIconSelfPack = [
+  'GreaterThan',
+  IconGreaterThanStrokeRounded,
+  IconGreaterThanDuotoneRounded,
+  IconGreaterThanTwotoneRounded,
+  IconGreaterThanSolidRounded,
+  IconGreaterThanBulkRounded,
+  IconGreaterThanStrokeSharp,
+  IconGreaterThanSolidSharp,
+];

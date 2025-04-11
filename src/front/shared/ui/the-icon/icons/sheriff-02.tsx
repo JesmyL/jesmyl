@@ -17,18 +17,15 @@ export const IconSheriff02StrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="sheriff-02-stroke-rounded IconSheriff02StrokeRounded"
+      the-icon="Sheriff02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -38,25 +35,19 @@ export const IconSheriff02DuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="sheriff-02-duotone-rounded IconSheriff02DuotoneRounded"
+      the-icon="Sheriff02 DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -66,19 +57,15 @@ export const IconSheriff02TwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="sheriff-02-twotone-rounded IconSheriff02TwotoneRounded"
+      the-icon="Sheriff02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="o7 s sw"
       />
     </TheIconWrapper>
   );
@@ -88,13 +75,11 @@ export const IconSheriff02SolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="sheriff-02-solid-rounded IconSheriff02SolidRounded"
+      the-icon="Sheriff02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -104,16 +89,15 @@ export const IconSheriff02BulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="sheriff-02-bulk-rounded IconSheriff02BulkRounded"
+      the-icon="Sheriff02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -123,17 +107,15 @@ export const IconSheriff02StrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="sheriff-02-stroke-sharp IconSheriff02StrokeSharp"
+      the-icon="Sheriff02 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -143,25 +125,23 @@ export const IconSheriff02SolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="sheriff-02-solid-sharp IconSheriff02SolidSharp"
+      the-icon="Sheriff02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSheriff02: TheIconSelfPack = {
-  name: 'Sheriff02',
-  StrokeRounded: IconSheriff02StrokeRounded,
-  DuotoneRounded: IconSheriff02DuotoneRounded,
-  TwotoneRounded: IconSheriff02TwotoneRounded,
-  SolidRounded: IconSheriff02SolidRounded,
-  BulkRounded: IconSheriff02BulkRounded,
-  StrokeSharp: IconSheriff02StrokeSharp,
-  SolidSharp: IconSheriff02SolidSharp,
-};
+export const iconPackOfSheriff02: TheIconSelfPack = [
+  'Sheriff02',
+  IconSheriff02StrokeRounded,
+  IconSheriff02DuotoneRounded,
+  IconSheriff02TwotoneRounded,
+  IconSheriff02SolidRounded,
+  IconSheriff02BulkRounded,
+  IconSheriff02StrokeSharp,
+  IconSheriff02SolidSharp,
+];

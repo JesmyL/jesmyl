@@ -17,14 +17,11 @@ export const IconHeartbreakStrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="heartbreak-stroke-rounded IconHeartbreakStrokeRounded"
+      the-icon="Heartbreak StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -34,19 +31,15 @@ export const IconHeartbreakDuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="heartbreak-duotone-rounded IconHeartbreakDuotoneRounded"
+      the-icon="Heartbreak DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -56,22 +49,15 @@ export const IconHeartbreakTwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="heartbreak-twotone-rounded IconHeartbreakTwotoneRounded"
+      the-icon="Heartbreak TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -81,13 +67,11 @@ export const IconHeartbreakSolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="heartbreak-solid-rounded IconHeartbreakSolidRounded"
+      the-icon="Heartbreak SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -97,16 +81,15 @@ export const IconHeartbreakBulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="heartbreak-bulk-rounded IconHeartbreakBulkRounded"
+      the-icon="Heartbreak BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -116,12 +99,11 @@ export const IconHeartbreakStrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="heartbreak-stroke-sharp IconHeartbreakStrokeSharp"
+      the-icon="Heartbreak StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -131,23 +113,23 @@ export const IconHeartbreakSolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="heartbreak-solid-sharp IconHeartbreakSolidSharp"
+      the-icon="Heartbreak SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfHeartbreak: TheIconSelfPack = {
-  name: 'Heartbreak',
-  StrokeRounded: IconHeartbreakStrokeRounded,
-  DuotoneRounded: IconHeartbreakDuotoneRounded,
-  TwotoneRounded: IconHeartbreakTwotoneRounded,
-  SolidRounded: IconHeartbreakSolidRounded,
-  BulkRounded: IconHeartbreakBulkRounded,
-  StrokeSharp: IconHeartbreakStrokeSharp,
-  SolidSharp: IconHeartbreakSolidSharp,
-};
+export const iconPackOfHeartbreak: TheIconSelfPack = [
+  'Heartbreak',
+  IconHeartbreakStrokeRounded,
+  IconHeartbreakDuotoneRounded,
+  IconHeartbreakTwotoneRounded,
+  IconHeartbreakSolidRounded,
+  IconHeartbreakBulkRounded,
+  IconHeartbreakStrokeSharp,
+  IconHeartbreakSolidSharp,
+];

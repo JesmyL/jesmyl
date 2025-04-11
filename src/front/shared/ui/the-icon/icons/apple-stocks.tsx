@@ -20,34 +20,26 @@ export const IconAppleStocksStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="apple-stocks-stroke-rounded IconAppleStocksStrokeRounded"
+      the-icon="AppleStocks StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="15" 
-        cy="9" 
-        r="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="15"
+        cy="9"
+        r="1"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -56,39 +48,30 @@ export const IconAppleStocksDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="apple-stocks-duotone-rounded IconAppleStocksDuotoneRounded"
+      the-icon="AppleStocks DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="15" 
-        cy="9" 
-        r="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="15"
+        cy="9"
+        r="1"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -97,35 +80,26 @@ export const IconAppleStocksTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="apple-stocks-twotone-rounded IconAppleStocksTwotoneRounded"
+      the-icon="AppleStocks TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sw"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="15" 
-        cy="9" 
-        r="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="15"
+        cy="9"
+        r="1"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -134,15 +108,15 @@ export const IconAppleStocksSolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="apple-stocks-solid-rounded IconAppleStocksSolidRounded"
+      the-icon="AppleStocks SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -152,16 +126,15 @@ export const IconAppleStocksBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="apple-stocks-bulk-rounded IconAppleStocksBulkRounded"
+      the-icon="AppleStocks BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -171,33 +144,26 @@ export const IconAppleStocksStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="apple-stocks-stroke-sharp IconAppleStocksStrokeSharp"
+      the-icon="AppleStocks StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d8}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sw"
       />
       <circle 
-        cx="15" 
-        cy="9" 
-        r="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
+        cx="15"
+        cy="9"
+        r="1"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -206,27 +172,27 @@ export const IconAppleStocksSolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="apple-stocks-solid-sharp IconAppleStocksSolidSharp"
+      the-icon="AppleStocks SolidSharp"
     >
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
       <path 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAppleStocks: TheIconSelfPack = {
-  name: 'AppleStocks',
-  StrokeRounded: IconAppleStocksStrokeRounded,
-  DuotoneRounded: IconAppleStocksDuotoneRounded,
-  TwotoneRounded: IconAppleStocksTwotoneRounded,
-  SolidRounded: IconAppleStocksSolidRounded,
-  BulkRounded: IconAppleStocksBulkRounded,
-  StrokeSharp: IconAppleStocksStrokeSharp,
-  SolidSharp: IconAppleStocksSolidSharp,
-};
+export const iconPackOfAppleStocks: TheIconSelfPack = [
+  'AppleStocks',
+  IconAppleStocksStrokeRounded,
+  IconAppleStocksDuotoneRounded,
+  IconAppleStocksTwotoneRounded,
+  IconAppleStocksSolidRounded,
+  IconAppleStocksBulkRounded,
+  IconAppleStocksStrokeSharp,
+  IconAppleStocksSolidSharp,
+];

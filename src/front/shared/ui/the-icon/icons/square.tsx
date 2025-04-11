@@ -15,12 +15,11 @@ export const IconSquareStrokeRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="square-stroke-rounded IconSquareStrokeRounded"
+      the-icon="Square StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -30,17 +29,15 @@ export const IconSquareDuotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="square-duotone-rounded IconSquareDuotoneRounded"
+      the-icon="Square DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -50,19 +47,15 @@ export const IconSquareTwotoneRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="square-twotone-rounded IconSquareTwotoneRounded"
+      the-icon="Square TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="o7 s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -72,13 +65,11 @@ export const IconSquareSolidRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="square-solid-rounded IconSquareSolidRounded"
+      the-icon="Square SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -88,18 +79,15 @@ export const IconSquareBulkRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="square-bulk-rounded IconSquareBulkRounded"
+      the-icon="Square BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -109,13 +97,11 @@ export const IconSquareStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="square-stroke-sharp IconSquareStrokeSharp"
+      the-icon="Square StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -125,23 +111,23 @@ export const IconSquareSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="square-solid-sharp IconSquareSolidSharp"
+      the-icon="Square SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSquare: TheIconSelfPack = {
-  name: 'Square',
-  StrokeRounded: IconSquareStrokeRounded,
-  DuotoneRounded: IconSquareDuotoneRounded,
-  TwotoneRounded: IconSquareTwotoneRounded,
-  SolidRounded: IconSquareSolidRounded,
-  BulkRounded: IconSquareBulkRounded,
-  StrokeSharp: IconSquareStrokeSharp,
-  SolidSharp: IconSquareSolidSharp,
-};
+export const iconPackOfSquare: TheIconSelfPack = [
+  'Square',
+  IconSquareStrokeRounded,
+  IconSquareDuotoneRounded,
+  IconSquareTwotoneRounded,
+  IconSquareSolidRounded,
+  IconSquareBulkRounded,
+  IconSquareStrokeSharp,
+  IconSquareSolidSharp,
+];

@@ -16,14 +16,11 @@ export const IconLinkForwardStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="link-forward-stroke-rounded IconLinkForwardStrokeRounded"
+      the-icon="LinkForward StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -33,19 +30,15 @@ export const IconLinkForwardDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="link-forward-duotone-rounded IconLinkForwardDuotoneRounded"
+      the-icon="LinkForward DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -55,22 +48,15 @@ export const IconLinkForwardTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="link-forward-twotone-rounded IconLinkForwardTwotoneRounded"
+      the-icon="LinkForward TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -80,13 +66,11 @@ export const IconLinkForwardSolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="link-forward-solid-rounded IconLinkForwardSolidRounded"
+      the-icon="LinkForward SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -96,16 +80,15 @@ export const IconLinkForwardBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="link-forward-bulk-rounded IconLinkForwardBulkRounded"
+      the-icon="LinkForward BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -115,12 +98,11 @@ export const IconLinkForwardStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="link-forward-stroke-sharp IconLinkForwardStrokeSharp"
+      the-icon="LinkForward StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -130,23 +112,23 @@ export const IconLinkForwardSolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="link-forward-solid-sharp IconLinkForwardSolidSharp"
+      the-icon="LinkForward SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfLinkForward: TheIconSelfPack = {
-  name: 'LinkForward',
-  StrokeRounded: IconLinkForwardStrokeRounded,
-  DuotoneRounded: IconLinkForwardDuotoneRounded,
-  TwotoneRounded: IconLinkForwardTwotoneRounded,
-  SolidRounded: IconLinkForwardSolidRounded,
-  BulkRounded: IconLinkForwardBulkRounded,
-  StrokeSharp: IconLinkForwardStrokeSharp,
-  SolidSharp: IconLinkForwardSolidSharp,
-};
+export const iconPackOfLinkForward: TheIconSelfPack = [
+  'LinkForward',
+  IconLinkForwardStrokeRounded,
+  IconLinkForwardDuotoneRounded,
+  IconLinkForwardTwotoneRounded,
+  IconLinkForwardSolidRounded,
+  IconLinkForwardBulkRounded,
+  IconLinkForwardStrokeSharp,
+  IconLinkForwardSolidSharp,
+];

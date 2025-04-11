@@ -17,21 +17,15 @@ export const IconThumbsUpDownStrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="thumbs-up-down-stroke-rounded IconThumbsUpDownStrokeRounded"
+      the-icon="ThumbsUpDown StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -41,26 +35,19 @@ export const IconThumbsUpDownDuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="thumbs-up-down-duotone-rounded IconThumbsUpDownDuotoneRounded"
+      the-icon="ThumbsUpDown DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -70,22 +57,15 @@ export const IconThumbsUpDownTwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="thumbs-up-down-twotone-rounded IconThumbsUpDownTwotoneRounded"
+      the-icon="ThumbsUpDown TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -95,15 +75,15 @@ export const IconThumbsUpDownSolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="thumbs-up-down-solid-rounded IconThumbsUpDownSolidRounded"
+      the-icon="ThumbsUpDown SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -113,16 +93,15 @@ export const IconThumbsUpDownBulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="thumbs-up-down-bulk-rounded IconThumbsUpDownBulkRounded"
+      the-icon="ThumbsUpDown BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -132,21 +111,15 @@ export const IconThumbsUpDownStrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="thumbs-up-down-stroke-sharp IconThumbsUpDownStrokeSharp"
+      the-icon="ThumbsUpDown StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -156,27 +129,27 @@ export const IconThumbsUpDownSolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="thumbs-up-down-solid-sharp IconThumbsUpDownSolidSharp"
+      the-icon="ThumbsUpDown SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfThumbsUpDown: TheIconSelfPack = {
-  name: 'ThumbsUpDown',
-  StrokeRounded: IconThumbsUpDownStrokeRounded,
-  DuotoneRounded: IconThumbsUpDownDuotoneRounded,
-  TwotoneRounded: IconThumbsUpDownTwotoneRounded,
-  SolidRounded: IconThumbsUpDownSolidRounded,
-  BulkRounded: IconThumbsUpDownBulkRounded,
-  StrokeSharp: IconThumbsUpDownStrokeSharp,
-  SolidSharp: IconThumbsUpDownSolidSharp,
-};
+export const iconPackOfThumbsUpDown: TheIconSelfPack = [
+  'ThumbsUpDown',
+  IconThumbsUpDownStrokeRounded,
+  IconThumbsUpDownDuotoneRounded,
+  IconThumbsUpDownTwotoneRounded,
+  IconThumbsUpDownSolidRounded,
+  IconThumbsUpDownBulkRounded,
+  IconThumbsUpDownStrokeSharp,
+  IconThumbsUpDownSolidSharp,
+];

@@ -22,7 +22,6 @@ export const initialStyles = css`
     --icon-fill: var(--icon-color);
     --icon-stroke: var(--icon-color);
     --icon-stroke-width: 2;
-    --icon-opacity: 0.4;
     --icon-size: 24px;
     --icon-scale: 1;
 

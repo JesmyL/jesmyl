@@ -19,14 +19,11 @@ export const IconBodyPartMuscleStrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="body-part-muscle-stroke-rounded IconBodyPartMuscleStrokeRounded"
+      the-icon="BodyPartMuscle StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -36,19 +33,15 @@ export const IconBodyPartMuscleDuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="body-part-muscle-duotone-rounded IconBodyPartMuscleDuotoneRounded"
+      the-icon="BodyPartMuscle DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -58,22 +51,15 @@ export const IconBodyPartMuscleTwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="body-part-muscle-twotone-rounded IconBodyPartMuscleTwotoneRounded"
+      the-icon="BodyPartMuscle TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -83,11 +69,11 @@ export const IconBodyPartMuscleSolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="body-part-muscle-solid-rounded IconBodyPartMuscleSolidRounded"
+      the-icon="BodyPartMuscle SolidRounded"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -97,16 +83,15 @@ export const IconBodyPartMuscleBulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="body-part-muscle-bulk-rounded IconBodyPartMuscleBulkRounded"
+      the-icon="BodyPartMuscle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f o7"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -116,12 +101,11 @@ export const IconBodyPartMuscleStrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="body-part-muscle-stroke-sharp IconBodyPartMuscleStrokeSharp"
+      the-icon="BodyPartMuscle StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -131,23 +115,23 @@ export const IconBodyPartMuscleSolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="body-part-muscle-solid-sharp IconBodyPartMuscleSolidSharp"
+      the-icon="BodyPartMuscle SolidSharp"
     >
       <path 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBodyPartMuscle: TheIconSelfPack = {
-  name: 'BodyPartMuscle',
-  StrokeRounded: IconBodyPartMuscleStrokeRounded,
-  DuotoneRounded: IconBodyPartMuscleDuotoneRounded,
-  TwotoneRounded: IconBodyPartMuscleTwotoneRounded,
-  SolidRounded: IconBodyPartMuscleSolidRounded,
-  BulkRounded: IconBodyPartMuscleBulkRounded,
-  StrokeSharp: IconBodyPartMuscleStrokeSharp,
-  SolidSharp: IconBodyPartMuscleSolidSharp,
-};
+export const iconPackOfBodyPartMuscle: TheIconSelfPack = [
+  'BodyPartMuscle',
+  IconBodyPartMuscleStrokeRounded,
+  IconBodyPartMuscleDuotoneRounded,
+  IconBodyPartMuscleTwotoneRounded,
+  IconBodyPartMuscleSolidRounded,
+  IconBodyPartMuscleBulkRounded,
+  IconBodyPartMuscleStrokeSharp,
+  IconBodyPartMuscleSolidSharp,
+];

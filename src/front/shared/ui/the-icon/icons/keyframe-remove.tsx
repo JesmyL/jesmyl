@@ -16,18 +16,15 @@ export const IconKeyframeRemoveStrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="keyframe-remove-stroke-rounded IconKeyframeRemoveStrokeRounded"
+      the-icon="KeyframeRemove StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -37,23 +34,19 @@ export const IconKeyframeRemoveDuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="keyframe-remove-duotone-rounded IconKeyframeRemoveDuotoneRounded"
+      the-icon="KeyframeRemove DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -63,19 +56,15 @@ export const IconKeyframeRemoveTwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="keyframe-remove-twotone-rounded IconKeyframeRemoveTwotoneRounded"
+      the-icon="KeyframeRemove TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -85,17 +74,15 @@ export const IconKeyframeRemoveSolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="keyframe-remove-solid-rounded IconKeyframeRemoveSolidRounded"
+      the-icon="KeyframeRemove SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -105,18 +92,15 @@ export const IconKeyframeRemoveBulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="keyframe-remove-bulk-rounded IconKeyframeRemoveBulkRounded"
+      the-icon="KeyframeRemove BulkRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr o7"
       />
     </TheIconWrapper>
   );
@@ -126,17 +110,15 @@ export const IconKeyframeRemoveStrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="keyframe-remove-stroke-sharp IconKeyframeRemoveStrokeSharp"
+      the-icon="KeyframeRemove StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -146,29 +128,27 @@ export const IconKeyframeRemoveSolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="keyframe-remove-solid-sharp IconKeyframeRemoveSolidSharp"
+      the-icon="KeyframeRemove SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfKeyframeRemove: TheIconSelfPack = {
-  name: 'KeyframeRemove',
-  StrokeRounded: IconKeyframeRemoveStrokeRounded,
-  DuotoneRounded: IconKeyframeRemoveDuotoneRounded,
-  TwotoneRounded: IconKeyframeRemoveTwotoneRounded,
-  SolidRounded: IconKeyframeRemoveSolidRounded,
-  BulkRounded: IconKeyframeRemoveBulkRounded,
-  StrokeSharp: IconKeyframeRemoveStrokeSharp,
-  SolidSharp: IconKeyframeRemoveSolidSharp,
-};
+export const iconPackOfKeyframeRemove: TheIconSelfPack = [
+  'KeyframeRemove',
+  IconKeyframeRemoveStrokeRounded,
+  IconKeyframeRemoveDuotoneRounded,
+  IconKeyframeRemoveTwotoneRounded,
+  IconKeyframeRemoveSolidRounded,
+  IconKeyframeRemoveBulkRounded,
+  IconKeyframeRemoveStrokeSharp,
+  IconKeyframeRemoveSolidSharp,
+];

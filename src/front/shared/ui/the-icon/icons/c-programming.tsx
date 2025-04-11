@@ -16,18 +16,15 @@ export const IconCProgrammingStrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="c-programming-stroke-rounded IconCProgrammingStrokeRounded"
+      the-icon="CProgramming StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -37,23 +34,19 @@ export const IconCProgrammingDuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="c-programming-duotone-rounded IconCProgrammingDuotoneRounded"
+      the-icon="CProgramming DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -63,19 +56,15 @@ export const IconCProgrammingTwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="c-programming-twotone-rounded IconCProgrammingTwotoneRounded"
+      the-icon="CProgramming TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -85,13 +74,11 @@ export const IconCProgrammingSolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="c-programming-solid-rounded IconCProgrammingSolidRounded"
+      the-icon="CProgramming SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -101,18 +88,15 @@ export const IconCProgrammingBulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="c-programming-bulk-rounded IconCProgrammingBulkRounded"
+      the-icon="CProgramming BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -122,18 +106,15 @@ export const IconCProgrammingStrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="c-programming-stroke-sharp IconCProgrammingStrokeSharp"
+      the-icon="CProgramming StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -143,25 +124,23 @@ export const IconCProgrammingSolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="c-programming-solid-sharp IconCProgrammingSolidSharp"
+      the-icon="CProgramming SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCProgramming: TheIconSelfPack = {
-  name: 'CProgramming',
-  StrokeRounded: IconCProgrammingStrokeRounded,
-  DuotoneRounded: IconCProgrammingDuotoneRounded,
-  TwotoneRounded: IconCProgrammingTwotoneRounded,
-  SolidRounded: IconCProgrammingSolidRounded,
-  BulkRounded: IconCProgrammingBulkRounded,
-  StrokeSharp: IconCProgrammingStrokeSharp,
-  SolidSharp: IconCProgrammingSolidSharp,
-};
+export const iconPackOfCProgramming: TheIconSelfPack = [
+  'CProgramming',
+  IconCProgrammingStrokeRounded,
+  IconCProgrammingDuotoneRounded,
+  IconCProgrammingTwotoneRounded,
+  IconCProgrammingSolidRounded,
+  IconCProgrammingBulkRounded,
+  IconCProgrammingStrokeSharp,
+  IconCProgrammingSolidSharp,
+];

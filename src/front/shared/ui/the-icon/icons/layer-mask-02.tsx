@@ -18,17 +18,15 @@ export const IconLayerMask02StrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="layer-mask-02-stroke-rounded IconLayerMask02StrokeRounded"
+      the-icon="LayerMask02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -38,22 +36,19 @@ export const IconLayerMask02DuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="layer-mask-02-duotone-rounded IconLayerMask02DuotoneRounded"
+      the-icon="LayerMask02 DuotoneRounded"
     >
       <path 
-        opacity="0.3" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o1"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d4}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -63,18 +58,15 @@ export const IconLayerMask02TwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="layer-mask-02-twotone-rounded IconLayerMask02TwotoneRounded"
+      the-icon="LayerMask02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="o7 s sw"
       />
     </TheIconWrapper>
   );
@@ -84,13 +76,11 @@ export const IconLayerMask02SolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="layer-mask-02-solid-rounded IconLayerMask02SolidRounded"
+      the-icon="LayerMask02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -100,18 +90,15 @@ export const IconLayerMask02BulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="layer-mask-02-bulk-rounded IconLayerMask02BulkRounded"
+      the-icon="LayerMask02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -121,19 +108,15 @@ export const IconLayerMask02StrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="layer-mask-02-stroke-sharp IconLayerMask02StrokeSharp"
+      the-icon="LayerMask02 StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -143,25 +126,23 @@ export const IconLayerMask02SolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="layer-mask-02-solid-sharp IconLayerMask02SolidSharp"
+      the-icon="LayerMask02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfLayerMask02: TheIconSelfPack = {
-  name: 'LayerMask02',
-  StrokeRounded: IconLayerMask02StrokeRounded,
-  DuotoneRounded: IconLayerMask02DuotoneRounded,
-  TwotoneRounded: IconLayerMask02TwotoneRounded,
-  SolidRounded: IconLayerMask02SolidRounded,
-  BulkRounded: IconLayerMask02BulkRounded,
-  StrokeSharp: IconLayerMask02StrokeSharp,
-  SolidSharp: IconLayerMask02SolidSharp,
-};
+export const iconPackOfLayerMask02: TheIconSelfPack = [
+  'LayerMask02',
+  IconLayerMask02StrokeRounded,
+  IconLayerMask02DuotoneRounded,
+  IconLayerMask02TwotoneRounded,
+  IconLayerMask02SolidRounded,
+  IconLayerMask02BulkRounded,
+  IconLayerMask02StrokeSharp,
+  IconLayerMask02SolidSharp,
+];

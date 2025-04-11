@@ -18,26 +18,21 @@ export const IconCaravanStrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="caravan-stroke-rounded IconCaravanStrokeRounded"
+      the-icon="Caravan StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="9" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="9"
+        cy="18"
+        r="2"
+        i-c="s sw"
+      />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -47,33 +42,25 @@ export const IconCaravanDuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="caravan-duotone-rounded IconCaravanDuotoneRounded"
+      the-icon="Caravan DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="9" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="9"
+        cy="18"
+        r="2"
+        i-c="s sw"
+      />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -83,27 +70,21 @@ export const IconCaravanTwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="caravan-twotone-rounded IconCaravanTwotoneRounded"
+      the-icon="Caravan TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <circle 
-        cx="9" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="9"
+        cy="18"
+        r="2"
+        i-c="s sw"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sw"
       />
     </TheIconWrapper>
   );
@@ -113,18 +94,17 @@ export const IconCaravanSolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="caravan-solid-rounded IconCaravanSolidRounded"
+      the-icon="Caravan SolidRounded"
     >
       <circle 
-        cx="8.875" 
-        cy="18.375" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="8.875"
+        cy="18.375"
+        r="2.5"
+        i-c="f"
+      />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -134,25 +114,21 @@ export const IconCaravanBulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="caravan-bulk-rounded IconCaravanBulkRounded"
+      the-icon="Caravan BulkRounded"
     >
       <circle 
-        cx="8.875" 
-        cy="18.375" 
-        r="2.5" 
-        fill="var(--icon-fill)"></circle>
-      <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        cx="8.875"
+        cy="18.375"
+        r="2.5"
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr o7"
+      />
+      <path 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -162,24 +138,21 @@ export const IconCaravanStrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="caravan-stroke-sharp IconCaravanStrokeSharp"
+      the-icon="Caravan StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <circle 
-        cx="9" 
-        cy="18" 
-        r="2" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="9"
+        cy="18"
+        r="2"
+        i-c="s sw"
+      />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -189,29 +162,27 @@ export const IconCaravanSolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="caravan-solid-sharp IconCaravanSolidSharp"
+      the-icon="Caravan SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCaravan: TheIconSelfPack = {
-  name: 'Caravan',
-  StrokeRounded: IconCaravanStrokeRounded,
-  DuotoneRounded: IconCaravanDuotoneRounded,
-  TwotoneRounded: IconCaravanTwotoneRounded,
-  SolidRounded: IconCaravanSolidRounded,
-  BulkRounded: IconCaravanBulkRounded,
-  StrokeSharp: IconCaravanStrokeSharp,
-  SolidSharp: IconCaravanSolidSharp,
-};
+export const iconPackOfCaravan: TheIconSelfPack = [
+  'Caravan',
+  IconCaravanStrokeRounded,
+  IconCaravanDuotoneRounded,
+  IconCaravanTwotoneRounded,
+  IconCaravanSolidRounded,
+  IconCaravanBulkRounded,
+  IconCaravanStrokeSharp,
+  IconCaravanSolidSharp,
+];

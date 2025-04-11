@@ -18,18 +18,15 @@ export const IconWhatsappStrokeRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="whatsapp-stroke-rounded IconWhatsappStrokeRounded"
+      the-icon="Whatsapp StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -39,25 +36,19 @@ export const IconWhatsappDuotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="whatsapp-duotone-rounded IconWhatsappDuotoneRounded"
+      the-icon="Whatsapp DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -67,19 +58,15 @@ export const IconWhatsappTwotoneRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="whatsapp-twotone-rounded IconWhatsappTwotoneRounded"
+      the-icon="Whatsapp TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="o7 s sw"
       />
     </TheIconWrapper>
   );
@@ -89,13 +76,11 @@ export const IconWhatsappSolidRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="whatsapp-solid-rounded IconWhatsappSolidRounded"
+      the-icon="Whatsapp SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -105,16 +90,15 @@ export const IconWhatsappBulkRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="whatsapp-bulk-rounded IconWhatsappBulkRounded"
+      the-icon="Whatsapp BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -124,17 +108,15 @@ export const IconWhatsappStrokeSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="whatsapp-stroke-sharp IconWhatsappStrokeSharp"
+      the-icon="Whatsapp StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -144,25 +126,23 @@ export const IconWhatsappSolidSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="whatsapp-solid-sharp IconWhatsappSolidSharp"
+      the-icon="Whatsapp SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfWhatsapp: TheIconSelfPack = {
-  name: 'Whatsapp',
-  StrokeRounded: IconWhatsappStrokeRounded,
-  DuotoneRounded: IconWhatsappDuotoneRounded,
-  TwotoneRounded: IconWhatsappTwotoneRounded,
-  SolidRounded: IconWhatsappSolidRounded,
-  BulkRounded: IconWhatsappBulkRounded,
-  StrokeSharp: IconWhatsappStrokeSharp,
-  SolidSharp: IconWhatsappSolidSharp,
-};
+export const iconPackOfWhatsapp: TheIconSelfPack = [
+  'Whatsapp',
+  IconWhatsappStrokeRounded,
+  IconWhatsappDuotoneRounded,
+  IconWhatsappTwotoneRounded,
+  IconWhatsappSolidRounded,
+  IconWhatsappBulkRounded,
+  IconWhatsappStrokeSharp,
+  IconWhatsappSolidSharp,
+];

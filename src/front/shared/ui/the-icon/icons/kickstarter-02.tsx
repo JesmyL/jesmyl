@@ -18,20 +18,15 @@ export const IconKickstarter02StrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="kickstarter-02-stroke-rounded IconKickstarter02StrokeRounded"
+      the-icon="Kickstarter02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -41,27 +36,19 @@ export const IconKickstarter02DuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="kickstarter-02-duotone-rounded IconKickstarter02DuotoneRounded"
+      the-icon="Kickstarter02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -71,21 +58,15 @@ export const IconKickstarter02TwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="kickstarter-02-twotone-rounded IconKickstarter02TwotoneRounded"
+      the-icon="Kickstarter02 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -95,13 +76,11 @@ export const IconKickstarter02SolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="kickstarter-02-solid-rounded IconKickstarter02SolidRounded"
+      the-icon="Kickstarter02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -111,16 +90,15 @@ export const IconKickstarter02BulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="kickstarter-02-bulk-rounded IconKickstarter02BulkRounded"
+      the-icon="Kickstarter02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -130,19 +108,15 @@ export const IconKickstarter02StrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="kickstarter-02-stroke-sharp IconKickstarter02StrokeSharp"
+      the-icon="Kickstarter02 StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj ss sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -152,25 +126,23 @@ export const IconKickstarter02SolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="kickstarter-02-solid-sharp IconKickstarter02SolidSharp"
+      the-icon="Kickstarter02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfKickstarter02: TheIconSelfPack = {
-  name: 'Kickstarter02',
-  StrokeRounded: IconKickstarter02StrokeRounded,
-  DuotoneRounded: IconKickstarter02DuotoneRounded,
-  TwotoneRounded: IconKickstarter02TwotoneRounded,
-  SolidRounded: IconKickstarter02SolidRounded,
-  BulkRounded: IconKickstarter02BulkRounded,
-  StrokeSharp: IconKickstarter02StrokeSharp,
-  SolidSharp: IconKickstarter02SolidSharp,
-};
+export const iconPackOfKickstarter02: TheIconSelfPack = [
+  'Kickstarter02',
+  IconKickstarter02StrokeRounded,
+  IconKickstarter02DuotoneRounded,
+  IconKickstarter02TwotoneRounded,
+  IconKickstarter02SolidRounded,
+  IconKickstarter02BulkRounded,
+  IconKickstarter02StrokeSharp,
+  IconKickstarter02SolidSharp,
+];

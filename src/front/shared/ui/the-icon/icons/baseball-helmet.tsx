@@ -18,21 +18,15 @@ export const IconBaseballHelmetStrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="baseball-helmet-stroke-rounded IconBaseballHelmetStrokeRounded"
+      the-icon="BaseballHelmet StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -42,26 +36,19 @@ export const IconBaseballHelmetDuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="baseball-helmet-duotone-rounded IconBaseballHelmetDuotoneRounded"
+      the-icon="BaseballHelmet DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -71,22 +58,15 @@ export const IconBaseballHelmetTwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="baseball-helmet-twotone-rounded IconBaseballHelmetTwotoneRounded"
+      the-icon="BaseballHelmet TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -96,13 +76,11 @@ export const IconBaseballHelmetSolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="baseball-helmet-solid-rounded IconBaseballHelmetSolidRounded"
+      the-icon="BaseballHelmet SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -112,18 +90,15 @@ export const IconBaseballHelmetBulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="baseball-helmet-bulk-rounded IconBaseballHelmetBulkRounded"
+      the-icon="BaseballHelmet BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -133,19 +108,15 @@ export const IconBaseballHelmetStrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="baseball-helmet-stroke-sharp IconBaseballHelmetStrokeSharp"
+      the-icon="BaseballHelmet StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -155,25 +126,23 @@ export const IconBaseballHelmetSolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="baseball-helmet-solid-sharp IconBaseballHelmetSolidSharp"
+      the-icon="BaseballHelmet SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBaseballHelmet: TheIconSelfPack = {
-  name: 'BaseballHelmet',
-  StrokeRounded: IconBaseballHelmetStrokeRounded,
-  DuotoneRounded: IconBaseballHelmetDuotoneRounded,
-  TwotoneRounded: IconBaseballHelmetTwotoneRounded,
-  SolidRounded: IconBaseballHelmetSolidRounded,
-  BulkRounded: IconBaseballHelmetBulkRounded,
-  StrokeSharp: IconBaseballHelmetStrokeSharp,
-  SolidSharp: IconBaseballHelmetSolidSharp,
-};
+export const iconPackOfBaseballHelmet: TheIconSelfPack = [
+  'BaseballHelmet',
+  IconBaseballHelmetStrokeRounded,
+  IconBaseballHelmetDuotoneRounded,
+  IconBaseballHelmetTwotoneRounded,
+  IconBaseballHelmetSolidRounded,
+  IconBaseballHelmetBulkRounded,
+  IconBaseballHelmetStrokeSharp,
+  IconBaseballHelmetSolidSharp,
+];

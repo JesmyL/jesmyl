@@ -16,19 +16,17 @@ export const IconQuoteUpCircleStrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="quote-up-circle-stroke-rounded IconQuoteUpCircleStrokeRounded"
+      the-icon="QuoteUpCircle StrokeRounded"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -38,26 +36,21 @@ export const IconQuoteUpCircleDuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="quote-up-circle-duotone-rounded IconQuoteUpCircleDuotoneRounded"
+      the-icon="QuoteUpCircle DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr o7"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -67,20 +60,17 @@ export const IconQuoteUpCircleTwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="quote-up-circle-twotone-rounded IconQuoteUpCircleTwotoneRounded"
+      the-icon="QuoteUpCircle TwotoneRounded"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -90,13 +80,11 @@ export const IconQuoteUpCircleSolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="quote-up-circle-solid-rounded IconQuoteUpCircleSolidRounded"
+      the-icon="QuoteUpCircle SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -106,18 +94,15 @@ export const IconQuoteUpCircleBulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="quote-up-circle-bulk-rounded IconQuoteUpCircleBulkRounded"
+      the-icon="QuoteUpCircle BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -127,18 +112,17 @@ export const IconQuoteUpCircleStrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="quote-up-circle-stroke-sharp IconQuoteUpCircleStrokeSharp"
+      the-icon="QuoteUpCircle StrokeSharp"
     >
       <circle 
-        cx="12" 
-        cy="12" 
-        r="10" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="10"
+        i-c="s sw"
+      />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -148,25 +132,23 @@ export const IconQuoteUpCircleSolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="quote-up-circle-solid-sharp IconQuoteUpCircleSolidSharp"
+      the-icon="QuoteUpCircle SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfQuoteUpCircle: TheIconSelfPack = {
-  name: 'QuoteUpCircle',
-  StrokeRounded: IconQuoteUpCircleStrokeRounded,
-  DuotoneRounded: IconQuoteUpCircleDuotoneRounded,
-  TwotoneRounded: IconQuoteUpCircleTwotoneRounded,
-  SolidRounded: IconQuoteUpCircleSolidRounded,
-  BulkRounded: IconQuoteUpCircleBulkRounded,
-  StrokeSharp: IconQuoteUpCircleStrokeSharp,
-  SolidSharp: IconQuoteUpCircleSolidSharp,
-};
+export const iconPackOfQuoteUpCircle: TheIconSelfPack = [
+  'QuoteUpCircle',
+  IconQuoteUpCircleStrokeRounded,
+  IconQuoteUpCircleDuotoneRounded,
+  IconQuoteUpCircleTwotoneRounded,
+  IconQuoteUpCircleSolidRounded,
+  IconQuoteUpCircleBulkRounded,
+  IconQuoteUpCircleStrokeSharp,
+  IconQuoteUpCircleSolidSharp,
+];

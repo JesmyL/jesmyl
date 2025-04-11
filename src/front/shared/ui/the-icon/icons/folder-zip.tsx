@@ -18,13 +18,11 @@ export const IconFolderZipStrokeRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="folder-zip-stroke-rounded IconFolderZipStrokeRounded"
+      the-icon="FolderZip StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -34,18 +32,15 @@ export const IconFolderZipDuotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="folder-zip-duotone-rounded IconFolderZipDuotoneRounded"
+      the-icon="FolderZip DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -55,20 +50,15 @@ export const IconFolderZipTwotoneRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="folder-zip-twotone-rounded IconFolderZipTwotoneRounded"
+      the-icon="FolderZip TwotoneRounded"
     >
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d4}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -78,11 +68,11 @@ export const IconFolderZipSolidRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="folder-zip-solid-rounded IconFolderZipSolidRounded"
+      the-icon="FolderZip SolidRounded"
     >
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -92,16 +82,15 @@ export const IconFolderZipBulkRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="folder-zip-bulk-rounded IconFolderZipBulkRounded"
+      the-icon="FolderZip BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -111,12 +100,11 @@ export const IconFolderZipStrokeSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="folder-zip-stroke-sharp IconFolderZipStrokeSharp"
+      the-icon="FolderZip StrokeSharp"
     >
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -126,23 +114,23 @@ export const IconFolderZipSolidSharp: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="folder-zip-solid-sharp IconFolderZipSolidSharp"
+      the-icon="FolderZip SolidSharp"
     >
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfFolderZip: TheIconSelfPack = {
-  name: 'FolderZip',
-  StrokeRounded: IconFolderZipStrokeRounded,
-  DuotoneRounded: IconFolderZipDuotoneRounded,
-  TwotoneRounded: IconFolderZipTwotoneRounded,
-  SolidRounded: IconFolderZipSolidRounded,
-  BulkRounded: IconFolderZipBulkRounded,
-  StrokeSharp: IconFolderZipStrokeSharp,
-  SolidSharp: IconFolderZipSolidSharp,
-};
+export const iconPackOfFolderZip: TheIconSelfPack = [
+  'FolderZip',
+  IconFolderZipStrokeRounded,
+  IconFolderZipDuotoneRounded,
+  IconFolderZipTwotoneRounded,
+  IconFolderZipSolidRounded,
+  IconFolderZipBulkRounded,
+  IconFolderZipStrokeSharp,
+  IconFolderZipSolidSharp,
+];

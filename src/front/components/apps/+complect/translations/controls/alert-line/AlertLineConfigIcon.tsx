@@ -1,4 +1,4 @@
-import { theIconKnownPack } from '#shared/ui/the-icon/pack';
+import { takeIconFromKnownPack } from '#shared/ui/the-icon/utils';
 import styled, { css } from 'styled-components';
 import { useScreenTranslationBackgroundStyles } from '../../complect/hooks/background-styles';
 import { AlertLineConfig } from '../../model';
@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function AlertLineConfigIcon({ config, isSelected, onClick }: Props) {
-  const Icon = theIconKnownPack[config.icon].StrokeRounded;
+  const Icon = takeIconFromKnownPack(config.icon);
   const background = useScreenTranslationBackgroundStyles(config);
 
   return (

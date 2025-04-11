@@ -15,12 +15,11 @@ export const IconLabelImportantStrokeRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="label-important-stroke-rounded IconLabelImportantStrokeRounded"
+      the-icon="LabelImportant StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -30,17 +29,15 @@ export const IconLabelImportantDuotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="label-important-duotone-rounded IconLabelImportantDuotoneRounded"
+      the-icon="LabelImportant DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -50,20 +47,15 @@ export const IconLabelImportantTwotoneRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="label-important-twotone-rounded IconLabelImportantTwotoneRounded"
+      the-icon="LabelImportant TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d3}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -73,11 +65,11 @@ export const IconLabelImportantSolidRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="label-important-solid-rounded IconLabelImportantSolidRounded"
+      the-icon="LabelImportant SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -87,12 +79,11 @@ export const IconLabelImportantBulkRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="label-important-bulk-rounded IconLabelImportantBulkRounded"
+      the-icon="LabelImportant BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -102,13 +93,11 @@ export const IconLabelImportantStrokeSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="label-important-stroke-sharp IconLabelImportantStrokeSharp"
+      the-icon="LabelImportant StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -118,23 +107,23 @@ export const IconLabelImportantSolidSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="label-important-solid-sharp IconLabelImportantSolidSharp"
+      the-icon="LabelImportant SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfLabelImportant: TheIconSelfPack = {
-  name: 'LabelImportant',
-  StrokeRounded: IconLabelImportantStrokeRounded,
-  DuotoneRounded: IconLabelImportantDuotoneRounded,
-  TwotoneRounded: IconLabelImportantTwotoneRounded,
-  SolidRounded: IconLabelImportantSolidRounded,
-  BulkRounded: IconLabelImportantBulkRounded,
-  StrokeSharp: IconLabelImportantStrokeSharp,
-  SolidSharp: IconLabelImportantSolidSharp,
-};
+export const iconPackOfLabelImportant: TheIconSelfPack = [
+  'LabelImportant',
+  IconLabelImportantStrokeRounded,
+  IconLabelImportantDuotoneRounded,
+  IconLabelImportantTwotoneRounded,
+  IconLabelImportantSolidRounded,
+  IconLabelImportantBulkRounded,
+  IconLabelImportantStrokeSharp,
+  IconLabelImportantSolidSharp,
+];

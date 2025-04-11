@@ -20,14 +20,11 @@ export const IconBoxingGlove01StrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="boxing-glove-01-stroke-rounded IconBoxingGlove01StrokeRounded"
+      the-icon="BoxingGlove01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -37,19 +34,15 @@ export const IconBoxingGlove01DuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="boxing-glove-01-duotone-rounded IconBoxingGlove01DuotoneRounded"
+      the-icon="BoxingGlove01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -59,22 +52,15 @@ export const IconBoxingGlove01TwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="boxing-glove-01-twotone-rounded IconBoxingGlove01TwotoneRounded"
+      the-icon="BoxingGlove01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d4}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -84,15 +70,15 @@ export const IconBoxingGlove01SolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="boxing-glove-01-solid-rounded IconBoxingGlove01SolidRounded"
+      the-icon="BoxingGlove01 SolidRounded"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -102,16 +88,15 @@ export const IconBoxingGlove01BulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="boxing-glove-01-bulk-rounded IconBoxingGlove01BulkRounded"
+      the-icon="BoxingGlove01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f o7"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -121,18 +106,15 @@ export const IconBoxingGlove01StrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="boxing-glove-01-stroke-sharp IconBoxingGlove01StrokeSharp"
+      the-icon="BoxingGlove01 StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d10} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d10}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -142,25 +124,23 @@ export const IconBoxingGlove01SolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="boxing-glove-01-solid-sharp IconBoxingGlove01SolidSharp"
+      the-icon="BoxingGlove01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBoxingGlove01: TheIconSelfPack = {
-  name: 'BoxingGlove01',
-  StrokeRounded: IconBoxingGlove01StrokeRounded,
-  DuotoneRounded: IconBoxingGlove01DuotoneRounded,
-  TwotoneRounded: IconBoxingGlove01TwotoneRounded,
-  SolidRounded: IconBoxingGlove01SolidRounded,
-  BulkRounded: IconBoxingGlove01BulkRounded,
-  StrokeSharp: IconBoxingGlove01StrokeSharp,
-  SolidSharp: IconBoxingGlove01SolidSharp,
-};
+export const iconPackOfBoxingGlove01: TheIconSelfPack = [
+  'BoxingGlove01',
+  IconBoxingGlove01StrokeRounded,
+  IconBoxingGlove01DuotoneRounded,
+  IconBoxingGlove01TwotoneRounded,
+  IconBoxingGlove01SolidRounded,
+  IconBoxingGlove01BulkRounded,
+  IconBoxingGlove01StrokeSharp,
+  IconBoxingGlove01SolidSharp,
+];

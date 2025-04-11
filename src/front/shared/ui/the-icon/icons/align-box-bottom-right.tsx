@@ -17,21 +17,15 @@ export const IconAlignBoxBottomRightStrokeRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="align-box-bottom-right-stroke-rounded IconAlignBoxBottomRightStrokeRounded"
+      the-icon="AlignBoxBottomRight StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -41,26 +35,19 @@ export const IconAlignBoxBottomRightDuotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="align-box-bottom-right-duotone-rounded IconAlignBoxBottomRightDuotoneRounded"
+      the-icon="AlignBoxBottomRight DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -70,22 +57,15 @@ export const IconAlignBoxBottomRightTwotoneRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="align-box-bottom-right-twotone-rounded IconAlignBoxBottomRightTwotoneRounded"
+      the-icon="AlignBoxBottomRight TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -95,13 +75,11 @@ export const IconAlignBoxBottomRightSolidRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="align-box-bottom-right-solid-rounded IconAlignBoxBottomRightSolidRounded"
+      the-icon="AlignBoxBottomRight SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -111,18 +89,15 @@ export const IconAlignBoxBottomRightBulkRounded: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="align-box-bottom-right-bulk-rounded IconAlignBoxBottomRightBulkRounded"
+      the-icon="AlignBoxBottomRight BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -132,20 +107,15 @@ export const IconAlignBoxBottomRightStrokeSharp: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="align-box-bottom-right-stroke-sharp IconAlignBoxBottomRightStrokeSharp"
+      the-icon="AlignBoxBottomRight StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -155,25 +125,23 @@ export const IconAlignBoxBottomRightSolidSharp: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="align-box-bottom-right-solid-sharp IconAlignBoxBottomRightSolidSharp"
+      the-icon="AlignBoxBottomRight SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfAlignBoxBottomRight: TheIconSelfPack = {
-  name: 'AlignBoxBottomRight',
-  StrokeRounded: IconAlignBoxBottomRightStrokeRounded,
-  DuotoneRounded: IconAlignBoxBottomRightDuotoneRounded,
-  TwotoneRounded: IconAlignBoxBottomRightTwotoneRounded,
-  SolidRounded: IconAlignBoxBottomRightSolidRounded,
-  BulkRounded: IconAlignBoxBottomRightBulkRounded,
-  StrokeSharp: IconAlignBoxBottomRightStrokeSharp,
-  SolidSharp: IconAlignBoxBottomRightSolidSharp,
-};
+export const iconPackOfAlignBoxBottomRight: TheIconSelfPack = [
+  'AlignBoxBottomRight',
+  IconAlignBoxBottomRightStrokeRounded,
+  IconAlignBoxBottomRightDuotoneRounded,
+  IconAlignBoxBottomRightTwotoneRounded,
+  IconAlignBoxBottomRightSolidRounded,
+  IconAlignBoxBottomRightBulkRounded,
+  IconAlignBoxBottomRightStrokeSharp,
+  IconAlignBoxBottomRightSolidSharp,
+];

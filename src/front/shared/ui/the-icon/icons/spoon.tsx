@@ -15,13 +15,11 @@ export const IconSpoonStrokeRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="spoon-stroke-rounded IconSpoonStrokeRounded"
+      the-icon="Spoon StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -31,18 +29,15 @@ export const IconSpoonDuotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="spoon-duotone-rounded IconSpoonDuotoneRounded"
+      the-icon="Spoon DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -52,20 +47,15 @@ export const IconSpoonTwotoneRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="spoon-twotone-rounded IconSpoonTwotoneRounded"
+      the-icon="Spoon TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -75,11 +65,11 @@ export const IconSpoonSolidRounded: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="spoon-solid-rounded IconSpoonSolidRounded"
+      the-icon="Spoon SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -89,16 +79,15 @@ export const IconSpoonBulkRounded: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="spoon-bulk-rounded IconSpoonBulkRounded"
+      the-icon="Spoon BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -108,13 +97,11 @@ export const IconSpoonStrokeSharp: FC<TheIconProps> = (props: TheIconProps): JSX
   return (
     <TheIconWrapper
       {...props}
-      name="spoon-stroke-sharp IconSpoonStrokeSharp"
+      the-icon="Spoon StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d5}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -124,23 +111,23 @@ export const IconSpoonSolidSharp: FC<TheIconProps> = (props: TheIconProps): JSX.
   return (
     <TheIconWrapper
       {...props}
-      name="spoon-solid-sharp IconSpoonSolidSharp"
+      the-icon="Spoon SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSpoon: TheIconSelfPack = {
-  name: 'Spoon',
-  StrokeRounded: IconSpoonStrokeRounded,
-  DuotoneRounded: IconSpoonDuotoneRounded,
-  TwotoneRounded: IconSpoonTwotoneRounded,
-  SolidRounded: IconSpoonSolidRounded,
-  BulkRounded: IconSpoonBulkRounded,
-  StrokeSharp: IconSpoonStrokeSharp,
-  SolidSharp: IconSpoonSolidSharp,
-};
+export const iconPackOfSpoon: TheIconSelfPack = [
+  'Spoon',
+  IconSpoonStrokeRounded,
+  IconSpoonDuotoneRounded,
+  IconSpoonTwotoneRounded,
+  IconSpoonSolidRounded,
+  IconSpoonBulkRounded,
+  IconSpoonStrokeSharp,
+  IconSpoonSolidSharp,
+];

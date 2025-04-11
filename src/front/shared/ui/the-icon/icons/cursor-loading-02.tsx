@@ -17,18 +17,15 @@ export const IconCursorLoading02StrokeRounded: FC<TheIconProps> = (props: TheIco
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-loading-02-stroke-rounded IconCursorLoading02StrokeRounded"
+      the-icon="CursorLoading02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -38,23 +35,19 @@ export const IconCursorLoading02DuotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-loading-02-duotone-rounded IconCursorLoading02DuotoneRounded"
+      the-icon="CursorLoading02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -64,19 +57,15 @@ export const IconCursorLoading02TwotoneRounded: FC<TheIconProps> = (props: TheIc
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-loading-02-twotone-rounded IconCursorLoading02TwotoneRounded"
+      the-icon="CursorLoading02 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -86,15 +75,15 @@ export const IconCursorLoading02SolidRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-loading-02-solid-rounded IconCursorLoading02SolidRounded"
+      the-icon="CursorLoading02 SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -104,16 +93,15 @@ export const IconCursorLoading02BulkRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-loading-02-bulk-rounded IconCursorLoading02BulkRounded"
+      the-icon="CursorLoading02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -123,18 +111,15 @@ export const IconCursorLoading02StrokeSharp: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-loading-02-stroke-sharp IconCursorLoading02StrokeSharp"
+      the-icon="CursorLoading02 StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d5}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -144,27 +129,27 @@ export const IconCursorLoading02SolidSharp: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="cursor-loading-02-solid-sharp IconCursorLoading02SolidSharp"
+      the-icon="CursorLoading02 SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfCursorLoading02: TheIconSelfPack = {
-  name: 'CursorLoading02',
-  StrokeRounded: IconCursorLoading02StrokeRounded,
-  DuotoneRounded: IconCursorLoading02DuotoneRounded,
-  TwotoneRounded: IconCursorLoading02TwotoneRounded,
-  SolidRounded: IconCursorLoading02SolidRounded,
-  BulkRounded: IconCursorLoading02BulkRounded,
-  StrokeSharp: IconCursorLoading02StrokeSharp,
-  SolidSharp: IconCursorLoading02SolidSharp,
-};
+export const iconPackOfCursorLoading02: TheIconSelfPack = [
+  'CursorLoading02',
+  IconCursorLoading02StrokeRounded,
+  IconCursorLoading02DuotoneRounded,
+  IconCursorLoading02TwotoneRounded,
+  IconCursorLoading02SolidRounded,
+  IconCursorLoading02BulkRounded,
+  IconCursorLoading02StrokeSharp,
+  IconCursorLoading02SolidSharp,
+];

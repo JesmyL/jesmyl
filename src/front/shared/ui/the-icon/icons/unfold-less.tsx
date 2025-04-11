@@ -17,21 +17,15 @@ export const IconUnfoldLessStrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="unfold-less-stroke-rounded IconUnfoldLessStrokeRounded"
+      the-icon="UnfoldLess StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -41,21 +35,15 @@ export const IconUnfoldLessDuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="unfold-less-duotone-rounded IconUnfoldLessDuotoneRounded"
+      the-icon="UnfoldLess DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -65,22 +53,15 @@ export const IconUnfoldLessTwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="unfold-less-twotone-rounded IconUnfoldLessTwotoneRounded"
+      the-icon="UnfoldLess TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -90,15 +71,15 @@ export const IconUnfoldLessSolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="unfold-less-solid-rounded IconUnfoldLessSolidRounded"
+      the-icon="UnfoldLess SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -108,16 +89,15 @@ export const IconUnfoldLessBulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="unfold-less-bulk-rounded IconUnfoldLessBulkRounded"
+      the-icon="UnfoldLess BulkRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -127,17 +107,15 @@ export const IconUnfoldLessStrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="unfold-less-stroke-sharp IconUnfoldLessStrokeSharp"
+      the-icon="UnfoldLess StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -147,27 +125,27 @@ export const IconUnfoldLessSolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="unfold-less-solid-sharp IconUnfoldLessSolidSharp"
+      the-icon="UnfoldLess SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfUnfoldLess: TheIconSelfPack = {
-  name: 'UnfoldLess',
-  StrokeRounded: IconUnfoldLessStrokeRounded,
-  DuotoneRounded: IconUnfoldLessDuotoneRounded,
-  TwotoneRounded: IconUnfoldLessTwotoneRounded,
-  SolidRounded: IconUnfoldLessSolidRounded,
-  BulkRounded: IconUnfoldLessBulkRounded,
-  StrokeSharp: IconUnfoldLessStrokeSharp,
-  SolidSharp: IconUnfoldLessSolidSharp,
-};
+export const iconPackOfUnfoldLess: TheIconSelfPack = [
+  'UnfoldLess',
+  IconUnfoldLessStrokeRounded,
+  IconUnfoldLessDuotoneRounded,
+  IconUnfoldLessTwotoneRounded,
+  IconUnfoldLessSolidRounded,
+  IconUnfoldLessBulkRounded,
+  IconUnfoldLessStrokeSharp,
+  IconUnfoldLessSolidSharp,
+];

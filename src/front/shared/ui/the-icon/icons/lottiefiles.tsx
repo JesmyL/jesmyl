@@ -17,18 +17,15 @@ export const IconLottiefilesStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="lottiefiles-stroke-rounded IconLottiefilesStrokeRounded"
+      the-icon="Lottiefiles StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -38,23 +35,19 @@ export const IconLottiefilesDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="lottiefiles-duotone-rounded IconLottiefilesDuotoneRounded"
+      the-icon="Lottiefiles DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -64,19 +57,15 @@ export const IconLottiefilesTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="lottiefiles-twotone-rounded IconLottiefilesTwotoneRounded"
+      the-icon="Lottiefiles TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d2}
+        i-c="o7 s sr sw"
       />
     </TheIconWrapper>
   );
@@ -86,13 +75,11 @@ export const IconLottiefilesSolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="lottiefiles-solid-rounded IconLottiefilesSolidRounded"
+      the-icon="Lottiefiles SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -102,18 +89,15 @@ export const IconLottiefilesBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="lottiefiles-bulk-rounded IconLottiefilesBulkRounded"
+      the-icon="Lottiefiles BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -123,19 +107,15 @@ export const IconLottiefilesStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="lottiefiles-stroke-sharp IconLottiefilesStrokeSharp"
+      the-icon="Lottiefiles StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -145,25 +125,23 @@ export const IconLottiefilesSolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="lottiefiles-solid-sharp IconLottiefilesSolidSharp"
+      the-icon="Lottiefiles SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfLottiefiles: TheIconSelfPack = {
-  name: 'Lottiefiles',
-  StrokeRounded: IconLottiefilesStrokeRounded,
-  DuotoneRounded: IconLottiefilesDuotoneRounded,
-  TwotoneRounded: IconLottiefilesTwotoneRounded,
-  SolidRounded: IconLottiefilesSolidRounded,
-  BulkRounded: IconLottiefilesBulkRounded,
-  StrokeSharp: IconLottiefilesStrokeSharp,
-  SolidSharp: IconLottiefilesSolidSharp,
-};
+export const iconPackOfLottiefiles: TheIconSelfPack = [
+  'Lottiefiles',
+  IconLottiefilesStrokeRounded,
+  IconLottiefilesDuotoneRounded,
+  IconLottiefilesTwotoneRounded,
+  IconLottiefilesSolidRounded,
+  IconLottiefilesBulkRounded,
+  IconLottiefilesStrokeSharp,
+  IconLottiefilesSolidSharp,
+];

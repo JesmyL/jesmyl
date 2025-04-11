@@ -15,20 +15,15 @@ export const IconRamadhan01StrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="ramadhan-01-stroke-rounded IconRamadhan01StrokeRounded"
+      the-icon="Ramadhan01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -38,25 +33,19 @@ export const IconRamadhan01DuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="ramadhan-01-duotone-rounded IconRamadhan01DuotoneRounded"
+      the-icon="Ramadhan01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -66,21 +55,15 @@ export const IconRamadhan01TwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="ramadhan-01-twotone-rounded IconRamadhan01TwotoneRounded"
+      the-icon="Ramadhan01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -90,15 +73,15 @@ export const IconRamadhan01SolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="ramadhan-01-solid-rounded IconRamadhan01SolidRounded"
+      the-icon="Ramadhan01 SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -108,16 +91,15 @@ export const IconRamadhan01BulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="ramadhan-01-bulk-rounded IconRamadhan01BulkRounded"
+      the-icon="Ramadhan01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f o7"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -127,18 +109,15 @@ export const IconRamadhan01StrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="ramadhan-01-stroke-sharp IconRamadhan01StrokeSharp"
+      the-icon="Ramadhan01 StrokeSharp"
     >
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -148,27 +127,27 @@ export const IconRamadhan01SolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="ramadhan-01-solid-sharp IconRamadhan01SolidSharp"
+      the-icon="Ramadhan01 SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfRamadhan01: TheIconSelfPack = {
-  name: 'Ramadhan01',
-  StrokeRounded: IconRamadhan01StrokeRounded,
-  DuotoneRounded: IconRamadhan01DuotoneRounded,
-  TwotoneRounded: IconRamadhan01TwotoneRounded,
-  SolidRounded: IconRamadhan01SolidRounded,
-  BulkRounded: IconRamadhan01BulkRounded,
-  StrokeSharp: IconRamadhan01StrokeSharp,
-  SolidSharp: IconRamadhan01SolidSharp,
-};
+export const iconPackOfRamadhan01: TheIconSelfPack = [
+  'Ramadhan01',
+  IconRamadhan01StrokeRounded,
+  IconRamadhan01DuotoneRounded,
+  IconRamadhan01TwotoneRounded,
+  IconRamadhan01SolidRounded,
+  IconRamadhan01BulkRounded,
+  IconRamadhan01StrokeSharp,
+  IconRamadhan01SolidSharp,
+];

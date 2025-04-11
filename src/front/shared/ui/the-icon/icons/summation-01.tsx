@@ -16,14 +16,11 @@ export const IconSummation01StrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="summation-01-stroke-rounded IconSummation01StrokeRounded"
+      the-icon="Summation01 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -33,15 +30,11 @@ export const IconSummation01DuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="summation-01-duotone-rounded IconSummation01DuotoneRounded"
+      the-icon="Summation01 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -51,22 +44,15 @@ export const IconSummation01TwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="summation-01-twotone-rounded IconSummation01TwotoneRounded"
+      the-icon="Summation01 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -76,11 +62,11 @@ export const IconSummation01SolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="summation-01-solid-rounded IconSummation01SolidRounded"
+      the-icon="Summation01 SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -90,16 +76,15 @@ export const IconSummation01BulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="summation-01-bulk-rounded IconSummation01BulkRounded"
+      the-icon="Summation01 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -109,12 +94,11 @@ export const IconSummation01StrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="summation-01-stroke-sharp IconSummation01StrokeSharp"
+      the-icon="Summation01 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -124,25 +108,23 @@ export const IconSummation01SolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="summation-01-solid-sharp IconSummation01SolidSharp"
+      the-icon="Summation01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSummation01: TheIconSelfPack = {
-  name: 'Summation01',
-  StrokeRounded: IconSummation01StrokeRounded,
-  DuotoneRounded: IconSummation01DuotoneRounded,
-  TwotoneRounded: IconSummation01TwotoneRounded,
-  SolidRounded: IconSummation01SolidRounded,
-  BulkRounded: IconSummation01BulkRounded,
-  StrokeSharp: IconSummation01StrokeSharp,
-  SolidSharp: IconSummation01SolidSharp,
-};
+export const iconPackOfSummation01: TheIconSelfPack = [
+  'Summation01',
+  IconSummation01StrokeRounded,
+  IconSummation01DuotoneRounded,
+  IconSummation01TwotoneRounded,
+  IconSummation01SolidRounded,
+  IconSummation01BulkRounded,
+  IconSummation01StrokeSharp,
+  IconSummation01SolidSharp,
+];

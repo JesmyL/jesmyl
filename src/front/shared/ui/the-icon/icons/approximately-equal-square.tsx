@@ -16,20 +16,15 @@ export const IconApproximatelyEqualSquareStrokeRounded: FC<TheIconProps> = (prop
   return (
     <TheIconWrapper
       {...props}
-      name="approximately-equal-square-stroke-rounded IconApproximatelyEqualSquareStrokeRounded"
+      the-icon="ApproximatelyEqualSquare StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -39,25 +34,19 @@ export const IconApproximatelyEqualSquareDuotoneRounded: FC<TheIconProps> = (pro
   return (
     <TheIconWrapper
       {...props}
-      name="approximately-equal-square-duotone-rounded IconApproximatelyEqualSquareDuotoneRounded"
+      the-icon="ApproximatelyEqualSquare DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -67,21 +56,15 @@ export const IconApproximatelyEqualSquareTwotoneRounded: FC<TheIconProps> = (pro
   return (
     <TheIconWrapper
       {...props}
-      name="approximately-equal-square-twotone-rounded IconApproximatelyEqualSquareTwotoneRounded"
+      the-icon="ApproximatelyEqualSquare TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -91,13 +74,11 @@ export const IconApproximatelyEqualSquareSolidRounded: FC<TheIconProps> = (props
   return (
     <TheIconWrapper
       {...props}
-      name="approximately-equal-square-solid-rounded IconApproximatelyEqualSquareSolidRounded"
+      the-icon="ApproximatelyEqualSquare SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -107,18 +88,15 @@ export const IconApproximatelyEqualSquareBulkRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="approximately-equal-square-bulk-rounded IconApproximatelyEqualSquareBulkRounded"
+      the-icon="ApproximatelyEqualSquare BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -128,19 +106,15 @@ export const IconApproximatelyEqualSquareStrokeSharp: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="approximately-equal-square-stroke-sharp IconApproximatelyEqualSquareStrokeSharp"
+      the-icon="ApproximatelyEqualSquare StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -150,25 +124,23 @@ export const IconApproximatelyEqualSquareSolidSharp: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="approximately-equal-square-solid-sharp IconApproximatelyEqualSquareSolidSharp"
+      the-icon="ApproximatelyEqualSquare SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfApproximatelyEqualSquare: TheIconSelfPack = {
-  name: 'ApproximatelyEqualSquare',
-  StrokeRounded: IconApproximatelyEqualSquareStrokeRounded,
-  DuotoneRounded: IconApproximatelyEqualSquareDuotoneRounded,
-  TwotoneRounded: IconApproximatelyEqualSquareTwotoneRounded,
-  SolidRounded: IconApproximatelyEqualSquareSolidRounded,
-  BulkRounded: IconApproximatelyEqualSquareBulkRounded,
-  StrokeSharp: IconApproximatelyEqualSquareStrokeSharp,
-  SolidSharp: IconApproximatelyEqualSquareSolidSharp,
-};
+export const iconPackOfApproximatelyEqualSquare: TheIconSelfPack = [
+  'ApproximatelyEqualSquare',
+  IconApproximatelyEqualSquareStrokeRounded,
+  IconApproximatelyEqualSquareDuotoneRounded,
+  IconApproximatelyEqualSquareTwotoneRounded,
+  IconApproximatelyEqualSquareSolidRounded,
+  IconApproximatelyEqualSquareBulkRounded,
+  IconApproximatelyEqualSquareStrokeSharp,
+  IconApproximatelyEqualSquareSolidSharp,
+];

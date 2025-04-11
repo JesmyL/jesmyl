@@ -16,20 +16,18 @@ export const IconTropicalStormStrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="tropical-storm-stroke-rounded IconTropicalStormStrokeRounded"
+      the-icon="TropicalStorm StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="3"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -38,27 +36,22 @@ export const IconTropicalStormDuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="tropical-storm-duotone-rounded IconTropicalStormDuotoneRounded"
+      the-icon="TropicalStorm DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="c f fr o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <circle 
-        cx="12" 
-        cy="12" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="3"
+        i-c="s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -67,21 +60,18 @@ export const IconTropicalStormTwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="tropical-storm-twotone-rounded IconTropicalStormTwotoneRounded"
+      the-icon="TropicalStorm TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="12" 
-        r="3" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></circle>
+        cx="12"
+        cy="12"
+        r="3"
+        i-c="o7 s sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -90,13 +80,11 @@ export const IconTropicalStormSolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="tropical-storm-solid-rounded IconTropicalStormSolidRounded"
+      the-icon="TropicalStorm SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -106,16 +94,15 @@ export const IconTropicalStormBulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="tropical-storm-bulk-rounded IconTropicalStormBulkRounded"
+      the-icon="TropicalStorm BulkRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -125,17 +112,15 @@ export const IconTropicalStormStrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="tropical-storm-stroke-sharp IconTropicalStormStrokeSharp"
+      the-icon="TropicalStorm StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -145,25 +130,23 @@ export const IconTropicalStormSolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="tropical-storm-solid-sharp IconTropicalStormSolidSharp"
+      the-icon="TropicalStorm SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTropicalStorm: TheIconSelfPack = {
-  name: 'TropicalStorm',
-  StrokeRounded: IconTropicalStormStrokeRounded,
-  DuotoneRounded: IconTropicalStormDuotoneRounded,
-  TwotoneRounded: IconTropicalStormTwotoneRounded,
-  SolidRounded: IconTropicalStormSolidRounded,
-  BulkRounded: IconTropicalStormBulkRounded,
-  StrokeSharp: IconTropicalStormStrokeSharp,
-  SolidSharp: IconTropicalStormSolidSharp,
-};
+export const iconPackOfTropicalStorm: TheIconSelfPack = [
+  'TropicalStorm',
+  IconTropicalStormStrokeRounded,
+  IconTropicalStormDuotoneRounded,
+  IconTropicalStormTwotoneRounded,
+  IconTropicalStormSolidRounded,
+  IconTropicalStormBulkRounded,
+  IconTropicalStormStrokeSharp,
+  IconTropicalStormSolidSharp,
+];

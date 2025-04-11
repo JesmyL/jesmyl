@@ -21,32 +21,26 @@ export const IconMoreHorizontalSquare01StrokeRounded: FC<TheIconProps> = (props:
   return (
     <TheIconWrapper
       {...props}
-      name="more-horizontal-square-01-stroke-rounded IconMoreHorizontalSquare01StrokeRounded"
+      the-icon="MoreHorizontalSquare01 StrokeRounded"
     >
       <rect 
-        x="18" 
-        y="10.5" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="18"
+        y="10.5"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="10.5" 
-        y="10.5" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="10.5"
+        y="10.5"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="3" 
-        y="10.5" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="3"
+        y="10.5"
+        rx="1"
+        i-c="h7 s sw w"
+      />
     </TheIconWrapper>
   );
 };
@@ -55,47 +49,40 @@ export const IconMoreHorizontalSquare01DuotoneRounded: FC<TheIconProps> = (props
   return (
     <TheIconWrapper
       {...props}
-      name="more-horizontal-square-01-duotone-rounded IconMoreHorizontalSquare01DuotoneRounded"
+      the-icon="MoreHorizontalSquare01 DuotoneRounded"
     >
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f"
       />
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       </g>
       <rect 
-        x="18" 
-        y="10.5" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="18"
+        y="10.5"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="10.5" 
-        y="10.5" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="10.5"
+        y="10.5"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="3" 
-        y="10.5" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="3"
+        y="10.5"
+        rx="1"
+        i-c="h7 s sw w"
+      />
     </TheIconWrapper>
   );
 };
@@ -104,33 +91,26 @@ export const IconMoreHorizontalSquare01TwotoneRounded: FC<TheIconProps> = (props
   return (
     <TheIconWrapper
       {...props}
-      name="more-horizontal-square-01-twotone-rounded IconMoreHorizontalSquare01TwotoneRounded"
+      the-icon="MoreHorizontalSquare01 TwotoneRounded"
     >
       <rect 
-        x="18" 
-        y="10.5" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="18"
+        y="10.5"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        opacity="var(--icon-opacity)" 
-        x="10.5" 
-        y="10.5" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="10.5"
+        y="10.5"
+        rx="1"
+        i-c="h7 o7 s sw w"
+      />
       <rect 
-        x="3" 
-        y="10.5" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="3"
+        y="10.5"
+        rx="1"
+        i-c="h7 s sw w"
+      />
     </TheIconWrapper>
   );
 };
@@ -139,25 +119,19 @@ export const IconMoreHorizontalSquare01SolidRounded: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="more-horizontal-square-01-solid-rounded IconMoreHorizontalSquare01SolidRounded"
+      the-icon="MoreHorizontalSquare01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -167,26 +141,19 @@ export const IconMoreHorizontalSquare01BulkRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="more-horizontal-square-01-bulk-rounded IconMoreHorizontalSquare01BulkRounded"
+      the-icon="MoreHorizontalSquare01 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -196,22 +163,19 @@ export const IconMoreHorizontalSquare01StrokeSharp: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="more-horizontal-square-01-stroke-sharp IconMoreHorizontalSquare01StrokeSharp"
+      the-icon="MoreHorizontalSquare01 StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -221,37 +185,31 @@ export const IconMoreHorizontalSquare01SolidSharp: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="more-horizontal-square-01-solid-sharp IconMoreHorizontalSquare01SolidSharp"
+      the-icon="MoreHorizontalSquare01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMoreHorizontalSquare01: TheIconSelfPack = {
-  name: 'MoreHorizontalSquare01',
-  StrokeRounded: IconMoreHorizontalSquare01StrokeRounded,
-  DuotoneRounded: IconMoreHorizontalSquare01DuotoneRounded,
-  TwotoneRounded: IconMoreHorizontalSquare01TwotoneRounded,
-  SolidRounded: IconMoreHorizontalSquare01SolidRounded,
-  BulkRounded: IconMoreHorizontalSquare01BulkRounded,
-  StrokeSharp: IconMoreHorizontalSquare01StrokeSharp,
-  SolidSharp: IconMoreHorizontalSquare01SolidSharp,
-};
+export const iconPackOfMoreHorizontalSquare01: TheIconSelfPack = [
+  'MoreHorizontalSquare01',
+  IconMoreHorizontalSquare01StrokeRounded,
+  IconMoreHorizontalSquare01DuotoneRounded,
+  IconMoreHorizontalSquare01TwotoneRounded,
+  IconMoreHorizontalSquare01SolidRounded,
+  IconMoreHorizontalSquare01BulkRounded,
+  IconMoreHorizontalSquare01StrokeSharp,
+  IconMoreHorizontalSquare01SolidSharp,
+];

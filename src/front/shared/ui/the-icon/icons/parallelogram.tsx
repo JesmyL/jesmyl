@@ -17,13 +17,11 @@ export const IconParallelogramStrokeRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="parallelogram-stroke-rounded IconParallelogramStrokeRounded"
+      the-icon="Parallelogram StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -33,18 +31,15 @@ export const IconParallelogramDuotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="parallelogram-duotone-rounded IconParallelogramDuotoneRounded"
+      the-icon="Parallelogram DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -54,21 +49,15 @@ export const IconParallelogramTwotoneRounded: FC<TheIconProps> = (props: TheIcon
   return (
     <TheIconWrapper
       {...props}
-      name="parallelogram-twotone-rounded IconParallelogramTwotoneRounded"
+      the-icon="Parallelogram TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -78,11 +67,11 @@ export const IconParallelogramSolidRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="parallelogram-solid-rounded IconParallelogramSolidRounded"
+      the-icon="Parallelogram SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -92,16 +81,15 @@ export const IconParallelogramBulkRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="parallelogram-bulk-rounded IconParallelogramBulkRounded"
+      the-icon="Parallelogram BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -111,13 +99,11 @@ export const IconParallelogramStrokeSharp: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="parallelogram-stroke-sharp IconParallelogramStrokeSharp"
+      the-icon="Parallelogram StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d7}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -127,23 +113,23 @@ export const IconParallelogramSolidSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="parallelogram-solid-sharp IconParallelogramSolidSharp"
+      the-icon="Parallelogram SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfParallelogram: TheIconSelfPack = {
-  name: 'Parallelogram',
-  StrokeRounded: IconParallelogramStrokeRounded,
-  DuotoneRounded: IconParallelogramDuotoneRounded,
-  TwotoneRounded: IconParallelogramTwotoneRounded,
-  SolidRounded: IconParallelogramSolidRounded,
-  BulkRounded: IconParallelogramBulkRounded,
-  StrokeSharp: IconParallelogramStrokeSharp,
-  SolidSharp: IconParallelogramSolidSharp,
-};
+export const iconPackOfParallelogram: TheIconSelfPack = [
+  'Parallelogram',
+  IconParallelogramStrokeRounded,
+  IconParallelogramDuotoneRounded,
+  IconParallelogramTwotoneRounded,
+  IconParallelogramSolidRounded,
+  IconParallelogramBulkRounded,
+  IconParallelogramStrokeSharp,
+  IconParallelogramSolidSharp,
+];

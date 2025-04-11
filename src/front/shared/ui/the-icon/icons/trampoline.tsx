@@ -16,37 +16,27 @@ export const IconTrampolineStrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="trampoline-stroke-rounded IconTrampolineStrokeRounded"
+      the-icon="Trampoline StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <ellipse 
-        cx="12" 
-        cy="10" 
-        rx="10" 
-        ry="6" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></ellipse>
+        cx="12"
+        cy="10"
+        rx="10"
+        ry="6"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -55,44 +45,34 @@ export const IconTrampolineDuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="trampoline-duotone-rounded IconTrampolineDuotoneRounded"
+      the-icon="Trampoline DuotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
       <ellipse 
-        opacity="var(--icon-opacity)" 
-        cx="12" 
-        cy="10" 
-        rx="10" 
-        ry="6" 
-        fill="var(--icon-fill)"></ellipse>
+        cx="12"
+        cy="10"
+        rx="10"
+        ry="6"
+        i-c="f o7"
+      />
       <ellipse 
-        cx="12" 
-        cy="10" 
-        rx="10" 
-        ry="6" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></ellipse>
+        cx="12"
+        cy="10"
+        rx="10"
+        ry="6"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -101,40 +81,27 @@ export const IconTrampolineTwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="trampoline-twotone-rounded IconTrampolineTwotoneRounded"
+      the-icon="Trampoline TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="o7 s sj sr sw"
       />
       <ellipse 
-        cx="12" 
-        cy="10" 
-        rx="10" 
-        ry="6" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></ellipse>
+        cx="12"
+        cy="10"
+        rx="10"
+        ry="6"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -143,13 +110,11 @@ export const IconTrampolineSolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="trampoline-solid-rounded IconTrampolineSolidRounded"
+      the-icon="Trampoline SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -159,18 +124,15 @@ export const IconTrampolineBulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="trampoline-bulk-rounded IconTrampolineBulkRounded"
+      the-icon="Trampoline BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -180,34 +142,27 @@ export const IconTrampolineStrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="trampoline-stroke-sharp IconTrampolineStrokeSharp"
+      the-icon="Trampoline StrokeSharp"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sw"
       />
       <ellipse 
-        cx="12" 
-        cy="10" 
-        rx="10" 
-        ry="6" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></ellipse>
+        cx="12"
+        cy="10"
+        rx="10"
+        ry="6"
+        i-c="s sj sw"
+      />
     </TheIconWrapper>
   );
 };
@@ -216,23 +171,23 @@ export const IconTrampolineSolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="trampoline-solid-sharp IconTrampolineSolidSharp"
+      the-icon="Trampoline SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfTrampoline: TheIconSelfPack = {
-  name: 'Trampoline',
-  StrokeRounded: IconTrampolineStrokeRounded,
-  DuotoneRounded: IconTrampolineDuotoneRounded,
-  TwotoneRounded: IconTrampolineTwotoneRounded,
-  SolidRounded: IconTrampolineSolidRounded,
-  BulkRounded: IconTrampolineBulkRounded,
-  StrokeSharp: IconTrampolineStrokeSharp,
-  SolidSharp: IconTrampolineSolidSharp,
-};
+export const iconPackOfTrampoline: TheIconSelfPack = [
+  'Trampoline',
+  IconTrampolineStrokeRounded,
+  IconTrampolineDuotoneRounded,
+  IconTrampolineTwotoneRounded,
+  IconTrampolineSolidRounded,
+  IconTrampolineBulkRounded,
+  IconTrampolineStrokeSharp,
+  IconTrampolineSolidSharp,
+];

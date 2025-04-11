@@ -15,14 +15,11 @@ export const IconWebflowStrokeRounded: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="webflow-stroke-rounded IconWebflowStrokeRounded"
+      the-icon="Webflow StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -32,19 +29,15 @@ export const IconWebflowDuotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="webflow-duotone-rounded IconWebflowDuotoneRounded"
+      the-icon="Webflow DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -54,22 +47,15 @@ export const IconWebflowTwotoneRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="webflow-twotone-rounded IconWebflowTwotoneRounded"
+      the-icon="Webflow TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -79,11 +65,11 @@ export const IconWebflowSolidRounded: FC<TheIconProps> = (props: TheIconProps): 
   return (
     <TheIconWrapper
       {...props}
-      name="webflow-solid-rounded IconWebflowSolidRounded"
+      the-icon="Webflow SolidRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -93,12 +79,11 @@ export const IconWebflowBulkRounded: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="webflow-bulk-rounded IconWebflowBulkRounded"
+      the-icon="Webflow BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -108,13 +93,11 @@ export const IconWebflowStrokeSharp: FC<TheIconProps> = (props: TheIconProps): J
   return (
     <TheIconWrapper
       {...props}
-      name="webflow-stroke-sharp IconWebflowStrokeSharp"
+      the-icon="Webflow StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        d={d.d5}
+        i-c="s sr sw"
       />
     </TheIconWrapper>
   );
@@ -124,23 +107,23 @@ export const IconWebflowSolidSharp: FC<TheIconProps> = (props: TheIconProps): JS
   return (
     <TheIconWrapper
       {...props}
-      name="webflow-solid-sharp IconWebflowSolidSharp"
+      the-icon="Webflow SolidSharp"
     >
       <path 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfWebflow: TheIconSelfPack = {
-  name: 'Webflow',
-  StrokeRounded: IconWebflowStrokeRounded,
-  DuotoneRounded: IconWebflowDuotoneRounded,
-  TwotoneRounded: IconWebflowTwotoneRounded,
-  SolidRounded: IconWebflowSolidRounded,
-  BulkRounded: IconWebflowBulkRounded,
-  StrokeSharp: IconWebflowStrokeSharp,
-  SolidSharp: IconWebflowSolidSharp,
-};
+export const iconPackOfWebflow: TheIconSelfPack = [
+  'Webflow',
+  IconWebflowStrokeRounded,
+  IconWebflowDuotoneRounded,
+  IconWebflowTwotoneRounded,
+  IconWebflowSolidRounded,
+  IconWebflowBulkRounded,
+  IconWebflowStrokeSharp,
+  IconWebflowSolidSharp,
+];

@@ -18,19 +18,15 @@ export const IconPaintBrush04StrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="paint-brush-04-stroke-rounded IconPaintBrush04StrokeRounded"
+      the-icon="PaintBrush04 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -40,24 +36,19 @@ export const IconPaintBrush04DuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="paint-brush-04-duotone-rounded IconPaintBrush04DuotoneRounded"
+      the-icon="PaintBrush04 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -67,20 +58,15 @@ export const IconPaintBrush04TwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="paint-brush-04-twotone-rounded IconPaintBrush04TwotoneRounded"
+      the-icon="PaintBrush04 TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d2}
+        i-c="o7 s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -90,13 +76,11 @@ export const IconPaintBrush04SolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="paint-brush-04-solid-rounded IconPaintBrush04SolidRounded"
+      the-icon="PaintBrush04 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -106,16 +90,15 @@ export const IconPaintBrush04BulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="paint-brush-04-bulk-rounded IconPaintBrush04BulkRounded"
+      the-icon="PaintBrush04 BulkRounded"
     >
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -125,18 +108,15 @@ export const IconPaintBrush04StrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="paint-brush-04-stroke-sharp IconPaintBrush04StrokeSharp"
+      the-icon="PaintBrush04 StrokeSharp"
     >
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d6}
+        i-c="s sj sw"
       />
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -146,27 +126,27 @@ export const IconPaintBrush04SolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="paint-brush-04-solid-sharp IconPaintBrush04SolidSharp"
+      the-icon="PaintBrush04 SolidSharp"
     >
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
       <path 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfPaintBrush04: TheIconSelfPack = {
-  name: 'PaintBrush04',
-  StrokeRounded: IconPaintBrush04StrokeRounded,
-  DuotoneRounded: IconPaintBrush04DuotoneRounded,
-  TwotoneRounded: IconPaintBrush04TwotoneRounded,
-  SolidRounded: IconPaintBrush04SolidRounded,
-  BulkRounded: IconPaintBrush04BulkRounded,
-  StrokeSharp: IconPaintBrush04StrokeSharp,
-  SolidSharp: IconPaintBrush04SolidSharp,
-};
+export const iconPackOfPaintBrush04: TheIconSelfPack = [
+  'PaintBrush04',
+  IconPaintBrush04StrokeRounded,
+  IconPaintBrush04DuotoneRounded,
+  IconPaintBrush04TwotoneRounded,
+  IconPaintBrush04SolidRounded,
+  IconPaintBrush04BulkRounded,
+  IconPaintBrush04StrokeSharp,
+  IconPaintBrush04SolidSharp,
+];

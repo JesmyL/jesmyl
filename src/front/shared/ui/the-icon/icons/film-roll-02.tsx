@@ -18,27 +18,21 @@ export const IconFilmRoll02StrokeRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="film-roll-02-stroke-rounded IconFilmRoll02StrokeRounded"
+      the-icon="FilmRoll02 StrokeRounded"
     >
       <circle 
-        cx="10.5" 
-        cy="10.5" 
-        r="8.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        cx="10.5"
+        cy="10.5"
+        r="8.5"
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -48,33 +42,27 @@ export const IconFilmRoll02DuotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="film-roll-02-duotone-rounded IconFilmRoll02DuotoneRounded"
+      the-icon="FilmRoll02 DuotoneRounded"
     >
       <circle 
-        opacity="var(--icon-opacity)" 
-        cx="10.5" 
-        cy="10.5" 
-        r="8.5" 
-        fill="var(--icon-fill)"></circle>
+        cx="10.5"
+        cy="10.5"
+        r="8.5"
+        i-c="f o7"
+      />
       <circle 
-        cx="10.5" 
-        cy="10.5" 
-        r="8.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        cx="10.5"
+        cy="10.5"
+        r="8.5"
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -84,28 +72,21 @@ export const IconFilmRoll02TwotoneRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="film-roll-02-twotone-rounded IconFilmRoll02TwotoneRounded"
+      the-icon="FilmRoll02 TwotoneRounded"
     >
       <circle 
-        cx="10.5" 
-        cy="10.5" 
-        r="8.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
-      <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
+        cx="10.5"
+        cy="10.5"
+        r="8.5"
+        i-c="s sj sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sr sw"
+      />
+      <path 
+        d={d.d2}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -115,19 +96,15 @@ export const IconFilmRoll02SolidRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="film-roll-02-solid-rounded IconFilmRoll02SolidRounded"
+      the-icon="FilmRoll02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -137,24 +114,19 @@ export const IconFilmRoll02BulkRounded: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="film-roll-02-bulk-rounded IconFilmRoll02BulkRounded"
+      the-icon="FilmRoll02 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="f o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -164,27 +136,21 @@ export const IconFilmRoll02StrokeSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="film-roll-02-stroke-sharp IconFilmRoll02StrokeSharp"
+      the-icon="FilmRoll02 StrokeSharp"
     >
       <circle 
-        cx="10.5" 
-        cy="10.5" 
-        r="8.5" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round"></circle>
-      <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="square" 
-        strokeLinejoin="round" 
+        cx="10.5"
+        cy="10.5"
+        r="8.5"
+        i-c="s sj sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj ss sw"
+      />
+      <path 
+        d={d.d8}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -194,25 +160,23 @@ export const IconFilmRoll02SolidSharp: FC<TheIconProps> = (props: TheIconProps):
   return (
     <TheIconWrapper
       {...props}
-      name="film-roll-02-solid-sharp IconFilmRoll02SolidSharp"
+      the-icon="FilmRoll02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d9} 
-        fill="var(--icon-fill)" 
+        d={d.d9}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfFilmRoll02: TheIconSelfPack = {
-  name: 'FilmRoll02',
-  StrokeRounded: IconFilmRoll02StrokeRounded,
-  DuotoneRounded: IconFilmRoll02DuotoneRounded,
-  TwotoneRounded: IconFilmRoll02TwotoneRounded,
-  SolidRounded: IconFilmRoll02SolidRounded,
-  BulkRounded: IconFilmRoll02BulkRounded,
-  StrokeSharp: IconFilmRoll02StrokeSharp,
-  SolidSharp: IconFilmRoll02SolidSharp,
-};
+export const iconPackOfFilmRoll02: TheIconSelfPack = [
+  'FilmRoll02',
+  IconFilmRoll02StrokeRounded,
+  IconFilmRoll02DuotoneRounded,
+  IconFilmRoll02TwotoneRounded,
+  IconFilmRoll02SolidRounded,
+  IconFilmRoll02BulkRounded,
+  IconFilmRoll02StrokeSharp,
+  IconFilmRoll02SolidSharp,
+];

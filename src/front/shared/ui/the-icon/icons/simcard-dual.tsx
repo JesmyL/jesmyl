@@ -17,17 +17,15 @@ export const IconSimcardDualStrokeRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="simcard-dual-stroke-rounded IconSimcardDualStrokeRounded"
+      the-icon="SimcardDual StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -37,22 +35,19 @@ export const IconSimcardDualDuotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="simcard-dual-duotone-rounded IconSimcardDualDuotoneRounded"
+      the-icon="SimcardDual DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -62,18 +57,15 @@ export const IconSimcardDualTwotoneRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="simcard-dual-twotone-rounded IconSimcardDualTwotoneRounded"
+      the-icon="SimcardDual TwotoneRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d1}
+        i-c="s sw"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d2}
+        i-c="o7 s sw"
       />
     </TheIconWrapper>
   );
@@ -83,15 +75,15 @@ export const IconSimcardDualSolidRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="simcard-dual-solid-rounded IconSimcardDualSolidRounded"
+      the-icon="SimcardDual SolidRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -101,16 +93,15 @@ export const IconSimcardDualBulkRounded: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="simcard-dual-bulk-rounded IconSimcardDualBulkRounded"
+      the-icon="SimcardDual BulkRounded"
     >
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="f o7"
       />
     </TheIconWrapper>
   );
@@ -120,17 +111,15 @@ export const IconSimcardDualStrokeSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="simcard-dual-stroke-sharp IconSimcardDualStrokeSharp"
+      the-icon="SimcardDual StrokeSharp"
     >
       <path 
-        d={d.d5} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d5}
+        i-c="s sw"
       />
       <path 
-        d={d.d6} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d6}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -140,27 +129,27 @@ export const IconSimcardDualSolidSharp: FC<TheIconProps> = (props: TheIconProps)
   return (
     <TheIconWrapper
       {...props}
-      name="simcard-dual-solid-sharp IconSimcardDualSolidSharp"
+      the-icon="SimcardDual SolidSharp"
     >
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfSimcardDual: TheIconSelfPack = {
-  name: 'SimcardDual',
-  StrokeRounded: IconSimcardDualStrokeRounded,
-  DuotoneRounded: IconSimcardDualDuotoneRounded,
-  TwotoneRounded: IconSimcardDualTwotoneRounded,
-  SolidRounded: IconSimcardDualSolidRounded,
-  BulkRounded: IconSimcardDualBulkRounded,
-  StrokeSharp: IconSimcardDualStrokeSharp,
-  SolidSharp: IconSimcardDualSolidSharp,
-};
+export const iconPackOfSimcardDual: TheIconSelfPack = [
+  'SimcardDual',
+  IconSimcardDualStrokeRounded,
+  IconSimcardDualDuotoneRounded,
+  IconSimcardDualTwotoneRounded,
+  IconSimcardDualSolidRounded,
+  IconSimcardDualBulkRounded,
+  IconSimcardDualStrokeSharp,
+  IconSimcardDualSolidSharp,
+];

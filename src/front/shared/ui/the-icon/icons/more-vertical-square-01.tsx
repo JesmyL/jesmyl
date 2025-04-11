@@ -21,32 +21,26 @@ export const IconMoreVerticalSquare01StrokeRounded: FC<TheIconProps> = (props: T
   return (
     <TheIconWrapper
       {...props}
-      name="more-vertical-square-01-stroke-rounded IconMoreVerticalSquare01StrokeRounded"
+      the-icon="MoreVerticalSquare01 StrokeRounded"
     >
       <rect 
-        x="10.5" 
-        y="3" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="10.5"
+        y="3"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="10.5" 
-        y="10.5" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="10.5"
+        y="10.5"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="10.5" 
-        y="18" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="10.5"
+        y="18"
+        rx="1"
+        i-c="h7 s sw w"
+      />
     </TheIconWrapper>
   );
 };
@@ -55,47 +49,40 @@ export const IconMoreVerticalSquare01DuotoneRounded: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="more-vertical-square-01-duotone-rounded IconMoreVerticalSquare01DuotoneRounded"
+      the-icon="MoreVerticalSquare01 DuotoneRounded"
     >
-      <g 
-        opacity="var(--icon-opacity)">
+      <g    i-c="o7">
       <path 
-        d={d.d1} 
-        fill="var(--icon-fill)" 
+        d={d.d1}
+        i-c="f"
       />
       <path 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f"
       />
       <path 
-        d={d.d3} 
-        fill="var(--icon-fill)" 
+        d={d.d3}
+        i-c="f"
       />
       </g>
       <rect 
-        x="10.5" 
-        y="3" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="10.5"
+        y="3"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="10.5" 
-        y="10.5" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="10.5"
+        y="10.5"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        x="10.5" 
-        y="18" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="10.5"
+        y="18"
+        rx="1"
+        i-c="h7 s sw w"
+      />
     </TheIconWrapper>
   );
 };
@@ -104,33 +91,26 @@ export const IconMoreVerticalSquare01TwotoneRounded: FC<TheIconProps> = (props: 
   return (
     <TheIconWrapper
       {...props}
-      name="more-vertical-square-01-twotone-rounded IconMoreVerticalSquare01TwotoneRounded"
+      the-icon="MoreVerticalSquare01 TwotoneRounded"
     >
       <rect 
-        x="10.5" 
-        y="3" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="10.5"
+        y="3"
+        rx="1"
+        i-c="h7 s sw w"
+      />
       <rect 
-        opacity="var(--icon-opacity)" 
-        x="10.5" 
-        y="10.5" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="10.5"
+        y="10.5"
+        rx="1"
+        i-c="h7 o7 s sw w"
+      />
       <rect 
-        x="10.5" 
-        y="18" 
-        width="3" 
-        height="3" 
-        rx="1" 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)"></rect>
+        x="10.5"
+        y="18"
+        rx="1"
+        i-c="h7 s sw w"
+      />
     </TheIconWrapper>
   );
 };
@@ -139,25 +119,19 @@ export const IconMoreVerticalSquare01SolidRounded: FC<TheIconProps> = (props: Th
   return (
     <TheIconWrapper
       {...props}
-      name="more-vertical-square-01-solid-rounded IconMoreVerticalSquare01SolidRounded"
+      the-icon="MoreVerticalSquare01 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -167,26 +141,19 @@ export const IconMoreVerticalSquare01BulkRounded: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="more-vertical-square-01-bulk-rounded IconMoreVerticalSquare01BulkRounded"
+      the-icon="MoreVerticalSquare01 BulkRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -196,22 +163,19 @@ export const IconMoreVerticalSquare01StrokeSharp: FC<TheIconProps> = (props: The
   return (
     <TheIconWrapper
       {...props}
-      name="more-vertical-square-01-stroke-sharp IconMoreVerticalSquare01StrokeSharp"
+      the-icon="MoreVerticalSquare01 StrokeSharp"
     >
       <path 
-        d={d.d7} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d7}
+        i-c="s sw"
       />
       <path 
-        d={d.d8} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d8}
+        i-c="s sw"
       />
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
+        d={d.d9}
+        i-c="s sw"
       />
     </TheIconWrapper>
   );
@@ -221,37 +185,31 @@ export const IconMoreVerticalSquare01SolidSharp: FC<TheIconProps> = (props: TheI
   return (
     <TheIconWrapper
       {...props}
-      name="more-vertical-square-01-solid-sharp IconMoreVerticalSquare01SolidSharp"
+      the-icon="MoreVerticalSquare01 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d11} 
-        fill="var(--icon-fill)" 
+        d={d.d11}
+        i-c="c f fr"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d12} 
-        fill="var(--icon-fill)" 
+        d={d.d12}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfMoreVerticalSquare01: TheIconSelfPack = {
-  name: 'MoreVerticalSquare01',
-  StrokeRounded: IconMoreVerticalSquare01StrokeRounded,
-  DuotoneRounded: IconMoreVerticalSquare01DuotoneRounded,
-  TwotoneRounded: IconMoreVerticalSquare01TwotoneRounded,
-  SolidRounded: IconMoreVerticalSquare01SolidRounded,
-  BulkRounded: IconMoreVerticalSquare01BulkRounded,
-  StrokeSharp: IconMoreVerticalSquare01StrokeSharp,
-  SolidSharp: IconMoreVerticalSquare01SolidSharp,
-};
+export const iconPackOfMoreVerticalSquare01: TheIconSelfPack = [
+  'MoreVerticalSquare01',
+  IconMoreVerticalSquare01StrokeRounded,
+  IconMoreVerticalSquare01DuotoneRounded,
+  IconMoreVerticalSquare01TwotoneRounded,
+  IconMoreVerticalSquare01SolidRounded,
+  IconMoreVerticalSquare01BulkRounded,
+  IconMoreVerticalSquare01StrokeSharp,
+  IconMoreVerticalSquare01SolidSharp,
+];

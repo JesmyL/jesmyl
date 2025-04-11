@@ -19,14 +19,11 @@ export const IconBorderNone02StrokeRounded: FC<TheIconProps> = (props: TheIconPr
   return (
     <TheIconWrapper
       {...props}
-      name="border-none-02-stroke-rounded IconBorderNone02StrokeRounded"
+      the-icon="BorderNone02 StrokeRounded"
     >
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -36,19 +33,15 @@ export const IconBorderNone02DuotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="border-none-02-duotone-rounded IconBorderNone02DuotoneRounded"
+      the-icon="BorderNone02 DuotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d2} 
-        fill="var(--icon-fill)" 
+        d={d.d2}
+        i-c="f o7"
       />
       <path 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -58,22 +51,15 @@ export const IconBorderNone02TwotoneRounded: FC<TheIconProps> = (props: TheIconP
   return (
     <TheIconWrapper
       {...props}
-      name="border-none-02-twotone-rounded IconBorderNone02TwotoneRounded"
+      the-icon="BorderNone02 TwotoneRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        d={d.d1} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d1}
+        i-c="o7 s sj sr sw"
       />
       <path 
-        d={d.d3} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinecap="round" 
-        strokeLinejoin="round" 
+        d={d.d3}
+        i-c="s sj sr sw"
       />
     </TheIconWrapper>
   );
@@ -83,13 +69,11 @@ export const IconBorderNone02SolidRounded: FC<TheIconProps> = (props: TheIconPro
   return (
     <TheIconWrapper
       {...props}
-      name="border-none-02-solid-rounded IconBorderNone02SolidRounded"
+      the-icon="BorderNone02 SolidRounded"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d4} 
-        fill="var(--icon-fill)" 
+        d={d.d4}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
@@ -99,28 +83,23 @@ export const IconBorderNone02BulkRounded: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="border-none-02-bulk-rounded IconBorderNone02BulkRounded"
+      the-icon="BorderNone02 BulkRounded"
     >
       <path 
-        opacity="var(--icon-opacity)" 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d5} 
-        fill="var(--icon-fill)" 
+        d={d.d5}
+        i-c="c f fr o7"
       />
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d6} 
-        fill="var(--icon-fill)" 
+        d={d.d6}
+        i-c="c f fr"
       />
       <path 
-        d={d.d7} 
-        fill="var(--icon-fill)" 
+        d={d.d7}
+        i-c="f"
       />
       <path 
-        d={d.d8} 
-        fill="var(--icon-fill)" 
+        d={d.d8}
+        i-c="f"
       />
     </TheIconWrapper>
   );
@@ -130,13 +109,11 @@ export const IconBorderNone02StrokeSharp: FC<TheIconProps> = (props: TheIconProp
   return (
     <TheIconWrapper
       {...props}
-      name="border-none-02-stroke-sharp IconBorderNone02StrokeSharp"
+      the-icon="BorderNone02 StrokeSharp"
     >
       <path 
-        d={d.d9} 
-        stroke="var(--icon-stroke)" 
-        strokeWidth="var(--icon-stroke-width)" 
-        strokeLinejoin="round" 
+        d={d.d9}
+        i-c="s sj sw"
       />
     </TheIconWrapper>
   );
@@ -146,25 +123,23 @@ export const IconBorderNone02SolidSharp: FC<TheIconProps> = (props: TheIconProps
   return (
     <TheIconWrapper
       {...props}
-      name="border-none-02-solid-sharp IconBorderNone02SolidSharp"
+      the-icon="BorderNone02 SolidSharp"
     >
       <path 
-        fillRule="evenodd" 
-        clipRule="evenodd" 
-        d={d.d10} 
-        fill="var(--icon-fill)" 
+        d={d.d10}
+        i-c="c f fr"
       />
     </TheIconWrapper>
   );
 };
 
-export const iconPackOfBorderNone02: TheIconSelfPack = {
-  name: 'BorderNone02',
-  StrokeRounded: IconBorderNone02StrokeRounded,
-  DuotoneRounded: IconBorderNone02DuotoneRounded,
-  TwotoneRounded: IconBorderNone02TwotoneRounded,
-  SolidRounded: IconBorderNone02SolidRounded,
-  BulkRounded: IconBorderNone02BulkRounded,
-  StrokeSharp: IconBorderNone02StrokeSharp,
-  SolidSharp: IconBorderNone02SolidSharp,
-};
+export const iconPackOfBorderNone02: TheIconSelfPack = [
+  'BorderNone02',
+  IconBorderNone02StrokeRounded,
+  IconBorderNone02DuotoneRounded,
+  IconBorderNone02TwotoneRounded,
+  IconBorderNone02SolidRounded,
+  IconBorderNone02BulkRounded,
+  IconBorderNone02StrokeSharp,
+  IconBorderNone02SolidSharp,
+];
