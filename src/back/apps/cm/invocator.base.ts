@@ -22,6 +22,9 @@ import { cmUserStoreSokiInvocatorBaseServer } from './user-store-invocator.base'
 
 export const cmServerInvocatorBase = new (class Cm extends SokiInvocatorBaseServer<CmSokiInvocatorModel> {
   constructor() {
+    const filterNotRemoved = <Item extends { isRemoved?: 1 }>(item: Item) => item.isRemoved !== 1;
+    const extractItemw = <Item extends { w: number }>(item: Item) => item.w;
+
     super({
       scope: 'Cm',
       beforeEachTools: {
@@ -29,19 +32,15 @@ export const cmServerInvocatorBase = new (class Cm extends SokiInvocatorBaseServ
       },
       methods: {
         requestFreshes: async ({ lastModfiedAt }, { client, auth }) => {
-          sendBasicModifiedableList(
-            lastModfiedAt,
-            comsFileStore,
-            () => comsFileStore.getValue(),
-            (coms, modifiedAt) => cmShareServerInvocatorMethods.refreshComList({ coms, modifiedAt }, client),
-          );
+          sendBasicModifiedableList(lastModfiedAt, comsFileStore, comsFileStore.getValue, (coms, modifiedAt) => {
+            const existComws = comsFileStore.getValue().filter(filterNotRemoved).map(extractItemw);
+            cmShareServerInvocatorMethods.refreshComList({ coms, modifiedAt, existComws }, client);
+          });
 
-          sendBasicModifiedableList(
-            lastModfiedAt,
-            catsFileStore,
-            () => catsFileStore.getValue(),
-            (cats, modifiedAt) => cmShareServerInvocatorMethods.refreshCatList({ cats, modifiedAt }, client),
-          );
+          sendBasicModifiedableList(lastModfiedAt, catsFileStore, catsFileStore.getValue, (cats, modifiedAt) => {
+            const existCatws = catsFileStore.getValue().filter(filterNotRemoved).map(extractItemw);
+            cmShareServerInvocatorMethods.refreshCatList({ cats, modifiedAt, existCatws }, client);
+          });
 
           const chordPackModifiedAt = chordPackFileStore.fileModifiedAt();
           if (!chordPackModifiedAt || chordPackModifiedAt > lastModfiedAt) {
@@ -58,8 +57,11 @@ export const cmServerInvocatorBase = new (class Cm extends SokiInvocatorBaseServ
             lastModfiedAt,
             eventPacksFileStore,
             () => smylib.values(eventPacksFileStore.getValue()),
-            (items, modifiedAt) =>
-              cmShareServerInvocatorMethods.refreshScheduleEventComPacks({ packs: items, modifiedAt }, client),
+            (packs, modifiedAt) => {
+              if (packs.length > 0) {
+                cmShareServerInvocatorMethods.refreshScheduleEventComPacks({ packs, modifiedAt }, client);
+              }
+            },
           );
 
           if (auth?.login != null) {
@@ -69,8 +71,11 @@ export const cmServerInvocatorBase = new (class Cm extends SokiInvocatorBaseServ
               lastModfiedAt,
               comCommentsFileStore,
               () => smylib.values(comCommentsFileStore.getValue()[login]),
-              (comments, modifiedAt) =>
-                cmShareServerInvocatorMethods.refreshComComments({ comments, modifiedAt }, client),
+              (comments, modifiedAt) => {
+                if (comments.length > 0) {
+                  cmShareServerInvocatorMethods.refreshComComments({ comments, modifiedAt }, client);
+                }
+              },
             );
 
             const favoriteItem = aboutComFavoritesFileStore.getValue()[login];
@@ -134,22 +139,15 @@ export const cmServerInvocatorBase = new (class Cm extends SokiInvocatorBaseServ
   }
 })();
 
-const sendBasicModifiedableList = <Item extends { m: number }>(
+const sendBasicModifiedableList = <Item extends { m: number }, Value>(
   lastModfiedAt: number,
-  store: FileStore<unknown>,
+  store: FileStore<Value>,
   listMapper: () => Item[],
   send: (list: Item[], modifiedAt: number) => void,
 ) => {
-  if (store.fileModifiedAt() > lastModfiedAt) {
-    let modifiedAt = 0;
-
-    const items = listMapper().filter(item => {
-      modifiedAt = Math.max(modifiedAt, item.m);
-      return item.m > lastModfiedAt;
-    });
-
-    if (items.length) send(items, modifiedAt);
-  }
+  if (store.fileModifiedAt() <= lastModfiedAt) return;
+  const items = listMapper().filter(item => item.m > lastModfiedAt);
+  send(items, store.fileModifiedAt());
 };
 
 cmEditComServerInvocatorBase.$$register();

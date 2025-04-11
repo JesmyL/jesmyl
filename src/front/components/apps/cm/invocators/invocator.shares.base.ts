@@ -9,26 +9,34 @@ export const cmShareSokiInvocatorBaseClient =
         scope: 'CmShare',
         methods: {
           editedCom: async ({ com }) => {
-            cmIDB.db.coms.put(com);
-            cmIDB.db.coms.where({ isRemoved: 1 }).delete();
+            if (com.isRemoved) {
+              await cmIDB.db.coms.where('w').equals(com.w).delete();
+            } else {
+              await cmIDB.db.coms.put(com);
+            }
+
             cmIDB.updateLastModifiedAt(com.m ?? com.w);
           },
 
-          refreshComList: async ({ coms: icoms, modifiedAt }) => {
-            await cmIDB.db.coms.bulkPut(icoms);
-            cmIDB.db.coms.where({ isRemoved: 1 }).delete();
+          refreshComList: async ({ coms, modifiedAt, existComws }) => {
+            await cmIDB.db.coms.bulkPut(coms);
+            cmIDB.db.coms.where('w').noneOf(existComws).delete();
             cmIDB.updateLastModifiedAt(modifiedAt);
           },
 
           editedCat: async ({ cat }) => {
-            cmIDB.db.cats.put(cat);
-            cmIDB.db.cats.where({ isRemoved: 1 }).delete();
+            if (cat.isRemoved) {
+              await cmIDB.db.cats.where('w').equals(cat.w).delete();
+            } else {
+              await cmIDB.db.cats.put(cat);
+            }
+
             cmIDB.updateLastModifiedAt(cat.m ?? cat.w);
           },
 
-          refreshCatList: async ({ cats: icats, modifiedAt }) => {
-            await cmIDB.db.cats.bulkPut(icats);
-            cmIDB.db.cats.where({ isRemoved: 1 }).delete();
+          refreshCatList: async ({ cats, modifiedAt, existCatws }) => {
+            await cmIDB.db.cats.bulkPut(cats);
+            cmIDB.db.cats.where('w').noneOf(existCatws).delete();
             cmIDB.updateLastModifiedAt(modifiedAt);
           },
 

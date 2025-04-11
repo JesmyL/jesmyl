@@ -1,5 +1,7 @@
 import {
   ChordPack,
+  CmCatWid,
+  CmComWid,
   ICmComComment,
   IExportableCat,
   IExportableCom,
@@ -9,10 +11,10 @@ import {
 
 export type CmShareSokiInvocatorModel = {
   editedCom: (args: { com: IExportableCom }) => unknown;
-  refreshComList: (args: { coms: IExportableCom[]; modifiedAt: number }) => unknown;
+  refreshComList: (args: { coms: IExportableCom[]; modifiedAt: number; existComws: CmComWid[] }) => unknown;
 
   editedCat: (args: { cat: IExportableCat }) => unknown;
-  refreshCatList: (args: { cats: IExportableCat[]; modifiedAt: number }) => unknown;
+  refreshCatList: (args: { cats: IExportableCat[]; modifiedAt: number; existCatws: CmCatWid[] }) => unknown;
 
   editedChords: (args: { chords: ChordPack; modifiedAt: number }) => unknown;
   refreshChordPack: (args: { pack: ChordPack; modifiedAt: number }) => unknown;
