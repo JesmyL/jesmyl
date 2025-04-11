@@ -61,10 +61,7 @@ export function TheOrder(props: Props) {
         repeats: orderUnit.texti == null ? orderUnit.repeatsTitle : '',
       });
 
-  const chordedOrd = !!(
-    (!orderUnit.chordsi || orderUnit.chordsi > -1) &&
-    (props.chordVisibleVariant === 2 || (props.chordVisibleVariant === 1 && orderUnit.isMin))
-  );
+  const chordedOrd = orderUnit.isCanShowChordsInText(props.chordVisibleVariant);
 
   const headerNode = blockHeader ? (
     <div className={`styled-header ${className}`}>{blockHeader}</div>

@@ -118,4 +118,5 @@ export type MenuComToolNameList =
   | 'hide-metronome'
   | 'qr-share'
   | 'com-comment'
+  | 'copy-com'
   | 'cats-binds';

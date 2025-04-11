@@ -9,6 +9,7 @@ import { CmCatsBindsComTool } from '../ui/CatsBindsComTool';
 import { ChordImagesComTool } from '../ui/ChordImagesComTool';
 import { ChordsVariantComTool } from '../ui/ChordsVariantComTool';
 import { ComCommentComTool } from '../ui/ComCommentComTool';
+import { ComCopyTextTool } from '../ui/ComCopyTextTool';
 import { FavoriteComTool } from '../ui/FavoriteComTool';
 import { FullscreenComTool } from '../ui/FullscreenComTool';
 import { HideMetronomeComTool } from '../ui/HideMetronomeComTool';
@@ -69,6 +70,7 @@ const toolsDict: Record<MigratableComToolName, React.ReactNode> = {
   'qr-share': <QrComShareComTool />,
   'cats-binds': <CmCatsBindsComTool />,
   'com-comment': <ComCommentComTool />,
+  'copy-com': <ComCopyTextTool />,
 
   'edit-com': <RedactComTool />,
 };

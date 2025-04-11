@@ -1,5 +1,6 @@
 import { mylib, MyLib } from '#shared/lib/my-lib';
 import { SourceBased } from '#shared/lib/SourceBased';
+import { ChordVisibleVariant } from '$cm/Cm.model';
 import {
   CmComOrderWid,
   IExportableOrder,
@@ -192,6 +193,13 @@ export class Order extends SourceBased<IExportableOrder> {
     if (this._regions === undefined) this.setRegions();
 
     return this._regions;
+  }
+
+  isCanShowChordsInText(chordVisibleVariant: ChordVisibleVariant) {
+    return !!(
+      (!this.chordsi || this.chordsi > -1) &&
+      (chordVisibleVariant === 2 || (chordVisibleVariant === 1 && this.isMin))
+    );
   }
 
   getWatchInheritance<Key extends keyof InheritancableOrder>(fieldn: Key) {
