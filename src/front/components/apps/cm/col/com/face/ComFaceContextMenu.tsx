@@ -29,14 +29,19 @@ export function ComFaceContextMenu({ onClick, comWid }: Props) {
       <TheIconButton
         icon={isSelected(comWid) ? 'RemoveCircleHalfDot' : 'AddCircleHalfDot'}
         postfix={isSelected(comWid) ? 'Отменить выбор' : 'Выбрать'}
-        onClick={() => toggleSelectedCom(comWid)}
+        onClick={() => {
+          onClick(null);
+          toggleSelectedCom(comWid);
+        }}
       />
       {!selectedComws.length || (
         <TheIconButton
           icon="CancelCircleHalfDot"
           postfix="Очистить выбранные"
-          onClick={() => {
-            confirm('Очистить список выбранных?').then(isClear => isClear && clearSelectedComws());
+          onClick={async () => {
+            if (!(await confirm('Очистить список выбранных?'))) return;
+            onClick(null);
+            clearSelectedComws();
           }}
         />
       )}
