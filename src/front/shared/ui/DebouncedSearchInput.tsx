@@ -34,15 +34,17 @@ export const DebouncedSearchInput = ({ debounce = 300, className = '', placehold
     },
     [wid],
   );
+  const iconName = isNumberSearch ? 'GridTable' : 'SearchVisual';
 
   return (
     <label className={`debounced-input flex gap-2 ${className}`}>
       <LazyIcon
         className="pointer"
-        icon={isNumberSearch ? 'GridTable' : 'SearchVisual'}
+        icon={iconName}
         onClick={() => isNumberSearchToggle()}
       />
       <StyledInput
+        key={iconName}
         type={isNumberSearch ? 'tel' : 'text'}
         value={term}
         className="input"
