@@ -55,7 +55,7 @@ export const deployTheCode = async (front, back) => {
 
     console.info('...sending back files on server');
 
-    await sendFilesOnServer([`./${filePath}.js`], back);
+    await sendFilesOnServer([`./${filePath}.cjs`], back);
 
     if (back.loadToDirFiles != null) {
       const loadToDirFiles = Object.entries(back.loadToDirFiles);

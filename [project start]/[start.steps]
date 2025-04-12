@@ -15,7 +15,7 @@ a2enmod rewrite # for .htaccess work
 fuser -k 4446/tcp ###
 
 scp -r ./build/* root@89.104.71.170:/var/www/html # XE5fYQaR41ostIS8
-scp -r ./src/back/back.index.js root@89.104.71.170:/var/www/jesmyl.ru/back.index.js # XE5fYQaR41ostIS8
+scp -r ./src/back/back.index.cjs root@89.104.71.170:/var/www/jesmyl.ru/back.index.cjs # XE5fYQaR41ostIS8
 
 apt install npm
 cd /var/www/jesmyl.ru/
@@ -55,7 +55,7 @@ DATABASE_URL="postgresql://jesmyl:????@localhost:5432/jdb"
 /////////////// .env
 
 nano /etc/systemd/system/jesmyl_soki.service
-vim /etc/systemd/system/jsub.service
+nano /etc/systemd/system/jsub.service
 
 nano /etc/php/7.4/apache2/php.ini
 

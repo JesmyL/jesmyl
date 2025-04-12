@@ -5,7 +5,7 @@ export const buildBackIndexFile = async () => {
 
   await build({
     entryPoints: [`${filePath}.ts`],
-    outfile: `${filePath}.js`,
+    outfile: `${filePath}.cjs`,
     bundle: true,
     minify: false,
     platform: 'node',

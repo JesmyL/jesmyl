@@ -4,7 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
-/src/back/back.index.js
+/src/back/back.index.cjs
 /src/back/.env.mode
 /src/back/file-stores
 
