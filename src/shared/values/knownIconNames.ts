@@ -6,6 +6,7 @@ export const knownIconNames = [
   'CircleArrowRight02',
   'Diameter',
   'FileRemove',
+  'RightToLeftListTriangle',
   'Edit02',
   'StarCircle',
   'PlayListFavourite01',

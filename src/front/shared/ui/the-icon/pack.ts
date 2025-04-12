@@ -171,6 +171,7 @@ import { iconPackOfQrCode01 } from './icons/qr-code-01';
 import { iconPackOfRecord } from './icons/record';
 import { iconPackOfRefresh } from './icons/refresh';
 import { iconPackOfRemoveCircleHalfDot } from './icons/remove-circle-half-dot';
+import { iconPackOfRightToLeftListTriangle } from './icons/right-to-left-list-triangle';
 import { iconPackOfRowDelete } from './icons/row-delete';
 import { iconPackOfRssError } from './icons/rss-error';
 import { iconPackOfSchoolReportCard } from './icons/school-report-card';
@@ -272,6 +273,7 @@ export const theIconKnownPack: Record<TheIconKnownName, TheIconSelfPack> = {
   BasketballHoop: iconPackOfBasketballHoop,
   Book02: iconPackOfBook02,
   BookDownload: iconPackOfBookDownload,
+  RightToLeftListTriangle: iconPackOfRightToLeftListTriangle,
   BookOpen01: iconPackOfBookOpen01,
   BookOpen02: iconPackOfBookOpen02,
   Bookmark01: iconPackOfBookmark01,
