@@ -4,7 +4,7 @@ import { smylib } from 'shared/utils';
 import { unwatchEditComBusies, watchEditComBusies } from './complect/edit-com-busy';
 import { cmGetResourceHTMLString } from './complect/mp3-rules';
 import { cmShareEditorServerInvocatorMethods } from './editor-invocator.shares';
-import { chordPackFileStore, eePackFileStore, mp3ResourcesData } from './file-stores';
+import { chordPackFileStore, cmConstantsConfigFileStore, eePackFileStore, mp3ResourcesData } from './file-stores';
 import { cmShareServerInvocatorMethods } from './invocator.shares';
 
 export const cmEditorSokiInvocatorBaseServer =
@@ -55,19 +55,25 @@ export const cmEditorSokiInvocatorBaseServer =
           watchComBusies: watchEditComBusies,
           unwatchComBusies: unwatchEditComBusies,
 
-          requestFreshes: async ({ lastModfiedAt }, { auth, client }) => {
-            if (auth && auth.level >= 50) {
-              const eePackModifiedAt = eePackFileStore.fileModifiedAt();
-              if (eePackModifiedAt > lastModfiedAt) {
-                cmShareEditorServerInvocatorMethods.refreshEEPack(
-                  {
-                    modifiedAt: eePackModifiedAt,
-                    pack: eePackFileStore.getValue(),
-                  },
-                  client,
-                );
-              }
+          requestFreshes: async ({ lastModfiedAt }, { client }) => {
+            const eePackModifiedAt = eePackFileStore.fileModifiedAt();
+            if (eePackModifiedAt > lastModfiedAt) {
+              cmShareEditorServerInvocatorMethods.refreshEEPack(
+                {
+                  modifiedAt: eePackModifiedAt,
+                  pack: eePackFileStore.getValue(),
+                },
+                client,
+              );
             }
+          },
+
+          updateConstantsConfig: async ({ config }) => {
+            cmConstantsConfigFileStore.updateValue(prev => ({ ...prev, ...config }));
+            cmShareEditorServerInvocatorMethods.refreshConstantsConfig({
+              config,
+              modifiedAt: cmConstantsConfigFileStore.fileModifiedAt(),
+            });
           },
         },
         onEachFeedback: {
@@ -83,6 +89,7 @@ export const cmEditorSokiInvocatorBaseServer =
           watchComBusies: null,
           unwatchComBusies: null,
           requestFreshes: null,
+          updateConstantsConfig: null,
         },
       });
     }

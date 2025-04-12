@@ -2,6 +2,7 @@ import { useCurrentAppSetter } from '#basis/lib/useCurrentAppSetter';
 import { atom } from '#shared/lib/atom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { useToast } from '#shared/ui/modal/useToast';
+import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { Outlet } from '@tanstack/react-router';
 import { useAuth } from 'front/components/index/atoms';
 import React, { Suspense, memo, useEffect, useState } from 'react';
@@ -10,12 +11,12 @@ import { cmAppActions } from '../app-actions/cm-app-actions';
 import { CmSharedComListActionInterpretator } from '../app-actions/SharedComList';
 import { useSelectedComs } from '../base/useSelectedComs';
 
-const maxSelectedComsCount = 50;
 const CmEditorPage = React.lazy(() => import('$cm+editor/app/EditorPage').then(m => ({ default: m.CmEditorPage })));
 const comListOnActionAtom = atom<CmComWid[] | null>(null);
 
 export const CmApp = () => {
   useCurrentAppSetter('cm');
+  const { maxSelectedComsCount } = cmIDB.useValue.constantsConfig();
 
   const auth = useAuth();
   const { selectedComws, setSelectedComws } = useSelectedComs();
@@ -33,7 +34,7 @@ export const CmApp = () => {
       setSelectedComws(copySelected);
       toast(`Можно выбрать максимум ${maxSelectedComsCount} песен`, { mood: 'ko' });
     }
-  }, [selectedComws, setSelectedComws, toast]);
+  }, [maxSelectedComsCount, selectedComws, setSelectedComws, toast]);
 
   return (
     <>

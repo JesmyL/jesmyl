@@ -95,6 +95,18 @@ export const CmEditorPage = () => {
                       idPostfix="e-e"
                     />
                   </Link>
+                  <Link to="/cm/edit/constants">
+                    <BrutalItem
+                      iconNode={
+                        <LazyIcon
+                          icon="RightToLeftListTriangle"
+                          kind="TwotoneRounded"
+                        />
+                      }
+                      title="Константы"
+                      idPostfix="constants"
+                    />
+                  </Link>
                 </>
               )}
             </>

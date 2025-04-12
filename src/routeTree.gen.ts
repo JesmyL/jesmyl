@@ -36,6 +36,7 @@ import { Route as CmLiEventsImport } from './front/routes/cm/li/events'
 import { Route as CmEditMp3RulesImport } from './front/routes/cm/edit/mp3Rules'
 import { Route as CmEditEventsImport } from './front/routes/cm/edit/events'
 import { Route as CmEditEEImport } from './front/routes/cm/edit/e-e'
+import { Route as CmEditConstantsImport } from './front/routes/cm/edit/constants'
 import { Route as CmEditChordImport } from './front/routes/cm/edit/chord'
 import { Route as CmEditComsIndexImport } from './front/routes/cm/edit/coms/index'
 import { Route as CmEditCatsIndexImport } from './front/routes/cm/edit/cats/index'
@@ -208,6 +209,12 @@ const CmEditEventsRoute = CmEditEventsImport.update({
 const CmEditEERoute = CmEditEEImport.update({
   id: '/e-e',
   path: '/e-e',
+  getParentRoute: () => CmEditRouteRoute,
+} as any)
+
+const CmEditConstantsRoute = CmEditConstantsImport.update({
+  id: '/constants',
+  path: '/constants',
   getParentRoute: () => CmEditRouteRoute,
 } as any)
 
@@ -398,6 +405,13 @@ declare module '@tanstack/react-router' {
       path: '/chord'
       fullPath: '/cm/edit/chord'
       preLoaderRoute: typeof CmEditChordImport
+      parentRoute: typeof CmEditRouteImport
+    }
+    '/cm/edit/constants': {
+      id: '/cm/edit/constants'
+      path: '/constants'
+      fullPath: '/cm/edit/constants'
+      preLoaderRoute: typeof CmEditConstantsImport
       parentRoute: typeof CmEditRouteImport
     }
     '/cm/edit/e-e': {
@@ -597,6 +611,7 @@ const CmEditComsComwRouteRouteWithChildren =
 
 interface CmEditRouteRouteChildren {
   CmEditChordRoute: typeof CmEditChordRoute
+  CmEditConstantsRoute: typeof CmEditConstantsRoute
   CmEditEERoute: typeof CmEditEERoute
   CmEditEventsRoute: typeof CmEditEventsRoute
   CmEditMp3RulesRoute: typeof CmEditMp3RulesRoute
@@ -609,6 +624,7 @@ interface CmEditRouteRouteChildren {
 
 const CmEditRouteRouteChildren: CmEditRouteRouteChildren = {
   CmEditChordRoute: CmEditChordRoute,
+  CmEditConstantsRoute: CmEditConstantsRoute,
   CmEditEERoute: CmEditEERoute,
   CmEditEventsRoute: CmEditEventsRoute,
   CmEditMp3RulesRoute: CmEditMp3RulesRoute,
@@ -703,6 +719,7 @@ export interface FileRoutesByFullPath {
   '/tuner/': typeof TunerIndexRoute
   '/schedule-day': typeof ScheduleDayIndexLazyRoute
   '/cm/edit/chord': typeof CmEditChordRoute
+  '/cm/edit/constants': typeof CmEditConstantsRoute
   '/cm/edit/e-e': typeof CmEditEERoute
   '/cm/edit/events': typeof CmEditEventsRoute
   '/cm/edit/mp3Rules': typeof CmEditMp3RulesRoute
@@ -739,6 +756,7 @@ export interface FileRoutesByTo {
   '/tuner': typeof TunerIndexRoute
   '/schedule-day': typeof ScheduleDayIndexLazyRoute
   '/cm/edit/chord': typeof CmEditChordRoute
+  '/cm/edit/constants': typeof CmEditConstantsRoute
   '/cm/edit/e-e': typeof CmEditEERoute
   '/cm/edit/events': typeof CmEditEventsRoute
   '/cm/edit/mp3Rules': typeof CmEditMp3RulesRoute
@@ -780,6 +798,7 @@ export interface FileRoutesById {
   '/tuner/': typeof TunerIndexRoute
   '/schedule-day/': typeof ScheduleDayIndexLazyRoute
   '/cm/edit/chord': typeof CmEditChordRoute
+  '/cm/edit/constants': typeof CmEditConstantsRoute
   '/cm/edit/e-e': typeof CmEditEERoute
   '/cm/edit/events': typeof CmEditEventsRoute
   '/cm/edit/mp3Rules': typeof CmEditMp3RulesRoute
@@ -823,6 +842,7 @@ export interface FileRouteTypes {
     | '/tuner/'
     | '/schedule-day'
     | '/cm/edit/chord'
+    | '/cm/edit/constants'
     | '/cm/edit/e-e'
     | '/cm/edit/events'
     | '/cm/edit/mp3Rules'
@@ -858,6 +878,7 @@ export interface FileRouteTypes {
     | '/tuner'
     | '/schedule-day'
     | '/cm/edit/chord'
+    | '/cm/edit/constants'
     | '/cm/edit/e-e'
     | '/cm/edit/events'
     | '/cm/edit/mp3Rules'
@@ -897,6 +918,7 @@ export interface FileRouteTypes {
     | '/tuner/'
     | '/schedule-day/'
     | '/cm/edit/chord'
+    | '/cm/edit/constants'
     | '/cm/edit/e-e'
     | '/cm/edit/events'
     | '/cm/edit/mp3Rules'
@@ -1009,6 +1031,7 @@ export const routeTree = rootRoute
       "parent": "/cm",
       "children": [
         "/cm/edit/chord",
+        "/cm/edit/constants",
         "/cm/edit/e-e",
         "/cm/edit/events",
         "/cm/edit/mp3Rules",
@@ -1052,6 +1075,10 @@ export const routeTree = rootRoute
     },
     "/cm/edit/chord": {
       "filePath": "cm/edit/chord.tsx",
+      "parent": "/cm/edit"
+    },
+    "/cm/edit/constants": {
+      "filePath": "cm/edit/constants.tsx",
       "parent": "/cm/edit"
     },
     "/cm/edit/e-e": {

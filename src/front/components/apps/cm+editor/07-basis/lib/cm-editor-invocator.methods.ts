@@ -119,6 +119,7 @@ export const cmEditorClientInvocatorMethods =
           getResourceHTMLString: true,
           watchComBusies: true,
           unwatchComBusies: true,
+          updateConstantsConfig: true,
         },
       });
     }

@@ -5,10 +5,10 @@ import { cmUserStoreSokiInvocatorClient } from '$cm/invocators/user-store-invoca
 import { useAuth } from '$index/atoms';
 
 let saveTimeout: TimeOut;
-const maxFavouritesCount = 37;
 
 export const useFavouriteComs = () => {
   const favourites = cmIDB.useValue.favoriteComs();
+  const { maxFavouritesCount } = cmIDB.useValue.constantsConfig();
   const favouriteComsSet = new Set(favourites);
   const toast = useToast();
   const auth = useAuth();

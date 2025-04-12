@@ -1,10 +1,10 @@
+import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { CmTextableBlockAnchorTitles } from '$cm+editor/entities/TextableBlockAnchorTitles';
 import { TextCorrectMessages } from '$cm+editor/entities/TextBlockIncorrectMessages';
-import { InputWithLoadingIcon } from '$cm/base/InputWithLoadingIcon';
 import { useState } from 'react';
 import { makeRegExp } from 'shared/utils';
 

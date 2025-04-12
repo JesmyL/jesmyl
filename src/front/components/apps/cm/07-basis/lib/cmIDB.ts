@@ -4,6 +4,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import {
   ChordPack,
   CmComWid,
+  CmConstantsConfig,
   ICmComComment,
   IExportableCat,
   IExportableCom,
@@ -12,6 +13,7 @@ import {
   ScheduleComPack,
 } from 'shared/api';
 import { itNumSort } from 'shared/utils';
+import { cmConstantsDefaultConfig } from 'shared/values/cm/cmConstantsDefaultConfig';
 import { ChordVisibleVariant, FavoriteMeetings, PlayerHideMode } from '../../Cm.model';
 import { defaultCmConfig } from '../../translation/complect/controlled/hooks/configs';
 import { CmTranslationScreenConfig } from '../../translation/complect/controlled/model';
@@ -20,6 +22,7 @@ export interface CmIDBStorage {
   chordPack: ChordPack;
   favoriteComs: CmComWid[];
   comTopTools: MigratableComToolName[];
+  constantsConfig: CmConstantsConfig;
 
   lastModifiedAt: number;
 
@@ -70,6 +73,7 @@ class CmIDB extends DexieDB<CmIDBStorage> {
       translationScreenConfigs: { $byDefault: [defaultCmConfig] },
       lastOpenComw: { $byDefault: undefined },
       isShowFavouritesInTranslations: { $byDefault: false },
+      constantsConfig: { $byDefault: cmConstantsDefaultConfig },
 
       coms: {
         w: '++',

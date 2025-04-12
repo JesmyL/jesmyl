@@ -1,8 +1,8 @@
+import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { TextCorrectMessages } from '$cm+editor/entities/TextBlockIncorrectMessages';
-import { InputWithLoadingIcon } from '$cm/base/InputWithLoadingIcon';
 import { useState } from 'react';
 import { CmTextableBlockAnchorTitles } from './TextableBlockAnchorTitles';
 

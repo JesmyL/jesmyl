@@ -1,10 +1,10 @@
+import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditCatClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { EditableCat } from '$cm+editor/basis/lib/EditableCat';
 import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
-import { InputWithLoadingIcon } from '$cm/base/InputWithLoadingIcon';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React, { useMemo } from 'react';

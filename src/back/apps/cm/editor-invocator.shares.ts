@@ -10,6 +10,7 @@ export const cmShareEditorServerInvocatorMethods =
           editedEEWords: true,
           refreshEEPack: true,
           comBusies: true,
+          refreshConstantsConfig: true,
         },
       });
     }

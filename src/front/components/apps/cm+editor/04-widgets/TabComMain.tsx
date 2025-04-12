@@ -1,3 +1,4 @@
+import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { useAtomSet } from '#shared/lib/atom';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
@@ -8,7 +9,6 @@ import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { TextCorrectMessages } from '$cm+editor/entities/TextBlockIncorrectMessages';
-import { InputWithLoadingIcon } from '$cm/base/InputWithLoadingIcon';
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { TheCom } from '$cm/col/com/TheCom';
 import { useAuth } from '$index/atoms';

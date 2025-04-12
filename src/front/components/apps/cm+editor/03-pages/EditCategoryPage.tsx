@@ -1,3 +1,4 @@
+import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { useAtom } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
@@ -7,7 +8,6 @@ import { removedCategoriesAtom } from '$cm+editor/basis/lib/atoms/cat';
 import { cmEditCatClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { useEditableCcat } from '$cm+editor/basis/lib/hooks/useEditableCat';
 import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer';
-import { InputWithLoadingIcon } from '$cm/base/InputWithLoadingIcon';
 import { catTrackers } from '$cm/col/cat/Cat.complect';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
 import { useParams } from '@tanstack/react-router';
