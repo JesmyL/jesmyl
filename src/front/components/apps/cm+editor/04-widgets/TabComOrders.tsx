@@ -64,72 +64,78 @@ export const CmEditorTabComOrders = () => {
         );
 
         return (
-          <div
-            key={ordi}
-            className={ord.me.isAnchorInherit ? 'inherit-block' : ''}
-          >
-            {ordi === 0 && clickBetweenData && clickBetweenData.checkIsShowButton(zeroProps) && (
-              <div className="flex flex-gap margin-big-gap-t center">
-                <TheButton
-                  onClick={async () => {
-                    try {
-                      await clickBetweenData.onClick(zeroProps);
-                    } catch (_error) {
-                      //
-                    }
-                    setClickBetweenOrds(null);
-                  }}
-                >
-                  {clickBetweenData.buttonTitle}
-                </TheButton>
-                {cancelClickBetweenDataButtonNode}
-              </div>
-            )}
-            <div className="margin-big-gap-h">
-              {isWithHead ? null : ord.me.isAnchorInherit && ord.me.leadOrd && ord.me.anchorInheritIndex != null ? (
-                <TheIconButton
-                  icon={ord.isVisible ? 'View' : 'ViewOffSlash'}
-                  confirm={
-                    <>
-                      Сделать {ord.me.anchorInheritIndex + 2}-ю часть ссылки на
-                      <span className="color--7"> {ord.me.leadOrd.me.header()} </span>
-                      {ord.me.leadOrd.top.inh?.v?.[ord.me.anchorInheritIndex] == null ? 'не' : ''}видимой?
-                    </>
-                  }
-                  onClick={() => {
-                    if (ord.me.anchorInheritIndex == null || ord.me.leadOrd == null) return;
-
-                    return cmEditComOrderClientInvocatorMethods.toggleAnchorInheritVisibility({
-                      comw: ord.com.wid,
-                      leadOrderWid: ord.me.leadOrd.wid,
-                      anchorInheritIndex: ord.me.anchorInheritIndex,
-                      leadOrderTitle: ord.me.leadOrd.me.header(),
-                    });
-                  }}
-                />
-              ) : (
-                editNode
+          <>
+            <div
+              key={ordi}
+              className={ord.me.isAnchorInherit ? 'inherit-block' : ''}
+            >
+              {ordi === 0 && clickBetweenData && clickBetweenData.checkIsShowButton(zeroProps) && (
+                <div className="flex flex-gap margin-big-gap-t center">
+                  <TheButton
+                    onClick={async () => {
+                      try {
+                        await clickBetweenData.onClick(zeroProps);
+                      } catch (_error) {
+                        //
+                      }
+                      setClickBetweenOrds(null);
+                    }}
+                  >
+                    {clickBetweenData.buttonTitle}
+                  </TheButton>
+                  {cancelClickBetweenDataButtonNode}
+                </div>
               )}
-            </div>
-            <TheOrder
-              orderUnit={ord}
-              orderUniti={ordi}
-              com={ccom}
-              showInvisibles
-              chordVisibleVariant={ChordVisibleVariant.Maximal}
-              asHeaderComponent={
-                clickBetweenData
-                  ? undefined
-                  : ({ headerNode }) => {
-                      return (
-                        <div className="flex">
-                          {headerNode}
-                          {isWithHead ? editNode : null}
-                        </div>
-                      );
+
+              <div className="mx-10 mt-2">
+                {clickBetweenData || isWithHead ? null : ord.me.isAnchorInherit &&
+                  ord.me.leadOrd &&
+                  ord.me.anchorInheritIndex != null ? (
+                  <TheIconButton
+                    icon={ord.isVisible ? 'View' : 'ViewOffSlash'}
+                    confirm={
+                      <>
+                        Сделать {ord.me.anchorInheritIndex + 2}-ю часть ссылки на
+                        <span className="color--7"> {ord.me.leadOrd.me.header()} </span>
+                        {ord.me.leadOrd.top.inh?.v?.[ord.me.anchorInheritIndex] == null ? 'не' : ''}видимой?
+                      </>
                     }
-              }
-            />
+                    onClick={() => {
+                      if (ord.me.anchorInheritIndex == null || ord.me.leadOrd == null) return;
+
+                      return cmEditComOrderClientInvocatorMethods.toggleAnchorInheritVisibility({
+                        comw: ord.com.wid,
+                        leadOrderWid: ord.me.leadOrd.wid,
+                        anchorInheritIndex: ord.me.anchorInheritIndex,
+                        leadOrderTitle: ord.me.leadOrd.me.header(),
+                      });
+                    }}
+                  />
+                ) : (
+                  editNode
+                )}
+              </div>
+
+              <TheOrder
+                orderUnit={ord}
+                orderUniti={ordi}
+                com={ccom}
+                showInvisibles
+                chordVisibleVariant={ChordVisibleVariant.Maximal}
+                asHeaderComponent={
+                  clickBetweenData
+                    ? undefined
+                    : ({ headerNode }) => {
+                        return (
+                          <div className="flex">
+                            {headerNode}
+                            {isWithHead && editNode}
+                          </div>
+                        );
+                      }
+                }
+              />
+            </div>
             {clickBetweenData && clickBetweenData.checkIsShowButton(betweenProps) && (
               <div className="flex gap-3 justify-center mt-5">
                 <TheButton
@@ -147,7 +153,7 @@ export const CmEditorTabComOrders = () => {
                 {cancelClickBetweenDataButtonNode}
               </div>
             )}
-          </div>
+          </>
         );
       })}
       {!clickBetweenData && (
