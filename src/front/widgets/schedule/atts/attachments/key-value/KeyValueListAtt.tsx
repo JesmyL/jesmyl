@@ -466,7 +466,7 @@ export function ScheduleKeyValueListAtt({
                 )}
               </div>
               {isRedact && customAttUseRights.checkIsCan(userR, att.U) && (
-                <div className={'flex flex-gap' + (mylib.isStr(value) ? ' mr-15' : '')}>
+                <div className={'flex' + (mylib.isStr(value) ? ' mr-7' : '')}>
                   {itema.length > 1 && itemi > 0 && (
                     <TheIconSendButton
                       className="relative z-15 text-x7"
