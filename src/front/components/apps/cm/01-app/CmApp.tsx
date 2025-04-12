@@ -1,3 +1,4 @@
+import { useCurrentAppSetter } from '#basis/lib/useCurrentAppSetter';
 import { atom } from '#shared/lib/atom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { useToast } from '#shared/ui/modal/useToast';
@@ -8,15 +9,15 @@ import { CmComWid } from 'shared/api';
 import { cmAppActions } from '../app-actions/cm-app-actions';
 import { CmSharedComListActionInterpretator } from '../app-actions/SharedComList';
 import { useSelectedComs } from '../base/useSelectedComs';
-import { CmFooter } from '../routing/CmFooter';
 
 const maxSelectedComsCount = 50;
 const CmEditorPage = React.lazy(() => import('$cm+editor/app/EditorPage').then(m => ({ default: m.CmEditorPage })));
 const comListOnActionAtom = atom<CmComWid[] | null>(null);
 
 export const CmApp = () => {
-  const auth = useAuth();
+  useCurrentAppSetter('cm');
 
+  const auth = useAuth();
   const { selectedComws, setSelectedComws } = useSelectedComs();
   const toast = useToast();
 
@@ -37,7 +38,6 @@ export const CmApp = () => {
   return (
     <>
       <Outlet />
-      <CmFooter />
 
       {auth.level >= 50 && <RenderEditorOnce />}
 

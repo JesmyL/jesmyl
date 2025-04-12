@@ -1,7 +1,9 @@
+import { currentAppNameAtom } from '#basis/lib/atoms/currentAppNameAtom';
 import { useFingersActions } from '#basis/lib/global-listeners/useFingersActions';
 import { useGlobalFontFamilySetter } from '#basis/lib/global-listeners/useGlobalFontFamilySetter';
 import { useGlobalFullscreenChanger } from '#basis/lib/global-listeners/useGlobalFullscreenChanger';
 import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
+import { useAtomValue } from '#shared/lib/atom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { LinkAppActionFabric } from '#shared/lib/link-app-actions';
 import { KEYBOARD_FLASH } from '#shared/ui/keyboard/KeyboardInputFlash';
@@ -11,6 +13,7 @@ import { Outlet, ParsedLocation, useLocation, useNavigate } from '@tanstack/reac
 import { soki } from 'front/soki';
 import { useEffect, useMemo, useState } from 'react';
 import { emptyArray } from 'shared/utils';
+import { routingApps } from './lib/configs';
 import { lastVisitedRouteLsName } from './lib/consts';
 
 export const AppComponent = () => {
@@ -19,6 +22,7 @@ export const AppComponent = () => {
   const [keyboardOpen, setKeyboardOpen] = useState(false);
   const [isShowLogo, setIsShowLogo] = useState(true);
   const toast = useToast();
+  const appName = useAtomValue(currentAppNameAtom);
 
   useEffect(() => {
     const unauthListener = soki.onTokenInvalidEvent.listen(() => {
@@ -73,6 +77,8 @@ export const AppComponent = () => {
           loc={loc as never}
         />
       )}
+
+      {appName && routingApps[appName]?.footer}
     </>
   );
 };
