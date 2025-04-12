@@ -7,7 +7,6 @@ import { cmCurrentComwIdPrefix } from '../lib/consts';
 export const StyledComList = styled.div<{
   $ccomw: CmComWid | NaN | nil;
   $accentComw: number | nil;
-  $isPutCcomFaceOff: boolean | nil;
   $comTitles: Record<number, string> | und;
 }>`
   * {
@@ -36,23 +35,19 @@ export const StyledComList = styled.div<{
     });
   }}
 
-  ${props =>
-    !props.$isPutCcomFaceOff &&
-    css`
-      #${cmCurrentComwIdPrefix}${props.$ccomw} {
-        font-weight: bold;
-      }
-    `}
+  ${props => css`
+    #${cmCurrentComwIdPrefix}${props.$ccomw} {
+      font-weight: bold;
+    }
+  `}
   
     ${props => {
-    return css`
-      ${props.$accentComw
-        ? css`
-            > :not(#${cmCurrentComwIdPrefix}${props.$accentComw}) {
-              opacity: 0.4;
-            }
-          `
-        : ''}
-    `;
+    return props.$accentComw
+      ? css`
+          > :not(#${cmCurrentComwIdPrefix}${props.$accentComw}) {
+            opacity: 0.4;
+          }
+        `
+      : null;
   }}
 `;

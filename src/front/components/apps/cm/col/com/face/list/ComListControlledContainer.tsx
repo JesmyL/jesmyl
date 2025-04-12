@@ -52,7 +52,6 @@ export const ComListControlledContainer = (props: Props) => {
       <StyledComList
         $ccomw={lastOpenComw}
         $accentComw={floatMenuCoords?.comw}
-        $isPutCcomFaceOff={props.isPutCcomFaceOff}
         $comTitles={props.titles}
         className={props.className}
         ref={props.listRef}
