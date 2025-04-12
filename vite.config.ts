@@ -8,6 +8,7 @@ import eslint from 'vite-plugin-eslint';
 import { VitePWA } from 'vite-plugin-pwa';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import * as tsconf from './tsconfig.json';
+import { vitePWAOptions } from './vite-pwa.options';
 
 dns.setDefaultResultOrder('verbatim');
 
@@ -22,7 +23,7 @@ Object.entries(tsConfig.compilerOptions.paths).forEach(([aliasKey, [path]]) => {
 export default defineConfig(() => {
   return {
     build: { outDir: 'build' },
-    server: { https: true },
+    server: { https: {} },
     plugins: [
       TanStackRouterVite({ target: 'react', autoCodeSplitting: true, routesDirectory: 'src/front/routes' }),
       tsconfigPaths(),
@@ -32,14 +33,7 @@ export default defineConfig(() => {
         // failOnWarning: false,
         // lintOnStart: false,
       }),
-      VitePWA({
-        injectRegister: 'auto',
-        strategies: 'generateSW',
-        registerType: 'autoUpdate',
-        workbox: {
-          cleanupOutdatedCaches: false,
-        },
-      }),
+      VitePWA(vitePWAOptions),
       tailwindcss(),
       basicSsl(),
       react(),
