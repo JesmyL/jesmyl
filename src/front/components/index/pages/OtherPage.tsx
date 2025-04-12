@@ -1,4 +1,5 @@
 import { useAppNameContext } from '#basis/lib/contexts';
+import { useCurrentAppSetter } from '#basis/lib/useCurrentAppSetter';
 import { appNames } from '#basis/model/App.model';
 import { atom } from '#shared/lib/atom';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
@@ -19,6 +20,7 @@ import { itNNull } from 'shared/utils';
 
 export const IndexOtherPage = () => {
   const currentAppName = useAppNameContext();
+  useCurrentAppSetter(currentAppName);
   const linkParams = { appName: currentAppName };
   const isAboutOpenAtom = atom(false);
 
