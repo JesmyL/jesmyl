@@ -1,4 +1,4 @@
-import { isIPhone } from '#shared/lib/device-differences';
+import { isIOS } from '#shared/lib/device-differences';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { useLastOpenComw } from '$cm/basis/lib/com-selections';
@@ -10,7 +10,7 @@ const initComsAfter = 18;
 const loadComsOnScroll = 15;
 
 const inkNumFunc = (n: number) => n + 1;
-const isRejectScrollDivision = isIPhone;
+const isRejectScrollDivision = isIOS;
 
 export const useComListShownLimitsController = (listRef: React.RefObject<HTMLDivElement>, props: ComFaceListProps) => {
   const [, forceUpdate] = useState(0);

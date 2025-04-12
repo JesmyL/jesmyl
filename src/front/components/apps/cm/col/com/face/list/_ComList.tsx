@@ -1,5 +1,5 @@
 import { FaceItem } from '#basis/ui/FaceItem';
-import { isIPhone } from '#shared/lib/device-differences';
+import { isIOS } from '#shared/lib/device-differences';
 import { useListInfiniteScrollController } from '#shared/lib/hooks/useListInfiniteScrollController';
 import { mylib } from '#shared/lib/my-lib';
 import { useSetComListLimitsExtracterContext } from '$cm/base/SetComListLimitsExtracterContext';
@@ -46,7 +46,7 @@ export const ComFaceListComList = (props: ComFaceListProps) => {
       {...props}
       listRef={listRef}
     >
-      {props.list.slice(isIPhone ? 0 : limits.start, limits.finish).map((com, comi) => {
+      {props.list.slice(isIOS ? 0 : limits.start, limits.finish).map((com, comi) => {
         return (
           <FaceItem
             key={isSetWids ? com.wid : comi}

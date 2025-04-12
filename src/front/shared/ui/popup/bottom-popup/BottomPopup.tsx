@@ -1,3 +1,4 @@
+import { isIOS } from '#shared/lib/device-differences';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
 import { Box, SwipeableDrawer } from '@mui/material';
 import { ReactNode, useEffect, useRef } from 'react';
@@ -43,6 +44,8 @@ export const BottomPopup = ({ children, onClose, isPreventCloseOnClick, id }: Pr
         open
         onOpen={emptyFunc}
         onClose={() => onClose(false)}
+        disableDiscovery={isIOS}
+        disableBackdropTransition={!isIOS}
       >
         <BottomPopupOnCloseContext.Provider value={isPreventCloseOnClick ? emptyFunc : () => setTimeout(onClose, 100)}>
           <Box className="bg-x1 py-5 sm:px-3 xl:px-7 text-x4">{children}</Box>
