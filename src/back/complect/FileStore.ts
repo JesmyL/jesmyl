@@ -68,6 +68,11 @@ export class FileStore<Value> {
     this.writeValue(value);
   };
 
+  updateValue = (updater: (value: Value) => Value) => {
+    this.value = updater(this.value);
+    this.writeValue(this.value);
+  };
+
   saveValue = () => {
     this.writeValue(this.value);
   };
