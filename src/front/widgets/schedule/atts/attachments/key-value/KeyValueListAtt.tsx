@@ -70,7 +70,7 @@ export function ScheduleKeyValueListAtt({
 
   if (isRedact) {
     checkboxes = customAttUseRights.checkIsHasIndividualRights(att.use, CustomAttUseRights.Checkboxes) && (
-      <div className="flex flex-gap margin-gap-v">
+      <div className="flex flex-gap my-2">
         <LazyIcon icon="CheckmarkSquare02" />
         <span className="text-italic">Пункт</span>
         <TheIconSendButton
@@ -183,7 +183,7 @@ export function ScheduleKeyValueListAtt({
           return (
             <div
               key={game.mi}
-              className="flex flex-gap margin-gap-v"
+              className="flex flex-gap my-2"
             >
               {customAttUseRights.checkIsHasIndividualRights(att.use, CustomAttUseRights.CheckGames) ? (
                 <>
@@ -232,7 +232,7 @@ export function ScheduleKeyValueListAtt({
       roles = exclusiveRoles.map(role => (
         <div
           key={role.mi}
-          className="flex flex-gap margin-gap-v"
+          className="flex flex-gap my-2"
         >
           <ScheduleWidgetRoleFace
             role={role}
@@ -333,7 +333,7 @@ export function ScheduleKeyValueListAtt({
     }
 
     const itemNode = (
-      <div className="flex flex-gap margin-big-gap-v">
+      <div className="flex gap-2 my-10">
         <LazyIcon icon="Text" />
         Пункт
         <TheIconSendButton
@@ -352,18 +352,17 @@ export function ScheduleKeyValueListAtt({
     if (checkboxes || (users || titles || roles || lists || games || null)?.length) {
       insertionNode = (
         <>
-          <div className="margin-gap-v color--7">Вставить поле ввода:</div>
+          <div className="my-2 text-x7">Вставить поле ввода:</div>
           {itemNode}
-          <div className="margin-big-gap-v">{checkboxes}</div>
-          <div className="margin-big-gap-v">{titles}</div>
-          <div className="margin-big-gap-v">{roles}</div>
-          <div className="margin-big-gap-v">{lists}</div>
-          <div className="margin-big-gap-v">{users}</div>
-          <div className="margin-big-gap-v">{games}</div>
+          <div className="my-10">{checkboxes}</div>
+          <div className="my-10">{titles}</div>
+          <div className="my-10">{roles}</div>
+          <div className="my-10">{lists}</div>
+          <div className="my-10">{users}</div>
+          <div className="my-10">{games}</div>
         </>
       );
-    } else
-      insertionNode = itemNode || <div className="margin-big-gap-v text-italic">{att.title}. Вставлять нечего</div>;
+    } else insertionNode = itemNode || <div className="my-10 text-italic">{att.title}. Вставлять нечего</div>;
   }
 
   return (
@@ -397,23 +396,16 @@ export function ScheduleKeyValueListAtt({
         return (
           <div
             key={itemMi}
-            className={
-              'dropdown-ancestor' +
-              (mylib.isArr(value)
-                ? isRedact
-                  ? ' margin-giant-gap-b margin-big-gap-t'
-                  : ' margin-big-gap-b'
-                : ' margin-gap-b')
-            }
+            className={'dropdown-ancestor' + (mylib.isArr(value) ? (isRedact ? ' mb-15 mt-10' : ' mb-10') : ' mb-2')}
           >
-            <div className="flex flex-gap between margin-gap-b">
+            <div className="flex gap-2 between mb-2">
               <div className="flex flex-gap">
                 {generalNode !== null ? (
                   generalNode
                 ) : mylib.isBool(key) ? (
-                  <div className={'flex flex-gap color--3' + (key ? ' fade-05' : '')}>
+                  <div className={'flex gap-2 text-x3' + (key ? ' fade-05' : '')}>
                     <TheIconSendButton
-                      className="self-start relative z-index:15"
+                      className="self-start relative z-15"
                       icon={key ? 'CheckmarkSquare02' : 'Square'}
                       disabled={!customAttUseRights.checkIsCan(userR, att.U)}
                       onSend={() =>
@@ -474,10 +466,10 @@ export function ScheduleKeyValueListAtt({
                 )}
               </div>
               {isRedact && customAttUseRights.checkIsCan(userR, att.U) && (
-                <div className={'flex flex-gap' + (mylib.isStr(value) ? ' margin-giant-gap-r' : '')}>
+                <div className={'flex flex-gap' + (mylib.isStr(value) ? ' mr-15' : '')}>
                   {itema.length > 1 && itemi > 0 && (
                     <TheIconSendButton
-                      className="relative z-index:15 color--7"
+                      className="relative z-15 text-x7"
                       icon="ArrowDataTransferVertical"
                       onSend={() =>
                         schDayEventsSokiInvocatorClient.moveKeyValueAttachment({ props: dayEventAttScopeProps, itemMi })
@@ -485,7 +477,7 @@ export function ScheduleKeyValueListAtt({
                     />
                   )}
                   <TheIconSendButton
-                    className="relative z-index:15 color--ko"
+                    className="relative z-15 text-xKO"
                     confirm="Удалить пункт?"
                     icon="Delete02"
                     onSend={() =>
@@ -505,8 +497,8 @@ export function ScheduleKeyValueListAtt({
                 <StrongField
                   $indent={!isRedact && mylib.isBool(key)}
                   className={
-                    `ml-3 -mt-${isRedact ? 3 : 9} mood-for-2 relative z-5 ` +
-                    (mylib.isBool(key) ? (key ? 'color--3 fade-05' : 'color--3') : '')
+                    `ml-3 ${isRedact ? '-mt-3' : '-mt-9'} mood-for-2 relative z-5 ` +
+                    (mylib.isBool(key) ? (key ? 'text-x3 fade-05' : 'text-x3') : '')
                   }
                   value={value}
                   multiline
@@ -530,7 +522,7 @@ export function ScheduleKeyValueListAtt({
                             <span className="flex self-start">{vali + 1}.</span>
                             {vala.length > 1 && vali > 0 && (
                               <TheIconSendButton
-                                className="relative z-index:15 color--7"
+                                className="relative z-15 text-x7"
                                 icon="ArrowDataTransferVertical"
                                 onSend={() =>
                                   schDayEventsSokiInvocatorClient.moveKeyValueAttachmentListItem({
@@ -542,7 +534,7 @@ export function ScheduleKeyValueListAtt({
                               />
                             )}
                             <TheIconSendButton
-                              className="relative z-index:15 color--ko"
+                              className="relative z-15 text-xKO"
                               confirm="Удалить пункт?"
                               icon="Delete02"
                               onSend={() =>
@@ -557,13 +549,13 @@ export function ScheduleKeyValueListAtt({
                         )}
                         <div className="full-width">
                           {mylib.isNum(val) ? (
-                            <div className="margin-gap-v">
+                            <div className="my-2">
                               <KeyValueListAttNumberMember value={val} />
                             </div>
                           ) : (
                             <StrongEditableField
                               value={val}
-                              className="mood-for-2 margin-gap-v"
+                              className="mood-for-2 my-2"
                               isRedact
                               multiline
                               onSend={val => {
@@ -603,7 +595,7 @@ export function ScheduleKeyValueListAtt({
                   {subItems?.([key, value, itemMi])}
 
                   <StrongEditableField
-                    className="mood-for-2 relative z-index:5 margin-gap-t"
+                    className="mood-for-2 relative z-5 mt-2"
                     placeholder="Новый подпункт"
                     isRedact={isRedact}
                     setSelfRedact={setSelfRedact}
@@ -625,7 +617,7 @@ export function ScheduleKeyValueListAtt({
                     return (
                       <div
                         key={vali}
-                        className="flex flex-gap margin-big-gap-l"
+                        className="flex flex-gap ml-10"
                       >
                         <span className="flex self-start">{vali + 1}.</span>
                         {mylib.isNum(val) ? <KeyValueListAttNumberMember value={val} /> : <Markdown>{val}</Markdown>}
