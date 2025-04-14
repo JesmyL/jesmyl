@@ -5,6 +5,7 @@ import { cmEditorClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-i
 import { useCmMp3Rules } from '$cm+editor/basis/lib/hooks/useCmMp3Rules';
 import { useEffect, useState } from 'react';
 import { CmMp3ContainsPageResult } from 'shared/api';
+import { itInvokeIt, itIt } from 'shared/utils';
 
 export const ObserveUrlResource = ({
   onSuccess,
@@ -13,7 +14,7 @@ export const ObserveUrlResource = ({
 }: {
   onSuccess: (val: CmMp3ContainsPageResult) => void;
   availableWithTextQuery?: boolean;
-  onGoogleSearch?: () => string;
+  onGoogleSearch?: (() => string)[];
 }) => {
   const [url, setUrl] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -57,19 +58,19 @@ export const ObserveUrlResource = ({
               key={rule.url}
               className={'flex gap-2 my-2 ' + (url.startsWith(rule.url) ? 'text-x7' : '')}
             >
-              {rule.url}
-              {onGoogleSearch && (
+              {Array.from(new Set(onGoogleSearch?.map(itInvokeIt).filter(itIt))).map(text => (
                 <LazyIcon
+                  key={text}
                   icon="Google"
                   onClick={() => {
-                    const text = onGoogleSearch();
                     const url = new URL('https://google.com/search');
 
                     url.searchParams.set('q', `site:${rule.url} ${text}`);
                     window.open(url.toString());
                   }}
                 />
-              )}
+              ))}
+              {rule.url}
             </div>
           )
         );

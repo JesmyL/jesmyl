@@ -74,13 +74,17 @@ export const CmEditorTabComAudio = ({ topHTML, topCom, topMp3Rule }: Props) => {
                 setInnerHTML(html);
                 setMp3Rule(rule);
               }}
-              onGoogleSearch={() => {
-                let max = 0;
-                ccom.texts?.forEach(text => (text.length > max ? (max = text.length) : 0));
-                const text = ccom.texts?.find(text => text.length === max);
-
-                return `"${ccom.name}" ${text?.replace(makeRegExp('/\\n+/g'), ' ') ?? ''}`;
-              }}
+              onGoogleSearch={[
+                () => {
+                  const ord = ccom.orders?.find(ord => ord.type === 'two');
+                  return `"${ccom.name}" ${ord?.text.replace(makeRegExp('/\\n+/g'), ' ') ?? ''}`;
+                },
+                () => {
+                  const ord = ccom.orders?.find(ord => ord.type === 'one');
+                  return `"${ccom.name}" ${ord?.text.replace(makeRegExp('/\\n+/g'), ' ') ?? ''}`;
+                },
+                () => `"${ccom.name}"`,
+              ]}
             />
           )}
           <ComAudioControlledList
