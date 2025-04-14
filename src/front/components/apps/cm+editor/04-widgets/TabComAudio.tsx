@@ -69,31 +69,19 @@ export const CmEditorTabComAudio = ({ topHTML, topCom, topMp3Rule }: Props) => {
         <>
           <h2>Добавить аудио</h2>
           {!topHTML && (
-            <>
-              <div>
-                <span
-                  className="children-middle pointer"
-                  onClick={() => {
-                    let max = 0;
-                    ccom.texts?.forEach(text => (text.length > max ? (max = text.length) : 0));
-                    const text = ccom.texts?.find(text => text.length === max);
-                    if (text) {
-                      const url = new URL('https://google.com/search');
-                      url.searchParams.set('q', `${ccom.name} ${text.replace(makeRegExp('/\\n+/g'), ' ')}`);
-                      window.open(url.toString());
-                    }
-                  }}
-                >
-                  Найти песню в гугл <LazyIcon icon="Google" />
-                </span>
-              </div>
-              <ObserveUrlResource
-                onSuccess={({ html, rule }) => {
-                  setInnerHTML(html);
-                  setMp3Rule(rule);
-                }}
-              />
-            </>
+            <ObserveUrlResource
+              onSuccess={({ html, rule }) => {
+                setInnerHTML(html);
+                setMp3Rule(rule);
+              }}
+              onGoogleSearch={() => {
+                let max = 0;
+                ccom.texts?.forEach(text => (text.length > max ? (max = text.length) : 0));
+                const text = ccom.texts?.find(text => text.length === max);
+
+                return `"${ccom.name}" ${text?.replace(makeRegExp('/\\n+/g'), ' ') ?? ''}`;
+              }}
+            />
           )}
           <ComAudioControlledList
             srcs={hrefs}

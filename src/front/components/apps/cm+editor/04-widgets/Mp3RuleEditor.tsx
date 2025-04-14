@@ -3,6 +3,7 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useCmMp3Rules } from '$cm+editor/basis/lib/hooks/useCmMp3Rules';
 import { ReactNode, useState } from 'react';
 import { CmMp3Rule } from 'shared/api';
+import { makeRegExp, StrRegExp } from 'shared/utils';
 
 export const Mp3RuleEditor = (
   props: Partial<CmMp3Rule> & {
@@ -15,6 +16,9 @@ export const Mp3RuleEditor = (
   const [mp3Rules] = useCmMp3Rules();
   const [url, setUrl] = useState(props.url || '');
   const [attr, setAttr] = useState(props.attr || '');
+  const [repReg, setRepReg] = useState<StrRegExp | ''>(props.repReg || '');
+  const [repRegError, setRepRegError] = useState('');
+  const [repText, setRepText] = useState<string>(props.repText || '');
   const [textQuery, setTextQuery] = useState(props.textQuery || '');
   const [isHTML, setIsHTML] = useState<1 | und>(props.isHTML);
   const [query, setQuery] = useState(props.query || '');
@@ -24,8 +28,8 @@ export const Mp3RuleEditor = (
   return (
     <>
       <div className="flex column margin-big-gap">
-        <div className="full-width">
-          {'URL-адрес: '}
+        <div className="w-full">
+          URL-адрес:
           {isRedact ? (
             <>
               <KeyboardInput
@@ -49,45 +53,45 @@ export const Mp3RuleEditor = (
               {errorMessage && <div className="error-message">{errorMessage}</div>}
             </>
           ) : (
-            <span className="color--7">{url}</span>
+            <span className="text-x7 ml-2">{url}</span>
           )}
         </div>
-        <div className="full-width">
-          Query (mp3):{' '}
+        <div className="w-full">
+          Query (mp3):
           {isRedact ? (
             <KeyboardInput
               value={query}
               onChange={setQuery}
             />
           ) : (
-            <span className="color--7">{query}</span>
+            <span className="text-x7 ml-2">{query}</span>
           )}
         </div>
-        <div className="full-width">
-          Аттрибут с URL (mp3):{' '}
+        <div className="w-full">
+          Аттрибут с URL (mp3):
           {isRedact ? (
             <KeyboardInput
               value={attr}
               onChange={setAttr}
             />
           ) : (
-            <span className="color--7">{attr}</span>
+            <span className="text-x7 ml-2">{attr}</span>
           )}
         </div>
-        <div className="full-width">
-          Аттрибут (текст):{' '}
+        <div className="w-full">
+          Аттрибут (текст):
           {isRedact ? (
             <KeyboardInput
               value={textQuery}
               onChange={setTextQuery}
             />
           ) : (
-            <span className="color--7">{textQuery || '-'}</span>
+            <span className="text-x7 ml-2">{textQuery || '-'}</span>
           )}
         </div>
         {textQuery && (
-          <div className="full-width">
-            innerHTML (Не innerText):{' '}
+          <div className="w-full">
+            innerHTML (Не innerText):
             {isRedact ? (
               <input
                 type="checkbox"
@@ -95,10 +99,47 @@ export const Mp3RuleEditor = (
                 onChange={event => setIsHTML(event.currentTarget.checked ? 1 : undefined)}
               />
             ) : (
-              <span className="color--7">{isHTML ? 'innerHTML' : 'innerText'}</span>
+              <span className="text-x7 ml-2">{isHTML ? 'innerHTML' : 'innerText'}</span>
             )}
           </div>
         )}
+        <div className="w-full">
+          Замена в строке URL (RegExp):
+          {isRedact ? (
+            <KeyboardInput
+              value={repReg}
+              onChange={text => {
+                setRepRegError('');
+
+                if (text === '') {
+                  setRepReg('');
+                  return;
+                }
+
+                try {
+                  makeRegExp(text as never);
+                  setRepReg(text as never);
+                } catch (error) {
+                  setRepRegError('' + error);
+                }
+              }}
+            />
+          ) : (
+            <span className="text-x7 ml-2">{repReg}</span>
+          )}
+        </div>
+        {repRegError && <div className="text-xKO">{repRegError}</div>}
+        <div className="w-full">
+          Заменить в строке URL (на текст):
+          {isRedact ? (
+            <KeyboardInput
+              value={repText}
+              onChange={setRepText}
+            />
+          ) : (
+            <span className="text-x7 ml-2">{repText}</span>
+          )}
+        </div>
         {props.button ||
           (isRedact ? (
             <TheIconButton
@@ -112,6 +153,8 @@ export const Mp3RuleEditor = (
                   query,
                   isHTML,
                   textQuery,
+                  repReg,
+                  repText,
                   url: new URL(url).origin,
                   w: props.w ?? Date.now() + Math.random(),
                 });

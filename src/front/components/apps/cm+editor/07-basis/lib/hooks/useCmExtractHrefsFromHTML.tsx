@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { CmMp3Rule } from 'shared/api';
-import { itIt } from 'shared/utils';
+import { itIt, makeRegExp } from 'shared/utils';
 
 export const useCmExtractHrefsFromHTML = (
   html: string | nil,
@@ -13,7 +13,16 @@ export const useCmExtractHrefsFromHTML = (
       const existsHrefs = new Set(audio?.split('\n'));
       const div = document.createElement('div');
       div.innerHTML = html;
-      const { attr, query, url } = mp3Rule;
+      const { attr, query, url, repReg, repText = '' } = mp3Rule;
+      let mapSrc = itIt<string>;
+
+      if (repReg)
+        try {
+          const regToReplace = makeRegExp(repReg);
+          mapSrc = (src: string) => src.replace(regToReplace, repText);
+        } catch (_error) {
+          //
+        }
 
       setHrefs(
         Array.from(
@@ -50,7 +59,7 @@ export const useCmExtractHrefsFromHTML = (
 
                   const src = serverUrl.toString();
                   if (existsHrefs.has(src)) return '';
-                  return src;
+                  return mapSrc(src);
                 }
 
                 return '';
