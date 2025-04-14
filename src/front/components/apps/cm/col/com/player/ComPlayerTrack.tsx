@@ -17,17 +17,24 @@ let userChangeTimeout: TimeOut;
 interface Props {
   src: string;
   timeRender?: (timeNode: React.ReactNode) => React.ReactNode;
+  isPlayOwnOnly?: boolean;
 }
 
-export const ComPlayerTrack = ({ timeRender, src }: Props) => {
+export const ComPlayerTrack = ({ timeRender, src, isPlayOwnOnly }: Props) => {
   const playSrc = useAtomValue(comPlayerPlaySrcAtom);
+  const isOtherPlaySrc = playSrc && playSrc !== src;
   const trackMarks = cmIDB.useAudioTrackMarks(playSrc ?? src);
-  const currentTime = useComPlayerCurrentTime();
+  let duration = useComPlayerDuration();
+  let currentTime = useComPlayerCurrentTime();
+
+  if (isPlayOwnOnly && isOtherPlaySrc) {
+    duration = 0;
+    currentTime = 0;
+  }
   const time = mylib.convertSecondsInStrTime(currentTime);
-  const duration = useComPlayerDuration();
+
   const setIsPlay = useAtomSet(comPlayerIsPlayAtom);
   const marks = useMemo(() => mylib.keys(trackMarks?.marks).map(value => ({ value })), [trackMarks?.marks]);
-  const isOtherPlaySrc = playSrc && playSrc !== src;
 
   return (
     <>

@@ -5,15 +5,19 @@ import { comPlayerIsPlayAtom, comPlayerPlaySrcAtom } from './controls';
 interface Props {
   className?: string;
   src: string;
+  isPlayOwnOnly?: boolean;
 }
 
-export const ComPlayerPlayButton = ({ src, className = '' }: Props) => {
+export const ComPlayerPlayButton = ({ src, className = '', isPlayOwnOnly }: Props) => {
   const playSrc = useAtomValue(comPlayerPlaySrcAtom);
+  const isOtherPlaySrc = playSrc && playSrc !== src;
+  const isCurrentPlay = useAtomValue(comPlayerIsPlayAtom);
+  const isPlay = isPlayOwnOnly && isOtherPlaySrc ? false : isCurrentPlay;
 
   return (
     <LazyIcon
-      icon={useAtomValue(comPlayerIsPlayAtom) ? 'Pause' : 'Play'}
-      className={className + ' pointer ' + (playSrc && playSrc !== src ? 'text-x5' : '')}
+      icon={isPlay ? 'Pause' : 'Play'}
+      className={className + ' pointer ' + (!isPlayOwnOnly && isOtherPlaySrc ? 'text-x5' : '')}
       withoutAnimation
       onClick={() => {
         comPlayerPlaySrcAtom.set(src);

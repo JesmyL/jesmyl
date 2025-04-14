@@ -7,9 +7,10 @@ import { ComPlayerTrack } from './ComPlayerTrack';
 interface Props {
   audioSrcs: string;
   timeRender?: (timeNode: React.ReactNode, currentSrc: string) => React.ReactNode;
+  isPlayOwnOnly?: boolean;
 }
 
-export const ComPlayer = ({ audioSrcs, timeRender }: Props) => {
+export const ComPlayer = ({ audioSrcs, timeRender, isPlayOwnOnly }: Props) => {
   const [currentVariant, setCurrentVariant] = useState(0);
   const variants = audioSrcs.split(makeRegExp('/\n+/')).map(src => src.trim());
   const src = variants[currentVariant];
@@ -17,9 +18,13 @@ export const ComPlayer = ({ audioSrcs, timeRender }: Props) => {
   return (
     <>
       <StyledPlayer className="composition-player flex gap-2 px-2">
-        <ComPlayerPlayButton src={src} />
+        <ComPlayerPlayButton
+          src={src}
+          isPlayOwnOnly={isPlayOwnOnly}
+        />
         <ComPlayerTrack
           src={src}
+          isPlayOwnOnly={isPlayOwnOnly}
           timeRender={timeRender ? timeNode => timeRender(timeNode, src) : itIt}
         />
 
