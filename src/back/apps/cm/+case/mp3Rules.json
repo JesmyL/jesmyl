@@ -28,5 +28,23 @@
     "textQuery": "#texts .blocks",
     "url": "https://fonki.pro",
     "w": 1713000448432.737
+  },
+  {
+    "attr": "data-url",
+    "query": "a[data-url]",
+    "textQuery": "",
+    "repReg": "/(copy.)?(mp3xa)/",
+    "repText": "cdn.$2",
+    "url": "https://mp3xa.me",
+    "w": 1744610276001.6072
+  },
+  {
+    "attr": "data-url",
+    "query": "a[data-url]",
+    "textQuery": "",
+    "repReg": "/(copy.)?(mp3xa)/",
+    "repText": "cdn.$2",
+    "url": "https://copy.mp3xa.me",
+    "w": 1744618913193.429
   }
 ]
