@@ -1,5 +1,6 @@
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmEditorClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { useCmMp3Rules } from '$cm+editor/basis/lib/hooks/useCmMp3Rules';
 import { useEffect, useState } from 'react';
@@ -8,9 +9,11 @@ import { CmMp3ContainsPageResult } from 'shared/api';
 export const ObserveUrlResource = ({
   onSuccess,
   availableWithTextQuery,
+  onGoogleSearch,
 }: {
   onSuccess: (val: CmMp3ContainsPageResult) => void;
   availableWithTextQuery?: boolean;
+  onGoogleSearch?: () => string;
 }) => {
   const [url, setUrl] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -52,9 +55,21 @@ export const ObserveUrlResource = ({
           (!availableWithTextQuery || rule.textQuery) && (
             <div
               key={rule.url}
-              className={!url || url.startsWith(rule.url) ? 'color--7' : ''}
+              className={'flex gap-2 my-2 ' + (url.startsWith(rule.url) ? 'text-x7' : '')}
             >
               {rule.url}
+              {onGoogleSearch && (
+                <LazyIcon
+                  icon="Google"
+                  onClick={() => {
+                    const text = onGoogleSearch();
+                    const url = new URL('https://google.com/search');
+
+                    url.searchParams.set('q', `site:${rule.url} ${text}`);
+                    window.open(url.toString());
+                  }}
+                />
+              )}
             </div>
           )
         );

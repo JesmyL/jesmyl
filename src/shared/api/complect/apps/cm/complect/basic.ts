@@ -1,9 +1,12 @@
+import { StrRegExp } from 'shared/utils';
 import { CmCatWid, CmComMod, CmComOrderWid, CmComWid, CmMeetingEventWid } from './enums';
 
 export interface CmMp3Rule {
   w: number;
   url: string;
   attr: string;
+  repReg: StrRegExp | '';
+  repText: string;
   query: string;
   textQuery?: string;
   isHTML?: 1;
