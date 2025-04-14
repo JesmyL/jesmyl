@@ -8,7 +8,7 @@ import { removedCategoriesAtom } from '$cm+editor/basis/lib/atoms/cat';
 import { cmEditCatClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { useEditableCcat } from '$cm+editor/basis/lib/hooks/useEditableCat';
 import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer';
-import { catTrackers } from '$cm/col/cat/Cat.complect';
+import { catTrackers } from '$cm/col/cat/useCatSpecialSearches';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
 import { useParams } from '@tanstack/react-router';
 import { useState } from 'react';

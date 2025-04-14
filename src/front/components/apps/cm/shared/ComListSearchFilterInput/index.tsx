@@ -5,7 +5,7 @@ import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { Com } from '$cm/col/com/Com';
 import { useEffect } from 'react';
 import { IExportableCom } from 'shared/api';
-import { categoryDebounceTermAtom, categoryTermAtom } from './lib';
+import { categoryTermAtom } from './lib';
 
 export const CmComListSearchFilterInput = <ComConstructor extends Com>({
   Constructor,
@@ -16,7 +16,7 @@ export const CmComListSearchFilterInput = <ComConstructor extends Com>({
   coms?: Com[];
   Constructor: new (icom: IExportableCom) => ComConstructor;
 }) => {
-  const term = useAtomValue(categoryDebounceTermAtom);
+  const term = useAtomValue(categoryTermAtom);
   const isNumberSearch = useAtomValue(isNumberSearchAtom);
 
   useEffect(() => {
@@ -50,7 +50,6 @@ export const CmComListSearchFilterInput = <ComConstructor extends Com>({
       placeholder="Песни"
       className="com-search debounced-searcher round-styled"
       debounce={500}
-      debouncedTermAtom={categoryDebounceTermAtom}
       termAtom={categoryTermAtom}
     />
   );

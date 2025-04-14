@@ -23,12 +23,12 @@ export class EditableComCorrects extends EditableComBase {
       });
     });
 
-    return name.replace(makeRegExp('/[^а-я!]+$/i'), '');
+    return name.replace(makeRegExp('/[^а-яёіґїє!]+$/i'), '');
   }
 
   static textBlockIncorrectMessages(text: string | und = '', isSetAllText?: boolean, maxLength?: number): ICorrects {
     if (maxLength != null) {
-      const lines = text.split(makeRegExp('/[^а-я]*\n/i'));
+      const lines = text.split(makeRegExp('/[^а-яёіґїє]*\n/i'));
       const longLinei = lines.findIndex(line => line.length > maxLength);
 
       if (longLinei > -1)

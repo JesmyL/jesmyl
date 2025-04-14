@@ -45,6 +45,7 @@ export const DebouncedSearchInput = ({ debounce = 300, className = '', placehold
       />
       <StyledInput
         key={iconName}
+        id="debounced-input"
         type={isNumberSearch ? 'tel' : 'text'}
         value={term}
         className="input"

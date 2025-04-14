@@ -8,8 +8,8 @@ import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer
 import { EditCompositionsMore } from '$cm+editor/features/EditCompositionsMore';
 import { useComs } from '$cm/basis/lib/coms-selections';
 import { Cat } from '$cm/col/cat/Cat';
-import { CatSpecialSearches } from '$cm/col/cat/Cat.complect';
 import { TheCatSpecialSearches } from '$cm/col/cat/SpecialSearches';
+import { CatSpecialSearches } from '$cm/col/cat/useCatSpecialSearches';
 import { Com } from '$cm/col/com/Com';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
 import { CmComListSearchFilterInput } from '$cm/shared/ComListSearchFilterInput';
@@ -94,7 +94,9 @@ export const EditCompositionsPage = () => {
               />
             )}
             <ComFaceList
+              key={+!term}
               list={searchedComs}
+              isPutCcomFaceOff={!!term}
               importantOnClick={({ com }) => {
                 navigate({
                   to: '/cm/edit/coms/$comw',
