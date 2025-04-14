@@ -47,7 +47,6 @@ const StyledFooter = styled.div.attrs({ className: 'footer-menu' })`
   align-items: flex-start;
   padding-top: 10px;
   opacity: var(--footer-opacity);
-  z-index: 200;
   transition: var(--fullscreen-transition);
   background-color: var(--color--1);
   width: 100vw;
