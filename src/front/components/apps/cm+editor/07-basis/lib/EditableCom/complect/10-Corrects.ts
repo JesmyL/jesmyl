@@ -26,19 +26,20 @@ export class EditableComCorrects extends EditableComBase {
     return name.replace(makeRegExp('/[^а-я!]+$/i'), '');
   }
 
-  static textBlockIncorrectMessages(text: string | und = '', isSetAllText?: boolean): ICorrects {
-    const maxLength = 32;
-    const lines = text.split(makeRegExp('/[^а-я]*\n/i'));
-    const longLinei = lines.findIndex(line => line.length > maxLength);
+  static textBlockIncorrectMessages(text: string | und = '', isSetAllText?: boolean, maxLength?: number): ICorrects {
+    if (maxLength != null) {
+      const lines = text.split(makeRegExp('/[^а-я]*\n/i'));
+      const longLinei = lines.findIndex(line => line.length > maxLength);
 
-    if (longLinei > -1)
-      return {
-        errors: [
-          {
-            message: `Строка ${longLinei + 1} слишком длинная:\n${lines[longLinei].slice(0, maxLength)}/---/${lines[longLinei].slice(maxLength)}`,
-          },
-        ],
-      };
+      if (longLinei > -1)
+        return {
+          errors: [
+            {
+              message: `Строка ${longLinei + 1} слишком длинная:\n${lines[longLinei].slice(0, maxLength)}/---/${lines[longLinei].slice(maxLength)}`,
+            },
+          ],
+        };
+    }
 
     let mistakes = '';
 

@@ -1,8 +1,8 @@
 import { CmConstantsConfig } from 'shared/api';
 
 export const cmConstantsDefaultConfig: CmConstantsConfig = {
-  maxFavouritesCount: 37,
-  maxAvailableComLineLength: 40,
+  maxFavouritesCount: 30,
+  maxAvailableComLineLength: 37,
   maxSelectedComsCount: 50,
   maxLaterComsVizitedCount: 4,
 };

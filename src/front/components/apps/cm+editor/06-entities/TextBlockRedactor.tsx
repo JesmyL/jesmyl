@@ -3,12 +3,14 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { TextCorrectMessages } from '$cm+editor/entities/TextBlockIncorrectMessages';
+import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useState } from 'react';
 import { CmTextableBlockAnchorTitles } from './TextableBlockAnchorTitles';
 
 export const CmTextBlockRedactor = ({ texti, text, ccom }: { texti: number; text: string; ccom: EditableCom }) => {
   const [value, setValue] = useState(text);
-  const corrects = EditableCom.textBlockIncorrectMessages(value);
+  const { maxAvailableComLineLength } = cmIDB.useValue.constantsConfig();
+  const corrects = EditableCom.textBlockIncorrectMessages(value, undefined, maxAvailableComLineLength);
 
   return (
     <div className="margin-big-gap-v">
