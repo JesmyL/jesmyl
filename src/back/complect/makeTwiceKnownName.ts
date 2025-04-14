@@ -35,6 +35,10 @@ const wordRegEnds: Record<string, Record<string, EndVariantsDict>> = {
       // охотничий
       pronoun: 'ичья', // охотничья
     },
+    щийся$: {
+      // заботящийся
+      pronoun: 'щаяся', // заботящаяся
+    },
     '([жшчщ])[иоы]й$': {
       // большой
       pronoun: '$1ая', // большая
@@ -56,6 +60,10 @@ const wordRegEnds: Record<string, Record<string, EndVariantsDict>> = {
     ичий$: {
       // птичий
       pronoun: 'ичье', // птичье
+    },
+    щийся$: {
+      // заботящийся
+      pronoun: 'щееся', // заботящееся
     },
     '([жчщ])[иоы]й$': {
       // большой поющий
