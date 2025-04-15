@@ -49,10 +49,13 @@ export class CmComUtils {
 
   static cmComLanguages = ['русский', 'украинский'];
 
-  static chordDiezEquivalent: Record<string, string> = {
-    Bb: 'A#',
-    Hb: 'A#',
-  };
+  static chordDiezEquivalent = SMyLib.entries(this.chordBemoleEquivalent).reduce(
+    (acc, [key, val]) => ({ ...acc, [val]: key }),
+    {
+      Bb: 'A#',
+      Hb: 'A#',
+    } as Record<string, string>,
+  );
 
   static textLinesLengthCorrects(text: string, maxLength: number): IIncorrects | und {
     const lines = text.split(makeRegExp(`/[^${this.slavicLowerLettersStr}]*\n/i`));
@@ -230,5 +233,3 @@ export class CmComUtils {
     };
   }
 }
-
-SMyLib.entries(CmComUtils.chordBemoleEquivalent).forEach(([key, val]) => (CmComUtils.chordDiezEquivalent[val] = key));
