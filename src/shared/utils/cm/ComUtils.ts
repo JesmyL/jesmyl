@@ -7,6 +7,7 @@ import { itTrim } from '../utils';
 export class CmComUtils {
   static doubleQuotesStr = '«»„„“”«»“' as const;
   static singleQuotesStr = '’`‘’' as const;
+  static replacableAvailableCharsStr = '…' as const;
   static ruUaSingLettersStr = 'уеыаоэяиёюіїє ' as const;
   static ruDifferentLowerLettersStr = 'ъыэё' as const;
   static uaDifferentLowerLettersStr = 'іґїє' as const;
@@ -73,11 +74,13 @@ export class CmComUtils {
       .map(itTrim)
       .join('\n')
       .trim()
-      .replace(makeRegExp(`/([${this.displayableTextBlockSingleWritedSymbolsStr} ])\\1+/g`), '$1')
-      .replace(makeRegExp(`/${this.doubleQuotesStr}/g`), '"')
-      .replace(makeRegExp(`/${this.singleQuotesStr}/g`), "'")
+      .replace(makeRegExp(`/[${this.doubleQuotesStr}]/g`), '"')
+      .replace(makeRegExp(`/[${this.singleQuotesStr}]/g`), "'")
       .replace(makeRegExp(`/ ([,.!?:])/g`), '$1')
-      .replace(makeRegExp(`/ -+ |-+ | -+/g`), '- ');
+      .replace(makeRegExp(`/ -+ |-+ | -+/g`), '- ')
+      .replace(makeRegExp(`/…|\\.{4,}/g`), '...')
+      .replace(makeRegExp(`/([^.]|^)\\.{2}([^.]|$)/g`), '$1.$2')
+      .replace(makeRegExp(`/([${this.displayableTextBlockSingleWritedSymbolsStr} ])\\1+/g`), '$1');
   }
 
   static transformToDisplayedText = (() => {
@@ -122,10 +125,15 @@ export class CmComUtils {
   static takeTextBlockIncorrects(text: string | und = '', eeStore: EeStorePack): IIncorrects {
     let mistakes = '';
 
-    const textWithIncorrects = text.replace(makeRegExp(`/[^${this.displayableTextBlockCharsStr}]+/gi`), all => {
-      mistakes += all;
-      return `[${all}]`;
-    });
+    const textWithIncorrects = text.replace(
+      makeRegExp(
+        `/[^${this.displayableTextBlockCharsStr}${this.doubleQuotesStr}${this.singleQuotesStr}${this.replacableAvailableCharsStr}]+/gi`,
+      ),
+      all => {
+        mistakes += all;
+        return `[${all}]`;
+      },
+    );
 
     if (textWithIncorrects !== text)
       return { errors: [{ message: `Присутствуют недопустимые символы: ${mistakes}\n\n${textWithIncorrects}\n\n` }] };
