@@ -12,6 +12,7 @@ import { ObserveUrlResource } from '$cm+editor/basis/ui/ObserveUrlResource';
 import { NewComNameChange } from '$cm+editor/entities/NameChangeWithCorrects';
 import { CmNewComTextableListRedactor } from '$cm+editor/entities/TextableListRedactor';
 import { ComAudioControlledList } from '$cm+editor/widgets/AudioControlledList';
+import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { Com } from '$cm/col/com/Com';
 import { ComOrders } from '$cm/col/com/orders/ComOrders';
@@ -31,6 +32,7 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
   const [newCom, setNewCom] = useState<IExportableCom>({ m: CmComMod.def, n: '', w: CmComWid.def });
   const [parseErrors, setParseErrors] = useState<string[]>([]);
   const eeStore = cmEditorIDB.useValue.eeStore();
+  const { maxAvailableComLineLength } = cmIDB.useValue.constantsConfig();
 
   const [hrefs, setHrefs] = useState<string[]>([]);
   const [removedAudioHrefs, setRemovedAudioHrefs] = useState<string[]>([]);
@@ -71,7 +73,12 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
     })
     .filter(itNNil);
 
-  const textsErrors = newCom.t?.map(text => CmComUtils.takeTextBlockIncorrects(text, eeStore)) ?? [];
+  const textsErrors =
+    newCom.t?.map(
+      text =>
+        CmComUtils.textLinesLengthIncorrects(text, maxAvailableComLineLength) ??
+        CmComUtils.takeTextBlockIncorrects(text, eeStore),
+    ) ?? [];
   const chordsErrors = newCom.c?.map(text => CmComUtils.chordsBlockIncorrectMessage(text)) ?? [];
 
   return (

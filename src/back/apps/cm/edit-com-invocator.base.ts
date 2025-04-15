@@ -3,7 +3,7 @@ import { CmComWid, IExportableCom } from 'shared/api';
 import { CmEditComSokiInvocatorModel } from 'shared/api/invocators/cm/edit-com-invocators.model';
 import { smylib } from 'shared/utils';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
-import { comsFileStore } from './file-stores';
+import { cmConstantsConfigFileStore, comsFileStore } from './file-stores';
 import { cmShareServerInvocatorMethods } from './invocator.shares';
 
 export const modifyInvocableCom = async (comw: CmComWid, mapper: (com: IExportableCom) => void) => {
@@ -70,7 +70,17 @@ export const cmEditComServerInvocatorBase =
           changeChordBlock: ({ texti: coli, comw, value }) =>
             modifyInvocableCom(comw, com => (com.c = com.c?.with(coli, value) ?? [])),
           changeTextBlock: ({ texti: coli, comw, value }) =>
-            modifyInvocableCom(comw, com => (com.t = com.t?.with(coli, CmComUtils.transformToClearText(value)) ?? [])),
+            modifyInvocableCom(comw, com => {
+              if (
+                CmComUtils.textLinesLengthIncorrects(
+                  value,
+                  cmConstantsConfigFileStore.getValue().maxAvailableComLineLength,
+                )
+              )
+                throw 'Слишком длинные строки';
+
+              com.t = com.t?.with(coli, CmComUtils.transformToClearText(value)) ?? [];
+            }),
 
           insertChordBlock: insertInTextableBlock('c'),
           insertTextBlock: insertInTextableBlock('t'),
@@ -79,7 +89,22 @@ export const cmEditComServerInvocatorBase =
           removeTextBlock: removeTextableBlock('t'),
 
           newCom: async ({ value: newCom }) => {
-            const com = { ...newCom, w: Date.now(), m: Date.now() };
+            if (
+              newCom.t?.some(text =>
+                CmComUtils.textLinesLengthIncorrects(
+                  text,
+                  cmConstantsConfigFileStore.getValue().maxAvailableComLineLength,
+                ),
+              )
+            )
+              throw 'Слишком длинные строки';
+
+            const com = {
+              ...newCom,
+              w: Date.now(),
+              m: Date.now(),
+              t: newCom.t?.map(text => CmComUtils.transformToClearText(text)),
+            };
             comsFileStore.getValue().push(com);
             comsFileStore.saveValue();
             cmShareServerInvocatorMethods.editedCom({ com });

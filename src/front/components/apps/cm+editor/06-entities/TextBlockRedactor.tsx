@@ -19,7 +19,7 @@ export const CmTextBlockRedactor = ({ texti, text, ccom }: Props) => {
   const [value, setValue] = useState(text);
   const eeStore = cmEditorIDB.useValue.eeStore();
   const { maxAvailableComLineLength } = cmIDB.useValue.constantsConfig();
-  const lineLengthCorrects = CmComUtils.textLinesLengthCorrects(value, maxAvailableComLineLength);
+  const lineLengthCorrects = CmComUtils.textLinesLengthIncorrects(value, maxAvailableComLineLength);
   const corrects = lineLengthCorrects ?? CmComUtils.takeTextBlockIncorrects(value, eeStore);
 
   return (

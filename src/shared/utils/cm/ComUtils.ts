@@ -57,7 +57,7 @@ export class CmComUtils {
     } as Record<string, string>,
   );
 
-  static textLinesLengthCorrects(text: string, maxLength: number): IIncorrects | und {
+  static textLinesLengthIncorrects(text: string, maxLength: number): IIncorrects | und {
     const lines = text.split(makeRegExp(`/[^${this.slavicLowerLettersStr}]*\n/i`));
     const longLinei = lines.findIndex(line => line.length > maxLength);
 
