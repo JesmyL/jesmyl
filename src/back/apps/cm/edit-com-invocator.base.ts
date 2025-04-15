@@ -1,7 +1,7 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { CmComWid, IExportableCom } from 'shared/api';
 import { CmEditComSokiInvocatorModel } from 'shared/api/invocators/cm/edit-com-invocators.model';
-import { smylib } from 'shared/utils';
+import { itNNil, smylib } from 'shared/utils';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { cmConstantsConfigFileStore, comsFileStore } from './file-stores';
 import { cmShareServerInvocatorMethods } from './invocator.shares';
@@ -71,13 +71,12 @@ export const cmEditComServerInvocatorBase =
             modifyInvocableCom(comw, com => (com.c = com.c?.with(coli, value) ?? [])),
           changeTextBlock: ({ texti: coli, comw, value }) =>
             modifyInvocableCom(comw, com => {
-              if (
-                CmComUtils.textLinesLengthIncorrects(
-                  value,
-                  cmConstantsConfigFileStore.getValue().maxAvailableComLineLength,
-                )
-              )
-                throw 'Слишком длинные строки';
+              const incorrects = CmComUtils.textLinesLengthIncorrects(
+                value,
+                cmConstantsConfigFileStore.getValue().maxAvailableComLineLength,
+              );
+
+              if (incorrects?.errors?.length) throw incorrects.errors[0].message;
 
               com.t = com.t?.with(coli, CmComUtils.transformToClearText(value)) ?? [];
             }),
@@ -89,15 +88,16 @@ export const cmEditComServerInvocatorBase =
           removeTextBlock: removeTextableBlock('t'),
 
           newCom: async ({ value: newCom }) => {
-            if (
-              newCom.t?.some(text =>
+            const incorrects = newCom.t
+              ?.map(text =>
                 CmComUtils.textLinesLengthIncorrects(
                   text,
                   cmConstantsConfigFileStore.getValue().maxAvailableComLineLength,
                 ),
               )
-            )
-              throw 'Слишком длинные строки';
+              .filter(itNNil);
+
+            if (incorrects?.[0]?.errors?.length) throw incorrects[0].errors[0].message;
 
             const com = {
               ...newCom,
