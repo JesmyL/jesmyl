@@ -18,7 +18,7 @@ export interface Props<Value> {
 
 export const Modal = <Value,>({ mood, children, isRenderHere, openAtom, checkIsOpen }: Props<Value>) => {
   const isOpenValue = useAtomValue(openAtom);
-  const isOpen = checkIsOpen === undefined ? !!isOpenValue : checkIsOpen(isOpenValue);
+  const isOpen = checkIsOpen === undefined ? isOpenValue === 0 || !!isOpenValue : checkIsOpen(isOpenValue);
 
   const modalNode = (
     <Portal>

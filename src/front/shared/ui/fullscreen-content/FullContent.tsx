@@ -5,6 +5,7 @@ import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
 import { HTMLAttributes, ReactNode, useEffect } from 'react';
 import { Eventer, EventerListeners } from 'shared/utils';
 import styled from 'styled-components';
+import { Portal } from '../Portal';
 import { RootAnchoredContent } from '../RootAnchoredContent';
 import { TheIconButton } from '../the-icon/TheIconButton';
 
@@ -26,25 +27,27 @@ interface Props<Value> {
 
 export const FullContent = <Value,>(props: Props<Value>) => {
   const isOpenValue = useAtomValue(props.openAtom);
-  const isOpen = props.checkIsOpen === undefined ? !!isOpenValue : props.checkIsOpen(isOpenValue);
+  const isOpen = props.checkIsOpen === undefined ? isOpenValue === 0 || !!isOpenValue : props.checkIsOpen(isOpenValue);
 
   return (
     <RootAnchoredContent openAtom={props.openAtom}>
       {isOpen && (
-        <Swiped
-          close={props.openAtom.reset}
-          onClick={props.closable ? props.openAtom.reset : propagationStopper}
-          className={props.className}
-        >
-          {props.closable || (
-            <StyledCloseButton
-              icon="Cancel01"
-              className="pointer close-button"
-              onClick={props.openAtom.reset}
-            />
-          )}
-          <StyledContainer className={props.containerClassName ?? 'p-5'}>{props.children}</StyledContainer>
-        </Swiped>
+        <Portal>
+          <Swiped
+            close={props.openAtom.reset}
+            onClick={props.closable ? props.openAtom.reset : propagationStopper}
+            className={props.className}
+          >
+            {props.closable || (
+              <StyledCloseButton
+                icon="Cancel01"
+                className="pointer close-button"
+                onClick={props.openAtom.reset}
+              />
+            )}
+            <StyledContainer className={props.containerClassName ?? 'p-5'}>{props.children}</StyledContainer>
+          </Swiped>
+        </Portal>
       )}
     </RootAnchoredContent>
   );
@@ -77,7 +80,6 @@ const StyledContainerWrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 999;
   width: 100vw;
   height: 100%;
 
@@ -85,7 +87,7 @@ const StyledContainerWrapper = styled.div`
     position: fixed;
     top: 10px;
     right: 10px;
-    z-index: 100;
+    z-index: 1000000;
   }
 `;
 
