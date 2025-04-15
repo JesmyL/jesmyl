@@ -1,12 +1,12 @@
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
-import { ICorrects } from '$cm+editor/basis/model/Corrects';
 import { TextCorrectMessages } from '$cm+editor/entities/TextBlockIncorrectMessages';
+import { IIncorrects } from 'shared/model/cm/Incorrects';
 
 type Props = {
   title: React.ReactNode;
   list: string[];
   onInput(value: string, texti: number): void;
-  corrects: ICorrects[];
+  corrects: IIncorrects[];
 };
 
 export const CmNewComTextableListRedactor = ({ title, onInput, list, corrects }: Props) => {

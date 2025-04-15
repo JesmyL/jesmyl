@@ -1,19 +1,29 @@
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditorIDB } from '$cm+editor/basis/lib/cmEditorIDB';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { TextCorrectMessages } from '$cm+editor/entities/TextBlockIncorrectMessages';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useState } from 'react';
+import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { CmTextableBlockAnchorTitles } from './TextableBlockAnchorTitles';
 
-export const CmTextBlockRedactor = ({ texti, text, ccom }: { texti: number; text: string; ccom: EditableCom }) => {
+interface Props {
+  texti: number;
+  text: string;
+  ccom: EditableCom;
+}
+
+export const CmTextBlockRedactor = ({ texti, text, ccom }: Props) => {
   const [value, setValue] = useState(text);
+  const eeStore = cmEditorIDB.useValue.eeStore();
   const { maxAvailableComLineLength } = cmIDB.useValue.constantsConfig();
-  const corrects = EditableCom.textBlockIncorrectMessages(value, undefined, maxAvailableComLineLength);
+  const lineLengthCorrects = CmComUtils.textLinesLengthCorrects(value, maxAvailableComLineLength);
+  const corrects = lineLengthCorrects ?? CmComUtils.takeTextBlockIncorrects(value, eeStore);
 
   return (
-    <div className="margin-big-gap-v">
+    <div className="my-5">
       {!texti && (
         <TheIconButton
           icon="PlusSignCircle"
@@ -27,13 +37,13 @@ export const CmTextBlockRedactor = ({ texti, text, ccom }: { texti: number; text
           }
         />
       )}
-      <div className="flex between">
+      <div className="flex justify-between">
         <CmTextableBlockAnchorTitles
           texti={texti}
           com={ccom}
         />
 
-        <span className="flex flex-gap">
+        <span className="flex gap-2">
           <TheIconButton
             icon="Cancel01"
             onClick={() =>

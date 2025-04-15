@@ -6,7 +6,6 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { TheButton } from '#shared/ui/TheButton';
 import { cmEditorClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
-import { correctChordNameReg } from '$cm+editor/basis/lib/utils';
 import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer';
 import { ChordRedactableTrack } from '$cm+editor/entities/ChordRedactableTrack';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
@@ -14,6 +13,7 @@ import { ChordCard } from '$cm/col/com/chord-card/ChordCard';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { useEffect, useMemo, useState } from 'react';
 import { ChordPack, ChordTrack } from 'shared/api';
+import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import styled from 'styled-components';
 
 const redactableChordsAtom = atom<ChordPack>({});
@@ -46,7 +46,7 @@ export const EditChordPage = () => {
   useEffect(() => {
     setNewNameError(
       isNewChord
-        ? correctChordNameReg.exec(newChordName)
+        ? CmComUtils.correctChordNameReg.exec(newChordName)
           ? chords[newChordName] || redactableChords[newChordName]
             ? 'Такой аккорд существует'
             : ''

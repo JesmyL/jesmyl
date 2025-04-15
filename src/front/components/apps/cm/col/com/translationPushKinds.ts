@@ -1,13 +1,4 @@
 import { MyLib } from '#shared/lib/my-lib';
-import { makeRegExp } from 'shared/utils';
-
-export const ruUaSingLettersStr = 'уеыаоэяиёюіїє ' as const;
-export const iRuUaReg = makeRegExp(`/[${ruUaSingLettersStr}]/i`);
-export const gSimpleHashChordReg = makeRegExp('/[ACDEFGH]#?/g');
-export const gSimpleBemoleChordReg = makeRegExp('/[ABCDEFGH]b?/g');
-export const gSimpleHashedEachLetterChordReg = makeRegExp('/[A-H]#/g');
-
-export const simpleHashChords = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'H'];
 
 export const translationPushKinds = [
   // +цифра в ключе - меньше или равно количество реальных строк
@@ -115,17 +106,3 @@ export const translationPushKinds = [
     },
   };
 });
-
-export const chordBemoleEquivalent: Record<string, string> = {
-  'A#': 'B',
-  'C#': 'Db',
-  'D#': 'Eb',
-  'F#': 'Gb',
-  'G#': 'Ab',
-};
-
-export const chordDiezEquivalent: Record<string, string> = {
-  Bb: 'A#',
-  Hb: 'A#',
-};
-MyLib.entries(chordBemoleEquivalent).forEach(([key, val]) => (chordDiezEquivalent[val] = key));

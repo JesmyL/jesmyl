@@ -5,13 +5,11 @@ import { IExportableCom } from 'shared/api';
 import { makeRegExp } from 'shared/utils';
 
 export class EditableComBase extends Com {
-  initialName: string;
   initial: Com;
 
   constructor(top: IExportableCom) {
     super(mylib.clone(top));
 
-    this.initialName = this.name;
     this.initial = new Com(mylib.clone(top));
   }
 

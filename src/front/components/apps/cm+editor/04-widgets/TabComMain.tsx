@@ -6,7 +6,7 @@ import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { removedCompositionsAtom } from '$cm+editor/basis/lib/atoms/com';
 import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
-import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
+import { cmEditorIDB } from '$cm+editor/basis/lib/cmEditorIDB';
 import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { TextCorrectMessages } from '$cm+editor/entities/TextBlockIncorrectMessages';
 import { ChordVisibleVariant } from '$cm/Cm.model';
@@ -14,6 +14,7 @@ import { TheCom } from '$cm/col/com/TheCom';
 import { useAuth } from '$index/atoms';
 import { useState } from 'react';
 import { emptyFunc } from 'shared/utils';
+import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { CmComEditTransposition } from './ComEditTransposition';
 
 const meterSizeItems: DropdownItem<3 | 4>[] = [
@@ -27,9 +28,10 @@ export const CmEditorTabComMain = () => {
   const auth = useAuth();
   const confirm = useConfirm();
   const [name, setName] = useState('');
+  const eeStore = cmEditorIDB.useValue.eeStore();
 
   if (!ccom) return null;
-  const nameCorrects = EditableCom.textBlockIncorrectMessages(name);
+  const nameCorrects = CmComUtils.takeTextBlockIncorrects(name, eeStore);
 
   return (
     <>

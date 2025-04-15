@@ -3,25 +3,17 @@ import { BaseNamed } from '$cm/base/BaseNamed';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { IExportableCom, IExportableOrder } from 'shared/api';
 import { itIt, makeRegExp } from 'shared/utils';
-import { cmComLanguages } from 'shared/values/values';
+import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { Cat } from '../cat/Cat';
 import { blockStyles } from './block-styles/BlockStyles';
 import { StyleBlock } from './block-styles/StyleBlock';
-import {
-  chordBemoleEquivalent,
-  gSimpleHashChordReg,
-  gSimpleHashedEachLetterChordReg,
-  iRuUaReg,
-  simpleHashChords,
-  translationPushKinds,
-} from './Com.complect';
 import { Order } from './order/Order';
 import { IExportableOrderMe, OrderTopHeaderBag } from './order/Order.model';
+import { translationPushKinds } from './translationPushKinds';
 
 export class Com extends BaseNamed<IExportableCom> {
   initial: Partial<IExportableCom & { pos: number }>;
   ton?: number;
-  initialName: string;
   excludedModulations: number[] = [];
 
   protected _o?: Order[];
@@ -31,7 +23,6 @@ export class Com extends BaseNamed<IExportableCom> {
 
   constructor(top: IExportableCom) {
     super(top);
-    this.initialName = this.name;
     this.ton = top.ton;
 
     this.initial = {};
@@ -143,26 +134,26 @@ export class Com extends BaseNamed<IExportableCom> {
     return Com.langs[this.langi || 0];
   }
   static get langs() {
-    return cmComLanguages;
+    return CmComUtils.cmComLanguages;
   }
 
   getVowelPositions(textLine: string) {
     const R = [];
-    for (let i = 0; i < textLine.length; i++) if (iRuUaReg.test(textLine[i])) R.push(i);
+    for (let i = 0; i < textLine.length; i++) if (CmComUtils.ruUaReg_i.test(textLine[i])) R.push(i);
     return R;
   }
 
   transposeChord(chord: string, delta: number = 1) {
-    const cindex = simpleHashChords.indexOf(chord);
+    const cindex = CmComUtils.simpleHashChords.indexOf(chord);
     const di = cindex - -delta;
-    const len = simpleHashChords.length;
+    const len = CmComUtils.simpleHashChords.length;
     const nindex = di < 0 ? len - -di : di > len ? di % len : di === len || -di === len ? 0 : di;
 
-    return simpleHashChords[nindex];
+    return CmComUtils.simpleHashChords[nindex];
   }
 
   transposeBlock(cblock: string, delta = this.transPosition) {
-    return cblock?.replace(gSimpleHashChordReg, chord => this.transposeChord(chord, delta));
+    return cblock?.replace(CmComUtils.simpleHashChordReg_g, chord => this.transposeChord(chord, delta));
   }
 
   transposedBlocks(delta?: number) {
@@ -233,45 +224,6 @@ export class Com extends BaseNamed<IExportableCom> {
 
     return kinds.clearList();
   }
-
-  static bracketsTransformed = (() => {
-    const brackets = [
-      ['«', '»'],
-      ['„', '“'],
-      ['"', '"'],
-      ["'", "'"],
-    ];
-    const backBrackets = ['`', '`'];
-    const dashReg = makeRegExp(`/(\\s)-+(\\s)/g`);
-    const openBracketReg = makeRegExp(`/(\\( ?)?("+)( ?\\)?)/g`);
-    const closeBracketReg = makeRegExp(`/\\("+ \\)$|^\\( "+\\)/g`);
-    const spacesLikeReg = makeRegExp(`/\\s/`);
-
-    return (str = '') => {
-      let level = 0;
-
-      const text = str
-        .replace(dashReg, '$1—$2')
-        .replace(openBracketReg, function (_, pref = '', all: string, post = '', index, text) {
-          const pre = text[index - 1];
-          const isOpen = !pre || pre.search(spacesLikeReg) + 1;
-          const brLevel = level - (isOpen ? 0 : 1);
-          level -= (isOpen ? -1 : 1) * all.length;
-
-          return pref[0] === '(' && post.endsWith(')')
-            ? ''
-            : (pref || '') +
-                all
-                  .split('')
-                  .map((_, bri) => (brackets[brLevel - (isOpen ? -bri : bri)] ?? backBrackets)[isOpen ? 0 : 1])
-                  .join('') +
-                (post || '');
-        })
-        .replace(closeBracketReg, '');
-
-      return { text, level };
-    };
-  })();
 
   get chordLabels(): string[][][] {
     if (this._chordLabels == null) this.updateChordLabels();
@@ -350,7 +302,12 @@ export class Com extends BaseNamed<IExportableCom> {
 
   static withBemoles(chords?: string, isSet: num = 0) {
     return (
-      isSet ? chords?.replace(gSimpleHashedEachLetterChordReg, all => chordBemoleEquivalent[all] || all) : chords
+      isSet
+        ? chords?.replace(
+            CmComUtils.simpleHashedEachLetterChordReg_g,
+            all => CmComUtils.chordBemoleEquivalent[all] || all,
+          )
+        : chords
     )?.replace(makeRegExp('/A#/g'), 'B');
   }
 

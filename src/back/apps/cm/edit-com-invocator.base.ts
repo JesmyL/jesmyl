@@ -2,7 +2,7 @@ import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { CmComWid, IExportableCom } from 'shared/api';
 import { CmEditComSokiInvocatorModel } from 'shared/api/invocators/cm/edit-com-invocators.model';
 import { smylib } from 'shared/utils';
-import { cmComLanguages } from 'shared/values/values';
+import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { comsFileStore } from './file-stores';
 import { cmShareServerInvocatorMethods } from './invocator.shares';
 
@@ -70,7 +70,7 @@ export const cmEditComServerInvocatorBase =
           changeChordBlock: ({ texti: coli, comw, value }) =>
             modifyInvocableCom(comw, com => (com.c = com.c?.with(coli, value) ?? [])),
           changeTextBlock: ({ texti: coli, comw, value }) =>
-            modifyInvocableCom(comw, com => (com.t = com.t?.with(coli, value) ?? [])),
+            modifyInvocableCom(comw, com => (com.t = com.t?.with(coli, CmComUtils.transformToClearText(value)) ?? [])),
 
           insertChordBlock: insertInTextableBlock('c'),
           insertTextBlock: insertInTextableBlock('t'),
@@ -103,7 +103,7 @@ export const cmEditComServerInvocatorBase =
         },
         onEachFeedback: {
           changeLanguage: ({ value }, com) =>
-            `Язык песни ${getCmComNameInBrackets(com)} изменён на ${cmComLanguages[value]}`,
+            `Язык песни ${getCmComNameInBrackets(com)} изменён на ${CmComUtils.cmComLanguages[value]}`,
 
           changePushKind: ({ value }, com) =>
             `Изменено значение правила группировок для слайдов в песне ${getCmComNameInBrackets(com)} - ${value}`,

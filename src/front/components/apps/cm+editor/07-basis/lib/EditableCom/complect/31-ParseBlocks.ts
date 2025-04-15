@@ -1,19 +1,10 @@
 import { mylib } from '#shared/lib/my-lib';
-import {
-  checkIsChordLineReg,
-  ruDifferentLowerLettersStr,
-  slavicLowerLettersStr,
-  uaDifferentLowerLettersStr,
-} from '$cm+editor/basis/lib/utils';
 import { blockStyles } from '$cm/col/com/block-styles/BlockStyles';
 import { StyleBlock } from '$cm/col/com/block-styles/StyleBlock';
 import { INewExportableOrder } from '$cm/col/com/order/Order.model';
 import { makeRegExp } from 'shared/utils';
+import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { EditableComBlocks } from './30-Blocks';
-
-const freeSlavicLineReg_gi = makeRegExp(`/[^${slavicLowerLettersStr} ]/gi`);
-const ruDifferentReg = makeRegExp(`/[${ruDifferentLowerLettersStr}]/`);
-const uaDifferentReg = makeRegExp(`/[${uaDifferentLowerLettersStr}]/`);
 
 export class EditableComParseBlocks extends EditableComBlocks {
   static async parseBlocksFromClipboard(value: string, cb?: (blocks: string[]) => boolean) {
@@ -60,8 +51,8 @@ export class EditableComParseBlocks extends EditableComBlocks {
         const freeLine = line.replace(makeRegExp('/\\s+/g'), ' ').trim();
 
         if (languagei !== null) {
-          setLanguagei(ruDifferentReg, freeLine, 0);
-          setLanguagei(uaDifferentReg, freeLine, 1);
+          setLanguagei(makeRegExp(`/[${CmComUtils.ruDifferentLowerLettersStr}]/`), freeLine, 0);
+          setLanguagei(makeRegExp(`/[${CmComUtils.uaDifferentLowerLettersStr}]/`), freeLine, 1);
         }
 
         if (linei === 0) {
@@ -69,7 +60,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
           if (unit.style) return;
         }
 
-        if (freeLine.match(checkIsChordLineReg)) {
+        if (freeLine.match(CmComUtils.checkIsChordLineReg)) {
           chordLines.push(freeLine);
         } else {
           if (textLines.length === 0) {
@@ -119,10 +110,11 @@ export class EditableComParseBlocks extends EditableComBlocks {
 
       unitTextLines.forEach((lines, linesi) => {
         const currUnit = linesi === 0 ? unit : {};
+        const reg = makeRegExp(`/[^${CmComUtils.slavicLowerLettersStr} ]/gi`);
 
         currUnit.text = lines.join('\n');
         currUnit.chords = chords;
-        currUnit.cleanText = lines.map(line => line.replace(freeSlavicLineReg_gi, '')).join('\n');
+        currUnit.cleanText = lines.map(line => line.replace(reg, '')).join('\n');
 
         if (linesi > 0) {
           currUnit.style = inheritStyle;

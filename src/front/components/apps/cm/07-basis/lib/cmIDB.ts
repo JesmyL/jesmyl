@@ -1,5 +1,8 @@
 import { DexieDB } from '#shared/lib/DexieDB';
 import { mylib } from '#shared/lib/my-lib';
+import { ChordVisibleVariant, FavoriteMeetings, PlayerHideMode } from '$cm/Cm.model';
+import { defaultCmConfig } from '$cm/translation/complect/controlled/hooks/configs';
+import { CmTranslationScreenConfig } from '$cm/translation/complect/controlled/model';
 import { useLiveQuery } from 'dexie-react-hooks';
 import {
   ChordPack,
@@ -14,9 +17,6 @@ import {
 } from 'shared/api';
 import { itNumSort } from 'shared/utils';
 import { cmConstantsDefaultConfig } from 'shared/values/cm/cmConstantsDefaultConfig';
-import { ChordVisibleVariant, FavoriteMeetings, PlayerHideMode } from '../../Cm.model';
-import { defaultCmConfig } from '../../translation/complect/controlled/hooks/configs';
-import { CmTranslationScreenConfig } from '../../translation/complect/controlled/model';
 
 export interface CmIDBStorage {
   chordPack: ChordPack;

@@ -1,6 +1,6 @@
 import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
-import { translationPushKinds } from '$cm/col/com/Com.complect';
+import { translationPushKinds } from '$cm/col/com/translationPushKinds';
 import { useCmScreenTranslationCurrentConfig } from '$cm/translation/complect/controlled/hooks/configs';
 import { Button } from '@mui/material';
 

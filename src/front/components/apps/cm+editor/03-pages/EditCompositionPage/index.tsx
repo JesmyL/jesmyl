@@ -65,7 +65,7 @@ export const CmEditCompositionPage = () => {
       className="edit-composition"
       headTitle={
         <>
-          #{<CmComNumber comw={ccom.wid} />} {ccom.initialName || ccom.name}
+          #{<CmComNumber comw={ccom.wid} />} {ccom.name}
         </>
       }
       withoutBackSwipe

@@ -1,9 +1,9 @@
-import { ICorrects } from '$cm+editor/basis/model/Corrects';
+import { IIncorrects } from 'shared/model/cm/Incorrects';
 import styled, { css } from 'styled-components';
 
 const classNamePostfix = '-correct-block';
 
-export const TextCorrectMessages = ({ corrects }: { corrects: ICorrects }) => {
+export const TextCorrectMessages = ({ corrects }: { corrects: IIncorrects }) => {
   return (
     <>
       {corrects.errors?.map(({ message }, correcti) => {

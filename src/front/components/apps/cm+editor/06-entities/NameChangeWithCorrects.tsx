@@ -1,7 +1,8 @@
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
-import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
+import { cmEditorIDB } from '$cm+editor/basis/lib/cmEditorIDB';
 import { TextCorrectMessages } from '$cm+editor/entities/TextBlockIncorrectMessages';
 import { IExportableCom } from 'shared/api';
+import { CmComUtils } from 'shared/utils/cm/ComUtils';
 
 export const NewComNameChange = ({
   name,
@@ -10,6 +11,8 @@ export const NewComNameChange = ({
   name: string | und;
   setNewCom: (value: React.SetStateAction<IExportableCom>) => void;
 }) => {
+  const eeStore = cmEditorIDB.useValue.eeStore();
+
   return (
     <>
       <div className="flex full-width">
@@ -25,7 +28,7 @@ export const NewComNameChange = ({
           />
         </div>
       </div>
-      <TextCorrectMessages corrects={EditableCom.textBlockIncorrectMessages(name)} />
+      <TextCorrectMessages corrects={CmComUtils.takeTextBlockIncorrects(name, eeStore)} />
     </>
   );
 };

@@ -7,10 +7,11 @@ import { CmTextableBlockAnchorTitles } from '$cm+editor/entities/TextableBlockAn
 import { TextCorrectMessages } from '$cm+editor/entities/TextBlockIncorrectMessages';
 import { useState } from 'react';
 import { makeRegExp } from 'shared/utils';
+import { CmComUtils } from 'shared/utils/cm/ComUtils';
 
 export const CmChordsBlockRedactor = ({ text, texti, ccom }: { texti: number; text: string; ccom: EditableCom }) => {
   const [value, setValue] = useState(text);
-  const corrects = EditableCom.chordsBlockIncorrectMessage(value);
+  const corrects = CmComUtils.chordsBlockIncorrectMessage(value);
 
   return (
     <div className="margin-big-gap-v">

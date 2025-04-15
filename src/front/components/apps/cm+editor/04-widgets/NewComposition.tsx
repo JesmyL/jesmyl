@@ -5,6 +5,7 @@ import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TheButton } from '#shared/ui/TheButton';
 import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditorIDB } from '$cm+editor/basis/lib/cmEditorIDB';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { useCmExtractHrefsFromHTML } from '$cm+editor/basis/lib/hooks/useCmExtractHrefsFromHTML';
 import { ObserveUrlResource } from '$cm+editor/basis/ui/ObserveUrlResource';
@@ -18,6 +19,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
 import { CmComMod, CmComWid, CmMp3Rule, IExportableCom } from 'shared/api';
 import { itIt, itNNil, makeRegExp } from 'shared/utils';
+import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import styled from 'styled-components';
 
 export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
@@ -28,6 +30,7 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
   const [mp3Rule, setMp3Rule] = useState<CmMp3Rule | und>();
   const [newCom, setNewCom] = useState<IExportableCom>({ m: CmComMod.def, n: '', w: CmComWid.def });
   const [parseErrors, setParseErrors] = useState<string[]>([]);
+  const eeStore = cmEditorIDB.useValue.eeStore();
 
   const [hrefs, setHrefs] = useState<string[]>([]);
   const [removedAudioHrefs, setRemovedAudioHrefs] = useState<string[]>([]);
@@ -68,8 +71,8 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
     })
     .filter(itNNil);
 
-  const textsErrors = newCom.t?.map(text => EditableCom.textBlockIncorrectMessages(text)) ?? [];
-  const chordsErrors = newCom.c?.map(text => EditableCom.chordsBlockIncorrectMessage(text)) ?? [];
+  const textsErrors = newCom.t?.map(text => CmComUtils.takeTextBlockIncorrects(text, eeStore)) ?? [];
+  const chordsErrors = newCom.c?.map(text => CmComUtils.chordsBlockIncorrectMessage(text)) ?? [];
 
   return (
     <>
