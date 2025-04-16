@@ -1,6 +1,7 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { CmEditComExternalsSokiInvocatorModel } from 'shared/api/invocators/cm/edit-com-externals-invocators.model';
 import { smylib } from 'shared/utils';
+import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { schedulesFileStore } from '../index/schedules/file-stores';
 import { comsFileStore, eventPackHistoryFileStore, eventPacksFileStore } from './file-stores';
 import { cmShareServerInvocatorMethods } from './invocator.shares';
@@ -63,7 +64,7 @@ export const cmEditComExternalsSokiInvocatorBaseServer =
                 const coms = comsFileStore.getValue().filter(com => !com.isRemoved);
                 const comi = coms.findIndex(com => com.w === comw);
                 if (comi < 0) return `<s>Нет песни</s>`;
-                return `${comi + 1}. ${coms[comi].n}`;
+                return `${CmComUtils.takeCorrectComNumber(comi + 1)}. ${coms[comi].n}`;
               })
               .join('\n')}`,
 

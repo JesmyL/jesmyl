@@ -57,7 +57,7 @@ export class CmComUtils {
     } as Record<string, string>,
   );
 
-  static textLinesLengthIncorrects(text: string, maxLength: number): IIncorrects | und {
+  static textLinesLengthIncorrects = (text: string, maxLength: number): IIncorrects | und => {
     const lines = text.split(makeRegExp(`/[^${this.slavicLowerLettersStr}]*\n/i`));
     const longLinei = lines.findIndex(line => line.length > maxLength);
 
@@ -69,9 +69,12 @@ export class CmComUtils {
           },
         ],
       };
-  }
+  };
 
-  static transformToClearText(text: string) {
+  static takeCorrectComNumber = (comPositionNumber: number) =>
+    comPositionNumber > 403 || comPositionNumber > 665 ? comPositionNumber + 1 : comPositionNumber;
+
+  static transformToClearText = (text: string) => {
     return text
       .split(makeRegExp('/\n/'))
       .map(itTrim)
@@ -84,7 +87,7 @@ export class CmComUtils {
       .replace(makeRegExp(`/…|\\.{4,}/g`), '...')
       .replace(makeRegExp(`/([^.]|^)\\.{2}([^.]|$)/g`), '$1.$2')
       .replace(makeRegExp(`/([${this.displayableTextBlockSingleWritedSymbolsStr} ])\\1+/g`), '$1');
-  }
+  };
 
   static transformToDisplayedText = (() => {
     const backBrackets = ['`', '`'];
@@ -125,7 +128,7 @@ export class CmComUtils {
     };
   })();
 
-  static takeTextBlockIncorrects(text: string | und = '', eeStore: EeStorePack): IIncorrects {
+  static takeTextBlockIncorrects = (text: string | und = '', eeStore: EeStorePack): IIncorrects => {
     let mistakes = '';
 
     const textWithIncorrects = text.replace(
@@ -157,9 +160,9 @@ export class CmComUtils {
     }
 
     return this.eeTextIncorrects(text, eeStore);
-  }
+  };
 
-  static eeTextIncorrects(text: string | nil, eeStore: EeStorePack): IIncorrects {
+  static eeTextIncorrects = (text: string | nil, eeStore: EeStorePack): IIncorrects => {
     if (typeof text !== 'string') return {};
     const errors: IIncorrect[] = [];
     const warnings: IIncorrect[] = [];
@@ -203,9 +206,9 @@ export class CmComUtils {
     });
 
     return { errors, warnings, unknowns };
-  }
+  };
 
-  static chordsBlockIncorrectMessage(value: string | und): IIncorrects {
+  static chordsBlockIncorrectMessage = (value: string | und): IIncorrects => {
     const incorrectChords: string[] = [];
     const textWithIncorrects = (value || '')
       .trim()
@@ -231,5 +234,5 @@ export class CmComUtils {
         },
       ],
     };
-  }
+  };
 }

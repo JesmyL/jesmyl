@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { CmComWid } from 'shared/api';
+import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { cmIDB } from './cmIDB';
 
 const numbersStore: PRecord<CmComWid, number> = {};
@@ -20,11 +21,10 @@ export const useComNumbers = (comw: CmComWid | CmComWid[], numbers = numbersStor
         if (newNumbers[comw] !== undefined) return;
         isThereNews = true;
 
-        const realNumber = await cmIDB.db.coms.where('w').belowOrEqual(comw).count();
         newNumbers[comw] =
           numbers[comw] =
           numbersStore[comw] =
-            realNumber && (realNumber > 403 || realNumber > 665) ? realNumber + 1 : realNumber;
+            CmComUtils.takeCorrectComNumber(await cmIDB.db.coms.where('w').belowOrEqual(comw).count());
       }
 
       if (isThereNews) setNumbersState(newNumbers);
