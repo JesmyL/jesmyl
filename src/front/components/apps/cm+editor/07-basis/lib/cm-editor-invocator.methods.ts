@@ -70,6 +70,7 @@ export const cmEditComExternalsClientInvocatorMethods =
         methods: {
           setInScheduleEvent: true,
           getScheduleEventHistory: true,
+          getScheduleEventHistoryStatistic: true,
           removeScheduleEventHistoryItem: true,
         },
       });

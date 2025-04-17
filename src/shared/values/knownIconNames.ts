@@ -4,6 +4,7 @@ export const knownIconNames = [
   'Alert02',
   'Alien02',
   'CircleArrowRight02',
+  'TradeUp',
   'Diameter',
   'FileRemove',
   'RightToLeftListTriangle',

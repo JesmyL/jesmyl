@@ -1,14 +1,20 @@
 import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
+import { atom } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
+import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { TheButton } from '#shared/ui/TheButton';
 import { cmEditComExternalsClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
 import { useState } from 'react';
 import { IScheduleWidgetWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
+import { CmMeetingEventEditsHistoryStatisticModalInner } from './EventEditsHistoryStatisticModal';
+
+const isOpenStatisticAtom = atom(false);
 
 export const CmMeetingEventEditsHistoryModalInner = ({ dayi, schw }: { dayi: number; schw: IScheduleWidgetWid }) => {
   const [limit, setLimit] = useState(10);
@@ -47,8 +53,12 @@ export const CmMeetingEventEditsHistoryModalInner = ({ dayi, schw }: { dayi: num
 
   return (
     <>
-      <ModalHeader>
-        История {historyPacks.length > limit ? `${limit}/${historyPacks.length}` : historyPacks.length}
+      <ModalHeader className="flex justify-between">
+        <span>История {historyPacks.length > limit ? `${limit}/${historyPacks.length}` : historyPacks.length}</span>
+        <TheIconButton
+          icon="TradeUp"
+          onClick={isOpenStatisticAtom.toggle}
+        />
       </ModalHeader>
       <ModalBody>
         {historyPacks.slice(0, limit).map(pack => {
@@ -90,6 +100,12 @@ export const CmMeetingEventEditsHistoryModalInner = ({ dayi, schw }: { dayi: num
           </div>
         )}
       </ModalBody>
+      <Modal openAtom={isOpenStatisticAtom}>
+        <CmMeetingEventEditsHistoryStatisticModalInner
+          dayi={dayi}
+          schw={schw}
+        />
+      </Modal>
     </>
   );
 };

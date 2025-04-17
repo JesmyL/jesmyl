@@ -11,6 +11,10 @@ export type CmEditComExternalsSokiInvocatorModel = {
   }) => void;
 
   getScheduleEventHistory: (args: { schw: IScheduleWidgetWid; dayi: number }) => ScheduleComPackHistoryItem[];
+  getScheduleEventHistoryStatistic: (args: { schw: IScheduleWidgetWid; dayi: number }) => {
+    comwCount: Record<CmComWid, number>;
+    totalCount: number;
+  };
 
   removeScheduleEventHistoryItem: (args: {
     schw: IScheduleWidgetWid;

@@ -2,12 +2,12 @@ import { addAbortControlledPipe, hookEffectPipe } from '#shared/lib/hookEffectPi
 import { theIconLoadingNode } from '#shared/ui/the-icon/theIconLoadingNode';
 import { useEffect, useState } from 'react';
 
-export const useInvocatedValue = <Value>(
-  initialValue: Value,
-  invocation: (props: { aborter: AbortController }) => Promise<Value>,
+export const useInvocatedValue = <Value, InitialValue extends Value>(
+  initialValue: InitialValue,
+  invocation: (props: { aborter: AbortController }, initialValue: InitialValue) => Promise<Value>,
   deps: unknown[],
 ) => {
-  const [value, setValue] = useState(initialValue);
+  const [value, setValue] = useState<Value>(initialValue);
   const [error, setError] = useState<unknown>(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -18,7 +18,7 @@ export const useInvocatedValue = <Value>(
       .pipe(
         addAbortControlledPipe(async aborter => {
           try {
-            const value = await invocation({ aborter });
+            const value = await invocation({ aborter }, initialValue);
             setValue(value);
             setIsLoading(false);
             setError(null);

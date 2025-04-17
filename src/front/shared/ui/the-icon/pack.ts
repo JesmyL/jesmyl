@@ -202,6 +202,7 @@ import { iconPackOfTextVerticalAlignment } from './icons/text-vertical-alignment
 import { iconPackOfTickDouble02 } from './icons/tick-double-02';
 import { iconPackOfToggleOff } from './icons/toggle-off';
 import { iconPackOfToggleOn } from './icons/toggle-on';
+import { iconPackOfTradeUp } from './icons/trade-up';
 import { iconPackOfTvSmart } from './icons/tv-smart';
 import { iconPackOfUmbrella } from './icons/umbrella';
 import { iconPackOfUnavailable } from './icons/unavailable';
@@ -229,6 +230,7 @@ export const theIconKnownPack: Record<TheIconKnownName, TheIconSelfPack> = {
   Alert01: iconPackOfAlert01,
   Alert02: iconPackOfAlert02,
   Alien02: iconPackOfAlien02,
+  TradeUp: iconPackOfTradeUp,
   Diameter: iconPackOfDiameter,
   CircleArrowRight02: iconPackOfCircleArrowRight02,
   FileRemove: iconPackOfFileRemove,

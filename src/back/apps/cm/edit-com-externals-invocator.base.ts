@@ -1,4 +1,5 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
+import { CmComWid } from 'shared/api';
 import { CmEditComExternalsSokiInvocatorModel } from 'shared/api/invocators/cm/edit-com-externals-invocators.model';
 import { smylib } from 'shared/utils';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
@@ -43,6 +44,22 @@ export const cmEditComExternalsSokiInvocatorBaseServer =
 
             return history[schw]?.[dayi] ?? [];
           },
+          getScheduleEventHistoryStatistic: async ({ schw, dayi }) => {
+            const comwCount = {} as Record<CmComWid, number>;
+            let totalCount = 0;
+            const packs = eventPackHistoryFileStore.getValue()[schw]?.[dayi];
+
+            if (packs === undefined) return { comwCount, totalCount };
+
+            for (const pack of packs)
+              for (const comw of pack.s) {
+                comwCount[comw] ??= 0;
+                comwCount[comw]++;
+                totalCount++;
+              }
+
+            return { comwCount, totalCount };
+          },
 
           removeScheduleEventHistoryItem: async ({ schw, dayi, writedAt }) => {
             const history = eventPackHistoryFileStore.getValue();
@@ -73,6 +90,7 @@ export const cmEditComExternalsSokiInvocatorBaseServer =
             `"${schedulesFileStore.getValue().find(sch => sch.w === schw)?.title ?? '??'}"`,
 
           getScheduleEventHistory: null,
+          getScheduleEventHistoryStatistic: null,
         },
       });
     }
