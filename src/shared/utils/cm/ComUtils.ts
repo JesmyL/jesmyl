@@ -57,15 +57,18 @@ export class CmComUtils {
     } as Record<string, string>,
   );
 
+  private static clearTextLineForLengthCompute = (line: string) =>
+    line.replace(makeRegExp(`/[^${this.slavicLowerLettersStr} ]+/gi`), '');
+
   static textLinesLengthIncorrects = (text: string, maxLength: number): IIncorrects | und => {
-    const lines = text.split(makeRegExp(`/[^${this.slavicLowerLettersStr}]*\n/i`));
-    const longLinei = lines.findIndex(line => line.length > maxLength);
+    const lines = text.split(makeRegExp(`/\n/`));
+    const longLinei = lines.findIndex(line => this.clearTextLineForLengthCompute(line).length > maxLength);
 
     if (longLinei > -1)
       return {
         errors: [
           {
-            message: `Строка ${longLinei + 1} слишком длинная:\n${lines[longLinei].slice(0, maxLength)}/---/${lines[longLinei].slice(maxLength)}`,
+            message: `Строка ${longLinei + 1} слишком длинная:\n${this.clearTextLineForLengthCompute(lines[longLinei]).slice(0, maxLength)}/---/${lines[longLinei].slice(maxLength)}`,
           },
         ],
       };
