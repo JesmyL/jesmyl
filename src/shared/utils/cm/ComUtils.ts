@@ -60,18 +60,24 @@ export class CmComUtils {
   private static clearTextLineForLengthCompute = (line: string) =>
     line.replace(makeRegExp(`/[^${this.slavicLowerLettersStr} ]+/gi`), '');
 
-  static textLinesLengthIncorrects = (text: string, maxLength: number): IIncorrects | und => {
+  static takeTextLineOverLengthIndex = (text: string, maxLength: number) => {
     const lines = text.split(makeRegExp(`/\n/`));
-    const longLinei = lines.findIndex(line => this.clearTextLineForLengthCompute(line).length > maxLength);
+    return lines.findIndex(line => this.clearTextLineForLengthCompute(line).length > maxLength);
+  };
 
-    if (longLinei > -1)
+  static textLinesLengthIncorrects = (text: string, maxLength: number): IIncorrects | und => {
+    const linei = this.takeTextLineOverLengthIndex(text, maxLength);
+
+    if (linei > -1) {
+      const line = this.clearTextLineForLengthCompute(text.split(makeRegExp(`/\n/`))[linei]);
       return {
         errors: [
           {
-            message: `Строка ${longLinei + 1} слишком длинная:\n${this.clearTextLineForLengthCompute(lines[longLinei]).slice(0, maxLength)}/---/${lines[longLinei].slice(maxLength)}`,
+            message: `Строка ${linei + 1} слишком длинная:\n${line.slice(0, maxLength)}/---/${line.slice(maxLength)}`,
           },
         ],
       };
+    }
   };
 
   static takeCorrectComNumber = (comPositionNumber: number) =>
@@ -185,7 +191,7 @@ export class CmComUtils {
         unknowns.push({
           message:
             `Слово '${realWord}' ещё не встречалось среди существующих песен. Проверь, пожалуйста, ` +
-            `правильность написания букв ё/е, встречающихся в нём.\n\nУпоминание:\n${text}`,
+            `правильность написания букв ё/е, встречающихся в нём.`,
         });
         return;
       }
@@ -195,7 +201,7 @@ export class CmComUtils {
         const info = (code: 0 | 1) => ({
           message: `${['Не верно', 'Возможно не верно'][code]} указана ${
             typea.length > 1 ? `${typei + 1}-я из букв ё/е` : `буква ${parts[typei]}`
-          } в слове '${realWord}'.\n\nУпоминание:\n${text}`,
+          } в слове '${realWord}'.`,
         });
 
         if (type === 0) {

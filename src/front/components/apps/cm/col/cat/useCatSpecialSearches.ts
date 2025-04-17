@@ -3,6 +3,7 @@ import { cmEditorIDB } from '$cm+editor/basis/lib/cmEditorIDB';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useMemo } from 'react';
 import { itIt, makeRegExp } from 'shared/utils';
+import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { Com } from '../com/Com';
 import { Cat } from './Cat';
 import { CatTracker } from './Cat.model';
@@ -79,11 +80,7 @@ export const useCatSpecialSearches = (): Record<`@${string}`, CatSpecialSearches
           const maxLength = +term.split(':')[1] || maxAvailableComLineLength;
 
           return coms.filter(com =>
-            com.texts?.some(text =>
-              text.split(makeRegExp('/[^а-яёіґїє]*\n/i')).some(line => {
-                return line.length > maxLength;
-              }),
-            ),
+            com.texts?.some(text => CmComUtils.takeTextLineOverLengthIndex(text, maxLength) > -1),
           );
         },
       },
