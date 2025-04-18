@@ -34,17 +34,19 @@ export function TheOrder(props: Props) {
 
   if (props.isMiniAnchor && orderUnit.isAnchor && !orderUnit.isOpened) {
     return (
-      <div
-        id={`com-block-${orderUniti}`}
-        className={`${className} styled-header anchor`}
-        ref={el => {
-          if (el) orderUnit.element = el;
-        }}
-      >
-        {orderUnit.me.header({
-          isTexted: false,
-          repeats: orderUnit.repeatsTitle,
-        })}
+      <div className="styled-block">
+        <div
+          id={`com-block-${orderUniti}`}
+          className={`${className} styled-header anchor`}
+          ref={el => {
+            if (el) orderUnit.element = el;
+          }}
+        >
+          {orderUnit.me.header({
+            isTexted: false,
+            repeats: orderUnit.repeatsTitle,
+          })}
+        </div>
       </div>
     );
   }

@@ -39,7 +39,7 @@ export const backSwipableContainerMaker = (goBack: () => void, goForward?: () =>
     container.style.transformOrigin = transformOrigin;
     container.style.transition = '';
     container.style.filter = '';
-    container.style.left = '0';
+    container.style.translate = '0';
 
     setTimeOut(
       container => {
@@ -70,10 +70,10 @@ export const backSwipableContainerMaker = (goBack: () => void, goForward?: () =>
 
     if (isHorizontalMoving) {
       if (isCanGoForward || deltaX >= 0) {
-        event.currentTarget.style.left = deltaX.toFixed(0) + 'px';
+        event.currentTarget.style.translate = deltaX.toFixed(0) + 'px';
         if (Math.abs(deltaX) > minLim)
           event.currentTarget.style.filter = 'blur(' + (Math.abs(deltaX) / 20).toFixed(0) + 'px)';
-      } else if (deltaX < 0) event.currentTarget.style.left = '0';
+      } else if (deltaX < 0) event.currentTarget.style.translate = '0';
     }
   };
 
@@ -89,7 +89,7 @@ export const backSwipableContainerMaker = (goBack: () => void, goForward?: () =>
 
       if (deltaX > minLim || deltaX < -minLim) {
         container.style.transition = toInitLeftTransition;
-        container.style.left = (isForwardDir ? -maxLim : maxLim) + 'px';
+        container.style.translate = (isForwardDir ? -maxLim : maxLim) + 'px';
         container.style.transform = 'scale(.9)';
         container.style.transformOrigin = '';
 
@@ -111,7 +111,7 @@ export const backSwipableContainerMaker = (goBack: () => void, goForward?: () =>
         );
       } else {
         container.style.transition = toInitLeftTransition;
-        container.style.left = '0';
+        container.style.translate = '0';
         setTimeOut(withInitLeftAction, toInitLeftTimeout, container);
         isCanGo = true;
       }
