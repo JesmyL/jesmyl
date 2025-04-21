@@ -204,6 +204,7 @@ import { iconPackOfToggleOff } from './icons/toggle-off';
 import { iconPackOfToggleOn } from './icons/toggle-on';
 import { iconPackOfTradeUp } from './icons/trade-up';
 import { iconPackOfTvSmart } from './icons/tv-smart';
+import { iconPackOfTwoFinger05 } from './icons/two-finger-05';
 import { iconPackOfUmbrella } from './icons/umbrella';
 import { iconPackOfUnavailable } from './icons/unavailable';
 import { iconPackOfUser } from './icons/user';
@@ -230,6 +231,7 @@ export const theIconKnownPack: Record<TheIconKnownName, TheIconSelfPack> = {
   Alert01: iconPackOfAlert01,
   Alert02: iconPackOfAlert02,
   Alien02: iconPackOfAlien02,
+  TwoFinger05: iconPackOfTwoFinger05,
   TradeUp: iconPackOfTradeUp,
   Diameter: iconPackOfDiameter,
   CircleArrowRight02: iconPackOfCircleArrowRight02,
