@@ -6,9 +6,9 @@ import { useMemo } from 'react';
 import { CmComWid } from 'shared/api';
 import { Com } from '../../col/com/Com';
 
-export const useFixedCcom = (topComw?: number): Com | und => {
+export const useFixedCcom = (): Com | und => {
   const ccom = useCcom();
-  const comw = topComw ?? ccom?.wid ?? CmComWid.def;
+  const comw = ccom?.wid ?? CmComWid.def;
   const ifixedCom = useLiveQuery(() => mylib.isNNlButUnd(comw) && cmIDB.tb.fixedComs.get(+comw), [comw]);
 
   return useMemo(() => ccom && new Com({ ...ccom.top, ...ifixedCom }), [ccom, ifixedCom]);
