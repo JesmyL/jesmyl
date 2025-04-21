@@ -29,6 +29,7 @@ export function TheOrder(props: Props) {
     return null;
 
   const { orderUniti, com } = props;
+  const styleAttributes = orderUnit.me.style?.takeBlockAttributes(orderUnit.me.leadOrd?.me.style?.key);
 
   if (props.isMiniAnchor && orderUnit.isAnchor && !orderUnit.isOpened) {
     return (
@@ -36,7 +37,7 @@ export function TheOrder(props: Props) {
         <div
           id={`com-block-${orderUniti}`}
           className="styled-header anchor"
-          block-style={orderUnit.type}
+          {...styleAttributes}
           ref={el => {
             if (el) orderUnit.element = el;
           }}
@@ -67,7 +68,7 @@ export function TheOrder(props: Props) {
   const headerNode = blockHeader ? (
     <div
       className="styled-header"
-      block-style={orderUnit.type}
+      {...styleAttributes}
     >
       {blockHeader}
     </div>
@@ -107,7 +108,7 @@ export function TheOrder(props: Props) {
           <div
             key={orderUniti}
             className="styled-block chords-block vertical-middle"
-            block-style={orderUnit.type}
+            {...styleAttributes}
           >
             {com.chordLabels[orderUniti].map(line => line.join(' ')).join('\n')}
           </div>
@@ -121,7 +122,7 @@ export function TheOrder(props: Props) {
   return (
     <div
       id={`com-block-${orderUniti}`}
-      block-style={orderUnit.type}
+      {...styleAttributes}
       className={
         (props.specialClassId || '') +
         `composition-block styled-block` +

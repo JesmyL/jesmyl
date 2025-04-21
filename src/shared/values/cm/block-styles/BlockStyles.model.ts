@@ -12,18 +12,18 @@ export interface IExportableStyleProp {
 }
 
 export const enum CmBlockStyleKey {
-  Empty = '',
   Enter = 'enter',
-  ShiftOne = ' one',
+  OneWithShift = ' one',
   One = 'one',
   PTwo = 'p-two',
   Two = 'two',
   Bridge = 'bridge',
   Play = 'play',
-  Trans = 'trans',
+  Modulation = 'trans',
   Final = 'final',
   Thirdo = 'thirdo',
   Insert = 'insert',
+
   Plus = '+',
   PlusPlus = '++',
   Shift = '>',

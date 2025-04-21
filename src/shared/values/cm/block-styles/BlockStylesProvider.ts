@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 import { CmBlockStyleKey } from './BlockStyles.model';
+import { StyleBlock } from './StyleBlock';
 
-const makeBlockStyleSelector = (key: CmBlockStyleKey) => `[block-style="${key}"]` as const;
+const makeStartsBlockStyleSelector = (key: CmBlockStyleKey) => `[${StyleBlock.blockStyleAttribute}^="${key}"]` as const;
+const makeEndsBlockStyleSelector = (key: CmBlockStyleKey) => `[${StyleBlock.blockStyleAttribute}$="${key}"]` as const;
 
 export const BlockStylesProvider = styled.div`
   .composition-block {
@@ -28,11 +30,12 @@ export const BlockStylesProvider = styled.div`
     font-weight: bold;
     text-decoration: underline;
 
-    &${makeBlockStyleSelector(CmBlockStyleKey.Enter)}, &${makeBlockStyleSelector(CmBlockStyleKey.Trans)} {
+    &${makeStartsBlockStyleSelector(CmBlockStyleKey.Enter)},
+      &${makeStartsBlockStyleSelector(CmBlockStyleKey.Modulation)} {
       margin-left: 0.5em;
     }
 
-    &${makeBlockStyleSelector(CmBlockStyleKey.PTwo)} {
+    &${makeStartsBlockStyleSelector(CmBlockStyleKey.PTwo)} {
       font-style: italic;
     }
 
@@ -54,7 +57,7 @@ export const BlockStylesProvider = styled.div`
         line-height: 2.3em;
       }
 
-      + .inherit.without-chords {
+      + [${StyleBlock.inheritBlockStyleAttribute}].without-chords {
         margin-top: -0.4em;
       }
     }
@@ -64,43 +67,43 @@ export const BlockStylesProvider = styled.div`
         line-height: 1.5em;
       }
 
-      + .inherit.chorded-block {
+      + [${StyleBlock.inheritBlockStyleAttribute}].chorded-block {
         margin-top: 0.4em;
       }
     }
 
-    &${makeBlockStyleSelector(CmBlockStyleKey.Enter)},
-      &${makeBlockStyleSelector(CmBlockStyleKey.PTwo)},
-      &${makeBlockStyleSelector(CmBlockStyleKey.Two)},
-      &${makeBlockStyleSelector(CmBlockStyleKey.Thirdo)} {
+    &${makeStartsBlockStyleSelector(CmBlockStyleKey.Enter)},
+      &${makeStartsBlockStyleSelector(CmBlockStyleKey.PTwo)},
+      &${makeStartsBlockStyleSelector(CmBlockStyleKey.Two)},
+      &${makeStartsBlockStyleSelector(CmBlockStyleKey.Thirdo)} {
       margin-left: 0.5em;
     }
 
-    &${makeBlockStyleSelector(CmBlockStyleKey.ShiftOne)},
-      &${makeBlockStyleSelector(CmBlockStyleKey.Shift)},
-      &${makeBlockStyleSelector(CmBlockStyleKey.PlusPlusShift)},
-      &${makeBlockStyleSelector(CmBlockStyleKey.Final)} {
+    &${makeStartsBlockStyleSelector(CmBlockStyleKey.OneWithShift)},
+      &${makeStartsBlockStyleSelector(CmBlockStyleKey.Final)},
+      &${makeEndsBlockStyleSelector(CmBlockStyleKey.Shift)},
+      &${makeEndsBlockStyleSelector(CmBlockStyleKey.PlusPlusShift)} {
       margin-left: 1em;
     }
 
-    &${makeBlockStyleSelector(CmBlockStyleKey.Bridge)} {
+    &${makeStartsBlockStyleSelector(CmBlockStyleKey.Bridge)} {
       margin-left: 1.5em;
     }
 
-    &${makeBlockStyleSelector(CmBlockStyleKey.PTwo)},
-      &${makeBlockStyleSelector(CmBlockStyleKey.Bridge)},
-      &${makeBlockStyleSelector(CmBlockStyleKey.Final)} {
+    &${makeStartsBlockStyleSelector(CmBlockStyleKey.PTwo)},
+      &${makeStartsBlockStyleSelector(CmBlockStyleKey.Bridge)},
+      &${makeStartsBlockStyleSelector(CmBlockStyleKey.Final)} {
       font-style: italic;
     }
 
-    &${makeBlockStyleSelector(CmBlockStyleKey.Two)},
-      &${makeBlockStyleSelector(CmBlockStyleKey.Thirdo)},
-      &${makeBlockStyleSelector(CmBlockStyleKey.Final)},
-      &${makeBlockStyleSelector(CmBlockStyleKey.Bridge)} {
+    &${makeStartsBlockStyleSelector(CmBlockStyleKey.Two)},
+      &${makeStartsBlockStyleSelector(CmBlockStyleKey.Thirdo)},
+      &${makeStartsBlockStyleSelector(CmBlockStyleKey.Final)},
+      &${makeStartsBlockStyleSelector(CmBlockStyleKey.Bridge)} {
       font-weight: bold;
     }
 
-    &${makeBlockStyleSelector(CmBlockStyleKey.Plus)}, &${makeBlockStyleSelector(CmBlockStyleKey.Shift)} {
+    &${makeEndsBlockStyleSelector(CmBlockStyleKey.Plus)}, &${makeEndsBlockStyleSelector(CmBlockStyleKey.Shift)} {
       margin-top: 0;
     }
   }

@@ -8,7 +8,7 @@ export const comBlockStylesConfig: IExportableStyleProp[] = [
     forChordedBlock: 1,
   },
   {
-    key: CmBlockStyleKey.ShiftOne,
+    key: CmBlockStyleKey.OneWithShift,
     title: ['Куплет', 'Куплет'],
     group: 1,
     isBlockForTextableOnly: true,
@@ -48,7 +48,7 @@ export const comBlockStylesConfig: IExportableStyleProp[] = [
     isBlockForChordedOnly: true,
   },
   {
-    key: CmBlockStyleKey.Trans,
+    key: CmBlockStyleKey.Modulation,
     title: ['Модуляция', 'Модуляція'],
     tags: ['модуляция', 'модуляція'],
     isModulation: true,

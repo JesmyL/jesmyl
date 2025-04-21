@@ -2,8 +2,18 @@ import { SourceBased } from '#shared/lib/SourceBased';
 import { CmBlockStyleKey, IExportableStyleProp } from './BlockStyles.model';
 
 export class StyleBlock extends SourceBased<IExportableStyleProp> {
+  static blockStyleAttribute = 'block-style' as const;
+  static inheritBlockStyleAttribute = 'inherit-block-style' as const;
+
+  takeBlockAttributes(leadKey: CmBlockStyleKey | und) {
+    return {
+      [StyleBlock.blockStyleAttribute]: leadKey === undefined ? this.key : `${leadKey} ${this.key}`,
+      [StyleBlock.inheritBlockStyleAttribute]: this.isInherit ? '' : undefined,
+    };
+  }
+
   get key() {
-    return this.getBasicOr('key', CmBlockStyleKey.Empty);
+    return this.getBasicOr('key', CmBlockStyleKey.One);
   }
 
   get title() {
