@@ -6,19 +6,21 @@ import { CmComOrderWid } from 'shared/api';
 const timeouts: PRecord<`${CmComOrderWid}/${number}`, TimeOut> = {};
 
 export const useUpdateLinePositions = () => {
-  const [ordLinePositions, setLinePositions] = useState<PRecord<`${CmComOrderWid}/${number}`, number[]>>({});
+  const [ordLinePositionsOnSend, setLinePositionsOnSend] = useState<PRecord<`${CmComOrderWid}/${number}`, number[]>>(
+    {},
+  );
   const [linesOnUpdateSet, setLinesOnUpdateSet] = useState<PRecord<CmComOrderWid, Set<number>>>({});
 
   const updateLinePositions = (ord: Order, linei: number, pos: number) => {
     const key = `${ord.wid}/${linei}` as const;
-    const line = [...(ordLinePositions[key] ?? ord.positions?.[linei] ?? [])];
+    const line = [...(ordLinePositionsOnSend[key] ?? ord.positions?.[linei] ?? [])];
 
     if (line.includes(pos)) line.splice(line.indexOf(pos), 1);
     else line.push(pos);
 
     line.sort((a, b) => a - b);
 
-    setLinePositions(prev => ({ ...prev, [key]: line }));
+    setLinePositionsOnSend(prev => ({ ...prev, [key]: line }));
     setLinesOnUpdateSet(prev => {
       const news = { ...prev };
       news[ord.wid] ??= new Set();
@@ -44,7 +46,7 @@ export const useUpdateLinePositions = () => {
       }
 
       delete timeouts[key];
-      setLinePositions(prev => {
+      setLinePositionsOnSend(prev => {
         const linePositions = { ...prev };
         delete linePositions[key];
         return linePositions;
@@ -58,5 +60,5 @@ export const useUpdateLinePositions = () => {
     }, 5000);
   };
 
-  return { updateLinePositions, ordLinePositions, linesOnUpdateSet };
+  return { updateLinePositions, ordLinePositionsOnSend, linesOnUpdateSet };
 };

@@ -102,9 +102,15 @@ export const cmEditComOrderServerInvocatorBase =
             }),
 
           setPositionsLine: ({ comw, ordw, linei, line }) =>
-            modifyOrd(comw, ordw, ord => {
-              ord.p ??= [];
-              ord.p[linei] = line;
+            modifyOrd(comw, ordw, (ord, com) => {
+              let targetOrd = ord;
+              if (ord.a != null) {
+                targetOrd = com.o?.find(o => o.w === ord.a) ?? ord;
+                delete ord.p;
+              }
+
+              targetOrd.p ??= [];
+              targetOrd.p[linei] = line;
             }),
 
           setModulationValue: ({ comw, ordw, value }) =>
@@ -175,13 +181,17 @@ export const cmEditComOrderServerInvocatorBase =
     }
   })();
 
-const modifyOrd = (comw: CmComWid, ordw: CmComOrderWid, modifier: (ord: IExportableOrder) => void) => {
+const modifyOrd = (
+  comw: CmComWid,
+  ordw: CmComOrderWid,
+  modifier: (ord: IExportableOrder, com: IExportableCom) => void,
+) => {
   return modifyInvocableCom(comw, com => {
     const ord = com.o?.find(ord => ord.w === ordw);
 
     if (ord == null) throw new Error('Ord not found');
 
-    modifier(ord);
+    modifier(ord, com);
 
     return com;
   });

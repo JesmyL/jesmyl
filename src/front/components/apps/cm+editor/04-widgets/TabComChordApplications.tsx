@@ -5,12 +5,12 @@ import { useUpdateLinePositions } from '$cm+editor/basis/lib/hooks/useUpdateChor
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { ComLine } from '$cm/col/com/line/ComLine';
 import { TheOrder } from '$cm/col/com/order/TheOrder';
-import { emptyArray } from 'shared/utils';
+import { emptyArray, itIt } from 'shared/utils';
 import styled, { css } from 'styled-components';
 
 export const CmEditorTabComChordApplications = () => {
   const ccom = useEditableCcom();
-  const { updateLinePositions, linesOnUpdateSet, ordLinePositions } = useUpdateLinePositions();
+  const { updateLinePositions, linesOnUpdateSet, ordLinePositionsOnSend } = useUpdateLinePositions();
 
   return (
     <Content className="chord-application-redactor">
@@ -36,8 +36,8 @@ export const CmEditorTabComChordApplications = () => {
             asLineComponent={props => {
               const { com, textLine, textLinei } = props;
               const linePositions =
-                ordLinePositions[`${ord.wid}/${textLinei}`] ?? ord.positions?.[textLinei] ?? emptyArray;
-              const diffCount = (chords[textLinei]?.length || 0) - (linePositions?.length || 0);
+                ordLinePositionsOnSend[`${ord.wid}/${textLinei}`] ?? ord.positions?.[textLinei] ?? emptyArray;
+              const diffCount = (chords[textLinei].filter(itIt)?.length || 0) - (linePositions?.length || 0);
 
               return (
                 <div>
@@ -73,14 +73,14 @@ export const CmEditorTabComChordApplications = () => {
                     className={'post binder pointer' + (linePositions?.includes(-2) ? ' active' : '')}
                     onClick={() => updateLinePositions(ord, textLinei, -2)}
                   />
-                  <span
-                    className={'margin-gap-h' + (diffCount < 0 ? ' pointer error-message' : '')}
-                    onClick={() => {
-                      ord.cutChordPositions(textLine, textLinei);
-                    }}
-                  >
-                    {diffCount || ''}
-                  </span>
+                  {!diffCount || (
+                    <span
+                      className={'ml-2' + (diffCount < 0 ? ' pointer text-xKO' : '')}
+                      onClick={() => ord.cutChordPositions(textLine, textLinei)}
+                    >
+                      {diffCount}
+                    </span>
+                  )}
                 </div>
               );
             }}

@@ -3,51 +3,12 @@ import { makeRegExp } from 'shared/utils';
 import styled from 'styled-components';
 import { IComLineProps } from '../order/Order.model';
 
-const consonantLettersStr = '[йцкнгшщзхъфвпрлджчсмтьб]';
-const splitLettersReg = makeRegExp(`/([а-яё](?:${consonantLettersStr}(?=${consonantLettersStr}{2}))?[?!,.)-:;]?)/`);
-
-const insertDividedBits = (lettersText: string, chord: string | und) => {
-  if (chord == null || chord.length < lettersText.length)
-    return <span dangerouslySetInnerHTML={{ __html: lettersText }} />;
-
-  const text = lettersText.split(splitLettersReg);
-  const nodes = [];
-
-  for (let txti = 0; txti < text.length; txti++) {
-    if (text[txti] === ' ') break;
-    if (text[txti] === '') continue;
-
-    nodes.push(
-      <span
-        key={0}
-        dangerouslySetInnerHTML={{
-          __html: text[txti][text[txti].length - 1] === '-' ? text[txti].slice(0, -1) : text[txti],
-        }}
-      />,
-      <span
-        key={1}
-        dash-divider=""
-      />,
-    );
-
-    text[txti] = '';
-    break;
-  }
-
-  return (
-    <span>
-      {nodes}
-      <span dangerouslySetInnerHTML={{ __html: text.join('') }} />
-    </span>
-  );
-};
-
 export function ComLine(props: IComLineProps) {
   const className = `composition-line line-num-${props.textLinei}`;
 
   if (!props.chordedOrd)
     return (
-      <Line
+      <StyledLine
         className={className}
         onClick={props.onClick}
       >
@@ -67,7 +28,7 @@ export function ComLine(props: IComLineProps) {
             </span>
           );
         })}
-      </Line>
+      </StyledLine>
     );
 
   const vowelPositions = props.com.getVowelPositions(props.textLine);
@@ -180,16 +141,55 @@ export function ComLine(props: IComLineProps) {
   });
 
   return (
-    <Line
+    <StyledLine
       className={className}
       onClick={props.onClick}
     >
       {wordsNodes}
-    </Line>
+    </StyledLine>
   );
 }
 
-const Line = styled.div`
+const consonantLettersStr = '[йцкнгшщзхъфвпрлджчсмтьб]';
+const splitLettersReg = makeRegExp(`/([а-яё](?:${consonantLettersStr}(?=${consonantLettersStr}{2}))?[?!,.)-:;]?)/`);
+
+const insertDividedBits = (lettersText: string, chord: string | und) => {
+  if (chord == null || chord.length < lettersText.length)
+    return <span dangerouslySetInnerHTML={{ __html: lettersText }} />;
+
+  const text = lettersText.split(splitLettersReg);
+  const nodes = [];
+
+  for (let txti = 0; txti < text.length; txti++) {
+    if (text[txti] === ' ') break;
+    if (text[txti] === '') continue;
+
+    nodes.push(
+      <span
+        key={0}
+        dangerouslySetInnerHTML={{
+          __html: text[txti][text[txti].length - 1] === '-' ? text[txti].slice(0, -1) : text[txti],
+        }}
+      />,
+      <span
+        key={1}
+        dash-divider=""
+      />,
+    );
+
+    text[txti] = '';
+    break;
+  }
+
+  return (
+    <span>
+      {nodes}
+      <span dangerouslySetInnerHTML={{ __html: text.join('') }} />
+    </span>
+  );
+};
+
+const StyledLine = styled.div`
   white-space: normal;
 
   * {
@@ -206,10 +206,6 @@ const Line = styled.div`
     position: relative;
     line-height: 1;
     white-space: pre;
-
-    &.space-word {
-      /* top: -1em; */
-    }
 
     &.pre,
     &.post,
