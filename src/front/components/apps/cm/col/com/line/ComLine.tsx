@@ -7,40 +7,39 @@ const consonantLettersStr = '[йцкнгшщзхъфвпрлджчсмтьб]';
 const splitLettersReg = makeRegExp(`/([а-яё](?:${consonantLettersStr}(?=${consonantLettersStr}{2}))?[?!,.)-:;]?)/`);
 
 const insertDividedBits = (lettersText: string, chord: string | und) => {
-  if (chord == null || chord.length < 2) return <span dangerouslySetInnerHTML={{ __html: lettersText }} />;
+  if (chord == null || chord.length < lettersText.length)
+    return <span dangerouslySetInnerHTML={{ __html: lettersText }} />;
 
   const text = lettersText.split(splitLettersReg);
   const nodes = [];
 
   for (let txti = 0; txti < text.length; txti++) {
     if (text[txti] === ' ') break;
-    if (!text[txti]) continue;
+    if (text[txti] === '') continue;
 
     nodes.push(
       <span
         key={0}
-        dangerouslySetInnerHTML={{ __html: text[txti] }}
+        dangerouslySetInnerHTML={{
+          __html: text[txti][text[txti].length - 1] === '-' ? text[txti].slice(0, -1) : text[txti],
+        }}
       />,
       <span
         key={1}
-        className="dash-divider"
-      >
-        {' - '}
-      </span>,
+        dash-divider=""
+      />,
     );
 
     text[txti] = '';
     break;
   }
 
-  nodes.push(
-    <span
-      key={2}
-      dangerouslySetInnerHTML={{ __html: text.join('') }}
-    />,
+  return (
+    <span>
+      {nodes}
+      <span dangerouslySetInnerHTML={{ __html: text.join('') }} />
+    </span>
   );
-
-  return <span>{nodes}</span>;
 };
 
 export function ComLine(props: IComLineProps) {
@@ -89,7 +88,7 @@ export function ComLine(props: IComLineProps) {
 
   let wordBitNodes: ReactNode[] = [];
   const wordsNodes: ReactNode[] = [];
-  const pushWordNode = (index: number) => {
+  const pushWordNode = (index: number, isAddSpaceWord: boolean) => {
     wordsNodes.push(
       <span
         key={index}
@@ -97,12 +96,14 @@ export function ComLine(props: IComLineProps) {
       >
         {wordBitNodes}
       </span>,
-      <span
-        key={index + 100000}
-        className={`com-letter space-word letteri_${index} ${props.setWordClass?.(props, index) ?? ''}`}
-      >
-        {' '}
-      </span>,
+      isAddSpaceWord && (
+        <span
+          key={`other-index-${index}`}
+          className={`com-letter space-word letteri_${index} ${props.setWordClass === undefined ? '' : props.setWordClass(props, index)}`}
+        >
+          {' '}
+        </span>
+      ),
     );
     wordBitNodes = [];
   };
@@ -130,7 +131,7 @@ export function ComLine(props: IComLineProps) {
     );
 
     if (baseTextBitOriginal.startsWith(' ')) {
-      pushWordNode(indexi);
+      pushWordNode(indexi, true);
 
       if (firstTextBit !== '') {
         wordBitNodes.push(<React.Fragment key={indexi + 100000}>{firstBitNode}</React.Fragment>, ' ');
@@ -175,7 +176,7 @@ export function ComLine(props: IComLineProps) {
 
     wordBitNodes.push(node);
 
-    if (indexa.length - 1 === indexi) pushWordNode(indexi + 1);
+    if (indexa.length - 1 === indexi) pushWordNode(indexi + 1, false);
   });
 
   return (
@@ -308,7 +309,7 @@ const Line = styled.div`
 
   .whole-word,
   .spaced-word {
-    .dash-divider {
+    [dash-divider]::before {
       display: none;
     }
   }
@@ -324,7 +325,8 @@ const Line = styled.div`
             justify-content: space-between;
             width: 100%;
 
-            .dash-divider {
+            [dash-divider]::before {
+              content: ' - ';
               display: inline-block;
               color: var(--color--7);
             }

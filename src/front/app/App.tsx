@@ -6,6 +6,7 @@ import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { complectIDB } from 'front/components/apps/+complect/_idb/complectIDB';
 import { soki } from 'front/soki';
 import { routeTree } from 'routeTree.gen';
+import { BlockStylesProvider } from 'shared/values/cm/block-styles/BlockStylesProvider';
 import './App.scss';
 import { muiDarkThemePalette } from './lib/theme/lib/darkPalette';
 import { muiLightThemePalette } from './lib/theme/lib/lightPalette';
@@ -23,16 +24,18 @@ export const App = () => {
   const isDarkMode = complectIDB.useValue.isDarkMode();
 
   return (
-    <IconProvider>
-      <AppDialogProvider title="app">
-        <ThemeProvider
-          theme={isDarkMode ? muiDarkThemePalette : muiLightThemePalette}
-          defaultMode="light"
-        >
-          <RouterProvider router={router} />
-        </ThemeProvider>
-      </AppDialogProvider>
-    </IconProvider>
+    <BlockStylesProvider>
+      <IconProvider>
+        <AppDialogProvider title="app">
+          <ThemeProvider
+            theme={isDarkMode ? muiDarkThemePalette : muiLightThemePalette}
+            defaultMode="light"
+          >
+            <RouterProvider router={router} />
+          </ThemeProvider>
+        </AppDialogProvider>
+      </IconProvider>
+    </BlockStylesProvider>
   );
 };
 

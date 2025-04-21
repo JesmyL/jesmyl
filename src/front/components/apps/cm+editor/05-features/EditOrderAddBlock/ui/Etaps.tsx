@@ -5,9 +5,9 @@ import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { CmTextableBlockAnchorTitles } from '$cm+editor/entities/TextableBlockAnchorTitles';
-import { blockStyles } from '$cm/col/com/block-styles/BlockStyles';
-import { StyleBlock } from '$cm/col/com/block-styles/StyleBlock';
 import { useEffect, useState } from 'react';
+import { comBlockStyles } from 'shared/values/cm/block-styles/BlockStyles';
+import { StyleBlock } from 'shared/values/cm/block-styles/StyleBlock';
 import { cmNewOrderMakeEtapQueue } from '../lib/consts';
 import { CmNewOrderMakeEtap } from '../model';
 
@@ -106,7 +106,7 @@ export const OrdersRedactorAdditionsEtapsModalInner = ({ com, onClose, firstEtap
         <>
           <ModalHeader>Тип нового блока</ModalHeader>
           <ModalBody>
-            {blockStyles?.styles.map(styleBlock => {
+            {comBlockStyles.styles.map(styleBlock => {
               if (selectedTexti == null ? styleBlock.isBlockForTextableOnly : styleBlock.isBlockForChordedOnly)
                 return null;
               const typeTitle = styleBlock.title[com.langi || 0];

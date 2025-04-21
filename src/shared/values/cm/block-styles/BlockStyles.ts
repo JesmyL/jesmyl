@@ -1,17 +1,15 @@
 import { mylib } from '#shared/lib/my-lib';
-import { SourceBased } from '#shared/lib/SourceBased';
-import * as styles from '../../../resources/block-styles.json';
-import { IExportableSetts } from './BlockStyles.model';
+import { IExportableStyleProp } from './BlockStyles.model';
+import { comBlockStylesConfig } from './comBlockStyles.config';
 import { StyleBlock } from './StyleBlock';
 
-export class BlockStyles extends SourceBased<IExportableSetts> {
+export class BlockStyles {
   styles: StyleBlock[];
   levelSorted: StyleBlock[][];
   forChordedBlock: StyleBlock[];
 
-  constructor(top: IExportableSetts) {
-    super(top);
-    this.styles = mylib.typ([], top.styles).map(st => new StyleBlock(st));
+  constructor(styles: IExportableStyleProp[]) {
+    this.styles = styles.map(st => new StyleBlock(st));
 
     const levelStyles: Record<number, StyleBlock[]> = {};
     this.styles
@@ -42,4 +40,4 @@ export class BlockStyles extends SourceBased<IExportableSetts> {
   }
 }
 
-export const blockStyles: BlockStyles | nil = new BlockStyles(styles);
+export const comBlockStyles = new BlockStyles(comBlockStylesConfig);

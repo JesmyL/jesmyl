@@ -130,7 +130,7 @@ const Content = styled.div`
       font-size: 1em;
     }
 
-    &.chorded:not(.pre) {
+    &.chorded:not(.pre):not(.post) {
       > .fragment > * {
         display: inline-block;
 

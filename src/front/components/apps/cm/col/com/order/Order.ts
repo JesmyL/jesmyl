@@ -2,7 +2,6 @@ import { mylib, MyLib } from '#shared/lib/my-lib';
 import { SourceBased } from '#shared/lib/SourceBased';
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import {
-  CmComOrderWid,
   IExportableOrder,
   IExportableOrderFieldValues,
   InheritancableOrder,
@@ -42,9 +41,6 @@ export class Order extends SourceBased<IExportableOrder> {
   get wid() {
     return this.me.source?.top.w || this.top.w;
   }
-  set wid(val: CmComOrderWid) {
-    if (this.me.source) this.me.source.top.w = val;
-  }
 
   get isAnchor() {
     return this.getBasic('a') != null;
@@ -53,29 +49,17 @@ export class Order extends SourceBased<IExportableOrder> {
   get anchor() {
     return this.getBasic('a');
   }
-  set anchor(val) {
-    this.setExportable('a', val);
-  }
 
   get isEmptyHeader() {
     return this.getBasic('e');
-  }
-  set isEmptyHeader(val) {
-    this.setExportable('e', val);
   }
 
   get isOpened() {
     return this.getBasic('o');
   }
-  set isOpened(val) {
-    this.setExportable('o', val);
-  }
 
   get chordsi() {
     return this.getBasic('c') ?? this.me.watchOrd?.getBasic('c');
-  }
-  set chordsi(val) {
-    this.setExportable('c', val);
   }
 
   get texti() {
@@ -96,15 +80,9 @@ export class Order extends SourceBased<IExportableOrder> {
       (this.me.source && (this.me.source.top.p = []))
     );
   }
-  set positions(val) {
-    this.setExportable('p', val);
-  }
 
   get type() {
     return this.getBasic('s');
-  }
-  set type(val) {
-    this.setExportable('s', val);
   }
 
   get text() {
@@ -128,9 +106,6 @@ export class Order extends SourceBased<IExportableOrder> {
       : this.me.isInherit
         ? !(this.getBasic('v') === 0 || (this.me.leadOrd && !this.me.leadOrd.isVisible))
         : this.getBasic('v') !== 0;
-  }
-  set isVisible(val) {
-    this.setExportable('v', val ? 1 : 0);
   }
 
   get isHeaderNoneForce() {

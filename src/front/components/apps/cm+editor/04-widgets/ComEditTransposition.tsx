@@ -4,7 +4,7 @@ import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { ChordVisibleVariant } from '$cm/Cm.model';
@@ -25,13 +25,16 @@ export const CmComEditTransposition = ({ ccom }: { ccom: EditableCom }) => {
   const firstChord = ccom.getFirstSimpleChord();
 
   return (
-    <div
-      className="flex full-width between margin-gap-v pointer"
-      onClick={isOpenModalAtom.toggle}
-    >
-      <LazyIcon icon="Notification01" />
-      <div className="title half-width text-center">Изменить тональность</div>
-      <div className="half-width text-center">{firstChord}</div>
+    <>
+      <TheIconButton
+        onClick={isOpenModalAtom.toggle}
+        icon="Notification01"
+        postfix={
+          <>
+            Тональность — <span className="text-x7">{firstChord}</span>
+          </>
+        }
+      />
 
       <Modal openAtom={isOpenModalAtom}>
         <ModalHeader>Тональность песни</ModalHeader>
@@ -67,6 +70,6 @@ export const CmComEditTransposition = ({ ccom }: { ccom: EditableCom }) => {
           />
         </ModalBody>
       </Modal>
-    </div>
+    </>
   );
 };

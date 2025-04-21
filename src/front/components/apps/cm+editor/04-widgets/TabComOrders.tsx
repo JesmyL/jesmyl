@@ -11,7 +11,7 @@ import { OrdersRedactorOrderTools } from '$cm+editor/features/EditOrderTools';
 import { OrdersRedactorOrderToolsProps } from '$cm+editor/features/EditOrderTools/model';
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { TheOrder } from '$cm/col/com/order/TheOrder';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 export const CmEditorTabComOrders = () => {
@@ -64,11 +64,8 @@ export const CmEditorTabComOrders = () => {
         );
 
         return (
-          <>
-            <div
-              key={ordi}
-              className={ord.me.isAnchorInherit ? 'inherit-block' : ''}
-            >
+          <React.Fragment key={ordi}>
+            <div className={ord.me.isAnchorInherit ? 'inherit-block' : ''}>
               {ordi === 0 && clickBetweenData && clickBetweenData.checkIsShowButton(zeroProps) && (
                 <div className="flex flex-gap margin-big-gap-t center">
                   <TheButton
@@ -153,7 +150,7 @@ export const CmEditorTabComOrders = () => {
                 {cancelClickBetweenDataButtonNode}
               </div>
             )}
-          </>
+          </React.Fragment>
         );
       })}
       {!clickBetweenData && (

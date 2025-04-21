@@ -100,9 +100,8 @@ export class CmComUtils {
 
   static transformToDisplayedText = (() => {
     const backBrackets = ['`', '`'];
-    const dashReg = makeRegExp(`/(\\s)?-+(\\s)?/g`);
-    const dashReplacer: (...args: string[]) => string = (_all, before, after) =>
-      `${before || '&nbsp;'}—${after || '&nbsp;'}`;
+    const dashReg = makeRegExp(`/((?=\\S)-+(?=\\S))|( ?-+\n)|( ?-+ ?)/g`);
+    const dashReplacer: (...args: string[]) => string = (_, $1, $2) => ($2 ? ' —\n' : $1 || ' —&nbsp;');
     const openBracketReg = makeRegExp(`/(\\( ?)?("+)( ?\\)?)/g`);
     const closeBracketReg = makeRegExp(`/\\("+ \\)$|^\\( "+\\)/g`);
     const spacesLikeReg = makeRegExp(`/\\s/`);

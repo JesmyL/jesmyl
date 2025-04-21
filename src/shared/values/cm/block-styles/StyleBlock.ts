@@ -1,24 +1,9 @@
 import { SourceBased } from '#shared/lib/SourceBased';
-import { makeRegExp } from 'shared/utils';
-import { Order } from '../order/Order';
-import { IExportableStyleProp } from './BlockStyles.model';
+import { CmBlockStyleKey, IExportableStyleProp } from './BlockStyles.model';
 
 export class StyleBlock extends SourceBased<IExportableStyleProp> {
   get key() {
-    return this.getBasicOr('key', '');
-  }
-
-  normName(name: string) {
-    return name
-      .replace(makeRegExp('/ /g'), '_')
-      .replace(makeRegExp('/\\+/g'), '_plus')
-      .replace(makeRegExp('/>/g'), '_shift');
-  }
-
-  getStyleName(ord: Order) {
-    return `${this.normName(this.key)} ${this.isInherit ? 'inherit' : ''} ${this.normName(
-      ord.me.leadOrd?.me.style?.key || '',
-    )}`;
+    return this.getBasicOr('key', CmBlockStyleKey.Empty);
   }
 
   get title() {

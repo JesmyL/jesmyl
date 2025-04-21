@@ -1,4 +1,5 @@
 import { StrRegExp } from 'shared/utils';
+import { CmBlockStyleKey } from 'shared/values/cm/block-styles/BlockStyles.model';
 import { CmCatWid, CmComMod, CmComOrderWid, CmComWid, CmMeetingEventWid } from './enums';
 
 export interface CmMp3Rule {
@@ -48,7 +49,7 @@ export interface IExportableOrder extends InheritancableOrder {
   f?: IExportableOrderFieldValues; // Особые значения
   m?: 1; // Минималка
   o?: 1; // Открыто в полном режиме
-  s?: string; // Тип блока
+  s?: CmBlockStyleKey; // Тип блока
   inh?: Inheritancables; //
 }
 

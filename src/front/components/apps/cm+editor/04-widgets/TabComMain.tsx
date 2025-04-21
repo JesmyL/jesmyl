@@ -2,8 +2,8 @@ import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { useAtomSet } from '#shared/lib/atom';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
-import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { removedCompositionsAtom } from '$cm+editor/basis/lib/atoms/com';
 import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { cmEditorIDB } from '$cm+editor/basis/lib/cmEditorIDB';
@@ -26,7 +26,6 @@ export const CmEditorTabComMain = () => {
   const ccom = useEditableCcom();
   const setRemovedComs = useAtomSet(removedCompositionsAtom);
   const auth = useAuth();
-  const confirm = useConfirm();
   const [name, setName] = useState('');
   const eeStore = cmEditorIDB.useValue.eeStore();
 
@@ -64,41 +63,55 @@ export const CmEditorTabComMain = () => {
           }}
         />
       </div>
-      <div
-        className="flex full-width between margin-gap-v pointer"
+      <TheIconButton
+        icon="Flag03"
+        confirm={
+          <>
+            Переключить язык песни на <span className="text-x7">{ccom.nextLangn}</span>?
+          </>
+        }
+        postfix={
+          <>
+            Язык — <span className="text-x7">{ccom.langn}</span>
+          </>
+        }
         onClick={event => {
           event.stopPropagation();
           cmEditComClientInvocatorMethods.changeLanguage({ comw: ccom.wid, value: ccom.langi ? 0 : 1 });
         }}
-      >
-        <LazyIcon icon="Flag03" />
-        <div className="title half-width text-center">Язык</div>
-        <div className="half-width text-center">{ccom.langn}</div>
-      </div>
+      />
       <CmComEditTransposition ccom={ccom} />
-      <div
-        className="flex full-width between margin-gap-v pointer"
+      <TheIconButton
+        icon="Grid"
+        confirm={
+          <>
+            Сделать песню <span className="text-x7">{ccom.isBemoled ? 'диезной' : 'бемольной'}</span>?
+          </>
+        }
+        postfix={
+          <>
+            <span className="text-x7">{ccom.isBemoled ? 'Диезная' : 'Бемольная'}</span> песня
+          </>
+        }
         onClick={() => {
           cmEditComClientInvocatorMethods.makeBemoled({ comw: ccom.wid, value: ccom.isBemoled === 1 ? 0 : 1 });
         }}
-      >
-        <LazyIcon icon="Grid" />
-        <div className="title half-width  text-center">Сделать {ccom.isBemoled ? 'диезным' : 'бемольным'}</div>
-        <div className="half-width" />
-      </div>
+      />
       {auth.level === 100 && (
-        <div
-          className="flex full-width between error-message margin-gap-v pointer"
+        <TheIconButton
+          icon="Delete01"
+          className="text-xKO"
+          confirm={
+            <>
+              Удалить песню <span className="text-x7">{ccom.name}</span>?
+            </>
+          }
+          postfix="Удалить песню"
           onClick={async () => {
-            if (!(await confirm(`Удалить песню "${ccom.name}"?`))) return;
             setRemovedComs(prev => ({ ...prev, [ccom.wid]: ccom.name }));
             cmEditComClientInvocatorMethods.remove({ comw: ccom.wid });
           }}
-        >
-          <LazyIcon icon="Delete01" />
-          <div className="title half-width text-center">Удалить песню</div>
-          <div className="half-width" />
-        </div>
+        />
       )}
 
       <TheCom

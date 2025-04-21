@@ -3,7 +3,6 @@ import { useCcom } from '$cm/basis/lib/com-selections';
 import { RefObject } from 'react';
 import { Com } from './Com';
 import { ComNotFoundPage } from './ComNotFoundPage';
-import './block-styles/BlockStyles.scss';
 import { ComOrders } from './orders/ComOrders';
 
 interface Props {

@@ -6,8 +6,8 @@ import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { cmEditComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { ChordVisibleVariant } from '$cm/Cm.model';
-import { blockStyles } from '$cm/col/com/block-styles/BlockStyles';
 import { TheOrder } from '$cm/col/com/order/TheOrder';
+import { comBlockStyles } from 'shared/values/cm/block-styles/BlockStyles';
 import { OrdersRedactorOrderToolsProps } from '../model';
 
 const isModalOpenAtom = atom(false);
@@ -30,7 +30,7 @@ export const OrdersRedactorOrderToolsBlockType = ({ com, ord, ordi }: OrdersReda
             chordVisibleVariant={ChordVisibleVariant.Maximal}
             com={com}
           />
-          {blockStyles?.styles.map(styleBlock => {
+          {comBlockStyles?.styles.map(styleBlock => {
             if ((ordi === 0 || ord.me.isTarget) && styleBlock.isInherit) return null;
             if (ord.texti == null ? styleBlock.isBlockForTextableOnly : styleBlock.isBlockForChordedOnly) return null;
 

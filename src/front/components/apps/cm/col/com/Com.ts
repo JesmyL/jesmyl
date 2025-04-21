@@ -4,9 +4,9 @@ import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { IExportableCom, IExportableOrder } from 'shared/api';
 import { itIt, makeRegExp } from 'shared/utils';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
+import { comBlockStyles } from 'shared/values/cm/block-styles/BlockStyles';
+import { StyleBlock } from 'shared/values/cm/block-styles/StyleBlock';
 import { Cat } from '../cat/Cat';
-import { blockStyles } from './block-styles/BlockStyles';
-import { StyleBlock } from './block-styles/StyleBlock';
 import { Order } from './order/Order';
 import { IExportableOrderMe, OrderTopHeaderBag } from './order/Order.model';
 import { translationPushKinds } from './translationPushKinds';
@@ -132,6 +132,9 @@ export class Com extends BaseNamed<IExportableCom> {
 
   get langn() {
     return Com.langs[this.langi || 0];
+  }
+  get nextLangn() {
+    return Com.langs[(this.langi || 0) + 1] || Com.langs[0];
   }
   static get langs() {
     return CmComUtils.cmComLanguages;
@@ -332,11 +335,11 @@ export class Com extends BaseNamed<IExportableCom> {
     return this._o || this.setOrders();
   }
   setOrders() {
-    if (!blockStyles) return null;
+    if (!comBlockStyles) return null;
     const ords = this.ords;
     const orders: ReturnType<typeof this.orderConstructor>[] = [];
     let minimals: [string?, number?][] = [];
-    const styles = blockStyles.styles;
+    const styles = comBlockStyles.styles;
     const groups: Record<string, number> = {};
     let viewIndex = 0;
     let prev, prevOrd;

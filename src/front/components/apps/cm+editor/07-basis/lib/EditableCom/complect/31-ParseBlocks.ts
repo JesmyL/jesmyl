@@ -1,9 +1,9 @@
 import { mylib } from '#shared/lib/my-lib';
-import { blockStyles } from '$cm/col/com/block-styles/BlockStyles';
-import { StyleBlock } from '$cm/col/com/block-styles/StyleBlock';
 import { INewExportableOrder } from '$cm/col/com/order/Order.model';
 import { makeRegExp } from 'shared/utils';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
+import { comBlockStyles } from 'shared/values/cm/block-styles/BlockStyles';
+import { StyleBlock } from 'shared/values/cm/block-styles/StyleBlock';
 import { EditableComBlocks } from './30-Blocks';
 
 export class EditableComParseBlocks extends EditableComBlocks {
@@ -38,7 +38,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
         } else languagei = langi;
       }
     };
-    const inheritStyle = blockStyles?.styles.find(({ isInherit }) => isInherit);
+    const inheritStyle = comBlockStyles?.styles.find(({ isInherit }) => isInherit);
 
     (typeof blocks === 'string' ? blocks.split(makeRegExp('/\\n+\\s*\\n+/')) : blocks).forEach(block => {
       if (!block) return;
@@ -130,19 +130,19 @@ export class EditableComParseBlocks extends EditableComBlocks {
     const orders: INewExportableOrder[] = [];
 
     units.forEach((unit, uniti) => {
-      if (unit.style === undefined && blockStyles) {
+      if (unit.style === undefined && comBlockStyles) {
         if (!unit.text) {
-          if (uniti === 0) unit.style = blockStyles.forChordedBlock[0];
-          else unit.style = blockStyles.forChordedBlock[1];
+          if (uniti === 0) unit.style = comBlockStyles.forChordedBlock[0];
+          else unit.style = comBlockStyles.forChordedBlock[1];
         }
         const prevUnit = units[uniti - 1];
         if (prevUnit?.style && prevUnit.text && unit.firstLineSlogs === prevUnit.firstLineSlogs) {
-          const style = blockStyles.getNextLevelSortedStyle(prevUnit.style);
+          const style = comBlockStyles.getNextLevelSortedStyle(prevUnit.style);
           if (style) unit.style = style;
         } else {
           const uniti = unitSlogGroups.findIndex(units => units.includes(unit));
           if (uniti !== undefined) {
-            const style = blockStyles.getNextLevelSortedStyle(uniti);
+            const style = comBlockStyles.getNextLevelSortedStyle(uniti);
             if (style) unit.style = style;
           }
         }

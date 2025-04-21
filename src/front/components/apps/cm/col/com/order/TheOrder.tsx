@@ -30,14 +30,13 @@ export function TheOrder(props: Props) {
 
   const { orderUniti, com } = props;
 
-  const className = orderUnit.me.style?.getStyleName(orderUnit);
-
   if (props.isMiniAnchor && orderUnit.isAnchor && !orderUnit.isOpened) {
     return (
       <div className="styled-block">
         <div
           id={`com-block-${orderUniti}`}
-          className={`${className} styled-header anchor`}
+          className="styled-header anchor"
+          block-style={orderUnit.type}
           ref={el => {
             if (el) orderUnit.element = el;
           }}
@@ -66,7 +65,12 @@ export function TheOrder(props: Props) {
   const chordedOrd = orderUnit.isCanShowChordsInText(props.chordVisibleVariant);
 
   const headerNode = blockHeader ? (
-    <div className={`styled-header ${className}`}>{blockHeader}</div>
+    <div
+      className="styled-header"
+      block-style={orderUnit.type}
+    >
+      {blockHeader}
+    </div>
   ) : (
     !orderUnit.me.style?.isHeaderNoneForce && <div className="styled-header empty" />
   );
@@ -102,7 +106,8 @@ export function TheOrder(props: Props) {
         {isTexted && (
           <div
             key={orderUniti}
-            className={`styled-block chords-block vertical-middle ${className}`}
+            className="styled-block chords-block vertical-middle"
+            block-style={orderUnit.type}
           >
             {com.chordLabels[orderUniti].map(line => line.join(' ')).join('\n')}
           </div>
@@ -116,9 +121,10 @@ export function TheOrder(props: Props) {
   return (
     <div
       id={`com-block-${orderUniti}`}
+      block-style={orderUnit.type}
       className={
         (props.specialClassId || '') +
-        `composition-block styled-block ${className}` +
+        `composition-block styled-block` +
         (orderUnit.isVisible ? '' : ' ord-invisible') +
         (chordedOrd ? ' chorded-block' : ' without-chords')
       }

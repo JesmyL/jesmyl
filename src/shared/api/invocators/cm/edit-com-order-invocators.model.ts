@@ -1,4 +1,5 @@
 import { CmComOrderWid, CmComWid, IExportableCom, OrderRepeats } from 'shared/api/complect/apps';
+import { CmBlockStyleKey } from 'shared/values/cm/block-styles/BlockStyles.model';
 
 export type CmEditComOrderSokiInvocatorModel = {
   setRepeats: (args: {
@@ -16,7 +17,7 @@ export type CmEditComOrderSokiInvocatorModel = {
     ordw: CmComOrderWid;
     orderTitle: string;
     comw: CmComWid;
-    type: string;
+    type: CmBlockStyleKey;
     newTypeTitle: string;
   }) => IExportableCom;
 
@@ -61,7 +62,7 @@ export type CmEditComOrderSokiInvocatorModel = {
     orderTitle: string;
     insertAfterOrdwOrFirst: CmComOrderWid | nil;
     chordi: number;
-    type: string;
+    type: CmBlockStyleKey;
     texti: number | und;
   }) => IExportableCom;
 

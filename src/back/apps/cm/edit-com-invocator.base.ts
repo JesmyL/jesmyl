@@ -47,8 +47,12 @@ const removeTextableBlock =
 
       list.splice(removei, 1);
       com.o?.forEach(ord => {
-        if (ord[coln] != null && ord[coln] >= removei) ord[coln]--;
+        if (ord[coln] != null)
+          if (ord[coln] > removei) ord[coln]--;
+          else if (ord[coln] === removei) delete ord[coln];
       });
+
+      com.o = com.o?.filter(ord => ord.a != null || ord.c != null || ord.t != null);
     });
 
 export const cmEditComServerInvocatorBase =

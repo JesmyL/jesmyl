@@ -92,6 +92,8 @@ export const CmCatPage = (props: Props) => {
               <div className="com-list">
                 <SetComListLimitsExtracterContext.Provider value={setComListLimitsExtracterRef}>
                   <ComFaceList
+                    key={+!!term}
+                    isPutCcomFaceOff={!!term}
                     list={limitedComs}
                     {...props}
                   />
