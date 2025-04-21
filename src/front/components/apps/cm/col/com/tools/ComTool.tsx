@@ -4,9 +4,9 @@ import { IconButton } from '@mui/material';
 import { memo } from 'react';
 import { useComToolItemAttrsContext, useComToolNameContext, useIsComToolIconItemsContext } from './lib/contexts';
 
-type Props = Parameters<typeof BottomPopupItem>[0];
+type Props = Parameters<typeof BottomPopupItem>[0] & { iconClassName?: string };
 
-export const ComTool = memo(({ ...props }: Props) => {
+export const ComTool = memo(({ iconClassName = '', ...props }: Props) => {
   const toolName = useComToolNameContext();
 
   return useIsComToolIconItemsContext() ? (
@@ -15,7 +15,7 @@ export const ComTool = memo(({ ...props }: Props) => {
         <LazyIcon
           icon={props.icon}
           kind={props.iconKind}
-          className={`pointer com-tool com-tool-${toolName}`}
+          className={`pointer com-tool com-tool-${toolName} ${iconClassName}`}
           onClick={props.onClick}
         />
       </IconButton>
@@ -26,6 +26,7 @@ export const ComTool = memo(({ ...props }: Props) => {
     <Bottom
       {...props}
       className={`com-tool com-tool-${toolName}`}
+      iconClassName={iconClassName}
     />
   );
 });
