@@ -11,6 +11,7 @@ interface Props extends HTMLAttributes<HTMLLIElement> {
   title?: string;
   rightNode?: React.ReactNode;
   iconWrapperClassName?: string;
+  iconClassName?: string;
   onIconClick?: PreventerAndStopperCallback;
 }
 
@@ -22,6 +23,7 @@ export const BottomPopupItem = ({
   title,
   rightNode,
   iconWrapperClassName = '',
+  iconClassName = '',
   onClick,
   onIconClick,
   className = '',
@@ -53,6 +55,7 @@ export const BottomPopupItem = ({
                   <LazyIcon
                     icon={icon}
                     kind={iconKind}
+                    className={iconClassName}
                   />
                 ))}
             </div>
