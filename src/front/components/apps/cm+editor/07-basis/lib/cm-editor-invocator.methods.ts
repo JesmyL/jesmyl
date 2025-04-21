@@ -97,6 +97,7 @@ export const cmEditComOrderClientInvocatorMethods =
           remove: true,
           insertNewBlock: true,
           setPositionsLine: true,
+          trimOverPositions: true,
           setModulationValue: true,
           removeRepeats: true,
         },

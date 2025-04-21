@@ -1,7 +1,7 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { CmComOrderWid, CmComWid, IExportableCom, IExportableOrder } from 'shared/api';
 import { CmEditComOrderSokiInvocatorModel } from 'shared/api/invocators/cm/edit-com-order-invocators.model';
-import { itNNil, smylib } from 'shared/utils';
+import { itNNil, makeRegExp, smylib } from 'shared/utils';
 import { getCmComNameInBrackets, modifyInvocableCom } from './edit-com-invocator.base';
 
 export const cmEditComOrderServerInvocatorBase =
@@ -113,6 +113,23 @@ export const cmEditComOrderServerInvocatorBase =
               targetOrd.p[linei] = line;
             }),
 
+          trimOverPositions: ({ comw, ordw }) =>
+            modifyOrd(comw, ordw, (ord, com) => {
+              if (com.t == null) throw 'В песне нет текстов';
+
+              let targetOrd = ord;
+              if (ord.a != null) {
+                targetOrd = com.o?.find(o => o.w === ord.a) ?? ord;
+                delete ord.p;
+              }
+
+              if (targetOrd.t == null || !com.t[targetOrd.t]) throw 'Текста нет';
+              if (targetOrd.p == null) throw 'Аппликатура не обнаружена';
+
+              const textLinesCount = com.t[targetOrd.t].split(makeRegExp('/\n/')).length;
+              if (textLinesCount < targetOrd.p.length) targetOrd.p.length = textLinesCount;
+            }),
+
           setModulationValue: ({ comw, ordw, value }) =>
             modifyOrd(comw, ordw, ord => {
               ord.f ??= {};
@@ -170,6 +187,9 @@ export const cmEditComOrderServerInvocatorBase =
           setPositionsLine: ({ orderTitle, linei, lineChangesText }, com) =>
             `В песне ${getCmComNameInBrackets(com)} в блоке ${orderTitle} изменена аппликатура в ` +
             `${linei + 1}-й строке: ${lineChangesText}`,
+
+          trimOverPositions: ({ orderTitle }, com) =>
+            `В песне ${getCmComNameInBrackets(com)} в блоке ${orderTitle} удалены лишние строки аппликатуры`,
 
           setModulationValue: ({ orderTitle, value }, com) =>
             `В песне ${getCmComNameInBrackets(com)} установлено значение модулирования блока ${orderTitle} - ${value}`,

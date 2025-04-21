@@ -66,4 +66,12 @@ export class EditableComOrder extends Order {
       lineChangesText: textLine,
     });
   }
+
+  async trimOverPositions() {
+    await cmEditComOrderClientInvocatorMethods.trimOverPositions({
+      comw: this.com.wid,
+      orderTitle: this.me.header({ isEdit: true }),
+      ordw: this.wid,
+    });
+  }
 }

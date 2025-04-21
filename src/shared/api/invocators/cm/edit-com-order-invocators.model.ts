@@ -75,6 +75,8 @@ export type CmEditComOrderSokiInvocatorModel = {
     lineChangesText: string;
   }) => IExportableCom;
 
+  trimOverPositions: (args: { comw: CmComWid; orderTitle: string; ordw: CmComOrderWid }) => IExportableCom;
+
   setModulationValue: (args: {
     comw: CmComWid;
     orderTitle: string;
