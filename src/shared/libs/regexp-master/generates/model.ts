@@ -1,0 +1,3 @@
+interface TheNamedRegExtMakerRegTypes {
+  ['/ /']: { $0: ' ' };
+}

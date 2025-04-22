@@ -7,6 +7,7 @@ import { defineConfig } from 'vite';
 import eslint from 'vite-plugin-eslint';
 import { VitePWA } from 'vite-plugin-pwa';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import { regExpMasterVitePlugin } from './src/shared/libs/regexp-master/plugin';
 import * as tsconf from './tsconfig.json';
 import { vitePWAOptions } from './vite-pwa.options';
 
@@ -25,6 +26,7 @@ export default defineConfig(() => {
     build: { outDir: 'build' },
     server: { https: {} },
     plugins: [
+      regExpMasterVitePlugin(),
       TanStackRouterVite({ target: 'react', autoCodeSplitting: true, routesDirectory: 'src/front/routes' }),
       tsconfigPaths(),
       eslint({
