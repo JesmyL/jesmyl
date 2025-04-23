@@ -2,28 +2,39 @@ import { makeNamedRegExp } from './makeNamedRegExp';
 import { StrRegExp } from './makeRegExp';
 
 const numbersSet = new Set(['1', '2', '3', '4', '5', '6', '7', '8', '9', '0']);
-const findNamedGroupsReg = /\\?\((?:\?<([\w$_]+)>)?/g;
+const findNamedGroupsReg = /\\?\((?:\?<([\w$_]+)>|\?<()>)?/g;
 
-export const prepareNameMakedRegExp = (reg: StrRegExp) => {
+export const prepareNameMakedRegExp = (reg: StrRegExp, errorsStore?: string[]) => {
   let openPosition = 0;
   const positions: number[] = [];
-  const names: Record<number, string> = {};
-  const contents: Record<string, string> = {};
+  const positionedNames: Record<number, string> = {};
+  const restContents: Record<string, string> = {};
 
-  const perparedRegStr = reg.replace(findNamedGroupsReg, (all, name, content) => {
-    if (all.startsWith('\\')) return all;
+  const perparedRegStr = reg.replace(
+    findNamedGroupsReg,
+    (all, name: string | undefined, emptyName: string | undefined, index: number, restContent: string) => {
+      if (all.startsWith('\\')) return all;
 
-    openPosition++;
-    positions.push(openPosition);
+      openPosition++;
+      positions.push(openPosition);
 
-    if (name !== undefined && name !== '') {
-      if (numbersSet.has(name[0])) throw `Incorrect StrRegExp name <${name}> in ${makeNamedRegExp.name}`;
-      names[openPosition] = name;
-      if (typeof content === 'string') contents[name] = content.slice(0, -1);
-    } else if (typeof content === 'string') contents[openPosition] = content.slice(0, -1);
+      if (emptyName !== undefined) {
+        if (errorsStore === undefined) throw `Incorrect StrRegExp name empty <> in ${makeNamedRegExp.name}`;
+        else errorsStore.push('');
+      }
 
-    return '(';
-  });
+      if (name !== undefined && name !== '') {
+        if (name === '' || numbersSet.has(name[0])) {
+          if (errorsStore === undefined) throw `Incorrect StrRegExp name <${name}> in ${makeNamedRegExp.name}`;
+          else errorsStore.push(name);
+        }
+        positionedNames[openPosition] = name;
+        if (typeof restContent === 'string') restContents[name] = restContent.slice(index + all.length);
+      } else if (typeof restContent === 'string') restContents[openPosition] = restContent.slice(index + all.length);
 
-  return { perparedRegStr, positions, names, contents };
+      return '(';
+    },
+  );
+
+  return { perparedRegStr, positions, positionedNames, restContents };
 };
