@@ -8,15 +8,15 @@ export const makeNamedRegExp: MakeNamedRegExp = (reg, replacer, setLastIndexTo) 
   replacers[reg] = replacer as never;
 
   if (regReps[reg] === undefined) {
-    const { names, perparedRegStr: perparedReg, positions } = prepareNameMakedRegExp(reg);
+    const { positionedNames, perparedRegStr, positions } = prepareNameMakedRegExp(reg);
 
     regReps[reg] = [
-      makeRegExp(perparedReg as never),
+      makeRegExp(perparedRegStr as never),
       (...args) => {
         const reps: Record<string, string | und> = { $0: args[0] };
 
         for (const pos of positions) {
-          if (pos in names) reps[names[pos]] = args[pos];
+          if (pos in positionedNames) reps[positionedNames[pos]] = args[pos];
           else reps[`$${pos}`] = args[pos];
         }
 
