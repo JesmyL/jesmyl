@@ -1,3 +1,3 @@
-interface TheNamedRegExtMakerRegTypes {
+interface _GlobalScopedNamedRegExpMakerGeneratedTypes {
   ['/ /']: { $0: ' ' };
 }

@@ -56,6 +56,15 @@ export const regExpMasterVitePlugin = ({ srcDir = 'src' }: { srcDir?: string } =
     return isInclusive;
   }
 
+  const unreadableUnionsSet = new Set(['^', '$', '']);
+  const filterUakeReadableUnions = (text: string) => !unreadableUnionsSet.has(text);
+  const makeReadableUnions = (text: string) => {
+    const s = text.split(makeRegExp('/\\|/g'));
+    const f = s.filter(filterUakeReadableUnions);
+
+    return (s.length !== f.length && f.length ? "' | '" : '') + f.join("' | '");
+  };
+
   //////////////////
   // region: opts //
   //////////////////
@@ -110,15 +119,28 @@ export const regExpMasterVitePlugin = ({ srcDir = 'src' }: { srcDir?: string } =
 
           const findFreeBracketReg = makeRegExp(`/(?<!\\\\)\\${bracket}/`);
           const index = splits[i].slice(1).search(findFreeBracketReg);
-          const userWritedRegStr = splits[i]?.slice(1, index + 1);
-          const typeKeyRegStr = `\`${
+          let userWritedRegStr = splits[i]?.slice(1, index + 1);
+
+          let typeKeyRegStr = `\`${
             bracket === '`'
               ? userWritedRegStr
               : userWritedRegStr.replace(makeRegExp('/(\\\\*?)\\\\([`\'"])/g'), slashedBracketsReplacer)
           }\``;
 
+          if (bracket === '`') {
+            let replacement = '${string}';
+            const reg = makeRegExp('/(\\\\*)\\$\\{[^}]+\\}/gi');
+
+            const replacer = (all: string, slashes: string) => {
+              return slashes.length % 2 ? all : replacement;
+            };
+
+            typeKeyRegStr = typeKeyRegStr.replace(reg, replacer);
+            replacement = '\\\\w+';
+            userWritedRegStr = userWritedRegStr.replace(reg, replacer);
+          }
+
           if (generatedRegsSet.has(typeKeyRegStr)) continue;
-          if (makeRegExp('/(?<!\\\\)\\${/').test(userWritedRegStr)) throw 'Static reg string only';
           generatedRegsSet.add(typeKeyRegStr);
 
           let isNeedReplace = true;
@@ -150,7 +172,7 @@ export const regExpMasterVitePlugin = ({ srcDir = 'src' }: { srcDir?: string } =
 
             isNeedReplace = true;
 
-            replacedPerparedRegStr = replacedPerparedRegStr.replace(makeRegExp('/[^[\\]0]/'), '');
+            replacedPerparedRegStr = replacedPerparedRegStr.replace(makeRegExp('/[^[\\]0]/g'), '');
 
             while (isNeedReplace) {
               isNeedReplace = false;
@@ -172,7 +194,12 @@ export const regExpMasterVitePlugin = ({ srcDir = 'src' }: { srcDir?: string } =
               const restContentParts: [string, ...(string | undefined)[]] = restContents[key]
                 .replace(makeRegExp('/\\\\{2}/g'), '\\')
                 .split(makeRegExp('/((?!\\\\)[)])/'))[0]
-                .split(makeRegExp('/(\\[\\d[-\\d]*\\d][?*]?|\\+|(?:\\\\+[wd][?*]?)|.[?*]|\\()/'), 4) as never;
+                .split(
+                  makeRegExp(
+                    '/(\\[(?:\\d[-\\d]*\\d)?][?*]?|\\\\*\\[|\\+|(?:\\\\+[wd][?*]?)|.[?*]|.\\{(?:0|),\\d+\\}|{\\d+,?\\d?\\}|\\(|\\.)/',
+                  ),
+                  4,
+                ) as never;
 
               const isFirstNumber =
                 restContentParts[1] === '\\\\d' ||
@@ -184,7 +211,7 @@ export const regExpMasterVitePlugin = ({ srcDir = 'src' }: { srcDir?: string } =
 
               insertableLiteralContents[key] =
                 restContentParts.length === 1
-                  ? `'${restContentParts[0].replace(makeRegExp("/'/g"), "\\'")}'`
+                  ? `'${makeReadableUnions(restContentParts[0].replace(makeRegExp("/'/g"), "\\'"))}'`
                   : `\`${restContentParts[0].replace(makeRegExp('/`/g'), '\\`')}\${${isFirstNumber ? (!restContentParts[2] && !restContentParts[3] ? `number${optionalNumber}` : `number${optionalNumber}}\${string`) : 'string'}}\``;
 
               if (insertableLiteralContents[key] === '`${string}`') insertableLiteralContents[key] = 'string';
@@ -210,18 +237,20 @@ export const regExpMasterVitePlugin = ({ srcDir = 'src' }: { srcDir?: string } =
 
         fs.writeFile(
           modelFilePath,
-          `interface TheNamedRegExtMakerRegTypes {${types
+          `interface _GlobalScopedNamedRegExpMakerGeneratedTypes extends\n${types
             .map(props => {
-              const typeContent =
-                props.duplicateNameErrors.length !== 0
-                  ? `'Duplicate name${props.duplicateNameErrors.length === 1 ? ` <${props.duplicateNameErrors[0]}>` : `s: <${props.duplicateNameErrors.join('>, <')}>`}'`
-                  : props.nameErrors.length !== 0
-                    ? `'Invalid group name${props.nameErrors.length === 1 ? ` <${props.nameErrors[0]}>` : `s: <${props.nameErrors.join('>, <')}>`}'`
-                    : `{ ${fillTypes(props.requiredTypes, false, props.insertableLiteralContents)} ${fillTypes(props.optionalTypes, true, props.insertableLiteralContents)} }`;
+              let typeContent = '';
 
-              return `\n  [${props.typeKeyRegStr}]: ${typeContent};`;
+              if (props.duplicateNameErrors.length !== 0)
+                typeContent = `'Duplicate name${props.duplicateNameErrors.length === 1 ? ` <${props.duplicateNameErrors[0]}>` : `s: <${props.duplicateNameErrors.join('>, <')}>`}'`;
+              else if (props.nameErrors.length !== 0)
+                typeContent = `'Invalid group name${props.nameErrors.length === 1 ? ` <${props.nameErrors[0]}>` : `s: <${props.nameErrors.join('>, <')}>`}'`;
+              else
+                typeContent = `{ ${fillTypes(props.requiredTypes, false, props.insertableLiteralContents)} ${fillTypes(props.optionalTypes, true, props.insertableLiteralContents)} }`;
+
+              return `Record<${props.typeKeyRegStr}, ${typeContent}>`;
             })
-            .join('')}\n}\n`,
+            .join(',\n  ')}\n{ '': ''; }\n`,
           () => {},
         );
       } catch (error) {

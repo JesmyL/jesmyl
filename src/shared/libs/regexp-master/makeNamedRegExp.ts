@@ -1,18 +1,21 @@
 import { makeRegExp, StrRegExp } from './makeRegExp';
 import { prepareNameMakedRegExp } from './utils';
 
-const replacers: Record<string, (reps: Record<string, string | und>) => string> = {};
-const regReps: Record<string, [reg: RegExp, replacer: Parameters<''['replace']>[1]]> = {};
+type RegTypes = _GlobalScopedNamedRegExpMakerGeneratedTypes;
+type Regulars<Ret> = { regExp: RegExp; transform: (args: [string, ...(string | und)[]]) => Ret };
 
-export const makeNamedRegExp: MakeNamedRegExp = (reg, replacer, setLastIndexTo) => {
-  replacers[reg] = replacer as never;
+const regReps: Record<string, Regulars<object>> = {};
 
-  if (regReps[reg] === undefined) {
-    const { positionedNames, perparedRegStr, positions } = prepareNameMakedRegExp(reg);
+export const makeNamedRegExp = <R extends StrRegExp, Reg extends R extends keyof RegTypes ? R : keyof RegTypes>(
+  stringRegExp: Reg,
+  setLastIndexTo?: number,
+): Regulars<RegTypes[Reg]> => {
+  if (regReps[stringRegExp] === undefined) {
+    const { positionedNames, perparedRegStr, positions } = prepareNameMakedRegExp(stringRegExp as never);
 
-    regReps[reg] = [
-      makeRegExp(perparedRegStr as never),
-      (...args) => {
+    regReps[stringRegExp] = {
+      regExp: makeRegExp(perparedRegStr as never),
+      transform: args => {
         const reps: Record<string, string | und> = { $0: args[0] };
 
         for (const pos of positions) {
@@ -20,23 +23,12 @@ export const makeNamedRegExp: MakeNamedRegExp = (reg, replacer, setLastIndexTo) 
           else reps[`$${pos}`] = args[pos];
         }
 
-        return replacers[reg](reps);
+        return reps;
       },
-    ];
+    };
   }
 
-  if (setLastIndexTo !== undefined) regReps[reg][0].lastIndex = setLastIndexTo;
+  if (setLastIndexTo !== undefined) regReps[stringRegExp].regExp.lastIndex = setLastIndexTo;
 
-  return regReps[reg];
+  return regReps[stringRegExp] as never;
 };
-
-// types
-
-type MakeNamedRegExp = <
-  Reg extends StrRegExp,
-  R extends Reg extends keyof TheNamedRegExtMakerRegTypes ? Reg : keyof TheNamedRegExtMakerRegTypes,
->(
-  reg: R,
-  replacer: (reps: TheNamedRegExtMakerRegTypes[R]) => string,
-  setLastIndexTo?: number,
-) => (typeof regReps)[string];
