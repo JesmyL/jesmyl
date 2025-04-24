@@ -4,14 +4,11 @@ import { makeRegExp } from './makeRegExp';
 import { prepareNameMakedRegExp } from './utils';
 
 export const regExpMasterVitePlugin = ({ srcDir = 'src' }: { srcDir?: string } = {}) => {
+  const bracketsSet = new Set(['`', '"', "'"]);
   const filePathSplitterReg = makeRegExp(`/[/\\\\]${srcDir}[/\\\\]/`);
-
-  const importTestReg = makeRegExp(`/import \\{\\s*${makeNamedRegExp.name}[^}]*\\}/`);
-  const makerSplitterReg = makeRegExp(
-    `/${makeNamedRegExp.name}\\(\\s*(?:\\s*(?:\\/{2,}.*|\\/\\*[\\w\\W]+?\\*\\/)\\s*\n*)*/gm`,
-  );
-  const templatesInStringReg = makeRegExp('/(?<!\\\\)\\${/');
   const dirName = __dirname.replace(/\\/g, '/');
+
+  const toCharCodeReplacer = (all: string) => '' + all.charCodeAt(0);
 
   const fillTypes = (types: string[], isOptionalParam: boolean, insertableLiteralContents: Record<string, string>) =>
     types.length === 0
@@ -40,7 +37,6 @@ export const regExpMasterVitePlugin = ({ srcDir = 'src' }: { srcDir?: string } =
     }
     if (knownFilesSet.has(fileSrc)) saveKnownFiles(knownFilesSet.delete(fileSrc));
   };
-  const toCharCodeReplacer = (all: string) => '' + all.charCodeAt(0);
 
   const slashedBracketsReplacer = (all: string, $1: string, $2: string) =>
     all.length % 2 ? `${$1}\\\\${$2}` : $2 === '`' ? all : `${$1.slice(0, -1)}${$2}`;
@@ -53,6 +49,12 @@ export const regExpMasterVitePlugin = ({ srcDir = 'src' }: { srcDir?: string } =
       });
     });
   };
+
+  function filterInclusiveNames(this: Set<string>, name: string) {
+    const isInclusive = !this.has(name);
+    this.delete(name);
+    return isInclusive;
+  }
 
   //////////////////
   // region: opts //
@@ -75,13 +77,21 @@ export const regExpMasterVitePlugin = ({ srcDir = 'src' }: { srcDir?: string } =
 
       const content = await readFileAsync(src);
 
-      if (!importTestReg.test(content)) {
+      const importNameMatch = content.match(
+        makeRegExp(`/import \\{\\s*[\\w\\W]*?${makeNamedRegExp.name}(?:\\s+as\\s+([\\w_$]+))?[\\w\\W]*?}\\s*from/`),
+      );
+
+      if (importNameMatch === null) {
         removeFile(modelFilePath, fileSrc);
         return;
       }
 
       try {
-        const splits = content.split(makerSplitterReg);
+        const splits = content.split(
+          makeRegExp(
+            `/${importNameMatch[1] ?? makeNamedRegExp.name}\\(\\s*(?:\\s*(?:\\/{2,}.*|\\/\\*[\\w\\W]+?\\*\\/)\\s*\n*)*/gm`,
+          ),
+        );
         const nameErrors: string[] = [];
         const generatedRegsSet = new Set<string>();
 
@@ -96,6 +106,8 @@ export const regExpMasterVitePlugin = ({ srcDir = 'src' }: { srcDir?: string } =
 
         for (let i = 1; i < splits.length; i++) {
           const bracket = splits[i][0];
+          if (!bracketsSet.has(bracket)) throw `Pass incorrect string regexp`;
+
           const findFreeBracketReg = makeRegExp(`/(?<!\\\\)\\${bracket}/`);
           const index = splits[i].slice(1).search(findFreeBracketReg);
           const userWritedRegStr = splits[i]?.slice(1, index + 1);
@@ -106,12 +118,13 @@ export const regExpMasterVitePlugin = ({ srcDir = 'src' }: { srcDir?: string } =
           }\``;
 
           if (generatedRegsSet.has(typeKeyRegStr)) continue;
-          if (templatesInStringReg.test(userWritedRegStr)) throw 'Static reg string only';
+          if (makeRegExp('/(?<!\\\\)\\${/').test(userWritedRegStr)) throw 'Static reg string only';
           generatedRegsSet.add(typeKeyRegStr);
 
           let isNeedReplace = true;
           const optionalTypes: string[] = [];
           const requiredTypes: string[] = ['$0'];
+          const registeredNames: string[] = ['$0'];
           const insertableLiteralContents: Record<string, string> = {};
           const { positionedNames, positions, perparedRegStr, restContents } = prepareNameMakedRegExp(
             userWritedRegStr as never,
@@ -149,32 +162,34 @@ export const regExpMasterVitePlugin = ({ srcDir = 'src' }: { srcDir?: string } =
             }
 
             for (const position of positions) {
-              (replacedPerparedRegStr[position - 1] === '1' ? optionalTypes : requiredTypes).push(
-                position in positionedNames ? positionedNames[position] : `$${position}`,
-              );
+              const registeredName = position in positionedNames ? positionedNames[position] : `$${position}`;
+
+              registeredNames.push(registeredName);
+              (replacedPerparedRegStr[position - 1] === '1' ? optionalTypes : requiredTypes).push(registeredName);
             }
 
             for (const key in restContents) {
-              const restContent = restContents[key]
+              const restContentParts: [string, ...(string | undefined)[]] = restContents[key]
+                .replace(makeRegExp('/\\\\{2}/g'), '\\')
                 .split(makeRegExp('/((?!\\\\)[)])/'))[0]
-                .split(makeRegExp('/(\\[\\d[-\\d]*\\d][?*]?|\\+|(?:\\\\+[wd][?*]?)|.[?*]|\\()/'), 3);
+                .split(makeRegExp('/(\\[\\d[-\\d]*\\d][?*]?|\\+|(?:\\\\+[wd][?*]?)|.[?*]|\\()/'), 4) as never;
 
               const isFirstNumber =
-                restContent[1] === '\\\\d' || makeRegExp('/\\[\\d[-\\d]*\\d]/').test(restContent[1]);
+                restContentParts[1] === '\\\\d' ||
+                (restContentParts[1] && makeRegExp('/\\[\\d[-\\d]*\\d]/').test(restContentParts[1]));
               const optionalNumber =
-                restContent[1] && (restContent[1].endsWith('?') || restContent[1].endsWith('*')) ? " | ''" : '';
+                restContentParts[1] && (restContentParts[1].endsWith('?') || restContentParts[1].endsWith('*'))
+                  ? " | ''"
+                  : '';
 
               insertableLiteralContents[key] =
-                restContent.length === 1
-                  ? `'${restContent[0].replace(makeRegExp("/'/g"), "\\'")}'`
-                  : `\`${restContent[0].replace(makeRegExp('/`/g'), '\\`')}\${${isFirstNumber ? (!restContent[2] ? `number${optionalNumber}` : `number${optionalNumber}}\${string`) : 'string'}}\``;
+                restContentParts.length === 1
+                  ? `'${restContentParts[0].replace(makeRegExp("/'/g"), "\\'")}'`
+                  : `\`${restContentParts[0].replace(makeRegExp('/`/g'), '\\`')}\${${isFirstNumber ? (!restContentParts[2] && !restContentParts[3] ? `number${optionalNumber}` : `number${optionalNumber}}\${string`) : 'string'}}\``;
 
               if (insertableLiteralContents[key] === '`${string}`') insertableLiteralContents[key] = 'string';
             }
           }
-
-          const names = Object.values(positionedNames);
-          const exclusiveNames = new Set(names);
 
           types.push({
             typeKeyRegStr,
@@ -182,11 +197,7 @@ export const regExpMasterVitePlugin = ({ srcDir = 'src' }: { srcDir?: string } =
             requiredTypes,
             insertableLiteralContents,
             nameErrors,
-            duplicateNameErrors: names.filter(name => {
-              const isInclusive = !exclusiveNames.has(name);
-              exclusiveNames.delete(name);
-              return isInclusive;
-            }),
+            duplicateNameErrors: registeredNames.filter(filterInclusiveNames, new Set(registeredNames)),
           });
         }
 
