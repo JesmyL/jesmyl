@@ -26,10 +26,10 @@ export const tgBotUrlController = async (
         text: '✅ Отправить ✅',
         callback_data: 'send-URL-message',
         cb: async (_bot, query, answer) => {
-          if (!query.message?.text || !query.message.reply_to_message?.text) return;
+          if (query.message?.text === undefined || query.message.reply_to_message === undefined) return;
 
           try {
-            await adminBot.forwardMessage(targetBot.chatId, query.message.reply_to_message.message_id ?? 0);
+            await targetBot.forwardMessage(adminBot.chatId, query.message.reply_to_message.message_id ?? 0);
             await adminBot.editMessageText(query.message.message_id, 'Сообщение отправлено');
 
             answer({ text: 'Отправлено!', show_alert: true });
