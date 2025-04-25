@@ -1,4 +1,4 @@
-import { makeRegExp } from 'shared/utils';
+import { makeRegExp } from 'regexp-master';
 import { CoderResultComponent } from './model';
 import { CoderValueExpandable } from './value-expandable';
 

@@ -7,7 +7,8 @@ import { ChordVisibleVariant } from '$cm/Cm.model';
 import { ComLine } from '$cm/col/com/line/ComLine';
 import { TheOrder } from '$cm/col/com/order/TheOrder';
 import React from 'react';
-import { emptyArray, itIt, makeRegExp } from 'shared/utils';
+import { makeRegExp } from 'regexp-master';
+import { emptyArray, itIt } from 'shared/utils';
 import styled, { css } from 'styled-components';
 
 export const CmEditorTabComChordApplications = () => {

@@ -1,4 +1,5 @@
-import { SMyLib, itIt, makeRegExp } from 'shared/utils';
+import { makeRegExp } from 'regexp-master';
+import { SMyLib, itIt } from 'shared/utils';
 
 const constants = {
   REMOVE: ['REMOVE'],

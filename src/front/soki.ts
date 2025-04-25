@@ -1,5 +1,6 @@
+import { makeRegExp } from 'regexp-master';
 import { InvocatorClientEvent, InvocatorClientTool, InvocatorServerEvent, SokiError } from 'shared/api';
-import { Eventer, makeRegExp } from 'shared/utils';
+import { Eventer } from 'shared/utils';
 import { jversion } from 'shared/values';
 import { authIDB } from './components/index/db/auth-idb';
 import { indexIDB } from './components/index/db/index-idb';

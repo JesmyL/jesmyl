@@ -1,6 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { useEffect, useState } from 'react';
-import { itIt, makeRegExp } from 'shared/utils';
+import { makeRegExp } from 'regexp-master';
+import { itIt } from 'shared/utils';
 import { StrongEditableField } from './field/StrongEditableField';
 
 type TakeDateComponent = 'NO' | 'year' | 'month' | 'day';

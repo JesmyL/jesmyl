@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
+import { makeRegExp } from 'regexp-master';
 import { OrderRepeats } from 'shared/api';
-import { makeRegExp } from '../makeRegExp';
 import { emptyArray } from '../utils';
 
 export class CmComOrderUtils {

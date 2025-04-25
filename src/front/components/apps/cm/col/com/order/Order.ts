@@ -1,6 +1,7 @@
 import { mylib, MyLib } from '#shared/lib/my-lib';
 import { SourceBased } from '#shared/lib/SourceBased';
 import { ChordVisibleVariant } from '$cm/Cm.model';
+import { makeRegExp } from 'regexp-master';
 import {
   IExportableOrder,
   IExportableOrderFieldValues,
@@ -8,7 +9,7 @@ import {
   OrderRepeats,
   SpecialOrderRepeats,
 } from 'shared/api';
-import { emptyArray, itIt, makeRegExp } from 'shared/utils';
+import { emptyArray, itIt } from 'shared/utils';
 import { CmComOrderUtils } from 'shared/utils/cm/ComOrderUtils';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { Com } from '../Com';
@@ -140,7 +141,7 @@ export class Order extends SourceBased<IExportableOrder> {
         this.me.repeats ?? this.me?.targetOrd?.me.source?.top.r ?? this.getWatchInheritance('r') ?? this.top.r;
 
       const nrepeats = {} as SpecialOrderRepeats;
-      const reg = makeRegExp('/[a-z]/i', true);
+      const reg = makeRegExp('/[a-z]/i', 0);
 
       return MyLib.entries((repeats && (mylib.isNum(repeats) ? { '.': repeats } : repeats)) || nrepeats).reduce(
         (acc, [key, val]) => {

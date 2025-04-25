@@ -1,7 +1,8 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
+import { makeRegExp } from 'regexp-master';
 import { IScheduleWidgetDayEventMi } from 'shared/api';
 import { SchDaysSokiInvocatorMethods } from 'shared/api/invocators/schedules/invocators.model';
-import { makeRegExp, smylib } from 'shared/utils';
+import { smylib } from 'shared/utils';
 import { modifySchedule, modifyScheduleDay } from '../schedule-modificators';
 import { onScheduleDayBeginTimeSetEvent, onScheduleDayEventListSetEvent } from '../specific-modify-events';
 import { scheduleTitleInBrackets } from './general-invocators.base';

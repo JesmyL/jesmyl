@@ -1,8 +1,8 @@
 import { mylib } from '#shared/lib/my-lib';
 import { useIndexFileAssociations } from '$index/atoms';
 import { useMemo } from 'react';
+import { makeRegExp } from 'regexp-master';
 import { MyFileType } from 'shared/api';
-import { makeRegExp } from 'shared/utils';
 
 export const useAssociateTheFileType = () => {
   const associates = useIndexFileAssociations();

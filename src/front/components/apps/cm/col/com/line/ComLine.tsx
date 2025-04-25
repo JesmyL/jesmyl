@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { makeRegExp } from 'shared/utils';
+import { makeRegExp } from 'regexp-master';
 import styled from 'styled-components';
 import { IComLineProps } from '../order/Order.model';
 

@@ -1,7 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { Com } from '$cm/col/com/Com';
+import { makeRegExp } from 'regexp-master';
 import { IExportableCom } from 'shared/api';
-import { makeRegExp } from 'shared/utils';
 import { comBlockStyles } from 'shared/values/cm/block-styles/BlockStyles';
 
 export class EditableComBase extends Com {

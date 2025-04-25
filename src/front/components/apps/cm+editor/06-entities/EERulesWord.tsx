@@ -4,8 +4,9 @@ import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { CmEditorIDBStorage } from '$cm+editor/basis/lib/cmEditorIDB';
 import { memo, useReducer, useState } from 'react';
+import { makeRegExp } from 'regexp-master';
 import { EeStorePack } from 'shared/api';
-import { itIt, itNIt, makeRegExp } from 'shared/utils';
+import { itIt, itNIt } from 'shared/utils';
 import styled from 'styled-components';
 
 const radioTitles = ['е/ё', 'е!!', 'ё!!'].map((typeName, type) => <div key={type}>{typeName}</div>);

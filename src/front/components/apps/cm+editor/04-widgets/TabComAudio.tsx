@@ -6,8 +6,9 @@ import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { ObserveUrlResource } from '$cm+editor/basis/ui/ObserveUrlResource';
 import { ComAudioControlledList } from '$cm+editor/widgets/AudioControlledList';
 import { useState } from 'react';
+import { makeRegExp } from 'regexp-master';
 import { CmMp3Rule } from 'shared/api';
-import { itIt, makeRegExp } from 'shared/utils';
+import { itIt } from 'shared/utils';
 
 type Props = { topHTML?: string; topCom?: EditableCom; topMp3Rule?: CmMp3Rule };
 

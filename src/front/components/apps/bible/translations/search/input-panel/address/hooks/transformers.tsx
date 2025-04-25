@@ -6,7 +6,8 @@ import { useSetBibleAddressIndexes } from '$bible/basis/lib/hooks/address/addres
 import { useBibleBookList } from '$bible/basis/lib/hooks/texts';
 import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/basis/model/base';
 import { ReactNode, useEffect, useRef, useState } from 'react';
-import { emptyFunc, makeRegExp } from 'shared/utils';
+import { makeRegExp } from 'regexp-master';
+import { emptyFunc } from 'shared/utils';
 
 const addressReg = makeRegExp('/(\\d?\\s*[а-яё]+)\\s*((\\d{1,3})((:|\\s+)(\\d{1,3})(\\s*([-,]?)\\s*)(\\d{1,3})?)?)?/i');
 const makePropsFromAddressArgs = (args: [string, ...(string | und)[]] | RegExpMatchArray) => {

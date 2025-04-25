@@ -2,6 +2,7 @@ import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { SokiServerInvocatorTool } from 'back/SokiInvocatorBase.server';
 import { userAuthStringified, userVisitStringified } from 'back/utils';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
+import { makeRegExp } from 'regexp-master';
 import {
   InvocatorClientEvent,
   InvocatorServerEvent,
@@ -10,7 +11,7 @@ import {
   SokiError,
   SokiVisit,
 } from 'shared/api';
-import { makeRegExp, setSharedPolyfills, smylib } from 'shared/utils';
+import { setSharedPolyfills, smylib } from 'shared/utils';
 import WebSocket, { WebSocketServer } from 'ws';
 import { ErrorCatcher } from '../ErrorCatcher';
 import { onSokiServerEventerInvocatorInvoke } from './eventers';

@@ -18,8 +18,9 @@ import { Com } from '$cm/col/com/Com';
 import { ComOrders } from '$cm/col/com/orders/ComOrders';
 import { useNavigate } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
+import { makeRegExp } from 'regexp-master';
 import { CmComMod, CmComWid, CmMp3Rule, IExportableCom } from 'shared/api';
-import { itIt, itNNil, makeRegExp } from 'shared/utils';
+import { itIt, itNNil } from 'shared/utils';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import styled from 'styled-components';
 

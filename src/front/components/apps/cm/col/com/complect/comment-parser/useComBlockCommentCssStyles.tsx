@@ -33,18 +33,20 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
       let cssContentList: RuleSet<object>[] = [];
 
       if (comComment) {
-        const commentBlocks = Array.from(comComment.matchAll(ComBlockCommentMakerCleans.commentsParseReg()));
+        const { regExp: commentMatcher, transform: makePropsFromCommentsArgs } =
+          ComBlockCommentMakerCleans.commentsAnySpecialNumberParseReg;
+        const commentBlocks = Array.from(comComment.matchAll(commentMatcher));
         const commentsDict: Record<string, string[]> = {};
 
         for (const commentBlock of commentBlocks) {
-          const cmt = ComBlockCommentMakerCleans.makePropsFromCommentsArgs(commentBlock as never);
+          const cmt = makePropsFromCommentsArgs(commentBlock as never);
 
-          if (!cmt.$comment) continue;
+          if (!cmt.comment) continue;
 
-          if (cmt.$hashes && cmt.$hashes.length > 1 && cmt.$blockHashPosition !== undefined) {
+          if (cmt.hashes && cmt.hashes.length > 1 && cmt.blockHashPosition !== undefined) {
             if (visibleOrders == null) continue;
 
-            const leadOrderStyleKey = visibleOrders[+cmt.$blockHashPosition - 1]?.me.style?.key.trim();
+            const leadOrderStyleKey = visibleOrders[+cmt.blockHashPosition - 1]?.me.style?.key.trim();
 
             if (leadOrderStyleKey == null) continue;
             let orderPosition = 0;
@@ -53,20 +55,20 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
               orderPosition++;
 
               if (visibleOrder.me.style?.key.trim() !== leadOrderStyleKey) continue;
-              if (commentsDict[orderPosition] != null && cmt.$modificators !== '!') continue;
+              if (commentsDict[orderPosition] != null && cmt.modificators !== '!') continue;
 
-              commentsDict[orderPosition] = [cmt.$comment.trim()];
+              commentsDict[orderPosition] = [cmt.comment.trim()];
             }
             continue;
-          } else if (cmt.$modificators === '!' && cmt.$blockHashPosition !== undefined) {
-            commentsDict[cmt.$blockHashPosition] = [cmt.$comment.trim()];
+          } else if (cmt.modificators === '!' && cmt.blockHashPosition !== undefined) {
+            commentsDict[cmt.blockHashPosition] = [cmt.comment.trim()];
 
             continue;
           }
 
-          if (cmt.$blockHashPosition !== undefined) {
-            commentsDict[cmt.$blockHashPosition] ??= [];
-            commentsDict[cmt.$blockHashPosition].push(cmt.$comment.trim());
+          if (cmt.blockHashPosition !== undefined) {
+            commentsDict[cmt.blockHashPosition] ??= [];
+            commentsDict[cmt.blockHashPosition].push(cmt.comment.trim());
           }
         }
 

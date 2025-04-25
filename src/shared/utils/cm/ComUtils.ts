@@ -1,6 +1,6 @@
+import { makeRegExp } from 'regexp-master';
 import { EeStorePack } from 'shared/api';
 import { IIncorrect, IIncorrects } from 'shared/model/cm/Incorrects';
-import { makeRegExp } from '../makeRegExp';
 import { smylib, SMyLib } from '../SMyLib';
 import { itTrim } from '../utils';
 

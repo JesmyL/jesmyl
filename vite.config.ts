@@ -3,11 +3,12 @@ import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 import basicSsl from '@vitejs/plugin-basic-ssl';
 import react from '@vitejs/plugin-react';
 import dns from 'dns';
+import fs from 'fs';
+import { regExpMasterVitePlugin } from 'regexp-master';
 import { defineConfig } from 'vite';
 import eslint from 'vite-plugin-eslint';
 import { VitePWA } from 'vite-plugin-pwa';
 import tsconfigPaths from 'vite-tsconfig-paths';
-import { regExpMasterVitePlugin } from './src/shared/libs/regexp-master/plugin';
 import * as tsconf from './tsconfig.json';
 import { vitePWAOptions } from './vite-pwa.options';
 
@@ -26,7 +27,7 @@ export default defineConfig(() => {
     build: { outDir: 'build' },
     server: { https: {} },
     plugins: [
-      regExpMasterVitePlugin(),
+      regExpMasterVitePlugin({ __dirname, fs: { ...fs } }),
       TanStackRouterVite({ target: 'react', autoCodeSplitting: true, routesDirectory: 'src/front/routes' }),
       tsconfigPaths(),
       eslint({

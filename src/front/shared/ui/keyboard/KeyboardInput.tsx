@@ -1,6 +1,6 @@
 import { indexSimpleValIsUseNativeKeyboard } from 'front/components/index/complect/index.simpleValues';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { makeRegExp } from 'shared/utils';
+import { makeRegExp } from 'regexp-master';
 import styled from 'styled-components';
 import { LazyIcon } from '../the-icon/LazyIcon';
 import { KeyboardInputProps } from './Keyboard.model';

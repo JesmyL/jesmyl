@@ -1,5 +1,5 @@
 import md5 from 'md5';
-import { makeRegExp } from './makeRegExp';
+import { makeRegExp } from 'regexp-master';
 import { itIt, itNIt } from './utils';
 
 export type StringTemplaterArgs<Adds = object> = {

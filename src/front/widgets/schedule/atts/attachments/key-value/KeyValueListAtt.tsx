@@ -12,6 +12,7 @@ import {
 } from '#widgets/schedule/useScheduleWidget';
 import Markdown from 'markdown-to-jsx';
 import { ReactNode } from 'react';
+import { makeRegExp } from 'regexp-master';
 import {
   customAttUseRights,
   CustomAttUseRights,
@@ -27,7 +28,7 @@ import {
   ScheduleWidgetCleans,
   ScheduleWidgetRightsCtrl,
 } from 'shared/api';
-import { itIt, makeRegExp } from 'shared/utils';
+import { itIt } from 'shared/utils';
 import styled, { css } from 'styled-components';
 import { ScheduleKeyValueListAttArrayItemKeyChange } from './ArrayItemSignChange';
 import { KeyValueListAttNumberMember } from './KeyValueListAttNumberMember';

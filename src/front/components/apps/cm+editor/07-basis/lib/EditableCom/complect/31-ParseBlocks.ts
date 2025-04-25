@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
 import { INewExportableOrder } from '$cm/col/com/order/Order.model';
-import { makeRegExp } from 'shared/utils';
+import { makeRegExp } from 'regexp-master';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { comBlockStyles } from 'shared/values/cm/block-styles/BlockStyles';
 import { StyleBlock } from 'shared/values/cm/block-styles/StyleBlock';

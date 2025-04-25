@@ -1,7 +1,8 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
+import { makeRegExp } from 'regexp-master';
 import { CmComOrderWid, CmComWid, IExportableCom, IExportableOrder } from 'shared/api';
 import { CmEditComOrderSokiInvocatorModel } from 'shared/api/invocators/cm/edit-com-order-invocators.model';
-import { itNNil, makeRegExp, smylib } from 'shared/utils';
+import { itNNil, smylib } from 'shared/utils';
 import { getCmComNameInBrackets, modifyInvocableCom } from './edit-com-invocator.base';
 
 export const cmEditComOrderServerInvocatorBase =

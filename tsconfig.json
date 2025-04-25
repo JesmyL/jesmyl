@@ -57,6 +57,6 @@
       "bibles/*": ["./bibles/*"]
     }
   },
-  "include": ["src", "src/shared/utils/complect", "./node_modules/cypress", "cypress/**/*.ts"],
+  "include": ["src", "src/shared/utils/complect", "./node_modules/cypress", "cypress/**/*.ts", "regexp-master.gen"],
   "exclude": ["src/front/shared/ui/the-icon/icons"]
 }

@@ -4,7 +4,7 @@ import { useCom } from '$cm/basis/lib/com-selections';
 import { ComLine } from '$cm/col/com/line/ComLine';
 import { ComOrders } from '$cm/col/com/orders/ComOrders';
 import { useEffect, useMemo } from 'react';
-import { makeRegExp } from 'shared/utils';
+import { makeRegExp } from 'regexp-master';
 import styled from 'styled-components';
 import { CmSchWTranslationLiveDataValue } from './model';
 

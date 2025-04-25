@@ -9,6 +9,7 @@ import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { exec } from 'child_process';
 import jwt from 'jsonwebtoken';
 import TelegramBot from 'node-telegram-bot-api';
+import { makeRegExp } from 'regexp-master';
 import {
   IScheduleWidget,
   IScheduleWidgetUser,
@@ -18,7 +19,7 @@ import {
   TelegramNativeAuthUserData,
 } from 'shared/api';
 import { IndexSokiInvocatorModel } from 'shared/api/invocators/index/basics-invocators.model';
-import { itNNull, makeRegExp, smylib } from 'shared/utils';
+import { itNNull, smylib } from 'shared/utils';
 import { appVersionFileStore, valuesFileStore } from './file-stores';
 import { schGeneralSokiInvocatorBaseServer } from './schedules/base-invocators/general-invocators.base';
 import { schedulesFileStore } from './schedules/file-stores';

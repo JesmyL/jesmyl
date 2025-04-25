@@ -11,7 +11,7 @@ export const useCheckIsComCommentIncludesBibleAddress = (com: Com | und) => {
   if (isWasOpenComWithBibleAddressInComment) return true;
 
   isWasOpenComWithBibleAddressInComment = !!(
-    com && comment?.match(ComBlockCommentMakerCleans.firstCommentBibleAddressRegExp)
+    com && comment?.match(ComBlockCommentMakerCleans.firstCommentBibleAddressRegExp.regExp)
   );
 
   return isWasOpenComWithBibleAddressInComment;

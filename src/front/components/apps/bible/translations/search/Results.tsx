@@ -5,7 +5,8 @@ import { useBibleAddressChapteri } from '$bible/basis/lib/hooks/address/chapters
 import { useBibleShowTranslatesValue } from '$bible/basis/lib/hooks/translates';
 import { BibleBooki, BibleChapteri, BibleTranslationSingleAddress, BibleVersei } from '$bible/basis/model/base';
 import { JSX, useCallback, useEffect, useState } from 'react';
-import { emptyArray, makeRegExp } from 'shared/utils';
+import { makeRegExp } from 'regexp-master';
+import { emptyArray } from 'shared/utils';
 import styled from 'styled-components';
 import { useBibleTranslationSearchResultList, useBibleTranslationSearchResultSelectedValue } from './hooks/results';
 import { BibleSearchResultVerse } from './ResultVerse';

@@ -1,8 +1,9 @@
 import { mylib } from '#shared/lib/my-lib';
 import { BaseNamed } from '$cm/base/BaseNamed';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { makeRegExp } from 'regexp-master';
 import { IExportableCom, IExportableOrder } from 'shared/api';
-import { itIt, makeRegExp } from 'shared/utils';
+import { itIt } from 'shared/utils';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { comBlockStyles } from 'shared/values/cm/block-styles/BlockStyles';
 import { StyleBlock } from 'shared/values/cm/block-styles/StyleBlock';

@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { itIt, makeRegExp } from 'shared/utils';
+import { makeRegExp } from 'regexp-master';
+import { itIt } from 'shared/utils';
 import styled, { css, keyframes } from 'styled-components';
 import { ComPlayerPlayButton } from './ComPlayerPlayButton';
 import { ComPlayerTrack } from './ComPlayerTrack';

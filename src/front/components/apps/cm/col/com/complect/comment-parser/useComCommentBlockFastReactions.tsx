@@ -41,19 +41,17 @@ export const useComCommentBlockFastReactions = (com: Com) => {
 
         commentInput.scrollIntoView({ block: 'center' });
         commentInput.focus();
-        const caretPosition = commentInput.value.search(
-          ComBlockCommentMakerCleans.commentsParseReg(withHeaderOrdPosition),
-        );
+        const { regExp: commentReg } = ComBlockCommentMakerCleans.commentsParseReg(withHeaderOrdPosition);
+        const caretPosition = commentInput.value.search(commentReg);
 
         Promise.resolve().then(() => mylib.setInputHeightByContent(commentInput));
 
         if (caretPosition < 0) {
           let currentNumber = withHeaderOrdPosition - 1;
+          const { regExp: currentCommentReg } = ComBlockCommentMakerCleans.commentsParseReg(currentNumber);
 
           while (currentNumber++ < withHeaderOrdi) {
-            const insertPosition = commentInput.value.search(
-              ComBlockCommentMakerCleans.commentsParseReg(currentNumber),
-            );
+            const insertPosition = commentInput.value.search(currentCommentReg);
 
             if (insertPosition > -1) {
               commentInput.value =

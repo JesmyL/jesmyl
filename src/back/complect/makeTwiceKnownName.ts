@@ -1,5 +1,6 @@
 import { nounsFileStore, pronounsFileStore } from 'back/apps/index/file-stores';
-import { makeRegExp, SMyLib, smylib } from 'shared/utils';
+import { makeRegExp } from 'regexp-master';
+import { SMyLib, smylib } from 'shared/utils';
 
 type Replacer<Ret> = (substring: string, ...args: string[]) => Ret;
 

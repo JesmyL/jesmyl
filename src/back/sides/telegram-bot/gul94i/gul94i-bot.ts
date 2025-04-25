@@ -1,4 +1,4 @@
-import { makeRegExp } from 'shared/utils';
+import { makeRegExp } from 'regexp-master';
 import { jesmylTgBot } from '../bot';
 import { tgBotUrlController } from '../complect/url-controller';
 import { tglogger } from '../log/log-bot';

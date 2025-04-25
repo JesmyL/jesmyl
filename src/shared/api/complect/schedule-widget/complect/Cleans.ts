@@ -1,10 +1,11 @@
+import { makeRegExp } from 'regexp-master';
 import {
   CustomAttUseTaleId,
   IScheduleWidget,
   IScheduleWidgetDayEvent,
   ScheduleWidgetDayListItemTypeBox,
 } from 'shared/api';
-import { makeRegExp, SMyLib, smylib } from 'shared/utils';
+import { SMyLib, smylib } from 'shared/utils';
 
 const singleTitleSymbols = '- ().,/';
 const incorrectsTitleReg = makeRegExp(`/[^${singleTitleSymbols}\\dа-яё]/gi`);

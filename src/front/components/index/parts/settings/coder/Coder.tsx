@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { makeRegExp } from 'shared/utils';
+import { makeRegExp } from 'regexp-master';
 import styled from 'styled-components';
 
 interface Props {

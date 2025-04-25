@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
+import { makeRegExp } from 'regexp-master';
 import { CmMp3Rule } from 'shared/api';
-import { itIt, makeRegExp } from 'shared/utils';
+import { itIt } from 'shared/utils';
 
 export const useCmExtractHrefsFromHTML = (
   html: string | nil,
