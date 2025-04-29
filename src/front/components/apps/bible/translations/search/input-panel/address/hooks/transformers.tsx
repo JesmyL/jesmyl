@@ -6,15 +6,12 @@ import { useSetBibleAddressIndexes } from '$bible/basis/lib/hooks/address/addres
 import { useBibleBookList } from '$bible/basis/lib/hooks/texts';
 import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/basis/model/base';
 import { ReactNode, useEffect, useRef, useState } from 'react';
-import { makeRegExp } from 'regexp-master';
+import { makeNamedRegExp, makeRegExp } from 'regexp-master';
 import { emptyFunc } from 'shared/utils';
 
-const addressReg = makeRegExp('/(\\d?\\s*[а-яё]+)\\s*((\\d{1,3})((:|\\s+)(\\d{1,3})(\\s*([-,]?)\\s*)(\\d{1,3})?)?)?/i');
-const makePropsFromAddressArgs = (args: [string, ...(string | und)[]] | RegExpMatchArray) => {
-  const [$all, bookn, , chapterStr, , , verseStr, , verseSeparator, finishVerseStr] = args;
-
-  return { $all, bookn, chapterStr, verseStr, verseSeparator, finishVerseStr };
-};
+const { regExp: addressReg, transform: makePropsFromAddressArgs } = makeNamedRegExp(
+  '/(?<bookn>\\d?\\s*[а-яё]+)\\s*((?<chapterStr>\\d{1,3})((:|\\s+)(?<verseStr>\\d{1,3})(\\s*(?<verseSeparator>[-,]?)\\s*)(?<finishVerseStr>\\d{1,3})?)?)?/i',
+);
 
 const disable = false;
 
