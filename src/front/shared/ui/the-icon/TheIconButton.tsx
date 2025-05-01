@@ -10,6 +10,7 @@ interface Props {
   icon: TheIconKnownName;
   kind?: TheIconNameKind;
   disabled?: boolean;
+  withoutAnimation?: boolean;
   disabledReason?: (() => ReactNode) | ReactNode;
   confirm?: React.ReactNode;
   prefix?: ReactNode;
@@ -64,6 +65,7 @@ export const TheIconButton = (props: Props) => {
                       icon={props.icon}
                       kind={props.kind}
                       className={props.iconClassName}
+                      withoutAnimation={props.withoutAnimation}
                     />
                   )}
                 </IconButton>
