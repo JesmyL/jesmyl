@@ -1,13 +1,14 @@
 import { propagationStopper } from '#shared/lib/event-funcs';
 
 import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
+import { useAtomValue } from '#shared/lib/atom';
 import { QRCode } from '#shared/ui/qr-code/QRCode';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { indexSokiInvocatorClientMethods } from '$index/invocator.methods';
 import { useConnectionState, useIsOnline } from '$index/useConnectionState';
-import { checkIsThereNewSW } from 'front/serviceWorkerRegistration';
+import { checkIsThereNewSWAtom, reloadSW } from 'front/sw-register';
 import { useEffect, useState } from 'react';
 import { jversion } from 'shared/values';
 
@@ -16,6 +17,7 @@ export function IndexAbout() {
   const connectionStateNode = useConnectionState();
   const [isRefreshProcess, setIsRefreshProcess] = useState(false);
   const isOnline = useIsOnline();
+  const isThereNewSW = useAtomValue(checkIsThereNewSWAtom);
 
   const [appVersion, isVersionLoading] = useInvocatedValue(
     0,
@@ -79,30 +81,43 @@ export function IndexAbout() {
           isRefreshProcess ? (
             <TheIconLoading />
           ) : (
-            <TheIconButton
-              icon="Refresh"
-              confirm="Это действие требует немедленного обновления сразу после своего завершения. Убедитесь, пожалуйста, что у вас есть интернет-соединение, ибо, в противном случае, возникнет проблема"
-              onClick={event => {
-                event.stopPropagation();
-                setIsRefreshProcess(true);
+            <>
+              <TheIconButton
+                icon="Refresh"
+                className={isThereNewSW ? 'text-x7' : ''}
+                withoutAnimation
+                confirm="Убедитесь в наличии интернет-соединения! Обновить приложение?"
+                onClick={event => {
+                  event.stopPropagation();
+                  setIsRefreshProcess(true);
 
-                const clearCache = async () => {
-                  try {
-                    await Promise.all(cacheNames.map(cacheName => caches.delete(cacheName)));
-                    window.location.reload();
-                  } catch (_error) {
-                    //
-                  }
+                  reloadSW();
+                }}
+              />
+              <TheIconButton
+                icon="Refresh"
+                withoutAnimation
+                confirm="Это действие требует немедленного обновления сразу после своего завершения. Убедитесь, пожалуйста, что у вас есть интернет-соединение, ибо, в противном случае, возникнет проблема"
+                onClick={event => {
+                  event.stopPropagation();
+                  setIsRefreshProcess(true);
 
-                  setIsRefreshProcess(false);
-                };
+                  const clearCache = async () => {
+                    try {
+                      await Promise.all(cacheNames.map(cacheName => caches.delete(cacheName)));
+                      window.location.reload();
+                    } catch (_error) {
+                      //
+                    }
 
-                checkIsThereNewSW(reg => {
-                  reg?.waiting?.postMessage({ type: 'SKIP_WAITING' });
-                  setTimeout(clearCache, 1000);
-                }, clearCache);
-              }}
-            />
+                    setIsRefreshProcess(false);
+                  };
+
+                  clearCache();
+                  reloadSW();
+                }}
+              />
+            </>
           )
         ) : (
           connectionStateNode

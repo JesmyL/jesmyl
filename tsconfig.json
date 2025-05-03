@@ -16,6 +16,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": "src",
+    "types": ["vite-plugin-pwa/info.d.ts", "vite-plugin-pwa/client.d.ts"],
     "paths": {
       "#shared/*": ["./front/shared/*"],
       "#widgets/*": ["./front/widgets/*"],
@@ -57,6 +58,13 @@
       "bibles/*": ["./bibles/*"]
     }
   },
-  "include": ["src", "src/shared/utils/complect", "./node_modules/cypress", "cypress/**/*.ts", "regexp-master.gen"],
+  "include": [
+    "src",
+    "src/shared/utils/complect",
+    "./node_modules/cypress",
+    "cypress/**/*.ts",
+    "regexp-master.gen",
+    "src/service-worker.ts"
+  ],
   "exclude": ["src/front/shared/ui/the-icon/icons"]
 }
