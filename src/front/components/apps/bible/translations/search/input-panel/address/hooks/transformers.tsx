@@ -10,7 +10,7 @@ import { makeNamedRegExp, makeRegExp } from 'regexp-master';
 import { emptyFunc } from 'shared/utils';
 
 const { regExp: addressReg, transform: makePropsFromAddressArgs } = makeNamedRegExp(
-  '/(?<bookn>\\d?\\s*[а-яё]+)\\s*((?<chapterStr>\\d{1,3})((:|\\s+)(?<verseStr>\\d{1,3})(\\s*(?<verseSeparator>[-,]?)\\s*)(?<finishVerseStr>\\d{1,3})?)?)?/i',
+  `/(?<bookn>\\d?\\s*[а-яё]+)\\s*((?<chapterStr>\\d{1,3})((:|\\s+)(?<verseStr>\\d{1,3})(\\s*(?<verseSeparator>[-,]?)\\s*)(?<finishVerseStr>\\d{1,3})?)?)?/i`,
 );
 
 const disable = false;

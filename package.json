@@ -59,7 +59,7 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-virtuoso": "^0.6.0",
-    "regexp-master": "^0.0.39",
+    "regexp-master": "^0.0.66",
     "sass": "^1.49.9",
     "styled-components": "^6.1.1",
     "tailwindcss": "^4.0.12",
@@ -123,6 +123,7 @@
     "vite": "^6.1.0",
     "vite-plugin-eslint": "^1.8.1",
     "vite-tsconfig-paths": "^5.1.4",
+    "workbox-window": "^7.3.0",
     "ws": "^8.18.0"
   },
   "keywords": [],
