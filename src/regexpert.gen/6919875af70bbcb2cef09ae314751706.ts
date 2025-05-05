@@ -1,73 +1,73 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
 namespace N6919875af70bbcb2cef09ae314751706_1 {
-  type $0 = `${before}${beforeSpaces}${hashes}${blockHashPosition}${associations | ''}${''|`${` `}${string}`}${info | ''}${beforeCommentSpaces}${comment}${U1}`;
-  type before = `` | `${`\n`}`;
-  type beforeSpaces = `${''|`${` `}${string}`}`;
-  type hashes = `${`#`}${string}`;
-  type blockHashPosition = `${string}`;
-  type associations = `${`_` | ''}${secretWidStr | ''}${modificators | ''}`;
-  type secretWidStr = `${''|`${string}${string}`}`;
-  type modificators = `${`!` | ''}`;
-  type info = `[${blockHeader | ''}]`;
-  type blockHeader = `${string}${string}`;
-  type beforeCommentSpaces = `${''|`${` `}${string}`}`;
-  type comment = `${string}${string}`;
+  type $0 = `${Tbefore}${TbeforeSpaces}${Thashes}${TblockHashPosition}${Tassociations | ''}${''|` ${string}`}${Tinfo | ''}${TbeforeCommentSpaces}${Tcomment}${U1}`;
+  type Tbefore = `` | `\n`;
+  type TbeforeSpaces = `${''|` ${string}`}`;
+  type Thashes = `#${string}`;
+  type TblockHashPosition = string;
+  type Tassociations = `${`_` | ''}${TsecretWidStr}${Tmodificators}`;
+  type TsecretWidStr = `${''|`${string}${string}`}`;
+  type Tmodificators = `${`!` | ''}`;
+  type Tinfo = `[${TblockHeader}]`;
+  type TblockHeader = `${string}${string}`;
+  type TbeforeCommentSpaces = `${''|` ${string}`}`;
+  type Tcomment = `${string}${string}`;
   
-  type U1 = ''; // `${`\n`}${''|`${` `}${string}`}#` | ``;
+  type U1 = ''; // `\n${''|` ${string}`}#` | ``;
 
   export interface I extends Record<
     `/(?<before>^|\\n)(?<beforeSpaces> *)(?<hashes>#{1,2})(?<blockHashPosition>${string})(?<associations>_?(?<secretWidStr>[${string}]*)(?<modificators>!?))? *(?<info>\\[(?<blockHeader>.+?)\\])?(?<beforeCommentSpaces> *)(?<comment>[\\w\\W]+?)(?=\\n *#|$)/g`,
     {
       $0: $0;
-      before: before;
-      beforeSpaces: beforeSpaces;
-      hashes: hashes;
-      blockHashPosition: blockHashPosition;
-      associations?: associations;
-      secretWidStr?: secretWidStr;
-      modificators?: modificators;
-      info?: info;
-      blockHeader?: blockHeader;
-      beforeCommentSpaces: beforeCommentSpaces;
-      comment: comment
+      before: Tbefore;
+      beforeSpaces: TbeforeSpaces;
+      hashes: Thashes;
+      blockHashPosition: TblockHashPosition;
+      associations?: Tassociations;
+      secretWidStr?: TsecretWidStr;
+      modificators?: Tmodificators;
+      info?: Tinfo;
+      blockHeader?: TblockHeader;
+      beforeCommentSpaces: TbeforeCommentSpaces;
+      comment: Tcomment
     }
   > { '': '' }
 }
 
 namespace N6919875af70bbcb2cef09ae314751706_2 {
-  type $0 = `${translate}:${book}${''|`${` `}${string}`}${chapter}:${verseDiapason}`;
-  type translate = `${string}`;
-  type book = `${bookPrefix | ''}${bookTitle}`;
-  type bookPrefix = `${bookNumberWithSuffix | ''}${''|`${` `}${string}`}`;
-  type bookNumberWithSuffix = `${bookNumber | ''}${`-` | ''}${bookNumberSuffix | ''}` | `${bookTitleFrom | ''}`;
-  type bookNumber = `${number}`;
-  type bookNumberSuffix = `${string | ''}`;
-  type bookTitleFrom = `От`;
-  type bookTitle = `${string}${string}`;
-  type chapter = `${number}`;
-  type verseDiapason = `${verseFrom}${verseTail | ''}`;
-  type verseFrom = `${number}`;
-  type verseTail = `-${verseTo | ''}`;
-  type verseTo = `${number}`;
+  type $0 = `${Ttranslate}:${Tbook}${''|` ${string}`}${Tchapter}:${TverseDiapason}`;
+  type Ttranslate = string;
+  type Tbook = `${TbookPrefix | ''}${TbookTitle}`;
+  type TbookPrefix = `${TbookNumberWithSuffix}${''|` ${string}`}`;
+  type TbookNumberWithSuffix = `${TbookNumber}${`-` | ''}${TbookNumberSuffix}` | TbookTitleFrom;
+  type TbookNumber = `${number}`;
+  type TbookNumberSuffix = `${string | ''}`;
+  type TbookTitleFrom = `От`;
+  type TbookTitle = `${string}${string}`;
+  type Tchapter = `${number}`;
+  type TverseDiapason = `${TverseFrom}${TverseTail | ''}`;
+  type TverseFrom = `${number}`;
+  type TverseTail = `-${TverseTo}`;
+  type TverseTo = `${number}`;
 
   export interface I extends Record<
     `/(?<translate>${string}):(?<book>(?<bookPrefix>(?<bookNumberWithSuffix>(?<bookNumber>\\d{1,3})-?(?<bookNumberSuffix>[яе]?)|(?<bookTitleFrom>От)) *)?(?<bookTitle>[а-яё]+))+ *(?<chapter>\\d{1,3}):(?<verseDiapason>(?<verseFrom>\\d{1,3})(?<verseTail>-(?<verseTo>\\d{1,3}))?)/gi`,
     {
       $0: $0;
-      translate: translate;
-      book: book;
-      bookPrefix?: bookPrefix;
-      bookNumberWithSuffix?: bookNumberWithSuffix;
-      bookNumber?: bookNumber;
-      bookNumberSuffix?: bookNumberSuffix;
-      bookTitleFrom?: bookTitleFrom;
-      bookTitle: bookTitle;
-      chapter: chapter;
-      verseDiapason: verseDiapason;
-      verseFrom: verseFrom;
-      verseTail?: verseTail;
-      verseTo?: verseTo
+      translate: Ttranslate;
+      book: Tbook;
+      bookPrefix?: TbookPrefix;
+      bookNumberWithSuffix?: TbookNumberWithSuffix;
+      bookNumber?: TbookNumber;
+      bookNumberSuffix?: TbookNumberSuffix;
+      bookTitleFrom?: TbookTitleFrom;
+      bookTitle: TbookTitle;
+      chapter: Tchapter;
+      verseDiapason: TverseDiapason;
+      verseFrom: TverseFrom;
+      verseTail?: TverseTail;
+      verseTo?: TverseTo
     }
   > { '': '' }
 }
