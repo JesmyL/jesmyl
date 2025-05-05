@@ -1,4 +1,3 @@
-import { Atom } from '#shared/lib/atom';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { MyLib } from '#shared/lib/my-lib';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
@@ -17,6 +16,7 @@ import { ChordVisibleVariant } from '$cm/Cm.model';
 import { Com } from '$cm/col/com/Com';
 import { ComOrders } from '$cm/col/com/orders/ComOrders';
 import { useNavigate } from '@tanstack/react-router';
+import { Atom } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmComMod, CmComWid, CmMp3Rule, IExportableCom } from 'shared/api';

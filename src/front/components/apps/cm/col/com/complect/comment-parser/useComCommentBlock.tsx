@@ -1,6 +1,6 @@
-import { useAtomValue } from '#shared/lib/atom';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useComCommentText } from '$cm/com-comments-manager';
+import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import { Com } from '../../Com';
 import { ComBlockCommentMakerCleans } from './Cleans';

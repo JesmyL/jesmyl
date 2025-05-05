@@ -1,6 +1,5 @@
 import { useAppNameContext } from '#basis/lib/contexts';
 import { appNames } from '#basis/model/App.model';
-import { atom } from '#shared/lib/atom';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { BrutalScreen } from '#shared/ui/brutal-screen/BrutalScreen';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
@@ -15,12 +14,14 @@ import { AppFace } from '$index/parts/main/AppFace';
 import { IndexProfileInfo } from '$index/parts/main/ProfileInfo';
 import { useConnectionState } from '$index/useConnectionState';
 import { Link } from '@tanstack/react-router';
+import { atom } from 'atomaric';
 import { itNNull } from 'shared/utils';
+
+const isAboutOpenAtom = atom(false);
 
 export const IndexOtherPage = () => {
   const currentAppName = useAppNameContext();
   const linkParams = { appName: currentAppName };
-  const isAboutOpenAtom = atom(false);
 
   const auth = useAuth();
   const connectionStateNode = useConnectionState();

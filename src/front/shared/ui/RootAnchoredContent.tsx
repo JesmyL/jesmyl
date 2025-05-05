@@ -1,4 +1,4 @@
-import { Atom } from '#shared/lib/atom';
+import { Atom } from 'atomaric';
 import { useEffect } from 'react';
 import { useSetRootAnchoredContent } from './useSetRootAnchoredContent';
 

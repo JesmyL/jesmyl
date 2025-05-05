@@ -1,6 +1,6 @@
 import { isNumberSearchAtom } from '#basis/lib/atoms/isNumberSearchAtom';
-import { atom, Atom, useAtom, useAtomSet, useAtomToggle, useAtomValue } from '#shared/lib/atom';
 import { UsedWid, useWid } from '#shared/lib/hooks/useWid';
+import { atom, Atom, useAtom, useAtomSet, useAtomToggle, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { LazyIcon } from './the-icon/LazyIcon';

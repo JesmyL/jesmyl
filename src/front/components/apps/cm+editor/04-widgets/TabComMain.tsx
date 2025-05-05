@@ -1,5 +1,4 @@
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
-import { useAtomSet } from '#shared/lib/atom';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -12,6 +11,7 @@ import { TextCorrectMessages } from '$cm+editor/entities/TextBlockIncorrectMessa
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { TheCom } from '$cm/col/com/TheCom';
 import { useAuth } from '$index/atoms';
+import { useAtomSet } from 'atomaric';
 import { useState } from 'react';
 import { emptyFunc } from 'shared/utils';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';

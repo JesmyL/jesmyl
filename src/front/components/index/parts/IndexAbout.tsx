@@ -1,13 +1,13 @@
 import { propagationStopper } from '#shared/lib/event-funcs';
 
 import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
-import { useAtomValue } from '#shared/lib/atom';
 import { QRCode } from '#shared/ui/qr-code/QRCode';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { indexSokiInvocatorClientMethods } from '$index/invocator.methods';
 import { useConnectionState, useIsOnline } from '$index/useConnectionState';
+import { useAtomValue } from 'atomaric';
 import { checkIsThereNewSWAtom, reloadSW } from 'front/sw-register';
 import { useEffect, useState } from 'react';
 import { jversion } from 'shared/values';

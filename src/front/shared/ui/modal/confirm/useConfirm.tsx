@@ -1,5 +1,5 @@
-import { atom } from '#shared/lib/atom';
 import { useSetRootAnchoredContent } from '#shared/ui/useSetRootAnchoredContent';
+import { atom } from 'atomaric';
 import { ReactNode, useCallback, useRef } from 'react';
 import { emptyFunc } from 'shared/utils';
 import { Modal } from '../Modal/Modal';

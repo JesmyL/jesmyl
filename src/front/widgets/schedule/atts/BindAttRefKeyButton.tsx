@@ -1,10 +1,10 @@
 import { StrongDiv } from '#basis/ui/strong-control/StrongDiv';
-import { atom } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { atom } from 'atomaric';
 import { ReactNode } from 'react';
 import {
   IScheduleWidget,

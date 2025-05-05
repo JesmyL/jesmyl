@@ -1,7 +1,7 @@
-import { useAtom } from '#shared/lib/atom';
 import { isFullscreenAtom } from '#shared/lib/atoms/fullscreen';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { useAtom } from 'atomaric';
 import { useEffect } from 'react';
 
 export const useGlobalFullscreenChanger = () => {

@@ -1,4 +1,3 @@
-import { atom } from '#shared/lib/atom';
 import { MyLib, mylib } from '#shared/lib/my-lib';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
@@ -6,6 +5,7 @@ import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useAuth, useIndexSchedules } from '$index/atoms';
+import { atom } from 'atomaric';
 import { useState } from 'react';
 import {
   CustomAttUseTaleId,

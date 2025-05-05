@@ -1,7 +1,7 @@
-import { atom } from '#shared/lib/atom';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { useCcom } from '$cm/basis/lib/com-selections';
 import { ComCopyTextModalInner } from '$cm/widgets/ComCopyTextModalInner';
+import { atom } from 'atomaric';
 import { ComTool } from '../ComTool';
 
 const isOpenAtom = atom(false);

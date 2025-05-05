@@ -1,4 +1,4 @@
-import { useAtomValue } from '#shared/lib/atom';
+import { useAtomValue } from 'atomaric';
 import { ScheduleWidgetMarkdownLiveTranslation } from '../MarkdownLive';
 import { markdownTranslationAtom } from './atoms';
 

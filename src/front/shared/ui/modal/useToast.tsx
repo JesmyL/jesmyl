@@ -1,4 +1,4 @@
-import { atom } from '#shared/lib/atom';
+import { atom } from 'atomaric';
 import { useCallback, useRef } from 'react';
 import { useSetRootAnchoredContent } from '../useSetRootAnchoredContent';
 import { StyledModal, StyledModalScreen, StyledModalScreenWrapper } from './styled';

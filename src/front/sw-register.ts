@@ -1,4 +1,4 @@
-import { atom } from '#shared/lib/atom';
+import { atom } from 'atomaric';
 import { registerSW } from 'virtual:pwa-register';
 
 export const checkIsThereNewSWAtom = atom(false);

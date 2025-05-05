@@ -1,12 +1,12 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { StrongInputDateTimeExtracter } from '#basis/ui/strong-control/StrongDateTimeExtracter';
-import { atom } from '#shared/lib/atom';
 import { useIsRedactArea } from '#shared/lib/hooks/useIsRedactArea';
 import { mylib } from '#shared/lib/my-lib';
 import { QrCodeFullScreen } from '#shared/ui/qr-code/QrCodeFullScreen';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { atom } from 'atomaric';
 import { useAuth } from 'front/components/index/atoms';
 import { useEffect, useMemo, useState } from 'react';
 import { makeRegExp } from 'regexpert';

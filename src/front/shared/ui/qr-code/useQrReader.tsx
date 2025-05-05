@@ -1,5 +1,5 @@
-import { Atom } from '#shared/lib/atom';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
+import { Atom } from 'atomaric';
 import QrScanner from 'qr-scanner';
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';

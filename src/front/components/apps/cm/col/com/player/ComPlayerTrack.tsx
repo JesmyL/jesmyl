@@ -1,7 +1,7 @@
-import { useAtomSet, useAtomValue } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { Slider } from '@mui/material';
+import { useAtomSet, useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import {
   comPlayerAudioElement,

@@ -1,8 +1,8 @@
-import { atom } from '#shared/lib/atom';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
+import { atom } from 'atomaric';
 import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import { useScheduleGameContext } from '../lib/contexts';

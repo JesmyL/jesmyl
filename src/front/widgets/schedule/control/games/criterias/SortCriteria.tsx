@@ -1,5 +1,4 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
-import { atom, useAtomValue } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
@@ -9,6 +8,7 @@ import { TheButton } from '#shared/ui/TheButton';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
+import { atom, useAtomValue } from 'atomaric';
 import { useMemo, useState } from 'react';
 import { IScheduleWidgetTeamCriteria, IScheduleWidgetUser, ScheduleGameCriteriaScopeProps } from 'shared/api';
 import { isNIs } from 'shared/utils';

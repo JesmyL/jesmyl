@@ -1,4 +1,4 @@
-import { atom } from '../atom';
+import { atom } from 'atomaric';
 
 export const isFullscreenAtom = atom(false);
 

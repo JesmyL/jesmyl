@@ -1,4 +1,3 @@
-import { atom, useAtomValue } from '#shared/lib/atom';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
@@ -11,6 +10,7 @@ import {
   schLiveSokiInvocatorBaseClient,
   schLiveSokiInvocatorClient,
 } from '$index/complect/translations/live-invocator';
+import { atom, useAtomValue } from 'atomaric';
 import { ScreenTranslationControlPanelShowMdButton } from 'front/components/apps/+complect/translations/controls/ShowMdButton';
 import { soki } from 'front/soki';
 import { useEffect, useState } from 'react';

@@ -1,4 +1,4 @@
-import { atom } from '#shared/lib/atom';
+import { atom } from 'atomaric';
 
 export const categoryTermAtom = atom('');
 export const categoryDebounceTermAtom = atom('');

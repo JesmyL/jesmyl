@@ -1,6 +1,6 @@
-import { useAtom } from '#shared/lib/atom';
 import { isTouchDevice } from '#shared/lib/device-differences';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { useAtom } from 'atomaric';
 import { memo } from 'react';
 import { itNIt } from 'shared/utils';
 import styled from 'styled-components';

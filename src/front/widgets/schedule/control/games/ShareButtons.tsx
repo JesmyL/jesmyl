@@ -1,4 +1,3 @@
-import { atom } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
@@ -7,6 +6,7 @@ import { schPhotosSokiInvocatorClient } from '#widgets/schedule/invocators/invoc
 import { getScheduleWidgetUserPhotoStorageKey } from '#widgets/schedule/storage';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import { indexIDB } from '$index/db/index-idb';
+import { atom } from 'atomaric';
 import { ScheduleWidgetPhotoKey } from 'shared/api';
 import { ScheduleWidgetPhotoGalery } from './PhotoGalery';
 import { checkIsUserPhotoable } from './utils';

@@ -1,4 +1,3 @@
-import { atom } from '#shared/lib/atom';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
@@ -7,6 +6,7 @@ import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { atom } from 'atomaric';
 import { useState } from 'react';
 import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 

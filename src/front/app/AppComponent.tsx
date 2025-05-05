@@ -3,13 +3,13 @@ import { useFingersActions } from '#basis/lib/global-listeners/useFingersActions
 import { useGlobalFontFamilySetter } from '#basis/lib/global-listeners/useGlobalFontFamilySetter';
 import { useGlobalFullscreenChanger } from '#basis/lib/global-listeners/useGlobalFullscreenChanger';
 import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
-import { useAtomValue } from '#shared/lib/atom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { LinkAppActionFabric } from '#shared/lib/link-app-actions';
 import { KEYBOARD_FLASH } from '#shared/ui/keyboard/KeyboardInputFlash';
 import { useToast } from '#shared/ui/modal/useToast';
 import { schLinkAction } from '#widgets/schedule/links';
 import { Outlet, ParsedLocation, useLocation, useNavigate } from '@tanstack/react-router';
+import { useAtomValue } from 'atomaric';
 import { soki } from 'front/soki';
 import { useEffect, useMemo, useState } from 'react';
 import { emptyArray } from 'shared/utils';

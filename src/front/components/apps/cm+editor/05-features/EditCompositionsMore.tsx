@@ -1,10 +1,10 @@
-import { atom } from '#shared/lib/atom';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { RemovedComsModalInner } from '$cm+editor/features/RemovedComsModalInner';
 import { NewComposition } from '$cm+editor/widgets/NewComposition';
 import { useAuth } from '$index/atoms';
+import { atom } from 'atomaric';
 import { useEffect } from 'react';
 
 const isRemovedComsOpenAtom = atom(false);

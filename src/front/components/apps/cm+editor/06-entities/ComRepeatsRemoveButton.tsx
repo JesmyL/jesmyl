@@ -1,4 +1,3 @@
-import { atom } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
 import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
@@ -9,6 +8,7 @@ import { TheButton } from '#shared/ui/TheButton';
 import { cmEditComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { EditableComOrder } from '$cm+editor/basis/lib/EditableComOrder';
 import { Order } from '$cm/col/com/order/Order';
+import { atom } from 'atomaric';
 import { makeRegExp } from 'regexpert';
 import { OrderRepeats } from 'shared/api';
 

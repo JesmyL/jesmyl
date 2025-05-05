@@ -1,5 +1,5 @@
-import { atom, useAtomValue } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
+import { atom, useAtomValue } from 'atomaric';
 import { ReactNode } from 'react';
 import { Modal } from './modal/Modal/Modal';
 import { ModalBody } from './modal/Modal/ModalBody';

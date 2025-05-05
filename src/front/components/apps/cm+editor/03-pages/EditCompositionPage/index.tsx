@@ -1,4 +1,3 @@
-import { useAtomValue } from '#shared/lib/atom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { MyLib, mylib } from '#shared/lib/my-lib';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -15,6 +14,7 @@ import { CmComNumber } from '$cm/col/com/complect/ComNumber';
 import { ComPlayer } from '$cm/col/com/player/ComPlayer';
 import { useConnectionState } from '$index/useConnectionState';
 import { Link, useNavigate, useSearch } from '@tanstack/react-router';
+import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 

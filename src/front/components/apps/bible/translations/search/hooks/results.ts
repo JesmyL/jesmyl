@@ -1,5 +1,5 @@
-import { atom, useAtom, useAtomSet, useAtomValue } from '#shared/lib/atom';
 import { BibleTranslationSingleAddress } from '$bible/basis/model/base';
+import { atom, useAtom, useAtomSet, useAtomValue } from 'atomaric';
 
 const listAtom = atom<BibleTranslationSingleAddress[]>([]);
 const selectediAtom = atom<number | null>(null);

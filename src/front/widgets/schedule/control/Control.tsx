@@ -1,5 +1,4 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
-import { atom } from '#shared/lib/atom';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
@@ -7,6 +6,7 @@ import { SendableDropdown } from '#shared/ui/sends/dropdown/SendableDropdown';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { atom } from 'atomaric';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '../useScheduleWidget';

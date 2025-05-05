@@ -1,10 +1,10 @@
 import { StrongDiv } from '#basis/ui/strong-control/StrongDiv';
-import { atom } from '#shared/lib/atom';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { schDayEventsSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { atom } from 'atomaric';
 import {
   CustomAttUseTaleId,
   IScheduleWidgetListUnit,

@@ -1,4 +1,3 @@
-import { atom, useAtom, useAtomSet, useAtomValue } from '#shared/lib/atom';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
@@ -14,6 +13,7 @@ import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer
 import { EERulesListComputer } from '$cm+editor/entities/EERulesListComputer';
 import { EERulesWord } from '$cm+editor/entities/EERulesWord';
 import { EERulesWordSearchModalInner } from '$cm+editor/widgets/EERulesWordSearchModalInner';
+import { atom, useAtom, useAtomSet, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { EeStorePack } from 'shared/api';
 

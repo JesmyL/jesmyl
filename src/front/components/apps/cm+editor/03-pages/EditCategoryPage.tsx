@@ -1,5 +1,4 @@
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
-import { useAtom } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { LoadIndicatedContent } from '#shared/ui/load-indicated-content/LoadIndicatedContent';
@@ -11,6 +10,7 @@ import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer
 import { catTrackers } from '$cm/col/cat/useCatSpecialSearches';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
 import { useParams } from '@tanstack/react-router';
+import { useAtom } from 'atomaric';
 import { useState } from 'react';
 import { CmCatWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';

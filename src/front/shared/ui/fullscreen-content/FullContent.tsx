@@ -1,7 +1,7 @@
-import { Atom, useAtomValue } from '#shared/lib/atom';
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
+import { Atom, useAtomValue } from 'atomaric';
 import { HTMLAttributes, ReactNode, useEffect } from 'react';
 import { Eventer, EventerListeners } from 'shared/utils';
 import styled from 'styled-components';

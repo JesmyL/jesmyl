@@ -1,4 +1,4 @@
-import { atom, useAtomSet, useAtomValue } from '#shared/lib/atom';
+import { atom, useAtomSet, useAtomValue } from 'atomaric';
 import { useScreenTranslationCurrentConfigi } from './configs';
 
 export type TranslationWindow = {

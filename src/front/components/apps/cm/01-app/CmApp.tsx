@@ -1,9 +1,9 @@
 import { useCurrentAppSetter } from '#basis/lib/useCurrentAppSetter';
-import { atom } from '#shared/lib/atom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { useToast } from '#shared/ui/modal/useToast';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { Outlet } from '@tanstack/react-router';
+import { atom } from 'atomaric';
 import { useAuth } from 'front/components/index/atoms';
 import React, { Suspense, memo, useEffect, useState } from 'react';
 import { CmComWid } from 'shared/api';

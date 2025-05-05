@@ -1,4 +1,3 @@
-import { atom } from '#shared/lib/atom';
 import { checkIsCssRuleSupports } from '#shared/lib/checkIsCssSupports';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
@@ -13,6 +12,7 @@ import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { Com } from '$cm/col/com/Com';
 import { TheComCommentInfo } from '$cm/col/com/complect/comment-parser/infos/TheComCommentInfo';
 import { updateComComment, useComComment } from '$cm/com-comments-manager';
+import { atom } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
 import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';

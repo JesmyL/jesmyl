@@ -1,5 +1,5 @@
-import { useAtom } from '#shared/lib/atom';
 import { cmIsShowCatBindsInCompositionAtom } from '$cm/atoms';
+import { useAtom } from 'atomaric';
 import { itNIt } from 'shared/utils';
 import { ComTool } from '../ComTool';
 

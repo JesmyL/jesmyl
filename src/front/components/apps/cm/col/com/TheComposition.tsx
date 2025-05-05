@@ -1,4 +1,3 @@
-import { useAtomValue } from '#shared/lib/atom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import {
@@ -19,6 +18,7 @@ import { useFixedCcom } from '$cm/basis/lib/com-selections';
 import { useCmCurrentComPackContext } from '$cm/basis/lib/contexts/current-com-list';
 import { cmSokiInvocatorClient } from '$cm/invocators/basic-invocator.methods';
 import { Link } from '@tanstack/react-router';
+import { useAtomValue } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { CmComCommentModalInner } from './CommentModalInner';

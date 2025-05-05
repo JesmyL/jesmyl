@@ -1,6 +1,6 @@
-import { useAtomSet } from '#shared/lib/atom';
 import { NewWindow } from '#shared/ui/tags/NewWindow';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
+import { useAtomSet } from 'atomaric';
 import { useAuth } from 'front/components/index/atoms';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';

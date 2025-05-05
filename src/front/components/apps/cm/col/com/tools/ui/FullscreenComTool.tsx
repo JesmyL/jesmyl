@@ -1,5 +1,5 @@
-import { useAtomSet } from '#shared/lib/atom';
 import { isFullscreenAtom } from '#shared/lib/atoms/fullscreen';
+import { useAtomSet } from 'atomaric';
 import { ComTool } from '../ComTool';
 
 export const FullscreenComTool = () => {

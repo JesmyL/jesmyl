@@ -1,7 +1,7 @@
-import { atom, useAtomValue } from '#shared/lib/atom';
 import { bibleIDB } from '$bible/basis/lib/bibleIDB';
 import { BibleTranslationAnyAddress } from '$bible/basis/model/base';
 import { useBibleTranslationAddToHistory } from '$bible/translations/archive/history/hooks/history';
+import { atom, useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
 import { useSetIsScreenTranslationTextVisible } from '../../../../+complect/translations/atoms';
 

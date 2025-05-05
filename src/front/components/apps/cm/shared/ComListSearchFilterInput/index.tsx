@@ -1,8 +1,8 @@
 import { isNumberSearchAtom } from '#basis/lib/atoms/isNumberSearchAtom';
-import { useAtomValue } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { Com } from '$cm/col/com/Com';
+import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { IExportableCom } from 'shared/api';
 import { categoryTermAtom } from './lib';

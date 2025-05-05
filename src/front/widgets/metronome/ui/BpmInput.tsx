@@ -1,6 +1,6 @@
-import { useAtom } from '#shared/lib/atom';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { useAtom } from 'atomaric';
 import { memo } from 'react';
 import styled from 'styled-components';
 import { metronomeUserBpmAtom } from '../lib/atoms';

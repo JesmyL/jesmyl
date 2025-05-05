@@ -1,6 +1,6 @@
-import { atom } from '#shared/lib/atom';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { atom } from 'atomaric';
 import styled, { css } from 'styled-components';
 import { useScreenTranslationCurrentConfig } from '../hooks/configs';
 import { TranslationScreen } from '../TranslationScreen';

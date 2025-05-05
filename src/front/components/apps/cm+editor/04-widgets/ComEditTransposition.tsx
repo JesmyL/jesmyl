@@ -1,4 +1,3 @@
-import { atom } from '#shared/lib/atom';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
@@ -9,6 +8,7 @@ import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { ComOrders } from '$cm/col/com/orders/ComOrders';
+import { atom } from 'atomaric';
 import { useState } from 'react';
 
 const dotts = '.'

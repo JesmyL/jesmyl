@@ -1,5 +1,5 @@
-import { useAtomSet } from '#shared/lib/atom';
 import { isTouchDevice } from '#shared/lib/device-differences';
+import { useAtomSet } from 'atomaric';
 import { memo } from 'react';
 import styled from 'styled-components';
 import { metronomeUserBpmAtom } from '../lib/atoms';

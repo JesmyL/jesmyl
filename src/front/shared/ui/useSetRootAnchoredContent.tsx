@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useSetAppRootAnchorNodesContext } from '#basis/lib/App.contexts';
 import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
-import { Atom } from '#shared/lib/atom';
 import { useWid } from '#shared/lib/hooks/useWid';
+import { Atom } from 'atomaric';
 import { useCallback, useEffect } from 'react';
 
 export const useSetRootAnchoredContent = (openAtom: Atom<any>, topContent?: React.ReactNode) => {

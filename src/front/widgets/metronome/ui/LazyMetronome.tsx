@@ -1,6 +1,6 @@
-import { useAtomSet, useAtomValue } from '#shared/lib/atom';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
+import { useAtomSet, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import { metronomeIsOpenAtom, metronomeUserBpmAtom, metronomeUserMeterSizeAtom } from '../lib/atoms';

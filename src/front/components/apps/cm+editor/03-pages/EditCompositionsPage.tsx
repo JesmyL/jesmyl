@@ -1,5 +1,4 @@
 import { isNumberSearchAtom } from '#basis/lib/atoms/isNumberSearchAtom';
-import { useAtom, useAtomValue } from '#shared/lib/atom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { StyledPhaseContainerConfigurerHead } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
@@ -15,6 +14,7 @@ import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
 import { CmComListSearchFilterInput } from '$cm/shared/ComListSearchFilterInput';
 import { categoryDebounceTermAtom, categoryTermAtom } from '$cm/shared/ComListSearchFilterInput/lib';
 import { useNavigate } from '@tanstack/react-router';
+import { useAtom, useAtomValue } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 

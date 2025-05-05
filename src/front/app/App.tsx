@@ -3,14 +3,18 @@ import { IconProvider } from '#shared/ui/the-icon/IconProvider';
 import { authIDB } from '$index/db/auth-idb';
 import { ThemeProvider } from '@mui/material';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
+import { registerReactUseSyncExternalStoreHookFunc } from 'atomaric';
 import { complectIDB } from 'front/components/apps/+complect/_idb/complectIDB';
 import { soki } from 'front/soki';
+import { useSyncExternalStore } from 'react';
 import { routeTree } from 'routeTree.gen';
 import { BlockStylesProvider } from 'shared/values/cm/block-styles/BlockStylesProvider';
 import './App.scss';
 import { muiDarkThemePalette } from './lib/theme/lib/darkPalette';
 import { muiLightThemePalette } from './lib/theme/lib/lightPalette';
 import './tw.css';
+
+registerReactUseSyncExternalStoreHookFunc(useSyncExternalStore);
 
 const router = createRouter({ routeTree });
 

@@ -1,5 +1,5 @@
-import { useAtomSet } from '#shared/lib/atom';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
+import { useAtomSet } from 'atomaric';
 import { useEffect } from 'react';
 import { isNIs, itNNull } from 'shared/utils';
 import { useSetIsScreenTranslationTextVisible } from '../../../atoms';

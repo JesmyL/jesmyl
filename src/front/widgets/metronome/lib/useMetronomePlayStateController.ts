@@ -1,5 +1,5 @@
-import { useAtomValue } from '#shared/lib/atom';
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
+import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { Loop, LoopOptions, Sampler, getTransport } from 'tone';
 import {

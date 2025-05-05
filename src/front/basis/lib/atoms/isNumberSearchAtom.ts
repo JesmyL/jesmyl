@@ -1,3 +1,3 @@
-import { atom } from '#shared/lib/atom';
+import { atom } from 'atomaric';
 
 export const isNumberSearchAtom = atom(false);

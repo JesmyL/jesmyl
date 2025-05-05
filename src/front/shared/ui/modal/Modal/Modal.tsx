@@ -1,9 +1,9 @@
 import { propagationStopper } from '#shared/lib/event-funcs';
 
-import { Atom, useAtomValue } from '#shared/lib/atom';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
 import { RootAnchoredContent } from '#shared/ui/RootAnchoredContent';
 import { Portal } from '@mui/material';
+import { Atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { StyledModal, StyledModalScreen, StyledModalScreenWrapper } from '../styled';
 

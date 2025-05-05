@@ -1,5 +1,5 @@
-import { useAtomSet } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
+import { useAtomSet } from 'atomaric';
 import { useEffect } from 'react';
 import { itInvokeIt, wait } from 'shared/utils';
 import { Com } from '../../Com';

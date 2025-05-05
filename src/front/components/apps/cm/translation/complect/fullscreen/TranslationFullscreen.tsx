@@ -1,9 +1,9 @@
-import { atom, useAtom } from '#shared/lib/atom';
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { propsOfClicker } from '#shared/lib/clicker/propsOfClicker';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { FontSizeContain } from '$cm/base/font-size-contain/FontSizeContain';
+import { atom, useAtom } from 'atomaric';
 import { useEffect, useReducer, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { useCloseTranslation } from '../hooks/close-translation';

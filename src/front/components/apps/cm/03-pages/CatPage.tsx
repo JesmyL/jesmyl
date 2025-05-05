@@ -1,4 +1,3 @@
-import { atom, useAtom, useAtomValue } from '#shared/lib/atom';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LoadIndicatedContent } from '#shared/ui/load-indicated-content/LoadIndicatedContent';
 import {
@@ -15,6 +14,7 @@ import { CmComListSearchFilterInput } from '$cm/shared/ComListSearchFilterInput'
 import { categoryDebounceTermAtom, categoryTermAtom } from '$cm/shared/ComListSearchFilterInput/lib';
 import { CmRatingSortedComList } from '$cm/widgets/RatingSortedComList';
 import { FileRoutesByPath } from '@tanstack/react-router';
+import { atom, useAtom, useAtomValue } from 'atomaric';
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';

@@ -1,4 +1,4 @@
-import { atom, useAtom } from '#shared/lib/atom';
+import { atom, useAtom } from 'atomaric';
 
 export const translationBlockAtom = atom(0);
 export const useComTranslationBlock = () => useAtom(translationBlockAtom);

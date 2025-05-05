@@ -1,8 +1,8 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
-import { atom } from '#shared/lib/atom';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { atom } from 'atomaric';
 import { useMemo } from 'react';
 import { IScheduleWidgetListCat, IScheduleWidgetListUnit, IScheduleWidgetUserCati } from 'shared/api';
 import styled from 'styled-components';

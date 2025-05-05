@@ -1,4 +1,3 @@
-import { useAtomValue } from '#shared/lib/atom';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { translationBlockAtom } from '$cm/atoms';
 import { useCcom } from '$cm/basis/lib/com-selections';
@@ -6,6 +5,7 @@ import { CmTranslationControlled } from '$cm/translation/complect/controlled/CmT
 import { useCmScreenTranslationConfigs } from '$cm/translation/complect/controlled/hooks/configs';
 import { useCmScreenTranslationComNavigations } from '$cm/translation/complect/hooks/com-navigation';
 import { IndexSchWTranslationLiveDataValue } from '$index/Index.model';
+import { useAtomValue } from 'atomaric';
 import { useSwitchCurrentTranslationTextApp } from 'front/components/apps/+complect/translations/hooks/current-app';
 import { useEffect } from 'react';
 import { schLiveSokiInvocatorClient } from './live-invocator';

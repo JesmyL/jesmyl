@@ -1,11 +1,11 @@
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 
-import { atom } from '#shared/lib/atom';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheButton } from '#shared/ui/TheButton';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
+import { atom } from 'atomaric';
 import { ScheduleWidgetShareButtons } from '../ShareButtons';
 import { ScheduleWidgetSortCriteria } from './SortCriteria';
 

@@ -1,8 +1,8 @@
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 
-import { atom } from '#shared/lib/atom';
 import { TheButton } from '#shared/ui/TheButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
+import { atom } from 'atomaric';
 import { ScheduleWidgetTeamGameSetTeamsScreen } from './SetTeamsScreen';
 
 const isOpenFullContentAtom = atom(false);

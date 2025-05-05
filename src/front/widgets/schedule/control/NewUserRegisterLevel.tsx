@@ -1,7 +1,7 @@
-import { atom } from '#shared/lib/atom';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { atom } from 'atomaric';
 import { scheduleWidgetUserRights } from 'shared/api';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';

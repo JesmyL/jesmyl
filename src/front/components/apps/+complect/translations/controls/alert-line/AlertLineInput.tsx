@@ -1,8 +1,8 @@
-import { atom, useAtom } from '#shared/lib/atom';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { atom, useAtom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React from 'react';
 import { complectIDB } from '../../../_idb/complectIDB';

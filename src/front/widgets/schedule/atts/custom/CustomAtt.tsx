@@ -1,5 +1,4 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
-import { atom, useAtomValue } from '#shared/lib/atom';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
@@ -10,6 +9,7 @@ import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/con
 import { ScheduleWidgetRightControlList } from '#widgets/schedule/control/RightControlList';
 import { schAttachmentTypesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
+import { atom, useAtomValue } from 'atomaric';
 import React, { ReactNode, useMemo } from 'react';
 import {
   CustomAttUseRights,

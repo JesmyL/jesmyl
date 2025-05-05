@@ -1,5 +1,4 @@
 import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
-import { atom } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
@@ -9,6 +8,7 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { TheButton } from '#shared/ui/TheButton';
 import { cmEditComExternalsClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
+import { atom } from 'atomaric';
 import { useState } from 'react';
 import { IScheduleWidgetWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';

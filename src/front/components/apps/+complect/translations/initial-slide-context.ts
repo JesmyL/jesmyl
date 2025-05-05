@@ -1,4 +1,4 @@
-import { atom, useAtomSet, useAtomValue } from '#shared/lib/atom';
+import { atom, useAtomSet, useAtomValue } from 'atomaric';
 
 export const isShowTranslatedTextAtom = atom(true);
 const isShowAtom = atom(true);

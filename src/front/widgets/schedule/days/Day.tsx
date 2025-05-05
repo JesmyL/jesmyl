@@ -1,10 +1,10 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
-import { atom } from '#shared/lib/atom';
 import { useIsRedactArea } from '#shared/lib/hooks/useIsRedactArea';
 import { mylib, MyLib } from '#shared/lib/my-lib';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { atom } from 'atomaric';
 import { useMemo, useState } from 'react';
 import {
   indexScheduleCheckIsDayIsPast,

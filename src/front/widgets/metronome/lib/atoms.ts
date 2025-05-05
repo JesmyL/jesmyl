@@ -1,4 +1,4 @@
-import { atom } from '#shared/lib/atom';
+import { atom } from 'atomaric';
 
 export const metronomeIsPlayAtom = atom(false);
 export const metronomeUserMeterSizeAtom = atom<3 | 4>(4);

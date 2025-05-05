@@ -1,5 +1,4 @@
 import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
-import { atom, useAtomValue } from '#shared/lib/atom';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
@@ -8,6 +7,7 @@ import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-
 import { Com } from '$cm/col/com/Com';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
 import { TheCom } from '$cm/col/com/TheCom';
+import { atom, useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import { CmComWid } from 'shared/api';
 import { emptyArray } from 'shared/utils';

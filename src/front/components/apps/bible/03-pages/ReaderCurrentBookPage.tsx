@@ -1,4 +1,3 @@
-import { atom } from '#shared/lib/atom';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BibleTranslatesContextProvider } from '$bible/basis/contexts/TranslatesContext';
@@ -12,6 +11,7 @@ import { BibleAddressSingle } from '$bible/entities/BibleAddressSingle';
 import { BibleModulesTranslationsControl } from '$bible/entities/ModulesTranslationsControl';
 import { useBibleSingleAddressSetter } from '$bible/translations/lists/atoms';
 import { BibleReaderBookText } from '$bible/widgets/BookText';
+import { atom } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
 import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';

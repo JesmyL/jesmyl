@@ -1,4 +1,3 @@
-import { atom } from '#shared/lib/atom';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
@@ -6,6 +5,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
+import { atom } from 'atomaric';
 import { IScheduleWidgetUser } from 'shared/api';
 import { ScheduleWidgetUserTakePhoto } from '../users/TakePhoto';
 import { ScheduleWidgetUserPhoto } from '../users/UserPhoto';

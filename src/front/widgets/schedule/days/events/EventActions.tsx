@@ -1,4 +1,3 @@
-import { atom } from '#shared/lib/atom';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
@@ -8,6 +7,7 @@ import { ScheduleWidgetTopicTitle } from '#widgets/schedule/complect/TopicTitle'
 import { ScheduleWidgetEventType } from '#widgets/schedule/events/EventType';
 import { schDaysSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
+import { atom } from 'atomaric';
 import { IScheduleWidget, IScheduleWidgetDayEvent, ScheduleDayScopeProps } from 'shared/api';
 
 type Props = {

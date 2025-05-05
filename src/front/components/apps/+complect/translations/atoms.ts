@@ -1,4 +1,4 @@
-import { atom, useAtom, useAtomSet, useAtomValue } from '#shared/lib/atom';
+import { atom, useAtom, useAtomSet, useAtomValue } from 'atomaric';
 import { complectIDB } from '../_idb/complectIDB';
 
 const isCanShowTextTranslationAtom = atom(false);

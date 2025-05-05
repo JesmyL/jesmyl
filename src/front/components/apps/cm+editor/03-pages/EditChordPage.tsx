@@ -1,4 +1,3 @@
-import { atom, useAtom } from '#shared/lib/atom';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { MyLib, mylib } from '#shared/lib/my-lib';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
@@ -11,6 +10,7 @@ import { ChordRedactableTrack } from '$cm+editor/entities/ChordRedactableTrack';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { ChordCard } from '$cm/col/com/chord-card/ChordCard';
 import { useNavigate, useSearch } from '@tanstack/react-router';
+import { atom, useAtom } from 'atomaric';
 import { useEffect, useMemo, useState } from 'react';
 import { ChordPack, ChordTrack } from 'shared/api';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';

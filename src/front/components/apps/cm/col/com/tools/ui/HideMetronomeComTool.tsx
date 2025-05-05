@@ -1,5 +1,5 @@
-import { useAtomSet } from '#shared/lib/atom';
 import { metronomeIsOpenAtom } from '#widgets/metronome';
+import { useAtomSet } from 'atomaric';
 import { ComTool } from '../ComTool';
 
 export const HideMetronomeComTool = () => {

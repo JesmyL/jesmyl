@@ -1,10 +1,10 @@
-import { Atom, useAtomValue } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { TheButton } from '#shared/ui/TheButton';
 import { useSelectedComs } from '$cm/base/useSelectedComs';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
 import { useNavigate } from '@tanstack/react-router';
+import { Atom, useAtomValue } from 'atomaric';
 import { CmComWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';

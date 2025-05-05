@@ -1,6 +1,6 @@
-import { atom } from '#shared/lib/atom';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { useFixedCcom } from '$cm/basis/lib/com-selections';
+import { atom } from 'atomaric';
 import { ChordImagesList } from '../../chord-card/ChordImagesList';
 import { ComTool } from '../ComTool';
 

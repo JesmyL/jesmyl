@@ -1,4 +1,4 @@
-import { atom, useAtomValue } from '#shared/lib/atom';
+import { atom, useAtomValue } from 'atomaric';
 
 export const comPlayerAudioElement = document.createElement('audio');
 

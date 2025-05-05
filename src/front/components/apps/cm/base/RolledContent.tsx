@@ -1,7 +1,7 @@
-import { useAtomValue } from '#shared/lib/atom';
 import { isFullscreenAtom } from '#shared/lib/atoms/fullscreen';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { useAtomValue } from 'atomaric';
 import { HTMLAttributes, PropsWithChildren, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 

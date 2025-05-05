@@ -1,5 +1,5 @@
-import { atom } from '#shared/lib/atom';
 import { MyLib } from '#shared/lib/my-lib';
+import { atom } from 'atomaric';
 import { ReactNode } from 'react';
 import { Modal } from '../modal/Modal/Modal';
 import { ModalBody } from '../modal/Modal/ModalBody';

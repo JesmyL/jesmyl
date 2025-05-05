@@ -1,7 +1,7 @@
-import { atom } from '#shared/lib/atom';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ListItemIcon, MenuItem } from '@mui/material';
+import { atom } from 'atomaric';
 import { ComPlayerMarksConfigurer } from './ComPlayerMarksConfigurer';
 
 const isMarksConfigurerOpenAtom = atom(false);

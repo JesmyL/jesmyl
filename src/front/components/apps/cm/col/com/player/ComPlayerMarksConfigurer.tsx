@@ -1,8 +1,8 @@
-import { useAtomValue } from '#shared/lib/atom';
 import { mylib, MyLib } from '#shared/lib/my-lib';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { Button } from '@mui/material';
+import { useAtomValue } from 'atomaric';
 import { ComPlayer } from './ComPlayer';
 import { ComPlayerMarksConfigurerTimeMark } from './ComPlayerMarksConfigurerTimeMark';
 import { comPlayerPlaySrcAtom, useComPlayerCurrentTime } from './controls';

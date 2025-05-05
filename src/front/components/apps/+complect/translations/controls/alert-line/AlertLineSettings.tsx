@@ -1,8 +1,8 @@
-import { atom, useAtom } from '#shared/lib/atom';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { atom, useAtom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React from 'react';
 import { complectIDB } from '../../../_idb/complectIDB';

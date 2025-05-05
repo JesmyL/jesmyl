@@ -1,7 +1,7 @@
 import { useNavigate, UseNavigateResult } from '@tanstack/react-router';
+import { atom, useAtomValue } from 'atomaric';
 import { useCallback, useEffect } from 'react';
 import { SokiAppName } from 'shared/api';
-import { atom, useAtomValue } from '../atom';
 import { useActualRef } from '../hooks/useActualRef';
 import { MyLib } from '../my-lib';
 

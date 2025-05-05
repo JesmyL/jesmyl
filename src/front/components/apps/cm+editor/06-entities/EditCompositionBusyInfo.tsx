@@ -1,8 +1,8 @@
-import { useAtomValue } from '#shared/lib/atom';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { comEditorBusiesAtom } from '$cm+editor/basis/lib/atoms/com';
 import { cmEditorClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { indexIDB } from '$index/db/index-idb';
+import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { CmComWid } from 'shared/api';
 import styled from 'styled-components';

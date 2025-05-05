@@ -1,4 +1,3 @@
-import { atom } from '#shared/lib/atom';
 import { mylib } from '#shared/lib/my-lib';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
@@ -12,6 +11,7 @@ import { useSelectedComs } from '$cm/base/useSelectedComs';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
 import { MoveSelectedComButton } from '$cm/entities/MoveSelectedComButton';
 import { useAuth } from '$index/atoms';
+import { atom } from 'atomaric';
 import { CmComWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import { CmMeetingEventEditsHistoryModalInner } from './EventEditsHistoryModal';

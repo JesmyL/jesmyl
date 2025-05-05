@@ -1,6 +1,6 @@
-import { Atom } from '#shared/lib/atom';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { Atom } from 'atomaric';
 import { useCallback, useState } from 'react';
 import {
   IScheduleWidgetTeamCriteria,

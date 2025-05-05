@@ -1,4 +1,3 @@
-import { atom, useAtomValue } from '#shared/lib/atom';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { DocTitle } from '#shared/ui/tags/DocTitle';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -17,6 +16,7 @@ import {
 } from '$cm/col/com/player/controls';
 import { useFavouriteComs } from '$cm/lists/favourites/useFavouriteComs';
 import { useNavigate, useSearch } from '@tanstack/react-router';
+import { atom, useAtomValue } from 'atomaric';
 import { useEffect, useMemo } from 'react';
 import { CmComWid } from 'shared/api';
 import styled from 'styled-components';

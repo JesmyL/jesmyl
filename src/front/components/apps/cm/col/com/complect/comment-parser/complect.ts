@@ -1,3 +1,3 @@
-import { atom } from '#shared/lib/atom';
+import { atom } from 'atomaric';
 
 export const isComCommentRedactAtom = atom(false);

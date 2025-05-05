@@ -1,4 +1,4 @@
-import { atom, useAtomValue } from '#shared/lib/atom';
+import { atom, useAtomValue } from 'atomaric';
 import { ReactNode } from 'react';
 import { Modal } from './modal/Modal/Modal';
 import { ModalBody } from './modal/Modal/ModalBody';

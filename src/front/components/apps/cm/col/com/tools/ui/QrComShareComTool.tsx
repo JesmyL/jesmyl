@@ -1,8 +1,8 @@
-import { atom } from '#shared/lib/atom';
 import { QrCodeFullScreen } from '#shared/ui/qr-code/QrCodeFullScreen';
 import { cmAppActions } from '$cm/app-actions/cm-app-actions';
 import { useCcom } from '$cm/basis/lib/com-selections';
 import { useComNumbers } from '$cm/basis/lib/useComNumbers';
+import { atom } from 'atomaric';
 import { CmComWid } from 'shared/api';
 import { ComTool } from '../ComTool';
 

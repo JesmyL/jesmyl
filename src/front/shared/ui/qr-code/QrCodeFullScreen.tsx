@@ -1,4 +1,4 @@
-import { Atom } from '#shared/lib/atom';
+import { Atom } from 'atomaric';
 import { CopyTextButton } from '../CopyTextButton';
 import { FullContent } from '../fullscreen-content/FullContent';
 import { QRCode } from './QRCode';

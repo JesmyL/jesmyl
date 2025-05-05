@@ -1,9 +1,9 @@
-import { atom } from '#shared/lib/atom';
 import { isTouchDevice } from '#shared/lib/device-differences';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { useCmOpenComLinkRendererContext } from '$cm/basis/lib/contexts/current-com-list';
 import { Com } from '$cm/col/com/Com';
+import { atom } from 'atomaric';
 import { ComListQrShare } from './ComListShare';
 import { FullscreenExpandComList } from './FullscreenExpandComList';
 

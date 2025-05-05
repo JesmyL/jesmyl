@@ -1,5 +1,5 @@
-import { useAtomValue } from '#shared/lib/atom';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { useAtomValue } from 'atomaric';
 import { comPlayerIsPlayAtom, comPlayerPlaySrcAtom } from './controls';
 
 interface Props {

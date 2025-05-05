@@ -1,7 +1,7 @@
-import { atom } from '#shared/lib/atom';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useLocation, useNavigate } from '@tanstack/react-router';
+import { atom } from 'atomaric';
 import { useEffect } from 'react';
 import { IScheduleWidgetWid } from 'shared/api';
 import { ScheduleWidgetLiveTranslation } from './Live';
