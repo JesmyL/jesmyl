@@ -1,4 +1,4 @@
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { SMyLib, itIt } from 'shared/utils';
 
 const constants = {

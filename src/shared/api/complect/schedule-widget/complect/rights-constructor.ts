@@ -1,4 +1,4 @@
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 
 export interface ScheduleWidgetRightTexts<Right> {
   id: Right;

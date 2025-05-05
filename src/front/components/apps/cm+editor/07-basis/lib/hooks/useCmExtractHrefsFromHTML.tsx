@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { CmMp3Rule } from 'shared/api';
 import { itIt } from 'shared/utils';
 

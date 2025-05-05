@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
 namespace N6919875af70bbcb2cef09ae314751706_1 {
-  type $0 = `${before}${beforeSpaces}${hashes}${blockHashPosition}${associations}${''|`${` `}${string}`}${info}${beforeCommentSpaces}${comment}${U1}`;
+  type $0 = `${before}${beforeSpaces}${hashes}${blockHashPosition}${associations | ''}${''|`${` `}${string}`}${info | ''}${beforeCommentSpaces}${comment}${U1}`;
   type before = `` | `${`\n`}`;
   type beforeSpaces = `${''|`${` `}${string}`}`;
   type hashes = `${`#`}${string}`;
   type blockHashPosition = `${string}`;
-  type associations = `${`_` | ''}${secretWidStr}${modificators}`;
+  type associations = `${`_` | ''}${secretWidStr | ''}${modificators | ''}`;
   type secretWidStr = `${''|`${string}${string}`}`;
   type modificators = `${`!` | ''}`;
-  type info = `[${blockHeader}]`;
+  type info = `[${blockHeader | ''}]`;
   type blockHeader = `${string}${string}`;
   type beforeCommentSpaces = `${''|`${` `}${string}`}`;
   type comment = `${string}${string}`;
@@ -24,11 +24,11 @@ namespace N6919875af70bbcb2cef09ae314751706_1 {
       beforeSpaces: beforeSpaces;
       hashes: hashes;
       blockHashPosition: blockHashPosition;
-      associations: associations;
-      secretWidStr: secretWidStr;
-      modificators: modificators;
-      info: info;
-      blockHeader: blockHeader;
+      associations?: associations;
+      secretWidStr?: secretWidStr;
+      modificators?: modificators;
+      info?: info;
+      blockHeader?: blockHeader;
       beforeCommentSpaces: beforeCommentSpaces;
       comment: comment
     }
@@ -38,17 +38,17 @@ namespace N6919875af70bbcb2cef09ae314751706_1 {
 namespace N6919875af70bbcb2cef09ae314751706_2 {
   type $0 = `${translate}:${book}${''|`${` `}${string}`}${chapter}:${verseDiapason}`;
   type translate = `${string}`;
-  type book = `${bookPrefix}${bookTitle}`;
-  type bookPrefix = `${bookNumberWithSuffix}${''|`${` `}${string}`}`;
+  type book = `${bookPrefix | ''}${bookTitle}`;
+  type bookPrefix = `${bookNumberWithSuffix | ''}${''|`${` `}${string}`}`;
   type bookNumberWithSuffix = `${bookNumber | ''}${`-` | ''}${bookNumberSuffix | ''}` | `${bookTitleFrom | ''}`;
   type bookNumber = `${number}`;
   type bookNumberSuffix = `${string | ''}`;
   type bookTitleFrom = `От`;
   type bookTitle = `${string}${string}`;
   type chapter = `${number}`;
-  type verseDiapason = `${verseFrom}${verseTail}`;
+  type verseDiapason = `${verseFrom}${verseTail | ''}`;
   type verseFrom = `${number}`;
-  type verseTail = `-${verseTo}`;
+  type verseTail = `-${verseTo | ''}`;
   type verseTo = `${number}`;
 
   export interface I extends Record<
@@ -57,8 +57,8 @@ namespace N6919875af70bbcb2cef09ae314751706_2 {
       $0: $0;
       translate: translate;
       book: book;
-      bookPrefix: bookPrefix;
-      bookNumberWithSuffix: bookNumberWithSuffix;
+      bookPrefix?: bookPrefix;
+      bookNumberWithSuffix?: bookNumberWithSuffix;
       bookNumber?: bookNumber;
       bookNumberSuffix?: bookNumberSuffix;
       bookTitleFrom?: bookTitleFrom;
@@ -66,8 +66,8 @@ namespace N6919875af70bbcb2cef09ae314751706_2 {
       chapter: chapter;
       verseDiapason: verseDiapason;
       verseFrom: verseFrom;
-      verseTail: verseTail;
-      verseTo: verseTo
+      verseTail?: verseTail;
+      verseTo?: verseTo
     }
   > { '': '' }
 }

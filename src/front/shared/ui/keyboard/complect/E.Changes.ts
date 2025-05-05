@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { KeyboardInputPropsType, KeyboardStorageEvent } from '../Keyboard.model';
 import { KeyboardStorageNavigate } from './D.Navigate';
 

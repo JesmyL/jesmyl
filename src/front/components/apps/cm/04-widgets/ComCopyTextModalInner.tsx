@@ -12,7 +12,7 @@ import { IsComToolIconItemsContext } from '$cm/col/com/tools/lib/contexts';
 import { ChordsVariantComTool } from '$cm/col/com/tools/ui/ChordsVariantComTool';
 import { MiniAnchorSwitchComTool } from '$cm/col/com/tools/ui/MiniAnchorSwitchComTool';
 import { useEffect, useState } from 'react';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 
 export const ComCopyTextModalInner = ({ com }: { com: Com }) => {
   const [text, setText] = useState('');

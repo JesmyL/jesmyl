@@ -1,4 +1,4 @@
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 
 export const isAndroid = navigator.userAgent && makeRegExp('/android/i').test(navigator.userAgent);
 export const isIOS = makeRegExp('/iPad|iPhone|iPod/i').test(navigator.userAgent);

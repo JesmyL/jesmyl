@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
 namespace Nb09d67b661fb57bb15ee68ed2e7d8d57_1 {
-  type $0 = `${bookn}${''|`${string}${string}`}${$2}`;
+  type $0 = `${bookn}${''|`${string}${string}`}${$2 | ''}`;
   type bookn = `${number | ''}${''|`${string}${string}`}${string}${string}`;
-  type $2 = `${chapterStr}${$4}`;
+  type $2 = `${chapterStr | ''}${$4 | ''}`;
   type chapterStr = `${number}`;
-  type $4 = `${$5}${verseStr}${$7}${finishVerseStr}`;
+  type $4 = `${$5 | ''}${verseStr | ''}${$7 | ''}${finishVerseStr | ''}`;
   type $5 = `:` | `${string}${string}`;
   type verseStr = `${number}`;
-  type $7 = `${''|`${string}${string}`}${verseSeparator}${''|`${string}${string}`}`;
+  type $7 = `${''|`${string}${string}`}${verseSeparator | ''}${''|`${string}${string}`}`;
   type verseSeparator = `${string | ''}`;
   type finishVerseStr = `${number}`;
 
@@ -17,14 +17,14 @@ namespace Nb09d67b661fb57bb15ee68ed2e7d8d57_1 {
     {
       $0: $0;
       bookn: bookn;
-      $2: $2;
-      chapterStr: chapterStr;
-      $4: $4;
-      $5: $5;
-      verseStr: verseStr;
-      $7: $7;
-      verseSeparator: verseSeparator;
-      finishVerseStr: finishVerseStr
+      $2?: $2;
+      chapterStr?: chapterStr;
+      $4?: $4;
+      $5?: $5;
+      verseStr?: verseStr;
+      $7?: $7;
+      verseSeparator?: verseSeparator;
+      finishVerseStr?: finishVerseStr
     }
   > { '': '' }
 }

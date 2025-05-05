@@ -63,7 +63,7 @@
     "src/shared/utils/complect",
     "./node_modules/cypress",
     "cypress/**/*.ts",
-    "regexp-master.gen",
+    "regexpert.gen",
     "src/service-worker.ts"
   ],
   "exclude": ["src/front/shared/ui/the-icon/icons"]

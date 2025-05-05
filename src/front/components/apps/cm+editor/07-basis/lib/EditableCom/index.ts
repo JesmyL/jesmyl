@@ -1,6 +1,6 @@
 import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { IExportableOrderMe } from '$cm/col/com/order/Order.model';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { EditableComOrder } from '../EditableComOrder';
 import { EditableComParseBlocks } from './complect/31-ParseBlocks';

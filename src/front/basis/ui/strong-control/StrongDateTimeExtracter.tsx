@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
 import { useEffect, useState } from 'react';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { itIt } from 'shared/utils';
 import { StrongEditableField } from './field/StrongEditableField';
 

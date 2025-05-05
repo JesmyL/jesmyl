@@ -2,7 +2,7 @@ import { MyLib, mylib } from '#shared/lib/my-lib';
 import { cmEditorIDB } from '$cm+editor/basis/lib/cmEditorIDB';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useMemo } from 'react';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { itIt } from 'shared/utils';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { Com } from '../com/Com';

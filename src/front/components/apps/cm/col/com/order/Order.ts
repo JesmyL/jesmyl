@@ -1,7 +1,7 @@
 import { mylib, MyLib } from '#shared/lib/my-lib';
 import { SourceBased } from '#shared/lib/SourceBased';
 import { ChordVisibleVariant } from '$cm/Cm.model';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import {
   IExportableOrder,
   IExportableOrderFieldValues,

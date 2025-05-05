@@ -7,7 +7,7 @@ import { ChordVisibleVariant } from '$cm/Cm.model';
 import { ComLine } from '$cm/col/com/line/ComLine';
 import { TheOrder } from '$cm/col/com/order/TheOrder';
 import React from 'react';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { emptyArray, itIt } from 'shared/utils';
 import styled, { css } from 'styled-components';
 

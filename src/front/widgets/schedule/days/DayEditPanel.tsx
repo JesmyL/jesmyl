@@ -3,7 +3,7 @@ import { atom } from '#shared/lib/atom';
 import { renderComponentInNewWindow } from '#shared/lib/renders';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { IScheduleWidget, IScheduleWidgetDay, ScheduleScopeProps } from 'shared/api';
 import { useScheduleDayScopePropsContext } from '../complect/lib/contexts';
 import { schDaysSokiInvocatorClient } from '../invocators/invocators.methods';

@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { OrderRepeats } from 'shared/api';
 import { emptyArray } from '../utils';
 

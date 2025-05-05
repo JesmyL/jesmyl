@@ -12,7 +12,7 @@ import {
 } from '#widgets/schedule/useScheduleWidget';
 import Markdown from 'markdown-to-jsx';
 import { ReactNode } from 'react';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import {
   customAttUseRights,
   CustomAttUseRights,

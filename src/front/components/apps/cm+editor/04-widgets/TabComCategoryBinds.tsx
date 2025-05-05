@@ -8,7 +8,7 @@ import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React, { useMemo } from 'react';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { emptyFunc } from 'shared/utils';
 
 export const CmEditorTabComCategoryBinds = () => {

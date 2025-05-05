@@ -1,4 +1,4 @@
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { EeStorePack } from 'shared/api';
 import { IIncorrect, IIncorrects } from 'shared/model/cm/Incorrects';
 import { smylib, SMyLib } from '../SMyLib';

@@ -3,7 +3,7 @@ import { mylib } from '#shared/lib/my-lib';
 import { BibleBookTranslates } from '$bible/basis/contexts/TranslatesContext';
 import { bibleTitles } from '$bible/basis/lib/const/bibleTitlesJson';
 import { bibleAllTranslates, bibleLowerBooks, translateDescriptions } from '$bible/basis/lib/const/consts';
-import { makeNamedRegExp, makeRegExp } from 'regexp-master';
+import { makeNamedRegExp, makeRegExp } from 'regexpert';
 import { CmComOrderWid } from 'shared/api';
 import { css } from 'styled-components';
 import { Order } from '../../order/Order';

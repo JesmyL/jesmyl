@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { CoderResultComponent } from './model';
 import { CoderResultValue } from './value';
 import { CoderValueExpandable } from './value-expandable';

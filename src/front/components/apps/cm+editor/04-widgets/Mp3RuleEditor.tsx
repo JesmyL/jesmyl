@@ -2,7 +2,7 @@ import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useCmMp3Rules } from '$cm+editor/basis/lib/hooks/useCmMp3Rules';
 import { ReactNode, useState } from 'react';
-import { StrRegExp, makeRegExp } from 'regexp-master';
+import { StrRegExp, makeRegExp } from 'regexpert';
 import { CmMp3Rule } from 'shared/api';
 
 export const Mp3RuleEditor = (

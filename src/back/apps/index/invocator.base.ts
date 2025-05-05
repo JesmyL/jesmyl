@@ -9,7 +9,7 @@ import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
 import { exec } from 'child_process';
 import jwt from 'jsonwebtoken';
 import TelegramBot from 'node-telegram-bot-api';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import {
   IScheduleWidget,
   IScheduleWidgetUser,

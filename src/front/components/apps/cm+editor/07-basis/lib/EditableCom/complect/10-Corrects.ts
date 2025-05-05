@@ -1,4 +1,4 @@
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { EditableComBase } from './0-Base';
 
 export class EditableComCorrects extends EditableComBase {

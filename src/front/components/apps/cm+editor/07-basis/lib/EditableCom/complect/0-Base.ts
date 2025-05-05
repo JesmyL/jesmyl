@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
 import { Com } from '$cm/col/com/Com';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { IExportableCom } from 'shared/api';
 import { comBlockStyles } from 'shared/values/cm/block-styles/BlockStyles';
 

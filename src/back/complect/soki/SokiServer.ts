@@ -2,7 +2,7 @@ import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
 import { SokiServerInvocatorTool } from 'back/SokiInvocatorBase.server';
 import { userAuthStringified, userVisitStringified } from 'back/utils';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import {
   InvocatorClientEvent,
   InvocatorServerEvent,

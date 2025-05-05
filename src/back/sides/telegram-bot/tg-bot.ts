@@ -1,5 +1,5 @@
 import TgBot, { InlineKeyboardButton, InlineKeyboardMarkup, SendMessageOptions, User } from 'node-telegram-bot-api';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { SokiAuthLogin } from 'shared/api';
 import { emptyFunc, smylib } from 'shared/utils';
 import { Stream } from 'stream';

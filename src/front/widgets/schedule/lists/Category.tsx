@@ -7,7 +7,7 @@ import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import React, { useMemo } from 'react';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { IScheduleWidgetListCat } from 'shared/api';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';

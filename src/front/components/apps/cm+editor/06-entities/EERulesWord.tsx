@@ -4,7 +4,7 @@ import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { CmEditorIDBStorage } from '$cm+editor/basis/lib/cmEditorIDB';
 import { memo, useReducer, useState } from 'react';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { EeStorePack } from 'shared/api';
 import { itIt, itNIt } from 'shared/utils';
 import styled from 'styled-components';

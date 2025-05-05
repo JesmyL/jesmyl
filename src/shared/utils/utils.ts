@@ -1,4 +1,4 @@
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 
 export const convertMd2HTMLMaker = (isForTg: boolean) => {
   const headersReplacer = isForTg ? '<b>$2</b>' : baseHeadersReplacer;

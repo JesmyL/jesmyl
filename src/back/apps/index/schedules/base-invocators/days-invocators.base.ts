@@ -1,5 +1,5 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { IScheduleWidgetDayEventMi } from 'shared/api';
 import { SchDaysSokiInvocatorMethods } from 'shared/api/invocators/schedules/invocators.model';
 import { smylib } from 'shared/utils';

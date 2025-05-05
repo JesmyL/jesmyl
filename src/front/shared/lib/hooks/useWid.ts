@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 
 const deps: [] = [];
 

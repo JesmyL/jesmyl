@@ -4,7 +4,7 @@ import { cmEditorIDB } from '$cm+editor/basis/lib/cmEditorIDB';
 import { useEditableCats } from '$cm+editor/basis/lib/hooks/useEditableCat';
 import { useEditableComs } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { memo, useEffect, useState } from 'react';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { BibleTranslateName, EeStorePack } from 'shared/api';
 import { emptyArray, itIt } from 'shared/utils';
 

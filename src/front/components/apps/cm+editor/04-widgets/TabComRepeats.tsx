@@ -10,7 +10,7 @@ import { ComLine } from '$cm/col/com/line/ComLine';
 import { TheOrder } from '$cm/col/com/order/TheOrder';
 import { IconButton } from '@mui/material';
 import { CSSProperties, useCallback, useEffect, useState } from 'react';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { OrderRepeats } from 'shared/api';
 import styled from 'styled-components';
 

@@ -9,7 +9,7 @@ import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIcon
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useAuth } from 'front/components/index/atoms';
 import { useEffect, useMemo, useState } from 'react';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { IScheduleWidget, IScheduleWidgetWid, ScheduleScopeProps } from 'shared/api';
 import styled from 'styled-components';
 import { ScheduleWidgetCustomAttachments } from './atts/custom/CustomAttachments';

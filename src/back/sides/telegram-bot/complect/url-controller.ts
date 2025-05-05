@@ -1,5 +1,5 @@
 import TelegramBot, { SendMessageOptions } from 'node-telegram-bot-api';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { JTgBotCallbackQuery } from '../model';
 import { JesmylTelegramBot } from '../tg-bot';
 

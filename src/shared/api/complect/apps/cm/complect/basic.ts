@@ -1,4 +1,4 @@
-import { StrRegExp } from 'regexp-master';
+import { StrRegExp } from 'regexpert';
 import { CmBlockStyleKey } from 'shared/values/cm/block-styles/BlockStyles.model';
 import { CmCatWid, CmComMod, CmComOrderWid, CmComWid, CmMeetingEventWid } from './enums';
 

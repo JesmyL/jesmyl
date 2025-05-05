@@ -1,6 +1,6 @@
 /* eslint-disable no-constant-condition */
 import { jesmylTgBot } from 'back/sides/telegram-bot/bot';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { IScheduleWidget, IScheduleWidgetDay, ScheduleWidgetCleans } from 'shared/api';
 import { itNNull } from 'shared/utils';
 import { schedulesFileStore } from '../file-stores';

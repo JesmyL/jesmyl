@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { ChordVisibleVariant } from '../../../Cm.model';
 import { Com } from '../Com';
 import { ComLine } from '../line/ComLine';

@@ -1,6 +1,6 @@
 import Markdown, { MarkdownToJSX } from 'markdown-to-jsx';
 import { useState } from 'react';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { isNIs } from 'shared/utils';
 import style from './Multiline.module.scss';
 

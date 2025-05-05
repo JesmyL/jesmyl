@@ -1,4 +1,4 @@
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import {
   CustomAttUseTaleId,
   IScheduleWidget,

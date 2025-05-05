@@ -6,7 +6,7 @@ import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { ObserveUrlResource } from '$cm+editor/basis/ui/ObserveUrlResource';
 import { ComAudioControlledList } from '$cm+editor/widgets/AudioControlledList';
 import { useState } from 'react';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { CmMp3Rule } from 'shared/api';
 import { itIt } from 'shared/utils';
 

@@ -1,5 +1,5 @@
 import { SokiInvocatorBaseServer } from 'back/SokiInvocatorBase.server';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { CmComOrderWid, CmComWid, IExportableCom, IExportableOrder } from 'shared/api';
 import { CmEditComOrderSokiInvocatorModel } from 'shared/api/invocators/cm/edit-com-order-invocators.model';
 import { itNNil, smylib } from 'shared/utils';

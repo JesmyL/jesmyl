@@ -1,4 +1,4 @@
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 
 export const makePseudoElementCorrectContentText = (text: string) =>
   text?.replace(makeRegExp("/'/g"), "\\'").replace(makeRegExp('/\\n/g'), "''\\A''");

@@ -9,7 +9,7 @@ import { TheButton } from '#shared/ui/TheButton';
 import { cmEditComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
 import { EditableComOrder } from '$cm+editor/basis/lib/EditableComOrder';
 import { Order } from '$cm/col/com/order/Order';
-import { makeRegExp } from 'regexp-master';
+import { makeRegExp } from 'regexpert';
 import { OrderRepeats } from 'shared/api';
 
 interface Props {
