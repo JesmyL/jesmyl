@@ -1,30 +1,30 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
 namespace Nb09d67b661fb57bb15ee68ed2e7d8d57_1 {
-  type $0 = `${Tbookn}${''|`${string}${string}`}${$2 | ''}`;
-  type Tbookn = `${number | ''}${''|`${string}${string}`}${string}${string}`;
-  type $2 = `${TchapterStr}${$4 | ''}`;
-  type TchapterStr = `${number}`;
-  type $4 = `${$5}${TverseStr}${$7}${TfinishVerseStr | ''}`;
+  type $0 = `${$bookn}${''|`${string}${string}`}${$2 | ''}`;
+  type $bookn = `${number | ''}${''|`${string}${string}`}${string}${string}`;
+  type $2 = `${$chapterStr}${$4 | ''}`;
+  type $chapterStr = `${number}`;
+  type $4 = `${$5}${$verseStr}${$7}${$finishVerseStr | ''}`;
   type $5 = `:` | `${string}${string}`;
-  type TverseStr = `${number}`;
-  type $7 = `${''|`${string}${string}`}${TverseSeparator}${''|`${string}${string}`}`;
-  type TverseSeparator = `${string | ''}`;
-  type TfinishVerseStr = `${number}`;
+  type $verseStr = `${number}`;
+  type $7 = `${''|`${string}${string}`}${$verseSeparator}${''|`${string}${string}`}`;
+  type $verseSeparator = `${string | ''}`;
+  type $finishVerseStr = `${number}`;
 
   export interface I extends Record<
     `/(?<bookn>\\d?\\s*[а-яё]+)\\s*((?<chapterStr>\\d{1,3})((:|\\s+)(?<verseStr>\\d{1,3})(\\s*(?<verseSeparator>[-,]?)\\s*)(?<finishVerseStr>\\d{1,3})?)?)?/i`,
     {
       $0: $0;
-      bookn: Tbookn;
+      bookn: $bookn;
       $2?: $2;
-      chapterStr?: TchapterStr;
+      chapterStr?: $chapterStr;
       $4?: $4;
       $5?: $5;
-      verseStr?: TverseStr;
+      verseStr?: $verseStr;
       $7?: $7;
-      verseSeparator?: TverseSeparator;
-      finishVerseStr?: TfinishVerseStr
+      verseSeparator?: $verseSeparator;
+      finishVerseStr?: $finishVerseStr
     }
   > { '': '' }
 }

@@ -11,7 +11,7 @@ import { Order } from '../../order/Order';
 let titlesMap: Map<string, number>;
 
 export class ComBlockCommentMakerCleans {
-  private static numberAssociationLine = 'iwvthjkfsz';
+  private static numberAssociationLine = 'iwvthjkfsz' as const;
 
   static spaceFreeText = (text: string) => text.replace(makeRegExp('/\\s+/g'), '');
   static makeComOrderHeaderSelector = (blockNumber: number | string) =>
