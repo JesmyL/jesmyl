@@ -4,10 +4,12 @@ import { useBibleAddressBooki } from '$bible/basis/lib/hooks/address/books';
 import { useBibleAddressChapteri } from '$bible/basis/lib/hooks/address/chapters';
 import { useBibleShowTranslatesValue } from '$bible/basis/lib/hooks/translates';
 import { BibleBooki, BibleChapteri, BibleTranslationSingleAddress, BibleVersei } from '$bible/basis/model/base';
+import { useAtomValue } from 'atomaric';
 import { JSX, useCallback, useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { emptyArray } from 'shared/utils';
 import styled from 'styled-components';
+import { bibleSearchTermAtom, bibleSearchZoneAtom } from './atoms';
 import { useBibleTranslationSearchResultList, useBibleTranslationSearchResultSelectedValue } from './hooks/results';
 import { BibleSearchResultVerse } from './ResultVerse';
 
@@ -28,8 +30,8 @@ const maxItems = 49;
 const sortStringsByLength = (a: string, b: string) => b.length - a.length;
 
 export function BibleSearchResults({ inputRef, height = '100px', innerZone, onClick: userOnClick }: Props) {
-  const searchZone = bibleIDB.useValue.searchZone();
-  const searchTerm = bibleIDB.useValue.searchTerm();
+  const searchZone = useAtomValue(bibleSearchZoneAtom);
+  const searchTerm = useAtomValue(bibleSearchTermAtom);
   const showTranslates = useBibleShowTranslatesValue();
   const lowerChapters = useBibleTranslatesContext()[showTranslates[0]]?.lowerChapters;
   const [list, setList] = useState<JSX.Element[]>([]);

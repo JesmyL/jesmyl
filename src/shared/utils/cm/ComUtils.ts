@@ -1,8 +1,10 @@
-import { makeRegExp } from 'regexpert';
+import { makeNamedRegExp, makeRegExp } from 'regexpert';
 import { EeStorePack } from 'shared/api';
 import { IIncorrect, IIncorrects } from 'shared/model/cm/Incorrects';
 import { smylib, SMyLib } from '../SMyLib';
 import { itTrim } from '../utils';
+
+const chordLikeStr = `([ACDFG]#?|[EH])(\\+|11|((m|min|7?sus|maj|dim|add)?(\\d(/\\d)?)?))` as const;
 
 export class CmComUtils {
   static doubleQuotesStr = '«»„„“”«»“' as const;
@@ -12,15 +14,15 @@ export class CmComUtils {
   static ruDifferentLowerLettersStr = 'ъыэё' as const;
   static uaDifferentLowerLettersStr = 'іґїє' as const;
   static slavicLowerLettersStr = `а-яё${this.uaDifferentLowerLettersStr}` as const;
-  static chordLikeStr = '([ACDFG]#?|[EH])(\\+|11|((m|min|7?sus|maj|dim|add)?(\\d(/\\d)?)?))' as const;
+  static chordLikeStr = chordLikeStr;
   static displayableTextBlockSingleWritedSymbolsStr = `(),":;'?` as const;
   static displayableTextBlockSymbolsStr = `-.!\\s${this.displayableTextBlockSingleWritedSymbolsStr}` as const;
   static displayableTextBlockCharsStr = `${this.displayableTextBlockSymbolsStr}${this.slavicLowerLettersStr}`;
 
-  static textedChordReg = makeRegExp(
-    `/^\\.*-?${this.chordLikeStr}(/${this.chordLikeStr})?((\\.+|-|\\.+-)${this.chordLikeStr}(/${this.chordLikeStr})?)*$/`,
-  );
-  static correctChordNameReg = makeRegExp(`/^${this.chordLikeStr}(/${this.chordLikeStr})?$/`);
+  static textedChordReg = makeNamedRegExp(
+    `/^\\.*-?${chordLikeStr}(?<bassChord>/${chordLikeStr})?((?<dotSeparations>\\.+|-|\\.+-)${chordLikeStr}(/${chordLikeStr})?)*$/`,
+  ).regExp;
+  static correctChordNameReg = makeNamedRegExp(`/^${chordLikeStr}(/${chordLikeStr})?$/`).regExp;
   static checkIsChordLineReg = makeRegExp('/^[-+A-Ha-z# /\\d]+$/');
   static correctNotSlavicNameReg_i = makeRegExp(`/([^${this.slavicLowerLettersStr} !?]+\\s*)+$/i`);
 

@@ -1,13 +1,14 @@
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
-import { bibleIDB } from '$bible/basis/lib/bibleIDB';
 import { useBibleAddressBooki } from '$bible/basis/lib/hooks/address/books';
 import { useBibleAddressChapteri } from '$bible/basis/lib/hooks/address/chapters';
 import { useBibleBookList } from '$bible/basis/lib/hooks/texts';
+import { bibleSearchZoneAtom } from '$bible/translations/search/atoms';
 import { useBibleTranslationSearchResultSelectedSet } from '$bible/translations/search/hooks/results';
 import { BibleSearchPanelSearchTextInput } from '$bible/translations/search/input-panel/SearchTextInput';
 import { BibleSearchResults } from '$bible/translations/search/Results';
 import { useNavigate } from '@tanstack/react-router';
+import { useAtomValue } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
 import { emptyArray } from 'shared/utils';
 
@@ -15,7 +16,7 @@ export function BibleReaderSearchPage() {
   const navigate = useNavigate();
   const currentBooki = useBibleAddressBooki();
   const currentChapteri = useBibleAddressChapteri();
-  const searchZone = bibleIDB.useValue.searchZone();
+  const searchZone = useAtomValue(bibleSearchZoneAtom);
   const bookTitles = useBibleBookList();
   const [innerZone, setInnerZone] = useState<'book' | 'chapter'>('book');
   const setResultSelected = useBibleTranslationSearchResultSelectedSet();
@@ -36,7 +37,7 @@ export function BibleReaderSearchPage() {
             <IconCheckbox
               checked={searchZone === 'global'}
               postfix="Глобальный поиск"
-              onChange={() => bibleIDB.set.searchZone('global')}
+              onChange={() => bibleSearchZoneAtom.set('global')}
             />
             <IconCheckbox
               checked={searchZone === 'inner' && innerZone === 'book'}
@@ -46,7 +47,7 @@ export function BibleReaderSearchPage() {
                 </>
               }
               onChange={() => {
-                bibleIDB.set.searchZone('inner');
+                bibleSearchZoneAtom.set('inner');
                 setInnerZone('book');
               }}
             />
@@ -61,7 +62,7 @@ export function BibleReaderSearchPage() {
                 </>
               }
               onChange={() => {
-                bibleIDB.set.searchZone('inner');
+                bibleSearchZoneAtom.set('inner');
                 setInnerZone('chapter');
               }}
             />

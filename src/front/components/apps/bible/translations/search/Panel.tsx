@@ -1,11 +1,11 @@
-import { bibleIDB } from '$bible/basis/lib/bibleIDB';
 import { BibleSearchZone } from '$bible/basis/model/base';
 import { JSX, memo, useEffect, useRef } from 'react';
+import { bibleSearchZoneAtom } from './atoms';
 import { BibleSearchInputPanel } from './input-panel/InputPanel';
 import { BibleSearchResults } from './Results';
 
 const setSearchZone = (zone: BibleSearchZone, inputRef: React.RefObject<HTMLInputElement | null>) => {
-  bibleIDB.set.searchZone(zone);
+  bibleSearchZoneAtom.set(zone);
   const select = () => inputRef.current?.select();
   setTimeout(select, 10);
   setTimeout(select, 50);

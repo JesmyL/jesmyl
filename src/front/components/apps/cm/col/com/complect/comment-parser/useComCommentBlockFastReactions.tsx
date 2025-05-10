@@ -1,80 +1,90 @@
+import { getParentNodeWithClassName } from '#shared/lib/getParentNodeWithClassName';
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { mylib } from '#shared/lib/my-lib';
-import { useAtomSet } from 'atomaric';
 import { useEffect } from 'react';
-import { itInvokeIt, wait } from 'shared/utils';
+import { wait } from 'shared/utils';
 import { Com } from '../../Com';
 import { ComBlockCommentMakerCleans } from './Cleans';
 import { isComCommentRedactAtom } from './complect';
 
-export const useComCommentBlockFastReactions = (com: Com) => {
-  const setIsRedact = useAtomSet(isComCommentRedactAtom);
+export const useComCommentBlockFastReactions = (listRef: React.RefObject<HTMLDivElement | null>, com: Com) => {
+  const comOrders = useActualRef(com.orders);
 
   useEffect(() => {
-    let withHeaderOrdi = 0;
-    const mutes = new Set<() => void>();
+    let isFirstClick = true;
 
-    com.orders?.forEach(ord => {
-      if (ord.me.isInherit || ord.isEmptyHeader || !ord.isVisible) return;
-      withHeaderOrdi++;
-      const withHeaderOrdPosition = withHeaderOrdi;
-
-      const headerNode = document.querySelector(
-        ComBlockCommentMakerCleans.makeComOrderHeaderSelector(withHeaderOrdPosition),
-      );
-
-      if (headerNode == null) return;
-      let isFirstClick = true;
-
-      const focusCommentInput = async () => {
-        if (isFirstClick) {
-          isFirstClick = false;
-          setTimeout(() => (isFirstClick = true), 500);
-          return;
-        }
-
-        setIsRedact(true);
-        await wait(300);
-
-        const commentInput = document.querySelector('.com-comment-input') as HTMLTextAreaElement;
-        if (commentInput == null) return;
-        const hashedNumber = `\n#${withHeaderOrdPosition} `;
-
-        commentInput.scrollIntoView({ block: 'center' });
-        commentInput.focus();
-        const { regExp: commentReg } = ComBlockCommentMakerCleans.commentsParseReg(withHeaderOrdPosition);
-        const caretPosition = commentInput.value.search(commentReg);
-
-        Promise.resolve().then(() => mylib.setInputHeightByContent(commentInput));
-
-        if (caretPosition < 0) {
-          let currentNumber = withHeaderOrdPosition - 1;
-          const { regExp: currentCommentReg } = ComBlockCommentMakerCleans.commentsParseReg(currentNumber);
-
-          while (currentNumber++ < withHeaderOrdi) {
-            const insertPosition = commentInput.value.search(currentCommentReg);
-
-            if (insertPosition > -1) {
-              commentInput.value =
-                commentInput.value.slice(0, insertPosition) + hashedNumber + commentInput.value.slice(insertPosition);
-
-              commentInput.selectionStart = commentInput.selectionEnd = commentInput.value.indexOf(
-                '\n',
-                insertPosition + 1,
-              );
-              return;
-            }
+    return hookEffectPipe()
+      .pipe(
+        addEventListenerPipe(listRef.current, 'click', async event => {
+          if (comOrders.current === null) return;
+          if (isFirstClick) {
+            isFirstClick = false;
+            setTimeout(() => (isFirstClick = true), 500);
+            return;
           }
-          commentInput.value += hashedNumber;
-          return;
-        }
 
-        commentInput.selectionStart = commentInput.selectionEnd = commentInput.value.indexOf('\n', caretPosition + 1);
-      };
+          isComCommentRedactAtom.set(true);
+          await wait(300);
 
-      headerNode.addEventListener('click', focusCommentInput);
-      mutes.add(() => headerNode.removeEventListener('click', focusCommentInput));
-    });
+          const commentInput = document.querySelector('.com-comment-input') as HTMLTextAreaElement;
+          if (commentInput == null) return;
 
-    return () => mutes.forEach(itInvokeIt);
-  }, [com.orders, com.wid, setIsRedact]);
+          const { node } = getParentNodeWithClassName(event, 'styled-header');
+
+          if (node === null) return;
+          const ordw = +node.getAttribute('ord-wid')!;
+          if (mylib.isNaN(ordw)) return;
+
+          let withHeaderOrdNumber = 0;
+          for (const ord of comOrders.current) {
+            if (ord.me.isInherit || ord.isEmptyHeader || !ord.isVisible) continue;
+            withHeaderOrdNumber++;
+            if (ord.wid === ordw) break;
+          }
+
+          const hashedNumber = `\n#${withHeaderOrdNumber} `;
+
+          commentInput.focus();
+          commentInput.scrollIntoView({ block: 'center' });
+          commentInput.focus();
+
+          const { regExp: commentReg } = ComBlockCommentMakerCleans.commentsParseReg(withHeaderOrdNumber);
+          const caretPosition = commentInput.value.search(commentReg);
+
+          setTimeout(() => mylib.setInputHeightByContent(commentInput), 120);
+
+          if (caretPosition < 0) {
+            let currentNumber = withHeaderOrdNumber - 1;
+            const { regExp: currentCommentReg } = ComBlockCommentMakerCleans.commentsParseReg(currentNumber);
+
+            while (currentNumber++ < withHeaderOrdNumber) {
+              const insertPosition = commentInput.value.search(currentCommentReg);
+
+              if (insertPosition > -1) {
+                setTimeout(() => {
+                  commentInput.value =
+                    commentInput.value.slice(0, insertPosition) +
+                    hashedNumber +
+                    commentInput.value.slice(insertPosition);
+
+                  commentInput.selectionStart = commentInput.selectionEnd = commentInput.value.indexOf(
+                    '\n',
+                    insertPosition + 1,
+                  );
+                }, 100);
+
+                return;
+              }
+            }
+
+            commentInput.value += hashedNumber;
+            return;
+          }
+
+          commentInput.selectionStart = commentInput.selectionEnd = commentInput.value.indexOf('\n', caretPosition + 1);
+        }),
+      )
+      .effect();
+  }, [comOrders, listRef]);
 };

@@ -1,4 +1,4 @@
-import { bibleIDB } from '$bible/basis/lib/bibleIDB';
+import { atom, useAtomValue } from 'atomaric';
 import { BibleSearchPanelInput } from '../Input';
 import { useBibleTransformAddressTermToAddress } from './hooks/transformers';
 
@@ -6,10 +6,11 @@ interface Props {
   inputRef: React.RefObject<HTMLInputElement | null>;
 }
 
-const onChange = (event: React.ChangeEvent<HTMLInputElement | null>) => bibleIDB.set.addressTerm(event.target.value);
+const termAtom = atom('', 'bible:addressTerm');
+const onChange = (event: React.ChangeEvent<HTMLInputElement | null>) => termAtom.set(event.target.value);
 
 export const BibleSearchPanelAddressInput = ({ inputRef }: Props) => {
-  const addressTerm = bibleIDB.useValue.addressTerm();
+  const addressTerm = useAtomValue(termAtom);
   const address = useBibleTransformAddressTermToAddress(addressTerm, inputRef);
 
   return (

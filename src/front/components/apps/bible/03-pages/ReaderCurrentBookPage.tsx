@@ -127,6 +127,9 @@ function Content() {
                     setAddress(selectedBooki, selectedChapteri, versei);
                     onBookCloseRef.current();
                     onChapterCloseRef.current();
+
+                    isOpenBookSelectorAtom.reset();
+                    isOpenChapterSelectorAtom.reset();
                     isOpenVerseSelectorAtom.reset();
                   }}
                 >

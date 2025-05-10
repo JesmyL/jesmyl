@@ -1,8 +1,9 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { bibleIDB } from '$bible/basis/lib/bibleIDB';
 import { useSetBibleAddressIndexes } from '$bible/basis/lib/hooks/address/address';
 import { useBibleTranslationSlideSyncContentSetter } from '$bible/basis/lib/hooks/slide-sync';
+import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
+import { bibleSearchTermAtom } from '../atoms';
 import {
   useBibleTranslationSearchResultList,
   useBibleTranslationSearchResultSelectedSet,
@@ -14,10 +15,10 @@ interface Props {
   inputRef: React.RefObject<HTMLInputElement | null>;
 }
 
-const onChange = (event: React.ChangeEvent<HTMLInputElement>) => bibleIDB.set.searchTerm(event.target.value);
+const onChange = (event: React.ChangeEvent<HTMLInputElement>) => bibleSearchTermAtom.set(event.target.value);
 
 export function BibleSearchPanelSearchTextInput({ inputRef }: Props) {
-  const searchTerm = bibleIDB.useValue.searchTerm();
+  const searchTerm = useAtomValue(bibleSearchTermAtom);
   const resultSelected = useBibleTranslationSearchResultSelectedValue();
   const setResultSelected = useBibleTranslationSearchResultSelectedSet();
   const syncSlide = useBibleTranslationSlideSyncContentSetter();

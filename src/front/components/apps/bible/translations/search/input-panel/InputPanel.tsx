@@ -1,8 +1,9 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { bibleIDB } from '$bible/basis/lib/bibleIDB';
 import { BibleSearchZone } from '$bible/basis/model/base';
+import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import styled, { css } from 'styled-components';
+import { bibleSearchZoneAtom } from '../atoms';
 import { useBibleTranslationSearchResultSelectedSet } from '../hooks/results';
 import { BibleSearchPanelAddressInput } from './address/AddressInput';
 import { BibleSearchPanelSearchTextInput } from './SearchTextInput';
@@ -13,7 +14,7 @@ interface Props {
 }
 
 export function BibleSearchInputPanel({ inputRef, setSearchZone }: Props) {
-  const searchZone = bibleIDB.useValue.searchZone();
+  const searchZone = useAtomValue(bibleSearchZoneAtom);
   const setResultSelected = useBibleTranslationSearchResultSelectedSet();
 
   useEffect(() => {

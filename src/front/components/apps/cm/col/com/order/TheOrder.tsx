@@ -37,6 +37,7 @@ export function TheOrder(props: Props) {
         <div
           id={`com-block-${orderUniti}`}
           className="styled-header anchor"
+          ord-wid={orderUnit.wid}
           {...styleAttributes}
           ref={el => {
             if (el) orderUnit.element = el;
@@ -68,12 +69,18 @@ export function TheOrder(props: Props) {
   const headerNode = blockHeader ? (
     <div
       className="styled-header"
+      ord-wid={orderUnit.wid}
       {...styleAttributes}
     >
       {blockHeader}
     </div>
   ) : (
-    !orderUnit.me.style?.isHeaderNoneForce && <div className="styled-header empty" />
+    !orderUnit.me.style?.isHeaderNoneForce && (
+      <div
+        className="styled-header empty"
+        ord-wid={orderUnit.wid}
+      />
+    )
   );
 
   const header =

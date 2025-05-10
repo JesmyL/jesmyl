@@ -37,7 +37,7 @@ export const TheControlledCom = ({ com, comList, chordVisibleVariant }: Props) =
   const nextComLinkRef = useRef<HTMLAnchorElement>(null);
   const prevComLinkRef = useRef<HTMLAnchorElement>(null);
 
-  useComCommentBlockFastReactions(com);
+  useComCommentBlockFastReactions(listRef, com);
 
   onNextCom = () => nextComLinkRef.current?.click();
   onPrevCom = () => prevComLinkRef.current?.click();

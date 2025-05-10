@@ -19,8 +19,6 @@ export interface BibleIDBStorage {
   showTranslates: BibleTranslateName[];
   myTranslates: BibleTranslateName[];
 
-  addressTerm: string;
-  searchTerm: string;
   searchZone: BibleSearchZone;
 
   translationScreenConfigs: BibleTranslationScreenConfig[];
@@ -50,8 +48,6 @@ export const bibleIDB = new BibleIDB('bible', {
   chapteri: { $byDefault: BibleChapteri.def },
   versei: { $byDefault: BibleVersei.def },
 
-  searchTerm: { $byDefault: '' },
-  addressTerm: { $byDefault: '' },
   searchZone: { $byDefault: 'global' },
 
   showTranslates: { $byDefault: [BibleTranslateName.rst] },

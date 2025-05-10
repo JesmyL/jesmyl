@@ -14,8 +14,11 @@ export class ComBlockCommentMakerCleans {
   private static numberAssociationLine = 'iwvthjkfsz' as const;
 
   static spaceFreeText = (text: string) => text.replace(makeRegExp('/\\s+/g'), '');
+  static makeComOrderBlockSelector = (blockNumber: number | string) =>
+    `.styled-block:nth-child(${blockNumber} of :has(.styled-header))` as const;
+
   static makeComOrderHeaderSelector = (blockNumber: number | string) =>
-    `.styled-block:nth-child(${blockNumber} of :has(.styled-header)) .styled-header`;
+    `${this.makeComOrderBlockSelector(blockNumber)} .styled-header` as const;
 
   static commentsParseReg = (specialNumber: number | string) =>
     makeNamedRegExp(

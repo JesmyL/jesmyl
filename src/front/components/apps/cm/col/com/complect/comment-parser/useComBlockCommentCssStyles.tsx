@@ -3,9 +3,11 @@ import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
 import { MyLib } from '#shared/lib/my-lib';
 import { useBibleTranslatesContext } from '$bible/basis/lib/contexts/translates';
 import { useEffect, useState } from 'react';
+import { makeRegExp } from 'regexpert';
 import { CmComWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import { RuleSet, css } from 'styled-components';
+import { StyledComLine } from '../../line/StyledComLine';
 import { Order } from '../../order/Order';
 import { ComBlockCommentMakerCleans } from './Cleans';
 
@@ -74,13 +76,26 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
 
         cssContentList = MyLib.entries(commentsDict).map(([blockNumber, comment]) => {
           const commentStr = comment.join('\n');
+          const isNumeredLines = commentStr.match(makeRegExp(`/(?<=^|\\n)\\d/`));
 
           return css`
-            ${ComBlockCommentMakerCleans.makeComOrderHeaderSelector(blockNumber)} {
-              &::after {
+            ${ComBlockCommentMakerCleans.makeComOrderBlockSelector(blockNumber)} {
+              .styled-header::after {
                 ${ComBlockCommentMakerCleans.makePseudoCommentContentCss(commentStr)}
                 ${ComBlockCommentMakerCleans.makePseudoCommentContentAccentsCss(commentStr)}
               }
+
+              ${isNumeredLines &&
+              css`
+                ${StyledComLine} {
+                  counter-increment: com-line;
+
+                  &::before {
+                    content: counter(com-line) '_';
+                    opacity: 0.7;
+                  }
+                }
+              `}
             }
           `;
         });
