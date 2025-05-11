@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import('../front/components/apps/bible/translations/search/input-panel/address/hooks/transformers')
+import('../front/components/apps/bible/translations/search/input-panel/address/hooks/transformers');
 
 namespace Nb09d67b661fb57bb15ee68ed2e7d8d57_1 {
   type $0 = `${$bookn}${''|`${string}${string}`}${$2 | ''}`;

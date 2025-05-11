@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import('../front/components/apps/cm/col/com/complect/comment-parser/Cleans')
+import('../front/components/apps/cm/col/com/complect/comment-parser/Cleans');
 
 namespace N6919875af70bbcb2cef09ae314751706_1 {
   type $0 = `${$before}${$beforeSpaces}${$hashes}${$blockHashPosition}${$associations | ''}${''|` ${string}`}${$info | ''}${$beforeCommentSpaces}${$comment}${U1}`;

@@ -1,39 +1,48 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import('../shared/utils/cm/ComUtils')
+import('../shared/utils/cm/ComUtils');
 
 namespace N65bd67bbcbd7186a7d10a038bb18fd15_1 {
-  type $0 = `${''|`.${string}`}${`-` | ''}${$1}${$2}${$bassChord | ''}${$14 | ''}`;
+  type $0 = string; // `${''|`.${string}`}${`-` | ''}${$1}${$2}${$7 | ''}${$bassChord | ''}${$16 | ''}`;
   type $1 = `${string}${`#` | ''}` | string;
   type $2 = `+` | `11` | $3;
   type $3 = `${$4 | ''}${$5 | ''}`;
   type $4 = `m` | `min` | `${`7` | ''}sus` | `maj` | `dim` | `add`;
   type $5 = `${number}${$6 | ''}`;
   type $6 = `/${number}`;
-  type $bassChord = `/${$8}${$9}`;
-  type $8 = $1;
-  type $9 = `+` | `11` | $10;
-  type $10 = `${$11 | ''}${$12 | ''}`;
-  type $11 = $4;
-  type $12 = `${number}${$13 | ''}`;
-  type $13 = $6;
-  type $14 = `${$dotSeparations}${$16}${$17}${$22 | ''}`;
+  type $7 = `${string}${U1}`;
+  type $bassChord = `/${$9}${$10}${$15 | ''}`;
+  type $9 = $1;
+  type $10 = `+` | `11` | $11;
+  type $11 = `${$12 | ''}${$13 | ''}`;
+  type $12 = $4;
+  type $13 = `${number}${$14 | ''}`;
+  type $14 = $6;
+  type $15 = `${string}${U2}`;
+  type $16 = `${$dotSeparations}${$18}${$19}${$24 | ''}${$25 | ''}`;
   type $dotSeparations = `.${string}` | `-` | `.${string}-`;
-  type $16 = $1;
-  type $17 = `+` | `11` | $18;
-  type $18 = `${$19 | ''}${$20 | ''}`;
-  type $19 = $4;
-  type $20 = `${number}${$21 | ''}`;
-  type $21 = $6;
-  type $22 = `/${$23}${$24}`;
-  type $23 = $1;
-  type $24 = `+` | `11` | $25;
-  type $25 = `${$26 | ''}${$27 | ''}`;
-  type $26 = $4;
-  type $27 = `${number}${$28 | ''}`;
-  type $28 = $6;
+  type $18 = $1;
+  type $19 = `+` | `11` | $20;
+  type $20 = `${$21 | ''}${$22 | ''}`;
+  type $21 = $4;
+  type $22 = `${number}${$23 | ''}`;
+  type $23 = $6;
+  type $24 = `${string}${U3}`;
+  type $25 = `/${$26}${$27}${$32 | ''}`;
+  type $26 = $1;
+  type $27 = `+` | `11` | $28;
+  type $28 = `${$29 | ''}${$30 | ''}`;
+  type $29 = $4;
+  type $30 = `${number}${$31 | ''}`;
+  type $31 = $6;
+  type $32 = `${string}${U4}`;
+  
+  type U1 = `5` | `7` | `9` | `11` | `13`;
+  type U2 = `5` | `7` | `9` | `11` | `13`;
+  type U3 = `5` | `7` | `9` | `11` | `13`;
+  type U4 = `5` | `7` | `9` | `11` | `13`;
 
   export interface I extends Record<
-    `/^\\.*-?([ACDFG]#?|[EH])(\\+|11|((m|min|7?sus|maj|dim|add)?(\\d(/\\d)?)?))(?<bassChord>/([ACDFG]#?|[EH])(\\+|11|((m|min|7?sus|maj|dim|add)?(\\d(/\\d)?)?)))?((?<dotSeparations>\\.+|-|\\.+-)([ACDFG]#?|[EH])(\\+|11|((m|min|7?sus|maj|dim|add)?(\\d(/\\d)?)?))(/([ACDFG]#?|[EH])(\\+|11|((m|min|7?sus|maj|dim|add)?(\\d(/\\d)?)?)))?)*$/`,
+    `/^\\.*-?([ACDFG]#?|[EH])(\\+|11|((m|min|7?sus|maj|dim|add)?(\\d{1,2}(/\\d{1,2})?)?))([#b](?:5|7|9|11|13))*(?<bassChord>/([ACDFG]#?|[EH])(\\+|11|((m|min|7?sus|maj|dim|add)?(\\d{1,2}(/\\d{1,2})?)?))([#b](?:5|7|9|11|13))*)?((?<dotSeparations>\\.+|-|\\.+-)([ACDFG]#?|[EH])(\\+|11|((m|min|7?sus|maj|dim|add)?(\\d{1,2}(/\\d{1,2})?)?))([#b](?:5|7|9|11|13))*(/([ACDFG]#?|[EH])(\\+|11|((m|min|7?sus|maj|dim|add)?(\\d{1,2}(/\\d{1,2})?)?))([#b](?:5|7|9|11|13))*)?)*$/`,
     {
       $0: $0;
       $1: $1;
@@ -42,17 +51,17 @@ namespace N65bd67bbcbd7186a7d10a038bb18fd15_1 {
       $4?: $4;
       $5?: $5;
       $6?: $6;
+      $7?: $7;
       bassChord?: $bassChord;
-      $8?: $8;
       $9?: $9;
       $10?: $10;
       $11?: $11;
       $12?: $12;
       $13?: $13;
       $14?: $14;
-      dotSeparations?: $dotSeparations;
+      $15?: $15;
       $16?: $16;
-      $17?: $17;
+      dotSeparations?: $dotSeparations;
       $18?: $18;
       $19?: $19;
       $20?: $20;
@@ -63,29 +72,38 @@ namespace N65bd67bbcbd7186a7d10a038bb18fd15_1 {
       $25?: $25;
       $26?: $26;
       $27?: $27;
-      $28?: $28
+      $28?: $28;
+      $29?: $29;
+      $30?: $30;
+      $31?: $31;
+      $32?: $32
     }
   > { '': '' }
 }
 
 namespace N65bd67bbcbd7186a7d10a038bb18fd15_2 {
-  type $0 = `${$1}${$2}${$7 | ''}`;
+  type $0 = `${$1}${$2}${$7 | ''}${$8 | ''}`;
   type $1 = `${string}${`#` | ''}` | string;
   type $2 = `+` | `11` | $3;
   type $3 = `${$4 | ''}${$5 | ''}`;
   type $4 = `m` | `min` | `${`7` | ''}sus` | `maj` | `dim` | `add`;
   type $5 = `${number}${$6 | ''}`;
   type $6 = `/${number}`;
-  type $7 = `/${$8}${$9}`;
-  type $8 = $1;
-  type $9 = `+` | `11` | $10;
-  type $10 = `${$11 | ''}${$12 | ''}`;
-  type $11 = $4;
-  type $12 = `${number}${$13 | ''}`;
-  type $13 = $6;
+  type $7 = `${string}${U1}`;
+  type $8 = `/${$9}${$10}${$15 | ''}`;
+  type $9 = $1;
+  type $10 = `+` | `11` | $11;
+  type $11 = `${$12 | ''}${$13 | ''}`;
+  type $12 = $4;
+  type $13 = `${number}${$14 | ''}`;
+  type $14 = $6;
+  type $15 = `${string}${U2}`;
+  
+  type U1 = `5` | `7` | `9` | `11` | `13`;
+  type U2 = `5` | `7` | `9` | `11` | `13`;
 
   export interface I extends Record<
-    `/^([ACDFG]#?|[EH])(\\+|11|((m|min|7?sus|maj|dim|add)?(\\d(/\\d)?)?))(/([ACDFG]#?|[EH])(\\+|11|((m|min|7?sus|maj|dim|add)?(\\d(/\\d)?)?)))?$/`,
+    `/^([ACDFG]#?|[EH])(\\+|11|((m|min|7?sus|maj|dim|add)?(\\d{1,2}(/\\d{1,2})?)?))([#b](?:5|7|9|11|13))*(/([ACDFG]#?|[EH])(\\+|11|((m|min|7?sus|maj|dim|add)?(\\d{1,2}(/\\d{1,2})?)?))([#b](?:5|7|9|11|13))*)?$/`,
     {
       $0: $0;
       $1: $1;
@@ -100,7 +118,9 @@ namespace N65bd67bbcbd7186a7d10a038bb18fd15_2 {
       $10?: $10;
       $11?: $11;
       $12?: $12;
-      $13?: $13
+      $13?: $13;
+      $14?: $14;
+      $15?: $15
     }
   > { '': '' }
 }

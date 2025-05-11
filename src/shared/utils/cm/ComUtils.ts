@@ -4,7 +4,8 @@ import { IIncorrect, IIncorrects } from 'shared/model/cm/Incorrects';
 import { smylib, SMyLib } from '../SMyLib';
 import { itTrim } from '../utils';
 
-const chordLikeStr = `([ACDFG]#?|[EH])(\\+|11|((m|min|7?sus|maj|dim|add)?(\\d(/\\d)?)?))` as const;
+const chordLikeStr =
+  `([ACDFG]#?|[EH])(\\+|11|((m|min|7?sus|maj|dim|add)?(\\d{1,2}(/\\d{1,2})?)?))([#b](?:5|7|9|11|13))*` as const;
 
 export class CmComUtils {
   static doubleQuotesStr = '«»„„“”«»“' as const;
@@ -20,6 +21,8 @@ export class CmComUtils {
   static displayableTextBlockCharsStr = `${this.displayableTextBlockSymbolsStr}${this.slavicLowerLettersStr}`;
 
   static textedChordReg = makeNamedRegExp(
+    // regexpert:
+    // stringify $0
     `/^\\.*-?${chordLikeStr}(?<bassChord>/${chordLikeStr})?((?<dotSeparations>\\.+|-|\\.+-)${chordLikeStr}(/${chordLikeStr})?)*$/`,
   ).regExp;
   static correctChordNameReg = makeNamedRegExp(`/^${chordLikeStr}(/${chordLikeStr})?$/`).regExp;
