@@ -1,21 +1,22 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-namespace */
 import('../front/components/apps/cm/col/com/complect/comment-parser/Cleans');
 
 namespace N6919875af70bbcb2cef09ae314751706_1 {
-  type $0 = `${$before}${$beforeSpaces}${$hashes}${$blockHashPosition}${$associations | ''}${''|` ${string}`}${$info | ''}${$beforeCommentSpaces}${$comment}${U1}`;
+  type $0 = `${$before}${$beforeSpaces}${$hashes}${$blockHashPosition}${$associations | ''}${OptRepeatingString<` `>}${$info | ''}${$beforeCommentSpaces}${$comment}${U1}`;
   type $before = `` | `\n`;
-  type $beforeSpaces = `${''|` ${string}`}`;
+  type $beforeSpaces = `${OptRepeatingString<` `>}`;
   type $hashes = `#${string}`;
   type $blockHashPosition = string;
   type $associations = `${`_` | ''}${$secretWidStr}${$modificators}`;
-  type $secretWidStr = `${''|`${string}${string}`}`;
+  type $secretWidStr = OptRepeatingString<string>;
   type $modificators = `${`!` | ''}`;
   type $info = `[${$blockHeader}]`;
-  type $blockHeader = `${string}${string}`;
+  type $blockHeader = RepeatingString<string>;
   type $beforeCommentSpaces = $beforeSpaces;
-  type $comment = `${string}${string}`;
+  type $comment = RepeatingString<string>;
   
-  type U1 = ''; // `\n${''|` ${string}`}#` | ``;
+  type U1 = LookaheadAssertion<`\n${OptRepeatingString<` `>}#` | ``>;
 
   export interface I extends Record<
     `/(?<before>^|\\n)(?<beforeSpaces> *)(?<hashes>#{1,2})(?<blockHashPosition>${string})(?<associations>_?(?<secretWidStr>[${string}]*)(?<modificators>!?))? *(?<info>\\[(?<blockHeader>.+?)\\])?(?<beforeCommentSpaces> *)(?<comment>[\\w\\W]+?)(?=\\n *#|$)/g`,
@@ -37,15 +38,15 @@ namespace N6919875af70bbcb2cef09ae314751706_1 {
 }
 
 namespace N6919875af70bbcb2cef09ae314751706_2 {
-  type $0 = `${$translate}:${$book}${''|` ${string}`}${$chapter}:${$verseDiapason}`;
+  type $0 = `${$translate}:${$book}${OptRepeatingString<` `>}${$chapter}:${$verseDiapason}`;
   type $translate = string;
   type $book = `${$bookPrefix | ''}${$bookTitle}`;
-  type $bookPrefix = `${$bookNumberWithSuffix}${''|` ${string}`}`;
+  type $bookPrefix = `${$bookNumberWithSuffix}${OptRepeatingString<` `>}`;
   type $bookNumberWithSuffix = `${$bookNumber}${`-` | ''}${$bookNumberSuffix}` | $bookTitleFrom;
   type $bookNumber = `${number}`;
-  type $bookNumberSuffix = `${string | ''}`;
+  type $bookNumberSuffix = string | '';
   type $bookTitleFrom = `От`;
-  type $bookTitle = `${string}${string}`;
+  type $bookTitle = RepeatingString<string>;
   type $chapter = `${number}`;
   type $verseDiapason = `${$verseFrom}${$verseTail | ''}`;
   type $verseFrom = `${number}`;
@@ -54,7 +55,7 @@ namespace N6919875af70bbcb2cef09ae314751706_2 {
 
   export interface I extends Record<
     `/(?<translate>${string}):(?<book>(?<bookPrefix>(?<bookNumberWithSuffix>(?<bookNumber>\\d{1,3})-?(?<bookNumberSuffix>[яе]?)|(?<bookTitleFrom>От)) *)?(?<bookTitle>[а-яё]+))+ *(?<chapter>\\d{1,3}):(?<verseDiapason>(?<verseFrom>\\d{1,3})(?<verseTail>-(?<verseTo>\\d{1,3}))?)/gi`,
-    {
+    IgnoreCaseRecord<{
       $0: $0;
       translate: $translate;
       book: $book;
@@ -69,7 +70,7 @@ namespace N6919875af70bbcb2cef09ae314751706_2 {
       verseFrom: $verseFrom;
       verseTail?: $verseTail;
       verseTo?: $verseTo
-    }
+    }>
   > { '': '' }
 }
 

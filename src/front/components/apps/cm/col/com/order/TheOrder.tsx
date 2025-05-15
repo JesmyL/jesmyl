@@ -1,3 +1,5 @@
+import { cmChordHardLevelAtom } from '$cm/atoms';
+import { useAtomValue } from 'atomaric';
 import React from 'react';
 import { makeRegExp } from 'regexpert';
 import { ChordVisibleVariant } from '../../../Cm.model';
@@ -21,6 +23,7 @@ interface Props {
 
 export function TheOrder(props: Props) {
   const orderUnit = props.orderUnit;
+  const chordHardLevel = useAtomValue(cmChordHardLevelAtom);
 
   if (
     (props.isMiniAnchor && (orderUnit.me.isAnchorInherit || orderUnit.me.isAnchorInheritPlus)) ||
@@ -117,7 +120,10 @@ export function TheOrder(props: Props) {
             className="styled-block chords-block vertical-middle"
             {...styleAttributes}
           >
-            {com.chordLabels[orderUniti].map(line => line.join(' ')).join('\n')}
+            {com.chordLabels[orderUniti]
+              .map((_, linei) => props.orderUnit.lineChordLabels(chordHardLevel, linei, props.orderUniti))
+              .map(line => line.join(' '))
+              .join('\n')}
           </div>
         )}
       </div>

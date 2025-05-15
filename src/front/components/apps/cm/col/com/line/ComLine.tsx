@@ -1,3 +1,5 @@
+import { cmChordHardLevelAtom } from '$cm/atoms';
+import { useAtomValue } from 'atomaric';
 import React, { ReactNode } from 'react';
 import { makeRegExp } from 'regexpert';
 import { IComLineProps } from '../order/Order.model';
@@ -5,6 +7,7 @@ import { StyledComLine } from './StyledComLine';
 
 export function ComLine(props: IComLineProps) {
   const className = `composition-line line-num-${props.textLinei}`;
+  const chordHardLevel = useAtomValue(cmChordHardLevelAtom);
 
   if (!props.chordedOrd)
     return (
@@ -35,8 +38,7 @@ export function ComLine(props: IComLineProps) {
   let chordIndex = 0;
   let points = vowelPositions;
 
-  const chordsLabels =
-    (props.orderUnit.chordLabels ?? props.com.chordLabels[props.orderUniti])?.[props.textLinei] ?? [];
+  const chordsLabels = props.orderUnit.lineChordLabels(chordHardLevel, props.textLinei, props.orderUniti);
   const linePositions = props.positions ?? props.orderUnit.positions?.[props.textLinei] ?? [];
 
   if (props.isJoinLetters !== false)

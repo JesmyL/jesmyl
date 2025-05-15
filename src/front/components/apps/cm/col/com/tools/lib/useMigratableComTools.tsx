@@ -6,6 +6,7 @@ import React from 'react';
 import { MigratableComToolName } from 'shared/api';
 import styled, { css } from 'styled-components';
 import { CmCatsBindsComTool } from '../ui/CatsBindsComTool';
+import { ChordHardLevelComTool } from '../ui/ChordHardLevelComTool';
 import { ChordImagesComTool } from '../ui/ChordImagesComTool';
 import { ChordsVariantComTool } from '../ui/ChordsVariantComTool';
 import { ComCommentComTool } from '../ui/ComCommentComTool';
@@ -71,6 +72,7 @@ const toolsDict: Record<MigratableComToolName, React.ReactNode> = {
   'cats-binds': <CmCatsBindsComTool />,
   'com-comment': <ComCommentComTool />,
   'copy-com': <ComCopyTextTool />,
+  'chord-hard-level': <ChordHardLevelComTool />,
 
   'edit-com': <RedactComTool />,
 };

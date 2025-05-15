@@ -31,6 +31,10 @@ import { iconPackOfAttachment02 } from './icons/attachment-02';
 import { iconPackOfAuthorized } from './icons/authorized';
 import { iconPackOfBasketball01 } from './icons/basketball-01';
 import { iconPackOfBasketballHoop } from './icons/basketball-hoop';
+import { iconPackOfBatteryFull } from './icons/battery-full';
+import { iconPackOfBatteryLow } from './icons/battery-low';
+import { iconPackOfBatteryMedium01 } from './icons/battery-medium-01';
+import { iconPackOfBatteryMedium02 } from './icons/battery-medium-02';
 import { iconPackOfBook02 } from './icons/book-02';
 import { iconPackOfBookDownload } from './icons/book-download';
 import { iconPackOfBookOpen01 } from './icons/book-open-01';
@@ -232,6 +236,10 @@ export const theIconKnownPack: Record<TheIconKnownName, TheIconSelfPack> = {
   Alert02: iconPackOfAlert02,
   Alien02: iconPackOfAlien02,
   TwoFinger05: iconPackOfTwoFinger05,
+  BatteryLow: iconPackOfBatteryLow,
+  BatteryFull: iconPackOfBatteryFull,
+  BatteryMedium01: iconPackOfBatteryMedium01,
+  BatteryMedium02: iconPackOfBatteryMedium02,
   TradeUp: iconPackOfTradeUp,
   Diameter: iconPackOfDiameter,
   CircleArrowRight02: iconPackOfCircleArrowRight02,

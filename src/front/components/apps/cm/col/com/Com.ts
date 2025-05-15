@@ -278,7 +278,6 @@ export class Com extends BaseNamed<IExportableCom> {
     this._chordLabels = [];
     this._usedChords = {};
     let currTransPosition = this.transPosition;
-    let firstChord: string = '';
 
     this.orders?.forEach(ord => {
       const ordLabels: string[][] = [];
@@ -298,7 +297,6 @@ export class Com extends BaseNamed<IExportableCom> {
             .split(makeRegExp('/[^#A-Z/0-9]+/i'))
             .forEach(chord => this._usedChords && (this._usedChords[chord.replace(makeRegExp('/B/'), 'A#')] = chord));
           lineLabels.push(chordSchema);
-          if (!firstChord) firstChord = chordSchema;
         });
       });
     });

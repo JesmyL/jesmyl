@@ -1,11 +1,15 @@
-import { makeNamedRegExp, makeRegExp } from 'regexpert';
+import { escapeRegExpNames, makeNamedRegExp, makeRegExp } from 'regexpert';
 import { EeStorePack } from 'shared/api';
 import { IIncorrect, IIncorrects } from 'shared/model/cm/Incorrects';
 import { smylib, SMyLib } from '../SMyLib';
 import { itTrim } from '../utils';
 
-const chordLikeStr =
-  `([ACDFG]#?|[EH])(\\+|11|((m|min|7?sus|maj|dim|add)?(\\d{1,2}(/\\d{1,2})?)?))([#b](?:5|7|9|11|13))*` as const;
+const hardModificators = `(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))` as const;
+const lightModificators = `(?<lightModificators>\\+|(?:(?:min|7?sus|maj|dim|add)?(?:\\d{1,2}(?:/\\d{1,2})?)?))`;
+const chordLeadLetter = `[ACDFG]#?|[EH]`;
+const chordLikeStr = `(?<simpleChord>(?:${chordLeadLetter})m?)${lightModificators}${hardModificators}?` as const;
+const chordInterpretedLikeStr =
+  `(?<simpleChord>(?:${chordLeadLetter}|B)m?)${lightModificators}${hardModificators}?` as const;
 
 export class CmComUtils {
   static doubleQuotesStr = '«»„„“”«»“' as const;
@@ -20,12 +24,30 @@ export class CmComUtils {
   static displayableTextBlockSymbolsStr = `-.!\\s${this.displayableTextBlockSingleWritedSymbolsStr}` as const;
   static displayableTextBlockCharsStr = `${this.displayableTextBlockSymbolsStr}${this.slavicLowerLettersStr}`;
 
-  static textedChordReg = makeNamedRegExp(
+  static textedChordRegs = makeNamedRegExp(
+    // regexpert:
+    // stringify $0 U23
+    `/^\\.*-?${chordLikeStr}(?<bassChord>/${
+      //
+      escapeRegExpNames(chordLikeStr, '_bass')
+    })?(?<repeats>(?:(?:\\.+|-|\\.+-)${
+      //
+      escapeRegExpNames(chordLikeStr, '_lastRepeat')
+    }(?:/${
+      //
+      escapeRegExpNames(chordLikeStr, `_lastRepeatBass`)
+    })?)*)$/`,
+  );
+  static correctChordRegs = makeNamedRegExp(
     // regexpert:
     // stringify $0
-    `/^\\.*-?${chordLikeStr}(?<bassChord>/${chordLikeStr})?((?<dotSeparations>\\.+|-|\\.+-)${chordLikeStr}(/${chordLikeStr})?)*$/`,
-  ).regExp;
-  static correctChordNameReg = makeNamedRegExp(`/^${chordLikeStr}(/${chordLikeStr})?$/`).regExp;
+    `/^${chordLikeStr}(?:/${escapeRegExpNames(chordLikeStr, '_bass')})?$/`,
+  );
+  static chordInterpretedRegs = makeNamedRegExp(
+    // regexpert:
+    // stringify $0
+    `/^${chordInterpretedLikeStr}(?:/${escapeRegExpNames(chordInterpretedLikeStr, '_bass')})?$/`,
+  );
   static checkIsChordLineReg = makeRegExp('/^[-+A-Ha-z# /\\d]+$/');
   static correctNotSlavicNameReg_i = makeRegExp(`/([^${this.slavicLowerLettersStr} !?]+\\s*)+$/i`);
 
@@ -227,7 +249,7 @@ export class CmComUtils {
       .trim()
       .split(makeRegExp('/([\\n\\s ]+)/'))
       .map(chord => {
-        if (chord.trim() && !chord.match(this.textedChordReg)) {
+        if (chord.trim() && !chord.match(this.textedChordRegs.regExp)) {
           incorrectChords.push(chord);
           return `[${chord}]`;
         }

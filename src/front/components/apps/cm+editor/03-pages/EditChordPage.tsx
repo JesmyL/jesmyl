@@ -46,7 +46,7 @@ export const EditChordPage = () => {
   useEffect(() => {
     setNewNameError(
       isNewChord
-        ? CmComUtils.correctChordNameReg.exec(newChordName)
+        ? CmComUtils.correctChordRegs.regExp.exec(newChordName)
           ? chords[newChordName] || redactableChords[newChordName]
             ? 'Такой аккорд существует'
             : ''

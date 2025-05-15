@@ -211,10 +211,31 @@ export class Order extends SourceBased<IExportableOrder> {
     return !!(this.text && this.isVisible);
   }
 
-  openText() {
-    if (!this.isRealText()) return '';
+  lineChordLabels(chordHardLevel: 2 | 1 | 3, specialLinei: number, specialOrdi: number) {
+    let chordsLabels = (this.chordLabels ?? this.com.chordLabels[specialOrdi])?.[specialLinei] ?? [];
 
-    return this.text;
+    if (chordHardLevel < 3) {
+      chordsLabels = chordsLabels.map(chord => {
+        const chordsList = chord.split(makeRegExp('/( |\\.+)/'));
+
+        if (chordsList === null) return chord;
+
+        return chordsList
+          .map(chord => {
+            return chord.replace(CmComUtils.chordInterpretedRegs.regExp, (...args) => {
+              const chips = CmComUtils.chordInterpretedRegs.transform(args);
+
+              if (chordHardLevel === 1)
+                return `${chips.simpleChord}${chips.simpleChord_bass ? '/' : ''}${chips.simpleChord_bass ?? ''}`;
+
+              return `${chips.simpleChord}${chips.lightModificators}${chips.simpleChord_bass ? '/' : ''}${chips.simpleChord_bass ?? ''}${chips.lightModificators_bass ?? ''}`;
+            });
+          })
+          .join('');
+      });
+    }
+
+    return chordsLabels;
   }
 
   setRegions = <Ord extends Order>() =>

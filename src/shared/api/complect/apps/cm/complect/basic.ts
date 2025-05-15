@@ -123,4 +123,5 @@ export type MenuComToolNameList =
   | 'qr-share'
   | 'com-comment'
   | 'copy-com'
+  | 'chord-hard-level'
   | 'cats-binds';
