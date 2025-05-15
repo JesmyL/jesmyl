@@ -26,6 +26,58 @@ export const escapeText = (text: string) =>
     }
   });
 
+export const transcriptEnToRuDict = {
+  q: 'й',
+  w: 'ц',
+  e: 'у',
+  r: 'к',
+  t: 'е',
+  y: 'н',
+  u: 'г',
+  i: 'ш',
+  o: 'щ',
+  p: 'з',
+  '[': 'х',
+  '{': 'х',
+  ']': 'ъ',
+  '}': 'ъ',
+  a: 'ф',
+  s: 'ы',
+  d: 'в',
+  f: 'а',
+  g: 'п',
+  h: 'р',
+  j: 'о',
+  k: 'л',
+  l: 'д',
+  ';': 'ж',
+  ':': 'ж',
+  "'": 'э',
+  '"': 'э',
+  z: 'я',
+  x: 'ч',
+  c: 'с',
+  v: 'м',
+  b: 'и',
+  n: 'т',
+  m: 'ь',
+  ',': 'б',
+  '<': 'б',
+  '.': 'ю',
+  '>': 'ю',
+};
+
+export const transcriptEnToRuText = (text: string) => {
+  let transcriptedText = '';
+  text = text.toLowerCase();
+
+  for (const letter of text) {
+    transcriptedText += transcriptEnToRuDict[letter as 'a'] ?? letter;
+  }
+
+  return transcriptedText;
+};
+
 /////////////////////////////////////
 /////////////////////////////////////
 /////////////////////////////////////

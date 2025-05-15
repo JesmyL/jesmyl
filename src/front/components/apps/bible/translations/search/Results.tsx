@@ -7,7 +7,7 @@ import { BibleBooki, BibleChapteri, BibleTranslationSingleAddress, BibleVersei }
 import { useAtomValue } from 'atomaric';
 import { JSX, useCallback, useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
-import { emptyArray } from 'shared/utils';
+import { emptyArray, transcriptEnToRuText } from 'shared/utils';
 import styled from 'styled-components';
 import { bibleSearchTermAtom, bibleSearchZoneAtom } from './atoms';
 import { useBibleTranslationSearchResultList, useBibleTranslationSearchResultSelectedValue } from './hooks/results';
@@ -48,11 +48,13 @@ export function BibleSearchResults({ inputRef, height = '100px', innerZone, onCl
 
   useEffect(() => {
     if (lowerChapters === undefined || searchTerm.trim().length < 3) return;
-    const freeTerm = searchTerm.trim().replace(makeRegExp('/[^а-яё ]/gi'), '');
+    const freeTerm = searchTerm.trim();
     if (freeTerm.length < 3) return;
 
     const lowerTerm = freeTerm.trim().toLowerCase();
+    const transcriptedWords = transcriptEnToRuText(lowerTerm).split(makeRegExp('/ +/'));
     const lowerWords = lowerTerm.split(makeRegExp('/ +/'));
+
     const founds = Array(lowerWords.length).fill(0).map(mapRetArrFunc);
     const splitReg = getSplitReg(lowerWords);
     const lastFounds = founds[founds.length - 1];
@@ -62,8 +64,9 @@ export function BibleSearchResults({ inputRef, height = '100px', innerZone, onCl
         const verse = chapter[versei];
         let foundWordsCount = -1;
 
-        for (const lowerWord of lowerWords) {
-          if (verse.includes(lowerWord)) foundWordsCount++;
+        for (const lowerWordi in lowerWords) {
+          if (verse.includes(lowerWords[lowerWordi]) || verse.includes(transcriptedWords[lowerWordi]))
+            foundWordsCount++;
         }
 
         if (foundWordsCount > -1) {

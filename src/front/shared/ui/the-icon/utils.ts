@@ -10,5 +10,6 @@ export const theIconNamePostfixList = {
   SolidSharp: 7,
 } as const;
 
-export const takeIconFromKnownPack = (icon: TheIconKnownName, kind: TheIconNameKind = 'StrokeRounded') =>
-  theIconKnownPack[icon][theIconNamePostfixList[kind]];
+export const takeIconFromKnownPack = (icon: TheIconKnownName, kind: TheIconNameKind = 'StrokeRounded') => {
+  return theIconKnownPack[icon]?.[theIconNamePostfixList[kind]];
+};

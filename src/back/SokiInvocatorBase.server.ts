@@ -8,7 +8,7 @@ import { jesmylChangesBot } from './sides/telegram-bot/control/jesmylChangesBot'
 import { tglogger } from './sides/telegram-bot/log/log-bot';
 import { userAuthStringified, userVisitStringified } from './utils';
 
-export type SokiServerInvocatorTool = { client: WebSocket; auth: LocalSokiAuth | und; visit: SokiVisit | und };
+export type SokiServerInvocatorTool = { client: WebSocket; auth: LocalSokiAuth | und; visitInfo: SokiVisit | und };
 export type SokiServerBeforeEachTool = { minVersion?: number; minLevel?: number };
 
 export const SokiInvocatorBaseServer = makeSokiInvocatorBase<
@@ -17,9 +17,9 @@ export const SokiInvocatorBaseServer = makeSokiInvocatorBase<
   SokiServerBeforeEachTool
 >({
   eventerValue: onSokiServerEventerInvocatorInvoke,
-  onErrorMessage: ({ errorMessage, invoke: { method, scope }, tool: { auth, visit } }) => {
+  onErrorMessage: ({ errorMessage, invoke: { method, scope }, tool: { auth, visitInfo } }) => {
     tglogger.userErrors(
-      `${scope}.${method}()\n\n${errorMessage}\n\n${userAuthStringified(auth)}\n\n${userVisitStringified(visit)}`,
+      `${scope}.${method}()\n\n${errorMessage}\n\n${userAuthStringified(auth)}\n\n${userVisitStringified(visitInfo)}`,
     );
   },
   feedbackOnEach: backConfig.isTest
@@ -42,7 +42,7 @@ export const SokiInvocatorBaseServer = makeSokiInvocatorBase<
         );
       },
   beforeEach: async ({ invoke: { method }, tool, beforeEachTools, defaultBeforeEachTool }) => {
-    const userVersion = tool.visit?.version ?? 0;
+    const userVersion = tool.visitInfo?.version ?? 0;
     const beforeTool = beforeEachTools?.[method] ?? defaultBeforeEachTool;
 
     if (beforeTool === undefined) {

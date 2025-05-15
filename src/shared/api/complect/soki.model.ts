@@ -32,7 +32,7 @@ export type InvocatorServerEvent = InvocatorBaseEvent & {
 
 export type InvocatorClientEvent = InvocatorBaseEvent & {
   token?: string | nil;
-  visit?: SokiVisit;
+  visitInfo?: SokiVisit;
   ping?: 1;
 };
 

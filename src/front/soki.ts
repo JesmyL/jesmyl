@@ -46,7 +46,7 @@ export class SokiTrip {
 
       await this.send({
         token: await authIDB.get.token(),
-        visit: {
+        visitInfo: {
           deviceId: await indexIDB.get.deviceId(),
           version: jversion.num,
           urls: this.urls.length ? this.urls : [this.getCurrentUrl()],

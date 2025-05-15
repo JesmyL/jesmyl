@@ -59,11 +59,11 @@ export class SokiServer {
           if (event.token === null) {
             this.send({ requestId: event.requestId }, client);
 
-            if (event.visit !== undefined) {
-              this.visits.set(client, event.visit);
+            if (event.visitInfo !== undefined) {
+              this.visits.set(client, event.visitInfo);
 
-              if (!this.isLocalhost(event.visit.urls[0]))
-                tglogger.visit(`Не авторизованный\n\n${userVisitStringified(event.visit)}\n\n`);
+              if (!this.isLocalhost(event.visitInfo.urls[0]))
+                tglogger.visit(`Не авторизованный\n\n${userVisitStringified(event.visitInfo)}\n\n`);
             }
 
             return;
@@ -80,11 +80,11 @@ export class SokiServer {
 
           const auth = jwt.decode(event.token) as LocalSokiAuth;
 
-          if (event.visit !== undefined) {
-            this.visits.set(client, event.visit);
+          if (event.visitInfo !== undefined) {
+            this.visits.set(client, event.visitInfo);
 
-            if (!this.isLocalhost(event.visit.urls[0]))
-              tglogger.visit(`${userAuthStringified(auth)}\n\n${userVisitStringified(event.visit)}\n\n`);
+            if (!this.isLocalhost(event.visitInfo.urls[0]))
+              tglogger.visit(`${userAuthStringified(auth)}\n\n${userVisitStringified(event.visitInfo)}\n\n`);
           }
 
           if (auth) {
@@ -101,12 +101,12 @@ export class SokiServer {
         }
 
         const auth = this.auths.get(client);
-        const visit = this.visits.get(client);
+        const visitInfo = this.visits.get(client);
 
         if (event.errorMessage !== undefined) {
-          if (!this.isLocalhost(visit?.urls[0]))
+          if (!this.isLocalhost(visitInfo?.urls[0]))
             tglogger.userErrors(
-              `${event.errorMessage}\n\n${userAuthStringified(auth)}\n\n${userVisitStringified(visit)}`,
+              `${event.errorMessage}\n\n${userAuthStringified(auth)}\n\n${userVisitStringified(visitInfo)}`,
             );
         }
 
@@ -115,7 +115,7 @@ export class SokiServer {
         onSokiServerEventerInvocatorInvoke.invoke({
           invoke: event.invoke,
           sendResponse: this.sendInvokeEvent,
-          tool: { client, auth, visit },
+          tool: { client, auth, visitInfo },
           requestId: event.requestId,
         });
       });

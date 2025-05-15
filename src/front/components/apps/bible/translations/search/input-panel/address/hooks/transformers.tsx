@@ -7,10 +7,10 @@ import { useBibleBookList } from '$bible/basis/lib/hooks/texts';
 import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/basis/model/base';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { makeNamedRegExp, makeRegExp } from 'regexpert';
-import { emptyFunc } from 'shared/utils';
+import { emptyFunc, transcriptEnToRuText } from 'shared/utils';
 
 const { regExp: addressReg, transform: makePropsFromAddressArgs } = makeNamedRegExp(
-  `/(?<bookn>\\d?\\s*[а-яё]+)\\s*((?<chapterStr>\\d{1,3})((:|\\s+)(?<verseStr>\\d{1,3})(\\s*(?<verseSeparator>[-,]?)\\s*)(?<finishVerseStr>\\d{1,3})?)?)?/i`,
+  `/(?<bookn>\\d?\\s*[а-яё]+)\\s*((?<chapterStr>\\d{1,3})((:|\\s+)(?<verseStr>\\d{1,3})(\\s*(?<verseSeparator>[-,]?)\\s*)(?<finishVerseStr>\\d{1,3})?)?)?/`,
 );
 
 const disable = false;
@@ -42,14 +42,14 @@ export const useBibleTransformAddressTermToAddress = (
   useEffect(() => {
     if (chapters === undefined || term.length < 1) return;
 
-    const match = term.match(addressReg);
+    const match = term.toLowerCase().match(addressReg) ?? transcriptEnToRuText(term).match(addressReg);
 
     if (match === null) return;
 
     const { bookn, chapterStr, verseStr, verseSeparator, finishVerseStr } = makePropsFromAddressArgs(match);
 
     const chapterNumberi = chapterStr === undefined ? 0 : ((+chapterStr - 1) as BibleChapteri);
-    const verseNumber = (verseStr === undefined ? 1 : (+verseStr as BibleVersei)) || 1;
+    let verseNumber = (verseStr === undefined ? 1 : (+verseStr as BibleVersei)) || 1;
     const finishVerseNumber = finishVerseStr === undefined ? undefined : +finishVerseStr;
 
     let booki = BibleBooki.none;
@@ -112,9 +112,7 @@ export const useBibleTransformAddressTermToAddress = (
         verseNode = <span className="color--ko">{verseNumber}</span>;
         if (finishVerseNumber !== undefined) finishVerseNode = <span className="color--ko">{finishVerseNumber}</span>;
 
-        onEnterPressRef.current = emptyFunc;
-
-        break;
+        verseNumber = 1;
       }
 
       onEnterPressRef.current = () => {
@@ -122,13 +120,15 @@ export const useBibleTransformAddressTermToAddress = (
           setAddressIndexes(booki, chapterNumberi, verseNumber - 1);
           bibleIDB.set.joinAddress(null);
         } else {
+          const arrLen = finishVerseNumber - verseNumber + 1;
+
           setAddressIndexes(booki, chapterNumberi, finishVerseNumber - 1);
           bibleIDB.set.joinAddress({
             [booki]: {
               [chapterNumberi]:
                 verseSeparator?.trim() === ','
                   ? [verseNumber - 1, finishVerseNumber - 1]
-                  : Array(finishVerseNumber - verseNumber + 1)
+                  : Array(arrLen < 0 ? 0 : arrLen)
                       .fill(0)
                       .map((_, i) => i + verseNumber - 1),
             },
@@ -150,7 +150,7 @@ export const useBibleTransformAddressTermToAddress = (
     );
 
     setAddress(address);
-  }, [books, chapters, setAddressIndexes, setAddress, term]);
+  }, [books, chapters, setAddressIndexes, term]);
 
   return address;
 };

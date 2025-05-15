@@ -1,14 +1,14 @@
 import { LocalSokiAuth, SokiVisit } from 'shared/api';
 import { appVersionFileStore } from './apps/index/file-stores';
 
-export const userVisitStringified = (visit: SokiVisit | nil) => {
-  if (visit == null) return '';
+export const userVisitStringified = (visitInfo: SokiVisit | nil) => {
+  if (visitInfo == null) return '';
   return (
-    `${visit.urls[0]}\n\n<blockquote expandable>${JSON.stringify(
-      { ...visit, version: `${visit.version}/${appVersionFileStore.getValue().num}` },
+    `${visitInfo.urls[0]}\n\n<blockquote expandable>${JSON.stringify(
+      { ...visitInfo, version: `${visitInfo.version}/${appVersionFileStore.getValue().num}` },
       null,
       1,
-    )}\n` + `Разница: ${Date.now() - visit.clientTm}мс</blockquote>`
+    )}\n` + `Разница: ${Date.now() - visitInfo.clientTm}мс</blockquote>`
   );
 };
 

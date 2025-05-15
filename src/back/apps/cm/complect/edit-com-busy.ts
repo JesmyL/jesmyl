@@ -5,15 +5,15 @@ import { cmShareEditorServerInvocatorMethods } from '../editor-invocator.shares'
 
 export const watchEditComBusies = async (
   { comw }: { comw: CmComWid },
-  { auth, client, visit }: { auth?: LocalSokiAuth; visit?: SokiVisit; client: WebSocket },
+  { auth, client, visitInfo }: { auth?: LocalSokiAuth; visitInfo?: SokiVisit; client: WebSocket },
 ) => {
-  if (auth == null || auth.fio == null || auth.login == null || visit == null) throw 'Авторизация не действительна';
+  if (auth == null || auth.fio == null || auth.login == null || visitInfo == null) throw 'Авторизация не действительна';
 
   const comBusy: ComEditBusy = {
     comw,
     fio: auth.fio,
     login: auth.login,
-    deviceId: visit.deviceId,
+    deviceId: visitInfo.deviceId,
   };
 
   clientToBusyMap.set(client, comBusy);

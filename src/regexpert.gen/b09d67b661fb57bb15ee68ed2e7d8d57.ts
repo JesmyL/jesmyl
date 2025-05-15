@@ -15,8 +15,8 @@ namespace Nb09d67b661fb57bb15ee68ed2e7d8d57_1 {
   type $finishVerseStr = `${number}`;
 
   export interface I extends Record<
-    `/(?<bookn>\\d?\\s*[а-яё]+)\\s*((?<chapterStr>\\d{1,3})((:|\\s+)(?<verseStr>\\d{1,3})(\\s*(?<verseSeparator>[-,]?)\\s*)(?<finishVerseStr>\\d{1,3})?)?)?/i`,
-    IgnoreCaseRecord<{
+    `/(?<bookn>\\d?\\s*[а-яё]+)\\s*((?<chapterStr>\\d{1,3})((:|\\s+)(?<verseStr>\\d{1,3})(\\s*(?<verseSeparator>[-,]?)\\s*)(?<finishVerseStr>\\d{1,3})?)?)?/`,
+    {
       $0: $0;
       bookn: $bookn;
       $2?: $2;
@@ -27,7 +27,7 @@ namespace Nb09d67b661fb57bb15ee68ed2e7d8d57_1 {
       $7?: $7;
       verseSeparator?: $verseSeparator;
       finishVerseStr?: $finishVerseStr
-    }>
+    }
   > { '': '' }
 }
 

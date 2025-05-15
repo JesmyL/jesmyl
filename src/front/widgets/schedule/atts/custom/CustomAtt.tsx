@@ -72,6 +72,7 @@ export function ScheduleWidgetCustomAtt(props: {
       );
     })
     .filter(itIt);
+
   const whoCani = useAtomValue(whoCaniAtom);
   const whoCan = whoCanUnits[whoCani];
   const userR = rights.myUser?.R ?? rights.schedule.ctrl.defu;
@@ -85,16 +86,15 @@ export function ScheduleWidgetCustomAtt(props: {
     <>
       <div className={'margin-gap-v' + (props.isRedact ? '' : ' padding-gap bgcolor--5')}>
         {props.topContent}
-        {props.isRedact ||
-          (isCanRedact && (
-            <div className="flex flex-end full-width">
-              <LazyIcon
-                className="pointer"
-                icon="PencilEdit01"
-                onClick={isOpenAttRedactorAtom.toggle}
-              />
-            </div>
-          ))}
+        {!props.isRedact && isCanRedact && (
+          <div className="flex flex-end full-width">
+            <LazyIcon
+              className="pointer"
+              icon="PencilEdit01"
+              onClick={isOpenAttRedactorAtom.toggle}
+            />
+          </div>
+        )}
         {props.isRedact && (
           <LazyIconConfigurator
             icon={props.tatt.icon}
@@ -333,7 +333,7 @@ export function ScheduleWidgetCustomAtt(props: {
         )}
       </div>
 
-      {isCanRedact && (
+      {isCanRedact && whoCan && (
         <Modal
           openAtom={whoCaniAtom}
           checkIsOpen={whoCani => whoCani !== WhoCan.No}
@@ -388,7 +388,7 @@ export function ScheduleWidgetCustomAtt(props: {
         </Modal>
       )}
 
-      {isCanRedact && (
+      {isCanRedact && !props.isRedact && (
         <Modal openAtom={isOpenAttRedactorAtom}>
           <ModalHeader>
             <span className="flex flex-gap full-width between">
@@ -400,6 +400,7 @@ export function ScheduleWidgetCustomAtt(props: {
           <ModalBody>
             <ScheduleWidgetCustomAtt
               {...props}
+              tatt={props.tatt}
               isRedact
             />
           </ModalBody>
