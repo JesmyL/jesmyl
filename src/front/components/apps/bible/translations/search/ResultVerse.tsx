@@ -35,7 +35,7 @@ export const BibleSearchResultVerse = memo(function BibleSearchResultVerse({
       onClick={addressSetter(booki, chapteri, versei, resulti, onClick)}
     >
       <span className="color--3 margin-gap-r nowrap">
-        {books[booki][1]} {chapteri + 1} {versei + 1}
+        {books[booki].short} {chapteri + 1} {versei + 1}
       </span>
       <span>
         {textBits?.map((__html, biti) => {

@@ -1,8 +1,8 @@
 import { makePseudoElementCorrectContentText } from '#shared/lib/getParentNodeWithClassName';
 import { mylib } from '#shared/lib/my-lib';
 import { BibleBookTranslates } from '$bible/basis/contexts/TranslatesContext';
-import { bibleTitles } from '$bible/basis/lib/const/bibleTitlesJson';
-import { bibleAllTranslates, bibleLowerBooks, translateDescriptions } from '$bible/basis/lib/const/consts';
+import { bibleLowerBooks, bibleTitles } from '$bible/basis/lib/const/bibleTitles';
+import { bibleAllTranslates, translateDescriptions } from '$bible/basis/lib/const/consts';
 import { makeNamedRegExp, makeRegExp } from 'regexpert';
 import { CmComOrderWid } from 'shared/api';
 import { css } from 'styled-components';
@@ -76,9 +76,9 @@ export class ComBlockCommentMakerCleans {
     if (!startComment) return '';
     titlesMap ??= new Map(
       bibleLowerBooks
-        .map(([fullTitle, shortTitle], i) => [
-          [fullTitle, i],
-          [shortTitle, i],
+        .map(({ full, short }, i) => [
+          [full, i],
+          [short, i],
         ])
         .flat() as never,
     );
@@ -109,7 +109,7 @@ export class ComBlockCommentMakerCleans {
       if (booki === undefined)
         return `${addr.translate}:<КНИГА ${bookTitle} НЕ НАЙДЕНА> ${addr.chapter}:${addr.verseDiapason}`;
 
-      const fullBibleTitle = bibleTitles.titles[booki]?.[0] || bookTitle;
+      const fullBibleTitle = bibleTitles.titles[booki]?.full || bookTitle;
       const book = translate.chapters[booki];
 
       if (book == null)

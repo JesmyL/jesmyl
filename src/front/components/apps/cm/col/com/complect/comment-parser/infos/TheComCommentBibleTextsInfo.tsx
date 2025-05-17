@@ -1,6 +1,6 @@
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
-import { bibleTitles } from '$bible/basis/lib/const/bibleTitlesJson';
+import { bibleTitles } from '$bible/basis/lib/const/bibleTitles';
 import { bibleAllTranslates, translateDescriptions } from '$bible/basis/lib/const/consts';
 import { useBibleMyTranslates } from '$bible/basis/lib/hooks/translates';
 import { BibleModulesTranslationsRedactButton } from '$bible/entities/ModulesTranslationsRedactButton';
@@ -60,7 +60,7 @@ export function TheComCommentBibleTextsInfo() {
 
         <p>
           Для идентификации Библейской книги укажите сокращение или полное название:
-          {bibleTitles.titles.map(([fullName, shortName], titlei) => {
+          {bibleTitles.titles.map(({ full: fullName, short: shortName }, titlei) => {
             return (
               <React.Fragment key={shortName}>
                 <br />

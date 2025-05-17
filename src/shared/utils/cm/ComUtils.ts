@@ -5,11 +5,11 @@ import { smylib, SMyLib } from '../SMyLib';
 import { itTrim } from '../utils';
 
 const hardModificators = `(?<hardModificators>(?:(?:[#b]5)?(?:[#b]7)?(?:[#b]9)?(?:[#b]11)?(?:[#b]13)?))` as const;
-const lightModificators = `(?<lightModificators>\\+|(?:(?:min|7?sus|maj|dim|add)?(?:\\d{1,2}(?:/\\d{1,2})?)?))`;
+const lightModificators = `(?<lightModificators>\\+|(?:(?:min|sus|maj|dim|add)?(?:\\d{1,2}(?:/\\d{1,2})?)?))`;
 const chordLeadLetter = `[ACDFG]#?|[EH]`;
-const chordLikeStr = `(?<simpleChord>(?:${chordLeadLetter})m?)${lightModificators}${hardModificators}?` as const;
+const chordLikeStr = `(?<simpleChord>(?:${chordLeadLetter})m?7?)${lightModificators}${hardModificators}?` as const;
 const chordInterpretedLikeStr =
-  `(?<simpleChord>(?:${chordLeadLetter}|B)m?)${lightModificators}${hardModificators}?` as const;
+  `(?<simpleChord>(?:${chordLeadLetter}|B)m?7?)${lightModificators}${hardModificators}?` as const;
 
 export class CmComUtils {
   static doubleQuotesStr = '«»„„“”«»“' as const;

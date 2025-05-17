@@ -71,7 +71,7 @@ function Content() {
           )}
 
           <FullContent openAtom={isOpenBookSelectorAtom}>
-            {bookTitles.map(([bookTitle], booki) => {
+            {bookTitles.map(({ full: bookTitle }, booki) => {
               return (
                 <div
                   key={bookTitle}

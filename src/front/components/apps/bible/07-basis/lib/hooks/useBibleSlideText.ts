@@ -11,7 +11,7 @@ import {
 import { verseTranslateTitleCssClassName } from '$bible/translations/complect';
 import { BibleTranslateName } from 'shared/api';
 import { itIt } from 'shared/utils';
-import { bibleTitles } from '../const/bibleTitlesJson';
+import { bibleTitles } from '../const/bibleTitles';
 
 const numSortFunc = (a: number, b: number) => a - b;
 
@@ -73,7 +73,7 @@ const makeSlideJoinedAddressText = (
 
         return (
           (isSetAddress !== false && booka.length > 1
-            ? bibleTitles.titles[booki][0] + (bookEntries.length > 1 ? '' : ', ' + (1 + +bookEntries[0][0])) + ':\n'
+            ? bibleTitles.titles[booki].full + (bookEntries.length > 1 ? '' : ', ' + (1 + +bookEntries[0][0])) + ':\n'
             : '') +
           bookEntries
             .map(([chapteri, chapter], _, chaptera) => {

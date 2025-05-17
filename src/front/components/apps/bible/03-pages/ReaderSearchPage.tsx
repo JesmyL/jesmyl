@@ -43,7 +43,7 @@ export function BibleReaderSearchPage() {
               checked={searchZone === 'inner' && innerZone === 'book'}
               postfix={
                 <>
-                  Поиск по книге <i>{bookTitles[currentBooki][0]}</i>
+                  Поиск по книге <i>{bookTitles[currentBooki].full}</i>
                 </>
               }
               onChange={() => {
@@ -57,7 +57,7 @@ export function BibleReaderSearchPage() {
                 <>
                   {'Поиск по главе '}
                   <i>
-                    {bookTitles[currentBooki][0]} {currentChapteri + 1}
+                    {bookTitles[currentBooki].full} {currentChapteri + 1}
                   </i>
                 </>
               }

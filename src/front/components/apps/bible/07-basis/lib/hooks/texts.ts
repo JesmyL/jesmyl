@@ -2,7 +2,7 @@ import { mylib, MyLib } from '#shared/lib/my-lib';
 import { useBibleTranslatesContext } from '$bible/basis/lib/contexts/translates';
 import { useBibleShowTranslatesValue } from '$bible/basis/lib/hooks/translates';
 import { BibleTranslationAnyAddress } from '$bible/basis/model/base';
-import { bibleTitles } from '../const/bibleTitlesJson';
+import { bibleTitles } from '../const/bibleTitles';
 import { useBibleAddressBooki } from './address/books';
 
 const numSortFunc = (a: number, b: number) => a - b;
@@ -14,7 +14,10 @@ export const useBibleCurrentChapterList = () => {
 };
 export const useBibleBookList = () => bibleTitles.titles;
 
-export const makeBibleJoinedAddressText = (addressCode: BibleTranslationAnyAddress | nil, titleVariant: 0 | 1 = 0) => {
+export const makeBibleJoinedAddressText = (
+  addressCode: BibleTranslationAnyAddress | nil,
+  titleVariant: 'full' | 'short' = 'full',
+) => {
   if (addressCode == null) return '';
 
   if (mylib.isArr(addressCode)) {

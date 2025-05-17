@@ -23,7 +23,7 @@ export function BibleBookList() {
             className={`bible-list-face pointer ${faceClassName}`}
             onClick={() => setValue(booki, 0, 0)}
           >
-            {booki + 1} <span className="title">{book[1]}</span>
+            {booki + 1} <span className="title">{book.short}</span>
           </Face>
         );
       })}
