@@ -1,9 +1,11 @@
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { cmIsComMiniAnchorAtom } from '$cm/atoms';
 import { RollControled } from '$cm/base/RolledContent';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { Link } from '@tanstack/react-router';
+import { useAtomValue } from 'atomaric';
 import { useEffect, useRef } from 'react';
 import styled, { RuleSet, css } from 'styled-components';
 import { Com } from './Com';
@@ -26,7 +28,7 @@ interface Props {
 
 export const TheControlledCom = ({ com, comList, chordVisibleVariant }: Props) => {
   const fontSize = cmIDB.useValue.comFontSize();
-  const isMiniAnchor = cmIDB.useValue.isMiniAnchor();
+  const isMiniAnchor = useAtomValue(cmIsComMiniAnchorAtom);
   const listRef = useRef<HTMLDivElement>(null);
   const commentCss = useComCommentBlockCss(com);
 

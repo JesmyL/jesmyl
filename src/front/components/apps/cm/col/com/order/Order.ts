@@ -40,7 +40,7 @@ export class Order extends SourceBased<IExportableOrder> {
   }
 
   get wid() {
-    return this.me.source?.top.w || this.top.w;
+    return this.me.source?.top.w ?? this.top.w;
   }
 
   get isAnchor() {

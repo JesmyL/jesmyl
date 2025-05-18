@@ -36,21 +36,18 @@ export function TheOrder(props: Props) {
 
   if (props.isMiniAnchor && orderUnit.isAnchor && !orderUnit.isOpened) {
     return (
-      <div className="styled-block">
-        <div
-          id={`com-block-${orderUniti}`}
-          className="styled-header anchor"
-          ord-wid={orderUnit.wid}
-          {...styleAttributes}
-          ref={el => {
-            if (el) orderUnit.element = el;
-          }}
-        >
-          {orderUnit.me.header({
-            isTexted: false,
-            repeats: orderUnit.repeatsTitle,
-          })}
-        </div>
+      <div
+        id={`com-block-${orderUniti}`}
+        className="styled-header anchor"
+        {...styleAttributes}
+        ref={el => {
+          if (el) orderUnit.element = el;
+        }}
+      >
+        {orderUnit.me.header({
+          isTexted: false,
+          repeats: orderUnit.repeatsTitle,
+        })}
       </div>
     );
   }
@@ -72,18 +69,12 @@ export function TheOrder(props: Props) {
   const headerNode = blockHeader ? (
     <div
       className="styled-header"
-      ord-wid={orderUnit.wid}
       {...styleAttributes}
     >
       {blockHeader}
     </div>
   ) : (
-    !orderUnit.me.style?.isHeaderNoneForce && (
-      <div
-        className="styled-header empty"
-        ord-wid={orderUnit.wid}
-      />
-    )
+    !orderUnit.me.style?.isHeaderNoneForce && <div className="styled-header empty" />
   );
 
   const header =
@@ -104,6 +95,7 @@ export function TheOrder(props: Props) {
     return (
       <div
         id={`com-block-${orderUniti}`}
+        ord-nn={orderUniti + 1}
         className={
           (props.specialClassId || '') +
           'composition-block styled-block flex flex-baseline' +
@@ -117,7 +109,7 @@ export function TheOrder(props: Props) {
         {isTexted && (
           <div
             key={orderUniti}
-            className="styled-block chords-block vertical-middle"
+            className="chords-block vertical-middle"
             {...styleAttributes}
           >
             {com.chordLabels[orderUniti]
@@ -135,6 +127,7 @@ export function TheOrder(props: Props) {
   return (
     <div
       id={`com-block-${orderUniti}`}
+      ord-nn={orderUniti + 1}
       {...styleAttributes}
       className={
         (props.specialClassId || '') +

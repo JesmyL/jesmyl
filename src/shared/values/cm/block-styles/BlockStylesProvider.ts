@@ -29,6 +29,8 @@ export const BlockStylesProvider = styled.div`
       display: inline-block;
       vertical-align: middle;
       margin-bottom: 0.5em;
+      padding-top: 10px;
+      margin-top: -10px;
       font-weight: bold;
       text-decoration: underline;
 
@@ -48,7 +50,7 @@ export const BlockStylesProvider = styled.div`
     }
 
     .styled-block {
-      &.chords-block {
+      .chords-block {
         margin-bottom: 0.5em;
         margin-left: 0.5em;
         white-space: pre-line;

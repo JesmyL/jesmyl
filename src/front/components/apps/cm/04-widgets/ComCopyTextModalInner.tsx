@@ -4,20 +4,21 @@ import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { cmIsComMiniAnchorAtom } from '$cm/atoms';
 import { useChordVisibleVariant } from '$cm/base/useChordVisibleVariant';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { Com } from '$cm/col/com/Com';
 import { TheCurrentCom } from '$cm/col/com/TheCurrentCom';
 import { IsComToolIconItemsContext } from '$cm/col/com/tools/lib/contexts';
 import { ChordsVariantComTool } from '$cm/col/com/tools/ui/ChordsVariantComTool';
 import { MiniAnchorSwitchComTool } from '$cm/col/com/tools/ui/MiniAnchorSwitchComTool';
+import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 
 export const ComCopyTextModalInner = ({ com }: { com: Com }) => {
   const [text, setText] = useState('');
   const [chordVisibleVariant] = useChordVisibleVariant();
-  const isMiniAnchor = cmIDB.useValue.isMiniAnchor();
+  const isMiniAnchor = useAtomValue(cmIsComMiniAnchorAtom);
 
   useEffect(() => {
     return hookEffectPipe()

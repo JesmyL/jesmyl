@@ -42,8 +42,6 @@ export interface CmIDBStorage {
   chordVisibleVariant: ChordVisibleVariant;
   comFontSize: number;
 
-  isShowComHashComments: boolean;
-  isMiniAnchor: boolean;
   playerHideMode: PlayerHideMode;
   translationScreenConfigs: CmTranslationScreenConfig[];
   eventContext: number[];
@@ -65,8 +63,6 @@ class CmIDB extends DexieDB<CmIDBStorage> {
       comFontSize: { $byDefault: 14 },
       eventContext: { $byDefault: [] },
       favoriteMeetings: { $byDefault: { contexts: [], events: [] } },
-      isMiniAnchor: { $byDefault: false },
-      isShowComHashComments: { $byDefault: true },
       laterComwList: { $byDefault: [] },
       playerHideMode: { $byDefault: 'expand' },
       speedRollKf: { $byDefault: 10 },

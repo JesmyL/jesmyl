@@ -1,4 +1,4 @@
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmIsComMiniAnchorAtom } from '$cm/atoms';
 import { useComCommentText } from '$cm/com-comments-manager';
 import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
@@ -20,5 +20,5 @@ export const useComCommentBlockCss = (com: Com) => {
 
   useComBlockCommentUpdateBlockNames(com, visibleOrders, isRedact, comment);
 
-  return cmIDB.useValue.isShowComHashComments() ? styles : '';
+  return useAtomValue(cmIsComMiniAnchorAtom) ? '' : styles;
 };

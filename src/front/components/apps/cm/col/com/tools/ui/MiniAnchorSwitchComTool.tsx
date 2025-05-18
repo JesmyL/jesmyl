@@ -1,8 +1,9 @@
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmIsComMiniAnchorAtom } from '$cm/atoms';
+import { useAtom } from 'atomaric';
 import { ComTool } from '../ComTool';
 
 export const MiniAnchorSwitchComTool = () => {
-  const [isMiniAnchor, setIsMiniAnchor] = cmIDB.use.isMiniAnchor();
+  const [isMiniAnchor, setIsMiniAnchor] = useAtom(cmIsComMiniAnchorAtom);
 
   return (
     <ComTool
