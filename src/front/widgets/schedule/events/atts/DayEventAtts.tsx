@@ -1,5 +1,6 @@
 import { MyLib } from '#shared/lib/my-lib';
-import { useScheduleWidgetAppAttsContext, useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
+import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
+import { useScheduleWidgetAppAttsContext } from '#widgets/schedule/useScheduleWidget';
 import {
   IScheduleWidget,
   IScheduleWidgetDay,

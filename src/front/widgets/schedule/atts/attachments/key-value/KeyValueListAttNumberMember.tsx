@@ -1,8 +1,9 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { ScheduleWidgetRoleFace } from '#widgets/schedule/control/roles/RoleFace';
 import { ScheduleWidgetListUnitFace } from '#widgets/schedule/lists/UnitFace';
-import { extractScheduleWidgetRole, useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
+import { extractScheduleWidgetRole } from '#widgets/schedule/useScheduleWidget';
 import { CustomAttUseTaleId, ScheduleWidgetCleans } from 'shared/api';
 
 export function KeyValueListAttNumberMember({ value }: { value: number }) {

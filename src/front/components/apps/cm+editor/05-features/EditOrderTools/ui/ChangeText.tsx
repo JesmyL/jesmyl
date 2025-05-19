@@ -26,8 +26,8 @@ export const OrdersRedactorOrderToolsChangeText = ({ com, ord, ordi }: OrdersRed
         <ModalHeader>{blockHeaderHtml('Текстовый блок для блока')}</ModalHeader>
         <ModalBody>
           <TheOrder
-            orderUnit={ord}
-            orderUniti={ordi}
+            ord={ord}
+            ordi={ordi}
             chordVisibleVariant={ChordVisibleVariant.Maximal}
             com={com}
           />

@@ -11,6 +11,8 @@ import { StyledComLine } from '../../line/StyledComLine';
 import { Order } from '../../order/Order';
 import { ComBlockCommentMakerCleans } from './Cleans';
 
+const plusInheritBlockStyleSelector = ` + [inherit-block-style]:not(:has(.styled-header))`;
+
 export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order[] | und, comment: string | nil) => {
   const comComment = useDebounceValue(comment, 400);
   const [fastStyles, setFastStyles] = useState<string | null>(null);
@@ -85,9 +87,18 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
                 ${ComBlockCommentMakerCleans.makePseudoCommentContentAccentsCss(commentStr)}
               }
 
+              &:has(.styled-header) {
+                counter-reset: com-line;
+              }
+
               ${isNumeredLines &&
               css`
-                ${StyledComLine} {
+                ${plusInheritBlockStyleSelector.repeat(0)} ${StyledComLine},
+                ${plusInheritBlockStyleSelector.repeat(1)} ${StyledComLine},
+                ${plusInheritBlockStyleSelector.repeat(2)} ${StyledComLine},
+                ${plusInheritBlockStyleSelector.repeat(3)} ${StyledComLine},
+                ${plusInheritBlockStyleSelector.repeat(4)} ${StyledComLine},
+                ${plusInheritBlockStyleSelector.repeat(5)} ${StyledComLine} {
                   counter-increment: com-line;
 
                   &::before {

@@ -8,8 +8,9 @@ import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIcon
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
+import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { schRolesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
-import { extractScheduleWidgetRoleUser, useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
+import { extractScheduleWidgetRoleUser } from '#widgets/schedule/useScheduleWidget';
 import { atom } from 'atomaric';
 import { useAuth } from 'front/components/index/atoms';
 import React, { useMemo } from 'react';

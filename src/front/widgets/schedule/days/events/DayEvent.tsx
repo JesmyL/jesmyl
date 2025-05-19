@@ -7,9 +7,9 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ScheduleWidgetBindAttRefKeyButton } from '#widgets/schedule/atts/BindAttRefKeyButton';
 import { ScheduleWidgetBindAtts } from '#widgets/schedule/atts/BindAtts';
 import { ScheduleWidgetTopicTitle } from '#widgets/schedule/complect/TopicTitle';
+import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { ScheduleWidgetDayEventAtts } from '#widgets/schedule/events/atts/DayEventAtts';
 import { schDayEventsSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
-import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import { ReactNode, useMemo } from 'react';
 import {
   indexScheduleGetEventFinishMs,

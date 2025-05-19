@@ -5,8 +5,8 @@ import { useToast } from '#shared/ui/modal/useToast';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
+import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { schUsersSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
-import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 interface Props {

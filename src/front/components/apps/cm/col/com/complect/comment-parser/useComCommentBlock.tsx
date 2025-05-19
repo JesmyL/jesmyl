@@ -18,7 +18,7 @@ export const useComCommentBlockCss = (com: Com) => {
 
   const styles = useComBlockCommentCssStyles(com.wid, visibleOrders, comment);
 
-  useComBlockCommentUpdateBlockNames(com, visibleOrders, isRedact, comment);
+  useComBlockCommentUpdateBlockNames(com, isRedact, comment);
 
   return useAtomValue(cmIsComMiniAnchorAtom) ? '' : styles;
 };

@@ -1,6 +1,6 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
+import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { IScheduleWidgetUser, IScheduleWidgetUserMi } from 'shared/api';
 import { emptyFunc } from 'shared/utils';

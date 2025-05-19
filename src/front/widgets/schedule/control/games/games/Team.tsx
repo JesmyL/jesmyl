@@ -1,5 +1,5 @@
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
-import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
+import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { IScheduleWidgetTeam } from 'shared/api';
 
 interface Props {

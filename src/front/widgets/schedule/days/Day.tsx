@@ -18,8 +18,8 @@ import { isNIs } from 'shared/utils';
 import styled from 'styled-components';
 import { ScheduleAlarmDay } from '../alarm/AlarmDay';
 import { ScheduleDayScopePropsContext } from '../complect/lib/contexts';
+import { useScheduleWidgetRightsContext } from '../contexts';
 import { schDaysSokiInvocatorClient } from '../invocators/invocators.methods';
-import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import { ScheduleWidgetDayEditPanel } from './DayEditPanel';
 import { ScheduleWidgetDayEventList } from './events/DayEventList';
 

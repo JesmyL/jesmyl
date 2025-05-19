@@ -7,9 +7,9 @@ import { useMemo } from 'react';
 import { IScheduleWidgetListCat, IScheduleWidgetListUnit, IScheduleWidgetUserCati } from 'shared/api';
 import styled from 'styled-components';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
+import { useScheduleWidgetRightsContext } from '../contexts';
 import { ScheduleWidgetUserList } from '../control/users/UserList';
 import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
-import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import { ScheduleWidgetListUnitRedactor } from './UnitRedactor';
 
 type Props = {

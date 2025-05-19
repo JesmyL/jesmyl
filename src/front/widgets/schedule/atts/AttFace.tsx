@@ -7,8 +7,8 @@ import { atom } from 'atomaric';
 import { ReactNode } from 'react';
 import { ScheduleWidgetAttKey, scheduleWidgetUserRights } from 'shared/api';
 import styled from 'styled-components';
+import { useScheduleWidgetRightsContext } from '../contexts';
 import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
-import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import { ScheduleWidgetCustomAtt } from './custom/CustomAtt';
 
 type Props = {

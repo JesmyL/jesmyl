@@ -1,8 +1,6 @@
-import { appAttsStore } from '#basis/lib/appScheduleAttrsStorage';
 import { contextCreator } from '#shared/lib/contextCreator';
-import { MyLib, mylib } from '#shared/lib/my-lib';
 import { useAuth } from '$index/atoms';
-import React, { useContext, useMemo } from 'react';
+import { useMemo } from 'react';
 import {
   IScheduleWidget,
   IScheduleWidgetRole,
@@ -13,8 +11,6 @@ import {
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
 } from 'shared/api';
-import { ScheduleKeyValueListAtt } from './atts/attachments/key-value/KeyValueListAtt';
-import { scheduleOwnAtts } from './atts/attachments/ownAtts';
 import { ScheduleWidgetAppAtts, ScheduleWidgetAttRefs } from './ScheduleWidget.model';
 
 export const [ScheduleWidgetAppAttsContext, useScheduleWidgetAppAttsContext] = contextCreator<
@@ -56,17 +52,6 @@ export const defScheduleWidgetUserRights: ScheduleWidgetUserRights = {
   isCanRedactUsers: false,
 };
 
-export const ScheduleWidgetRightsContext = React.createContext<ScheduleWidgetRights>({
-  ...defScheduleWidgetUserRights,
-  myUser: undefined,
-  isSwPrivate: false,
-  isSwBeforeRegistration: false,
-  isSwHideContent: false,
-  isSwPublic: false,
-  auth: { level: 0 },
-  schedule: defaultScheduleWidget,
-});
-export const useScheduleWidgetRightsContext = () => useContext(ScheduleWidgetRightsContext);
 export const useScheduleWidgetRights = (schedule: IScheduleWidget | nil, rights?: ScheduleWidgetRights) => {
   const auth = useAuth();
 
@@ -154,37 +139,4 @@ export const extractScheduleWidgetRoleUser = (
   const roleUser = schedule.ctrl.users.find(user => user.mi === roleUserMi);
   if (roleUser === undefined) return null;
   return roleUser;
-};
-
-export const makeAttStorage = (schedule?: IScheduleWidget): [ScheduleWidgetAppAtts<'SCH'>, ScheduleWidgetAttRefs] => {
-  const atts: ScheduleWidgetAppAtts<'SCH'> = {};
-
-  const attRefs: ScheduleWidgetAttRefs = {};
-
-  schedule?.days.forEach(day => {
-    day.list.forEach(event => {
-      if (event.atts)
-        MyLib.entries(event.atts).forEach(([attKey, att]) => {
-          if (!mylib.isArr(att)) (attRefs[attKey] ??= []).push([day.mi, event.mi]);
-        });
-    });
-  });
-
-  schedule?.tatts.forEach(att => {
-    atts[`[SCH]:custom:${att.mi}`] = {
-      ...att,
-      isCustomize: true,
-      useActionPanelNode: () => null,
-      result: (value, dayEventAttScopeProps, isRedact) => (
-        <ScheduleKeyValueListAtt
-          isRedact={isRedact}
-          att={att}
-          value={value}
-          dayEventAttScopeProps={{ ...dayEventAttScopeProps, attTitle: att.title }}
-        />
-      ),
-      ExtRoute: () => <></>,
-    };
-  });
-  return [{ ...appAttsStore, ...scheduleOwnAtts, ...atts }, attRefs];
 };

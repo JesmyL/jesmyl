@@ -15,8 +15,9 @@ import {
   scheduleWidgetUserRights,
 } from 'shared/api';
 import styled from 'styled-components';
+import { useScheduleWidgetRightsContext } from '../contexts';
 import { ScheduleWidgetAppAtt } from '../ScheduleWidget.model';
-import { useScheduleWidgetAppAttsContext, useScheduleWidgetRightsContext } from '../useScheduleWidget';
+import { useScheduleWidgetAppAttsContext } from '../useScheduleWidget';
 import { ScheduleWidgetAttFace } from './AttFace';
 import { ScheduleWidgetCustomAttachments } from './custom/CustomAttachments';
 

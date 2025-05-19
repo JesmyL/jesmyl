@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
 import { CopyTextButton } from '#shared/ui/CopyTextButton';
-import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
+import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { CustomAttUseTaleId, ScheduleWidgetAppAttCustomizableValueItem, ScheduleWidgetCleans } from 'shared/api';
 import { itNNil } from 'shared/utils';
 

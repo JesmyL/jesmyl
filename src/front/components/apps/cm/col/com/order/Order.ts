@@ -216,7 +216,7 @@ export class Order extends SourceBased<IExportableOrder> {
 
     if (chordHardLevel < 3) {
       chordsLabels = chordsLabels.map(chord => {
-        const chordsList = chord.split(makeRegExp('/( |\\.+)/'));
+        const chordsList = chord.split(makeRegExp('/(-| |\\.+)/'));
 
         if (chordsList === null) return chord;
 

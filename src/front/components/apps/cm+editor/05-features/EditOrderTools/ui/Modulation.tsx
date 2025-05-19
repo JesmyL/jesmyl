@@ -31,8 +31,8 @@ export const OrdersRedactorOrderToolsModulation = ({ com, ord, ordi }: OrdersRed
         <ModalHeader>Установка значения модуляции</ModalHeader>
         <ModalBody>
           <TheOrder
-            orderUnit={ord}
-            orderUniti={ordi}
+            ord={ord}
+            ordi={ordi}
             chordVisibleVariant={ChordVisibleVariant.Maximal}
             com={com}
           />

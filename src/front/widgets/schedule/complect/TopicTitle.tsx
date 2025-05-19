@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
+import { useScheduleWidgetRightsContext } from '../contexts';
 
 export function ScheduleWidgetTopicTitle<TitleBox extends { title?: string }>({
   titleBox,

@@ -29,8 +29,8 @@ export const OrdersRedactorOrderToolsChordBind = ({ com, ord, ordi }: OrdersReda
             <br />
             <br />
             <TheOrder
-              orderUnit={ord}
-              orderUniti={ordi}
+              ord={ord}
+              ordi={ordi}
               com={com}
               chordVisibleVariant={ChordVisibleVariant.Maximal}
             />

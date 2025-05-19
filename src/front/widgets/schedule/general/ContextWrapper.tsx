@@ -1,12 +1,8 @@
 import { ReactNode, useMemo } from 'react';
 import { IScheduleWidget } from 'shared/api';
-import {
-  makeAttStorage,
-  ScheduleWidgetAppAttsContext,
-  ScheduleWidgetRights,
-  ScheduleWidgetRightsContext,
-  useScheduleWidgetRights,
-} from '../useScheduleWidget';
+import { ScheduleWidgetRightsContext } from '../contexts';
+import { makeAttStorage } from '../makeAttStorage';
+import { ScheduleWidgetAppAttsContext, ScheduleWidgetRights, useScheduleWidgetRights } from '../useScheduleWidget';
 
 export function ScheduleWidgetContextWrapper({
   schedule,

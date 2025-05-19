@@ -4,9 +4,9 @@ import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ScheduleWidgetTopicTitle } from '#widgets/schedule/complect/TopicTitle';
+import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { ScheduleWidgetEventType } from '#widgets/schedule/events/EventType';
 import { schDaysSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
-import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import { atom } from 'atomaric';
 import { IScheduleWidget, IScheduleWidgetDayEvent, ScheduleDayScopeProps } from 'shared/api';
 

@@ -9,10 +9,10 @@ import { css } from 'styled-components';
 import { Order } from '../../order/Order';
 
 let titlesMap: Map<string, number>;
+const orderWidSecretifyLine = `iwvthjkfsz` as const;
+const orderInheritiSecretifyLine = `IWVTHJKFSZ` as const;
 
 export class ComBlockCommentMakerCleans {
-  private static numberAssociationLine = 'iwvthjkfsz' as const;
-
   static spaceFreeText = (text: string) => text.replace(makeRegExp('/\\s+/g'), '');
   static makeComOrderBlockSelector = (blockNumber: number | string) =>
     `.styled-block:nth-child(${blockNumber} of :has(.styled-header))` as const;
@@ -22,7 +22,7 @@ export class ComBlockCommentMakerCleans {
 
   static commentsParseReg = (specialNumber: number | string) =>
     makeNamedRegExp(
-      `/(?<before>^|\\n)(?<beforeSpaces> *)(?<hashes>#{1,2})(?<blockHashPosition>${specialNumber})(?<associations>_?(?<secretWidStr>[${this.numberAssociationLine}]*)(?<modificators>!?))? *(?<info>\\[(?<blockHeader>.+?)\\])?(?<beforeCommentSpaces> *)(?<comment>[\\w\\W]+?)(?=\\n *#|$)/g`,
+      `/(?<before>^|\\n)(?<beforeSpaces> *)(?<hashes>#{1,2})(?<blockHashPosition>${specialNumber})(?<associations>_?(?<secretOrdWid>[${orderWidSecretifyLine}]*)(?<secretOrdInheritWid>[${orderInheritiSecretifyLine}]*)(?<modificators>!?))? *(?<info>\\[(?<blockHeader>.+?)\\])?(?<beforeCommentSpaces> *)(?<comment>[\\w\\W]*?)(?=\\n *#|$)/g`,
     );
   static commentsAnySpecialNumberParseReg = this.commentsParseReg('\\d*');
 
@@ -31,13 +31,94 @@ export class ComBlockCommentMakerCleans {
   static makeSecretToWid = (infoWidStr: string) =>
     infoWidStr
       ? (+('' + infoWidStr || '').replace(
-          makeRegExp(`/[${this.numberAssociationLine}]/g`),
-          all => '' + this.numberAssociationLine.indexOf(all),
+          makeRegExp(`/[${orderWidSecretifyLine}]/g`),
+          all => '' + orderWidSecretifyLine.indexOf(all),
         ) as CmComOrderWid)
       : null;
 
   static makeWidToSecret = (wid: CmComOrderWid) =>
-    ('' + wid).replace(makeRegExp('/./g'), all => this.numberAssociationLine[+all]);
+    ('' + wid).replace(makeRegExp('/./g'), all => orderWidSecretifyLine[+all]);
+
+  static makeSecretToInheritWid = (infoWidStr: string | nil) =>
+    infoWidStr
+      ? (+('' + infoWidStr || '').replace(
+          makeRegExp(`/[${orderInheritiSecretifyLine}]/g`),
+          all => '' + orderInheritiSecretifyLine.indexOf(all),
+        ) as CmComOrderWid)
+      : null;
+
+  static makeInheritWidToSecret = (wid: CmComOrderWid) =>
+    ('' + wid).replace(makeRegExp('/./g'), all => orderInheritiSecretifyLine[+all]);
+
+  static takeSecretsAndTitle = (
+    cmt: Pick<
+      ReturnType<typeof this.commentsAnySpecialNumberParseReg.transform>,
+      'secretOrdInheritWid' | 'blockHashPosition' | 'secretOrdWid'
+    >,
+    comOrders: Order[],
+    visibleOrders: Order[],
+  ) => {
+    let ord: Order | nil = null;
+    let leadOrd: Order | nil = null;
+    let watchOrd: Order | nil = null;
+
+    (() => {
+      if (cmt.secretOrdWid) {
+        const unsecredWid = ComBlockCommentMakerCleans.makeSecretToWid(cmt.secretOrdWid);
+
+        const unsecredVisibleOrderi = visibleOrders.findIndex(ord => ord.wid === unsecredWid);
+        const unsecredVisibleOrder = visibleOrders[unsecredVisibleOrderi];
+
+        if (unsecredVisibleOrder != null) {
+          if (cmt.secretOrdInheritWid) {
+            const unsecredInheritWid = ComBlockCommentMakerCleans.makeSecretToInheritWid(cmt.secretOrdInheritWid);
+
+            leadOrd = unsecredVisibleOrder;
+            ord = visibleOrders.find(
+              o => o.me.leadOrd?.wid === unsecredWid && o.me.watchOrd?.wid === unsecredInheritWid,
+            );
+
+            watchOrd = visibleOrders.find(o => o.wid === unsecredInheritWid);
+          } else ord = unsecredVisibleOrder;
+        } else {
+          const unsecretInvisibleOrderi = comOrders.findIndex(ord => ord.wid === unsecredWid);
+          const unsecretInvisibleOrder = comOrders[unsecretInvisibleOrderi];
+
+          if (unsecretInvisibleOrder) {
+            ord = unsecretInvisibleOrder;
+          } else ord = visibleOrders[+cmt.blockHashPosition - 1];
+        }
+      } else {
+        const fromBlockHashPositionOrder = visibleOrders[+cmt.blockHashPosition - 1] as Order | nil;
+
+        if (fromBlockHashPositionOrder == null) return;
+
+        if (fromBlockHashPositionOrder.me.anchorInheritIndex == null) {
+          ord = fromBlockHashPositionOrder;
+        } else {
+          ord = fromBlockHashPositionOrder.me.leadOrd;
+          watchOrd = fromBlockHashPositionOrder.me.watchOrd;
+        }
+      }
+    })();
+
+    if (ord == null)
+      return {
+        blockHashPosition: cmt.blockHashPosition,
+        secrets: '',
+        blockTitle: '',
+      };
+
+    const secretWid_ = ComBlockCommentMakerCleans.makeWidToSecret((leadOrd ?? ord).wid) ?? '';
+    const secretInheritWid_ = (watchOrd && ComBlockCommentMakerCleans.makeInheritWidToSecret(watchOrd.wid)) ?? '';
+    const header = (leadOrd ?? ord).me.header();
+
+    return {
+      blockHashPosition: `${visibleOrders.indexOf(ord) + 1 || ''}`,
+      secrets: secretWid_ ? `_${secretWid_}${secretInheritWid_}` : '',
+      blockTitle: header ? `[${header}${watchOrd ? '++' : ord.me.isInherit ? '+' : ''}]` : '',
+    };
+  };
 
   static makePseudoComment = (text: string) => makePseudoElementCorrectContentText(text.trim());
 

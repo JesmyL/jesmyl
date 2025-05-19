@@ -4,8 +4,8 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { atom } from 'atomaric';
 import { scheduleWidgetUserRights } from 'shared/api';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
+import { useScheduleWidgetRightsContext } from '../contexts';
 import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
-import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import { ScheduleWidgetRightControlList } from './RightControlList';
 
 const isModalOpenAtom = atom(false);

@@ -5,9 +5,9 @@ import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIcon
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ScheduleWidgetTopicTitle } from '#widgets/schedule/complect/TopicTitle';
+import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { ScheduleWidgetEventTypeList } from '#widgets/schedule/events/EventTypeList';
 import { schDaysSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
-import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import { useEffect, useMemo, useState } from 'react';
 import { IScheduleWidgetDay, ScheduleDayScopeProps, indexScheduleGetDayEventTimes } from 'shared/api';
 import { isNIs } from 'shared/utils';

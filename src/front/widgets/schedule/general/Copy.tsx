@@ -16,8 +16,8 @@ import {
 } from 'shared/api';
 import { itNNull } from 'shared/utils';
 import { ScheduleWidgetTopicTitle } from '../complect/TopicTitle';
+import { useScheduleWidgetRightsContext } from '../contexts';
 import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
-import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 
 const isModalOpenAtom = atom(false);
 

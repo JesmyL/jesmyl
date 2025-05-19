@@ -4,10 +4,10 @@ import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIcon
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
+import { useScheduleWidgetRightsContext } from '../contexts';
 import { ScheduleWidgetTeamGames } from '../control/games/games/Games';
 import { ScheduleWidgetRoleList } from '../control/roles/RoleList';
 import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
-import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import { ScheduleWidgetListCategory } from './Category';
 
 export function ScheduleWidgetLists() {

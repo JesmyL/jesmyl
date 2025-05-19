@@ -8,18 +8,19 @@ namespace N6919875af70bbcb2cef09ae314751706_1 {
   type $beforeSpaces = `${OptRepeatingString<` `>}`;
   type $hashes = `#${string}`;
   type $blockHashPosition = string;
-  type $associations = `${`_` | ''}${$secretWidStr}${$modificators}`;
-  type $secretWidStr = OptRepeatingString<string>;
+  type $associations = `${`_` | ''}${$secretOrdWid}${$secretOrdInheritWid}${$modificators}`;
+  type $secretOrdWid = OptRepeatingString<string>;
+  type $secretOrdInheritWid = $secretOrdWid;
   type $modificators = `${`!` | ''}`;
   type $info = `[${$blockHeader}]`;
   type $blockHeader = RepeatingString<string>;
   type $beforeCommentSpaces = $beforeSpaces;
-  type $comment = RepeatingString<string>;
+  type $comment = string | '';
   
   type U1 = LookaheadAssertion<`\n${OptRepeatingString<` `>}#` | ``>;
 
   export interface I extends Record<
-    `/(?<before>^|\\n)(?<beforeSpaces> *)(?<hashes>#{1,2})(?<blockHashPosition>${string})(?<associations>_?(?<secretWidStr>[${string}]*)(?<modificators>!?))? *(?<info>\\[(?<blockHeader>.+?)\\])?(?<beforeCommentSpaces> *)(?<comment>[\\w\\W]+?)(?=\\n *#|$)/g`,
+    `/(?<before>^|\\n)(?<beforeSpaces> *)(?<hashes>#{1,2})(?<blockHashPosition>${string})(?<associations>_?(?<secretOrdWid>[iwvthjkfsz]*)(?<secretOrdInheritWid>[IWVTHJKFSZ]*)(?<modificators>!?))? *(?<info>\\[(?<blockHeader>.+?)\\])?(?<beforeCommentSpaces> *)(?<comment>[\\w\\W]*?)(?=\\n *#|$)/g`,
     {
       $0: $0;
       before: $before;
@@ -27,7 +28,8 @@ namespace N6919875af70bbcb2cef09ae314751706_1 {
       hashes: $hashes;
       blockHashPosition: $blockHashPosition;
       associations?: $associations;
-      secretWidStr?: $secretWidStr;
+      secretOrdWid?: $secretOrdWid;
+      secretOrdInheritWid?: $secretOrdInheritWid;
       modificators?: $modificators;
       info?: $info;
       blockHeader?: $blockHeader;

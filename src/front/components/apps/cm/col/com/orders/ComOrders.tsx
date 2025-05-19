@@ -3,6 +3,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ReactNode, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Com } from '../Com';
+import { ComBlockCommentMakerCleans } from '../complect/comment-parser/Cleans';
 import { TheOrder } from '../order/TheOrder';
 import { IComOrdersProps } from './ComOrders.model';
 
@@ -12,33 +13,35 @@ export function ComOrders(props: IComOrdersProps) {
 
   let specChordedi = 0;
   let specTextedi = 0;
+  let visibleOrdi = -1;
 
   const content = (
-    <OrdList
+    <StyledOrdList
       className="com-ord-list"
       ref={props.listRef}
       $fontSize={fontSize}
     >
-      {com.orders?.map((orderUnit, orderUniti) => {
-        const isExcludedModulation = exMods.includes(orderUnit.wid);
+      {com.orders?.map((ord, ordi) => {
+        if (ComBlockCommentMakerCleans.withHeaderTextOrderFilter(ord)) visibleOrdi++;
+        const isExcludedModulation = exMods.includes(ord.wid);
         const specialClassId =
-          orderUnit.texti == null ? ` com-chorded-block-${specChordedi++} ` : ` com-texted-block-${specTextedi++} `;
+          ord.texti == null ? ` com-chorded-block-${specChordedi++} ` : ` com-texted-block-${specTextedi++} `;
 
         return (
           <TheOrder
-            key={orderUniti}
+            key={ordi}
             {...props}
             specialClassId={specialClassId}
-            orderUnit={orderUnit}
-            orderUniti={orderUniti}
+            ord={ord}
+            ordi={visibleOrdi}
             asLineComponent={asLineComponent}
             asHeaderComponent={({ headerNode }) => {
-              return orderUnit.me.style?.isModulation ? (
+              return ord.me.style?.isModulation ? (
                 <span
                   className={'pointer flex ' + (isExcludedModulation ? 'color--ko' : 'color--7')}
                   onClick={event => {
                     event.stopPropagation();
-                    updateExMods(com.toggleModulationInclusion(orderUnit));
+                    updateExMods(com.toggleModulationInclusion(ord));
                   }}
                 >
                   <LazyIcon
@@ -54,7 +57,7 @@ export function ComOrders(props: IComOrdersProps) {
           />
         );
       })}
-    </OrdList>
+    </StyledOrdList>
   );
 
   return fontSize && fontSize > 0 ? (
@@ -88,7 +91,7 @@ const FlexFontSizeContent = styled.div`
   width: max-content;
 `;
 
-const OrdList = styled.div<{ $fontSize: number | und }>`
+const StyledOrdList = styled.div<{ $fontSize: number | und }>`
   display: inline-block;
   transition: padding 0.2s;
   padding-top: 0.06em;

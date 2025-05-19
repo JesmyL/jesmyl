@@ -114,8 +114,8 @@ export const CmEditorTabComOrders = () => {
               </div>
 
               <TheOrder
-                orderUnit={ord}
-                orderUniti={ordi}
+                ord={ord}
+                ordi={ordi}
                 com={ccom}
                 showInvisibles
                 chordVisibleVariant={ChordVisibleVariant.Maximal}

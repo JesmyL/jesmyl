@@ -1,7 +1,7 @@
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 
 import { TheButton } from '#shared/ui/TheButton';
-import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
+import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { atom } from 'atomaric';
 import { ScheduleWidgetTeamGameSetTeamsScreen } from './SetTeamsScreen';
 

@@ -10,8 +10,8 @@ import React, { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
 import { IScheduleWidgetListCat } from 'shared/api';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
+import { useScheduleWidgetRightsContext } from '../contexts';
 import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
-import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import { ScheduleWidgetListUnit } from './Unit';
 
 const LazyIconConfigurator = React.lazy(() => import('../../../shared/ui/configurators/Icon'));

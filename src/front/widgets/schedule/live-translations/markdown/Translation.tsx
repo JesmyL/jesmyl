@@ -1,5 +1,5 @@
 import { NewWindow } from '#shared/ui/tags/NewWindow';
-import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
+import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { useAtomSet } from 'atomaric';
 import { useAuth } from 'front/components/index/atoms';
 import { useEffect, useState } from 'react';

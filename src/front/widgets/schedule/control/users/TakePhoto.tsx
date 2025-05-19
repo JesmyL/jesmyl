@@ -3,8 +3,8 @@ import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { getScheduleWidgetUserPhotoStorageKey } from '#widgets/schedule/storage';
-import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import { atom } from 'atomaric';
 import { indexIDB } from 'front/components/index/db/index-idb';
 import { useEffect, useRef, useState } from 'react';

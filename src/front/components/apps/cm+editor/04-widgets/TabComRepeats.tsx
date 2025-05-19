@@ -108,8 +108,8 @@ export const CmEditorTabComRepeats = () => {
             <TheOrder
               chordVisibleVariant={ChordVisibleVariant.None}
               com={ccom}
-              orderUnit={ord}
-              orderUniti={ordi}
+              ord={ord}
+              ordi={ordi}
               asHeaderComponent={props => {
                 return (
                   <div className="flex items-center">

@@ -24,10 +24,10 @@ export const CmEditorTabComChordApplications = () => {
         return (
           <React.Fragment key={ordi}>
             <TheOrder
-              orderUnit={ord}
+              ord={ord}
+              ordi={ordi}
               chordVisibleVariant={ChordVisibleVariant.Maximal}
               com={ccom}
-              orderUniti={ordi}
               asHeaderComponent={({ headerNode }) => {
                 return (
                   <div className="flex flex-gap">

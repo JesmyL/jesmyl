@@ -12,8 +12,8 @@ interface Props {
   asLineComponent?: (props: IComLineProps) => React.ReactNode;
   asHeaderComponent?: (props: IComOrdHeaderProps) => React.ReactNode;
   isMiniAnchor?: boolean;
-  orderUnit: Order;
-  orderUniti: number;
+  ord: Order;
+  ordi: number;
   com: Com;
   chordVisibleVariant: ChordVisibleVariant;
   showInvisibles?: boolean;
@@ -22,7 +22,7 @@ interface Props {
 }
 
 export function TheOrder(props: Props) {
-  const orderUnit = props.orderUnit;
+  const orderUnit = props.ord;
   const chordHardLevel = useAtomValue(cmChordHardLevelAtom);
 
   if (
@@ -31,7 +31,7 @@ export function TheOrder(props: Props) {
   )
     return null;
 
-  const { orderUniti, com } = props;
+  const { ordi: orderUniti, com } = props;
   const styleAttributes = orderUnit.me.style?.takeBlockAttributes(orderUnit.me.leadOrd?.me.style?.key);
 
   if (props.isMiniAnchor && orderUnit.isAnchor && !orderUnit.isOpened) {
@@ -113,7 +113,7 @@ export function TheOrder(props: Props) {
             {...styleAttributes}
           >
             {com.chordLabels[orderUniti]
-              .map((_, linei) => props.orderUnit.lineChordLabels(chordHardLevel, linei, props.orderUniti))
+              .map((_, linei) => props.ord.lineChordLabels(chordHardLevel, linei, props.ordi))
               .map(line => line.join(' '))
               .join('\n')}
           </div>

@@ -1,3 +1,4 @@
+import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { StrongInputDateTimeExtracter } from '#basis/ui/strong-control/StrongDateTimeExtracter';
 import { useIsRedactArea } from '#shared/lib/hooks/useIsRedactArea';
@@ -13,7 +14,6 @@ import { makeRegExp } from 'regexpert';
 import { IScheduleWidget, IScheduleWidgetWid, ScheduleScopeProps } from 'shared/api';
 import styled from 'styled-components';
 import { ScheduleWidgetCustomAttachments } from './atts/custom/CustomAttachments';
-import { ScheduleScopePropsContext } from './complect/lib/contexts';
 import { ScheduleWidgetStartTimeText } from './complect/StartTimeText';
 import { ScheduleWidgetTopicTitle } from './complect/TopicTitle';
 import { ScheduleWidgetControl } from './control/Control';
@@ -146,7 +146,7 @@ export function ScheduleWidget({
       schedule={schedule}
       rights={rights}
     >
-      <ScheduleScopePropsContext.Provider value={scheduleScopeProps}>
+      <AppDialogProvider title="">
         <QrCodeFullScreen
           openAtom={isOpenInviteQrAtom}
           text={schLinkAction.makeLink({ inviteSch: schedule.w })}
@@ -298,7 +298,7 @@ export function ScheduleWidget({
             )}
           </div>
         </Widget>
-      </ScheduleScopePropsContext.Provider>
+      </AppDialogProvider>
     </ScheduleWidgetContextWrapper>
   );
 }

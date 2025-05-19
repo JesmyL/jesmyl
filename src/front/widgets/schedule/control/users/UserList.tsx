@@ -1,5 +1,5 @@
 import { useIsExpand } from '#shared/ui/expand/useIsExpand';
-import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
+import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { ReactNode } from 'react';
 import { IScheduleWidgetUser, scheduleWidgetUserRights } from 'shared/api';
 import { ScheduleWidgetUser } from './User';

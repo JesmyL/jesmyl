@@ -8,8 +8,8 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { atom } from 'atomaric';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
+import { useScheduleWidgetRightsContext } from '../contexts';
 import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
-import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
 import { ScheduleWidgetRegisterType } from './RegisterType';
 import { ScheduleWidgetUserAddByExcel } from './users/excel/AddByExcel';
 import { ScheduleWidgetUserList } from './users/UserList';
@@ -97,7 +97,10 @@ export const ScheduleWidgetControl = () => {
                           : 'TG-Напоминание: только по началу события'
                     }
                     onSend={() =>
-                      schGeneralSokiInvocatorClient.toggleIsTgInform({ props: scheduleScopeProps, value: undefined })
+                      schGeneralSokiInvocatorClient.toggleIsTgInform({
+                        props: scheduleScopeProps,
+                        value: undefined,
+                      })
                     }
                   />
                   <SendableDropdown

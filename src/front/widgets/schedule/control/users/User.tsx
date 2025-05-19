@@ -4,7 +4,7 @@ import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ScheduleUserScopePropsContext, useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
-import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
+import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { atom } from 'atomaric';
 import { ReactNode, useMemo } from 'react';
 import {
@@ -40,6 +40,7 @@ const isRedactModalOpenAtom = atom(false);
 
 const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props) => {
   const rights = useScheduleWidgetRightsContext();
+
   const userName =
     user.nick === undefined
       ? user.fio || <span className="color--7 text-italic">Ссылка</span>

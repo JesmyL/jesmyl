@@ -1,7 +1,7 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ReactNode, useState } from 'react';
 import { IScheduleWidgetListUnit } from 'shared/api';
-import { useScheduleWidgetRightsContext } from '../useScheduleWidget';
+import { useScheduleWidgetRightsContext } from '../contexts';
 
 export function ScheduleWidgetListUnitFace({
   unitMi,

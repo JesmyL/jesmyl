@@ -70,10 +70,13 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
       </ModalBody>
       <ModalFooter className="flex flex-gap">
         {comComment?.isSavedLocal ? (
-          <LazyIcon
-            icon="FileValidation"
-            className="color--ok"
-          />
+          <>
+            Сохранено локально
+            <LazyIcon
+              icon="FileValidation"
+              className="color--ok"
+            />
+          </>
         ) : (
           <TheIconLoading isLoading={isLoading} />
         )}
@@ -104,6 +107,6 @@ const setInputHeight = checkIsCssRuleSupports('field-sizing: content')
 
 const StyledInput = styled.textarea`
   resize: none;
-  field-sizing: content;
+  ${'field-sizing: content;'}
   min-height: 2lh;
 `;

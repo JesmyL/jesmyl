@@ -2,14 +2,11 @@ import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditab
 import { mylib } from '#shared/lib/my-lib';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { ScheduleWidgetRoleFace } from '#widgets/schedule/control/roles/RoleFace';
 import { schDayEventsSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { ScheduleWidgetListUnitFace } from '#widgets/schedule/lists/UnitFace';
-import {
-  extractScheduleWidgetRole,
-  extractScheduleWidgetRoleUser,
-  useScheduleWidgetRightsContext,
-} from '#widgets/schedule/useScheduleWidget';
+import { extractScheduleWidgetRole, extractScheduleWidgetRoleUser } from '#widgets/schedule/useScheduleWidget';
 import Markdown from 'markdown-to-jsx';
 import { ReactNode } from 'react';
 import { makeRegExp } from 'regexpert';

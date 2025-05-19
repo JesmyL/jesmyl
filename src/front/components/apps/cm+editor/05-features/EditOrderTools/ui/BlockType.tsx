@@ -25,8 +25,8 @@ export const OrdersRedactorOrderToolsBlockType = ({ com, ord, ordi }: OrdersReda
         <ModalHeader>Тип блока</ModalHeader>
         <ModalBody>
           <TheOrder
-            orderUnit={ord}
-            orderUniti={ordi}
+            ord={ord}
+            ordi={ordi}
             chordVisibleVariant={ChordVisibleVariant.Maximal}
             com={com}
           />

@@ -1,5 +1,5 @@
+import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { getScheduleWidgetUserPhotoStorageKey } from '#widgets/schedule/storage';
-import { useScheduleWidgetRightsContext } from '#widgets/schedule/useScheduleWidget';
 import { indexIDB } from '$index/db/index-idb';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { IScheduleWidgetUser } from 'shared/api';

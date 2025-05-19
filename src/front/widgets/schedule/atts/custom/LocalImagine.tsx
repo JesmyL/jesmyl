@@ -1,6 +1,6 @@
 import { MyLib } from '#shared/lib/my-lib';
 import { SendableDropdown } from '#shared/ui/sends/dropdown/SendableDropdown';
-import { makeAttStorage } from '#widgets/schedule/useScheduleWidget';
+import { makeAttStorage } from '#widgets/schedule/makeAttStorage';
 import { useMemo } from 'react';
 
 export const ScheduleWidgetCustomAttLocalImagineSelector = ({ id }: { id: `[SCH]:${string}` | nil }) => {
