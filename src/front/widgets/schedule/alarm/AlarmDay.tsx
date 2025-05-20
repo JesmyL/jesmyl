@@ -11,7 +11,10 @@ export function ScheduleAlarmDay(props: ScheduleWidgetDayProps) {
   const scheduleScopeProps = useMemo(() => ({ schw: props.schedule.w }), [props.schedule.w]);
 
   return (
-    <ScheduleWidgetContextWrapper schedule={props.schedule}>
+    <ScheduleWidgetContextWrapper
+      schedule={props.schedule}
+      scheduleScopeProps={scheduleScopeProps}
+    >
       <h3>
         <ScheduleWidgetTopicTitle
           titleBox={props.schedule}

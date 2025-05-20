@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { ScheduleWidgetContextWrapper } from '../general/ContextWrapper';
 import { useScheduleWidgetRights } from '../useScheduleWidget';
@@ -8,6 +8,7 @@ import { StyledScheduleWidgetDayEvent } from './events/DayEvent';
 export function ScheduleWidgetPrintableDay(props: ScheduleWidgetDayProps & { win: typeof window }) {
   const [fontSize, setFontSize] = useState(40);
   const page = useRef<HTMLDivElement>(null);
+  const scheduleScopeProps = useMemo(() => ({ schw: props.schedule.w }), [props.schedule.w]);
 
   useEffect(() => {
     props.win.onclick = event => {
@@ -27,6 +28,7 @@ export function ScheduleWidgetPrintableDay(props: ScheduleWidgetDayProps & { win
   return (
     <ScheduleWidgetContextWrapper
       schedule={props.schedule}
+      scheduleScopeProps={scheduleScopeProps}
       rights={{
         ...rights,
         isCanRead: true,
