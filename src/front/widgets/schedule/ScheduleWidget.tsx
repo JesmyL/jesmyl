@@ -136,6 +136,7 @@ export function ScheduleWidget({
       <ScheduleWidgetContextWrapper
         schedule={schedule}
         rights={rights}
+        scheduleScopeProps={scheduleScopeProps}
       >
         {blockContent}
       </ScheduleWidgetContextWrapper>
@@ -145,14 +146,15 @@ export function ScheduleWidget({
     <ScheduleWidgetContextWrapper
       schedule={schedule}
       rights={rights}
+      scheduleScopeProps={scheduleScopeProps}
     >
-      <AppDialogProvider title="">
+      <AppDialogProvider title="schedule">
         <QrCodeFullScreen
           openAtom={isOpenInviteQrAtom}
           text={schLinkAction.makeLink({ inviteSch: schedule.w })}
         />
 
-        <Widget className={'schedule-widget'}>
+        <StyledWidget className={'schedule-widget'}>
           {titleNode}
           <div className="margin-big-gap-v">
             {rights.isCanRedact && isRedact ? (
@@ -297,13 +299,13 @@ export function ScheduleWidget({
               </>
             )}
           </div>
-        </Widget>
+        </StyledWidget>
       </AppDialogProvider>
     </ScheduleWidgetContextWrapper>
   );
 }
 
-const Widget = styled.div`
+const StyledWidget = styled.div`
   transition: margin 0.3s;
   padding: 5px;
 

@@ -9,6 +9,7 @@ import { atom } from 'atomaric';
 import { ReactNode, useMemo } from 'react';
 import {
   IScheduleWidgetUser,
+  IScheduleWidgetUserMi,
   ScheduleUserScopeProps,
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
@@ -29,6 +30,7 @@ export const ScheduleWidgetUser = (props: Props) => {
     () => ({ ...scheduleScopeProps, userMi: props.user.mi }),
     [scheduleScopeProps, props.user.mi],
   );
+
   return (
     <ScheduleUserScopePropsContext.Provider value={userScopeProps}>
       <ScheduleWidgetUserInContext {...props} />
@@ -36,7 +38,7 @@ export const ScheduleWidgetUser = (props: Props) => {
   );
 };
 
-const isRedactModalOpenAtom = atom(false);
+const isRedactModalOpenAtom = atom<IScheduleWidgetUserMi | null>(null);
 
 const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props) => {
   const rights = useScheduleWidgetRightsContext();
@@ -76,7 +78,7 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
             <LazyIcon
               icon="Edit02"
               className="pointer flex between full-width"
-              onClick={isRedactModalOpenAtom.toggle}
+              onClick={() => isRedactModalOpenAtom.set(user.mi)}
             />
           </span>
         </>
@@ -86,17 +88,20 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
 
   return (
     <>
-      <Modal openAtom={isRedactModalOpenAtom}>
+      <Modal
+        openAtom={isRedactModalOpenAtom}
+        checkIsOpen={mi => mi === user.mi}
+        isRenderHere
+      >
         <ModalHeader>
           <div className="flex between flex-gap">
             <span>
               {userName}
-              {'- '}
               {balance < 0
                 ? user.R == null
-                  ? 'Новый'
-                  : 'в блоке'
-                : scheduleWidgetUserRights.texts[balance]?.role?.[0] || 'Неизвестный'}
+                  ? ' - Новый'
+                  : ' - в блоке'
+                : scheduleWidgetUserRights.texts[balance]?.role?.[0] || ' - Неизвестный'}
             </span>
             <span className="flex flex-gap">
               <ScheduleWidgetUserTakePhoto user={user} />

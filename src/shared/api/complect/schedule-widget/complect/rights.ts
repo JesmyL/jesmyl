@@ -95,7 +95,7 @@ export const customAttUseRightsTitles: (ScheduleWidgetRightTexts<CustomAttUseRig
 })[] = [
   {
     id: CustomAttUseRights.Checkboxes,
-    title: 'вып. пункты',
+    title: 'выполняемые пункты',
   },
   {
     id: CustomAttUseRights.Roles,
@@ -111,7 +111,7 @@ export const customAttUseRightsTitles: (ScheduleWidgetRightTexts<CustomAttUseRig
   },
   {
     id: CustomAttUseRights.CheckUsers,
-    title: 'вып. участники',
+    title: 'выполняемые пункты',
     top: CustomAttUseRights.Users,
   },
   {
@@ -120,7 +120,7 @@ export const customAttUseRightsTitles: (ScheduleWidgetRightTexts<CustomAttUseRig
   },
   {
     id: CustomAttUseRights.CheckTitles,
-    title: 'вып. заголовки',
+    title: 'выполняемые пункты',
     top: CustomAttUseRights.Titles,
   },
   {
@@ -129,7 +129,7 @@ export const customAttUseRightsTitles: (ScheduleWidgetRightTexts<CustomAttUseRig
   },
   {
     id: CustomAttUseRights.CheckGames,
-    title: 'вып. ком. игры',
+    title: 'выполняемые пункты',
     top: CustomAttUseRights.Games,
   },
 ];
