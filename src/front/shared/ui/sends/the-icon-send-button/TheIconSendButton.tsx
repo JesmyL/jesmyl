@@ -9,6 +9,7 @@ interface Props<Value> extends SendButtonContentMakerProps<Value> {
   prefix?: null | React.ReactNode;
   postfix?: null | React.ReactNode;
   disabledReason?: string;
+  withoutAnimation?: boolean;
 }
 
 export function TheIconSendButton<Value>({ className = '', ...props }: Props<Value>) {
@@ -32,6 +33,7 @@ export function TheIconSendButton<Value>({ className = '', ...props }: Props<Val
             disabledReason={props.disabledReason}
             postfix={props.postfix}
             prefix={props.prefix}
+            withoutAnimation={props.withoutAnimation}
           />
         );
       }}
