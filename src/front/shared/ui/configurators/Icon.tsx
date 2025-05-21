@@ -22,6 +22,8 @@ export default function IconConfigurator(props: {
   const [loadingIcon, setLoadingIcon] = useState<TheIconKnownName | null>(null);
   const usedSet = new Set(props.used);
   const toast = useToast();
+  const iconNames = MyLib.keys(theIconKnownPack);
+  const limitedIconNames = iconNames.slice(0, limit);
 
   return (
     <>
@@ -36,34 +38,34 @@ export default function IconConfigurator(props: {
       <Modal openAtom={isOpenModalAtom}>
         <ModalHeader className="flex gap-2">{props.header}</ModalHeader>
         <ModalBody>
-          <div className="flex flex-wrap">
-            {MyLib.keys(theIconKnownPack)
-              .slice(0, limit)
-              .map(icon => {
-                return (
-                  <LazyIcon
-                    key={icon}
-                    icon={icon}
-                    className={'p-2 pointer ' + (props.icon === icon || usedSet.has(icon) ? ' text-x7' : '')}
-                    onClick={async () => {
-                      setLoadingIcon(icon);
+          <div className="flex flex-wrap justify-between">
+            {limitedIconNames.map(icon => {
+              return (
+                <LazyIcon
+                  key={icon}
+                  icon={icon}
+                  className={'p-2 pointer ' + (props.icon === icon || usedSet.has(icon) ? ' text-x7' : '')}
+                  onClick={async () => {
+                    setLoadingIcon(icon);
 
-                      try {
-                        await props.onSend(icon);
-                        isOpenModalAtom.set(false);
-                      } catch (error) {
-                        toast('' + error);
-                      }
-                      setLoadingIcon(null);
-                    }}
-                    withoutAnimation
-                  />
-                );
-              })}
+                    try {
+                      await props.onSend(icon);
+                      isOpenModalAtom.set(false);
+                    } catch (error) {
+                      toast('' + error);
+                    }
+                    setLoadingIcon(null);
+                  }}
+                  withoutAnimation
+                />
+              );
+            })}
           </div>
-          <div className="flex justify-center">
-            <TheButton onClick={() => setLimit(prev => prev + 36)}>Загрузить ещё</TheButton>
-          </div>
+          {iconNames.length !== limitedIconNames.length && (
+            <div className="flex justify-center">
+              <TheButton onClick={() => setLimit(prev => prev + 36)}>Загрузить ещё</TheButton>
+            </div>
+          )}
         </ModalBody>
       </Modal>
     </>
