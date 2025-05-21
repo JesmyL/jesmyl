@@ -21,7 +21,7 @@ type Props = {
   onRemoveAttSend: (attKey: ScheduleWidgetAttKey) => Promise<unknown>;
 };
 
-const isModalOpenAtom = atom(false);
+const tattOnRedactAtom = atom<ScheduleWidgetAttKey | null>(null);
 
 export function ScheduleWidgetAttFace({
   tatt,
@@ -43,7 +43,7 @@ export function ScheduleWidgetAttFace({
     <>
       <Tatt
         className={'relative flex center column' + (isCanRedact && tatt?.isCustomize ? ' color--7 pointer' : '')}
-        onClick={isCanRedact && tatt?.isCustomize ? isModalOpenAtom.toggle : undefined}
+        onClick={isCanRedact && tatt?.isCustomize ? () => tattOnRedactAtom.set(attKey) : undefined}
       >
         {isLink && (
           <LazyIcon
@@ -81,7 +81,10 @@ export function ScheduleWidgetAttFace({
         )}
       </Tatt>
       {!tatt || (
-        <Modal openAtom={isModalOpenAtom}>
+        <Modal
+          openAtom={tattOnRedactAtom}
+          checkIsOpen={tatt => tatt === attKey}
+        >
           <ModalHeader>
             Вложение <span className="color--7">{tatt.title}</span>
           </ModalHeader>
