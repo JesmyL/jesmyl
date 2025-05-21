@@ -7,17 +7,8 @@
       1551767355220, 1551768058548, 1551770021776, 1605353683636, 1607345768420, 1609238347324, 1609761208284,
       1609953328330, 1609955214660
     ],
-    "m": 1747337117158.5688,
-    "tools": [
-      "edit-com",
-      "com-comment",
-      "hide-metronome",
-      "mark-com",
-      "chords-variant",
-      "selected-toggle",
-      "fullscreen-mode",
-      "chord-hard-level"
-    ]
+    "m": 1747569899202.8406,
+    "tools": ["edit-com", "com-comment", "mark-com", "fullscreen-mode", "chord-hard-level", "is-mini-anchor"]
   },
   "08a0e6ba7792e902569816a81b846b25": {
     "comws": [
@@ -75,8 +66,8 @@
   },
   "T6558fe287d2ea93be3e19bbe64b5dfc": {
     "comws": [1718543236522, 1741883251071],
-    "m": 1742713315400.7683,
-    "tools": ["edit-com", "fullscreen-mode", "com-comment", "cats-binds", "hide-metronome"]
+    "m": 1747570754975.682,
+    "tools": ["edit-com", "fullscreen-mode", "com-comment", "cats-binds", "hide-metronome", "chord-hard-level"]
   },
   "T8574ab57c74159d39de20665af3eebe": { "comws": [1634188046492], "m": 1729802274224 },
   "T8656fec3ec9f81c86770b916f7503fc": {
