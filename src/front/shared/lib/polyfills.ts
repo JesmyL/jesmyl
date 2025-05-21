@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { setSharedPolyfills } from 'shared/utils';
 
 export const setPolyfills = () => {
@@ -66,6 +67,106 @@ export const setPolyfills = () => {
 
     return setter;
   };
+
+  (function () {
+    if (typeof window.Map === 'function') return;
+
+    function Map(this: any) {
+      this._keys = [];
+      this._values = [];
+    }
+
+    Map.prototype.set = function (key: any, value: any) {
+      const index = this._keys.indexOf(key);
+      if (index === -1) {
+        this._keys.push(key);
+        this._values.push(value);
+      } else {
+        this._values[index] = value;
+      }
+      return this;
+    };
+
+    Map.prototype.get = function (key: any) {
+      const index = this._keys.indexOf(key);
+      return index === -1 ? undefined : this._values[index];
+    };
+
+    Map.prototype.has = function (key: any) {
+      return this._keys.indexOf(key) !== -1;
+    };
+
+    Map.prototype.delete = function (key: any) {
+      const index = this._keys.indexOf(key);
+      if (index !== -1) {
+        this._keys.splice(index, 1);
+        this._values.splice(index, 1);
+        return true;
+      }
+      return false;
+    };
+
+    Map.prototype.clear = function () {
+      this._keys = [];
+      this._values = [];
+    };
+
+    Map.prototype.size = function () {
+      return this._keys.length;
+    };
+
+    Map.prototype.forEach = function (callback: (...args: any[]) => any, thisArg: any) {
+      for (let i = 0; i < this._keys.length; i++) {
+        callback.call(thisArg, this._values[i], this._keys[i], this);
+      }
+    };
+
+    (globalThis as any).Map = Map;
+  })();
+
+  (function () {
+    if (typeof window.Set === 'function') return;
+
+    function Set(this: any) {
+      this._values = [];
+    }
+
+    Set.prototype.add = function (value: any) {
+      if (!this.has(value)) {
+        this._values.push(value);
+      }
+      return this;
+    };
+
+    Set.prototype.delete = function (value: any) {
+      const index = this._values.indexOf(value);
+      if (index !== -1) {
+        this._values.splice(index, 1);
+        return true;
+      }
+      return false;
+    };
+
+    Set.prototype.has = function (value: any) {
+      return this._values.indexOf(value) !== -1;
+    };
+
+    Set.prototype.clear = function () {
+      this._values = [];
+    };
+
+    Set.prototype.size = function () {
+      return this._values.length;
+    };
+
+    Set.prototype.forEach = function (callback: any, thisArg: any) {
+      for (let i = 0; i < this._values.length; i++) {
+        callback.call(thisArg, this._values[i], this._values[i], this);
+      }
+    };
+
+    (globalThis as any).Set = Set;
+  })();
 };
 
 type EffectListener = <EventName extends keyof HTMLElementEventMap, Event extends HTMLElementEventMap[EventName]>(
