@@ -37,7 +37,7 @@ const defaultPrint = {
   title: true,
 };
 
-const isFullDayOpenAtom = atom(false);
+const openFullDayAtom = atom<number | null>(null);
 
 export const ScheduleWidgetDay = ({
   day,
@@ -80,7 +80,7 @@ export const ScheduleWidgetDay = ({
       >
         <div
           className={'day-title flex flex-gap padding-gap-v sticky pos-top' + (print.title ? '' : ' not-printable')}
-          onClick={isCanOpenFull ? isFullDayOpenAtom.toggle : undefined}
+          onClick={isCanOpenFull ? () => openFullDayAtom.set(dayi) : undefined}
         >
           {title}
           {schedule.withTech ? (
@@ -170,14 +170,20 @@ export const ScheduleWidgetDay = ({
         )}
       </StyledScheduleWidgetDay>
 
-      <FullContent openAtom={isFullDayOpenAtom}>
-        <ScheduleAlarmDay
-          day={day}
-          dayi={dayi}
-          schedule={schedule}
-          scheduleScopeProps={scheduleScopeProps}
-        />
-      </FullContent>
+      {isForceOpen || (
+        <FullContent
+          openAtom={openFullDayAtom}
+          checkIsOpen={openDayi => openDayi === dayi}
+        >
+          <ScheduleAlarmDay
+            day={day}
+            dayi={dayi}
+            schedule={schedule}
+            scheduleScopeProps={scheduleScopeProps}
+            isForceOpen
+          />
+        </FullContent>
+      )}
     </ScheduleDayScopePropsContext.Provider>
   );
 };
