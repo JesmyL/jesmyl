@@ -90,7 +90,7 @@ export const CmEditorTabComMain = () => {
         }
         postfix={
           <>
-            <span className="text-x7">{ccom.isBemoled ? 'Диезная' : 'Бемольная'}</span> песня
+            <span className="text-x7">{ccom.isBemoled ? 'Бемольная' : 'Диезная'}</span> песня
           </>
         }
         onClick={() => {
