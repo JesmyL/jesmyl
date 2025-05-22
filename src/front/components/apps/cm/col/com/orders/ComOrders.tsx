@@ -33,7 +33,8 @@ export function ComOrders(props: IComOrdersProps) {
             {...props}
             specialClassId={specialClassId}
             ord={ord}
-            ordi={visibleOrdi}
+            ordi={ordi}
+            visibleOrdi={visibleOrdi}
             asLineComponent={asLineComponent}
             asHeaderComponent={({ headerNode }) => {
               return ord.me.style?.isModulation ? (

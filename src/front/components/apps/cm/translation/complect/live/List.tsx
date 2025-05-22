@@ -61,7 +61,7 @@ export const CmLiveTranslationList = (props: CmSchWTranslationLiveDataValue) => 
               return (
                 <div
                   className={_lineNamePrefix}
-                  id={`${_lineNamePrefix}${lineVolumes.sum[props.orderUniti] + props.textLinei}`}
+                  id={`${_lineNamePrefix}${lineVolumes.sum[props.ordi] + props.textLinei}`}
                 >
                   <ComLine {...props} />
                 </div>

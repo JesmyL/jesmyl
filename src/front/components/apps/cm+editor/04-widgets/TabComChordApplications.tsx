@@ -52,10 +52,10 @@ export const CmEditorTabComChordApplications = () => {
                       key={textLinei}
                       {...props}
                       chordedOrd
-                      orderUnit={ord}
+                      ord={ord}
                       positions={linePositions}
                       com={com}
-                      orderUniti={ordi}
+                      ordi={ordi}
                       isJoinLetters={false}
                       onClick={async event => {
                         const clicked = event.nativeEvent

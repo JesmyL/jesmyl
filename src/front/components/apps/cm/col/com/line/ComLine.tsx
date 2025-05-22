@@ -38,8 +38,8 @@ export function ComLine(props: IComLineProps) {
   let chordIndex = 0;
   let points = vowelPositions;
 
-  const chordsLabels = props.orderUnit.lineChordLabels(chordHardLevel, props.textLinei, props.orderUniti);
-  const linePositions = props.positions ?? props.orderUnit.positions?.[props.textLinei] ?? [];
+  const chordsLabels = props.ord.lineChordLabels(chordHardLevel, props.textLinei, props.ordi);
+  const linePositions = props.positions ?? props.ord.positions?.[props.textLinei] ?? [];
 
   if (props.isJoinLetters !== false)
     points = vowelPositions.filter(

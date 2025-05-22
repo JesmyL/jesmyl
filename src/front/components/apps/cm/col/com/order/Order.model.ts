@@ -88,8 +88,9 @@ export interface IComOrdHeaderProps extends IComOrdProps {
 
 export interface IComOrdProps {
   chordedOrd: boolean;
-  orderUnit: Order;
-  orderUniti: number;
+  ord: Order;
+  ordi: number;
+  visibleOrdi: number;
   positions?: number[];
   isJoinLetters: boolean;
   com: Com;

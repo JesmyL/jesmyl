@@ -38,7 +38,7 @@ export const useComCommentBlockFastReactions = (listRef: React.RefObject<HTMLDiv
           const commentInput = document.querySelector('.com-comment-input') as HTMLTextAreaElement;
           if (commentInput == null) return;
 
-          const orderNN = +node.getAttribute('ord-nn')!;
+          const orderNN = +node.getAttribute('visible-ord-nn')!;
           if (mylib.isNaN(orderNN)) return;
 
           const { secrets, blockTitle } = ComBlockCommentMakerCleans.takeSecretsAndTitle(

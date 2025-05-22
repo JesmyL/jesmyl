@@ -14,6 +14,7 @@ interface Props {
   isMiniAnchor?: boolean;
   ord: Order;
   ordi: number;
+  visibleOrdi: number;
   com: Com;
   chordVisibleVariant: ChordVisibleVariant;
   showInvisibles?: boolean;
@@ -22,49 +23,47 @@ interface Props {
 }
 
 export function TheOrder(props: Props) {
-  const orderUnit = props.ord;
+  const ord = props.ord;
   const chordHardLevel = useAtomValue(cmChordHardLevelAtom);
 
   if (
-    (props.isMiniAnchor && (orderUnit.me.isAnchorInherit || orderUnit.me.isAnchorInheritPlus)) ||
-    (!props.showInvisibles && !orderUnit.isVisible)
+    (props.isMiniAnchor && (ord.me.isAnchorInherit || ord.me.isAnchorInheritPlus)) ||
+    (!props.showInvisibles && !ord.isVisible)
   )
     return null;
 
-  const { ordi: orderUniti, com } = props;
-  const styleAttributes = orderUnit.me.style?.takeBlockAttributes(orderUnit.me.leadOrd?.me.style?.key);
+  const { ordi, com, visibleOrdi } = props;
+  const styleAttributes = ord.me.style?.takeBlockAttributes(ord.me.leadOrd?.me.style?.key);
 
-  if (props.isMiniAnchor && orderUnit.isAnchor && !orderUnit.isOpened) {
+  if (props.isMiniAnchor && ord.isAnchor && !ord.isOpened) {
     return (
       <div
-        id={`com-block-${orderUniti}`}
+        id={`com-block-${ordi}`}
         className="styled-header anchor"
         {...styleAttributes}
         ref={el => {
-          if (el) orderUnit.element = el;
+          if (el) ord.element = el;
         }}
       >
-        {orderUnit.me.header({
+        {ord.me.header({
           isTexted: false,
-          repeats: orderUnit.repeatsTitle,
+          repeats: ord.repeatsTitle,
         })}
       </div>
     );
   }
 
   const isTexted =
-    orderUnit.texti == null
-      ? !(!props.chordVisibleVariant || (!orderUnit.isMin && props.chordVisibleVariant === 1))
-      : true;
+    ord.texti == null ? !(!props.chordVisibleVariant || (!ord.isMin && props.chordVisibleVariant === 1)) : true;
 
-  const blockHeader = orderUnit.me.isInherit
+  const blockHeader = ord.me.isInherit
     ? null
-    : orderUnit.me.header({
+    : ord.me.header({
         isTexted,
-        repeats: orderUnit.texti == null ? orderUnit.repeatsTitle : '',
+        repeats: ord.texti == null ? ord.repeatsTitle : '',
       });
 
-  const chordedOrd = orderUnit.isCanShowChordsInText(props.chordVisibleVariant);
+  const chordedOrd = ord.isCanShowChordsInText(props.chordVisibleVariant);
 
   const headerNode = blockHeader ? (
     <div
@@ -74,45 +73,46 @@ export function TheOrder(props: Props) {
       {blockHeader}
     </div>
   ) : (
-    !orderUnit.me.style?.isHeaderNoneForce && <div className="styled-header empty" />
+    !ord.me.style?.isHeaderNoneForce && <div className="styled-header empty" />
   );
 
   const header =
     typeof props.asHeaderComponent === 'function'
       ? props.asHeaderComponent({
           chordedOrd,
-          orderUnit,
-          orderUniti,
+          ord,
+          ordi,
+          visibleOrdi,
           com: props.com,
           isJoinLetters: true,
           headerNode,
         })
       : headerNode;
 
-  if (!orderUnit.text) {
-    if (!orderUnit.chords) return null;
+  if (!ord.text) {
+    if (!ord.chords) return null;
 
     return (
       <div
-        id={`com-block-${orderUniti}`}
-        ord-nn={orderUniti + 1}
+        id={`com-block-${ordi}`}
+        visible-ord-nn={visibleOrdi + 1}
         className={
           (props.specialClassId || '') +
           'composition-block styled-block flex flex-baseline' +
-          (orderUnit.isVisible ? '' : ' ord-invisible')
+          (ord.isVisible ? '' : ' ord-invisible')
         }
         ref={el => {
-          if (el) orderUnit.element = el;
+          if (el) ord.element = el;
         }}
       >
         {header}
         {isTexted && (
           <div
-            key={orderUniti}
+            key={ordi}
             className="chords-block vertical-middle"
             {...styleAttributes}
           >
-            {com.chordLabels[orderUniti]
+            {com.chordLabels[ordi]
               .map((_, linei) => props.ord.lineChordLabels(chordHardLevel, linei, props.ordi))
               .map(line => line.join(' '))
               .join('\n')}
@@ -122,21 +122,21 @@ export function TheOrder(props: Props) {
     );
   }
 
-  const lines = (props.isHideRepeats ? orderUnit.text : orderUnit.repeatedText() || '').split(makeRegExp('/\\n/'));
+  const lines = (props.isHideRepeats ? ord.text : ord.repeatedText() || '').split(makeRegExp('/\\n/'));
 
   return (
     <div
-      id={`com-block-${orderUniti}`}
-      ord-nn={orderUniti + 1}
+      id={`com-block-${ordi}`}
+      visible-ord-nn={visibleOrdi + 1}
       {...styleAttributes}
       className={
         (props.specialClassId || '') +
         `composition-block styled-block` +
-        (orderUnit.isVisible ? '' : ' ord-invisible') +
+        (ord.isVisible ? '' : ' ord-invisible') +
         (chordedOrd ? ' chorded-block' : ' without-chords')
       }
       ref={el => {
-        if (el) orderUnit.element = el;
+        if (el) ord.element = el;
       }}
     >
       {header}
@@ -151,8 +151,9 @@ export function TheOrder(props: Props) {
                 textLine,
                 textLinei,
                 textLines: textLinea.length,
-                orderUnit,
-                orderUniti,
+                ord,
+                ordi,
+                visibleOrdi,
                 wordCount: words.length,
                 words,
                 prevLinesCount: 1,
@@ -166,8 +167,9 @@ export function TheOrder(props: Props) {
                 textLinei={textLinei}
                 prevLinesCount={1}
                 textLines={textLinea.length}
-                orderUnit={orderUnit}
-                orderUniti={orderUniti}
+                ord={ord}
+                ordi={ordi}
+                visibleOrdi={visibleOrdi}
                 wordCount={words.length}
                 words={words}
                 com={props.com}
