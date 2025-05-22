@@ -10,9 +10,9 @@ import {
   schLiveSokiInvocatorBaseClient,
   schLiveSokiInvocatorClient,
 } from '$index/complect/translations/live-invocator';
+import { useConnectionState } from '$index/useConnectionState';
 import { atom, useAtomValue } from 'atomaric';
 import { ScreenTranslationControlPanelShowMdButton } from 'front/components/apps/+complect/translations/controls/ShowMdButton';
-import { soki } from 'front/soki';
 import { useEffect, useState } from 'react';
 import { IScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
 import { ScheduleWidgetMarkdownLiveTranslation } from './MarkdownLive';
@@ -29,19 +29,15 @@ export const ScheduleWidgetLiveTranslation = ({ schw, isShowMarkdownOnly }: Prop
   const [streamerLogin, setStreamerLogin] = useState<SokiAuthLogin | null>(null);
   const streamers = useAtomValue(liveDataStreamersAtom);
   const [isLoading, setIsLoading] = useState(true);
+  const isNetworkConnected = useConnectionState();
 
   useEffect(() => {
+    if (isNetworkConnected !== true) return;
+
     if (streamerLogin != null) {
       schLiveSokiInvocatorClient.watch({ schw, streamerLogin });
 
-      const unsubscribe = soki.onConnectionState(isConnected => {
-        if (!isConnected) return;
-
-        schLiveSokiInvocatorClient.watch({ schw, streamerLogin });
-      });
-
       return () => {
-        unsubscribe();
         schLiveSokiInvocatorClient.unwatch({ schw, streamerLogin });
       };
     }
@@ -51,7 +47,7 @@ export const ScheduleWidgetLiveTranslation = ({ schw, isShowMarkdownOnly }: Prop
       await schLiveSokiInvocatorClient.requestStreamers({ schw });
       setTimeout(setIsLoading, 1000, false);
     })();
-  }, [schw, streamerLogin]);
+  }, [isNetworkConnected, schw, streamerLogin]);
 
   useEffect(() => {
     isSelectStreamerModalAtom.set(!!streamers?.length && !streamerLogin);
