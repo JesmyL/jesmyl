@@ -70,11 +70,11 @@ const wordRegEnds: Record<string, Record<string, EndVariantsDict>> = {
       // поющий
       pronoun: '$1ее', // поющее
     },
-    ий$: {
+    ший$: {
       // больший
       pronoun: 'ее', // большее
     },
-    '[оы]й$': {
+    '[иоы]й$': {
       // большой холостой
       pronoun: 'ое', // большое холостое
     },
@@ -129,3 +129,10 @@ export const makeTwiceKnownName = (joinBy = ' ', fixedPronoun?: string, fixedNou
     ? [fixNoun(noun), fixPronoun(pronoun)].join(joinBy)
     : [fixPronoun(pronoun), fixNoun(noun)].join(joinBy);
 };
+
+// eslint-disable-next-line no-constant-condition
+if (true) {
+  console.info(makeTwiceKnownName(' ', 'широкий', 'снижение'));
+  console.info(makeTwiceKnownName(' ', 'поэтический', 'пламя.'));
+  console.info(makeTwiceKnownName(' ', 'медленный', 'бро!'));
+}
