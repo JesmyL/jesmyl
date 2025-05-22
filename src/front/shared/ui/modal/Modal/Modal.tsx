@@ -12,11 +12,18 @@ export interface Props<Value> {
   checkIsOpen?: (value: Value) => boolean;
   mood?: 'ok' | 'ko';
   children?: React.ReactNode;
-  onClose?: (isOpen: false) => void;
+  onClose?: (openAtom: Atom<Value>) => void;
   isRenderHere?: boolean;
 }
 
-export const Modal = <Value,>({ mood, children, isRenderHere, openAtom, checkIsOpen }: Props<Value>) => {
+export const Modal = <Value,>({
+  mood,
+  children,
+  isRenderHere,
+  openAtom,
+  checkIsOpen,
+  onClose = () => openAtom.reset(),
+}: Props<Value>) => {
   const isOpenValue = useAtomValue(openAtom);
   const isOpen = checkIsOpen === undefined ? isOpenValue === 0 || !!isOpenValue : checkIsOpen(isOpenValue);
 
@@ -27,10 +34,10 @@ export const Modal = <Value,>({ mood, children, isRenderHere, openAtom, checkIsO
           className="type_screen"
           onClick={event => {
             event.stopPropagation();
-            openAtom.reset();
+            onClose(openAtom);
           }}
         >
-          <EscapableModal onClose={openAtom.reset} />
+          <EscapableModal onClose={() => onClose(openAtom)} />
           <StyledModalScreenWrapper className="type_screen">
             <StyledModalScreen
               className={'type_screen mood mood_' + mood}

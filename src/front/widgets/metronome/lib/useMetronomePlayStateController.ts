@@ -16,7 +16,7 @@ export const useMetronomePlayStateController = () => {
   const isPlay = useAtomValue(metronomeIsPlayAtom);
 
   useEffect(() => {
-    if (!isPlay) return retOnPlayStop;
+    if (!isPlay) return retOnPlayStop();
 
     for (let beati = 0; beati < userMeterSize; beati++) {
       const note = accents[beati] === '1' ? 'A1' : 'A2';

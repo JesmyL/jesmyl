@@ -6,7 +6,7 @@ import { metronomeUserBpmAtom } from '../lib/atoms';
 
 let lastTs: number;
 
-export const MetronomeTouchBpmButton = memo(function MetronomeTouctBpmButton() {
+export const MetronomeTouchBpmButton = memo(function MetronomeTouchBpmButton() {
   const setUserBpm = useAtomSet(metronomeUserBpmAtom);
 
   const touchBpm = () => {

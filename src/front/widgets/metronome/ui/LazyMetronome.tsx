@@ -26,8 +26,11 @@ export default function LazyMetronome({ meterSize = 4, bpm = 120 }: Props) {
   useEffect(() => setUserBpm(bpm), [bpm, setUserBpm]);
 
   return (
-    isOpen && (
-      <Modal openAtom={metronomeIsOpenAtom}>
+    <div hidden={!isOpen}>
+      <Modal
+        openAtom={metronomeIsOpenAtom}
+        onClose={openAtom => openAtom.set(false)}
+      >
         <StyledModalBody className="flex column between">
           <div className="flex between full-width">
             <MetronomeTouchBpmButton />
@@ -39,7 +42,7 @@ export default function LazyMetronome({ meterSize = 4, bpm = 120 }: Props) {
           </div>
         </StyledModalBody>
       </Modal>
-    )
+    </div>
   );
 }
 
