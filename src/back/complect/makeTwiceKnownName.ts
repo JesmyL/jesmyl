@@ -131,7 +131,7 @@ export const makeTwiceKnownName = (joinBy = ' ', fixedPronoun?: string, fixedNou
 };
 
 // eslint-disable-next-line no-constant-condition
-if (true) {
+if (false) {
   console.info(makeTwiceKnownName(' ', 'широкий', 'снижение'));
   console.info(makeTwiceKnownName(' ', 'поэтический', 'пламя.'));
   console.info(makeTwiceKnownName(' ', 'медленный', 'бро!'));
