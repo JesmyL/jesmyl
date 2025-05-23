@@ -28,7 +28,13 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
   const [isReplacementInProcess, setIsReplacementInProcess] = useState(false);
   const rights = useScheduleWidgetRightsContext();
   const [isIndividualReplacement, setIsIndividualReplacement] = useState(false);
-  const { editIcon, isRedact } = useIsRedactArea(true, isIndividualReplacement || null, rights.isCanRedact, true);
+  const { editIcon, isRedact } = useIsRedactArea({
+    redactable: true,
+    redact: isIndividualReplacement || null,
+    canRedact: rights.isCanRedact,
+    isShowDoneButton: true,
+    icon: 'EditTable',
+  });
   const [listTitle, isExpand, switchIsExpand] = useIsRememberExpand(
     JSON.stringify(dayScopeProps),
     <>

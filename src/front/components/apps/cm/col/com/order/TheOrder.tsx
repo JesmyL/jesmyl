@@ -14,7 +14,7 @@ interface Props {
   isMiniAnchor?: boolean;
   ord: Order;
   ordi: number;
-  visibleOrdi: number;
+  visibleOrdi?: number;
   com: Com;
   chordVisibleVariant: ChordVisibleVariant;
   showInvisibles?: boolean;
@@ -95,7 +95,7 @@ export function TheOrder(props: Props) {
     return (
       <div
         id={`com-block-${ordi}`}
-        visible-ord-nn={visibleOrdi + 1}
+        visible-ord-nn={(visibleOrdi ?? ordi) + 1}
         className={
           (props.specialClassId || '') +
           'composition-block styled-block flex flex-baseline' +
@@ -127,7 +127,7 @@ export function TheOrder(props: Props) {
   return (
     <div
       id={`com-block-${ordi}`}
-      visible-ord-nn={visibleOrdi + 1}
+      visible-ord-nn={(visibleOrdi ?? ordi) + 1}
       {...styleAttributes}
       className={
         (props.specialClassId || '') +

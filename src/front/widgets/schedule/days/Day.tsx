@@ -54,7 +54,12 @@ export const ScheduleWidgetDay = ({
   const times: number[] = [];
   const [isShowDay, setIsShowDay] = useState(!isPastDay);
   const rights = useScheduleWidgetRightsContext();
-  const { editIcon, isRedact } = useIsRedactArea(true, null, rights.isCanRedact, true);
+  const { editIcon, isRedact } = useIsRedactArea({
+    redactable: true,
+    canRedact: rights.isCanRedact,
+    isShowDoneButton: true,
+    icon: 'MapsEditing',
+  });
   const [print, setPrint] = useState(defaultPrint);
   const dayScopeProps: ScheduleDayScopeProps = useMemo(
     () => ({ ...scheduleScopeProps, dayi }),

@@ -5,24 +5,28 @@ import { useState } from 'react';
 type booleanOrNil = boolean | nil;
 type OnEditStart = ((isSelfRedact: boolean) => void) | nil;
 
-export function useIsRedactArea(
-  redactable?: booleanOrNil,
-  redact?: booleanOrNil,
-  canRedact?: booleanOrNil,
-  isShowDoneButton?: booleanOrNil,
-  onEditStart?: OnEditStart,
-) {
-  return useIsRedactAreaWithInit(false, redactable, redact, canRedact, isShowDoneButton, onEditStart);
+interface Props {
+  redactable?: booleanOrNil;
+  redact?: booleanOrNil;
+  canRedact?: booleanOrNil;
+  isShowDoneButton?: booleanOrNil;
+  onEditStart?: OnEditStart;
+  icon?: TheIconKnownName;
 }
 
-export function useIsRedactAreaWithInit(
-  init: boolean,
-  redactable?: booleanOrNil,
-  redact?: booleanOrNil,
-  canRedact?: booleanOrNil,
-  isShowDoneButton?: booleanOrNil,
-  onEditStart?: OnEditStart,
-) {
+export function useIsRedactArea(props: Props) {
+  return useIsRedactAreaWithInit({ ...props, init: false });
+}
+
+export function useIsRedactAreaWithInit({
+  icon = 'Edit02',
+  init,
+  canRedact,
+  isShowDoneButton,
+  onEditStart,
+  redact,
+  redactable,
+}: { init: boolean } & Props) {
   const [isSelfRedact, setIsSelfRedact] = useState(init);
   const isCanRedact = !!(canRedact == null || canRedact);
 
@@ -34,7 +38,7 @@ export function useIsRedactAreaWithInit(
       redactable && isCanRedact ? (
         !(redact ?? isSelfRedact) ? (
           <LazyIcon
-            icon="Edit02"
+            icon={icon}
             className="pointer edit-button"
             onClick={event => {
               event.stopPropagation();

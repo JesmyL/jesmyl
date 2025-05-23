@@ -37,7 +37,12 @@ export default function StrongEditableField<Key extends string, Value extends st
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const toast = useToast();
-  const { editIcon, isSelfRedact } = useIsRedactArea(true, null, true, true, props.onSelfRedactChange);
+  const { editIcon, isSelfRedact } = useIsRedactArea({
+    redactable: true,
+    canRedact: true,
+    isShowDoneButton: true,
+    onEditStart: props.onSelfRedactChange,
+  });
   const isRedact = props.setSelfRedact ? isSelfRedact : props.isRedact;
 
   const sendValue = () => {

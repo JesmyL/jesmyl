@@ -28,7 +28,11 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
   const rights = useScheduleWidgetRightsContext();
   const auth = useAuth();
   const roleUser = extractScheduleWidgetRoleUser(rights.schedule, 0, role);
-  const catsRedact = useIsRedactArea(true, null, true, true);
+  const catsRedact = useIsRedactArea({
+    redactable: true,
+    canRedact: true,
+    isShowDoneButton: true,
+  });
   const scheduleScopeProps = useScheduleScopePropsContext();
   const roleScopeProps: ScheduleRoleScopeProps = useMemo(
     () => ({ ...scheduleScopeProps, roleMi: role.mi }),

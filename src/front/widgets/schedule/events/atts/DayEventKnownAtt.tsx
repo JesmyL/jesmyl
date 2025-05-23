@@ -44,7 +44,11 @@ export const DayEventKnownAtt = (props: ScheduleDayEventKnownAttProps) => {
 
   const useActionPanelNode = (appAtt.im ? appAtts[appAtt.im].useActionPanelNode : appAtt.useActionPanelNode) ?? retNull;
   const isCanRedact = props.isCanRedact && (!mylib.isArr(props.att) || props.att[0] < 0);
-  const { isRedact, editIcon, setIsSelfRedact } = useIsRedactArea(true, null, props.isCanRedact, true);
+  const { isRedact, editIcon, setIsSelfRedact } = useIsRedactArea({
+    redactable: true,
+    canRedact: props.isCanRedact,
+    isShowDoneButton: true,
+  });
   const editIconNode = isCanRedact && isExpand && editIcon;
 
   const actionPanelNode = useActionPanelNode(

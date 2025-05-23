@@ -90,7 +90,7 @@ export interface IComOrdProps {
   chordedOrd: boolean;
   ord: Order;
   ordi: number;
-  visibleOrdi: number;
+  visibleOrdi?: number;
   positions?: number[];
   isJoinLetters: boolean;
   com: Com;

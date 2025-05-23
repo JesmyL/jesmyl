@@ -50,7 +50,12 @@ export function ScheduleWidget({
   );
   const prevDate = schedule?.prevStart == null ? null : new Date(schedule.prevStart);
 
-  const { editIcon, isRedact } = useIsRedactArea(true, null, rights.isCanRedact, true);
+  const { editIcon, isRedact } = useIsRedactArea({
+    redactable: true,
+    canRedact: rights.isCanRedact,
+    isShowDoneButton: true,
+    icon: 'PropertyEdit',
+  });
   const [startTime, setStartTime] = useState(schedule?.start);
 
   const titleNode = (

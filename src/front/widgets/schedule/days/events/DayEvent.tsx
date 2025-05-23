@@ -53,7 +53,11 @@ export function ScheduleWidgetDayEvent(props: Props) {
   let timerClassNamePlus = '';
   const rights = useScheduleWidgetRightsContext();
   const eventType = props.schedule.types[props.event.type];
-  const { editIcon, isRedact, isSelfRedact, setIsSelfRedact } = useIsRedactArea(true, null, rights.isCanRedact, true);
+  const { editIcon, isRedact, isSelfRedact, setIsSelfRedact } = useIsRedactArea({
+    redactable: true,
+    canRedact: rights.isCanRedact,
+    isShowDoneButton: true,
+  });
   const dayEventScopeProps: ScheduleDayEventScopeProps = useMemo(
     () => ({ ...props.dayScopeProps, eventMi: props.event.mi }),
     [props.dayScopeProps, props.event.mi],
