@@ -25,6 +25,7 @@ import {
   ScheduleWidgetAttRef,
   ScheduleWidgetPhotoKey,
 } from 'shared/api';
+import { StameskaIconName } from 'stameska-icon';
 
 type Callback<Value> = (args: { props: ScheduleScopeProps; value: Value }) => IScheduleWidget;
 
@@ -69,7 +70,7 @@ export type SchListsSokiInvocatorMethods = {
   createCategory: (args: { props: ScheduleScopeProps }) => IScheduleWidget;
   createUnit: (args: { props: ScheduleScopeProps; cati: number }) => IScheduleWidget;
   setCategoryTitle: (args: { props: ScheduleListCategoryScopeProps; value: string }) => IScheduleWidget;
-  setCategoryIcon: (args: { props: ScheduleListCategoryScopeProps; value: TheIconKnownName }) => IScheduleWidget;
+  setCategoryIcon: (args: { props: ScheduleListCategoryScopeProps; value: StameskaIconName }) => IScheduleWidget;
   setCategoryMembersTitle: (args: { props: ScheduleListCategoryScopeProps; value: string }) => IScheduleWidget;
   setCategoryMentorsTitle: (args: { props: ScheduleListCategoryScopeProps; value: string }) => IScheduleWidget;
 
@@ -79,7 +80,7 @@ export type SchListsSokiInvocatorMethods = {
 
 export type SchRolesSokiInvocatorMethods = {
   createRole: (args: { props: ScheduleScopeProps }) => IScheduleWidget;
-  setRoleIcon: (args: { props: ScheduleRoleScopeProps; value: TheIconKnownName; roleTitle: string }) => IScheduleWidget;
+  setRoleIcon: (args: { props: ScheduleRoleScopeProps; value: StameskaIconName; roleTitle: string }) => IScheduleWidget;
   setRoleTitle: (args: { props: ScheduleRoleScopeProps; value: string; prevTitle: string }) => IScheduleWidget;
   addRoleCategory: (args: { props: ScheduleScopeProps }) => IScheduleWidget;
   setRoleCategoryTitle: (args: {
@@ -265,7 +266,7 @@ export type SchAttachmentTypesSokiInvocatorMethods = {
   }) => IScheduleWidget;
   setIcon: (args: {
     props: ScheduleAttachmentTypeScopeProps;
-    value: TheIconKnownName;
+    value: StameskaIconName;
     tattTitle: string;
   }) => IScheduleWidget;
   setUse: (args: { props: ScheduleAttachmentTypeScopeProps; value: number; tattTitle: string }) => IScheduleWidget;

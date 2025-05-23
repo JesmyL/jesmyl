@@ -1,4 +1,4 @@
-import { takeIconFromKnownPack } from '#shared/ui/the-icon/utils';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import styled, { css } from 'styled-components';
 import { useScreenTranslationBackgroundStyles } from '../../complect/hooks/background-styles';
 import { AlertLineConfig } from '../../model';
@@ -10,7 +10,6 @@ type Props = {
 };
 
 export default function AlertLineConfigIcon({ config, isSelected, onClick }: Props) {
-  const Icon = takeIconFromKnownPack(config.icon);
   const background = useScreenTranslationBackgroundStyles(config);
 
   return (
@@ -21,7 +20,7 @@ export default function AlertLineConfigIcon({ config, isSelected, onClick }: Pro
       $background={background}
       $isSelected={isSelected}
     >
-      <Icon />
+      <LazyIcon icon={config.icon} />
     </StypedIconContainer>
   );
 }

@@ -1,15 +1,17 @@
 import { HTMLAttributes } from 'react';
-import { takeIconFromKnownPack } from './utils';
+import { makeStameskaIconSvgProps, StameskaIconKind, StameskaIconName } from 'stameska-icon';
 
 export type LazyIconProps = HTMLAttributes<HTMLOrSVGElement> & {
-  icon: TheIconKnownName;
-  kind?: TheIconNameKind;
+  icon: StameskaIconName;
+  kind?: StameskaIconKind;
   withoutAnimation?: boolean;
 };
 
-export default function TheIconLazy({ icon, kind, ...props }: LazyIconProps) {
-  const Icon = takeIconFromKnownPack(icon, kind);
-  if (Icon === undefined) return null;
-
-  return <Icon {...props} />;
+export default function TheIconLazy({ icon, kind, withoutAnimation, className, ...props }: LazyIconProps) {
+  return (
+    <svg
+      {...makeStameskaIconSvgProps(icon, kind, className, withoutAnimation)}
+      {...props}
+    />
+  );
 }

@@ -4,6 +4,7 @@ import { useToast } from '#shared/ui/modal/useToast';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ReactNode, useEffect, useState } from 'react';
+import { StameskaIconName } from 'stameska-icon';
 import { StrongEditableFieldMultiline } from './StrongEditableFieldMultiline';
 
 type Props<Key, Value> = {
@@ -13,7 +14,7 @@ type Props<Key, Value> = {
   description?: ReactNode;
   disabled?: boolean;
   type?: 'text' | 'number';
-  icon?: TheIconKnownName;
+  icon?: StameskaIconName;
   placeholder?: string;
   isRedact?: boolean;
   setSelfRedact?: boolean;

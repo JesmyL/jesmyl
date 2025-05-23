@@ -9,6 +9,7 @@ import { atom, useAtomValue } from 'atomaric';
 import { ReactNode, useMemo } from 'react';
 import { IScheduleWidget, ScheduleWidgetCleans, ScheduleWidgetDayListItemTypeBox } from 'shared/api';
 import { emptyArray } from 'shared/utils';
+import { StameskaIconName } from 'stameska-icon';
 import styled from 'styled-components';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { schEventTypesSokiInvocatorClient } from '../invocators/invocators.methods';
@@ -18,7 +19,7 @@ import { useAttTypeTitleError } from './useAttTypeTitleError';
 type Props = {
   postfix: ReactNode;
   schedule: IScheduleWidget;
-  icon: TheIconKnownName;
+  icon: StameskaIconName;
   usedCounts?: Record<number, number>;
   onItemSelectSend?: (typei: number) => Promise<unknown>;
 };

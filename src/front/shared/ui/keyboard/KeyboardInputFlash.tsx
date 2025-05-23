@@ -1,6 +1,7 @@
 import { propsOfClicker } from '#shared/lib/clicker/propsOfClicker';
 import { indexSimpleValIsUseNativeKeyboard } from 'front/components/index/complect/index.simpleValues';
 import React, { memo, ReactNode, useEffect, useState } from 'react';
+import { StameskaIconName } from 'stameska-icon';
 import { LazyIcon } from '../the-icon/LazyIcon';
 import { keyboardKeyDict, keyboardNumberScreenLines } from './Keyboard.complect';
 import './Keyboard.scss';
@@ -52,7 +53,7 @@ export const KEYBOARD_FLASH = memo(function ({
   const keyNode = (
     className: string,
     key: string,
-    icon?: TheIconKnownName,
+    icon?: StameskaIconName,
     onMouseUp?: React.MouseEventHandler<HTMLDivElement>,
     children?: ReactNode,
     onContextMenu?: React.MouseEventHandler<HTMLOrSVGElement>,

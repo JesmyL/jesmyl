@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { StameskaIconName } from 'stameska-icon';
 import { SokiAppName, SokiAuthLogin } from '../../soki.model';
 import { ScheduleWidgetRegType, ScheduleWidgetUserRoleRight } from './rights';
 
@@ -54,7 +55,7 @@ export interface IScheduleWidgetListUnit {
 
 export interface IScheduleWidgetListCat {
   title: string;
-  icon: TheIconKnownName;
+  icon: StameskaIconName;
   titles: [string, string];
 }
 
@@ -130,7 +131,7 @@ export interface IScheduleWidgetDayEvent {
 export type ScheduleWidgetDayEventAttValues = Record<ScheduleWidgetAttKey, ScheduleWidgetDayEventAttValue>;
 
 export type ScheduleWidgetAppAttBasic<AttValue = any> = Record<`[SCH]:${string}`, unknown> & {
-  icon: TheIconKnownName;
+  icon: StameskaIconName;
   title: string;
   im?: `[SCH]:${string}` | nil;
   description: string;
@@ -194,7 +195,7 @@ export interface IScheduleWidgetRole {
   mi: number;
   title: string;
   userMi?: IScheduleWidgetUserMi;
-  icon?: TheIconKnownName;
+  icon?: StameskaIconName;
   cati?: number;
 }
 

@@ -1,12 +1,13 @@
 import { mylib } from '#shared/lib/my-lib';
 import { FunctionComponent, HTMLAttributes, ReactNode, useState } from 'react';
+import { StameskaIconName } from 'stameska-icon';
 import { LazyIcon } from '../the-icon/LazyIcon';
 
 interface Props<Element extends HTMLElement> {
   children: ReactNode | ((isExpand: boolean) => ReactNode);
   title: ReactNode | ((isExpand: boolean) => ReactNode);
   postfix?: ReactNode | ((isExpand: boolean) => ReactNode);
-  icon?: TheIconKnownName;
+  icon?: StameskaIconName;
   HeaderNode?: FunctionComponent<HTMLAttributes<Element>>;
 }
 

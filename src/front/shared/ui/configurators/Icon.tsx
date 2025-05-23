@@ -1,28 +1,28 @@
 import { MyLib } from '#shared/lib/my-lib';
 import { atom } from 'atomaric';
 import { ReactNode, useState } from 'react';
+import { StameskaIconName, stameskaIconPack } from 'stameska-icon';
 import { Modal } from '../modal/Modal/Modal';
 import { ModalBody } from '../modal/Modal/ModalBody';
 import { ModalHeader } from '../modal/Modal/ModalHeader';
 import { useToast } from '../modal/useToast';
 import { LazyIcon } from '../the-icon/LazyIcon';
-import { theIconKnownPack } from '../the-icon/pack';
 import { TheIconButton } from '../the-icon/TheIconButton';
 import { TheButton } from '../TheButton';
 
 const isOpenModalAtom = atom(false);
 
 export default function IconConfigurator(props: {
-  icon: TheIconKnownName;
+  icon: StameskaIconName;
   header: ReactNode;
-  used?: (TheIconKnownName | und)[];
-  onSend: (icon: TheIconKnownName) => Promise<unknown>;
+  used?: (StameskaIconName | und)[];
+  onSend: (icon: StameskaIconName) => Promise<unknown>;
 }) {
   const [limit, setLimit] = useState(36);
-  const [loadingIcon, setLoadingIcon] = useState<TheIconKnownName | null>(null);
+  const [loadingIcon, setLoadingIcon] = useState<StameskaIconName | null>(null);
   const usedSet = new Set(props.used);
   const toast = useToast();
-  const iconNames = MyLib.keys(theIconKnownPack);
+  const iconNames = MyLib.keys(stameskaIconPack);
   const limitedIconNames = iconNames.slice(0, limit);
 
   return (

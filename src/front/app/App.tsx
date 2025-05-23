@@ -1,5 +1,4 @@
 import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
-import { IconProvider } from '#shared/ui/the-icon/IconProvider';
 import { authIDB } from '$index/db/auth-idb';
 import { ThemeProvider } from '@mui/material';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
@@ -9,6 +8,8 @@ import { soki } from 'front/soki';
 import { useSyncExternalStore } from 'react';
 import { routeTree } from 'routeTree.gen';
 import { BlockStylesProvider } from 'shared/values/cm/block-styles/BlockStylesProvider';
+import { makeStameskaIconStyledProvider } from 'stameska-icon/provider';
+import styled, { css, keyframes } from 'styled-components';
 import './App.scss';
 import { muiDarkThemePalette } from './lib/theme/lib/darkPalette';
 import { muiLightThemePalette } from './lib/theme/lib/lightPalette';
@@ -28,8 +29,8 @@ export const App = () => {
   const isDarkMode = complectIDB.useValue.isDarkMode();
 
   return (
-    <BlockStylesProvider>
-      <IconProvider>
+    <StyledIconProvider>
+      <BlockStylesProvider>
         <AppDialogProvider title="app">
           <ThemeProvider
             theme={isDarkMode ? muiDarkThemePalette : muiLightThemePalette}
@@ -38,10 +39,12 @@ export const App = () => {
             <RouterProvider router={router} />
           </ThemeProvider>
         </AppDialogProvider>
-      </IconProvider>
-    </BlockStylesProvider>
+      </BlockStylesProvider>
+    </StyledIconProvider>
   );
 };
+
+const StyledIconProvider = makeStameskaIconStyledProvider(styled, css, keyframes);
 
 soki.onTokenInvalidEvent.listen(() => {
   authIDB.remove.auth();

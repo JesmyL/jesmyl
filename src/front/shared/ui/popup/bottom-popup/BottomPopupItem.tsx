@@ -1,12 +1,13 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { HTMLAttributes, JSX } from 'react';
+import { StameskaIconKind, StameskaIconName } from 'stameska-icon';
 import { useBottomPopupOnCloseContext } from './context';
 
 interface Props extends HTMLAttributes<HTMLLIElement> {
-  icon?: TheIconKnownName;
+  icon?: StameskaIconName;
   iconNode?: JSX.Element;
-  iconKind?: TheIconNameKind;
+  iconKind?: StameskaIconKind;
   titleNode?: React.ReactNode;
   title?: string;
   rightNode?: React.ReactNode;

@@ -1,11 +1,12 @@
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { ComPlayer } from '$cm/col/com/player/ComPlayer';
 import { useState } from 'react';
+import { StameskaIconName } from 'stameska-icon';
 
 interface Props {
   srcs: string[];
   onToggle: (src: string) => Promise<unknown>;
-  icon: TheIconKnownName;
+  icon: StameskaIconName;
 }
 
 export const ComAudioControlledList = ({ srcs, onToggle, icon }: Props) => {

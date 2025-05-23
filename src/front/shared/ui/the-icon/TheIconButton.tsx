@@ -1,14 +1,15 @@
 import { mylib } from '#shared/lib/my-lib';
 import { IconButton } from '@mui/material';
 import { ReactNode } from 'react';
+import { StameskaIconKind, StameskaIconName } from 'stameska-icon';
 import { ConfirmContent } from '../modal/confirm/ConfirmContent';
 import { useToast } from '../modal/useToast';
 import { TheIconLoading } from './IconLoading';
 import { LazyIcon } from './LazyIcon';
 
 interface Props {
-  icon: TheIconKnownName;
-  kind?: TheIconNameKind;
+  icon: StameskaIconName;
+  kind?: StameskaIconKind;
   disabled?: boolean;
   withoutAnimation?: boolean;
   disabledReason?: (() => ReactNode) | ReactNode;

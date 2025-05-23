@@ -3,6 +3,7 @@ import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useEffect, useRef, useState } from 'react';
+import { StameskaIconName } from 'stameska-icon';
 import styled, { css } from 'styled-components';
 
 type Props<ChangedValue> = {
@@ -12,7 +13,7 @@ type Props<ChangedValue> = {
   defaultValue: string;
   label?: string;
   placeholder?: string;
-  icon: TheIconKnownName;
+  icon: StameskaIconName;
   multiline?: boolean;
   isError?: boolean;
 };

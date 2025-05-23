@@ -1,5 +1,6 @@
 import { JStorageBooleanVal } from '#shared/lib/JSimpleStorage/exports/Boolean';
 import { ReactNode, useEffect, useState } from 'react';
+import { StameskaIconName } from 'stameska-icon';
 import { StyledLoadingSpinner } from './IconLoading';
 import { LazyIcon } from './LazyIcon';
 
@@ -35,7 +36,7 @@ export function IconCheckbox(props: Props) {
       : () => props.onChange?.(!props.checked)
     : undefined;
 
-  const renderNode = (icon: TheIconKnownName) => {
+  const renderNode = (icon: StameskaIconName) => {
     if (isLoading)
       return (
         <StyledLoadingSpinner
@@ -77,7 +78,7 @@ export function IconCheckbox(props: Props) {
 }
 
 const WithSimpleValuer = (props: {
-  children: (icon: TheIconKnownName) => ReactNode;
+  children: (icon: StameskaIconName) => ReactNode;
   simpleValuer: JStorageBooleanVal;
   negativeValue?: boolean;
 }) => {
