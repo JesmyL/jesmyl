@@ -33,7 +33,7 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
     redact: isIndividualReplacement || null,
     canRedact: rights.isCanRedact,
     isShowDoneButton: true,
-    icon: 'EditTable',
+    icon: 'DashboardSquareEdit',
   });
   const [listTitle, isExpand, switchIsExpand] = useIsRememberExpand(
     JSON.stringify(dayScopeProps),
@@ -214,7 +214,7 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
           {isRedact && moveEventMi === null && (
             <ScheduleWidgetEventTypeList
               postfix="Добавить событие"
-              icon="PlusSign"
+              icon="CreditCardAdd"
               schedule={rights.schedule}
               usedCounts={usedCounts}
               onItemSelectSend={typei => schDaysSokiInvocatorClient.addEvent({ props: dayScopeProps, value: typei })}

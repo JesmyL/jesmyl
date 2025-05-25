@@ -669,7 +669,7 @@ const StrongField = styled(StrongEditableField)<{ $indent: boolean }>`
           }
         }
 
-        > *:first-child > p:first-child,
+        > *:first-child > :where(p, h1, h2, h3, h4, h5, h6):first-child,
         > p:first-child {
           text-indent: var(--indent);
         }

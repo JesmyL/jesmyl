@@ -48,6 +48,7 @@ export const DayEventKnownAtt = (props: ScheduleDayEventKnownAttProps) => {
     redactable: true,
     canRedact: props.isCanRedact,
     isShowDoneButton: true,
+    icon: 'TaskEdit01',
   });
   const editIconNode = isCanRedact && isExpand && editIcon;
 

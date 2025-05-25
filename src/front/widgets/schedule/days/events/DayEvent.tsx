@@ -57,6 +57,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
     redactable: true,
     canRedact: rights.isCanRedact,
     isShowDoneButton: true,
+    icon: 'PropertyEdit',
   });
   const dayEventScopeProps: ScheduleDayEventScopeProps = useMemo(
     () => ({ ...props.dayScopeProps, eventMi: props.event.mi }),

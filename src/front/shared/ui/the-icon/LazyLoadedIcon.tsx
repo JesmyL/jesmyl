@@ -7,7 +7,7 @@ export type LazyIconProps = HTMLAttributes<HTMLOrSVGElement> & {
   withoutAnimation?: boolean;
 };
 
-export default function TheIconLazy({ icon, kind, withoutAnimation, className, ...props }: LazyIconProps) {
+export default function TheIconLazy({ icon, kind, withoutAnimation, className, children, ...props }: LazyIconProps) {
   return (
     <svg
       {...makeStameskaIconSvgProps(icon, kind, className, withoutAnimation)}
