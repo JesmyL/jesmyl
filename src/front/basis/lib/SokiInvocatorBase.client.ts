@@ -1,8 +1,6 @@
-import { onSokiClientEventerInvocatorInvoke } from 'front/eventers';
-import { makeSokiInvocatorBase } from 'shared/api/complect/SokiInvocatorBase.master';
 import { emptyFunc } from 'shared/utils';
+import { makeTSJRPCBaseMaker } from 'tsjrpc';
 
-export const SokiInvocatorBaseClient = makeSokiInvocatorBase({
-  eventerValue: onSokiClientEventerInvocatorInvoke,
+export const { maker: SokiInvocatorBaseClient, next: sokiInvocatorBaseClientNext } = makeTSJRPCBaseMaker({
   onErrorMessage: emptyFunc,
 });

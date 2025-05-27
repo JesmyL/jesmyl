@@ -1,8 +1,7 @@
 import { LocalSokiAuth, SokiVisit } from 'shared/api';
-import { makeSokiInvocatorBase } from 'shared/api/complect/SokiInvocatorBase.master';
 import { emptyFunc, smylib } from 'shared/utils';
+import { makeTSJRPCBaseMaker } from 'tsjrpc';
 import { WebSocket } from 'ws';
-import { onSokiServerEventerInvocatorInvoke } from './complect/soki/eventers';
 import { backConfig } from './config/backConfig';
 import { jesmylChangesBot } from './sides/telegram-bot/control/jesmylChangesBot';
 import { tglogger } from './sides/telegram-bot/log/log-bot';
@@ -11,12 +10,11 @@ import { userAuthStringified, userVisitStringified } from './utils';
 export type SokiServerInvocatorTool = { client: WebSocket; auth: LocalSokiAuth | und; visitInfo: SokiVisit | und };
 export type SokiServerBeforeEachTool = { minVersion?: number; minLevel?: number };
 
-export const SokiInvocatorBaseServer = makeSokiInvocatorBase<
+export const { maker: SokiInvocatorBaseServer, next: sokiInvocatorBaseServerNext } = makeTSJRPCBaseMaker<
   SokiServerInvocatorTool,
   string | ((tool: SokiServerInvocatorTool) => string),
   SokiServerBeforeEachTool
 >({
-  eventerValue: onSokiServerEventerInvocatorInvoke,
   onErrorMessage: ({ errorMessage, invoke: { method, scope }, tool: { auth, visitInfo } }) => {
     tglogger.userErrors(
       `${scope}.${method}()\n\n${errorMessage}\n\n${userAuthStringified(auth)}\n\n${userVisitStringified(visitInfo)}`,

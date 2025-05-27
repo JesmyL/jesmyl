@@ -1,5 +1,5 @@
 import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
-import { SokiServerInvocatorTool } from 'back/SokiInvocatorBase.server';
+import { sokiInvocatorBaseServerNext, SokiServerInvocatorTool } from 'back/SokiInvocatorBase.server';
 import { userAuthStringified, userVisitStringified } from 'back/utils';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 import { makeRegExp } from 'regexpert';
@@ -14,7 +14,6 @@ import {
 import { setSharedPolyfills, smylib } from 'shared/utils';
 import WebSocket, { WebSocketServer } from 'ws';
 import { ErrorCatcher } from '../ErrorCatcher';
-import { onSokiServerEventerInvocatorInvoke } from './eventers';
 import { tokenSecretFileStore } from './file-stores';
 import { SokiServerClientSelector } from './model';
 
@@ -112,7 +111,7 @@ export class SokiServer {
 
         if (event.invoke === undefined) return;
 
-        onSokiServerEventerInvocatorInvoke.invoke({
+        sokiInvocatorBaseServerNext({
           invoke: event.invoke,
           sendResponse: this.sendInvokeEvent,
           tool: { client, auth, visitInfo },

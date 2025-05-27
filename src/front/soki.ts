@@ -1,3 +1,4 @@
+import { sokiInvocatorBaseClientNext } from '#basis/lib/SokiInvocatorBase.client';
 import { makeRegExp } from 'regexpert';
 import { InvocatorClientEvent, InvocatorClientTool, InvocatorServerEvent, SokiError } from 'shared/api';
 import { Eventer } from 'shared/utils';
@@ -5,7 +6,6 @@ import { jversion } from 'shared/values';
 import { authIDB } from './components/index/db/auth-idb';
 import { indexIDB } from './components/index/db/index-idb';
 import { environment } from './environment';
-import { onSokiClientEventerInvocatorInvoke } from './eventers';
 
 export class SokiTrip {
   private ws?: WebSocket;
@@ -96,7 +96,7 @@ export class SokiTrip {
 
         if (event.invoke === undefined) return;
 
-        onSokiClientEventerInvocatorInvoke.invoke({
+        sokiInvocatorBaseClientNext({
           invoke: event.invoke,
           sendResponse: this.send,
           tool: null,
