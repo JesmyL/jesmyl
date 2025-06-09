@@ -1,8 +1,8 @@
 import { propagationStopper } from '#shared/lib/event-funcs';
 
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
+import { Portal } from '#shared/ui/Portal';
 import { RootAnchoredContent } from '#shared/ui/RootAnchoredContent';
-import { Portal } from '@mui/material';
 import { Atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { StyledModal, StyledModalScreen, StyledModalScreenWrapper } from '../styled';
@@ -27,27 +27,25 @@ export const Modal = <Value,>({
   const isOpenValue = useAtomValue(openAtom);
   const isOpen = checkIsOpen === undefined ? isOpenValue === 0 || !!isOpenValue : checkIsOpen(isOpenValue);
 
-  const modalNode = (
+  const modalNode = isOpen && (
     <Portal>
-      {isOpen && (
-        <StyledModal
-          className="type_screen"
-          onClick={event => {
-            event.stopPropagation();
-            onClose(openAtom);
-          }}
-        >
-          <EscapableModal onClose={() => onClose(openAtom)} />
-          <StyledModalScreenWrapper className="type_screen">
-            <StyledModalScreen
-              className={'type_screen mood mood_' + mood}
-              onClick={propagationStopper}
-            >
-              {children}
-            </StyledModalScreen>
-          </StyledModalScreenWrapper>
-        </StyledModal>
-      )}
+      <StyledModal
+        className="type_screen"
+        onClick={event => {
+          event.stopPropagation();
+          onClose(openAtom);
+        }}
+      >
+        <EscapableModal onClose={() => onClose(openAtom)} />
+        <StyledModalScreenWrapper className="type_screen">
+          <StyledModalScreen
+            className={'type_screen mood mood_' + mood}
+            onClick={propagationStopper}
+          >
+            {children}
+          </StyledModalScreen>
+        </StyledModalScreenWrapper>
+      </StyledModal>
     </Portal>
   );
 

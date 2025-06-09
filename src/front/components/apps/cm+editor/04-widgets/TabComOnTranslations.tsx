@@ -2,7 +2,6 @@ import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-
 import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { translationPushKinds } from '$cm/col/com/translationPushKinds';
 import { useCmScreenTranslationCurrentConfig } from '$cm/translation/complect/controlled/hooks/configs';
-import { Button } from '@mui/material';
 
 export const CmEditorTabComOnTranslations = () => {
   const ccom = useEditableCcom();
@@ -14,16 +13,16 @@ export const CmEditorTabComOnTranslations = () => {
     <>
       <div className="my-3">
         {translationPushKinds.map(({ title }, kindi) => (
-          <Button
+          <button
             key={kindi}
-            color={ccom.translationPushKind === kindi ? 'x7' : 'x3'}
+            className={'text-x1 px-2 mr-1 mt-1 ' + (ccom.translationPushKind === kindi ? 'bg-x7' : 'bg-x3')}
             onClick={() => {
               if (ccom.translationPushKind === kindi) return;
               cmEditComClientInvocatorMethods.changePushKind({ comw: ccom.wid, value: kindi });
             }}
           >
             {title}
-          </Button>
+          </button>
         ))}
       </div>
       {ccom.getOrderedBlocks(currentConfig?.pushKind).map((lines, linesi) => {

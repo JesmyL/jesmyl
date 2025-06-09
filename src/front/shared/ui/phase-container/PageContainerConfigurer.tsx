@@ -1,5 +1,4 @@
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
-import { IconButton } from '@mui/material';
 import { Link } from '@tanstack/react-router';
 import { useRef } from 'react';
 import { emptyFunc } from 'shared/utils';
@@ -58,16 +57,13 @@ export function PageContainerConfigurer(props: PageContainerConfigurerProps) {
         <StyledPhaseContainerConfigurerHeadWithMoreIcon className={`head ${props.headClass || 'flex between'}`}>
           <StyledPhaseContainerConfigurerHead className="w-full">{props.head}</StyledPhaseContainerConfigurerHead>
           {props.onMoreClick && (
-            <IconButton
-              color="x7"
-              className="pointer"
-            >
+            <button className="pointer m-1">
               <LazyIcon
                 icon="MoreVerticalCircle01"
                 id="phase-container-header-more-button"
                 onClick={() => props.onMoreClick?.(true)}
               />
-            </IconButton>
+            </button>
           )}
         </StyledPhaseContainerConfigurerHeadWithMoreIcon>
       </StyledPhaseContainerConfigurerHeader>

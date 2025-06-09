@@ -1,7 +1,6 @@
 import { mylib, MyLib } from '#shared/lib/my-lib';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
-import { Button } from '@mui/material';
 import { useAtomValue } from 'atomaric';
 import { ComPlayer } from './ComPlayer';
 import { ComPlayerMarksConfigurerTimeMark } from './ComPlayerMarksConfigurerTimeMark';
@@ -16,16 +15,14 @@ export const ComPlayerMarksConfigurer = ({ src }: { src: string }) => {
     <>
       <div className="text-2xl mb-5">Настройка точек песни</div>
       <ComPlayer audioSrcs={src} />
-      <Button
-        startIcon={<LazyIcon icon="PlusSign" />}
-        color="x1"
-        variant="contained"
-        className="mt-2!"
+      <button
+        className="flex justify-center gap-2 px-2 py-1 min-w-35 border-x2! border-4! rounded-lg mt-2!"
         disabled={currentTime === 0}
         onClick={() => cmIDB.addAudioTrackMark(src, currentTime, mylib.convertSecondsInStrTime(currentTime))}
       >
+        <LazyIcon icon="PlusSign" />
         {currentTime}
-      </Button>
+      </button>
 
       {MyLib.entries(trackMarks?.marks ?? {}).map(([time, text]) => {
         return (

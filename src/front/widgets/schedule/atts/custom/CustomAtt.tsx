@@ -13,6 +13,7 @@ import { atom, useAtomValue } from 'atomaric';
 import React, { ReactNode, useMemo } from 'react';
 import {
   CustomAttUseRights,
+  IScheduleWidgetAttachmentTypeMi,
   ScheduleAttachmentTypeScopeProps,
   ScheduleWidgetAppAttCustomized,
   ScheduleWidgetRightsCtrl,
@@ -34,7 +35,7 @@ enum WhoCan {
 }
 
 const whoCaniAtom = atom<WhoCan>(WhoCan.No);
-const isOpenAttRedactorAtom = atom(false);
+const openAttRedactorAtom = atom<IScheduleWidgetAttachmentTypeMi | null>(null);
 
 const whoCanUnits: { action: string; rule: 'R' | 'U'; icon: StameskaIconName }[] = [
   {
@@ -92,7 +93,7 @@ export function ScheduleWidgetCustomAtt(props: {
             <LazyIcon
               className="pointer"
               icon="PencilEdit01"
-              onClick={isOpenAttRedactorAtom.toggle}
+              onClick={() => openAttRedactorAtom.set(props.tatt.mi)}
             />
           </div>
         )}
@@ -390,7 +391,10 @@ export function ScheduleWidgetCustomAtt(props: {
       )}
 
       {isCanRedact && !props.isRedact && (
-        <Modal openAtom={isOpenAttRedactorAtom}>
+        <Modal
+          openAtom={openAttRedactorAtom}
+          checkIsOpen={openTatt => openTatt === props.tatt.mi}
+        >
           <ModalHeader>
             <span className="flex flex-gap full-width between">
               <span>

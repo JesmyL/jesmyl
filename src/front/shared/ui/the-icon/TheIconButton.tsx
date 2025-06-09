@@ -1,5 +1,4 @@
 import { mylib } from '#shared/lib/my-lib';
-import { IconButton } from '@mui/material';
 import { ReactNode } from 'react';
 import { StameskaIconKind, StameskaIconName } from 'stameska-icon';
 import { ConfirmContent } from '../modal/confirm/ConfirmContent';
@@ -58,18 +57,16 @@ export const TheIconButton = (props: Props) => {
                 }
               >
                 {props.prefix}
-                <IconButton>
-                  {props.isLoading ? (
-                    <TheIconLoading className={props.iconClassName} />
-                  ) : (
-                    <LazyIcon
-                      icon={props.icon}
-                      kind={props.kind}
-                      className={props.iconClassName}
-                      withoutAnimation={props.withoutAnimation}
-                    />
-                  )}
-                </IconButton>
+                {props.isLoading ? (
+                  <TheIconLoading className={props.iconClassName} />
+                ) : (
+                  <LazyIcon
+                    icon={props.icon}
+                    kind={props.kind}
+                    className={props.iconClassName}
+                    withoutAnimation={props.withoutAnimation}
+                  />
+                )}
                 {props.postfix}
               </span>
             </>

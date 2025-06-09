@@ -1,6 +1,5 @@
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { IconButton } from '@mui/material';
 import { memo } from 'react';
 import { useComToolItemAttrsContext, useComToolNameContext, useIsComToolIconItemsContext } from './lib/contexts';
 
@@ -11,14 +10,14 @@ export const ComTool = memo(({ iconClassName = '', ...props }: Props) => {
 
   return useIsComToolIconItemsContext() ? (
     props.icon ? (
-      <IconButton>
+      <button className="m-1">
         <LazyIcon
           icon={props.icon}
           kind={props.iconKind}
           className={`pointer com-tool com-tool-${toolName} ${iconClassName}`}
           onClick={props.onClick}
         />
-      </IconButton>
+      </button>
     ) : (
       props.iconNode
     )

@@ -1,4 +1,4 @@
-import { Button, Menu } from '@mui/material';
+import { Menu } from '@mui/material';
 import { useRef, useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { ComPlayer } from './ComPlayer';
@@ -18,16 +18,13 @@ export const ComPlayerWithPoints = ({ audioSrcs }: Props) => {
       audioSrcs={audioSrcs}
       timeRender={(timeNode, currentSrc) => (
         <>
-          <Button
+          <button
             ref={buttonRef}
-            className="text-x3! bg-x1! h-6! pointer rounded-2xl!"
-            color="x3"
-            size="small"
-            variant="outlined"
+            className="bg-x1 h-6 w-13 pointer text-x3 rounded-2xl"
             onClick={() => setIsOpenMenu(true)}
           >
             {timeNode}
-          </Button>
+          </button>
 
           <Menu
             open={isOpenMenu}

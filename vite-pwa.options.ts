@@ -12,6 +12,11 @@ export const vitePWAOptions: Partial<VitePWAOptions> = {
     short_name: 'Jes.myL',
     description: 'Сборник приложений',
     prefer_related_applications: false,
+    start_url: '.',
+    display: 'standalone',
+    theme_color: '#000000',
+    background_color: '#000000',
+    categories: ['christian', 'христианское', 'песни', 'хвала', 'для Иисуса Христа', 'JesmyL'],
     icons: [
       {
         src: 'android-chrome-192x192.png',
@@ -24,11 +29,6 @@ export const vitePWAOptions: Partial<VitePWAOptions> = {
         type: 'image/png',
       },
     ],
-    start_url: '.',
-    display: 'standalone',
-    theme_color: '#000000',
-    background_color: '#000000',
-    categories: ['christian', 'христианское', 'песни', 'хвала', 'для Иисуса Христа', 'JesmyL'],
     share_target: {
       action: '/share',
       method: 'GET',

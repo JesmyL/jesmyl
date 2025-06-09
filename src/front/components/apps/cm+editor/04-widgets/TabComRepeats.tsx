@@ -8,7 +8,6 @@ import { CmComRepeatsRemoveButton } from '$cm+editor/entities/ComRepeatsRemoveBu
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { ComLine } from '$cm/col/com/line/ComLine';
 import { TheOrder } from '$cm/col/com/order/TheOrder';
-import { IconButton } from '@mui/material';
 import { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { OrderRepeats } from 'shared/api';
@@ -116,31 +115,27 @@ export const CmEditorTabComRepeats = () => {
                     {props.headerNode}
                     {ord.me.watchOrd ? (
                       <>
-                        <IconButton>
-                          <LazyIcon
-                            icon="LinkBackward"
-                            className="vertical-middle pointer margin-gap-h"
-                            onClick={() => {
-                              ord.me.watchOrd?.element?.scrollIntoView();
-                            }}
-                          />
-                        </IconButton>
-                        <IconButton>
-                          <LazyIcon
-                            icon="RowDelete"
-                            className={`vertical-middle pointer ${ord.isInheritValue('r') ? 'disabled' : ''}`}
-                            onClick={async () => {
-                              const isClear = await confirm('Очистить собственные правила повторения?');
+                        <LazyIcon
+                          icon="LinkBackward"
+                          className="vertical-middle pointer margin-gap-h"
+                          onClick={() => {
+                            ord.me.watchOrd?.element?.scrollIntoView();
+                          }}
+                        />
+                        <LazyIcon
+                          icon="RowDelete"
+                          className={`vertical-middle pointer ${ord.isInheritValue('r') ? 'disabled' : ''}`}
+                          onClick={async () => {
+                            const isClear = await confirm('Очистить собственные правила повторения?');
 
-                              if (isClear)
-                                cmEditComOrderClientInvocatorMethods.clearOwnRepeats({
-                                  ordw: ord.wid,
-                                  orderTitle: ord.me.header(),
-                                  comw: ccom.wid,
-                                });
-                            }}
-                          />
-                        </IconButton>
+                            if (isClear)
+                              cmEditComOrderClientInvocatorMethods.clearOwnRepeats({
+                                ordw: ord.wid,
+                                orderTitle: ord.me.header(),
+                                comw: ccom.wid,
+                              });
+                          }}
+                        />
                       </>
                     ) : null}
                   </div>

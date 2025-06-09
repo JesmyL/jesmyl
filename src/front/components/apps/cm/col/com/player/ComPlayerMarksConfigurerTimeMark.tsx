@@ -3,7 +3,6 @@ import { mylib } from '#shared/lib/my-lib';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
-import { Button } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 interface Props {
@@ -52,13 +51,15 @@ export const ComPlayerMarksConfigurerTimeMark = ({ text, time, src }: Props) => 
           />
         </>
       ) : (
-        <Button
-          color="x3"
+        <button
+          className="text-x3 flex gap-2"
           onClick={() => setIsRedactTime(true)}
-          endIcon={<LazyIcon icon="Edit02" />}
         >
-          {time} ({mylib.convertSecondsInStrTime(time)})
-        </Button>
+          <span>
+            {time} ({mylib.convertSecondsInStrTime(time)})
+          </span>
+          <LazyIcon icon="Edit02" />
+        </button>
       )}
       <input
         className="bg-x2! text-x4! px-2 py-1"
