@@ -6,7 +6,7 @@ import { useBibleShowTranslatesValue } from '$bible/basis/lib/hooks/translates';
 import { BibleBooki, BibleChapteri, BibleTranslationSingleAddress, BibleVersei } from '$bible/basis/model/base';
 import { useAtomValue } from 'atomaric';
 import { JSX, useCallback, useEffect, useState } from 'react';
-import { makeRegExp } from 'regexpert';
+import { escapeRegExpSymbols, makeRegExp } from 'regexpert';
 import { emptyArray, transcriptEnToRuText } from 'shared/utils';
 import styled from 'styled-components';
 import { bibleSearchTermAtom, bibleSearchZoneAtom } from './atoms';
@@ -20,7 +20,7 @@ interface Props {
   onClick?: (booki: BibleBooki, chapteri: BibleChapteri, versei: BibleVersei) => void;
 }
 
-const mapWordsReplaceYoLetter = (word: string) => word.replace(makeRegExp('/[ёе]/g'), '[её]');
+const mapWordsReplaceYoLetter = (word: string) => escapeRegExpSymbols(word).replace(makeRegExp('/[ёе]/g'), '[её]');
 const mapRetArrFunc = (): BibleTranslationSingleAddress[] => [];
 const getSplitReg = (lowerWords: string[]) =>
   makeRegExp(`/(${lowerWords.map(mapWordsReplaceYoLetter).sort(sortStringsByLength).join('|')})/gi`);

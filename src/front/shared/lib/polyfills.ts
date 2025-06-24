@@ -125,47 +125,59 @@ export const setPolyfills = () => {
   })();
 
   (function () {
-    if (typeof window.Set === 'function') return;
-
     function Set(this: any) {
       this._values = [];
     }
 
-    Set.prototype.add = function (value: any) {
-      if (!this.has(value)) {
-        this._values.push(value);
-      }
-      return this;
-    };
+    let setPrototype = (globalThis as any).Set?.prototype ?? Set.prototype;
 
-    Set.prototype.delete = function (value: any) {
-      const index = this._values.indexOf(value);
-      if (index !== -1) {
-        this._values.splice(index, 1);
-        return true;
-      }
-      return false;
-    };
+    if (typeof (globalThis as any).Set !== 'function') {
+      setPrototype = Set.prototype;
 
-    Set.prototype.has = function (value: any) {
-      return this._values.indexOf(value) !== -1;
-    };
+      setPrototype.add = function (value: any) {
+        if (!this.has(value)) {
+          this._values.push(value);
+        }
+        return this;
+      };
 
-    Set.prototype.clear = function () {
-      this._values = [];
-    };
+      setPrototype.delete = function (value: any) {
+        const index = this._values.indexOf(value);
+        if (index !== -1) {
+          this._values.splice(index, 1);
+          return true;
+        }
+        return false;
+      };
 
-    Set.prototype.size = function () {
-      return this._values.length;
-    };
+      setPrototype.has = function (value: any) {
+        return this._values.indexOf(value) !== -1;
+      };
 
-    Set.prototype.forEach = function (callback: any, thisArg: any) {
-      for (let i = 0; i < this._values.length; i++) {
-        callback.call(thisArg, this._values[i], this._values[i], this);
-      }
-    };
+      setPrototype.clear = function () {
+        this._values = [];
+      };
 
-    (globalThis as any).Set = Set;
+      setPrototype.size = function () {
+        return this._values.length;
+      };
+
+      setPrototype.forEach = function (callback: any, thisArg: any) {
+        for (let i = 0; i < this._values.length; i++) {
+          callback.call(thisArg, this._values[i], this._values[i], this);
+        }
+      };
+
+      (globalThis as any).Set = Set;
+    }
+
+    if (!setPrototype.difference) {
+      setPrototype.difference = function (otherSet: Set<unknown>) {
+        const differenceSet = new (globalThis as any).Set();
+        for (const elem of this) if (!otherSet.has(elem)) differenceSet.add(elem);
+        return differenceSet;
+      };
+    }
   })();
 };
 
