@@ -78,7 +78,7 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
 
         cssContentList = MyLib.entries(commentsDict).map(([blockNumber, comment]) => {
           const commentStr = comment.join('\n');
-          const isNumeredLines = commentStr.match(makeRegExp(`/(?<=^|\\n)\\d/`));
+          const isNumeredLines = commentStr.match(makeRegExp(`/(?<=^|\\n)[^а-я]*\\d/`));
 
           return css`
             ${ComBlockCommentMakerCleans.makeComOrderBlockSelector(blockNumber)} {
