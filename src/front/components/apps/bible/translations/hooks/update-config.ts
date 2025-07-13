@@ -1,7 +1,7 @@
 import { useScreenTranslationCurrentConfigi } from 'front/components/apps/+complect/translations/hooks/configs';
 import { useCallback } from 'react';
 import { BibleTranslationScreenConfig } from '../model';
-import { useBibleScreenTranslationConfigsSet } from './configs';
+import { defaultBibleConfig, useBibleScreenTranslationConfigsSet } from './configs';
 
 export const useUpdateBibleTranslationConfig = (topConfigi?: number) => {
   const setConfigs = useBibleScreenTranslationConfigsSet();
@@ -13,9 +13,11 @@ export const useUpdateBibleTranslationConfig = (topConfigi?: number) => {
         if (configIndex == null) return configs;
 
         const newConfigs = [...configs];
+
         if (config === null) {
           newConfigs.splice(configIndex, 1);
-        } else newConfigs[configIndex] = { ...newConfigs[configIndex], ...config };
+        } else newConfigs[configIndex] = { ...defaultBibleConfig, ...newConfigs[configIndex], ...config };
+
         return newConfigs;
       });
     },
