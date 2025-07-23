@@ -166,7 +166,7 @@ export const cmEditComOrderServerInvocatorBase =
             `Перемещён порядковый блок ${orderTitle} в песне ${getCmComNameInBrackets(com)}`,
 
           addAnchorOrder: ({ orderTitle }, com) =>
-            `В песне создана ссылка ${getCmComNameInBrackets(com)} ${orderTitle}`,
+            `В песне ${getCmComNameInBrackets(com)} создана ссылка ${orderTitle}`,
 
           setTexti: ({ orderTitle, texti }, com) =>
             `В песне ${getCmComNameInBrackets(com)} к порядковому блоку ${orderTitle} прикреплён ${texti + 1} текст`,

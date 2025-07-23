@@ -43,7 +43,7 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
         const commentsDict: Record<string, string[]> = {};
 
         for (const commentBlock of commentBlocks) {
-          const cmt = makePropsFromCommentsArgs(commentBlock as never);
+          const cmt = makePropsFromCommentsArgs(commentBlock);
 
           if (!cmt.comment) continue;
 
