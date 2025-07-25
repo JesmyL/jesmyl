@@ -13,7 +13,7 @@ import { editCompositionNavs } from '$cm+editor/pages/EditCompositionPage/lib/ta
 import { CmComNumber } from '$cm/col/com/complect/ComNumber';
 import { ComPlayer } from '$cm/col/com/player/ComPlayer';
 import { useConnectionState } from '$index/useConnectionState';
-import { Link, useNavigate, useSearch } from '@tanstack/react-router';
+import { Link, useNavigate, useParams } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -25,8 +25,8 @@ export const CmEditCompositionPage = () => {
   const [isOpenPlayer, setIsOpenPlayer] = useState(false);
   const connectionNode = useConnectionState('margin-gap');
   const navigate = useNavigate();
-  const { tab } = useSearch({ from: '/cm/edit/coms/$comw/' });
-  const TabComponent = tab && editCompositionNavs[tab].Component;
+  const { tab } = useParams({ from: '/cm/edit/coms/$comw/$tab' });
+  const TabComponent = tab && editCompositionNavs[tab as keyof typeof editCompositionNavs].Component;
 
   useEffect(() => {
     return hookEffectPipe()
@@ -89,9 +89,8 @@ export const CmEditCompositionPage = () => {
               return (
                 <Link
                   key={tab}
-                  to={'/cm/edit/coms/$comw'}
-                  params={{ comw: `${ccom.wid}` }}
-                  search={{ tab }}
+                  to={'/cm/edit/coms/$comw/$tab'}
+                  params={{ comw: `${ccom.wid}`, tab }}
                   className="pointer"
                 >
                   {({ isActive }) =>

@@ -5,7 +5,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { CmComWid } from 'shared/api';
 
-export const useCcomw = () => +useParams({ from: '/cm/edit/coms/$comw/' }).comw as CmComWid | NaN;
+export const useCcomw = () => +useParams({ from: '/cm/edit/coms/$comw/$tab' }).comw as CmComWid | NaN;
 
 export const useEditableCcom = (): EditableCom | und => {
   const ccomw = useCcomw();

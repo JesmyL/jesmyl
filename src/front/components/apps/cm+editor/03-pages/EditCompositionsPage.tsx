@@ -99,9 +99,8 @@ export const EditCompositionsPage = () => {
               isPutCcomFaceOff={!!term}
               importantOnClick={({ com }) => {
                 navigate({
-                  to: '/cm/edit/coms/$comw',
-                  params: { comw: `${com.wid}` },
-                  search: { tab: 'watch' },
+                  to: '/cm/edit/coms/$comw/$tab',
+                  params: { comw: `${com.wid}`, tab: 'watch' },
                 });
               }}
             />

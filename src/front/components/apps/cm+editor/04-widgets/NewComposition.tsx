@@ -218,7 +218,7 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
           onSend={() => cmEditComClientInvocatorMethods.newCom({ value: newCom })}
           onSuccess={com => {
             openAtom.set(false);
-            navigate({ to: '/cm/edit/coms/$comw', params: { comw: `${com.w}` } });
+            navigate({ to: '/cm/edit/coms/$comw/$tab', params: { comw: `${com.w}`, tab: 'watch' } });
           }}
         />
       </div>

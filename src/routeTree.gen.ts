@@ -47,9 +47,9 @@ import { Route as otherAppNameActionsIndexImport } from './front/routes/!other.$
 import { Route as CmLiCatCatwImport } from './front/routes/cm/li/cat.$catw'
 import { Route as CmEditCatsCatwImport } from './front/routes/cm/edit/cats/$catw'
 import { Route as otherAppNameSettingsConsoleImport } from './front/routes/!other.$appName/settings/console'
-import { Route as CmEditComsComwRouteImport } from './front/routes/cm/edit/coms/$comw/route'
-import { Route as CmEditComsComwIndexImport } from './front/routes/cm/edit/coms/$comw/index'
 import { Route as otherAppNameActionsFilesIndexImport } from './front/routes/!other.$appName/actions/files/index'
+import { Route as CmEditComsComwTabRouteImport } from './front/routes/cm/edit/coms/$comw.$tab/route'
+import { Route as CmEditComsComwTabIndexImport } from './front/routes/cm/edit/coms/$comw.$tab/index'
 
 // Create Virtual Routes
 
@@ -279,24 +279,24 @@ const otherAppNameSettingsConsoleRoute =
     getParentRoute: () => otherAppNameRouteRoute,
   } as any)
 
-const CmEditComsComwRouteRoute = CmEditComsComwRouteImport.update({
-  id: '/coms/$comw',
-  path: '/coms/$comw',
-  getParentRoute: () => CmEditRouteRoute,
-} as any)
-
-const CmEditComsComwIndexRoute = CmEditComsComwIndexImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => CmEditComsComwRouteRoute,
-} as any)
-
 const otherAppNameActionsFilesIndexRoute =
   otherAppNameActionsFilesIndexImport.update({
     id: '/actions/files/',
     path: '/actions/files/',
     getParentRoute: () => otherAppNameRouteRoute,
   } as any)
+
+const CmEditComsComwTabRouteRoute = CmEditComsComwTabRouteImport.update({
+  id: '/coms/$comw/$tab',
+  path: '/coms/$comw/$tab',
+  getParentRoute: () => CmEditRouteRoute,
+} as any)
+
+const CmEditComsComwTabIndexRoute = CmEditComsComwTabIndexImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => CmEditComsComwTabRouteRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -491,13 +491,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CmEditIndexLazyImport
       parentRoute: typeof CmEditRouteImport
     }
-    '/cm/edit/coms/$comw': {
-      id: '/cm/edit/coms/$comw'
-      path: '/coms/$comw'
-      fullPath: '/cm/edit/coms/$comw'
-      preLoaderRoute: typeof CmEditComsComwRouteImport
-      parentRoute: typeof CmEditRouteImport
-    }
     '/!other/$appName/settings/console': {
       id: '/!other/$appName/settings/console'
       path: '/settings/console'
@@ -561,6 +554,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CmEditComsIndexImport
       parentRoute: typeof CmEditRouteImport
     }
+    '/cm/edit/coms/$comw/$tab': {
+      id: '/cm/edit/coms/$comw/$tab'
+      path: '/coms/$comw/$tab'
+      fullPath: '/cm/edit/coms/$comw/$tab'
+      preLoaderRoute: typeof CmEditComsComwTabRouteImport
+      parentRoute: typeof CmEditRouteImport
+    }
     '/!other/$appName/actions/files/': {
       id: '/!other/$appName/actions/files/'
       path: '/actions/files'
@@ -568,12 +568,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof otherAppNameActionsFilesIndexImport
       parentRoute: typeof otherAppNameRouteImport
     }
-    '/cm/edit/coms/$comw/': {
-      id: '/cm/edit/coms/$comw/'
+    '/cm/edit/coms/$comw/$tab/': {
+      id: '/cm/edit/coms/$comw/$tab/'
       path: '/'
-      fullPath: '/cm/edit/coms/$comw/'
-      preLoaderRoute: typeof CmEditComsComwIndexImport
-      parentRoute: typeof CmEditComsComwRouteImport
+      fullPath: '/cm/edit/coms/$comw/$tab/'
+      preLoaderRoute: typeof CmEditComsComwTabIndexImport
+      parentRoute: typeof CmEditComsComwTabRouteImport
     }
   }
 }
@@ -598,16 +598,19 @@ const BibleRouteRouteWithChildren = BibleRouteRoute._addFileChildren(
   BibleRouteRouteChildren,
 )
 
-interface CmEditComsComwRouteRouteChildren {
-  CmEditComsComwIndexRoute: typeof CmEditComsComwIndexRoute
+interface CmEditComsComwTabRouteRouteChildren {
+  CmEditComsComwTabIndexRoute: typeof CmEditComsComwTabIndexRoute
 }
 
-const CmEditComsComwRouteRouteChildren: CmEditComsComwRouteRouteChildren = {
-  CmEditComsComwIndexRoute: CmEditComsComwIndexRoute,
-}
+const CmEditComsComwTabRouteRouteChildren: CmEditComsComwTabRouteRouteChildren =
+  {
+    CmEditComsComwTabIndexRoute: CmEditComsComwTabIndexRoute,
+  }
 
-const CmEditComsComwRouteRouteWithChildren =
-  CmEditComsComwRouteRoute._addFileChildren(CmEditComsComwRouteRouteChildren)
+const CmEditComsComwTabRouteRouteWithChildren =
+  CmEditComsComwTabRouteRoute._addFileChildren(
+    CmEditComsComwTabRouteRouteChildren,
+  )
 
 interface CmEditRouteRouteChildren {
   CmEditChordRoute: typeof CmEditChordRoute
@@ -616,10 +619,10 @@ interface CmEditRouteRouteChildren {
   CmEditEventsRoute: typeof CmEditEventsRoute
   CmEditMp3RulesRoute: typeof CmEditMp3RulesRoute
   CmEditIndexLazyRoute: typeof CmEditIndexLazyRoute
-  CmEditComsComwRouteRoute: typeof CmEditComsComwRouteRouteWithChildren
   CmEditCatsCatwRoute: typeof CmEditCatsCatwRoute
   CmEditCatsIndexRoute: typeof CmEditCatsIndexRoute
   CmEditComsIndexRoute: typeof CmEditComsIndexRoute
+  CmEditComsComwTabRouteRoute: typeof CmEditComsComwTabRouteRouteWithChildren
 }
 
 const CmEditRouteRouteChildren: CmEditRouteRouteChildren = {
@@ -629,10 +632,10 @@ const CmEditRouteRouteChildren: CmEditRouteRouteChildren = {
   CmEditEventsRoute: CmEditEventsRoute,
   CmEditMp3RulesRoute: CmEditMp3RulesRoute,
   CmEditIndexLazyRoute: CmEditIndexLazyRoute,
-  CmEditComsComwRouteRoute: CmEditComsComwRouteRouteWithChildren,
   CmEditCatsCatwRoute: CmEditCatsCatwRoute,
   CmEditCatsIndexRoute: CmEditCatsIndexRoute,
   CmEditComsIndexRoute: CmEditComsIndexRoute,
+  CmEditComsComwTabRouteRoute: CmEditComsComwTabRouteRouteWithChildren,
 }
 
 const CmEditRouteRouteWithChildren = CmEditRouteRoute._addFileChildren(
@@ -731,7 +734,6 @@ export interface FileRoutesByFullPath {
   '/cm/li': typeof CmLiIndexRoute
   '/cm/player': typeof CmPlayerIndexRoute
   '/cm/edit/': typeof CmEditIndexLazyRoute
-  '/cm/edit/coms/$comw': typeof CmEditComsComwRouteRouteWithChildren
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/cm/edit/cats/$catw': typeof CmEditCatsCatwRoute
   '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
@@ -741,8 +743,9 @@ export interface FileRoutesByFullPath {
   '/!other/$appName/settings': typeof otherAppNameSettingsIndexRoute
   '/cm/edit/cats': typeof CmEditCatsIndexRoute
   '/cm/edit/coms': typeof CmEditComsIndexRoute
+  '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabRouteRouteWithChildren
   '/!other/$appName/actions/files': typeof otherAppNameActionsFilesIndexRoute
-  '/cm/edit/coms/$comw/': typeof CmEditComsComwIndexRoute
+  '/cm/edit/coms/$comw/$tab/': typeof CmEditComsComwTabIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -778,7 +781,7 @@ export interface FileRoutesByTo {
   '/cm/edit/cats': typeof CmEditCatsIndexRoute
   '/cm/edit/coms': typeof CmEditComsIndexRoute
   '/!other/$appName/actions/files': typeof otherAppNameActionsFilesIndexRoute
-  '/cm/edit/coms/$comw': typeof CmEditComsComwIndexRoute
+  '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabIndexRoute
 }
 
 export interface FileRoutesById {
@@ -810,7 +813,6 @@ export interface FileRoutesById {
   '/cm/li/': typeof CmLiIndexRoute
   '/cm/player/': typeof CmPlayerIndexRoute
   '/cm/edit/': typeof CmEditIndexLazyRoute
-  '/cm/edit/coms/$comw': typeof CmEditComsComwRouteRouteWithChildren
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/cm/edit/cats/$catw': typeof CmEditCatsCatwRoute
   '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
@@ -820,8 +822,9 @@ export interface FileRoutesById {
   '/!other/$appName/settings/': typeof otherAppNameSettingsIndexRoute
   '/cm/edit/cats/': typeof CmEditCatsIndexRoute
   '/cm/edit/coms/': typeof CmEditComsIndexRoute
+  '/cm/edit/coms/$comw/$tab': typeof CmEditComsComwTabRouteRouteWithChildren
   '/!other/$appName/actions/files/': typeof otherAppNameActionsFilesIndexRoute
-  '/cm/edit/coms/$comw/': typeof CmEditComsComwIndexRoute
+  '/cm/edit/coms/$comw/$tab/': typeof CmEditComsComwTabIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -854,7 +857,6 @@ export interface FileRouteTypes {
     | '/cm/li'
     | '/cm/player'
     | '/cm/edit/'
-    | '/cm/edit/coms/$comw'
     | '/!other/$appName/settings/console'
     | '/cm/edit/cats/$catw'
     | '/cm/li/cat/$catw'
@@ -864,8 +866,9 @@ export interface FileRouteTypes {
     | '/!other/$appName/settings'
     | '/cm/edit/cats'
     | '/cm/edit/coms'
+    | '/cm/edit/coms/$comw/$tab'
     | '/!other/$appName/actions/files'
-    | '/cm/edit/coms/$comw/'
+    | '/cm/edit/coms/$comw/$tab/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -900,7 +903,7 @@ export interface FileRouteTypes {
     | '/cm/edit/cats'
     | '/cm/edit/coms'
     | '/!other/$appName/actions/files'
-    | '/cm/edit/coms/$comw'
+    | '/cm/edit/coms/$comw/$tab'
   id:
     | '__root__'
     | '/'
@@ -930,7 +933,6 @@ export interface FileRouteTypes {
     | '/cm/li/'
     | '/cm/player/'
     | '/cm/edit/'
-    | '/cm/edit/coms/$comw'
     | '/!other/$appName/settings/console'
     | '/cm/edit/cats/$catw'
     | '/cm/li/cat/$catw'
@@ -940,8 +942,9 @@ export interface FileRouteTypes {
     | '/!other/$appName/settings/'
     | '/cm/edit/cats/'
     | '/cm/edit/coms/'
+    | '/cm/edit/coms/$comw/$tab'
     | '/!other/$appName/actions/files/'
-    | '/cm/edit/coms/$comw/'
+    | '/cm/edit/coms/$comw/$tab/'
   fileRoutesById: FileRoutesById
 }
 
@@ -1036,10 +1039,10 @@ export const routeTree = rootRoute
         "/cm/edit/events",
         "/cm/edit/mp3Rules",
         "/cm/edit/",
-        "/cm/edit/coms/$comw",
         "/cm/edit/cats/$catw",
         "/cm/edit/cats/",
-        "/cm/edit/coms/"
+        "/cm/edit/coms/",
+        "/cm/edit/coms/$comw/$tab"
       ]
     },
     "/bible/i": {
@@ -1125,13 +1128,6 @@ export const routeTree = rootRoute
       "filePath": "cm/edit/index.lazy.tsx",
       "parent": "/cm/edit"
     },
-    "/cm/edit/coms/$comw": {
-      "filePath": "cm/edit/coms/$comw/route.tsx",
-      "parent": "/cm/edit",
-      "children": [
-        "/cm/edit/coms/$comw/"
-      ]
-    },
     "/!other/$appName/settings/console": {
       "filePath": "!other.$appName/settings/console.tsx",
       "parent": "/!other/$appName"
@@ -1168,13 +1164,20 @@ export const routeTree = rootRoute
       "filePath": "cm/edit/coms/index.tsx",
       "parent": "/cm/edit"
     },
+    "/cm/edit/coms/$comw/$tab": {
+      "filePath": "cm/edit/coms/$comw.$tab/route.tsx",
+      "parent": "/cm/edit",
+      "children": [
+        "/cm/edit/coms/$comw/$tab/"
+      ]
+    },
     "/!other/$appName/actions/files/": {
       "filePath": "!other.$appName/actions/files/index.tsx",
       "parent": "/!other/$appName"
     },
-    "/cm/edit/coms/$comw/": {
-      "filePath": "cm/edit/coms/$comw/index.tsx",
-      "parent": "/cm/edit/coms/$comw"
+    "/cm/edit/coms/$comw/$tab/": {
+      "filePath": "cm/edit/coms/$comw.$tab/index.tsx",
+      "parent": "/cm/edit/coms/$comw/$tab"
     }
   }
 }

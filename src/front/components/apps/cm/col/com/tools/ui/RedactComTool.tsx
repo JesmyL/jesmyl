@@ -10,9 +10,8 @@ export default function RedactComTool() {
   return (
     auth.level > 49 && (
       <Link
-        to="/cm/edit/coms/$comw"
-        params={{ comw: `${ccom?.wid ?? 0}` }}
-        search={{ tab: 'watch' }}
+        to="/cm/edit/coms/$comw/$tab"
+        params={{ comw: `${ccom?.wid ?? 0}`, tab: 'watch' }}
       >
         <ComTool
           title="Редактировать"
