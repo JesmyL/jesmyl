@@ -2,9 +2,9 @@ import { makeRegExp } from 'regexpert';
 import { SMyLib, itIt } from 'shared/utils';
 
 const constants = {
-  REMOVE: ['REMOVE'],
-  POSITION: ['POSITION'],
-  INDEX: ['INDEX'],
+  REMOVE: ['REMOVE'] as const,
+  POSITION: ['POSITION'] as const,
+  INDEX: ['INDEX'] as const,
 };
 
 type Trace = string | (typeof constants)[keyof typeof constants];
