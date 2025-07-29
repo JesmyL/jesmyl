@@ -2,21 +2,22 @@ import { isNumberSearchAtom } from '#basis/lib/atoms/isNumberSearchAtom';
 import { mylib } from '#shared/lib/my-lib';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { Com } from '$cm/col/com/Com';
-import { useAtomValue } from 'atomaric';
+import { Atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { IExportableCom } from 'shared/api';
-import { categoryTermAtom } from './lib';
 
 export const CmComListSearchFilterInput = <ComConstructor extends Com>({
   Constructor,
   onSearch,
   coms,
+  termAtom,
 }: {
   onSearch: (coms: ComConstructor[]) => void;
   coms?: Com[];
   Constructor: new (icom: IExportableCom) => ComConstructor;
+  termAtom: Atom<string>;
 }) => {
-  const term = useAtomValue(categoryTermAtom);
+  const term = useAtomValue(termAtom);
   const isNumberSearch = useAtomValue(isNumberSearchAtom);
 
   useEffect(() => {
@@ -50,7 +51,7 @@ export const CmComListSearchFilterInput = <ComConstructor extends Com>({
       placeholder="Песни"
       className="com-search debounced-searcher round-styled"
       debounce={500}
-      termAtom={categoryTermAtom}
+      termAtom={termAtom}
     />
   );
 };

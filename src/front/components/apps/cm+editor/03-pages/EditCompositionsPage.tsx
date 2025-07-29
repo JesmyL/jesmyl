@@ -11,14 +11,15 @@ import { TheCatSpecialSearches } from '$cm/col/cat/SpecialSearches';
 import { CatSpecialSearches } from '$cm/col/cat/useCatSpecialSearches';
 import { Com } from '$cm/col/com/Com';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
-import { CmComListSearchFilterInput } from '$cm/shared/ComListSearchFilterInput';
-import { categoryDebounceTermAtom, categoryTermAtom } from '$cm/shared/ComListSearchFilterInput/lib';
+import { CmComListSearchFilterInput } from '$cm/features/CmComListSearchFilterInput';
 import { useNavigate } from '@tanstack/react-router';
-import { useAtom, useAtomValue } from 'atomaric';
+import { atom, useAtom, useAtomValue } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 const mapExtractItem = <Item,>({ item }: { item: Item }): Item => item;
+const termAtom = atom('');
+const debounceTermAtom = atom('');
 
 export const EditCompositionsPage = () => {
   const coms = useComs();
@@ -27,9 +28,9 @@ export const EditCompositionsPage = () => {
   const listRef = useRef<HTMLDivElement>(null);
   const [searchedComs, setSearchedComs] = useState<Com[]>([]);
   const [mapper, setMapper] = useState<CatSpecialSearches['map'] | null>(null);
-  const [term, setTerm] = useAtom(categoryTermAtom);
+  const [term, setTerm] = useAtom(termAtom);
   const navigate = useNavigate();
-  const debouncedTerm = useAtom(categoryDebounceTermAtom);
+  const debouncedTerm = useAtom(debounceTermAtom);
 
   useEffect(() => {
     if (listRef.current) listRef.current.scrollTop = 0;
@@ -80,6 +81,7 @@ export const EditCompositionsPage = () => {
           <CmComListSearchFilterInput
             Constructor={EditableCom}
             onSearch={setSearchedComs}
+            termAtom={termAtom}
           />
         }
         onMoreClick={setIsOpenMorePopup}

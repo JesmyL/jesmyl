@@ -35,7 +35,7 @@
       "$cm/processes/*": ["./front/components/apps/cm/02-processes/*"],
       "$cm/pages/*": ["./front/components/apps/cm/03-pages/*"],
       "$cm/widgets/*": ["./front/components/apps/cm/04-widgets/*"],
-      "$cm/features/*": ["./front/components/apps/cm/04-features/*"],
+      "$cm/features/*": ["./front/components/apps/cm/05-features/*"],
       "$cm/entities/*": ["./front/components/apps/cm/06-entities/*"],
       "$cm/basis/*": ["./front/components/apps/cm/07-basis/*"],
       "$cm/*": ["./front/components/apps/cm/*"],

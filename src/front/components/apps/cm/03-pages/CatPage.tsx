@@ -10,12 +10,12 @@ import { comPlayerHeaderStickyCss } from '$cm/basis/css/com-player';
 import { Cat } from '$cm/col/cat/Cat';
 import { ComPlayer } from '$cm/col/com/player/ComPlayer';
 import { comPlayerPlaySrcAtom } from '$cm/col/com/player/controls';
-import { CmComListSearchFilterInput } from '$cm/shared/ComListSearchFilterInput';
-import { categoryDebounceTermAtom, categoryTermAtom } from '$cm/shared/ComListSearchFilterInput/lib';
+import { CmComListSearchFilterInput } from '$cm/features/CmComListSearchFilterInput';
 import { CmRatingSortedComList } from '$cm/widgets/RatingSortedComList';
 import { FileRoutesByPath } from '@tanstack/react-router';
-import { atom, useAtom, useAtomValue } from 'atomaric';
+import { Atom, atom, useAtom, useAtomValue } from 'atomaric';
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { CmCatWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
 import { Com } from '../col/com/Com';
@@ -31,14 +31,19 @@ interface Props {
 }
 
 const isOpenRatingSortedComsAtom = atom(false);
+const termAtoms: PRecord<CmCatWid, Atom<string>> = {};
+const debounceTermAtoms: PRecord<CmCatWid, Atom<string>> = {};
 
 export const CmCatPage = (props: Props) => {
-  const term = useAtomValue(categoryTermAtom);
+  const termAtom = (termAtoms[props.cat?.wid ?? CmCatWid.def] ??= atom(''));
+  const debounceTermAtom = (debounceTermAtoms[props.cat?.wid ?? CmCatWid.def] ??= atom(''));
+
+  const term = useAtomValue(termAtom);
   const [searchedComs, setSearchedComs] = useState<Com[]>([]);
   const setComListLimitsExtracterRef = useRef<(start: number | nil, finish: number | nil) => void>(emptyFunc);
   const listRef = useRef<HTMLDivElement>(null);
   const categoryTitleRef = useRef<HTMLDivElement>(null);
-  const debouncedTerm = useAtom(categoryDebounceTermAtom);
+  const debouncedTerm = useAtom(debounceTermAtom);
   const playComSrc = useAtomValue(comPlayerPlaySrcAtom);
 
   useEffect(() => {
@@ -69,6 +74,7 @@ export const CmCatPage = (props: Props) => {
             Constructor={Com}
             onSearch={setSearchedComs}
             coms={props.coms}
+            termAtom={termAtom}
           />
         }
         contentRef={listRef}
