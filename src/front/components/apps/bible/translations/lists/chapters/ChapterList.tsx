@@ -1,6 +1,6 @@
-import { JStorageNumberVal } from '#shared/lib/JSimpleStorage/exports/Number';
 import { useSetBibleAddressWithForceJoinReset } from '$bible/basis/lib/hooks/address/address';
 import { useBibleCurrentChapterList } from '$bible/basis/lib/hooks/texts';
+import { atom } from 'atomaric';
 import { useMemo } from 'react';
 import styled from 'styled-components';
 import { bibleChapteriIdPrefix } from '../lib/consts';
@@ -8,7 +8,7 @@ import { useBibleListFaceClickListener } from '../lib/useBibleListFaceClickListe
 
 const faceClassName = 'bible-list-chapter-face';
 
-const fastChaptersCount = new JStorageNumberVal('bible', 'fastChaptersCount', 0);
+const fastChaptersCountAtom = atom(0, 'bible:fastChaptersCount');
 
 export function BibleChapterList() {
   const chapters = useBibleCurrentChapterList();
@@ -19,12 +19,12 @@ export function BibleChapterList() {
   );
 
   const chapterNumbers = useMemo(() => {
-    const chaptersCount = chapters?.length ?? fastChaptersCount.get();
+    const chaptersCount = chapters?.length ?? fastChaptersCountAtom.get();
     const numbers: number[] = [];
 
     for (let i = 0; i < chaptersCount; i++) numbers.push(i);
 
-    fastChaptersCount.set(chaptersCount);
+    fastChaptersCountAtom.set(chaptersCount);
     return numbers;
   }, [chapters?.length]);
 

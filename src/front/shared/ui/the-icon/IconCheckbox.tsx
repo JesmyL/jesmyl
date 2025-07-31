@@ -1,5 +1,5 @@
-import { JStorageBooleanVal } from '#shared/lib/JSimpleStorage/exports/Boolean';
-import { ReactNode, useEffect, useState } from 'react';
+import { Atom, useAtomValue } from 'atomaric';
+import { ReactNode, useState } from 'react';
 import { StameskaIconName } from 'stameska-icon';
 import { StyledLoadingSpinner } from './IconLoading';
 import { LazyIcon } from './LazyIcon';
@@ -12,7 +12,7 @@ interface Props {
   prefix?: null | ReactNode;
   postfix?: null | ReactNode;
   className?: string;
-  simpleValuer?: JStorageBooleanVal;
+  valueAtom?: Atom<boolean>;
   negativeValue?: boolean;
 }
 
@@ -64,10 +64,10 @@ export function IconCheckbox(props: Props) {
     );
   };
 
-  if (props.simpleValuer !== undefined)
+  if (props.valueAtom !== undefined)
     return (
       <WithSimpleValuer
-        simpleValuer={props.simpleValuer}
+        valueAtom={props.valueAtom}
         negativeValue={props.negativeValue}
       >
         {icon => renderNode(icon)}
@@ -79,12 +79,10 @@ export function IconCheckbox(props: Props) {
 
 const WithSimpleValuer = (props: {
   children: (icon: StameskaIconName) => ReactNode;
-  simpleValuer: JStorageBooleanVal;
+  valueAtom: Atom<boolean>;
   negativeValue?: boolean;
 }) => {
-  const [checked, setChecked] = useState(props.simpleValuer.get());
-
-  useEffect(() => props.simpleValuer.listen(setChecked), [props.simpleValuer]);
+  const checked = useAtomValue(props.valueAtom);
 
   return <>{props.children((props.negativeValue ? !checked : checked) ? 'CheckmarkSquare04' : 'Square')}</>;
 };

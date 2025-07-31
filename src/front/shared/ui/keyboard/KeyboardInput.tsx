@@ -1,4 +1,4 @@
-import { indexSimpleValIsUseNativeKeyboard } from 'front/components/index/complect/index.simpleValues';
+import { indexIsUseNativeKeyboardAtom } from '$index/complect/index.atoms';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import styled from 'styled-components';
@@ -32,7 +32,7 @@ export function KeyboardInput(props: KeyboardInputProps) {
   }, [props.type]);
 
   useEffect(() => {
-    if (!indexSimpleValIsUseNativeKeyboard.get() && value) input.replaceAll(value, false, true);
+    if (!indexIsUseNativeKeyboardAtom.get() && value) input.replaceAll(value, false, true);
   }, [value, input]);
 
   const valueGetterSetter = (set?: string) => {
@@ -48,7 +48,7 @@ export function KeyboardInput(props: KeyboardInputProps) {
 
     return '';
   };
-  if (indexSimpleValIsUseNativeKeyboard.get() || props.type === 'button') {
+  if (indexIsUseNativeKeyboardAtom.get() || props.type === 'button') {
     let isCanBlur = true;
     const {
       className,
@@ -242,6 +242,6 @@ export function KeyboardInput(props: KeyboardInputProps) {
 }
 
 const StyledTextarea = styled.textarea`
-  field-sizing: content;
+  ${'field-sizing: content;'}
   min-height: 2lh;
 `;

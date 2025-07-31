@@ -1,8 +1,8 @@
-import { indexSimpleValIsPlayAnimations } from '$index/complect/index.simpleValues';
+import { indexIsPlayAnimationsAtom } from '$index/complect/index.atoms';
 
 export const styledDefaultTheme = {
   isIOS: /iPad|iPhone|iPod/.test(navigator.userAgent),
-  isCanPlayAnimations: () => indexSimpleValIsPlayAnimations.get(),
+  isCanPlayAnimations: () => indexIsPlayAnimationsAtom.get(),
 } as const;
 
 export type StyledDefaultTheme = typeof styledDefaultTheme;

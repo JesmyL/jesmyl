@@ -1,5 +1,5 @@
 import { propsOfClicker } from '#shared/lib/clicker/propsOfClicker';
-import { indexSimpleValIsUseNativeKeyboard } from 'front/components/index/complect/index.simpleValues';
+import { indexIsUseNativeKeyboardAtom } from '$index/complect/index.atoms';
 import React, { memo, ReactNode, useEffect, useState } from 'react';
 import { StameskaIconName } from 'stameska-icon';
 import { LazyIcon } from '../the-icon/LazyIcon';
@@ -48,7 +48,7 @@ export const KEYBOARD_FLASH = memo(function ({
     };
   }, []);
 
-  if (indexSimpleValIsUseNativeKeyboard.get()) return null;
+  if (indexIsUseNativeKeyboardAtom.get()) return null;
 
   const keyNode = (
     className: string,

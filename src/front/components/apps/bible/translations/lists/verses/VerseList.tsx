@@ -1,14 +1,14 @@
-import { JStorageSetOrArrayVal } from '#shared/lib/JSimpleStorage/exports/SetOrArray';
 import { useBibleTranslatesContext } from '$bible/basis/lib/contexts/translates';
 import { useBibleAddressBooki } from '$bible/basis/lib/hooks/address/books';
 import { useBibleAddressChapteri } from '$bible/basis/lib/hooks/address/chapters';
 import { useBibleShowTranslatesValue } from '$bible/basis/lib/hooks/translates';
+import { atom } from 'atomaric';
 import { JSX, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { bibleVerseiIdPrefix } from '../lib/consts';
 import { useVerseListListeners } from './useVerseListListeners';
 
-const fastVerses = new JStorageSetOrArrayVal<string[]>('bible', 'fastVerses', []);
+const fastVerses = atom<string[]>([], 'bible:fastVerses');
 
 export function BibleVerseList(): JSX.Element {
   const verseListRef = useRef<HTMLOListElement>(null);
