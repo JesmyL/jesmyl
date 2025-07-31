@@ -1,6 +1,6 @@
 import { DexiedValueSetter } from '#shared/lib/DexieDB';
-import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
+import { TextInput } from '#shared/ui/TextInput';
 import { CmEditorIDBStorage } from '$cm+editor/basis/lib/cmEditorIDB';
 import { EERulesWord } from '$cm+editor/entities/EERulesWord';
 import { useState } from 'react';
@@ -26,9 +26,9 @@ export const EERulesWordSearchModalInner = ({
 
   return (
     <StyledModalBody>
-      <KeyboardInput
+      <TextInput
         value={word}
-        onChange={setWord}
+        onChanged={setWord}
       />
 
       {word && (

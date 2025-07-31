@@ -1,7 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
-import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
+import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
@@ -101,10 +101,10 @@ export function ScheduleWidgetTeamGameSetTeamsScreen() {
       )}
       <div className="margin-giant-gap-b">
         Количество команд
-        <KeyboardInput
+        <TextInput
           value={teamsCountStr}
           type="number"
-          onChange={setTeamsCount}
+          onChanged={setTeamsCount}
         />
       </div>
       <div className="flex between full-width margin-gap-b">

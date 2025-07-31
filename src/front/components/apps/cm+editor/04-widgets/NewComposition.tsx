@@ -1,7 +1,7 @@
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { MyLib } from '#shared/lib/my-lib';
-import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
+import { TextInput } from '#shared/ui/TextInput';
 import { TheButton } from '#shared/ui/TheButton';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { cmEditorIDB } from '$cm+editor/basis/lib/cmEditorIDB';
@@ -117,9 +117,8 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
           value={value}
           className="margin-gap-v"
           multiline
-          withoutCloseButton
           placeholder="Начни писать или вставь текст для создания песни"
-          onChange={setTextAsValue}
+          onChanged={setTextAsValue}
         />
 
         <TheButton
@@ -226,7 +225,7 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
   );
 };
 
-const StyledTextInput = styled(KeyboardInput)`
+const StyledTextInput = styled(TextInput)`
   outline: 0;
   border: 2px dashed var(--text-color);
   width: 100%;

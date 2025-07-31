@@ -8,7 +8,7 @@ import { FontFamilyConfigurator } from '#shared/ui/configurators/FontFamily';
 import { FontSizeConfigurator } from '#shared/ui/configurators/FontSize';
 import { FontStyleConfigurator } from '#shared/ui/configurators/FontStyle';
 import { FontWeightConfigurator } from '#shared/ui/configurators/FontWeight/ui';
-import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
+import { TextInput } from '#shared/ui/TextInput';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React, { useDeferredValue, useEffect, useRef, useState } from 'react';
 import { complectIDB } from '../../../_idb/complectIDB';
@@ -77,9 +77,9 @@ const AlertLineConfigSettingsInnerWithConfig = ({
       <h2>Положение строки - вверх/вниз/+CTRL</h2>
       <div className="flex flex-gap nowrap">
         Нвазвание:
-        <KeyboardInput
+        <TextInput
           value={config.title}
-          onChange={title => update({ title })}
+          onChanged={title => update({ title })}
         />
       </div>
 
@@ -92,9 +92,9 @@ const AlertLineConfigSettingsInnerWithConfig = ({
 
       <div className="flex flex-gap nowrap">
         Альтернативный текст:
-        <KeyboardInput
+        <TextInput
           value={config.text}
-          onChange={text => update({ text })}
+          onChanged={text => update({ text })}
         />
       </div>
       <ColorConfigurator
@@ -123,10 +123,10 @@ const AlertLineConfigSettingsInnerWithConfig = ({
       />
       <div className="flex flex-gap nowrap">
         Время пробега:
-        <KeyboardInput
+        <TextInput
           value={'' + config.speed}
           type="number"
-          onChange={speed => update({ speed: +speed })}
+          onChanged={speed => update({ speed: +speed })}
           onKeyDown={propagationStopper}
         />
       </div>

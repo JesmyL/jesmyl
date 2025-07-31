@@ -1,9 +1,9 @@
 import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
 import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
-import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { useToast } from '#shared/ui/modal/useToast';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
+import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
 import { useConnectionState } from '$index/useConnectionState';
@@ -111,8 +111,8 @@ export const IndexTelegramAuthPage = () => {
                       id="tg-auth-code-input-wrapper"
                       className="input-wrapper"
                     >
-                      <KeyboardInput
-                        onChange={setAuthCode}
+                      <TextInput
+                        onChanged={setAuthCode}
                         value={authCode}
                         placeholder="Одноразовый код"
                       />

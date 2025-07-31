@@ -1,5 +1,5 @@
-import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
+import { TextInput } from '#shared/ui/TextInput';
 import { useEffect, useMemo, useState } from 'react';
 import {
   IScheduleWidget,
@@ -141,9 +141,9 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
 
   return (
     <div className="margin-giant-gap-t">
-      <KeyboardInput
+      <TextInput
         value={value}
-        onChange={setValue}
+        onChanged={setValue}
         multiline
       />
       {errorText ? (

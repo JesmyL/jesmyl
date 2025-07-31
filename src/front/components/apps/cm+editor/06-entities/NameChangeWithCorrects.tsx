@@ -1,4 +1,4 @@
-import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
+import { TextInput } from '#shared/ui/TextInput';
 import { cmEditorIDB } from '$cm+editor/basis/lib/cmEditorIDB';
 import { TextCorrectMessages } from '$cm+editor/entities/TextBlockIncorrectMessages';
 import { IExportableCom } from 'shared/api';
@@ -21,7 +21,7 @@ export const NewComNameChange = ({
           id="new-com-input-wrapper"
           className="full-width"
         >
-          <KeyboardInput
+          <TextInput
             className="full-width"
             value={name}
             onInput={n => setNewCom(prev => ({ ...prev, n }))}

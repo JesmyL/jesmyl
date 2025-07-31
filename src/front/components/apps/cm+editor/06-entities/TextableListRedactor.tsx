@@ -1,4 +1,4 @@
-import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
+import { TextInput } from '#shared/ui/TextInput';
 import { TextCorrectMessages } from '$cm+editor/entities/TextBlockIncorrectMessages';
 import { IIncorrects } from 'shared/model/cm/Incorrects';
 
@@ -19,10 +19,9 @@ export const CmNewComTextableListRedactor = ({ title, onInput, list, corrects }:
             className="margin-gap-v"
             key={texti}
           >
-            <KeyboardInput
+            <TextInput
               value={text}
               multiline
-              withoutCloseButton
               onInput={value => onInput(value, texti)}
             />
             <TextCorrectMessages corrects={corrects[texti]} />

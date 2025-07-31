@@ -5,13 +5,12 @@ import { useGlobalFullscreenChanger } from '#basis/lib/global-listeners/useGloba
 import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { LinkAppActionFabric } from '#shared/lib/link-app-actions';
-import { KEYBOARD_FLASH } from '#shared/ui/keyboard/KeyboardInputFlash';
 import { useToast } from '#shared/ui/modal/useToast';
 import { schLinkAction } from '#widgets/schedule/links';
 import { Outlet, ParsedLocation, useLocation, useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { soki } from 'front/soki';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { emptyArray } from 'shared/utils';
 import { routingApps } from './lib/configs';
 import { lastVisitedRouteLsName } from './lib/consts';
@@ -19,7 +18,6 @@ import { lastVisitedRouteLsName } from './lib/consts';
 export const AppComponent = () => {
   const loc = useLocation();
   const [isNeedFirstNavigate, setIsNeedFirstNavigate] = useState(true);
-  const [keyboardOpen, setKeyboardOpen] = useState(false);
   const [isShowLogo, setIsShowLogo] = useState(true);
   const toast = useToast();
   const appName = useAtomValue(currentAppNameAtom);
@@ -53,13 +51,9 @@ export const AppComponent = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, emptyArray);
 
-  const keyboardProps = useMemo(() => {
-    return { onFocus: () => setKeyboardOpen(true), onBlur: () => setKeyboardOpen(false) };
-  }, []);
-
   return (
     <>
-      <div className={`above-container ${keyboardOpen ? 'keyboard-open' : ''}`}>
+      <div className={`above-container`}>
         {isShowLogo && (
           <div className="jesmyl-smile-box flex center absolute full-width full-height z-index:5">
             <JesmylLogo className="no-fade-in-effect" />
@@ -69,7 +63,6 @@ export const AppComponent = () => {
           <Outlet />
           {fullscreenIcon}
         </div>
-        <KEYBOARD_FLASH {...keyboardProps} />
       </div>
       {isNeedFirstNavigate && (
         <FirstNaver

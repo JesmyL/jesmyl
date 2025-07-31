@@ -1,6 +1,6 @@
 import { useIsRedactArea } from '#shared/lib/hooks/useIsRedactArea';
-import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { useToast } from '#shared/ui/modal/useToast';
+import { TextInput } from '#shared/ui/TextInput';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ReactNode, useEffect, useState } from 'react';
@@ -117,13 +117,13 @@ export function StrongEditableField<Key extends string, Value extends string | P
           )}
           <div className="flex flex-gap">
             {props.description}
-            <KeyboardInput
+            <TextInput
               value={stateValue}
               placeholder={props.placeholder}
               multiline={props.multiline}
               type={props.type}
               disabled={props.disabled}
-              onChange={val => {
+              onChanged={val => {
                 setStateValue(val);
                 setIsUserChange(true);
                 props.onChange?.(val);

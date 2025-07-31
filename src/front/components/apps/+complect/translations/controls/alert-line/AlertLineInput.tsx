@@ -1,6 +1,6 @@
 import { propagationStopper } from '#shared/lib/event-funcs';
-import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
+import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { atom, useAtom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
@@ -26,10 +26,10 @@ export const AlertLineInput = () => {
           onClick={isOpenSettingsModalAtom.toggle}
         />
 
-        <KeyboardInput
+        <TextInput
           className="bgcolor--2 full-width"
           value={alertLine ?? ''}
-          onChange={value => setAlertLine(value)}
+          onChanged={value => setAlertLine(value)}
           onKeyDown={propagationStopper}
         />
 

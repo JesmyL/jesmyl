@@ -1,4 +1,4 @@
-import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
+import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useAtom } from 'atomaric';
 import { memo } from 'react';
@@ -18,10 +18,9 @@ export const MetronomeBpmInput = memo(function MetronomeBpmInput() {
       />
 
       <StyledBpmInput
-        type="number"
-        withoutCloseButton
+        type="tel"
         value={'' + userBpm}
-        onChange={value => setUserBpm(+value)}
+        onChanged={value => setUserBpm(+value)}
       />
 
       <LazyIcon
@@ -34,7 +33,7 @@ export const MetronomeBpmInput = memo(function MetronomeBpmInput() {
   );
 });
 
-const StyledBpmInput = styled(KeyboardInput)`
+const StyledBpmInput = styled(TextInput)`
   width: 3em;
   text-align: center;
 `;

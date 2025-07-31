@@ -1,6 +1,6 @@
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { MyLib, mylib } from '#shared/lib/my-lib';
-import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
+import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { TheButton } from '#shared/ui/TheButton';
@@ -155,7 +155,7 @@ export const EditChordPage = () => {
           <div className="flex column center old-chord">
             {isNewChord ? (
               <>
-                <KeyboardInput
+                <TextInput
                   onInput={newChordName => navigate({ to: '.', search: { newChordName } })}
                   value={newChordName}
                 />

@@ -1,5 +1,5 @@
-import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
+import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmEditorClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { useCmMp3Rules } from '$cm+editor/basis/lib/hooks/useCmMp3Rules';
@@ -34,7 +34,7 @@ export const ObserveUrlResource = ({
   return (
     <div>
       <div className="flex flex-between flex-gap">
-        <KeyboardInput
+        <TextInput
           className="url-observer-input-wrapper half-width"
           placeholder="URL-адрес"
           value={url}
