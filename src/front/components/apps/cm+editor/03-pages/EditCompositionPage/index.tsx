@@ -26,7 +26,9 @@ export const CmEditCompositionPage = () => {
   const connectionNode = useConnectionState('margin-gap');
   const navigate = useNavigate();
   const { tab } = useParams({ from: '/cm/edit/coms/$comw/$tab' });
-  const TabComponent = tab && editCompositionNavs[tab as keyof typeof editCompositionNavs].Component;
+  const TabComponent =
+    (tab && editCompositionNavs[tab as keyof typeof editCompositionNavs]?.Component) ||
+    editCompositionNavs.watch.Component;
 
   useEffect(() => {
     return hookEffectPipe()

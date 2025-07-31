@@ -8,12 +8,8 @@ import { CmEditorTabComOrders } from '$cm+editor/widgets/TabComOrders';
 import { CmEditorTabComRepeats } from '$cm+editor/widgets/TabComRepeats';
 import { CmEditorTabTextBlocks } from '$cm+editor/widgets/TabComTextBlocks';
 import { CmEditorTabWatch } from '$cm+editor/widgets/TabComWatch';
-import { StameskaIconName } from 'stameska-icon';
 
-export const editCompositionNavs: Record<
-  string,
-  { Component: <Props>(props?: Props) => React.ReactNode; icon: StameskaIconName }
-> = {
+export const editCompositionNavs = {
   watch: {
     Component: CmEditorTabWatch,
     icon: 'View',
