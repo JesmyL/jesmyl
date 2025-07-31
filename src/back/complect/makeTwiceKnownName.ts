@@ -72,7 +72,7 @@ const wordRegEnds: Record<string, Record<string, EndVariantsDict>> = {
     },
     ший$: {
       // больший
-      pronoun: 'ее', // большее
+      pronoun: 'шее', // большее
     },
     '[иоы]й$': {
       // большой холостой
@@ -135,4 +135,6 @@ if (false) {
   console.info(makeTwiceKnownName(' ', 'широкий', 'снижение'));
   console.info(makeTwiceKnownName(' ', 'поэтический', 'пламя.'));
   console.info(makeTwiceKnownName(' ', 'медленный', 'бро!'));
+  console.info(makeTwiceKnownName(' ', 'покрасивевший', 'учреждение'));
+  console.info(makeTwiceKnownName(' ', 'больший', 'учреждение'));
 }
