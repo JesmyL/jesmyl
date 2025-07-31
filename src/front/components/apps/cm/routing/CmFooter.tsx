@@ -1,9 +1,12 @@
 import { AppFooter } from '$app/AppFooter';
 import { AppFooterItem } from '$app/AppFooterItem';
 import { useAuth } from '$index/atoms';
+import { indexIsShowPlayerInFooterAtom } from '$index/complect/index.atoms';
+import { useAtomValue } from 'atomaric';
 
 export const CmFooter = () => {
   const auth = useAuth();
+  const isShowPlayer = useAtomValue(indexIsShowPlayerInFooterAtom);
 
   return (
     <AppFooter appName="cm">
@@ -19,7 +22,7 @@ export const CmFooter = () => {
         title="Списки"
         icon="Playlist01"
       />
-      {auth.level >= 3 && (
+      {isShowPlayer && auth.level >= 3 && (
         <AppFooterItem
           idPostfix="cm-player"
           to="/cm/player/"

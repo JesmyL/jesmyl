@@ -6,7 +6,7 @@ import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContaine
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useAppFontFamily, useAuth } from '$index/atoms';
-import { indexIsPlayAnimationsAtom, indexIsUseNativeKeyboardAtom } from '$index/complect/index.atoms';
+import { indexIsPlayAnimationsAtom, indexIsShowPlayerInFooterAtom } from '$index/complect/index.atoms';
 import { useConnectionState } from '$index/useConnectionState';
 import { Link } from '@tanstack/react-router';
 import React from 'react';
@@ -44,15 +44,10 @@ export function IndexSettingsPage() {
       </Link>
     ),
     <BrutalItem
-      iconNode={<LazyIcon icon="Keyboard" />}
-      title="Фирменная клавиатура"
-      onClick={indexIsUseNativeKeyboardAtom.toggle}
-      box={
-        <IconCheckbox
-          valueAtom={indexIsUseNativeKeyboardAtom}
-          negativeValue
-        />
-      }
+      iconNode={<LazyIcon icon="PlayListFavourite02" />}
+      title="Показывать плеер"
+      onClick={indexIsShowPlayerInFooterAtom.toggle}
+      box={<IconCheckbox valueAtom={indexIsShowPlayerInFooterAtom} />}
     />,
     <BrutalItem
       iconNode={<LazyIcon icon="PaintBoard" />}
