@@ -2,7 +2,7 @@ import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { StyledLoadingSpinner } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { cmEditComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { useState } from 'react';
 import { OrdersRedactorOrderToolsProps } from '../model';
 
@@ -25,7 +25,7 @@ export const OrdersRedactorOrderToolsVisibility = ({ onClose, ord }: OrdersRedac
       onClick={async () => {
         if (await confirm(`Скрыть блок ${ord.me.header()}?`)) {
           setIsLoading(true);
-          await cmEditComOrderClientInvocatorMethods.toggleVisibility({
+          await cmEditComOrderClientTsjrpcMethods.toggleVisibility({
             ordw: ord.wid,
             orderTitle: ord.me.header(),
             comw: ord.com.wid,

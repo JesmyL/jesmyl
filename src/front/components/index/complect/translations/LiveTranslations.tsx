@@ -10,7 +10,7 @@ import { useTranslationInitialSlideSet } from 'front/components/apps/+complect/t
 import { useEffect, useState } from 'react';
 import { IScheduleWidgetWid } from 'shared/api';
 import { itNNull } from 'shared/utils';
-import { schLiveSokiInvocatorClient } from './live-invocator';
+import { schLiveTsjrpcClient } from './live.tsjrpc';
 import { IndexScheduleWidgetBibleTranslationsControlled } from './LiveBible';
 import { ScheduleWidgetLiveCmTranslations } from './LiveCm';
 
@@ -33,13 +33,11 @@ export const IndexScheduleWidgetTranslations = ({ schw }: { schw: IScheduleWidge
     if (windows.some(itNNull)) setIsCantTranslateLive(false);
     else {
       setIsCantTranslateLive(true);
-      schLiveSokiInvocatorClient.reset({ schw: schedule.w });
+      schLiveTsjrpcClient.reset({ schw: schedule.w });
     }
 
     return hookEffectPipe()
-      .pipe(
-        addEventListenerPipe(window, 'unload' as never, () => schLiveSokiInvocatorClient.reset({ schw: schedule.w })),
-      )
+      .pipe(addEventListenerPipe(window, 'unload' as never, () => schLiveTsjrpcClient.reset({ schw: schedule.w })))
       .effect();
   }, [schedule?.w, windows]);
 

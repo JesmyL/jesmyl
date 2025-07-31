@@ -5,7 +5,7 @@ import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheButton } from '#shared/ui/TheButton';
-import { cmEditComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { EditableComOrder } from '$cm+editor/basis/lib/EditableComOrder';
 import { Order } from '$cm/col/com/order/Order';
 import { atom } from 'atomaric';
@@ -40,7 +40,7 @@ export const CmComRepeatsRemoveButton = ({ isChordBlock, startOrd, ord, textLine
 
           if (isChordBlock) {
             if (await confirm(`Сбросить повторения блока "${startOrd.me.header() || ''}"?`, 'Сброс')) {
-              cmEditComOrderClientInvocatorMethods.removeRepeats({
+              cmEditComOrderClientTsjrpcMethods.removeRepeats({
                 comw: startOrd.com.wid,
                 orderTitle: startOrd.me.header(),
                 ordw: startOrd.wid,

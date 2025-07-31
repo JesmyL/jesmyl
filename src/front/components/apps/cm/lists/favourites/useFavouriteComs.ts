@@ -1,7 +1,7 @@
 import { useToast } from '#shared/ui/modal/useToast';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useComs } from '$cm/basis/lib/coms-selections';
-import { cmUserStoreSokiInvocatorClient } from '$cm/invocators/user-store-invocator.methods';
+import { cmUserStoreTsjrpcClient } from '$cm/tsjrpc/user-store.tsjrpc.methods';
 import { useAuth } from '$index/atoms';
 
 let saveTimeout: TimeOut;
@@ -34,7 +34,7 @@ export const useFavouriteComs = () => {
       if (auth.login == null) return;
       clearTimeout(saveTimeout);
       saveTimeout = setTimeout(() => {
-        cmUserStoreSokiInvocatorClient.setAboutComFavorites({ comws });
+        cmUserStoreTsjrpcClient.setAboutComFavorites({ comws });
       }, 1000);
     },
   };

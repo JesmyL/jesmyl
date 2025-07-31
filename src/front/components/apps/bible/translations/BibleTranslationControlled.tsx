@@ -2,7 +2,7 @@ import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContaine
 import { bibleIDB } from '$bible/basis/lib/bibleIDB';
 import { useBiblePrintShowSlideAddressCode } from '$bible/basis/lib/hooks/slide-sync';
 import { BibleModulesTranslationsControl } from '$bible/entities/ModulesTranslationsControl';
-import { bibleSokiInvocatorBaseClient } from '$bible/processes/invocator';
+import { bibleTsjrpcBaseClient } from '$bible/processes/tsjrpc';
 import { JSX, ReactNode, useEffect } from 'react';
 import styled from 'styled-components';
 import { ScreenTranslationControlPanel } from '../../+complect/translations/controls/ControllPanel';
@@ -69,4 +69,4 @@ const Container = styled.div`
   --min-size: 200px;
 `;
 
-bibleSokiInvocatorBaseClient.$$register();
+bibleTsjrpcBaseClient.$$register();

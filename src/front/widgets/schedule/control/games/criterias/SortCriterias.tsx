@@ -4,7 +4,7 @@ import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIcon
 import { TheButton } from '#shared/ui/TheButton';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
-import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { schGamesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { atom } from 'atomaric';
 import { ScheduleWidgetShareButtons } from '../ShareButtons';
 import { ScheduleWidgetSortCriteria } from './SortCriteria';
@@ -25,7 +25,7 @@ export function ScheduleWidgetSortCriterias() {
           <TheIconSendButton
             icon="PlusSign"
             confirm="Добавить новый критерий?"
-            onSend={() => schGamesSokiInvocatorClient.addCriteria({ props: scheduleScopeProps })}
+            onSend={() => schGamesTsjrpcClient.addCriteria({ props: scheduleScopeProps })}
           />
         </h3>
 

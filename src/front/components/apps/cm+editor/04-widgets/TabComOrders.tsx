@@ -2,7 +2,7 @@ import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { TheButton } from '#shared/ui/TheButton';
-import { cmEditComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { CmComOrderOnClickBetweenData } from '$cm+editor/basis/model/Orders';
@@ -100,7 +100,7 @@ export const CmEditorTabComOrders = () => {
                     onClick={() => {
                       if (ord.me.anchorInheritIndex == null || ord.me.leadOrd == null) return;
 
-                      return cmEditComOrderClientInvocatorMethods.toggleAnchorInheritVisibility({
+                      return cmEditComOrderClientTsjrpcMethods.toggleAnchorInheritVisibility({
                         comw: ord.com.wid,
                         leadOrderWid: ord.me.leadOrd.wid,
                         anchorInheritIndex: ord.me.anchorInheritIndex,

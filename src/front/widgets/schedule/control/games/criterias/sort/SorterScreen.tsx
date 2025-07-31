@@ -1,5 +1,5 @@
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
-import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { schGamesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { Atom } from 'atomaric';
 import { useCallback, useState } from 'react';
 import {
@@ -86,7 +86,7 @@ export function ScheduleWidgetTeamsCriteriaSorterScreen({
               value[user.mi] = useri;
             });
 
-            return schGamesSokiInvocatorClient.setSortedDict({
+            return schGamesTsjrpcClient.setSortedDict({
               props: criteriaScopeProps,
               value,
               criteriaTitle: criteria.title,

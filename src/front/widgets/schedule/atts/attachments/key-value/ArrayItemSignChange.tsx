@@ -3,7 +3,7 @@ import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { schDayEventsSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { atom } from 'atomaric';
 import {
   CustomAttUseTaleId,
@@ -32,7 +32,7 @@ export function ScheduleKeyValueListAttArrayItemKeyChange(props: {
         onSuccess={() => isModalOpenAtom.set(false)}
         className="margin-gap-v"
         onSend={() =>
-          schDayEventsSokiInvocatorClient.changeKeyValueAttachmentKey({
+          schDayEventsTsjrpcClient.changeKeyValueAttachmentKey({
             props: props.dayEventAttScopeProps,
             key: props.theKey,
             value: id,

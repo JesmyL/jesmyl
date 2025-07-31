@@ -4,8 +4,8 @@ import { useAuth, useIndexSchedules } from '$index/atoms';
 import { useConnectionState } from '$index/useConnectionState';
 import { Link } from '@tanstack/react-router';
 import { useScheduleCurrentSchwContext, useScheduleScopePropsContext } from '../complect/lib/contexts';
-import { schUsersSokiInvocatorClient } from '../invocators/invocators.methods';
 import { ScheduleWidget } from '../ScheduleWidget';
+import { schUsersTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { useFixActualSchw } from '../useSch';
 
 export const ScheduleWidgetPage = () => {
@@ -49,7 +49,7 @@ export const ScheduleWidgetPage = () => {
               ) : (
                 <SendButton
                   title="Буду участвовать"
-                  onSend={() => schUsersSokiInvocatorClient.addMe({ props: scheduleScopeProps, place: 'по ссылке' })}
+                  onSend={() => schUsersTsjrpcClient.addMe({ props: scheduleScopeProps, place: 'по ссылке' })}
                 />
               )
             ) : (

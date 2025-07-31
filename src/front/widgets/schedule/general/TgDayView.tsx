@@ -2,7 +2,7 @@ import { TelegramWebAppApiOr } from '#basis/ui/tg-app/getTgApi';
 import { TelegramWebApp, TelegramWebAppInitData } from '#basis/ui/tg-app/model';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { useAuth } from '$index/atoms';
-import { indexSokiInvocatorClientMethods } from '$index/invocator.methods';
+import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
 import { useEffect } from 'react';
 import { IScheduleWidgetWid } from 'shared/api';
 import styled from 'styled-components';
@@ -47,7 +47,7 @@ const Child = ({ api, initData }: Props) => {
     return hookEffectLine()
       .setTimeout(() => {
         if (auth.level) return;
-        indexSokiInvocatorClientMethods.authMeByTelegramInScheduleDay({ user: initData.user });
+        indexTsjrpcClientMethods.authMeByTelegramInScheduleDay({ user: initData.user });
       }, 300)
       .effect();
   }, [auth.level, initData.user]);

@@ -21,15 +21,11 @@ import { ScheduleWidgetDay } from './days/Day';
 import { ScheduleWidgetEventTypeList } from './events/EventTypeList';
 import { ScheduleWidgetContextWrapper } from './general/ContextWrapper';
 import { ScheduleWidgetCopy } from './general/Copy';
-import {
-  schDaysSokiInvocatorClient,
-  schGeneralSokiInvocatorClient,
-  schUsersSokiInvocatorClient,
-} from './invocators/invocators.methods';
 import { schLinkAction } from './links';
 import { ScheduleWidgetLists } from './lists/Lists';
 import { ScheduleWidgetWatchLiveTranslationButton } from './live-translations/WatchLiveButton';
 import { ScheduleWidgetMyUserTgInform } from './tg-inform/UserTgInform';
+import { schDaysTsjrpcClient, schGeneralTsjrpcClient, schUsersTsjrpcClient } from './tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetRights, useScheduleWidgetRights } from './useScheduleWidget';
 
 const msInMin = mylib.howMs.inMin;
@@ -102,9 +98,7 @@ export function ScheduleWidget({
           <SendButton
             title="Буду участвовать"
             confirm="Вы будете записаны как участник"
-            onSend={() =>
-              schUsersSokiInvocatorClient.addMe({ props: scheduleScopeProps, place: 'по кнопке в расписании' })
-            }
+            onSend={() => schUsersTsjrpcClient.addMe({ props: scheduleScopeProps, place: 'по кнопке в расписании' })}
           />
         );
       } else if (rights.isSwHideContent)
@@ -171,8 +165,7 @@ export function ScheduleWidget({
                 takeTime="NO"
                 onComponentsChange={(_, __, ___, date) => setStartTime(date.getTime())}
                 onSend={async () =>
-                  startTime &&
-                  schGeneralSokiInvocatorClient.setStartTime({ props: scheduleScopeProps, value: startTime })
+                  startTime && schGeneralTsjrpcClient.setStartTime({ props: scheduleScopeProps, value: startTime })
                 }
               />
             ) : (
@@ -194,7 +187,7 @@ export function ScheduleWidget({
                       isRedact
                       icon="SchoolReportCard"
                       title="Заголовок"
-                      onSend={value => schGeneralSokiInvocatorClient.rename({ props: scheduleScopeProps, value })}
+                      onSend={value => schGeneralTsjrpcClient.rename({ props: scheduleScopeProps, value })}
                     />
                     <StrongEditableField
                       fieldKey="topic"
@@ -202,7 +195,7 @@ export function ScheduleWidget({
                       isRedact
                       icon="Bookmark03"
                       title="Тема"
-                      onSend={value => schGeneralSokiInvocatorClient.setTopic({ props: scheduleScopeProps, value })}
+                      onSend={value => schGeneralTsjrpcClient.setTopic({ props: scheduleScopeProps, value })}
                     />
                   </>
                 )}
@@ -215,7 +208,7 @@ export function ScheduleWidget({
                     textClassName=" "
                     icon="File02"
                     title="Описание"
-                    onSend={value => schGeneralSokiInvocatorClient.setDescription({ props: scheduleScopeProps, value })}
+                    onSend={value => schGeneralTsjrpcClient.setDescription({ props: scheduleScopeProps, value })}
                   />
                 )}
                 {rights.isCanReadTitles && (
@@ -256,7 +249,7 @@ export function ScheduleWidget({
                         postfix="Добавить день"
                         confirm="Дни удалять не возможно! Создать новый?"
                         className="margin-gap-v"
-                        onSend={() => schDaysSokiInvocatorClient.addDay({ props: scheduleScopeProps })}
+                        onSend={() => schDaysTsjrpcClient.addDay({ props: scheduleScopeProps })}
                       />
                     )}
                     {auth && auth.level >= 80 && (
@@ -265,7 +258,7 @@ export function ScheduleWidget({
                         icon="Delete02"
                         confirm="Восстановить расписание будет не возможно. Продолжить?"
                         postfix="Удалить расписание"
-                        onSend={() => schGeneralSokiInvocatorClient.remove({ props: scheduleScopeProps })}
+                        onSend={() => schGeneralTsjrpcClient.remove({ props: scheduleScopeProps })}
                       />
                     )}
                   </>
@@ -276,7 +269,7 @@ export function ScheduleWidget({
                       title="Хочу комментить события"
                       className="margin-giant-gap-t"
                       onSend={() =>
-                        schUsersSokiInvocatorClient.addMe({
+                        schUsersTsjrpcClient.addMe({
                           props: scheduleScopeProps,
                           place: 'по кнопке "Хочу комментить события"',
                         })

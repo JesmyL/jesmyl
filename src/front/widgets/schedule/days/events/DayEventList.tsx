@@ -7,7 +7,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ScheduleWidgetTopicTitle } from '#widgets/schedule/complect/TopicTitle';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { ScheduleWidgetEventTypeList } from '#widgets/schedule/events/EventTypeList';
-import { schDaysSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { schDaysTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { useEffect, useMemo, useState } from 'react';
 import { IScheduleWidgetDay, ScheduleDayScopeProps, indexScheduleGetDayEventTimes } from 'shared/api';
 import { isNIs } from 'shared/utils';
@@ -100,7 +100,7 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
                     }}
                     onSend={async () =>
                       movementEvent &&
-                      schDaysSokiInvocatorClient.moveEvent({
+                      schDaysTsjrpcClient.moveEvent({
                         props: dayScopeProps,
                         value: {
                           eventMi: movementEvent.mi,
@@ -194,7 +194,7 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
                         className="color--ko"
                         disabled={moveEventMi !== null}
                         onSend={() =>
-                          schDaysSokiInvocatorClient.removeEvent({
+                          schDaysTsjrpcClient.removeEvent({
                             props: dayScopeProps,
                             value: { eventMi: event.mi, eventTypeTitle: rights.schedule.types[event.type].title },
                           })
@@ -217,7 +217,7 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
               icon="CreditCardAdd"
               schedule={rights.schedule}
               usedCounts={usedCounts}
-              onItemSelectSend={typei => schDaysSokiInvocatorClient.addEvent({ props: dayScopeProps, value: typei })}
+              onItemSelectSend={typei => schDaysTsjrpcClient.addEvent({ props: dayScopeProps, value: typei })}
             />
           )}
         </>

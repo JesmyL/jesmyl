@@ -4,7 +4,7 @@ import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIcon
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
-import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { schGamesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { atom } from 'atomaric';
 import { IScheduleWidgetUser } from 'shared/api';
 import { ScheduleWidgetUserTakePhoto } from '../users/TakePhoto';
@@ -46,7 +46,7 @@ export function ScheduleWidgetRemovableUserFace({ user, isStriked, buttons }: Pr
           icon={isUserStriked ? 'LinkBackward' : 'Cancel02'}
           className={isUserStriked ? 'color--ok' : 'color--ko'}
           onSend={() =>
-            schGamesSokiInvocatorClient.toggleStrikedUser({
+            schGamesTsjrpcClient.toggleStrikedUser({
               props: scheduleScopeProps,
               userMi: user.mi,
               userName: user.fio ?? user.nick ?? '',

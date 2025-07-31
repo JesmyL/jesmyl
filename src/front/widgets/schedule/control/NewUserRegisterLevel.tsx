@@ -5,7 +5,7 @@ import { atom } from 'atomaric';
 import { scheduleWidgetUserRights } from 'shared/api';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';
-import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schGeneralTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetRightControlList } from './RightControlList';
 
 const isModalOpenAtom = atom(false);
@@ -28,9 +28,7 @@ export function ScheduleWidgetNewUserRegisterLevel() {
           <ScheduleWidgetRightControlList
             rightCtrl={scheduleWidgetUserRights}
             R={rights.schedule.ctrl.defu}
-            onSend={value =>
-              schGeneralSokiInvocatorClient.setDefaultUserRights({ props: scheduleScopeProps, R: value })
-            }
+            onSend={value => schGeneralTsjrpcClient.setDefaultUserRights({ props: scheduleScopeProps, R: value })}
           />
         </ModalBody>
       </Modal>

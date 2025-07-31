@@ -4,7 +4,7 @@ import { useIsExpand } from '#shared/ui/expand/useIsExpand';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
-import { schDayEventsSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { ReactNode } from 'react';
 import { IScheduleWidgetDayEvent, ScheduleDayEventScopeProps } from 'shared/api';
 import { emptyAsyncFunc, itNNull } from 'shared/utils';
@@ -113,7 +113,7 @@ export function ScheduleWidgetDayEventRating(props: {
                   icon={ratePoint < 0 ? 'Heartbreak' : ratePoint === 0 ? 'HelpCircle' : 'Favourite'}
                   onSend={async () =>
                     ratePoint !== myRate[0] &&
-                    schDayEventsSokiInvocatorClient.setRatePoint({
+                    schDayEventsTsjrpcClient.setRatePoint({
                       props: props.dayEventScopeProps,
                       userMi: myUser.mi,
                       ratePoint: ratePoint,
@@ -138,7 +138,7 @@ export function ScheduleWidgetDayEventRating(props: {
             setSelfRedact
             multiline
             onSend={value =>
-              schDayEventsSokiInvocatorClient.setRateComment({
+              schDayEventsTsjrpcClient.setRateComment({
                 props: props.dayEventScopeProps,
                 userMi: myUser.mi,
                 comment: value,

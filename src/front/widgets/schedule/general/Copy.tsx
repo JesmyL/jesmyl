@@ -17,7 +17,7 @@ import {
 import { itNNull } from 'shared/utils';
 import { ScheduleWidgetTopicTitle } from '../complect/TopicTitle';
 import { useScheduleWidgetRightsContext } from '../contexts';
-import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schGeneralTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 
 const isModalOpenAtom = atom(false);
 
@@ -104,7 +104,7 @@ export function ScheduleWidgetCopy(props: { schw: IScheduleWidgetWid }) {
                   }),
                 };
 
-                return schGeneralSokiInvocatorClient.copySchedule({ props: { schw: props.schw }, schedule: value });
+                return schGeneralTsjrpcClient.copySchedule({ props: { schw: props.schw }, schedule: value });
               }}
             />
           </ModalBody>

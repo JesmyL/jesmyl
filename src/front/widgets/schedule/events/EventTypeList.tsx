@@ -12,7 +12,7 @@ import { emptyArray } from 'shared/utils';
 import { StameskaIconName } from 'stameska-icon';
 import styled from 'styled-components';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
-import { schEventTypesSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schEventTypesTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetEventType } from './EventType';
 import { useAttTypeTitleError } from './useAttTypeTitleError';
 
@@ -75,7 +75,7 @@ export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCount
             </>
           }
           postfix={node}
-          onSend={() => schEventTypesSokiInvocatorClient.create({ props: scheduleScopeProps, title, tm })}
+          onSend={() => schEventTypesTsjrpcClient.create({ props: scheduleScopeProps, title, tm })}
         />
       );
     });

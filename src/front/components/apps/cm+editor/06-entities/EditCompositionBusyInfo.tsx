@@ -1,6 +1,6 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { comEditorBusiesAtom } from '$cm+editor/basis/lib/atoms/com';
-import { cmEditorClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditorClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { indexIDB } from '$index/db/index-idb';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
@@ -12,10 +12,10 @@ export const EditCompositionBusyInfo = ({ comw }: { comw: CmComWid }) => {
   const busies = useAtomValue(comEditorBusiesAtom);
 
   useEffect(() => {
-    cmEditorClientInvocatorMethods.watchComBusies({ comw });
+    cmEditorClientTsjrpcMethods.watchComBusies({ comw });
 
     return () => {
-      cmEditorClientInvocatorMethods.unwatchComBusies();
+      cmEditorClientTsjrpcMethods.unwatchComBusies();
     };
   }, [comw]);
 

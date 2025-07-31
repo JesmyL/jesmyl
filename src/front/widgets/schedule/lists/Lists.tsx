@@ -7,7 +7,7 @@ import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';
 import { ScheduleWidgetTeamGames } from '../control/games/games/Games';
 import { ScheduleWidgetRoleList } from '../control/roles/RoleList';
-import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schListsTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetListCategory } from './Category';
 
 export function ScheduleWidgetLists() {
@@ -23,7 +23,7 @@ export function ScheduleWidgetLists() {
           icon="PlusSign"
           prefix="список"
           confirm="Создать новый список?"
-          onSend={() => schListsSokiInvocatorClient.createCategory({ props: scheduleScopeProps })}
+          onSend={() => schListsTsjrpcClient.createCategory({ props: scheduleScopeProps })}
         />
       ),
   );

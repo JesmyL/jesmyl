@@ -1,6 +1,6 @@
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { IScheduleWidget, ScheduleScopeProps } from 'shared/api';
-import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schGeneralTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { useScheduleWidgetRights } from '../useScheduleWidget';
 
 export const ScheduleWidgetMyUserTgInform = ({
@@ -18,14 +18,14 @@ export const ScheduleWidgetMyUserTgInform = ({
       icon="NotificationOff01"
       postfix="Не оповещать меня о событиях в TG"
       className="margin-gap-b"
-      onSend={() => schGeneralSokiInvocatorClient.setIsTgInformMe({ props: scheduleScopeProps, type: 1 })}
+      onSend={() => schGeneralTsjrpcClient.setIsTgInformMe({ props: scheduleScopeProps, type: 1 })}
     />
   ) : (
     <TheIconSendButton
       icon="Notification01"
       postfix="Оповещать меня о событиях в TG"
       className="margin-gap-b"
-      onSend={() => schGeneralSokiInvocatorClient.setIsTgInformMe({ props: scheduleScopeProps, type: 0 })}
+      onSend={() => schGeneralTsjrpcClient.setIsTgInformMe({ props: scheduleScopeProps, type: 0 })}
     />
   );
 };

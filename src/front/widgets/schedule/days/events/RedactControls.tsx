@@ -1,6 +1,6 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { schDayEventsSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { ScheduleDayEventScopeProps } from 'shared/api';
 import { DayEventIsNeedTgInformButton } from './IsNeedTgInformButton';
 
@@ -34,14 +34,14 @@ export const DayEventRedactControls = ({
           </>
         }
         postfix="Скрытое событие"
-        onSend={() => schDayEventsSokiInvocatorClient.toggleIsSecret({ props: dayEventScopeProps, value: undefined })}
+        onSend={() => schDayEventsTsjrpcClient.toggleIsSecret({ props: dayEventScopeProps, value: undefined })}
       />
 
       <DayEventIsNeedTgInformButton
         disabled={isPastEvent}
         isNeedInform={tgInform === 0 || isPastEvent}
         onSend={() =>
-          schDayEventsSokiInvocatorClient.setIsNeedTgInform({
+          schDayEventsTsjrpcClient.setIsNeedTgInform({
             props: dayEventScopeProps,
             value: tgInform === 0 ? 1 : 0,
           })
@@ -55,14 +55,14 @@ export const DayEventRedactControls = ({
         postfix=" мин"
         title="Продолжительность, мин"
         icon="Clock01"
-        onSend={value => schDayEventsSokiInvocatorClient.setTm({ props: dayEventScopeProps, value: +value })}
+        onSend={value => schDayEventsTsjrpcClient.setTm({ props: dayEventScopeProps, value: +value })}
       />
       <StrongEditableField
         isRedact
         value={eventTopic}
         title="Тема"
         icon="Bookmark03"
-        onSend={value => schDayEventsSokiInvocatorClient.setTopic({ props: dayEventScopeProps, value })}
+        onSend={value => schDayEventsTsjrpcClient.setTopic({ props: dayEventScopeProps, value })}
       />
     </>
   );

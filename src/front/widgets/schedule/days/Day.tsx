@@ -19,7 +19,7 @@ import styled from 'styled-components';
 import { ScheduleAlarmDay } from '../alarm/AlarmDay';
 import { ScheduleDayScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';
-import { schDaysSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schDaysTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetDayEditPanel } from './DayEditPanel';
 import { ScheduleWidgetDayEventList } from './events/DayEventList';
 
@@ -133,7 +133,7 @@ export const ScheduleWidgetDay = ({
                     isRedact={isRedact}
                     icon="Bookmark03"
                     title="Тема дня"
-                    onSend={value => schDaysSokiInvocatorClient.setTopic({ props: dayScopeProps, value })}
+                    onSend={value => schDaysTsjrpcClient.setTopic({ props: dayScopeProps, value })}
                   />
                 )}
                 {(isRedact || day.dsc) && (
@@ -145,7 +145,7 @@ export const ScheduleWidgetDay = ({
                     textClassName=" "
                     icon="File02"
                     title="Описание дня"
-                    onSend={value => schDaysSokiInvocatorClient.setDescription({ props: dayScopeProps, value })}
+                    onSend={value => schDaysTsjrpcClient.setDescription({ props: dayScopeProps, value })}
                   />
                 )}
                 {isRedact ? (

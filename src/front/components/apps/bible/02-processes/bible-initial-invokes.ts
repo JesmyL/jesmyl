@@ -1,15 +1,15 @@
 import { bibleIDB, bibleTranslatesIDB } from '$bible/basis/lib/bibleIDB';
 import { soki } from 'front/soki';
-import { bibleSokiInvocatorBaseClient, bibleSokiInvocatorClient } from './invocator';
+import { bibleTsjrpcBaseClient, bibleTsjrpcClient } from './tsjrpc';
 
 export const bibleInitialInvokes = () => {
-  bibleSokiInvocatorBaseClient.$$register();
+  bibleTsjrpcBaseClient.$$register();
 
   const getFreshes = async () => {
     const lastModifiedAt = await bibleTranslatesIDB.get.lastModifiedAt();
     const myTranslates = await bibleIDB.get.myTranslates();
 
-    bibleSokiInvocatorClient.requestFreshes({ lastModifiedAt, myTranslates });
+    bibleTsjrpcClient.requestFreshes({ lastModifiedAt, myTranslates });
   };
 
   soki.onBeforeAuthorizeEvent.listen(() => {

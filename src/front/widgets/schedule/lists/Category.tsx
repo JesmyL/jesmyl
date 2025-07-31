@@ -11,7 +11,7 @@ import { makeRegExp } from 'regexpert';
 import { IScheduleWidgetListCat } from 'shared/api';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';
-import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schListsTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetListUnit } from './Unit';
 
 const LazyIconConfigurator = React.lazy(() => import('../../../shared/ui/configurators/Icon'));
@@ -44,7 +44,7 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
                 <TheIconSendButton
                   icon="PlusSign"
                   confirm={`Создать новое ${cat.title}?`}
-                  onSend={() => schListsSokiInvocatorClient.createUnit({ props: catScopeProps, cati })}
+                  onSend={() => schListsTsjrpcClient.createUnit({ props: catScopeProps, cati })}
                 />
               )}
               <LazyIcon
@@ -83,7 +83,7 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
             header={`Иконка для списка ${cat.title}`}
             icon={cat.icon}
             used={[cat.icon]}
-            onSend={icon => schListsSokiInvocatorClient.setCategoryIcon({ props: catScopeProps, value: icon })}
+            onSend={icon => schListsTsjrpcClient.setCategoryIcon({ props: catScopeProps, value: icon })}
           />
           <StrongEditableField
             icon="SchoolReportCard"
@@ -91,19 +91,19 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
             value={cat}
             fieldKey="title"
             isRedact
-            onSend={value => schListsSokiInvocatorClient.setCategoryTitle({ props: catScopeProps, value })}
+            onSend={value => schListsTsjrpcClient.setCategoryTitle({ props: catScopeProps, value })}
           />
           <StrongEditableField
             title="Заголовок руководителям"
             value={cat.titles[0]}
             isRedact
-            onSend={value => schListsSokiInvocatorClient.setCategoryMentorsTitle({ props: catScopeProps, value })}
+            onSend={value => schListsTsjrpcClient.setCategoryMentorsTitle({ props: catScopeProps, value })}
           />
           <StrongEditableField
             title="Заголовок участникам"
             value={cat.titles[1]}
             isRedact
-            onSend={value => schListsSokiInvocatorClient.setCategoryMembersTitle({ props: catScopeProps, value })}
+            onSend={value => schListsTsjrpcClient.setCategoryMembersTitle({ props: catScopeProps, value })}
           />
         </ModalBody>
       </Modal>

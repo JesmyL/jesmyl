@@ -1,15 +1,15 @@
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { onLocalComCommentsSendEvent } from '$cm/com-comments-manager';
-import { cmSokiInvocatorClient } from '$cm/invocators/basic-invocator.methods';
-import { cmShareSokiInvocatorBaseClient } from '$cm/invocators/invocator.shares.base';
+import { cmTsjrpcClient } from '$cm/tsjrpc/basic.tsjrpc.methods';
+import { cmShareTsjrpcBaseClient } from '$cm/tsjrpc/tsjrpc.shares.base';
 import { soki } from 'front/soki';
 
 export const cmInitialInvokes = () => {
-  cmShareSokiInvocatorBaseClient.$$register();
+  cmShareTsjrpcBaseClient.$$register();
 
   const getFreshes = async () => {
     const lastModfiedAt = await cmIDB.get.lastModifiedAt();
-    await cmSokiInvocatorClient.requestFreshes({ lastModfiedAt });
+    await cmTsjrpcClient.requestFreshes({ lastModfiedAt });
 
     onLocalComCommentsSendEvent.invoke();
   };

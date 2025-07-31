@@ -9,7 +9,7 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { atom } from 'atomaric';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';
-import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schGeneralTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetRegisterType } from './RegisterType';
 import { ScheduleWidgetUserAddByExcel } from './users/excel/AddByExcel';
 import { ScheduleWidgetUserList } from './users/UserList';
@@ -71,7 +71,7 @@ export const ScheduleWidgetControl = () => {
                     confirm={`Сделать первый день ${rights.schedule.withTech ? 'обычным' : 'подготовительным'}?`}
                     className="margin-gap-b"
                     onSend={() =>
-                      schGeneralSokiInvocatorClient.setFirstDayAsTech({
+                      schGeneralTsjrpcClient.setFirstDayAsTech({
                         props: scheduleScopeProps,
                         value: rights.schedule.withTech ? undefined : 1,
                       })
@@ -82,9 +82,7 @@ export const ScheduleWidgetControl = () => {
                     isRedact
                     setSelfRedact
                     title="TG-чат-реквизиты"
-                    onSend={value =>
-                      schGeneralSokiInvocatorClient.setTgChatRequisites({ props: scheduleScopeProps, value })
-                    }
+                    onSend={value => schGeneralTsjrpcClient.setTgChatRequisites({ props: scheduleScopeProps, value })}
                   />
                   <TheIconSendButton
                     className="margin-gap-b"
@@ -97,7 +95,7 @@ export const ScheduleWidgetControl = () => {
                           : 'TG-Напоминание: только по началу события'
                     }
                     onSend={() =>
-                      schGeneralSokiInvocatorClient.toggleIsTgInform({
+                      schGeneralTsjrpcClient.toggleIsTgInform({
                         props: scheduleScopeProps,
                         value: undefined,
                       })
@@ -108,9 +106,7 @@ export const ScheduleWidgetControl = () => {
                     disabled={rights.schedule.tgInform === 0}
                     id={rights.schedule.tgInformTime}
                     className="margin-big-gap-b"
-                    onSend={tm =>
-                      schGeneralSokiInvocatorClient.setTgInformTime({ props: scheduleScopeProps, value: tm })
-                    }
+                    onSend={tm => schGeneralTsjrpcClient.setTgInformTime({ props: scheduleScopeProps, value: tm })}
                   />
                 </>
               )}

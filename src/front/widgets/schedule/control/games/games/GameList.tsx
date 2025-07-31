@@ -2,7 +2,7 @@ import { useIsExpand } from '#shared/ui/expand/useIsExpand';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
-import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { schGamesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetTeamGame } from './game/Game';
 import { ScheduleGameContext } from './lib/contexts';
 
@@ -21,7 +21,7 @@ export function ScheduleWidgetTeamGameList() {
           icon="PlusSign"
           prefix="игра"
           confirm="Добавить новую игру?"
-          onSend={() => schGamesSokiInvocatorClient.addGame({ props: scheduleScopeProps })}
+          onSend={() => schGamesTsjrpcClient.addGame({ props: scheduleScopeProps })}
         />
       ),
   );

@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { ScheduleWidgetTopicTitle } from '../complect/TopicTitle';
 import { ScheduleWidgetDay, ScheduleWidgetDayProps } from '../days/Day';
 import { ScheduleWidgetContextWrapper } from '../general/ContextWrapper';
-import { schUsersSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schUsersTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 
 export function ScheduleAlarmDay(props: ScheduleWidgetDayProps) {
   const auth = useAuth();
@@ -27,7 +27,7 @@ export function ScheduleAlarmDay(props: ScheduleWidgetDayProps) {
           title="Хочу комментить события"
           className="margin-giant-gap-t"
           onSend={() =>
-            schUsersSokiInvocatorClient.addMe({
+            schUsersTsjrpcClient.addMe({
               props: scheduleScopeProps,
               place: 'по кнопке "Хочу комментить события" в отдельном дне',
             })

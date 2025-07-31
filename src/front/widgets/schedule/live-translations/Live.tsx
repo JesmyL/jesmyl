@@ -6,10 +6,7 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { BibleTranslationSlide } from '$bible/translations/BibleTranslationSlide';
 import { CmLiveTranslationScreen } from '$cm/translation/complect/live/Screen';
 import { liveDataAtom, liveDataStreamersAtom } from '$index/atoms';
-import {
-  schLiveSokiInvocatorBaseClient,
-  schLiveSokiInvocatorClient,
-} from '$index/complect/translations/live-invocator';
+import { schLiveTsjrpcBaseClient, schLiveTsjrpcClient } from '$index/complect/translations/live.tsjrpc';
 import { useConnectionState } from '$index/useConnectionState';
 import { atom, useAtomValue } from 'atomaric';
 import { ScreenTranslationControlPanelShowMdButton } from 'front/components/apps/+complect/translations/controls/ShowMdButton';
@@ -35,16 +32,16 @@ export const ScheduleWidgetLiveTranslation = ({ schw, isShowMarkdownOnly }: Prop
     if (isNetworkConnected !== true) return;
 
     if (streamerLogin != null) {
-      schLiveSokiInvocatorClient.watch({ schw, streamerLogin });
+      schLiveTsjrpcClient.watch({ schw, streamerLogin });
 
       return () => {
-        schLiveSokiInvocatorClient.unwatch({ schw, streamerLogin });
+        schLiveTsjrpcClient.unwatch({ schw, streamerLogin });
       };
     }
 
     (async () => {
       setIsLoading(true);
-      await schLiveSokiInvocatorClient.requestStreamers({ schw });
+      await schLiveTsjrpcClient.requestStreamers({ schw });
       setTimeout(setIsLoading, 1000, false);
     })();
   }, [isNetworkConnected, schw, streamerLogin]);
@@ -106,4 +103,4 @@ export const ScheduleWidgetLiveTranslation = ({ schw, isShowMarkdownOnly }: Prop
   );
 };
 
-schLiveSokiInvocatorBaseClient.$$register();
+schLiveTsjrpcBaseClient.$$register();

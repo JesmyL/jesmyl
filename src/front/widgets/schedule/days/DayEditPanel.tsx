@@ -6,7 +6,7 @@ import { atom } from 'atomaric';
 import { makeRegExp } from 'regexpert';
 import { IScheduleWidget, IScheduleWidgetDay, ScheduleScopeProps } from 'shared/api';
 import { useScheduleDayScopePropsContext } from '../complect/lib/contexts';
-import { schDaysSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schDaysTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetEventListUpdater } from './EventListUpdater';
 import { ScheduleWidgetPrintableDay } from './PrintableDay';
 
@@ -33,7 +33,7 @@ export function ScheduleWidgetDayEditPanel({ day, dayi, schedule, scheduleScopeP
         takeDate="NO"
         takeTime="hour-min"
         onSend={async (isChanged, value) =>
-          isChanged && schDaysSokiInvocatorClient.setBeginTime({ props: dayScopeProps, value })
+          isChanged && schDaysTsjrpcClient.setBeginTime({ props: dayScopeProps, value })
         }
       />
       <TheIconButton

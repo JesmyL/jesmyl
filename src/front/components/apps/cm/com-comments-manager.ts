@@ -3,8 +3,8 @@ import { authIDB } from '$index/db/auth-idb';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { CmComWid } from 'shared/api';
 import { Eventer } from 'shared/utils';
-import { cmSokiInvocatorClient } from './invocators/basic-invocator.methods';
-import { cmUserStoreSokiInvocatorClient } from './invocators/user-store-invocator.methods';
+import { cmTsjrpcClient } from './tsjrpc/basic.tsjrpc.methods';
+import { cmUserStoreTsjrpcClient } from './tsjrpc/user-store.tsjrpc.methods';
 
 export const useComCommentText = (comw: CmComWid) =>
   useLiveQuery(() => cmIDB.tb.comComments.get(comw), [comw])?.comment;
@@ -17,7 +17,7 @@ onLocalComCommentsSendEvent.listen(async () => {
 
   if (!localComments.length) return;
 
-  const freshComments = await cmSokiInvocatorClient.exchangeFreshComComments({
+  const freshComments = await cmTsjrpcClient.exchangeFreshComComments({
     modifiedComments: localComments.map(comment => ({ ...comment, isSavedLocal: undefined })),
     clientDateNow: Date.now(),
   });
@@ -59,7 +59,7 @@ let trySend = async (comw: CmComWid, comment: string, setIsLoading: (is: boolean
       clearTimeout(updateComCommentTimeOut[comw]);
       updateComCommentTimeOut[comw] = setTimeout(async () => {
         const timeOut = setTimeout(onCantSend, 5000);
-        await cmUserStoreSokiInvocatorClient.setComComment({ comw, comment });
+        await cmUserStoreTsjrpcClient.setComComment({ comw, comment });
         clearTimeout(timeOut);
         setIsLoading(false);
       }, 1000);

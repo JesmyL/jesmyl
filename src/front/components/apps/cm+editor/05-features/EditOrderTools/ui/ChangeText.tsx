@@ -3,7 +3,7 @@ import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
-import { cmEditComOrderClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { TheOrder } from '$cm/col/com/order/TheOrder';
 import { atom } from 'atomaric';
@@ -48,7 +48,7 @@ export const OrdersRedactorOrderToolsChangeText = ({ com, ord, ordi }: OrdersRed
                 }
                 onChange={isModalOpenAtom.reset}
                 onClick={() =>
-                  cmEditComOrderClientInvocatorMethods.setTexti({
+                  cmEditComOrderClientTsjrpcMethods.setTexti({
                     orderTitle: ord.me.header(),
                     comw: com.wid,
                     ordw: ord.wid,

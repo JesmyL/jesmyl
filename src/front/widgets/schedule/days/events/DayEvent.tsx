@@ -9,7 +9,7 @@ import { ScheduleWidgetBindAtts } from '#widgets/schedule/atts/BindAtts';
 import { ScheduleWidgetTopicTitle } from '#widgets/schedule/complect/TopicTitle';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { ScheduleWidgetDayEventAtts } from '#widgets/schedule/events/atts/DayEventAtts';
-import { schDayEventsSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { ReactNode, useMemo } from 'react';
 import {
   indexScheduleGetEventFinishMs,
@@ -141,7 +141,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
   );
 
   const onRemoveAttSend = (attKey: ScheduleWidgetAttKey) =>
-    schDayEventsSokiInvocatorClient.removeAttachment({ props: dayEventScopeProps, attKey });
+    schDayEventsTsjrpcClient.removeAttachment({ props: dayEventScopeProps, attKey });
 
   return (
     <>
@@ -230,7 +230,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
                 title="Содержание"
                 textClassName=" "
                 icon="File02"
-                onSend={value => schDayEventsSokiInvocatorClient.setDescription({ props: dayEventScopeProps, value })}
+                onSend={value => schDayEventsTsjrpcClient.setDescription({ props: dayEventScopeProps, value })}
               />
             )}
             {isRedact ? (
@@ -244,7 +244,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
                     </>
                   }
                   onAddAttSend={(attKey, defaultValue) =>
-                    schDayEventsSokiInvocatorClient.addAttachment({ props: dayEventScopeProps, attKey, defaultValue })
+                    schDayEventsTsjrpcClient.addAttachment({ props: dayEventScopeProps, attKey, defaultValue })
                   }
                   onRemoveAttSend={onRemoveAttSend}
                   inAttNodeAdds={(attKey, tatt, refs) => {
@@ -259,7 +259,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
                           schedule={rights.schedule}
                           onRemoveAttSend={onRemoveAttSend}
                           onSend={attRef =>
-                            schDayEventsSokiInvocatorClient.addAttachmentRef({
+                            schDayEventsTsjrpcClient.addAttachmentRef({
                               props: dayEventScopeProps,
                               attKey,
                               attRef,

@@ -1,6 +1,6 @@
-import { sokiInvocatorBaseClientNext } from '#basis/lib/SokiInvocatorBase.client';
+import { tsjrpcBaseClientNext } from '#basis/lib/TsjrpcBase.client';
 import { makeRegExp } from 'regexpert';
-import { InvocatorClientEvent, InvocatorClientTool, InvocatorServerEvent, SokiError } from 'shared/api';
+import { SokiError, TsjrpcClientEvent, TsjrpcClientTool, TsjrpcServerEvent } from 'shared/api';
 import { Eventer } from 'shared/utils';
 import { jversion } from 'shared/values';
 import { authIDB } from './components/index/db/auth-idb';
@@ -12,7 +12,7 @@ export class SokiTrip {
 
   private isConnected = false;
   private connectionState = Eventer.createValue<boolean>();
-  private requests = {} as PRecord<string, (event: InvocatorClientEvent) => void>;
+  private requests = {} as PRecord<string, (event: TsjrpcClientEvent) => void>;
 
   private isOpened = false;
 
@@ -77,7 +77,7 @@ export class SokiTrip {
 
     this.ws.onmessage = async ({ data }: { data: string }) => {
       try {
-        const event: InvocatorServerEvent = JSON.parse(data);
+        const event: TsjrpcServerEvent = JSON.parse(data);
 
         if (event.pong) {
           this.setIsConnected(true);
@@ -96,7 +96,7 @@ export class SokiTrip {
 
         if (event.invoke === undefined) return;
 
-        sokiInvocatorBaseClientNext({
+        tsjrpcBaseClientNext({
           invoke: event.invoke,
           sendResponse: this.send,
           tool: null,
@@ -122,7 +122,7 @@ export class SokiTrip {
     this.onConnectionOpenEvent.listen(cb);
   };
 
-  private async sendForce(event: InvocatorClientEvent) {
+  private async sendForce(event: TsjrpcClientEvent) {
     let tries = 20;
 
     const trySend = async () => {
@@ -140,8 +140,8 @@ export class SokiTrip {
   }
 
   send = <InvokedResult = unknown>(
-    event: OmitOwn<InvocatorClientEvent, 'requestId'>,
-    tool?: InvocatorClientTool | nil | void,
+    event: OmitOwn<TsjrpcClientEvent, 'requestId'>,
+    tool?: TsjrpcClientTool | nil | void,
   ) => {
     const requestId = '' + Date.now() + Math.random();
     const fullEvent = { ...event, requestId };

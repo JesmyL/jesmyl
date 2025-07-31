@@ -1,5 +1,5 @@
 import { Script } from '#shared/ui/tags/Script';
-import { indexSokiInvocatorClientMethods } from '$index/invocator.methods';
+import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
 import { useNavigate } from '@tanstack/react-router';
 import { useEffect, useRef, useState } from 'react';
 import { TelegramNativeAuthUserData } from 'shared/api';
@@ -18,7 +18,7 @@ export const TgNativeAuth = () => {
     const tgAuthIframe = document.querySelector('#telegram-login-jesmylbot');
 
     win[funcName] = async (user: TelegramNativeAuthUserData) => {
-      await indexSokiInvocatorClientMethods.authMeByTelegramNativeButton({ user });
+      await indexTsjrpcClientMethods.authMeByTelegramNativeButton({ user });
       navigate({ to: '..' });
     };
 

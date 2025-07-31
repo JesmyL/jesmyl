@@ -3,7 +3,7 @@ import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIcon
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
-import { schRolesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { schRolesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { useMemo, useState } from 'react';
 import { IScheduleWidgetRole } from 'shared/api';
 import { ScheduleWidgetRole } from './Role';
@@ -23,7 +23,7 @@ export function ScheduleWidgetRoleList() {
           icon="PlusSign"
           prefix="роль"
           confirm="Добавить новую роль?"
-          onSend={() => schRolesSokiInvocatorClient.createRole({ props: scheduleScopeProps })}
+          onSend={() => schRolesTsjrpcClient.createRole({ props: scheduleScopeProps })}
         />
       ),
   );

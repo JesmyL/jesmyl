@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';
 import { ScheduleWidgetUserList } from '../control/users/UserList';
-import { schListsSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schListsTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetListUnitRedactor } from './UnitRedactor';
 
 type Props = {
@@ -56,7 +56,7 @@ export function ScheduleWidgetListUnit(props: Props) {
               multiline
               setSelfRedact
               isRedact
-              onSend={value => schListsSokiInvocatorClient.setUnitDescription({ props: unitScopeData, value, cati })}
+              onSend={value => schListsTsjrpcClient.setUnitDescription({ props: unitScopeData, value, cati })}
             />
           )}
 

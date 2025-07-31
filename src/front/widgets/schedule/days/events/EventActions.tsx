@@ -6,7 +6,7 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ScheduleWidgetTopicTitle } from '#widgets/schedule/complect/TopicTitle';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { ScheduleWidgetEventType } from '#widgets/schedule/events/EventType';
-import { schDaysSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { schDaysTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { atom } from 'atomaric';
 import { IScheduleWidget, IScheduleWidgetDayEvent, ScheduleDayScopeProps } from 'shared/api';
 
@@ -48,7 +48,7 @@ export function ScheduleWidgetDayEventEventActions({ schedule, event, onEventCut
           }
           className="flex-max color--ko margin-gap-v"
           onSend={() =>
-            schDaysSokiInvocatorClient.removeEvent({
+            schDaysTsjrpcClient.removeEvent({
               props: dayScopeProps,
               value: {
                 eventMi: event.mi,

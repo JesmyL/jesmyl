@@ -7,7 +7,7 @@ import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIcon
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { TheButton } from '#shared/ui/TheButton';
-import { cmEditorClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditorClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { cmEditorIDB } from '$cm+editor/basis/lib/cmEditorIDB';
 import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer';
 import { EERulesListComputer } from '$cm+editor/entities/EERulesListComputer';
@@ -59,7 +59,7 @@ export const EditEERulesPage = () => {
             `Отправить ${words.length} ${mylib.declension(words.length, 'слово', 'слова', 'слов')}: ` +
             `${words.join(', ')}`
           }
-          onSend={() => cmEditorClientInvocatorMethods.setEEWords({ words: editedWordsRef.current })}
+          onSend={() => cmEditorClientTsjrpcMethods.setEEWords({ words: editedWordsRef.current })}
           onSuccess={() => setEditedWords({})}
         />
       }

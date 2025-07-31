@@ -1,5 +1,5 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { cmEditorClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditorClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { useCmMp3Rules } from '$cm+editor/basis/lib/hooks/useCmMp3Rules';
 import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer';
 import { Mp3RuleEditor } from '$cm+editor/widgets/Mp3RuleEditor';
@@ -22,7 +22,7 @@ export const EditMp3RulesPage = () => {
               <Mp3RuleEditor
                 key={rule.w}
                 {...rule}
-                onComplete={newRule => cmEditorClientInvocatorMethods.setMp3Rule({ rule: newRule })}
+                onComplete={newRule => cmEditorClientTsjrpcMethods.setMp3Rule({ rule: newRule })}
               />
             );
           })}
@@ -51,7 +51,7 @@ export const EditMp3RulesPage = () => {
                 updateNewRules([...newRules, rule]);
                 setIsOpenNewRule(false);
 
-                cmEditorClientInvocatorMethods.addMp3Rule({ rule });
+                cmEditorClientTsjrpcMethods.addMp3Rule({ rule });
               }}
             />
           )}

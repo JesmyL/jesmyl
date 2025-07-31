@@ -1,10 +1,10 @@
 import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
-import { cmEditorClientInvocatorMethods } from '../cm-editor-invocator.methods';
+import { cmEditorClientTsjrpcMethods } from '../cm-editor.tsjrpc.methods';
 
 export const useCmMp3Rules = () => {
   return useInvocatedValue(
     [],
-    ({ aborter }) => cmEditorClientInvocatorMethods.getMp3RulesList(undefined, { aborter }),
+    ({ aborter }) => cmEditorClientTsjrpcMethods.getMp3RulesList(undefined, { aborter }),
     [],
   );
 };

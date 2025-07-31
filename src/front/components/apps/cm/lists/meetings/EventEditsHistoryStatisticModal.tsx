@@ -3,7 +3,7 @@ import { MyLib, mylib } from '#shared/lib/my-lib';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { cmEditComExternalsClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
 import { useMemo } from 'react';
 import { CmComWid, IScheduleWidgetWid } from 'shared/api';
@@ -19,7 +19,7 @@ export const CmMeetingEventEditsHistoryStatisticModalInner = ({ dayi, schw }: Pr
     undefined,
     async ({ aborter }, initialValue) => {
       if (mylib.isNaN(schw) || mylib.isNaN(dayi)) return initialValue;
-      return cmEditComExternalsClientInvocatorMethods.getScheduleEventHistoryStatistic({ schw, dayi }, { aborter });
+      return cmEditComExternalsClientTsjrpcMethods.getScheduleEventHistoryStatistic({ schw, dayi }, { aborter });
     },
     [schw, dayi],
   );

@@ -1,11 +1,11 @@
-import { schSokiInvocatorBaseClient } from '#widgets/schedule/invocators/invocator.base';
+import { schTsjrpcBaseClient } from '#widgets/schedule/tsjrpc/tsjrpc.base';
 import { indexIDB } from '$index/db/index-idb';
-import { indexSokiInvocatorClientMethods } from '$index/invocator.methods';
+import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
 import { soki } from 'front/soki';
 import { DeviceId } from 'shared/api';
 
 export const appInitialInvokes = () => {
-  schSokiInvocatorBaseClient.$$register();
+  schTsjrpcBaseClient.$$register();
 
   const getFreshes = async () => {
     const lastModfiedAt = await indexIDB.get.lastModifiedAt();
@@ -13,14 +13,14 @@ export const appInitialInvokes = () => {
 
     try {
       if (deviceId === DeviceId.def) {
-        const deviceId = await indexSokiInvocatorClientMethods.getDeviceId();
+        const deviceId = await indexTsjrpcClientMethods.getDeviceId();
         indexIDB.set.deviceId(deviceId);
       }
     } catch (_e) {
       //
     }
 
-    await indexSokiInvocatorClientMethods.requestFreshes({ lastModfiedAt });
+    await indexTsjrpcClientMethods.requestFreshes({ lastModfiedAt });
   };
 
   soki.onBeforeAuthorizeEvent.listen(() => indexIDB.remove.lastModifiedAt());

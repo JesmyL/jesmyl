@@ -1,5 +1,5 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { useCmExtractHrefsFromHTML } from '$cm+editor/basis/lib/hooks/useCmExtractHrefsFromHTML';
 import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
@@ -27,13 +27,13 @@ export const CmEditorTabComAudio = ({ topHTML, topCom, topMp3Rule }: Props) => {
   if (!ccom) return null;
 
   const removeSrc = (src: string) =>
-    cmEditComClientInvocatorMethods.setAudioLinks({
+    cmEditComClientTsjrpcMethods.setAudioLinks({
       comw: ccom.wid,
       value: Array.from(new Set(ccom.audio.split(/\n/).filter(s => s && s !== src))).join('\n'),
     });
 
   const addSrc = (src: string) =>
-    cmEditComClientInvocatorMethods.setAudioLinks({
+    cmEditComClientTsjrpcMethods.setAudioLinks({
       comw: ccom.wid,
       value: Array.from(new Set(ccom.audio.split(/\n/).concat(src).filter(itIt))).join('\n'),
     });

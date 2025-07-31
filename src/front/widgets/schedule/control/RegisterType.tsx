@@ -2,7 +2,7 @@ import { useIsExpand } from '#shared/ui/expand/useIsExpand';
 import { scheduleWidgetRegTypeRights } from 'shared/api';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '../contexts';
-import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schGeneralTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetNewUserRegisterLevel } from './NewUserRegisterLevel';
 import { ScheduleWidgetRightControlList } from './RightControlList';
 
@@ -24,7 +24,7 @@ export function ScheduleWidgetRegisterType() {
               isCantEdit={!rights.isCanTotalRedact}
               isDescriptionsCollect
               onSend={value =>
-                schGeneralSokiInvocatorClient.setScheduleRegisterType({ props: scheduleScopeProps, type: value })
+                schGeneralTsjrpcClient.setScheduleRegisterType({ props: scheduleScopeProps, type: value })
               }
             />
             {rights.isCanTotalRedact && <ScheduleWidgetNewUserRegisterLevel />}

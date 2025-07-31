@@ -6,7 +6,7 @@ import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
-import { schUsersSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { schUsersTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 interface Props {
@@ -165,9 +165,7 @@ export function ScheduleWidgetUserAddByExcelContent({ close }: Props) {
           disabled={!resultUsers?.length}
           title="Загрузить список"
           onSuccess={close}
-          onSend={() =>
-            schUsersSokiInvocatorClient.addUsersByExcel({ props: scheduleScopeProps, users: resultUsers ?? [] })
-          }
+          onSend={() => schUsersTsjrpcClient.addUsersByExcel({ props: scheduleScopeProps, users: resultUsers ?? [] })}
         />
       </div>
       {!existsUsers?.length || (

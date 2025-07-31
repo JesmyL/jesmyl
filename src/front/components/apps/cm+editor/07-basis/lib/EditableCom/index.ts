@@ -1,4 +1,4 @@
-import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { IExportableOrderMe } from '$cm/col/com/order/Order.model';
 import { makeRegExp } from 'regexpert';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
@@ -18,7 +18,7 @@ export class EditableCom extends EditableComParseBlocks {
 
     const val = col.replace(CmComUtils.simpleBemoleChordReg_g, chord => CmComUtils.chordDiezEquivalent[chord] || chord);
 
-    cmEditComClientInvocatorMethods.changeChordBlock({ texti: coli, comw: this.wid, value: val });
+    cmEditComClientTsjrpcMethods.changeChordBlock({ texti: coli, comw: this.wid, value: val });
   }
 
   getRegionNextLetter() {

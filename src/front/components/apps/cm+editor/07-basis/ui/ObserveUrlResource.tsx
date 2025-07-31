@@ -1,7 +1,7 @@
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { cmEditorClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditorClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { useCmMp3Rules } from '$cm+editor/basis/lib/hooks/useCmMp3Rules';
 import { useEffect, useState } from 'react';
 import { CmMp3ContainsPageResult } from 'shared/api';
@@ -45,7 +45,7 @@ export const ObserveUrlResource = ({
           title="Обзор URL"
           disabled={!url || !!errorMessage}
           onSuccess={onSuccess}
-          onSend={() => cmEditorClientInvocatorMethods.getResourceHTMLString({ src: url })}
+          onSend={() => cmEditorClientTsjrpcMethods.getResourceHTMLString({ src: url })}
         />
       </div>
       {errorMessage && <div className="error-message">{errorMessage}</div>}

@@ -13,7 +13,7 @@ import { AttTranslatorType, attTranslatorTypes, IScheduleWidget, ScheduleWidgetD
 import styled from 'styled-components';
 import { ScheduleWidgetBindAtts } from '../atts/BindAtts';
 import { useScheduleScopePropsContext } from '../complect/lib/contexts';
-import { schEventTypesSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schEventTypesTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { useAttTypeTitleError } from './useAttTypeTitleError';
 
 const isRedactModalOpenAtom = atom(false);
@@ -49,7 +49,7 @@ export function ScheduleWidgetEventType(props: {
         isImpossibleEmptyValue
         onChange={setTitle}
         onSend={value =>
-          schEventTypesSokiInvocatorClient.setTitle({
+          schEventTypesTsjrpcClient.setTitle({
             props: eventTypeScopeProps,
             value,
             prevTitle: props.typeBox.title,
@@ -69,7 +69,7 @@ export function ScheduleWidgetEventType(props: {
         isRedact={props.isRedact}
         title="Продолжительность, мин"
         icon="Clock01"
-        onSend={value => schEventTypesSokiInvocatorClient.setTm({ props: eventTypeScopeProps, tm: +value })}
+        onSend={value => schEventTypesTsjrpcClient.setTm({ props: eventTypeScopeProps, tm: +value })}
       />
       {props.isRedact ? (
         <ScheduleWidgetBindAtts
@@ -93,7 +93,7 @@ export function ScheduleWidgetEventType(props: {
               items={attTranslatorTypes}
               className="margin-gap-b"
               onSend={() =>
-                schEventTypesSokiInvocatorClient.setAttImaginePeriod({
+                schEventTypesTsjrpcClient.setAttImaginePeriod({
                   props: { ...eventTypeScopeProps, attKey },
                   value: attTranslatorType,
                 })
@@ -101,13 +101,13 @@ export function ScheduleWidgetEventType(props: {
             />
           )}
           onAddAttSend={attKey =>
-            schEventTypesSokiInvocatorClient.bindAttImagine({
+            schEventTypesTsjrpcClient.bindAttImagine({
               props: { ...eventTypeScopeProps, attKey },
               attTranslatorType,
             })
           }
           onRemoveAttSend={async attKey => {
-            schEventTypesSokiInvocatorClient.removeAttImagine({ props: { ...eventTypeScopeProps, attKey } });
+            schEventTypesTsjrpcClient.removeAttImagine({ props: { ...eventTypeScopeProps, attKey } });
           }}
         />
       ) : (

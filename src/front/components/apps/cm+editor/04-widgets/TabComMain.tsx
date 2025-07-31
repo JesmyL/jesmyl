@@ -4,7 +4,7 @@ import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { removedCompositionsAtom } from '$cm+editor/basis/lib/atoms/com';
-import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { cmEditorIDB } from '$cm+editor/basis/lib/cmEditorIDB';
 import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { TextCorrectMessages } from '$cm+editor/entities/TextBlockIncorrectMessages';
@@ -39,7 +39,7 @@ export const CmEditorTabComMain = () => {
         label="Название"
         defaultValue={ccom.name}
         isError={!!nameCorrects.errors?.length}
-        onChange={value => cmEditComClientInvocatorMethods.rename({ comw: ccom.wid, value })}
+        onChange={value => cmEditComClientTsjrpcMethods.rename({ comw: ccom.wid, value })}
         onInput={setName}
       />
       <TextCorrectMessages corrects={nameCorrects} />
@@ -49,7 +49,7 @@ export const CmEditorTabComMain = () => {
         label="Ударов в минуту"
         type="number"
         defaultValue={'' + (ccom.beatsPerMinute ?? '')}
-        onChange={value => cmEditComClientInvocatorMethods.setBpM({ comw: ccom.wid, value: +value })}
+        onChange={value => cmEditComClientTsjrpcMethods.setBpM({ comw: ccom.wid, value: +value })}
         onInput={emptyFunc}
       />
       <div className="flex full-width between margin-gap-v">
@@ -59,7 +59,7 @@ export const CmEditorTabComMain = () => {
           id={ccom.meterSize}
           items={meterSizeItems}
           onSelectId={value => {
-            cmEditComClientInvocatorMethods.setMeterSize({ comw: ccom.wid, value });
+            cmEditComClientTsjrpcMethods.setMeterSize({ comw: ccom.wid, value });
           }}
         />
       </div>
@@ -77,7 +77,7 @@ export const CmEditorTabComMain = () => {
         }
         onClick={event => {
           event.stopPropagation();
-          cmEditComClientInvocatorMethods.changeLanguage({ comw: ccom.wid, value: ccom.langi ? 0 : 1 });
+          cmEditComClientTsjrpcMethods.changeLanguage({ comw: ccom.wid, value: ccom.langi ? 0 : 1 });
         }}
       />
       <CmComEditTransposition ccom={ccom} />
@@ -94,7 +94,7 @@ export const CmEditorTabComMain = () => {
           </>
         }
         onClick={() => {
-          cmEditComClientInvocatorMethods.makeBemoled({ comw: ccom.wid, value: ccom.isBemoled === 1 ? 0 : 1 });
+          cmEditComClientTsjrpcMethods.makeBemoled({ comw: ccom.wid, value: ccom.isBemoled === 1 ? 0 : 1 });
         }}
       />
       {auth.level === 100 && (
@@ -109,7 +109,7 @@ export const CmEditorTabComMain = () => {
           postfix="Удалить песню"
           onClick={async () => {
             setRemovedComs(prev => ({ ...prev, [ccom.wid]: ccom.name }));
-            cmEditComClientInvocatorMethods.remove({ comw: ccom.wid });
+            cmEditComClientTsjrpcMethods.remove({ comw: ccom.wid });
           }}
         />
       )}

@@ -1,6 +1,6 @@
 import { MyLib } from '#shared/lib/my-lib';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
-import { cmUserStoreSokiInvocatorClient } from '$cm/invocators/user-store-invocator.methods';
+import { cmUserStoreTsjrpcClient } from '$cm/tsjrpc/user-store.tsjrpc.methods';
 import { useAuth } from '$index/atoms';
 import React from 'react';
 import { MigratableComToolName } from 'shared/api';
@@ -92,7 +92,7 @@ export const useMigratableListComTools = () => {
     if (auth.login == null) return;
     clearTimeout(saveTimeout);
     saveTimeout = setTimeout(() => {
-      cmUserStoreSokiInvocatorClient.setAboutComFavorites({ tools });
+      cmUserStoreTsjrpcClient.setAboutComFavorites({ tools });
     }, 1000);
   };
 

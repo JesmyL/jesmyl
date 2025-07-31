@@ -6,7 +6,7 @@ import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ScheduleDayEventPathProps } from '#widgets/schedule/ScheduleWidget.model';
-import { cmEditComExternalsClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { useSelectedComs } from '$cm/base/useSelectedComs';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
 import { MoveSelectedComButton } from '$cm/entities/MoveSelectedComButton';
@@ -66,7 +66,7 @@ export const CmMeetingEventEdits = ({
             icon="Sent"
             prefix="Отправить"
             onSend={() =>
-              cmEditComExternalsClientInvocatorMethods.setInScheduleEvent({
+              cmEditComExternalsClientTsjrpcMethods.setInScheduleEvent({
                 schw,
                 dayi,
                 eventMi,

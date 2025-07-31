@@ -5,7 +5,7 @@ import { useToast } from '#shared/ui/modal/useToast';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { indexSokiInvocatorClientMethods } from '$index/invocator.methods';
+import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
 import { useConnectionState } from '$index/useConnectionState';
 import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
@@ -19,7 +19,7 @@ export const IndexTelegramAuthPage = () => {
   const [isSendTgCode, setIsSendTgCode] = useState(false);
   const [values] = useInvocatedValue(
     {},
-    ({ aborter }) => indexSokiInvocatorClientMethods.getIndexValues(undefined, { aborter }),
+    ({ aborter }) => indexTsjrpcClientMethods.getIndexValues(undefined, { aborter }),
     [],
   );
 
@@ -133,7 +133,7 @@ export const IndexTelegramAuthPage = () => {
                     }}
                     onSend={async () => {
                       setIsLoading(true);
-                      return await indexSokiInvocatorClientMethods.authMeByTelegramBotNumber({
+                      return await indexTsjrpcClientMethods.authMeByTelegramBotNumber({
                         secretNumber: +authCode,
                       });
                     }}

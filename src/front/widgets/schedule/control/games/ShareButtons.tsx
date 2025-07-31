@@ -3,8 +3,8 @@ import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
-import { schPhotosSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { getScheduleWidgetUserPhotoStorageKey } from '#widgets/schedule/storage';
+import { schPhotosTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { indexIDB } from '$index/db/index-idb';
 import { atom } from 'atomaric';
 import { ScheduleWidgetPhotoKey } from 'shared/api';
@@ -48,13 +48,13 @@ export const ScheduleWidgetShareButtons = function ShareButtons({ prefix }: Prop
 
           if (!mylib.keys(value).length) return;
 
-          return schPhotosSokiInvocatorClient.putSharedPhotos({ schw: rights.schedule.w, photoDict: value });
+          return schPhotosTsjrpcClient.putSharedPhotos({ schw: rights.schedule.w, photoDict: value });
         }}
       />
       <TheIconSendButton
         icon="CloudDownload"
         onSuccess={photos => indexIDB.db.schedulePhotos.bulkPut(photos)}
-        onSend={() => schPhotosSokiInvocatorClient.getSharedPhotos({ schw: rights.schedule.w })}
+        onSend={() => schPhotosTsjrpcClient.getSharedPhotos({ schw: rights.schedule.w })}
       />
 
       <Modal openAtom={isOpenGaleryAtom}>

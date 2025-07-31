@@ -4,8 +4,8 @@ import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIcon
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { ScheduleWidgetRoleFace } from '#widgets/schedule/control/roles/RoleFace';
-import { schDayEventsSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
 import { ScheduleWidgetListUnitFace } from '#widgets/schedule/lists/UnitFace';
+import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { extractScheduleWidgetRole, extractScheduleWidgetRoleUser } from '#widgets/schedule/useScheduleWidget';
 import Markdown from 'markdown-to-jsx';
 import { ReactNode } from 'react';
@@ -74,7 +74,7 @@ export function ScheduleKeyValueListAtt({
         <TheIconSendButton
           icon="PlusSign"
           onSend={() =>
-            schDayEventsSokiInvocatorClient.putKeyValueAttachment({
+            schDayEventsTsjrpcClient.putKeyValueAttachment({
               props: dayEventAttScopeProps,
               key: false,
               value: '',
@@ -101,7 +101,7 @@ export function ScheduleKeyValueListAtt({
               <TheIconSendButton
                 icon="PlusSign"
                 onSend={() =>
-                  schDayEventsSokiInvocatorClient.putKeyValueAttachment({
+                  schDayEventsTsjrpcClient.putKeyValueAttachment({
                     props: dayEventAttScopeProps,
                     key: false,
                     value: title,
@@ -118,7 +118,7 @@ export function ScheduleKeyValueListAtt({
               <TheIconSendButton
                 icon="PlusSign"
                 onSend={() =>
-                  schDayEventsSokiInvocatorClient.putKeyValueAttachment({
+                  schDayEventsTsjrpcClient.putKeyValueAttachment({
                     props: dayEventAttScopeProps,
                     key: title,
                     value: '+',
@@ -157,7 +157,7 @@ export function ScheduleKeyValueListAtt({
                     icon="PlusSign"
                     prefix={team.title}
                     onSend={() => {
-                      return schDayEventsSokiInvocatorClient.addKeyValueAttachmentListItem({
+                      return schDayEventsTsjrpcClient.addKeyValueAttachmentListItem({
                         props: dayEventAttScopeProps,
                         itemMi,
                         value:
@@ -191,7 +191,7 @@ export function ScheduleKeyValueListAtt({
                   <TheIconSendButton
                     icon="PlusSign"
                     onSend={() =>
-                      schDayEventsSokiInvocatorClient.putKeyValueAttachment({
+                      schDayEventsTsjrpcClient.putKeyValueAttachment({
                         props: dayEventAttScopeProps,
                         key: false,
                         value: game.mi + CustomAttUseTaleId.Games,
@@ -206,7 +206,7 @@ export function ScheduleKeyValueListAtt({
                   <TheIconSendButton
                     icon="PlusSign"
                     onSend={() =>
-                      schDayEventsSokiInvocatorClient.putKeyValueAttachment({
+                      schDayEventsTsjrpcClient.putKeyValueAttachment({
                         props: dayEventAttScopeProps,
                         key: game.mi + CustomAttUseTaleId.Games,
                         value: [],
@@ -239,7 +239,7 @@ export function ScheduleKeyValueListAtt({
           <TheIconSendButton
             icon="PlusSign"
             onSend={() =>
-              schDayEventsSokiInvocatorClient.putKeyValueAttachment({
+              schDayEventsTsjrpcClient.putKeyValueAttachment({
                 props: dayEventAttScopeProps,
                 key: role.mi,
                 value: '+',
@@ -264,7 +264,7 @@ export function ScheduleKeyValueListAtt({
             <TheIconSendButton
               icon="PlusSign"
               onSend={() =>
-                schDayEventsSokiInvocatorClient.putKeyValueAttachment({
+                schDayEventsTsjrpcClient.putKeyValueAttachment({
                   props: dayEventAttScopeProps,
                   key: unit.mi + CustomAttUseTaleId.Lists,
                   value: '+',
@@ -301,7 +301,7 @@ export function ScheduleKeyValueListAtt({
             <TheIconSendButton
               icon="PlusSign"
               onSend={() =>
-                schDayEventsSokiInvocatorClient.putKeyValueAttachment({
+                schDayEventsTsjrpcClient.putKeyValueAttachment({
                   props: dayEventAttScopeProps,
                   key: false,
                   value: user.mi + CustomAttUseTaleId.Users,
@@ -318,7 +318,7 @@ export function ScheduleKeyValueListAtt({
             <TheIconSendButton
               icon="PlusSign"
               onSend={() =>
-                schDayEventsSokiInvocatorClient.putKeyValueAttachment({
+                schDayEventsTsjrpcClient.putKeyValueAttachment({
                   props: dayEventAttScopeProps,
                   key: user.mi + CustomAttUseTaleId.Users,
                   value: '+',
@@ -337,7 +337,7 @@ export function ScheduleKeyValueListAtt({
         <TheIconSendButton
           icon="PlusSign"
           onSend={() =>
-            schDayEventsSokiInvocatorClient.putKeyValueAttachment({
+            schDayEventsTsjrpcClient.putKeyValueAttachment({
               props: dayEventAttScopeProps,
               key: 'Пункт',
               value: '+',
@@ -407,7 +407,7 @@ export function ScheduleKeyValueListAtt({
                       icon={key ? 'CheckmarkSquare02' : 'Square'}
                       disabled={!customAttUseRights.checkIsCan(userR, att.U)}
                       onSend={() =>
-                        schDayEventsSokiInvocatorClient.setKeyValueAttachmentKey({
+                        schDayEventsTsjrpcClient.setKeyValueAttachmentKey({
                           props: dayEventAttScopeProps,
                           itemMi,
                           value: !key,
@@ -424,7 +424,7 @@ export function ScheduleKeyValueListAtt({
                       isRedact={isRedact}
                       setSelfRedact
                       onSend={value =>
-                        schDayEventsSokiInvocatorClient.setKeyValueAttachmentKey({
+                        schDayEventsTsjrpcClient.setKeyValueAttachmentKey({
                           props: dayEventAttScopeProps,
                           itemMi,
                           value,
@@ -442,7 +442,7 @@ export function ScheduleKeyValueListAtt({
                         <TheIconSendButton
                           icon={mylib.isArr(value) ? 'Text' : 'LeftToRightListDash'}
                           onSend={() =>
-                            schDayEventsSokiInvocatorClient.setKeyValueAttachmentValue({
+                            schDayEventsTsjrpcClient.setKeyValueAttachmentValue({
                               props: dayEventAttScopeProps,
                               itemMi,
                               value: mylib.isArr(value) ? '+' : [],
@@ -470,7 +470,7 @@ export function ScheduleKeyValueListAtt({
                       className="relative z-15 text-x7"
                       icon="ArrowDataTransferVertical"
                       onSend={() =>
-                        schDayEventsSokiInvocatorClient.moveKeyValueAttachment({ props: dayEventAttScopeProps, itemMi })
+                        schDayEventsTsjrpcClient.moveKeyValueAttachment({ props: dayEventAttScopeProps, itemMi })
                       }
                     />
                   )}
@@ -479,7 +479,7 @@ export function ScheduleKeyValueListAtt({
                     confirm="Удалить пункт?"
                     icon="Delete02"
                     onSend={() =>
-                      schDayEventsSokiInvocatorClient.putKeyValueAttachment({
+                      schDayEventsTsjrpcClient.putKeyValueAttachment({
                         props: dayEventAttScopeProps,
                         key: itemMi,
                         value: null,
@@ -503,7 +503,7 @@ export function ScheduleKeyValueListAtt({
                   isRedact={isRedact}
                   setSelfRedact={setSelfRedact}
                   onSend={value =>
-                    schDayEventsSokiInvocatorClient.setKeyValueAttachmentValue({
+                    schDayEventsTsjrpcClient.setKeyValueAttachmentValue({
                       props: dayEventAttScopeProps,
                       itemMi,
                       value,
@@ -523,7 +523,7 @@ export function ScheduleKeyValueListAtt({
                                 className="relative z-15 text-x7"
                                 icon="ArrowDataTransferVertical"
                                 onSend={() =>
-                                  schDayEventsSokiInvocatorClient.moveKeyValueAttachmentListItem({
+                                  schDayEventsTsjrpcClient.moveKeyValueAttachmentListItem({
                                     props: dayEventAttScopeProps,
                                     itemMi,
                                     value: val,
@@ -536,7 +536,7 @@ export function ScheduleKeyValueListAtt({
                               confirm="Удалить пункт?"
                               icon="Delete02"
                               onSend={() =>
-                                schDayEventsSokiInvocatorClient.removeKeyValueAttachmentListItemValue({
+                                schDayEventsTsjrpcClient.removeKeyValueAttachmentListItemValue({
                                   props: dayEventAttScopeProps,
                                   itemMi,
                                   value: val,
@@ -559,7 +559,7 @@ export function ScheduleKeyValueListAtt({
                               onSend={val => {
                                 while (value?.includes(val)) val += '1';
 
-                                return schDayEventsSokiInvocatorClient.setKeyValueAttachmentListItemValue({
+                                return schDayEventsTsjrpcClient.setKeyValueAttachmentListItemValue({
                                   props: dayEventAttScopeProps,
                                   itemMi,
                                   valuei: vali,
@@ -581,7 +581,7 @@ export function ScheduleKeyValueListAtt({
                       lists={dropdownLists}
                       roles={dropdownRoles}
                       onSend={value =>
-                        schDayEventsSokiInvocatorClient.addKeyValueAttachmentListItem({
+                        schDayEventsTsjrpcClient.addKeyValueAttachmentListItem({
                           props: dayEventAttScopeProps,
                           itemMi,
                           value,
@@ -601,7 +601,7 @@ export function ScheduleKeyValueListAtt({
                     onSend={val => {
                       while (value?.includes(val)) val += '1';
 
-                      return schDayEventsSokiInvocatorClient.addKeyValueAttachmentListItem({
+                      return schDayEventsTsjrpcClient.addKeyValueAttachmentListItem({
                         props: dayEventAttScopeProps,
                         itemMi,
                         value: val,

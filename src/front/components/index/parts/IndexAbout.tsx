@@ -5,7 +5,7 @@ import { QRCode } from '#shared/ui/qr-code/QRCode';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { indexSokiInvocatorClientMethods } from '$index/invocator.methods';
+import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
 import { useConnectionState, useIsOnline } from '$index/useConnectionState';
 import { useAtomValue } from 'atomaric';
 import { checkIsThereNewSWAtom, reloadSW } from 'front/sw-register';
@@ -21,12 +21,12 @@ export function IndexAbout() {
 
   const [appVersion, isVersionLoading] = useInvocatedValue(
     0,
-    ({ aborter }) => indexSokiInvocatorClientMethods.getFreshAppVersion(undefined, { aborter }),
+    ({ aborter }) => indexTsjrpcClientMethods.getFreshAppVersion(undefined, { aborter }),
     [],
   );
   const [values] = useInvocatedValue(
     {},
-    ({ aborter }) => indexSokiInvocatorClientMethods.getIndexValues(undefined, { aborter }),
+    ({ aborter }) => indexTsjrpcClientMethods.getIndexValues(undefined, { aborter }),
     [],
   );
 

@@ -5,7 +5,7 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { bibleAllTranslates, translateDescriptions } from '$bible/basis/lib/const/consts';
 import { useBibleMyTranslates } from '$bible/basis/lib/hooks/translates';
 import { removeBibleTranslate } from '$bible/basis/lib/utils';
-import { bibleSokiInvocatorBaseClient, bibleSokiInvocatorClient } from '$bible/processes/invocator';
+import { bibleTsjrpcBaseClient, bibleTsjrpcClient } from '$bible/processes/tsjrpc';
 import { useEffect, useState } from 'react';
 import { BibleTranslateName } from 'shared/api';
 
@@ -13,7 +13,7 @@ export default function TranslatesLoadModalInner() {
   const [myTranslates] = useBibleMyTranslates();
   const [translateOnLoad, setTranslateOnLoad] = useState<BibleTranslateName | null>(null);
 
-  useEffect(() => bibleSokiInvocatorBaseClient.$$register(), []);
+  useEffect(() => bibleTsjrpcBaseClient.$$register(), []);
 
   return (
     <>
@@ -52,7 +52,7 @@ export default function TranslatesLoadModalInner() {
               disabled={translateOnLoad !== null}
               onSend={async () => {
                 setTranslateOnLoad(tName);
-                await bibleSokiInvocatorClient.requestTranslate({ translate: tName });
+                await bibleTsjrpcClient.requestTranslate({ translate: tName });
                 setTranslateOnLoad(null);
               }}
             />

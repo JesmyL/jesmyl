@@ -7,7 +7,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheButton } from '#shared/ui/TheButton';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
-import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { schGamesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { atom, useAtomValue } from 'atomaric';
 import { useMemo, useState } from 'react';
 import { IScheduleWidgetTeamCriteria, IScheduleWidgetUser, ScheduleGameCriteriaScopeProps } from 'shared/api';
@@ -76,7 +76,7 @@ export function ScheduleWidgetSortCriteria({ criteria, criteriai }: Props) {
               placeholder="Новый критерий"
               isRedact={isRenaming}
               onSend={value =>
-                schGamesSokiInvocatorClient.setCriteriaTitle({
+                schGamesTsjrpcClient.setCriteriaTitle({
                   props: criteriaScopeProps,
                   value,
                   prevTitle: criteria.title,

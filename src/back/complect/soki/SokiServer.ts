@@ -1,16 +1,9 @@
 import { tglogger } from 'back/sides/telegram-bot/log/log-bot';
-import { sokiInvocatorBaseServerNext, SokiServerInvocatorTool } from 'back/SokiInvocatorBase.server';
+import { ServerTSJRPCTool, tsjrpcBaseServerNext } from 'back/tsjrpc.base.server';
 import { userAuthStringified, userVisitStringified } from 'back/utils';
 import jwt, { JsonWebTokenError } from 'jsonwebtoken';
 import { makeRegExp } from 'regexpert';
-import {
-  InvocatorClientEvent,
-  InvocatorServerEvent,
-  LocalSokiAuth,
-  SokiAuthLogin,
-  SokiError,
-  SokiVisit,
-} from 'shared/api';
+import { LocalSokiAuth, SokiAuthLogin, SokiError, SokiVisit, TsjrpcClientEvent, TsjrpcServerEvent } from 'shared/api';
 import { setSharedPolyfills, smylib } from 'shared/utils';
 import WebSocket, { WebSocketServer } from 'ws';
 import { ErrorCatcher } from '../ErrorCatcher';
@@ -42,7 +35,7 @@ export class SokiServer {
       });
 
       client.on('message', async (data: WebSocket.RawData) => {
-        const event: InvocatorClientEvent = JSON.parse('' + data);
+        const event: TsjrpcClientEvent = JSON.parse('' + data);
 
         if (event.ping) {
           this.send({ pong: 1, requestId: event.requestId }, client);
@@ -111,7 +104,7 @@ export class SokiServer {
 
         if (event.invoke === undefined) return;
 
-        sokiInvocatorBaseServerNext({
+        tsjrpcBaseServerNext({
           invoke: event.invoke,
           sendResponse: this.sendInvokeEvent,
           tool: { client, auth, visitInfo },
@@ -123,7 +116,7 @@ export class SokiServer {
     console.info('SokiServer started!!!');
   }
 
-  send(event: InvocatorServerEvent, clientSelector: SokiServerClientSelector | nil | void) {
+  send(event: TsjrpcServerEvent, clientSelector: SokiServerClientSelector | nil | void) {
     if (clientSelector instanceof WebSocket) {
       clientSelector.send(JSON.stringify(event));
       return;
@@ -153,7 +146,7 @@ export class SokiServer {
     });
   }
 
-  private sendInvokeEvent = (event: InvocatorServerEvent, tool: SokiServerInvocatorTool) => {
+  private sendInvokeEvent = (event: TsjrpcServerEvent, tool: ServerTSJRPCTool) => {
     if (this.abortedRequestIdsSet.has(event.requestId)) {
       this.abortedRequestIdsSet.delete(event.requestId);
       return;

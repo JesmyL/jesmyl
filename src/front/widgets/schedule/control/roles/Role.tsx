@@ -9,7 +9,7 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
-import { schRolesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { schRolesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { extractScheduleWidgetRoleUser } from '#widgets/schedule/useScheduleWidget';
 import { atom } from 'atomaric';
 import { useAuth } from 'front/components/index/atoms';
@@ -76,7 +76,7 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
                 postfix={user?.fio || user?.nick}
                 onSuccess={isUserSetModalOpenAtom.reset}
                 onSend={() =>
-                  schRolesSokiInvocatorClient.setRoleUser({
+                  schRolesTsjrpcClient.setRoleUser({
                     props: roleScopeProps,
                     value: user.mi,
                     roleTitle: role.title,
@@ -108,7 +108,7 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
                     isRedact
                     value={catName}
                     onSend={value =>
-                      schRolesSokiInvocatorClient.setRoleCategoryTitle({
+                      schRolesTsjrpcClient.setRoleCategoryTitle({
                         props: scheduleScopeProps,
                         cati: catNamei,
                         title: value,
@@ -127,7 +127,7 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
                     postfix={catName}
                     onSuccess={isCatSetModalOpenAtom.reset}
                     onSend={() =>
-                      schRolesSokiInvocatorClient.setCategoryForRole({
+                      schRolesTsjrpcClient.setCategoryForRole({
                         props: roleScopeProps,
                         value: catNamei,
                         roleTitle: role.title,
@@ -142,7 +142,7 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
           {!rights.schedule.ctrl.cats.includes('') && catsRedact.isRedact && (
             <TheIconSendButton
               icon="FolderAdd"
-              onSend={() => schRolesSokiInvocatorClient.addRoleCategory({ props: roleScopeProps })}
+              onSend={() => schRolesTsjrpcClient.addRoleCategory({ props: roleScopeProps })}
             />
           )}
         </ModalFooter>
@@ -158,16 +158,14 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
             value={role}
             fieldKey="title"
             postfix={roleUser && ' - ' + (roleUser.fio || roleUser.nick)}
-            onSend={value =>
-              schRolesSokiInvocatorClient.setRoleTitle({ props: roleScopeProps, value, prevTitle: role.title })
-            }
+            onSend={value => schRolesTsjrpcClient.setRoleTitle({ props: roleScopeProps, value, prevTitle: role.title })}
           />
           <LazyIconConfigurator
             header={`Иконка для роли ${role.title}`}
             icon={role.icon ?? 'Github01'}
             used={rights.schedule.ctrl.roles.map(role => role.icon)}
             onSend={icon =>
-              schRolesSokiInvocatorClient.setRoleIcon({
+              schRolesTsjrpcClient.setRoleIcon({
                 props: roleScopeProps,
                 value: icon,
                 roleTitle: role.title,
@@ -188,7 +186,7 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
                   }
                   postfix="Освободить роль"
                   className="flex-max margin-gap-v"
-                  onSend={() => schRolesSokiInvocatorClient.makeFreeRole({ props: roleScopeProps, value: role.title })}
+                  onSend={() => schRolesTsjrpcClient.makeFreeRole({ props: roleScopeProps, value: role.title })}
                 />
               )}
               {roleUser ? (

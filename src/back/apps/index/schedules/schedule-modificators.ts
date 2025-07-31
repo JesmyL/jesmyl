@@ -1,7 +1,7 @@
 import { IScheduleWidget, IScheduleWidgetDay, ScheduleDayScopeProps, ScheduleScopeProps } from 'shared/api';
 import { schedulesFileStore } from './file-stores';
-import { schServerInvocatorShareMethods } from './invocators.shares';
 import { scheduleTgInformer } from './tg-bot-inform/tg-inform';
+import { schServerTsjrpcShareMethods } from './tsjrpc.shares';
 
 export const modifySchedule = async (
   isNeedRefreshTgInformTime: boolean,
@@ -15,7 +15,7 @@ export const modifySchedule = async (
   sch.m = Date.now() + Math.random();
   schedulesFileStore.saveValue();
 
-  schServerInvocatorShareMethods.editedSchedule({ sch });
+  schServerTsjrpcShareMethods.editedSchedule({ sch });
   if (isNeedRefreshTgInformTime) scheduleTgInformer.inform(sch.w);
 
   return sch;

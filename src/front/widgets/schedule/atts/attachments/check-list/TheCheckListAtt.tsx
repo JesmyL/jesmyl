@@ -1,6 +1,6 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
-import { schDayEventsSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { ScheduleDayEventAttachmentScopeProps } from 'shared/api';
 import { ScheduleChListAtt } from './checkListAtt';
 
@@ -27,7 +27,7 @@ export function ScheduleCheckListAtt({
               className={'self-start relative z-index:15 color--3 ' + (isDone ? 'fade-05' : '')}
               icon={isDone ? 'CheckmarkSquare02' : 'Square'}
               onSend={() =>
-                schDayEventsSokiInvocatorClient.updateCheckListAttachmentValue({
+                schDayEventsTsjrpcClient.updateCheckListAttachmentValue({
                   props: scheduleDayEventAttachmentScopeProps,
                   itemMi,
                   key: isDone ? 0 : 1,
@@ -41,7 +41,7 @@ export function ScheduleCheckListAtt({
               isRedact={isRedact}
               textClassName={'mood-for-2 relative z-index:5 color--3 ' + (isDone ? 'fade-05' : '')}
               onSend={async value =>
-                schDayEventsSokiInvocatorClient.updateCheckListAttachmentValue({
+                schDayEventsTsjrpcClient.updateCheckListAttachmentValue({
                   props: scheduleDayEventAttachmentScopeProps,
                   itemMi,
                   key: null,
@@ -59,7 +59,7 @@ export function ScheduleCheckListAtt({
           disabled={value.list.some(li => !li[1])}
           disabledReason="Есть пустые пункты"
           onSend={() =>
-            schDayEventsSokiInvocatorClient.updateCheckListAttachmentValue({
+            schDayEventsTsjrpcClient.updateCheckListAttachmentValue({
               props: scheduleDayEventAttachmentScopeProps,
               itemMi: null,
               key: 0,

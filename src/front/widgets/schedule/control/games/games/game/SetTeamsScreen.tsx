@@ -5,7 +5,7 @@ import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
-import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { schGamesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { useEffect, useState } from 'react';
 import { IScheduleWidgetExportableTeam, IScheduleWidgetUserMi } from 'shared/api';
 import { ScheduleWidgetRemovableUserFace } from '../../RemovableUserFace';
@@ -173,7 +173,7 @@ export function ScheduleWidgetTeamGameSetTeamsScreen() {
             disabled={!criterias?.length || !teams.length}
             confirm="Отправить список команд?"
             onSend={() =>
-              schGamesSokiInvocatorClient.setTeams({ props: { ...scheduleScopeProps, gameMi: game.mi }, value: teams })
+              schGamesTsjrpcClient.setTeams({ props: { ...scheduleScopeProps, gameMi: game.mi }, value: teams })
             }
           />
         </>

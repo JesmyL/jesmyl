@@ -2,7 +2,7 @@ import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditab
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
-import { schGamesSokiInvocatorClient } from '#widgets/schedule/invocators/invocators.methods';
+import { schGamesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { useState } from 'react';
 import { useScheduleGameContext } from '../lib/contexts';
 import { ScheduleWidgetTeamGameTeam } from '../Team';
@@ -21,7 +21,7 @@ export function ScheduleWidgetTeamGame() {
         placeholder="Командная игра"
         isRedact={isRenaming}
         onSend={value =>
-          schGamesSokiInvocatorClient.setTitle({
+          schGamesTsjrpcClient.setTitle({
             props: { ...scheduleScopeProps, gameMi: game.mi },
             value,
             prevTitle: game.title,

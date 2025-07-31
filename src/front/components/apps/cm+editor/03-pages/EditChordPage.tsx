@@ -4,7 +4,7 @@ import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { TheButton } from '#shared/ui/TheButton';
-import { cmEditorClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditorClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer';
 import { ChordRedactableTrack } from '$cm+editor/entities/ChordRedactableTrack';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
@@ -131,7 +131,7 @@ export const EditChordPage = () => {
           className="margin-gap"
           confirm={`Отправить аккорды ${mylib.keys(chordsToSend).join('; ')} ?`}
           onClick={async () => {
-            await cmEditorClientInvocatorMethods.setChords({ chords: chordsToSend });
+            await cmEditorClientTsjrpcMethods.setChords({ chords: chordsToSend });
             setChordsToSend({});
             updateRedactableChords({});
           }}

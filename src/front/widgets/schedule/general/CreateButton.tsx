@@ -8,7 +8,7 @@ import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIcon
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { atom } from 'atomaric';
 import { useState } from 'react';
-import { schGeneralSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schGeneralTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 
 const isModalOpenAtom = atom(false);
 
@@ -52,7 +52,7 @@ export function ScheduleCreateWidgetButton() {
                   return;
                 }
 
-                return schGeneralSokiInvocatorClient.create({ title });
+                return schGeneralTsjrpcClient.create({ title });
               }}
             />
             <TheIconButton

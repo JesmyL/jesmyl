@@ -2,7 +2,7 @@ import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { MyLib, mylib } from '#shared/lib/my-lib';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { removedCompositionsAtom } from '$cm+editor/basis/lib/atoms/com';
-import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { useCcomw, useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer';
 import {
@@ -52,7 +52,7 @@ export const CmEditCompositionPage = () => {
               icon="MapsRefresh"
               postfix="Восстановить"
               className="color--ok"
-              onClick={() => cmEditComClientInvocatorMethods.bringBackToLife({ comw: ccomw })}
+              onClick={() => cmEditComClientTsjrpcMethods.bringBackToLife({ comw: ccomw })}
             />
           </div>
         }

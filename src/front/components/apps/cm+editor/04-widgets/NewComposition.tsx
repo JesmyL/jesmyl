@@ -3,7 +3,7 @@ import { MyLib } from '#shared/lib/my-lib';
 import { KeyboardInput } from '#shared/ui/keyboard/KeyboardInput';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TheButton } from '#shared/ui/TheButton';
-import { cmEditComClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditComClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { cmEditorIDB } from '$cm+editor/basis/lib/cmEditorIDB';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { useCmExtractHrefsFromHTML } from '$cm+editor/basis/lib/hooks/useCmExtractHrefsFromHTML';
@@ -215,7 +215,7 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
             chordsErrors.some(corrects => corrects.errors?.length) ||
             textsErrors.some(corrects => corrects.errors?.length)
           }
-          onSend={() => cmEditComClientInvocatorMethods.newCom({ value: newCom })}
+          onSend={() => cmEditComClientTsjrpcMethods.newCom({ value: newCom })}
           onSuccess={com => {
             openAtom.set(false);
             navigate({ to: '/cm/edit/coms/$comw/$tab', params: { comw: `${com.w}`, tab: 'watch' } });

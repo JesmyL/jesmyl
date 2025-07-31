@@ -10,7 +10,7 @@ import {
 } from 'shared/api';
 import { emptyFunc, itNNull, retNull } from 'shared/utils';
 import styled from 'styled-components';
-import { schDaysSokiInvocatorClient, schEventTypesSokiInvocatorClient } from '../invocators/invocators.methods';
+import { schDaysTsjrpcClient, schEventTypesTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetDayEvent } from './events/DayEvent';
 
 interface Props {
@@ -70,9 +70,7 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
 
                 <SendButton
                   title="Отправить только новые события"
-                  onSend={async () =>
-                    schEventTypesSokiInvocatorClient.putMany({ props: scheduleScopeProps, tatts: newTypes })
-                  }
+                  onSend={async () => schEventTypesTsjrpcClient.putMany({ props: scheduleScopeProps, tatts: newTypes })}
                 />
               </>
             )}
@@ -81,7 +79,7 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
               <SendButton
                 title={`Установить время начала дня: ${ScheduleWidgetCleans.computeDayWakeUpTime(dayWup, 'string')}`}
                 onSend={async () =>
-                  schDaysSokiInvocatorClient.setBeginTime({
+                  schDaysTsjrpcClient.setBeginTime({
                     props: { ...scheduleScopeProps, dayi },
                     value: '' + dayWup,
                   })
@@ -129,7 +127,7 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
               title="Отправить расписание"
               onSuccess={() => onClose(false)}
               onSend={() =>
-                schDaysSokiInvocatorClient.setEventList({
+                schDaysTsjrpcClient.setEventList({
                   props: { ...scheduleScopeProps, dayi },
                   list: list.filter(itNNull),
                 })

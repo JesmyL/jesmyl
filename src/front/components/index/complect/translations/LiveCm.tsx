@@ -8,7 +8,7 @@ import { IndexSchWTranslationLiveDataValue } from '$index/Index.model';
 import { useAtomValue } from 'atomaric';
 import { useSwitchCurrentTranslationTextApp } from 'front/components/apps/+complect/translations/hooks/current-app';
 import { useEffect } from 'react';
-import { schLiveSokiInvocatorClient } from './live-invocator';
+import { schLiveTsjrpcClient } from './live.tsjrpc';
 import { LiveTranslationAppProps } from './model';
 
 export const ScheduleWidgetLiveCmTranslations = ({
@@ -56,7 +56,7 @@ export const ScheduleWidgetLiveCmTranslations = ({
         },
       };
 
-      schLiveSokiInvocatorClient.next({ schw: schedule.w, data: liveData });
+      schLiveTsjrpcClient.next({ schw: schedule.w, data: liveData });
     }, 100);
   }, [ccom, config, currTexti, fio, isCantTranslateLive, schedule.w]);
 

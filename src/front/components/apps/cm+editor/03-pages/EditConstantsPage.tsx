@@ -1,6 +1,6 @@
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { mylib, MyLib } from '#shared/lib/my-lib';
-import { cmEditorClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditorClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { cmConstantsDefaultConfig } from 'shared/values/cm/cmConstantsDefaultConfig';
@@ -22,7 +22,7 @@ export const CmEditConstantsPage = () => {
                 placeholder={'' + cmConstantsDefaultConfig[key]}
                 icon="RightToLeftListTriangle"
                 onChange={async value =>
-                  cmEditorClientInvocatorMethods.updateConstantsConfig({
+                  cmEditorClientTsjrpcMethods.updateConstantsConfig({
                     config: {
                       [key]: (mylib.isNum(defaultValue)
                         ? value === ''

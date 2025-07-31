@@ -2,7 +2,7 @@ import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { cmEditCatClientInvocatorMethods } from '$cm+editor/basis/lib/cm-editor-invocator.methods';
+import { cmEditCatClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { EditableCat } from '$cm+editor/basis/lib/EditableCat';
 import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
@@ -31,12 +31,12 @@ export const CmEditorTabComCategoryBinds = () => {
               defaultValue={`${cat.dict?.[ccom.wid] || ''}`}
               onChange={value => {
                 if (!+value) {
-                  return cmEditCatClientInvocatorMethods.removeNativeComNum({ comw: ccom.wid, catw: cat.wid });
+                  return cmEditCatClientTsjrpcMethods.removeNativeComNum({ comw: ccom.wid, catw: cat.wid });
                 }
 
                 if (value.match(makeRegExp('/\\D/'))) return Promise.reject();
 
-                return cmEditCatClientInvocatorMethods.setNativeComNum({
+                return cmEditCatClientTsjrpcMethods.setNativeComNum({
                   comw: ccom.wid,
                   catw: cat.wid,
                   value: +value,
@@ -51,7 +51,7 @@ export const CmEditorTabComCategoryBinds = () => {
                 confirm={`Очистить номер из сборника ${cat.name}?`}
                 className="pointer color--ko margin-big-gap-l margin-gap-b"
                 onClick={() =>
-                  cmEditCatClientInvocatorMethods.removeNativeComNum({
+                  cmEditCatClientTsjrpcMethods.removeNativeComNum({
                     comw: ccom.wid,
                     catw: cat.wid,
                   })
@@ -68,7 +68,7 @@ export const CmEditorTabComCategoryBinds = () => {
             key={cat.wid}
             className="flex flex-gap flex-max pointer margin-big-gap-v"
             onClick={() =>
-              cmEditCatClientInvocatorMethods.toggleComExistence({
+              cmEditCatClientTsjrpcMethods.toggleComExistence({
                 comw: ccom.wid,
                 catw: cat.wid,
               })
