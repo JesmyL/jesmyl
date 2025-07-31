@@ -13,7 +13,7 @@ import { comPlayerPlaySrcAtom } from '$cm/col/com/player/controls';
 import { CmComListSearchFilterInput } from '$cm/features/CmComListSearchFilterInput';
 import { CmRatingSortedComList } from '$cm/widgets/RatingSortedComList';
 import { FileRoutesByPath } from '@tanstack/react-router';
-import { Atom, atom, useAtom, useAtomValue } from 'atomaric';
+import { Atom, atom, useAtomValue } from 'atomaric';
 import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
 import { CmCatWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
@@ -43,7 +43,7 @@ export const CmCatPage = (props: Props) => {
   const setComListLimitsExtracterRef = useRef<(start: number | nil, finish: number | nil) => void>(emptyFunc);
   const listRef = useRef<HTMLDivElement>(null);
   const categoryTitleRef = useRef<HTMLDivElement>(null);
-  const debouncedTerm = useAtom(debounceTermAtom);
+  const debouncedTerm = useAtomValue(debounceTermAtom);
   const playComSrc = useAtomValue(comPlayerPlaySrcAtom);
 
   useEffect(() => {
@@ -98,7 +98,7 @@ export const CmCatPage = (props: Props) => {
               <div className="com-list">
                 <SetComListLimitsExtracterContext.Provider value={setComListLimitsExtracterRef}>
                   <ComFaceList
-                    key={+!!term}
+                    key={+!term}
                     isPutCcomFaceOff={!!term}
                     list={limitedComs}
                     {...props}

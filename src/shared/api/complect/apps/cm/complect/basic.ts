@@ -58,19 +58,32 @@ export type IFixedCom = { w: CmComWid } & Partial<{
 }>;
 
 export interface IExportableCom {
+  /** название песни */
   n: string;
+  /** время создания - уникальный ID */
   w: CmComWid;
+  /** время изменения */
   m: CmComMod;
-  k?: number; // вариант группировки строк для трансляций
-  p?: number; // уровень модулирования
-  l?: number; // язык песни
-  b?: num; // бемольная песня
-  a?: string; // аудио файлы
-  t?: string[]; // список текстов
-  c?: string[]; // список аккорлов
-  o?: IExportableOrder[]; // порядковые блоки
-  bpm?: number; // ударов в минуту
-  s?: 3 | 4; // размерность песни
+  /** вариант группировки строк для трансляций */
+  k?: number;
+  /** уровень модулирования */
+  p?: number;
+  /** язык песни */
+  l?: number;
+  /** бемольная ли песня */
+  b?: num;
+  /** аудио файлы */
+  a?: string;
+  /** список текстов */
+  t?: string[];
+  /** список аккорлов */
+  c?: string[];
+  /** порядковые блоки */
+  o?: IExportableOrder[];
+  /** ударов в минуту */
+  bpm?: number;
+  /** размерность песни */
+  s?: 3 | 4;
 
   ton?: number;
 
@@ -91,12 +104,18 @@ export type TAboutComFavoriteItem = {
 };
 
 export interface IExportableCat {
-  w: CmCatWid; // writed time
-  m: number; // modified time
-  n: string; // name
-  s?: CmComWid[]; // comWid stack
-  d?: PRecord<CmComWid, number>; // dictionary of numbers
-  k: string; // kind of cat
+  /** время создания - уникальный ID */
+  w: CmCatWid;
+  /** время изменения */
+  m: number;
+  /** название категории */
+  n: string;
+  /** список песен */
+  s?: CmComWid[];
+  /** номера песен */
+  d?: PRecord<CmComWid, number>;
+  /** вид категории (список, по номерам из сборника, итд) */
+  k: string;
 
   isRemoved?: 1;
 }
