@@ -125,7 +125,7 @@ const AlertLineConfigSettingsInnerWithConfig = ({
         Время пробега:
         <TextInput
           value={'' + config.speed}
-          type="number"
+          type="tel"
           onChanged={speed => update({ speed: +speed })}
           onKeyDown={propagationStopper}
         />

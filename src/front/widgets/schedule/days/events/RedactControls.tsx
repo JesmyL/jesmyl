@@ -50,7 +50,7 @@ export const DayEventRedactControls = ({
 
       <StrongEditableField
         isRedact
-        type="number"
+        type="tel"
         value={'' + eventTm}
         postfix=" мин"
         title="Продолжительность, мин"

@@ -13,7 +13,7 @@ type Props<Key, Value> = {
   title?: string;
   description?: ReactNode;
   disabled?: boolean;
-  type?: 'text' | 'number';
+  type?: 'text' | 'tel';
   icon?: StameskaIconName;
   placeholder?: string;
   isRedact?: boolean;

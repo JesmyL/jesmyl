@@ -63,7 +63,7 @@ export function ScheduleWidgetEventType(props: {
         </div>
       )}
       <StrongEditableField
-        type="number"
+        type="tel"
         value={'' + (props.typeBox.tm ?? '')}
         postfix=" мин"
         isRedact={props.isRedact}

@@ -103,7 +103,7 @@ export function ScheduleWidgetTeamGameSetTeamsScreen() {
         Количество команд
         <TextInput
           value={teamsCountStr}
-          type="number"
+          type="tel"
           onChanged={setTeamsCount}
         />
       </div>

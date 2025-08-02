@@ -174,3 +174,15 @@ body {
     }
   }
 }
+
+input,
+textarea {
+  &.mood-2 {
+    background-color: var(--color--2);
+    color: var(--color--3);
+
+    &::placeholder {
+      color: var(--color--4);
+    }
+  }
+}

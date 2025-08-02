@@ -22,7 +22,7 @@ export const NewComNameChange = ({
           className="full-width"
         >
           <TextInput
-            className="full-width"
+            className="full-width mood-2"
             value={name}
             onInput={n => setNewCom(prev => ({ ...prev, n }))}
           />
