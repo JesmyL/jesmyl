@@ -347,7 +347,7 @@ export class MyLib extends SMyLib {
 
   setInputHeightByContent(inputNode: HTMLInputElement | HTMLTextAreaElement) {
     inputNode.style.height = '1px';
-    inputNode.style.height = `${inputNode.scrollHeight}px`;
+    inputNode.style.height = inputNode.scrollHeight ? `${inputNode.scrollHeight + 5}px` : '1.5em';
   }
 
   groupByFieldsSoftly<Item, Fieldn extends keyof Item>(
