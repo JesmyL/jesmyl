@@ -123,7 +123,7 @@ export default function StrongEditableField<Key extends string, Value extends st
               multiline={props.multiline}
               type={props.type}
               disabled={props.disabled}
-              onChanged={val => {
+              onInput={val => {
                 setStateValue(val);
                 setIsUserChange(true);
                 props.onChange?.(val);

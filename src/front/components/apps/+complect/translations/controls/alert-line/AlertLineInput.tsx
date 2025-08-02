@@ -29,7 +29,7 @@ export const AlertLineInput = () => {
         <TextInput
           className="bgcolor--2 full-width"
           value={alertLine ?? ''}
-          onChanged={value => setAlertLine(value)}
+          onInput={value => setAlertLine(value)}
           onKeyDown={propagationStopper}
         />
 

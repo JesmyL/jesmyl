@@ -112,7 +112,7 @@ export const IndexTelegramAuthPage = () => {
                       className="input-wrapper"
                     >
                       <TextInput
-                        onChanged={setAuthCode}
+                        onInput={setAuthCode}
                         value={authCode}
                         placeholder="Одноразовый код"
                       />

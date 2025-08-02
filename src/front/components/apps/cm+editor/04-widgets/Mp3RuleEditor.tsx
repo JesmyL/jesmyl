@@ -34,7 +34,7 @@ export const Mp3RuleEditor = (
             <>
               <TextInput
                 value={url}
-                onChanged={value => {
+                onInput={value => {
                   try {
                     const url = new URL(value);
                     const unnecessary = value.replace(url.origin, '');
@@ -61,7 +61,7 @@ export const Mp3RuleEditor = (
           {isRedact ? (
             <TextInput
               value={query}
-              onChanged={setQuery}
+              onInput={setQuery}
             />
           ) : (
             <span className="text-x7 ml-2">{query}</span>
@@ -72,7 +72,7 @@ export const Mp3RuleEditor = (
           {isRedact ? (
             <TextInput
               value={attr}
-              onChanged={setAttr}
+              onInput={setAttr}
             />
           ) : (
             <span className="text-x7 ml-2">{attr}</span>
@@ -83,7 +83,7 @@ export const Mp3RuleEditor = (
           {isRedact ? (
             <TextInput
               value={textQuery}
-              onChanged={setTextQuery}
+              onInput={setTextQuery}
             />
           ) : (
             <span className="text-x7 ml-2">{textQuery || '-'}</span>
@@ -108,7 +108,7 @@ export const Mp3RuleEditor = (
           {isRedact ? (
             <TextInput
               value={repReg}
-              onChanged={text => {
+              onInput={text => {
                 setRepRegError('');
 
                 if (text === '') {
@@ -134,7 +134,7 @@ export const Mp3RuleEditor = (
           {isRedact ? (
             <TextInput
               value={repText}
-              onChanged={setRepText}
+              onInput={setRepText}
             />
           ) : (
             <span className="text-x7 ml-2">{repText}</span>

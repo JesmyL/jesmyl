@@ -119,11 +119,12 @@ export function StrongEditableField<Key extends string, Value extends string | P
             {props.description}
             <TextInput
               value={stateValue}
+              className="mood-1"
               placeholder={props.placeholder}
               multiline={props.multiline}
               type={props.type}
               disabled={props.disabled}
-              onChanged={val => {
+              onInput={val => {
                 setStateValue(val);
                 setIsUserChange(true);
                 props.onChange?.(val);

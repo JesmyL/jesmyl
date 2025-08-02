@@ -143,7 +143,7 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
     <div className="margin-giant-gap-t">
       <TextInput
         value={value}
-        onChanged={setValue}
+        onInput={setValue}
         multiline
       />
       {errorText ? (

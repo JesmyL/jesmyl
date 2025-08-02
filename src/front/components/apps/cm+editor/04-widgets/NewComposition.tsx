@@ -118,7 +118,7 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
           className="margin-gap-v"
           multiline
           placeholder="Начни писать или вставь текст для создания песни"
-          onChanged={setTextAsValue}
+          onInput={setTextAsValue}
         />
 
         <TheButton

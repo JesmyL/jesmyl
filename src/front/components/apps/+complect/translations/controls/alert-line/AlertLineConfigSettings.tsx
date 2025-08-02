@@ -79,7 +79,7 @@ const AlertLineConfigSettingsInnerWithConfig = ({
         Нвазвание:
         <TextInput
           value={config.title}
-          onChanged={title => update({ title })}
+          onInput={title => update({ title })}
         />
       </div>
 
@@ -94,7 +94,7 @@ const AlertLineConfigSettingsInnerWithConfig = ({
         Альтернативный текст:
         <TextInput
           value={config.text}
-          onChanged={text => update({ text })}
+          onInput={text => update({ text })}
         />
       </div>
       <ColorConfigurator
@@ -126,7 +126,7 @@ const AlertLineConfigSettingsInnerWithConfig = ({
         <TextInput
           value={'' + config.speed}
           type="tel"
-          onChanged={speed => update({ speed: +speed })}
+          onInput={speed => update({ speed: +speed })}
           onKeyDown={propagationStopper}
         />
       </div>

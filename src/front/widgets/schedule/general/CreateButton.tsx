@@ -32,7 +32,7 @@ export function ScheduleCreateWidgetButton() {
           <div>
             <TextInput
               value={title}
-              onChanged={setTitle}
+              onInput={setTitle}
             />
           </div>
         </ModalBody>

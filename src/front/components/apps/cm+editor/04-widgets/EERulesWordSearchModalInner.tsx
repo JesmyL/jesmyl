@@ -28,7 +28,7 @@ export const EERulesWordSearchModalInner = ({
     <StyledModalBody>
       <TextInput
         value={word}
-        onChanged={setWord}
+        onInput={setWord}
       />
 
       {word && (

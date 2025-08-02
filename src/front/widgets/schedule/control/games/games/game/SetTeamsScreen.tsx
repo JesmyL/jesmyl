@@ -104,7 +104,7 @@ export function ScheduleWidgetTeamGameSetTeamsScreen() {
         <TextInput
           value={teamsCountStr}
           type="tel"
-          onChanged={setTeamsCount}
+          onInput={setTeamsCount}
         />
       </div>
       <div className="flex between full-width margin-gap-b">

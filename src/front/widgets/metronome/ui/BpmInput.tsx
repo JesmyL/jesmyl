@@ -20,7 +20,7 @@ export const MetronomeBpmInput = memo(function MetronomeBpmInput() {
       <StyledBpmInput
         type="tel"
         value={'' + userBpm}
-        onChanged={value => setUserBpm(+value)}
+        onInput={value => setUserBpm(+value)}
       />
 
       <LazyIcon
