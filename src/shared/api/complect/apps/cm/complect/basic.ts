@@ -98,10 +98,12 @@ export type ICmComComment = {
   isSavedLocal?: 1;
 };
 
+export type CmComCommentBlockSelector = CmComOrderWid | `${CmComOrderWid}_${CmComOrderWid}` | 'head';
+
 export type ICmComCommentBlock = {
   comw: CmComWid;
   /** comment block dict */
-  d: PRecord<CmComOrderWid | 'head', string[]>;
+  d: PRecord<CmComCommentBlockSelector, string[]>;
   m: number;
 };
 

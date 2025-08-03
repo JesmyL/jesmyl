@@ -23,7 +23,7 @@ import { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { CmComCommentModalInner } from './CommentModalInner';
 import { ComNotFoundPage } from './ComNotFoundPage';
-import { comCommentRedactOrdwAtom } from './complect/comment-parser/complect';
+import { comCommentRedactOrdSelectorIdAtom } from './complect/comment-parser/complect';
 import { useCheckIsComCommentIncludesBibleAddress } from './complect/comment-parser/useCheckIsComCommentIncludesBibleAddress';
 import { CmComNumber } from './complect/ComNumber';
 import { ComPlayerWithPoints } from './player/ComPlayerWithPoints';
@@ -110,7 +110,7 @@ export function TheComposition() {
 
           <Modal
             key="com-comment"
-            openAtom={comCommentRedactOrdwAtom}
+            openAtom={comCommentRedactOrdSelectorIdAtom}
             checkIsOpen={ordw => ordw !== null}
           >
             <CmComCommentModalInner com={ccom} />

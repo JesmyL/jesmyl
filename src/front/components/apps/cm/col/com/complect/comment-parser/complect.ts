@@ -1,4 +1,4 @@
 import { atom } from 'atomaric';
-import { CmComOrderWid } from 'shared/api';
+import { CmComCommentBlockSelector } from 'shared/api';
 
-export const comCommentRedactOrdwAtom = atom<CmComOrderWid | 'head' | null>(null);
+export const comCommentRedactOrdSelectorIdAtom = atom<CmComCommentBlockSelector | null>(null);

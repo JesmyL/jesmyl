@@ -1,9 +1,9 @@
 import { useAtomSet } from 'atomaric';
-import { comCommentRedactOrdwAtom } from '../../complect/comment-parser/complect';
+import { comCommentRedactOrdSelectorIdAtom } from '../../complect/comment-parser/complect';
 import { ComTool } from '../ComTool';
 
 export const ComCommentComTool = () => {
-  const setIsRedact = useAtomSet(comCommentRedactOrdwAtom);
+  const setIsRedact = useAtomSet(comCommentRedactOrdSelectorIdAtom);
 
   return (
     <ComTool

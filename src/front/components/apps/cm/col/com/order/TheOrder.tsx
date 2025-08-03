@@ -4,6 +4,7 @@ import React from 'react';
 import { makeRegExp } from 'regexpert';
 import { ChordVisibleVariant } from '../../../Cm.model';
 import { Com } from '../Com';
+import { ComBlockCommentMakerCleans } from '../complect/comment-parser/Cleans';
 import { ComLine } from '../line/ComLine';
 import { Order } from './Order';
 import { IComLineProps, IComOrdHeaderProps } from './Order.model';
@@ -108,6 +109,7 @@ export function TheOrder(props: Props) {
       <div
         id={`com-block-${ordi}`}
         visible-ord-nn={(visibleOrdi ?? ordi) + 1}
+        ord-selector={ComBlockCommentMakerCleans.makeOrdSelector(ord)}
         className={
           (props.specialClassId || '') +
           'composition-block styled-block flex flex-baseline' +
@@ -140,6 +142,7 @@ export function TheOrder(props: Props) {
     <div
       id={`com-block-${ordi}`}
       visible-ord-nn={(visibleOrdi ?? ordi) + 1}
+      ord-selector={ComBlockCommentMakerCleans.makeOrdSelector(ord)}
       {...styleAttributes}
       className={
         (props.specialClassId || '') +

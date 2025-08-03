@@ -30,8 +30,10 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
   useEffect(() => {
     (async () => {
       const cssContentList =
-        visibleOrders?.map((ord, ordi) => {
-          const commentLines = localCommentBlock?.d[ord.wid] ?? commentBlock?.d[ord.wid];
+        visibleOrders?.map(ord => {
+          const ordSelectorId = ComBlockCommentMakerCleans.makeOrdSelector(ord);
+
+          const commentLines = localCommentBlock?.d[ordSelectorId] ?? commentBlock?.d[ordSelectorId];
           if (commentLines == null) return '';
 
           let isNumeredLines = false;
@@ -49,7 +51,7 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
           });
 
           return css`
-            ${ComBlockCommentMakerCleans.makeComOrderBlockSelector(ordi + 1)} {
+            [ord-selector='${ordSelectorId}'] {
               ${linesStyle}
 
               &:has(.styled-header) {
@@ -76,9 +78,11 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
           `;
         }) ?? [];
 
-      const numeredOrderHeaders = visibleOrders?.map((_ord, ordi) => {
+      const numeredOrderHeaders = visibleOrders?.map((ord, ordi) => {
+        const ordSelectorId = ComBlockCommentMakerCleans.makeOrdSelector(ord);
+
         return css`
-          ${ComBlockCommentMakerCleans.makeComOrderHeaderSelector(ordi + 1)} {
+          [ord-selector='${ordSelectorId}'] .styled-header {
             &::before {
               content: '#${ordi + 1}';
             }

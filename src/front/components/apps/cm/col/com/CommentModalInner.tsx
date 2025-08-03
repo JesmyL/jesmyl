@@ -1,4 +1,3 @@
-import { propagationStopper } from '#shared/lib/event-funcs';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
@@ -15,42 +14,57 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
 import { useDeferredCallback } from 'shared/utils/useDeferredCallback';
 import { ComBlockCommentMakerCleans } from './complect/comment-parser/Cleans';
-import { comCommentRedactOrdwAtom } from './complect/comment-parser/complect';
+import { comCommentRedactOrdSelectorIdAtom } from './complect/comment-parser/complect';
 import { Order } from './order/Order';
 
 const HashSwitcherIcon = 'Note03';
 const isShowInfoModalAtom = atom(false);
 
 export const CmComCommentModalInner = ({ com }: { com: Com }) => {
-  const ordw = useAtomValue(comCommentRedactOrdwAtom);
+  const ordSelectorId = useAtomValue(comCommentRedactOrdSelectorIdAtom);
   const deferredCallback = useDeferredCallback();
   const localCommentBlock = useLiveQuery(() => cmIDB.tb.localComCommentBlocks.get(com.wid), [com.wid]);
   const commentBlock = useLiveQuery(() => cmIDB.tb.comCommentBlocks.get(com.wid), [com.wid]);
 
-  if (ordw === null) return;
+  if (ordSelectorId === null) return;
 
-  const comCommentBlockTexts = localCommentBlock?.d[ordw] ?? commentBlock?.d[ordw] ?? [];
   const visibleOrders = com.orders?.filter(ComBlockCommentMakerCleans.withHeaderTextOrderFilter) ?? [];
 
-  const ordi = visibleOrders.findIndex(ord => ord.wid === ordw);
-  const ord = visibleOrders[ordi] as Order | und;
+  const comCommentBlockTexts = localCommentBlock?.d[ordSelectorId] ?? commentBlock?.d[ordSelectorId] ?? [];
+
+  let ord: Order | und;
+  let ordNN = 0;
+
+  if (mylib.isNum(ordSelectorId)) {
+    const ordi = visibleOrders.findIndex(ord => ord.wid === ordSelectorId);
+    ord = visibleOrders[ordi];
+    ordNN = ordi + 1;
+  } else if (ordSelectorId !== 'head') {
+    const [leadOrdWid, watchOrdWid] = ordSelectorId.split('_').map(Number);
+    const ordi = visibleOrders.findIndex(
+      ord => ord.me.leadOrd?.wid === leadOrdWid && ord.me.watchOrd?.wid === watchOrdWid,
+    );
+
+    ord = visibleOrders[ordi];
+    ordNN = ordi + 1;
+  }
 
   return (
     <>
       <ModalHeader className="flex flex-gap">
         <LazyIcon icon="TextAlignLeft" />
         <span className="color--7 nowrap">
-          #{ordi + 1} {ord?.me.header()}
+          #{ordNN} {ord?.me.header()}
         </span>
         <span className="color--3 ellipsis">{com.name}</span>
-        {ordw !== 'head' && (
+        {ordSelectorId !== 'head' && (
           <LazyIcon
             icon="TextFont"
-            onClick={() => comCommentRedactOrdwAtom.set('head')}
+            onClick={() => comCommentRedactOrdSelectorIdAtom.set('head')}
           />
         )}
       </ModalHeader>
-      <ModalBody key={ordw}>
+      <ModalBody key={ordSelectorId}>
         {comCommentBlockTexts.concat(comCommentBlockTexts.length < 7 ? '' : [])?.map((line, linei) => {
           return (
             <TextInput
@@ -61,7 +75,7 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
               onInput={value => {
                 deferredCallback(
                   () => {
-                    const texts = [...(commentBlock?.d[ordw] ?? localCommentBlock?.d[ordw] ?? [])];
+                    const texts = [...(commentBlock?.d[ordSelectorId] ?? localCommentBlock?.d[ordSelectorId] ?? [])];
 
                     texts[linei] = value;
 
@@ -71,7 +85,7 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
                       m: mylib.takeNewWid(),
                       d: {
                         ...localCommentBlock?.d,
-                        [ordw]: texts,
+                        [ordSelectorId]: texts,
                       },
                     });
                   },
@@ -84,16 +98,16 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
         })}
       </ModalBody>
       <ModalFooter className="flex flex-gap">
-        {localCommentBlock?.d[ordw] != null && <SavedLocalLabel />}
+        {localCommentBlock?.d[ordSelectorId] != null && <SavedLocalLabel />}
 
-        <LazyIcon
+        {/* <LazyIcon
           icon="MessageQuestion"
           className="pointer flex full-width between color--7 margin-gap-v"
           onClick={event => {
             propagationStopper(event);
             isShowInfoModalAtom.set(true);
           }}
-        />
+        /> */}
       </ModalFooter>
 
       <Modal openAtom={isShowInfoModalAtom}>
