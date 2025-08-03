@@ -49,6 +49,9 @@ export function TheOrder(props: Props) {
           isTexted: false,
           repeats: ord.repeatsTitle,
         })}
+        <span className="comment-holder" />
+        <span className="comment-holder" />
+        <span className="comment-holder" />
       </div>
     );
   }
@@ -71,9 +74,18 @@ export function TheOrder(props: Props) {
       {...styleAttributes}
     >
       {blockHeader}
+      <span className="comment-holder" />
+      <span className="comment-holder" />
+      <span className="comment-holder" />
     </div>
   ) : (
-    !ord.me.style?.isHeaderNoneForce && <div className="styled-header empty" />
+    !ord.me.style?.isHeaderNoneForce && (
+      <div className="styled-header empty">
+        <span className="comment-holder" />
+        <span className="comment-holder" />
+        <span className="comment-holder" />
+      </div>
+    )
   );
 
   const header =

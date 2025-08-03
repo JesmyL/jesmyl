@@ -16,6 +16,7 @@ export const cmShareServerTsjrpcMethods = new (class CmShare extends TsjrpcServe
         refreshChordPack: true,
 
         refreshComComments: true,
+        refreshComCommentBlocks: true,
         refreshAboutComFavorites: true,
 
         refreshScheduleEventComPacks: true,

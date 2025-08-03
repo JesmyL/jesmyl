@@ -1,11 +1,14 @@
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
-import { AllHTMLAttributes, useEffect, useRef, useState } from 'react';
+import { AllHTMLAttributes, useEffect, useRef } from 'react';
 import styled, { css } from 'styled-components';
 
 export const TextInput = ({
   onChanged,
   onInput,
   multiline,
+  value,
+  type,
   ...props
 }: OmitOwn<AllHTMLAttributes<HTMLInputElement & HTMLTextAreaElement>, 'onChange' | 'onInput' | 'type'> & {
   onChanged?: (value: string) => void;
@@ -14,33 +17,32 @@ export const TextInput = ({
   type?: 'text' | 'tel' | 'email';
 }) => {
   const inputRef = useRef<(HTMLInputElement & HTMLTextAreaElement) | null>(null);
-  const [value, setValue] = useState('' + (props.value || ''));
-
-  const onBlur = onChanged
-    ? (event: React.FocusEvent<HTMLInputElement & HTMLTextAreaElement, Element>) => {
-        props.onBlur?.(event);
-        if (value !== props.value) onChanged(value);
-      }
-    : props.onBlur;
-
-  useEffect(() => setValue('' + props.value), [props.value]);
 
   useEffect(() => {
-    if (!multiline || inputRef.current == null || value === '') return;
-    mylib.setInputHeightByContent(inputRef.current);
-  }, [multiline, value]);
+    if (inputRef.current == null) return;
+    const inputNode = inputRef.current;
+    if (multiline) mylib.setInputHeightByContent(inputNode);
+    if (value !== undefined) inputNode.value = '' + value;
+
+    return hookEffectPipe()
+      .pipe(
+        addEventListenerPipe(inputNode, 'input', event => {
+          onInput?.('' + ((event.target as never as { value: string })?.value || ''));
+          if (multiline) mylib.setInputHeightByContent(inputNode);
+        }),
+        onChanged &&
+          addEventListenerPipe(inputNode, 'blur', () => {
+            if (inputNode.value !== value) onChanged(inputNode.value);
+          }),
+      )
+      .effect();
+  }, [multiline, onChanged, onInput, value]);
 
   if (multiline)
     return (
       <StyledTextarea
         {...props}
         ref={inputRef}
-        value={value}
-        onInput={event => {
-          setValue(event.currentTarget.value);
-          onInput?.(event.currentTarget.value);
-        }}
-        onBlur={onBlur}
       />
     );
 
@@ -48,19 +50,15 @@ export const TextInput = ({
     <StyledInput
       {...props}
       ref={inputRef}
-      type="text"
-      value={value}
-      onInput={event => {
-        setValue(event.currentTarget.value);
-        onInput?.(event.currentTarget.value);
-      }}
-      onBlur={onBlur}
+      type={type}
     />
   );
 };
 
 const styledBoth = css`
   color: var(--color--3);
+  ${'field-sizing: content;'}
+  min-height: 2lh;
 
   &::placeholder {
     color: var(--color--4);

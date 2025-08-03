@@ -9,6 +9,7 @@ import {
   CmComWid,
   CmConstantsConfig,
   ICmComComment,
+  ICmComCommentBlock,
   IExportableCat,
   IExportableCom,
   IFixedCom,
@@ -26,7 +27,11 @@ export interface CmIDBStorage {
 
   lastModifiedAt: number;
 
+  /** @deprecated */
   comComments: ICmComComment[];
+  comCommentBlocks: ICmComCommentBlock[];
+  localComCommentBlocks: ICmComCommentBlock[];
+
   coms: IExportableCom[];
   fixedComs: IFixedCom[];
   cats: IExportableCat[];
@@ -85,6 +90,12 @@ class CmIDB extends DexieDB<CmIDBStorage> {
       comComments: {
         comw: '++',
         isSavedLocal: true,
+      },
+      comCommentBlocks: {
+        comw: '++',
+      },
+      localComCommentBlocks: {
+        comw: '++',
       },
       scheduleComPacks: {
         schw: '++',

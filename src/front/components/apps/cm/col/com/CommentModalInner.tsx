@@ -1,85 +1,90 @@
-import { checkIsCssRuleSupports } from '#shared/lib/checkIsCssSupports';
 import { propagationStopper } from '#shared/lib/event-funcs';
-import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
-import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
+import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { Com } from '$cm/col/com/Com';
 import { TheComCommentInfo } from '$cm/col/com/complect/comment-parser/infos/TheComCommentInfo';
-import { updateComComment, useComComment } from '$cm/com-comments-manager';
-import { atom } from 'atomaric';
-import { useEffect, useRef, useState } from 'react';
-import { emptyFunc } from 'shared/utils';
-import styled from 'styled-components';
+import { atom, useAtomValue } from 'atomaric';
+import { useLiveQuery } from 'dexie-react-hooks';
+import { useEffect, useState } from 'react';
+import { useDeferredCallback } from 'shared/utils/useDeferredCallback';
+import { ComBlockCommentMakerCleans } from './complect/comment-parser/Cleans';
+import { comCommentRedactOrdwAtom } from './complect/comment-parser/complect';
+import { Order } from './order/Order';
 
 const HashSwitcherIcon = 'Note03';
 const isShowInfoModalAtom = atom(false);
 
 export const CmComCommentModalInner = ({ com }: { com: Com }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const comComment = useComComment(com.wid);
+  const ordw = useAtomValue(comCommentRedactOrdwAtom);
+  const deferredCallback = useDeferredCallback();
+  const localCommentBlock = useLiveQuery(() => cmIDB.tb.localComCommentBlocks.get(com.wid), [com.wid]);
+  const commentBlock = useLiveQuery(() => cmIDB.tb.comCommentBlocks.get(com.wid), [com.wid]);
 
-  const inputRef = useRef<HTMLTextAreaElement>(null);
+  if (ordw === null) return;
 
-  useEffect(() => {
-    (async () => {
-      if (inputRef.current === null || com.wid == null) return;
-      const inputNode = inputRef.current;
-      const commentBox = await cmIDB.db.comComments.get(com.wid);
-      if (commentBox == null) return;
+  const comCommentBlockTexts = localCommentBlock?.d[ordw] ?? commentBlock?.d[ordw] ?? [];
+  const visibleOrders = com.orders?.filter(ComBlockCommentMakerCleans.withHeaderTextOrderFilter) ?? [];
 
-      inputNode.value = commentBox.comment;
-      setInputHeight(inputNode);
-    })();
-  }, [com.wid]);
-
-  useEffect(() => {
-    if (inputRef.current === null || com.wid == null) return;
-    const inputNode = inputRef.current;
-
-    setInputHeight(inputNode);
-
-    return hookEffectPipe()
-      .pipe(addEventListenerPipe(inputNode, 'focus', () => setInputHeight(inputNode)))
-      .pipe(
-        addEventListenerPipe(inputNode, 'input', () => {
-          setInputHeight(inputNode);
-
-          updateComComment(com.wid, inputNode.value, setIsLoading);
-        }),
-      )
-      .effect();
-  }, [com.wid]);
+  const ordi = visibleOrders.findIndex(ord => ord.wid === ordw);
+  const ord = visibleOrders[ordi] as Order | und;
 
   return (
     <>
       <ModalHeader className="flex flex-gap">
         <LazyIcon icon="TextAlignLeft" />
-        <span className="color--7">{com.name}</span>
+        <span className="color--7 nowrap">
+          #{ordi + 1} {ord?.me.header()}
+        </span>
+        <span className="color--3 ellipsis">{com.name}</span>
+        {ordw !== 'head' && (
+          <LazyIcon
+            icon="TextFont"
+            onClick={() => comCommentRedactOrdwAtom.set('head')}
+          />
+        )}
       </ModalHeader>
-      <ModalBody>
-        <StyledInput
-          className="com-comment-input full-width bgcolor--1"
-          ref={inputRef}
-        />
+      <ModalBody key={ordw}>
+        {comCommentBlockTexts.concat(comCommentBlockTexts.length < 7 ? '' : [])?.map((line, linei) => {
+          return (
+            <TextInput
+              key={linei}
+              defaultValue={line}
+              className="mood-1"
+              multiline
+              onInput={value => {
+                deferredCallback(
+                  () => {
+                    const texts = [...(commentBlock?.d[ordw] ?? localCommentBlock?.d[ordw] ?? [])];
+
+                    texts[linei] = value;
+
+                    cmIDB.tb.localComCommentBlocks.put({
+                      ...localCommentBlock,
+                      comw: com.wid,
+                      m: mylib.takeNewWid(),
+                      d: {
+                        ...localCommentBlock?.d,
+                        [ordw]: texts,
+                      },
+                    });
+                  },
+                  1000,
+                  false,
+                );
+              }}
+            />
+          );
+        })}
       </ModalBody>
       <ModalFooter className="flex flex-gap">
-        {comComment?.isSavedLocal ? (
-          <>
-            Сохранено локально
-            <LazyIcon
-              icon="FileValidation"
-              className="color--ok"
-            />
-          </>
-        ) : (
-          <TheIconLoading isLoading={isLoading} />
-        )}
+        {localCommentBlock?.d[ordw] != null && <SavedLocalLabel />}
 
         <LazyIcon
           icon="MessageQuestion"
@@ -101,12 +106,28 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
   );
 };
 
-const setInputHeight = checkIsCssRuleSupports('field-sizing: content')
-  ? emptyFunc
-  : (inputNode: HTMLTextAreaElement) => mylib.setInputHeightByContent(inputNode);
+const SavedLocalLabel = () => {
+  const [isShow, setIsShow] = useState(false);
 
-const StyledInput = styled.textarea`
-  resize: none;
-  ${'field-sizing: content;'}
-  min-height: 2lh;
-`;
+  useEffect(() => {
+    return hookEffectPipe()
+      .pipe(
+        setTimeoutPipe(() => {
+          setIsShow(true);
+        }, 2500),
+      )
+      .effect();
+  }, []);
+
+  return (
+    isShow && (
+      <>
+        Сохранено локально
+        <LazyIcon
+          icon="FileValidation"
+          className="color--ok"
+        />
+      </>
+    )
+  );
+};

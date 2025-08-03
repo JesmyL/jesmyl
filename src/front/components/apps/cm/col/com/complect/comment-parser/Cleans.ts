@@ -152,9 +152,7 @@ export class ComBlockCommentMakerCleans {
     }):(?<book>(?<bookPrefix>(?<bookNumberWithSuffix>(?<bookNumber>\\d{1,3})-?(?<bookNumberSuffix>[яе]?)|(?<bookTitleFrom>От)) *)?(?<bookTitle>[а-яё]+))+ *(?<chapter>\\d{1,3}):(?<verseDiapason>(?<verseFrom>\\d{1,3})(?<verseTail>-(?<verseTo>\\d{1,3}))?)/gi`,
   );
 
-  static makeStartCommentCss = async (comComment: string | nil, translates: BibleBookTranslates) => {
-    let startComment = comComment?.match(makeRegExp('/^([^#]*?)(?=\\n *#|$)+/'))?.[0];
-    if (!startComment) return '';
+  static makeStartCommentCss = async (startComment: string, translates: BibleBookTranslates) => {
     titlesMap ??= new Map(
       bibleLowerBooks
         .map(({ full, short }, i) => [
@@ -243,12 +241,8 @@ export class ComBlockCommentMakerCleans {
     });
 
     return css`
-      &:before {
-        ${this.makePseudoCommentContentCss(startComment)}
-        ${accentsCss}
-
-        margin-bottom: 40px;
-      }
+      ${this.makePseudoCommentContentCss(startComment)}
+      ${accentsCss}
     `;
   };
 }

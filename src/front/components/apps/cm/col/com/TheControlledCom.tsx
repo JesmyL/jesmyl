@@ -63,19 +63,24 @@ export const TheControlledCom = ({ com, comList, chordVisibleVariant }: Props) =
         $commentStyles={commentCss}
         className="composition-content"
       >
-        <WithScrollProgress
-          {...swiper}
-          className="relative full-height"
-          $listHeight={listRef.current?.clientHeight}
-        >
-          <TheCom
-            com={com}
-            fontSize={fontSize}
-            chordVisibleVariant={chordVisibleVariant}
-            isMiniAnchor={isMiniAnchor}
-            listRef={listRef}
-          />
-        </WithScrollProgress>
+        <div className="com-orders-with-comments">
+          <span className="comment-holder" />
+          <span className="comment-holder" />
+          <span className="comment-holder" />
+          <WithScrollProgress
+            {...swiper}
+            className="relative full-height"
+            $listHeight={listRef.current?.clientHeight}
+          >
+            <TheCom
+              com={com}
+              fontSize={fontSize}
+              chordVisibleVariant={chordVisibleVariant}
+              isMiniAnchor={isMiniAnchor}
+              listRef={listRef}
+            />
+          </WithScrollProgress>
+        </div>
       </StyledRollControled>
       <div hidden>
         <Link

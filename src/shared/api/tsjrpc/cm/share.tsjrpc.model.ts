@@ -3,6 +3,7 @@ import {
   CmCatWid,
   CmComWid,
   ICmComComment,
+  ICmComCommentBlock,
   IExportableCat,
   IExportableCom,
   ScheduleComPack,
@@ -19,7 +20,9 @@ export type CmShareTsjrpcModel = {
   editedChords: (args: { chords: ChordPack; modifiedAt: number }) => unknown;
   refreshChordPack: (args: { pack: ChordPack; modifiedAt: number }) => unknown;
 
+  /** @deprecated */
   refreshComComments: (args: { comments: ICmComComment[]; modifiedAt: number }) => void;
+  refreshComCommentBlocks: (args: { comments: ICmComCommentBlock[]; modifiedAt: number }) => void;
   refreshAboutComFavorites: (args: { value: TAboutComFavoriteItem }) => void;
 
   refreshScheduleEventComPacks: (args: { packs: ScheduleComPack[]; modifiedAt: number }) => void;

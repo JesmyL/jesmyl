@@ -1,12 +1,13 @@
 import { SokiServerClientSelector } from 'back/complect/soki/model';
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
+import { SokiAuthLogin } from 'shared/api';
 import { CmUserStoreTsjrpcModel } from 'shared/api/tsjrpc/cm/user-store.tsjrpc.model';
 import { aboutComFavoritesFileStore, comCommentsFileStore } from './file-stores';
 import { cmShareServerTsjrpcMethods } from './tsjrpc.shares';
 
 const valueSendBuilder = <Args extends object>(
   action: (
-    authLogin: string,
+    authLogin: SokiAuthLogin,
     clientSelector: SokiServerClientSelector,
     args: Args,
   ) => void | ((tool: ServerTSJRPCTool) => void),

@@ -49,12 +49,15 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
           cmIDB.updateLastModifiedAt(modifiedAt);
         },
 
-        refreshComComments: async ({ comments, modifiedAt }) => {
-          comments.forEach(async comment => {
-            const localComment = await cmIDB.tb.comComments.get(comment.comw);
-            if (localComment?.isSavedLocal) return;
-            cmIDB.tb.comComments.put(comment);
-          });
+        refreshComComments: async () => {},
+
+        refreshComCommentBlocks: async ({ comments, modifiedAt }) => {
+          await Promise.all(
+            comments.map(async comment => {
+              await cmIDB.tb.comCommentBlocks.put(comment);
+              await cmIDB.tb.localComCommentBlocks.delete(comment.comw);
+            }),
+          );
 
           cmIDB.updateLastModifiedAt(modifiedAt);
         },

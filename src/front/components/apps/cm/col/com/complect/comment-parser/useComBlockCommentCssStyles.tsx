@@ -1,7 +1,6 @@
-import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
-import { MyLib } from '#shared/lib/my-lib';
 import { useBibleTranslatesContext } from '$bible/basis/lib/contexts/translates';
+import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmComWid } from 'shared/api';
@@ -13,79 +12,45 @@ import { ComBlockCommentMakerCleans } from './Cleans';
 
 const plusInheritBlockStyleSelector = ` + [inherit-block-style]:not(:has(.styled-header))`;
 
-export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order[] | und, comment: string | nil) => {
-  const comComment = useDebounceValue(comment, 400);
-  const [fastStyles, setFastStyles] = useState<string | null>(null);
+const commentHolderSelectors = [
+  '.comment-holder:nth-child(1)::before',
+  '.comment-holder:nth-child(1)::after',
+  '.comment-holder:nth-child(2)::before',
+  '.comment-holder:nth-child(2)::after',
+  '.comment-holder:nth-child(3)::before',
+  '.comment-holder:nth-child(3)::after',
+];
+
+export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order[] | und) => {
   const [styles, setStyles] = useState<RuleSet<object> | ''>('');
   const translates = useBibleTranslatesContext();
+  const localCommentBlock = useLiveQuery(() => cmIDB.tb.localComCommentBlocks.get(comw), [comw]);
+  const commentBlock = useLiveQuery(() => cmIDB.tb.comCommentBlocks.get(comw), [comw]);
 
   useEffect(() => {
-    setFastStyles('');
-
-    return hookEffectPipe()
-      .pipe(setTimeoutPipe(setFastStyles, 600, null))
-      .effect();
-  }, [comw]);
-
-  useEffect(() => {
-    if (fastStyles !== null) {
-      setStyles('');
-      return;
-    }
-
     (async () => {
-      let cssContentList: RuleSet<object>[] = [];
+      const cssContentList =
+        visibleOrders?.map((ord, ordi) => {
+          const commentLines = localCommentBlock?.d[ord.wid] ?? commentBlock?.d[ord.wid];
+          if (commentLines == null) return '';
 
-      if (comComment) {
-        const { regExp: commentMatcher, transform: makePropsFromCommentsArgs } =
-          ComBlockCommentMakerCleans.commentsAnySpecialNumberParseReg;
-        const commentBlocks = Array.from(comComment.matchAll(commentMatcher));
-        const commentsDict: Record<string, string[]> = {};
+          let isNumeredLines = false;
 
-        for (const commentBlock of commentBlocks) {
-          const cmt = makePropsFromCommentsArgs(commentBlock);
+          const linesStyle = commentLines.map((line, linei) => {
+            if (!line) return;
+            isNumeredLines ||= !!line.match(makeRegExp(`/(?<=^|\\n)[^а-я]*\\d/`));
 
-          if (!cmt.comment) continue;
-
-          if (cmt.hashes && cmt.hashes.length > 1 && cmt.blockHashPosition !== undefined) {
-            if (visibleOrders == null) continue;
-
-            const leadOrderStyleKey = visibleOrders[+cmt.blockHashPosition - 1]?.me.style?.key.trim();
-
-            if (leadOrderStyleKey == null) continue;
-            let orderPosition = 0;
-
-            for (const visibleOrder of visibleOrders) {
-              orderPosition++;
-
-              if (visibleOrder.me.style?.key.trim() !== leadOrderStyleKey) continue;
-              if (commentsDict[orderPosition] != null && cmt.modificators !== '!') continue;
-
-              commentsDict[orderPosition] = [cmt.comment.trim()];
-            }
-            continue;
-          } else if (cmt.modificators === '!' && cmt.blockHashPosition !== undefined) {
-            commentsDict[cmt.blockHashPosition] = [cmt.comment.trim()];
-
-            continue;
-          }
-
-          if (cmt.blockHashPosition !== undefined) {
-            commentsDict[cmt.blockHashPosition] ??= [];
-            commentsDict[cmt.blockHashPosition].push(cmt.comment.trim());
-          }
-        }
-
-        cssContentList = MyLib.entries(commentsDict).map(([blockNumber, comment]) => {
-          const commentStr = comment.join('\n');
-          const isNumeredLines = commentStr.match(makeRegExp(`/(?<=^|\\n)[^а-я]*\\d/`));
+            return css`
+              .styled-header ${commentHolderSelectors[linei] || '::after'} {
+                ${ComBlockCommentMakerCleans.makePseudoCommentContentCss(line)}
+                ${ComBlockCommentMakerCleans.makePseudoCommentContentAccentsCss(line)}
+              }
+            `;
+          });
 
           return css`
-            ${ComBlockCommentMakerCleans.makeComOrderBlockSelector(blockNumber)} {
-              .styled-header::after {
-                ${ComBlockCommentMakerCleans.makePseudoCommentContentCss(commentStr)}
-                ${ComBlockCommentMakerCleans.makePseudoCommentContentAccentsCss(commentStr)}
-              }
+            ${ComBlockCommentMakerCleans.makeComOrderBlockSelector(ordi + 1)} {
+              ${linesStyle}
 
               &:has(.styled-header) {
                 counter-reset: com-line;
@@ -109,8 +74,7 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
               `}
             }
           `;
-        });
-      }
+        }) ?? [];
 
       const numeredOrderHeaders = visibleOrders?.map((_ord, ordi) => {
         return css`
@@ -122,15 +86,29 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
         `;
       });
 
+      const headCommentContents = await Promise.all(
+        (localCommentBlock?.d.head ?? commentBlock?.d.head ?? []).map(async (line, linei) => {
+          return css`
+            ${commentHolderSelectors[linei - 1]
+              ? `.com-orders-with-comments > ${commentHolderSelectors[linei - 1]}`
+              : '&::before'} {
+              ${await ComBlockCommentMakerCleans.makeStartCommentCss(line, translates)}
+            }
+          `;
+        }),
+      );
+
       return css`
         --comment-opacity: 0.5;
         --comment-opacity-accent: 0.8;
 
-        ${await ComBlockCommentMakerCleans.makeStartCommentCss(comComment, translates)}
+        ${headCommentContents}
 
         .styled-header {
           &::after,
-          &::before {
+          &::before,
+          > ::after,
+          > ::before {
             opacity: var(--comment-opacity);
             text-decoration: none;
           }
@@ -139,7 +117,9 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
             margin-right: 1rem;
           }
 
-          &:after {
+          &:after,
+          > ::after,
+          > ::before {
             display: block;
             text-decoration: underline;
             margin-left: 1rem;
@@ -152,7 +132,7 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
     })()
       .then(styles => setStyles(styles))
       .catch(emptyFunc);
-  }, [comComment, fastStyles, translates, visibleOrders]);
+  }, [commentBlock?.d, localCommentBlock?.d, translates, visibleOrders]);
 
-  return fastStyles ?? styles;
+  return styles;
 };

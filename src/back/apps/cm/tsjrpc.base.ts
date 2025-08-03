@@ -1,6 +1,6 @@
 import { FileStore } from 'back/complect/FileStore';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
-import { ICmComComment } from 'shared/api';
+import { ICmComComment, ICmComCommentBlock } from 'shared/api';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
 import { smylib } from 'shared/utils';
 import { cmEditCatServerTsjrpcBase } from './edit-cat.tsjrpc.base';
@@ -12,6 +12,7 @@ import {
   aboutComFavoritesFileStore,
   catsFileStore,
   chordPackFileStore,
+  comCommentBlocksFileStore,
   comCommentsFileStore,
   comsFileStore,
   comwVisitsFileStore,
@@ -69,6 +70,17 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
 
             sendBasicModifiedableList(
               lastModfiedAt,
+              comCommentBlocksFileStore,
+              () => smylib.values(comCommentBlocksFileStore.getValue()[login]),
+              (comments, modifiedAt) => {
+                if (comments.length > 0) {
+                  cmShareServerTsjrpcMethods.refreshComCommentBlocks({ comments, modifiedAt }, client);
+                }
+              },
+            );
+
+            sendBasicModifiedableList(
+              lastModfiedAt,
               comCommentsFileStore,
               () => smylib.values(comCommentsFileStore.getValue()[login]),
               (comments, modifiedAt) => {
@@ -120,6 +132,48 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
             cmShareServerTsjrpcMethods.refreshComComments(
               { comments: freshComments, modifiedAt: localSavedCommentsMaxModifiedAt },
               { login: auth.login, ignoreClient: client },
+            );
+          }
+
+          return resultComments;
+        },
+
+        exchangeFreshComCommentBlocks: async ({ modifiedComments, clientDateNow }, { auth }) => {
+          if (auth?.login == null) throw new Error('Не авторизован');
+
+          const withClientTimeDelta = Date.now() - clientDateNow;
+
+          const commentBlocks = comCommentBlocksFileStore.getValue();
+          const userServerComments = (commentBlocks[auth.login] ??= {});
+          let localSavedCommentsMaxModifiedAt = 0;
+          const freshComments: ICmComCommentBlock[] = [];
+          const resultComments: ICmComCommentBlock[] = [];
+
+          modifiedComments.forEach(({ d, comw, m }) => {
+            const commentModifiedAt = m + withClientTimeDelta;
+
+            if (userServerComments[comw] != null && commentModifiedAt < userServerComments[comw].m) {
+              resultComments.push(userServerComments[comw]);
+              return;
+            }
+
+            userServerComments[comw] = {
+              d: { ...userServerComments[comw]?.d, ...d },
+              comw,
+              m: commentModifiedAt,
+            };
+
+            resultComments.push(userServerComments[comw]);
+            freshComments.push(userServerComments[comw]);
+            localSavedCommentsMaxModifiedAt = Math.max(localSavedCommentsMaxModifiedAt, commentModifiedAt);
+          });
+
+          if (localSavedCommentsMaxModifiedAt) {
+            comCommentBlocksFileStore.saveValue();
+
+            cmShareServerTsjrpcMethods.refreshComCommentBlocks(
+              { comments: freshComments, modifiedAt: localSavedCommentsMaxModifiedAt },
+              { login: auth.login },
             );
           }
 

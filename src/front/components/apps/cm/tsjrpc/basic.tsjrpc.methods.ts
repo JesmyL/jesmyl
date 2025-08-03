@@ -8,6 +8,7 @@ export const cmTsjrpcClient = new (class Cm extends TsjrpcClient<CmTsjrpcModel> 
       methods: {
         requestFreshes: true,
         exchangeFreshComComments: true,
+        exchangeFreshComCommentBlocks: true,
         getComwVisits: true,
         printComwVisit: true,
         takeComwVisitsCount: true,

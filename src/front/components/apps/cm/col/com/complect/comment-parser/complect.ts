@@ -1,3 +1,4 @@
 import { atom } from 'atomaric';
+import { CmComOrderWid } from 'shared/api';
 
-export const isComCommentRedactAtom = atom(false);
+export const comCommentRedactOrdwAtom = atom<CmComOrderWid | 'head' | null>(null);

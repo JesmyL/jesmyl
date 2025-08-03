@@ -90,11 +90,19 @@ export interface IExportableCom {
   isRemoved?: 1;
 }
 
+/** @deprecated */
 export type ICmComComment = {
   comw: CmComWid;
   comment: string;
   m: number;
   isSavedLocal?: 1;
+};
+
+export type ICmComCommentBlock = {
+  comw: CmComWid;
+  /** comment block dict */
+  d: PRecord<CmComOrderWid | 'head', string[]>;
+  m: number;
 };
 
 export type TAboutComFavoriteItem = {
