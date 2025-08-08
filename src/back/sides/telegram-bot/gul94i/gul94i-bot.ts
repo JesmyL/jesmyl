@@ -1,5 +1,6 @@
 import { makeRegExp } from 'regexpert';
 import { jesmylTgBot } from '../bot';
+import { tgBotDTO } from '../complect/dto';
 import { tgBotUrlController } from '../complect/url-controller';
 import { tglogger } from '../log/log-bot';
 import { JesmylTelegramBot } from '../tg-bot';
@@ -17,6 +18,8 @@ export const gul94iAdminTelegramBot = new JesmylTelegramBot({
   logger: tglogger,
   uniqPrefix: '@!',
 });
+
+tgBotDTO.gul94iAdminTelegramBot = gul94iAdminTelegramBot;
 
 gul94iTelegramBot.onChatMessages((bot, message) => {
   if (message.text?.toLowerCase() === 'матюки') {
