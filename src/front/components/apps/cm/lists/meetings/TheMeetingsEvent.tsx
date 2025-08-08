@@ -30,7 +30,7 @@ export const TheMeetingsEvent = ({ dayi, eventMi, schw }: Props) => {
       headTitle={`${schedule.title} - ${schedule.types[typei]?.title ?? ''}`}
       backButtonRender={backButtonRenderer}
       head={
-        <div className="flex">
+        <div className="flex gap-3 pr-3">
           {isMobileDevice ? (
             <ScheduleWidgetWatchLiveTranslationButton schw={schedule.w} />
           ) : auth.level ? (
