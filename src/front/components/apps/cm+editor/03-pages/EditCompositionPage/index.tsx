@@ -86,7 +86,7 @@ export const CmEditCompositionPage = () => {
         <>
           {mylib.isNaN(ccomw) || <EditCompositionBusyInfo comw={ccomw} />}
 
-          <div className="flex around sticky nav-panel overflow-auto no-scrollbar">
+          <div className="flex justify-around gap-x-2 px-2 sticky nav-panel overflow-auto no-scrollbar">
             {MyLib.entries(editCompositionNavs).map(([tab, { icon }]) => {
               return (
                 <Link

@@ -8,6 +8,7 @@ import { CmEditorTabComOrders } from '$cm+editor/widgets/TabComOrders';
 import { CmEditorTabComRepeats } from '$cm+editor/widgets/TabComRepeats';
 import { CmEditorTabTextBlocks } from '$cm+editor/widgets/TabComTextBlocks';
 import { CmEditorTabWatch } from '$cm+editor/widgets/TabComWatch';
+import { StameskaIconName } from 'stameska-icon';
 
 export const editCompositionNavs = {
   watch: {
@@ -50,4 +51,4 @@ export const editCompositionNavs = {
     Component: CmEditorTabComMain,
     icon: 'SchoolReportCard',
   },
-} as const;
+} satisfies Record<string, { Component: () => React.ReactNode; icon: StameskaIconName }>;
