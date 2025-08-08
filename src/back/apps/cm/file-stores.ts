@@ -40,16 +40,24 @@ export const cmConstantsConfigFileStore = new FileStore<CmConstantsConfig>(
   cmConstantsDefaultConfig,
 );
 
-/** @deprecated */
-type TCommentsStore = PRecord<SokiAuthLogin, PRecord<CmComWid, ICmComComment>>;
-
 type TCommentBlocksStore = PRecord<SokiAuthLogin, PRecord<CmComWid, ICmComCommentBlock>>;
 type TUserFavoritesStore = Partial<Record<string, TAboutComFavoriteItem>>;
 
-/** @deprecated */
-export const comCommentsFileStore = new FileStore<TCommentsStore>('/apps/cm/comComments.json', {});
 export const comCommentBlocksFileStore = new FileStore<TCommentBlocksStore>('/apps/cm/comCommentBlocks.json', {});
 export const aboutComFavoritesFileStore = new FileStore<TUserFavoritesStore>('/apps/cm/aboutComFavorites.json', {});
+
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+///////////////////////////////////////////////////
+/** @deprecated */
+type TCommentsStore = PRecord<SokiAuthLogin, PRecord<CmComWid, ICmComComment>>;
+/** @deprecated */
+export const comCommentsFileStore = new FileStore<TCommentsStore>('/apps/cm/comComments.json', {});
 
 const blocks = comCommentBlocksFileStore.getValueWithAutoSave();
 SMyLib.entries(comCommentsFileStore.getValue()).forEach(([login, commentDict]) => {
@@ -73,3 +81,7 @@ SMyLib.entries(comCommentsFileStore.getValue()).forEach(([login, commentDict]) =
     block[comwStr] = { comw: +comwStr, d, m: Date.now() };
   });
 });
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
+////////////////////////////////////////////////////
