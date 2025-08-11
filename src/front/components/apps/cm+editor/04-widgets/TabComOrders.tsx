@@ -22,6 +22,20 @@ export const CmEditorTabComOrders = () => {
 
   if (!ccom) return null;
 
+  const zeroProps = {
+    aboveLeadOrdw: null,
+    ordAbove: null,
+    ordBelow: ccom.orders?.[0] ?? null,
+  };
+
+  const cancelClickBetweenDataButtonNode = (
+    <LazyIcon
+      icon="Cancel01"
+      className="pointer color--ko"
+      onClick={() => setClickBetweenOrds(null)}
+    />
+  );
+
   return (
     <StyledOrdersRedactor>
       <>
@@ -35,6 +49,24 @@ export const CmEditorTabComOrders = () => {
           </BottomPopup>
         )}
       </>
+
+      {clickBetweenData && clickBetweenData.checkIsShowButton(zeroProps) && (
+        <div className="flex flex-gap margin-big-gap-t center">
+          <TheButton
+            onClick={async () => {
+              try {
+                await clickBetweenData.onClick(zeroProps);
+              } catch (_error) {
+                //
+              }
+              setClickBetweenOrds(null);
+            }}
+          >
+            {clickBetweenData.buttonTitle}
+          </TheButton>
+          {cancelClickBetweenDataButtonNode}
+        </div>
+      )}
       {ccom.orders?.map((ord, ordi, orda) => {
         const editNode = !ord.me.isAnchorInherit && (
           <LazyIcon
@@ -49,41 +81,10 @@ export const CmEditorTabComOrders = () => {
           aboveLeadOrdw: ord?.me.isAnchorInherit ? ord?.me.leadOrd?.wid : ord?.wid,
           ordBelow: orda[ordi + 1] ?? null,
         };
-        const zeroProps = {
-          aboveLeadOrdw: null,
-          ordAbove: null,
-          ordBelow: ord,
-        };
-
-        const cancelClickBetweenDataButtonNode = (
-          <LazyIcon
-            icon="Cancel01"
-            className="pointer color--ko"
-            onClick={() => setClickBetweenOrds(null)}
-          />
-        );
 
         return (
           <React.Fragment key={ordi}>
             <div className={ord.me.isAnchorInherit ? 'inherit-block' : ''}>
-              {ordi === 0 && clickBetweenData && clickBetweenData.checkIsShowButton(zeroProps) && (
-                <div className="flex flex-gap margin-big-gap-t center">
-                  <TheButton
-                    onClick={async () => {
-                      try {
-                        await clickBetweenData.onClick(zeroProps);
-                      } catch (_error) {
-                        //
-                      }
-                      setClickBetweenOrds(null);
-                    }}
-                  >
-                    {clickBetweenData.buttonTitle}
-                  </TheButton>
-                  {cancelClickBetweenDataButtonNode}
-                </div>
-              )}
-
               <div className="mx-10 mt-2">
                 {clickBetweenData || isWithHead ? null : ord.me.isAnchorInherit &&
                   ord.me.leadOrd &&
