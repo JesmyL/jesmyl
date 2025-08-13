@@ -13,7 +13,7 @@ export const BlockStylesProvider = styled.div`
       margin-top: 1em;
       padding-left: 1em;
       white-space: nowrap;
-      text-wrap: balance;
+      ${'text-wrap: balance;'}
       word-wrap: normal;
 
       &:has(.styled-header.empty) {
@@ -52,7 +52,7 @@ export const BlockStylesProvider = styled.div`
     .styled-block {
       .chords-block {
         margin-bottom: 0.5em;
-        margin-left: 0.5em;
+        margin-left: 2em;
         white-space: pre-line;
       }
 

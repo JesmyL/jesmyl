@@ -36,7 +36,7 @@ export class CmComUtils {
     }(?:/${
       //
       escapeRegExpNames(chordLikeStr, `_lastRepeatBass`)
-    })?)*)$/`,
+    })?)*)\\|?$/`,
   );
   static correctChordRegs = makeNamedRegExp(
     // regexpert:

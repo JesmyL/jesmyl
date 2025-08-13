@@ -79,7 +79,7 @@ export function ComLine(props: IComLineProps) {
     const isChorded = linePositions.includes(vowelPositions.indexOf(index));
     const chordLabel = isChorded ? chordsLabels[chordIndex++ - (isHasPre ? -1 : 0)] || undefined : undefined;
 
-    const chord = isChordedFirst ? chordsLabels[0] : chordLabel;
+    const chord = makeTaktedChord(isChordedFirst ? chordsLabels[0] : chordLabel);
     const pchord = isLast && isHasPost ? chordsLabels[chordsLabels.length - 1] : null;
 
     const baseTextBitOriginal = props.textLine.slice(index, indexa[indexi + 1]);
@@ -89,7 +89,7 @@ export function ComLine(props: IComLineProps) {
       <span
         className={isHasPre ? 'chorded pre' : undefined}
         dangerouslySetInnerHTML={{ __html: firstTextBit }}
-        attr-chord={isHasPre ? chordsLabels[0] : undefined}
+        attr-chord={isHasPre ? makeTaktedChord(chordsLabels[0]) : undefined}
       />
     );
 
@@ -190,3 +190,5 @@ const insertDividedBits = (lettersText: string, chord: string | und) => {
     </span>
   );
 };
+
+const makeTaktedChord = (chord: string | und) => (chord?.endsWith('|') ? `${chord.slice(0, -1)} |` : chord);

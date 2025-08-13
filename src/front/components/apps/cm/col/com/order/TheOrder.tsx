@@ -111,9 +111,7 @@ export function TheOrder(props: Props) {
         visible-ord-nn={(visibleOrdi ?? ordi) + 1}
         ord-selector={ComBlockCommentMakerCleans.makeOrdSelector(ord)}
         className={
-          (props.specialClassId || '') +
-          'composition-block styled-block flex flex-baseline' +
-          (ord.isVisible ? '' : ' ord-invisible')
+          (props.specialClassId || '') + 'composition-block styled-block' + (ord.isVisible ? '' : ' ord-invisible')
         }
         ref={el => {
           if (el) ord.element = el;
@@ -123,7 +121,7 @@ export function TheOrder(props: Props) {
         {isTexted && (
           <div
             key={ordi}
-            className="chords-block vertical-middle"
+            className="chords-block"
             {...styleAttributes}
           >
             {com.chordLabels[ordi]
