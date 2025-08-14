@@ -127,7 +127,19 @@ export function TheOrder(props: Props) {
             {com.chordLabels[ordi]
               .map((_, linei) => props.ord.lineChordLabels(chordHardLevel, linei, props.ordi))
               .map(line => line.join(' '))
-              .join('\n')}
+              .join('\n')
+              .split(makeRegExp('/(\\|)/'))
+              .map((text, texti) => {
+                return (
+                  <span
+                    key={texti}
+                    className={text === '|' ? 'color--7' : undefined}
+                  >
+                    {text === '|' && ' '}
+                    {text}
+                  </span>
+                );
+              })}
           </div>
         )}
       </div>
