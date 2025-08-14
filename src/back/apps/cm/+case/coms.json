@@ -1684,7 +1684,7 @@
   {
     "c": [
       "G D Em\nC\nD\nG D\nEm\nC D G",
-      "G Gmaj9/H C2 Gmaj9/H C2\nGmaj9/H Cmaj9/E G/D G Cmaj9/D\nG/D Cmaj9/D G/H C2\nG/H D C2 G/H Gmaj9 Cmaj9",
+      "G| Gmaj9/H| C2 Gmaj9/H C2\nGmaj9/H Cmaj9/E G/D G Cmaj9/D\nG/D Cmaj9/D G/H C2\nG/H D C2 G/H Gmaj9 Cmaj9",
       "G D/F# C2/E G/D\nC2 G2/H\nAm9 Dsus2-D\nG D/F#\nEm2 C2 G\nDsus2 G",
       "G D/F# Em7 Cmaj9\nG4/D G D/F#\nEm7 C2",
       "C2 G2/H\nAm7 G\nC2 G Em7\nAm7 Dsus2-G/D-D7",
@@ -1725,6 +1725,7 @@
         "t": 1,
         "w": 1
       },
+      { "w": 9, "a": 8 },
       {
         "c": 2,
         "p": [
@@ -1774,7 +1775,9 @@
     ],
     "w": 1517895005000,
     "a": "https://holychords.pro/uploads/music/20190815/2019081513071941.mp3\n",
-    "m": 1753255796065.0493
+    "m": 1755067271258.5767,
+    "s": 4,
+    "bpm": 67
   },
   {
     "c": ["C\nAm\nA7 Dm\nF G\nE Am\nF G C", "F G\nE Am\nF G C-Am\nF G\nE Am\nF G\nC"],
@@ -17461,11 +17464,12 @@
     "w": 1614674711950,
     "c": [
       "C C/E F\nF G/F C\nC C/E F\nF G/F C",
-      "Am G/H C F\nF E Am\nAm G/H C F\nF G C",
+      "Am G/H C F\nF E Am\nAm G/H C F\nF G C-Dm-C",
       "F G Am\nAm G/H C\nC Dm C/E F\nF G C",
       "C C/E F",
       "Am7 Fmaj",
-      "Am E/G# Em/G D/F#\nF E Am\nAm E/G# Em/G D/F#\nF G C",
+      "Am F\nF/A G/H C\nAm F\nF/A G/H C",
+      "Am E/G# Em/G D/F#\nF E Am\nAm E/G# Em/G D/F#\nF G C-Dm-C",
       "F G Am\nAm G/H C\nC Dm C/E F\nF G Am"
     ],
     "t": [
@@ -17540,24 +17544,24 @@
           [0, 3, 6]
         ]
       },
-      { "w": 6, "a": 3, "c": 6 },
+      { "w": 6, "a": 3, "c": 7 },
       { "w": 10, "s": "play", "c": 4, "r": 2 },
       {
         "w": 7,
         "s": " one",
-        "c": 0,
+        "c": 5,
         "t": 5,
         "p": [
-          [0, 6, 9],
+          [0, 9],
           [0, 3, 6],
-          [0, 4, 7],
+          [0, 7],
           [0, 3, 6]
         ]
       },
       {
         "w": 8,
         "s": "+",
-        "c": 5,
+        "c": 6,
         "t": 6,
         "p": [
           [0, 3, 7, 11],
@@ -17566,11 +17570,12 @@
           [0, 3, 6]
         ]
       },
+      { "w": 13, "a": 3, "r": 2 },
       { "w": 12, "a": 9, "s": "final" }
     ],
     "p": 9,
     "a": "https://holychords.pro/uploads/music/20200805/20200805160430.mp3",
-    "m": 1754826092725.9937
+    "m": 1755024984110.168
   },
   {
     "n": "О, Господь, мой крест беру я",
@@ -23753,7 +23758,7 @@
       { "w": 5, "a": 1 }
     ],
     "a": "https://holychords.pro/uploads/music/20200309/2020030911314085.mp3",
-    "m": 1658860751232.635
+    "m": 1755065072228.1792
   },
   {
     "w": 1659213404428,
@@ -27503,7 +27508,9 @@
     "a": "https://holychords.pro/uploads/music/20230314/20230314130644.mp3",
     "l": 0,
     "b": 0,
-    "m": 1729335622849.558
+    "m": 1755020126275.5432,
+    "s": 4,
+    "bpm": 142
   },
   {
     "n": "Тобой гореть и не быть тёплым",
@@ -27538,6 +27545,7 @@
         ]
       },
       { "w": 7, "a": 6 },
+      { "w": 10, "a": 9, "s": "play" },
       {
         "w": 2,
         "t": 2,
@@ -27560,7 +27568,7 @@
     "l": 0,
     "b": 0,
     "bpm": 114,
-    "m": 1736686603851
+    "m": 1755022388638.8784
   },
   {
     "n": "Путь к Голгофе далёк",
