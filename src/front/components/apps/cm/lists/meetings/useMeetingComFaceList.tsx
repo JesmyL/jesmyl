@@ -11,9 +11,10 @@ interface Props {
   dayi: number | und;
   eventMi: IScheduleWidgetDayEventMi | und;
   comImportantOnClick?: (props: { com: Com }) => void;
+  isPutCcomFaceOff?: boolean;
 }
 
-export function useMeetingComFaceList({ dayi, eventMi, schw, comImportantOnClick }: Props) {
+export function useMeetingComFaceList({ dayi, eventMi, schw, comImportantOnClick, isPutCcomFaceOff }: Props) {
   const pack = useLiveQuery(() => schw && cmIDB.db.scheduleComPacks.get({ schw }), [schw]);
   const packComws = pack?.pack?.[dayi as never]?.[eventMi as never] ?? emptyArray;
   const coms = useComs(packComws);
@@ -25,6 +26,7 @@ export function useMeetingComFaceList({ dayi, eventMi, schw, comImportantOnClick
       <ComFaceList
         list={coms}
         importantOnClick={comImportantOnClick}
+        isPutCcomFaceOff={isPutCcomFaceOff}
       />
     ),
   };

@@ -16,7 +16,7 @@ import { useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { schEventTypesTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { useAttTypeTitleError } from './useAttTypeTitleError';
 
-const isRedactModalOpenAtom = atom(false);
+const isRedactTypeiModalOpenAtom = atom<number | null>(null);
 
 export function ScheduleWidgetEventType(props: {
   schedule: IScheduleWidget;
@@ -129,7 +129,7 @@ export function ScheduleWidgetEventType(props: {
         <div className="flex flex-end full-width absolute pos-top pos-right margin-sm-gap z-index:5">
           <LazyIcon
             icon="Edit02"
-            onClick={isRedactModalOpenAtom.toggle}
+            onClick={() => isRedactTypeiModalOpenAtom.set(props.typei)}
           />
         </div>
       )}
@@ -149,22 +149,27 @@ export function ScheduleWidgetEventType(props: {
         </SelectItem>
       )}
 
-      <Modal openAtom={isRedactModalOpenAtom}>
-        <ModalHeader>
-          <span className="flex flex-gap full-width between">
-            <span>
-              <span className="color--7">{props.typeBox.title} </span>- Редактирование шаблона
+      {props.isRedact || (
+        <Modal
+          openAtom={isRedactTypeiModalOpenAtom}
+          checkIsOpen={typei => props.typei === typei}
+        >
+          <ModalHeader>
+            <span className="flex flex-gap full-width between">
+              <span>
+                <span className="color--7">{props.typeBox.title} </span>- Редактирование шаблона
+              </span>
             </span>
-          </span>
-        </ModalHeader>
+          </ModalHeader>
 
-        <ModalBody>
-          <ScheduleWidgetEventType
-            {...props}
-            isRedact
-          />
-        </ModalBody>
-      </Modal>
+          <ModalBody>
+            <ScheduleWidgetEventType
+              {...props}
+              isRedact
+            />
+          </ModalBody>
+        </Modal>
+      )}
     </div>
   );
 }

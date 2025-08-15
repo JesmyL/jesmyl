@@ -1,40 +1,21 @@
-import { ScheduleAlarmDay } from '#widgets/schedule/alarm/AlarmDay';
-import { ScheduleCurrentSchwContext } from '#widgets/schedule/complect/lib/contexts';
-import { ScheduleWidgetPage } from '#widgets/schedule/pages/ScheduleWidgetPage';
+import { makeScheduleRoute } from '#widgets/schedule/complect/makeScheduleRoute';
 import { indexIDB } from '$index/db/index-idb';
-import { createFileRoute } from '@tanstack/react-router';
+import { createFileRoute, Navigate } from '@tanstack/react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { ScheduleWidgetCleans } from 'shared/api';
 
-export const Route = createFileRoute('/schedule-day/$schw/')({
-  component: RouteComponent,
-});
+export const Route = createFileRoute('/schedule-day/$schw/')(makeScheduleRoute((() => Route) as never, RouteComponent));
 
 function RouteComponent() {
   const { schw } = Route.useParams();
   const schedule = useLiveQuery(() => indexIDB.tb.schs.get(+schw), [schw]);
 
-  if (schedule != null) {
-    const dayi = ScheduleWidgetCleans.getCurrentDayiOrNull(schedule);
-
-    if (dayi != null) {
-      return (
-        <div className="m-3">
-          <ScheduleAlarmDay
-            day={schedule.days[dayi]}
-            dayi={dayi}
-            schedule={schedule}
-            scheduleScopeProps={{ schw: +schw }}
-            isForceOpen
-          />
-        </div>
-      );
-    }
-  }
+  if (schedule == null) return;
 
   return (
-    <ScheduleCurrentSchwContext.Provider value={+schw}>
-      <ScheduleWidgetPage />
-    </ScheduleCurrentSchwContext.Provider>
+    <Navigate
+      to="/!other/$appName/schs"
+      params={{ appName: 'cm' }}
+      search={{ isOpenSingleDay: true, schw: schedule?.w }}
+    />
   );
 }

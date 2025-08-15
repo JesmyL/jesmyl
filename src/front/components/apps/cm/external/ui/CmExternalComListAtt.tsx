@@ -13,6 +13,7 @@ export function CmExternalComListAtt({ scopeProps }: Props) {
     schw: scopeProps.schw,
     dayi: scopeProps.dayi,
     eventMi: scopeProps.eventMi,
+    isPutCcomFaceOff: true,
     comImportantOnClick: ({ com }) => {
       navigate({
         to: '.',
