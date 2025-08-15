@@ -56,9 +56,8 @@ export const TextInput = ({
 };
 
 const styledBoth = css`
+  width: 100%;
   color: var(--color--3);
-  ${'field-sizing: content;'}
-  min-height: 2lh;
 
   &::placeholder {
     color: var(--color--4);
@@ -75,10 +74,11 @@ const styledBoth = css`
 
 const StyledTextarea = styled.textarea`
   padding-right: 30px;
-  width: 100%;
   height: 100%;
   resize: none;
   text-align: inherit;
+  ${'field-sizing: content;'}
+  min-height: 2lh;
 
   ${styledBoth}
 `;
