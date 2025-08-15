@@ -1,7 +1,7 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { useSelectedComs } from '$cm/base/useSelectedComs';
-import { useNavigate } from '@tanstack/react-router';
+import { useRouter } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { Com } from '../../Com';
 import { cmCurrentComwIdPrefix, cmFaceItemDescriptionClassName } from '../lib/consts';
@@ -13,7 +13,7 @@ export const useComListClickListener = (
   list: Com[],
 ) => {
   const { toggleSelectedCom } = useSelectedComs();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     if (listRef.current === null) return;
@@ -53,7 +53,7 @@ export const useComListClickListener = (
           }
 
           const defaultClick = () => {
-            navigate({
+            router.navigate({
               to: '.',
               search: prev => ({ ...(prev as object), comw }) as object,
             });
@@ -71,5 +71,5 @@ export const useComListClickListener = (
         }),
       )
       .effect();
-  }, [importantOnClick, list, listRef, navigate, toggleSelectedCom]);
+  }, [importantOnClick, list, listRef, router, toggleSelectedCom]);
 };
