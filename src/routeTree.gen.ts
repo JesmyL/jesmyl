@@ -26,6 +26,7 @@ import { Route as BibleSearchImport } from './front/routes/bible/search'
 import { Route as BibleIImport } from './front/routes/bible/i'
 import { Route as CmEditRouteImport } from './front/routes/cm/edit/route'
 import { Route as otherAppNameRouteImport } from './front/routes/!other.$appName/route'
+import { Route as ScheduleDaySchwIndexImport } from './front/routes/schedule-day/$schw/index'
 import { Route as CmPlayerIndexImport } from './front/routes/cm/player/index'
 import { Route as CmLiIndexImport } from './front/routes/cm/li/index'
 import { Route as CmIIndexImport } from './front/routes/cm/i/index'
@@ -151,6 +152,12 @@ const CmEditIndexLazyRoute = CmEditIndexLazyImport.update({
 } as any).lazy(() =>
   import('./front/routes/cm/edit/index.lazy').then((d) => d.Route),
 )
+
+const ScheduleDaySchwIndexRoute = ScheduleDaySchwIndexImport.update({
+  id: '/schedule-day/$schw/',
+  path: '/schedule-day/$schw/',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const CmPlayerIndexRoute = CmPlayerIndexImport.update({
   id: '/player/',
@@ -484,6 +491,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CmPlayerIndexImport
       parentRoute: typeof CmRouteImport
     }
+    '/schedule-day/$schw/': {
+      id: '/schedule-day/$schw/'
+      path: '/schedule-day/$schw'
+      fullPath: '/schedule-day/$schw'
+      preLoaderRoute: typeof ScheduleDaySchwIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/cm/edit/': {
       id: '/cm/edit/'
       path: '/'
@@ -733,6 +747,7 @@ export interface FileRoutesByFullPath {
   '/cm/i': typeof CmIIndexRoute
   '/cm/li': typeof CmLiIndexRoute
   '/cm/player': typeof CmPlayerIndexRoute
+  '/schedule-day/$schw': typeof ScheduleDaySchwIndexRoute
   '/cm/edit/': typeof CmEditIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/cm/edit/cats/$catw': typeof CmEditCatsCatwRoute
@@ -770,6 +785,7 @@ export interface FileRoutesByTo {
   '/cm/i': typeof CmIIndexRoute
   '/cm/li': typeof CmLiIndexRoute
   '/cm/player': typeof CmPlayerIndexRoute
+  '/schedule-day/$schw': typeof ScheduleDaySchwIndexRoute
   '/cm/edit': typeof CmEditIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/cm/edit/cats/$catw': typeof CmEditCatsCatwRoute
@@ -812,6 +828,7 @@ export interface FileRoutesById {
   '/cm/i/': typeof CmIIndexRoute
   '/cm/li/': typeof CmLiIndexRoute
   '/cm/player/': typeof CmPlayerIndexRoute
+  '/schedule-day/$schw/': typeof ScheduleDaySchwIndexRoute
   '/cm/edit/': typeof CmEditIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
   '/cm/edit/cats/$catw': typeof CmEditCatsCatwRoute
@@ -856,6 +873,7 @@ export interface FileRouteTypes {
     | '/cm/i'
     | '/cm/li'
     | '/cm/player'
+    | '/schedule-day/$schw'
     | '/cm/edit/'
     | '/!other/$appName/settings/console'
     | '/cm/edit/cats/$catw'
@@ -892,6 +910,7 @@ export interface FileRouteTypes {
     | '/cm/i'
     | '/cm/li'
     | '/cm/player'
+    | '/schedule-day/$schw'
     | '/cm/edit'
     | '/!other/$appName/settings/console'
     | '/cm/edit/cats/$catw'
@@ -932,6 +951,7 @@ export interface FileRouteTypes {
     | '/cm/i/'
     | '/cm/li/'
     | '/cm/player/'
+    | '/schedule-day/$schw/'
     | '/cm/edit/'
     | '/!other/$appName/settings/console'
     | '/cm/edit/cats/$catw'
@@ -955,6 +975,7 @@ export interface RootRouteChildren {
   TunerRouteRoute: typeof TunerRouteRouteWithChildren
   otherAppNameRouteRoute: typeof otherAppNameRouteRouteWithChildren
   ScheduleDayIndexLazyRoute: typeof ScheduleDayIndexLazyRoute
+  ScheduleDaySchwIndexRoute: typeof ScheduleDaySchwIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -964,6 +985,7 @@ const rootRouteChildren: RootRouteChildren = {
   TunerRouteRoute: TunerRouteRouteWithChildren,
   otherAppNameRouteRoute: otherAppNameRouteRouteWithChildren,
   ScheduleDayIndexLazyRoute: ScheduleDayIndexLazyRoute,
+  ScheduleDaySchwIndexRoute: ScheduleDaySchwIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -981,7 +1003,8 @@ export const routeTree = rootRoute
         "/cm",
         "/tuner",
         "/!other/$appName",
-        "/schedule-day/"
+        "/schedule-day/",
+        "/schedule-day/$schw/"
       ]
     },
     "/": {
@@ -1123,6 +1146,9 @@ export const routeTree = rootRoute
     "/cm/player/": {
       "filePath": "cm/player/index.tsx",
       "parent": "/cm"
+    },
+    "/schedule-day/$schw/": {
+      "filePath": "schedule-day/$schw/index.tsx"
     },
     "/cm/edit/": {
       "filePath": "cm/edit/index.lazy.tsx",

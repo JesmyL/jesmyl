@@ -117,6 +117,17 @@ export class ScheduleWidgetCleans {
     return (date.getTime() - schedule.start + (schedule.withTech ? smylib.howMs.inDay : 0)) / smylib.howMs.inDay;
   }
 
+  static getCurrentDayiOrNull(schedule: IScheduleWidget) {
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+
+    const dayi = Math.trunc(
+      (date.getTime() - schedule.start + (schedule.withTech ? smylib.howMs.inDay : 0)) / smylib.howMs.inDay,
+    );
+    if (dayi > schedule.days.length - 1 || dayi < 0) return null;
+    return dayi;
+  }
+
   static getCurrentEventInDay(schedule: IScheduleWidget, dayi: number) {
     const day = schedule.days[dayi];
     if (day == null) return undefined;

@@ -102,6 +102,17 @@ export const scheduleWidgetMessageCatcher = jesmylTgBot.catchMessages(async (mes
 });
 
 jesmylTgBot.catchCallbackQuery(async (query, bot, answer) => {
+  const ret = (text: string) => answer({ text });
+
+  if (query.message === undefined || query.message.text === undefined) return ret('');
+
+  try {
+    if (!(await bot.getChatAdministrators(query.message.chat.id)).some(member => member.user.id === query.from.id))
+      return ret('Такие действия только для админов этой группы');
+  } catch (_error) {
+    return ret('Ошибка');
+  }
+
   if (query.data === deleteButtonsCbData_) {
     if (query.message?.text !== undefined)
       bot.editMessageText(`<code>${query.message.text}</code>`, {
@@ -113,18 +124,9 @@ jesmylTgBot.catchCallbackQuery(async (query, bot, answer) => {
     return answer('');
   }
 
-  const ret = (text: string) => answer({ text });
+  if (query.data !== parseCbData_) return ret('');
 
-  if (query.message === undefined || query.message.text === undefined || query.data !== parseCbData_) return ret('');
-
-  try {
-    if (!(await bot.getChatAdministrators(query.message.chat.id)).some(member => member.user.id === query.from.id))
-      return ret('Обновлять расписание могут только админы этой группы');
-  } catch (_error) {
-    return ret('Ошибка');
-  }
-
-  let schedule,
+  let schedule: IScheduleWidget,
     dayi = -1;
 
   try {
@@ -133,7 +135,7 @@ jesmylTgBot.catchCallbackQuery(async (query, bot, answer) => {
     return ret('' + errorMessage);
   }
 
-  if (!schedule.days[dayi]?.list.length) return ret('Для обновления расписания список событий должен быть пустым');
+  if (schedule.days[dayi]?.list.length) return ret('Для обновления расписания список событий должен быть пустым');
 
   const { dayWup, list, newTypes } = ScheduleWidgetCleans.preparedText2DayList(query.message.text, schedule);
 
@@ -148,13 +150,6 @@ jesmylTgBot.catchCallbackQuery(async (query, bot, answer) => {
     onScheduleDayBeginTimeSetEvent.invoke({ dayProps, strWup: '' + dayWup });
     onScheduleDayEventListSetEvent.invoke({ dayProps, list: list.filter(itNNull) });
   }
-
-  if (query.message?.text !== undefined)
-    await bot.editMessageText(`<code>${query.message.text}</code>`, {
-      chat_id: query.message.chat.id,
-      message_id: query.message.message_id,
-      parse_mode: 'HTML',
-    });
 
   return ret('Расписание дня обновлено');
 });
