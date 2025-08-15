@@ -1,4 +1,5 @@
 import { currentAppNameAtom } from '#basis/lib/atoms/currentAppNameAtom';
+import { hideAppFooterAtom } from '#basis/lib/atoms/hideAppFooterAtom';
 import { useFingersActions } from '#basis/lib/global-listeners/useFingersActions';
 import { useGlobalFontFamilySetter } from '#basis/lib/global-listeners/useGlobalFontFamilySetter';
 import { useGlobalFullscreenChanger } from '#basis/lib/global-listeners/useGlobalFullscreenChanger';
@@ -21,6 +22,7 @@ export const AppComponent = () => {
   const [isShowLogo, setIsShowLogo] = useState(true);
   const toast = useToast();
   const appName = useAtomValue(currentAppNameAtom);
+  const hideAppFooter = useAtomValue(hideAppFooterAtom);
 
   useEffect(() => {
     const unauthListener = soki.onTokenInvalidEvent.listen(() => {
@@ -71,7 +73,7 @@ export const AppComponent = () => {
         />
       )}
 
-      {appName && routingApps[appName]?.footer}
+      {!hideAppFooter && appName && routingApps[appName]?.footer}
     </>
   );
 };
