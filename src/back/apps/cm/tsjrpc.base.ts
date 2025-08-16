@@ -97,7 +97,7 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
         },
 
         exchangeFreshComComments: async ({ modifiedComments, clientDateNow }, { client, auth }) => {
-          if (auth?.login == null) throw new Error('Не авторизован');
+          if (auth?.login == null) return [];
 
           const withClientTimeDelta = Date.now() - clientDateNow;
 
@@ -105,15 +105,15 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
           const userServerComments = (comments[auth.login] ??= {});
           let localSavedCommentsMaxModifiedAt = 0;
           const freshComments: ICmComComment[] = [];
-          const resultComments: ICmComComment[] = [];
+          // const resultComments: ICmComComment[] = [];
 
           modifiedComments.forEach(({ comment, comw, m }) => {
             const commentModifiedAt = m + withClientTimeDelta;
 
-            if (userServerComments[comw] != null && commentModifiedAt < userServerComments[comw].m) {
-              resultComments.push(userServerComments[comw]);
-              return;
-            }
+            // if (userServerComments[comw] != null && commentModifiedAt < userServerComments[comw].m) {
+            //   resultComments.push(userServerComments[comw]);
+            //   return;
+            // }
 
             userServerComments[comw] = {
               comment,
@@ -121,7 +121,7 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
               m: commentModifiedAt,
             };
 
-            resultComments.push(userServerComments[comw]);
+            // resultComments.push(userServerComments[comw]);
             freshComments.push(userServerComments[comw]);
             localSavedCommentsMaxModifiedAt = Math.max(localSavedCommentsMaxModifiedAt, commentModifiedAt);
           });
@@ -129,13 +129,13 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
           if (localSavedCommentsMaxModifiedAt) {
             comCommentsFileStore.saveValue();
 
-            cmShareServerTsjrpcMethods.refreshComComments(
-              { comments: freshComments, modifiedAt: localSavedCommentsMaxModifiedAt },
-              { login: auth.login, ignoreClient: client },
-            );
+            // cmShareServerTsjrpcMethods.refreshComComments(
+            //   { comments: freshComments, modifiedAt: localSavedCommentsMaxModifiedAt },
+            //   { login: auth.login, ignoreClient: client },
+            // );
           }
 
-          return resultComments;
+          return [];
         },
 
         exchangeFreshComCommentBlocks: async ({ modifiedComments, clientDateNow }, { auth }) => {
