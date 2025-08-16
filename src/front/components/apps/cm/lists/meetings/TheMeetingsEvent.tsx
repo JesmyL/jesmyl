@@ -4,9 +4,9 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ScheduleWidgetWatchLiveTranslationButton } from '#widgets/schedule/live-translations/WatchLiveButton';
 import { ScheduleDayEventPathProps } from '#widgets/schedule/ScheduleWidget.model';
 import { useCmOpenComLinkRendererContext } from '$cm/basis/lib/contexts/current-com-list';
-import { useCmMeetingLinkBackFromEvent } from '$cm/basis/lib/hooks/useCmMeetingLinkBackFromEvent';
 import { useAuth } from '$index/atoms';
 import { indexIDB } from '$index/db/index-idb';
+import { Link } from '@tanstack/react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { CmMeetingEventEdits } from './EventEdits';
 import { useMeetingComFaceList } from './useMeetingComFaceList';
@@ -18,7 +18,6 @@ export const TheMeetingsEvent = ({ dayi, eventMi, schw }: Props) => {
   const schedule = useLiveQuery(() => indexIDB.db.schs.get(schw), [schw]);
   const auth = useAuth();
   const linkToCom = useCmOpenComLinkRendererContext();
-  const backButtonRenderer = useCmMeetingLinkBackFromEvent();
 
   if (schedule == null) return;
 
@@ -28,7 +27,20 @@ export const TheMeetingsEvent = ({ dayi, eventMi, schw }: Props) => {
     <PageContainerConfigurer
       className="meeting-container"
       headTitle={`${schedule.title} - ${schedule.types[typei]?.title ?? ''}`}
-      backButtonRender={backButtonRenderer}
+      backButtonRender={(linkRef, children) => (
+        <Link
+          ref={linkRef}
+          to="."
+          search={prev => ({
+            ...prev,
+            dayi: undefined,
+            eventMi: undefined,
+            attKey: undefined,
+          })}
+        >
+          {children}
+        </Link>
+      )}
       head={
         <div className="flex gap-3 pr-3">
           {isMobileDevice ? (
