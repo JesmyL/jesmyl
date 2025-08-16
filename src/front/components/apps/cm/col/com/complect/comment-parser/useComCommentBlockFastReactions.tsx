@@ -1,5 +1,5 @@
 import { getParentNodeWithClassName } from '#shared/lib/getParentNodeWithClassName';
-import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { addEventListenerWithDelayPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { cmIsComMiniAnchorAtom } from '$cm/atoms';
 import { useAtomValue } from 'atomaric';
@@ -12,33 +12,38 @@ export const useComCommentBlockFastReactions = (listRef: React.RefObject<HTMLDiv
   const isMiniAnchor = useAtomValue(cmIsComMiniAnchorAtom);
 
   useEffect(() => {
-    if (listRef.current == null || isMiniAnchor) return;
+    if (isMiniAnchor) return;
     let isFirstClick = true;
 
     return hookEffectPipe()
       .pipe(
-        addEventListenerPipe(listRef.current, 'mousedown', async event => {
-          const comOrders = com.orders;
-          if (comOrders === null) return;
-          const visibleOrders = comOrders.filter(ComBlockCommentMakerCleans.withHeaderTextOrderFilter);
+        addEventListenerWithDelayPipe(
+          700,
+          () => listRef.current,
+          'mousedown',
+          async event => {
+            const comOrders = com.orders;
+            if (comOrders === null) return;
+            const visibleOrders = comOrders.filter(ComBlockCommentMakerCleans.withHeaderTextOrderFilter);
 
-          if (isFirstClick) {
-            isFirstClick = false;
-            setTimeout(() => (isFirstClick = true), 500);
-            return;
-          }
+            if (isFirstClick) {
+              isFirstClick = false;
+              setTimeout(() => (isFirstClick = true), 500);
+              return;
+            }
 
-          const { node, foundClassNames } = getParentNodeWithClassName(event, 'styled-block', ['styled-header']);
+            const { node, foundClassNames } = getParentNodeWithClassName(event, 'styled-block', ['styled-header']);
 
-          if (node === null || !foundClassNames['styled-header']) return;
+            if (node === null || !foundClassNames['styled-header']) return;
 
-          const orderNN = +node.getAttribute('visible-ord-nn')!;
-          if (mylib.isNaN(orderNN)) return;
-          const ord = visibleOrders[orderNN - 1];
-          if (ord == null) return;
+            const orderNN = +node.getAttribute('visible-ord-nn')!;
+            if (mylib.isNaN(orderNN)) return;
+            const ord = visibleOrders[orderNN - 1];
+            if (ord == null) return;
 
-          comCommentRedactOrdSelectorIdAtom.set(ComBlockCommentMakerCleans.makeOrdSelector(ord));
-        }),
+            comCommentRedactOrdSelectorIdAtom.set(ComBlockCommentMakerCleans.makeOrdSelector(ord));
+          },
+        ),
       )
       .effect();
   }, [com.orders, isMiniAnchor, listRef]);
