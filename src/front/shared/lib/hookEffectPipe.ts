@@ -6,11 +6,13 @@ class EffectPipeMember {
   }
 }
 
+type Elem = HTMLElement | typeof globalThis | Window | null;
+
 export const addEventListenerPipe = <
   EventName extends keyof HTMLElementEventMap,
   Event extends HTMLElementEventMap[EventName],
 >(
-  elem: HTMLElement | typeof globalThis | Window | null,
+  elem: Elem,
   eventName: EventName,
   callback: (event: Event) => void,
   turn?: boolean,
@@ -19,6 +21,29 @@ export const addEventListenerPipe = <
   elem.addEventListener(eventName, callback as never, turn);
 
   return new EffectPipeMember(() => elem.removeEventListener(eventName, callback as never, turn));
+};
+
+export const addEventListenerWithDelayPipe = <
+  EventName extends keyof HTMLElementEventMap,
+  Event extends HTMLElementEventMap[EventName],
+>(
+  delayTime: number,
+  elem: () => Elem,
+  eventName: EventName,
+  callback: (event: Event) => void,
+  turn?: boolean,
+) => {
+  let realElem = elem();
+
+  const timeout = setTimeout(() => {
+    realElem = elem();
+    realElem?.addEventListener(eventName, callback as never, turn);
+  }, delayTime);
+
+  return new EffectPipeMember(() => {
+    realElem?.removeEventListener(eventName, callback as never, turn);
+    clearTimeout(timeout);
+  });
 };
 
 export const addAbortControlledPipe = (callback: (aborter: AbortController) => void) => {
