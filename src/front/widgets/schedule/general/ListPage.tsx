@@ -1,6 +1,6 @@
 import { useAppNameContext } from '#basis/lib/contexts';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
-import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { useAuth, useIndexSchedules } from 'front/components/index/atoms';
 import { useConnectionState } from 'front/components/index/useConnectionState';
@@ -31,28 +31,38 @@ export const ScheduleWidgetListPage = () => {
       head={<span className="flex flex-gap margin-gap">{connectionNode}</span>}
       content={
         <>
-          {schedules?.map(schedule => {
-            if (!schedule.start) return null;
-            return (
-              <Link
-                key={schedule.w}
-                to="/!other/$appName/schs"
-                params={{ appName }}
-                search={{ schw: schedule.w }}
-              >
-                <TheIconButton
-                  icon="Calendar03"
-                  className="margin-gap-v"
-                  postfix={
-                    <>
-                      {schedule.title}
-                      {schedule.topic ? `: ${schedule.topic}` : ''}
-                    </>
-                  }
-                />
-              </Link>
-            );
-          })}
+          {schedules
+            ?.sort((a, b) => b.start - a.start)
+            .map(schedule => {
+              if (!schedule.start) return null;
+
+              return (
+                <Link
+                  key={schedule.w}
+                  to="/!other/$appName/schs"
+                  params={{ appName }}
+                  search={{ schw: schedule.w }}
+                  className="pointer grid grid-rows-2 grid-cols-13 gap-x-1 py-2 border-[#aaa7]! border-b-[.5px]!"
+                >
+                  <div className="row-span-2 flex center">
+                    <LazyIcon icon="Calendar03" />
+                  </div>
+
+                  <div className="col-span-12 font-bold">
+                    {schedule.title}
+                    {schedule.topic ? `: ${schedule.topic}` : ''}
+                  </div>
+
+                  <div className="col-span-12 text-xs">
+                    {new Date(schedule.start).toLocaleDateString('ru', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </div>
+                </Link>
+              );
+            })}
           {auth && auth.level > 29 && <ScheduleCreateWidgetButton />}
         </>
       }
