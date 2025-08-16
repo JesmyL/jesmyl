@@ -27,7 +27,7 @@ export class CmComUtils {
   static textedChordRegs = makeNamedRegExp(
     // regexpert:
     // stringify $0 U23
-    `/^\\.*-?${chordLikeStr}(?<bassChord>/${
+    `/^\\|?\\.*-?${chordLikeStr}(?<bassChord>/${
       //
       escapeRegExpNames(chordLikeStr, '_bass')
     })?(?<repeats>(?:(?:\\.+|-|\\.+-)${

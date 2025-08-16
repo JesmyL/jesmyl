@@ -135,8 +135,7 @@ export function TheOrder(props: Props) {
                     key={texti}
                     className={text === '|' ? 'color--7' : undefined}
                   >
-                    {text === '|' && ' '}
-                    {text}
+                    {text === '|' ? ' | ' : text}
                   </span>
                 );
               })}

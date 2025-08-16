@@ -191,4 +191,5 @@ const insertDividedBits = (lettersText: string, chord: string | und) => {
   );
 };
 
-const makeTaktedChord = (chord: string | und) => (chord?.endsWith('|') ? chord.slice(0, -1) : chord);
+const makeTaktedChord = (chord: string | und) =>
+  chord?.endsWith('|') ? chord.slice(0, -1) : chord?.startsWith('|') ? chord.slice(1) : chord;
