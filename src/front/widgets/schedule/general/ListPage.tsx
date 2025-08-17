@@ -15,13 +15,17 @@ export const ScheduleWidgetListPage = () => {
   const appName = useAppNameContext();
 
   schLinkAction.useOnAction(({ props }) => {
-    if (props.inviteSch && schedules?.some(sch => sch.w === props.inviteSch)) {
+    if (props.inviteSch) {
       navigate({
         to: '/!other/$appName/schs',
         params: { appName },
         search: { schw: props.inviteSch },
       });
+
+      return true;
     }
+
+    return false;
   });
 
   return (

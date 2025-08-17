@@ -15,46 +15,7 @@ export type LinkActionEvent<Props extends Record<string, unknown> = Record<strin
 const registededPathsMap = new Map<string, string>();
 
 const searchParamName = 'appAction';
-const actonAtom = atom<LinkActionEvent | null>(null);
-
-const useOnAction = (cb: (props: unknown) => void) => {
-  const props = useAtomValue(actonAtom);
-  const cbActualRef = useActualRef(cb);
-
-  useEffect(() => {
-    if (props === null) return;
-
-    cbActualRef.current(props as never);
-  }, [cbActualRef, props]);
-};
-
-const useOnHrefData = () => {
-  const navigate = useNavigate();
-
-  return useCallback(
-    (href: string) => {
-      try {
-        const url = new URL(href);
-        const actionFor = url.searchParams.get(searchParamName) as ActionFor | '';
-
-        if (!actionFor) return;
-
-        url.searchParams.delete(searchParamName);
-        const props: Record<string, unknown> = {};
-
-        Array.from(url.searchParams.entries()).forEach(([key, value]) => (props[key] = JSON.parse(value)));
-
-        actonAtom.set({ props, navigateFromRoot: navigate });
-
-        if (actionFor.startsWith('*/')) setTimeout(navigate, 200, registededPathsMap.get(actionFor) ?? '/');
-        else navigate({ to: `/${actionFor}/i` });
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    [navigate],
-  );
-};
+const actionAtom = atom<LinkActionEvent | null>(null);
 
 export class LinkAppActionFabric<Props extends Record<string, unknown> = Record<string, unknown>> {
   constructor(
@@ -68,7 +29,16 @@ export class LinkAppActionFabric<Props extends Record<string, unknown> = Record<
     registededPathsMap.set(actionFor, path);
   }
 
-  useOnAction = useOnAction as (cb: (props: LinkActionEvent<Props>) => void) => void;
+  useOnAction = (cb: (props: LinkActionEvent<Props>) => boolean) => {
+    const props = useAtomValue(actionAtom);
+    const cbActualRef = useActualRef(cb);
+
+    useEffect(() => {
+      if (props === null) return;
+
+      if (cbActualRef.current(props as never)) actionAtom.reset();
+    }, [cbActualRef, props]);
+  };
 
   makeLink(props: Props) {
     const url = new URL(window.location.origin);
@@ -79,5 +49,32 @@ export class LinkAppActionFabric<Props extends Record<string, unknown> = Record<
 
   register() {}
 
-  static useOnHrefData = useOnHrefData;
+  static useOnHrefData = () => {
+    const navigate = useNavigate();
+
+    return useCallback(
+      (href: string) => {
+        try {
+          const url = new URL(href);
+          const actionFor = url.searchParams.get(searchParamName) as ActionFor | '';
+
+          if (!actionFor) return;
+
+          url.searchParams.delete(searchParamName);
+          const props: Record<string, unknown> = {};
+
+          Array.from(url.searchParams.entries()).forEach(([key, value]) => (props[key] = JSON.parse(value)));
+
+          actionAtom.set({ props, navigateFromRoot: navigate });
+
+          if (actionFor.startsWith('*/'))
+            setTimeout(() => navigate({ to: registededPathsMap.get(actionFor) ?? '/' }), 200);
+          else navigate({ to: `/${actionFor}/i` });
+        } catch (error) {
+          console.error(error);
+        }
+      },
+      [navigate],
+    );
+  };
 }

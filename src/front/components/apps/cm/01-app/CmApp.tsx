@@ -23,8 +23,16 @@ export const CmApp = () => {
   const toast = useToast();
 
   cmAppActions.useOnAction(({ props, navigateFromRoot }) => {
-    if (props.comws?.length) comListOnActionAtom.set(props.comws);
-    if (props.comw != null) navigateFromRoot({ to: '/cm/i', search: { comw: props.comw } });
+    if (props.comws?.length) {
+      comListOnActionAtom.set(props.comws);
+      return true;
+    }
+    if (props.comw != null) {
+      navigateFromRoot({ to: '/cm/i', search: { comw: props.comw } });
+      return true;
+    }
+
+    return false;
   });
 
   useEffect(() => {
