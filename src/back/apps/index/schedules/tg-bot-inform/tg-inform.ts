@@ -329,13 +329,15 @@ class TgInformer {
         if (text) sendUserMessage(user.tgId);
       }
 
+      setTimeout(() => this.inform(schedule.w, invokeDayi));
+
       if (event.tgInform !== 0) {
         onScheduleDayEventIsNeedTgInformSetEvent.invoke({
           dayEventProps: { dayi, eventMi: event.mi, schw: schedule.w },
           value: 0,
           isNeedRefreshTgInformTime: false,
         });
-      } else setTimeout(() => this.inform(schedule.w, invokeDayi));
+      }
     });
   }
 
