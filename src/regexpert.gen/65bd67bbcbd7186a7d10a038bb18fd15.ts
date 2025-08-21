@@ -3,7 +3,7 @@
 import('../shared/utils/cm/ComUtils');
 
 namespace N65bd67bbcbd7186a7d10a038bb18fd15_1 {
-  type $0 = string; // `❁❁${`❁` | ''}${OptRepeatingString<`.`>}${`-` | ''}${$simpleChord}${$lightModificators}${$hardModificators | ''}${$bassChord | ''}${$repeats}❁❁${`❁` | ''}`;
+  type $0 = string; // `${`|` | ''}${OptRepeatingString<`.`>}${`-` | ''}${$simpleChord}${$lightModificators}${$hardModificators | ''}${$bassChord | ''}${$repeats}${`|` | ''}`;
   type $simpleChord = `${U1}${`m` | ''}${`7` | ''}`;
   type $lightModificators = `+` | U2;
   type $hardModificators = U6;

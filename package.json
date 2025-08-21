@@ -60,7 +60,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-virtuoso": "^0.6.0",
-    "regexpert": "^0.0.88",
+    "regexpert": "^0.0.89",
     "sass": "^1.49.9",
     "stameska-icon": "^0.0.27",
     "styled-components": "^6.1.1",
