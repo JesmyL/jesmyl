@@ -119,7 +119,7 @@ export function StrongEditableField<Key extends string, Value extends string | P
             {props.description}
             <TextInput
               value={stateValue}
-              className="mood-1"
+              st-mood="1"
               placeholder={props.placeholder}
               multiline={props.multiline}
               type={props.type}

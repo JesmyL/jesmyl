@@ -35,7 +35,8 @@ export const ObserveUrlResource = ({
     <div>
       <div className="flex flex-between flex-gap">
         <TextInput
-          className="url-observer-input-wrapper half-width mood-2"
+          className="url-observer-input-wrapper half-width"
+          st-mood="2"
           placeholder="URL-адрес"
           value={url}
           onInput={setUrl}

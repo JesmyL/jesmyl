@@ -57,18 +57,9 @@ export const TextInput = ({
 
 const styledBoth = css`
   width: 100%;
-  color: var(--color--3);
 
   &::placeholder {
     color: var(--color--4);
-  }
-
-  &.mood-2 {
-    background-color: var(--color--2);
-  }
-
-  &.mood-1 {
-    background-color: var(--color--1);
   }
 `;
 

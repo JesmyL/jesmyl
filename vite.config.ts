@@ -2,6 +2,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 import basicSsl from '@vitejs/plugin-basic-ssl';
 import react from '@vitejs/plugin-react';
+import { attrStylerVitePlugin } from 'attr-styler';
 import dns from 'dns';
 import { regExpertVitePlugin } from 'regexpert';
 import { defineConfig } from 'vite';
@@ -39,6 +40,9 @@ export default defineConfig(() => {
       tailwindcss(),
       basicSsl(),
       react(),
+      attrStylerVitePlugin({
+        fileExtToAnalize: ['.css', '.scss', '.styler.ts'],
+      }),
     ],
     resolve: { alias },
   };

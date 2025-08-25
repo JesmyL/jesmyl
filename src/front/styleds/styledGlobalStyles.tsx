@@ -6,6 +6,7 @@ import { htmlThemeStyles } from './complect/htmlThemeStyles';
 import { initialStyles } from './complect/initialStyles';
 import { otherStyles } from './complect/otherStyles';
 import { resetStyles } from './complect/resetStyles';
+import { attrStylerStyles } from './complect/styles.styler';
 import { svgUrlsVariables } from './complect/svgUrlsVariables';
 import { utilStyles } from './complect/utilStyles';
 
@@ -23,6 +24,7 @@ const styles = css`
   ${fontStyles}
   ${otherStyles}
   ${svgUrlsVariables}
+  ${attrStylerStyles}
 `;
 
 export const StyledGlobalStyles = createGlobalStyle`${styles}`;

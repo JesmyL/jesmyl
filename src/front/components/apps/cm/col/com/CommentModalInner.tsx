@@ -70,7 +70,7 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
             <TextInput
               key={linei}
               defaultValue={line}
-              className="mood-1"
+              st-mood="1"
               multiline
               onInput={value => {
                 deferredCallback(
