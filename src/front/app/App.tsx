@@ -2,7 +2,7 @@ import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
 import { authIDB } from '$index/db/auth-idb';
 import { ThemeProvider } from '@mui/material';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
-import { registerReactHooks } from 'atomaric';
+import { configureAtomaric } from 'atomaric';
 import { complectIDB } from 'front/components/apps/+complect/_idb/complectIDB';
 import { soki } from 'front/soki';
 import { useSyncExternalStore } from 'react';
@@ -15,7 +15,7 @@ import { muiDarkThemePalette } from './lib/theme/lib/darkPalette';
 import { muiLightThemePalette } from './lib/theme/lib/lightPalette';
 import './tw.css';
 
-registerReactHooks({ useSyncExternalStore });
+configureAtomaric({ useSyncExternalStore });
 
 const router = createRouter({ routeTree });
 
