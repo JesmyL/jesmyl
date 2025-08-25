@@ -1,7 +1,8 @@
 import { MyLib } from '#shared/lib/my-lib';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmComTopToolsAtom } from '$cm/basis/lib/store/atoms';
 import { cmUserStoreTsjrpcClient } from '$cm/tsjrpc/user-store.tsjrpc.methods';
 import { useAuth } from '$index/atoms';
+import { useAtom, useAtomValue } from 'atomaric';
 import React from 'react';
 import { MigratableComToolName } from 'shared/api';
 import styled, { css } from 'styled-components';
@@ -80,7 +81,7 @@ const toolKeys = MyLib.keys(toolsDict);
 
 let saveTimeout: TimeOut;
 export const useMigratableListComTools = () => {
-  const [comTopTools, setComTopTools] = cmIDB.use.comTopTools();
+  const [comTopTools, setComTopTools] = useAtom(cmComTopToolsAtom);
   const auth = useAuth();
 
   mapToolsSelf.comTopTools = comTopTools;
@@ -100,7 +101,7 @@ export const useMigratableListComTools = () => {
 };
 
 export const useMigratableTopComTools = () => {
-  const comTopTools = cmIDB.useValue.comTopTools();
+  const comTopTools = useAtomValue(cmComTopToolsAtom);
 
   return (
     <IsComToolIconItemsContext.Provider value={true}>{comTopTools.map(mapTools)}</IsComToolIconItemsContext.Provider>

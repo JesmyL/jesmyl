@@ -1,5 +1,5 @@
 import { useToast } from '#shared/ui/modal/useToast';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { useAuth } from '$index/atoms';
 import { atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';

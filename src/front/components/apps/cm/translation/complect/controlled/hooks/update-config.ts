@@ -1,4 +1,4 @@
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { useScreenTranslationCurrentConfigi } from 'front/components/apps/+complect/translations/hooks/configs';
 import { useCallback } from 'react';
 import { CmTranslationScreenConfig } from '../model';

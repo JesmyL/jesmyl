@@ -5,7 +5,7 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditCatClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { EditableCat } from '$cm+editor/basis/lib/EditableCat';
 import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React, { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';

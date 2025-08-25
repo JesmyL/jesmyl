@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmSelectedComwsAtom } from '$cm/basis/lib/store/atoms';
 import styled from 'styled-components';
 
 export const MoveSelectedComButton = ({ comi }: { comi: number }) => {
@@ -9,7 +9,7 @@ export const MoveSelectedComButton = ({ comi }: { comi: number }) => {
       <MoveComButton
         icon="ArrowDataTransferVertical"
         onClick={() => {
-          cmIDB.set.selectedComws(prev => {
+          cmSelectedComwsAtom.set(prev => {
             return mylib.withInsertedBeforei(prev, comi - 1, comi);
           });
         }}

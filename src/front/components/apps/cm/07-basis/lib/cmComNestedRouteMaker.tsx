@@ -1,4 +1,3 @@
-import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { TheComposition } from '$cm/col/com/TheComposition';
 import { CmTranslations } from '$cm/translation/Translation';
 import { FileRoutesByPath, Link, useSearch } from '@tanstack/react-router';
@@ -10,6 +9,7 @@ import {
   CmCurrentComPackContext,
   CmOpenComLinkRendererContext,
 } from './contexts/current-com-list';
+import { cmLastOpenComwAtom } from './store/atoms';
 
 interface Props<Path extends keyof FileRoutesByPath> {
   path: Path;
@@ -25,7 +25,7 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>(props:
     const comList = props.useComListPack();
 
     useEffect(() => {
-      if (comw) cmIDB.set.lastOpenComw(comw);
+      if (comw) cmLastOpenComwAtom.set(comw);
     }, [comw]);
 
     return (

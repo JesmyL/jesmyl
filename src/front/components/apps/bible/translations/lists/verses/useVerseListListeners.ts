@@ -1,8 +1,8 @@
 import { mylib } from '#shared/lib/my-lib';
-import { bibleIDB } from '$bible/basis/lib/bibleIDB';
 import { useBibleTranslationJoinAddress } from '$bible/basis/lib/hooks/address/address';
 import { useBibleAddressVersei } from '$bible/basis/lib/hooks/address/verses';
 import { useBibleTranslationSlideSyncContentSetter } from '$bible/basis/lib/hooks/slide-sync';
+import { bibleJoinAddressAtom, bibleVerseiAtom } from '$bible/basis/lib/store/atoms';
 import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress } from '$bible/basis/model/base';
 import { useEffect } from 'react';
 import { bibleVerseiIdPrefix } from '../lib/consts';
@@ -38,8 +38,8 @@ export const useVerseListListeners = (
         clearTimeout(clickTimeout);
         if (isDblClick) {
           if (!currentJoin?.includes(versei)) {
-            bibleIDB.set.joinAddress(null);
-            bibleIDB.set.versei(versei);
+            bibleJoinAddressAtom.set(null);
+            bibleVerseiAtom.set(versei);
           }
           syncSlide();
           isDblClick = false;
@@ -50,14 +50,14 @@ export const useVerseListListeners = (
 
         clickTimeout = setTimeout(() => {
           if (!ctrlKey && !shiftKey) {
-            bibleIDB.set.joinAddress(null);
-            bibleIDB.set.versei(versei);
+            bibleJoinAddressAtom.set(null);
+            bibleVerseiAtom.set(versei);
 
             return;
           }
 
           let newJoin = { ...currentJoinAddress } as BibleTranslationJoinAddress;
-          bibleIDB.set.versei(versei);
+          bibleVerseiAtom.set(versei);
 
           if (currentJoinAddress == null) {
             const verses = ((newJoin[currentBooki] = {} as BibleTranslationJoinAddress[BibleBooki])[currentChapteri] =
@@ -103,7 +103,7 @@ export const useVerseListListeners = (
             }
           }
 
-          bibleIDB.set.joinAddress(newJoin);
+          bibleJoinAddressAtom.set(newJoin);
         }, 150);
       })
       .clearTimeout(clickTimeout)

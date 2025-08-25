@@ -4,7 +4,8 @@ import { cmEditComClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsj
 import { cmEditorIDB } from '$cm+editor/basis/lib/cmEditorIDB';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { TextCorrectMessages } from '$cm+editor/entities/TextBlockIncorrectMessages';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmConstantsConfigAtom } from '$cm/basis/lib/store/atoms';
+import { useAtomValue } from 'atomaric';
 import { useState } from 'react';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { CmTextableBlockAnchorTitles } from './TextableBlockAnchorTitles';
@@ -18,7 +19,7 @@ interface Props {
 export const CmTextBlockRedactor = ({ texti, text, ccom }: Props) => {
   const [value, setValue] = useState(text);
   const eeStore = cmEditorIDB.useValue.eeStore();
-  const { maxAvailableComLineLength } = cmIDB.useValue.constantsConfig();
+  const { maxAvailableComLineLength } = useAtomValue(cmConstantsConfigAtom);
   const lineLengthCorrects = CmComUtils.textLinesLengthIncorrects(value, maxAvailableComLineLength);
   const corrects = lineLengthCorrects ?? CmComUtils.takeTextBlockIncorrects(value, eeStore);
 

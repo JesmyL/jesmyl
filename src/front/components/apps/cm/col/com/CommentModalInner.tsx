@@ -6,7 +6,7 @@ import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { Com } from '$cm/col/com/Com';
 import { TheComCommentInfo } from '$cm/col/com/complect/comment-parser/infos/TheComCommentInfo';
 import { atom, useAtomValue } from 'atomaric';

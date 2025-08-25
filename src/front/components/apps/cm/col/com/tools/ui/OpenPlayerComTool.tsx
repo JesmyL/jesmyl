@@ -1,8 +1,9 @@
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmPlayerHideModeAtom } from '$cm/basis/lib/store/atoms';
+import { useAtom } from 'atomaric';
 import { ComTool } from '../ComTool';
 
 export const OpenPlayerComTool = () => {
-  const [playerHideMode, setPlayerHideMode] = cmIDB.use.playerHideMode();
+  const [playerHideMode, setPlayerHideMode] = useAtom(cmPlayerHideModeAtom);
 
   return (
     <ComTool

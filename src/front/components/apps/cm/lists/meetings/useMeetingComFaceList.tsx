@@ -1,5 +1,5 @@
-import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useComs } from '$cm/basis/lib/coms-selections';
+import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { Com } from '$cm/col/com/Com';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
 import { useLiveQuery } from 'dexie-react-hooks';

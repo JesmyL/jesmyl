@@ -1,9 +1,9 @@
 import { useCurrentAppSetter } from '#basis/lib/useCurrentAppSetter';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { useToast } from '#shared/ui/modal/useToast';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmConstantsConfigAtom } from '$cm/basis/lib/store/atoms';
 import { Outlet } from '@tanstack/react-router';
-import { atom } from 'atomaric';
+import { atom, useAtomValue } from 'atomaric';
 import { useAuth } from 'front/components/index/atoms';
 import React, { Suspense, memo, useEffect, useState } from 'react';
 import { CmComWid } from 'shared/api';
@@ -16,7 +16,7 @@ const comListOnActionAtom = atom<CmComWid[] | null>(null);
 
 export const CmApp = () => {
   useCurrentAppSetter('cm');
-  const { maxSelectedComsCount } = cmIDB.useValue.constantsConfig();
+  const { maxSelectedComsCount } = useAtomValue(cmConstantsConfigAtom);
 
   const auth = useAuth();
   const { selectedComws, setSelectedComws } = useSelectedComs();

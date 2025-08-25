@@ -1,9 +1,9 @@
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { DocTitle } from '#shared/ui/tags/DocTitle';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useCom } from '$cm/basis/lib/com-selections';
 import { useComs } from '$cm/basis/lib/coms-selections';
+import { cmLastOpenComwAtom } from '$cm/basis/lib/store/atoms';
 import { Com } from '$cm/col/com/Com';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
 import { ComPlayerPlayButton } from '$cm/col/com/player/ComPlayerPlayButton';
@@ -40,7 +40,7 @@ export const CmPlayerPage = () => {
     [allComs, favouriteComs, isOpenAllComs],
   );
   const search = useSearch({ from: '/cm/player/' });
-  const lastOpenComw = cmIDB.useValue.lastOpenComw();
+  const lastOpenComw = useAtomValue(cmLastOpenComwAtom);
   const com = useCom(search.comw ?? lastOpenComw) ?? (coms[0] as Com | und);
   const navigate = useNavigate();
   const endedTick = useAtomValue(comPlayerEndedTickAtom);
@@ -53,7 +53,7 @@ export const CmPlayerPage = () => {
     if (!com) return;
 
     if (src) {
-      cmIDB.set.lastOpenComw(com.wid);
+      cmLastOpenComwAtom.set(com.wid);
       comPlayerPlaySrcAtom.set(src);
       if (isCanPlay) comPlayerIsPlayAtom.set(true);
       return;

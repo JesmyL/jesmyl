@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { bibleTranslatesIDB } from '$bible/basis/lib/bibleIDB';
+import { bibleTranslatesIDB } from '$bible/basis/lib/store/bibleIDB';
 import { BibleTranslate } from '$bible/basis/model/base';
 import React, { JSX, useEffect, useState } from 'react';
 import { BibleTranslateName } from 'shared/api';

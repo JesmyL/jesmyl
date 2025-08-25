@@ -1,9 +1,9 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { bibleIDB } from '$bible/basis/lib/bibleIDB';
 import { bibleLowerBooks, checkEachBibleTitles } from '$bible/basis/lib/const/bibleTitles';
 import { useBibleTranslatesContext } from '$bible/basis/lib/contexts/translates';
 import { useSetBibleAddressIndexes } from '$bible/basis/lib/hooks/address/address';
 import { useBibleBookList } from '$bible/basis/lib/hooks/texts';
+import { bibleJoinAddressAtom } from '$bible/basis/lib/store/atoms';
 import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/basis/model/base';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { makeNamedRegExp, makeRegExp } from 'regexpert';
@@ -113,12 +113,12 @@ export const useBibleTransformAddressTermToAddress = (
       onEnterPressRef.current = () => {
         if (finishVerseNumber === undefined) {
           setAddressIndexes(booki, chapterNumberi, verseNumber - 1);
-          bibleIDB.set.joinAddress(null);
+          bibleJoinAddressAtom.set(null);
         } else {
           const arrLen = finishVerseNumber - verseNumber + 1;
 
           setAddressIndexes(booki, chapterNumberi, finishVerseNumber - 1);
-          bibleIDB.set.joinAddress({
+          bibleJoinAddressAtom.set({
             [booki]: {
               [chapterNumberi]:
                 chips.verseSeparator?.trim() === ','

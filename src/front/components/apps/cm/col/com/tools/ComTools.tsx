@@ -3,11 +3,13 @@ import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useChordVisibleVariant } from '$cm/base/useChordVisibleVariant';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useFixedCcom } from '$cm/basis/lib/com-selections';
+import { cmComFontSizeAtom } from '$cm/basis/lib/store/atoms';
+import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { cmTsjrpcClient } from '$cm/tsjrpc/basic.tsjrpc.methods';
 import { Chip, useMediaQuery } from '@mui/material';
+import { useAtom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
 import { CmComCatMentions } from '../useGetCatMentions';
@@ -15,7 +17,7 @@ import { useMigratableListComTools } from './lib/useMigratableComTools';
 
 export const ComTools = () => {
   const ccom = useFixedCcom();
-  const [fontSize, setFontSize] = cmIDB.use.comFontSize();
+  const [fontSize, setFontSize] = useAtom(cmComFontSizeAtom);
   const [chordVisibleVariant] = useChordVisibleVariant();
   const comToolsNode = useMigratableListComTools();
   const ifixedCom = useLiveQuery(() => ccom && cmIDB.tb.fixedComs.get(ccom.wid), [ccom?.wid]);

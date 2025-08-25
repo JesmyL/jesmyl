@@ -1,3 +1,4 @@
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmChordVisibleVariantAtom } from '$cm/basis/lib/store/atoms';
+import { useAtom } from 'atomaric';
 
-export const useChordVisibleVariant = () => cmIDB.use.chordVisibleVariant();
+export const useChordVisibleVariant = () => useAtom(cmChordVisibleVariantAtom);

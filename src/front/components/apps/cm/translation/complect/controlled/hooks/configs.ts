@@ -1,5 +1,5 @@
 import { BackgroundConfigProps } from '#shared/ui/configurators/model';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import {
   defaultScreenTranslationBackgroundConfig,
   defaultScreenTranslationPositionConfig,

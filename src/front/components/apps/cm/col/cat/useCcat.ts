@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useComs } from '$cm/basis/lib/coms-selections';
+import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';
 import { CmCatWid } from 'shared/api';

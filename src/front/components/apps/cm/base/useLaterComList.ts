@@ -1,9 +1,10 @@
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmConstantsConfigAtom, cmLaterComwListAtom } from '$cm/basis/lib/store/atoms';
+import { useAtomValue } from 'atomaric';
 
 const addLaterComw = async (comw: number) => {
-  const { maxLaterComsVizitedCount } = await cmIDB.get.constantsConfig();
+  const { maxLaterComsVizitedCount } = cmConstantsConfigAtom.get();
 
-  cmIDB.set.laterComwList(prev => {
+  cmLaterComwListAtom.set(prev => {
     const set = new Set(prev.toReversed());
 
     set.delete(comw);
@@ -17,7 +18,7 @@ const addLaterComw = async (comw: number) => {
 
 export function useLaterComList() {
   return {
-    laterComws: cmIDB.useValue.laterComwList(),
+    laterComws: useAtomValue(cmLaterComwListAtom),
     addLaterComw,
   };
 }

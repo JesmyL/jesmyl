@@ -1,4 +1,4 @@
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { Cat } from '$cm/col/cat/Cat';
 import { useLiveQuery } from 'dexie-react-hooks';
 

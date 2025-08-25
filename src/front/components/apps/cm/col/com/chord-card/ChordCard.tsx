@@ -1,4 +1,4 @@
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { JSX } from 'react';
 import { ChordTrack } from 'shared/api';
 import './ChordCard.scss';

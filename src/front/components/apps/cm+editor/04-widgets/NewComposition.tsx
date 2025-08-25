@@ -11,12 +11,12 @@ import { ObserveUrlResource } from '$cm+editor/basis/ui/ObserveUrlResource';
 import { NewComNameChange } from '$cm+editor/entities/NameChangeWithCorrects';
 import { CmNewComTextableListRedactor } from '$cm+editor/entities/TextableListRedactor';
 import { ComAudioControlledList } from '$cm+editor/widgets/AudioControlledList';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmConstantsConfigAtom } from '$cm/basis/lib/store/atoms';
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { Com } from '$cm/col/com/Com';
 import { ComOrders } from '$cm/col/com/orders/ComOrders';
 import { useNavigate } from '@tanstack/react-router';
-import { Atom } from 'atomaric';
+import { Atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmComMod, CmComWid, CmMp3Rule, IExportableCom } from 'shared/api';
@@ -33,7 +33,7 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
   const [newCom, setNewCom] = useState<IExportableCom>({ m: CmComMod.def, n: '', w: CmComWid.def });
   const [parseErrors, setParseErrors] = useState<string[]>([]);
   const eeStore = cmEditorIDB.useValue.eeStore();
-  const { maxAvailableComLineLength } = cmIDB.useValue.constantsConfig();
+  const { maxAvailableComLineLength } = useAtomValue(cmConstantsConfigAtom);
 
   const [hrefs, setHrefs] = useState<string[]>([]);
   const [removedAudioHrefs, setRemovedAudioHrefs] = useState<string[]>([]);

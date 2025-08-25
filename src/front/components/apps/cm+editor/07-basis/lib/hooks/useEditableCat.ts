@@ -1,5 +1,5 @@
 import { EditableCat } from '$cm+editor/basis/lib/EditableCat';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { useIccat } from '$cm/col/cat/useCcat';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useMemo } from 'react';

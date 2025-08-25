@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { Slider } from '@mui/material';
 import { useAtomSet, useAtomValue } from 'atomaric';
 import { useMemo } from 'react';

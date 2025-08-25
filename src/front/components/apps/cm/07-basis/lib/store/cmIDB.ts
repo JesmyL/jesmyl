@@ -1,8 +1,9 @@
 import { DexieDB } from '#shared/lib/DexieDB';
 import { mylib } from '#shared/lib/my-lib';
-import { ChordVisibleVariant, FavoriteMeetings, PlayerHideMode } from '$cm/Cm.model';
+import { ChordVisibleVariant, PlayerHideMode } from '$cm/Cm.model';
 import { defaultCmConfig } from '$cm/translation/complect/controlled/hooks/configs';
 import { CmTranslationScreenConfig } from '$cm/translation/complect/controlled/model';
+import { Atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import {
   ChordPack,
@@ -17,13 +18,22 @@ import {
   ScheduleComPack,
 } from 'shared/api';
 import { itNumSort } from 'shared/utils';
-import { cmConstantsDefaultConfig } from 'shared/values/cm/cmConstantsDefaultConfig';
+import {
+  cmChordVisibleVariantAtom,
+  cmComFontSizeAtom,
+  cmComTopToolsAtom,
+  cmConstantsConfigAtom,
+  cmFavoriteComsAtom,
+  cmIsShowFavouritesInTranslationsAtom,
+  cmLastOpenComwAtom,
+  cmLaterComwListAtom,
+  cmPlayerHideModeAtom,
+  cmSelectedComwsAtom,
+  cmSpeedRollKfAtom,
+} from './atoms';
 
 export interface CmIDBStorage {
   chordPack: ChordPack;
-  favoriteComs: CmComWid[];
-  comTopTools: MigratableComToolName[];
-  constantsConfig: CmConstantsConfig;
 
   lastModifiedAt: number;
 
@@ -36,23 +46,22 @@ export interface CmIDBStorage {
   fixedComs: IFixedCom[];
   cats: IExportableCat[];
   audioTrackMarks: { src: string; marks: KRecord<number, string> }[];
-
-  lastOpenComw?: CmComWid;
-  isShowFavouritesInTranslations: boolean;
-
   scheduleComPacks: ScheduleComPack[];
-  selectedComws: CmComWid[];
 
-  laterComwList: number[];
-  chordVisibleVariant: ChordVisibleVariant;
-  comFontSize: number;
-
-  playerHideMode: PlayerHideMode;
   translationScreenConfigs: CmTranslationScreenConfig[];
-  eventContext: number[];
-  favoriteMeetings: FavoriteMeetings;
 
-  speedRollKf: number;
+  // remove
+  favoriteComs: CmComWid[] | null;
+  comTopTools: MigratableComToolName[] | null;
+  constantsConfig: CmConstantsConfig | null;
+  lastOpenComw?: CmComWid | null;
+  isShowFavouritesInTranslations: boolean | null;
+  selectedComws: CmComWid[] | null;
+  laterComwList: number[] | null;
+  chordVisibleVariant: ChordVisibleVariant | null;
+  comFontSize: number | null;
+  playerHideMode: PlayerHideMode | null;
+  speedRollKf: number | null;
 }
 
 class CmIDB extends DexieDB<CmIDBStorage> {
@@ -60,21 +69,19 @@ class CmIDB extends DexieDB<CmIDBStorage> {
     super('cm', {
       chordPack: { $byDefault: {} },
       lastModifiedAt: { $byDefault: 0 },
-      favoriteComs: { $byDefault: [] },
-      selectedComws: { $byDefault: [] },
-      comTopTools: { $byDefault: ['mark-com', 'fullscreen-mode', 'chords-variant'] as never },
-
-      chordVisibleVariant: { $byDefault: ChordVisibleVariant.Maximal },
-      comFontSize: { $byDefault: 14 },
-      eventContext: { $byDefault: [] },
-      favoriteMeetings: { $byDefault: { contexts: [], events: [] } },
-      laterComwList: { $byDefault: [] },
-      playerHideMode: { $byDefault: 'expand' },
-      speedRollKf: { $byDefault: 10 },
       translationScreenConfigs: { $byDefault: [defaultCmConfig] },
-      lastOpenComw: { $byDefault: undefined },
-      isShowFavouritesInTranslations: { $byDefault: false },
-      constantsConfig: { $byDefault: cmConstantsDefaultConfig },
+
+      favoriteComs: { $byDefault: null },
+      selectedComws: { $byDefault: null },
+      comTopTools: { $byDefault: null },
+      chordVisibleVariant: { $byDefault: null },
+      comFontSize: { $byDefault: null },
+      laterComwList: { $byDefault: null },
+      playerHideMode: { $byDefault: null },
+      speedRollKf: { $byDefault: null },
+      lastOpenComw: { $byDefault: null },
+      isShowFavouritesInTranslations: { $byDefault: null },
+      constantsConfig: { $byDefault: null },
 
       coms: {
         w: '++',
@@ -136,3 +143,30 @@ class CmIDB extends DexieDB<CmIDBStorage> {
 }
 
 export const cmIDB = new CmIDB();
+
+(async () => {
+  const removeWithAtomSet = async <
+    Key extends keyof typeof cmIDB.tb,
+    Value extends Awaited<ReturnType<(typeof cmIDB.get)[Key]>>,
+  >(
+    key: Key,
+    atom: Atom<Value>,
+  ) => {
+    const value = (await cmIDB.get[key]()) as Value;
+    if (value == null) return;
+    atom.set(value);
+    cmIDB.remove[key]();
+  };
+
+  await removeWithAtomSet('favoriteComs', cmFavoriteComsAtom);
+  await removeWithAtomSet('selectedComws', cmSelectedComwsAtom);
+  await removeWithAtomSet('comTopTools', cmComTopToolsAtom);
+  await removeWithAtomSet('chordVisibleVariant', cmChordVisibleVariantAtom);
+  await removeWithAtomSet('comFontSize', cmComFontSizeAtom);
+  await removeWithAtomSet('laterComwList', cmLaterComwListAtom);
+  await removeWithAtomSet('playerHideMode', cmPlayerHideModeAtom);
+  await removeWithAtomSet('speedRollKf', cmSpeedRollKfAtom);
+  await removeWithAtomSet('lastOpenComw', cmLastOpenComwAtom);
+  await removeWithAtomSet('isShowFavouritesInTranslations', cmIsShowFavouritesInTranslationsAtom);
+  await removeWithAtomSet('constantsConfig', cmConstantsConfigAtom);
+})();

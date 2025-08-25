@@ -1,20 +1,16 @@
-import { bibleIDB } from '$bible/basis/lib/bibleIDB';
 import { BibleTranslationAnyAddress } from '$bible/basis/model/base';
 import { useBibleTranslationAddToHistory } from '$bible/translations/archive/history/hooks/history';
 import { atom, useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
 import { useSetIsScreenTranslationTextVisible } from '../../../../+complect/translations/atoms';
+import { bibleBookiAtom, bibleChapteriAtom, bibleJoinAddressAtom, bibleVerseiAtom } from '../store/atoms';
 
 const showAddressCodeAtom = atom<BibleTranslationAnyAddress | nil>(null);
 
 export const useBiblePrintShowSlideAddressCode = () =>
-  useCallback(async () => {
+  useCallback(() => {
     showAddressCodeAtom.set(
-      (await bibleIDB.get.joinAddress()) ?? [
-        await bibleIDB.get.booki(),
-        await bibleIDB.get.chapteri(),
-        await bibleIDB.get.versei(),
-      ],
+      bibleJoinAddressAtom.get() ?? [bibleBookiAtom.get(), bibleChapteriAtom.get(), bibleVerseiAtom.get()],
     );
   }, []);
 
@@ -29,13 +25,9 @@ export const useBibleTranslationSlideSyncContentSetter = () => {
     (isReplaceFirstNearVersei = false) => {
       setIsVisible(true);
 
-      setTimeout(async () => {
+      setTimeout(() => {
         addToHistory(
-          (await bibleIDB.get.joinAddress()) ?? [
-            await bibleIDB.get.booki(),
-            await bibleIDB.get.chapteri(),
-            await bibleIDB.get.versei(),
-          ],
+          bibleJoinAddressAtom.get() ?? [bibleBookiAtom.get(), bibleChapteriAtom.get(), bibleVerseiAtom.get()],
           isReplaceFirstNearVersei,
         );
         printShowAddress();

@@ -1,3 +1,4 @@
-import { useBibleBooki } from '$bible/translations/lists/atoms';
+import { useAtomValue } from 'atomaric';
+import { bibleBookiAtom } from '../../store/atoms';
 
-export const useBibleAddressBooki = () => useBibleBooki()[0];
+export const useBibleAddressBooki = () => useAtomValue(bibleBookiAtom);

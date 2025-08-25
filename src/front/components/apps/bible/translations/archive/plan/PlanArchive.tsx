@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
-import { bibleIDB } from '$bible/basis/lib/bibleIDB';
 import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '$bible/basis/lib/hooks/address/address';
+import { bibleJoinAddressAtom } from '$bible/basis/lib/store/atoms';
 import { JSX, memo, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { BibleTranslationArchive } from '../Archive';
@@ -47,9 +47,9 @@ export const BibleTranslationPlanArchive = memo(function BibleTranslationPlanArc
               const item = plan[selectedItemi];
               if (mylib.isArr(item)) {
                 setAddress(...item);
-                bibleIDB.set.joinAddress(null);
+                bibleJoinAddressAtom.set(null);
               } else {
-                bibleIDB.set.joinAddress(item);
+                bibleJoinAddressAtom.set(item);
                 setAddress(...getJoinAddressMaxes(item));
               }
 

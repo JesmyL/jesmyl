@@ -1,5 +1,6 @@
 import { TsjrpcBaseClient } from '#basis/lib/TsjrpcBase.client';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmComTopToolsAtom, cmFavoriteComsAtom } from '$cm/basis/lib/store/atoms';
+import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { CmShareTsjrpcModel } from 'shared/api/tsjrpc/cm/share.tsjrpc.model';
 
 export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extends TsjrpcBaseClient<CmShareTsjrpcModel> {
@@ -63,8 +64,8 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
         },
 
         refreshAboutComFavorites: async ({ value: favorites }) => {
-          if (favorites.comws != null) cmIDB.set.favoriteComs(favorites.comws);
-          if (favorites.tools != null) cmIDB.set.comTopTools(favorites.tools);
+          if (favorites.comws != null) cmFavoriteComsAtom.set(favorites.comws);
+          if (favorites.tools != null) cmComTopToolsAtom.set(favorites.tools);
           cmIDB.updateLastModifiedAt(favorites.m);
         },
 

@@ -1,6 +1,8 @@
 import { MyLib, mylib } from '#shared/lib/my-lib';
 import { cmEditorIDB } from '$cm+editor/basis/lib/cmEditorIDB';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmConstantsConfigAtom } from '$cm/basis/lib/store/atoms';
+import { cmIDB } from '$cm/basis/lib/store/cmIDB';
+import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
 import { itIt } from 'shared/utils';
@@ -70,7 +72,7 @@ const eeIncorrectWordsReg = delayedValueSetDefiner(cmEditorIDB.get.eeStore, /^е
 });
 
 export const useCatSpecialSearches = (): Record<`@${string}`, CatSpecialSearches> => {
-  const { maxAvailableComLineLength } = cmIDB.useValue.constantsConfig();
+  const { maxAvailableComLineLength } = useAtomValue(cmConstantsConfigAtom);
 
   return useMemo(
     () => ({

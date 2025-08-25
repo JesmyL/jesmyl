@@ -1,5 +1,6 @@
-import { bibleIDB } from '$bible/basis/lib/bibleIDB';
+import { useAtom, useAtomValue } from 'atomaric';
+import { bibleMyTranslatesAtom, bibleShowTranslatesAtom } from '../store/atoms';
 
-export const useBibleMyTranslates = () => bibleIDB.use.myTranslates();
-export const useBibleShowTranslates = () => bibleIDB.use.showTranslates();
-export const useBibleShowTranslatesValue = () => bibleIDB.useValue.showTranslates();
+export const useBibleMyTranslates = () => useAtom(bibleMyTranslatesAtom);
+export const useBibleShowTranslates = () => useAtom(bibleShowTranslatesAtom);
+export const useBibleShowTranslatesValue = () => useAtomValue(bibleShowTranslatesAtom);

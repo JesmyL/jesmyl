@@ -1,15 +1,13 @@
-import { bibleIDB } from '$bible/basis/lib/bibleIDB';
 import { useBibleTranslatesContext } from '$bible/basis/lib/contexts/translates';
 import { useBibleShowTranslatesValue } from '$bible/basis/lib/hooks/translates';
 import { BibleVersei } from '$bible/basis/model/base';
-import { useBibleVersei } from '$bible/translations/lists/atoms';
+import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
+import { bibleJoinAddressAtom, bibleVerseiAtom } from '../../store/atoms';
 import { useBibleTranslationSlideSyncContentSetter } from '../slide-sync';
 import { useBibleTranslationJoinAddress } from './address';
 import { useBibleAddressBooki } from './books';
 import { useBibleAddressChapteri } from './chapters';
-
-const useBibleAddressCurrentVersei = () => useBibleVersei()[0];
 
 export const useBibleAddressIsCurrentVersei = (versei: BibleVersei) => {
   const joinAddress = useBibleTranslationJoinAddress();
@@ -24,7 +22,7 @@ export const useBibleAddressIsCurrentVersei = (versei: BibleVersei) => {
 export const useBibleAddressVersei = (): BibleVersei => {
   const currentChapteri = useBibleAddressChapteri();
   const currentBooki = useBibleAddressBooki();
-  const currentVersei = useBibleAddressCurrentVersei();
+  const currentVersei = useAtomValue(bibleVerseiAtom);
   const showTranslates = useBibleShowTranslatesValue();
   const chapter = useBibleTranslatesContext()[showTranslates[0]]?.chapters?.[currentBooki]?.[currentChapteri];
 
@@ -44,13 +42,13 @@ export const usePutBibleAddressVerseiSetter = () => {
   return useCallback(
     (versei: BibleVersei, isDblClick: boolean): (() => void) | null => {
       if (isDblClick) syncSlide();
-      else bibleIDB.set.joinAddress(null);
+      else bibleJoinAddressAtom.set(null);
 
-      bibleIDB.set.versei(versei);
+      bibleVerseiAtom.set(versei);
 
       return () => {
         if (currentJoinAddress?.[currentBooki]?.[currentChapteri]?.includes(versei)) {
-          bibleIDB.set.joinAddress(currentJoinAddress);
+          bibleJoinAddressAtom.set(currentJoinAddress);
         }
       };
     },

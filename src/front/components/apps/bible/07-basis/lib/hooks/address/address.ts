@@ -1,9 +1,10 @@
 import { mylib } from '#shared/lib/my-lib';
-import { bibleIDB } from '$bible/basis/lib/bibleIDB';
 import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '$bible/basis/model/base';
 import { useBibleSingleAddressSetter } from '$bible/translations/lists/atoms';
 import { useBibleTranslationSearchResultSelectedSet } from '$bible/translations/search/hooks/results';
+import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
+import { bibleJoinAddressAtom } from '../../store/atoms';
 
 export const useBibleTranslationAddressIndexesSetter = () => {
   const setAddress = useBibleSingleAddressSetter();
@@ -20,7 +21,7 @@ export const useBibleTranslationAddressIndexesSetter = () => {
       setAddress(booki, chapteri, versei);
       if (resultSelectedi !== undefined) {
         setResultSelected(resultSelectedi);
-        bibleIDB.set.joinAddress(null);
+        bibleJoinAddressAtom.set(null);
       }
 
       onClick?.(booki, chapteri, versei);
@@ -38,7 +39,7 @@ export const useSetBibleAddressIndexes = () => {
 
       if (resultSelectedi !== undefined) {
         setResultSelected(resultSelectedi);
-        bibleIDB.set.joinAddress(null);
+        bibleJoinAddressAtom.set(null);
       }
     },
     [setAddress, setResultSelected],
@@ -50,14 +51,14 @@ export const useSetBibleAddressWithForceJoinReset = () => {
 
   return useCallback(
     (booki?: BibleBooki, chapteri?: BibleChapteri, versei?: BibleVersei) => {
-      bibleIDB.set.joinAddress(null);
+      bibleJoinAddressAtom.set(null);
       setAddress(booki, chapteri, versei);
     },
     [setAddress],
   );
 };
 
-export const useBibleTranslationJoinAddress = () => bibleIDB.useValue.joinAddress();
+export const useBibleTranslationJoinAddress = () => useAtomValue(bibleJoinAddressAtom);
 
 export const useGetterJoinedAddressMaxValues = () =>
   useCallback((joinAddress: BibleTranslationJoinAddress) => {

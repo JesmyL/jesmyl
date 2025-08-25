@@ -1,7 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { bibleIDB } from '$bible/basis/lib/bibleIDB';
 import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '$bible/basis/lib/hooks/address/address';
+import { bibleJoinAddressAtom } from '$bible/basis/lib/store/atoms';
 import { BibleTranslationAddress } from '$bible/basis/model/base';
 import { JSX, memo } from 'react';
 import { BibleTranslationArchiveJoinedAddressText } from './JoinedAddress';
@@ -44,7 +44,7 @@ export const BibleTranslationArchive = memo(function BibleTranslationArchive({
               id={'archive-itemi-' + itemi}
               className={itemClassName}
               onClick={() => {
-                bibleIDB.set.joinAddress(null);
+                bibleJoinAddressAtom.set(null);
                 setAddress(...item);
               }}
             >
@@ -62,7 +62,7 @@ export const BibleTranslationArchive = memo(function BibleTranslationArchive({
             id={'archive-itemi-' + itemi}
             className={itemClassName}
             onClick={() => {
-              bibleIDB.set.joinAddress(item);
+              bibleJoinAddressAtom.set(item);
               setAddress(...getJoinAddressMaxes(item));
             }}
           >

@@ -1,9 +1,10 @@
-import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useComs } from '$cm/basis/lib/coms-selections';
+import { cmSelectedComwsAtom } from '$cm/basis/lib/store/atoms';
+import { useAtom } from 'atomaric';
 import { useCallback } from 'react';
 
 export function useSelectedComs() {
-  const [selectedComws, setSelectedComws] = cmIDB.use.selectedComws();
+  const [selectedComws, setSelectedComws] = useAtom(cmSelectedComwsAtom);
   const selectedComs = useComs(selectedComws);
 
   const selectedComPosition = useCallback((comWid: number) => selectedComws.indexOf(comWid) + 1, [selectedComws]);

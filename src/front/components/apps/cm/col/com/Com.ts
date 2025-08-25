@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
 import { BaseNamed } from '$cm/base/BaseNamed';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { makeRegExp } from 'regexpert';
 import { IExportableCom, IExportableOrder } from 'shared/api';
 import { itIt } from 'shared/utils';

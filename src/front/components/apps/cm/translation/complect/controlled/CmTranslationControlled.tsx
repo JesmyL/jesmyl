@@ -1,8 +1,9 @@
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useCmOpenComLinkRendererContext } from '$cm/basis/lib/contexts/current-com-list';
+import { cmIsShowFavouritesInTranslationsAtom } from '$cm/basis/lib/store/atoms';
 import { Com } from '$cm/col/com/Com';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
+import { useAtom } from 'atomaric';
 import { TranslationSlidePreview } from 'front/components/apps/+complect/translations/controls/Preview';
 import { ReactNode } from 'react';
 import { itNIt } from 'shared/utils';
@@ -22,7 +23,7 @@ interface Props {
 }
 
 export function CmTranslationControlled(props: Props) {
-  const [isShowFavouritesList, setIsShowFavouritesList] = cmIDB.use.isShowFavouritesInTranslations();
+  const [isShowFavouritesList, setIsShowFavouritesList] = useAtom(cmIsShowFavouritesInTranslationsAtom);
 
   const { comPack, coms } = useCmScreenTranslationComNavigations();
   const setTexti = useCmScreenTranslationComTextNavigations().setTexti;

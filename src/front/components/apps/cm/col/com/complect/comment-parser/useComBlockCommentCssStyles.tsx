@@ -1,5 +1,5 @@
 import { useBibleTranslatesContext } from '$bible/basis/lib/contexts/translates';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';

@@ -1,6 +1,7 @@
 import { TsjrpcClient } from '#basis/lib/Tsjrpc.client';
 import { TsjrpcBaseClient } from '#basis/lib/TsjrpcBase.client';
-import { bibleIDB, bibleTranslatesIDB } from '$bible/basis/lib/bibleIDB';
+import { bibleMyTranslatesAtom } from '$bible/basis/lib/store/atoms';
+import { bibleTranslatesIDB } from '$bible/basis/lib/store/bibleIDB';
 import { BibleTranslate } from '$bible/basis/model/base';
 import { BibleTsjrpcBaseModel, BibleTsjrpcModel } from 'shared/api/tsjrpc/bible/tsjrpc.model';
 
@@ -27,12 +28,12 @@ export const bibleTsjrpcBaseClient = new (class BibleTsjrpcBaseClient extends Ts
           await bibleTranslatesIDB.set[tName](translate);
           await bibleTranslatesIDB.updateLastModifiedAt(modifiedAt);
 
-          const myTranslates = new Set(await bibleIDB.get.myTranslates());
+          const myTranslates = new Set(bibleMyTranslatesAtom.get());
           const prevSize = myTranslates.size;
           const addedSize = myTranslates.add(tName).size;
 
           if (prevSize !== addedSize) {
-            bibleIDB.set.myTranslates(Array.from(myTranslates));
+            bibleMyTranslatesAtom.set(Array.from(myTranslates));
           }
         },
       },

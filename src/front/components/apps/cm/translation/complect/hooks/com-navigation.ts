@@ -1,16 +1,17 @@
-import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useCcom } from '$cm/basis/lib/com-selections';
 import { useCmCurrentComPackContext } from '$cm/basis/lib/contexts/current-com-list';
+import { cmIsShowFavouritesInTranslationsAtom } from '$cm/basis/lib/store/atoms';
 import { Com } from '$cm/col/com/Com';
 import { cmCurrentComwIdPrefix } from '$cm/col/com/face/lib/consts';
 import { useFavouriteComs } from '$cm/lists/favourites/useFavouriteComs';
 import { useNavigate } from '@tanstack/react-router';
+import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
 import { useCmScreenTranslationComTextNavigations } from './com-texts';
 
 export const useCmScreenTranslationComNavigations = () => {
   const { favouriteComs } = useFavouriteComs();
-  const isShowFavouritesList = cmIDB.useValue.isShowFavouritesInTranslations();
+  const isShowFavouritesList = useAtomValue(cmIsShowFavouritesInTranslationsAtom);
   const ccom = useCcom();
   const navigate = useNavigate();
   const setCom: (com: Com) => void = useCallback(

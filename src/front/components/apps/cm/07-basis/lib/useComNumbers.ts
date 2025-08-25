@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { CmComWid } from 'shared/api';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
-import { cmIDB } from './cmIDB';
+import { cmIDB } from './store/cmIDB';
 
 const numbersStore: PRecord<CmComWid, number> = {};
 

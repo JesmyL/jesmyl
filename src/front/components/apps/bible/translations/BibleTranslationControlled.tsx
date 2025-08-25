@@ -1,6 +1,6 @@
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
-import { bibleIDB } from '$bible/basis/lib/bibleIDB';
 import { useBiblePrintShowSlideAddressCode } from '$bible/basis/lib/hooks/slide-sync';
+import { bibleVerseiAtom } from '$bible/basis/lib/store/atoms';
 import { BibleModulesTranslationsControl } from '$bible/entities/ModulesTranslationsControl';
 import { bibleTsjrpcBaseClient } from '$bible/processes/tsjrpc';
 import { JSX, ReactNode, useEffect } from 'react';
@@ -52,8 +52,8 @@ export default function BibleTranslationControlled({ head, headTitle }: Props): 
           <BibleTranslationControlledTopPanel />
           <BibleModulesTranslationsControl />
           <ScreenTranslationControlPanel
-            onPrev={() => bibleIDB.set.versei(v => v - 1)}
-            onNext={() => bibleIDB.set.versei(v => v + 1)}
+            onPrev={() => bibleVerseiAtom.set(v => v - 1)}
+            onNext={() => bibleVerseiAtom.set(v => v + 1)}
           />
           <BibleSearchPanel />
           <BibleTranslationControlledBottomPanel />

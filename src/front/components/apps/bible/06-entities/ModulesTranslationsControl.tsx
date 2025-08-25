@@ -1,6 +1,7 @@
 import { translateFilter } from '$bible/basis/lib/const/consts';
 import { useBibleMyTranslates, useBibleShowTranslates } from '$bible/basis/lib/hooks/translates';
-import { useBibleBooki } from '$bible/translations/lists/atoms';
+import { bibleBookiAtom } from '$bible/basis/lib/store/atoms';
+import { useAtomValue } from 'atomaric';
 import { JSX, memo } from 'react';
 import { BibleModulesTranslationsRedactButton } from './ModulesTranslationsRedactButton';
 
@@ -11,7 +12,7 @@ export const BibleModulesTranslationsControl = memo(function BibleModules({
 }): JSX.Element {
   const [myTranslates] = useBibleMyTranslates();
   const [showTranslates, setShowTranslates] = useBibleShowTranslates();
-  const [booki] = useBibleBooki();
+  const booki = useAtomValue(bibleBookiAtom);
 
   return (
     <div className="flex flex-gap margin-gap-v">

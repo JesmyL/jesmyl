@@ -1,8 +1,8 @@
-import { bibleIDB } from '$bible/basis/lib/bibleIDB';
 import { useBibleTranslatesContext } from '$bible/basis/lib/contexts/translates';
 import { useBibleAddressBooki } from '$bible/basis/lib/hooks/address/books';
 import { useBibleAddressChapteri } from '$bible/basis/lib/hooks/address/chapters';
 import { useBibleShowTranslatesValue } from '$bible/basis/lib/hooks/translates';
+import { bibleJoinAddressAtom } from '$bible/basis/lib/store/atoms';
 import { BibleBooki, BibleChapteri, BibleTranslationSingleAddress, BibleVersei } from '$bible/basis/model/base';
 import { useAtomValue } from 'atomaric';
 import { JSX, useCallback, useEffect, useState } from 'react';
@@ -125,7 +125,7 @@ export function BibleSearchResults({ inputRef, height = '100px', innerZone, onCl
     if (resultSelected === null || resultList[resultSelected] == null) return;
     const [booki, chapteri, versei] = resultList[resultSelected];
     const node = document.getElementById(`bible-search-result-${booki}-${chapteri}-${versei}`);
-    bibleIDB.set.joinAddress(null);
+    bibleJoinAddressAtom.set(null);
     if (node === null) return;
     node.scrollIntoView({ block: 'nearest' });
 

@@ -96,7 +96,7 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
           }
         },
 
-        exchangeFreshComComments: async ({ modifiedComments, clientDateNow }, { client, auth }) => {
+        exchangeFreshComComments: async ({ modifiedComments, clientDateNow }, { auth }) => {
           if (auth?.login == null) return [];
 
           const withClientTimeDelta = Date.now() - clientDateNow;

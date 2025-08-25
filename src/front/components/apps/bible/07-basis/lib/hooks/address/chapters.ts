@@ -1,11 +1,12 @@
 import { useBibleTranslatesContext } from '$bible/basis/lib/contexts/translates';
 import { useBibleShowTranslatesValue } from '$bible/basis/lib/hooks/translates';
 import { BibleChapteri } from '$bible/basis/model/base';
-import { useBibleChapteri } from '$bible/translations/lists/atoms';
+import { useAtomValue } from 'atomaric';
+import { bibleChapteriAtom } from '../../store/atoms';
 import { useBibleAddressBooki } from './books';
 
 export const useBibleAddressChapteri = (): BibleChapteri => {
-  const [chapteri] = useBibleChapteri();
+  const chapteri = useAtomValue(bibleChapteriAtom);
   const currentBooki = useBibleAddressBooki();
   const showTranslates = useBibleShowTranslatesValue();
   const chapter = useBibleTranslatesContext()[showTranslates[0]]?.chapters?.[currentBooki];

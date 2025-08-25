@@ -1,5 +1,5 @@
 import { TsjrpcBaseClient } from '#basis/lib/TsjrpcBase.client';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
+import { cmConstantsConfigAtom } from '$cm/basis/lib/store/atoms';
 import { CmShareEditorTsjrpcModel } from 'shared/api/tsjrpc/cm/editor.tsjrpc.shares.model';
 import { comEditorBusiesAtom } from './atoms/com';
 import { cmEditorIDB } from './cmEditorIDB';
@@ -21,7 +21,7 @@ export const cmShareEditorTsjrpcBaseClient =
           },
 
           refreshConstantsConfig: async ({ config, modifiedAt }) => {
-            await cmIDB.set.constantsConfig(prev => ({ ...prev, ...config }));
+            cmConstantsConfigAtom.set(prev => ({ ...prev, ...config }));
             await cmEditorIDB.updateLastModifiedAt(modifiedAt);
           },
 

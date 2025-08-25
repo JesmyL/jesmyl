@@ -13,9 +13,9 @@ import { cmIsShowCatBindsInCompositionAtom } from '$cm/atoms';
 import { useChordVisibleVariant } from '$cm/base/useChordVisibleVariant';
 import { useLaterComList } from '$cm/base/useLaterComList';
 import { comPlayerHeaderStickyCss } from '$cm/basis/css/com-player';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
 import { useFixedCcom } from '$cm/basis/lib/com-selections';
 import { useCmCurrentComPackContext } from '$cm/basis/lib/contexts/current-com-list';
+import { cmPlayerHideModeAtom } from '$cm/basis/lib/store/atoms';
 import { cmTsjrpcClient } from '$cm/tsjrpc/basic.tsjrpc.methods';
 import { Link } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
@@ -39,7 +39,7 @@ export function TheComposition() {
   const [isOpenTools, setIsOpenTools] = useState(false);
   const comToolsNode = useMigratableTopComTools();
   const { list } = useCmCurrentComPackContext();
-  const playerHideMode = cmIDB.useValue.playerHideMode();
+  const playerHideMode = useAtomValue(cmPlayerHideModeAtom);
 
   const isShowCatBinds = useAtomValue(cmIsShowCatBindsInCompositionAtom);
 

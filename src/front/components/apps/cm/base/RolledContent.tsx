@@ -1,13 +1,13 @@
 import { isFullscreenAtom } from '#shared/lib/atoms/fullscreen';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { cmIDB } from '$cm/basis/lib/cmIDB';
-import { useAtomValue } from 'atomaric';
+import { cmSpeedRollKfAtom } from '$cm/basis/lib/store/atoms';
+import { useAtom, useAtomValue } from 'atomaric';
 import { HTMLAttributes, PropsWithChildren, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 export function RollControled(props: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
   const isFullscreen = useAtomValue(isFullscreenAtom);
-  const [speedRollKf, setSpeedRollKf] = cmIDB.use.speedRollKf();
+  const [speedRollKf, setSpeedRollKf] = useAtom(cmSpeedRollKfAtom);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isRolling, setIsRolling] = useState(false);
 
