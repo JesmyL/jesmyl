@@ -42,6 +42,7 @@ export default defineConfig(() => {
       react(),
       attrStylerVitePlugin({
         fileExtToAnalize: ['.css', '.scss', '.styler.ts'],
+        prefixes: ['st-', 'com-letter-', 'com-word-'],
       }),
     ],
     resolve: { alias },

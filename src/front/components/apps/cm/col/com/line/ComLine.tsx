@@ -3,7 +3,7 @@ import { useAtomValue } from 'atomaric';
 import React, { ReactNode } from 'react';
 import { makeRegExp } from 'regexpert';
 import { IComLineProps } from '../order/Order.model';
-import { StyledComLine } from './StyledComLine';
+import { StyledComLine } from './StyledComLine.styler';
 
 export function ComLine(props: IComLineProps) {
   const className = `composition-line line-num-${props.textLinei}`;
@@ -19,12 +19,14 @@ export function ComLine(props: IComLineProps) {
           return (
             <span
               key={wordi}
-              className={`com-word wordi_${wordi} ${props.setWordClass?.(props, wordi) ?? ''}`}
+              className={props.setWordClass?.(props, wordi)}
+              com-word-index={wordi}
             >
               {word && <span dangerouslySetInnerHTML={{ __html: word }} />}
               <span
                 key={wordi + 100000}
-                className={`com-word wordi_${wordi} ${props.setWordClass?.(props, wordi) ?? ''}`}
+                className={props.setWordClass?.(props, wordi)}
+                com-word-index={wordi}
               >
                 {' '}
               </span>
@@ -62,7 +64,9 @@ export function ComLine(props: IComLineProps) {
       isAddSpaceWord && (
         <span
           key={`other-index-${index}`}
-          className={`com-letter space-word letteri_${index} ${props.setWordClass === undefined ? '' : props.setWordClass(props, index)}`}
+          className={props.setWordClass?.(props, index)}
+          com-letter-space-word=""
+          com-letter-index={index}
         >
           {' '}
         </span>
@@ -87,7 +91,7 @@ export function ComLine(props: IComLineProps) {
 
     let firstBitNode: ReactNode = firstTextBit !== '' && (
       <span
-        className={isHasPre ? 'chorded pre' : undefined}
+        com-letter-chorded={isHasPre ? 'pre' : undefined}
         dangerouslySetInnerHTML={{ __html: firstTextBit }}
         attr-chord={isHasPre ? makeTaktedChord(chordsLabels[0]) : undefined}
       />
@@ -108,14 +112,17 @@ export function ComLine(props: IComLineProps) {
         <span
           attr-chord={chord}
           attr-pchord={pchord}
-          className={
-            `com-letter letteri_${indexi}` +
-            (isChorded || isChordedFirst || isChordedLast ? ' chorded' : '') +
-            (isChordedLast ? ' post' : '') +
-            (isChordedFirst ? ' pre' : '') +
-            (baseTextBitOriginal.match(makeRegExp('/ /')) ? ' spaced-word' : '') +
-            (baseTextBitOriginal === ' ' ? ' space-word' : '') +
-            (isChorded && isLast && isHasPost ? ' twice' : '')
+          com-letter-index={indexi}
+          com-letter-space-word={includeEmptyOrUnd(baseTextBitOriginal === ' ')}
+          com-letter-spaced-word={includeEmptyOrUnd(baseTextBitOriginal.match(makeRegExp('/ /')))}
+          com-letter-chorded={
+            isChorded || isChordedFirst || isChordedLast
+              ? isChordedLast
+                ? 'post'
+                : isChordedFirst
+                  ? 'pre'
+                  : ''
+              : undefined
           }
         >
           {isChorded || isChordedLast ? (
@@ -193,3 +200,5 @@ const insertDividedBits = (lettersText: string, chord: string | und) => {
 
 const makeTaktedChord = (chord: string | und) =>
   chord?.endsWith('|') ? chord.slice(0, -1) : chord?.startsWith('|') ? chord.slice(1) : chord;
+
+const includeEmptyOrUnd = (is: boolean | unknown) => (is ? '' : undefined);

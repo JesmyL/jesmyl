@@ -6,7 +6,7 @@ import { makeRegExp } from 'regexpert';
 import { CmComWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import { RuleSet, css } from 'styled-components';
-import { StyledComLine } from '../../line/StyledComLine';
+import { StyledComLine } from '../../line/StyledComLine.styler';
 import { Order } from '../../order/Order';
 import { ComBlockCommentMakerCleans } from './Cleans';
 

@@ -193,39 +193,32 @@ export const CmEditorTabComRepeats = () => {
                         : 'inactive-word';
                     }}
                     onClick={event => {
-                      const clicked = event.nativeEvent
-                        .composedPath()
-                        .find(span => (span as HTMLSpanElement)?.classList?.contains('com-word')) as HTMLSpanElement;
+                      const wordiStr = (event.nativeEvent.composedPath() as HTMLSpanElement[])
+                        .find(span => span?.hasAttribute('com-word-index'))
+                        ?.getAttribute('com-word-index');
 
-                      const [, wordi] =
-                        (clicked &&
-                          Array.from(clicked.classList)
-                            .find(className => className.startsWith('wordi_'))
-                            ?.split('_')) ||
-                        [];
-
-                      if (wordi == null) return;
+                      if (wordiStr == null) return;
 
                       const { textLinei: linei, textLines: lines, wordCount } = props;
 
                       if (start == null || isChordBlock) {
-                        setStart({ ...props, orderUnit: ord, wordi: +wordi });
+                        setStart({ ...props, orderUnit: ord, wordi: +wordiStr });
                         setPos({ '--x': event.currentTarget.offsetLeft, '--y': event.currentTarget.offsetTop });
                         setIsChordBlock(false);
                       } else {
                         const nextLetter = ccom.getRegionNextLetter();
                         const [startDiap, finishDiap] =
                           startOrd === ord
-                            ? startLinei === 0 && startWordi === 0 && linei === lines - 1 && +wordi === wordCount - 1
+                            ? startLinei === 0 && startWordi === 0 && linei === lines - 1 && +wordiStr === wordCount - 1
                               ? ['.']
                               : [
                                   `${startLinei}${startWordi ? `:${startWordi}` : ''}${
-                                    startLinei === linei && !startWordi && wordCount - 1 === +wordi
+                                    startLinei === linei && !startWordi && wordCount - 1 === +wordiStr
                                       ? ''
-                                      : `-${linei}${wordCount - 1 === +wordi ? '' : `:${wordi}`}`
+                                      : `-${linei}${wordCount - 1 === +wordiStr ? '' : `:${wordiStr}`}`
                                   }`,
                                 ]
-                            : [`${nextLetter}${startLinei}:${startWordi}`, `${linei}:${wordi}${nextLetter}`];
+                            : [`${nextLetter}${startLinei}:${startWordi}`, `${linei}:${wordiStr}${nextLetter}`];
 
                         setField(startOrd, { [startDiap]: flashCount }, startOrd?.repeats);
 
@@ -313,7 +306,7 @@ export const CmEditorTabComRepeats = () => {
 const Content = styled.div`
   position: relative;
 
-  .com-word {
+  [com-word-index] {
     cursor: pointer;
 
     &.inactive-word {

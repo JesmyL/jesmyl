@@ -12,23 +12,24 @@ export const StyledComLine = styled.div`
     }
   }
 
-  .chorded {
+  [com-letter-chorded],
+  [com-letter-chorded=''] {
     display: inline-block;
     position: relative;
     line-height: 1;
     white-space: pre;
 
-    &.pre,
-    &.post,
-    &.spaced-word {
+    &[com-letter-chorded='pre'],
+    &[com-letter-chorded='post'],
+    &[com-letter-spaced-word] {
       &::before,
       &::after {
         color: color-mix(in lch, currentColor 50%, var(--color--7));
       }
     }
 
-    &:not(.pre):not(.post) {
-      &.spaced-word::before {
+    &:not([com-letter-chorded='pre']):not([com-letter-chorded='post']) {
+      &[com-letter-spaced-word]::before {
         left: -0.2em;
       }
 
@@ -37,7 +38,7 @@ export const StyledComLine = styled.div`
       }
     }
 
-    &:not(.post) {
+    &:not([com-letter-chorded='post']) {
       &::before,
       &::after {
         position: absolute;
@@ -65,7 +66,7 @@ export const StyledComLine = styled.div`
       }
     }
 
-    &.spaced-word:not(.post)::after {
+    &[com-letter-spaced-word]:not([com-letter-chorded='post'])::after {
       content: '.';
       top: 0;
       width: 0.3em;
@@ -74,18 +75,18 @@ export const StyledComLine = styled.div`
       height: 1.2em;
     }
 
-    &.pre::before,
-    &:not(.pre):not(.post)::before {
+    &[com-letter-chorded='pre']::before,
+    &:not([com-letter-chorded='pre']):not([com-letter-chorded='post'])::before {
       content: attr(attr-chord);
       max-width: 500px;
       white-space: nowrap;
     }
 
-    &.pre::before {
+    &[com-letter-chorded='pre']::before {
       left: -0.5em;
     }
 
-    &.post {
+    &[com-letter-chorded='post'] {
       .fragment {
         display: inline-block;
         position: relative;
@@ -115,7 +116,7 @@ export const StyledComLine = styled.div`
   }
 
   .whole-word,
-  .spaced-word {
+  [com-letter-spaced-word] {
     [dash-divider]::before {
       display: none;
     }
@@ -165,5 +166,9 @@ export const StyledComLine = styled.div`
         }
       }
     }
+  }
+
+  [com-letter-space-word][com-letter-index][com-word-index] {
+    color: inherit;
   }
 `;
