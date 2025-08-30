@@ -69,7 +69,7 @@ const StyledButtons = styled.div`
   ${hideOnPrintCss}
 `;
 
-const StyledFullContent = styled(FullContent<boolean>)`
+const StyledFullContent = styled(FullContent<boolean, boolean>)`
   --current-bg: white;
 
   color: black;

@@ -29,42 +29,47 @@ export const CmSharedComListActionInterpretator = ({
 
   return (
     <>
-      <FullContent openAtom={comListOnActionAtom}>
-        <h3>С вами поделились списком</h3>
-        <ComFaceList
-          list={comws}
-          importantOnClick={emptyFunc}
-        />
-        <div className="flex column flex-gap margin-big-gap">
-          <TheButton
-            disabled={addComsCount === 0}
-            onClick={() => {
-              setSelectedComws(Array.from(localComwsSet.union(incomingComwsSet)));
-              close(true);
-            }}
-          >
-            Добавить к выбранным
-          </TheButton>
-          <StyledButtonDescription>
-            Добавится {addComsCount} {mylib.declension(addComsCount, 'песня', 'песни', 'песен')}
-          </StyledButtonDescription>
+      <FullContent
+        openAtom={comListOnActionAtom}
+        checkIsOpen={it => it != null}
+      >
+        {comws => (
+          <>
+            <h3>С вами поделились списком</h3>
+            <ComFaceList
+              list={comws}
+              importantOnClick={emptyFunc}
+            />
+            <div className="flex column flex-gap margin-big-gap">
+              <TheButton
+                disabled={addComsCount === 0}
+                onClick={() => {
+                  setSelectedComws(Array.from(localComwsSet.union(incomingComwsSet)));
+                  close(true);
+                }}
+              >
+                Добавить к выбранным
+              </TheButton>
+              <StyledButtonDescription>
+                Добавится {addComsCount} {mylib.declension(addComsCount, 'песня', 'песни', 'песен')}
+              </StyledButtonDescription>
 
-          {comws && (
-            <TheButton
-              disabled={lessComsCount === 0 && addComsCount === 0}
-              onClick={() => {
-                setSelectedComws(comws);
-                close(true);
-              }}
-            >
-              Заменить выбранные
-            </TheButton>
-          )}
+              <TheButton
+                disabled={lessComsCount === 0 && addComsCount === 0}
+                onClick={() => {
+                  setSelectedComws(comws);
+                  close(true);
+                }}
+              >
+                Заменить выбранные
+              </TheButton>
 
-          <StyledButtonDescription>
-            Потеряется {lessComsCount} {mylib.declension(lessComsCount, 'песня', 'песни', 'песен')}
-          </StyledButtonDescription>
-        </div>
+              <StyledButtonDescription>
+                Потеряется {lessComsCount} {mylib.declension(lessComsCount, 'песня', 'песни', 'песен')}
+              </StyledButtonDescription>
+            </div>
+          </>
+        )}
       </FullContent>
     </>
   );

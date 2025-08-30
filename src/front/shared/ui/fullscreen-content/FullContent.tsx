@@ -2,6 +2,7 @@ import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMak
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
 import { Atom, useAtomValue } from 'atomaric';
+import { TrustChildrenCheckType } from 'front/types/TrustChildrenCheckType';
 import { HTMLAttributes, ReactNode, useEffect } from 'react';
 import { Eventer, EventerListeners } from 'shared/utils';
 import styled from 'styled-components';
@@ -16,18 +17,16 @@ const swiper = backSwipableContainerMaker(() => Eventer.invoke(swipeEvents, unde
 export type FullContentOpenMode = null | 'open' | 'closable';
 export type FullContentValue<PassValue = unknown> = (close: () => void, passValue?: PassValue) => ReactNode;
 
-interface Props<Value> {
-  openAtom: Atom<Value>;
-  checkIsOpen?: (value: Value) => boolean;
-  closable?: boolean;
-  children?: React.ReactNode;
-  className?: string;
-  containerClassName?: string;
-}
-
-export const FullContent = <Value,>(props: Props<Value>) => {
-  const isOpenValue = useAtomValue(props.openAtom);
-  const isOpen = props.checkIsOpen === undefined ? isOpenValue === 0 || !!isOpenValue : props.checkIsOpen(isOpenValue);
+export const FullContent = <Value, TrustValue extends Value>(
+  props: TrustChildrenCheckType<Value, TrustValue> & {
+    openAtom: Atom<Value>;
+    closable?: boolean;
+    className?: string;
+    containerClassName?: string;
+  },
+) => {
+  const value = useAtomValue(props.openAtom);
+  const isOpen = props.checkIsOpen === undefined ? value === 0 || !!value : props.checkIsOpen(value);
 
   return (
     <RootAnchoredContent openAtom={props.openAtom}>
@@ -45,7 +44,9 @@ export const FullContent = <Value,>(props: Props<Value>) => {
                 onClick={props.openAtom.reset}
               />
             )}
-            <StyledContainer className={props.containerClassName ?? 'p-5'}>{props.children}</StyledContainer>
+            <StyledContainer className={props.containerClassName ?? 'p-5'}>
+              {typeof props.children === 'function' ? props.children(value as never) : props.children}
+            </StyledContainer>
           </Swiped>
         </Portal>
       )}

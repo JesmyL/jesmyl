@@ -2,7 +2,7 @@ import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { atom, useAtom } from 'atomaric';
+import { atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React from 'react';
 import { complectIDB } from '../../../_idb/complectIDB';
@@ -14,7 +14,6 @@ const editConfigIdAtom = atom<number | null>(null);
 
 export const AlertLineSettingsModalInner = () => {
   const configs = useLiveQuery(() => complectIDB.tb.alertLineConfigs.toArray());
-  const [editConfigId, setEditConfigId] = useAtom(editConfigIdAtom);
 
   return (
     <>
@@ -32,7 +31,7 @@ export const AlertLineSettingsModalInner = () => {
                   {config.title}
                 </span>
               }
-              onClick={() => setEditConfigId(config.id)}
+              onClick={() => editConfigIdAtom.set(config.id)}
             />
           );
         })}
@@ -43,8 +42,11 @@ export const AlertLineSettingsModalInner = () => {
         />
       </ModalBody>
 
-      <FullContent openAtom={editConfigIdAtom}>
-        {editConfigId == null || <AlertLineConfigSettingsInner configId={editConfigId} />}
+      <FullContent
+        openAtom={editConfigIdAtom}
+        checkIsOpen={it => it != null}
+      >
+        {id => <AlertLineConfigSettingsInner configId={id} />}
       </FullContent>
     </>
   );

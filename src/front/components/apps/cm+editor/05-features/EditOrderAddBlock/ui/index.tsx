@@ -3,7 +3,7 @@ import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { CmComOrderOnClickBetweenData } from '$cm+editor/basis/model/Orders';
-import { atom, useAtomValue } from 'atomaric';
+import { atom } from 'atomaric';
 import { CmNewOrderMakeEtap } from '../model';
 import { OrdersRedactorAdditionsEtapsModalInner } from './Etaps';
 
@@ -16,8 +16,6 @@ type Props = {
 const selectFirstEtapAtom = atom<null | CmNewOrderMakeEtap>(null);
 
 export const OrdersRedactorAdditions = ({ com, setClickBetweenOrds }: Props) => {
-  const firstEtap = useAtomValue(selectFirstEtapAtom);
-
   return (
     <>
       <BottomPopupItem
@@ -31,8 +29,11 @@ export const OrdersRedactorAdditions = ({ com, setClickBetweenOrds }: Props) => 
         onClick={() => selectFirstEtapAtom.set(CmNewOrderMakeEtap.Chord)}
       />
 
-      <Modal openAtom={selectFirstEtapAtom}>
-        {firstEtap && (
+      <Modal
+        openAtom={selectFirstEtapAtom}
+        checkIsOpen={it => it != null}
+      >
+        {firstEtap => (
           <OrdersRedactorAdditionsEtapsModalInner
             com={com}
             firstEtap={firstEtap}

@@ -7,7 +7,7 @@ import { cmEditComClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsj
 import { Com } from '$cm/col/com/Com';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
 import { TheCom } from '$cm/col/com/TheCom';
-import { atom, useAtomValue } from 'atomaric';
+import { atom } from 'atomaric';
 import { useMemo } from 'react';
 import { CmComWid } from 'shared/api';
 import { emptyArray } from 'shared/utils';
@@ -15,8 +15,6 @@ import { emptyArray } from 'shared/utils';
 const openComwAtom = atom<CmComWid | null>(null);
 
 export const RemovedComsModalInner = () => {
-  const openComw = useAtomValue(openComwAtom);
-
   const [icoms] = useInvocatedValue(
     emptyArray,
     ({ aborter }) => cmEditComClientTsjrpcMethods.takeRemovedComs(undefined, { aborter }),
@@ -36,10 +34,15 @@ export const RemovedComsModalInner = () => {
         />
       </ModalBody>
 
-      <Modal openAtom={openComwAtom}>
-        <ModalBody>
-          <TheCom com={coms.find(com => com.wid === openComw)} />
-        </ModalBody>
+      <Modal
+        openAtom={openComwAtom}
+        checkIsOpen={it => it != null}
+      >
+        {openComw => (
+          <ModalBody>
+            <TheCom com={coms.find(com => com.wid === openComw)} />
+          </ModalBody>
+        )}
       </Modal>
     </>
   );

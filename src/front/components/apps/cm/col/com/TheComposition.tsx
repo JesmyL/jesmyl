@@ -111,7 +111,7 @@ export function TheComposition() {
           <Modal
             key="com-comment"
             openAtom={comCommentRedactOrdSelectorIdAtom}
-            checkIsOpen={ordw => ordw !== null}
+            checkIsOpen={it => it != null}
           >
             <CmComCommentModalInner com={ccom} />
           </Modal>
