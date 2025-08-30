@@ -6,7 +6,7 @@ class EffectPipeMember {
   }
 }
 
-type Elem = HTMLElement | typeof globalThis | Window | null;
+type Elem = HTMLElement | typeof globalThis | Window | nil;
 
 export const addEventListenerPipe = <
   EventName extends keyof HTMLElementEventMap,
