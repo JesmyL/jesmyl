@@ -111,8 +111,11 @@ export const ComTools = () => {
           ` ${visitsCount} ${mylib.declension(visitsCount, 'раз', 'раза', 'раз')}`
         )}
       </div>
-      <div className="full-width fade-05 flex center font-size:0.7em py-3">
-        Добавлено: {new Date(ccom.wid).toLocaleString('ru')}
+      <div className="full-width fade-05 flex flex-col font-size:0.7em py-3">
+        <div>Добавлена: {new Date(ccom.wid).toLocaleString('ru')}</div>
+        {Math.trunc(ccom.wid) !== Math.trunc(ccom.mod) && (
+          <div>Обновлена: {new Date(ccom.mod).toLocaleString('ru')}</div>
+        )}
       </div>
     </>
   );

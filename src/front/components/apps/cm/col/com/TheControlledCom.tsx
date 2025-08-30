@@ -1,8 +1,8 @@
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
 import { cmIsComMiniAnchorAtom } from '$cm/atoms';
-import { RollControled } from '$cm/base/RolledContent';
-import { cmComFontSizeAtom } from '$cm/basis/lib/store/atoms';
+import { cmComFontSizeAtom, cmSpeedRollKfAtom } from '$cm/basis/lib/store/atoms';
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { Link } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
@@ -60,6 +60,7 @@ export const TheControlledCom = ({ com, comList, chordVisibleVariant }: Props) =
   return (
     <>
       <StyledRollControled
+        speedKfAtom={cmSpeedRollKfAtom}
         $commentStyles={commentCss}
         className="composition-content"
       >
@@ -98,7 +99,7 @@ export const TheControlledCom = ({ com, comList, chordVisibleVariant }: Props) =
   );
 };
 
-const StyledRollControled = styled(RollControled)<{ $commentStyles?: RuleSet<object> | string }>`
+const StyledRollControled = styled(RolledContent)<{ $commentStyles?: RuleSet<object> | string }>`
   ${props => props.$commentStyles}
 `;
 

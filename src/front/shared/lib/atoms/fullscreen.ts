@@ -6,3 +6,7 @@ isFullscreenAtom.subscribe(isFullscreen => {
   if (isFullscreen) document.body.requestFullscreen();
   else if (document.fullscreenElement) document.exitFullscreen();
 });
+
+window.addEventListener('fullscreenchange', () => {
+  isFullscreenAtom.set(!!document.fullscreenElement);
+});

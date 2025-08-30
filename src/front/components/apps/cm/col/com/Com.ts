@@ -31,6 +31,10 @@ export class Com extends BaseNamed<IExportableCom> {
     this.pullTransPosition(top);
   }
 
+  get mod() {
+    return this.getBasic('m');
+  }
+
   get texts() {
     return this.getBasic('t');
   }

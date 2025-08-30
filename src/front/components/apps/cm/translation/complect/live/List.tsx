@@ -1,6 +1,7 @@
-import { RollControled } from '$cm/base/RolledContent';
+import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
 import { useChordVisibleVariant } from '$cm/base/useChordVisibleVariant';
 import { useCom } from '$cm/basis/lib/com-selections';
+import { cmSpeedRollKfAtom } from '$cm/basis/lib/store/atoms';
 import { ComLine } from '$cm/col/com/line/ComLine';
 import { ComOrders } from '$cm/col/com/orders/ComOrders';
 import { useEffect, useMemo } from 'react';
@@ -48,7 +49,7 @@ export const CmLiveTranslationList = (props: CmSchWTranslationLiveDataValue) => 
   }, [querySelector]);
 
   return (
-    <RollControled>
+    <RolledContent speedKfAtom={cmSpeedRollKfAtom}>
       <List
         className="flex"
         $querySelector={querySelector}
@@ -70,7 +71,7 @@ export const CmLiveTranslationList = (props: CmSchWTranslationLiveDataValue) => 
           />
         )}
       </List>
-    </RollControled>
+    </RolledContent>
   );
 };
 

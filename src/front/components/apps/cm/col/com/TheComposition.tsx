@@ -1,3 +1,4 @@
+import { hideAppFooterAtom } from '#basis/lib/atoms/hideAppFooterAtom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import {
@@ -40,6 +41,7 @@ export function TheComposition() {
   const comToolsNode = useMigratableTopComTools();
   const { list } = useCmCurrentComPackContext();
   const playerHideMode = useAtomValue(cmPlayerHideModeAtom);
+  const hideAppFooter = useAtomValue(hideAppFooterAtom);
 
   const isShowCatBinds = useAtomValue(cmIsShowCatBindsInCompositionAtom);
 
@@ -99,7 +101,7 @@ export function TheComposition() {
       content={
         <>
           <DocTitle title={ccom.name} />
-          {comAudio && <ComPlayerWithPoints audioSrcs={comAudio} />}
+          {!hideAppFooter && comAudio && <ComPlayerWithPoints audioSrcs={comAudio} />}
           {isShowCatBinds && (
             <div className="fade-05 full-width color--7">
               <CmComCatMentions com={ccom} />
@@ -175,7 +177,7 @@ const StyledComContainer = styled(PageContainerConfigurer)<{ $isInLaterList: boo
     pointer-events: all;
   }
 
-  html .fullscreen-mode :is(&, &.with-open-player) .composition-player {
+  html [st-fullscreen] :is(&, &.with-open-player) .composition-player {
     opacity: 0;
     margin-top: calc(0px - var(--com-player-size));
     pointer-events: none;

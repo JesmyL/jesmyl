@@ -2,11 +2,12 @@ import { currentAppNameAtom } from '#basis/lib/atoms/currentAppNameAtom';
 import { hideAppFooterAtom } from '#basis/lib/atoms/hideAppFooterAtom';
 import { useFingersActions } from '#basis/lib/global-listeners/useFingersActions';
 import { useGlobalFontFamilySetter } from '#basis/lib/global-listeners/useGlobalFontFamilySetter';
-import { useGlobalFullscreenChanger } from '#basis/lib/global-listeners/useGlobalFullscreenChanger';
 import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
+import { isFullscreenAtom } from '#shared/lib/atoms/fullscreen';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { LinkAppActionFabric } from '#shared/lib/link-app-actions';
 import { useToast } from '#shared/ui/modal/useToast';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { schLinkAction } from '#widgets/schedule/links';
 import { Outlet, ParsedLocation, useLocation, useNavigate } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
@@ -23,6 +24,7 @@ export const AppComponent = () => {
   const toast = useToast();
   const appName = useAtomValue(currentAppNameAtom);
   const hideAppFooter = useAtomValue(hideAppFooterAtom);
+  const isFullscreen = useAtomValue(isFullscreenAtom);
 
   useEffect(() => {
     const unauthListener = soki.onTokenInvalidEvent.listen(() => {
@@ -44,8 +46,6 @@ export const AppComponent = () => {
 
   useEffect(() => soki.pushCurrentUrl(), [loc.href]);
 
-  const [isFullscreen, fullscreenIcon] = useGlobalFullscreenChanger();
-
   useEffect(() => {
     return hookEffectPipe()
       .pipe(setTimeoutPipe(setIsShowLogo, 1200, false))
@@ -55,15 +55,27 @@ export const AppComponent = () => {
 
   return (
     <>
-      <div className={`above-container`}>
+      <div
+        className="above-container"
+        st-hide-footer-menu={hideAppFooter ? '' : undefined}
+      >
         {isShowLogo && (
           <div className="jesmyl-smile-box flex center absolute full-width full-height z-index:5">
             <JesmylLogo className="no-fade-in-effect" />
           </div>
         )}
-        <div className={`application-container ${isFullscreen ? ' fullscreen-mode' : ''}`}>
+        <div
+          className="application-container"
+          st-fullscreen={isFullscreen ? '' : undefined}
+        >
           <Outlet />
-          {fullscreenIcon}
+          {isFullscreen && (
+            <LazyIcon
+              icon="ArrowShrink02"
+              className="pointer absolute top-0 right-0 z-50 m-[10px]"
+              onClick={() => isFullscreenAtom.set(false)}
+            />
+          )}
         </div>
       </div>
       {isNeedFirstNavigate && (
@@ -73,7 +85,7 @@ export const AppComponent = () => {
         />
       )}
 
-      {!hideAppFooter && appName && routingApps[appName]?.footer}
+      {appName && routingApps[appName]?.footer}
     </>
   );
 };

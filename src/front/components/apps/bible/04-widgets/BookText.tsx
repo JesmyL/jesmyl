@@ -1,6 +1,8 @@
 import { mylib } from '#shared/lib/my-lib';
+import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
 import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/basis/model/base';
 import { useBibleSingleAddressSetter } from '$bible/translations/lists/atoms';
+import { atom } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { BibleChapterText } from './ChapterText';
@@ -11,6 +13,8 @@ interface Props {
   currentChapteri?: BibleChapteri;
   currentVersei?: BibleVersei;
 }
+
+const speedKfAtom = atom(10, 'bible:speedRollKf');
 
 export const BibleReaderBookText = ({ chapterList, currentChapteri, currentVersei, currentBooki }: Props) => {
   const listRef = useRef<HTMLDivElement>(null);
@@ -57,18 +61,20 @@ export const BibleReaderBookText = ({ chapterList, currentChapteri, currentVerse
   return (
     <>
       <List ref={listRef}>
-        {chapterList?.map((chapterList, chapteri) => {
-          return (
-            chapterList && (
-              <BibleChapterText
-                key={chapteri}
-                chapteri={chapteri}
-                list={chapterList}
-              />
-            )
-          );
-        })}
-        <BottomBox />
+        <RolledContent speedKfAtom={speedKfAtom}>
+          {chapterList?.map((chapterList, chapteri) => {
+            return (
+              chapterList && (
+                <BibleChapterText
+                  key={chapteri}
+                  chapteri={chapteri}
+                  list={chapterList}
+                />
+              )
+            );
+          })}
+          <BottomBox />
+        </RolledContent>
       </List>
     </>
   );

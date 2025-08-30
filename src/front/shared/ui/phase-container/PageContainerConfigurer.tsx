@@ -45,7 +45,8 @@ export function PageContainerConfigurer(props: PageContainerConfigurerProps) {
       $withoutFooter={withoutFooter}
     >
       <StyledPhaseContainerConfigurerHeader
-        className={'header flex between full-width' + (props.hideFooterMenu ? ' hideFooterMenu' : '')}
+        className="header flex between full-width"
+        st-hide-footer-menu={props.hideFooterMenu ? '' : undefined}
       >
         {props.withoutBackButton
           ? props.headTitle && (

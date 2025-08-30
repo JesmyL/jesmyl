@@ -104,7 +104,8 @@ body {
   @include numeric-1-9-builder('rem');
   @include numeric-1-9-builder('em');
 
-  &:has(.hideFooterMenu) {
+  &:has([st-hide-footer-menu]),
+  &:has([st-fullscreen]) {
     --footer-height: 0px;
     --footer-opacity: 0;
 
@@ -164,7 +165,7 @@ body {
       height: var(--phase-container-height);
     }
 
-    &.fullscreen-mode {
+    &[st-fullscreen] {
       --header-top: calc(0px - var(--header-height));
       --header-container-top: calc(0px - var(--header-content-height));
       --footer-bottom: calc(0px - var(--footer-height));

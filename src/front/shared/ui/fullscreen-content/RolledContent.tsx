@@ -1,18 +1,24 @@
-import { isFullscreenAtom } from '#shared/lib/atoms/fullscreen';
+import { hideAppFooterAtom } from '#basis/lib/atoms/hideAppFooterAtom';
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { cmSpeedRollKfAtom } from '$cm/basis/lib/store/atoms';
-import { useAtom, useAtomValue } from 'atomaric';
+import { Atom, useAtom } from 'atomaric';
 import { HTMLAttributes, PropsWithChildren, useEffect, useRef, useState } from 'react';
+import { itNIt } from 'shared/utils';
 import styled from 'styled-components';
 
-export function RollControled(props: PropsWithChildren<HTMLAttributes<HTMLDivElement>>) {
-  const isFullscreen = useAtomValue(isFullscreenAtom);
-  const [speedRollKf, setSpeedRollKf] = useAtom(cmSpeedRollKfAtom);
+export const RolledContent = ({
+  speedKfAtom,
+  ...props
+}: PropsWithChildren<HTMLAttributes<HTMLDivElement>> & { speedKfAtom: Atom<number> }) => {
+  const [speedRollKf, setSpeedRollKf] = useAtom(speedKfAtom);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isRolling, setIsRolling] = useState(false);
 
   useEffect(() => {
+    hideAppFooterAtom.set(isRolling);
+
     if (containerRef.current?.parentElement == null || !isRolling) return;
+
     const node = containerRef.current.parentElement;
     let rollTimeout: TimeOut;
     let prevScrollTop = -1;
@@ -34,16 +40,24 @@ export function RollControled(props: PropsWithChildren<HTMLAttributes<HTMLDivEle
     return () => clearTimeout(rollTimeout);
   }, [isRolling, speedRollKf]);
 
+  useEffect(() => {
+    return hookEffectPipe()
+      .pipe(
+        addEventListenerPipe(window, 'keydown', event => {
+          if (event.code !== 'Space') return;
+          event.preventDefault();
+          setIsRolling(itNIt);
+        }),
+      )
+      .effect();
+  }, []);
+
   return (
     <RollContent
       {...props}
-      onClick={() => setIsRolling(is => !is)}
+      onClick={() => setIsRolling(itNIt)}
       ref={containerRef}
-      className={
-        'roll-controled-container full-width full-height' +
-        (isFullscreen ? ' fullscreen' : '') +
-        ('' + (props.className || ''))
-      }
+      className={'roll-controled-container full-width full-height ' + (props.className || '')}
     >
       <div className={'roll-controls pointer flex column center' + (isRolling ? ' open' : '')}>
         <LazyIcon
@@ -67,13 +81,13 @@ export function RollControled(props: PropsWithChildren<HTMLAttributes<HTMLDivEle
       {props.children}
     </RollContent>
   );
-}
+};
 
 const RollContent = styled.div`
   transition: padding 0.3s;
   padding: 0;
 
-  &.fullscreen {
+  [st-fullscreen] {
     padding-top: 30%;
   }
 

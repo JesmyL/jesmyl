@@ -1,5 +1,5 @@
-import { RollControled } from '$cm/base/RolledContent';
-import { cmComFontSizeAtom } from '$cm/basis/lib/store/atoms';
+import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
+import { cmComFontSizeAtom, cmSpeedRollKfAtom } from '$cm/basis/lib/store/atoms';
 import { Com } from '$cm/col/com/Com';
 import { CmComNumber } from '$cm/col/com/complect/ComNumber';
 import { ComOrders } from '$cm/col/com/orders/ComOrders';
@@ -11,7 +11,7 @@ export function FullscreenExpandComList({ coms }: { coms: Com[] }) {
 
   return (
     <ExpandContent className="com-expand-content full-height">
-      <RollControled>
+      <RolledContent speedKfAtom={cmSpeedRollKfAtom}>
         <div className="inner-content">
           {coms?.map(com => (
             <div key={com.wid}>
@@ -25,7 +25,7 @@ export function FullscreenExpandComList({ coms }: { coms: Com[] }) {
             </div>
           ))}
         </div>
-      </RollControled>
+      </RolledContent>
     </ExpandContent>
   );
 }
