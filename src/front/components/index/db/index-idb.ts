@@ -1,12 +1,14 @@
 import { AppName } from '#basis/model/App.model';
 import { DexieDB } from '#shared/lib/DexieDB';
+import { Atom } from 'atomaric';
 import { DeviceId, IScheduleWidget, IScheduleWidgetWid, ScheduleWidgetPhotoKey } from 'shared/api';
 import { FileAssociations } from '../parts/actions/files/complect/MyFilesTypeBox';
+import { indexDeviceIdAtom } from './atoms';
 
 interface Storage {
   lastModifiedAt: number;
   appFontFamily: string | null;
-  deviceId: DeviceId;
+  deviceId: DeviceId | null;
 
   currentApp: AppName;
   fileAssociations?: FileAssociations;
@@ -23,7 +25,7 @@ class IndexIDB extends DexieDB<Storage> {
       appFontFamily: { $byDefault: null },
       currentApp: { $byDefault: 'cm' },
       fileAssociations: { $byDefault: {} as never },
-      deviceId: { $byDefault: DeviceId.def },
+      deviceId: { $byDefault: null },
       lastScheduleWid: { $byDefault: NaN },
 
       schs: {
@@ -38,3 +40,20 @@ class IndexIDB extends DexieDB<Storage> {
 }
 
 export const indexIDB = new IndexIDB();
+
+(async () => {
+  const removeWithAtomSet = async <
+    Key extends keyof typeof indexIDB.tb,
+    Value extends Awaited<ReturnType<(typeof indexIDB.get)[Key]>>,
+  >(
+    key: Key,
+    atom: Atom<Value>,
+  ) => {
+    const value = (await indexIDB.get[key]()) as Value;
+    if (value == null) return;
+    atom.set(value);
+    indexIDB.remove[key]();
+  };
+
+  await removeWithAtomSet('deviceId', indexDeviceIdAtom);
+})();

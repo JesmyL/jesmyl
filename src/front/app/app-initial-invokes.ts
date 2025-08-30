@@ -1,4 +1,5 @@
 import { schTsjrpcBaseClient } from '#widgets/schedule/tsjrpc/tsjrpc.base';
+import { indexDeviceIdAtom } from '$index/db/atoms';
 import { indexIDB } from '$index/db/index-idb';
 import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
 import { soki } from 'front/soki';
@@ -9,12 +10,12 @@ export const appInitialInvokes = () => {
 
   const getFreshes = async () => {
     const lastModfiedAt = await indexIDB.get.lastModifiedAt();
-    const deviceId = await indexIDB.get.deviceId();
+    const deviceId = indexDeviceIdAtom.get();
 
     try {
       if (deviceId === DeviceId.def) {
         const deviceId = await indexTsjrpcClientMethods.getDeviceId();
-        indexIDB.set.deviceId(deviceId);
+        indexDeviceIdAtom.set(deviceId);
       }
     } catch (_e) {
       //

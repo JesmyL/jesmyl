@@ -1,14 +1,14 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { comEditorBusiesAtom } from '$cm+editor/basis/lib/atoms/com';
 import { cmEditorClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
-import { indexIDB } from '$index/db/index-idb';
+import { indexDeviceIdAtom } from '$index/db/atoms';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { CmComWid } from 'shared/api';
 import styled from 'styled-components';
 
 export const EditCompositionBusyInfo = ({ comw }: { comw: CmComWid }) => {
-  const deviceId = indexIDB.useValue.deviceId();
+  const deviceId = useAtomValue(indexDeviceIdAtom);
   const busies = useAtomValue(comEditorBusiesAtom);
 
   useEffect(() => {

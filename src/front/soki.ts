@@ -1,10 +1,10 @@
 import { tsjrpcBaseClientNext } from '#basis/lib/TsjrpcBase.client';
+import { indexDeviceIdAtom } from '$index/db/atoms';
 import { makeRegExp } from 'regexpert';
 import { SokiError, TsjrpcClientEvent, TsjrpcClientTool, TsjrpcServerEvent } from 'shared/api';
 import { Eventer } from 'shared/utils';
 import { jversion } from 'shared/values';
 import { authIDB } from './components/index/db/auth-idb';
-import { indexIDB } from './components/index/db/index-idb';
 import { environment } from './environment';
 
 export class SokiTrip {
@@ -47,7 +47,7 @@ export class SokiTrip {
       await this.send({
         token: await authIDB.get.token(),
         visitInfo: {
-          deviceId: await indexIDB.get.deviceId(),
+          deviceId: indexDeviceIdAtom.get(),
           version: jversion.num,
           urls: this.urls.length ? this.urls : [this.getCurrentUrl()],
           clientTm: Date.now(),
