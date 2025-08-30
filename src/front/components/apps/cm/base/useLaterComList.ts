@@ -1,5 +1,7 @@
 import { cmConstantsConfigAtom, cmLaterComwListAtom } from '$cm/basis/lib/store/atoms';
 import { useAtomValue } from 'atomaric';
+import { useEffect } from 'react';
+import { itIt, itNIt } from 'shared/utils';
 
 const addLaterComw = async (comw: number) => {
   const { maxLaterComsVizitedCount } = cmConstantsConfigAtom.get();
@@ -10,15 +12,22 @@ const addLaterComw = async (comw: number) => {
     set.delete(comw);
     set.add(comw);
     const result = Array.from(set).reverse();
-    result.length = maxLaterComsVizitedCount;
+    if (result.length > maxLaterComsVizitedCount) {
+      result.length = maxLaterComsVizitedCount;
+    }
 
     return result;
   });
 };
 
 export function useLaterComList() {
-  return {
-    laterComws: useAtomValue(cmLaterComwListAtom),
-    addLaterComw,
-  };
+  const laterComws = useAtomValue(cmLaterComwListAtom);
+
+  useEffect(() => {
+    if (!laterComws.some(itNIt)) return;
+    cmLaterComwListAtom.set(prev => prev.filter(itIt));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return { laterComws, addLaterComw };
 }
