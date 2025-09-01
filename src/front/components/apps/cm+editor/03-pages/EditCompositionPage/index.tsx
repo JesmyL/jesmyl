@@ -71,6 +71,7 @@ export const CmEditCompositionPage = () => {
         </>
       }
       withoutBackSwipe
+      backButtonPath="/cm/edit/coms/"
       head={
         <>
           {connectionNode}
