@@ -1,3 +1,4 @@
+import { propagationStopper } from '#shared/lib/event-funcs';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { AllHTMLAttributes, useEffect, useRef } from 'react';
@@ -26,6 +27,7 @@ export const TextInput = ({
 
     return hookEffectPipe()
       .pipe(
+        addEventListenerPipe(inputNode, 'keydown', propagationStopper),
         addEventListenerPipe(inputNode, 'input', event => {
           onInput?.('' + ((event.target as never as { value: string })?.value || ''));
           if (multiline) mylib.setInputHeightByContent(inputNode);
