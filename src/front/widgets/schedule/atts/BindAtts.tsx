@@ -1,4 +1,5 @@
 import { StrongDiv } from '#basis/ui/strong-control/StrongDiv';
+import { propagationStopper } from '#shared/lib/event-funcs';
 import { MyLib, mylib } from '#shared/lib/my-lib';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
@@ -98,7 +99,7 @@ export const ScheduleWidgetBindAtts = ({
         </ModalFooter>
       </Modal>
 
-      <div className="flex flex-gap">
+      <div className="flex flex-gap my-3">
         <LazyIcon icon="Attachment01" />
         Вложения
         <LazyIcon
@@ -107,7 +108,10 @@ export const ScheduleWidgetBindAtts = ({
           onClick={isModalOpenAtom.do.toggle}
         />
       </div>
-      <StyledBoxes className="flex flex-gap no-scrollbar">
+      <StyledBoxes
+        className="flex flex-gap no-scrollbar"
+        onTouchStart={propagationStopper}
+      >
         {attEntries?.length ? (
           attEntries.map(([attKey]) => {
             return (
