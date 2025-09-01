@@ -33,7 +33,7 @@ export const TranslationSlidePreview = ({ isPreview = true }: Props) => {
           </div>
           <FullButton
             icon="PencilEdit02"
-            onClick={isSettingsOpenAtom.toggle}
+            onClick={isSettingsOpenAtom.do.toggle}
           />
         </>
       )}

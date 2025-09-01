@@ -18,7 +18,7 @@ export const OrdersRedactorOrderToolsBlockType = ({ com, ord, ordi }: OrdersReda
       <BottomPopupItem
         icon="Cube"
         title="Тип блока"
-        onClick={isModalOpenAtom.toggle}
+        onClick={isModalOpenAtom.do.toggle}
       />
 
       <Modal openAtom={isModalOpenAtom}>

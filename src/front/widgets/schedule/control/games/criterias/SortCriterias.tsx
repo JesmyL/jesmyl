@@ -17,7 +17,7 @@ export function ScheduleWidgetSortCriterias() {
 
   return (
     <>
-      <TheButton onClick={isOpenCriteriasAtom.toggle}>Посмотреть критерии сортировки</TheButton>
+      <TheButton onClick={isOpenCriteriasAtom.do.toggle}>Посмотреть критерии сортировки</TheButton>
 
       <FullContent openAtom={isOpenCriteriasAtom}>
         <h3 className="flex flex-gap">

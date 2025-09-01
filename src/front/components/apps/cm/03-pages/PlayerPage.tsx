@@ -110,7 +110,7 @@ export const CmPlayerPage = () => {
       head={
         <span
           className="flex gap-2"
-          onClick={isOpenAllComsAtom.toggle}
+          onClick={isOpenAllComsAtom.do.toggle}
         >
           <span className={isOpenAllComs ? 'text-x7' : ''}>
             <LazyIcon
@@ -145,7 +145,7 @@ export const CmPlayerPage = () => {
             importantOnClick={({ defaultClick }) => {
               isCanPlay = true;
               defaultClick();
-              comPlayerIsPlayAtom.toggle();
+              comPlayerIsPlayAtom.do.toggle();
             }}
             comDescription={com => {
               return (

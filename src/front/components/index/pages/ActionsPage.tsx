@@ -24,7 +24,7 @@ export function IndexActionsPage() {
           <BrutalItem
             iconNode={<LazyIcon icon="QrCode01" />}
             title="Читать QR"
-            onClick={isOpenAtom.toggle}
+            onClick={isOpenAtom.do.toggle}
           />
           <Link
             to="/!other/$appName/actions/files"

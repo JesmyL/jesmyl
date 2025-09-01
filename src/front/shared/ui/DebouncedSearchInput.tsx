@@ -1,6 +1,6 @@
 import { isNumberSearchAtom } from '#basis/lib/atoms/isNumberSearchAtom';
 import { UsedWid, useWid } from '#shared/lib/hooks/useWid';
-import { atom, Atom, useAtom, useAtomSet, useAtomToggle, useAtomValue } from 'atomaric';
+import { atom, Atom, useAtom, useAtomSet, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { LazyIcon } from './the-icon/LazyIcon';
@@ -25,7 +25,6 @@ export const DebouncedSearchInput = ({ debounce = 300, className = '', placehold
   const setDebouncedTerm = useAtomSet(debouncedTermAtom);
 
   const isNumberSearch = useAtomValue(isNumberSearchAtom);
-  const isNumberSearchToggle = useAtomToggle(isNumberSearchAtom);
 
   useEffect(
     () => () => {
@@ -41,7 +40,7 @@ export const DebouncedSearchInput = ({ debounce = 300, className = '', placehold
       <LazyIcon
         className="pointer"
         icon={iconName}
-        onClick={() => isNumberSearchToggle()}
+        onClick={isNumberSearchAtom.do.toggle}
       />
       <StyledInput
         key={iconName}

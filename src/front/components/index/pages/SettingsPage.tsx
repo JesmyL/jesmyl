@@ -46,13 +46,13 @@ export function IndexSettingsPage() {
     <BrutalItem
       iconNode={<LazyIcon icon="PlayListFavourite02" />}
       title="Показывать плеер"
-      onClick={indexIsShowPlayerInFooterAtom.toggle}
+      onClick={indexIsShowPlayerInFooterAtom.do.toggle}
       box={<IconCheckbox valueAtom={indexIsShowPlayerInFooterAtom} />}
     />,
     <BrutalItem
       iconNode={<LazyIcon icon="PaintBoard" />}
       title="Анимации"
-      onClick={indexIsPlayAnimationsAtom.toggle}
+      onClick={indexIsPlayAnimationsAtom.do.toggle}
       box={<IconCheckbox valueAtom={indexIsPlayAnimationsAtom} />}
     />,
     <BrutalItem

@@ -21,7 +21,7 @@ export const ComPlayerPlayButton = ({ src, className = '', isPlayOwnOnly }: Prop
       withoutAnimation
       onClick={() => {
         comPlayerPlaySrcAtom.set(src);
-        comPlayerIsPlayAtom.toggle();
+        comPlayerIsPlayAtom.do.toggle();
       }}
     />
   );

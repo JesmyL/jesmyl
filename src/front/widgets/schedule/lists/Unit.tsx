@@ -41,7 +41,7 @@ export function ScheduleWidgetListUnit(props: Props) {
                     <LazyIcon
                       className="pointer"
                       icon="Edit02"
-                      onClick={isModalOpenAtom.toggle}
+                      onClick={isModalOpenAtom.do.toggle}
                     />
                   )
               : null

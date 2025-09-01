@@ -27,7 +27,7 @@ export function ScheduleWidgetDayEventEventActions({ schedule, event, onEventCut
         icon="Shapes"
         postfix="Редактировать шаблон события"
         className="flex-max margin-gap-v"
-        onClick={isOpenModalAtom.toggle}
+        onClick={isOpenModalAtom.do.toggle}
       />
       <TheIconButton
         icon="Crop"

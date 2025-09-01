@@ -20,7 +20,7 @@ export const LocalListToolsPopup = ({ coms }: { coms: Com[] | und }) => {
       <BottomPopupItem
         icon="BookOpen02"
         title="Раскрыть песни списка"
-        onClick={isOpenListAtom.toggle}
+        onClick={isOpenListAtom.do.toggle}
       />
       {linkToCom({
         children: (
@@ -37,7 +37,7 @@ export const LocalListToolsPopup = ({ coms }: { coms: Com[] | und }) => {
       <BottomPopupItem
         icon="QrCode01"
         title="Поделиться списком"
-        onClick={isOpenQrAtom.toggle}
+        onClick={isOpenQrAtom.do.toggle}
       />
 
       <ComListQrShare

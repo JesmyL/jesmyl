@@ -15,7 +15,7 @@ export function ScheduleWidgetTeamGameSetTeamsButton() {
     <>
       <TheButton
         disabled={!criterias?.length}
-        onClick={isOpenFullContentAtom.toggle}
+        onClick={isOpenFullContentAtom.do.toggle}
       >
         Сформировать команды
       </TheButton>

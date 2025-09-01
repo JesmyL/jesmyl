@@ -20,7 +20,7 @@ export function ScheduleWidgetNewUserRegisterLevel() {
         icon="ArrowRight01"
         className="margin-big-gap-v margin-gap-l"
         prefix="Права по умолчанию"
-        onClick={isModalOpenAtom.toggle}
+        onClick={isModalOpenAtom.do.toggle}
       />
 
       <Modal openAtom={isModalOpenAtom}>

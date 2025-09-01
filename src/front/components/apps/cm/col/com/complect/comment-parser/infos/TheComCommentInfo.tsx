@@ -35,7 +35,7 @@ export function TheComCommentInfo({ HashSwitcherIcon }: { HashSwitcherIcon: Stam
         {'Оно может содержать Библейские '}
         <span
           className="pointer color--7 text-underline text-italic"
-          onClick={isOpenBibleInfoAtom.toggle}
+          onClick={isOpenBibleInfoAtom.do.toggle}
         >
           тексты
         </span>

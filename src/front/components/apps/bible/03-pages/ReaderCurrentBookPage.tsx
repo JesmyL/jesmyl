@@ -53,7 +53,7 @@ function Content() {
       headTitle={
         <span
           className="pointer"
-          onClick={isOpenBookSelectorAtom.toggle}
+          onClick={isOpenBookSelectorAtom.do.toggle}
         >
           <BibleAddressSingle />
         </span>

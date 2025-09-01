@@ -12,7 +12,7 @@ export function BibleModulesTranslationsRedactButton(): JSX.Element {
       <LazyIcon
         className="pointer"
         icon="PencilEdit02"
-        onClick={isOpenModalAtom.toggle}
+        onClick={isOpenModalAtom.do.toggle}
       />
 
       <Modal openAtom={isOpenModalAtom}>

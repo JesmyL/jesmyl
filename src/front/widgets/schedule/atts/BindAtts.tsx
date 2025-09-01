@@ -104,7 +104,7 @@ export const ScheduleWidgetBindAtts = ({
         <LazyIcon
           className="pointer"
           icon="PlusSign"
-          onClick={isModalOpenAtom.toggle}
+          onClick={isModalOpenAtom.do.toggle}
         />
       </div>
       <StyledBoxes className="flex flex-gap no-scrollbar">

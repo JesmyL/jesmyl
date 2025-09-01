@@ -30,7 +30,7 @@ export default function IconConfigurator(props: {
       <TheIconButton
         icon={props.icon ?? 'HelpSquare'}
         postfix="Изменить иконку"
-        onClick={isOpenModalAtom.toggle}
+        onClick={isOpenModalAtom.do.toggle}
         className="flex-max margin-gap-v"
         isLoading={loadingIcon != null}
       />

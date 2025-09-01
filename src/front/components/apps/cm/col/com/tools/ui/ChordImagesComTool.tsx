@@ -15,7 +15,7 @@ export const ChordImagesComTool = () => {
         title="Аппликатура аккордов"
         icon="TwoFinger05"
         iconClassName="-scale-x-100!"
-        onClick={isOpenAtom.toggle}
+        onClick={isOpenAtom.do.toggle}
       />
 
       <FullContent

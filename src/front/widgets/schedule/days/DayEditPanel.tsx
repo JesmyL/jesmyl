@@ -57,7 +57,7 @@ export function ScheduleWidgetDayEditPanel({ day, dayi, schedule, scheduleScopeP
         postfix="Загрузить текстовое расписание"
         disabled={day.list.length > 0}
         disabledReason="Расписание дня должно быть пустым"
-        onClick={isOpenDayListUpdaterAtom.toggle}
+        onClick={isOpenDayListUpdaterAtom.do.toggle}
       />
 
       <FullContent openAtom={isOpenDayListUpdaterAtom}>

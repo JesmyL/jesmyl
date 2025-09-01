@@ -21,13 +21,13 @@ export const EditCompositionsMore = ({ onClose }: { onClose(is: boolean): void }
         id="create-com-button"
         icon="PlusSignCircle"
         title="Новая песня"
-        onClick={isComCreatorOpenAtom.toggle}
+        onClick={isComCreatorOpenAtom.do.toggle}
       />
       <BottomPopupItem
         id="create-com-button"
         icon="FileRemove"
         title="Удалённые песни"
-        onClick={isRemovedComsOpenAtom.toggle}
+        onClick={isRemovedComsOpenAtom.do.toggle}
       />
 
       <FullContent openAtom={isComCreatorOpenAtom}>

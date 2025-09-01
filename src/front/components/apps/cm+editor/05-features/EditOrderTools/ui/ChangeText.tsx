@@ -19,7 +19,7 @@ export const OrdersRedactorOrderToolsChangeText = ({ com, ord, ordi }: OrdersRed
       <BottomPopupItem
         icon="Text"
         title="Заменить текст"
-        onClick={isModalOpenAtom.toggle}
+        onClick={isModalOpenAtom.do.toggle}
       />
 
       <Modal openAtom={isModalOpenAtom}>

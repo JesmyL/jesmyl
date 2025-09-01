@@ -68,7 +68,7 @@ export const CmCatPage = (props: Props) => {
         withoutBackButton={props.withoutBackButton}
         headClass="flex between full-width"
         backButtonPath={props.backButtonPath}
-        onMoreClick={isOpenRatingSortedComsAtom.toggle}
+        onMoreClick={isOpenRatingSortedComsAtom.do.toggle}
         head={
           <CmComListSearchFilterInput
             Constructor={Com}

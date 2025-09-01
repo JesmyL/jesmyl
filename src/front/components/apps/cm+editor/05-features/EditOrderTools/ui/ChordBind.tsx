@@ -17,7 +17,7 @@ export const OrdersRedactorOrderToolsChordBind = ({ com, ord, ordi }: OrdersReda
       <BottomPopupItem
         icon="Playlist03"
         title="Аккорды"
-        onClick={isModalOpenAtom.toggle}
+        onClick={isModalOpenAtom.do.toggle}
       />
 
       <Modal openAtom={isModalOpenAtom}>

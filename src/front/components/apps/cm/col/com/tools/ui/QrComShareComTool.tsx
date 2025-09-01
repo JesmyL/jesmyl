@@ -21,7 +21,7 @@ export const QrComShareComTool = () => {
       <ComTool
         title="Поделиться по QR"
         icon="QrCode"
-        onClick={isOpenQrAtom.toggle}
+        onClick={isOpenQrAtom.do.toggle}
       />
 
       <QrCodeFullScreen

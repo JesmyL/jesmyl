@@ -27,7 +27,7 @@ export const CmComEditTransposition = ({ ccom }: { ccom: EditableCom }) => {
   return (
     <>
       <TheIconButton
-        onClick={isOpenModalAtom.toggle}
+        onClick={isOpenModalAtom.do.toggle}
         icon="Notification01"
         postfix={
           <>

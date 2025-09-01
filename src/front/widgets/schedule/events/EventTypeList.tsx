@@ -124,7 +124,7 @@ export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCount
       <TheIconButton
         icon={icon}
         postfix={postfix}
-        onClick={isModalOpenAtom.toggle}
+        onClick={isModalOpenAtom.do.toggle}
       />
     </>
   );

@@ -65,7 +65,7 @@ export function ScheduleWidget({
       <span className="flex flex-gap">
         <LazyIcon
           icon="QrCode"
-          onClick={isOpenInviteQrAtom.toggle}
+          onClick={isOpenInviteQrAtom.do.toggle}
         />
         {editIcon}
       </span>

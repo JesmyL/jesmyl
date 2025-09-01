@@ -37,7 +37,7 @@ export function ScheduleWidgetRemovableUserFace({ user, isStriked, buttons }: Pr
             <LazyIcon
               icon="Image02"
               className="pointer color--7"
-              onClick={isPhotoOpenAtom.toggle}
+              onClick={isPhotoOpenAtom.do.toggle}
             />
           }
         />

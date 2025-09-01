@@ -25,7 +25,7 @@ export function ScheduleWidgetCustomAttachments(props: { tatts: ScheduleWidgetAp
             <LazyIcon icon="ArrowRight01" />
           </>
         }
-        onClick={isModalOpenAtom.toggle}
+        onClick={isModalOpenAtom.do.toggle}
         className="flex-max margin-gap-v"
       />
 

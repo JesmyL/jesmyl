@@ -14,7 +14,7 @@ export const ComCopyTextTool = () => {
       <ComTool
         title="Копировать текст песни"
         icon="Copy01"
-        onClick={isOpenAtom.toggle}
+        onClick={isOpenAtom.do.toggle}
       />
 
       <Modal openAtom={isOpenAtom}>{ccom && <ComCopyTextModalInner com={ccom} />}</Modal>

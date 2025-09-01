@@ -40,7 +40,7 @@ export function ScheduleWidgetUserAddByExcel() {
       <LazyIcon
         className="pointer"
         icon="FileImport"
-        onClick={isOpenFullContentAtom.toggle}
+        onClick={isOpenFullContentAtom.do.toggle}
       />
 
       <FullContent openAtom={isOpenFullContentAtom}>

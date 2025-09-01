@@ -74,7 +74,7 @@ export const EditEERulesPage = () => {
             </TheButton>
             <TheIconButton
               icon="SearchVisual"
-              onClick={isOpenSearchWordAtom.toggle}
+              onClick={isOpenSearchWordAtom.do.toggle}
             />
           </div>
           <IconCheckbox

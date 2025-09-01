@@ -57,7 +57,7 @@ export const CmMeetingEventEditsHistoryModalInner = ({ dayi, schw }: { dayi: num
         <span>История {historyPacks.length > limit ? `${limit}/${historyPacks.length}` : historyPacks.length}</span>
         <TheIconButton
           icon="TradeUp"
-          onClick={isOpenStatisticAtom.toggle}
+          onClick={isOpenStatisticAtom.do.toggle}
         />
       </ModalHeader>
       <ModalBody>

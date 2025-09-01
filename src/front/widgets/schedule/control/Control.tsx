@@ -35,7 +35,7 @@ export const ScheduleWidgetControl = () => {
               Управление <LazyIcon icon="ArrowRight01" />
             </>
           }
-          onClick={isModalOpenAtom.toggle}
+          onClick={isModalOpenAtom.do.toggle}
           className="margin-gap-v flex-max"
         />
       ) : (
@@ -46,7 +46,7 @@ export const ScheduleWidgetControl = () => {
               Участники <LazyIcon icon="ArrowRight01" />
             </>
           }
-          onClick={isModalOpenAtom.toggle}
+          onClick={isModalOpenAtom.do.toggle}
           className="margin-gap-v flex-max"
         />
       )}

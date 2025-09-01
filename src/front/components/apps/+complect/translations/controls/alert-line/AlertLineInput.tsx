@@ -23,7 +23,7 @@ export const AlertLineInput = () => {
         <LazyIcon
           className="pointer"
           icon="Settings01"
-          onClick={isOpenSettingsModalAtom.toggle}
+          onClick={isOpenSettingsModalAtom.do.toggle}
         />
 
         <TextInput

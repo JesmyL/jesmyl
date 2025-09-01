@@ -33,7 +33,7 @@ export function ScheduleWidgetCopy(props: { schw: IScheduleWidgetWid }) {
       <TheIconButton
         icon="Copy02"
         postfix="Скопировать расписание"
-        onClick={isModalOpenAtom.toggle}
+        onClick={isModalOpenAtom.do.toggle}
       />
 
       {schedule ? (

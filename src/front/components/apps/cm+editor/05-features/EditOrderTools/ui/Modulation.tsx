@@ -24,7 +24,7 @@ export const OrdersRedactorOrderToolsModulation = ({ com, ord, ordi }: OrdersRed
       <BottomPopupItem
         icon="Flash"
         title="Значение модуляции"
-        onClick={isModalOpenAtom.toggle}
+        onClick={isModalOpenAtom.do.toggle}
       />
 
       <Modal openAtom={isModalOpenAtom}>

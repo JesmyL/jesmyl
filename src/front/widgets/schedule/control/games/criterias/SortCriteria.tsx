@@ -128,7 +128,7 @@ export function ScheduleWidgetSortCriteria({ criteria, criteriai }: Props) {
                 user={user}
               />
             ))}
-            <TheButton onClick={isOpenAtom.toggle}>Распределить</TheButton>
+            <TheButton onClick={isOpenAtom.do.toggle}>Распределить</TheButton>
           </>
         )}
 

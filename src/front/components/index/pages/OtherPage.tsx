@@ -83,7 +83,7 @@ export const IndexOtherPage = () => {
           <BrutalItem
             iconNode={<LazyIcon icon="InformationCircle" />}
             title="О приложении"
-            onClick={isAboutOpenAtom.toggle}
+            onClick={isAboutOpenAtom.do.toggle}
           />
 
           {!appList.length || (

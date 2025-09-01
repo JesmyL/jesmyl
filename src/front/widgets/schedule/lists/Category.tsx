@@ -49,7 +49,7 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
               )}
               <LazyIcon
                 icon="Edit02"
-                onClick={isModalOpenAtom.toggle}
+                onClick={isModalOpenAtom.do.toggle}
               />
             </div>
           )

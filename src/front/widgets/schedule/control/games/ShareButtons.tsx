@@ -27,7 +27,7 @@ export const ScheduleWidgetShareButtons = function ShareButtons({ prefix }: Prop
       <LazyIcon
         className="pointer"
         icon="Eye"
-        onClick={isOpenGaleryAtom.toggle}
+        onClick={isOpenGaleryAtom.do.toggle}
       />
       <TheIconSendButton
         icon="CloudUpload"

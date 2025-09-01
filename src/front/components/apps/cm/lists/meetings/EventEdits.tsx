@@ -36,13 +36,13 @@ export const CmMeetingEventEdits = ({
       {!selectedComs.length || mylib.isEq(selectedComws, packComws) || (
         <TheIconButton
           icon="Sent"
-          onClick={isOpenSendModalAtom.toggle}
+          onClick={isOpenSendModalAtom.do.toggle}
         />
       )}
 
       <TheIconButton
         icon="WorkHistory"
-        onClick={isOpenHistoryModalAtom.toggle}
+        onClick={isOpenHistoryModalAtom.do.toggle}
       />
 
       <Modal openAtom={isOpenHistoryModalAtom}>

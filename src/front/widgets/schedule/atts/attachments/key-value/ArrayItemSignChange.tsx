@@ -49,7 +49,7 @@ export function ScheduleKeyValueListAttArrayItemKeyChange(props: {
       <LazyIcon
         icon="ArrowReloadHorizontal"
         className="pointer"
-        onClick={isModalOpenAtom.toggle}
+        onClick={isModalOpenAtom.do.toggle}
       />
 
       <Modal openAtom={isModalOpenAtom}>

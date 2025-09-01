@@ -49,7 +49,7 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
         <LazyIcon
           className="pointer"
           icon="Edit01"
-          onClick={isCatRedactModalOpenAtom.toggle}
+          onClick={isCatRedactModalOpenAtom.do.toggle}
         />
       )}
 
@@ -192,14 +192,14 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
               {roleUser ? (
                 <TheIconButton
                   icon="ArrowReloadHorizontal"
-                  onClick={isUserSetModalOpenAtom.toggle}
+                  onClick={isUserSetModalOpenAtom.do.toggle}
                   postfix="Заменить человека"
                   className="flex-max margin-gap-v"
                 />
               ) : (
                 <TheIconButton
                   icon="UserAdd01"
-                  onClick={isUserSetModalOpenAtom.toggle}
+                  onClick={isUserSetModalOpenAtom.do.toggle}
                   postfix="Назначить человека"
                   className="flex-max margin-gap-v"
                 />
@@ -207,7 +207,7 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
               {role.mi > 0 && (
                 <TheIconButton
                   icon="GridView"
-                  onClick={isCatSetModalOpenAtom.toggle}
+                  onClick={isCatSetModalOpenAtom.do.toggle}
                   postfix={`Категория ${rights.schedule.ctrl.cats[role.cati || 0] || 'Основное'}`}
                   className="flex-max margin-gap-v"
                 />
