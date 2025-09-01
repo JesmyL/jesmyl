@@ -40,8 +40,8 @@ namespace N6919875af70bbcb2cef09ae314751706_1 {
 }
 
 namespace N6919875af70bbcb2cef09ae314751706_2 {
-  type $0 = `${$translate}:${$book}${OptRepeatingString<` `>}${$chapter}:${$verseDiapason}`;
-  type $translate = string;
+  type $0 = `${$translate | ''}${$book}${OptRepeatingString<` `>}${$chapter}:${$verseDiapason}`;
+  type $translate = `${string}:`;
   type $book = `${$bookPrefix | ''}${$bookTitle}`;
   type $bookPrefix = `${$bookNumberWithSuffix}${OptRepeatingString<` `>}`;
   type $bookNumberWithSuffix = `${$bookNumber}${`-` | ''}${$bookNumberSuffix}` | $bookTitleFrom;
@@ -56,10 +56,10 @@ namespace N6919875af70bbcb2cef09ae314751706_2 {
   type $verseTo = `${number}`;
 
   export interface I extends Record<
-    `/(?<translate>${string}):(?<book>(?<bookPrefix>(?<bookNumberWithSuffix>(?<bookNumber>\\d{1,3})-?(?<bookNumberSuffix>[яе]?)|(?<bookTitleFrom>От)) *)?(?<bookTitle>[а-яё]+))+ *(?<chapter>\\d{1,3}):(?<verseDiapason>(?<verseFrom>\\d{1,3})(?<verseTail>-(?<verseTo>\\d{1,3}))?)/gi`,
+    `/(?<translate>${string}:)?(?<book>(?<bookPrefix>(?<bookNumberWithSuffix>(?<bookNumber>\\d{1,3})-?(?<bookNumberSuffix>[яе]?)|(?<bookTitleFrom>От)) *)?(?<bookTitle>[а-яё]+))+ *(?<chapter>\\d{1,3}):(?<verseDiapason>(?<verseFrom>\\d{1,3})(?<verseTail>-(?<verseTo>\\d{1,3}))?)/gi`,
     IgnoreCaseRecord<{
       $0: $0;
-      translate: $translate;
+      translate?: $translate;
       book: $book;
       bookPrefix?: $bookPrefix;
       bookNumberWithSuffix?: $bookNumberWithSuffix;

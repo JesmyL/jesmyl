@@ -15,7 +15,7 @@ export const useCheckIsComCommentIncludesBibleAddress = (com: Com | und) => {
   const comment = (localCommentBlock?.d.head || commentBlock?.d.head)?.join('\n') || '';
 
   isWasOpenComWithBibleAddressInComment = !!(
-    com && comment?.match(ComBlockCommentMakerCleans.firstCommentBibleAddressRegExp.regExp)
+    com && comment?.match(ComBlockCommentMakerCleans.commentHeadBibleAddressRegExp.regExp)
   );
 
   return isWasOpenComWithBibleAddressInComment;

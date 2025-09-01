@@ -4,7 +4,7 @@ import { BibleBookTranslates } from '$bible/basis/contexts/TranslatesContext';
 import { bibleLowerBooks, bibleTitles } from '$bible/basis/lib/const/bibleTitles';
 import { bibleAllTranslates, translateDescriptions } from '$bible/basis/lib/const/consts';
 import { makeNamedRegExp, makeRegExp } from 'regexpert';
-import { CmComCommentBlockSelector, CmComOrderWid } from 'shared/api';
+import { BibleTranslateName, CmComCommentBlockSelector, CmComOrderWid } from 'shared/api';
 import { css } from 'styled-components';
 import { Order } from '../../order/Order';
 
@@ -69,10 +69,10 @@ export class ComBlockCommentMakerCleans {
     `;
   };
 
-  static firstCommentBibleAddressRegExp = makeNamedRegExp(
+  static commentHeadBibleAddressRegExp = makeNamedRegExp(
     `/(?<translate>${
       '' + bibleAllTranslates.join('|')
-    }):(?<book>(?<bookPrefix>(?<bookNumberWithSuffix>(?<bookNumber>\\d{1,3})-?(?<bookNumberSuffix>[яе]?)|(?<bookTitleFrom>От)) *)?(?<bookTitle>[а-яё]+))+ *(?<chapter>\\d{1,3}):(?<verseDiapason>(?<verseFrom>\\d{1,3})(?<verseTail>-(?<verseTo>\\d{1,3}))?)/gi`,
+    }:)?(?<book>(?<bookPrefix>(?<bookNumberWithSuffix>(?<bookNumber>\\d{1,3})-?(?<bookNumberSuffix>[яе]?)|(?<bookTitleFrom>От)) *)?(?<bookTitle>[а-яё]+))+ *(?<chapter>\\d{1,3}):(?<verseDiapason>(?<verseFrom>\\d{1,3})(?<verseTail>-(?<verseTo>\\d{1,3}))?)/gi`,
   );
 
   static makeStartCommentCss = async (startComment: string, translates: BibleBookTranslates) => {
@@ -86,12 +86,13 @@ export class ComBlockCommentMakerCleans {
     );
     const accentsCss = this.makePseudoCommentContentAccentsCss(startComment);
 
-    startComment = startComment.replace(this.firstCommentBibleAddressRegExp.regExp, (...args) => {
-      const addr = this.firstCommentBibleAddressRegExp.transform(args);
+    startComment = startComment.replace(this.commentHeadBibleAddressRegExp.regExp, (...args) => {
+      const addr = this.commentHeadBibleAddressRegExp.transform(args);
 
-      const translate = translates[addr.translate as 'rst'];
+      const tName = (addr.translate?.slice(0, -1) || 'rst') as BibleTranslateName;
+      const translate = translates[tName];
       if (translate == null || translate.chapters == null)
-        return `<ПЕРЕВОД ${addr.translate} НЕ УСТАНОВЛЕН>:${addr.book} ${addr.chapter}:${addr.verseDiapason}`;
+        return `<ПЕРЕВОД ${tName} НЕ УСТАНОВЛЕН>:${addr.book} ${addr.chapter}:${addr.verseDiapason}`;
 
       const booki =
         addr.bookTitle === undefined
@@ -108,24 +109,22 @@ export class ComBlockCommentMakerCleans {
         (addr.bookNumber ? `${addr.bookNumber}${addr.bookNumberSuffix ? `-${addr.bookNumberSuffix}` : ''} ` : '') +
         addr.bookTitle;
 
-      if (booki === undefined)
-        return `${addr.translate}:<КНИГА ${bookTitle} НЕ НАЙДЕНА> ${addr.chapter}:${addr.verseDiapason}`;
+      if (booki === undefined) return `${tName}:<КНИГА ${bookTitle} НЕ НАЙДЕНА> ${addr.chapter}:${addr.verseDiapason}`;
 
       const fullBibleTitle = bibleTitles.titles[booki]?.full || bookTitle;
       const book = translate.chapters[booki];
 
       if (book == null)
         return (
-          `${addr.translate}:<КНИГИ "${fullBibleTitle}" В ПЕРЕВОДЕ ` +
-          `${translateDescriptions[addr.translate as 'rst'] || ''} НЕТ> ${addr.chapter}:${addr.verseDiapason}`
+          `${tName}:<КНИГИ "${fullBibleTitle}" В ПЕРЕВОДЕ ` +
+          `${translateDescriptions[tName] || ''} НЕТ> ${addr.chapter}:${addr.verseDiapason}`
         );
 
       const chapteri = +addr.chapter! - 1;
 
       if (mylib.isNaN(chapteri) || chapteri == null) return addr.$0;
 
-      if (book[chapteri] == null)
-        return `${addr.translate}:${fullBibleTitle} <${addr.chapter} ГЛАВЫ НЕТ>:${addr.verseDiapason}`;
+      if (book[chapteri] == null) return `${tName}:${fullBibleTitle} <${addr.chapter} ГЛАВЫ НЕТ>:${addr.verseDiapason}`;
 
       let text = '';
 
@@ -134,19 +133,17 @@ export class ComBlockCommentMakerCleans {
         const fromVersei = +verseFromStr - 1;
 
         if (mylib.isNaN(fromVersei) || book[chapteri][fromVersei] == null)
-          return (
-            `${addr.translate}:${fullBibleTitle} ${addr.chapter}:<${addr.verseFrom} СТИХА НЕТ>` + (addr.verseTail || '')
-          );
+          return `${tName}:${fullBibleTitle} ${addr.chapter}:<${addr.verseFrom} СТИХА НЕТ>` + (addr.verseTail || '');
 
         if (verseToStr != null) {
           const toVersei = +verseToStr - 1;
 
           if (mylib.isNaN(toVersei) || book[chapteri][toVersei] == null)
-            return `${addr.translate}:${fullBibleTitle} ${addr.chapter}:${addr.verseFrom}-<${verseToStr} СТИХА НЕТ>`;
+            return `${tName}:${fullBibleTitle} ${addr.chapter}:${addr.verseFrom}-<${verseToStr} СТИХА НЕТ>`;
 
           if (toVersei <= fromVersei)
             return (
-              `${addr.translate}:${fullBibleTitle} ${addr.chapter}:<${addr.verseFrom}` +
+              `${tName}:${fullBibleTitle} ${addr.chapter}:<${addr.verseFrom}` +
               `${addr.verseTail || ''} ОШИБКА ДИАПАЗОНА>`
             );
 
@@ -158,7 +155,7 @@ export class ComBlockCommentMakerCleans {
 
       return (
         `\n\n${fullBibleTitle} ${addr.chapter}:${addr.verseFrom}${addr.verseTo ? `-${addr.verseTo}` : ''} ` +
-        `(${translateDescriptions[addr.translate as 'rst']})\n` +
+        `(${translateDescriptions[tName]})\n` +
         text.replace(makeRegExp('/</?[^>]+>/g'), '')
       );
     });
