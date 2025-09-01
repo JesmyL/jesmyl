@@ -1,25 +1,29 @@
 import { hideAppFooterAtom } from '#basis/lib/atoms/hideAppFooterAtom';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { Atom, useAtom } from 'atomaric';
-import { HTMLAttributes, PropsWithChildren, useEffect, useRef, useState } from 'react';
+import { Atom, useAtomValue } from 'atomaric';
+import { HTMLAttributes, PropsWithChildren, RefObject, useEffect, useRef, useState } from 'react';
 import { itNIt } from 'shared/utils';
 import styled from 'styled-components';
 
 export const RolledContent = ({
   speedKfAtom,
+  elementRef,
   ...props
-}: PropsWithChildren<HTMLAttributes<HTMLDivElement>> & { speedKfAtom: Atom<number> }) => {
-  const [speedRollKf, setSpeedRollKf] = useAtom(speedKfAtom);
+}: PropsWithChildren<HTMLAttributes<HTMLDivElement>> & {
+  speedKfAtom: Atom<number>;
+  elementRef?: RefObject<HTMLDivElement | null>;
+}) => {
+  const speedRollKf = useAtomValue(speedKfAtom);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isRolling, setIsRolling] = useState(false);
 
   useEffect(() => {
     hideAppFooterAtom.set(isRolling);
+    const node = elementRef?.current ?? containerRef.current?.parentElement;
 
-    if (containerRef.current?.parentElement == null || !isRolling) return;
+    if (node == null || !isRolling) return;
 
-    const node = containerRef.current.parentElement;
     let rollTimeout: TimeOut;
     let prevScrollTop = -1;
     let countsToStop = 20;
@@ -37,8 +41,11 @@ export const RolledContent = ({
 
     roll();
 
-    return () => clearTimeout(rollTimeout);
-  }, [isRolling, speedRollKf]);
+    return () => {
+      clearTimeout(rollTimeout);
+      hideAppFooterAtom.reset();
+    };
+  }, [elementRef, isRolling, speedRollKf]);
 
   useEffect(() => {
     return hookEffectPipe()
@@ -65,7 +72,7 @@ export const RolledContent = ({
           onClick={event => {
             event.stopPropagation();
             if (speedRollKf <= 1) return;
-            setSpeedRollKf(speedRollKf - 1);
+            speedKfAtom.do.increment(-1);
           }}
         />
         <div>{(speedRollKf / 10).toFixed(1)}</div>
@@ -74,7 +81,7 @@ export const RolledContent = ({
           onClick={event => {
             event.stopPropagation();
             if (speedRollKf >= 20) return;
-            setSpeedRollKf(speedRollKf + 1);
+            speedKfAtom.do.increment(1);
           }}
         />
       </div>
