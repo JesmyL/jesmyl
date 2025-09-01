@@ -60,8 +60,11 @@ export const BibleReaderBookText = ({ chapterList, currentChapteri, currentVerse
 
   return (
     <>
-      <List ref={listRef}>
-        <RolledContent speedKfAtom={speedKfAtom}>
+      <RolledContent
+        speedKfAtom={speedKfAtom}
+        elementRef={listRef}
+      >
+        <List ref={listRef}>
           {chapterList?.map((chapterList, chapteri) => {
             return (
               chapterList && (
@@ -74,8 +77,8 @@ export const BibleReaderBookText = ({ chapterList, currentChapteri, currentVerse
             );
           })}
           <BottomBox />
-        </RolledContent>
-      </List>
+        </List>
+      </RolledContent>
     </>
   );
 };
