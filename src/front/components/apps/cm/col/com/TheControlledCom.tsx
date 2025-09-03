@@ -1,6 +1,7 @@
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
+import { BibleModulesTranslationsControl } from '$bible/entities/ModulesTranslationsControl';
 import { cmIsComMiniAnchorAtom } from '$cm/atoms';
 import { cmComFontSizeAtom, cmSpeedRollKfAtom } from '$cm/basis/lib/store/atoms';
 import { ChordVisibleVariant } from '$cm/Cm.model';
@@ -30,7 +31,7 @@ export const TheControlledCom = ({ com, comList, chordVisibleVariant }: Props) =
   const fontSize = useAtomValue(cmComFontSizeAtom);
   const isMiniAnchor = useAtomValue(cmIsComMiniAnchorAtom);
   const listRef = useRef<HTMLDivElement>(null);
-  const commentCss = useComCommentBlockCss(com);
+  const { commentCss, isThereUnsettedTranslate } = useComCommentBlockCss(com);
 
   const comi = comList.findIndex(c => c.wid === com.wid);
   const nextComw = comi < comList.length - 1 ? comList[comi + 1]?.wid : comList[0]?.wid;
@@ -59,6 +60,12 @@ export const TheControlledCom = ({ com, comList, chordVisibleVariant }: Props) =
 
   return (
     <>
+      {isThereUnsettedTranslate && (
+        <div className="flex gap-3">
+          Выбрать перевод
+          <BibleModulesTranslationsControl />
+        </div>
+      )}
       <StyledRollControled
         speedKfAtom={cmSpeedRollKfAtom}
         $commentStyles={commentCss}

@@ -75,7 +75,11 @@ export class ComBlockCommentMakerCleans {
     }:)?(?<book>(?<bookPrefix>(?<bookNumberWithSuffix>(?<bookNumber>\\d{1,3})-?(?<bookNumberSuffix>[яе]?)|(?<bookTitleFrom>От)) *)?(?<bookTitle>[а-яё]+))+ *(?<chapter>\\d{1,3}):(?<verseDiapason>(?<verseFrom>\\d{1,3})(?<verseTail>-(?<verseTo>\\d{1,3}))?)/gi`,
   );
 
-  static makeStartCommentCss = async (startComment: string, translates: BibleBookTranslates) => {
+  static makeStartCommentCss = async (
+    currentBibleTranslate: BibleTranslateName,
+    startComment: string,
+    translates: BibleBookTranslates,
+  ) => {
     titlesMap ??= new Map(
       bibleLowerBooks
         .map(({ full, short }, i) => [
@@ -85,14 +89,25 @@ export class ComBlockCommentMakerCleans {
         .flat() as never,
     );
     const accentsCss = this.makePseudoCommentContentAccentsCss(startComment);
+    let isThereUnsettedTranslate = false;
 
     startComment = startComment.replace(this.commentHeadBibleAddressRegExp.regExp, (...args) => {
       const addr = this.commentHeadBibleAddressRegExp.transform(args);
 
-      const tName = (addr.translate?.slice(0, -1) || 'rst') as BibleTranslateName;
+      if (!addr.translate || !addr.translate.slice(0, -1)) isThereUnsettedTranslate ||= true;
+
+      const tName = (
+        addr.translate?.slice(0, -1) ||
+        currentBibleTranslate ||
+        'rst'
+      ).toLowerCase() as BibleTranslateName;
+
+      const tNameUpper = tName.toUpperCase() as BibleTranslateName;
+
       const translate = translates[tName];
-      if (translate == null || translate.chapters == null)
-        return `<ПЕРЕВОД ${tName} НЕ УСТАНОВЛЕН>:${addr.book} ${addr.chapter}:${addr.verseDiapason}`;
+      if (translate == null || translate.chapters == null) {
+        return `\n<ПЕРЕВОД ${tNameUpper} НЕ УСТАНОВЛЕН>:${addr.book} ${addr.chapter}:${addr.verseDiapason}`;
+      }
 
       const booki =
         addr.bookTitle === undefined
@@ -109,14 +124,15 @@ export class ComBlockCommentMakerCleans {
         (addr.bookNumber ? `${addr.bookNumber}${addr.bookNumberSuffix ? `-${addr.bookNumberSuffix}` : ''} ` : '') +
         addr.bookTitle;
 
-      if (booki === undefined) return `${tName}:<КНИГА ${bookTitle} НЕ НАЙДЕНА> ${addr.chapter}:${addr.verseDiapason}`;
+      if (booki === undefined)
+        return `\n${tNameUpper}:<КНИГА ${bookTitle} НЕ НАЙДЕНА> ${addr.chapter}:${addr.verseDiapason}`;
 
       const fullBibleTitle = bibleTitles.titles[booki]?.full || bookTitle;
       const book = translate.chapters[booki];
 
       if (book == null)
         return (
-          `${tName}:<КНИГИ "${fullBibleTitle}" В ПЕРЕВОДЕ ` +
+          `\n${tNameUpper}:<КНИГИ "${fullBibleTitle}" В ПЕРЕВОДЕ ${tNameUpper} ` +
           `${translateDescriptions[tName] || ''} НЕТ> ${addr.chapter}:${addr.verseDiapason}`
         );
 
@@ -124,7 +140,8 @@ export class ComBlockCommentMakerCleans {
 
       if (mylib.isNaN(chapteri) || chapteri == null) return addr.$0;
 
-      if (book[chapteri] == null) return `${tName}:${fullBibleTitle} <${addr.chapter} ГЛАВЫ НЕТ>:${addr.verseDiapason}`;
+      if (book[chapteri] == null)
+        return `\n${tNameUpper}:${fullBibleTitle} <${addr.chapter} ГЛАВЫ НЕТ>:${addr.verseDiapason}`;
 
       let text = '';
 
@@ -133,17 +150,19 @@ export class ComBlockCommentMakerCleans {
         const fromVersei = +verseFromStr - 1;
 
         if (mylib.isNaN(fromVersei) || book[chapteri][fromVersei] == null)
-          return `${tName}:${fullBibleTitle} ${addr.chapter}:<${addr.verseFrom} СТИХА НЕТ>` + (addr.verseTail || '');
+          return (
+            `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:<${addr.verseFrom} СТИХА НЕТ>` + (addr.verseTail || '')
+          );
 
         if (verseToStr != null) {
           const toVersei = +verseToStr - 1;
 
           if (mylib.isNaN(toVersei) || book[chapteri][toVersei] == null)
-            return `${tName}:${fullBibleTitle} ${addr.chapter}:${addr.verseFrom}-<${verseToStr} СТИХА НЕТ>`;
+            return `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:${addr.verseFrom}-<${verseToStr} СТИХА НЕТ>`;
 
           if (toVersei <= fromVersei)
             return (
-              `${tName}:${fullBibleTitle} ${addr.chapter}:<${addr.verseFrom}` +
+              `\n${tNameUpper}:${fullBibleTitle} ${addr.chapter}:<${addr.verseFrom}` +
               `${addr.verseTail || ''} ОШИБКА ДИАПАЗОНА>`
             );
 
@@ -154,15 +173,18 @@ export class ComBlockCommentMakerCleans {
       }
 
       return (
-        `\n\n${fullBibleTitle} ${addr.chapter}:${addr.verseFrom}${addr.verseTo ? `-${addr.verseTo}` : ''} ` +
-        `(${translateDescriptions[tName]})\n` +
+        `\n${fullBibleTitle} ${addr.chapter}:${addr.verseFrom}${addr.verseTo ? `-${addr.verseTo}` : ''} ` +
+        `${tNameUpper} (${translateDescriptions[tName]})` +
         text.replace(makeRegExp('/</?[^>]+>/g'), '')
       );
     });
 
-    return css`
-      ${this.makePseudoCommentContentCss(startComment)}
-      ${accentsCss}
-    `;
+    return {
+      isThereUnsettedTranslate,
+      startCommentCss: css`
+        ${this.makePseudoCommentContentCss(startComment)}
+        ${accentsCss}
+      `,
+    };
   };
 }

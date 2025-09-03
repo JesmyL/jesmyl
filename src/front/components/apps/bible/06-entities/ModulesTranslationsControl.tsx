@@ -35,7 +35,7 @@ export const BibleModulesTranslationsControl = memo(function BibleModules({
               } else setShowTranslates(prev => [...prev, tName]);
             }}
           >
-            {tName}
+            {tName.toUpperCase()}
           </div>
         );
       })}

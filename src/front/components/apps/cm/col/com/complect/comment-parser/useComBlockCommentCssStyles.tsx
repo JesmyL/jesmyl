@@ -1,5 +1,7 @@
 import { useBibleTranslatesContext } from '$bible/basis/lib/contexts/translates';
+import { bibleShowTranslatesAtom } from '$bible/basis/lib/store/atoms';
 import { cmIDB } from '$cm/basis/lib/store/cmIDB';
+import { useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
@@ -10,22 +12,17 @@ import { StyledComLine } from '../../line/StyledComLine.styler';
 import { Order } from '../../order/Order';
 import { ComBlockCommentMakerCleans } from './Cleans';
 
-const plusInheritBlockStyleSelector = ` + [inherit-block-style]:not(:has(.styled-header))`;
-
-const commentHolderSelectors = [
-  '.comment-holder:nth-child(1)::before',
-  '.comment-holder:nth-child(1)::after',
-  '.comment-holder:nth-child(2)::before',
-  '.comment-holder:nth-child(2)::after',
-  '.comment-holder:nth-child(3)::before',
-  '.comment-holder:nth-child(3)::after',
-];
-
 export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order[] | und) => {
-  const [styles, setStyles] = useState<RuleSet<object> | ''>('');
+  const [styles, setStyles] = useState<
+    Partial<{
+      commentCss: RuleSet<object> | '';
+      isThereUnsettedTranslate: boolean;
+    }>
+  >({});
   const translates = useBibleTranslatesContext();
   const localCommentBlock = useLiveQuery(() => cmIDB.tb.localComCommentBlocks.get(comw), [comw]);
   const commentBlock = useLiveQuery(() => cmIDB.tb.comCommentBlocks.get(comw), [comw]);
+  const currentBibleTranslate = useAtomValue(bibleShowTranslatesAtom)[0];
 
   useEffect(() => {
     (async () => {
@@ -89,54 +86,74 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
           }
         `;
       });
+      let isThereUnsettedTranslate = false;
 
       const headCommentContents = await Promise.all(
         (localCommentBlock?.d.head ?? commentBlock?.d.head ?? []).map(async (line, linei) => {
+          const { startCommentCss, isThereUnsettedTranslate: isUnset } =
+            await ComBlockCommentMakerCleans.makeStartCommentCss(currentBibleTranslate, line, translates);
+
+          isThereUnsettedTranslate ||= isUnset;
+
           return css`
             ${commentHolderSelectors[linei - 1]
               ? `.com-orders-with-comments > ${commentHolderSelectors[linei - 1]}`
               : '&::before'} {
-              ${await ComBlockCommentMakerCleans.makeStartCommentCss(line, translates)}
+              ${startCommentCss}
             }
           `;
         }),
       );
 
-      return css`
-        --comment-opacity: 0.5;
-        --comment-opacity-accent: 0.8;
+      return {
+        isThereUnsettedTranslate,
+        commentCss: css`
+          --comment-opacity: 0.5;
+          --comment-opacity-accent: 0.8;
 
-        ${headCommentContents}
+          ${headCommentContents}
 
-        .styled-header {
-          &::after,
-          &::before,
-          > ::after,
-          > ::before {
-            opacity: var(--comment-opacity);
-            text-decoration: none;
+          .styled-header {
+            &::after,
+            &::before,
+            > ::after,
+            > ::before {
+              opacity: var(--comment-opacity);
+              text-decoration: none;
+            }
+
+            &::before {
+              margin-right: 1rem;
+            }
+
+            &:after,
+            > ::after,
+            > ::before {
+              display: block;
+              text-decoration: underline;
+              margin-left: 1rem;
+            }
           }
 
-          &::before {
-            margin-right: 1rem;
-          }
-
-          &:after,
-          > ::after,
-          > ::before {
-            display: block;
-            text-decoration: underline;
-            margin-left: 1rem;
-          }
-        }
-
-        ${cssContentList}
-        ${numeredOrderHeaders}
-      `;
+          ${cssContentList}
+          ${numeredOrderHeaders}
+        `,
+      };
     })()
       .then(styles => setStyles(styles))
       .catch(emptyFunc);
-  }, [commentBlock?.d, localCommentBlock?.d, translates, visibleOrders]);
+  }, [commentBlock?.d, currentBibleTranslate, localCommentBlock?.d, translates, visibleOrders]);
 
   return styles;
 };
+
+const plusInheritBlockStyleSelector = ` + [inherit-block-style]:not(:has(.styled-header))`;
+
+const commentHolderSelectors = [
+  '.comment-holder:nth-child(1)::before',
+  '.comment-holder:nth-child(1)::after',
+  '.comment-holder:nth-child(2)::before',
+  '.comment-holder:nth-child(2)::after',
+  '.comment-holder:nth-child(3)::before',
+  '.comment-holder:nth-child(3)::after',
+];
