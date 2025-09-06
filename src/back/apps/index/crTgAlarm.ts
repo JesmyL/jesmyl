@@ -23,7 +23,7 @@ const crFileStore = new FileStore<CrAlarm | nil>('/apps/index/crAlarm.json', nul
 
 export const startCrTgAlarm = () => {
   const timeFormatter = new Intl.RelativeTimeFormat('ru', { style: 'long', numeric: 'auto' });
-  let prevJob: nodeSchedule.Job;
+  let currentJob: nodeSchedule.Job;
   let nextPaymentInTimeDate: Date;
   let nextAlarmDate: Date;
 
@@ -110,6 +110,8 @@ export const startCrTgAlarm = () => {
 
       todayDate.setHours(0, 0, 0, 0);
 
+      if (!nextAlarmDate) setAlarm();
+
       await bot.editMessageText(
         query.message.message_id,
         `Следующий платёж ${nextPaymentInTimeDate.toLocaleDateString('ru')} (${timeFormatter.format(
@@ -175,7 +177,7 @@ export const startCrTgAlarm = () => {
       const minutesStr = query.data.split(':')[1];
 
       if (!minutesStr) {
-        answer('Ошибка 189274994');
+        answer('Ошибка 719451256');
         return;
       }
 
@@ -219,7 +221,7 @@ export const startCrTgAlarm = () => {
 
     crFileStore.saveValue();
 
-    prevJob?.cancel();
+    currentJob?.cancel();
     const nextAlarmDate = setAlarm();
 
     if (nextAlarmDate == null) {
@@ -232,13 +234,13 @@ export const startCrTgAlarm = () => {
     crTelegramBot.postMessage(`Время следующего напоминания ${nextAlarmTime}`);
   };
 
-  const setAlarm = () => {
+  const setAlarm = (dayDate = new Date()) => {
     const crData = getCrData();
 
     if (!smylib.isArr(crData?.dates)) return;
 
-    const today = new Date().toISOString();
-    const nearDateStr = crData.dates.find(date => date > today);
+    const dayDateISO = dayDate.toISOString();
+    const nearDateStr = crData.dates.find(date => date > dayDateISO);
 
     if (nearDateStr === undefined) return;
 
@@ -261,12 +263,18 @@ export const startCrTgAlarm = () => {
           : timeTo => timeTo >= todayInTimeTs,
       );
 
-    if (alarmInTimeTs === undefined) return;
+    if (alarmInTimeTs === undefined) {
+      const nextDayDate = new Date(dayDate);
+      nextDayDate.setDate(dayDate.getDate() + 1);
+      setAlarm(nextDayDate);
+
+      return;
+    }
 
     nextAlarmDate = new Date(alarmInTimeTs);
     nextAlarmDate.setHours(crData.hours, crData.minutes, 0, 0);
 
-    prevJob = nodeSchedule.scheduleJob(nextAlarmDate, () => {
+    currentJob = nodeSchedule.scheduleJob(nextAlarmDate, () => {
       const nextAlarmDate = setAlarm();
       let nextAlarmInfo = 'Больше напоминаний не будет';
 
