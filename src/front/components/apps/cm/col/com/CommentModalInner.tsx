@@ -75,7 +75,7 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
               onInput={value => {
                 deferredCallback(
                   () => {
-                    const texts = [...(commentBlock?.d[ordSelectorId] ?? localCommentBlock?.d[ordSelectorId] ?? [])];
+                    const texts = [...(localCommentBlock?.d[ordSelectorId] ?? commentBlock?.d[ordSelectorId] ?? [])];
 
                     texts[linei] = value;
 

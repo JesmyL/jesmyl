@@ -72,7 +72,7 @@ export class ComBlockCommentMakerCleans {
   static commentHeadBibleAddressRegExp = makeNamedRegExp(
     `/(?<translate>${
       '' + bibleAllTranslates.join('|')
-    }:)?(?<book>(?<bookPrefix>(?<bookNumberWithSuffix>(?<bookNumber>\\d{1,3})-?(?<bookNumberSuffix>[яе]?)|(?<bookTitleFrom>От)) *)?(?<bookTitle>[а-яё]+))+ *(?<chapter>\\d{1,3}):(?<verseDiapason>(?<verseFrom>\\d{1,3})(?<verseTail>-(?<verseTo>\\d{1,3}))?)/gi`,
+    }:)?(?<book>(?<bookPrefix>(?<bookNumberWithSuffix>(?<bookNumber>\\d{1,3})-?(?<bookNumberSuffix>[яе]?)|(?<bookTitleFrom>От)) *)?(?<bookTitle>[а-яё]{2,}))+ *(?<chapter>\\d{1,3}):(?<verseDiapason>(?<verseFrom>\\d{1,3})(?<verseTail>-(?<verseTo>\\d{1,3}))?)/gi`,
   );
 
   static makeStartCommentCss = async (
@@ -82,11 +82,14 @@ export class ComBlockCommentMakerCleans {
   ) => {
     titlesMap ??= new Map(
       bibleLowerBooks
-        .map(({ full, short }, i) => [
-          [full, i],
-          [short, i],
-        ])
-        .flat() as never,
+        .map(
+          ({ full, short }, i) =>
+            [
+              [full, i],
+              [short, i],
+            ] as const,
+        )
+        .flat(),
     );
     const accentsCss = this.makePseudoCommentContentAccentsCss(startComment);
     let isThereUnsettedTranslate = false;
