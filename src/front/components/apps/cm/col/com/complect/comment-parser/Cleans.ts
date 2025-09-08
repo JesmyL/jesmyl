@@ -9,6 +9,7 @@ import { css } from 'styled-components';
 import { Order } from '../../order/Order';
 
 let titlesMap: Map<string, number>;
+let titlesLine: string[];
 const orderWidSecretifyLine = `iwvthjkfsz` as const;
 const orderInheritiSecretifyLine = `IWVTHJKFSZ` as const;
 
@@ -72,7 +73,7 @@ export class ComBlockCommentMakerCleans {
   static commentHeadBibleAddressRegExp = makeNamedRegExp(
     `/(?<translate>${
       '' + bibleAllTranslates.join('|')
-    }:)?(?<book>(?<bookPrefix>(?<bookNumberWithSuffix>(?<bookNumber>\\d{1,3})-?(?<bookNumberSuffix>[яе]?)|(?<bookTitleFrom>От)) *)?(?<bookTitle>[а-яё]{2,}))+ *(?<chapter>\\d{1,3}):(?<verseDiapason>(?<verseFrom>\\d{1,3})(?<verseTail>-(?<verseTo>\\d{1,3}))?)/gi`,
+    }:)?(?<book>(?<bookPrefix>(?<bookNumberWithSuffix>(?<bookNumber>\\d{1,3})-?(?<bookNumberSuffix>[яе]?)|(?<bookTitleFrom>От)) *)?(?<bookTitle>[а-яё]+))+ *(?<chapter>\\d{1,3}):(?<verseDiapason>(?<verseFrom>\\d{1,3})(?<verseTail>-(?<verseTo>\\d{1,3}))?)/gi`,
   );
 
   static makeStartCommentCss = async (
@@ -91,6 +92,7 @@ export class ComBlockCommentMakerCleans {
         )
         .flat(),
     );
+
     const accentsCss = this.makePseudoCommentContentAccentsCss(startComment);
     let isThereUnsettedTranslate = false;
 
@@ -112,16 +114,30 @@ export class ComBlockCommentMakerCleans {
         return `\n<ПЕРЕВОД ${tNameUpper} НЕ УСТАНОВЛЕН>:${addr.book} ${addr.chapter}:${addr.verseDiapason}`;
       }
 
-      const booki =
-        addr.bookTitle === undefined
-          ? undefined
-          : (titlesMap.get(`${addr.bookNumber ?? ''}${addr.bookTitle.toLowerCase()}`) ??
-            titlesMap.get(`${addr.bookNumber}-я ${addr.bookTitle.toLowerCase()}`) ??
-            titlesMap.get(`${addr.bookNumber}-е ${addr.bookTitle.toLowerCase()}`) ??
-            titlesMap.get(`от ${addr.bookTitle.toLowerCase()}`) ??
-            titlesMap.get(`1${addr.bookTitle.toLowerCase()}`) ??
-            titlesMap.get(`1-е ${addr.bookTitle.toLowerCase()}`) ??
-            titlesMap.get(`1-я ${addr.bookTitle.toLowerCase()}`));
+      let booki = undefined as number | und;
+
+      if (addr.bookTitle !== undefined) {
+        const lowerBookTitle = addr.bookTitle.toLowerCase();
+
+        booki =
+          titlesMap.get(`${addr.bookNumber ?? ''}${lowerBookTitle}`) ??
+          titlesMap.get(`${addr.bookNumber}-я ${lowerBookTitle}`) ??
+          titlesMap.get(`${addr.bookNumber}-е ${lowerBookTitle}`) ??
+          titlesMap.get(`от ${lowerBookTitle}`) ??
+          titlesMap.get(`к ${lowerBookTitle}`) ??
+          titlesMap.get(`1${lowerBookTitle}`) ??
+          titlesMap.get(`1-е ${lowerBookTitle}`) ??
+          titlesMap.get(`1-я ${lowerBookTitle}`);
+
+        if (booki === undefined) {
+          titlesLine = Array.from(titlesMap.keys());
+          const titleName =
+            titlesLine.find(title => title.startsWith(lowerBookTitle)) ??
+            titlesLine.find(title => title.includes(lowerBookTitle));
+
+          if (titleName !== undefined) booki = titlesMap.get(titleName);
+        }
+      }
 
       const bookTitle =
         (addr.bookNumber ? `${addr.bookNumber}${addr.bookNumberSuffix ? `-${addr.bookNumberSuffix}` : ''} ` : '') +

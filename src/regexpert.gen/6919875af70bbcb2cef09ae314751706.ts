@@ -48,7 +48,7 @@ namespace N6919875af70bbcb2cef09ae314751706_2 {
   type $bookNumber = `${number}`;
   type $bookNumberSuffix = string | '';
   type $bookTitleFrom = `От`;
-  type $bookTitle = `${string}${string}`;
+  type $bookTitle = RepeatingString<string>;
   type $chapter = `${number}`;
   type $verseDiapason = `${$verseFrom}${$verseTail | ''}`;
   type $verseFrom = `${number}`;
@@ -56,7 +56,7 @@ namespace N6919875af70bbcb2cef09ae314751706_2 {
   type $verseTo = `${number}`;
 
   export interface I extends Record<
-    `/(?<translate>${string}:)?(?<book>(?<bookPrefix>(?<bookNumberWithSuffix>(?<bookNumber>\\d{1,3})-?(?<bookNumberSuffix>[яе]?)|(?<bookTitleFrom>От)) *)?(?<bookTitle>[а-яё]{2,}))+ *(?<chapter>\\d{1,3}):(?<verseDiapason>(?<verseFrom>\\d{1,3})(?<verseTail>-(?<verseTo>\\d{1,3}))?)/gi`,
+    `/(?<translate>${string}:)?(?<book>(?<bookPrefix>(?<bookNumberWithSuffix>(?<bookNumber>\\d{1,3})-?(?<bookNumberSuffix>[яе]?)|(?<bookTitleFrom>От)) *)?(?<bookTitle>[а-яё]+))+ *(?<chapter>\\d{1,3}):(?<verseDiapason>(?<verseFrom>\\d{1,3})(?<verseTail>-(?<verseTo>\\d{1,3}))?)/gi`,
     IgnoreCaseRecord<{
       $0: $0;
       translate?: $translate;
