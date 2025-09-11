@@ -2,11 +2,13 @@ import { schTsjrpcBaseClient } from '#widgets/schedule/tsjrpc/tsjrpc.base';
 import { indexDeviceIdAtom } from '$index/db/atoms';
 import { indexIDB } from '$index/db/index-idb';
 import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
+import { indexTsjrpcBaseClient } from '$index/tsjrpc.shares';
 import { soki } from 'front/soki';
 import { DeviceId } from 'shared/api';
 
 export const appInitialInvokes = () => {
   schTsjrpcBaseClient.$$register();
+  indexTsjrpcBaseClient.$$register();
 
   const getFreshes = async () => {
     const lastModfiedAt = await indexIDB.get.lastModifiedAt();

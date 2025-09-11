@@ -1,5 +1,5 @@
 import { cmEditorInitialInvokes } from '$cm+editor/processes/cm+editor-initial-invokes';
-import { authIDB } from '$index/db/auth-idb';
+import { useCheckUserAccessRightsInScope } from '$index/checkers';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/cm/edit')({
@@ -7,11 +7,10 @@ export const Route = createFileRoute('/cm/edit')({
 });
 
 function RouteComponent() {
-  return authIDB.useValue.auth().level < 50 ? (
-    <div className="text-xKO flex items-center justify-center w-full h-full">Не авторизован</div>
-  ) : (
-    <Outlet />
-  );
+  const checkAccess = useCheckUserAccessRightsInScope();
+  if (!checkAccess('cm', 'EDIT')) return <>Нет доступа</>;
+
+  return <Outlet />;
 }
 
 cmEditorInitialInvokes();

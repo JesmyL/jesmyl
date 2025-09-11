@@ -1,4 +1,5 @@
 import { CmEditCompositionPage } from '$cm+editor/pages/EditCompositionPage';
+import { useCheckUserAccessRightsInScope } from '$index/checkers';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/cm/edit/coms/$comw/$tab')({
@@ -6,5 +7,7 @@ export const Route = createFileRoute('/cm/edit/coms/$comw/$tab')({
 });
 
 function RouteComponent() {
-  return <CmEditCompositionPage />;
+  const checkAccess = useCheckUserAccessRightsInScope();
+
+  if (checkAccess('cm', 'COM', 'R')) return <CmEditCompositionPage />;
 }

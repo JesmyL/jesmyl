@@ -6,6 +6,7 @@ import { cmEditCatClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsj
 import { EditableCat } from '$cm+editor/basis/lib/EditableCat';
 import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { cmIDB } from '$cm/basis/lib/store/cmIDB';
+import { useCheckUserAccessRightsInScope } from '$index/checkers';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React, { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
@@ -15,6 +16,7 @@ export const CmEditorTabComCategoryBinds = () => {
   const ccom = useEditableCcom();
   const icats = useLiveQuery(() => cmIDB.db.cats.toArray());
   const cats = useMemo(() => icats?.map(icat => new EditableCat(icat, [])), [icats]);
+  const checkAccess = useCheckUserAccessRightsInScope();
 
   if (!ccom || cats == null) return null;
 
@@ -27,7 +29,9 @@ export const CmEditorTabComCategoryBinds = () => {
             <InputWithLoadingIcon
               icon="BookOpen02"
               label={cat.name}
-              type="number"
+              type="tel"
+              className="bg-x1!"
+              disabled={!checkAccess('cm', 'COM_CAT', 'U')}
               defaultValue={`${cat.dict?.[ccom.wid] || ''}`}
               onChange={value => {
                 if (!+value) {
@@ -50,6 +54,7 @@ export const CmEditorTabComCategoryBinds = () => {
                 postfix={isNaN(cat.dict?.[ccom.wid as never]) ? 'Корректно очистить' : 'Удалить'}
                 confirm={`Очистить номер из сборника ${cat.name}?`}
                 className="pointer color--ko margin-big-gap-l margin-gap-b"
+                disabled={!checkAccess('cm', 'COM_CAT', 'U')}
                 onClick={() =>
                   cmEditCatClientTsjrpcMethods.removeNativeComNum({
                     comw: ccom.wid,
@@ -63,21 +68,30 @@ export const CmEditorTabComCategoryBinds = () => {
       })}
       <div className="cat-list-title">Списки</div>
       {cats.map(cat => {
-        return cat.kind !== 'list' ? null : (
-          <div
-            key={cat.wid}
-            className="flex flex-gap flex-max pointer margin-big-gap-v"
-            onClick={() =>
-              cmEditCatClientTsjrpcMethods.toggleComExistence({
-                comw: ccom.wid,
-                catw: cat.wid,
-              })
-            }
-          >
-            <LazyIcon icon="ListView" />
-            <span>{cat.name} </span>
-            <IconCheckbox checked={cat.stack?.some(comw => ccom.wid === comw)} />
-          </div>
+        return (
+          cat.kind !== 'list' || (
+            <div
+              key={cat.wid}
+              className="my-5"
+            >
+              <IconCheckbox
+                prefix={
+                  <>
+                    <LazyIcon icon="ListView" />
+                    <span>{cat.name} </span>
+                  </>
+                }
+                checked={cat.stack?.some(comw => ccom.wid === comw)}
+                disabled={!checkAccess('cm', 'COM_CAT', 'U')}
+                onClick={() =>
+                  cmEditCatClientTsjrpcMethods.toggleComExistence({
+                    comw: ccom.wid,
+                    catw: cat.wid,
+                  })
+                }
+              />
+            </div>
+          )
         );
       })}
     </>

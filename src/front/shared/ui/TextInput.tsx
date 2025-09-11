@@ -10,6 +10,7 @@ export const TextInput = ({
   multiline,
   value,
   type,
+  defaultValue,
   ...props
 }: OmitOwn<AllHTMLAttributes<HTMLInputElement & HTMLTextAreaElement>, 'onChange' | 'onInput' | 'type'> & {
   onChanged?: (value: string) => void;
@@ -18,6 +19,11 @@ export const TextInput = ({
   type?: 'text' | 'tel' | 'email';
 }) => {
   const inputRef = useRef<(HTMLInputElement & HTMLTextAreaElement) | null>(null);
+
+  useEffect(() => {
+    if (inputRef.current == null || (typeof defaultValue !== 'string' && typeof defaultValue !== 'number')) return;
+    inputRef.current.value = '' + defaultValue;
+  }, [defaultValue]);
 
   useEffect(() => {
     if (inputRef.current == null) return;

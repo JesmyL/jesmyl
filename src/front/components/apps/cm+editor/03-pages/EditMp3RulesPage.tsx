@@ -3,6 +3,7 @@ import { cmEditorClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjr
 import { useCmMp3Rules } from '$cm+editor/basis/lib/hooks/useCmMp3Rules';
 import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer';
 import { Mp3RuleEditor } from '$cm+editor/widgets/Mp3RuleEditor';
+import { useCheckUserAccessRightsInScope } from '$index/checkers';
 import { useState } from 'react';
 import { CmMp3Rule } from 'shared/api';
 
@@ -10,6 +11,8 @@ export const EditMp3RulesPage = () => {
   const [newRules, updateNewRules] = useState<CmMp3Rule[]>([]);
   const [mp3Rules] = useCmMp3Rules();
   const [isOpenNewRule, setIsOpenNewRule] = useState(false);
+  const checkAccess = useCheckUserAccessRightsInScope();
+  const isCanUpdate = checkAccess('cm', 'MP3', 'U');
 
   return (
     <PageCmEditorContainer
@@ -23,26 +26,32 @@ export const EditMp3RulesPage = () => {
                 key={rule.w}
                 {...rule}
                 onComplete={newRule => cmEditorClientTsjrpcMethods.setMp3Rule({ rule: newRule })}
+                isCanRedact={isCanUpdate}
               />
             );
           })}
-          {newRules.map(({ w, ...rule }) => {
-            return (
-              <Mp3RuleEditor
-                key={w}
-                {...rule}
-              />
-            );
-          })}
-          <h2 className="flex flex-gap">
-            Новое правило
-            {!isOpenNewRule && (
-              <LazyIcon
-                icon="PlusSignCircle"
-                onClick={() => setIsOpenNewRule(true)}
-              />
-            )}
-          </h2>
+
+          {checkAccess('cm', 'MP3', 'C') && (
+            <>
+              {newRules.map(({ w, ...rule }) => {
+                return (
+                  <Mp3RuleEditor
+                    key={w}
+                    {...rule}
+                  />
+                );
+              })}
+              <h2 className="flex flex-gap">
+                Новое правило
+                {!isOpenNewRule && (
+                  <LazyIcon
+                    icon="PlusSignCircle"
+                    onClick={() => setIsOpenNewRule(true)}
+                  />
+                )}
+              </h2>
+            </>
+          )}
           {isOpenNewRule && (
             <Mp3RuleEditor
               redact

@@ -5,6 +5,7 @@ import { useCmExtractHrefsFromHTML } from '$cm+editor/basis/lib/hooks/useCmExtra
 import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { ObserveUrlResource } from '$cm+editor/basis/ui/ObserveUrlResource';
 import { ComAudioControlledList } from '$cm+editor/widgets/AudioControlledList';
+import { useCheckUserAccessRightsInScope } from '$index/checkers';
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmMp3Rule } from 'shared/api';
@@ -21,6 +22,7 @@ export const CmEditorTabComAudio = ({ topHTML, topCom, topMp3Rule }: Props) => {
   const [hrefs, setHrefs] = useState<string[]>([]);
   const [removedHrefs, setRemovedHrefs] = useState<string[]>([]);
   const [openAddBlock, setOpenAddBlock] = useState(false);
+  const checkAccess = useCheckUserAccessRightsInScope();
 
   useCmExtractHrefsFromHTML(innerHTML, mp3Rule, setHrefs, ccom?.audio);
 
@@ -45,6 +47,7 @@ export const CmEditorTabComAudio = ({ topHTML, topCom, topMp3Rule }: Props) => {
         <ComAudioControlledList
           srcs={ccom.audio.split('\n').filter(itIt)}
           icon="CancelCircle"
+          isCanDelete={checkAccess('cm', 'COM_AUDIO', 'D')}
           onToggle={async src => {
             await removeSrc(src);
             setRemovedHrefs(removedHrefs.concat(src));
@@ -66,44 +69,45 @@ export const CmEditorTabComAudio = ({ topHTML, topCom, topMp3Rule }: Props) => {
           />
         </>
       )}
-      {openAddBlock ? (
-        <>
-          <h2>Добавить аудио</h2>
-          {!topHTML && (
-            <ObserveUrlResource
-              onSuccess={({ html, rule }) => {
-                setInnerHTML(html);
-                setMp3Rule(rule);
+      {checkAccess('cm', 'COM_AUDIO', 'C') &&
+        (openAddBlock ? (
+          <>
+            <h2>Добавить аудио</h2>
+            {!topHTML && (
+              <ObserveUrlResource
+                onSuccess={({ html, rule }) => {
+                  setInnerHTML(html);
+                  setMp3Rule(rule);
+                }}
+                onGoogleSearch={[
+                  () => {
+                    const ord = ccom.orders?.find(ord => ord.type === 'two');
+                    return `"${ccom.name}" ${ord?.text.replace(makeRegExp('/\\n+/g'), ' ') ?? ''}`;
+                  },
+                  () => {
+                    const ord = ccom.orders?.find(ord => ord.type === 'one');
+                    return `"${ccom.name}" ${ord?.text.replace(makeRegExp('/\\n+/g'), ' ') ?? ''}`;
+                  },
+                  () => `"${ccom.name}"`,
+                ]}
+              />
+            )}
+            <ComAudioControlledList
+              srcs={hrefs}
+              icon="PlusSignCircle"
+              onToggle={async src => {
+                await addSrc(src);
+                setHrefs(hrefs.filter(href => href !== src));
               }}
-              onGoogleSearch={[
-                () => {
-                  const ord = ccom.orders?.find(ord => ord.type === 'two');
-                  return `"${ccom.name}" ${ord?.text.replace(makeRegExp('/\\n+/g'), ' ') ?? ''}`;
-                },
-                () => {
-                  const ord = ccom.orders?.find(ord => ord.type === 'one');
-                  return `"${ccom.name}" ${ord?.text.replace(makeRegExp('/\\n+/g'), ' ') ?? ''}`;
-                },
-                () => `"${ccom.name}"`,
-              ]}
             />
-          )}
-          <ComAudioControlledList
-            srcs={hrefs}
+          </>
+        ) : (
+          <LazyIcon
             icon="PlusSignCircle"
-            onToggle={async src => {
-              await addSrc(src);
-              setHrefs(hrefs.filter(href => href !== src));
-            }}
+            className="color--ok margin-big-gap"
+            onClick={() => setOpenAddBlock(true)}
           />
-        </>
-      ) : (
-        <LazyIcon
-          icon="PlusSignCircle"
-          className="color--ok margin-big-gap"
-          onClick={() => setOpenAddBlock(true)}
-        />
-      )}
+        ))}
     </>
   );
 };

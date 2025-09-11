@@ -1,21 +1,21 @@
-import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { useActualRef } from '#shared/lib/hooks/useActualRef';
+import { TextInput } from '#shared/ui/TextInput';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { StameskaIconName } from 'stameska-icon';
-import styled, { css } from 'styled-components';
 
 type Props<ChangedValue> = {
   onChange: (value: string) => Promise<ChangedValue>;
   onInput?: (value: string) => void;
-  type?: React.InputHTMLAttributes<HTMLInputElement>['type'];
+  type?: 'email' | 'tel' | 'text';
   defaultValue: string;
   label?: string;
   placeholder?: string;
+  className?: string;
   icon: StameskaIconName;
   multiline?: boolean;
   isError?: boolean;
+  disabled?: boolean;
 };
 
 export const InputWithLoadingIcon = <ChangedValue,>({
@@ -28,45 +28,10 @@ export const InputWithLoadingIcon = <ChangedValue,>({
   multiline,
   isError,
   placeholder,
+  disabled,
+  className = '',
 }: Props<ChangedValue>) => {
-  const inputRef = useRef<HTMLInputElement | null>(null);
-  const actualOnChange = useActualRef(onChange);
-  const actualOnInput = useActualRef(onInput);
   const [isLoading, setIsLoading] = useState(false);
-  const [value, setValue] = useState(defaultValue);
-
-  useEffect(() => setValue(defaultValue), [defaultValue]);
-
-  useEffect(() => {
-    if (inputRef.current === null) return;
-    const inputNode = inputRef.current;
-
-    const setHeight = () => {
-      inputNode.style.height = '1px';
-      inputNode.style.height = `${inputNode.scrollHeight}px`;
-    };
-
-    if (multiline) setHeight();
-
-    return hookEffectPipe()
-      .pipe(
-        addEventListenerPipe(multiline ? inputNode : null, 'input', setHeight),
-        addEventListenerPipe(multiline ? inputNode : null, 'focus', setHeight),
-        addEventListenerPipe(inputNode, 'change', async () => {
-          if (isError || defaultValue === inputNode.value) return;
-          setIsLoading(true);
-
-          try {
-            await actualOnChange.current(inputNode.value);
-          } catch (_error) {
-            //
-          }
-
-          setIsLoading(false);
-        }),
-      )
-      .effect();
-  }, [actualOnChange, actualOnInput, defaultValue, isError, multiline]);
 
   return (
     <div className="full-width flex flex-gap margin-gap-v">
@@ -82,48 +47,28 @@ export const InputWithLoadingIcon = <ChangedValue,>({
         />
       )}
       {label && <span className="nowrap">{label}</span>}
-      {multiline ? (
-        <StyledTextarea
-          ref={inputRef as never}
-          className="full-width pointer"
-          value={value}
-          placeholder={placeholder}
-          onChange={event => {
-            onInput?.(event.currentTarget.value);
-            setValue(event.currentTarget.value);
-          }}
-        />
-      ) : (
-        <StyledInput
-          ref={inputRef}
-          type={type}
-          className="full-width pointer"
-          value={value}
-          placeholder={placeholder}
-          onChange={event => {
-            onInput?.(event.currentTarget.value);
-            setValue(event.currentTarget.value);
-          }}
-        />
-      )}
+
+      <TextInput
+        multiline={multiline}
+        className={'full-width pointer ' + className}
+        defaultValue={defaultValue}
+        placeholder={placeholder}
+        type={type}
+        disabled={disabled}
+        onInput={onInput}
+        onChanged={async value => {
+          if (isError || defaultValue === value) return;
+          setIsLoading(true);
+
+          try {
+            await onChange(value);
+          } catch (_error) {
+            //
+          }
+
+          setIsLoading(false);
+        }}
+      />
     </div>
   );
 };
-
-const style = css`
-  background-color: var(--color--1);
-
-  &::placeholder {
-    color: var(--color--4);
-    opacity: 0.5;
-  }
-`;
-
-const StyledInput = styled.input`
-  ${style}
-`;
-
-const StyledTextarea = styled.textarea`
-  ${style}
-  resize: none;
-`;

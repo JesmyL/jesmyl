@@ -6,7 +6,7 @@ import { useMeetingComFaceList } from '$cm/lists/meetings/useMeetingComFaceList'
 import { TranslationFullscreen } from '$cm/translation/complect/fullscreen/TranslationFullscreen';
 import { IndexScheduleWidgetTranslations } from '$index/complect/translations/LiveTranslations';
 import { FileRoutesByPath, Link, useParams, useSearch } from '@tanstack/react-router';
-import { JSX, useMemo } from 'react';
+import { useMemo } from 'react';
 import { IScheduleWidgetWid } from 'shared/api';
 import { CmComOpenRouteProps } from '../model/com';
 import { CmMeetingToEventLinkRender } from '../model/meetings';
@@ -16,7 +16,7 @@ import { CmMeetingLinkToEvent } from './contexts/meeting';
 
 interface Props<Path extends keyof FileRoutesByPath> {
   path: Path;
-  RouteComponent: () => JSX.Element;
+  RouteComponent: () => React.ReactNode;
   useComListPack?: () => CmComListContextValue;
 }
 

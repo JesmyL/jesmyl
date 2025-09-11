@@ -20,10 +20,17 @@ import {
 } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { itNNull, smylib } from 'shared/utils';
-import { appVersionFileStore, valuesFileStore } from './file-stores';
+import { updateCRUDAccesRightValue } from 'shared/utils/index/utils';
+import {
+  accessRightTitlesFileStore,
+  appVersionFileStore,
+  userAccessRightsFileStore,
+  valuesFileStore,
+} from './file-stores';
 import { schGeneralTsjrpcBaseServer } from './schedules/base-tsjrpc/general.tsjrpc.base';
 import { schedulesFileStore } from './schedules/file-stores';
 import { schServerTsjrpcShareMethods } from './schedules/tsjrpc.shares';
+import { indexServerTsjrpcShareMethods } from './tsjrpc.methods';
 
 const deviceIdPostfixSymbols = '!@#$%^&*;.,?/|\\+=-'.split('');
 
@@ -87,7 +94,14 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
       methods: {
         requestFreshes: async ({ lastModfiedAt }, { client, auth }) => {
           const isNoAuth = auth == null;
-          const someScheduleUser = (user: IScheduleWidgetUser) => user.login === auth!.login;
+          const login = auth?.login;
+          const someScheduleUser = (user: IScheduleWidgetUser) => user.login === login;
+          const userRights = userAccessRightsFileStore.getValue();
+
+          if (login != null && userRights[login] != null && userRights[login].info.m > lastModfiedAt) {
+            const { info, ...rights } = userRights[login];
+            indexServerTsjrpcShareMethods.refreshAccessRights({ rights });
+          }
 
           const schedules = schedulesFileStore
             .getValue()
@@ -131,6 +145,29 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
 
         getFreshAppVersion: async () => appVersionFileStore.getValue().num,
         getIndexValues: async () => valuesFileStore.getValue(),
+
+        getAccessRightTitles: async () => accessRightTitlesFileStore.getValue(),
+        getUserAccessRights: async () => userAccessRightsFileStore.getValue(),
+        updateUserAccessRight: async ({ login, rule, scope, value, operation }) => {
+          const rights = userAccessRightsFileStore.getValue();
+
+          if (rights[login] == null) return null;
+
+          rights[login][scope] ??= {};
+          rights[login][scope][rule] = updateCRUDAccesRightValue(rights[login][scope][rule] ?? 0, operation, value);
+
+          rights[login].info ??= { fio: 'unknown', m: Date.now() };
+          rights[login].info.m = Date.now();
+
+          if (!rights[login][scope][rule]) delete rights[login][scope][rule];
+          if (!smylib.keys(rights[login][scope]).length) delete rights[login][scope];
+
+          userAccessRightsFileStore.saveValue();
+          const { info, ...userRights } = rights[login];
+          indexServerTsjrpcShareMethods.refreshAccessRights({ rights: userRights }, { login });
+
+          return rights;
+        },
       },
       onEachFeedback: {
         authMeByTelegramBotNumber: (_, { auth }) =>
@@ -154,6 +191,9 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         requestFreshes: null,
         getFreshAppVersion: null,
         getIndexValues: null,
+        getAccessRightTitles: null,
+        getUserAccessRights: null,
+        updateUserAccessRight: null,
       },
     });
   }

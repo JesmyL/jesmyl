@@ -1,12 +1,13 @@
 import { AppFooter } from '$app/AppFooter';
 import { AppFooterItem } from '$app/AppFooterItem';
-import { useAuth } from '$index/atoms';
-import { indexIsShowPlayerInFooterAtom } from '$index/complect/index.atoms';
+import { indexIsShowPlayerInFooterAtom, useAuth } from '$index/atoms';
+import { useCheckUserAccessRightsInScope } from '$index/checkers';
 import { useAtomValue } from 'atomaric';
 
 export const CmFooter = () => {
   const auth = useAuth();
   const isShowPlayer = useAtomValue(indexIsShowPlayerInFooterAtom);
+  const checkAccess = useCheckUserAccessRightsInScope();
 
   return (
     <AppFooter appName="cm">
@@ -31,7 +32,7 @@ export const CmFooter = () => {
         />
       )}
 
-      {auth.level >= 50 && (
+      {checkAccess('cm', 'EDIT') && (
         <AppFooterItem
           idPostfix="cm-edit"
           to="/cm/edit/"

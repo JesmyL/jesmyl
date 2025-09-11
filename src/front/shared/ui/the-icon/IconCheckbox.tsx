@@ -17,12 +17,12 @@ interface Props {
 }
 
 export function IconCheckbox(props: Props) {
-  const isClickable = !props.disabled;
-  const className = `${props.className || ''}${isClickable ? ' pointer' : ''}${props.disabled ? ' disabled' : ''}`;
+  const className = `${props.className || ''}${!props.disabled ? ' pointer' : ''}${props.disabled ? ' disabled' : ''}`;
   const [isLoading, setIsLoading] = useState(false);
 
-  const onClick = isClickable
-    ? props.onClick
+  const onClick = props.disabled
+    ? undefined
+    : props.onClick
       ? async () => {
           try {
             setIsLoading(true);
@@ -33,32 +33,32 @@ export function IconCheckbox(props: Props) {
             //
           }
         }
-      : () => props.onChange?.(!props.checked)
-    : undefined;
+      : () => props.onChange?.(!props.checked);
 
   const renderNode = (icon: StameskaIconName) => {
-    if (isLoading)
-      return (
-        <StyledLoadingSpinner
-          icon="Loading03"
-          className={className}
-          onClick={onClick}
-        />
-      );
-
-    return props.prefix === undefined && props.postfix === undefined ? (
-      <LazyIcon
-        icon={icon}
+    const loadIcon = isLoading ? (
+      <StyledLoadingSpinner
+        icon="Loading03"
         className={className}
         onClick={onClick}
       />
+    ) : null;
+
+    return props.prefix === undefined && props.postfix === undefined ? (
+      (loadIcon ?? (
+        <LazyIcon
+          icon={icon}
+          className={className}
+          onClick={onClick}
+        />
+      ))
     ) : (
       <span
-        className={`flex flex-gap ${className || 'flex-max'}`}
+        className={`flex gap-2 flex-max ${className}`}
         onClick={onClick}
       >
         {props.prefix}
-        <LazyIcon icon={icon} />
+        {loadIcon ?? <LazyIcon icon={icon} />}
         {props.postfix}
       </span>
     );

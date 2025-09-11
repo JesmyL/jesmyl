@@ -47,6 +47,7 @@ import { Route as otherAppNameAuthIndexImport } from './front/routes/!other.$app
 import { Route as otherAppNameActionsIndexImport } from './front/routes/!other.$appName/actions/index'
 import { Route as CmLiCatCatwImport } from './front/routes/cm/li/cat.$catw'
 import { Route as CmEditCatsCatwImport } from './front/routes/cm/edit/cats/$catw'
+import { Route as otherAppNameSettingsRightsImport } from './front/routes/!other.$appName/settings/rights'
 import { Route as otherAppNameSettingsConsoleImport } from './front/routes/!other.$appName/settings/console'
 import { Route as otherAppNameActionsFilesIndexImport } from './front/routes/!other.$appName/actions/files/index'
 import { Route as CmEditComsComwTabRouteImport } from './front/routes/cm/edit/coms/$comw.$tab/route'
@@ -278,6 +279,14 @@ const CmEditCatsCatwRoute = CmEditCatsCatwImport.update({
   path: '/cats/$catw',
   getParentRoute: () => CmEditRouteRoute,
 } as any)
+
+const otherAppNameSettingsRightsRoute = otherAppNameSettingsRightsImport.update(
+  {
+    id: '/settings/rights',
+    path: '/settings/rights',
+    getParentRoute: () => otherAppNameRouteRoute,
+  } as any,
+)
 
 const otherAppNameSettingsConsoleRoute =
   otherAppNameSettingsConsoleImport.update({
@@ -512,6 +521,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof otherAppNameSettingsConsoleImport
       parentRoute: typeof otherAppNameRouteImport
     }
+    '/!other/$appName/settings/rights': {
+      id: '/!other/$appName/settings/rights'
+      path: '/settings/rights'
+      fullPath: '/!other/$appName/settings/rights'
+      preLoaderRoute: typeof otherAppNameSettingsRightsImport
+      parentRoute: typeof otherAppNameRouteImport
+    }
     '/cm/edit/cats/$catw': {
       id: '/cm/edit/cats/$catw'
       path: '/cats/$catw'
@@ -700,6 +716,7 @@ const TunerRouteRouteWithChildren = TunerRouteRoute._addFileChildren(
 interface otherAppNameRouteRouteChildren {
   otherAppNameIndexRoute: typeof otherAppNameIndexRoute
   otherAppNameSettingsConsoleRoute: typeof otherAppNameSettingsConsoleRoute
+  otherAppNameSettingsRightsRoute: typeof otherAppNameSettingsRightsRoute
   otherAppNameActionsIndexRoute: typeof otherAppNameActionsIndexRoute
   otherAppNameAuthIndexRoute: typeof otherAppNameAuthIndexRoute
   otherAppNameSchsIndexRoute: typeof otherAppNameSchsIndexRoute
@@ -710,6 +727,7 @@ interface otherAppNameRouteRouteChildren {
 const otherAppNameRouteRouteChildren: otherAppNameRouteRouteChildren = {
   otherAppNameIndexRoute: otherAppNameIndexRoute,
   otherAppNameSettingsConsoleRoute: otherAppNameSettingsConsoleRoute,
+  otherAppNameSettingsRightsRoute: otherAppNameSettingsRightsRoute,
   otherAppNameActionsIndexRoute: otherAppNameActionsIndexRoute,
   otherAppNameAuthIndexRoute: otherAppNameAuthIndexRoute,
   otherAppNameSchsIndexRoute: otherAppNameSchsIndexRoute,
@@ -750,6 +768,7 @@ export interface FileRoutesByFullPath {
   '/schedule-day/$schw': typeof ScheduleDaySchwIndexRoute
   '/cm/edit/': typeof CmEditIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
+  '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
   '/cm/edit/cats/$catw': typeof CmEditCatsCatwRoute
   '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
   '/!other/$appName/actions': typeof otherAppNameActionsIndexRoute
@@ -788,6 +807,7 @@ export interface FileRoutesByTo {
   '/schedule-day/$schw': typeof ScheduleDaySchwIndexRoute
   '/cm/edit': typeof CmEditIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
+  '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
   '/cm/edit/cats/$catw': typeof CmEditCatsCatwRoute
   '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
   '/!other/$appName/actions': typeof otherAppNameActionsIndexRoute
@@ -831,6 +851,7 @@ export interface FileRoutesById {
   '/schedule-day/$schw/': typeof ScheduleDaySchwIndexRoute
   '/cm/edit/': typeof CmEditIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
+  '/!other/$appName/settings/rights': typeof otherAppNameSettingsRightsRoute
   '/cm/edit/cats/$catw': typeof CmEditCatsCatwRoute
   '/cm/li/cat/$catw': typeof CmLiCatCatwRoute
   '/!other/$appName/actions/': typeof otherAppNameActionsIndexRoute
@@ -876,6 +897,7 @@ export interface FileRouteTypes {
     | '/schedule-day/$schw'
     | '/cm/edit/'
     | '/!other/$appName/settings/console'
+    | '/!other/$appName/settings/rights'
     | '/cm/edit/cats/$catw'
     | '/cm/li/cat/$catw'
     | '/!other/$appName/actions'
@@ -913,6 +935,7 @@ export interface FileRouteTypes {
     | '/schedule-day/$schw'
     | '/cm/edit'
     | '/!other/$appName/settings/console'
+    | '/!other/$appName/settings/rights'
     | '/cm/edit/cats/$catw'
     | '/cm/li/cat/$catw'
     | '/!other/$appName/actions'
@@ -954,6 +977,7 @@ export interface FileRouteTypes {
     | '/schedule-day/$schw/'
     | '/cm/edit/'
     | '/!other/$appName/settings/console'
+    | '/!other/$appName/settings/rights'
     | '/cm/edit/cats/$catw'
     | '/cm/li/cat/$catw'
     | '/!other/$appName/actions/'
@@ -1045,6 +1069,7 @@ export const routeTree = rootRoute
       "children": [
         "/!other/$appName/",
         "/!other/$appName/settings/console",
+        "/!other/$appName/settings/rights",
         "/!other/$appName/actions/",
         "/!other/$appName/auth/",
         "/!other/$appName/schs/",
@@ -1156,6 +1181,10 @@ export const routeTree = rootRoute
     },
     "/!other/$appName/settings/console": {
       "filePath": "!other.$appName/settings/console.tsx",
+      "parent": "/!other/$appName"
+    },
+    "/!other/$appName/settings/rights": {
+      "filePath": "!other.$appName/settings/rights.tsx",
       "parent": "/!other/$appName"
     },
     "/cm/edit/cats/$catw": {

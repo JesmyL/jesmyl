@@ -5,8 +5,7 @@ import { FontFamilySelector } from '#shared/ui/configurators/selectors/FontFamil
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useAppFontFamily, useAuth } from '$index/atoms';
-import { indexIsPlayAnimationsAtom, indexIsShowPlayerInFooterAtom } from '$index/complect/index.atoms';
+import { indexIsPlayAnimationsAtom, indexIsShowPlayerInFooterAtom, useAppFontFamily, useAuth } from '$index/atoms';
 import { useConnectionState } from '$index/useConnectionState';
 import { Link } from '@tanstack/react-router';
 import React from 'react';
@@ -40,6 +39,17 @@ export function IndexSettingsPage() {
         <BrutalItem
           iconNode={<LazyIcon icon="SourceCodeCircle" />}
           title="Консоль"
+        />
+      </Link>
+    ),
+    auth.level === 100 && (
+      <Link
+        to="/!other/$appName/settings/rights"
+        params={{ appName }}
+      >
+        <BrutalItem
+          iconNode={<LazyIcon icon="SourceCodeCircle" />}
+          title="Права доступа"
         />
       </Link>
     ),

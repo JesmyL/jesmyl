@@ -8,6 +8,7 @@ import { CmComRepeatsRemoveButton } from '$cm+editor/entities/ComRepeatsRemoveBu
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { ComLine } from '$cm/col/com/line/ComLine';
 import { TheOrder } from '$cm/col/com/order/TheOrder';
+import { useCheckUserAccessRightsInScope } from '$index/checkers';
 import { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { OrderRepeats } from 'shared/api';
@@ -20,6 +21,8 @@ export const CmEditorTabComRepeats = () => {
   const [isReadySetChordBlock, setIsReadySetChordBlock] = useState(false);
   const [flashCount, setFlashCount] = useState(2);
   const confirm = useConfirm();
+  const checkAccess = useCheckUserAccessRightsInScope();
+  const isCantRedact = !checkAccess('cm', 'COM_REP', 'U');
 
   const ccom = useEditableCcom();
   const { textLinei: startLinei, wordi: startWordi, orderUnit: startOrd } = start || {};
@@ -30,7 +33,7 @@ export const CmEditorTabComRepeats = () => {
 
   const setField = useCallback(
     (ord?: EditableComOrder | null, repeateds?: OrderRepeats | nil, prevs?: OrderRepeats | nil) => {
-      if (!ord || !ccom) return;
+      if (isCantRedact || !ord || !ccom) return;
 
       const reps = typeof prevs === 'number' ? { '.': prevs } : prevs || {};
       const repds = typeof repeateds === 'number' ? { '.': repeateds } : repeateds || {};
@@ -51,7 +54,7 @@ export const CmEditorTabComRepeats = () => {
           : ord.me.header({ repeats: ord.repeatsTitle }),
       });
     },
-    [ccom],
+    [ccom, isCantRedact],
   );
 
   const reset = useCallback(() => {
@@ -69,7 +72,9 @@ export const CmEditorTabComRepeats = () => {
   }, [flashCount, isReadySetChordBlock, reset, setField, startOrd]);
 
   return (
-    <Content className={`com-repeats-editor ${start == null ? '' : 'active'}`}>
+    <Content
+      className={`com-repeats-editor ${start == null ? '' : 'active'}${isCantRedact ? ' disabled pointers-none' : ''}`}
+    >
       {ccom?.orders?.map((ord, ordi) => {
         if (!ord.isVisible) return null;
 
@@ -81,6 +86,7 @@ export const CmEditorTabComRepeats = () => {
               ord.text
                 ? undefined
                 : event => {
+                    if (isCantRedact) return;
                     if (start == null || !isChordBlock) {
                       setStart({
                         orderUnit: ord,
@@ -193,6 +199,8 @@ export const CmEditorTabComRepeats = () => {
                         : 'inactive-word';
                     }}
                     onClick={event => {
+                      if (isCantRedact) return;
+
                       const wordiStr = (event.nativeEvent.composedPath() as HTMLSpanElement[])
                         .find(span => span?.hasAttribute('com-word-index'))
                         ?.getAttribute('com-word-index');
@@ -237,7 +245,8 @@ export const CmEditorTabComRepeats = () => {
               }}
             />
 
-            {start &&
+            {!isCantRedact &&
+              start &&
               start.orderUnit === ord &&
               (() => {
                 const { orderUnit: startOrd, textLinei, wordi } = start;

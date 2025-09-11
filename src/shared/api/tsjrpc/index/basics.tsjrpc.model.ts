@@ -1,5 +1,11 @@
 import { DeviceId } from 'shared/api/complect/enums';
-import { IndexValues, LocalSokiAuth, TelegramNativeAuthUserData } from 'shared/api/complect/soki.model';
+import { LocalSokiAuth, TelegramNativeAuthUserData } from 'shared/api/complect/soki.model';
+import {
+  IndexAppAccessRightTitles,
+  IndexAppUserAccessRights,
+  UpdateUserAccessRight,
+} from 'shared/model/index/access-rights';
+import { IndexValues } from 'shared/model/index/other';
 
 export type IndexTsjrpcModel = {
   requestFreshes: (args: { lastModfiedAt: number }) => void;
@@ -11,4 +17,8 @@ export type IndexTsjrpcModel = {
 
   getFreshAppVersion: () => number;
   getIndexValues: () => IndexValues;
+
+  getAccessRightTitles: () => IndexAppAccessRightTitles;
+  getUserAccessRights: () => IndexAppUserAccessRights;
+  updateUserAccessRight: UpdateUserAccessRight;
 };

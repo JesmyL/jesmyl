@@ -5,6 +5,7 @@ import { ScheduleWidgetWatchLiveTranslationButton } from '#widgets/schedule/live
 import { ScheduleDayEventPathProps } from '#widgets/schedule/ScheduleWidget.model';
 import { useCmOpenComLinkRendererContext } from '$cm/basis/lib/contexts/current-com-list';
 import { useAuth } from '$index/atoms';
+import { useCheckUserAccessRightsInScope } from '$index/checkers';
 import { indexIDB } from '$index/db/index-idb';
 import { Link } from '@tanstack/react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
@@ -18,6 +19,7 @@ export const TheMeetingsEvent = ({ dayi, eventMi, schw }: Props) => {
   const schedule = useLiveQuery(() => indexIDB.db.schs.get(schw), [schw]);
   const auth = useAuth();
   const linkToCom = useCmOpenComLinkRendererContext();
+  const checkAccess = useCheckUserAccessRightsInScope();
 
   if (schedule == null) return;
 
@@ -54,7 +56,7 @@ export const TheMeetingsEvent = ({ dayi, eventMi, schw }: Props) => {
               },
             })
           ) : null}
-          {auth.level < 50 || (
+          {checkAccess('cm', 'EVENT', 'U') && (
             <CmMeetingEventEdits
               packComws={packComws}
               dayi={dayi}

@@ -11,6 +11,7 @@ import { OrdersRedactorOrderTools } from '$cm+editor/features/EditOrderTools';
 import { OrdersRedactorOrderToolsProps } from '$cm+editor/features/EditOrderTools/model';
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { TheOrder } from '$cm/col/com/order/TheOrder';
+import { useCheckUserAccessRightsInScope } from '$index/checkers';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
@@ -19,6 +20,9 @@ export const CmEditorTabComOrders = () => {
   const [newBlockAdderPopupCom, setNewBlockAdderPopupCom] = useState<EditableCom | false>(false);
   const [toolProps, setToolProps] = useState<OrdersRedactorOrderToolsProps | false>(false);
   const [clickBetweenData, setClickBetweenOrds] = useState<CmComOrderOnClickBetweenData | null>(null);
+  const checkAccess = useCheckUserAccessRightsInScope();
+  const isCanCreate = checkAccess('cm', 'COM_ORD', 'C');
+  const isCanUpdate = checkAccess('cm', 'COM_ORD', 'U');
 
   if (!ccom) return null;
 
@@ -68,7 +72,7 @@ export const CmEditorTabComOrders = () => {
         </div>
       )}
       {ccom.orders?.map((ord, ordi, orda) => {
-        const editNode = !ord.me.isAnchorInherit && (
+        const editNode = isCanUpdate && !ord.me.isAnchorInherit && (
           <LazyIcon
             icon={ord.isAnchor ? 'Link02' : 'Edit02'}
             className="margin-gap-h margin-gap-b pointer vertical-middle"
@@ -154,7 +158,7 @@ export const CmEditorTabComOrders = () => {
           </React.Fragment>
         );
       })}
-      {!clickBetweenData && (
+      {isCanCreate && !clickBetweenData && (
         <div className="flex center margin-big-gap">
           <LazyIcon
             icon="PlusSignCircle"
@@ -163,7 +167,7 @@ export const CmEditorTabComOrders = () => {
           />
         </div>
       )}
-      {toolProps && (
+      {isCanUpdate && toolProps && (
         <BottomPopup onClose={setToolProps}>
           <OrdersRedactorOrderTools {...toolProps} />
         </BottomPopup>

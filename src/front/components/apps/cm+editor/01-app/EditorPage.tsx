@@ -1,11 +1,11 @@
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer';
+import { useCheckUserAccessRightsInScope } from '$index/checkers';
 import { Link } from '@tanstack/react-router';
-import { useAuth } from 'front/components/index/atoms';
 
 export const CmEditorPage = () => {
-  const auth = useAuth();
+  const checkAccess = useCheckUserAccessRightsInScope();
 
   return (
     <PageCmEditorContainer
@@ -14,7 +14,7 @@ export const CmEditorPage = () => {
       headTitle="Редактор"
       content={
         <>
-          {auth.level === 100 && (
+          {checkAccess('cm', 'CAT', 'R') && (
             <Link to="/cm/edit/cats">
               <BrutalItem
                 iconNode={
@@ -28,88 +28,92 @@ export const CmEditorPage = () => {
               />
             </Link>
           )}
-          <Link to="/cm/edit/coms">
-            <BrutalItem
-              iconNode={
-                <LazyIcon
-                  icon="Headphones"
-                  kind="TwotoneRounded"
-                />
-              }
-              title="Песни"
-              idPostfix="coms"
-            />
-          </Link>
-          {auth.level > 49 && (
-            <>
-              <Link to="/cm/edit/events">
-                <BrutalItem
-                  iconNode={
-                    <LazyIcon
-                      icon="Calendar02"
-                      kind="TwotoneRounded"
-                    />
-                  }
-                  title="События"
-                  idPostfix="events"
-                />
-              </Link>
-              <Link
-                to="/cm/edit/chord"
-                search={{ newChordName: '' }}
-              >
-                <BrutalItem
-                  iconNode={
-                    <LazyIcon
-                      icon="Arrange"
-                      kind="TwotoneRounded"
-                    />
-                  }
-                  title="Редактор аккордов"
-                  idPostfix="chord"
-                />
-              </Link>
-              {auth.level > 79 && (
-                <>
-                  <Link to="/cm/edit/mp3Rules">
-                    <BrutalItem
-                      iconNode={
-                        <LazyIcon
-                          icon="MusicNote01"
-                          kind="TwotoneRounded"
-                        />
-                      }
-                      title="Редактор MP3 правил"
-                      idPostfix="mp3Rules"
-                    />
-                  </Link>
-                  <Link to="/cm/edit/e-e">
-                    <BrutalItem
-                      iconNode={
-                        <LazyIcon
-                          icon="Text"
-                          kind="TwotoneRounded"
-                        />
-                      }
-                      title="Ё-Е правила"
-                      idPostfix="e-e"
-                    />
-                  </Link>
-                  <Link to="/cm/edit/constants">
-                    <BrutalItem
-                      iconNode={
-                        <LazyIcon
-                          icon="RightToLeftListTriangle"
-                          kind="TwotoneRounded"
-                        />
-                      }
-                      title="Константы"
-                      idPostfix="constants"
-                    />
-                  </Link>
-                </>
-              )}
-            </>
+          {checkAccess('cm', 'COM') && (
+            <Link to="/cm/edit/coms">
+              <BrutalItem
+                iconNode={
+                  <LazyIcon
+                    icon="Headphones"
+                    kind="TwotoneRounded"
+                  />
+                }
+                title="Песни"
+                idPostfix="coms"
+              />
+            </Link>
+          )}
+          {checkAccess('cm', 'EVENT', 'R') && (
+            <Link to="/cm/edit/events">
+              <BrutalItem
+                iconNode={
+                  <LazyIcon
+                    icon="Calendar02"
+                    kind="TwotoneRounded"
+                  />
+                }
+                title="События"
+                idPostfix="events"
+              />
+            </Link>
+          )}
+          {checkAccess('cm', 'CHORD', 'R') && (
+            <Link
+              to="/cm/edit/chord"
+              search={{ newChordName: '' }}
+            >
+              <BrutalItem
+                iconNode={
+                  <LazyIcon
+                    icon="Arrange"
+                    kind="TwotoneRounded"
+                  />
+                }
+                title="Редактор аккордов"
+                idPostfix="chord"
+              />
+            </Link>
+          )}
+          {checkAccess('cm', 'MP3', 'R') && (
+            <Link to="/cm/edit/mp3Rules">
+              <BrutalItem
+                iconNode={
+                  <LazyIcon
+                    icon="MusicNote01"
+                    kind="TwotoneRounded"
+                  />
+                }
+                title="Редактор MP3 правил"
+                idPostfix="mp3Rules"
+              />
+            </Link>
+          )}
+          {checkAccess('cm', 'EE', 'R') && (
+            <Link to="/cm/edit/e-e">
+              <BrutalItem
+                iconNode={
+                  <LazyIcon
+                    icon="Text"
+                    kind="TwotoneRounded"
+                  />
+                }
+                title="Ё-Е правила"
+                idPostfix="e-e"
+              />
+            </Link>
+          )}
+          {checkAccess('cm', 'CONST', 'R') && (
+            <Link to="/cm/edit/constants">
+              <BrutalItem
+                iconNode={
+                  <LazyIcon
+                    icon="RightToLeftListTriangle"
+                    kind="TwotoneRounded"
+                  />
+                }
+                title="Константы"
+                idPostfix="constants"
+              />
+            </Link>
           )}
         </>
       }

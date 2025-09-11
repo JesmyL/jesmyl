@@ -1,4 +1,5 @@
 import { EditChordPage } from '$cm+editor/pages/EditChordPage';
+import { useCheckUserAccessRightsInScope } from '$index/checkers';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/cm/edit/chord')({
@@ -11,5 +12,6 @@ export const Route = createFileRoute('/cm/edit/chord')({
 });
 
 function RouteComponent() {
-  return <EditChordPage />;
+  const checkAccess = useCheckUserAccessRightsInScope();
+  if (checkAccess('cm', 'CHORD', 'R')) return <EditChordPage />;
 }

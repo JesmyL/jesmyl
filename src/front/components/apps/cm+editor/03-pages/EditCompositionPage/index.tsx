@@ -12,6 +12,7 @@ import {
 import { editCompositionNavs } from '$cm+editor/pages/EditCompositionPage/lib/tabs.config';
 import { CmComNumber } from '$cm/col/com/complect/ComNumber';
 import { ComPlayer } from '$cm/col/com/player/ComPlayer';
+import { useCheckUserAccessRightsInScope } from '$index/checkers';
 import { useConnectionState } from '$index/useConnectionState';
 import { Link, useNavigate, useParams } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
@@ -25,9 +26,10 @@ export const CmEditCompositionPage = () => {
   const [isOpenPlayer, setIsOpenPlayer] = useState(false);
   const connectionNode = useConnectionState('margin-gap');
   const navigate = useNavigate();
-  const { tab } = useParams({ from: '/cm/edit/coms/$comw/$tab' });
+  const { tab }: { tab: keyof typeof editCompositionNavs } = useParams({ from: '/cm/edit/coms/$comw/$tab' });
+  const checkAccess = useCheckUserAccessRightsInScope();
   const TabComponent =
-    (tab && editCompositionNavs[tab as keyof typeof editCompositionNavs]?.Component) ||
+    (tab && editCompositionNavs[tab].checkTabAccess(checkAccess) && editCompositionNavs[tab]?.Component) ||
     editCompositionNavs.watch.Component;
 
   useEffect(() => {
@@ -88,7 +90,9 @@ export const CmEditCompositionPage = () => {
           {mylib.isNaN(ccomw) || <EditCompositionBusyInfo comw={ccomw} />}
 
           <div className="flex justify-around gap-x-2 px-2 sticky nav-panel overflow-auto no-scrollbar">
-            {MyLib.entries(editCompositionNavs).map(([tab, { icon }]) => {
+            {MyLib.entries(editCompositionNavs).map(([tab, { icon, checkTabAccess }]) => {
+              if (!checkTabAccess(checkAccess)) return null;
+
               return (
                 <Link
                   key={tab}

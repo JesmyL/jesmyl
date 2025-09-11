@@ -9,6 +9,7 @@ import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer
 import { ChordRedactableTrack } from '$cm+editor/entities/ChordRedactableTrack';
 import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { ChordCard } from '$cm/col/com/chord-card/ChordCard';
+import { useCheckUserAccessRightsInScope } from '$index/checkers';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { atom, useAtom } from 'atomaric';
 import { useEffect, useMemo, useState } from 'react';
@@ -22,6 +23,7 @@ const chordsToSendAtom = atom<ChordPack>({});
 export const EditChordPage = () => {
   const { newChordName = '' } = useSearch({ from: '/cm/edit/chord' });
   const navigate = useNavigate();
+  const checkAccess = useCheckUserAccessRightsInScope();
 
   const chords = cmIDB.useValue.chordPack();
   const [currentChordName, setCurrentChord] = useState(newChordName);
@@ -124,18 +126,20 @@ export const EditChordPage = () => {
       contentClass={`chord-redactor-content padding-gap ${isNewChord ? 'chord-addition' : ''}`}
       headTitle="Редактор аккордов"
       head={
-        <TheIconButton
-          icon="Sent"
-          disabled={!mylib.keys(chordsToSend).length}
-          disabledReason="Изменений нет"
-          className="margin-gap"
-          confirm={`Отправить аккорды ${mylib.keys(chordsToSend).join('; ')} ?`}
-          onClick={async () => {
-            await cmEditorClientTsjrpcMethods.setChords({ chords: chordsToSend });
-            setChordsToSend({});
-            updateRedactableChords({});
-          }}
-        />
+        (checkAccess('cm', 'CHORD', 'U') || checkAccess('cm', 'CHORD', 'C')) && (
+          <TheIconButton
+            icon="Sent"
+            disabled={!mylib.keys(chordsToSend).length}
+            disabledReason="Изменений нет"
+            className="margin-gap"
+            confirm={`Отправить аккорды ${mylib.keys(chordsToSend).join('; ')} ?`}
+            onClick={async () => {
+              await cmEditorClientTsjrpcMethods.setChords({ chords: chordsToSend });
+              setChordsToSend({});
+              updateRedactableChords({});
+            }}
+          />
+        )
       }
       content={
         <>
@@ -145,12 +149,14 @@ export const EditChordPage = () => {
             onTouchMove={propagationStopper}
           >
             <div className="chords-scroll">{chordNodes}</div>
-            <div className="add-chord-button flex center">
-              <LazyIcon
-                icon="PlusSignCircle"
-                onClick={() => setIsNewChord(true)}
-              />
-            </div>
+            {checkAccess('cm', 'CHORD', 'C') && (
+              <div className="add-chord-button flex center">
+                <LazyIcon
+                  icon="PlusSignCircle"
+                  onClick={() => setIsNewChord(true)}
+                />
+              </div>
+            )}
           </div>
           <div className="flex column center old-chord">
             {isNewChord ? (
@@ -176,55 +182,57 @@ export const EditChordPage = () => {
               <div>Выбери аккорд для редактирования</div>
             )}
           </div>
-          <div className="flex flex-gap column center new-chord">
-            {currentChordName || isNewChord ? (
-              <>
-                {redactableChord && !isNewChord && (
-                  <ChordRedactableTrack
-                    modifyTrack={modifyTrack}
-                    redactableChord={redactableChord}
-                  />
-                )}
-                <TheButton
-                  className="margin-big-gap"
-                  confirm={!!redactableChord}
-                  disabled={!!newNameError}
-                  onClick={() => {
-                    const newRedacts = { ...redactableChords };
+          {checkAccess('cm', 'CHORD', 'U') && (
+            <div className="flex flex-gap column center new-chord">
+              {currentChordName || isNewChord ? (
+                <>
+                  {redactableChord && !isNewChord && (
+                    <ChordRedactableTrack
+                      modifyTrack={modifyTrack}
+                      redactableChord={redactableChord}
+                    />
+                  )}
+                  <TheButton
+                    className="margin-big-gap"
+                    confirm={!!redactableChord}
+                    disabled={!!newNameError}
+                    onClick={() => {
+                      const newRedacts = { ...redactableChords };
 
-                    if (isNewChord) {
-                      setIsNewChord(false);
-                      setNewNameError('');
-                      setCurrentChord(newChordName);
-                      newRedacts[newChordName] = [0];
-                      updateRedactableChords(newRedacts);
-                    } else if (redactableChord) {
-                      setIsNewChord(false);
-                      setNewNameError('');
-                      if (!isExists) setCurrentChord('');
-                      navigate({ to: '.', search: { newChordName: '' } });
-                      delete newRedacts[currentChordName];
-                      updateRedactableChords(newRedacts);
-                    } else if (chords) {
-                      newRedacts[currentChordName] = chords[currentChordName];
-                      updateRedactableChords(newRedacts);
-                    }
-                    setExecution(newRedacts);
-                  }}
-                >
-                  {isNewChord
-                    ? 'Создать'
-                    : redactableChord
-                      ? isExists
-                        ? 'Вернуть аккорд'
-                        : 'Удалить аккорд'
-                      : 'Редактировать'}
-                </TheButton>
-              </>
-            ) : (
-              <div>Выбери аккорд для редактирования</div>
-            )}
-          </div>
+                      if (isNewChord) {
+                        setIsNewChord(false);
+                        setNewNameError('');
+                        setCurrentChord(newChordName);
+                        newRedacts[newChordName] = [0];
+                        updateRedactableChords(newRedacts);
+                      } else if (redactableChord) {
+                        setIsNewChord(false);
+                        setNewNameError('');
+                        if (!isExists) setCurrentChord('');
+                        navigate({ to: '.', search: { newChordName: '' } });
+                        delete newRedacts[currentChordName];
+                        updateRedactableChords(newRedacts);
+                      } else if (chords) {
+                        newRedacts[currentChordName] = chords[currentChordName];
+                        updateRedactableChords(newRedacts);
+                      }
+                      setExecution(newRedacts);
+                    }}
+                  >
+                    {isNewChord
+                      ? 'Создать'
+                      : redactableChord
+                        ? isExists
+                          ? 'Вернуть аккорд'
+                          : 'Удалить аккорд'
+                        : 'Редактировать'}
+                  </TheButton>
+                </>
+              ) : (
+                <div>Выбери аккорд для редактирования</div>
+              )}
+            </div>
+          )}
         </>
       }
     />

@@ -11,6 +11,7 @@ export const Mp3RuleEditor = (
     button?: ReactNode;
     onComplete?: (rule: CmMp3Rule) => void;
     newRule?: boolean;
+    isCanRedact?: boolean;
   },
 ) => {
   const [mp3Rules] = useCmMp3Rules();
@@ -22,8 +23,10 @@ export const Mp3RuleEditor = (
   const [textQuery, setTextQuery] = useState(props.textQuery || '');
   const [isHTML, setIsHTML] = useState<1 | und>(props.isHTML);
   const [query, setQuery] = useState(props.query || '');
-  const [isRedact, setIsRedact] = useState(props.redact);
+  const [isRedactState, setIsRedact] = useState(props.redact);
   const [errorMessage, setErrorMessage] = useState('');
+
+  const isRedact = props.isCanRedact !== false && isRedactState;
 
   return (
     <>
@@ -161,10 +164,12 @@ export const Mp3RuleEditor = (
               }}
             />
           ) : (
-            <TheIconButton
-              icon="Edit02"
-              onClick={() => setIsRedact(true)}
-            />
+            props.isCanRedact !== false && (
+              <TheIconButton
+                icon="Edit02"
+                onClick={() => setIsRedact(true)}
+              />
+            )
           ))}
       </div>
     </>

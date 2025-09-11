@@ -12,7 +12,7 @@ import { schGeneralTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 
 const isModalOpenAtom = atom(false);
 
-export function ScheduleCreateWidgetButton() {
+export const ScheduleCreateWidgetButton = () => {
   const [title, setTitle] = useState('');
 
   return (
@@ -69,4 +69,4 @@ export function ScheduleCreateWidgetButton() {
       </Modal>
     </>
   );
-}
+};

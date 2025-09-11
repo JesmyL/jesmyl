@@ -1,16 +1,18 @@
 import { useAppNameContext } from '#basis/lib/contexts';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { useCheckUserAccessRightsInScope } from '$index/checkers';
 import { Link, useNavigate } from '@tanstack/react-router';
-import { useAuth, useIndexSchedules } from 'front/components/index/atoms';
+import { useIndexSchedules } from 'front/components/index/atoms';
 import { useConnectionState } from 'front/components/index/useConnectionState';
 import { schLinkAction } from '../links';
 import { ScheduleCreateWidgetButton } from './CreateButton';
 
 export const ScheduleWidgetListPage = () => {
+  const checkAccess = useCheckUserAccessRightsInScope();
+
   const schedules = useIndexSchedules();
   const connectionNode = useConnectionState();
-  const auth = useAuth();
   const navigate = useNavigate();
   const appName = useAppNameContext();
 
@@ -67,7 +69,7 @@ export const ScheduleWidgetListPage = () => {
                 </Link>
               );
             })}
-          {auth && auth.level > 29 && <ScheduleCreateWidgetButton />}
+          {checkAccess('sch', 'SCH', 'C') && <ScheduleCreateWidgetButton />}
         </>
       }
     />

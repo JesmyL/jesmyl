@@ -1,4 +1,5 @@
 import { EditCompositionsPage } from '$cm+editor/pages/EditCompositionsPage';
+import { useCheckUserAccessRightsInScope } from '$index/checkers';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/cm/edit/coms/')({
@@ -6,5 +7,7 @@ export const Route = createFileRoute('/cm/edit/coms/')({
 });
 
 function RouteComponent() {
-  return <EditCompositionsPage />;
+  const checkAccess = useCheckUserAccessRightsInScope();
+
+  if (checkAccess('cm', 'COM')) return <EditCompositionsPage />;
 }

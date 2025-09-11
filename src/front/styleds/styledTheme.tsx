@@ -1,4 +1,4 @@
-import { indexIsPlayAnimationsAtom } from '$index/complect/index.atoms';
+import { indexIsPlayAnimationsAtom } from '$index/atoms';
 
 export const styledDefaultTheme = {
   isIOS: /iPad|iPhone|iPod/.test(navigator.userAgent),

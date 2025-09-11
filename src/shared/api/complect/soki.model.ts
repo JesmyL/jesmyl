@@ -1,6 +1,5 @@
 import { User } from 'node-telegram-bot-api';
 import { DeviceId } from './enums';
-import { SokiInvokerData } from './tsjrpc.master.model';
 
 export const sokiAppNames = ['index', 'cm', 'tuner', 'admin', 'gamer', 'leader', 'bible', 'wed'] as const;
 export const sokiAppNamesSet = new Set(sokiAppNames);
@@ -17,26 +16,6 @@ export interface SokiVisit {
   clientTm: number;
   location: object | null;
 }
-
-export type TsjrpcBaseEvent = {
-  requestId: string;
-  invokedResult?: unknown;
-  invoke?: SokiInvokerData;
-  errorMessage?: string | SokiError;
-  abort?: string;
-};
-
-export type TsjrpcServerEvent = TsjrpcBaseEvent & {
-  pong?: 1;
-};
-
-export type TsjrpcClientEvent = TsjrpcBaseEvent & {
-  token?: string | nil;
-  visitInfo?: SokiVisit;
-  ping?: 1;
-};
-
-export type TsjrpcClientTool = { aborter?: AbortController; timeout?: number };
 
 export interface TelegramNativeAuthUserData extends OmitOwn<User, 'language_code' | 'is_bot'> {
   auth_date?: number;
@@ -55,8 +34,4 @@ export interface LocalSokiAuth {
   login?: SokiAuthLogin;
   tgId?: number;
   tgAva?: string;
-}
-
-export interface IndexValues {
-  chatUrl?: string;
 }

@@ -7,9 +7,10 @@ interface Props {
   srcs: string[];
   onToggle: (src: string) => Promise<unknown>;
   icon: StameskaIconName;
+  isCanDelete?: boolean;
 }
 
-export const ComAudioControlledList = ({ srcs, onToggle, icon }: Props) => {
+export const ComAudioControlledList = ({ srcs, onToggle, icon, isCanDelete }: Props) => {
   const [tracksInProcess, setTracksInProcess] = useState<string[]>([]);
 
   return (
@@ -24,16 +25,18 @@ export const ComAudioControlledList = ({ srcs, onToggle, icon }: Props) => {
               audioSrcs={src}
               isPlayOwnOnly
             />
-            <TheIconLoading
-              isLoading={tracksInProcess.includes(src)}
-              icon={icon}
-              className="add-com-audio-button pointer"
-              onClick={async () => {
-                setTracksInProcess(tracksInProcess.concat(src));
-                await onToggle(src);
-                setTracksInProcess(tracksInProcess.filter(s => s !== src));
-              }}
-            />
+            {isCanDelete !== false && (
+              <TheIconLoading
+                isLoading={tracksInProcess.includes(src)}
+                icon={icon}
+                className="add-com-audio-button pointer"
+                onClick={async () => {
+                  setTracksInProcess(tracksInProcess.concat(src));
+                  await onToggle(src);
+                  setTracksInProcess(tracksInProcess.filter(s => s !== src));
+                }}
+              />
+            )}
           </div>
         );
       })}

@@ -5,6 +5,8 @@ import { useUpdateLinePositions } from '$cm+editor/basis/lib/hooks/useUpdateChor
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { ComLine } from '$cm/col/com/line/ComLine';
 import { TheOrder } from '$cm/col/com/order/TheOrder';
+import { TheCom } from '$cm/col/com/TheCom';
+import { useCheckUserAccessRightsInScope } from '$index/checkers';
 import React from 'react';
 import { makeRegExp } from 'regexpert';
 import { emptyArray, itIt } from 'shared/utils';
@@ -13,6 +15,16 @@ import { CmEditorTabComChordApplicationsStyledContent } from './styled/CmEditorT
 export const CmEditorTabComChordApplications = () => {
   const ccom = useEditableCcom();
   const { updateLinePositions, linesOnUpdateSet, ordLinePositionsOnSend } = useUpdateLinePositions();
+  const checkAccess = useCheckUserAccessRightsInScope();
+
+  if (!checkAccess('cm', 'COM_APPS', 'U'))
+    return (
+      <TheCom
+        com={ccom}
+        chordVisibleVariant={ChordVisibleVariant.Maximal}
+        isMiniAnchor={false}
+      />
+    );
 
   return (
     <CmEditorTabComChordApplicationsStyledContent id="chord-application-redactor">

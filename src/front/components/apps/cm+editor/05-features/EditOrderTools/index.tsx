@@ -1,3 +1,4 @@
+import { useCheckUserAccessRightsInScope } from '$index/checkers';
 import { OrdersRedactorOrderToolsProps } from './model';
 import { OrdersRedactorOrderToolsAnchor } from './ui/Anchor';
 import { OrdersRedactorOrderToolsAnchorDelete } from './ui/AnchorDelete';
@@ -11,6 +12,8 @@ import { OrdersRedactorOrderToolsMoveBlock } from './ui/MoveBlock';
 import { OrdersRedactorOrderToolsVisibility } from './ui/Visibility';
 
 export const OrdersRedactorOrderTools = (props: OrdersRedactorOrderToolsProps) => {
+  const checkAccess = useCheckUserAccessRightsInScope();
+
   return (
     <>
       <OrdersRedactorOrderToolsBlockType {...props} />
@@ -18,7 +21,8 @@ export const OrdersRedactorOrderTools = (props: OrdersRedactorOrderToolsProps) =
       {!props.ord.isAnchor ? (
         <>
           {props.ord.texti == null || <OrdersRedactorOrderToolsChangeText {...props} />}
-          {props.ord.me.isInherit || <OrdersRedactorOrderToolsAnchor {...props} />}
+          {checkAccess('cm', 'COM_ORD', 'C') &&
+            (props.ord.me.isInherit || <OrdersRedactorOrderToolsAnchor {...props} />)}
         </>
       ) : (
         <>
@@ -30,7 +34,7 @@ export const OrdersRedactorOrderTools = (props: OrdersRedactorOrderToolsProps) =
 
       <OrdersRedactorOrderToolsEmptyHeader {...props} />
       <OrdersRedactorOrderToolsMoveBlock {...props} />
-      <OrdersRedactorOrderToolsAnchorDelete {...props} />
+      {checkAccess('cm', 'COM_ORD', 'D') && <OrdersRedactorOrderToolsAnchorDelete {...props} />}
     </>
   );
 };
