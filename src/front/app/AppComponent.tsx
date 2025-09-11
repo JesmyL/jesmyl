@@ -14,6 +14,7 @@ import { useAtomValue } from 'atomaric';
 import { soki } from 'front/soki';
 import { useEffect, useState } from 'react';
 import { emptyArray } from 'shared/utils';
+import { AppFooter } from './AppFooter';
 import { routingApps } from './lib/configs';
 import { lastVisitedRouteLsName } from './lib/consts';
 
@@ -85,7 +86,13 @@ export const AppComponent = () => {
         />
       )}
 
-      {appName && routingApps[appName]?.footer}
+      {appName &&
+        (routingApps[appName]?.footer ?? (
+          <AppFooter
+            appName={appName}
+            children={<div className="size-full flex justify-center items-center pb-3">Выберите программу</div>}
+          />
+        ))}
     </>
   );
 };
