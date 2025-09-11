@@ -17,15 +17,20 @@
     "textQuery": "pre#music_text"
   },
   {
-    "url": "https://kg-music.club",
     "attr": "data-audio-file",
     "query": "[data-audio-file].jp-playlist-item",
+    "textQuery": "pre#soungchord",
+    "repReg": "",
+    "repText": "",
+    "url": "https://kg-music.club",
     "w": 1676442467365.221
   },
   {
     "attr": "src",
     "query": ".entry-header .wp-audio-shortcode source",
     "textQuery": "#texts .blocks",
+    "repReg": "",
+    "repText": "",
     "url": "https://fonki.pro",
     "w": 1713000448432.737
   },
