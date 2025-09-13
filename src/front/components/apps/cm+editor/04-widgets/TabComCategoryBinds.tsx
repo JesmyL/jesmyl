@@ -10,7 +10,6 @@ import { useCheckUserAccessRightsInScope } from '$index/checkers';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React, { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
-import { emptyFunc } from 'shared/utils';
 
 export const CmEditorTabComCategoryBinds = () => {
   const ccom = useEditableCcom();
@@ -46,7 +45,6 @@ export const CmEditorTabComCategoryBinds = () => {
                   value: +value,
                 });
               }}
-              onInput={emptyFunc}
             />
             {cat.dict?.[ccom.wid] != null && (
               <TheIconButton
@@ -55,6 +53,7 @@ export const CmEditorTabComCategoryBinds = () => {
                 confirm={`Очистить номер из сборника ${cat.name}?`}
                 className="pointer color--ko margin-big-gap-l margin-gap-b"
                 disabled={!checkAccess('cm', 'COM_CAT', 'U')}
+                disabledReason="Заперщено"
                 onClick={() =>
                   cmEditCatClientTsjrpcMethods.removeNativeComNum({
                     comw: ccom.wid,

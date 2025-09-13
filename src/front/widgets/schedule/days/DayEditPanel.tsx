@@ -10,8 +10,6 @@ import { schDaysTsjrpcClient } from '../tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetEventListUpdater } from './EventListUpdater';
 import { ScheduleWidgetPrintableDay } from './PrintableDay';
 
-const dotReg = makeRegExp('/\\./');
-
 interface Props {
   scheduleScopeProps: ScheduleScopeProps;
   day: IScheduleWidgetDay;
@@ -27,7 +25,7 @@ export function ScheduleWidgetDayEditPanel({ day, dayi, schedule, scheduleScopeP
   return (
     <>
       <StrongInputDateTimeExtracter
-        value={day.wup?.toFixed?.(2).replace(dotReg, ' ') || ''}
+        value={day.wup?.toFixed?.(2).replace(makeRegExp('/\\./'), ' ') || ''}
         icon="Clock01"
         title="Начало дня"
         takeDate="NO"

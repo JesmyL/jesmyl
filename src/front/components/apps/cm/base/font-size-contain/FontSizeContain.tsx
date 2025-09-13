@@ -1,3 +1,4 @@
+import { mylib } from '#shared/lib/my-lib';
 import { CSSProperties, useLayoutEffect, useRef, useState } from 'react';
 import { FontSizeContainProps } from './FontSizeContain.model';
 
@@ -22,7 +23,7 @@ export function FontSizeContain({ className, content, html, subUpdates, style }:
         containerRef.current.clientWidth / shadowChildRef.current.clientWidth,
       );
 
-      if (scale > 0 && Number.isFinite(scale) && !isNaN(scale))
+      if (scale > 0 && Number.isFinite(scale) && !mylib.isNaN(scale))
         setChildStyle({
           transform: `scale(${scale})`,
           transformOrigin: style?.textAlign === 'left' ? 'left' : style?.textAlign === 'right' ? 'right' : 'center',

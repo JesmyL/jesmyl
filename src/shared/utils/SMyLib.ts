@@ -52,15 +52,14 @@ export class SMyLib {
     return Object.keys(it) as never;
   }
 
-  keys<T extends object | nil>(it: T): (keyof T)[] {
-    if (it == null) return [];
-    return Object.keys(it) as never;
-  }
-
-  values<T extends object | nil>(it: T): T[keyof T][] {
+  static values<T extends object | nil>(it: T): T[keyof T][] {
     if (it == null) return [];
     return Object.values(it) as never;
   }
+
+  keys = SMyLib.keys;
+  values = SMyLib.values;
+  entries = SMyLib.entries;
 
   mapFilter = <Item, Val>(
     items: Item[],

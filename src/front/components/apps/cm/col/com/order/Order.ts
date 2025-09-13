@@ -391,7 +391,7 @@ export class Order extends SourceBased<IExportableOrder> {
 
                 if (end) {
                   [endLinei, endWordi] = (end || '').split(':').map(num => parseInt(num));
-                  if (isNaN(endLinei)) endLinei = startLinei;
+                  if (mylib.isNaN(endLinei)) endLinei = startLinei;
                   if (endWordi == null) {
                     endWordi = (txt[endLinei] || '').length - 1;
                     isEndWordiLast = true;
