@@ -30,7 +30,7 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
         visibleOrders?.map(ord => {
           const ordSelectorId = ComBlockCommentMakerCleans.makeOrdSelector(ord);
 
-          const commentLines = localCommentBlock?.d[ordSelectorId] ?? commentBlock?.d[ordSelectorId];
+          const commentLines = localCommentBlock?.d?.[ordSelectorId] ?? commentBlock?.d?.[ordSelectorId];
           if (commentLines == null) return '';
 
           let isNumeredLines = false;
@@ -89,7 +89,7 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
       let isThereUnsettedTranslate = false;
 
       const headCommentContents = await Promise.all(
-        (localCommentBlock?.d.head ?? commentBlock?.d.head ?? []).map(async (line, linei) => {
+        (localCommentBlock?.d?.head ?? commentBlock?.d?.head ?? []).map(async (line, linei) => {
           const { startCommentCss, isThereUnsettedTranslate: isUnset } =
             await ComBlockCommentMakerCleans.makeStartCommentCss(currentBibleTranslate, line, translates);
 

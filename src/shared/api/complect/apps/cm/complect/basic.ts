@@ -103,7 +103,7 @@ export type CmComCommentBlockSelector = CmComOrderWid | `${CmComOrderWid}_${CmCo
 export type ICmComCommentBlock = {
   comw: CmComWid;
   /** comment block dict */
-  d: PRecord<CmComCommentBlockSelector, string[]>;
+  d?: PRecord<CmComCommentBlockSelector, string[]>;
   m: number;
 };
 

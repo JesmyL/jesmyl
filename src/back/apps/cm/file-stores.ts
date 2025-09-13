@@ -40,7 +40,7 @@ export const cmConstantsConfigFileStore = new FileStore<CmConstantsConfig>(
   cmConstantsDefaultConfig,
 );
 
-type TCommentBlocksStore = PRecord<SokiAuthLogin, PRecord<CmComWid, ICmComCommentBlock>>;
+type TCommentBlocksStore = PRecord<SokiAuthLogin, PRecord<CmComWid, OmitOwn<ICmComCommentBlock, 'comw'>>>;
 type TUserFavoritesStore = Partial<Record<string, TAboutComFavoriteItem>>;
 
 export const comCommentBlocksFileStore = new FileStore<TCommentBlocksStore>('/apps/cm/comCommentBlocks.json', {});

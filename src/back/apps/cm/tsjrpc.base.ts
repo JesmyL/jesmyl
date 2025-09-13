@@ -2,7 +2,7 @@ import { FileStore } from 'back/complect/FileStore';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { ICmComComment, ICmComCommentBlock } from 'shared/api';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
-import { smylib } from 'shared/utils';
+import { emptyObject, SMyLib, smylib } from 'shared/utils';
 import { cmEditCatServerTsjrpcBase } from './edit-cat.tsjrpc.base';
 import { cmEditComExternalsTsjrpcBaseServer } from './edit-com-externals.tsjrpc.base';
 import { cmEditComOrderServerTsjrpcBase } from './edit-com-order.tsjrpc.base';
@@ -71,21 +71,20 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
             sendBasicModifiedableList(
               lastModfiedAt,
               comCommentBlocksFileStore,
-              () => smylib.values(comCommentBlocksFileStore.getValue()[login]),
+              () => {
+                const blocks = comCommentBlocksFileStore.getValue()[login];
+                if (blocks == null) return [];
+
+                return SMyLib.keys(blocks).map(strComw => ({
+                  m: 0,
+                  d: emptyObject,
+                  comw: +strComw,
+                  ...blocks[strComw],
+                }));
+              },
               (comments, modifiedAt) => {
                 if (comments.length > 0) {
                   cmShareServerTsjrpcMethods.refreshComCommentBlocks({ comments, modifiedAt }, client);
-                }
-              },
-            );
-
-            sendBasicModifiedableList(
-              lastModfiedAt,
-              comCommentsFileStore,
-              () => smylib.values(comCommentsFileStore.getValue()[login]),
-              (comments, modifiedAt) => {
-                if (comments.length > 0) {
-                  cmShareServerTsjrpcMethods.refreshComComments({ comments, modifiedAt }, client);
                 }
               },
             );
@@ -153,18 +152,31 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
             const commentModifiedAt = m + withClientTimeDelta;
 
             if (userServerComments[comw] != null && commentModifiedAt < userServerComments[comw].m) {
-              resultComments.push(userServerComments[comw]);
+              resultComments.push({ ...userServerComments[comw], comw });
               return;
             }
 
             userServerComments[comw] = {
               d: { ...userServerComments[comw]?.d, ...d },
-              comw,
               m: commentModifiedAt,
             };
 
-            resultComments.push(userServerComments[comw]);
-            freshComments.push(userServerComments[comw]);
+            SMyLib.entries(userServerComments[comw].d ?? {}).forEach(([key, block]) => {
+              if (!block) return;
+
+              for (let blocki = block.length - 1; blocki >= 0; blocki--) {
+                if (block[blocki]) break;
+                block.splice(-1);
+              }
+
+              if (!block.length && userServerComments[comw]?.d) delete userServerComments[comw].d[key];
+              // TODO: uncomment soon
+              // if (userServerComments[comw]?.d && !smylib.keys(userServerComments[comw].d).length) delete userServerComments[comw].d
+            });
+
+            const block: ICmComCommentBlock = { ...userServerComments[comw], comw };
+            resultComments.push(block);
+            freshComments.push(block);
             localSavedCommentsMaxModifiedAt = Math.max(localSavedCommentsMaxModifiedAt, commentModifiedAt);
           });
 
@@ -210,3 +222,30 @@ cmEditCatServerTsjrpcBase.$$register();
 cmEditComOrderServerTsjrpcBase.$$register();
 cmEditorTsjrpcBaseServer.$$register();
 cmUserStoreTsjrpcBaseServer.$$register();
+
+// TODO: remove after uncomment TODO below
+const commentBlocks = comCommentBlocksFileStore.getValueWithAutoSave();
+smylib.values(commentBlocks).forEach(userBlock => {
+  if (!userBlock) return;
+
+  smylib.values(userBlock).forEach(userServerComments => {
+    if (userServerComments == null || !userServerComments.d) return;
+
+    SMyLib.entries(userServerComments.d).forEach(([key, block]) => {
+      if (!block) return;
+      let isChanged = false;
+
+      for (let blocki = block.length - 1; blocki >= 0; blocki--) {
+        if (block[blocki]) break;
+        block.splice(-1);
+        isChanged = true;
+      }
+
+      if (!block.length && userServerComments.d) delete userServerComments.d[key];
+      // TODO: uncomment soon + restart server > remove
+      // if (userServerComments?.d && !smylib.keys(userServerComments.d).length) delete userServerComments.d;
+
+      if (isChanged) userServerComments.m = Date.now();
+    });
+  });
+});

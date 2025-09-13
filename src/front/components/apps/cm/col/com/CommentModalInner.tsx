@@ -12,6 +12,7 @@ import { TheComCommentInfo } from '$cm/col/com/complect/comment-parser/infos/The
 import { atom, useAtomValue } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
+import { emptyArray } from 'shared/utils';
 import { useDeferredCallback } from 'shared/utils/useDeferredCallback';
 import { ComBlockCommentMakerCleans } from './complect/comment-parser/Cleans';
 import { comCommentRedactOrdSelectorIdAtom } from './complect/comment-parser/complect';
@@ -30,7 +31,7 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
 
   const visibleOrders = com.orders?.filter(ComBlockCommentMakerCleans.withHeaderTextOrderFilter) ?? [];
 
-  const comCommentBlockTexts = localCommentBlock?.d[ordSelectorId] ?? commentBlock?.d[ordSelectorId] ?? [];
+  const comCommentBlockTexts = localCommentBlock?.d?.[ordSelectorId] ?? commentBlock?.d?.[ordSelectorId] ?? [];
 
   let ord: Order | und;
   let ordNN = 0;
@@ -75,7 +76,9 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
               onInput={value => {
                 deferredCallback(
                   () => {
-                    const texts = [...(localCommentBlock?.d[ordSelectorId] ?? commentBlock?.d[ordSelectorId] ?? [])];
+                    const texts = [
+                      ...(localCommentBlock?.d?.[ordSelectorId] ?? commentBlock?.d?.[ordSelectorId] ?? emptyArray),
+                    ];
 
                     texts[linei] = value;
 
@@ -98,7 +101,7 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
         })}
       </ModalBody>
       <ModalFooter className="flex flex-gap">
-        {localCommentBlock?.d[ordSelectorId] != null && <SavedLocalLabel />}
+        {localCommentBlock?.d?.[ordSelectorId] != null && <SavedLocalLabel />}
 
         {/* <LazyIcon
           icon="MessageQuestion"

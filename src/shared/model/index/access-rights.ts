@@ -15,7 +15,7 @@ type UserAccessRights<LoginKey extends string> = Partial<
 
 export type AccessRightsOwnerInfo = {
   fio: string;
-  isRequest?: true;
+  isRequest?: boolean;
   m: number;
 };
 export type IndexAppUserAccessRights = UserAccessRights<SokiAuthLogin>;
@@ -32,4 +32,4 @@ export type UpdateUserAccessRight = <
   value: boolean;
 }) => IndexAppUserAccessRights | null;
 
-const _asd: UserAccessRights<string> = rightsFromFile;
+rightsFromFile satisfies UserAccessRights<string>;
