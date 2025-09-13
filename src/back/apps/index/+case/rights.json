@@ -1,1 +1,41 @@
-{}
+{
+  "T166cbf17596a0c2919e4df1a6d54e66": { "info": { "fio": "Павел 👨‍💻", "m": 1757600715118, "isRequest": true } },
+  "T6558fe287d2ea93be3e19bbe64b5dfc": {
+    "info": { "fio": "Руслан", "m": 1757600615367, "isRequest": true },
+    "cm": {
+      "EDIT": 4,
+      "COM": 14,
+      "COM_APPS": 6,
+      "COM_ORD": 15,
+      "COM_TXT": 15,
+      "COM_CH": 15,
+      "COM_AUDIO": 15,
+      "COM_CAT": 6,
+      "COM_REP": 15,
+      "COM_MAIN": 6,
+      "CHORD": 12,
+      "EVENT": 6,
+      "MP3": 4
+    }
+  },
+  "T7f21a14d3133065ca2e48254f87ecf3": {
+    "info": { "fio": "danikpon", "m": 1757601141978, "isRequest": true },
+    "cm": {
+      "EDIT": 4,
+      "COM": 14,
+      "COM_APPS": 6,
+      "COM_ORD": 15,
+      "COM_TXT": 15,
+      "COM_CH": 15,
+      "COM_AUDIO": 15,
+      "COM_CAT": 6,
+      "COM_REP": 6,
+      "COM_TR": 4,
+      "COM_MAIN": 6,
+      "CHORD": 14,
+      "EVENT": 6,
+      "MP3": 4
+    },
+    "sch": { "SCH": 12 }
+  }
+}
