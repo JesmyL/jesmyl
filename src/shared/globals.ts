@@ -23,6 +23,7 @@ declare global {
 
   type NaN = NotANumber;
   type NaNumber = number | NotANumber;
+  type FalsyValue = false | '' | 0 | nil;
 
   type PropagationStopperEvent = { stopPropagation(): void };
   type PropagationStopper = (event: PropagationStopperEvent) => void;
