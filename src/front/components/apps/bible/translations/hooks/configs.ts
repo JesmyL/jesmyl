@@ -15,6 +15,7 @@ export const defaultBibleConfig: BibleTranslationScreenConfig = {
   ...defaultScreenTranslationBackgroundConfig,
   insertedtext: { color: '#ffffff', opacity: 0.7 },
   textinbrackets: { color: '#ffffff', display: 'none' },
+  godswords: { color: '#ffffff', display: 'none' },
   addressPanel: { height: 20, left: 0, top: 80, width: 100 },
 
   screen: defaultScreenTranslationPositionConfig,

@@ -63,6 +63,7 @@ export const BibleReaderBookText = ({ chapterList, currentChapteri, currentVerse
       <RolledContent
         speedKfAtom={speedKfAtom}
         elementRef={listRef}
+        className="bible-tag-controled-content"
       >
         <List ref={listRef}>
           {chapterList?.map((chapterList, chapteri) => {

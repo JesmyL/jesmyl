@@ -12,6 +12,7 @@ export interface BibleTranslationScreenConfig extends BackgroundConfigProps, Scr
 
   insertedtext?: ScreenTranslationSimpleTextConfig;
   textinbrackets?: ScreenTranslationSimpleTextConfig;
+  godswords?: ScreenTranslationSimpleTextConfig;
 
   address: {
     isOnBottom: boolean;

@@ -24,7 +24,7 @@ export function BibleTranslateCurrentScreenConfigurations({ currentConfig }: Pro
   const configRef = useActualRef(currentConfig);
 
   const putUpdateConfigInner = useCallback(
-    <Area extends 'address' | 'insertedtext' | 'textinbrackets'>(area: Area) =>
+    <Area extends 'address' | 'insertedtext' | 'textinbrackets' | 'godswords'>(area: Area) =>
       (configInner: Partial<BibleTranslationScreenConfig[Area]>) => {
         update({ ...configRef.current, [area]: { ...configRef.current[area], ...configInner } });
       },
@@ -98,6 +98,24 @@ export function BibleTranslateCurrentScreenConfigurations({ currentConfig }: Pro
             <DisplayConfigurator
               config={currentConfig.textinbrackets}
               updateConfig={putUpdateConfigInner('textinbrackets')}
+            />
+          </div>
+        </ExpandableContent>
+      )}
+      {currentConfig.godswords && (
+        <ExpandableContent title="Слова Христа">
+          <div className="margin-gap-l">
+            <ColorConfigurator
+              config={currentConfig.godswords}
+              updateConfig={putUpdateConfigInner('godswords')}
+            />
+            <FontStyleConfigurator
+              config={currentConfig.godswords}
+              updateConfig={putUpdateConfigInner('godswords')}
+            />
+            <OpacityConfigurator
+              config={currentConfig.godswords}
+              updateConfig={putUpdateConfigInner('godswords')}
             />
           </div>
         </ExpandableContent>

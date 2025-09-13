@@ -76,7 +76,8 @@ const StyledContainer = styled.ol`
   list-style-position: inside;
 
   insertedtext,
-  textinbrackets {
+  textinbrackets,
+  godswords {
     opacity: 0.6;
     font-style: italic;
     pointer-events: none;

@@ -7,8 +7,8 @@ import { CSSProperties, useMemo } from 'react';
 
 export const screenGridArea = 'screen-grid-area';
 
-const packInnerStyles = <Config extends Partial<Record<'insertedtext' | 'textinbrackets', object>>>(
-  area: 'insertedtext' | 'textinbrackets',
+const packInnerStyles = <Config extends Partial<Record<'insertedtext' | 'textinbrackets' | 'godswords', object>>>(
+  area: 'insertedtext' | 'textinbrackets' | 'godswords',
   currentConfig: Config,
   isVisible: boolean,
 ) => {
@@ -44,6 +44,7 @@ export const useGetBibleScreenTranslationScreenStyle = (
       ...textStyles,
       ...packInnerStyles('insertedtext', currentConfig, isVisible),
       ...packInnerStyles('textinbrackets', currentConfig, isVisible),
+      ...packInnerStyles('godswords', currentConfig, isVisible),
       gridArea: screenGridArea,
       textDecoration: 'italic',
 

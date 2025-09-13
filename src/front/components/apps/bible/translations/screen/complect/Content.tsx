@@ -28,7 +28,7 @@ export function BibleTranslationScreenContent(props: Props) {
   return (
     <>
       <StyledVerseText
-        className="bible-translation-screen-content absolute flex center"
+        className="bible-tag-controled-content absolute flex center"
         style={screenStyle}
         ref={screenWrapperRef}
       >

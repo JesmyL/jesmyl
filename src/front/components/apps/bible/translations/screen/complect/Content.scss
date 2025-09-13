@@ -1,4 +1,4 @@
-.bible-translation-screen-content {
+.bible-tag-controled-content {
   insertedtext {
     opacity: var(--insertedtext-opacity, 0.7);
     display: var(--insertedtext-display, initial);
@@ -11,5 +11,11 @@
     display: var(--textinbrackets-display, initial);
     color: var(--textinbrackets-color, inherit);
     font-style: var(--textinbrackets-fontStyle, inherit);
+  }
+
+  godswords {
+    opacity: var(--godswords-opacity, 0.5);
+    color: var(--godswords-color, var(--color--ok));
+    font-style: var(--godswords-fontStyle, inherit);
   }
 }
