@@ -1,13 +1,12 @@
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { atom } from 'atomaric';
-import { StameskaIconName } from 'stameska-icon';
 import { TheComCommentForExample } from './ForExample';
 import { TheComCommentBibleTextsInfo } from './TheComCommentBibleTextsInfo';
 
 const isOpenBibleInfoAtom = atom(false);
 
-export function TheComCommentInfo({ HashSwitcherIcon }: { HashSwitcherIcon: StameskaIconName }) {
+export function TheComCommentInfo({ HashSwitcherIcon }: { HashSwitcherIcon: KnownStameskaIconName }) {
   const italicBlockNumber_ = <i>номер блока</i>;
 
   return (

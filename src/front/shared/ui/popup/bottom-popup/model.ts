@@ -1,9 +1,8 @@
 import { AreaHTMLAttributes, JSX, ReactNode } from 'react';
-import { StameskaIconName } from 'stameska-icon';
 
 export type AbsoluteBottomPopupItem = {
   className?: string;
-  icon: StameskaIconName;
+  icon: KnownStameskaIconName;
   titleNode?: ReactNode;
   title?: string;
   rightNode?: ReactNode;

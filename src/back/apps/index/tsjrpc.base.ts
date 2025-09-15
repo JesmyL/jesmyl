@@ -19,8 +19,11 @@ import {
   TelegramNativeAuthUserData,
 } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
-import { itNNull, smylib } from 'shared/utils';
+import { itNNil, itNNull, smylib } from 'shared/utils';
 import { updateCRUDAccesRightValue } from 'shared/utils/index/utils';
+import { knownStameskaIconNames, knownStameskaIconNamesMd5Hash } from 'shared/values/index/known-icons';
+import { stameskaIconPack } from 'stameska-icon/pack';
+import { StameskaIconPack } from 'stameska-icon/utils';
 import {
   accessRightTitlesFileStore,
   appVersionFileStore,
@@ -79,6 +82,16 @@ const authByTgUser = async ({ user }: { user: TelegramNativeAuthUserData }) => {
 
 export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<IndexTsjrpcModel> {
   constructor() {
+    const extractIcon = <Icon>(it: { icon?: Icon }) => it.icon;
+    const extractAllScheduleIcons = (sch: IScheduleWidget) => {
+      return [
+        //
+        sch.tatts.map(extractIcon),
+        sch.ctrl.roles.map(extractIcon),
+        sch.lists.cats.map(extractIcon),
+      ];
+    };
+
     super({
       scope: 'Index',
       beforeEachTools: {
@@ -92,7 +105,10 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         requestFreshes: { minLevel: 0 },
       },
       methods: {
-        requestFreshes: async ({ lastModfiedAt }, { client, auth }) => {
+        requestFreshes: async (
+          { lastModfiedAt, iconPacks: userIconPacks, iconsMd5Hash: userIconsMd5Hash },
+          { client, auth },
+        ) => {
           const isNoAuth = auth == null;
           const login = auth?.login;
           const someScheduleUser = (user: IScheduleWidgetUser) => user.login === login;
@@ -121,7 +137,54 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
             })
             .filter(itNNull);
 
+          if (userIconsMd5Hash !== knownStameskaIconNamesMd5Hash || schedules.length) {
+            const userActualIconDict: PRecord<KnownStameskaIconName, StameskaIconPack | null> = {};
+            const knownIconNamesSet = new Set(knownStameskaIconNames);
+
+            if (userIconsMd5Hash !== knownStameskaIconNamesMd5Hash) {
+              userIconPacks.forEach(iconName => {
+                if (knownIconNamesSet.has(iconName)) {
+                  knownIconNamesSet.delete(iconName);
+
+                  if (userActualIconDict[iconName] === null) {
+                    delete userActualIconDict[iconName];
+                  }
+                  return;
+                }
+
+                userActualIconDict[iconName] = null;
+              });
+
+              knownIconNamesSet.forEach(knownIconName => {
+                userActualIconDict[knownIconName] = stameskaIconPack[knownIconName];
+              });
+            }
+
+            if (schedules.length) {
+              const userIconPacksSet = new Set(userIconPacks);
+
+              // TODO: replace on schedules
+              schedulesFileStore
+                .getValue()
+                .map(extractAllScheduleIcons)
+                .flat(2)
+                .filter(itNNil)
+                .forEach(iconName => {
+                  if (userIconPacksSet.has(iconName)) return;
+                  userActualIconDict[iconName] = stameskaIconPack[iconName];
+                });
+            }
+
+            indexServerTsjrpcShareMethods.updateKnownIconPacks({
+              actualIconPacks: userActualIconDict,
+              iconsMd5Hash: knownStameskaIconNamesMd5Hash,
+            });
+          }
+
           if (schedules.length) schServerTsjrpcShareMethods.refreshSchedules({ schs: schedules }, client);
+        },
+        getIconExistsPacks: async ({ limit, offset }) => {
+          return { packs: smylib.values(stameskaIconPack).slice(offset, offset + limit) };
         },
         getDeviceId: async () => {
           return (makeTwiceKnownName().replace(makeRegExp('/ /g'), '_') +
@@ -194,6 +257,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         getAccessRightTitles: null,
         getUserAccessRights: null,
         updateUserAccessRight: null,
+        getIconExistsPacks: null,
       },
     });
   }

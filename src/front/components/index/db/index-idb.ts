@@ -2,6 +2,7 @@ import { AppName } from '#basis/model/App.model';
 import { DexieDB } from '#shared/lib/DexieDB';
 import { Atom } from 'atomaric';
 import { DeviceId, IScheduleWidget, IScheduleWidgetWid, ScheduleWidgetPhotoKey } from 'shared/api';
+import { StameskaIconPack } from 'stameska-icon/utils';
 import { FileAssociations } from '../parts/actions/files/complect/MyFilesTypeBox';
 import { indexDeviceIdAtom } from './atoms';
 
@@ -16,6 +17,7 @@ interface Storage {
   schs: IScheduleWidget[];
   lastScheduleWid: IScheduleWidgetWid | NaN;
   schedulePhotos: { key: ScheduleWidgetPhotoKey; src: string }[];
+  iconPacks: { key: KnownStameskaIconName; pack: StameskaIconPack }[];
 }
 
 class IndexIDB extends DexieDB<Storage> {
@@ -33,6 +35,9 @@ class IndexIDB extends DexieDB<Storage> {
         isRemoved: true,
       },
       schedulePhotos: {
+        key: '++',
+      },
+      iconPacks: {
         key: '++',
       },
     });

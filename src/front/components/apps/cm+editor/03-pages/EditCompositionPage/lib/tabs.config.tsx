@@ -9,7 +9,6 @@ import { CmEditorTabComRepeats } from '$cm+editor/widgets/TabComRepeats';
 import { CmEditorTabTextBlocks } from '$cm+editor/widgets/TabComTextBlocks';
 import { CmEditorTabWatch } from '$cm+editor/widgets/TabComWatch';
 import { useCheckUserAccessRightsInScope } from '$index/checkers';
-import { StameskaIconName } from 'stameska-icon';
 
 export const editCompositionNavs = {
   watch: {
@@ -66,7 +65,7 @@ export const editCompositionNavs = {
   string,
   {
     Component: () => React.ReactNode;
-    icon: StameskaIconName;
+    icon: KnownStameskaIconName;
     checkTabAccess: (checker: ReturnType<typeof useCheckUserAccessRightsInScope>) => void;
   }
 >;

@@ -1,7 +1,6 @@
 import { FontStyleType } from '#shared/ui/configurators/FontStyle/model';
 import { FontWeightType } from '#shared/ui/configurators/FontWeight';
 import { BackgroundConfigProps } from '#shared/ui/configurators/model';
-import { StameskaIconName } from 'stameska-icon';
 
 export interface ScreenTranslationConfig {
   title: string;
@@ -14,7 +13,7 @@ export type AlertLineConfig = BackgroundConfigProps & {
   text: string;
   top: number;
   speed: number;
-  icon: StameskaIconName;
+  icon: KnownStameskaIconName;
   color: string;
   fontSize: number;
   fontFamily?: string;

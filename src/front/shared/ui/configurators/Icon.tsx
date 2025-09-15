@@ -1,29 +1,40 @@
-import { MyLib } from '#shared/lib/my-lib';
-import { atom } from 'atomaric';
-import { ReactNode, useState } from 'react';
-import { StameskaIconName, stameskaIconPack } from 'stameska-icon';
+import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
+import { atom, useAtomValue } from 'atomaric';
+import { ReactNode, useEffect, useState } from 'react';
+import { StameskaIconPack } from 'stameska-icon/utils';
 import { Modal } from '../modal/Modal/Modal';
 import { ModalBody } from '../modal/Modal/ModalBody';
 import { ModalHeader } from '../modal/Modal/ModalHeader';
 import { useToast } from '../modal/useToast';
+import { TextInput } from '../TextInput';
 import { LazyIcon } from '../the-icon/LazyIcon';
 import { TheIconButton } from '../the-icon/TheIconButton';
-import { TheButton } from '../TheButton';
 
 const isOpenModalAtom = atom(false);
+const pageSize = 54;
+const offsetAtom = atom(0, 'icons:setOfListOffset');
 
 export default function IconConfigurator(props: {
-  icon: StameskaIconName;
+  icon: KnownStameskaIconName;
   header: ReactNode;
-  used?: (StameskaIconName | und)[];
-  onSend: (icon: StameskaIconName) => Promise<unknown>;
+  used?: (KnownStameskaIconName | und)[];
+  onSend: (icon: KnownStameskaIconName) => Promise<unknown>;
 }) {
-  const [limit, setLimit] = useState(36);
-  const [loadingIcon, setLoadingIcon] = useState<StameskaIconName | null>(null);
+  const offset = useAtomValue(offsetAtom);
+  const [loadingIcon, setLoadingIcon] = useState<KnownStameskaIconName | null>(null);
+  const [iconPacks, setIconPacks] = useState<StameskaIconPack[]>([]);
   const usedSet = new Set(props.used);
   const toast = useToast();
-  const iconNames = MyLib.keys(stameskaIconPack);
-  const limitedIconNames = iconNames.slice(0, limit);
+
+  useEffect(() => {
+    (async () => {
+      const { packs } = await indexTsjrpcClientMethods.getIconExistsPacks({
+        limit: pageSize,
+        offset: offset < 0 ? offset - pageSize : offset,
+      });
+      setIconPacks(packs);
+    })();
+  }, [offset]);
 
   return (
     <>
@@ -39,12 +50,16 @@ export default function IconConfigurator(props: {
         <ModalHeader className="flex gap-2">{props.header}</ModalHeader>
         <ModalBody>
           <div className="flex flex-wrap justify-between">
-            {limitedIconNames.map(icon => {
+            {iconPacks.map(pack => {
+              const icon = pack[0] as KnownStameskaIconName;
+
               return (
                 <LazyIcon
                   key={icon}
                   icon={icon}
+                  pack={pack}
                   className={'p-2 pointer ' + (props.icon === icon || usedSet.has(icon) ? ' text-x7' : '')}
+                  withoutAnimation
                   onClick={async () => {
                     setLoadingIcon(icon);
 
@@ -56,16 +71,27 @@ export default function IconConfigurator(props: {
                     }
                     setLoadingIcon(null);
                   }}
-                  withoutAnimation
                 />
               );
             })}
           </div>
-          {iconNames.length !== limitedIconNames.length && (
-            <div className="flex justify-center">
-              <TheButton onClick={() => setLimit(prev => prev + 36)}>Загрузить ещё</TheButton>
-            </div>
-          )}
+          <div className="mt-5 flex justify-between">
+            <LazyIcon
+              icon="ArrowLeft02"
+              onClick={() => offsetAtom.do.increment(-pageSize)}
+            />
+
+            <TextInput
+              value={`${Math.trunc(offset / iconPacks.length)}`}
+              onChanged={value => offsetAtom.set(isNaN(+value) ? 0 : +value * pageSize)}
+              className="w-[5em]! text-center"
+            />
+
+            <LazyIcon
+              icon="ArrowRight02"
+              onClick={() => offsetAtom.do.increment(pageSize)}
+            />
+          </div>
         </ModalBody>
       </Modal>
     </>

@@ -1,5 +1,5 @@
 import { schTsjrpcBaseClient } from '#widgets/schedule/tsjrpc/tsjrpc.base';
-import { indexDeviceIdAtom } from '$index/db/atoms';
+import { indexDeviceIdAtom, lastUpdatedIconsMd5HashAtom } from '$index/db/atoms';
 import { indexIDB } from '$index/db/index-idb';
 import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
 import { indexTsjrpcBaseClient } from '$index/tsjrpc.shares';
@@ -23,7 +23,13 @@ export const appInitialInvokes = () => {
       //
     }
 
-    await indexTsjrpcClientMethods.requestFreshes({ lastModfiedAt });
+    const iconPacks = (await indexIDB.tb.iconPacks.toArray()).map(({ key }) => key);
+
+    await indexTsjrpcClientMethods.requestFreshes({
+      lastModfiedAt,
+      iconPacks,
+      iconsMd5Hash: lastUpdatedIconsMd5HashAtom.get(),
+    });
   };
 
   soki.onBeforeAuthorizeEvent.listen(() => indexIDB.remove.lastModifiedAt());

@@ -1,11 +1,10 @@
 import { useToast } from '#shared/ui/modal/useToast';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { StameskaIconName } from 'stameska-icon';
 import { SendButtonContentMaker } from '../send-button-content-maker/maker';
 import { SendButtonContentMakerProps } from '../send-button-content-maker/maker.model';
 
 interface Props<Value> extends SendButtonContentMakerProps<Value> {
-  icon: StameskaIconName;
+  icon: KnownStameskaIconName;
   className?: string;
   prefix?: null | React.ReactNode;
   postfix?: null | React.ReactNode;

@@ -5,7 +5,6 @@ import { TextInput } from '#shared/ui/TextInput';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ReactNode, useEffect, useState } from 'react';
-import { StameskaIconName } from 'stameska-icon';
 
 type Props<Key, Value> = {
   fieldKey?: Key;
@@ -14,7 +13,7 @@ type Props<Key, Value> = {
   description?: ReactNode;
   disabled?: boolean;
   type?: 'text' | 'tel';
-  icon?: StameskaIconName;
+  icon?: KnownStameskaIconName;
   placeholder?: string;
   isRedact?: boolean;
   setSelfRedact?: boolean;

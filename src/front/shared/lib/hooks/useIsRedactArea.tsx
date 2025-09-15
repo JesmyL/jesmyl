@@ -1,7 +1,6 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useState } from 'react';
-import { StameskaIconName } from 'stameska-icon';
 
 type booleanOrNil = boolean | nil;
 type OnEditStart = ((isSelfRedact: boolean) => void) | nil;
@@ -12,7 +11,7 @@ interface Props {
   canRedact?: booleanOrNil;
   isShowDoneButton?: booleanOrNil;
   onEditStart?: OnEditStart;
-  icon?: StameskaIconName;
+  icon?: KnownStameskaIconName;
 }
 
 export function useIsRedactArea(props: Props) {

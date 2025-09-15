@@ -1,6 +1,5 @@
 import { FileRoutesByPath } from '@tanstack/react-router';
 import { ReactNode } from 'react';
-import { StameskaIconName } from 'stameska-icon';
 
 export interface PageContainerConfigurerProps extends PageContainerProps {
   goBack?: (isForceBack?: boolean) => void;
@@ -14,7 +13,7 @@ export interface PageContainerProps {
   headTitle?: ReactNode;
   head?: ReactNode;
   content: ReactNode;
-  backButtonIcon?: StameskaIconName;
+  backButtonIcon?: KnownStameskaIconName;
   backButtonPath?: keyof FileRoutesByPath;
   backButtonRender?: PageContainerBackLinkRender;
   contentRef?: React.Ref<HTMLDivElement>;

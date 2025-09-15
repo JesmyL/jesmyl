@@ -2,6 +2,9 @@ import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { IScheduleWidgetRole, ScheduleRoleScopeProps } from 'shared/api';
 import { SchRolesTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
 import { smylib } from 'shared/utils';
+import { knownStameskaIconNamesMd5Hash } from 'shared/values/index/known-icons';
+import { stameskaIconPack } from 'stameska-icon/pack';
+import { indexServerTsjrpcShareMethods } from '../../tsjrpc.methods';
 import { modifySchedule } from '../schedule-modificators';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 
@@ -28,7 +31,14 @@ export const schRolesTsjrpcBaseServer = new (class SchRoles extends TsjrpcBaseSe
           modifySchedule(false, props, sch => (sch.ctrl.cats[cati] = title)),
         addRoleCategory: ({ props }) => modifySchedule(false, props, sch => sch.ctrl.cats.push('')),
 
-        setRoleIcon: modifyRole((role, value) => (role.icon = value)),
+        setRoleIcon: modifyRole((role, value) => {
+          indexServerTsjrpcShareMethods.updateKnownIconPacks({
+            actualIconPacks: { [value]: stameskaIconPack[value] },
+            iconsMd5Hash: knownStameskaIconNamesMd5Hash,
+          });
+
+          role.icon = value;
+        }),
         setRoleTitle: modifyRole((role, value) => (role.title = value)),
         setRoleUser: modifyRole((role, value) => (role.userMi = value)),
         setCategoryForRole: modifyRole((role, value) => (role.cati = value)),

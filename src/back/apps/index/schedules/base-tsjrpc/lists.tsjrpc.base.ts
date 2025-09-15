@@ -7,6 +7,9 @@ import {
 } from 'shared/api';
 import { SchListsTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
 import { smylib } from 'shared/utils';
+import { knownStameskaIconNamesMd5Hash } from 'shared/values/index/known-icons';
+import { stameskaIconPack } from 'stameska-icon/pack';
+import { indexServerTsjrpcShareMethods } from '../../tsjrpc.methods';
 import { modifySchedule } from '../schedule-modificators';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 
@@ -56,7 +59,14 @@ export const schListsTsjrpcBaseServer = new (class SchLists extends TsjrpcBaseSe
         setCategoryTitle: modifyCategory((cat, value) => (cat.title = value)),
         setCategoryMembersTitle: modifyCategory((cat, value) => (cat.titles[1] = value)),
         setCategoryMentorsTitle: modifyCategory((cat, value) => (cat.titles[0] = value)),
-        setCategoryIcon: modifyCategory((cat, value) => (cat.icon = value)),
+        setCategoryIcon: modifyCategory((cat, value) => {
+          indexServerTsjrpcShareMethods.updateKnownIconPacks({
+            actualIconPacks: { [value]: stameskaIconPack[value] },
+            iconsMd5Hash: knownStameskaIconNamesMd5Hash,
+          });
+
+          cat.icon = value;
+        }),
 
         setUnitTitle: modifyUnit((unit, value) => (unit.title = value)),
         setUnitDescription: modifyUnit((unit, value) => (unit.dsc = value)),

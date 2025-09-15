@@ -22,7 +22,6 @@ import {
   scheduleWidgetUserRights,
 } from 'shared/api';
 import { itIt, itNIt } from 'shared/utils';
-import { StameskaIconName } from 'stameska-icon';
 import { ScheduleWidgetCustomAttTitles } from './CustomAttTitles';
 import { ScheduleWidgetCustomAttLocalImagineSelector } from './LocalImagine';
 
@@ -37,7 +36,7 @@ enum WhoCan {
 const whoCaniAtom = atom<WhoCan>(WhoCan.No);
 const openAttRedactorAtom = atom<IScheduleWidgetAttachmentTypeMi | null>(null);
 
-const whoCanUnits: { action: string; rule: 'R' | 'U'; icon: StameskaIconName }[] = [
+const whoCanUnits: { action: string; rule: 'R' | 'U'; icon: KnownStameskaIconName }[] = [
   {
     action: 'видит',
     rule: 'R',

@@ -1,13 +1,12 @@
 import { footerItemPlaceLsPrefix, useCurrentAppFooterItemPlaceContext } from '#basis/lib/App.contexts';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { FileRoutesByPath, Link } from '@tanstack/react-router';
-import { StameskaIconName } from 'stameska-icon';
 import styled from 'styled-components';
 
 interface Props {
   to: keyof FileRoutesByPath;
   idPostfix: string;
-  icon: StameskaIconName;
+  icon: KnownStameskaIconName;
   title: string;
   className?: string;
   children?: React.ReactNode;

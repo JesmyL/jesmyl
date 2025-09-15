@@ -10,6 +10,9 @@ import {
 } from 'shared/api';
 import { SchAttachmentTypesTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
 import { smylib } from 'shared/utils';
+import { knownStameskaIconNamesMd5Hash } from 'shared/values/index/known-icons';
+import { stameskaIconPack } from 'stameska-icon/pack';
+import { indexServerTsjrpcShareMethods } from '../../tsjrpc.methods';
 import { modifySchedule } from '../schedule-modificators';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 
@@ -39,7 +42,14 @@ export const schAttachmentTypesTsjrpcBaseServer =
 
           setTitle: ({ props, value }) => this.modifyAttType(props, tatt => (tatt.title = value)),
           setDescription: ({ props, value }) => this.modifyAttType(props, tatt => (tatt.description = value)),
-          setIcon: ({ props, value }) => this.modifyAttType(props, tatt => (tatt.icon = value)),
+          setIcon: ({ props, value }) => {
+            indexServerTsjrpcShareMethods.updateKnownIconPacks({
+              actualIconPacks: { [value]: stameskaIconPack[value] },
+              iconsMd5Hash: knownStameskaIconNamesMd5Hash,
+            });
+
+            return this.modifyAttType(props, tatt => (tatt.icon = value));
+          },
           setUse: ({ props, value }) => this.modifyAttType(props, tatt => (tatt.use = value)),
           setRolesUses: ({ props, value }) => this.modifyAttType(props, tatt => (tatt.roles = value)),
           setListsUses: ({ props, value }) => this.modifyAttType(props, tatt => (tatt.list = value)),

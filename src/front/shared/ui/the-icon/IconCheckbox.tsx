@@ -1,6 +1,5 @@
 import { Atom, useAtomValue } from 'atomaric';
 import { ReactNode, useState } from 'react';
-import { StameskaIconName } from 'stameska-icon';
 import { StyledLoadingSpinner } from './IconLoading';
 import { LazyIcon } from './LazyIcon';
 
@@ -35,7 +34,7 @@ export function IconCheckbox(props: Props) {
         }
       : () => props.onChange?.(!props.checked);
 
-  const renderNode = (icon: StameskaIconName) => {
+  const renderNode = (icon: KnownStameskaIconName) => {
     const loadIcon = isLoading ? (
       <StyledLoadingSpinner
         icon="Loading03"
@@ -78,7 +77,7 @@ export function IconCheckbox(props: Props) {
 }
 
 const WithSimpleValuer = (props: {
-  children: (icon: StameskaIconName) => ReactNode;
+  children: (icon: KnownStameskaIconName) => ReactNode;
   valueAtom: Atom<boolean>;
   negativeValue?: boolean;
 }) => {

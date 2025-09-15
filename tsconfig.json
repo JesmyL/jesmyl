@@ -65,6 +65,5 @@
     "cypress/**/*.ts",
     "regexpert.gen",
     "src/service-worker.ts"
-  ],
-  "exclude": ["src/front/shared/ui/the-icon/icons"]
+  ]
 }

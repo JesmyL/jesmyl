@@ -28,6 +28,7 @@ export const indexTsjrpcClientMethods = new (class Index extends TsjrpcClient<In
 
         getFreshAppVersion: true,
         getIndexValues: true,
+        getIconExistsPacks: true,
 
         getAccessRightTitles: true,
         getUserAccessRights: true,

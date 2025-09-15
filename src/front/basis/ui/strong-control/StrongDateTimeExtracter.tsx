@@ -2,7 +2,6 @@ import { mylib } from '#shared/lib/my-lib';
 import { useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { itIt } from 'shared/utils';
-import { StameskaIconName } from 'stameska-icon';
 import { StrongEditableField } from './field/StrongEditableField';
 
 type TakeDateComponent = 'NO' | 'year' | 'month' | 'day';
@@ -23,7 +22,7 @@ const takeInPeriod = (num: string | null, finish: string, start?: number) => {
 export function StrongInputDateTimeExtracter(props: {
   fieldKey?: string;
   value: string;
-  icon?: StameskaIconName;
+  icon?: KnownStameskaIconName;
   title?: string;
   className?: string;
   takeDate: TakeDateComponent;

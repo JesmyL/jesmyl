@@ -1,13 +1,12 @@
 import { mylib } from '#shared/lib/my-lib';
 import { ReactNode } from 'react';
-import { StameskaIconKind, StameskaIconName } from 'stameska-icon';
 import { ConfirmContent } from '../modal/confirm/ConfirmContent';
 import { useToast } from '../modal/useToast';
 import { TheIconLoading } from './IconLoading';
 import { LazyIcon } from './LazyIcon';
 
 interface Props {
-  icon: StameskaIconName;
+  icon: KnownStameskaIconName;
   kind?: StameskaIconKind;
   disabled?: boolean;
   withoutAnimation?: boolean;

@@ -7,6 +7,7 @@ export const indexServerTsjrpcShareMethods = new (class Sch extends TsjrpcServer
       scope: 'Index',
       methods: {
         refreshAccessRights: true,
+        updateKnownIconPacks: true,
       },
     });
   }

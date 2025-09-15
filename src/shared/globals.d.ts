@@ -1,3 +1,6 @@
+import { StameskaIconKind as StameskaIconKindType } from 'stameska-icon/utils';
+import { KnownStameskaIconName as KnownStameskaIconNameType } from './model/index/other';
+
 enum NotANumber {
   nan = 'NaN',
 }
@@ -16,7 +19,8 @@ declare global {
 
   type KRecord<Key extends string | number, Value> = (Record<`${Key}`, Value> | Record<Key, Value>) &
     Record<`${Key}` | Key, Value>;
-  type PRecord<Key extends string | number, Value> = Partial<KRecord<Key, Value>>;
+  type PKRecord<Key extends string | number, Value> = Partial<KRecord<Key, Value>>;
+  type PRecord<Key extends string | number, Value> = Partial<Record<Key, Value>>;
 
   type OmitOwn<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
   type WithRewrites<T, P> = Pick<T, Exclude<keyof T, keyof P>> & Pick<P, keyof P>;
@@ -39,6 +43,7 @@ declare global {
 
   type Without<T, U> = { [P in Exclude<keyof T, keyof U>]?: never };
   type XOR<T, U> = (Without<T, U> & U) | (Without<U, T> & T);
-}
 
-export {};
+  type KnownStameskaIconName = KnownStameskaIconNameType;
+  type StameskaIconKind = StameskaIconKindType;
+}

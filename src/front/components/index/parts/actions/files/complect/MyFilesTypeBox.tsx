@@ -5,12 +5,11 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useIndexFileAssociations } from '$index/atoms';
 import { useEffect, useReducer, useState } from 'react';
 import { MyFileType } from 'shared/api';
-import { StameskaIconName } from 'stameska-icon';
 import { useRemoveMyFile } from '../hooks/remove-file';
 
 export type FileAssociations = Record<
   MyFileType,
-  { title: string; icon: StameskaIconName; removeTitle: string; extensions: string[] }
+  { title: string; icon: KnownStameskaIconName; removeTitle: string; extensions: string[] }
 >;
 
 const forceUpdater = (it: number) => it + 1;

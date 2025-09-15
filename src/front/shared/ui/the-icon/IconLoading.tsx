@@ -1,11 +1,10 @@
 import { HTMLAttributes } from 'react';
-import { StameskaIconName } from 'stameska-icon';
 import styled, { keyframes } from 'styled-components';
 import { LazyIcon } from './LazyIcon';
 
 interface Props extends HTMLAttributes<HTMLOrSVGElement> {
   isLoading?: boolean;
-  icon?: StameskaIconName;
+  icon?: KnownStameskaIconName;
 }
 
 export const TheIconLoading = (props: Props) => {

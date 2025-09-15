@@ -2,7 +2,6 @@ import { TextInput } from '#shared/ui/TextInput';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useState } from 'react';
-import { StameskaIconName } from 'stameska-icon';
 
 type Props<ChangedValue> = {
   onChange: (value: string) => Promise<ChangedValue>;
@@ -12,7 +11,7 @@ type Props<ChangedValue> = {
   label?: string;
   placeholder?: string;
   className?: string;
-  icon: StameskaIconName;
+  icon: KnownStameskaIconName;
   multiline?: boolean;
   isError?: boolean;
   disabled?: boolean;

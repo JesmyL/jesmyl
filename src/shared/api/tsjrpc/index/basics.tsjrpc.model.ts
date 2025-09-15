@@ -6,9 +6,10 @@ import {
   UpdateUserAccessRight,
 } from 'shared/model/index/access-rights';
 import { IndexValues } from 'shared/model/index/other';
+import { StameskaIconPack } from 'stameska-icon/utils';
 
 export type IndexTsjrpcModel = {
-  requestFreshes: (args: { lastModfiedAt: number }) => void;
+  requestFreshes: (args: { lastModfiedAt: number; iconPacks: KnownStameskaIconName[]; iconsMd5Hash: string }) => void;
   getDeviceId: () => DeviceId;
   authMeByTelegramNativeButton: (args: { user: TelegramNativeAuthUserData }) => { token: string; auth: LocalSokiAuth };
   authMeByTelegramMiniButton: (args: { user: TelegramNativeAuthUserData }) => { token: string; auth: LocalSokiAuth };
@@ -21,4 +22,7 @@ export type IndexTsjrpcModel = {
   getAccessRightTitles: () => IndexAppAccessRightTitles;
   getUserAccessRights: () => IndexAppUserAccessRights;
   updateUserAccessRight: UpdateUserAccessRight;
+  getIconExistsPacks: (args: { offset: number; limit: number }) => {
+    packs: StameskaIconPack[];
+  };
 };
