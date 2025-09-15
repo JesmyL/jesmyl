@@ -1,6 +1,11 @@
 import { indexIDB } from '$index/db/index-idb';
 import { HTMLAttributes, useEffect, useState } from 'react';
-import { makeStameskaIconSvgAttributeProps, makeStameskaIconSvgHTMLProp, StameskaIconPack } from 'stameska-icon/utils';
+import {
+  makeStameskaIconSvgAttributeProps,
+  makeStameskaIconSvgHTMLProp,
+  StameskaIconKind,
+  StameskaIconPack,
+} from 'stameska-icon/utils';
 
 export type LazyIconProps = HTMLAttributes<HTMLOrSVGElement> & {
   icon: KnownStameskaIconName;

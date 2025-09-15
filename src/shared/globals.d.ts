@@ -1,5 +1,4 @@
 import { knownStameskaIconNames } from 'shared/values/index/known-icons';
-import { StameskaIconKind as StameskaIconKindType } from 'stameska-icon/utils';
 
 enum NotANumber {
   nan = 'NaN',
@@ -45,5 +44,4 @@ declare global {
   type XOR<T, U> = (Without<T, U> & U) | (Without<U, T> & T);
 
   type KnownStameskaIconName = (typeof knownStameskaIconNames)[number];
-  type StameskaIconKind = StameskaIconKindType;
 }

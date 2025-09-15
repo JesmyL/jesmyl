@@ -1,5 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
 import { ReactNode } from 'react';
+import { StameskaIconKind } from 'stameska-icon/utils';
 import { ConfirmContent } from '../modal/confirm/ConfirmContent';
 import { useToast } from '../modal/useToast';
 import { TheIconLoading } from './IconLoading';
