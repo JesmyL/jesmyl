@@ -137,7 +137,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
             })
             .filter(itNNull);
 
-          if (userIconsMd5Hash !== knownStameskaIconNamesMd5Hash || schedules.length) {
+          if (userIconsMd5Hash !== knownStameskaIconNamesMd5Hash || !userIconPacks?.length || schedules.length) {
             const userActualIconDict: PRecord<KnownStameskaIconName, StameskaIconPack | null> = {};
             const knownIconNamesSet = new Set(knownStameskaIconNames);
 
@@ -160,7 +160,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
               });
             }
 
-            if (schedules.length) {
+            if (!userIconPacks?.length || schedules.length) {
               const userIconPacksSet = new Set(userIconPacks);
 
               // TODO: replace on schedules
