@@ -20,12 +20,7 @@ export const gul94iAdminTelegramBot = new JesmylTelegramBot({
 });
 
 tgBotDTO.gul94iAdminTelegramBot = gul94iAdminTelegramBot;
-
-gul94iTelegramBot.onChatMessages((bot, message) => {
-  if (message.text?.toLowerCase() === 'матюки') {
-    bot.deleteMessage(message.message_id, message.chat.id);
-  }
-});
+tgBotDTO.gul94iTelegramBot = gul94iTelegramBot;
 
 const msgForCheck = 'пров';
 const msgForPublicate = 'пуб!';

@@ -1,4 +1,4 @@
-import { anonymousQuestionService } from './complect/anonymousQuestionService';
+import { telegramAnonymousChatMessageService } from './complect/anonymousQuestionService';
 import { tgBotConfig } from './file-stores';
 import { JesmylTelegramBotWrapper } from './tg-bot-wrapper';
 
@@ -15,7 +15,12 @@ jesmylTgBot.setCommands([
     command: '/init',
     description: 'Инициализировать',
   },
-  anonymousQuestionService('gul94i', 'Гулячи', 'gul94iAdminTelegramBot'),
+  telegramAnonymousChatMessageService({
+    id: 'gul94i',
+    chatTitle: 'Гулячи',
+    botAdminName: 'gul94iAdminTelegramBot',
+    botName: 'gul94iTelegramBot',
+  }),
 ]);
 
 jesmylTgBot.catchMessages((message, bot) => {
