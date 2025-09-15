@@ -142,7 +142,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
             const knownIconNamesSet = new Set(knownStameskaIconNames);
 
             if (userIconsMd5Hash !== knownStameskaIconNamesMd5Hash) {
-              userIconPacks.forEach(iconName => {
+              userIconPacks?.forEach(iconName => {
                 if (knownIconNamesSet.has(iconName)) {
                   knownIconNamesSet.delete(iconName);
 
