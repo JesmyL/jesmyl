@@ -1,5 +1,4 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { ListItemText } from '@mui/material';
 import { HTMLAttributes, JSX } from 'react';
 import { StameskaIconKind } from 'stameska-icon/utils';
 import { twMerge } from 'tailwind-merge';
@@ -58,10 +57,7 @@ export const BottomPopupItem = ({
             ))}
         </div>
       )}
-      <ListItemText
-        primary={titleNode ?? title}
-        className="button-item-text"
-      />
+      <div className="w-full">{titleNode ?? title}</div>
       {rightNode}
     </li>
   );
