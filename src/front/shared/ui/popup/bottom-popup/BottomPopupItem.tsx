@@ -44,7 +44,7 @@ export const BottomPopupItem = ({
     >
       {(iconNode || icon) && (
         <div
-          className={twMerge('icon-box my-.5 mr-5 p-2.5 rounded-[50%]', iconWrapperClassName)}
+          className={twMerge('icon-box my-.5 mr-5 p-2.5 rounded-full', iconWrapperClassName)}
           onClick={onIconClick}
         >
           {iconNode ||
@@ -57,7 +57,7 @@ export const BottomPopupItem = ({
             ))}
         </div>
       )}
-      <div className="w-full">{titleNode ?? title}</div>
+      <div className="w-full @container">{titleNode ?? title}</div>
       {rightNode}
     </li>
   );

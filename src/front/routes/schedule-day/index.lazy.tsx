@@ -1,6 +1,6 @@
+import { Skeleton } from '#shared/components/ui/skeleton';
 import { extractTgRouteDataFromUrl } from '#widgets/schedule/general/extractTgRouteDataFromUrl';
 import { useGetScheduleOrPull } from '#widgets/schedule/general/useSetScheduleOrPull';
-import { Skeleton } from '@mui/material';
 import { createLazyFileRoute, Navigate } from '@tanstack/react-router';
 
 export const Route = createLazyFileRoute('/schedule-day/')({
@@ -17,10 +17,7 @@ function RouteComponent() {
       {error ? (
         <div className="text-KO">{error}</div>
       ) : isLoading || !schedule ? (
-        <Skeleton
-          height={300}
-          width="70vw"
-        />
+        <Skeleton className="h-[300px] w-[70vw]" />
       ) : (
         <Navigate
           to="/!other/$appName/schs"

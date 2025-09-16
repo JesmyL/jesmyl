@@ -1,5 +1,5 @@
-import { Menu } from '@mui/material';
-import { useRef, useState } from 'react';
+import { DropdownMenu } from '#shared/components/ui/dropdown-menu';
+import { useState } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 import { ComPlayer } from './ComPlayer';
 import { ComPlayerMarksConfigurerEditMenuButton } from './ComPlayerMarksConfigurerEditMenuButton';
@@ -10,36 +10,32 @@ interface Props {
 }
 
 export const ComPlayerWithPoints = ({ audioSrcs }: Props) => {
-  const buttonRef = useRef<HTMLButtonElement>(null);
   const [isOpenMenu, setIsOpenMenu] = useState(false);
 
   return (
     <ComPlayer
       audioSrcs={audioSrcs}
       timeRender={(timeNode, currentSrc) => (
-        <>
-          <button
-            ref={buttonRef}
+        <DropdownMenu.Root
+          open={isOpenMenu}
+          onOpenChange={setIsOpenMenu}
+        >
+          <DropdownMenu.Trigger
             className="bg-x1 h-6 w-13 pointer text-x3 rounded-2xl"
             onClick={() => setIsOpenMenu(true)}
           >
             {timeNode}
-          </button>
+          </DropdownMenu.Trigger>
 
-          <Menu
-            open={isOpenMenu}
-            anchorEl={buttonRef.current}
-            onClose={() => setIsOpenMenu(false)}
-            classes={{ list: 'bg-x2 text-x4 flex flex-col gap-3', paper: 'bg-x7', root: 'mt-1' }}
-          >
+          <DropdownMenu.Content className="bg-x2 text-x4 **:text-x4 flex flex-col gap-3">
             <ComPlayerMarksMovers src={currentSrc} />
 
             <ComPlayerMarksConfigurerEditMenuButton
               src={currentSrc}
               onClick={() => setIsOpenMenu(false)}
             />
-          </Menu>
-        </>
+          </DropdownMenu.Content>
+        </DropdownMenu.Root>
       )}
     />
   );

@@ -1,3 +1,4 @@
+import { Badge } from '#shared/components/ui/badge';
 import { mylib } from '#shared/lib/my-lib';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
@@ -8,10 +9,10 @@ import { cmComFontSizeAtom } from '$cm/basis/lib/store/atoms';
 import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { cmTsjrpcClient } from '$cm/tsjrpc/basic.tsjrpc.methods';
-import { Chip, useMediaQuery } from '@mui/material';
 import { useAtom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 import { CmComCatMentions } from '../useGetCatMentions';
 import { useMigratableListComTools } from './lib/useMigratableComTools';
 
@@ -31,7 +32,6 @@ export const ComTools = () => {
       setVisitsCount(visitsCount);
     })();
   }, [ccom?.wid]);
-  const isSmallDevice = useMediaQuery('(max-width: 350px)');
 
   if (!ccom) return null;
 
@@ -41,7 +41,7 @@ export const ComTools = () => {
         id="transpose-tool"
         icon="SlidersHorizontal"
         className={chordVisibleVariant === ChordVisibleVariant.None ? 'disabled' : undefined}
-        title={isSmallDevice ? '' : 'Тональность'}
+        titleNode={<span className="@min-[100px]:visible invisible">Тональность</span>}
         onClick={event => event.stopPropagation()}
         rightNode={
           <div className="flex justify-between gap-1">
@@ -50,12 +50,12 @@ export const ComTools = () => {
               className="minus"
               onClick={() => ccom.transpose(-1)}
             />
-            <Chip
-              label={ccom.getFirstSimpleChord()}
-              className={'min-w-13 flex justify-center'}
+            <Badge
+              className={twMerge('min-w-13 flex justify-center bg-x2', ifixedCom?.ton == null ? 'text-x7' : 'text-x3')}
               onClick={() => ccom.setChordsInitialTon()}
-              classes={{ label: ifixedCom?.ton == null ? 'text-x7' : 'text-x3' }}
-            />
+            >
+              {ccom.getFirstSimpleChord()}
+            </Badge>
             <TheIconButton
               icon="PlusSign"
               className="plus"
@@ -68,7 +68,7 @@ export const ComTools = () => {
       <BottomPopupItem
         id="font-size-tool"
         icon="TextFont"
-        title={isSmallDevice ? '' : 'Размер шрифта'}
+        titleNode={<span className="@min-[120px]:visible invisible">Размер шрифта</span>}
         onClick={event => event.stopPropagation()}
         rightNode={
           <div className="flex justify-between gap-1">
@@ -78,12 +78,13 @@ export const ComTools = () => {
               disabled={fontSize <= minFontSize}
               onClick={() => setFontSize(changeFontSize(-1))}
             />
-            <Chip
-              label={fontSize < 0 ? 'auto' : fontSize}
-              className="min-w-13 flex justify-center"
+
+            <Badge
+              className={twMerge('min-w-13 flex justify-center bg-x2', fontSize < 0 ? 'text-x7' : 'text-x3')}
               onClick={() => setFontSize(changeFontSize(0))}
-              classes={{ label: fontSize < 0 ? 'text-x7' : 'text-x3' }}
-            />
+            >
+              {fontSize < 0 ? 'auto' : fontSize}
+            </Badge>
             <TheIconButton
               className="plus"
               icon="PlusSign"

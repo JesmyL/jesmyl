@@ -1,17 +1,17 @@
+import { DropdownMenu } from '#shared/components/ui/dropdown-menu';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmIDB } from '$cm/basis/lib/store/cmIDB';
-import { MenuItem } from '@mui/material';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useRef } from 'react';
 import { comPlayerAudioElement, comPlayerPlaySrcAtom } from './controls';
 
 export const ComPlayerMarksMovers = ({ src }: { src: string }) => {
   const titleRef = useRef<HTMLDivElement>(null);
-  const prevRef = useRef<HTMLLIElement>(null);
-  const repeatRef = useRef<HTMLLIElement>(null);
-  const nextRef = useRef<HTMLLIElement>(null);
+  const prevRef = useRef<HTMLDivElement>(null);
+  const repeatRef = useRef<HTMLDivElement>(null);
+  const nextRef = useRef<HTMLDivElement>(null);
   const playSrc = useAtomValue(comPlayerPlaySrcAtom);
 
   const audioTrackMarks = cmIDB.useAudioTrackMarks(playSrc ?? src);
@@ -39,8 +39,8 @@ export const ComPlayerMarksMovers = ({ src }: { src: string }) => {
       titleNode.innerText = audioTrackMarks.marks[repeat] ?? 'Начало';
 
       if (repeat === marks[marks.length - 1]) {
-        nextRef.current?.classList.add('Mui-disabled');
-      } else nextRef.current?.classList.remove('Mui-disabled');
+        nextRef.current?.classList.add('disabled');
+      } else nextRef.current?.classList.remove('disabled');
     };
 
     updatePoints();
@@ -74,18 +74,18 @@ export const ComPlayerMarksMovers = ({ src }: { src: string }) => {
         className="ellipsis"
         ref={titleRef}
       />
-      <div className="flex">
-        <MenuItem ref={prevRef}>
+      <div className="flex justify-around w-full">
+        <DropdownMenu.Item ref={prevRef}>
           <LazyIcon icon="ArrowLeft02" />
-        </MenuItem>
+        </DropdownMenu.Item>
 
-        <MenuItem ref={repeatRef}>
+        <DropdownMenu.Item ref={repeatRef}>
           <LazyIcon icon="Refresh" />
-        </MenuItem>
+        </DropdownMenu.Item>
 
-        <MenuItem ref={nextRef}>
+        <DropdownMenu.Item ref={nextRef}>
           <LazyIcon icon="ArrowRight02" />
-        </MenuItem>
+        </DropdownMenu.Item>
       </div>
     </>
   );
