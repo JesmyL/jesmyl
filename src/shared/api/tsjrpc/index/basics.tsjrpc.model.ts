@@ -9,7 +9,11 @@ import { IndexValues } from 'shared/model/index/other';
 import { StameskaIconPack } from 'stameska-icon/utils';
 
 export type IndexTsjrpcModel = {
-  requestFreshes: (args: { lastModfiedAt: number; iconPacks: KnownStameskaIconName[]; iconsMd5Hash: string }) => void;
+  requestFreshes: (args: {
+    lastModfiedAt: number;
+    iconPacks: KnownStameskaIconName[] | nil;
+    iconsMd5Hash: string;
+  }) => void;
   getDeviceId: () => DeviceId;
   authMeByTelegramNativeButton: (args: { user: TelegramNativeAuthUserData }) => { token: string; auth: LocalSokiAuth };
   authMeByTelegramMiniButton: (args: { user: TelegramNativeAuthUserData }) => { token: string; auth: LocalSokiAuth };

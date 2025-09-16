@@ -137,11 +137,15 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
             })
             .filter(itNNull);
 
-          if (userIconsMd5Hash !== knownStameskaIconNamesMd5Hash || !userIconPacks?.length || schedules.length) {
+          const isStaticUserIconsInactual =
+            !userIconPacks?.length || userIconsMd5Hash !== knownStameskaIconNamesMd5Hash;
+          const isSchedulesWasUpdated = !userIconPacks?.length || !!schedules.length;
+
+          if (isStaticUserIconsInactual || isSchedulesWasUpdated) {
             const userActualIconDict: PRecord<KnownStameskaIconName, StameskaIconPack | null> = {};
             const knownIconNamesSet = new Set(knownStameskaIconNames);
 
-            if (userIconsMd5Hash !== knownStameskaIconNamesMd5Hash) {
+            if (isStaticUserIconsInactual) {
               userIconPacks?.forEach(iconName => {
                 if (knownIconNamesSet.has(iconName)) {
                   knownIconNamesSet.delete(iconName);
@@ -160,7 +164,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
               });
             }
 
-            if (!userIconPacks?.length || schedules.length) {
+            if (isSchedulesWasUpdated) {
               const userIconPacksSet = new Set(userIconPacks);
 
               // TODO: replace on schedules
@@ -175,10 +179,14 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
                 });
             }
 
-            indexServerTsjrpcShareMethods.updateKnownIconPacks({
-              actualIconPacks: userActualIconDict,
-              iconsMd5Hash: knownStameskaIconNamesMd5Hash,
-            });
+            indexServerTsjrpcShareMethods.updateKnownIconPacks(
+              {
+                actualIconPacks: userActualIconDict,
+                iconsMd5Hash: knownStameskaIconNamesMd5Hash,
+              },
+              // TODO: remove soon
+              visit => !!visit?.version && visit?.version >= 1019,
+            );
           }
 
           if (schedules.length) schServerTsjrpcShareMethods.refreshSchedules({ schs: schedules }, client);
