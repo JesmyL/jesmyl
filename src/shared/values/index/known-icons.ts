@@ -119,6 +119,7 @@ export const knownStameskaIconNames = [
   'MinusSign',
   'MinusSignCircle',
   'MoreVerticalCircle01',
+  'Mp302',
   'MusicNote01',
   'MusicNote03',
   'Note03',

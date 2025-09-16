@@ -33,7 +33,7 @@ export const CmEditorPage = () => {
               <BrutalItem
                 iconNode={
                   <LazyIcon
-                    icon="Headphones"
+                    icon="MusicNote01"
                     kind="TwotoneRounded"
                   />
                 }
@@ -64,7 +64,7 @@ export const CmEditorPage = () => {
               <BrutalItem
                 iconNode={
                   <LazyIcon
-                    icon="Arrange"
+                    icon="TwoFinger05"
                     kind="TwotoneRounded"
                   />
                 }
@@ -78,7 +78,7 @@ export const CmEditorPage = () => {
               <BrutalItem
                 iconNode={
                   <LazyIcon
-                    icon="MusicNote01"
+                    icon="Mp302"
                     kind="TwotoneRounded"
                   />
                 }
