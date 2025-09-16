@@ -8,6 +8,10 @@ export const initialStyles = css`
     height: 100vh;
   }
 
+  * {
+    --icon-color: currentColor;
+  }
+
   body {
     --font-family:
       -apple-system, montserrat, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
@@ -16,8 +20,6 @@ export const initialStyles = css`
     -moz-osx-font-smoothing: grayscale;
 
     --input-keyboard-background: var(--color--1);
-
-    --icon-color: var(--color--4);
 
     --icon-fill: var(--icon-color);
     --icon-stroke: var(--icon-color);

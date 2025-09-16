@@ -1,7 +1,8 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { ListItemText } from '@mui/material';
 import { HTMLAttributes, JSX } from 'react';
 import { StameskaIconKind } from 'stameska-icon/utils';
+import { twMerge } from 'tailwind-merge';
 import { useBottomPopupOnCloseContext } from './context';
 
 interface Props extends HTMLAttributes<HTMLLIElement> {
@@ -33,40 +34,35 @@ export const BottomPopupItem = ({
   const onClose = useBottomPopupOnCloseContext();
 
   return (
-    <ListItem
-      disablePadding
+    <li
       {...attrs}
+      className={twMerge('pointer px-7 xl:px-12 py-1.5 my-0 flex hover:bg-x2', className)}
       onClick={event => {
         onClick?.(event);
         if (event.isPropagationStopped()) return;
         onClose(false);
       }}
-      className={'pointer ' + className}
-      secondaryAction={rightNode}
     >
-      <ListItemButton>
-        {(iconNode || icon) && (
-          <ListItemIcon>
-            <div
-              className={'icon-box ' + iconWrapperClassName}
-              onClick={onIconClick}
-            >
-              {iconNode ||
-                (icon && (
-                  <LazyIcon
-                    icon={icon}
-                    kind={iconKind}
-                    className={iconClassName}
-                  />
-                ))}
-            </div>
-          </ListItemIcon>
-        )}
-        <ListItemText
-          primary={titleNode ?? title}
-          className="button-item-text"
-        />
-      </ListItemButton>
-    </ListItem>
+      {(iconNode || icon) && (
+        <div
+          className={twMerge('icon-box my-.5 mr-5 p-2.5 rounded-[50%]', iconWrapperClassName)}
+          onClick={onIconClick}
+        >
+          {iconNode ||
+            (icon && (
+              <LazyIcon
+                icon={icon}
+                kind={iconKind}
+                className={iconClassName}
+              />
+            ))}
+        </div>
+      )}
+      <ListItemText
+        primary={titleNode ?? title}
+        className="button-item-text"
+      />
+      {rightNode}
+    </li>
   );
 };

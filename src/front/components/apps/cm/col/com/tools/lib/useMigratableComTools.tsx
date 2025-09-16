@@ -5,7 +5,6 @@ import { useAuth } from '$index/atoms';
 import { useAtom, useAtomValue } from 'atomaric';
 import React from 'react';
 import { MigratableComToolName } from 'shared/api';
-import styled, { css } from 'styled-components';
 import { CmCatsBindsComTool } from '../ui/CatsBindsComTool';
 import { ChordHardLevelComTool } from '../ui/ChordHardLevelComTool';
 import { ChordImagesComTool } from '../ui/ChordImagesComTool';
@@ -38,9 +37,9 @@ function mapTools(this: und | typeof mapToolsSelf, key: MigratableComToolName) {
     );
 
   return (
-    <StyledItem
+    <div
       key={key}
-      $active={this.comTopTools.includes(key)}
+      className={this.comTopTools.includes(key) ? '[&_.icon-box]:bg-x4 [&_.icon-box]:text-x2' : undefined}
     >
       <ComToolNameContext.Provider value={key}>
         <ComToolItemAttrsContext.Provider
@@ -55,7 +54,7 @@ function mapTools(this: und | typeof mapToolsSelf, key: MigratableComToolName) {
           {toolsDict[key]}
         </ComToolItemAttrsContext.Provider>
       </ComToolNameContext.Provider>
-    </StyledItem>
+    </div>
   );
 }
 
@@ -107,13 +106,3 @@ export const useMigratableTopComTools = () => {
     <IsComToolIconItemsContext.Provider value={true}>{comTopTools.map(mapTools)}</IsComToolIconItemsContext.Provider>
   );
 };
-
-const StyledItem = styled.div<{ $active: boolean }>`
-  ${props =>
-    props.$active &&
-    css`
-      .icon-box {
-        background: var(--color--2);
-      }
-    `}
-`;

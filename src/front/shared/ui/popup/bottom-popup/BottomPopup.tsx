@@ -1,19 +1,20 @@
-import { isIOS } from '#shared/lib/device-differences';
+import { Drawer } from '#shared/components/ui/drawer';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
-import { Box, SwipeableDrawer } from '@mui/material';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ReactNode, useEffect, useRef } from 'react';
 import { emptyFunc } from 'shared/utils';
-import styled from 'styled-components';
 import { BottomPopupOnCloseContext } from './context';
 
 interface Props {
+  open?: boolean;
+  title?: ReactNode;
   children?: ReactNode;
   onClose: (is: false) => void;
   isPreventCloseOnClick?: boolean;
   id?: string;
 }
 
-export const BottomPopup = ({ children, onClose, isPreventCloseOnClick, id }: Props) => {
+export const BottomPopup = ({ children, onClose, isPreventCloseOnClick, id, title, open }: Props) => {
   const popupContainer = useRef<HTMLDivElement>(null);
   const overContentContainer = useRef<HTMLDivElement>(null);
 
@@ -37,57 +38,35 @@ export const BottomPopup = ({ children, onClose, isPreventCloseOnClick, id }: Pr
   }, []);
 
   return (
-    <>
-      <Popup
+    <Drawer.Above
+      open={open ?? true}
+      onClose={() => onClose(false)}
+    >
+      <Drawer.Content
+        className="h-[100vh] w-full"
         id={id}
-        anchor="bottom"
-        open
-        onOpen={emptyFunc}
-        onClose={() => onClose(false)}
-        disableDiscovery={isIOS}
-        disableBackdropTransition={!isIOS}
       >
-        <BottomPopupOnCloseContext.Provider value={isPreventCloseOnClick ? emptyFunc : () => setTimeout(onClose, 100)}>
-          <Box className="bg-x1 py-5 sm:px-3 xl:px-7 text-x4">{children}</Box>
-        </BottomPopupOnCloseContext.Provider>
-      </Popup>
-    </>
+        <Drawer.Close>
+          <Drawer.Header>
+            <Drawer.Title className="flex gap-3">
+              {title}
+              <LazyIcon icon="Cancel01" />
+            </Drawer.Title>
+            <Drawer.Description></Drawer.Description>
+          </Drawer.Header>
+        </Drawer.Close>
+
+        <div
+          className="w-full overflow-scroll"
+          st-no-scrollbar=""
+        >
+          <BottomPopupOnCloseContext.Provider
+            value={isPreventCloseOnClick ? emptyFunc : () => setTimeout(onClose, 100, false)}
+          >
+            <div className="bg-x1 py-5 text-x4">{children}</div>
+          </BottomPopupOnCloseContext.Provider>
+        </div>
+      </Drawer.Content>
+    </Drawer.Above>
   );
 };
-
-const Popup = styled(SwipeableDrawer)`
-  > * {
-    scroll-snap-align: start;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  &::-webkit-scrollbar {
-    display: none;
-  }
-
-  .icon-box {
-    --size: 2.5em;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    width: var(--size);
-    min-width: var(--size);
-    max-width: var(--size);
-    height: var(--size);
-    min-height: var(--size);
-    max-height: var(--size);
-
-    &.active {
-      background: var(--color--2);
-    }
-
-    .abs-icon {
-      margin: var(--main-gap);
-    }
-  }
-`;

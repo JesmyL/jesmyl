@@ -34,15 +34,15 @@ import { useMigratableTopComTools } from './tools/lib/useMigratableComTools';
 import { CmComCatMentions } from './useGetCatMentions';
 
 export function TheComposition() {
-  const [chordVisibleVariant] = useChordVisibleVariant();
   const ccom = useFixedCcom();
+  const [chordVisibleVariant] = useChordVisibleVariant();
   const { addLaterComw, laterComws } = useLaterComList();
   const [isOpenTools, setIsOpenTools] = useState(false);
   const comToolsNode = useMigratableTopComTools();
   const { list } = useCmCurrentComPackContext();
+
   const playerHideMode = useAtomValue(cmPlayerHideModeAtom);
   const hideAppFooter = useAtomValue(hideAppFooterAtom);
-
   const isShowCatBinds = useAtomValue(cmIsShowCatBindsInCompositionAtom);
 
   useEffect(() => {
@@ -97,7 +97,14 @@ export function TheComposition() {
           {backNode}
         </Link>
       )}
-      head={<div id="com-tools-top-panel">{comToolsNode}</div>}
+      head={
+        <div
+          id="com-tools-top-panel"
+          className="flex items-center"
+        >
+          {comToolsNode}
+        </div>
+      }
       content={
         <>
           <DocTitle title={ccom.name} />
@@ -123,14 +130,14 @@ export function TheComposition() {
             bpm={ccom.beatsPerMinute}
           />
 
-          {isOpenTools && (
-            <BottomPopup
-              id="com-tools-bottom-popup"
-              onClose={setIsOpenTools}
-            >
-              <ComTools />
-            </BottomPopup>
-          )}
+          <BottomPopup
+            id="com-tools-bottom-popup"
+            open={isOpenTools}
+            title={ccom.name}
+            onClose={setIsOpenTools}
+          >
+            <ComTools />
+          </BottomPopup>
         </>
       }
     />
