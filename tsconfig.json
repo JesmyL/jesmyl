@@ -58,6 +58,6 @@
       "bibles/*": ["./bibles/*"]
     }
   },
-  "include": ["src", "cypress/**/*.ts", "regexpert.gen"],
+  "include": ["src", "cypress/**/*.ts", "regexpert.gen", "src/front/components/apps/tuner/app.js"],
   "exclude": ["**/*.*js"]
 }
