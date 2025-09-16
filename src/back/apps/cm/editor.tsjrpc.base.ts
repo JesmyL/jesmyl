@@ -33,7 +33,7 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
               words,
               modifiedAt,
             },
-            (_client, auth) => !!auth && auth.level >= 50,
+            (_, auth) => !!auth && auth.level >= 50,
           );
 
           return words;

@@ -16,7 +16,7 @@ const valueSendBuilder = <Args extends object>(
     if (tool.auth?.login == null) throw 'Не авторизован для отправки user-store';
     const login = tool.auth.login;
 
-    const ret = action(login, (_client, auth) => auth?.login === login, args);
+    const ret = action(login, (_, auth) => auth?.login === login, args);
     if (ret === undefined) return;
     ret(tool);
   };

@@ -1,4 +1,4 @@
-import { LocalSokiAuth, SokiAuthLogin } from 'shared/api';
+import { LocalSokiAuth, SokiAuthLogin, SokiVisit } from 'shared/api';
 import { WebSocket } from 'ws';
 
 export type SokiServerClientSelector =
@@ -9,5 +9,5 @@ export type SokiServerClientSelector =
   | Set<WebSocket>
   | Map<unknown, WebSocket>
   | null
-  | ((client: WebSocket, auth: LocalSokiAuth | und) => boolean)
+  | ((visit: SokiVisit | nil, auth: LocalSokiAuth | nil, client: WebSocket) => boolean)
   | { login: SokiAuthLogin; ignoreClient?: WebSocket };

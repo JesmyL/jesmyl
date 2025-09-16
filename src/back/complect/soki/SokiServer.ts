@@ -130,7 +130,7 @@ export class SokiServer {
     const stringEvent = JSON.stringify(event);
     if (smylib.isFunc(clientSelector)) {
       this.clients.forEach(client => {
-        if (clientSelector(client, this.auths.get(client))) client.send(stringEvent);
+        if (clientSelector(this.visits.get(client), this.auths.get(client), client)) client.send(stringEvent);
       });
       return;
     }
