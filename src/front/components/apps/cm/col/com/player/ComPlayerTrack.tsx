@@ -1,8 +1,6 @@
+import { Slider } from '#shared/components/ui/slider';
 import { mylib } from '#shared/lib/my-lib';
-import { cmIDB } from '$cm/basis/lib/store/cmIDB';
-import { Slider } from '@mui/material';
 import { useAtomSet, useAtomValue } from 'atomaric';
-import { useMemo } from 'react';
 import {
   comPlayerAudioElement,
   comPlayerIsPlayAtom,
@@ -23,7 +21,6 @@ interface Props {
 export const ComPlayerTrack = ({ timeRender, src, isPlayOwnOnly }: Props) => {
   const playSrc = useAtomValue(comPlayerPlaySrcAtom);
   const isOtherPlaySrc = playSrc && playSrc !== src;
-  const trackMarks = cmIDB.useAudioTrackMarks(playSrc ?? src);
   let duration = useComPlayerDuration();
   let currentTime = useComPlayerCurrentTime();
 
@@ -34,20 +31,17 @@ export const ComPlayerTrack = ({ timeRender, src, isPlayOwnOnly }: Props) => {
   const time = mylib.convertSecondsInStrTime(currentTime);
 
   const setIsPlay = useAtomSet(comPlayerIsPlayAtom);
-  const marks = useMemo(() => mylib.keys(trackMarks?.marks).map(value => ({ value })), [trackMarks?.marks]);
 
   return (
     <>
       <Slider
-        size="small"
-        value={currentTime || 0}
+        value={[currentTime || 0]}
         min={0}
         step={1}
         max={duration}
         color={isOtherPlaySrc ? 'x5' : 'x7'}
         disabled={duration < 2}
-        marks={marks}
-        onChange={(_, value) => {
+        onValueChange={([value]) => {
           setIsPlay(false);
           isUserSlideTrackDTO.isSlide = true;
           clearTimeout(userChangeTimeout);
