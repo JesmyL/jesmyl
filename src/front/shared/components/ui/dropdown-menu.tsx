@@ -1,8 +1,9 @@
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
-import { CheckIcon, ChevronRightIcon, CircleIcon } from 'lucide-react';
 import * as React from 'react';
 
 import { cn } from '#shared/lib/utils';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { atom } from 'atomaric';
 
 export const DropdownMenu = {
   Root({ ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Root>) {
@@ -81,7 +82,7 @@ export const DropdownMenu = {
   },
 
   CheckboxItem({
-    className,
+    className = '',
     children,
     checked,
     ...props
@@ -98,7 +99,10 @@ export const DropdownMenu = {
       >
         <span className="pointer-events-none absolute left-2 flex size-3.5 items-center justify-center">
           <DropdownMenuPrimitive.ItemIndicator>
-            <CheckIcon className="size-4" />
+            <LazyIcon
+              icon="Circle"
+              className="size-4"
+            />
           </DropdownMenuPrimitive.ItemIndicator>
         </span>
         {children}
@@ -115,7 +119,7 @@ export const DropdownMenu = {
     );
   },
 
-  RadioItem({ className, children, ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.RadioItem>) {
+  RadioItem({ className = '', children, ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.RadioItem>) {
     return (
       <DropdownMenuPrimitive.RadioItem
         data-slot="dropdown-menu-radio-item"
@@ -127,7 +131,10 @@ export const DropdownMenu = {
       >
         <span className="pointer-events-none absolute left-2 flex size-3.5 items-center justify-center">
           <DropdownMenuPrimitive.ItemIndicator>
-            <CircleIcon className="size-2 fill-current" />
+            <LazyIcon
+              icon="Circle"
+              className="size-2 fill-current"
+            />
           </DropdownMenuPrimitive.ItemIndicator>
         </span>
         {children}
@@ -152,7 +159,7 @@ export const DropdownMenu = {
     );
   },
 
-  Separator({ className, ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Separator>) {
+  Separator({ className = '', ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Separator>) {
     return (
       <DropdownMenuPrimitive.Separator
         data-slot="dropdown-menu-separator"
@@ -182,7 +189,7 @@ export const DropdownMenu = {
   },
 
   SubTrigger({
-    className,
+    className = '',
     inset,
     children,
     ...props
@@ -200,7 +207,10 @@ export const DropdownMenu = {
         {...props}
       >
         {children}
-        <ChevronRightIcon className="ml-auto size-4" />
+        <LazyIcon
+          icon="ArrowRight01"
+          className="size-2 fill-current"
+        />
       </DropdownMenuPrimitive.SubTrigger>
     );
   },
@@ -218,3 +228,5 @@ export const DropdownMenu = {
     );
   },
 };
+
+console.log(atom(123));
