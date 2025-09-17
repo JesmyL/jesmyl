@@ -35,7 +35,7 @@ export const EERulesWord = memo(
     const isVariated = mylib.isArr(trackState) ? trackState.includes(0) : !trackState;
 
     return (
-      <StyledTable className="mx-5">
+      <StyledTable className="my-5">
         <tbody>
           <StyledWordTr>
             {parts.map((part, parti) => (

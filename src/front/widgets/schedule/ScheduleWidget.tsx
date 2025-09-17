@@ -153,9 +153,9 @@ export function ScheduleWidget({
           text={schLinkAction.makeLink({ inviteSch: schedule.w })}
         />
 
-        <StyledWidget className={'schedule-widget'}>
+        <StyledWidget className="schedule-widget">
           {titleNode}
-          <div className="mx-5">
+          <div className="my-5">
             {rights.isCanRedact && isRedact ? (
               <StrongInputDateTimeExtracter
                 title="Начало"

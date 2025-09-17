@@ -14,7 +14,7 @@ export function ScheduleWidgetRegisterType() {
   return (
     <>
       <div className="my-2">{expandNode}</div>
-      <div className="mx-5">
+      <div className="my-5">
         {isExpand && (
           <>
             <ScheduleWidgetRightControlList

@@ -38,7 +38,7 @@ export function ScheduleWidgetUserList({
     <>
       <div className="my-2">{expandNode}</div>
       {isExpand && (
-        <div className="mx-5 ml-2">
+        <div className="my-5 ml-2">
           {users.length ? (
             users.map(({ user, balance }) => {
               return (

@@ -123,7 +123,7 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
 
         <TheButton
           id="new-com-parse-text-button"
-          className="mx-5"
+          className="my-5"
           disabled={!value}
           onClick={() => {
             const { com, errors } = EditableCom.parseBlocks(value);

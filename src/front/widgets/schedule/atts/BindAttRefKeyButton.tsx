@@ -68,7 +68,7 @@ export function ScheduleWidgetBindAttRefKeyButton({
             return (
               <StrongDiv
                 key={attKey + dayi + eventMi}
-                className="mx-5"
+                className="my-5"
                 onSuccess={isModalOpenAtom.reset}
                 onSend={() => onSend(attRef)}
               >

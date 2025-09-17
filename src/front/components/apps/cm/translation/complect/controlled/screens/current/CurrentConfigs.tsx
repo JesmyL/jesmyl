@@ -103,7 +103,7 @@ export const CmTranslateCurrentScreenConfigurations = ({ currentConfig }: Props)
               <div>
                 <TheIconButton
                   icon="PlusSign"
-                  className="mx-5"
+                  className="my-5"
                   postfix="Вставить окно следующего блока"
                   onClick={onAddSubConfig}
                 />

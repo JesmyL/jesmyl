@@ -143,7 +143,7 @@ export function ScheduleWidgetCustomAtt(props: {
         />
         {props.tatt.title && (
           <>
-            <div className="mx-5">
+            <div className="my-5">
               {whoCanUnits.map((whoCan, whoCani) => {
                 return (
                   <TheIconButton

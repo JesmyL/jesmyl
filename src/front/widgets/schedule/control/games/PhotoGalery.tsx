@@ -36,7 +36,7 @@ export const ScheduleWidgetPhotoGalery = () => {
           return (
             <div
               key={user.mi}
-              className="flex center column mx-5"
+              className="flex center column my-5"
             >
               <ScheduleWidgetRemovableUserFace user={user} />
               <ScheduleWidgetUserPhoto user={user} />

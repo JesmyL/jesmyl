@@ -32,7 +32,7 @@ export const CmEditorTabComOnTranslations = () => {
         return (
           <div
             key={linesi}
-            className="mx-5"
+            className="my-5"
             style={{ whiteSpace: 'pre-wrap' }}
           >
             {lines?.map((text, texti) => (

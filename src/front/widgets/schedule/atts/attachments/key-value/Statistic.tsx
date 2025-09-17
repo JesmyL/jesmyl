@@ -116,7 +116,7 @@ export function ScheduleKeyValueListAttStatistic(props: { list: ScheduleWidgetAp
         }}
       />
       {!len || (
-        <div className="mx-5">
+        <div className="my-5">
           {len === lists || len === users || <div className="">Пунктов: {len}</div>}
           {!users || <div className="">Людей: {users}</div>}
           {!checks || len === checks || <div className="">Выбираемых: {checks}</div>}
