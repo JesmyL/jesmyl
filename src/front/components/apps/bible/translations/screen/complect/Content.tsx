@@ -33,7 +33,7 @@ export function BibleTranslationScreenContent(props: Props) {
         ref={screenWrapperRef}
       >
         <span
-          className="fade-00"
+          className="opacity-0"
           ref={screenContentRef}
           dangerouslySetInnerHTML={{ __html: textContent }}
         />

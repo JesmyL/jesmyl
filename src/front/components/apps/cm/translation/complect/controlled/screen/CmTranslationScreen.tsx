@@ -49,7 +49,7 @@ export const CmTranslationScreen = (props: Props) => {
 
   return (
     <div
-      className="relative full-size bgcolor-black"
+      className="relative full-size bg-black"
       style={wrapperStyle}
       ref={wrapperRef}
     >

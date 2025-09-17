@@ -46,7 +46,7 @@ export function ScheduleWidgetUserAddByExcel() {
       <FullContent openAtom={isOpenFullContentAtom}>
         <ContentOnLoad isLoading={isLoading}>
           {error ? (
-            <div className="color--ko">
+            <div className="text-xKO">
               <h3>Ошибка!</h3>
               <p>{error}</p>
             </div>

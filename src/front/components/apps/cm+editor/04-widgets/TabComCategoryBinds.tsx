@@ -51,7 +51,7 @@ export const CmEditorTabComCategoryBinds = () => {
                 icon="Cancel01"
                 postfix={isNaN(cat.dict?.[ccom.wid as never]) ? 'Корректно очистить' : 'Удалить'}
                 confirm={`Очистить номер из сборника ${cat.name}?`}
-                className="pointer color--ko margin-big-gap-l margin-gap-b"
+                className="pointer text-xKO ml-5 mb-2"
                 disabled={!checkAccess('cm', 'COM_CAT', 'U')}
                 disabledReason="Заперщено"
                 onClick={() =>

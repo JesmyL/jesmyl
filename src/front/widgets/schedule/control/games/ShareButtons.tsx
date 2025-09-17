@@ -21,7 +21,7 @@ export const ScheduleWidgetShareButtons = function ShareButtons({ prefix }: Prop
   const rights = useScheduleWidgetRightsContext();
 
   return (
-    <div className="flex flex-gap">
+    <div className="flex gap-2">
       {prefix}
 
       <LazyIcon

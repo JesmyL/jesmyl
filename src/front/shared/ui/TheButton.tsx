@@ -1,5 +1,6 @@
 import { HTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 import { ConfirmContent } from './modal/confirm/ConfirmContent';
 
 const xColors = ['x2', 'x3', 'x5'];
@@ -25,7 +26,7 @@ export function TheButton({
         return (
           <StyledButton
             {...props}
-            className={`the-button pointer ${props.className || ''}${disabled ? ' disabled' : ''}`}
+            className={twMerge('the-button pointer', props.className, disabled && 'disabled')}
             onClick={async event => {
               if (onClick && (await onConfirm())) onClick(event);
             }}

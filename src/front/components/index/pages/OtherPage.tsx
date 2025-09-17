@@ -47,13 +47,13 @@ export const IndexOtherPage = () => {
       withoutBackButton
       headTitle={routingApps[currentAppName]?.title || 'Другое'}
       head={
-        <div className="flex flex-gap">
+        <div className="flex gap-2">
           {connectionStateNode}
 
-          <div className="margin-gap-h pointer flex flex-gap">{auth.login && <IndexProfileInfo auth={auth} />}</div>
+          <div className="mx-2 pointer flex gap-2">{auth.login && <IndexProfileInfo auth={auth} />}</div>
         </div>
       }
-      contentClass="flex column padding-gap"
+      contentClass="flex column p-2"
       content={
         <>
           <ScheduleWidgetAlarm isForceShow={auth.level >= 50} />

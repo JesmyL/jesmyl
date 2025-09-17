@@ -43,7 +43,7 @@ export const CmTranslateCurrentScreenConfigurations = ({ currentConfig }: Props)
 
   return (
     <ExpandableContent title="Настроить">
-      <div className="margin-gap-l">
+      <div className="ml-2">
         <ScreenTranslateConfigurationNameChanger />
 
         <CmScreenTranslateConfigurationPushKind
@@ -72,12 +72,12 @@ export const CmTranslateCurrentScreenConfigurations = ({ currentConfig }: Props)
           updateConfig={update}
         />
         <ExpandableContent title="Доп. блоки">
-          <div className="margin-gap-l">
+          <div className="ml-2">
             {currentConfig.subs?.next ? (
               <>
                 <TheIconButton
                   icon="Cancel01"
-                  className="color--ko"
+                  className="text-xKO"
                   postfix="Убрать текст следующего блока"
                   confirm="Убрать текст следующего блока?"
                   onClick={() => putSubConfigUpdate(null)}
@@ -103,7 +103,7 @@ export const CmTranslateCurrentScreenConfigurations = ({ currentConfig }: Props)
               <div>
                 <TheIconButton
                   icon="PlusSign"
-                  className="margin-big-gap-v"
+                  className="mx-5"
                   postfix="Вставить окно следующего блока"
                   onClick={onAddSubConfig}
                 />

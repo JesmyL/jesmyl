@@ -43,7 +43,7 @@ export const IndexConsolePage = () => {
       headTitle="Консоль"
       content={
         <div
-          className="full-height"
+          className="h-full"
           onTouchStart={eventStopper}
         >
           <Line>

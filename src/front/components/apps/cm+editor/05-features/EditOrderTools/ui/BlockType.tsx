@@ -40,7 +40,7 @@ export const OrdersRedactorOrderToolsBlockType = ({ com, ord, ordi }: OrdersReda
                 key={styleBlock.key}
                 checked={styleBlock.key === ord.type}
                 disabled={styleBlock.key === ord.type}
-                className="margin-gap-t"
+                className="mt-2"
                 onChange={isModalOpenAtom.reset}
                 onClick={() =>
                   cmEditComOrderClientTsjrpcMethods.setType({

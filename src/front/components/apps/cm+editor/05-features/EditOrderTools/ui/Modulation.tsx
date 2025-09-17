@@ -42,7 +42,7 @@ export const OrdersRedactorOrderToolsModulation = ({ com, ord, ordi }: OrdersRed
                 key={position}
                 checked={ord.fieldValues.md === position}
                 disabled={ord.fieldValues.md === position}
-                className="margin-gap-t"
+                className="mt-2"
                 onClick={() =>
                   cmEditComOrderClientTsjrpcMethods.setModulationValue({
                     comw: com.wid,

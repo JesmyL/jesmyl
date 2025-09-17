@@ -52,7 +52,7 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
         setDropped(!isDropped);
       }}
     >
-      <div className="selected-item ellipsis full-max-width">
+      <div className="selected-item ellipsis max-w-full">
         {selectedItem?.title || (
           <span className="not-selected">{props.undTitle ?? props.nullTitle ?? props.placeholder ?? 'Не выбрано'}</span>
         )}
@@ -104,7 +104,7 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
       {error ? (
         <LazyIcon
           icon="Alert01"
-          className="color--ko"
+          className="text-xKO"
         />
       ) : (
         isLoading && (

@@ -81,7 +81,7 @@ export const EditChordPage = () => {
     return MyLib.entries(chordBoxes).map(([chordBase, names]) => {
       return (
         <div key={chordBase}>
-          <div className={`sticky chord-base-title ${currentChordName[0] === chordBase ? 'text-bold' : ''}`}>
+          <div className={`sticky chord-base-title ${currentChordName[0] === chordBase ? 'font-bold' : ''}`}>
             {chordBase}
           </div>
           {names.map(chordName => {
@@ -90,9 +90,9 @@ export const EditChordPage = () => {
                 key={chordName}
                 onClick={() => setCurrentChord(chordName)}
                 className={
-                  'flex center margin-gap pointer' +
-                  (currentChordName === chordName ? ' text-underline' : '') +
-                  (redactableChords[chordName] ? ' color--3' : '')
+                  'flex center m-2 pointer' +
+                  (currentChordName === chordName ? ' underline' : '') +
+                  (redactableChords[chordName] ? ' text-x3' : '')
                 }
               >
                 {chordName}
@@ -123,7 +123,7 @@ export const EditChordPage = () => {
   return (
     <StyledPageCmEditorContainer
       className="chord-redactor"
-      contentClass={`chord-redactor-content padding-gap ${isNewChord ? 'chord-addition' : ''}`}
+      contentClass={`chord-redactor-content p-2 ${isNewChord ? 'chord-addition' : ''}`}
       headTitle="Редактор аккордов"
       head={
         (checkAccess('cm', 'CHORD', 'U') || checkAccess('cm', 'CHORD', 'C')) && (
@@ -131,7 +131,7 @@ export const EditChordPage = () => {
             icon="Sent"
             disabled={!mylib.keys(chordsToSend).length}
             disabledReason="Изменений нет"
-            className="margin-gap"
+            className="m-2"
             confirm={`Отправить аккорды ${mylib.keys(chordsToSend).join('; ')} ?`}
             onClick={async () => {
               await cmEditorClientTsjrpcMethods.setChords({ chords: chordsToSend });
@@ -165,9 +165,9 @@ export const EditChordPage = () => {
                   onInput={newChordName => navigate({ to: '.', search: { newChordName } })}
                   value={newChordName}
                 />
-                {newNameError && <div className="error-message margin-gap">{newNameError}</div>}
+                {newNameError && <div className="text-xKO m-2">{newNameError}</div>}
                 <div
-                  className="padding-giant-gap pointer"
+                  className="p-10 pointer"
                   onClick={() => setIsNewChord(false)}
                 >
                   Вернуться к редактированию
@@ -183,7 +183,7 @@ export const EditChordPage = () => {
             )}
           </div>
           {checkAccess('cm', 'CHORD', 'U') && (
-            <div className="flex flex-gap column center new-chord">
+            <div className="flex gap-2 column center new-chord">
               {currentChordName || isNewChord ? (
                 <>
                   {redactableChord && !isNewChord && (
@@ -193,7 +193,7 @@ export const EditChordPage = () => {
                     />
                   )}
                   <TheButton
-                    className="margin-big-gap"
+                    className="m-5"
                     confirm={!!redactableChord}
                     disabled={!!newNameError}
                     onClick={() => {

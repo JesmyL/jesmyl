@@ -18,7 +18,7 @@ export function TheTuner() {
       className="tuner-application"
       withoutBackButton
       headTitle="Тюнер"
-      contentClass={`tuner-container padding-gap ${started ? 'started' : ''}`}
+      contentClass={`tuner-container p-2 ${started ? 'started' : ''}`}
       content={
         <>
           <div

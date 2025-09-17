@@ -54,7 +54,7 @@ export const CodeExecutionScreen = ({ onError, onLog }: Props) => {
 
   return (
     <Textarea
-      className="full-width half-height bgcolor--2 margin-big-gap-t"
+      className="w-full h-[50%] bg-x2 mt-5"
       onChange={event => setCode(event.target.value)}
       value={code}
     />

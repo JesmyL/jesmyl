@@ -2,6 +2,7 @@ import Markdown, { MarkdownToJSX } from 'markdown-to-jsx';
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { isNIs } from 'shared/utils';
+import { twMerge } from 'tailwind-merge';
 import style from './Multiline.module.scss';
 
 const onImageClick: React.MouseEventHandler<HTMLImageElement> = event => {
@@ -56,11 +57,11 @@ export function StrongEditableFieldMultiline({ value }: { value: string }) {
 
   return (
     <div
-      className={
-        style.markdownFieldContent +
-        ' markdownFieldContent white-pre-wrap break-word' +
-        (isExpandable ? ' pointer' : '')
-      }
+      className={twMerge(
+        style.markdownFieldContent,
+        'markdownFieldContent white-pre-wrap break-word',
+        isExpandable && 'pointer',
+      )}
       onClick={isExpandable ? () => setisExpand(isNIs) : undefined}
     >
       <Markdown options={options}>

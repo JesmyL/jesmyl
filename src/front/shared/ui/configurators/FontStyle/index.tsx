@@ -18,7 +18,7 @@ type Props = ConfiguratorEditProps<{ fontStyle?: FontStyleType }>;
 
 export const FontStyleConfigurator = ({ config, updateConfig }: Props) => {
   return (
-    <div className="flex flex-gap flex-max margin-gap-v">
+    <div className="flex gap-2 flex-max my-2">
       Стиль текста
       <Dropdown
         id={config.fontStyle}

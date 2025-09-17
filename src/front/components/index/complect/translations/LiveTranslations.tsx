@@ -41,8 +41,8 @@ export const IndexScheduleWidgetTranslations = ({ schw }: { schw: IScheduleWidge
       .effect();
   }, [schedule?.w, windows]);
 
-  if (auth.fio === undefined) return <div className="flex center full-size color--ko">Не авторизован</div>;
-  if (schedule == null) return <div className="flex center full-size color--ko">Расписание не найдено</div>;
+  if (auth.fio === undefined) return <div className="flex center full-size text-xKO">Не авторизован</div>;
+  if (schedule == null) return <div className="flex center full-size text-xKO">Расписание не найдено</div>;
 
   return isCm ? (
     <ScheduleWidgetLiveCmTranslations

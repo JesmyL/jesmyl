@@ -8,7 +8,7 @@ export const CmTranslateScreenConfigurations = () => {
   const updateConfig = useUpdateCmTranslationConfig();
 
   return (
-    <div className="margin-big-gap-t">
+    <div className="mt-5">
       <ScreenTranslationsFaceLine updateConfig={updateConfig} />
       {currentConfig && <CmTranslateCurrentScreenConfigurations currentConfig={currentConfig} />}
     </div>

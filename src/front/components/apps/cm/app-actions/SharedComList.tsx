@@ -40,7 +40,7 @@ export const CmSharedComListActionInterpretator = ({
               list={comws}
               importantOnClick={emptyFunc}
             />
-            <div className="flex column flex-gap margin-big-gap">
+            <div className="flex column gap-2 m-5">
               <TheButton
                 disabled={addComsCount === 0}
                 onClick={() => {

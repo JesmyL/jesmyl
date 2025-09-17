@@ -23,7 +23,7 @@ export const ScreenTranslationControlPanel = memo(function ControlPanel({ onNext
 
   return (
     <div>
-      <div className="flex flex-gap between">
+      <div className="flex gap-2 between">
         <ControlButton
           className="pointer"
           onClick={onPrev}

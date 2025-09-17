@@ -137,19 +137,19 @@ export function ScheduleWidgetUserAddByExcelContent({ close }: Props) {
                 return (
                   <div
                     key={user.fio}
-                    className="flex flex-gap margin-gap-v"
+                    className="flex gap-2 my-2"
                   >
-                    <span className={'' + (excludedFios.has(user.fio) ? ' text-strike' : '')}>{user.fio}</span>
+                    <span className={excludedFios.has(user.fio) ? ' line-through' : ''}>{user.fio}</span>
                     {excludedFios.has(user.fio) ? (
                       <LazyIcon
                         icon="LinkBackward"
-                        className="pointer color--ok"
+                        className="pointer text-xOK"
                         onClick={() => excludedFios.delete(user.fio) && setExcludedFios(new Set(excludedFios))}
                       />
                     ) : (
                       <LazyIcon
                         icon="Cancel01"
-                        className="pointer color--ko"
+                        className="pointer text-xKO"
                         onClick={() => setExcludedFios(new Set(excludedFios.add(user.fio)))}
                       />
                     )}
@@ -160,7 +160,7 @@ export function ScheduleWidgetUserAddByExcelContent({ close }: Props) {
           )}
         </div>
       </div>
-      <div className="flex center margin-big-gap">
+      <div className="flex center m-5">
         <SendButton
           disabled={!resultUsers?.length}
           title="Загрузить список"

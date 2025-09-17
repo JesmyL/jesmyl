@@ -104,7 +104,7 @@ export const CmEditorTabComAudio = ({ topHTML, topCom, topMp3Rule }: Props) => {
         ) : (
           <LazyIcon
             icon="PlusSignCircle"
-            className="color--ok margin-big-gap"
+            className="text-xOK m-5"
             onClick={() => setOpenAddBlock(true)}
           />
         ))}

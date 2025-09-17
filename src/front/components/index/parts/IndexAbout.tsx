@@ -44,25 +44,25 @@ export function IndexAbout() {
         onClick={propagationStopper}
       >
         {values.chatUrl && (
-          <div className="padding-giant-gap">
+          <div className="p-10">
             <QRCode text={values.chatUrl} />
-            <div className="flex center flex-gap">
+            <div className="flex center gap-2">
               <LazyIcon icon="Telegram" />
               <a href={values.chatUrl}>@jesmyl space</a>
             </div>
           </div>
         )}
-        <div className="padding-giant-gap">
+        <div className="p-10">
           <QRCode text="https://t.me/danikpon" />
-          <div className="flex center flex-gap">
+          <div className="flex center gap-2">
             <LazyIcon icon="Telegram" />
             <a href="https://t.me/danikpon">дизайн (3</a>
           </div>
         </div>
       </div>
       <div
-        className={`absolute pos-bottom flex flex-gap padding-giant-gap ${
-          appVersion ? (jversion.num !== appVersion ? 'color--ko' : 'color--7') : ''
+        className={`absolute bottom-0 flex gap-2 p-10 ${
+          appVersion ? (jversion.num !== appVersion ? 'text-xKO' : 'text-x7') : ''
         }`}
       >
         v{jversion.num}

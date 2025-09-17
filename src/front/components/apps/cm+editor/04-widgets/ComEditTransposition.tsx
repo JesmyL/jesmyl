@@ -10,6 +10,7 @@ import { ChordVisibleVariant } from '$cm/Cm.model';
 import { ComOrders } from '$cm/col/com/orders/ComOrders';
 import { atom } from 'atomaric';
 import { useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 const dotts = '.'
   .repeat(12)
@@ -46,14 +47,14 @@ export const CmComEditTransposition = ({ ccom }: { ccom: EditableCom }) => {
             return transposedChord === iconOnLoad ? (
               <TheIconLoading
                 key={position}
-                className="margin-gap-t"
+                className="mt-2"
               />
             ) : (
               <IconCheckbox
                 key={position}
                 checked={position === ccom.transPosition}
                 disabled={position === ccom.transPosition}
-                className={'margin-gap-t ' + (position === initialPosition ? ' text-bold' : '')}
+                className={twMerge('mt-2', position === initialPosition ? 'font-bold' : '')}
                 onChange={async () => {
                   setIconOnLoad(transposedChord);
                   await cmEditComClientTsjrpcMethods.changeTon({ comw: ccom.wid, value: position });

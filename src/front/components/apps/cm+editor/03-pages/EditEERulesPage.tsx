@@ -54,7 +54,7 @@ export const EditEERulesPage = () => {
         <TheIconSendButton
           icon="Sent"
           disabled={!words.length}
-          className="margin-gap"
+          className="m-2"
           confirm={
             `Отправить ${words.length} ${mylib.declension(words.length, 'слово', 'слова', 'слов')}: ` +
             `${words.join(', ')}`
@@ -65,9 +65,9 @@ export const EditEERulesPage = () => {
       }
       content={
         <>
-          <div className="flex flex-gap">
+          <div className="flex gap-2">
             <TheButton
-              className="margin-gap"
+              className="m-2"
               onClick={() => setIsShowListComputer(true)}
             >
               Проверить наличие неизвестных слов
@@ -94,7 +94,7 @@ export const EditEERulesPage = () => {
               {sizes.map(size => (
                 <button
                   key={size}
-                  className="margin-gap"
+                  className="m-2"
                   disabled={pageSize === size}
                   onClick={() => setPageSize(size)}
                 >

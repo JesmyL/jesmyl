@@ -16,7 +16,7 @@ export function ScheduleWidgetUserEdit({ user }: { user: IScheduleWidgetUser }) 
   const rights = useScheduleWidgetRightsContext();
   const scheduleUserScopeProps = useScheduleUserScopePropsContext();
 
-  if (scheduleUserScopeProps.schw === IScheduleWidgetWid.def) return <div className="color--ko">Не в контексте</div>;
+  if (scheduleUserScopeProps.schw === IScheduleWidgetWid.def) return <div className="text-xKO">Не в контексте</div>;
 
   return (
     <>

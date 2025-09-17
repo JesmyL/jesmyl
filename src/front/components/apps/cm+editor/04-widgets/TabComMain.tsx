@@ -62,9 +62,9 @@ export const CmEditorTabComMain = () => {
         onChange={value => cmEditComClientTsjrpcMethods.setBpM({ comw: ccom.wid, value: +value })}
         onInput={emptyFunc}
       />
-      <div className="flex full-width between margin-gap-v">
+      <div className="flex w-full between my-2">
         <LazyIcon icon="DashboardSpeed02" />
-        <div className="margin-gap-h nowrap">Размерность</div>
+        <div className="mx-2 nowrap">Размерность</div>
         <Dropdown
           id={ccom.meterSize}
           items={meterSizeItems}

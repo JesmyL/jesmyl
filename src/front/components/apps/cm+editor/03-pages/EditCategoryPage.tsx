@@ -30,11 +30,11 @@ export const EditCategoryPage = () => {
         headTitle={`Категория - ${removedCats[ccatw]}`}
         content={
           <div className="flex column">
-            <h2 className="color--ko">Категория удалена</h2>
+            <h2 className="text-xKO">Категория удалена</h2>
             <TheIconButton
               icon="MapsRefresh"
               postfix="Восстановить"
-              className="color--ok"
+              className="text-xOK"
               onClick={() => cmEditCatClientTsjrpcMethods.bringBackToLife({ catw: ccatw })}
             />
           </div>
@@ -58,7 +58,7 @@ export const EditCategoryPage = () => {
 
           <div className="flex between">
             <span>Тип:</span>
-            <div className="half-width">
+            <div className="w-[50%]">
               <Dropdown
                 id={ccat.kind}
                 items={catTrackers}
@@ -83,10 +83,10 @@ export const EditCategoryPage = () => {
             {isShowComs ? ' Скрыть' : ' Показать'} список песен {ccat.coms.length}
           </div>
 
-          <div className="flex center margin-gap-v">
+          <div className="flex center my-2">
             <TheIconButton
               icon="CancelCircle"
-              className="color--ko"
+              className="text-xKO"
               postfix="Удалить категорию"
               confirm
               onClick={() => {

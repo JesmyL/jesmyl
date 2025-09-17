@@ -2,6 +2,7 @@ import { DisabledArea } from '#shared/ui/DisabledArea';
 import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
+import { twMerge } from 'tailwind-merge';
 import { OrdersRedactorOrderToolsProps } from '../model';
 
 export const OrdersRedactorOrderToolsAnchorDelete = ({ com, ord, onClose }: OrdersRedactorOrderToolsProps) => {
@@ -18,7 +19,7 @@ export const OrdersRedactorOrderToolsAnchorDelete = ({ com, ord, onClose }: Orde
           !(await confirm(
             <>
               {'Удалить '}
-              <span className="color--7">
+              <span className="text-x7">
                 {ifAnchorSuffix}
                 {ord.me.header()}
               </span>
@@ -40,10 +41,10 @@ export const OrdersRedactorOrderToolsAnchorDelete = ({ com, ord, onClose }: Orde
         onClose(false);
       }}
     >
-      {({ className = '', onClick }) => (
+      {({ className, onClick }) => (
         <BottomPopupItem
           icon="Delete02"
-          className={'color--ko ' + className}
+          className={twMerge('text-xKO', className)}
           title={`Удалить ${ifAnchorSuffix} ${ord.me.header()}`}
           onClick={onClick}
         />

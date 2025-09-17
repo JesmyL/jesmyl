@@ -28,7 +28,7 @@ export function IndexSettingsPage() {
   const auth = useAuth();
   const appName = useAppNameContext();
   const [appFontFamily, setAppFontFamily] = useAppFontFamily();
-  const connectionNode = useConnectionState('margin-gap');
+  const connectionNode = useConnectionState('m-2');
 
   const settingsList = [
     auth.level === 100 && (

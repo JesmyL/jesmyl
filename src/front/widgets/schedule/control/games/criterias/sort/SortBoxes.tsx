@@ -136,8 +136,8 @@ export const ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes = function SortBox
         end={end}
         sortedUsers={sortedUsers}
       />
-      <div className="flex center column flex-gap full-width">
-        <div className="flex around full-width">
+      <div className="flex center column gap-2 w-full">
+        <div className="flex around w-full">
           <TheIconButton
             icon="MessageQuestion"
             onClick={() => {
@@ -146,7 +146,7 @@ export const ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes = function SortBox
               setSortedUsers(nextUser ? [nextUser] : []);
             }}
             confirm={`${currUser.fio} - неизвестный участник?`}
-            className={sortedUsers.length > 1 ? 'fade-00' : undefined}
+            className={sortedUsers.length > 1 ? 'opacity-0' : undefined}
           />
           У кого преимущество?
           <TheIconButton
@@ -156,12 +156,12 @@ export const ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes = function SortBox
           />
         </div>
 
-        <StyledUserNames className="full-width">
+        <StyledUserNames className="w-full">
           <span>{currUser.fio}</span>
           <span>{insertUser.fio}</span>
         </StyledUserNames>
 
-        <div className="flex around full-width">
+        <div className="flex around w-full">
           <ScheduleWidgetTeamsCriteriaSorterScreenSortBoxPhoto
             onClick={onCurrUserClick}
             user={currUser}
@@ -172,14 +172,14 @@ export const ScheduleWidgetTeamsCriteriaSorterScreenSortBoxes = function SortBox
             user={insertUser}
           />
         </div>
-        <div className="flex around full-width color--ok">
+        <div className="flex around w-full text-xOK">
           <LazyIcon
             icon="CheckmarkBadge01"
-            className={correct === 'left' ? undefined : 'fade-00'}
+            className={correct === 'left' ? undefined : 'opacity-0'}
           />
           <LazyIcon
             icon="CheckmarkBadge01"
-            className={correct === 'right' ? undefined : 'fade-00'}
+            className={correct === 'right' ? undefined : 'opacity-0'}
           />
         </div>
       </div>

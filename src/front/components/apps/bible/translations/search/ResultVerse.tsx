@@ -31,10 +31,10 @@ export const BibleSearchResultVerse = memo(function BibleSearchResultVerse({
   return (
     <div
       id={`bible-search-result-${booki}-${chapteri}-${versei}`}
-      className="bible-search-result pointer margin-gap-t flex"
+      className="bible-search-result pointer mt-2 flex"
       onClick={addressSetter(booki, chapteri, versei, resulti, onClick)}
     >
-      <span className="color--3 margin-gap-r nowrap">
+      <span className="text-x3 mr-2 nowrap">
         {books[booki].short} {chapteri + 1} {versei + 1}
       </span>
       <span>
@@ -42,7 +42,7 @@ export const BibleSearchResultVerse = memo(function BibleSearchResultVerse({
           return (
             <span
               key={biti}
-              className={biti % 2 ? 'color--7' : undefined}
+              className={biti % 2 ? 'text-x7' : undefined}
               dangerouslySetInnerHTML={{ __html }}
             />
           );

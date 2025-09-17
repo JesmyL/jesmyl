@@ -4,6 +4,7 @@ import { TextInput } from '#shared/ui/TextInput';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ReactNode, useEffect, useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 import { StrongEditableFieldMultiline } from './StrongEditableFieldMultiline';
 
 type Props<Key, Value> = {
@@ -80,7 +81,7 @@ export function StrongEditableField<Key extends string, Value extends string | P
   const indicatorNode = isError ? (
     <LazyIcon
       icon="Alert01"
-      className="error-message"
+      className="text-xKO"
     />
   ) : (
     <TheIconLoading isLoading={isLoading}>
@@ -93,7 +94,7 @@ export function StrongEditableField<Key extends string, Value extends string | P
       ) : (
         <LazyIcon
           icon="CloudUpload"
-          className="fade-05"
+          className="opacity-50"
         />
       )}
     </TheIconLoading>
@@ -101,20 +102,20 @@ export function StrongEditableField<Key extends string, Value extends string | P
 
   return (
     <div
-      className={props.className || 'margin-gap-v'}
+      className={twMerge('my-2', props.className)}
       attr-text={stateValue}
     >
       {isRedact ? (
         <>
           {(props.title || props.setSelfRedact) && (
-            <div className="flex flex-gap">
+            <div className="flex gap-2">
               {props.icon && <LazyIcon icon={props.icon} />}
               {props.title}
               {props.setSelfRedact && editIcon}
               {indicatorNode}
             </div>
           )}
-          <div className="flex flex-gap">
+          <div className="flex gap-2">
             {props.description}
             <TextInput
               value={stateValue}
@@ -141,19 +142,19 @@ export function StrongEditableField<Key extends string, Value extends string | P
       ) : (
         <div
           draggable={!!value}
-          className="flex flex-gap"
+          className="flex gap-2"
         >
           {props.icon && (
             <LazyIcon
               icon={props.icon}
-              className="color--7 self-start"
+              className="text-x7 self-start"
             />
           )}
           {value ? (
             props.multiline ? (
               <StrongEditableFieldMultiline value={value} />
             ) : (
-              <div className={'break-word ' + (props.textClassName || 'color--7 ')}>
+              <div className={twMerge('break-word', props.textClassName || 'text-x7')}>
                 {value}
                 {props.postfix || ''}
               </div>

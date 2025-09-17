@@ -20,7 +20,7 @@ export function ScheduleWidgetSortCriterias() {
       <TheButton onClick={isOpenCriteriasAtom.do.toggle}>Посмотреть критерии сортировки</TheButton>
 
       <FullContent openAtom={isOpenCriteriasAtom}>
-        <h3 className="flex flex-gap">
+        <h3 className="flex gap-2">
           Список критериев
           <TheIconSendButton
             icon="PlusSign"

@@ -17,7 +17,7 @@ export const IndexTelegramInlineAuthButton = () => {
             to="/!other/$appName/auth"
             params={{ appName }}
             id="authorize-button"
-            className="full-width"
+            className="w-full"
           >
             <BrutalItem
               iconNode={<LazyIcon icon="Authorized" />}
@@ -27,7 +27,7 @@ export const IndexTelegramInlineAuthButton = () => {
                   // todo edd event.stopPropagation();
                   <TheIconSendButton
                     icon="Telegram"
-                    className="color--ok"
+                    className="text-xOK"
                     onSend={async () =>
                       await indexTsjrpcClientMethods.authMeByTelegramMiniButton({
                         user: api.initDataUnsafe.user,

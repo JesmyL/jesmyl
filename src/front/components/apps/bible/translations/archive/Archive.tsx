@@ -15,7 +15,7 @@ interface Props {
   onRemove: () => void;
 }
 
-const itemClassName = 'nowrap pointer margin-gap-b';
+const itemClassName = 'nowrap pointer mb-2';
 
 export const BibleTranslationArchive = memo(function BibleTranslationArchive({
   title,
@@ -27,11 +27,11 @@ export const BibleTranslationArchive = memo(function BibleTranslationArchive({
 
   return (
     <>
-      <div className="archive-title flex flex-gap color--3 bgcolor--2 margin-gap-b">
+      <div className="archive-title flex gap-2 text-x3 bg-x2 mb-2">
         {title}
         <TheIconButton
           icon="Delete01"
-          className="color--ko"
+          className="text-xKO"
           confirm={`Очистить раздел ${title}?`}
           onClick={onRemove}
         />
@@ -48,7 +48,7 @@ export const BibleTranslationArchive = memo(function BibleTranslationArchive({
                 setAddress(...item);
               }}
             >
-              <span className="color--7">
+              <span className="text-x7">
                 <BibleTranslationArchiveSingleAddressText item={item} />
               </span>
               {' - '}
@@ -66,7 +66,7 @@ export const BibleTranslationArchive = memo(function BibleTranslationArchive({
               setAddress(...getJoinAddressMaxes(item));
             }}
           >
-            <span className="color--7">
+            <span className="text-x7">
               <BibleTranslationArchiveJoinedAddressText item={item} />
             </span>
             {' - '}

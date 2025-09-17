@@ -24,9 +24,9 @@ export const AlertLineSettingsModalInner = () => {
             <TheIconButton
               key={config.id}
               icon="Edit02"
-              className="margin-gap-v pointer"
+              className="my-2 pointer"
               prefix={
-                <span className="flex flex-gap center">
+                <span className="flex gap-2 center">
                   <LazyAlertLineConfigIcon config={config} />
                   {config.title}
                 </span>

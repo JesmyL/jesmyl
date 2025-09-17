@@ -22,7 +22,7 @@ export const CoderValueExpandable = ({ shortValue, fullValue, name, onCopy, scop
     <>
       <span
         onClick={() => setIsExpand()}
-        className="flex pointer flex-gap flex-max"
+        className="flex pointer gap-2 flex-max"
       >
         {name != null && (
           <span>
@@ -32,7 +32,7 @@ export const CoderValueExpandable = ({ shortValue, fullValue, name, onCopy, scop
         {isExpand
           ? onCopy && (
               <>
-                <span className="color--2">{shortValue}</span>
+                <span className="text-x2">{shortValue}</span>
                 <CopyTextButton
                   text={() => {
                     try {

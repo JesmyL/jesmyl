@@ -9,7 +9,7 @@ export const MetronomeBpmInput = memo(function MetronomeBpmInput() {
   const [userBpm, setUserBpm] = useAtom(metronomeUserBpmAtom);
 
   return (
-    <StyledBox className="flex flex-gap column">
+    <StyledBox className="flex gap-2 column">
       <LazyIcon
         icon="MinusSignCircle"
         kind="BulkRounded"

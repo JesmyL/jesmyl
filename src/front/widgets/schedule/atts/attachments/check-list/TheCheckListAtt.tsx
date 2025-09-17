@@ -21,10 +21,10 @@ export function ScheduleCheckListAtt({
         return (
           <div
             key={itemMi}
-            className="flex flex-gap full-width margin-big-gap-b"
+            className="flex gap-2 w-full mb-5"
           >
             <TheIconSendButton
-              className={'self-start relative z-index:15 color--3 ' + (isDone ? 'fade-05' : '')}
+              className={'self-start relative z-15 text-x3 ' + (isDone ? 'opacity-50' : '')}
               icon={isDone ? 'CheckmarkSquare02' : 'Square'}
               onSend={() =>
                 schDayEventsTsjrpcClient.updateCheckListAttachmentValue({
@@ -36,10 +36,10 @@ export function ScheduleCheckListAtt({
               }
             />
             <StrongEditableField
-              className="full-width"
+              className="w-full"
               value={title}
               isRedact={isRedact}
-              textClassName={'mood-for-2 relative z-index:5 color--3 ' + (isDone ? 'fade-05' : '')}
+              textClassName={'mood-for-2 relative z-5 text-x3 ' + (isDone ? 'opacity-50' : '')}
               onSend={async value =>
                 schDayEventsTsjrpcClient.updateCheckListAttachmentValue({
                   props: scheduleDayEventAttachmentScopeProps,

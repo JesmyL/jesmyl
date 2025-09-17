@@ -32,14 +32,14 @@ export const CmMeetingEventEditsHistoryModalInner = ({ dayi, schw }: { dayi: num
   if (isLoading)
     return (
       <ModalBody>
-        <div className="flex center full-size margin-gap">{isLoading}</div>
+        <div className="flex center full-size m-2">{isLoading}</div>
       </ModalBody>
     );
 
   if (historyPacks == null || error)
     return (
       <ModalBody>
-        <div className="flex center full-size color--ko">{error ? `${error}` : 'Ошибка'}</div>
+        <div className="flex center full-size text-xKO">{error ? `${error}` : 'Ошибка'}</div>
       </ModalBody>
     );
 
@@ -64,12 +64,12 @@ export const CmMeetingEventEditsHistoryModalInner = ({ dayi, schw }: { dayi: num
         {historyPacks.slice(0, limit).map(pack => {
           return (
             <div key={pack.w}>
-              <h3 className="flex flex-gap full-width between">
+              <h3 className="flex gap-2 w-full between">
                 {new Date(pack.w).toLocaleString('ru', itemTitleTimeOptions)}
 
                 <TheIconSendButton
                   icon="Delete02"
-                  className="color--ko"
+                  className="text-xKO"
                   confirm="Удалить эту запись?"
                   onSend={async () => {
                     const packs = await cmEditComExternalsClientTsjrpcMethods.removeScheduleEventHistoryItem({
@@ -84,7 +84,7 @@ export const CmMeetingEventEditsHistoryModalInner = ({ dayi, schw }: { dayi: num
               </h3>
               {pack.fio && (
                 <div>
-                  Обновил: <span className="color--7">{pack.fio}</span>
+                  Обновил: <span className="text-x7">{pack.fio}</span>
                 </div>
               )}
               <ComFaceList
@@ -95,7 +95,7 @@ export const CmMeetingEventEditsHistoryModalInner = ({ dayi, schw }: { dayi: num
           );
         })}
         {historyPacks.length > limit && (
-          <div className="flex center full-width">
+          <div className="flex center w-full">
             <TheButton onClick={() => setLimit(lim => lim + 10)}>Показать ещё</TheButton>
           </div>
         )}

@@ -8,6 +8,7 @@ import { makeRegExp } from 'regexpert';
 import { EeStorePack } from 'shared/api';
 import { itIt, itNIt } from 'shared/utils';
 import styled from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 
 const radioTitles = ['е/ё', 'е!!', 'ё!!'].map((typeName, type) => <div key={type}>{typeName}</div>);
 
@@ -34,13 +35,13 @@ export const EERulesWord = memo(
     const isVariated = mylib.isArr(trackState) ? trackState.includes(0) : !trackState;
 
     return (
-      <StyledTable className="margin-big-gap-v">
+      <StyledTable className="mx-5">
         <tbody>
           <StyledWordTr>
             {parts.map((part, parti) => (
               <th
                 key={parti}
-                className={trackState == null ? undefined : 'color--ok'}
+                className={trackState == null ? undefined : 'text-xOK'}
               >
                 {isVariated && <div>{part}</div>}
                 <div>
@@ -58,7 +59,7 @@ export const EERulesWord = memo(
               <th>
                 <TheIconButton
                   icon={isIgnored ? 'PlusSignCircle' : 'Cancel02'}
-                  className={'margin-gap ' + (isIgnored ? 'color--ok' : 'color--ko')}
+                  className={twMerge('m-2', isIgnored ? 'text-xOK' : 'text-xKO')}
                   onClick={() => {
                     setIgnoredWordsSet(prev => {
                       const news = new Set(prev);

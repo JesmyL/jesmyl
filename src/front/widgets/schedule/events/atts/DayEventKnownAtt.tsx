@@ -79,7 +79,7 @@ export const DayEventKnownAtt = (props: ScheduleDayEventKnownAttProps) => {
         notateNode = (
           <LazyIcon
             icon="View"
-            className="color--3 icon-scale-05"
+            className="text-x3 icon-scale-05"
           />
         );
 
@@ -98,7 +98,7 @@ export const DayEventKnownAtt = (props: ScheduleDayEventKnownAttProps) => {
         notateNode = (
           <LazyIcon
             icon="Link02"
-            className="color--3 icon-scale-05"
+            className="text-x3 icon-scale-05"
           />
         );
 
@@ -107,10 +107,10 @@ export const DayEventKnownAtt = (props: ScheduleDayEventKnownAttProps) => {
 
         if (props.schedule.types)
           linkTitle = isExpand && (
-            <div className="flex margin-big-gap-l margin-gap-b">
+            <div className="flex ml-5 mb-2">
               <LazyIcon
                 icon="Link02"
-                className="color--3 icon-scale-05"
+                className="text-x3 icon-scale-05"
               />
               <ScheduleWidgetTopicTitle
                 titleBox={props.schedule.types[event.type]}
@@ -119,7 +119,7 @@ export const DayEventKnownAtt = (props: ScheduleDayEventKnownAttProps) => {
               />
             </div>
           );
-      } else attContent ??= <div className="error-message">Источник удалён</div>;
+      } else attContent ??= <div className="text-xKO">Источник удалён</div>;
     }
 
     attContent ??= isExpand && (
@@ -139,12 +139,12 @@ export const DayEventKnownAtt = (props: ScheduleDayEventKnownAttProps) => {
     );
   } catch (error) {
     console.error(error);
-    attContent = <div className="color--ko">Контент не доступен</div>;
+    attContent = <div className="text-xKO">Контент не доступен</div>;
   }
 
   return (
     <>
-      <div className="flex flex-gap inline-block between color--7">
+      <div className="flex gap-2 inline-block between text-x7">
         {attTitleNode}
         <div className="flex">
           {actionPanelNode ?? editIconNode}
@@ -152,7 +152,7 @@ export const DayEventKnownAtt = (props: ScheduleDayEventKnownAttProps) => {
         </div>
       </div>
       {linkTitle}
-      <div className="margin-big-gap-l">{attContent}</div>
+      <div className="ml-5">{attContent}</div>
     </>
   );
 };

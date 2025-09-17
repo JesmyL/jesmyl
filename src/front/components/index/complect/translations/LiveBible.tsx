@@ -32,7 +32,7 @@ export const IndexScheduleWidgetBibleTranslationsControlled: React.FC<LiveTransl
         head={
           <LazyIcon
             icon="Book02"
-            className="pointer margin-gap-r"
+            className="pointer mr-2"
             onClick={() => switchCurrApp()}
           />
         }

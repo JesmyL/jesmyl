@@ -16,7 +16,7 @@ export const CmNewComTextableListRedactor = ({ title, onInput, list, corrects }:
       {list.map((text, texti) => {
         return (
           <div
-            className="margin-gap-v"
+            className="my-2"
             key={texti}
           >
             <TextInput

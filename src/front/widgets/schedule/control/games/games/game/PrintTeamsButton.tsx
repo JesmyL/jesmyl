@@ -25,7 +25,7 @@ export const ScheduleWidgetTeamGamePrintTeamsButton = function PrintTeamsButton(
         }}
       />
       <StyledFullContent openAtom={isOpenPrintAtom}>
-        <StyledButtons className="flex full-width around">
+        <StyledButtons className="flex w-full around">
           <TheIconButton
             icon="DashboardSquareRemove"
             disabled={cols < 2}
@@ -40,7 +40,7 @@ export const ScheduleWidgetTeamGamePrintTeamsButton = function PrintTeamsButton(
         {game.teams.map((team, teami) => {
           return (
             <React.Fragment key={team.mi}>
-              <div className="inline-block margin-big-gap-r vertical-top">
+              <div className="inline-block mr-5 align-top">
                 <h2>{team.title}</h2>
                 {team.users.map(({ mi }) => {
                   const user = rights.schedule.ctrl.users.find(user => user.mi === mi);

@@ -1,5 +1,6 @@
 import { HTMLAttributes } from 'react';
 import styled from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 
 type Props = HTMLAttributes<HTMLDivElement> & { children: React.ReactNode };
 
@@ -7,7 +8,7 @@ export const FaceItem = ({ children, ...props }: Props) => {
   return (
     <StyledFaceItem
       {...props}
-      className={`face-item ${props.className || ''}`}
+      className={twMerge('face-item', props.className)}
     >
       {children}
     </StyledFaceItem>

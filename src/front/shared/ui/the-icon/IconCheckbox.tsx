@@ -1,5 +1,6 @@
 import { Atom, useAtomValue } from 'atomaric';
 import { ReactNode, useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 import { StyledLoadingSpinner } from './IconLoading';
 import { LazyIcon } from './LazyIcon';
 
@@ -53,7 +54,7 @@ export function IconCheckbox(props: Props) {
       ))
     ) : (
       <span
-        className={`flex gap-2 flex-max ${className}`}
+        className={twMerge('flex gap-2 flex-max', className)}
         onClick={onClick}
       >
         {props.prefix}

@@ -60,7 +60,7 @@ export function BibleTranslateCurrentScreenConfigurations({ currentConfig }: Pro
       />
       {currentConfig.insertedtext && (
         <ExpandableContent title="Вставка">
-          <div className="margin-gap-l">
+          <div className="ml-2">
             <ColorConfigurator
               config={currentConfig.insertedtext}
               updateConfig={putUpdateConfigInner('insertedtext')}
@@ -82,7 +82,7 @@ export function BibleTranslateCurrentScreenConfigurations({ currentConfig }: Pro
       )}
       {currentConfig.textinbrackets && (
         <ExpandableContent title="Текст в [скобках]">
-          <div className="margin-gap-l">
+          <div className="ml-2">
             <ColorConfigurator
               config={currentConfig.textinbrackets}
               updateConfig={putUpdateConfigInner('textinbrackets')}
@@ -104,7 +104,7 @@ export function BibleTranslateCurrentScreenConfigurations({ currentConfig }: Pro
       )}
       {currentConfig.godswords && (
         <ExpandableContent title="Слова Христа">
-          <div className="margin-gap-l">
+          <div className="ml-2">
             <ColorConfigurator
               config={currentConfig.godswords}
               updateConfig={putUpdateConfigInner('godswords')}
@@ -121,7 +121,7 @@ export function BibleTranslateCurrentScreenConfigurations({ currentConfig }: Pro
         </ExpandableContent>
       )}
       <ExpandableContent title="Ссылка">
-        <div className="margin-gap-l">
+        <div className="ml-2">
           <ColorConfigurator
             config={currentConfig.address}
             updateConfig={putUpdateConfigInner('address')}

@@ -66,7 +66,7 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
       return (
         <div
           key={errorText}
-          className="color--ko flex center margin-gap-v"
+          className="text-xKO flex center my-2"
         >
           {errorText}
         </div>
@@ -85,7 +85,7 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
   return (
     <>
       <div
-        className="new-composition padding-gap"
+        className="new-composition p-2"
         onClick={propagationStopper}
       >
         <h2 className="title">Новая песня</h2>
@@ -115,7 +115,7 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
 
         <StyledTextInput
           value={value}
-          className="margin-gap-v"
+          className="my-2"
           multiline
           placeholder="Начни писать или вставь текст для создания песни"
           onInput={setTextAsValue}
@@ -123,7 +123,7 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
 
         <TheButton
           id="new-com-parse-text-button"
-          className="margin-big-gap-v"
+          className="mx-5"
           disabled={!value}
           onClick={() => {
             const { com, errors } = EditableCom.parseBlocks(value);
@@ -201,12 +201,12 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
 
         {!parseErrors.length && errorNodes}
         {parseErrors.map(errorText => {
-          return <div className="color--ko margin-gap-v">{errorText}</div>;
+          return <div className="text-xKO my-2">{errorText}</div>;
         })}
 
         <SendButton
           id="public-new-com-button"
-          className="margin-giant-gap-b"
+          className="mb-10"
           title="Опубликовать песню"
           disabled={
             !!errorNodes.length ||

@@ -43,7 +43,7 @@ export function ScheduleWidgetBindAttRefKeyButton({
       <TheIconButton
         icon="Link01"
         disabled={!!atts?.[attKey]}
-        className="absolute pos-top pos-right padding-gap"
+        className="absolute top-0 right-0 p-2"
         onClick={event => {
           event.stopPropagation();
           isModalOpenAtom.set(true);
@@ -68,14 +68,14 @@ export function ScheduleWidgetBindAttRefKeyButton({
             return (
               <StrongDiv
                 key={attKey + dayi + eventMi}
-                className="margin-big-gap-v"
+                className="mx-5"
                 onSuccess={isModalOpenAtom.reset}
                 onSend={() => onSend(attRef)}
               >
-                <div className="color--7">
+                <div className="text-x7">
                   {dayi + 1} день, {mylib.dayFullTitles[dayDate.getDay()]} - {schedule.types[event.type].title}
                 </div>
-                <div className={'flex flex-gap bgcolor--1 padding-gap pointer' + (atts?.[attKey] ? ' disabled ' : '')}>
+                <div className={'flex gap-2 bg-x1 p-2 pointer' + (atts?.[attKey] ? ' disabled ' : '')}>
                   <ScheduleWidgetAttFace
                     tatt={tatt}
                     typeTitle={forTitle}
@@ -83,7 +83,7 @@ export function ScheduleWidgetBindAttRefKeyButton({
                     isLink
                     onRemoveAttSend={onRemoveAttSend}
                   />
-                  <div className="fade-05">{tatt.description}</div>
+                  <div className="opacity-50">{tatt.description}</div>
                 </div>
               </StrongDiv>
             );

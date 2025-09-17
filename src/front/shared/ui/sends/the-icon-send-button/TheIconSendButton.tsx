@@ -26,7 +26,7 @@ export function TheIconSendButton<Value>({ className = '', ...props }: Props<Val
         return (
           <TheIconButton
             isLoading={isLoading}
-            className={className + (error ? ' color--ko ' : '')}
+            className={className + (error ? ' text-xKO ' : '')}
             onClick={props.disabled ? undefined : onClick}
             icon={props.icon}
             disabled={props.disabled}

@@ -50,7 +50,7 @@ export function useIsRedactAreaWithInit({
           isShowDoneButton && (
             <TheIconButton
               icon="CheckmarkCircle02"
-              className="edit-button color--ok"
+              className="edit-button text-xOK"
               disabled={redact === true && !isSelfRedact}
               onClick={event => {
                 event.stopPropagation();

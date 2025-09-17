@@ -3,6 +3,7 @@ import { useBibleMyTranslates, useBibleShowTranslates } from '$bible/basis/lib/h
 import { bibleBookiAtom } from '$bible/basis/lib/store/atoms';
 import { useAtomValue } from 'atomaric';
 import { JSX, memo } from 'react';
+import { twMerge } from 'tailwind-merge';
 import { BibleModulesTranslationsRedactButton } from './ModulesTranslationsRedactButton';
 
 export const BibleModulesTranslationsControl = memo(function BibleModules({
@@ -15,7 +16,7 @@ export const BibleModulesTranslationsControl = memo(function BibleModules({
   const booki = useAtomValue(bibleBookiAtom);
 
   return (
-    <div className="flex flex-gap margin-gap-v">
+    <div className="flex gap-2 my-2">
       {myTranslates.map(tName => {
         const isShow = showTranslates.includes(tName);
         if (isHideEmptyBook && translateFilter[tName](booki)) return null;
@@ -23,7 +24,7 @@ export const BibleModulesTranslationsControl = memo(function BibleModules({
         return (
           <div
             key={tName}
-            className={'pointer' + (isShow ? ' text-underline' : '') + (showTranslates[0] === tName ? ' color--7' : '')}
+            className={twMerge('pointer', isShow && 'underline', showTranslates[0] === tName && 'text-x7')}
             onClick={event => {
               if (!event.ctrlKey) {
                 setShowTranslates([tName]);

@@ -33,9 +33,9 @@ export const ObserveUrlResource = ({
 
   return (
     <div>
-      <div className="flex flex-between flex-gap">
+      <div className="flex flex-between gap-2">
         <TextInput
-          className="url-observer-input-wrapper half-width"
+          className="url-observer-input-wrapper w-[50%]"
           st-mood="2"
           placeholder="URL-адрес"
           value={url}
@@ -49,7 +49,7 @@ export const ObserveUrlResource = ({
           onSend={() => cmEditorClientTsjrpcMethods.getResourceHTMLString({ src: url })}
         />
       </div>
-      {errorMessage && <div className="error-message">{errorMessage}</div>}
+      {errorMessage && <div className="text-xKO">{errorMessage}</div>}
 
       <h2>Известные ресурсы:</h2>
       {mp3Rules?.map(rule => {

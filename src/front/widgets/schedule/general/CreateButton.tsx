@@ -37,10 +37,10 @@ export const ScheduleCreateWidgetButton = () => {
           </div>
         </ModalBody>
         <ModalFooter>
-          <div className="flex flex-gap">
+          <div className="flex gap-2">
             <TheIconSendButton
               icon="PlusSign"
-              className="color--ok"
+              className="text-xOK"
               postfix="Создать"
               disabled={!title}
               onSuccess={() => {
@@ -58,7 +58,7 @@ export const ScheduleCreateWidgetButton = () => {
             <TheIconButton
               icon="Cancel01"
               postfix="Отменить"
-              className="color--ko"
+              className="text-xKO"
               onClick={() => {
                 setTitle('');
                 isModalOpenAtom.set(false);

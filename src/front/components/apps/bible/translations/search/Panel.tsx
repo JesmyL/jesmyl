@@ -41,7 +41,7 @@ export const BibleSearchPanel = memo(function BibleSearchPanel(): JSX.Element {
   }, []);
 
   return (
-    <div className="full-width">
+    <div className="w-full">
       <BibleSearchInputPanel
         inputRef={inputRef}
         setSearchZone={setSearchZone}

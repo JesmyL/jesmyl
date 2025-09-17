@@ -116,7 +116,7 @@ export const OrdersRedactorAdditionsEtapsModalInner = ({ com, onClose, firstEtap
                   key={styleBlock.key}
                   checked={styleBlock === selectedStyleBlock}
                   disabled={styleBlock === selectedStyleBlock}
-                  className="margin-gap-t"
+                  className="mt-2"
                   onChange={() => setStyleBlock(styleBlock)}
                   postfix={typeTitle}
                 />

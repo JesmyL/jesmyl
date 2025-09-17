@@ -15,14 +15,14 @@ export const NewComNameChange = ({
 
   return (
     <>
-      <div className="flex full-width">
-        <span className="margin-gap-h">Название </span>
+      <div className="flex w-full">
+        <span className="mx-2">Название </span>
         <div
           id="new-com-input-wrapper"
-          className="full-width"
+          className="w-full"
         >
           <TextInput
-            className="full-width"
+            className="w-full"
             st-mood="2"
             value={name}
             onInput={n => setNewCom(prev => ({ ...prev, n }))}

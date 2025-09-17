@@ -14,11 +14,11 @@ export const QrCodeFullScreen = ({ text, copyText, openAtom }: Props) => {
     <FullContent
       closable
       openAtom={openAtom}
-      containerClassName="flex center column flex-gap full-size"
+      containerClassName="flex center column gap-2 full-size"
     >
       <QRCode
         text={text}
-        className="full-width full-max-height"
+        className="w-full max-h-full"
       />
       <CopyTextButton text={copyText ?? text} />
     </FullContent>

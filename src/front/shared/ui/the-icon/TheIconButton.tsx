@@ -1,6 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { ReactNode } from 'react';
 import { StameskaIconKind } from 'stameska-icon/utils';
+import { twMerge } from 'tailwind-merge';
 import { ConfirmContent } from '../modal/confirm/ConfirmContent';
 import { useToast } from '../modal/useToast';
 import { TheIconLoading } from './IconLoading';
@@ -35,7 +36,7 @@ export const TheIconButton = (props: Props) => {
           return (
             <>
               <span
-                className={`flex flex-gap flex-max ${className || ''}`}
+                className={twMerge('flex gap-2 flex-max', className)}
                 onClick={
                   props.onClick
                     ? async event => {

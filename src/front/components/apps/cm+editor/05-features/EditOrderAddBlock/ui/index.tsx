@@ -43,7 +43,7 @@ export const OrdersRedactorAdditions = ({ com, setClickBetweenOrds }: Props) => 
               setClickBetweenOrds({
                 buttonTitle: (
                   <>
-                    Новый блок <span className="color--7">{styleBlock.title[com.langi]}</span>
+                    Новый блок <span className="text-x7">{styleBlock.title[com.langi]}</span>
                   </>
                 ),
                 checkIsShowButton: ({ ordAbove }) => {

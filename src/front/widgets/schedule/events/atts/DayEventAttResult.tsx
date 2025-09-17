@@ -63,6 +63,6 @@ export function ScheduleWidgetDayEventAttResult({
     }
   } catch (error) {
     console.error(error);
-    return <div className="color--ko">Контент не доступен</div>;
+    return <div className="text-xKO">Контент не доступен</div>;
   }
 }

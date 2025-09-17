@@ -9,9 +9,9 @@ export function useIsExpand(
 ): [ReactNode, boolean, (isExpand?: boolean) => void] {
   const [isExpand, setIsExpand] = useState(initIsExpand);
   return [
-    <span className="flex flex-gap full-width between">
+    <span className="flex gap-2 w-full between">
       <span
-        className="flex flex-gap flex-max pointer"
+        className="flex gap-2 flex-max pointer"
         onClick={() => setIsExpand(!isExpand)}
       >
         {prefix}

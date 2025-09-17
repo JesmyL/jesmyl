@@ -18,7 +18,7 @@ export function IndexActionsPage() {
     <PageContainerConfigurer
       className=""
       headTitle="Взаимодействие"
-      contentClass="flex column padding-gap"
+      contentClass="flex column p-2"
       content={
         <>
           <BrutalItem

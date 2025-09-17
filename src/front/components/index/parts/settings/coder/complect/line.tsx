@@ -8,12 +8,12 @@ export const CoderResultLine: CoderResultComponent<unknown[][]> = ({ value }) =>
         return (
           <div
             key={resulti}
-            className="margin-giant-gap-t"
+            className="mb-10"
           >
             {result.map((result, resulti) => (
               <div
                 key={resulti}
-                className="margin-gap-t"
+                className="mt-2"
               >
                 <CoderResultValue
                   value={result}

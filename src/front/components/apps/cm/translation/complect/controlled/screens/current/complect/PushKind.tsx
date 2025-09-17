@@ -9,7 +9,7 @@ const ExtractTitels = ({ title }: { title: string }, id: number) => ({ title, id
 export const CmScreenTranslateConfigurationPushKind = ({ config, updateConfig }: Props) => {
   return (
     <>
-      <div className="flex flex-gap">
+      <div className="flex gap-2">
         Строчки
         <Dropdown
           id={config.pushKind}

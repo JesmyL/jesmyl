@@ -23,9 +23,9 @@ export function KeyValueListAttNumberMember({ value }: { value: number }) {
     const userMi = Math.trunc(value);
     const user = rights.schedule.ctrl.users.find(user => user.mi === userMi);
     return user === undefined ? (
-      <div className="color--ko">Участник не найден</div>
+      <div className="text-xKO">Участник не найден</div>
     ) : (
-      <div className="color--3 flex flex-gap">
+      <div className="text-x3 flex gap-2">
         <LazyIcon icon="User" />
         {user.fio || user.nick}
       </div>
@@ -35,9 +35,9 @@ export function KeyValueListAttNumberMember({ value }: { value: number }) {
     const game = rights.schedule.games?.list.find(game => game.mi === gameMi);
 
     return game === undefined ? (
-      <div className="color--ko">Ком. игра не найдена</div>
+      <div className="text-xKO">Ком. игра не найдена</div>
     ) : (
-      <div className="color--3 flex flex-gap">
+      <div className="text-x3 flex gap-2">
         <LazyIcon icon="Basketball01" />
         {game.title}
       </div>
@@ -47,7 +47,7 @@ export function KeyValueListAttNumberMember({ value }: { value: number }) {
   return (
     <TheIconButton
       icon="HelpSquare"
-      postfix={<span className="color--ko">Неизвестный пункт</span>}
+      postfix={<span className="text-xKO">Неизвестный пункт</span>}
     />
   );
 }

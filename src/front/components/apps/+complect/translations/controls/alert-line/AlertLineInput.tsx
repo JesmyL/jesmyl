@@ -19,7 +19,7 @@ export const AlertLineInput = () => {
 
   return (
     <>
-      <div className="margin-big-gap-t margin-gap-b flex flex-gap center full-width">
+      <div className="mt-5 mb-2 flex gap-2 center w-full">
         <LazyIcon
           className="pointer"
           icon="Settings01"
@@ -27,7 +27,7 @@ export const AlertLineInput = () => {
         />
 
         <TextInput
-          className="bgcolor--2 full-width"
+          className="bg-x2 w-full"
           value={alertLine ?? ''}
           onInput={value => setAlertLine(value)}
           onKeyDown={propagationStopper}

@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { twMerge } from 'tailwind-merge';
 import { useScheduleWidgetRightsContext } from '../contexts';
 
 export function ScheduleWidgetTopicTitle<TitleBox extends { title?: string }>({
@@ -18,17 +19,19 @@ export function ScheduleWidgetTopicTitle<TitleBox extends { title?: string }>({
   const userRights = useScheduleWidgetRightsContext();
 
   return (
-    <div className={(className || '') + ' flex flex-gap'}>
+    <div className={twMerge('flex gap-2', className)}>
       {prefix}
       {titleBox != null &&
         ((iForceShowTopic || userRights.isCanReadTitles) && topicBox?.topic ? (
           <>
-            <span className="color--3">{titleBox.title || altTitle}: </span>
+            <span className="text-x3">{titleBox.title || altTitle}: </span>
             {topicBox.topic}
           </>
         ) : (
-          <span className="color--3">{titleBox.title || altTitle}</span>
+          <span className="text-x3">{titleBox.title || altTitle}</span>
         ))}
     </div>
   );
 }
+
+console.log(twMerge('text-green-300 text-xKO text-kjasdkjjk text-wrapper'));

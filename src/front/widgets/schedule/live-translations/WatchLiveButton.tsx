@@ -34,7 +34,7 @@ export const ScheduleWidgetWatchLiveTranslationButton = ({
       <TheIconButton
         icon="ComputerPhoneSync"
         onClick={isOpenAtom.do.toggle}
-        className="margin-gap-v"
+        className="my-2"
         postfix={postfix}
       />
 

@@ -6,15 +6,15 @@ import { IScheduleWidget, IScheduleWidgetRole } from 'shared/api';
 export function ScheduleWidgetRoleFace({ role, schedule }: { role?: IScheduleWidgetRole; schedule: IScheduleWidget }) {
   const auth = useAuth();
   const roleUser = role && extractScheduleWidgetRoleUser(schedule, role.mi);
-  if (role === undefined) return <div className="color--ko">Неизвестная роль</div>;
+  if (role === undefined) return <div className="text-xKO">Неизвестная роль</div>;
 
   return (
-    <div className={'flex flex-gap' + (auth && roleUser && auth.login === roleUser.login ? ' color--7' : ' color--3')}>
+    <div className={'flex gap-2' + (auth && roleUser && auth.login === roleUser.login ? ' text-x7' : ' text-x3')}>
       {role.icon ? <LazyIcon icon={role.icon} /> : <LazyIcon icon="Github" />}
       <div className="face-title">
         {role.title}
         {' - '}
-        {roleUser?.fio || roleUser?.nick || <span className="color--3 text-italic">Вакант</span>}
+        {roleUser?.fio || roleUser?.nick || <span className="text-x3 italic">Вакант</span>}
       </div>
     </div>
   );

@@ -95,16 +95,16 @@ export const ComTools = () => {
         }
       />
 
-      <div className="flex justify-center text-center w-full fade-05 text-xs mt-3">
+      <div className="flex justify-center text-center w-full opacity-50 text-xs mt-3">
         Клик на иконку для добавления в быстрое меню
       </div>
       {comToolsNode}
 
-      <div className="fade-05 w-full py-2 px-5 text-x7">
+      <div className="opacity-50 w-full py-2 px-5 text-x7">
         <CmComCatMentions com={ccom} />
       </div>
 
-      <div className="full-width fade-05 flex center flex-gap font-size:0.7em py-3">
+      <div className="w-full opacity-50 flex center gap-2 text-xs py-3">
         Просмотрели
         {visitsCount === null ? (
           <TheIconLoading />
@@ -112,7 +112,7 @@ export const ComTools = () => {
           ` ${visitsCount} ${mylib.declension(visitsCount, 'раз', 'раза', 'раз')}`
         )}
       </div>
-      <div className="full-width fade-05 flex flex-col font-size:0.7em py-3">
+      <div className="w-full opacity-50 flex flex-col text-xs py-3">
         <div>Добавлена: {new Date(ccom.wid).toLocaleString('ru')}</div>
         {Math.trunc(ccom.wid) !== Math.trunc(ccom.mod) && (
           <div>Обновлена: {new Date(ccom.mod).toLocaleString('ru')}</div>

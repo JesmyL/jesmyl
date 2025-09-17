@@ -17,7 +17,7 @@ export const ChordRedactableTrack = ({
     <>
       <Dropdown
         placeholder="Начальный лад"
-        className="half-width"
+        className="w-[50%]"
         id={Math.trunc(redactableChord[0])}
         items={ladLine.map((_, lad) => ({ title: `Лад ${lad + 1}`, id: lad }))}
         onSelect={({ id }) => {
@@ -26,7 +26,7 @@ export const ChordRedactableTrack = ({
           });
         }}
       />
-      <div className="flex flex-gap">
+      <div className="flex gap-2">
         <ChordCardTracked
           track={redactableChord}
           bottomPadding={20}

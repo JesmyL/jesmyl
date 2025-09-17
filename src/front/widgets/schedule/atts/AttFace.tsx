@@ -42,13 +42,13 @@ export function ScheduleWidgetAttFace({
   return (
     <>
       <Tatt
-        className={'relative flex center column' + (isCanRedact && tatt?.isCustomize ? ' color--7 pointer' : '')}
+        className={'relative flex center column' + (isCanRedact && tatt?.isCustomize ? ' text-x7 pointer' : '')}
         onClick={isCanRedact && tatt?.isCustomize ? () => tattOnRedactAtom.set(attKey) : undefined}
       >
         {isLink && (
           <LazyIcon
             icon="Link02"
-            className="absolute pos-left pos-top color--3 fade-05"
+            className="absolute left-0 top-0 text-x3 opacity-50"
           />
         )}
         {isRedact && isCanRedact && (
@@ -57,7 +57,7 @@ export function ScheduleWidgetAttFace({
             className="close-button"
             confirm={
               <>
-                Убрать {isLink ? 'ссылку вложения' : 'вложение'} <span className="color--7">{tatt?.title || '??'}</span>
+                Убрать {isLink ? 'ссылку вложения' : 'вложение'} <span className="text-x7">{tatt?.title || '??'}</span>
                 {' из события '}
                 {typeTitle}?
               </>
@@ -68,15 +68,15 @@ export function ScheduleWidgetAttFace({
         {tatt ? (
           <>
             <LazyIcon icon={tatt.icon} />
-            <div className="ellipsis full-max-width">{tatt.title}</div>
+            <div className="ellipsis max-w-full">{tatt.title}</div>
           </>
         ) : (
           <>
             <LazyIcon
               icon="HelpCircle"
-              className="color--ko"
+              className="text-xKO"
             />
-            <div className="color--ko">Не изв.</div>
+            <div className="text-xKO">Не изв.</div>
           </>
         )}
       </Tatt>
@@ -86,7 +86,7 @@ export function ScheduleWidgetAttFace({
           checkIsOpen={tatt => tatt === attKey}
         >
           <ModalHeader>
-            Вложение <span className="color--7">{tatt.title}</span>
+            Вложение <span className="text-x7">{tatt.title}</span>
           </ModalHeader>
           <ModalBody>
             <ScheduleWidgetCustomAtt

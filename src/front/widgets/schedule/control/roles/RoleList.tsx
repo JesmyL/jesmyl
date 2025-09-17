@@ -40,7 +40,7 @@ export function ScheduleWidgetRoleList() {
 
   return (
     <>
-      <h3 className="flex between flex-gap">{rolesExpandNode}</h3>
+      <h3 className="flex between gap-2">{rolesExpandNode}</h3>
       {isRolesExpand &&
         categories.map((list, listi) => {
           const isExpand = catExpands.includes(listi);
@@ -49,7 +49,7 @@ export function ScheduleWidgetRoleList() {
               <TheIconButton
                 icon={isExpand ? 'ArrowUpDouble' : 'ArrowDownDouble'}
                 prefix={rights.schedule.ctrl.cats[listi]}
-                className="flex-max color--4"
+                className="flex-max text-x4"
                 onClick={() => setCatExpands(isExpand ? catExpands.filter(it => it !== listi) : [...catExpands, listi])}
               />
               {isExpand &&

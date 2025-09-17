@@ -50,7 +50,7 @@ export function BibleLists() {
 
   return (
     <Lists
-      className="flex flex-gap custom-align-items over-hidden"
+      className="flex gap-2 custom-align-items over-hidden"
       $joinAddress={joinAddress}
       $booki={currentBooki}
       $chapteri={currentChapteri}

@@ -43,11 +43,11 @@ export const CmMeetingEventEditsHistoryStatisticModalInner = ({ dayi, schw }: Pr
       </ModalHeader>
       {isLoading ? (
         <ModalBody>
-          <div className="flex center full-size margin-gap">{isLoading}</div>
+          <div className="flex center full-size m-2">{isLoading}</div>
         </ModalBody>
       ) : comwCount == null || error ? (
         <ModalBody>
-          <div className="flex center full-size color--ko">{error ? `${error}` : 'Ошибка'}</div>
+          <div className="flex center full-size text-xKO">{error ? `${error}` : 'Ошибка'}</div>
         </ModalBody>
       ) : (
         <ModalBody>

@@ -24,7 +24,7 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
   const catScopeProps = useMemo(() => ({ ...scheduleScopeProps, cati }), [cati, scheduleScopeProps]);
-  const title = <>{cat.title || <span className="text-italic">Список</span>}</>;
+  const title = <>{cat.title || <span className="italic">Список</span>}</>;
   const shortTitles: [string, string] = [cutTitle(cat.titles[0]), cutTitle(cat.titles[1])];
 
   return (
@@ -38,8 +38,8 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
         postfix={isExpand =>
           isExpand &&
           rights.isCanTotalRedact && (
-            <div className="flex flex-gap">
-              <div className="ellipsis max-width:5em">{cat.title.toLowerCase()}</div>
+            <div className="flex gap-2">
+              <div className="ellipsis max-w-20">{cat.title.toLowerCase()}</div>
               {!rights.schedule.lists?.units.some(unit => !unit.title) && (
                 <TheIconSendButton
                   icon="PlusSign"
@@ -56,7 +56,7 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
         }
       >
         {isExpand => (
-          <div className="margin-big-gap-h">
+          <div className="mx-5">
             {isExpand &&
               rights.schedule.lists?.units.map(unit => {
                 if (unit.cati !== cati) return null;
@@ -76,7 +76,7 @@ export function ScheduleWidgetListCategory({ cat, cati }: { cat: IScheduleWidget
       </ExpandableContent>
 
       <Modal openAtom={isModalOpenAtom}>
-        <ModalHeader className="flex flex-gap">{title}</ModalHeader>
+        <ModalHeader className="flex gap-2">{title}</ModalHeader>
 
         <ModalBody>
           <LazyIconConfigurator

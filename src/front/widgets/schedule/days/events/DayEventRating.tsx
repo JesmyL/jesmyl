@@ -9,6 +9,7 @@ import { ReactNode } from 'react';
 import { IScheduleWidgetDayEvent, ScheduleDayEventScopeProps } from 'shared/api';
 import { emptyAsyncFunc, itNNull } from 'shared/utils';
 import styled from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 
 const ratePoints = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5] as const;
 const defRate: [number, string] = [0, ''];
@@ -56,13 +57,13 @@ export function ScheduleWidgetDayEventRating(props: {
             return (
               <div
                 key={user.mi}
-                className="flex flex-gap"
+                className="flex gap-2"
               >
                 <div
-                  className={
-                    'margin-gap-t nowrap self-start text-bold' +
-                    (rate[0] < 0 ? ' color--ko' : rate[0] > 0 ? ' color--ok' : ' color--3')
-                  }
+                  className={twMerge(
+                    'mt-2 nowrap self-start font-bold',
+                    rate[0] < 0 ? 'text-xKO' : rate[0] > 0 ? 'text-xOK' : 'text-x3',
+                  )}
                 >
                   {user.fio || user.nick}: {rate[0]}
                 </div>
@@ -81,13 +82,9 @@ export function ScheduleWidgetDayEventRating(props: {
 
       ratingNode = (
         <>
-          <div className="color--3">{otherRatesTitleNode}</div>
+          <div className="text-x3">{otherRatesTitleNode}</div>
           {isOtherRatesTitleExpand &&
-            (usersRateNode?.length ? (
-              usersRateNode
-            ) : (
-              <span className="color--7 text-italic margin-gap-l">Оценок нет</span>
-            ))}
+            (usersRateNode?.length ? usersRateNode : <span className="text-x7 italic ml-2">Оценок нет</span>)}
         </>
       );
     }
@@ -95,10 +92,10 @@ export function ScheduleWidgetDayEventRating(props: {
 
   return (
     <>
-      <div className="color--3 margin-gap-v">{titleNode}</div>
+      <div className="text-x3 my-2">{titleNode}</div>
       {isExpand && (
-        <div className="margin-big-gap-l margin-gap-v">
-          <div className="flex margin-gap-v">
+        <div className="ml-5 my-2">
+          <div className="flex my-2">
             {ratePoints.map(ratePoint => {
               const isFill =
                 ratePoint === 0 ? myRate[0] === 0 : ratePoint < 0 ? myRate[0] <= ratePoint : myRate[0] >= ratePoint;
@@ -107,8 +104,8 @@ export function ScheduleWidgetDayEventRating(props: {
                 <TheIconSendButton
                   key={ratePoint}
                   className={
-                    (ratePoint < 0 ? 'color--ko' : ratePoint > 0 ? 'color--ok' : 'color--3') +
-                    (isFill ? '' : ' fade-05')
+                    (ratePoint < 0 ? 'text-xKO' : ratePoint > 0 ? 'text-xOK' : 'text-x3') +
+                    (isFill ? '' : ' opacity-50')
                   }
                   icon={ratePoint < 0 ? 'Heartbreak' : ratePoint === 0 ? 'HelpCircle' : 'Favourite'}
                   onSend={async () =>
@@ -124,7 +121,7 @@ export function ScheduleWidgetDayEventRating(props: {
               );
             })}
             <StyledReitingDisplay
-              className={'margin-gap-l' + (myRate[0] === 0 ? ' color--3' : myRate[0] < 0 ? ' color--ko' : ' color--ok')}
+              className={'ml-2' + (myRate[0] === 0 ? ' text-x3' : myRate[0] < 0 ? ' text-xKO' : ' text-xOK')}
             >
               {myRate[0]}
             </StyledReitingDisplay>
@@ -133,7 +130,7 @@ export function ScheduleWidgetDayEventRating(props: {
             icon="Message01"
             value={myRate[1]}
             title="Комментарий"
-            className="margin-gap-v"
+            className="my-2"
             isRedact
             setSelfRedact
             multiline

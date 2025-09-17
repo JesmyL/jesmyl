@@ -8,10 +8,10 @@ interface Props {
 
 export const AppFace = ({ config: { appName, icon, title } }: Props) => {
   return (
-    <div className="margin-big-gap-h margin-sm-gap-v flex between">
+    <div className="mx-5 my-1 flex between">
       <Link
         to={`/${appName}/i` as never}
-        className="flex flex-gap pointer"
+        className="flex gap-2 pointer"
       >
         <LazyIcon icon={icon} />
         <span>{title}</span>

@@ -35,28 +35,28 @@ export const IndexTelegramAuthPage = () => {
       head={connectionNode}
       content={
         <>
-          <div className="flex around column full-height full-width">
-            <div className="logo padding-big-gap-t">
+          <div className="flex around column h-full w-full">
+            <div className="logo pt-5">
               <div className="logo-container">
                 <JesmylLogo />
               </div>
               <div className="text">JesmyL</div>
             </div>
 
-            <div className="relative flex column full-width">
+            <div className="relative flex column w-full">
               <div>
                 Для авторизации нужно:
                 <ol>
                   <li className="children-middle">
                     Запустить бота
-                    <span className="margin-gap">
+                    <span className="m-2">
                       <a
                         href="https://t.me/jesmylbot"
                         className="children-middle"
                       >
                         <LazyIcon
                           icon="Telegram"
-                          className="margin-gap-r"
+                          className="mr-2"
                         />
                         jesmylbot
                       </a>
@@ -64,7 +64,7 @@ export const IndexTelegramAuthPage = () => {
                   </li>
                   <li>
                     Состоять в канале
-                    <span className="margin-gap">
+                    <span className="m-2">
                       <a
                         id="go-to-chanel-link"
                         href={values.chatUrl}
@@ -72,7 +72,7 @@ export const IndexTelegramAuthPage = () => {
                       >
                         <LazyIcon
                           icon="Telegram"
-                          className="margin-gap-r"
+                          className="mr-2"
                         />
                         jesmyl space
                       </a>
@@ -87,12 +87,12 @@ export const IndexTelegramAuthPage = () => {
                   </li>
                   {!isSendTgCode && (
                     <li>
-                      <div className="flex flex-gap">
+                      <div className="flex gap-2">
                         <TgNativeAuth />
                         или
                         <span
                           id="input-the-tg-code-button"
-                          className="color--7 pointer"
+                          className="text-x7 pointer"
                           onClick={() => setIsSendTgCode(true)}
                         >
                           ввести код
@@ -141,7 +141,7 @@ export const IndexTelegramAuthPage = () => {
                 </>
               )}
             </div>
-            {/* <div className="flex pointer color--3">
+            {/* <div className="flex pointer text-x3">
               <span onClick={onLoginAuth}>Ввести логин/пароль</span>
             </div> */}
           </div>

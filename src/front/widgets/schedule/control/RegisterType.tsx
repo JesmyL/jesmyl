@@ -13,14 +13,14 @@ export function ScheduleWidgetRegisterType() {
 
   return (
     <>
-      <div className="margin-gap-v">{expandNode}</div>
-      <div className="margin-big-gap-v">
+      <div className="my-2">{expandNode}</div>
+      <div className="mx-5">
         {isExpand && (
           <>
             <ScheduleWidgetRightControlList
               rightCtrl={scheduleWidgetRegTypeRights}
               R={rights.schedule.ctrl.type}
-              className="margin-gap-l"
+              className="ml-2"
               isCantEdit={!rights.isCanTotalRedact}
               isDescriptionsCollect
               onSend={value =>

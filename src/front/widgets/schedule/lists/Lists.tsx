@@ -31,7 +31,7 @@ export function ScheduleWidgetLists() {
   const [modalNode, screen] = useFullContent(() => {
     return (
       <>
-        <h3 className="flex flex-gap">{listsTitle}</h3>
+        <h3 className="flex gap-2">{listsTitle}</h3>
         {isExpand &&
           rights.schedule.lists.cats.map((cat, cati) => {
             return (
@@ -59,7 +59,7 @@ export function ScheduleWidgetLists() {
           </>
         }
         onClick={() => screen()}
-        className="margin-gap-v flex-max"
+        className="my-2 flex-max"
       />
     </>
   );

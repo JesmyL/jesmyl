@@ -3,6 +3,7 @@ import { UsedWid, useWid } from '#shared/lib/hooks/useWid';
 import { atom, Atom, useAtom, useAtomSet, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import styled, { css } from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 import { LazyIcon } from './the-icon/LazyIcon';
 
 interface Props {
@@ -36,7 +37,7 @@ export const DebouncedSearchInput = ({ debounce = 300, className = '', placehold
   const iconName = isNumberSearch ? 'GridTable' : 'SearchVisual';
 
   return (
-    <label className={`debounced-input flex gap-2 ${className}`}>
+    <label className={twMerge('debounced-input flex gap-2', className)}>
       <LazyIcon
         className="pointer"
         icon={iconName}
@@ -73,10 +74,10 @@ export const DebouncedSearchInput = ({ debounce = 300, className = '', placehold
 };
 
 const StyledInput = styled.input`
-  --text-color: var(--color-x3);
+  --text-color: var(--color--3);
 
   &::placeholder {
-    color: var(--color-x4);
+    color: var(--color--4);
   }
 `;
 

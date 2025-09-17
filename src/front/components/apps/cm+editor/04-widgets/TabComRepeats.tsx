@@ -123,14 +123,14 @@ export const CmEditorTabComRepeats = () => {
                       <>
                         <LazyIcon
                           icon="LinkBackward"
-                          className="vertical-middle pointer margin-gap-h"
+                          className="align-middle pointer mx-2"
                           onClick={() => {
                             ord.me.watchOrd?.element?.scrollIntoView();
                           }}
                         />
                         <LazyIcon
                           icon="RowDelete"
-                          className={`vertical-middle pointer ${ord.isInheritValue('r') ? 'disabled' : ''}`}
+                          className={`align-middle pointer ${ord.isInheritValue('r') ? 'disabled' : ''}`}
                           onClick={async () => {
                             const isClear = await confirm('Очистить собственные правила повторения?');
 
@@ -257,7 +257,7 @@ export const CmEditorTabComRepeats = () => {
 
                 return (
                   <div
-                    className={`float-button-panel z-index:300${start && ord === start.orderUnit ? '' : ' hidden'}`}
+                    className={`float-button-panel z-300${start && ord === start.orderUnit ? '' : ' hidden'}`}
                     style={pos as CSSProperties}
                   >
                     <div

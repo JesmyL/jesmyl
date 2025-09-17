@@ -25,7 +25,7 @@ export function ScheduleAlarmDay(props: ScheduleWidgetDayProps) {
       {auth.login && !props.schedule.ctrl.users.some(user => user.login === auth.login) && (
         <SendButton
           title="Хочу комментить события"
-          className="margin-giant-gap-t"
+          className="mt-10"
           onSend={() =>
             schUsersTsjrpcClient.addMe({
               props: scheduleScopeProps,

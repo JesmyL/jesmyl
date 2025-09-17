@@ -1,5 +1,6 @@
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import styled from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 import { ScreenTranslationConfig } from '../../model';
 
 interface ScreenTranslationsFaceProps {
@@ -19,7 +20,7 @@ export const ScreenTranslationsFace = ({
 }: ScreenTranslationsFaceProps) => {
   return (
     <Face
-      className={'inline-flex flex-gap between pointer margin-gap-l ' + className}
+      className={twMerge('inline-flex gap-2 between pointer ml-2', className)}
       onClick={putOnClick(configi)}
     >
       <span>{config.title}</span>

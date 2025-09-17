@@ -1,5 +1,6 @@
 import { ConfirmContent } from '#shared/ui/modal/confirm/ConfirmContent';
 import { ReactNode } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 export function StrongDiv(props: {
   children?: ReactNode;
@@ -14,7 +15,7 @@ export function StrongDiv(props: {
       confirm={props.confirm}
       content={onConfirm => (
         <div
-          className={'pointer ' + props.className}
+          className={twMerge('pointer', props.className)}
           onClick={async () => {
             try {
               if (!(await onConfirm())) return;

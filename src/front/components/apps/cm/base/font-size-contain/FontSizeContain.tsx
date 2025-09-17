@@ -33,7 +33,7 @@ export function FontSizeContain({ className, content, html, subUpdates, style }:
 
   return (
     <div
-      className={className + ' absolute full-height full-width'}
+      className={className + ' absolute h-full w-full'}
       ref={containerRef}
       style={style}
     >

@@ -22,6 +22,7 @@ import {
   scheduleWidgetUserRights,
 } from 'shared/api';
 import { itIt, itNIt } from 'shared/utils';
+import { twMerge } from 'tailwind-merge';
 import { ScheduleWidgetCustomAttTitles } from './CustomAttTitles';
 import { ScheduleWidgetCustomAttLocalImagineSelector } from './LocalImagine';
 
@@ -85,10 +86,10 @@ export function ScheduleWidgetCustomAtt(props: {
 
   return (
     <>
-      <div className={'margin-gap-v' + (props.isRedact ? '' : ' padding-gap bgcolor--5')}>
+      <div className={twMerge('my-2', props.isRedact ? null : 'p-2 bg-x5')}>
         {props.topContent}
         {!props.isRedact && isCanRedact && (
-          <div className="flex flex-end full-width">
+          <div className="flex flex-end w-full">
             <LazyIcon
               className="pointer"
               icon="PencilEdit01"
@@ -142,18 +143,18 @@ export function ScheduleWidgetCustomAtt(props: {
         />
         {props.tatt.title && (
           <>
-            <div className="margin-big-gap-v">
+            <div className="mx-5">
               {whoCanUnits.map((whoCan, whoCani) => {
                 return (
                   <TheIconButton
                     key={whoCan.rule}
                     icon={whoCan.icon}
-                    className="flex-max margin-gap-v"
+                    className="flex-max my-2"
                     postfix={
-                      <div className="full-width flex between">
-                        <span className="flex flex-gap">
+                      <div className="w-full flex between">
+                        <span className="flex gap-2">
                           Кто {whoCan.action}
-                          <span className="color--7">
+                          <span className="text-x7">
                             {scheduleWidgetUserRights.rightsBalance(props.tatt[whoCan.rule]) + 1}+
                           </span>
                         </span>
@@ -190,12 +191,12 @@ export function ScheduleWidgetCustomAtt(props: {
                               : 'Square'
                           }
                           className={
-                            (top ? 'margin-big-gap-l ' : '') +
+                            (top ? 'ml-5 ' : '') +
                             (customAttUseRights.checkIsHasIndividualRights(props.tatt.use, id) &&
                             (id !== CustomAttUseRights.Roles || (props.tatt.roles ?? 0) > 1) &&
                             (id !== CustomAttUseRights.Lists || (props.tatt.list ?? 0) > 1) &&
                             (id !== CustomAttUseRights.Titles || props.tatt.titles?.join(''))
-                              ? 'color--7'
+                              ? 'text-x7'
                               : '')
                           }
                           postfix={(top ? '' : 'Использовать ') + title}
@@ -211,7 +212,7 @@ export function ScheduleWidgetCustomAtt(props: {
 
                     {id === CustomAttUseRights.Roles &&
                       customAttUseRights.checkIsHasIndividualRights(props.tatt.use, CustomAttUseRights.Roles) && (
-                        <div className="margin-gap-v margin-big-gap-l">
+                        <div className="my-2 ml-5">
                           {rights.schedule.ctrl.cats.map((cat, cati, cata) => {
                             if (!cat) return null;
 
@@ -225,7 +226,7 @@ export function ScheduleWidgetCustomAtt(props: {
                                 }
                                 className={
                                   ScheduleWidgetRightsCtrl.checkIsHasIndividualRights(props.tatt.roles, cati)
-                                    ? 'color--7'
+                                    ? 'text-x7'
                                     : ''
                                 }
                                 postfix={cat}
@@ -243,7 +244,7 @@ export function ScheduleWidgetCustomAtt(props: {
                       )}
                     {id === CustomAttUseRights.Lists &&
                       customAttUseRights.checkIsHasIndividualRights(props.tatt.use, CustomAttUseRights.Lists) && (
-                        <div className="margin-gap-v margin-big-gap-l">
+                        <div className="my-2 ml-5">
                           {rights.schedule.lists.cats.map((cat, cati, cata) => {
                             return (
                               <TheIconSendButton
@@ -257,7 +258,7 @@ export function ScheduleWidgetCustomAtt(props: {
                                 disabledReason="Название пустое"
                                 className={
                                   ScheduleWidgetRightsCtrl.checkIsHasIndividualRights(props.tatt.list, cati)
-                                    ? 'color--7'
+                                    ? 'text-x7'
                                     : ''
                                 }
                                 postfix={cat.title}
@@ -275,7 +276,7 @@ export function ScheduleWidgetCustomAtt(props: {
                       )}
                     {id === CustomAttUseRights.CheckTitles &&
                       customAttUseRights.checkIsHasIndividualRights(props.tatt.use, CustomAttUseRights.Titles) && (
-                        <div className="margin-big-gap-l">
+                        <div className="ml-5">
                           {props.tatt.titles?.map((title, titlei) => {
                             return (
                               <StrongEditableField
@@ -323,9 +324,9 @@ export function ScheduleWidgetCustomAtt(props: {
                   <ScheduleWidgetCustomAttTitles tatt={props.tatt} />
                 )}
                 {!usedLists.length || (
-                  <div className="margin-gap-t color--4">
+                  <div className="mt-2 text-x4">
                     Используются:
-                    <span className="color--3"> {usedLists.join(', ')}</span>
+                    <span className="text-x3"> {usedLists.join(', ')}</span>
                   </div>
                 )}
               </>
@@ -340,7 +341,7 @@ export function ScheduleWidgetCustomAtt(props: {
           checkIsOpen={whoCani => whoCani !== WhoCan.No}
         >
           <ModalHeader>
-            Кто {whoCan.action} вложение <span className="color--7">{props.tatt.title}</span>
+            Кто {whoCan.action} вложение <span className="text-x7">{props.tatt.title}</span>
           </ModalHeader>
           <ModalBody>
             <ScheduleWidgetRightControlList
@@ -365,7 +366,7 @@ export function ScheduleWidgetCustomAtt(props: {
               return (
                 <TheIconSendButton
                   key={user.mi}
-                  className="margin-gap-v flex-max"
+                  className="my-2 flex-max"
                   disabled={!user.R || isForceChecked}
                   postfix={user.fio}
                   icon={
@@ -395,9 +396,9 @@ export function ScheduleWidgetCustomAtt(props: {
           checkIsOpen={openTatt => openTatt === props.tatt.mi}
         >
           <ModalHeader>
-            <span className="flex flex-gap full-width between">
+            <span className="flex gap-2 w-full between">
               <span>
-                <span className="color--7">{props.tatt.title} </span>- Редактирование вложения
+                <span className="text-x7">{props.tatt.title} </span>- Редактирование вложения
               </span>
             </span>
           </ModalHeader>

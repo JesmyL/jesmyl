@@ -35,7 +35,7 @@ export const CmEditorTabComOrders = () => {
   const cancelClickBetweenDataButtonNode = (
     <LazyIcon
       icon="Cancel01"
-      className="pointer color--ko"
+      className="pointer text-xKO"
       onClick={() => setClickBetweenOrds(null)}
     />
   );
@@ -55,7 +55,7 @@ export const CmEditorTabComOrders = () => {
       </>
 
       {clickBetweenData && clickBetweenData.checkIsShowButton(zeroProps) && (
-        <div className="flex flex-gap margin-big-gap-t center">
+        <div className="flex gap-2 mt-5 center">
           <TheButton
             onClick={async () => {
               try {
@@ -75,7 +75,7 @@ export const CmEditorTabComOrders = () => {
         const editNode = isCanUpdate && !ord.me.isAnchorInherit && (
           <LazyIcon
             icon={ord.isAnchor ? 'Link02' : 'Edit02'}
-            className="margin-gap-h margin-gap-b pointer vertical-middle"
+            className="mx-2 mb-2 pointer align-middle"
             onClick={() => setToolProps({ com: ccom, onClose: setToolProps, ord, ordi, setClickBetweenOrds })}
           />
         );
@@ -98,7 +98,7 @@ export const CmEditorTabComOrders = () => {
                     confirm={
                       <>
                         Сделать {ord.me.anchorInheritIndex + 2}-ю часть ссылки на
-                        <span className="color--7"> {ord.me.leadOrd.me.header()} </span>
+                        <span className="text-x7"> {ord.me.leadOrd.me.header()} </span>
                         {ord.me.leadOrd.top.inh?.v?.[ord.me.anchorInheritIndex] == null ? 'не' : ''}видимой?
                       </>
                     }
@@ -159,10 +159,10 @@ export const CmEditorTabComOrders = () => {
         );
       })}
       {isCanCreate && !clickBetweenData && (
-        <div className="flex center margin-big-gap">
+        <div className="flex center m-5">
           <LazyIcon
             icon="PlusSignCircle"
-            className="pointer margin-gap-h"
+            className="pointer mx-2"
             onClick={() => setNewBlockAdderPopupCom(ccom)}
           />
         </div>

@@ -26,13 +26,13 @@ export function ScheduleWidgetDayEventEventActions({ schedule, event, onEventCut
       <TheIconButton
         icon="Shapes"
         postfix="Редактировать шаблон события"
-        className="flex-max margin-gap-v"
+        className="flex-max my-2"
         onClick={isOpenModalAtom.do.toggle}
       />
       <TheIconButton
         icon="Crop"
         postfix="Вырезать событие"
-        className="flex-max margin-gap-v"
+        className="flex-max my-2"
         onClick={onEventCut}
       />
       {schedule.types && (
@@ -46,7 +46,7 @@ export function ScheduleWidgetDayEventEventActions({ schedule, event, onEventCut
               topicBox={event}
             />
           }
-          className="flex-max color--ko margin-gap-v"
+          className="flex-max text-xKO my-2"
           onSend={() =>
             schDaysTsjrpcClient.removeEvent({
               props: dayScopeProps,
@@ -61,7 +61,7 @@ export function ScheduleWidgetDayEventEventActions({ schedule, event, onEventCut
 
       <Modal openAtom={isOpenModalAtom}>
         <ModalHeader>
-          Шаблон события <span className="color--7">{schedule.types[event.type].title}</span>
+          Шаблон события <span className="text-x7">{schedule.types[event.type].title}</span>
         </ModalHeader>
         <ModalBody>
           {schedule.types[event.type] ? (

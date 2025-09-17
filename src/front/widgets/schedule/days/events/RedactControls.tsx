@@ -29,7 +29,7 @@ export const DayEventRedactControls = ({
         icon={isSecret ? 'CheckmarkSquare02' : 'Square'}
         confirm={
           <>
-            Событие <span className="color--7">{eventTypeTitle} </span>
+            Событие <span className="text-x7">{eventTypeTitle} </span>
             {isSecret ? 'больше не скрытое' : 'сделать скрытым'}?
           </>
         }

@@ -63,9 +63,7 @@ export function useFullContent<PassValue>(
               onClick={onClose}
             />
           )}
-          <Container className={altClassName ?? 'padding-big-gap'}>
-            {content?.(() => setOpenMode(null), passValue)}
-          </Container>
+          <Container className={altClassName ?? 'pt-5'}>{content?.(() => setOpenMode(null), passValue)}</Container>
         </ContainerWrapper>
       </Portal>
     ),
@@ -101,6 +99,6 @@ const Container = styled.div`
   left: 0;
   background-color: var(--current-bg);
   width: 100vw;
-  height: calc(100% - var(--keyboard-flash-height));
+  height: 100%;
   overflow-y: auto;
 `;

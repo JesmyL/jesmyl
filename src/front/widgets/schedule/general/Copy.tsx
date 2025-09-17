@@ -119,7 +119,7 @@ export function ScheduleWidgetCopy(props: { schw: IScheduleWidgetWid }) {
               return (
                 <div
                   key={schedule.w}
-                  className="pointer margin-gap-v"
+                  className="pointer my-2"
                   onClick={() => setSchw(schedule.w)}
                 >
                   <ScheduleWidgetTopicTitle

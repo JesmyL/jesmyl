@@ -40,7 +40,7 @@ export const CmEditorTabComChordsBlocks = () => {
                 com={ccom}
               />
 
-              <span className="flex flex-gap">
+              <span className="flex gap-2">
                 {makeRegExp('/[A-H]b/').exec(text) && (
                   <LazyIcon
                     className="pointer"

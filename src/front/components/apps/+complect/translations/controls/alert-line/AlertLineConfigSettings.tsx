@@ -66,16 +66,16 @@ const AlertLineConfigSettingsInnerWithConfig = ({
       .effect();
   }, []);
 
-  if (config == null) return <div className="color--ko">Не найдено</div>;
+  if (config == null) return <div className="text-xKO">Не найдено</div>;
 
   return (
     <>
-      <h2 className="flex flex-gap">
+      <h2 className="flex gap-2">
         <LazyAlertLineConfigIcon config={config} />
         {config.title}
       </h2>
       <h2>Положение строки - вверх/вниз/+CTRL</h2>
-      <div className="flex flex-gap nowrap">
+      <div className="flex gap-2 nowrap">
         Нвазвание:
         <TextInput
           value={config.title}
@@ -90,7 +90,7 @@ const AlertLineConfigSettingsInnerWithConfig = ({
         onSend={async icon => update({ ...config, icon })}
       />
 
-      <div className="flex flex-gap nowrap">
+      <div className="flex gap-2 nowrap">
         Альтернативный текст:
         <TextInput
           value={config.text}
@@ -121,7 +121,7 @@ const AlertLineConfigSettingsInnerWithConfig = ({
         config={config}
         updateConfig={update}
       />
-      <div className="flex flex-gap nowrap">
+      <div className="flex gap-2 nowrap">
         Время пробега:
         <TextInput
           value={'' + config.speed}

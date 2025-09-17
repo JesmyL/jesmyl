@@ -23,7 +23,7 @@ export const TranslationSlidePreview = ({ isPreview = true }: Props) => {
         />
       ) : (
         <>
-          <div className="flex center full-size bgcolor--2">
+          <div className="flex center full-size bg-x2">
             <ScreenWithBackground $proportion={currentConfig.proportion}>
               <TranslationScreen
                 win={window}
@@ -39,8 +39,8 @@ export const TranslationSlidePreview = ({ isPreview = true }: Props) => {
       )}
 
       <FullContent openAtom={isSettingsOpenAtom}>
-        <div className="flex center margin-big-gap-t">
-          <FullContainer className="flex center bgcolor--3">
+        <div className="flex center mt-5">
+          <FullContainer className="flex center bg-x3">
             {currentConfig && (
               <ScreenWithBackground $proportion={currentConfig.proportion}>
                 <TranslationScreen

@@ -34,7 +34,7 @@ export const ScheduleWidgetListPage = () => {
     <PageContainerConfigurer
       className="ScheduleWidgetPage ScheduleWidgetListPage"
       headTitle="Мероприятия"
-      head={<span className="flex flex-gap margin-gap">{connectionNode}</span>}
+      head={<span className="flex gap-2 m-2">{connectionNode}</span>}
       content={
         <>
           {schedules

@@ -87,7 +87,7 @@ export function ScheduleKeyValueListAttLiItemDropdown({
   if (lists.length === 0 && roles.length === 0 && users.length === 0 && titles.length === 0) return null;
 
   return (
-    <div className="flex flex-gap">
+    <div className="flex gap-2">
       <LazyIcon
         className="pointer"
         icon={isShowAll ? 'View' : 'ViewOffSlash'}

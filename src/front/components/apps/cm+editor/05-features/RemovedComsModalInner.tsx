@@ -49,16 +49,16 @@ export const RemovedComsModalInner = () => {
 };
 
 const comControls = (com: Com) => (
-  <div className="flex flex-gap">
+  <div className="flex gap-2">
     <TheIconSendButton
       icon="PlusSignCircle"
-      className="color--ok"
+      className="text-xOK"
       confirm="Восстановить эту песню?"
       onSend={() => cmEditComClientTsjrpcMethods.bringBackToLife({ comw: com.wid })}
     />
     <TheIconSendButton
       icon="CancelCircleHalfDot"
-      className="color--ko"
+      className="text-xKO"
       confirm="Уничтожить эту песню?"
       onSend={() => cmEditComClientTsjrpcMethods.destroy({ comw: com.wid })}
     />

@@ -15,6 +15,7 @@ import {
 } from 'shared/api';
 import { itNNull } from 'shared/utils';
 import styled from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 import { ScheduleWidgetTopicTitle } from '../complect/TopicTitle';
 import { ScheduleAlarmDay } from './AlarmDay';
 import { ScheduleWidgetAlarmInfoContent } from './InfoContent';
@@ -42,8 +43,8 @@ const makeNextDayFirstEventNode = (
 
   return (
     <div>
-      {scheduleTitle && <div className="color--7">{scheduleTitle}</div>}
-      <div className="flex flex-gap">
+      {scheduleTitle && <div className="text-x7">{scheduleTitle}</div>}
+      <div className="flex gap-2">
         Это был последний день
         <LazyIcon icon="Smile" />
       </div>
@@ -111,7 +112,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
 
       if (observeSchw !== undefined && !mylib.isNaN(observeSchw)) {
         schBox = scheduleBoxes.find(wr => wr.sch.w === observeSchw);
-        if (schBox === undefined) node = <span className="color--ko">Мероприятие не найдено</span>;
+        if (schBox === undefined) node = <span className="text-xKO">Мероприятие не найдено</span>;
         else if (schBox.days.length === 0)
           node = (
             <div className={isJustShowAllDay ? 'full-size flex center column' : undefined}>
@@ -120,7 +121,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
                 altTitle="Мероприятие"
                 topicBox={schBox.sch}
               />
-              <div className="text-italic">Составляется</div>
+              <div className="italic">Составляется</div>
             </div>
           );
       }
@@ -197,7 +198,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
                 );
               }
 
-              node = <div className="flex flex-gap">{content}</div>;
+              node = <div className="flex gap-2">{content}</div>;
             } else {
               node = (
                 <ScheduleWidgetAlarmInfoContent
@@ -254,10 +255,10 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
 
                     return (
                       <div>
-                        <div className="flex flex-big-gap">
+                        <div className="flex gap-5">
                           <span>Сейчас</span>
                           {event === null ? (
-                            <span className="color--3 text-italic">Тех. перерыв</span>
+                            <span className="text-x3 italic">Тех. перерыв</span>
                           ) : (
                             <ScheduleWidgetTopicTitle
                               titleBox={currSchBox.types[event.type]}
@@ -266,7 +267,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
                           )}
                         </div>
                         {nextEvent === null || nextEventType === null || (
-                          <div className="flex flex-big-gap">
+                          <div className="flex gap-5">
                             <span>Через {minTo}м.</span>
                             {nextEventType === undefined ? (
                               <div>конец дня</div>
@@ -375,7 +376,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
     <>
       {fullNode}
       <Alarm
-        className={'flex flex-gap between' + (fullValue ? ' pointer' : '')}
+        className={twMerge('flex gap-2 between py-5 px-2 bg-x1', fullValue && 'pointer')}
         onClick={fullValue && (() => setIsFullOpen(true))}
       >
         <Link
@@ -386,7 +387,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
           <div className="flex">
             <LazyIcon
               icon="Calendar01"
-              className="margin-big-gap"
+              className="m-5"
             />
             {node ??
               (observeSchedule !== undefined ? (
@@ -396,7 +397,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
                     altTitle="Мероприятие"
                     topicBox={observeSchedule.sch}
                   />
-                  <span className="text-italic">Мероприятие прошло</span>
+                  <span className="italic">Мероприятие прошло</span>
                 </div>
               ) : (
                 <>Мероприятий нет</>
@@ -410,7 +411,7 @@ export function ScheduleWidgetAlarmContent({ observeSchw, schedule, isJustShowAl
         >
           <LazyIcon
             icon="LeftToRightListDash"
-            className="margin-gap"
+            className="m-2"
           />
         </Link>
       </Alarm>
@@ -422,8 +423,6 @@ const Alarm = styled.div`
   --icon-color: var(--color--3);
 
   margin-top: calc(0px - var(--main-gap) + 5px);
-  background-color: var(--color--1);
-  padding: var(--main-big-gap) var(--main-gap);
 
   width: calc(100% + var(--main-gap) * 2);
   height: 4em;

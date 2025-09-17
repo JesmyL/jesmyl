@@ -103,9 +103,9 @@ export function ScheduleWidgetDayEventPeriodicTranslation(props: {
                   prefix={title + titlePostfix}
                   titleBox={type}
                   topicBox={event}
-                  className="text-underline"
+                  className="underline"
                 />
-                <div className="margin-gap-l">
+                <div className="ml-2">
                   {blockText ||
                     props.appAtt.result?.(
                       att ?? props.appAtt.initVal,
@@ -123,9 +123,9 @@ export function ScheduleWidgetDayEventPeriodicTranslation(props: {
 
   return (
     <>
-      <div className="flex flex-gap margin-gap-v">
+      <div className="flex gap-2 my-2">
         Обзор на
-        <span className="color--7">{periodTitle}:</span>
+        <span className="text-x7">{periodTitle}:</span>
       </div>
       {attTranslatorType === AttTranslatorType.Tomorrow && todayi === days.length - 1 ? (
         <div>Сегодня последний день</div>

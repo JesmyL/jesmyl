@@ -18,9 +18,9 @@ export const OrdersRedactorOrderToolsMoveBlock = (props: OrdersRedactorOrderTool
 
         props.setClickBetweenOrds({
           buttonTitle: (
-            <span className="flex flex-gap">
+            <span className="flex gap-2">
               {props.ord.isAnchor && <LazyIcon icon="Link02" />}
-              <span className="color--7">{props.ord.me.header()}</span> будет тут
+              <span className="text-x7">{props.ord.me.header()}</span> будет тут
             </span>
           ),
           checkIsShowButton: ({ ordAbove, ordBelow }) => {

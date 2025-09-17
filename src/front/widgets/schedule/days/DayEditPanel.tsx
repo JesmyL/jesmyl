@@ -36,7 +36,7 @@ export function ScheduleWidgetDayEditPanel({ day, dayi, schedule, scheduleScopeP
       />
       <TheIconButton
         icon="Printer"
-        className="flex-max margin-gap-v"
+        className="flex-max my-2"
         postfix="Распечатать распорядок дня"
         onClick={() =>
           renderComponentInNewWindow(win => (

@@ -25,12 +25,12 @@ export function ScheduleWidgetListUnit(props: Props) {
   const { unit, cat, cati } = props;
   const rights = useScheduleWidgetRightsContext();
   const scheduleScopeProps = useScheduleScopePropsContext();
-  const title = <>{unit.title || <span className="text-italic">Без названия</span>}</>;
+  const title = <>{unit.title || <span className="italic">Без названия</span>}</>;
   const unitScopeData = useMemo(() => ({ ...scheduleScopeProps, unitMi: unit.mi }), [scheduleScopeProps, unit.mi]);
 
   return (
     <>
-      <div className="margin-big-gap-t">
+      <div className="mt-5">
         <ExpandableContent
           HeaderNode={ExpHeader}
           title={title}
@@ -60,7 +60,7 @@ export function ScheduleWidgetListUnit(props: Props) {
             />
           )}
 
-          <div className="margin-big-gap-h">
+          <div className="mx-5">
             <ScheduleWidgetUserList
               title={cat.titles[0]}
               filter={user => user.li?.[cati] === -unit.mi}

@@ -1,5 +1,6 @@
 import { atom, useAtomValue } from 'atomaric';
 import { ReactNode } from 'react';
+import { twMerge } from 'tailwind-merge';
 import { Modal } from './modal/Modal/Modal';
 import { ModalBody } from './modal/Modal/ModalBody';
 import { ModalHeader } from './modal/Modal/ModalHeader';
@@ -25,7 +26,7 @@ export function CopyTextButton({ text, disabled, description, className, message
   return (
     <>
       <span
-        className={(className || '') + ' flex flex-gap pointer'}
+        className={twMerge('flex gap-2 pointer', className)}
         onClick={event => {
           event.stopPropagation();
           const textToWrite = typeof text === 'string' ? text : text();

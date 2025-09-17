@@ -79,7 +79,7 @@ export function ScheduleWidgetTeamsCriteriaSorterScreenHistory({
 
   return (
     <StyledHistory
-      className="flex flex-gap between half-width"
+      className="flex gap-2 between w-[50%]"
       $historyLength={history.length}
       $point={point}
     >

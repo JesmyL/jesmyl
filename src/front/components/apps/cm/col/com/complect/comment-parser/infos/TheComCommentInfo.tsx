@@ -15,7 +15,7 @@ export function TheComCommentInfo({ HashSwitcherIcon }: { HashSwitcherIcon: Know
         Если блоки не пронумерованы, жми{' '}
         <LazyIcon
           icon={HashSwitcherIcon}
-          className="vertical-middle"
+          className="align-middle"
         />
       </p>
 
@@ -33,7 +33,7 @@ export function TheComCommentInfo({ HashSwitcherIcon }: { HashSwitcherIcon: Know
         <br />
         {'Оно может содержать Библейские '}
         <span
-          className="pointer color--7 text-underline text-italic"
+          className="pointer text-x7 underline italic"
           onClick={isOpenBibleInfoAtom.do.toggle}
         >
           тексты
@@ -77,7 +77,7 @@ export function TheComCommentInfo({ HashSwitcherIcon }: { HashSwitcherIcon: Know
       </p>
 
       <p>
-        <span className="fade-05">#({italicBlockNumber_})</span>
+        <span className="opacity-50">#({italicBlockNumber_})</span>
         <b>!</b> - Запись с восклицательным знаком после '{italicBlockNumber_}' будет первой в итоговой Заметке для
         блока
         <TheComCommentForExample>
@@ -91,10 +91,10 @@ export function TheComCommentInfo({ HashSwitcherIcon }: { HashSwitcherIcon: Know
 
       <p>
         <b>##</b>
-        <span className="fade-05">({italicBlockNumber_})</span> - Для внесения Записи ко всем блокам, относящимся к
+        <span className="opacity-50">({italicBlockNumber_})</span> - Для внесения Записи ко всем блокам, относящимся к
         общему типу, указанному в '{italicBlockNumber_}'. Важно то, что записи, относящиеся к текущей выборке,
         написанные выше, имеют приоритет перед текущей записью, кроме случая, если указать знак приоритета данной записи
-        (<span className="fade-05">##5</span>
+        (<span className="opacity-50">##5</span>
         <b>!</b>)
         <TheComCommentForExample>##5 - эта запись появится во всех одноимённых блоках как и #5</TheComCommentForExample>
       </p>

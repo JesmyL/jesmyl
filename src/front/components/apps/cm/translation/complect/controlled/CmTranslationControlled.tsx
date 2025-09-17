@@ -62,7 +62,7 @@ export function CmTranslationControlled(props: Props) {
 
             <div className="translation-com-list">
               <div
-                className="flex flex-gap  pl-5 py-2 sticky pointer bg-x5"
+                className="flex gap-2  pl-5 py-2 sticky pointer bg-x5"
                 onClick={() => setIsShowFavouritesList(itNIt)}
               >
                 <span className={isShowFavouritesList ? undefined : 'text-x7'}>Список</span>/

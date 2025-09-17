@@ -30,7 +30,7 @@ export const Mp3RuleEditor = (
 
   return (
     <>
-      <div className="flex column margin-big-gap">
+      <div className="flex column m-5">
         <div className="w-full">
           URL-адрес:
           {isRedact ? (
@@ -53,7 +53,7 @@ export const Mp3RuleEditor = (
                   setUrl(value);
                 }}
               />
-              {errorMessage && <div className="error-message">{errorMessage}</div>}
+              {errorMessage && <div className="text-xKO">{errorMessage}</div>}
             </>
           ) : (
             <span className="text-x7 ml-2">{url}</span>
@@ -147,7 +147,7 @@ export const Mp3RuleEditor = (
           (isRedact ? (
             <TheIconButton
               icon="CheckmarkCircle02"
-              className="color--ok margin-big-gap"
+              className="text-xOK m-5"
               disabled={!!errorMessage || !attr || !query}
               onClick={() => {
                 setIsRedact(false);

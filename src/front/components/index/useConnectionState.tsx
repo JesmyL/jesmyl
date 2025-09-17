@@ -1,13 +1,14 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useEffect, useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 export function useConnectionState(className?: string) {
   return (
     useIsOnline() || (
       <LazyIcon
         icon="Alert01"
-        className={'color--ko ' + className}
+        className={twMerge('text-xKO', className)}
       />
     )
   );

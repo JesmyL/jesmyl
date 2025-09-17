@@ -45,24 +45,24 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
 
   const userName =
     user.nick === undefined
-      ? user.fio || <span className="color--7 text-italic">Ссылка</span>
+      ? user.fio || <span className="text-x7 italic">Ссылка</span>
       : `${user.fio && user.fio !== user.nick ? `${user.fio} (${user.nick})` : user.nick} `;
 
   const userNode = (
-    <div className="flex flex-gap between margin-gap-v">
+    <div className="flex gap-2 between my-2">
       {!rights.isCanRedactUsers ? (
         userName
       ) : (
         <>
-          <span className="flex flex-gap">
+          <span className="flex gap-2">
             {userName}
             {balance !== undefined && (
-              <span className="flex flex-gap color--7">
+              <span className="flex gap-2 text-x7">
                 {user.login === undefined ? (
                   <>
                     <LazyIcon
                       icon="Link02"
-                      className="color--7 icon-scale-05"
+                      className="text-x7 icon-scale-05"
                     />
                     {balance < 0 ? null : balance}
                   </>
@@ -74,10 +74,10 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
               </span>
             )}
           </span>
-          <span className="flex flex-gap">
+          <span className="flex gap-2">
             <LazyIcon
               icon="Edit02"
-              className="pointer flex between full-width"
+              className="pointer flex between w-full"
               onClick={() => isRedactModalOpenAtom.set(user.mi)}
             />
           </span>
@@ -94,7 +94,7 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
         isRenderHere
       >
         <ModalHeader>
-          <div className="flex between flex-gap">
+          <div className="flex between gap-2">
             <span>
               {userName}
               {balance < 0
@@ -103,7 +103,7 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
                   : ' - в блоке'
                 : scheduleWidgetUserRights.texts[balance]?.role?.[0] || ' - Неизвестный'}
             </span>
-            <span className="flex flex-gap">
+            <span className="flex gap-2">
               <ScheduleWidgetUserTakePhoto user={user} />
             </span>
           </div>
@@ -111,7 +111,7 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
         <ModalBody>
           <ScheduleWidgetUserEdit user={user} />
           {user.tgId != null && (
-            <div className="margin-big-gap-t">
+            <div className="mt-5">
               {user.tgInform === 0 ||
               !scheduleWidgetUserRights.checkIsHasRights(user.R, ScheduleWidgetUserRoleRight.Read) ? (
                 <TheIconButton
@@ -128,7 +128,7 @@ const ScheduleWidgetUserInContext = ({ user, balance, asUserPlusPrefix }: Props)
               )}
             </div>
           )}
-          <div className="flex center full-width margin-big-gap-t">
+          <div className="flex center w-full mt-5">
             <ScheduleWidgetUserPhoto user={user} />
           </div>
         </ModalBody>

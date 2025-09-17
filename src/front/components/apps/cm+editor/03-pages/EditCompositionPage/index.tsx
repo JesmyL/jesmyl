@@ -24,7 +24,7 @@ export const CmEditCompositionPage = () => {
   const ccomw = useCcomw();
   const removedComs = useAtomValue(removedCompositionsAtom);
   const [isOpenPlayer, setIsOpenPlayer] = useState(false);
-  const connectionNode = useConnectionState('margin-gap');
+  const connectionNode = useConnectionState('m-2');
   const navigate = useNavigate();
   const { tab }: { tab: keyof typeof editCompositionNavs } = useParams({ from: '/cm/edit/coms/$comw/$tab' });
   const checkAccess = useCheckUserAccessRightsInScope();
@@ -51,11 +51,11 @@ export const CmEditCompositionPage = () => {
         headTitle={removedComs[ccomw]}
         content={
           <div className="flex column">
-            <h2 className="color--ko">Песня удалена</h2>
+            <h2 className="text-xKO">Песня удалена</h2>
             <TheIconButton
               icon="MapsRefresh"
               postfix="Восстановить"
-              className="color--ok"
+              className="text-xOK"
               onClick={() => cmEditComClientTsjrpcMethods.bringBackToLife({ comw: ccomw })}
             />
           </div>
@@ -80,7 +80,7 @@ export const CmEditCompositionPage = () => {
           <TheIconButton
             icon="MusicNote03"
             kind={isOpenPlayer ? 'SolidRounded' : 'StrokeRounded'}
-            className="margin-gap"
+            className="m-2"
             onClick={() => setIsOpenPlayer(!isOpenPlayer)}
           />
         </>
@@ -106,7 +106,7 @@ export const CmEditCompositionPage = () => {
                         <TheIconButton
                           icon={icon}
                           kind="StrokeRounded"
-                          className="color--7"
+                          className="text-x7"
                         />
                       ) : (
                         <TheIconButton

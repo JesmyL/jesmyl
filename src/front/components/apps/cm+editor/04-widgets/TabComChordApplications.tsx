@@ -41,7 +41,7 @@ export const CmEditorTabComChordApplications = () => {
               com={ccom}
               asHeaderComponent={({ headerNode }) => {
                 return (
-                  <div className="flex flex-gap">
+                  <div className="flex gap-2">
                     {headerNode}
                     {!linesOnUpdateSet[ord.wid]?.size || <StyledLoadingSpinner icon="Loading03" />}
                   </div>

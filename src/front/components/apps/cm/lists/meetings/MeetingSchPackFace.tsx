@@ -66,7 +66,7 @@ export const MeetingSchPackFace = ({ schedule }: { schedule: IScheduleWidget }) 
           return link({
             children: (
               <TheIconButton
-                className="pointer margin-big-gap"
+                className="pointer m-5"
                 icon="ArrowRight02"
                 prefix={`${parseInt(path) + 1}-й день ${paths[path].title}`}
               />

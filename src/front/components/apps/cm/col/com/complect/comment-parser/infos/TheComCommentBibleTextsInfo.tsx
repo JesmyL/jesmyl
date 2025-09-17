@@ -43,17 +43,17 @@ export function TheComCommentBibleTextsInfo() {
             return (
               <React.Fragment key={tName}>
                 <br />
-                <span className="color--7">{tName}</span> - {translateDescriptions[tName]}
+                <span className="text-x7">{tName}</span> - {translateDescriptions[tName]}
               </React.Fragment>
             );
           })}
         </p>
 
         <p>
-          <span className="color--ko">Нужный перевод должен быть загружен!</span>
+          <span className="text-xKO">Нужный перевод должен быть загружен!</span>
           {'Загруженные переводы: '}
-          <span className="color--7">{myTranslates.join(', ')}</span>
-          <span className="vertical-middle margin-gap">
+          <span className="text-x7">{myTranslates.join(', ')}</span>
+          <span className="align-middle m-2">
             <BibleModulesTranslationsRedactButton />
           </span>
         </p>
@@ -64,7 +64,7 @@ export function TheComCommentBibleTextsInfo() {
             return (
               <React.Fragment key={shortName}>
                 <br />
-                <span className="color--7">{shortName}</span> - {fullName}
+                <span className="text-x7">{shortName}</span> - {fullName}
                 {titlei === 38 && <br />}
               </React.Fragment>
             );

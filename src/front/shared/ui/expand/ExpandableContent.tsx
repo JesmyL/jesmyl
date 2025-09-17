@@ -21,7 +21,7 @@ export const ExpandableContent = <Element extends HTMLElement>({
   const header = (
     <>
       <span
-        className="flex flex-gap flex-max pointer text-bold"
+        className="flex gap-2 flex-max pointer font-bold"
         onClick={() => setIsExpand(!isExpand)}
       >
         {icon && <LazyIcon icon={icon} />}
@@ -31,7 +31,7 @@ export const ExpandableContent = <Element extends HTMLElement>({
       {mylib.isFunc(postfix) ? postfix(isExpand) : postfix}
     </>
   );
-  const className = 'flex full-width between';
+  const className = 'flex w-full between';
 
   return (
     <>

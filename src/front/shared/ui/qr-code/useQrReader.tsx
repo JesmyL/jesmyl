@@ -36,7 +36,7 @@ export const QrReader = ({ facingMode = 'environment', onReadData, openAtom }: P
       className=" "
       closable
     >
-      <div className="bgcolor--1 flex center full-size">
+      <div className="bg-x1 flex center full-size">
         <StyledVideo ref={videoRef} />
       </div>
     </FullContent>

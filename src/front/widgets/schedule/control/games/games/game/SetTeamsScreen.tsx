@@ -87,10 +87,10 @@ export function ScheduleWidgetTeamGameSetTeamsScreen() {
   return (
     <>
       <h3>
-        Составляем новые команды для игры <span className="color--7">{game.title}</span>
+        Составляем новые команды для игры <span className="text-x7">{game.title}</span>
       </h3>
       {criterias && (
-        <div className="margin-gap-v margin-giant-gap-b">
+        <div className="my-2 mb-10">
           Критерий сортировки
           <Dropdown
             id={criteriai}
@@ -99,7 +99,7 @@ export function ScheduleWidgetTeamGameSetTeamsScreen() {
           />
         </div>
       )}
-      <div className="margin-giant-gap-b">
+      <div className="mb-10">
         Количество команд
         <TextInput
           value={teamsCountStr}
@@ -107,7 +107,7 @@ export function ScheduleWidgetTeamGameSetTeamsScreen() {
           onInput={setTeamsCount}
         />
       </div>
-      <div className="flex between full-width margin-gap-b">
+      <div className="flex between w-full mb-2">
         Точность сортировки
         {retriesLine.map(rate => {
           return (
@@ -122,7 +122,7 @@ export function ScheduleWidgetTeamGameSetTeamsScreen() {
         })}
       </div>
 
-      <div className="margin-big-gap">
+      <div className="m-5">
         {strikedUsers.map(mi => {
           const user = schUsers.find(user => user.mi === mi);
 
@@ -140,7 +140,7 @@ export function ScheduleWidgetTeamGameSetTeamsScreen() {
 
       <h3>Команды</h3>
       {isRecompute ? (
-        <div className="margin-giant-gap-v">Перераспределяю...</div>
+        <div className="my-10">Перераспределяю...</div>
       ) : (
         <>
           <h4>Разбег между командами - {diapason}</h4>
@@ -149,7 +149,7 @@ export function ScheduleWidgetTeamGameSetTeamsScreen() {
             return (
               <div
                 key={teami}
-                className="margin-giant-gap-v"
+                className="my-10"
               >
                 <h3>Команда {teami + 1}</h3>
                 {team.users.map(({ mi }) => {

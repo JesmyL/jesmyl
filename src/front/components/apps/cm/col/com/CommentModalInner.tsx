@@ -52,12 +52,12 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
 
   return (
     <>
-      <ModalHeader className="flex flex-gap">
+      <ModalHeader className="flex gap-2">
         <LazyIcon icon="TextAlignLeft" />
-        <span className="color--7 nowrap">
+        <span className="text-x7 nowrap">
           #{ordNN} {ord?.me.header()}
         </span>
-        <span className="color--3 ellipsis">{com.name}</span>
+        <span className="text-x3 ellipsis">{com.name}</span>
         {ordSelectorId !== 'head' && (
           <LazyIcon
             icon="TextFont"
@@ -100,12 +100,12 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
           );
         })}
       </ModalBody>
-      <ModalFooter className="flex flex-gap">
+      <ModalFooter className="flex gap-2">
         {localCommentBlock?.d?.[ordSelectorId] != null && <SavedLocalLabel />}
 
         {/* <LazyIcon
           icon="MessageQuestion"
-          className="pointer flex full-width between color--7 margin-gap-v"
+          className="pointer flex w-full between text-x7 my-2"
           onClick={event => {
             propagationStopper(event);
             isShowInfoModalAtom.set(true);
@@ -142,7 +142,7 @@ const SavedLocalLabel = () => {
         Сохранено локально
         <LazyIcon
           icon="FileValidation"
-          className="color--ok"
+          className="text-xOK"
         />
       </>
     )

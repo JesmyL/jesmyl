@@ -68,9 +68,9 @@ export function ScheduleKeyValueListAtt({
 
   if (isRedact) {
     checkboxes = customAttUseRights.checkIsHasIndividualRights(att.use, CustomAttUseRights.Checkboxes) && (
-      <div className="flex flex-gap my-2">
+      <div className="flex gap-2 my-2">
         <LazyIcon icon="CheckmarkSquare02" />
-        <span className="text-italic">Пункт</span>
+        <span className="italic">Пункт</span>
         <TheIconSendButton
           icon="PlusSign"
           onSend={() =>
@@ -94,7 +94,7 @@ export function ScheduleKeyValueListAtt({
           return customAttUseRights.checkIsHasIndividualRights(att.use, CustomAttUseRights.CheckTitles) ? (
             <div
               key={titlei}
-              className="flex flex-gap"
+              className="flex gap-2"
             >
               <LazyIcon icon="CheckmarkSquare02" />
               {title}
@@ -112,7 +112,7 @@ export function ScheduleKeyValueListAtt({
           ) : (
             <div
               key={titlei}
-              className="flex flex-gap"
+              className="flex gap-2"
             >
               {title}
               <TheIconSendButton
@@ -181,7 +181,7 @@ export function ScheduleKeyValueListAtt({
           return (
             <div
               key={game.mi}
-              className="flex flex-gap my-2"
+              className="flex gap-2 my-2"
             >
               {customAttUseRights.checkIsHasIndividualRights(att.use, CustomAttUseRights.CheckGames) ? (
                 <>
@@ -230,7 +230,7 @@ export function ScheduleKeyValueListAtt({
       roles = exclusiveRoles.map(role => (
         <div
           key={role.mi}
-          className="flex flex-gap my-2"
+          className="flex gap-2 my-2"
         >
           <ScheduleWidgetRoleFace
             role={role}
@@ -294,7 +294,7 @@ export function ScheduleKeyValueListAtt({
         customAttUseRights.checkIsHasIndividualRights(att.use, CustomAttUseRights.CheckUsers) ? (
           <div
             key={user.mi}
-            className="flex flex-gap"
+            className="flex gap-2"
           >
             <LazyIcon icon="CheckmarkSquare02" />
             {user.fio || user.nick}
@@ -312,7 +312,7 @@ export function ScheduleKeyValueListAtt({
         ) : (
           <div
             key={user.mi}
-            className="flex flex-gap"
+            className="flex gap-2"
           >
             {user.fio || user.nick}
             <TheIconSendButton
@@ -360,7 +360,7 @@ export function ScheduleKeyValueListAtt({
           <div className="my-10">{games}</div>
         </>
       );
-    } else insertionNode = itemNode || <div className="my-10 text-italic">{att.title}. Вставлять нечего</div>;
+    } else insertionNode = itemNode || <div className="my-10 italic">{att.title}. Вставлять нечего</div>;
   }
 
   return (
@@ -397,11 +397,11 @@ export function ScheduleKeyValueListAtt({
             className={'dropdown-ancestor' + (mylib.isArr(value) ? (isRedact ? ' mb-15 mt-10' : ' mb-10') : ' mb-2')}
           >
             <div className="flex gap-2 between mb-2">
-              <div className="flex flex-gap">
+              <div className="flex gap-2">
                 {generalNode !== null ? (
                   generalNode
                 ) : mylib.isBool(key) ? (
-                  <div className={'flex gap-2 text-x3' + (key ? ' fade-05' : '')}>
+                  <div className={'flex gap-2 text-x3' + (key ? ' opacity-50' : '')}>
                     <TheIconSendButton
                       className="self-start relative z-15"
                       icon={key ? 'CheckmarkSquare02' : 'Square'}
@@ -496,7 +496,7 @@ export function ScheduleKeyValueListAtt({
                   $indent={!isRedact && mylib.isBool(key)}
                   className={
                     `ml-3 ${isRedact ? '-mt-3' : '-mt-9'} mood-for-2 relative z-5 ` +
-                    (mylib.isBool(key) ? (key ? 'text-x3 fade-05' : 'text-x3') : '')
+                    (mylib.isBool(key) ? (key ? 'text-x3 opacity-50' : 'text-x3') : '')
                   }
                   value={value}
                   multiline
@@ -516,7 +516,7 @@ export function ScheduleKeyValueListAtt({
                     return (
                       <div key={vali}>
                         {customAttUseRights.checkIsCan(userR, att.U) && (
-                          <div className="flex flex-gap">
+                          <div className="flex gap-2">
                             <span className="flex self-start">{vali + 1}.</span>
                             {vala.length > 1 && vali > 0 && (
                               <TheIconSendButton
@@ -545,7 +545,7 @@ export function ScheduleKeyValueListAtt({
                             />
                           </div>
                         )}
-                        <div className="full-width">
+                        <div className="w-full">
                           {mylib.isNum(val) ? (
                             <div className="my-2">
                               <KeyValueListAttNumberMember value={val} />
@@ -615,7 +615,7 @@ export function ScheduleKeyValueListAtt({
                     return (
                       <div
                         key={vali}
-                        className="flex flex-gap ml-10"
+                        className="flex gap-2 ml-10"
                       >
                         <span className="flex self-start">{vali + 1}.</span>
                         {mylib.isNum(val) ? <KeyValueListAttNumberMember value={val} /> : <Markdown>{val}</Markdown>}

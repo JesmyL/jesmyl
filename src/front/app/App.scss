@@ -1,10 +1,5 @@
 body {
   --full-height: 100%;
-  --main-gap: 8px;
-  --main-sm-gap: 5px;
-  --main-big-gap: 18px;
-  --main-large-gap: 26px;
-  --main-giant-gap: 40px;
   --header-padding-top: 23px;
   --header-padding: var(--header-padding-top) var(--main-gap) var(--main-gap) var(--main-gap);
   --header-content-height: 50px;
@@ -13,96 +8,12 @@ body {
   --header-top: 0px;
   --header-height: calc(var(--header-padding-top) + var(--header-content-height));
   --footer-bottom: 0px;
-  --content-height: calc(100% - var(--footer-height) - var(--keyboard-flash-height));
+  --content-height: calc(100% - var(--footer-height));
   --content-top: var(--header-content-height);
   --phase-container-height: calc(100% - var(--header-height));
-  --keyboard-flash-height: 0px;
   --footer-opacity: 1;
 
-  --keyboard-flash-background: var(--color--2);
-  --keyboard-flash-selected-background: var(--color--3);
-  --keyboard-flash-selected-color: var(--color--1);
-  --keyboard-flash-tool-button-background: var(--color--1);
-  --keyboard-flash-color: var(--text-color);
-
   overflow: hidden;
-
-  @mixin gap-builder($general, $size: '') {
-    .#{$general} {
-      &#{$size}-gap {
-        #{$general}: var(--main#{$size}-gap);
-
-        &-t,
-        &-v {
-          #{$general}-top: var(--main#{$size}-gap);
-        }
-
-        &-b,
-        &-v {
-          #{$general}-bottom: var(--main#{$size}-gap);
-        }
-
-        &-l,
-        &-h {
-          #{$general}-left: var(--main#{$size}-gap);
-        }
-
-        &-r,
-        &-h {
-          #{$general}-right: var(--main#{$size}-gap);
-        }
-      }
-    }
-  }
-
-  @include gap-builder('margin');
-  @include gap-builder('margin', '-sm');
-  @include gap-builder('margin', '-big');
-  @include gap-builder('margin', '-large');
-  @include gap-builder('margin', '-giant');
-
-  @include gap-builder('padding');
-  @include gap-builder('padding', '-sm');
-  @include gap-builder('padding', '-big');
-  @include gap-builder('padding', '-large');
-  @include gap-builder('padding', '-giant');
-
-  @mixin numeric-1-9-builder($metric) {
-    $i: 0.1;
-
-    @while $i < 1 {
-      $i: $i + 0.1;
-
-      [class~='font-size:#{$i}#{$metric}'] {
-        font-size: #{$i}#{$metric};
-      }
-    }
-
-    @for $i from 1 through 9 {
-      [class~='font-size:#{$i}#{$metric}'] {
-        font-size: #{$i}#{$metric};
-      }
-
-      [class~='max-width:#{$i}#{$metric}'] {
-        max-width: #{$i}#{$metric};
-      }
-
-      [class~='width:#{$i}#{$metric}'] {
-        max-width: #{$i}#{$metric};
-      }
-
-      [class~='max-height:#{$i}#{$metric}'] {
-        max-height: #{$i}#{$metric};
-      }
-
-      [class~='height:#{$i}#{$metric}'] {
-        max-height: #{$i}#{$metric};
-      }
-    }
-  }
-
-  @include numeric-1-9-builder('rem');
-  @include numeric-1-9-builder('em');
 
   &:has([st-hide-footer-menu]),
   &:has([st-fullscreen]) {
@@ -111,16 +22,6 @@ body {
 
     .footer-menu {
       padding: 0;
-    }
-  }
-
-  .above-container.keyboard-open {
-    --keyboard-flash-height: 30vh;
-    --footer-height: 0px;
-    --footer-opacity: 0;
-
-    .phase-container > .content {
-      padding-bottom: var(--keyboard-flash-height);
     }
   }
 
@@ -174,19 +75,4 @@ body {
       --content-top: 0;
     }
   }
-}
-
-[st-no-scrollbar=''] {
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-li {
-  list-style-type: none;
-}
-
-ul {
-  margin-left: 0;
-  padding-left: 0;
 }

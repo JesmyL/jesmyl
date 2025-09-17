@@ -8,7 +8,7 @@ type Props = ConfiguratorEditProps<{ display?: ScreenTranslateConfigTypeDisplay 
 export const DisplayConfigurator = ({ config, updateConfig }: Props) => {
   return (
     <>
-      <div className="flex flex-gap flex-max">
+      <div className="flex gap-2 flex-max">
         Видимость
         <IconCheckbox
           checked={config.display !== 'none'}

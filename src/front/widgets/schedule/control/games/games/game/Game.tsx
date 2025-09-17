@@ -15,7 +15,7 @@ export function ScheduleWidgetTeamGame() {
   const scheduleScopeProps = useScheduleScopePropsContext();
 
   const titleNode = (
-    <h3 className="flex flex-gap">
+    <h3 className="flex gap-2">
       <StrongEditableField
         value={game.title}
         placeholder="Командная игра"
@@ -50,7 +50,7 @@ export function ScheduleWidgetTeamGame() {
 
   return (
     <ExpandableContent title={titleNode}>
-      <div className="margin-gap-v margin-big-gap-l">
+      <div className="my-2 ml-5">
         {game.teams.map(team => {
           return (
             <ScheduleWidgetTeamGameTeam

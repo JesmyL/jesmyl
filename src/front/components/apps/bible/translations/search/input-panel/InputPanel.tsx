@@ -35,7 +35,7 @@ export function BibleSearchInputPanel({ inputRef, setSearchZone }: Props) {
   }, [inputRef, setResultSelected]);
 
   return (
-    <div className="flex flex-gap margin-big-gap-t">
+    <div className="flex gap-2 mt-5">
       <span className="nowrap">
         {searchZone === 'global' ? 'Поиск в тексте:' : searchZone === 'inner' ? 'Поиск по главе:' : 'Поиск по ссылке:'}
       </span>

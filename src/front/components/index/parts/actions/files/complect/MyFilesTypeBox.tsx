@@ -33,17 +33,17 @@ export const MyFilesTypeBox = ({ type }: { type: MyFileType }) => {
 
   return (
     <>
-      <div className="flex flex-gap margin-gap-t padding-gap bgcolor--2">
+      <div className="flex gap-2 mt-2 p-2 bg-x2">
         <LazyIcon icon={fileAssociations[type].icon} />
-        <span className="color--3">{fileAssociations[type].title} </span>
+        <span className="text-x3">{fileAssociations[type].title} </span>
         {!fileAssociations[type].extensions.length || '(.' + fileAssociations[type].extensions.join(', .') + ')'}
       </div>
-      <div className="margin-big-gap-l">
+      <div className="ml-5">
         {files.map(file => {
           return (
             <div
               key={file.name}
-              className="flex flex-gap margin-gap-t"
+              className="flex gap-2 mt-2"
             >
               {file.name}
               <TheIconButton

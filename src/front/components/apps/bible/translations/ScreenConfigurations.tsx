@@ -10,11 +10,11 @@ export const BibleTranslateScreenConfigurations = memo(function BibleTranslateSc
   const updateConfig = useUpdateBibleCurrentTranslationConfig();
 
   return (
-    <div className="margin-big-gap-t">
+    <div className="mt-5">
       <ScreenTranslationsFaceLine updateConfig={updateConfig} />
       {currentConfig && (
         <ExpandableContent title="Настроить">
-          <div className="margin-gap-l">
+          <div className="ml-2">
             <BibleTranslateCurrentScreenConfigurations currentConfig={currentConfig} />
           </div>
         </ExpandableContent>

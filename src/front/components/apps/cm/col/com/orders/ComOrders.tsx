@@ -39,7 +39,7 @@ export function ComOrders(props: IComOrdersProps) {
             asHeaderComponent={({ headerNode }) => {
               return ord.me.style?.isModulation ? (
                 <span
-                  className={'pointer flex ' + (isExcludedModulation ? 'color--ko' : 'color--7')}
+                  className={'pointer flex ' + (isExcludedModulation ? 'text-xKO' : 'text-x7')}
                   onClick={event => {
                     event.stopPropagation();
                     updateExMods(com.toggleModulationInclusion(ord));

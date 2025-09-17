@@ -66,7 +66,7 @@ export const CmCatPage = (props: Props) => {
       <StyledCatPhaseContainer
         className="cat-content"
         withoutBackButton={props.withoutBackButton}
-        headClass="flex between full-width"
+        headClass="flex between w-full"
         backButtonPath={props.backButtonPath}
         onMoreClick={isOpenRatingSortedComsAtom.do.toggle}
         head={

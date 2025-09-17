@@ -11,7 +11,7 @@ export const OpacityConfigurator = ({ config, updateConfig }: Props) => {
 
   return (
     <>
-      <div className="flex flex-gap flex-max">
+      <div className="flex gap-2 flex-max">
         Прозрачность
         <input
           type="range"

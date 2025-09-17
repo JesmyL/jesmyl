@@ -10,10 +10,10 @@ export const ComNotFoundPage = () => {
   return (
     <PageContainerConfigurer
       className="com-container"
-      contentClass="padding-gap color--ko flex full-size center"
+      contentClass="p-2 text-xKO flex full-size center"
       headTitle="К списку песен"
       content={
-        <span className="flex flex-gap">
+        <span className="flex gap-2">
           <LazyIcon icon="FileNotFound" />
           Песня не найдена
         </span>

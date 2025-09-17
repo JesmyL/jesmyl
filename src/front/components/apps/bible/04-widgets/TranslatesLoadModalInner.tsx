@@ -20,7 +20,7 @@ export default function TranslatesLoadModalInner() {
       <ModalHeader>Переводы Библии</ModalHeader>
 
       <ModalBody>
-        <h3 className="margin-gap-v text-bold">Загруженные переводы</h3>
+        <h3 className="my-2 font-bold">Загруженные переводы</h3>
         {myTranslates.map(tName => {
           const isUnremovable = myTranslates.length < 2;
           const title = `${translateDescriptions[tName]} (${tName.toUpperCase()})`;
@@ -29,8 +29,8 @@ export default function TranslatesLoadModalInner() {
             <TheIconButton
               key={tName}
               icon={isUnremovable ? 'BookOpen02' : 'Delete02'}
-              className="margin-gap-l margin-gap-v"
-              iconClassName={isUnremovable ? undefined : 'color--ko'}
+              className="ml-2 my-2"
+              iconClassName={isUnremovable ? undefined : 'text-xKO'}
               disabled={isUnremovable}
               confirm={`Удалить безвозвратно модуль "${title}"`}
               postfix={title}
@@ -38,7 +38,7 @@ export default function TranslatesLoadModalInner() {
             />
           );
         })}
-        <h3 className="margin-gap-v text-bold">Доступные к загрузке</h3>
+        <h3 className="my-2 font-bold">Доступные к загрузке</h3>
         {bibleAllTranslates.map(tName => {
           if (myTranslates.includes(tName)) return null;
           const title = `${translateDescriptions[tName]} (${tName.toUpperCase()})`;
@@ -47,7 +47,7 @@ export default function TranslatesLoadModalInner() {
             <TheIconSendButton
               key={tName}
               icon="BookDownload"
-              className="margin-gap-l margin-gap-v"
+              className="ml-2 my-2"
               postfix={title}
               disabled={translateOnLoad !== null}
               onSend={async () => {

@@ -18,7 +18,7 @@ export const ComAudioControlledList = ({ srcs, onToggle, icon, isCanDelete }: Pr
         return (
           <div
             key={src}
-            className="com-audio-track flex flex-gap margin-gap-v full-width"
+            className="com-audio-track flex gap-2 my-2 w-full"
           >
             <ComPlayer
               audioSrcs={src}

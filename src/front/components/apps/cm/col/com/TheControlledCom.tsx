@@ -77,7 +77,7 @@ export const TheControlledCom = ({ com, comList, chordVisibleVariant }: Props) =
           <span className="comment-holder" />
           <WithScrollProgress
             {...swiper}
-            className="relative full-height"
+            className="relative h-full"
             $listHeight={listRef.current?.clientHeight}
           >
             <TheCom

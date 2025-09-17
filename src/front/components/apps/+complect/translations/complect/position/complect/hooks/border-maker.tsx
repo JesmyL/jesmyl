@@ -15,7 +15,7 @@ export const usePositionConfiguratorResizerBorderMaker = (
 
   return (vert: 'top' | 'bottom' | null, horz: 'left' | 'right' | null) => (
     <div
-      className={'resizer resizer' + (vert === null ? '' : '-' + vert) + (horz === null ? '' : '-' + horz)}
+      className={`resizer resizer${(vert === null ? '' : '-' + vert) + (horz === null ? '' : '-' + horz)}`}
       onClick={
         vert && horz
           ? undefined

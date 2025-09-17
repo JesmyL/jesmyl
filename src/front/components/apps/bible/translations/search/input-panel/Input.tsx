@@ -14,7 +14,7 @@ export const BibleSearchPanelInput = ({ inputRef, term, onChange }: Props) => {
     <>
       <input
         ref={inputRef}
-        className="bgcolor--2 full-width"
+        className="bg-x2 w-full"
         value={term}
         onKeyDown={onKeyDown}
         onChange={onChange}

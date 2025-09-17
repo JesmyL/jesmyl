@@ -1,6 +1,7 @@
 import { useSetBibleAddressWithForceJoinReset } from '$bible/basis/lib/hooks/address/address';
 import { useBibleBookList } from '$bible/basis/lib/hooks/texts';
 import styled from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 import { useBibleSingleAddressSetter } from '../atoms';
 import { bibleBookiIdPrefix } from '../lib/consts';
 import { useBibleListFaceClickListener } from '../lib/useBibleListFaceClickListener';
@@ -20,7 +21,7 @@ export function BibleBookList() {
           <Face
             key={booki}
             id={bibleBookiIdPrefix + booki}
-            className={`bible-list-face pointer ${faceClassName}`}
+            className={twMerge('bible-list-face pointer', faceClassName)}
             onClick={() => setValue(booki, 0, 0)}
           >
             {booki + 1} <span className="title">{book.short}</span>

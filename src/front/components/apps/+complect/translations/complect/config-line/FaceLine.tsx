@@ -52,21 +52,15 @@ export const ScreenTranslationsFaceLine = <Config,>(props: Props<Config>) => {
   const onAdd = useCallback(() => setCurrentConfigi(addConfig()), [addConfig, setCurrentConfigi]);
 
   return (
-    <div className="margin-big-gap-t">
-      <ConfigLine className="margin-gap-b no-scrollbar children-middle">
+    <div className="mt-5">
+      <ConfigLine className="mb-2 no-scrollbar children-middle">
         {configs.map((config, configi, configa) => {
           return (
             <ScreenTranslationsFace
               key={configi}
               configi={configi}
               config={config}
-              className={
-                windows[configi] === null
-                  ? ' bgcolor--ko '
-                  : currentConfigi === configi
-                    ? ' bgcolor--7 '
-                    : ' bgcolor--3 '
-              }
+              className={windows[configi] === null ? ' bg-xKO' : currentConfigi === configi ? ' bg-x7' : ' bg-x3'}
               putOnClick={putOnFaceClick}
               putOnClose={configa.length - 1 === configi ? putOnFaceClose : undefined}
             />
@@ -74,7 +68,7 @@ export const ScreenTranslationsFaceLine = <Config,>(props: Props<Config>) => {
         })}
         <LazyIcon
           icon="PlusSign"
-          className="margin-gap-l"
+          className="ml-2"
           onClick={onAdd}
         />
       </ConfigLine>

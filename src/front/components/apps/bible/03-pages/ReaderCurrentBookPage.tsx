@@ -15,6 +15,7 @@ import { atom } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
 import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 
 export function BibleReaderCurrentBookPage() {
   return (
@@ -75,12 +76,12 @@ function Content() {
               return (
                 <div
                   key={bookTitle}
-                  className={
-                    'margin-big-gap-v margin-gap-l pointer' +
-                    (booki === selectedBooki ? ' color--7' : '') +
-                    (booki === currentBooki ? ' text-underline' : '') +
-                    (booki === 38 ? ' margin-giant-gap-b' : '')
-                  }
+                  className={twMerge(
+                    'my-5 ml-2 pointer',
+                    booki === selectedBooki ? 'text-x7' : '',
+                    booki === currentBooki ? 'underline' : '',
+                    booki === 38 ? 'mb-10' : '',
+                  )}
                   onClick={() => {
                     setSelectedBooki(booki);
                     isOpenChapterSelectorAtom.set(true);
@@ -99,8 +100,8 @@ function Content() {
                   key={chapteri}
                   className={
                     'inline-flex center pointer' +
-                    (chapteri === selectedChapteri ? ' bgcolor--7 color--1' : ' bgcolor--2 color--3') +
-                    (chapteri === currentChapteri ? ' text-bold text-underline' : '')
+                    (chapteri === selectedChapteri ? ' bg-x7 text-x1' : ' bg-x2 text-x3') +
+                    (chapteri === currentChapteri ? ' font-bold underline' : '')
                   }
                   chapter-length={chapter?.length}
                   onClick={() => {
@@ -120,8 +121,8 @@ function Content() {
                 <ItemFace
                   key={versei}
                   className={
-                    'inline-flex center pointer bgcolor--2 color--3' +
-                    (versei === currentVersei ? ' color--7 text-bold  text-underline' : '')
+                    'inline-flex center pointer bg-x2 text-x3' +
+                    (versei === currentVersei ? ' text-x7 font-bold underline' : '')
                   }
                   onClick={() => {
                     setAddress(selectedBooki, selectedChapteri, versei);
@@ -145,7 +146,7 @@ function Content() {
 }
 
 const ItemFace = styled.div`
-  --size: calc((100vw - var(--main-big-gap) * 2 - 12 * 3px) / 5);
+  --size: calc((100vw - var(--main-5-gap) * 2 - 12 * 3px) / 5);
 
   position: relative;
 

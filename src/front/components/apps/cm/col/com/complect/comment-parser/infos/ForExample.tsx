@@ -1,5 +1,5 @@
 export const TheComCommentForExample = ({ children }: { children: React.ReactNode }) => (
-  <i className="color--7 margin-gap-v">
+  <i className="text-x7 my-2">
     <br />
     Например:
     <br />

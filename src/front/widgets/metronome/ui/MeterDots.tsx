@@ -8,7 +8,7 @@ export const MetronomeMeterDots = memo(function MetronomeMeterDots() {
   const [accents, setAccents] = useAtom(metronomeUserAccentsAtom);
 
   return (
-    <StyledContainer className="flex flex-gap column">
+    <StyledContainer className="flex gap-2 column">
       <StyledMeterDots
         id="metronome-dotts"
         className="flex"

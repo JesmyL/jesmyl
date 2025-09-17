@@ -18,7 +18,7 @@ export function ScheduleWidgetNewUserRegisterLevel() {
     <>
       <TheIconButton
         icon="ArrowRight01"
-        className="margin-big-gap-v margin-gap-l"
+        className="mx-5 ml-2"
         prefix="Права по умолчанию"
         onClick={isModalOpenAtom.do.toggle}
       />

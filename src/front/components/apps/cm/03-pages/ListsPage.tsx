@@ -16,12 +16,12 @@ export const CmListsPage = () => {
       className="lists-container"
       withoutBackButton
       headTitle="Списки"
-      contentClass="flex between column padding-gap"
+      contentClass="flex between column p-2"
       content={
         <>
           <Link
             to="/cm/li/fav"
-            className="full-width"
+            className="w-full"
           >
             <BrutalItem
               iconNode={<LazyIcon icon="Star" />}
@@ -30,7 +30,7 @@ export const CmListsPage = () => {
           </Link>
           <Link
             to="/cm/li/events"
-            className="full-width"
+            className="w-full"
           >
             <BrutalItem
               iconNode={<LazyIcon icon="Calendar02" />}
@@ -40,7 +40,7 @@ export const CmListsPage = () => {
           {selectedComws.length ? (
             <Link
               to="/cm/li/sel"
-              className="full-width"
+              className="w-full"
             >
               <BrutalItem
                 iconNode={<LazyIcon icon="CheckmarkBadge01" />}
@@ -60,7 +60,7 @@ export const CmListsPage = () => {
                 >
                   <LazyIcon
                     icon="BookOpen02"
-                    className="margin-big-gap"
+                    className="m-5"
                   />
                   <div>{cat.name}</div>
                 </Link>

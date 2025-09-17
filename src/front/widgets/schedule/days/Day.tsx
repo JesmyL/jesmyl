@@ -84,13 +84,13 @@ export const ScheduleWidgetDay = ({
         className={'ScheduleWidgetDay relative' + (isPastDay ? ' past' : '') + (isPrint ? ' print' : '')}
       >
         <div
-          className={'day-title flex flex-gap padding-gap-v sticky pos-top' + (print.title ? '' : ' not-printable')}
+          className={'day-title flex gap-2 py-2 sticky top-0' + (print.title ? '' : ' not-printable')}
           onClick={isCanOpenFull ? () => openFullDayAtom.set(dayi) : undefined}
         >
           {title}
           {schedule.withTech ? (
             dayi === 0 ? (
-              <span className="color--ko"> подготовка</span>
+              <span className="text-xKO"> подготовка</span>
             ) : (
               <>, {dayi} день</>
             )
@@ -108,7 +108,7 @@ export const ScheduleWidgetDay = ({
             />
           )}
         </div>
-        <div className="edit-day-panel absolute pos-top pos-right mt-4 flex flex-gap">
+        <div className="edit-day-panel absolute top-0 right-0 mt-4 flex gap-2">
           {isPastDay ? (
             <>
               <LazyIcon
@@ -158,7 +158,7 @@ export const ScheduleWidgetDay = ({
                 ) : (
                   <TheIconButton
                     icon="Favourite"
-                    className={'flex-max ' + (dayRating < 0 ? 'color--ko' : dayRating > 0 ? 'color--ok' : 'color--3')}
+                    className={'flex-max ' + (dayRating < 0 ? 'text-xKO' : dayRating > 0 ? 'text-xOK' : 'text-x3')}
                     postfix={'Рейтинг дня: ' + dayRating}
                   />
                 )}

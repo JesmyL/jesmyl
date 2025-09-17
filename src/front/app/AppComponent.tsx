@@ -61,7 +61,7 @@ export const AppComponent = () => {
         st-hide-footer-menu={hideAppFooter ? '' : undefined}
       >
         {isShowLogo && (
-          <div className="jesmyl-smile-box flex center absolute full-width full-height z-index:5">
+          <div className="jesmyl-smile-box flex center absolute w-full h-full z-5">
             <JesmylLogo className="no-fade-in-effect" />
           </div>
         )}

@@ -18,7 +18,7 @@ export const TheCatSpecialSearches = ({ setTerm, setMapper, term }: Props) => {
   }, [catSpecialSearches, setMapper, term]);
 
   return (
-    <div className="margin-gap bgcolor--2 padding-gap">
+    <div className="m-2 bg-x2 p-2">
       {MyLib.entries(catSpecialSearches).map(([key, { map, title, isRerenderOnInput }]) => {
         if (term.length > 1 && !term.startsWith(key)) return null;
 

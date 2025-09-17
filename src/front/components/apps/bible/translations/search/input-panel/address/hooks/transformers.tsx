@@ -66,7 +66,7 @@ export const useBibleTransformAddressTermToAddress = (
     }
     if (booki < 0) booki = 0;
 
-    const bookNameNode = booki === 0 ? <span className="color--7">{books[booki].full}</span> : books[booki].full;
+    const bookNameNode = booki === 0 ? <span className="text-x7">{books[booki].full}</span> : books[booki].full;
 
     let chapterNode: ReactNode = chapterNumberi + 1;
     let verseNode: ReactNode = verseNumber;
@@ -79,9 +79,9 @@ export const useBibleTransformAddressTermToAddress = (
       const isChapterOverOfBookLength = chapterNumberi >= book.length;
 
       if (isChapterOverOfBookLength) {
-        chapterNode = <span className="color--ko">{chapterNumberi + 1}</span>;
-        verseNode = <span className="color--ko">{verseNumber}</span>;
-        if (finishVerseNumber !== undefined) finishVerseNode = <span className="color--ko">{finishVerseNumber}</span>;
+        chapterNode = <span className="text-xKO">{chapterNumberi + 1}</span>;
+        verseNode = <span className="text-xKO">{verseNumber}</span>;
+        if (finishVerseNumber !== undefined) finishVerseNode = <span className="text-xKO">{finishVerseNumber}</span>;
 
         onEnterPressRef.current = emptyFunc;
 
@@ -92,7 +92,7 @@ export const useBibleTransformAddressTermToAddress = (
       const isFinishVerseOverOfCurrentChapter = finishVerseNumber !== undefined && finishVerseNumber > chapterLength;
 
       if (isFinishVerseOverOfCurrentChapter) {
-        finishVerseNode = <span className="color--ko">{finishVerseNumber}</span>;
+        finishVerseNode = <span className="text-xKO">{finishVerseNumber}</span>;
 
         onEnterPressRef.current = emptyFunc;
 
@@ -104,8 +104,8 @@ export const useBibleTransformAddressTermToAddress = (
       const isVerseDiapasonIncorrect = isVerseOverOfChapter || isFinishVerseLessThenStartVerse;
 
       if (isVerseDiapasonIncorrect) {
-        verseNode = <span className="color--ko">{verseNumber}</span>;
-        if (finishVerseNumber !== undefined) finishVerseNode = <span className="color--ko">{finishVerseNumber}</span>;
+        verseNode = <span className="text-xKO">{verseNumber}</span>;
+        if (finishVerseNumber !== undefined) finishVerseNode = <span className="text-xKO">{finishVerseNumber}</span>;
 
         verseNumber = 1;
       }

@@ -22,7 +22,7 @@ export const CmTextableBlockAnchorTitles = ({ texti, com, chordi }: Props) => {
     return (
       <>
         {textPosition}
-        <span className="color--ko">Нет упоминаний этого блока</span>
+        <span className="text-xKO">Нет упоминаний этого блока</span>
       </>
     );
 
@@ -30,7 +30,7 @@ export const CmTextableBlockAnchorTitles = ({ texti, com, chordi }: Props) => {
     <div>
       {textPosition}
       <span
-        className="fade-05"
+        className="opacity-50"
         dangerouslySetInnerHTML={{
           __html: mylib
             .unique(

@@ -12,11 +12,11 @@ export const ScreenTranslateConfigurationNameChanger = () => {
   if (config == null) return null;
 
   return (
-    <div className="flex flex-gap">
+    <div className="flex gap-2">
       Название
       <input
         value={config.title}
-        className="bgcolor--2"
+        className="bg-x2"
         onKeyDown={propagationStopper}
         onChange={event => {
           const title = event.target.value;

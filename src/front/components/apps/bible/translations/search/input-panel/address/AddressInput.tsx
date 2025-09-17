@@ -20,7 +20,7 @@ export const BibleSearchPanelAddressInput = ({ inputRef }: Props) => {
         term={addressTerm}
         onChange={onChange}
       />
-      <div className="full-width">{address}</div>
+      <div className="w-full">{address}</div>
     </>
   );
 };

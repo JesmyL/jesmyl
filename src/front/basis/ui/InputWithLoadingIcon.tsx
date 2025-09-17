@@ -2,6 +2,7 @@ import { TextInput } from '#shared/ui/TextInput';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useState } from 'react';
+import { twMerge } from 'tailwind-merge';
 
 type Props<ChangedValue> = {
   onChange: (value: string) => Promise<ChangedValue>;
@@ -33,11 +34,11 @@ export const InputWithLoadingIcon = <ChangedValue,>({
   const [isLoading, setIsLoading] = useState(false);
 
   return (
-    <div className="full-width flex flex-gap margin-gap-v">
+    <div className="w-full flex gap-2 my-2">
       {isError ? (
         <LazyIcon
           icon="Alert02"
-          className="color--ko"
+          className="text-xKO"
         />
       ) : (
         <TheIconLoading
@@ -49,7 +50,7 @@ export const InputWithLoadingIcon = <ChangedValue,>({
 
       <TextInput
         multiline={multiline}
-        className={'full-width pointer ' + className}
+        className={twMerge('w-full pointer', className)}
         defaultValue={defaultValue}
         placeholder={placeholder}
         type={type}

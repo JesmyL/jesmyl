@@ -123,17 +123,17 @@ export function ScheduleWidgetDayEvent(props: Props) {
     timerClassNamePlus =
       props.event.tm == null || props.event.tm === eventType.tm || (props.event.tm === 0 && eventType.tm == null)
         ? ''
-        : ' color--7';
+        : ' text-x7';
   } else {
     const date = new Date(eventStartMs);
     timeMark = `${('' + date.getHours()).padStart(2, '0')}:${('' + date.getMinutes()).padStart(2, '0')}`;
-    timerClassNamePlus = prevTm === 0 && prevEvent != null ? ' fade-03' : '';
+    timerClassNamePlus = prevTm === 0 && prevEvent != null ? ' opacity-30' : '';
   }
 
   const isCurrentEvent = now > eventStartMs && now < eventFinishMs;
 
   const timeToTitle = rights.isCanReadSpecials && !props.redact && isCurrentEvent && (
-    <div className="absolute pos-left pos-bottom margin-big-gap-l font-size:0.7em">
+    <div className="absolute left-0 bottom-0 ml-5 text-xs">
       {props.isLastEvent
         ? ScheduleWidgetCleans.minutesToTextTemplate(eventFinishMs - now, 'остал$onNum{{ась}{ось}} $num $txt')
         : 'через ' + ScheduleWidgetCleans.minutesToText(eventFinishMs - now, true)}
@@ -150,14 +150,14 @@ export function ScheduleWidgetDayEvent(props: Props) {
           (props.className || '') +
           ' day-event relative' +
           (props.isPastDay ? '' : isPrevEvent ? ' past' : '') +
-          (timeToTitle ? ' margin-big-gap-b' : '') +
+          (timeToTitle ? ' mb-5' : '') +
           (isInGroup ? ' in-group' : '') +
           (isFirstInGroup ? ' first-in-group' : '') +
           (isLastInGroup && !timeToTitle ? ' last-in-group' : '')
         }
       >
         <div
-          className={'event-header flex flex-gap between' + (props.redact || !isCanExpandEvent ? '' : ' pointer')}
+          className={'event-header flex gap-2 between' + (props.redact || !isCanExpandEvent ? '' : ' pointer')}
           onClick={
             isCanExpandEvent
               ? () => {
@@ -167,7 +167,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
               : undefined
           }
         >
-          <div className="left-part flex flex-gap">
+          <div className="left-part flex gap-2">
             <span
               className={'time-mark' + timerClassNamePlus}
               onClick={
@@ -184,7 +184,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
             {!isExpandEvent && !!props.event.secret && (
               <LazyIcon
                 icon="ViewOffSlash"
-                className="color--ko"
+                className="text-xKO"
               />
             )}
             <ScheduleWidgetTopicTitle
@@ -216,7 +216,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
               !!props.event.secret && (
                 <TheIconButton
                   icon="ViewOffSlash"
-                  className="color--ko margin-gap-v"
+                  className="text-xKO my-2"
                   postfix="Это событие только для лидеров"
                 />
               )
@@ -240,7 +240,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
                   schedule={props.schedule}
                   forTitle={
                     <>
-                      <span className="color--7">{eventType.title}</span> - вставить вложение
+                      <span className="text-x7">{eventType.title}</span> - вставить вложение
                     </>
                   }
                   onAddAttSend={(attKey, defaultValue) =>
@@ -252,7 +252,7 @@ export function ScheduleWidgetDayEvent(props: Props) {
                       !refs.length || (
                         <ScheduleWidgetBindAttRefKeyButton
                           refs={refs}
-                          forTitle={<span className="color--7">{eventType.title}</span>}
+                          forTitle={<span className="text-x7">{eventType.title}</span>}
                           tatt={tatt}
                           attKey={attKey}
                           atts={props.event.atts}

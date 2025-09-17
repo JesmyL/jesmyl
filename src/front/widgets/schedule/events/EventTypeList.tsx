@@ -66,11 +66,11 @@ export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCount
       return (
         <TheIconSendButton
           key={tm}
-          className="margin-gap-v flex-max"
+          className="my-2 flex-max"
           icon="PlusSign"
           confirm={
             <>
-              Добавить шаблон события <span className="color--7">{node}</span>
+              Добавить шаблон события <span className="text-x7">{node}</span>
             </>
           }
           postfix={node}
@@ -106,7 +106,7 @@ export const ScheduleWidgetEventTypeList = ({ postfix, schedule, icon, usedCount
                   onItemSelectSend={onItemSelectSend}
                 />
                 {usedCounts ? (
-                  <div className={'text-right' + (usedCounts[typei] ? '' : ' error-message')}>
+                  <div className={'text-right' + (usedCounts[typei] ? '' : ' text-xKO')}>
                     {typeBox.title}
                     {usedCounts[typei]
                       ? ` исп. ${ScheduleWidgetCleans.termsToText(usedCounts[typei])}`

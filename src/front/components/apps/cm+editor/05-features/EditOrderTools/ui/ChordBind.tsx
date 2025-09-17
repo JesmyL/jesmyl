@@ -46,7 +46,7 @@ export const OrdersRedactorOrderToolsChordBind = ({ com, ord, ordi }: OrdersReda
                 key={chordsBlocki}
                 checked={chordsBlocki === chordIndex}
                 disabled={chordsBlocki === chordIndex}
-                className="margin-gap-t"
+                className="mt-2"
                 onChange={isModalOpenAtom.reset}
                 onClick={() =>
                   cmEditComOrderClientTsjrpcMethods.bindChordBlock({

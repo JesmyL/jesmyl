@@ -10,7 +10,7 @@ export function FullscreenExpandComList({ coms }: { coms: Com[] }) {
   const fontSize = useAtomValue(cmComFontSizeAtom);
 
   return (
-    <ExpandContent className="com-expand-content full-height">
+    <ExpandContent className="com-expand-content h-full">
       <RolledContent speedKfAtom={cmSpeedRollKfAtom}>
         <div className="inner-content">
           {coms?.map(com => (

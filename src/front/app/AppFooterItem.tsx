@@ -2,6 +2,7 @@ import { footerItemPlaceLsPrefix, useCurrentAppFooterItemPlaceContext } from '#b
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { FileRoutesByPath, Link } from '@tanstack/react-router';
 import styled from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 
 interface Props {
   to: keyof FileRoutesByPath;
@@ -26,7 +27,7 @@ export function AppFooterItem({ to, icon, title, className, children, idPostfix:
     <StyledLink
       id={`footer-button-${id}`}
       to={to}
-      className={'pointer' + (isActive ? ' active' : '') + (className ? ' ' + className : '')}
+      className={twMerge('pointer', isActive && 'active', className)}
     >
       <div className="icon-container">
         {isActive ? (

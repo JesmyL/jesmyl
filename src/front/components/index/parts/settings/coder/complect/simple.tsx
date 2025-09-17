@@ -4,14 +4,14 @@ import styled from 'styled-components';
 import { CoderResultNameStyled } from './styles';
 
 export const CoderResultSimple = ({ name, value }: { value: unknown; name?: string | number }) => (
-  <span className="flex flex-gap">
+  <span className="flex gap-2">
     {name == null ? null : (
       <span>
         <CoderResultNameStyled>{name}: </CoderResultNameStyled>
       </span>
     )}
     {value instanceof Error ? (
-      <pre className="color--ko">{'' + value}</pre>
+      <pre className="text-xKO">{'' + value}</pre>
     ) : (
       <Simple>
         {mylib.isRegExp(value) ? (
@@ -21,7 +21,7 @@ export const CoderResultSimple = ({ name, value }: { value: unknown; name?: stri
         ) : value == null ? (
           ' ' + value
         ) : mylib.isStr(value) || (mylib.isNum(value) && value >= 10) ? (
-          <span className="flex flex-gap">
+          <span className="flex gap-2">
             {JSON.stringify(value)} {!!value && <CopyTextButton text={'' + value} />}
           </span>
         ) : (

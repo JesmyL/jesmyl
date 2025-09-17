@@ -21,12 +21,12 @@ type Props = {
 };
 
 export const ScheduleWidgetListUnitRedactor = ({ unit, cat, cati, shortTitles, unitScopeData }: Props) => {
-  const title = <>{unit.title || <span className="text-italic">Без названия</span>}</>;
+  const title = <>{unit.title || <span className="italic">Без названия</span>}</>;
 
   return (
     <>
       <ModalHeader>
-        <div className="flex flex-gap">
+        <div className="flex gap-2">
           <LazyIcon icon={cat.icon} />
           {title}
         </div>
@@ -55,7 +55,7 @@ export const ScheduleWidgetListUnitRedactor = ({ unit, cat, cati, shortTitles, u
           asUserPlusPrefix={(userNode, user, balance) => {
             const isForMember = balance < 3;
             return (
-              <div className="flex flex-gap">
+              <div className="flex gap-2">
                 {user.li?.[cati] == null ? (
                   <TheIconSendButton
                     icon="Square"
@@ -83,14 +83,14 @@ export const ScheduleWidgetListUnitRedactor = ({ unit, cat, cati, shortTitles, u
                     postfix={user.li[cati] < 0 ? shortTitles[0] : shortTitles[1]}
                     disabled={user.R === undefined || (user.li[cati] !== unit.mi && user.li[cati] !== -unit.mi)}
                     className={
-                      'flex flex-gap nowrap' +
+                      'flex gap-2 nowrap' +
                       (user.li[cati] > 0
                         ? isForMember
-                          ? ' color--7'
-                          : ' color--ko'
+                          ? ' text-x7'
+                          : ' text-xKO'
                         : !isForMember
-                          ? ' color--7'
-                          : ' color--ko')
+                          ? ' text-x7'
+                          : ' text-xKO')
                     }
                     onSend={() =>
                       schUsersTsjrpcClient.removeUserListUnitMembership({

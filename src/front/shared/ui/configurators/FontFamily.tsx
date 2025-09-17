@@ -5,7 +5,7 @@ type Props = ConfiguratorEditProps<{ fontFamily?: string }>;
 
 export const FontFamilyConfigurator = ({ config, updateConfig }: Props) => {
   return (
-    <div className="flex flex-gap margin-gap-v">
+    <div className="flex gap-2 my-2">
       Шрифт
       <FontFamilySelector
         fontFamily={config.fontFamily}

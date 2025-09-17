@@ -14,10 +14,10 @@ export function BrutalItem({ onClick, iconNode, title, box, description, idPostf
   const inner = (
     <Item className="pointer flex between relative w-full">
       <div className="nowrap over-hidden flex center">
-        <div className="margin-big-gap">{iconNode}</div>
+        <div className="m-5">{iconNode}</div>
         <div className="ellipsis inline-block">{title}</div>
       </div>
-      {box && <div className="margin-big-gap flex">{box}</div>}
+      {box && <div className="m-5 flex">{box}</div>}
       {description && (
         <div className="item-description">
           <div className="item-description-inner">
@@ -33,7 +33,7 @@ export function BrutalItem({ onClick, iconNode, title, box, description, idPostf
   return (
     <div
       id={`edit-${idPostfix}`}
-      className="flex between relative full-width"
+      className="flex between relative w-full"
       onClick={onClick}
     >
       {inner}

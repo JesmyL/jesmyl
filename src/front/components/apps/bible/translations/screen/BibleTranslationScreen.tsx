@@ -37,7 +37,7 @@ export const BibleTranslationScreen = (props: Props) => {
 
   return (
     <div
-      className="relative full-size bgcolor-black white-pre-line"
+      className="relative full-size bg-black white-pre-line"
       style={wrapperStyle}
       ref={wrapperRef}
     >
@@ -45,7 +45,7 @@ export const BibleTranslationScreen = (props: Props) => {
         <>
           <LazyIcon
             icon="CircleArrowDataTransferDiagonal"
-            className="pointer absolute pos-left pos-bottom z-index:130"
+            className="pointer absolute left-0 bottom-0 z-130"
             onClick={event => {
               event.preventDefault();
               setIsChangeAddressPanelHeight(is => !is);

@@ -15,7 +15,7 @@ export function SendableDropdown<Id extends string | number, Item extends Dropdo
   return (
     <div className="relative">
       <TheIconLoading
-        className="absolute pos-right z-index:400 margin-gap"
+        className="absolute right-0 z-400 m-2"
         isLoading={isLoading}
       />
       <Dropdown<Id, Item>

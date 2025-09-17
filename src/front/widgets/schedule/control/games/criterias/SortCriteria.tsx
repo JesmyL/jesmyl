@@ -70,7 +70,7 @@ export function ScheduleWidgetSortCriteria({ criteria, criteriai }: Props) {
     <>
       <ExpandableContent
         title={
-          <div className="flex flex-gap">
+          <div className="flex gap-2">
             <StrongEditableField
               value={criteria.title}
               placeholder="Новый критерий"

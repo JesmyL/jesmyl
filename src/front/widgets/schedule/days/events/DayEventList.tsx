@@ -40,7 +40,7 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
     <>
       <LazyIcon
         icon="LeftToRightListBullet"
-        className="color--7"
+        className="text-x7"
       />
       {' Распорядок'}
     </>,
@@ -90,9 +90,9 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
             const isNeighbour = moveEventMi === event.mi || moveEventMi === eventa[eventi + 1]?.mi;
             const insertControl = (beforei: number) =>
               isRedact && (
-                <div className={'insert-panel flex flex-gap' + (beforei === 0 ? ' first' : '')}>
+                <div className={'insert-panel flex gap-2' + (beforei === 0 ? ' first' : '')}>
                   <StrongDiv
-                    className="flex flex-gap pointer"
+                    className="flex gap-2 pointer"
                     onSuccess={() => {
                       setIsReplacementInProcess(false);
                       setIsIndividualReplacement(false);
@@ -110,7 +110,7 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
                     }
                   >
                     {movementBox && (
-                      <div className="flex flex-gap fade-05">
+                      <div className="flex gap-2 opacity-50">
                         <StyledMoveTitle className="ellipsis nowrap">{movementBox.title}</StyledMoveTitle>
                         <div className="nowrap">будет здесь</div>
                       </div>
@@ -124,7 +124,7 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
               <ScheduleWidgetDayEventWrapper
                 key={event.mi}
                 className={
-                  'day-event-wrapper flex flex-gap' +
+                  'day-event-wrapper flex gap-2' +
                   (moveEventMi === event.mi ? ' move-me pointer' : '') +
                   (isNeighbour ? ' neighbour' : '') +
                   (eventi === 0 ? ' first' : '')
@@ -191,7 +191,7 @@ export function ScheduleWidgetDayEventList({ day, isPastDay, dayi, isForceExpand
                             topicBox={event}
                           />
                         }
-                        className="color--ko"
+                        className="text-xKO"
                         disabled={moveEventMi !== null}
                         onSend={() =>
                           schDaysTsjrpcClient.removeEvent({

@@ -23,7 +23,7 @@ export const ScheduleWidgetPage = () => {
       <PageContainerConfigurer
         className="ScheduleWidgetPage"
         headTitle={schedule?.title ?? 'Мероприятие'}
-        head={<span className="flex flex-gap margin-gap">{connectionNode}</span>}
+        head={<span className="flex gap-2 m-2">{connectionNode}</span>}
         backButtonRender={(linkRef, children) => {
           return (
             <Link
@@ -56,7 +56,7 @@ export const ScheduleWidgetPage = () => {
               <ScheduleWidget schedule={schedule} />
             )
           ) : (
-            <div className="flex center color--ko">Мероприятие не найдено</div>
+            <div className="flex center text-xKO">Мероприятие не найдено</div>
           )
         }
       />

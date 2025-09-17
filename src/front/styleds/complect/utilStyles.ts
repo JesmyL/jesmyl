@@ -56,126 +56,22 @@ export const utilStyles = css`
     white-space: nowrap;
   }
 
-  .break-word {
-    word-break: break-word;
-  }
-
   .hidden {
     visibility: hidden;
   }
 
-  .over- {
-    &hidden {
-      overflow: hidden;
-    }
-
-    &x-hidden {
-      overflow-x: hidden;
-    }
-
-    &y-hidden {
-      overflow-y: hidden;
-    }
-
-    &visible {
-      overflow: visible;
-    }
-
-    &x-visible {
-      overflow-x: visible;
-    }
-
-    &y-visible {
-      overflow-y: visible;
-    }
-
-    &auto {
-      max-width: 100%;
-      max-height: 100%;
-      overflow: auto;
-    }
-
-    &x-auto {
-      max-width: 100%;
-      overflow-x: auto;
-    }
-
-    &y-auto {
-      max-height: 100%;
-      overflow-y: auto;
-    }
-  }
-
-  .border-radius {
-    border-radius: var(--main-gap);
-
-    &-big {
-      border-radius: var(--main-gap);
-    }
-  }
-
-  .half-width {
-    width: 50%;
-  }
-
-  .half-height {
-    height: 50%;
+  .over-hidden {
+    overflow: hidden;
   }
 
   .full-size,
-  .full-width {
+  .w-full {
     width: 100%;
   }
 
   .full-size,
-  .full-height {
+  .h-full {
     height: 100%;
-  }
-
-  .full-min-width {
-    min-width: 100%;
-  }
-
-  .full-min-height {
-    min-height: 100%;
-  }
-
-  .full-max-width {
-    max-width: 100%;
-  }
-
-  .min-width-90 {
-    min-width: 90%;
-  }
-
-  .full-max-height {
-    max-height: 100%;
-  }
-
-  .half-height {
-    height: 50%;
-  }
-
-  .min-height-30vh {
-    min-height: 30vh;
-  }
-
-  .height-30vh {
-    height: 30vh;
-
-    &-strong {
-      height: 30vh;
-      min-height: 30vh;
-      max-height: 30vh;
-    }
-  }
-
-  .vertical-middle {
-    vertical-align: middle;
-  }
-
-  .vertical-top {
-    vertical-align: top;
   }
 
   .children-middle {
@@ -183,10 +79,6 @@ export const utilStyles = css`
       display: inline-block;
       vertical-align: middle;
     }
-  }
-
-  .display-none {
-    display: none;
   }
 
   .flex {
@@ -203,20 +95,8 @@ export const utilStyles = css`
       width: max-content;
     }
 
-    &.flex-gap {
-      gap: var(--main-gap);
-    }
-
-    &.flex-big-gap {
-      gap: var(--main-big-gap);
-    }
-
     &.flex-wrap {
       flex-wrap: wrap;
-    }
-
-    &.flex-big-gap {
-      gap: var(--main-big-gap);
     }
 
     &:not(.custom-align-items) {
@@ -266,120 +146,19 @@ export const utilStyles = css`
     }
   }
 
-  .text {
-    &-strike {
-      text-decoration: line-through;
+  .pointers {
+    &-none {
+      pointer-events: none;
     }
-
-    &-underline {
-      text-decoration: underline;
+    &-all {
+      pointer-events: all;
     }
-
-    &-bold {
-      font-weight: bold;
-    }
-  }
-
-  .pointers-none {
-    pointer-events: none;
-  }
-
-  .pointers-all {
-    pointer-events: all;
-  }
-
-  .absolute {
-    position: absolute;
-
-    &.full-fill {
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-  }
-
-  .relative {
-    position: relative;
-  }
-
-  .margin-auto {
-    margin: auto;
-  }
-
-  .absolute,
-  .relative {
-    &.pos- {
-      &bottom,
-      &sea,
-      &all {
-        bottom: 0;
-
-        &-over {
-          bottom: -100%;
-        }
-      }
-
-      &top,
-      &ski,
-      &all {
-        top: 0;
-      }
-
-      &left,
-      &ski,
-      &sea,
-      &all {
-        left: 0;
-      }
-
-      &right,
-      &ski,
-      &sea,
-      &all {
-        right: 0;
-      }
-    }
-  }
-
-  .float- {
-    &left {
-      float: left;
-    }
-
-    &right {
-      float: right;
-    }
-  }
-
-  .non-overscroll {
-    overscroll-behavior: none;
-  }
-
-  .text-height-block {
-    height: 1.3em;
-  }
-
-  .relative {
-    position: relative;
   }
 
   .sticky {
     position: sticky;
     top: 0;
     z-index: 1;
-  }
-
-  .inactive {
-    opacity: 0.7;
-  }
-
-  [class~='font-size:0.7em'] {
-    font-size: 0.7em;
-  }
-
-  .no-resize {
-    resize: none;
   }
 
   .for-print {
@@ -414,19 +193,5 @@ export const utilStyles = css`
     height: var(--size);
     min-height: var(--size);
     max-height: var(--size);
-  }
-
-  .text- {
-    &center {
-      text-align: center;
-    }
-
-    &right {
-      text-align: right;
-    }
-
-    &italic {
-      font-style: italic;
-    }
   }
 `;

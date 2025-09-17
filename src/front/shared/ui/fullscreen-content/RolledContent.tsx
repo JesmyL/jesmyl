@@ -5,6 +5,7 @@ import { Atom, useAtomValue } from 'atomaric';
 import { HTMLAttributes, PropsWithChildren, RefObject, useEffect, useRef, useState } from 'react';
 import { itNIt } from 'shared/utils';
 import styled from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 
 export const RolledContent = ({
   speedKfAtom,
@@ -64,7 +65,7 @@ export const RolledContent = ({
       {...props}
       onClick={() => setIsRolling(itNIt)}
       ref={containerRef}
-      className={'roll-controled-container full-width full-height ' + (props.className || '')}
+      className={twMerge('roll-controled-container w-full h-full', props.className)}
     >
       <div className={'roll-controls pointer flex column center' + (isRolling ? ' open' : '')}>
         <LazyIcon

@@ -36,9 +36,9 @@ export function ScheduleWidgetUserList({
 
   return (
     <>
-      <div className="margin-gap-v">{expandNode}</div>
+      <div className="my-2">{expandNode}</div>
       {isExpand && (
-        <div className="margin-big-gap-v margin-gap-l">
+        <div className="mx-5 ml-2">
           {users.length ? (
             users.map(({ user, balance }) => {
               return (
@@ -51,7 +51,7 @@ export function ScheduleWidgetUserList({
               );
             })
           ) : (
-            <div className="text-italic color--7">Список пуст</div>
+            <div className="italic text-x7">Список пуст</div>
           )}
         </div>
       )}

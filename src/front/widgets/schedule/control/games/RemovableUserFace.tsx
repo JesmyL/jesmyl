@@ -27,16 +27,16 @@ export function ScheduleWidgetRemovableUserFace({ user, isStriked, buttons }: Pr
     <>
       <div
         key={user.mi}
-        className="flex flex-gap margin-gap-v"
+        className="flex gap-2 my-2"
       >
-        <span className={isUserStriked ? 'color--ko' : ''}>{user.fio}</span>
+        <span className={isUserStriked ? 'text-xKO' : ''}>{user.fio}</span>
         <ScheduleWidgetUserPhoto
           user={user}
           justRenderItOnEmpty={<ScheduleWidgetUserTakePhoto user={user} />}
           or={
             <LazyIcon
               icon="Image02"
-              className="pointer color--7"
+              className="pointer text-x7"
               onClick={isPhotoOpenAtom.do.toggle}
             />
           }
@@ -44,7 +44,7 @@ export function ScheduleWidgetRemovableUserFace({ user, isStriked, buttons }: Pr
         {buttons}
         <TheIconSendButton
           icon={isUserStriked ? 'LinkBackward' : 'Cancel02'}
-          className={isUserStriked ? 'color--ok' : 'color--ko'}
+          className={isUserStriked ? 'text-xOK' : 'text-xKO'}
           onSend={() =>
             schGamesTsjrpcClient.toggleStrikedUser({
               props: scheduleScopeProps,

@@ -15,4 +15,10 @@ export const attrStylerStyles = css`
     color: var(--color--3);
     background-color: var(--color--1);
   }
+
+  [st-no-scrollbar=''] {
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
 `;

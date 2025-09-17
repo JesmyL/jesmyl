@@ -67,10 +67,6 @@ function pointer(style: string) {
       a,
       a[href],
       .pointer,
-      .MuiButton-root,
-      .MuiButton-root *,
-      .MuiIconButton-root,
-      .MuiIconButton-root *,
       .pointer * {
         ${style}
       }

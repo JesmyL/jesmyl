@@ -6,6 +6,7 @@ import { TrustChildrenCheckType } from 'front/types/TrustChildrenCheckType';
 import { HTMLAttributes, ReactNode, useEffect } from 'react';
 import { Eventer, EventerListeners } from 'shared/utils';
 import styled from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 import { Portal } from '../Portal';
 import { RootAnchoredContent } from '../RootAnchoredContent';
 import { TheIconButton } from '../the-icon/TheIconButton';
@@ -44,7 +45,7 @@ export const FullContent = <Value, TrustValue extends Value>(
                 onClick={props.openAtom.reset}
               />
             )}
-            <StyledContainer className={props.containerClassName ?? 'p-5'}>
+            <StyledContainer className={twMerge(props.containerClassName ?? 'p-5')}>
               {typeof props.children === 'function' ? props.children(value as never) : props.children}
             </StyledContainer>
           </Swiped>
@@ -98,6 +99,6 @@ const StyledContainer = styled.div`
   left: 0;
   background-color: var(--current-bg);
   width: 100vw;
-  height: calc(100% - var(--keyboard-flash-height));
+  height: 100%;
   overflow-y: auto;
 `;

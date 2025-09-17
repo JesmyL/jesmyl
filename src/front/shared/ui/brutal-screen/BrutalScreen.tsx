@@ -30,7 +30,7 @@ const Screen = styled.div`
   }
 
   > .title {
-    margin: var(--main-big-gap);
+    margin: var(--main-5-gap);
   }
 
   > .item {

@@ -30,7 +30,7 @@ export function ScheduleKeyValueListAttArrayItemKeyChange(props: {
       <StrongDiv
         key={id}
         onSuccess={() => isModalOpenAtom.set(false)}
-        className="margin-gap-v"
+        className="my-2"
         onSend={() =>
           schDayEventsTsjrpcClient.changeKeyValueAttachmentKey({
             props: props.dayEventAttScopeProps,

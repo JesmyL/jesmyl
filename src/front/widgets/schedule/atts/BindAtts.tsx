@@ -74,10 +74,7 @@ export const ScheduleWidgetBindAtts = ({
             return (
               <StrongDiv
                 key={attKey}
-                className={
-                  'relative flex flex-gap bgcolor--1 padding-gap margin-big-gap-v pointer' +
-                  (atts?.[attKey] ? ' disabled ' : '')
-                }
+                className={'relative flex gap-2 bg-x1 p-2 mx-5 pointer' + (atts?.[attKey] ? ' disabled ' : '')}
                 onSuccess={() => isModalOpenAtom.set(true)}
                 onSend={() => onAddAttSend(attKey, tatt.initVal)}
               >
@@ -87,7 +84,7 @@ export const ScheduleWidgetBindAtts = ({
                   attKey={attKey}
                   onRemoveAttSend={onRemoveAttSend}
                 />
-                <div className="fade-05 ">{tatt.description}</div>
+                <div className="opacity-50 ">{tatt.description}</div>
                 {inAttNodeAdds?.(attKey, tatt, attRefs[attKey] ?? [])}
               </StrongDiv>
             );
@@ -99,7 +96,7 @@ export const ScheduleWidgetBindAtts = ({
         </ModalFooter>
       </Modal>
 
-      <div className="flex flex-gap my-3">
+      <div className="flex gap-2 my-3">
         <LazyIcon icon="Attachment01" />
         Вложения
         <LazyIcon
@@ -109,7 +106,7 @@ export const ScheduleWidgetBindAtts = ({
         />
       </div>
       <StyledBoxes
-        className="flex flex-gap no-scrollbar"
+        className="flex gap-2 no-scrollbar pr-2"
         onTouchStart={propagationStopper}
       >
         {attEntries?.length ? (
@@ -128,7 +125,7 @@ export const ScheduleWidgetBindAtts = ({
             );
           })
         ) : (
-          <span className="color--7">Вложений нет</span>
+          <span className="text-x7">Вложений нет</span>
         )}
       </StyledBoxes>
     </>
@@ -136,7 +133,6 @@ export const ScheduleWidgetBindAtts = ({
 };
 
 const StyledBoxes = styled.div`
-  padding-right: var(--margin-gap);
   width: 100%;
   overflow-x: auto;
   overflow-y: hidden;

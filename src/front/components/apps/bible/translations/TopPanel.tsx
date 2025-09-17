@@ -1,5 +1,6 @@
 import { JSX, useState } from 'react';
 import styled from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 import { TranslationSlidePreview } from '../../+complect/translations/controls/Preview';
 import { BibleLists } from './lists/Lists';
 
@@ -10,12 +11,12 @@ export const BibleTranslationControlledTopPanel = function TopPanel(): JSX.Eleme
     <StyledTopPanel>
       <div className="flex column">
         <div
-          className="flex flex-gap margin-gap-b"
+          className="flex gap-2 mb-2"
           onClick={() => setIsPreview(is => !is)}
         >
-          <div className={'pointer ' + (isPreview ? 'color--7' : '')}>Предпросмотр</div>
+          <div className={twMerge('pointer', isPreview && 'text-x7')}>Предпросмотр</div>
           {' / '}
-          <div className={'pointer ' + (isPreview ? '' : 'color--7')}>Слайд</div>
+          <div className={twMerge('pointer', !isPreview && 'text-x7')}>Слайд</div>
         </div>
         <TranslationSlidePreview isPreview={isPreview} />
       </div>

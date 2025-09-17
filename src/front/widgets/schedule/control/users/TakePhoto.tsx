@@ -103,13 +103,13 @@ function Camera({ close, user }: Props & { close: () => void }) {
   return (
     <>
       <div className="full-size flex column around">
-        {error && <div className="color--ko">{error}</div>}
+        {error && <div className="text-xKO">{error}</div>}
         <div>{user.fio}</div>
         <canvas
           ref={canvasRef}
           hidden
         />
-        <div className="flex flex-gap column center">
+        <div className="flex gap-2 column center">
           {src ? (
             <StyledImg
               src={src}

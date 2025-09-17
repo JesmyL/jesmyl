@@ -32,11 +32,11 @@ export default function LazyMetronome({ meterSize = 4, bpm = 120 }: Props) {
         onClose={openAtom => openAtom.set(false)}
       >
         <StyledModalBody className="flex column between">
-          <div className="flex between full-width">
+          <div className="flex between w-full">
             <MetronomeTouchBpmButton />
             <MetronomeMeterDots />
           </div>
-          <div className="flex full-width between">
+          <div className="flex w-full between">
             <MetronomeBpmInput />
             <MetronomePlayButton />
           </div>

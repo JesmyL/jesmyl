@@ -11,12 +11,12 @@ interface Props {
 export const ScheduleWidgetTeamsCriteriaSorterScreenSortBoxPhoto = function SortBoxPhoto({ onClick, user }: Props) {
   return (
     <div
-      className="full-height"
+      className="h-full"
       onClick={onClick}
     >
-      <StyledPhotoArea className="flex center full-height pointer">
+      <StyledPhotoArea className="flex center h-full pointer">
         <ScheduleWidgetUserPhoto
-          className="full-width"
+          className="w-full"
           user={user}
           or={
             <StyledPhotoArea className="flex center border">

@@ -21,7 +21,7 @@ export function IndexMyFilesPage() {
       headTitle="Мои файлы"
       content={
         <div
-          className="full-height full-width"
+          className="h-full w-full"
           onDrop={onDrop}
           onDragOver={onDragOver}
         >
@@ -32,7 +32,7 @@ export function IndexMyFilesPage() {
             ref={inputRef}
           />
           <div
-            className="flex flex-max padding-gap bgcolor--6 color--2"
+            className="flex flex-max p-2 bg-x6 text-x2"
             onClick={() => inputRef.current?.click()}
           >
             Загрузить файлы

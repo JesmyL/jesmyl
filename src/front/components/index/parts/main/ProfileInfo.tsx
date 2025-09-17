@@ -12,7 +12,7 @@ export const IndexProfileInfo = ({ auth }: { auth: LocalSokiAuth }) => {
     <>
       <div
         id="profile-info"
-        className="flex center flex-gap"
+        className="flex center gap-2"
         onClick={setIsUserMoreOpen}
       >
         <Name className="ellipsis">{auth.fio}</Name>

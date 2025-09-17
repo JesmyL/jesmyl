@@ -16,7 +16,7 @@ export const ScheduleWidgetTeamGameTranslateTeamsButton = function TranslateTeam
   const [cols, setCols] = useState(Math.floor(game.teams.length / 2));
 
   const grid: string = useMemo(() => {
-    let grid = `| |\n| :-: |\n| <h1>Игра <span className="color--7">${game.title}</span></h1> |\n\n`;
+    let grid = `| |\n| :-: |\n| <h1>Игра <span className="text-x7">${game.title}</span></h1> |\n\n`;
     const scheduleUsers = rights.schedule.ctrl.users;
     let limit = 1000000;
 
@@ -86,7 +86,7 @@ export const ScheduleWidgetTeamGameTranslateTeamsButton = function TranslateTeam
       />
 
       <FullContent openAtom={isOpenFullContentAtom}>
-        <div className="flex full-width around">
+        <div className="flex w-full around">
           <TheIconButton
             icon="DashboardSquareRemove"
             disabled={cols < 2}

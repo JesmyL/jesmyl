@@ -56,14 +56,14 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
         const isShowPeriodsNotTs = list.includes(null);
 
         setNode(
-          <div className="margin-gap-t">
+          <div className="mt-2">
             {!newTypes.length || (
               <>
                 <h2>Новые события</h2>
                 {newTypes.map(({ title, tm }) => {
                   return (
                     <div key={title}>
-                      {title} <span className="color--7">{tm}м.</span>
+                      {title} <span className="text-x7">{tm}м.</span>
                     </div>
                   );
                 })}
@@ -92,7 +92,7 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
                 return (
                   <div
                     key={eventi}
-                    className="color--ko"
+                    className="text-xKO"
                   >
                     Новое событие
                   </div>
@@ -140,14 +140,14 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
   }, [day, dayScopeProps, dayi, onClose, schedule, scheduleScopeProps, value]);
 
   return (
-    <div className="margin-giant-gap-t">
+    <div className="mt-10">
       <TextInput
         value={value}
         onInput={setValue}
         multiline
       />
       {errorText ? (
-        <div className="color--ko margin-gap-v flex center">
+        <div className="text-xKO my-2 flex center">
           <div dangerouslySetInnerHTML={{ __html: errorText }} />
         </div>
       ) : (

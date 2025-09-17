@@ -55,14 +55,14 @@ export function ScheduleWidget({
   const [startTime, setStartTime] = useState(schedule?.start);
 
   const titleNode = (
-    <div className="flex full-width between">
+    <div className="flex w-full between">
       <ScheduleWidgetTopicTitle
         prefix={<LazyIcon icon="Calendar03" />}
         titleBox={schedule ?? {}}
         altTitle="Мероприятие"
         topicBox={schedule}
       />
-      <span className="flex flex-gap">
+      <span className="flex gap-2">
         <LazyIcon
           icon="QrCode"
           onClick={isOpenInviteQrAtom.do.toggle}
@@ -102,26 +102,26 @@ export function ScheduleWidget({
           />
         );
       } else if (rights.isSwHideContent)
-        blockContent = <div className="color--7 font-size:0.8em">Предварительной регистрации на мероприятие нет</div>;
+        blockContent = <div className="text-x7 font-size:0.8em">Предварительной регистрации на мероприятие нет</div>;
     }
   } else {
     if (rights.myUser.R === undefined || rights.myUser.R === 0) {
-      if (!rights.isSwPublic || rights.isSwHideContent) blockContent = <div className="color--7">Заявка принята</div>;
+      if (!rights.isSwPublic || rights.isSwHideContent) blockContent = <div className="text-x7">Заявка принята</div>;
     } else if (!rights.isCanRead) {
-      blockContent = <div className="color--ko">Доступ к содержимому ограничен</div>;
+      blockContent = <div className="text-xKO">Доступ к содержимому ограничен</div>;
     }
   }
 
   const prevDateNode = prevDate && (
-    <StyledPrevDateText className={schedule && prevDate.getTime() > schedule.start ? 'color--ko' : undefined}>
+    <StyledPrevDateText className={schedule && prevDate.getTime() > schedule.start ? 'text-xKO' : undefined}>
       Предыдущее - {prevDate.toLocaleDateString('ru', { month: 'long', day: '2-digit', year: 'numeric' })}
     </StyledPrevDateText>
   );
 
   if (blockContent)
     return (
-      <div className="margin-sm-gap">
-        <div className="margin-gap-v">{titleNode}</div>
+      <div className="m-1">
+        <div className="my-2">{titleNode}</div>
         <ScheduleWidgetStartTimeText schedule={schedule} />
         {prevDateNode}
         {blockContent}
@@ -155,7 +155,7 @@ export function ScheduleWidget({
 
         <StyledWidget className={'schedule-widget'}>
           {titleNode}
-          <div className="margin-big-gap-v">
+          <div className="mx-5">
             {rights.isCanRedact && isRedact ? (
               <StrongInputDateTimeExtracter
                 title="Начало"
@@ -248,13 +248,13 @@ export function ScheduleWidget({
                         icon="PlusSign"
                         postfix="Добавить день"
                         confirm="Дни удалять не возможно! Создать новый?"
-                        className="margin-gap-v"
+                        className="my-2"
                         onSend={() => schDaysTsjrpcClient.addDay({ props: scheduleScopeProps })}
                       />
                     )}
                     {auth && auth.level >= 80 && (
                       <TheIconSendButton
-                        className="color--ko"
+                        className="text-xKO"
                         icon="Delete02"
                         confirm="Восстановить расписание будет не возможно. Продолжить?"
                         postfix="Удалить расписание"
@@ -267,7 +267,7 @@ export function ScheduleWidget({
                   (rights.auth.level > 0 ? (
                     <SendButton
                       title="Хочу комментить события"
-                      className="margin-giant-gap-t"
+                      className="mt-10"
                       onSend={() =>
                         schUsersTsjrpcClient.addMe({
                           props: scheduleScopeProps,
@@ -276,9 +276,7 @@ export function ScheduleWidget({
                       }
                     />
                   ) : (
-                    <div className="margin-big-gap-t">
-                      Комментировать события могут только регистрированные пользователи
-                    </div>
+                    <div className="mt-5">Комментировать события могут только регистрированные пользователи</div>
                   ))}
                 {schedule.days.map((day, dayi) => {
                   if (dayi === 0 && schedule.withTech && !rights.isCanReadSpecials) return null;

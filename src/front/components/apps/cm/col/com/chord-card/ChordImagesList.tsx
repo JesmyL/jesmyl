@@ -5,7 +5,7 @@ import { CmUndefinedChordCard } from './UndefinedChordCard';
 
 export function ChordImagesList({ com }: { com: Com }) {
   return (
-    <div className="margin-big-gap flex center column">
+    <div className="m-5 flex center column">
       {com?.usedChords &&
         Object.keys(com.usedChords)
           .filter(itIt)
@@ -18,7 +18,7 @@ export function ChordImagesList({ com }: { com: Com }) {
                   return (
                     <div
                       key={chordName}
-                      className="flex column margin-big-gap"
+                      className="flex column m-5"
                     >
                       {card || <CmUndefinedChordCard chord={chordName} />}
                       {com.usedChords?.[chordName] || '?'}

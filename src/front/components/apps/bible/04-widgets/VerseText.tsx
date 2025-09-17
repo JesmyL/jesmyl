@@ -13,7 +13,7 @@ export const BibleVerseText = memo(function BibleReaderVerseText({ html, versei,
       attr-chapteri={chapteri}
       attr-versei={versei}
     >
-      <span className="color--7">{versei + 1 + '. '}</span>
+      <span className="text-x7">{versei + 1 + '. '}</span>
       <span dangerouslySetInnerHTML={{ __html: html }} />
     </div>
   );

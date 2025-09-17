@@ -21,10 +21,6 @@ export const resetStyles = css`
     box-sizing: content-box;
   }
 
-  .bgcolor-black {
-    background-color: black;
-  }
-
   .input,
   input,
   textarea {
@@ -94,5 +90,14 @@ export const resetStyles = css`
   input[type='number'] {
     appearance: textfield;
     -moz-appearance: textfield;
+  }
+
+  li {
+    list-style-type: none;
+  }
+
+  ul {
+    margin-left: 0;
+    padding-left: 0;
   }
 `;

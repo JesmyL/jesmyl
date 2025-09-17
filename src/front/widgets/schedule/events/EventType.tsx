@@ -57,7 +57,7 @@ export function ScheduleWidgetEventType(props: {
         }
       />
       {error && (
-        <div className="flex flex-gap center error-message">
+        <div className="flex gap-2 center text-xKO">
           <LazyIcon icon="Alert02" />
           {error}
         </div>
@@ -77,7 +77,7 @@ export function ScheduleWidgetEventType(props: {
           atts={props.typeBox.atts}
           forTitle={
             <>
-              Шаблон <span className="color--7">{props.typeBox.title}</span> - Вставить обзорное вложение
+              Шаблон <span className="text-x7">{props.typeBox.title}</span> - Вставить обзорное вложение
             </>
           }
           topContent={
@@ -91,7 +91,7 @@ export function ScheduleWidgetEventType(props: {
             <SendableDropdown
               id={props.typeBox.atts?.[attKey]?.[0] as AttTranslatorType}
               items={attTranslatorTypes}
-              className="margin-gap-b"
+              className="mb-2"
               onSend={() =>
                 schEventTypesTsjrpcClient.setAttImaginePeriod({
                   props: { ...eventTypeScopeProps, attKey },
@@ -113,7 +113,7 @@ export function ScheduleWidgetEventType(props: {
       ) : (
         !attEntries || (
           <div>
-            <div className="flex flex-gap">
+            <div className="flex gap-2">
               <LazyIcon icon="Attachment" />
               Вложения
             </div>
@@ -126,7 +126,7 @@ export function ScheduleWidgetEventType(props: {
   return (
     <div className="relative">
       {props.isRedact || (
-        <div className="flex flex-end full-width absolute pos-top pos-right margin-sm-gap z-index:5">
+        <div className="flex flex-end w-full absolute top-0 right-0 m-1 z-5">
           <LazyIcon
             icon="Edit02"
             onClick={() => isRedactTypeiModalOpenAtom.set(props.typei)}
@@ -141,7 +141,7 @@ export function ScheduleWidgetEventType(props: {
           className={
             'schedule-event-type-select-item' +
             (props.onItemSelectSend ? (props.isRedact ? '' : props.typeBox.title ? ' pointer ' : ' disabled ') : '') +
-            (props.isRedact ? '' : ' bgcolor--5 padding-gap margin-gap-v')
+            (props.isRedact ? '' : ' bg-x5 p-2 my-2')
           }
           onSend={async () => props.onItemSelectSend?.(props.typei)}
         >
@@ -155,9 +155,9 @@ export function ScheduleWidgetEventType(props: {
           checkIsOpen={typei => props.typei === typei}
         >
           <ModalHeader>
-            <span className="flex flex-gap full-width between">
+            <span className="flex gap-2 w-full between">
               <span>
-                <span className="color--7">{props.typeBox.title} </span>- Редактирование шаблона
+                <span className="text-x7">{props.typeBox.title} </span>- Редактирование шаблона
               </span>
             </span>
           </ModalHeader>

@@ -27,9 +27,7 @@ export function ScheduleWidgetRightControlList({
 
   return (
     <>
-      {isDescriptionsCollect && (
-        <div className="color--7 margin-gap-v  margin-gap-l">Справедливы утверждения мелким шрифтом</div>
-      )}
+      {isDescriptionsCollect && <div className="text-x7 my-2  ml-2">Справедливы утверждения мелким шрифтом</div>}
       {rightCtrl.texts.map((type, typei) => {
         if (type.hidden || isHidden?.(type, typei)) return null;
         const isHas = (type.always || isCan) && rightCtrl.checkIsHasRights(R, type.id);
@@ -37,12 +35,12 @@ export function ScheduleWidgetRightControlList({
         const node = (
           <div
             key={type.id}
-            className={'flex flex-gap between margin-gap-v over-hidden ' + className}
+            className={'flex gap-2 between my-2 over-hidden ' + className}
           >
             <div>
               <div>{type.title}</div>
               {type.description && (!isDescriptionsCollect || isCan) && (
-                <Desc className="color--4 margin-gap-l">
+                <Desc className="text-x4 ml-2">
                   {isHas ? type.description[0] : type.description[1] || type.description[0]}
                 </Desc>
               )}
@@ -50,7 +48,7 @@ export function ScheduleWidgetRightControlList({
 
             <TheIconSendButton
               disabled={isCantEdit || !isCan || type.always || !!isDisabled?.(type, typei)}
-              className={(isReverse ? !isHas : isHas) ? 'color--ok' : 'color--3'}
+              className={(isReverse ? !isHas : isHas) ? 'text-xOK' : 'text-x3'}
               icon={(isReverse ? !isHas : isHas) ? 'ToggleOn' : 'ToggleOff'}
               onSend={() => onSend(rightCtrl.switchRights(R, type.id))}
             />

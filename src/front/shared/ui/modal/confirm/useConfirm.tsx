@@ -34,7 +34,7 @@ export const useConfirm = () => {
           <ModalHeader>{header ?? 'Подтверди'}</ModalHeader>
           <ModalBody>{content}</ModalBody>
           <ModalFooter>
-            <span className="flex flex-big-gap">
+            <span className="flex gap-5">
               <span
                 id="confirm-button-YES"
                 className="pointer"

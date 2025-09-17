@@ -50,7 +50,7 @@ export function ScheduleWidgetTeamsCriteriaSorterScreen({
   const [end, setEnd] = useState(sortedUsers.length - 1);
 
   return (
-    <div className="flex between column full-height">
+    <div className="flex between column h-full">
       {singleInsertUser ? (
         <h3>Переопределение участника ({criteria.title})</h3>
       ) : (
@@ -74,7 +74,7 @@ export function ScheduleWidgetTeamsCriteriaSorterScreen({
           stopOnSingleInsert={stopOnSingleInsert}
         />
       )}
-      <div className="full-width flex center">
+      <div className="w-full flex center">
         <SendButton
           title="Отправить"
           onSuccess={openAtom.reset}

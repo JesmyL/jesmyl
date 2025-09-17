@@ -19,7 +19,7 @@ export const EditCategoriesPage = () => {
                 key={cat.wid}
                 to="/cm/edit/cats/$catw"
                 params={{ catw: `${cat.wid}` }}
-                className="full-width"
+                className="w-full"
               >
                 <BrutalItem
                   iconNode={<LazyIcon icon="BookOpen01" />}

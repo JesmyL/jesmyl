@@ -1,12 +1,13 @@
 import QRCodeGenerator from 'qrcode';
 import { HTMLAttributes } from 'react';
 import styled from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 
 export function QRCode({ text, ...props }: HTMLAttributes<HTMLCanvasElement> & { text: string }) {
   return (
     <StyledCanvas
       {...props}
-      className={`qr-code power up ${props.className || ''}`}
+      className={twMerge('qr-code power up', props.className)}
       ref={element => {
         if (!element) return;
 

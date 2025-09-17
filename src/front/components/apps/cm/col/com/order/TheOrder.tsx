@@ -133,7 +133,7 @@ export function TheOrder(props: Props) {
                 return (
                   <span
                     key={texti}
-                    className={text === '|' ? 'color--7' : undefined}
+                    className={text === '|' ? 'text-x7' : undefined}
                   >
                     {text === '|' ? ' | ' : text}
                   </span>

@@ -37,7 +37,7 @@ export const OrdersRedactorOrderToolsChangeText = ({ com, ord, ordi }: OrdersRed
             return (
               <IconCheckbox
                 key={texti}
-                className="margin-gap-t"
+                className="mt-2"
                 disabled={ord.texti === texti}
                 checked={ord.texti === texti}
                 postfix={

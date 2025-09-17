@@ -7,7 +7,7 @@ import { BibleTranslateScreenConfigurations } from './ScreenConfigurations';
 export const BibleTranslationControlledBottomPanel = memo(
   function BibleTranslationControlledBottomPanel(): JSX.Element {
     return (
-      <BottomGrid className="margin-big-gap-t">
+      <BottomGrid className="mt-5">
         <div grid-configs="">
           <BibleTranslateScreenConfigurations />
         </div>

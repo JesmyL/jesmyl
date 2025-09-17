@@ -76,7 +76,7 @@ export const EditCompositionsPage = () => {
     <>
       <StyledPageCmEditorContainer
         className="edit-compositions"
-        headClass="flex between full-width"
+        headClass="flex between w-full"
         head={
           <CmComListSearchFilterInput
             Constructor={EditableCom}

@@ -18,7 +18,7 @@ export const ScheduleWidgetTgDayView = () => {
     <TelegramWebAppApiOr>
       {(api, isLoading) =>
         initData === null ? (
-          <div className="flex center color--ko full-size">Ошибка данных</div>
+          <div className="flex center text-xKO full-size">Ошибка данных</div>
         ) : (
           <Child
             api={api}
@@ -62,7 +62,7 @@ const Child = ({ api, initData }: Props) => {
           />
         ) : (
           <div className="full-size flex center">
-            {isLoading ? <TheIconLoading /> : <span className="color--ko">{error || 'Мероприятие не найдено'}</span>}
+            {isLoading ? <TheIconLoading /> : <span className="text-xKO">{error || 'Мероприятие не найдено'}</span>}
           </div>
         )}
       </StyledBox>

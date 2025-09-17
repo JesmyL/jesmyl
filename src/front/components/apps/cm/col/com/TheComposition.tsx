@@ -85,7 +85,7 @@ export function TheComposition() {
       className={playerHideMode && comAudio ? ` with-open-player ${playerHideMode}` : ''}
       headTitle={<CmComNumber comw={ccom.wid} />}
       onMoreClick={setIsOpenTools}
-      contentClass="composition-content padding-gap"
+      contentClass="composition-content p-2"
       contentRef={comListRef}
       withoutBackSwipe
       backButtonRender={(linkRef, backNode) => (
@@ -110,7 +110,7 @@ export function TheComposition() {
           <DocTitle title={ccom.name} />
           {!hideAppFooter && comAudio && <ComPlayerWithPoints audioSrcs={comAudio} />}
           {isShowCatBinds && (
-            <div className="fade-05 full-width color--7">
+            <div className="opacity-50 w-full text-x7">
               <CmComCatMentions com={ccom} />
             </div>
           )}

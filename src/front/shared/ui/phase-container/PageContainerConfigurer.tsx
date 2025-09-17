@@ -2,17 +2,16 @@ import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMak
 import { Link } from '@tanstack/react-router';
 import { useRef } from 'react';
 import { emptyFunc } from 'shared/utils';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 import { LazyIcon } from '../the-icon/LazyIcon';
 import { PageContainerConfigurerProps } from './PageContainerConfigurer.model';
-import { usePhaseContainerConfigurerWithoutFooterContext } from './lib/contexts';
 
 let navigate: () => void = emptyFunc;
 const swiper = backSwipableContainerMaker(() => navigate());
 
 export function PageContainerConfigurer(props: PageContainerConfigurerProps) {
   const backButtonRef = useRef<HTMLAnchorElement>(null);
-  const withoutFooter = usePhaseContainerConfigurerWithoutFooterContext();
   navigate = () => backButtonRef.current?.click();
 
   const backButtonRenderPassNode = (
@@ -39,23 +38,22 @@ export function PageContainerConfigurer(props: PageContainerConfigurerProps) {
   );
 
   return (
-    <StyledContainerPhase
+    <div
       {...(props.withoutBackButton || props.withoutBackSwipe ? {} : swiper)}
-      className={`phase-container relative ${props.className || ''}`}
-      $withoutFooter={withoutFooter}
+      className={twMerge('phase-container relative', props.className)}
     >
       <StyledPhaseContainerConfigurerHeader
-        className="header flex between full-width"
+        className="header flex between w-full"
         st-hide-footer-menu={props.hideFooterMenu ? '' : undefined}
       >
         {props.withoutBackButton
           ? props.headTitle && (
-              <StyledPhaseContainerConfigurerHeadTitle className="margin-big-gap-l">
+              <StyledPhaseContainerConfigurerHeadTitle className="ml-5">
                 {props.headTitle}
               </StyledPhaseContainerConfigurerHeadTitle>
             )
           : backButtonNode}
-        <StyledPhaseContainerConfigurerHeadWithMoreIcon className={`head ${props.headClass || 'flex between'}`}>
+        <StyledPhaseContainerConfigurerHeadWithMoreIcon className={twMerge('head', props.headClass || 'flex between')}>
           <StyledPhaseContainerConfigurerHead className="w-full">{props.head}</StyledPhaseContainerConfigurerHead>
           {props.onMoreClick && (
             <button className="pointer m-1">
@@ -70,24 +68,14 @@ export function PageContainerConfigurer(props: PageContainerConfigurerProps) {
       </StyledPhaseContainerConfigurerHeader>
 
       <StyledPhaseContainerConfigurerContent
-        className={`content ${props.contentClass || ' p-2'}`}
+        className={twMerge('content p-2', props.contentClass)}
         ref={props.contentRef}
       >
         {props.content}
       </StyledPhaseContainerConfigurerContent>
-    </StyledContainerPhase>
+    </div>
   );
 }
-
-const StyledContainerPhase = styled.div<{ $withoutFooter: boolean | und }>`
-  height: 100%;
-
-  ${props =>
-    props.$withoutFooter &&
-    css`
-      --content-height: calc(100% - var(--keyboard-flash-height));
-    `}
-`;
 
 export const StyledPhaseContainerConfigurerHeadTitle = styled.span``;
 export const StyledPhaseContainerConfigurerHeadWithMoreIcon = styled.div``;

@@ -65,7 +65,7 @@ export const ScheduleWidgetLiveCmTranslations = ({
       head={
         <LazyIcon
           icon="BookOpen02"
-          className="pointer margin-gap-r"
+          className="pointer mr-2"
           onClick={() => switchCurrApp()}
         />
       }

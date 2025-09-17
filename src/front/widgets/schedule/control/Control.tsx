@@ -36,7 +36,7 @@ export const ScheduleWidgetControl = () => {
             </>
           }
           onClick={isModalOpenAtom.do.toggle}
-          className="margin-gap-v flex-max"
+          className="my-2 flex-max"
         />
       ) : (
         <TheIconButton
@@ -47,7 +47,7 @@ export const ScheduleWidgetControl = () => {
             </>
           }
           onClick={isModalOpenAtom.do.toggle}
-          className="margin-gap-v flex-max"
+          className="my-2 flex-max"
         />
       )}
 
@@ -55,7 +55,7 @@ export const ScheduleWidgetControl = () => {
         {rights.isCanRedact ? (
           <>
             <ModalHeader>
-              Управление <span className="color--7">{rights.schedule.title}</span>
+              Управление <span className="text-x7">{rights.schedule.title}</span>
             </ModalHeader>
 
             <ModalBody>
@@ -69,7 +69,7 @@ export const ScheduleWidgetControl = () => {
                     icon={rights.schedule.withTech ? 'CheckmarkSquare02' : 'Square'}
                     postfix="Первый - технический день"
                     confirm={`Сделать первый день ${rights.schedule.withTech ? 'обычным' : 'подготовительным'}?`}
-                    className="margin-gap-b"
+                    className="mb-2"
                     onSend={() =>
                       schGeneralTsjrpcClient.setFirstDayAsTech({
                         props: scheduleScopeProps,
@@ -85,7 +85,7 @@ export const ScheduleWidgetControl = () => {
                     onSend={value => schGeneralTsjrpcClient.setTgChatRequisites({ props: scheduleScopeProps, value })}
                   />
                   <TheIconSendButton
-                    className="margin-gap-b"
+                    className="mb-2"
                     icon={rights.schedule.tgInform === 0 ? 'NotificationOff01' : 'Notification01'}
                     postfix={
                       rights.schedule.tgInform === 0
@@ -105,7 +105,7 @@ export const ScheduleWidgetControl = () => {
                     items={tgInformTimesItems}
                     disabled={rights.schedule.tgInform === 0}
                     id={rights.schedule.tgInformTime}
-                    className="margin-big-gap-b"
+                    className="mb-5"
                     onSend={tm => schGeneralTsjrpcClient.setTgInformTime({ props: scheduleScopeProps, value: tm })}
                   />
                 </>
@@ -121,7 +121,7 @@ export const ScheduleWidgetControl = () => {
                 return (
                   <div
                     key={user.mi}
-                    className="margin-gap-v"
+                    className="my-2"
                   >
                     {user.fio && user.fio !== user.nick ? `${user.fio} (${user.nick})` : user.nick}
                   </div>

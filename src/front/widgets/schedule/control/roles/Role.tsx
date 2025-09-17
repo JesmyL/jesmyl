@@ -40,7 +40,7 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
   );
 
   return (
-    <div className="flex flex-gap between margin-gap">
+    <div className="flex gap-2 between m-2">
       <ScheduleWidgetRoleFace
         schedule={rights.schedule}
         role={role}
@@ -56,7 +56,7 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
       <Modal openAtom={isUserSetModalOpenAtom}>
         <ModalHeader>
           <div className="flex">
-            Роль <span className="color--7">{role.title}</span> займёт
+            Роль <span className="text-x7">{role.title}</span> займёт
           </div>
         </ModalHeader>
         <ModalBody>
@@ -71,7 +71,7 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
               <TheIconSendButton
                 key={useri}
                 confirm={`Теперь ${user?.fio || user?.nick} займёт роль ${role.title}?`}
-                className="flex flex-gap pointer"
+                className="flex gap-2 pointer"
                 icon="User"
                 postfix={user?.fio || user?.nick}
                 onSuccess={isUserSetModalOpenAtom.reset}
@@ -93,7 +93,7 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
         <ModalHeader>
           <div className="flex between">
             <span>
-              <span className="color--7">{role.title}</span> в категорию
+              <span className="text-x7">{role.title}</span> в категорию
             </span>
 
             {catsRedact.editIcon}
@@ -122,7 +122,7 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
                 return (
                   <TheIconSendButton
                     key={catNamei}
-                    className="flex flex-gap pointer margin-gap"
+                    className="flex gap-2 pointer m-2"
                     icon="Folder01"
                     postfix={catName}
                     onSuccess={isCatSetModalOpenAtom.reset}
@@ -179,13 +179,13 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
                   icon="UserRemove01"
                   confirm={
                     <>
-                      <span className="color--7">{roleUser.fio || roleUser.nick} </span>
+                      <span className="text-x7">{roleUser.fio || roleUser.nick} </span>
                       больше не
-                      <span className="color--7"> {role.title}</span>?
+                      <span className="text-x7"> {role.title}</span>?
                     </>
                   }
                   postfix="Освободить роль"
-                  className="flex-max margin-gap-v"
+                  className="flex-max my-2"
                   onSend={() => schRolesTsjrpcClient.makeFreeRole({ props: roleScopeProps, value: role.title })}
                 />
               )}
@@ -194,14 +194,14 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
                   icon="ArrowReloadHorizontal"
                   onClick={isUserSetModalOpenAtom.do.toggle}
                   postfix="Заменить человека"
-                  className="flex-max margin-gap-v"
+                  className="flex-max my-2"
                 />
               ) : (
                 <TheIconButton
                   icon="UserAdd01"
                   onClick={isUserSetModalOpenAtom.do.toggle}
                   postfix="Назначить человека"
-                  className="flex-max margin-gap-v"
+                  className="flex-max my-2"
                 />
               )}
               {role.mi > 0 && (
@@ -209,7 +209,7 @@ export function ScheduleWidgetRole({ role }: { role: IScheduleWidgetRole }) {
                   icon="GridView"
                   onClick={isCatSetModalOpenAtom.do.toggle}
                   postfix={`Категория ${rights.schedule.ctrl.cats[role.cati || 0] || 'Основное'}`}
-                  className="flex-max margin-gap-v"
+                  className="flex-max my-2"
                 />
               )}
             </>

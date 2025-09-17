@@ -17,14 +17,14 @@ export const ScheduleWidgetMyUserTgInform = ({
     <TheIconSendButton
       icon="NotificationOff01"
       postfix="Не оповещать меня о событиях в TG"
-      className="margin-gap-b"
+      className="mb-2"
       onSend={() => schGeneralTsjrpcClient.setIsTgInformMe({ props: scheduleScopeProps, type: 1 })}
     />
   ) : (
     <TheIconSendButton
       icon="Notification01"
       postfix="Оповещать меня о событиях в TG"
-      className="margin-gap-b"
+      className="mb-2"
       onSend={() => schGeneralTsjrpcClient.setIsTgInformMe({ props: scheduleScopeProps, type: 0 })}
     />
   );

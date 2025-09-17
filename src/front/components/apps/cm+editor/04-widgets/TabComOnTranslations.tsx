@@ -32,7 +32,7 @@ export const CmEditorTabComOnTranslations = () => {
         return (
           <div
             key={linesi}
-            className="margin-big-gap-v"
+            className="mx-5"
             style={{ whiteSpace: 'pre-wrap' }}
           >
             {lines?.map((text, texti) => (

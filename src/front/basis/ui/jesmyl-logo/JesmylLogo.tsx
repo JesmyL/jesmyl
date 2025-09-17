@@ -1,10 +1,11 @@
+import { twMerge } from 'tailwind-merge';
 import './JesmylLogo.scss';
 
 export function JesmylLogo(props: { className?: string; onAnimationIteration?: () => void }) {
   return (
     <div
       onAnimationIteration={props.onAnimationIteration}
-      className={`jesmyl-smile ${props.className || ''}`}
+      className={twMerge('jesmyl-smile', props.className)}
     >
       <svg
         x="0px"

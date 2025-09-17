@@ -20,7 +20,7 @@ export const OrdersRedactorOrderToolsAnchor = ({
           setClickBetweenOrds({
             buttonTitle: (
               <>
-                Ссылка на <span className="color--7">{ord.me.header()}</span>
+                Ссылка на <span className="text-x7">{ord.me.header()}</span>
               </>
             ),
             onClick: async ({ aboveLeadOrdw }) => {

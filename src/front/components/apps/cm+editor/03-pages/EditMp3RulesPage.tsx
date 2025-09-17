@@ -41,7 +41,7 @@ export const EditMp3RulesPage = () => {
                   />
                 );
               })}
-              <h2 className="flex flex-gap">
+              <h2 className="flex gap-2">
                 Новое правило
                 {!isOpenNewRule && (
                   <LazyIcon

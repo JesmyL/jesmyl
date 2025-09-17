@@ -3,6 +3,7 @@ import { useBibleCurrentChapterList } from '$bible/basis/lib/hooks/texts';
 import { atom } from 'atomaric';
 import { useMemo } from 'react';
 import styled from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 import { bibleChapteriIdPrefix } from '../lib/consts';
 import { useBibleListFaceClickListener } from '../lib/useBibleListFaceClickListener';
 
@@ -35,7 +36,7 @@ export function BibleChapterList() {
           <div
             key={chapteri}
             id={bibleChapteriIdPrefix + chapteri}
-            className={`bible-list-face pointer ${faceClassName}`}
+            className={twMerge('bible-list-face pointer', faceClassName)}
           >
             {chapteri + 1}
           </div>

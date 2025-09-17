@@ -26,12 +26,12 @@ export function ScheduleWidgetCustomAttachments(props: { tatts: ScheduleWidgetAp
           </>
         }
         onClick={isModalOpenAtom.do.toggle}
-        className="flex-max margin-gap-v"
+        className="flex-max my-2"
       />
 
       <Modal openAtom={isModalOpenAtom}>
         <ModalHeader>
-          <div className="flex full-width between">
+          <div className="flex w-full between">
             Шаблоны вложений
             <TheIconSendButton
               icon="PlusSign"
