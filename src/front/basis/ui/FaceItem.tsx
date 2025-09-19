@@ -31,7 +31,7 @@ export const FaceItem = {
     return (
       <div
         {...props}
-        className={twMerge('face-title ellipsis ml=[calc(2.5em+1em)]', props.className)}
+        className={twMerge('face-title ellipsis ml-[calc(2.5em+1em)]', props.className)}
       >
         {children}
       </div>
