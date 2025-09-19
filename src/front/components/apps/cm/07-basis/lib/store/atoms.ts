@@ -1,6 +1,6 @@
 import { ChordVisibleVariant, PlayerHideMode } from '$cm/Cm.model';
 import { atom } from 'atomaric';
-import { CmComWid, MigratableComToolName } from 'shared/api';
+import { CmComCommentBlockSelector, CmComWid, MigratableComToolName } from 'shared/api';
 import { cmConstantsDefaultConfig } from 'shared/values/cm/cmConstantsDefaultConfig';
 
 export const cmFavoriteComsAtom = atom<CmComWid[]>([], 'cm:favoriteComs');
@@ -17,3 +17,7 @@ export const cmPlayerHideModeAtom = atom<PlayerHideMode>('expand', 'cm:playerHid
 export const cmLaterComwListAtom = atom<CmComWid[]>([], 'cm:laterComwList');
 export const cmSelectedComwsAtom = atom<CmComWid[]>([], 'cm:selectedComws');
 export const cmLastOpenComwAtom = atom<CmComWid | und>(undefined, 'cm:lastOpenComw');
+
+export const cmComCommentRedactOrdSelectorIdAtom = atom<CmComCommentBlockSelector | null>(null);
+export const cmComCommentAltKeyAtom = atom<string | null>(null, 'cm:comCurrentCommentAltKey');
+export const cmComCommentRegisteredAltKeysAtom = atom<string[]>([], 'cm:comCommentRegisteredAltKeys');

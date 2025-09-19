@@ -1,3 +1,4 @@
+import { twMerge } from 'tailwind-merge';
 import { StyledModalBody } from '../styled';
 
 interface Props {
@@ -6,5 +7,5 @@ interface Props {
 }
 
 export function ModalBody({ children, className }: Props) {
-  return <StyledModalBody className={className}>{children}</StyledModalBody>;
+  return <StyledModalBody className={twMerge('p-2', className)}>{children}</StyledModalBody>;
 }

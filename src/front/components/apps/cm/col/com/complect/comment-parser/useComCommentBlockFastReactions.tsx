@@ -2,11 +2,11 @@ import { getParentNodeWithClassName } from '#shared/lib/getParentNodeWithClassNa
 import { addEventListenerWithDelayPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { cmIsComMiniAnchorAtom } from '$cm/atoms';
+import { cmComCommentRedactOrdSelectorIdAtom } from '$cm/basis/lib/store/atoms';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { Com } from '../../Com';
 import { ComBlockCommentMakerCleans } from './Cleans';
-import { comCommentRedactOrdSelectorIdAtom } from './complect';
 
 export const useComCommentBlockFastReactions = (listRef: React.RefObject<HTMLDivElement | null>, com: Com) => {
   const isMiniAnchor = useAtomValue(cmIsComMiniAnchorAtom);
@@ -41,7 +41,7 @@ export const useComCommentBlockFastReactions = (listRef: React.RefObject<HTMLDiv
             const ord = visibleOrders[orderNN - 1];
             if (ord == null) return;
 
-            comCommentRedactOrdSelectorIdAtom.set(ComBlockCommentMakerCleans.makeOrdSelector(ord));
+            cmComCommentRedactOrdSelectorIdAtom.set(ComBlockCommentMakerCleans.makeOrdSelector(ord));
           },
         ),
       )

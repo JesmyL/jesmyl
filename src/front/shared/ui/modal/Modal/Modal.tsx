@@ -1,3 +1,4 @@
+import { Dialog } from '#shared/components/ui/dialog';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
 import { Portal } from '#shared/ui/Portal';
@@ -5,7 +6,7 @@ import { RootAnchoredContent } from '#shared/ui/RootAnchoredContent';
 import { Atom, useAtomValue } from 'atomaric';
 import { TrustChildrenCheckType } from 'front/types/TrustChildrenCheckType';
 import { useEffect } from 'react';
-import { StyledModal, StyledModalScreen, StyledModalScreenWrapper } from '../styled';
+import { StyledModalScreen, StyledModalScreenWrapper } from '../styled';
 
 export const Modal = <Value, TrustValue extends Value>({
   mood,
@@ -25,15 +26,16 @@ export const Modal = <Value, TrustValue extends Value>({
 
   const modalNode = isOpen && (
     <Portal>
-      <StyledModal
-        className="type_screen"
-        onClick={event => {
-          event.stopPropagation();
-          onClose(openAtom);
-        }}
-      >
+      <Dialog.Root>
+        <Dialog.Overlay />
         <EscapableModal onClose={() => onClose(openAtom)} />
-        <StyledModalScreenWrapper className="type_screen">
+        <StyledModalScreenWrapper
+          className="type_screen bg-x1/97"
+          onClick={event => {
+            event.stopPropagation();
+            onClose(openAtom);
+          }}
+        >
           <StyledModalScreen
             className={'type_screen mood mood_' + mood}
             onClick={propagationStopper}
@@ -41,7 +43,7 @@ export const Modal = <Value, TrustValue extends Value>({
             {typeof children === 'function' ? children(value as never) : children}
           </StyledModalScreen>
         </StyledModalScreenWrapper>
-      </StyledModal>
+      </Dialog.Root>
     </Portal>
   );
 

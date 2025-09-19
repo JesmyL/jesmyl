@@ -1,8 +1,8 @@
 import { useBibleTranslatesContext } from '$bible/basis/lib/contexts/translates';
 import { bibleShowTranslatesAtom } from '$bible/basis/lib/store/atoms';
-import { cmIDB } from '$cm/basis/lib/store/cmIDB';
+import { cmComCommentAltKeyAtom } from '$cm/basis/lib/store/atoms';
+import { useCmComCommentBlock } from '$cm/basis/lib/store/useCmComCommentBlock';
 import { useAtomValue } from 'atomaric';
-import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmComWid } from 'shared/api';
@@ -13,6 +13,7 @@ import { Order } from '../../order/Order';
 import { ComBlockCommentMakerCleans } from './Cleans';
 
 export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order[] | und) => {
+  const altCommentKey = useAtomValue(cmComCommentAltKeyAtom);
   const [styles, setStyles] = useState<
     Partial<{
       commentCss: RuleSet<object> | '';
@@ -20,8 +21,7 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
     }>
   >({});
   const translates = useBibleTranslatesContext();
-  const localCommentBlock = useLiveQuery(() => cmIDB.tb.localComCommentBlocks.get(comw), [comw]);
-  const commentBlock = useLiveQuery(() => cmIDB.tb.comCommentBlocks.get(comw), [comw]);
+  const { takeCommentTexts } = useCmComCommentBlock(comw);
   const currentBibleTranslate = useAtomValue(bibleShowTranslatesAtom)[0];
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
         visibleOrders?.map(ord => {
           const ordSelectorId = ComBlockCommentMakerCleans.makeOrdSelector(ord);
 
-          const commentLines = localCommentBlock?.d?.[ordSelectorId] ?? commentBlock?.d?.[ordSelectorId];
+          const commentLines = takeCommentTexts(ordSelectorId);
           if (commentLines == null) return '';
 
           let isNumeredLines = false;
@@ -89,16 +89,14 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
       let isThereUnsettedTranslate = false;
 
       const headCommentContents = await Promise.all(
-        (localCommentBlock?.d?.head ?? commentBlock?.d?.head ?? []).map(async (line, linei) => {
+        (takeCommentTexts('head') ?? []).map(async (line, linei) => {
           const { startCommentCss, isThereUnsettedTranslate: isUnset } =
             await ComBlockCommentMakerCleans.makeStartCommentCss(currentBibleTranslate, line, translates);
 
           isThereUnsettedTranslate ||= isUnset;
 
           return css`
-            ${commentHolderSelectors[linei - 1]
-              ? `.com-orders-with-comments > ${commentHolderSelectors[linei - 1]}`
-              : '&::before'} {
+            ${`.com-orders-with-comments > ${commentHolderSelectors[linei + 1]}`} {
               ${startCommentCss}
             }
           `;
@@ -112,6 +110,13 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
           --comment-opacity-accent: 0.8;
 
           ${headCommentContents}
+
+          ${altCommentKey &&
+          css`
+            .com-orders-with-comments > .alt-key-holder::before {
+              ${ComBlockCommentMakerCleans.makePseudoCommentContentCss(`${altCommentKey.toUpperCase()}\n`)}
+            }
+          `}
 
           .styled-header {
             &::after,
@@ -142,7 +147,7 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
     })()
       .then(styles => setStyles(styles))
       .catch(emptyFunc);
-  }, [commentBlock?.d, currentBibleTranslate, localCommentBlock?.d, translates, visibleOrders]);
+  }, [altCommentKey, currentBibleTranslate, takeCommentTexts, translates, visibleOrders]);
 
   return styles;
 };
@@ -150,10 +155,11 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
 const plusInheritBlockStyleSelector = ` + [inherit-block-style]:not(:has(.styled-header))`;
 
 const commentHolderSelectors = [
-  '.comment-holder:nth-child(1)::before',
-  '.comment-holder:nth-child(1)::after',
   '.comment-holder:nth-child(2)::before',
   '.comment-holder:nth-child(2)::after',
   '.comment-holder:nth-child(3)::before',
   '.comment-holder:nth-child(3)::after',
+  '.comment-holder:nth-child(4)::before',
+  '.comment-holder:nth-child(4)::after',
+  '.comment-holder:nth-child(5)::before',
 ];

@@ -26,7 +26,7 @@ export const IndexTelegramAuthPage = () => {
   const [errors] = useAuthErrors();
   const navigate = useNavigate();
   const error = (message: string | nil) => message && <div className="login-error-message">{message}</div>;
-  const toast = useToast({ mood: 'ko' });
+  const toast = useToast();
 
   return (
     <IndexTelegramAuthStyledPage
@@ -129,7 +129,7 @@ export const IndexTelegramAuthPage = () => {
                     }}
                     onFailure={errorMessage => {
                       setIsLoading(false);
-                      toast(errorMessage);
+                      toast(errorMessage, { mood: 'ko' });
                     }}
                     onSend={async () => {
                       setIsLoading(true);

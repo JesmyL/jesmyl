@@ -16,7 +16,7 @@ import { useLaterComList } from '$cm/base/useLaterComList';
 import { comPlayerHeaderStickyCss } from '$cm/basis/css/com-player';
 import { useFixedCcom } from '$cm/basis/lib/com-selections';
 import { useCmCurrentComPackContext } from '$cm/basis/lib/contexts/current-com-list';
-import { cmPlayerHideModeAtom } from '$cm/basis/lib/store/atoms';
+import { cmComCommentRedactOrdSelectorIdAtom, cmPlayerHideModeAtom } from '$cm/basis/lib/store/atoms';
 import { cmTsjrpcClient } from '$cm/tsjrpc/basic.tsjrpc.methods';
 import { Link } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
@@ -24,7 +24,6 @@ import { useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 import { CmComCommentModalInner } from './CommentModalInner';
 import { ComNotFoundPage } from './ComNotFoundPage';
-import { comCommentRedactOrdSelectorIdAtom } from './complect/comment-parser/complect';
 import { useCheckIsComCommentIncludesBibleAddress } from './complect/comment-parser/useCheckIsComCommentIncludesBibleAddress';
 import { CmComNumber } from './complect/ComNumber';
 import { ComPlayerWithPoints } from './player/ComPlayerWithPoints';
@@ -119,8 +118,7 @@ export function TheComposition() {
 
           <Modal
             key="com-comment"
-            openAtom={comCommentRedactOrdSelectorIdAtom}
-            checkIsOpen={it => it != null}
+            openAtom={cmComCommentRedactOrdSelectorIdAtom}
           >
             <CmComCommentModalInner com={ccom} />
           </Modal>

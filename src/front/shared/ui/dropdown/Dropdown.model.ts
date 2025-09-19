@@ -7,8 +7,9 @@ export interface DropdownProps<Id, Item extends DropdownItem<Id>> {
   onSelect?: (item: Item) => und | void | null | Promise<unknown>;
   onSelectId?: (item: Id) => und | void | null | Promise<unknown>;
   className?: string;
-  undTitle?: string;
-  nullTitle?: string;
+  undTitle?: React.ReactNode;
+  nullTitle?: React.ReactNode;
+  addContent?: React.ReactNode;
   disabled?: boolean;
   hiddenIds?: (Id | null)[];
 }

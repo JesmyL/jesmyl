@@ -8,6 +8,7 @@ import { soki } from 'front/soki';
 import { useSyncExternalStore } from 'react';
 import { routeTree } from 'routeTree.gen';
 import { BlockStylesProvider } from 'shared/values/cm/block-styles/BlockStylesProvider';
+import { Toaster } from 'sonner';
 import { makeStameskaIconStyledProvider } from 'stameska-icon/provider';
 import styled, { css, keyframes } from 'styled-components';
 import './App.scss';
@@ -33,6 +34,7 @@ export const App = () => {
           </AppDialogProvider>
         </BlockStylesProvider>
       </StyledIconProvider>
+      <Toaster position="bottom-center" />
     </QueryClientProvider>
   );
 };
