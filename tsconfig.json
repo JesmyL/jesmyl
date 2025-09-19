@@ -49,6 +49,15 @@
       "$bible/basis/*": ["./front/components/apps/bible/07-basis/*"],
       "$bible/*": ["./front/components/apps/bible/*"],
 
+      "$q/app/*": ["./front/components/apps/q/01-app/*"],
+      "$q/processes/*": ["./front/components/apps/q/02-processes/*"],
+      "$q/pages/*": ["./front/components/apps/q/03-pages/*"],
+      "$q/widgets/*": ["./front/components/apps/q/04-widgets/*"],
+      "$q/features/*": ["./front/components/apps/q/05-features/*"],
+      "$q/entities/*": ["./front/components/apps/q/06-entities/*"],
+      "$q/basis/*": ["./front/components/apps/q/07-basis/*"],
+      "$q/*": ["./front/components/apps/q/*"],
+
       "$index/*": ["./front/components/index/*"],
       "$app/*": ["./front/app/*"],
 

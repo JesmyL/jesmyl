@@ -14,6 +14,7 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './front/routes/__root'
 import { Route as TunerRouteImport } from './front/routes/tuner/route'
+import { Route as QRouteImport } from './front/routes/q/route'
 import { Route as CmRouteImport } from './front/routes/cm/route'
 import { Route as BibleRouteImport } from './front/routes/bible/route'
 import { Route as IndexImport } from './front/routes/index'
@@ -21,16 +22,19 @@ import { Route as TunerIndexImport } from './front/routes/tuner/index'
 import { Route as CmIndexImport } from './front/routes/cm/index'
 import { Route as BibleIndexImport } from './front/routes/bible/index'
 import { Route as TunerIImport } from './front/routes/tuner/i'
+import { Route as QIImport } from './front/routes/q/i'
 import { Route as BibleTranImport } from './front/routes/bible/tran'
 import { Route as BibleSearchImport } from './front/routes/bible/search'
 import { Route as BibleIImport } from './front/routes/bible/i'
 import { Route as CmEditRouteImport } from './front/routes/cm/edit/route'
 import { Route as otherAppNameRouteImport } from './front/routes/!other.$appName/route'
 import { Route as ScheduleDaySchwIndexImport } from './front/routes/schedule-day/$schw/index'
+import { Route as QRIndexImport } from './front/routes/q/r/index'
 import { Route as CmPlayerIndexImport } from './front/routes/cm/player/index'
 import { Route as CmLiIndexImport } from './front/routes/cm/li/index'
 import { Route as CmIIndexImport } from './front/routes/cm/i/index'
 import { Route as otherAppNameIndexImport } from './front/routes/!other.$appName/index'
+import { Route as QRBlankImport } from './front/routes/q/r/$blank'
 import { Route as CmLiSelImport } from './front/routes/cm/li/sel'
 import { Route as CmLiFavImport } from './front/routes/cm/li/fav'
 import { Route as CmLiEventsImport } from './front/routes/cm/li/events'
@@ -63,6 +67,12 @@ const CmEditIndexLazyImport = createFileRoute('/cm/edit/')()
 const TunerRouteRoute = TunerRouteImport.update({
   id: '/tuner',
   path: '/tuner',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const QRouteRoute = QRouteImport.update({
+  id: '/q',
+  path: '/q',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -116,6 +126,12 @@ const TunerIRoute = TunerIImport.update({
   getParentRoute: () => TunerRouteRoute,
 } as any)
 
+const QIRoute = QIImport.update({
+  id: '/i',
+  path: '/i',
+  getParentRoute: () => QRouteRoute,
+} as any)
+
 const BibleTranRoute = BibleTranImport.update({
   id: '/tran',
   path: '/tran',
@@ -160,6 +176,12 @@ const ScheduleDaySchwIndexRoute = ScheduleDaySchwIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const QRIndexRoute = QRIndexImport.update({
+  id: '/r/',
+  path: '/r/',
+  getParentRoute: () => QRouteRoute,
+} as any)
+
 const CmPlayerIndexRoute = CmPlayerIndexImport.update({
   id: '/player/',
   path: '/player/',
@@ -182,6 +204,12 @@ const otherAppNameIndexRoute = otherAppNameIndexImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => otherAppNameRouteRoute,
+} as any)
+
+const QRBlankRoute = QRBlankImport.update({
+  id: '/r/$blank',
+  path: '/r/$blank',
+  getParentRoute: () => QRouteRoute,
 } as any)
 
 const CmLiSelRoute = CmLiSelImport.update({
@@ -339,6 +367,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CmRouteImport
       parentRoute: typeof rootRoute
     }
+    '/q': {
+      id: '/q'
+      path: '/q'
+      fullPath: '/q'
+      preLoaderRoute: typeof QRouteImport
+      parentRoute: typeof rootRoute
+    }
     '/tuner': {
       id: '/tuner'
       path: '/tuner'
@@ -380,6 +415,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/bible/tran'
       preLoaderRoute: typeof BibleTranImport
       parentRoute: typeof BibleRouteImport
+    }
+    '/q/i': {
+      id: '/q/i'
+      path: '/i'
+      fullPath: '/q/i'
+      preLoaderRoute: typeof QIImport
+      parentRoute: typeof QRouteImport
     }
     '/tuner/i': {
       id: '/tuner/i'
@@ -472,6 +514,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CmLiSelImport
       parentRoute: typeof CmRouteImport
     }
+    '/q/r/$blank': {
+      id: '/q/r/$blank'
+      path: '/r/$blank'
+      fullPath: '/q/r/$blank'
+      preLoaderRoute: typeof QRBlankImport
+      parentRoute: typeof QRouteImport
+    }
     '/!other/$appName/': {
       id: '/!other/$appName/'
       path: '/'
@@ -499,6 +548,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/cm/player'
       preLoaderRoute: typeof CmPlayerIndexImport
       parentRoute: typeof CmRouteImport
+    }
+    '/q/r/': {
+      id: '/q/r/'
+      path: '/r'
+      fullPath: '/q/r'
+      preLoaderRoute: typeof QRIndexImport
+      parentRoute: typeof QRouteImport
     }
     '/schedule-day/$schw/': {
       id: '/schedule-day/$schw/'
@@ -699,6 +755,21 @@ const CmRouteRouteChildren: CmRouteRouteChildren = {
 const CmRouteRouteWithChildren =
   CmRouteRoute._addFileChildren(CmRouteRouteChildren)
 
+interface QRouteRouteChildren {
+  QIRoute: typeof QIRoute
+  QRBlankRoute: typeof QRBlankRoute
+  QRIndexRoute: typeof QRIndexRoute
+}
+
+const QRouteRouteChildren: QRouteRouteChildren = {
+  QIRoute: QIRoute,
+  QRBlankRoute: QRBlankRoute,
+  QRIndexRoute: QRIndexRoute,
+}
+
+const QRouteRouteWithChildren =
+  QRouteRoute._addFileChildren(QRouteRouteChildren)
+
 interface TunerRouteRouteChildren {
   TunerIRoute: typeof TunerIRoute
   TunerIndexRoute: typeof TunerIndexRoute
@@ -742,12 +813,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/bible': typeof BibleRouteRouteWithChildren
   '/cm': typeof CmRouteRouteWithChildren
+  '/q': typeof QRouteRouteWithChildren
   '/tuner': typeof TunerRouteRouteWithChildren
   '/!other/$appName': typeof otherAppNameRouteRouteWithChildren
   '/cm/edit': typeof CmEditRouteRouteWithChildren
   '/bible/i': typeof BibleIRoute
   '/bible/search': typeof BibleSearchRoute
   '/bible/tran': typeof BibleTranRoute
+  '/q/i': typeof QIRoute
   '/tuner/i': typeof TunerIRoute
   '/bible/': typeof BibleIndexRoute
   '/cm/': typeof CmIndexRoute
@@ -761,10 +834,12 @@ export interface FileRoutesByFullPath {
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
   '/cm/li/sel': typeof CmLiSelRoute
+  '/q/r/$blank': typeof QRBlankRoute
   '/!other/$appName/': typeof otherAppNameIndexRoute
   '/cm/i': typeof CmIIndexRoute
   '/cm/li': typeof CmLiIndexRoute
   '/cm/player': typeof CmPlayerIndexRoute
+  '/q/r': typeof QRIndexRoute
   '/schedule-day/$schw': typeof ScheduleDaySchwIndexRoute
   '/cm/edit/': typeof CmEditIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
@@ -784,9 +859,11 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/q': typeof QRouteRouteWithChildren
   '/bible/i': typeof BibleIRoute
   '/bible/search': typeof BibleSearchRoute
   '/bible/tran': typeof BibleTranRoute
+  '/q/i': typeof QIRoute
   '/tuner/i': typeof TunerIRoute
   '/bible': typeof BibleIndexRoute
   '/cm': typeof CmIndexRoute
@@ -800,10 +877,12 @@ export interface FileRoutesByTo {
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
   '/cm/li/sel': typeof CmLiSelRoute
+  '/q/r/$blank': typeof QRBlankRoute
   '/!other/$appName': typeof otherAppNameIndexRoute
   '/cm/i': typeof CmIIndexRoute
   '/cm/li': typeof CmLiIndexRoute
   '/cm/player': typeof CmPlayerIndexRoute
+  '/q/r': typeof QRIndexRoute
   '/schedule-day/$schw': typeof ScheduleDaySchwIndexRoute
   '/cm/edit': typeof CmEditIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
@@ -825,12 +904,14 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/bible': typeof BibleRouteRouteWithChildren
   '/cm': typeof CmRouteRouteWithChildren
+  '/q': typeof QRouteRouteWithChildren
   '/tuner': typeof TunerRouteRouteWithChildren
   '/!other/$appName': typeof otherAppNameRouteRouteWithChildren
   '/cm/edit': typeof CmEditRouteRouteWithChildren
   '/bible/i': typeof BibleIRoute
   '/bible/search': typeof BibleSearchRoute
   '/bible/tran': typeof BibleTranRoute
+  '/q/i': typeof QIRoute
   '/tuner/i': typeof TunerIRoute
   '/bible/': typeof BibleIndexRoute
   '/cm/': typeof CmIndexRoute
@@ -844,10 +925,12 @@ export interface FileRoutesById {
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
   '/cm/li/sel': typeof CmLiSelRoute
+  '/q/r/$blank': typeof QRBlankRoute
   '/!other/$appName/': typeof otherAppNameIndexRoute
   '/cm/i/': typeof CmIIndexRoute
   '/cm/li/': typeof CmLiIndexRoute
   '/cm/player/': typeof CmPlayerIndexRoute
+  '/q/r/': typeof QRIndexRoute
   '/schedule-day/$schw/': typeof ScheduleDaySchwIndexRoute
   '/cm/edit/': typeof CmEditIndexLazyRoute
   '/!other/$appName/settings/console': typeof otherAppNameSettingsConsoleRoute
@@ -871,12 +954,14 @@ export interface FileRouteTypes {
     | '/'
     | '/bible'
     | '/cm'
+    | '/q'
     | '/tuner'
     | '/!other/$appName'
     | '/cm/edit'
     | '/bible/i'
     | '/bible/search'
     | '/bible/tran'
+    | '/q/i'
     | '/tuner/i'
     | '/bible/'
     | '/cm/'
@@ -890,10 +975,12 @@ export interface FileRouteTypes {
     | '/cm/li/events'
     | '/cm/li/fav'
     | '/cm/li/sel'
+    | '/q/r/$blank'
     | '/!other/$appName/'
     | '/cm/i'
     | '/cm/li'
     | '/cm/player'
+    | '/q/r'
     | '/schedule-day/$schw'
     | '/cm/edit/'
     | '/!other/$appName/settings/console'
@@ -912,9 +999,11 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/q'
     | '/bible/i'
     | '/bible/search'
     | '/bible/tran'
+    | '/q/i'
     | '/tuner/i'
     | '/bible'
     | '/cm'
@@ -928,10 +1017,12 @@ export interface FileRouteTypes {
     | '/cm/li/events'
     | '/cm/li/fav'
     | '/cm/li/sel'
+    | '/q/r/$blank'
     | '/!other/$appName'
     | '/cm/i'
     | '/cm/li'
     | '/cm/player'
+    | '/q/r'
     | '/schedule-day/$schw'
     | '/cm/edit'
     | '/!other/$appName/settings/console'
@@ -951,12 +1042,14 @@ export interface FileRouteTypes {
     | '/'
     | '/bible'
     | '/cm'
+    | '/q'
     | '/tuner'
     | '/!other/$appName'
     | '/cm/edit'
     | '/bible/i'
     | '/bible/search'
     | '/bible/tran'
+    | '/q/i'
     | '/tuner/i'
     | '/bible/'
     | '/cm/'
@@ -970,10 +1063,12 @@ export interface FileRouteTypes {
     | '/cm/li/events'
     | '/cm/li/fav'
     | '/cm/li/sel'
+    | '/q/r/$blank'
     | '/!other/$appName/'
     | '/cm/i/'
     | '/cm/li/'
     | '/cm/player/'
+    | '/q/r/'
     | '/schedule-day/$schw/'
     | '/cm/edit/'
     | '/!other/$appName/settings/console'
@@ -996,6 +1091,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BibleRouteRoute: typeof BibleRouteRouteWithChildren
   CmRouteRoute: typeof CmRouteRouteWithChildren
+  QRouteRoute: typeof QRouteRouteWithChildren
   TunerRouteRoute: typeof TunerRouteRouteWithChildren
   otherAppNameRouteRoute: typeof otherAppNameRouteRouteWithChildren
   ScheduleDayIndexLazyRoute: typeof ScheduleDayIndexLazyRoute
@@ -1006,6 +1102,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BibleRouteRoute: BibleRouteRouteWithChildren,
   CmRouteRoute: CmRouteRouteWithChildren,
+  QRouteRoute: QRouteRouteWithChildren,
   TunerRouteRoute: TunerRouteRouteWithChildren,
   otherAppNameRouteRoute: otherAppNameRouteRouteWithChildren,
   ScheduleDayIndexLazyRoute: ScheduleDayIndexLazyRoute,
@@ -1025,6 +1122,7 @@ export const routeTree = rootRoute
         "/",
         "/bible",
         "/cm",
+        "/q",
         "/tuner",
         "/!other/$appName",
         "/schedule-day/",
@@ -1055,6 +1153,14 @@ export const routeTree = rootRoute
         "/cm/li/",
         "/cm/player/",
         "/cm/li/cat/$catw"
+      ]
+    },
+    "/q": {
+      "filePath": "q/route.tsx",
+      "children": [
+        "/q/i",
+        "/q/r/$blank",
+        "/q/r/"
       ]
     },
     "/tuner": {
@@ -1104,6 +1210,10 @@ export const routeTree = rootRoute
     "/bible/tran": {
       "filePath": "bible/tran.tsx",
       "parent": "/bible"
+    },
+    "/q/i": {
+      "filePath": "q/i.tsx",
+      "parent": "/q"
     },
     "/tuner/i": {
       "filePath": "tuner/i.tsx",
@@ -1156,6 +1266,10 @@ export const routeTree = rootRoute
       "filePath": "cm/li/sel.tsx",
       "parent": "/cm"
     },
+    "/q/r/$blank": {
+      "filePath": "q/r/$blank.tsx",
+      "parent": "/q"
+    },
     "/!other/$appName/": {
       "filePath": "!other.$appName/index.tsx",
       "parent": "/!other/$appName"
@@ -1171,6 +1285,10 @@ export const routeTree = rootRoute
     "/cm/player/": {
       "filePath": "cm/player/index.tsx",
       "parent": "/cm"
+    },
+    "/q/r/": {
+      "filePath": "q/r/index.tsx",
+      "parent": "/q"
     },
     "/schedule-day/$schw/": {
       "filePath": "schedule-day/$schw/index.tsx"
