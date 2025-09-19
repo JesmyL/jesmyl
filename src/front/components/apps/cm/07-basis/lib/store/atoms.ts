@@ -20,4 +20,4 @@ export const cmLastOpenComwAtom = atom<CmComWid | und>(undefined, 'cm:lastOpenCo
 
 export const cmComCommentRedactOrdSelectorIdAtom = atom<CmComCommentBlockSelector | null>(null);
 export const cmComCommentAltKeyAtom = atom<string | null>(null, 'cm:comCurrentCommentAltKey');
-export const cmComCommentRegisteredAltKeysAtom = atom<string[]>([], 'cm:comCommentRegisteredAltKeys');
+export const cmComCommentRegisteredAltKeysAtom = atom<Set<string>>(new Set(), 'cm:comCommentRegisteredAltKeys');

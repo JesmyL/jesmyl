@@ -132,9 +132,9 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
           id={altCommentKey}
           nullTitle={<span className="text-x7">Общ</span>}
           onSelectId={cmComCommentAltKeyAtom.set}
-          items={registeredAltKeys.map(key => ({ id: key, title: key }))}
+          items={Array.from(registeredAltKeys).map(key => ({ id: key, title: key }))}
           addContent={
-            registeredAltKeys.length < maxComCommentAlternativesCount && (
+            registeredAltKeys.size < maxComCommentAlternativesCount && (
               <Button
                 asSpan
                 className="text-x7"
@@ -153,15 +153,15 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
                     });
 
                   cmComCommentRegisteredAltKeysAtom.set(
-                    Array.from(altKeysSet).slice(0, maxComCommentAlternativesCount),
+                    new Set(Array.from(altKeysSet).slice(0, maxComCommentAlternativesCount)),
                   );
 
-                  if (cmComCommentRegisteredAltKeysAtom.get().length >= maxComCommentAlternativesCount) {
+                  if (cmComCommentRegisteredAltKeysAtom.get().size >= maxComCommentAlternativesCount) {
                     toast('Добавлено максимальное количество альтернатив');
                     return;
                   }
 
-                  const altCommentKey = await prompt('Добавить новую альтернативу');
+                  const altCommentKey = (await prompt('Добавить новую альтернативу'))?.toLowerCase();
                   const localComment = await cmIDB.tb.localComCommentBlocks.get(com.wid);
 
                   if (!altCommentKey || (localComment?.alt && altCommentKey in localComment.alt)) {
@@ -180,6 +180,8 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
                     m: Date.now(),
                     alt: { ...localComment?.alt, [altCommentKey]: {} },
                   });
+
+                  cmComCommentRegisteredAltKeysAtom.do.add(altCommentKey);
                 }}
               >
                 <LazyIcon icon="PlusSign" />
