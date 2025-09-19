@@ -247,10 +247,6 @@ export class MyLib extends SMyLib {
     return refElem.parentNode?.insertBefore(elem, refElem.nextSibling);
   }
 
-  takeNewWid() {
-    return Date.now() + Math.random();
-  }
-
   scrollToView(
     element: Element | null,
     position = 'center',

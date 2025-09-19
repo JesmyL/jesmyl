@@ -13,6 +13,7 @@ export const TheIconLoading = (props: Props) => {
     return (
       <StyledLoadingSpinner
         icon="Loading03"
+        withoutAnimation
         {...attrs}
       />
     );
@@ -20,6 +21,7 @@ export const TheIconLoading = (props: Props) => {
   return isLoading ? (
     <StyledLoadingSpinner
       icon="Loading03"
+      withoutAnimation
       {...attrs}
     />
   ) : (

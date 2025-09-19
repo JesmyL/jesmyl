@@ -33,5 +33,3 @@ export function ScheduleWidgetTopicTitle<TitleBox extends { title?: string }>({
     </div>
   );
 }
-
-console.log(twMerge('text-green-300 text-xKO text-kjasdkjjk text-wrapper'));

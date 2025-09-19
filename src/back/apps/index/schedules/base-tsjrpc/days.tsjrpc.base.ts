@@ -32,7 +32,7 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
           modifySchedule(true, props, sch =>
             sch.days.push({
               list: [],
-              mi: smylib.takeNextMi(sch.days, 0),
+              mi: smylib.takeNextMi(sch.days, 0 as number),
               wup: 7,
             }),
           ),

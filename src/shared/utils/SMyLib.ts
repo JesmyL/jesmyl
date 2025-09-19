@@ -45,7 +45,8 @@ export class SMyLib {
   isNl = (it: unknown) => this.isNaN(it) || this.isNil(it);
   isNNlButUnd = (it: unknown) => (this.isNl(it) ? undefined : true);
 
-  static entries = <T>(it: T): [keyof T, T[keyof T]][] => (it == null ? [] : Object.entries(it)) as never;
+  static entries = <T>(it: T): [keyof T | (keyof T extends number ? `${keyof T}` : keyof T), T[keyof T]][] =>
+    (it == null ? [] : Object.entries(it)) as never;
 
   static keys<T, Key extends T extends object ? keyof T : string>(it: T): Key[] {
     if (it == null) return [];
@@ -119,13 +120,19 @@ export class SMyLib {
     return what;
   }
 
-  takeNextMi<Mi extends number, Item extends Record<MiKey, Mi | number>, MiKey extends string = 'mi'>(
+  takeNextMi<Mi extends number, Item extends { [k in MiKey]: Mi }, MiKey extends string = 'mi'>(
     list: Item[],
-    minimalMi: Mi | number,
+    minimalMi: Mi,
     miKey?: MiKey,
-  ) {
+  ): Mi {
     const key = miKey ?? 'mi';
-    return list.reduce((max, item) => Math.max(item[key as never] as never, max), minimalMi - 1) + 1;
+    return (list.reduce((max, item) => Math.max(item[key as never] as never, max), minimalMi - 1) + 1) as never;
+  }
+
+  takeNewWid<Wid extends number>(prev: PRecord<Wid, unknown>): Wid {
+    let wid = Date.now() + Math.random();
+    for (; wid in prev; wid++);
+    return wid as never;
   }
 
   isEq(base: unknown, source: unknown, isIgnoreArrayItemsOrder?: boolean) {

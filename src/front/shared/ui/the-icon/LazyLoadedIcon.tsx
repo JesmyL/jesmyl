@@ -79,7 +79,7 @@ const WithoutStaticProps = ({ icon, className, kind = 'StrokeRounded', withoutAn
 
   useEffect(() => {
     (async () => {
-      const pack = (cachedPacks[icon] ??= (await indexIDB.tb.iconPacks.get(icon))?.pack);
+      const pack = (cachedPacks[icon] ??= icon && (await indexIDB.tb.iconPacks.get(icon))?.pack);
 
       setStaticIconProps((cachedStaticProps[`${icon}/${kind}`] = makeStameskaIconSvgHTMLProp(pack!, kind)));
     })();

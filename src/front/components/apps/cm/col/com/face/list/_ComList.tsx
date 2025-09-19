@@ -48,17 +48,17 @@ export const ComFaceListComList = (props: ComFaceListProps) => {
     >
       {props.list.slice(isIOS ? 0 : limits.start, limits.finish).map((com, comi) => {
         return (
-          <FaceItem
+          <FaceItem.Root
             key={isSetWids ? com.wid : comi}
             id={`${cmCurrentComwIdPrefix}${com.wid}`}
             className={`flex between pointer ${comi}-comi`}
           >
-            <div className="face-logo">
+            <FaceItem.Logo>
               <CmComNumber comw={com.wid} />
-            </div>
-            <span className="face-title ellipsis">{com.name}</span>
+            </FaceItem.Logo>
+            <FaceItem.Title>{com.name}</FaceItem.Title>
             {setComDescription(com, comi)}
-          </FaceItem>
+          </FaceItem.Root>
         );
       })}
     </ComListControlledContainer>

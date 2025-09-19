@@ -3,7 +3,6 @@ import * as React from 'react';
 
 import { cn } from '#shared/lib/utils';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { atom } from 'atomaric';
 
 export const DropdownMenu = {
   Root({ ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Root>) {
@@ -228,5 +227,3 @@ export const DropdownMenu = {
     );
   },
 };
-
-console.log(atom(123));

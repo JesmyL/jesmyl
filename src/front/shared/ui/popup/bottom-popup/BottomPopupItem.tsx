@@ -1,12 +1,12 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { HTMLAttributes, JSX } from 'react';
+import { HTMLAttributes } from 'react';
 import { StameskaIconKind } from 'stameska-icon/utils';
 import { twMerge } from 'tailwind-merge';
 import { useBottomPopupOnCloseContext } from './context';
 
 interface Props extends HTMLAttributes<HTMLLIElement> {
   icon?: KnownStameskaIconName;
-  iconNode?: JSX.Element;
+  iconNode?: React.ReactNode;
   iconKind?: StameskaIconKind;
   titleNode?: React.ReactNode;
   title?: string;

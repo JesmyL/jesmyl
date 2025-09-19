@@ -47,7 +47,7 @@ export const schListsTsjrpcBaseServer = new (class SchLists extends TsjrpcBaseSe
 
         createUnit: ({ props, cati }) =>
           modifySchedule(false, props, sch => {
-            const mi = smylib.takeNextMi(sch.lists.units, 0);
+            const mi = smylib.takeNextMi(sch.lists.units, 0 as number);
 
             sch.lists.units.push({
               mi,

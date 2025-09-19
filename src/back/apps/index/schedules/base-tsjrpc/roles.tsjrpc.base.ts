@@ -24,7 +24,7 @@ export const schRolesTsjrpcBaseServer = new (class SchRoles extends TsjrpcBaseSe
       methods: {
         createRole: ({ props }) =>
           modifySchedule(false, props, sch =>
-            sch.ctrl.roles.push({ mi: smylib.takeNextMi(sch.ctrl.roles, 0), title: 'Помощьник' }),
+            sch.ctrl.roles.push({ mi: smylib.takeNextMi(sch.ctrl.roles, 0 as number), title: 'Помощьник' }),
           ),
 
         setRoleCategoryTitle: ({ props, cati, title }) =>

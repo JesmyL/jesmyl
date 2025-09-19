@@ -1,5 +1,7 @@
+import { defaultQueryClient } from '#basis/lib/config/queryClient';
 import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
 import { authIDB } from '$index/db/auth-idb';
+import { QueryClientProvider } from '@tanstack/react-query';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { configureAtomaric } from 'atomaric';
 import { soki } from 'front/soki';
@@ -23,13 +25,15 @@ declare module '@tanstack/react-router' {
 
 export const App = () => {
   return (
-    <StyledIconProvider>
-      <BlockStylesProvider>
-        <AppDialogProvider title="app">
-          <RouterProvider router={router} />
-        </AppDialogProvider>
-      </BlockStylesProvider>
-    </StyledIconProvider>
+    <QueryClientProvider client={defaultQueryClient}>
+      <StyledIconProvider>
+        <BlockStylesProvider>
+          <AppDialogProvider title="app">
+            <RouterProvider router={router} />
+          </AppDialogProvider>
+        </BlockStylesProvider>
+      </StyledIconProvider>
+    </QueryClientProvider>
   );
 };
 

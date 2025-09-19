@@ -15,8 +15,8 @@ ErrorCatcher.logAllErrors();
 
 export class SokiServer {
   private clients = new Set<WebSocket>();
-  private auths = new Map<WebSocket, LocalSokiAuth>();
-  private clientsByLogin = new Map<SokiAuthLogin, Set<WebSocket>>();
+  auths = new Map<WebSocket, LocalSokiAuth>();
+  clientsByLogin = new Map<SokiAuthLogin, Set<WebSocket>>();
   private visits = new Map<WebSocket, SokiVisit>();
   private abortedRequestIdsSet = new Set<string>();
 

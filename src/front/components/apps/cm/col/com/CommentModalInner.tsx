@@ -85,7 +85,7 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
                     cmIDB.tb.localComCommentBlocks.put({
                       ...localCommentBlock,
                       comw: com.wid,
-                      m: mylib.takeNewWid(),
+                      m: Date.now(),
                       d: {
                         ...localCommentBlock?.d,
                         [ordSelectorId]: texts,

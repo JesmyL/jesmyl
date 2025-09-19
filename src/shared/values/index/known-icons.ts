@@ -35,6 +35,8 @@ export const knownStameskaIconNames = [
   'Bookmark03',
   'BookOpen01',
   'BookOpen02',
+  'BubbleChat',
+  'MessageEdit01',
   'Calendar01',
   'Calendar02',
   'Calendar03',

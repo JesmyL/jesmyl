@@ -139,7 +139,7 @@ export const schDayEventsTsjrpcBaseServer =
             modifyKeyValueAttachmentValueList(props, null, 'list', values => {
               if (itemMi == null) {
                 if (key == null || value == null) return;
-                values.push([key, value, smylib.takeNextMi(values, 0, '2')]);
+                values.push([key, value, smylib.takeNextMi(values, 0 as number, '2')]);
                 return;
               }
 
@@ -156,7 +156,7 @@ export const schDayEventsTsjrpcBaseServer =
                 const index = values.findIndex(([, , mi]) => mi === key);
                 if (index < 0) throw new Error('value not found');
                 values.splice(index, 1);
-              } else values.push([key, value, smylib.takeNextMi(values, 0, '2')]);
+              } else values.push([key, value, smylib.takeNextMi(values, 0 as number, '2')]);
             }),
 
           setKeyValueAttachmentValue: ({ props, itemMi, value }) =>

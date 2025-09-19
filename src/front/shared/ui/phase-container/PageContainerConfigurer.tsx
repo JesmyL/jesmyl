@@ -10,7 +10,7 @@ import { PageContainerConfigurerProps } from './PageContainerConfigurer.model';
 let navigate: () => void = emptyFunc;
 const swiper = backSwipableContainerMaker(() => navigate());
 
-export function PageContainerConfigurer(props: PageContainerConfigurerProps) {
+export const PageContainerConfigurer = (props: PageContainerConfigurerProps) => {
   const backButtonRef = useRef<HTMLAnchorElement>(null);
   navigate = () => backButtonRef.current?.click();
 
@@ -75,7 +75,7 @@ export function PageContainerConfigurer(props: PageContainerConfigurerProps) {
       </StyledPhaseContainerConfigurerContent>
     </div>
   );
-}
+};
 
 export const StyledPhaseContainerConfigurerHeadTitle = styled.span``;
 export const StyledPhaseContainerConfigurerHeadWithMoreIcon = styled.div``;
