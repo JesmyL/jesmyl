@@ -26,7 +26,7 @@ export type IndexTsjrpcModel = {
   getAccessRightTitles: () => IndexAppAccessRightTitles;
   getUserAccessRights: () => IndexAppUserAccessRights;
   updateUserAccessRight: UpdateUserAccessRight;
-  getIconExistsPacks: (args: { offset: number; limit: number }) => {
+  getIconExistsPacks: (args: { page: number; pageSize: number; searchTerm: string }) => {
     packs: StameskaIconPack[];
   };
 };

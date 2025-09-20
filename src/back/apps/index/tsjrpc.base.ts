@@ -19,11 +19,11 @@ import {
   TelegramNativeAuthUserData,
 } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
-import { itNNil, itNNull, smylib } from 'shared/utils';
+import { itIt, itNNil, itNNull, smylib } from 'shared/utils';
 import { updateCRUDAccesRightValue } from 'shared/utils/index/utils';
 import { knownStameskaIconNames, knownStameskaIconNamesMd5Hash } from 'shared/values/index/known-icons';
-import { stameskaIconPack } from 'stameska-icon/pack';
-import { StameskaIconPack } from 'stameska-icon/utils';
+import { StameskaIconName, stameskaIconPack } from 'stameska-icon/pack';
+import { StameskaIconKind, StameskaIconPack } from 'stameska-icon/utils';
 import {
   accessRightTitlesFileStore,
   appVersionFileStore,
@@ -36,6 +36,20 @@ import { schServerTsjrpcShareMethods } from './schedules/tsjrpc.shares';
 import { indexServerTsjrpcShareMethods } from './tsjrpc.methods';
 
 const deviceIdPostfixSymbols = '!@#$%^&*;.,?/|\\+=-'.split('');
+
+const stameskaKindRepRegExp = makeRegExp(
+  `/(${smylib
+    .keys({
+      BulkRounded: 0,
+      DuotoneRounded: 0,
+      SolidRounded: 0,
+      SolidSharp: 0,
+      StrokeRounded: 0,
+      StrokeSharp: 0,
+      TwotoneRounded: 0,
+    } satisfies Record<StameskaIconKind, 0>)
+    .join('|')})$/`,
+);
 
 const makeAuthFromUser = async (user: OmitOwn<TelegramBot.User, 'is_bot'>) => {
   try {
@@ -79,6 +93,7 @@ const authByTgUser = async ({ user }: { user: TelegramNativeAuthUserData }) => {
   const auth = await makeAuthFromUser(user);
   return { token: jwt.sign(auth, tokenSecretFileStore.getValue().token, { expiresIn: '100 D' }), auth };
 };
+const iconSearchCache: Record<string, StameskaIconPack[]> = {};
 
 export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<IndexTsjrpcModel> {
   constructor() {
@@ -191,8 +206,36 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
 
           if (schedules.length) schServerTsjrpcShareMethods.refreshSchedules({ schs: schedules }, client);
         },
-        getIconExistsPacks: async ({ limit, offset }) => {
-          return { packs: smylib.values(stameskaIconPack).slice(offset, offset + limit) };
+        getIconExistsPacks: async ({ pageSize, page, searchTerm }) => {
+          let iconPacks: StameskaIconPack[] | null = null;
+
+          if (searchTerm) {
+            const nameBeats = searchTerm
+              .trim()
+              .replace(/.*?([^/]+$)/, '$1')
+              .split(/(\d+)|\W|([A-Z][a-z]+)/)
+              .filter(itIt)
+              .map(name => `${name[0].toUpperCase()}${name.slice(1)}`);
+
+            const exactIconName = nameBeats.join('').replace(stameskaKindRepRegExp, '') as StameskaIconName;
+
+            if (stameskaIconPack[exactIconName] !== undefined) return { packs: [stameskaIconPack[exactIconName]] };
+
+            iconPacks = iconSearchCache[nameBeats.sort().join('')] ??= (() => {
+              const foundIconPacks: StameskaIconPack[] = [];
+
+              smylib.keys(stameskaIconPack).forEach(iconName => {
+                if (!nameBeats.some(beat => iconName.includes(beat))) return;
+                foundIconPacks.push(stameskaIconPack[iconName]);
+              });
+
+              return foundIconPacks;
+            })();
+          }
+
+          return {
+            packs: (iconPacks ?? smylib.values(stameskaIconPack)).slice(page * pageSize, page * pageSize + pageSize),
+          };
         },
         getDeviceId: async () => {
           return (makeTwiceKnownName().replace(makeRegExp('/ /g'), '_') +

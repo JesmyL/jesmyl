@@ -1,18 +1,25 @@
+import { Button } from '#shared/components/ui/button';
+import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
 import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
+import { useQuery } from '@tanstack/react-query';
 import { atom, useAtomValue } from 'atomaric';
-import { ReactNode, useEffect, useState } from 'react';
-import { StameskaIconPack } from 'stameska-icon/utils';
+import { ReactNode, useState } from 'react';
+import { itIt } from 'shared/utils';
+import { twMerge } from 'tailwind-merge';
 import { Modal } from '../modal/Modal/Modal';
 import { ModalBody } from '../modal/Modal/ModalBody';
 import { ModalHeader } from '../modal/Modal/ModalHeader';
 import { useToast } from '../modal/useToast';
 import { TextInput } from '../TextInput';
+import { TheIconLoading } from '../the-icon/IconLoading';
 import { LazyIcon } from '../the-icon/LazyIcon';
 import { TheIconButton } from '../the-icon/TheIconButton';
 
 const isOpenModalAtom = atom(false);
 const pageSize = 54;
-const offsetAtom = atom(0, 'icons:setOfListOffset');
+const pageAtom = atom(0, 'icons:setOfListPage');
+const searchTermAtom = atom('', 'icons:setOfListSearchTerm');
+const isSearchModeAtom = atom(false, 'icons:setOfListIsSearchMode');
 
 export default function IconConfigurator(props: {
   icon: KnownStameskaIconName;
@@ -20,21 +27,26 @@ export default function IconConfigurator(props: {
   used?: (KnownStameskaIconName | und)[];
   onSend: (icon: KnownStameskaIconName) => Promise<unknown>;
 }) {
-  const offset = useAtomValue(offsetAtom);
+  const isSearchMode = useAtomValue(isSearchModeAtom);
+  const page = useAtomValue(pageAtom);
+  const searchTermValue = useAtomValue(searchTermAtom);
+  const searchTerm = isSearchMode ? searchTermValue : '';
+
   const [loadingIcon, setLoadingIcon] = useState<KnownStameskaIconName | null>(null);
-  const [iconPacks, setIconPacks] = useState<StameskaIconPack[]>([]);
   const usedSet = new Set(props.used);
   const toast = useToast();
+  const searchTermDebounce = useDebounceValue(searchTerm, 1000);
 
-  useEffect(() => {
-    (async () => {
-      const { packs } = await indexTsjrpcClientMethods.getIconExistsPacks({
-        limit: pageSize,
-        offset: offset < 0 ? offset - pageSize : offset,
-      });
-      setIconPacks(packs);
-    })();
-  }, [offset]);
+  const { data: { packs: iconPacks = [] } = {}, isPending } = useQuery({
+    queryKey: ['IconConfigurator-iconsPage', page, searchTermDebounce],
+    placeholderData: itIt,
+    queryFn: () =>
+      indexTsjrpcClientMethods.getIconExistsPacks({
+        pageSize,
+        searchTerm: searchTermDebounce,
+        page: page < 0 ? page - 1 : page,
+      }),
+  });
 
   return (
     <>
@@ -58,14 +70,14 @@ export default function IconConfigurator(props: {
                   key={icon}
                   icon={icon}
                   pack={pack}
-                  className={'p-2 pointer ' + (props.icon === icon || usedSet.has(icon) ? ' text-x7' : '')}
+                  className={twMerge('p-2 pointer', (props.icon === icon || usedSet.has(icon)) && 'text-x7')}
                   withoutAnimation
                   onClick={async () => {
+                    isOpenModalAtom.set(false);
                     setLoadingIcon(icon);
 
                     try {
                       await props.onSend(icon);
-                      isOpenModalAtom.set(false);
                     } catch (error) {
                       toast('' + error);
                     }
@@ -75,22 +87,51 @@ export default function IconConfigurator(props: {
               );
             })}
           </div>
-          <div className="mt-5 flex justify-between">
-            <LazyIcon
-              icon="ArrowLeft02"
-              onClick={() => offsetAtom.do.increment(-pageSize)}
-            />
+          <div className="mt-5 flex justify-between @container">
+            <Button
+              size="icon"
+              onClick={() => pageAtom.do.increment(-1)}
+            >
+              <TheIconLoading
+                icon="ArrowLeft02"
+                isLoading={isPending}
+              />
+            </Button>
 
-            <TextInput
-              value={`${Math.trunc(offset / iconPacks.length)}`}
-              onChanged={value => offsetAtom.set(isNaN(+value) ? 0 : +value * pageSize)}
-              className="w-[5em]! text-center"
-            />
+            <span className="flex gap-2">
+              {isSearchMode ? (
+                <TextInput
+                  value={searchTerm}
+                  onInput={value => {
+                    searchTermAtom.set(value);
+                    pageAtom.reset();
+                  }}
+                  className="w-[8em]! text-center"
+                />
+              ) : (
+                <TextInput
+                  value={page}
+                  onInput={value => pageAtom.set(isNaN(+value) ? 0 : +value)}
+                  className="w-[5em]! text-center"
+                />
+              )}
+              <Button
+                size="icon"
+                onClick={isSearchModeAtom.do.toggle}
+              >
+                <LazyIcon icon={isSearchMode ? 'SearchRemove' : 'SearchFocus'} />
+              </Button>
+            </span>
 
-            <LazyIcon
-              icon="ArrowRight02"
-              onClick={() => offsetAtom.do.increment(pageSize)}
-            />
+            <Button
+              size="icon"
+              onClick={() => pageAtom.do.increment(1)}
+            >
+              <TheIconLoading
+                icon="ArrowRight02"
+                isLoading={isPending}
+              />
+            </Button>
           </div>
         </ModalBody>
       </Modal>
