@@ -37,7 +37,7 @@ import { indexServerTsjrpcShareMethods } from './tsjrpc.methods';
 
 const deviceIdPostfixSymbols = '!@#$%^&*;.,?/|\\+=-'.split('');
 
-const stameskaKindRepRegExp = makeRegExp(
+const stameskaKindPostfixReplaceRegExp = makeRegExp(
   `/(${smylib
     .keys({
       BulkRounded: 0,
@@ -48,7 +48,7 @@ const stameskaKindRepRegExp = makeRegExp(
       StrokeSharp: 0,
       TwotoneRounded: 0,
     } satisfies Record<StameskaIconKind, 0>)
-    .join('|')})$/`,
+    .join('|')}|Icon)$/`,
 );
 
 const makeAuthFromUser = async (user: OmitOwn<TelegramBot.User, 'is_bot'>) => {
@@ -217,7 +217,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
               .filter(itIt)
               .map(name => `${name[0].toUpperCase()}${name.slice(1)}`);
 
-            const exactIconName = nameBeats.join('').replace(stameskaKindRepRegExp, '') as StameskaIconName;
+            const exactIconName = nameBeats.join('').replace(stameskaKindPostfixReplaceRegExp, '') as StameskaIconName;
 
             if (stameskaIconPack[exactIconName] !== undefined) return { packs: [stameskaIconPack[exactIconName]] };
 
