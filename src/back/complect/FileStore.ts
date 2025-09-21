@@ -1,5 +1,6 @@
 import { backConfig } from 'back/config/backConfig';
 import fs, { StatsListener } from 'fs';
+import { smylib } from 'shared/utils';
 
 const registeredPaths = new Set<string>();
 
@@ -9,17 +10,28 @@ export class FileStore<Value> {
   private value: Value;
   private filePath = '';
 
+  getValue: () => Value;
+
   constructor(
     path: `/${string}`,
     private defaultValue: Value,
   ) {
     this.filePath = `${initialFileDir}${path}`;
-    this.value = this.readValue(defaultValue);
+    this.value = defaultValue;
     if (registeredPaths.has(path)) throw new Error(`The path ${path} was registered again`);
     registeredPaths.add(path);
+    let isValueInit = false;
+
+    this.getValue = () => {
+      if (isValueInit) return this.value;
+      isValueInit = true;
+      this.getValue = () => this.value;
+
+      return (this.value = this.readValue(defaultValue));
+    };
   }
 
-  private readValue = (defaultValue: Value) => {
+  private readValue = (defaultValue: Value): Value => {
     try {
       return JSON.parse('' + fs.readFileSync(this.filePath));
     } catch (_error) {
@@ -54,16 +66,14 @@ export class FileStore<Value> {
     }
   };
 
-  getValue = (): Value => {
-    return this.value;
-  };
-
   getValueWithAutoSave = (): Value => {
     Promise.resolve().then(() => this.saveValue());
     return this.value;
   };
 
-  setValue = (value: Value) => {
+  setValue = (val: Value | ((value: Value) => Value)) => {
+    const value = smylib.isFunc(val) ? val(this.getValue()) : val;
+
     this.value = value;
     this.writeValue(value);
   };
