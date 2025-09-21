@@ -1,3 +1,4 @@
+import { useIndexValuesQuery } from '#basis/api/useIndexValuesQuery';
 import { Button } from '#shared/components/ui/button';
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
 import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
@@ -36,6 +37,7 @@ export default function IconConfigurator(props: {
   const usedSet = new Set(props.used);
   const toast = useToast();
   const searchTermDebounce = useDebounceValue(searchTerm, 1000);
+  const { data: { iconSearchLink } = {} } = useIndexValuesQuery();
 
   const { data: { packs: iconPacks = [] } = {}, isPending } = useQuery({
     queryKey: ['IconConfigurator-iconsPage', page, searchTermDebounce],
@@ -59,7 +61,19 @@ export default function IconConfigurator(props: {
       />
 
       <Modal openAtom={isOpenModalAtom}>
-        <ModalHeader className="flex gap-2">{props.header}</ModalHeader>
+        <ModalHeader className="flex gap-2 justify-between">
+          {props.header}
+          {iconSearchLink && (
+            <a
+              href={iconSearchLink}
+              target="_blank"
+            >
+              <Button size="icon">
+                <LazyIcon icon="LinkSquare02" />
+              </Button>
+            </a>
+          )}
+        </ModalHeader>
         <ModalBody>
           <div className="flex flex-wrap justify-between">
             {iconPacks.map(pack => {
