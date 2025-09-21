@@ -20,7 +20,6 @@ const isOpenModalAtom = atom(false);
 const pageSize = 54;
 const pageAtom = atom(0, 'icons:setOfListPage');
 const searchTermAtom = atom('', 'icons:setOfListSearchTerm');
-const isSearchModeAtom = atom(false, 'icons:setOfListIsSearchMode');
 
 export default function IconConfigurator(props: {
   icon: KnownStameskaIconName;
@@ -28,16 +27,14 @@ export default function IconConfigurator(props: {
   used?: (KnownStameskaIconName | und)[];
   onSend: (icon: KnownStameskaIconName) => Promise<unknown>;
 }) {
-  const isSearchMode = useAtomValue(isSearchModeAtom);
   const page = useAtomValue(pageAtom);
-  const searchTermValue = useAtomValue(searchTermAtom);
-  const searchTerm = isSearchMode ? searchTermValue : '';
+  const searchTerm = useAtomValue(searchTermAtom);
 
   const [loadingIcon, setLoadingIcon] = useState<KnownStameskaIconName | null>(null);
   const usedSet = new Set(props.used);
   const toast = useToast();
   const searchTermDebounce = useDebounceValue(searchTerm, 1000);
-  const { data: { iconSearchLink } = {} } = useIndexValuesQuery();
+  const { data: { iconSearchLink } = {}, isLoading: isIconSearchLinkLoading } = useIndexValuesQuery();
 
   const { data: { packs: iconPacks = [] } = {}, isPending } = useQuery({
     queryKey: ['IconConfigurator-iconsPage', page, searchTermDebounce],
@@ -61,20 +58,31 @@ export default function IconConfigurator(props: {
       />
 
       <Modal openAtom={isOpenModalAtom}>
-        <ModalHeader className="flex gap-2 justify-between">
-          {props.header}
-          {iconSearchLink && (
-            <a
-              href={iconSearchLink}
-              target="_blank"
-            >
-              <Button size="icon">
-                <LazyIcon icon="LinkSquare02" />
-              </Button>
-            </a>
-          )}
-        </ModalHeader>
+        <ModalHeader className="flex gap-2 justify-between">{props.header}</ModalHeader>
         <ModalBody>
+          <div className="flex gap-2 mb-5">
+            <TextInput
+              value={searchTerm}
+              className="w-full"
+              onFocus={event => event.currentTarget.select()}
+              onInput={value => {
+                searchTermAtom.set(value);
+                pageAtom.reset();
+              }}
+            />
+            {isIconSearchLinkLoading ? (
+              <TheIconLoading />
+            ) : (
+              <a
+                href={iconSearchLink}
+                target="_blank"
+              >
+                <Button size="icon">
+                  <LazyIcon icon="LinkSquare02" />
+                </Button>
+              </a>
+            )}
+          </div>
           <div className="flex flex-wrap justify-between">
             {iconPacks.map(pack => {
               const icon = pack[0] as KnownStameskaIconName;
@@ -113,29 +121,11 @@ export default function IconConfigurator(props: {
             </Button>
 
             <span className="flex gap-2">
-              {isSearchMode ? (
-                <TextInput
-                  value={searchTerm}
-                  className="w-[8em]! text-center"
-                  onFocus={event => event.currentTarget.select()}
-                  onInput={value => {
-                    searchTermAtom.set(value);
-                    pageAtom.reset();
-                  }}
-                />
-              ) : (
-                <TextInput
-                  value={page}
-                  onInput={value => pageAtom.set(isNaN(+value) ? 0 : +value)}
-                  className="w-[5em]! text-center"
-                />
-              )}
-              <Button
-                size="icon"
-                onClick={isSearchModeAtom.do.toggle}
-              >
-                <LazyIcon icon={isSearchMode ? 'SearchRemove' : 'SearchFocus'} />
-              </Button>
+              <TextInput
+                value={page}
+                onInput={value => pageAtom.set(isNaN(+value) ? 0 : +value)}
+                className="w-[5em]! text-center"
+              />
             </span>
 
             <Button

@@ -7,6 +7,7 @@ import { otherStyles } from './complect/otherStyles';
 import { resetStyles } from './complect/resetStyles';
 import { attrStylerStyles } from './complect/styles.styler';
 import { svgUrlsVariables } from './complect/svgUrlsVariables';
+import { twStyles } from './complect/twStyles';
 import { utilStyles } from './complect/utilStyles';
 
 const styles = css`
@@ -18,6 +19,7 @@ const styles = css`
 
   ${colorStyles}
   ${utilStyles}
+  ${twStyles}
   ${resetStyles}
   ${fontStyles}
   ${otherStyles}
