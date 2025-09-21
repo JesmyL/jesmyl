@@ -116,11 +116,12 @@ export default function IconConfigurator(props: {
               {isSearchMode ? (
                 <TextInput
                   value={searchTerm}
+                  className="w-[8em]! text-center"
+                  onFocus={event => event.currentTarget.select()}
                   onInput={value => {
                     searchTermAtom.set(value);
                     pageAtom.reset();
                   }}
-                  className="w-[8em]! text-center"
                 />
               ) : (
                 <TextInput
