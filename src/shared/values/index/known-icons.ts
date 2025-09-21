@@ -6,6 +6,7 @@ export const knownStameskaIconNames = [
   'Alert01',
   'Alert02',
   'ApproximatelyEqualSquare',
+  'LinkSquare02',
   'Arrange',
   'ArrowDataTransferDiagonal',
   'ArrowDataTransferVertical',
