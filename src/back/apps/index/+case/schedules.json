@@ -45,7 +45,7 @@
     "tatts": [
       {
         "description": "Ход",
-        "icon": "cast-outline",
+        "icon": "LeftToRightListDash",
         "initVal": {},
         "title": "Ход события",
         "R": 105,
@@ -145,14 +145,14 @@
         { "fio": "User", "login": "8f9bfe9d1345237cb3b2b205864da075", "nick": "User", "mi": 10 }
       ],
       "roles": [
-        { "mi": 0, "title": "Координатор", "icon": "github-outline", "user": 0 },
+        { "mi": 0, "title": "Координатор", "icon": "Github", "user": 0 },
         { "title": "", "mi": 1 }
       ],
       "type": 3,
       "defu": 21
     },
     "lists": {
-      "cats": [{ "icon": "people-outline", "title": "Группа", "titles": ["Наставники", "Участники"] }],
+      "cats": [{ "icon": "UserGroup03", "title": "Группа", "titles": ["Наставники", "Участники"] }],
       "units": [{ "cat": 0, "mi": 1, "title": "Первая", "dsc": "" }]
     },
     "tgAlertsTime": 30,
@@ -219,14 +219,14 @@
           "mi": 2
         }
       ],
-      "roles": [{ "mi": 0, "title": "Координатор", "icon": "github-outline", "user": 0 }],
+      "roles": [{ "mi": 0, "title": "Координатор", "icon": "Github", "user": 0 }],
       "type": 3,
       "defu": 43
     },
     "lists": {
       "cats": [
-        { "icon": "people-outline", "title": "Группа", "titles": ["Наставники", "Участники"] },
-        { "title": "", "icon": "list", "titles": ["Руководители", "Участники"] }
+        { "icon": "UserGroup03", "title": "Группа", "titles": ["Наставники", "Участники"] },
+        { "title": "", "icon": "LeftToRightListDash", "titles": ["Руководители", "Участники"] }
       ],
       "units": [{ "cat": 0, "mi": 1, "title": "Первая", "dsc": "" }]
     },
@@ -304,12 +304,12 @@
         { "fio": "User", "login": "8f9bfe9d1345237cb3b2b205864da075", "nick": "User", "mi": 3, "R": 5 },
         { "fio": "Artemkadjam", "login": "16d0e0d747fd06d1a3d91ecb00ed39ec", "nick": "Artemkadjam", "mi": 4, "R": 21 }
       ],
-      "roles": [{ "mi": 0, "title": "Координатор", "icon": "github-outline", "user": 0 }],
+      "roles": [{ "mi": 0, "title": "Координатор", "icon": "Github", "user": 0 }],
       "type": 13,
       "defu": 5
     },
     "lists": {
-      "cats": [{ "icon": "people-outline", "title": "Группа", "titles": ["Наставники", "Участники"] }],
+      "cats": [{ "icon": "UserGroup03", "title": "Группа", "titles": ["Наставники", "Участники"] }],
       "units": [{ "cat": 0, "mi": 1, "title": "Первая", "dsc": "" }]
     },
     "m": 1740234024820.0552,
@@ -347,7 +347,7 @@
     "tatts": [
       {
         "description": "",
-        "icon": "cast-outline",
+        "icon": "LeftToRightListDash",
         "initVal": {},
         "title": "Ход события",
         "R": 105,
@@ -390,7 +390,7 @@
         }
       ],
       "roles": [
-        { "mi": 0, "title": "Координатор", "icon": "github-outline" },
+        { "mi": 0, "title": "Координатор", "icon": "Github" },
         { "title": "", "mi": 1 }
       ],
       "type": 3,
@@ -398,7 +398,7 @@
     },
     "games": { "criterias": [{ "title": "Сила", "sorts": {} }], "list": [] },
     "lists": {
-      "cats": [{ "icon": "people-outline", "title": "Группа", "titles": ["Наставники", "Участники"] }],
+      "cats": [{ "icon": "UserGroup03", "title": "Группа", "titles": ["Наставники", "Участники"] }],
       "units": [{ "cat": 0, "mi": 1, "title": "Первая", "dsc": "" }]
     },
     "w": 1728975804442.541,
@@ -627,7 +627,7 @@
   },
   {
     "w": 1737866590786,
-    "m": 1758359824823.8706,
+    "m": 1758519476140.4368,
     "title": "Мои задачи",
     "app": "index",
     "dsc": "",
@@ -728,7 +728,7 @@
               }
             },
             "tgInform": 1,
-            "tm": 100,
+            "tm": 10,
             "topic": "",
             "rate": { "0": [0, ""] }
           }
