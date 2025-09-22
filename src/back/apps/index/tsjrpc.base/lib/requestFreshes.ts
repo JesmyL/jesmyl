@@ -88,10 +88,12 @@ export const indexTSJRPCBaseRequestFreshes: typeof indexServerTsjrpcBase.request
 
 const extractIcon = <Icon>(it: { icon?: Icon }) => it.icon;
 const extractAllScheduleIcons = (sch: IScheduleWidget) => {
-  return [
-    //
-    sch.tatts?.map(extractIcon) ?? [],
-    sch.ctrl.roles?.map(extractIcon) ?? [],
-    sch.lists.cats?.map(extractIcon) ?? [],
-  ];
+  return sch
+    ? [
+        //
+        sch.tatts?.map(extractIcon) ?? [],
+        sch.ctrl?.roles?.map(extractIcon) ?? [],
+        sch.lists?.cats?.map(extractIcon) ?? [],
+      ]
+    : [];
 };
