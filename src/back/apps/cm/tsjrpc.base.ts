@@ -12,6 +12,7 @@ import {
   aboutComFavoritesFileStore,
   catsFileStore,
   chordPackFileStore,
+  cmConstantsConfigFileStore,
   comCommentBlocksFileStore,
   comCommentsFileStore,
   comsFileStore,
@@ -148,7 +149,7 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
           const freshComments: ICmComCommentBlock[] = [];
           const resultComments: ICmComCommentBlock[] = [];
 
-          modifiedComments.forEach(({ d, comw, m }) => {
+          modifiedComments.forEach(({ d, comw, m, alt }) => {
             const commentModifiedAt = m + withClientTimeDelta;
 
             if (userServerComments[comw] != null && commentModifiedAt < userServerComments[comw].m) {
@@ -157,9 +158,22 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
             }
 
             userServerComments[comw] = {
+              ...userServerComments[comw],
               d: { ...userServerComments[comw]?.d, ...d },
               m: commentModifiedAt,
             };
+
+            if (alt) {
+              const userAlt = (userServerComments[comw].alt ??= {});
+
+              if (
+                Array.from(new Set([...smylib.keys(alt), ...smylib.keys(userAlt)])).length <=
+                cmConstantsConfigFileStore.getValue().maxComCommentAlternativesCount
+              )
+                SMyLib.entries(alt).forEach(([altCommentKey, altValue]) => {
+                  userAlt[altCommentKey] = { ...userAlt[altCommentKey], ...altValue };
+                });
+            }
 
             SMyLib.entries(userServerComments[comw].d ?? {}).forEach(([key, block]) => {
               if (!block) return;
@@ -172,6 +186,21 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
               if (!block.length && userServerComments[comw]?.d) delete userServerComments[comw].d[key];
               // TODO: uncomment soon
               // if (userServerComments[comw]?.d && !smylib.keys(userServerComments[comw].d).length) delete userServerComments[comw].d
+            });
+
+            SMyLib.entries(userServerComments[comw].alt ?? {}).forEach(([altCommentKey, altBlock]) => {
+              if (!altBlock) return;
+              SMyLib.entries(altBlock).forEach(([key, block]) => {
+                if (block == null) return;
+
+                for (let blocki = block.length - 1; blocki >= 0; blocki--) {
+                  if (block[blocki]) break;
+                  block.splice(-1);
+                }
+
+                if (!block.length && userServerComments[comw]?.alt?.[altCommentKey])
+                  delete userServerComments[comw].alt[altCommentKey][key];
+              });
             });
 
             const block: ICmComCommentBlock = { ...userServerComments[comw], comw };

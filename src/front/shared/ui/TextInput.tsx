@@ -6,7 +6,6 @@ import { AllHTMLAttributes } from 'react';
 export const TextInput = ({
   onChanged,
   onInput,
-  value,
   multiline,
   label,
   ...props
@@ -18,15 +17,16 @@ export const TextInput = ({
   label?: React.ReactNode;
 }) => {
   const Comp = multiline ? Textarea : Input;
+
   const node = (
     <Comp
       {...props}
       onKeyDown={propagationStopper}
-      onInput={onInput ? event => onInput(event.currentTarget.value) : undefined}
+      onChange={onInput ? event => onInput(event.currentTarget.value) : undefined}
       onBlur={
         onChanged
           ? event => {
-              if (event.currentTarget.value !== value) onChanged(event.currentTarget.value);
+              if (event.currentTarget.value !== props.value) onChanged(event.currentTarget.value);
               props.onBlur?.(event as never);
             }
           : undefined

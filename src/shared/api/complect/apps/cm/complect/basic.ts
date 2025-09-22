@@ -104,6 +104,7 @@ export type ICmComCommentBlock = {
   comw: CmComWid;
   /** comment block dict */
   d?: PRecord<CmComCommentBlockSelector, string[]>;
+  alt?: PRecord<string, PRecord<CmComCommentBlockSelector, string[]>>;
   m: number;
 };
 

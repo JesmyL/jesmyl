@@ -1,4 +1,5 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
+import { Button } from '#shared/components/ui/button';
 import { mylib } from '#shared/lib/my-lib';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -68,7 +69,7 @@ export function ScheduleKeyValueListAtt({
 
   if (isRedact) {
     checkboxes = customAttUseRights.checkIsHasIndividualRights(att.use, CustomAttUseRights.Checkboxes) && (
-      <div className="flex gap-2 my-2">
+      <Button className="flex gap-2 my-2">
         <LazyIcon icon="CheckmarkSquare02" />
         <span className="italic">Пункт</span>
         <TheIconSendButton
@@ -81,7 +82,7 @@ export function ScheduleKeyValueListAtt({
             })
           }
         />
-      </div>
+      </Button>
     );
 
     if (customAttUseRights.checkIsHasIndividualRights(att.use, CustomAttUseRights.Titles)) {
@@ -331,7 +332,7 @@ export function ScheduleKeyValueListAtt({
     }
 
     const itemNode = (
-      <div className="flex gap-2 my-10">
+      <Button className="flex gap-2 my-7">
         <LazyIcon icon="Text" />
         Пункт
         <TheIconSendButton
@@ -344,7 +345,7 @@ export function ScheduleKeyValueListAtt({
             })
           }
         />
-      </div>
+      </Button>
     );
 
     if (checkboxes || (users || titles || roles || lists || games || null)?.length) {
@@ -439,16 +440,18 @@ export function ScheduleKeyValueListAtt({
                       !mylib.isBool(key) &&
                       !mylib.isNil(value) &&
                       (value === '+' || value.length < 1) && (
-                        <TheIconSendButton
-                          icon={mylib.isArr(value) ? 'Text' : 'LeftToRightListDash'}
-                          onSend={() =>
-                            schDayEventsTsjrpcClient.setKeyValueAttachmentValue({
-                              props: dayEventAttScopeProps,
-                              itemMi,
-                              value: mylib.isArr(value) ? '+' : [],
-                            })
-                          }
-                        />
+                        <Button size="icon">
+                          <TheIconSendButton
+                            icon={mylib.isArr(value) ? 'Text' : 'LeftToRightListDash'}
+                            onSend={() =>
+                              schDayEventsTsjrpcClient.setKeyValueAttachmentValue({
+                                props: dayEventAttScopeProps,
+                                itemMi,
+                                value: mylib.isArr(value) ? '+' : [],
+                              })
+                            }
+                          />
+                        </Button>
                       )}
                     {mylib.isNum(key) && (
                       <ScheduleKeyValueListAttArrayItemKeyChange
@@ -466,26 +469,36 @@ export function ScheduleKeyValueListAtt({
               {isRedact && customAttUseRights.checkIsCan(userR, att.U) && (
                 <div className={'flex' + (mylib.isStr(value) ? ' mr-7' : '')}>
                   {itema.length > 1 && itemi > 0 && (
+                    <Button
+                      size="icon"
+                      className="ml-1"
+                    >
+                      <TheIconSendButton
+                        className="relative z-15 text-x7"
+                        icon="ArrowDataTransferVertical"
+                        onSend={() =>
+                          schDayEventsTsjrpcClient.moveKeyValueAttachment({ props: dayEventAttScopeProps, itemMi })
+                        }
+                      />
+                    </Button>
+                  )}
+                  <Button
+                    size="icon"
+                    className="ml-1"
+                  >
                     <TheIconSendButton
-                      className="relative z-15 text-x7"
-                      icon="ArrowDataTransferVertical"
+                      className="relative z-15 text-xKO"
+                      confirm="Удалить пункт?"
+                      icon="Delete02"
                       onSend={() =>
-                        schDayEventsTsjrpcClient.moveKeyValueAttachment({ props: dayEventAttScopeProps, itemMi })
+                        schDayEventsTsjrpcClient.putKeyValueAttachment({
+                          props: dayEventAttScopeProps,
+                          key: itemMi,
+                          value: null,
+                        })
                       }
                     />
-                  )}
-                  <TheIconSendButton
-                    className="relative z-15 text-xKO"
-                    confirm="Удалить пункт?"
-                    icon="Delete02"
-                    onSend={() =>
-                      schDayEventsTsjrpcClient.putKeyValueAttachment({
-                        props: dayEventAttScopeProps,
-                        key: itemMi,
-                        value: null,
-                      })
-                    }
-                  />
+                  </Button>
                 </div>
               )}
             </div>

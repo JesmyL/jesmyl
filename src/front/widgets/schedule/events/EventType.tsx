@@ -47,7 +47,7 @@ export function ScheduleWidgetEventType(props: {
         icon="SchoolReportCard"
         title="Название"
         isImpossibleEmptyValue
-        onChange={setTitle}
+        onChanged={setTitle}
         onSend={value =>
           schEventTypesTsjrpcClient.setTitle({
             props: eventTypeScopeProps,

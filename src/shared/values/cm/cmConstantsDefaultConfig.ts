@@ -5,4 +5,5 @@ export const cmConstantsDefaultConfig: CmConstantsConfig = {
   maxAvailableComLineLength: 37,
   maxSelectedComsCount: 50,
   maxLaterComsVizitedCount: 4,
+  maxComCommentAlternativesCount: 3,
 };

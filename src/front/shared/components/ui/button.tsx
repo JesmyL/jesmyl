@@ -40,13 +40,15 @@ function Button({
   asChild = false,
   isLoading,
   children,
+  asSpan,
   ...props
 }: React.ComponentProps<'button'> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean;
+    asSpan?: boolean;
     isLoading?: boolean;
   }) {
-  const Comp = asChild ? Slot : 'button';
+  const Comp = asSpan ? 'span' : asChild ? Slot : 'button';
 
   return (
     <Comp

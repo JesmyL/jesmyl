@@ -1,12 +1,13 @@
+import { useIndexValuesQuery } from '#basis/api/useIndexValuesQuery';
 import { propagationStopper } from '#shared/lib/event-funcs';
 
-import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
 import { QRCode } from '#shared/ui/qr-code/QRCode';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
 import { useConnectionState, useIsOnline } from '$index/useConnectionState';
+import { useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'atomaric';
 import { checkIsThereNewSWAtom, reloadSW } from 'front/sw-register';
 import { useEffect, useState } from 'react';
@@ -18,17 +19,12 @@ export function IndexAbout() {
   const [isRefreshProcess, setIsRefreshProcess] = useState(false);
   const isOnline = useIsOnline();
   const isThereNewSW = useAtomValue(checkIsThereNewSWAtom);
+  const { data: values = {} } = useIndexValuesQuery();
 
-  const [appVersion, isVersionLoading] = useInvocatedValue(
-    0,
-    ({ aborter }) => indexTsjrpcClientMethods.getFreshAppVersion(undefined, { aborter }),
-    [],
-  );
-  const [values] = useInvocatedValue(
-    {},
-    ({ aborter }) => indexTsjrpcClientMethods.getIndexValues(undefined, { aborter }),
-    [],
-  );
+  const { data: appVersion, isLoading: isVersionLoading } = useQuery({
+    queryKey: ['indexAppVersion'],
+    queryFn: () => indexTsjrpcClientMethods.getFreshAppVersion(),
+  });
 
   useEffect(() => {
     (async () => {

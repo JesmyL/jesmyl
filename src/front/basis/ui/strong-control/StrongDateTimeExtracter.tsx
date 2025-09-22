@@ -118,7 +118,7 @@ export function StrongInputDateTimeExtracter(props: {
         isRedact
         description={timeImagine}
         placeholder="Нецифра - разделитель"
-        onChange={setInputValue}
+        onChanged={setInputValue}
         onSend={() => props.onSend(initTs !== currentTs, timeImagine)}
       />
     </>

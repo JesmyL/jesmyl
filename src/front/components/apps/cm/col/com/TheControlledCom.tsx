@@ -72,6 +72,8 @@ export const TheControlledCom = ({ com, comList, chordVisibleVariant }: Props) =
         className="composition-content"
       >
         <div className="com-orders-with-comments">
+          <span className="alt-key-holder" />
+          <span className="comment-holder" />
           <span className="comment-holder" />
           <span className="comment-holder" />
           <span className="comment-holder" />

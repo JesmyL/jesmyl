@@ -18,4 +18,10 @@ export const accessRightTitlesFileStore = new FileStore<IndexAppAccessRightTitle
 accessRightTitlesFileStore.watchFile(emptyFunc);
 
 export const appVersionFileStore = new FileStore<{ num: number }>('/+version.json', { num: 0 });
-export const valuesFileStore = new FileStore<IndexValues>('/values', { chatUrl: '' });
+export const valuesFileStore = new FileStore<IndexValues>('/values', {});
+
+// valuesFileStore.setValue(prev => ({
+//   ...prev,
+//   // chatUrl: '',
+//   // iconSearchLink: '',
+// }));

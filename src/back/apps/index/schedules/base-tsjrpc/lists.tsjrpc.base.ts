@@ -60,10 +60,14 @@ export const schListsTsjrpcBaseServer = new (class SchLists extends TsjrpcBaseSe
         setCategoryMembersTitle: modifyCategory((cat, value) => (cat.titles[1] = value)),
         setCategoryMentorsTitle: modifyCategory((cat, value) => (cat.titles[0] = value)),
         setCategoryIcon: modifyCategory((cat, value) => {
-          indexServerTsjrpcShareMethods.updateKnownIconPacks({
-            actualIconPacks: { [value]: stameskaIconPack[value] },
-            iconsMd5Hash: knownStameskaIconNamesMd5Hash,
-          });
+          indexServerTsjrpcShareMethods.updateKnownIconPacks(
+            {
+              actualIconPacks: { [value]: stameskaIconPack[value] },
+              iconsMd5Hash: knownStameskaIconNamesMd5Hash,
+            },
+            // TODO: remove soon
+            visit => !!visit?.version && visit?.version >= 1019,
+          );
 
           cat.icon = value;
         }),

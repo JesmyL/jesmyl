@@ -1,7 +1,7 @@
-import { atom } from 'atomaric';
-import { useCallback, useRef } from 'react';
-import { useSetRootAnchoredContent } from '../useSetRootAnchoredContent';
-import { StyledModal, StyledModalScreen, StyledModalScreenWrapper } from './styled';
+import { useCallback } from 'react';
+import { toast } from 'sonner';
+import { twMerge } from 'tailwind-merge';
+import { LazyIcon } from '../the-icon/LazyIcon';
 
 type ModalConfigMood = 'norm' | 'ko' | 'ok';
 
@@ -10,30 +10,23 @@ interface ToastModalConfig {
   showTime?: number;
 }
 
-const isOpenToastAtom = atom(false);
-
-export const useToast = (
-  topConfig?: ToastModalConfig,
-): ((content: React.ReactNode, config?: ToastModalConfig) => void) => {
-  const timerRef = useRef<TimeOut>(0);
-  const setContent = useSetRootAnchoredContent(isOpenToastAtom);
-
+export const useToast = () => {
   return useCallback(
-    (content, config) => {
-      setContent(
-        <StyledModal className="type_toast pointers-none">
-          <StyledModalScreenWrapper className="type_toast">
-            <StyledModalScreen className={'type_toast mood mood_' + ((config ?? topConfig)?.mood ?? '')}>
-              {content}
-            </StyledModalScreen>
-          </StyledModalScreenWrapper>
-        </StyledModal>,
-      );
-
-      isOpenToastAtom.set(true);
-      clearTimeout(timerRef.current);
-      timerRef.current = setTimeout(isOpenToastAtom.set, config?.showTime ?? 3000, false);
+    (
+      content: React.ReactNode,
+      { showTime, duration, ...config }: ToastModalConfig & Parameters<typeof toast>[1] = {},
+    ) => {
+      toast(content, {
+        duration: showTime ?? duration,
+        icon: config.mood === 'ko' && <LazyIcon icon="Alert01" />,
+        ...config,
+        className: twMerge(
+          config.mood === 'ko' && 'bg-xKO! border-xKO!',
+          config.mood === 'ok' && 'bg-xOK! border-xOK!',
+          config.className,
+        ),
+      });
     },
-    [setContent, topConfig],
+    [],
   );
 };

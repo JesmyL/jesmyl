@@ -53,6 +53,7 @@ export function TheOrder(props: Props) {
         <span className="comment-holder" />
         <span className="comment-holder" />
         <span className="comment-holder" />
+        <span className="comment-holder" />
       </div>
     );
   }
@@ -78,10 +79,12 @@ export function TheOrder(props: Props) {
       <span className="comment-holder" />
       <span className="comment-holder" />
       <span className="comment-holder" />
+      <span className="comment-holder" />
     </div>
   ) : (
     !ord.me.style?.isHeaderNoneForce && (
       <div className="styled-header empty">
+        <span className="comment-holder" />
         <span className="comment-holder" />
         <span className="comment-holder" />
         <span className="comment-holder" />

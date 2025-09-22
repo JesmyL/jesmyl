@@ -23,7 +23,7 @@ type Props<Key, Value> = {
   multiline?: boolean;
   textClassName?: string;
   className?: string;
-  onChange?: (value: string) => void | Promise<boolean>;
+  onChanged?: (value: string) => void | Promise<boolean>;
   onUpdate?: (value: string) => void | Promise<boolean>;
   onSend: (value: string) => Promise<unknown>;
   onSelfRedactChange?: (is: boolean) => void;
@@ -46,7 +46,7 @@ export function StrongEditableField<Key extends string, Value extends string | P
   });
   const isRedact = props.setSelfRedact ? isSelfRedact : props.isRedact;
 
-  const sendValue = () => {
+  const sendValue = async () => {
     const isSendResuls =
       stateValue !== undefined &&
       (props.isImpossibleEmptyValue !== true || stateValue.trim()) &&
@@ -61,7 +61,7 @@ export function StrongEditableField<Key extends string, Value extends string | P
       setIsLoading(true);
       setIsError(false);
 
-      props
+      return props
         .onSend(stateValue.trim())
         .then(() => {
           setIsLoading(false);
@@ -115,10 +115,10 @@ export function StrongEditableField<Key extends string, Value extends string | P
               {indicatorNode}
             </div>
           )}
-          <div className="flex gap-2">
+          <div className="flex gap-2 my-5">
             {props.description}
             <TextInput
-              value={stateValue}
+              defaultValue={stateValue}
               st-mood="1"
               placeholder={props.placeholder}
               multiline={props.multiline}
@@ -127,9 +127,9 @@ export function StrongEditableField<Key extends string, Value extends string | P
               onInput={val => {
                 setStateValue(val);
                 setIsUserChange(true);
-                props.onChange?.(val);
+                props.onChanged?.(val);
               }}
-              onBlur={sendValue}
+              onChanged={sendValue}
               onKeyUp={event => {
                 if (event.key === 'Escape') setIsUserChange(false);
 

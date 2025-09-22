@@ -3,4 +3,5 @@ export interface CmConstantsConfig {
   maxAvailableComLineLength: number;
   maxSelectedComsCount: number;
   maxLaterComsVizitedCount: number;
+  maxComCommentAlternativesCount: number;
 }
