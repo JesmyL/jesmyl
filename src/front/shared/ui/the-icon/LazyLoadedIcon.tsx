@@ -29,6 +29,7 @@ export default function TheIconLazy({
         {...makeStameskaIconSvgAttributeProps({ icon, className, kind, withoutAnimation })}
         {...props}
         dangerouslySetInnerHTML={makeStameskaIconSvgHTMLProp(pack!, kind)}
+        children={undefined}
       />
     );
   }
@@ -42,6 +43,7 @@ export default function TheIconLazy({
           dangerouslySetInnerHTML={
             (cachedStaticProps[`${icon}/${kind}`] = makeStameskaIconSvgHTMLProp(cachedPacks[icon], kind))
           }
+          children={undefined}
         />
       );
     }
@@ -63,6 +65,7 @@ export default function TheIconLazy({
       {...makeStameskaIconSvgAttributeProps({ icon, className, kind, withoutAnimation })}
       {...props}
       dangerouslySetInnerHTML={cachedStaticProps[`${icon}/${kind}`]}
+      children={undefined}
     />
   );
 }
@@ -90,6 +93,7 @@ const WithoutStaticProps = ({ icon, className, kind = 'StrokeRounded', withoutAn
       {...makeStameskaIconSvgAttributeProps({ icon, className, kind, withoutAnimation })}
       {...props}
       dangerouslySetInnerHTML={staticIconProps}
+      children={undefined}
     />
   );
 };
