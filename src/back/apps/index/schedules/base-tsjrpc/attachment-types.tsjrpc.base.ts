@@ -43,10 +43,14 @@ export const schAttachmentTypesTsjrpcBaseServer =
           setTitle: ({ props, value }) => this.modifyAttType(props, tatt => (tatt.title = value)),
           setDescription: ({ props, value }) => this.modifyAttType(props, tatt => (tatt.description = value)),
           setIcon: ({ props, value }) => {
-            indexServerTsjrpcShareMethods.updateKnownIconPacks({
-              actualIconPacks: { [value]: stameskaIconPack[value] },
-              iconsMd5Hash: knownStameskaIconNamesMd5Hash,
-            });
+            indexServerTsjrpcShareMethods.updateKnownIconPacks(
+              {
+                actualIconPacks: { [value]: stameskaIconPack[value] },
+                iconsMd5Hash: knownStameskaIconNamesMd5Hash,
+              },
+              // TODO: remove soon
+              visit => !!visit?.version && visit?.version >= 1019,
+            );
 
             return this.modifyAttType(props, tatt => (tatt.icon = value));
           },
