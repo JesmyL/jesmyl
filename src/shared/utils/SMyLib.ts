@@ -131,8 +131,8 @@ export class SMyLib {
 
   takeNewWid<Wid extends number>(prev: PRecord<Wid, unknown>): Wid {
     let wid = Date.now() + Math.random();
-    for (; wid in prev; wid++);
-    return wid as never;
+    for (; wid in prev; wid += 0.1);
+    return wid as Wid;
   }
 
   isEq(base: unknown, source: unknown, isIgnoreArrayItemsOrder?: boolean) {
