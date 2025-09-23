@@ -129,6 +129,12 @@ export class SMyLib {
     return (list.reduce((max, item) => Math.max(item[key as never] as never, max), minimalMi - 1) + 1) as never;
   }
 
+  takeKeyId<Id extends number>(prev: PRecord<Id, unknown>, minId: Id): Id {
+    let id: number = minId;
+    for (; id in prev; id++);
+    return id as Id;
+  }
+
   takeNewWid<Wid extends number>(prev: PRecord<Wid, unknown>): Wid {
     let wid = Date.now() + Math.random();
     for (; wid in prev; wid += 0.1);
@@ -380,7 +386,8 @@ export class SMyLib {
 
   withInsertedBeforei<Item>(list: Item[], beforei: number, targeti: number) {
     const fakeEvent = {} as Item;
-    const [event] = list.splice(targeti, 1, fakeEvent);
+    list = [...list];
+    const event = list.splice(targeti, 1, fakeEvent)[0];
     list.splice(beforei, 0, event);
 
     return list.filter(event => event !== fakeEvent);
