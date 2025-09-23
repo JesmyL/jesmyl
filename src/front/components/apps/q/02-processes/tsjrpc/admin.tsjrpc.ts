@@ -6,10 +6,30 @@ export const questionerAdminTsjrpcClient = new (class Questioner extends TsjrpcC
     super({
       scope: 'QuestionerAdmin',
       methods: {
-        getAdminBlanks: true,
         createBlank: true,
-        getAdminBlank: true,
         addBlankTemplate: true,
+
+        getAdminBlanks: true,
+        getAdminBlank: true,
+        getUserBlank: true,
+
+        changeBlankTitle: true,
+        changeBlankDescription: true,
+        changeTemplateTitle: true,
+        changeTemplateDescription: true,
+        changeTemplateRequiredSign: true,
+        addTemplateAnswerVariant: true,
+        changeTemplateCorrectAnswerSign: true,
+        changeTemplateAnswerVariantTitle: true,
+        changeTemplateRandomSortSign: true,
+        switchTemplateHiddenSign: true,
+        switchBlankIsAnonymous: true,
+        changeTemplateMinSign: true,
+        changeTemplateMaxSign: true,
+        getUserAnswers: true,
+        publicUserAnswer: true,
+        changeTemplateAboveText: true,
+        changeTemplateBelowText: true,
       },
     });
   }

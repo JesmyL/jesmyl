@@ -2,14 +2,19 @@ export const enum QuestionerType {
   Radio = 116,
   Check = 917,
   Comment = 501,
+  Sorter = 498,
 }
 
-export const enum QuestionerAnswerMi {
+export type QuestionerVariatedType = QuestionerType.Check | QuestionerType.Radio;
+
+export const enum QuestionerAnswerId {
   empty = 0,
+  min = 1,
 }
 
-export const enum QuestionerTemplateMi {
+export const enum QuestionerTemplateId {
   empty = 0,
+  min = 1,
 }
 
 export const enum QuestionerBlankWid {

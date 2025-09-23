@@ -6,10 +6,10 @@ export const Route = createFileRoute('/q/r/')({
   component: RouteComponent,
 });
 
-function RouteComponent() {
+export function RouteComponent() {
   const checkAccess = useCheckUserAccessRightsInScope();
 
-  if (!checkAccess('q', 'EDIT')) return;
+  if (!checkAccess('q', 'EDIT', 'U')) return;
 
   return <QuestionerBlankListPage />;
 }

@@ -1,21 +1,34 @@
 import { AppFooter } from '$app/AppFooter';
 import { AppFooterItem } from '$app/AppFooterItem';
+import { useCheckUserAccessRightsInScope } from '$index/checkers';
 
 export const QuestionerFooter = () => {
+  const checkAccessRights = useCheckUserAccessRightsInScope();
+
   return (
     <AppFooter appName="q">
       <AppFooterItem
         idPostfix="answers"
         to="/q/i"
-        title="Ответы"
+        title="Ответ"
         icon="BubbleChat"
       />
-      <AppFooterItem
-        idPostfix="redactor"
-        to="/q/r/"
-        title="Редактор"
-        icon="MessageEdit01"
-      />
+      {checkAccessRights('q', 'EDIT', 'U') && (
+        <AppFooterItem
+          idPostfix="redactor"
+          to="/q/r/"
+          title="Редактор"
+          icon="MessageEdit01"
+        />
+      )}
+      {checkAccessRights('q', 'EDIT') && (
+        <AppFooterItem
+          idPostfix="answers"
+          to="/q/a/"
+          title="Проверка"
+          icon="MessageUser01"
+        />
+      )}
     </AppFooter>
   );
 };

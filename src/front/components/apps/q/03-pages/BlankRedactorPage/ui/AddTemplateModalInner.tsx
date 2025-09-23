@@ -1,12 +1,12 @@
 import { Button } from '#shared/components/ui/button';
 import { Card } from '#shared/components/ui/card';
-import { Popover } from '#shared/components/ui/popover';
-import { MyLib } from '#shared/lib/my-lib';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { questionerTemplateDescriptions } from '$q/basis/lib/const/templateDescriptions';
+import {
+  questionerTemplateDescriptions,
+  questionerTemplateDescriptionsOrder,
+} from '$q/basis/lib/const/templateDescriptions';
 import { Atom } from 'atomaric';
 import { QuestionerBlank } from 'shared/model/q';
 import { useQuestionerAddBlankTemplateMutation } from '../api/useQuestionerAddBlankTemplateMutation';
@@ -14,9 +14,11 @@ import { useQuestionerAddBlankTemplateMutation } from '../api/useQuestionerAddBl
 export const QuestionerAddTemplateModalInner = ({
   blank,
   openAtom,
+  onAdd,
 }: {
   blank: QuestionerBlank;
   openAtom: Atom<boolean>;
+  onAdd: () => void;
 }) => {
   const addTemplate = useQuestionerAddBlankTemplateMutation(openAtom.reset);
 
@@ -26,23 +28,29 @@ export const QuestionerAddTemplateModalInner = ({
         <span className="text-x7">{blank.title}.</span> Новый вопрос
       </ModalHeader>
       <ModalBody>
-        {MyLib.entries(questionerTemplateDescriptions).map(([type, { dsc, title }]) => {
+        {questionerTemplateDescriptionsOrder.map(type => {
+          const { dsc, title } = questionerTemplateDescriptions[type];
+
           return (
             <Card.Root
               key={type}
               className="my-3"
-              onClick={() => addTemplate.mutate({ blankw: blank.w, type: +type })}
             >
               <Card.Header>
-                <div>{title}</div>
-                <Popover.Root>
-                  <Popover.Trigger>
-                    <Button size="icon">
-                      {addTemplate.variables?.type === type ? <TheIconLoading /> : <LazyIcon icon="HelpCircle" />}
-                    </Button>
-                  </Popover.Trigger>
-                  <Popover.Content>{dsc}</Popover.Content>
-                </Popover.Root>
+                <Card.Title>{title}</Card.Title>
+                <Card.Description>{dsc}</Card.Description>
+                <Card.Action>
+                  <Button
+                    size="icon"
+                    disabled={addTemplate.isPending}
+                    onClick={() => addTemplate.mutateAsync({ blankw: blank.w, type }).then(onAdd)}
+                  >
+                    <TheIconLoading
+                      icon="Add02"
+                      isLoading={addTemplate.isPending && addTemplate.variables.type === type}
+                    />
+                  </Button>
+                </Card.Action>
               </Card.Header>
             </Card.Root>
           );

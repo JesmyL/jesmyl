@@ -1,4 +1,4 @@
-import { QuestionerAnswersPage } from '$q/pages/AnswersPage/ui/Page';
+import { QuestionerUserAnswerPage } from '$q/pages/UserAnswerPage/ui/Page';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/q/i')({
@@ -11,5 +11,6 @@ export const Route = createFileRoute('/q/i')({
 });
 
 function RouteComponent() {
-  return <QuestionerAnswersPage />;
+  const { q } = Route.useSearch();
+  return q && <QuestionerUserAnswerPage blankw={q} />;
 }

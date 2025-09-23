@@ -1,5 +1,5 @@
 import { SokiAuthLogin } from 'shared/api';
-import { QuestionerBlankRole, QuestionerBlankWid, QuestionerTemplateMi } from './enums';
+import { QuestionerBlankRole, QuestionerBlankWid, QuestionerTemplateId } from './enums';
 import { QuestionerTemplate } from './template';
 
 export type QuestionerBlankUser = {
@@ -13,10 +13,11 @@ export type QuestionerBlank = {
   m: number;
   title: string;
   dsc: string;
-  tmp: QuestionerTemplate[];
-  /** template **order** by TemplateId */
-  o: QuestionerTemplateMi[];
-  /** last used index */
-  li: number;
+  anon?: 1;
+  tmp: PRecord<QuestionerTemplateId, QuestionerTemplate>;
   team: PRecord<SokiAuthLogin, QuestionerBlankUser>;
+};
+
+export type QuestionerBlankSelector<With = object> = With & {
+  blankw: QuestionerBlankWid;
 };

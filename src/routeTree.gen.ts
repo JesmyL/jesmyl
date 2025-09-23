@@ -30,11 +30,13 @@ import { Route as CmEditRouteImport } from './front/routes/cm/edit/route'
 import { Route as otherAppNameRouteImport } from './front/routes/!other.$appName/route'
 import { Route as ScheduleDaySchwIndexImport } from './front/routes/schedule-day/$schw/index'
 import { Route as QRIndexImport } from './front/routes/q/r/index'
+import { Route as QAIndexImport } from './front/routes/q/a/index'
 import { Route as CmPlayerIndexImport } from './front/routes/cm/player/index'
 import { Route as CmLiIndexImport } from './front/routes/cm/li/index'
 import { Route as CmIIndexImport } from './front/routes/cm/i/index'
 import { Route as otherAppNameIndexImport } from './front/routes/!other.$appName/index'
 import { Route as QRBlankImport } from './front/routes/q/r/$blank'
+import { Route as QABlankImport } from './front/routes/q/a/$blank'
 import { Route as CmLiSelImport } from './front/routes/cm/li/sel'
 import { Route as CmLiFavImport } from './front/routes/cm/li/fav'
 import { Route as CmLiEventsImport } from './front/routes/cm/li/events'
@@ -182,6 +184,12 @@ const QRIndexRoute = QRIndexImport.update({
   getParentRoute: () => QRouteRoute,
 } as any)
 
+const QAIndexRoute = QAIndexImport.update({
+  id: '/a/',
+  path: '/a/',
+  getParentRoute: () => QRouteRoute,
+} as any)
+
 const CmPlayerIndexRoute = CmPlayerIndexImport.update({
   id: '/player/',
   path: '/player/',
@@ -209,6 +217,12 @@ const otherAppNameIndexRoute = otherAppNameIndexImport.update({
 const QRBlankRoute = QRBlankImport.update({
   id: '/r/$blank',
   path: '/r/$blank',
+  getParentRoute: () => QRouteRoute,
+} as any)
+
+const QABlankRoute = QABlankImport.update({
+  id: '/a/$blank',
+  path: '/a/$blank',
   getParentRoute: () => QRouteRoute,
 } as any)
 
@@ -514,6 +528,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CmLiSelImport
       parentRoute: typeof CmRouteImport
     }
+    '/q/a/$blank': {
+      id: '/q/a/$blank'
+      path: '/a/$blank'
+      fullPath: '/q/a/$blank'
+      preLoaderRoute: typeof QABlankImport
+      parentRoute: typeof QRouteImport
+    }
     '/q/r/$blank': {
       id: '/q/r/$blank'
       path: '/r/$blank'
@@ -548,6 +569,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/cm/player'
       preLoaderRoute: typeof CmPlayerIndexImport
       parentRoute: typeof CmRouteImport
+    }
+    '/q/a/': {
+      id: '/q/a/'
+      path: '/a'
+      fullPath: '/q/a'
+      preLoaderRoute: typeof QAIndexImport
+      parentRoute: typeof QRouteImport
     }
     '/q/r/': {
       id: '/q/r/'
@@ -757,13 +785,17 @@ const CmRouteRouteWithChildren =
 
 interface QRouteRouteChildren {
   QIRoute: typeof QIRoute
+  QABlankRoute: typeof QABlankRoute
   QRBlankRoute: typeof QRBlankRoute
+  QAIndexRoute: typeof QAIndexRoute
   QRIndexRoute: typeof QRIndexRoute
 }
 
 const QRouteRouteChildren: QRouteRouteChildren = {
   QIRoute: QIRoute,
+  QABlankRoute: QABlankRoute,
   QRBlankRoute: QRBlankRoute,
+  QAIndexRoute: QAIndexRoute,
   QRIndexRoute: QRIndexRoute,
 }
 
@@ -834,11 +866,13 @@ export interface FileRoutesByFullPath {
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
   '/cm/li/sel': typeof CmLiSelRoute
+  '/q/a/$blank': typeof QABlankRoute
   '/q/r/$blank': typeof QRBlankRoute
   '/!other/$appName/': typeof otherAppNameIndexRoute
   '/cm/i': typeof CmIIndexRoute
   '/cm/li': typeof CmLiIndexRoute
   '/cm/player': typeof CmPlayerIndexRoute
+  '/q/a': typeof QAIndexRoute
   '/q/r': typeof QRIndexRoute
   '/schedule-day/$schw': typeof ScheduleDaySchwIndexRoute
   '/cm/edit/': typeof CmEditIndexLazyRoute
@@ -877,11 +911,13 @@ export interface FileRoutesByTo {
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
   '/cm/li/sel': typeof CmLiSelRoute
+  '/q/a/$blank': typeof QABlankRoute
   '/q/r/$blank': typeof QRBlankRoute
   '/!other/$appName': typeof otherAppNameIndexRoute
   '/cm/i': typeof CmIIndexRoute
   '/cm/li': typeof CmLiIndexRoute
   '/cm/player': typeof CmPlayerIndexRoute
+  '/q/a': typeof QAIndexRoute
   '/q/r': typeof QRIndexRoute
   '/schedule-day/$schw': typeof ScheduleDaySchwIndexRoute
   '/cm/edit': typeof CmEditIndexLazyRoute
@@ -925,11 +961,13 @@ export interface FileRoutesById {
   '/cm/li/events': typeof CmLiEventsRoute
   '/cm/li/fav': typeof CmLiFavRoute
   '/cm/li/sel': typeof CmLiSelRoute
+  '/q/a/$blank': typeof QABlankRoute
   '/q/r/$blank': typeof QRBlankRoute
   '/!other/$appName/': typeof otherAppNameIndexRoute
   '/cm/i/': typeof CmIIndexRoute
   '/cm/li/': typeof CmLiIndexRoute
   '/cm/player/': typeof CmPlayerIndexRoute
+  '/q/a/': typeof QAIndexRoute
   '/q/r/': typeof QRIndexRoute
   '/schedule-day/$schw/': typeof ScheduleDaySchwIndexRoute
   '/cm/edit/': typeof CmEditIndexLazyRoute
@@ -975,11 +1013,13 @@ export interface FileRouteTypes {
     | '/cm/li/events'
     | '/cm/li/fav'
     | '/cm/li/sel'
+    | '/q/a/$blank'
     | '/q/r/$blank'
     | '/!other/$appName/'
     | '/cm/i'
     | '/cm/li'
     | '/cm/player'
+    | '/q/a'
     | '/q/r'
     | '/schedule-day/$schw'
     | '/cm/edit/'
@@ -1017,11 +1057,13 @@ export interface FileRouteTypes {
     | '/cm/li/events'
     | '/cm/li/fav'
     | '/cm/li/sel'
+    | '/q/a/$blank'
     | '/q/r/$blank'
     | '/!other/$appName'
     | '/cm/i'
     | '/cm/li'
     | '/cm/player'
+    | '/q/a'
     | '/q/r'
     | '/schedule-day/$schw'
     | '/cm/edit'
@@ -1063,11 +1105,13 @@ export interface FileRouteTypes {
     | '/cm/li/events'
     | '/cm/li/fav'
     | '/cm/li/sel'
+    | '/q/a/$blank'
     | '/q/r/$blank'
     | '/!other/$appName/'
     | '/cm/i/'
     | '/cm/li/'
     | '/cm/player/'
+    | '/q/a/'
     | '/q/r/'
     | '/schedule-day/$schw/'
     | '/cm/edit/'
@@ -1159,7 +1203,9 @@ export const routeTree = rootRoute
       "filePath": "q/route.tsx",
       "children": [
         "/q/i",
+        "/q/a/$blank",
         "/q/r/$blank",
+        "/q/a/",
         "/q/r/"
       ]
     },
@@ -1266,6 +1312,10 @@ export const routeTree = rootRoute
       "filePath": "cm/li/sel.tsx",
       "parent": "/cm"
     },
+    "/q/a/$blank": {
+      "filePath": "q/a/$blank.tsx",
+      "parent": "/q"
+    },
     "/q/r/$blank": {
       "filePath": "q/r/$blank.tsx",
       "parent": "/q"
@@ -1285,6 +1335,10 @@ export const routeTree = rootRoute
     "/cm/player/": {
       "filePath": "cm/player/index.tsx",
       "parent": "/cm"
+    },
+    "/q/a/": {
+      "filePath": "q/a/index.tsx",
+      "parent": "/q"
     },
     "/q/r/": {
       "filePath": "q/r/index.tsx",

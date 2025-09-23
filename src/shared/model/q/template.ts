@@ -1,73 +1,102 @@
-import { QuestionerAnswerMi, QuestionerTemplateMi, QuestionerType } from './enums';
+import { QuestionerBlank, QuestionerBlankSelector } from './blank';
+import { QuestionerAnswerId, QuestionerTemplateId, QuestionerType } from './enums';
 
 type QuestionerT_A = {
-  radio: Implement<
+  [QuestionerType.Radio]: Implement<
     {
       type: QuestionerType.Radio;
-      vari: AnswerVariant[];
-    },
-    QuestionerAnswerMi[]
+      correct?: QuestionerAnswerId;
+      /** is random sort variants  */
+      rSort?: 1;
+    } & QuestionerVariantedTemplate
   >;
 
-  check: Implement<
+  [QuestionerType.Check]: Implement<
     {
       type: QuestionerType.Check;
-      vari: AnswerVariant[];
-    },
-    QuestionerAnswerMi
+      correct?: QuestionerAnswerId[];
+      min?: number;
+      max?: number;
+      /** is random sort variants  */
+      rSort?: 1;
+    } & QuestionerVariantedTemplate
   >;
-  comment: Implement<
-    {
-      type: QuestionerType.Comment;
-    },
-    string
-  >;
+  [QuestionerType.Comment]: Implement<{
+    type: QuestionerType.Comment;
+    correct?: string;
+  }>;
+  [QuestionerType.Sorter]: Implement<{
+    type: QuestionerType.Sorter;
+    correct?: QuestionerAnswerId[];
+    above?: string;
+    below?: string;
+  }> &
+    QuestionerVariantedTemplate;
 };
 
-type ExtractTemplate<T extends { template: unknown }> = T['template'];
-type ExtractAnswer<T extends { answer: unknown }> = T['answer'];
+export type QuestionerTemplate = QuestionerT_A[QuestionerType];
+export type QuestionerTemplateByItsType<Type extends QuestionerType> = QuestionerT_A[Type];
 
-export type QuestionerTemplate = ExtractTemplate<QuestionerT_A[keyof QuestionerT_A]>;
-export type QuestionerAnswer = ExtractAnswer<QuestionerT_A[keyof QuestionerT_A]>;
+export type QuestionerAdminTemplateContentProps<Type extends QuestionerType> = {
+  blank: QuestionerBlank;
+  template: QuestionerTemplateByItsType<Type>;
+  templateId: RKey<QuestionerTemplateId>;
+  onUpdate: () => void;
+};
+
+export type QuestionerUserAnswerContentProps<Type extends QuestionerType> = {
+  template: QuestionerTemplateByItsType<Type>;
+  userAnswer: QuestionerTemplateByItsType<Type>['correct'];
+  onUpdate: (
+    updater: (value: QuestionerTemplateByItsType<Type>['correct']) => QuestionerTemplateByItsType<Type>['correct'],
+  ) => void;
+};
+
+export type QuestionerUserAnswerResultContentProps<Type extends QuestionerType> = {
+  template: QuestionerTemplateByItsType<Type>;
+  userAnswer: QuestionerTemplateByItsType<Type>['correct'];
+};
 
 /////////////////////////////
 /////////////////////////////
-export type QuestionerRadioTemplate = ExtractTemplate<QuestionerT_A['radio']>;
-export type QuestionerRadioAnswer = ExtractAnswer<QuestionerT_A['radio']>;
 
-export type QuestionerCheckTemplate = ExtractTemplate<QuestionerT_A['check']>;
-export type QuestionerCheckAnswer = ExtractAnswer<QuestionerT_A['check']>;
+type QuestionerVariantedTemplate = {
+  variants: PRecord<QuestionerAnswerId, AnswerVariant>;
+};
 
-export type QuestionerCommentTemplate = ExtractTemplate<QuestionerT_A['comment']>;
-export type QuestionerCommentAnswer = ExtractAnswer<QuestionerT_A['comment']>;
+export type QuestionerRadioTemplate = QuestionerT_A[QuestionerType.Radio];
+export type QuestionerCheckTemplate = QuestionerT_A[QuestionerType.Check];
+export type QuestionerCommentTemplate = QuestionerT_A[QuestionerType.Comment];
+export type QuestionerSorterTemplate = QuestionerT_A[QuestionerType.Sorter];
 /////////////////////////////
 /////////////////////////////
 
 type TemplateDefaults = {
+  title?: string;
+  dsc?: string;
   req?: 1;
-  mi: QuestionerTemplateMi;
-};
-
-type Answer<AnswerValue> = {
-  /** answer value */
-  v: AnswerValue;
-  /** comment */
-  cm?: string;
+  hidden?: 1;
+  correct?: unknown;
 };
 
 type Implement<
   T extends {
     type: QuestionerType;
+    correct?: unknown;
   },
-  AnswerValue,
-> = {
-  template: T & TemplateDefaults;
-  answer: Answer<AnswerValue>;
+> = T & TemplateDefaults;
+
+export type QuestionerUserAnswer = {
+  fio?: string;
+  answ: PRecord<QuestionerTemplateId, unknown>;
 };
 
 type AnswerVariant = {
-  mi: QuestionerAnswerMi;
   title: string;
-  /** correct variant mark */
-  cv?: 1;
 };
+
+export type QuestionerTemplateSelector<With = object> = QuestionerBlankSelector<
+  With & {
+    templateId: RKey<QuestionerTemplateId>;
+  }
+>;
