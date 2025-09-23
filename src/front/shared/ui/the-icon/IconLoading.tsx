@@ -1,14 +1,16 @@
 import { HTMLAttributes } from 'react';
+import { StameskaIconKind } from 'stameska-icon/utils';
 import styled, { keyframes } from 'styled-components';
 import { LazyIcon } from './LazyIcon';
 
 interface Props extends HTMLAttributes<HTMLOrSVGElement> {
   isLoading?: boolean;
   icon?: KnownStameskaIconName;
+  iconKind?: StameskaIconKind;
 }
 
 export const TheIconLoading = (props: Props) => {
-  const { isLoading, icon, ...attrs } = props;
+  const { isLoading, icon, iconKind, ...attrs } = props;
   if (!('isLoading' in props))
     return (
       <StyledLoadingSpinner
@@ -29,6 +31,7 @@ export const TheIconLoading = (props: Props) => {
       {icon ? (
         <LazyIcon
           icon={icon}
+          kind={iconKind}
           {...attrs}
         />
       ) : (

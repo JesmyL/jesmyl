@@ -506,6 +506,66 @@ export class MyLib extends SMyLib {
       })
       .effect();
   }
+
+  makeMaxMinReqInfo = (props: {
+    min: number | nil;
+    max: number | nil;
+    isRequired: boolean;
+    length: number;
+    infoBetweenText: string;
+    checkBetweenText: string;
+    infoEqText: string;
+    checkEqText: string;
+    checkMinText: string;
+    infoMinText: string;
+    checkMaxText: string;
+    infoMaxText: string;
+    checkRequiredText: string;
+  }): { check: string | null; info: null | string } | null => {
+    if (props.min != null && props.max != null) {
+      const info = props.max === props.min ? props.infoEqText : props.infoBetweenText;
+      const check = props.max === props.min ? props.checkEqText : props.checkBetweenText;
+
+      if (props.isRequired && !props.length) return { check, info };
+      else if (!props.isRequired && !props.length) return { check: null, info };
+
+      return {
+        info,
+        check:
+          props.max === props.min
+            ? props.length === props.min
+              ? null
+              : check
+            : props.length < props.min || props.length > props.max
+              ? check
+              : null,
+      };
+    } else if (props.min != null) {
+      return {
+        info: props.infoMinText,
+        check:
+          props.isRequired && !props.length ? props.checkMinText : props.length < props.min ? props.checkMinText : null,
+      };
+    } else if (props.max != null) {
+      return {
+        info: props.infoMaxText,
+        check:
+          props.isRequired && !props.length
+            ? props.checkRequiredText
+            : props.length > props.max
+              ? props.checkMaxText
+              : null,
+      };
+    }
+
+    if (props.isRequired && !props.length)
+      return {
+        check: props.checkRequiredText,
+        info: null,
+      };
+
+    return null;
+  };
 }
 
 export const mylib = new MyLib();

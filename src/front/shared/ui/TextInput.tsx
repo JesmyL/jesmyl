@@ -1,36 +1,43 @@
 import { Input } from '#shared/components/ui/input';
 import { Textarea } from '#shared/components/ui/textarea';
 import { propagationStopper } from '#shared/lib/event-funcs';
-import { AllHTMLAttributes } from 'react';
+import { AllHTMLAttributes, useEffect, useRef } from 'react';
 
-export const TextInput = ({
-  onChanged,
-  onInput,
-  multiline,
-  label,
-  ...props
-}: OmitOwn<AllHTMLAttributes<HTMLInputElement & HTMLTextAreaElement>, 'onChange' | 'onInput' | 'type' | 'label'> & {
+type Props = OmitOwn<
+  AllHTMLAttributes<HTMLInputElement & HTMLTextAreaElement>,
+  'onChange' | 'onInput' | 'type' | 'label'
+> & {
   onChanged?: (value: string) => void;
   onInput?: (value: string) => void;
   multiline?: boolean;
+  strongDefaultValue?: boolean;
   type?: 'text' | 'tel' | 'email';
   label?: React.ReactNode;
-}) => {
-  const Comp = multiline ? Textarea : Input;
+};
 
-  const node = (
+export const TextInput = ({ onChanged, onInput, multiline, label, strongDefaultValue, ...props }: Props) => {
+  const Comp = multiline ? Textarea : Input;
+  const attrs: AllHTMLAttributes<HTMLInputElement & HTMLTextAreaElement> = {
+    onKeyDown: propagationStopper,
+    onChange: onInput ? event => onInput(event.currentTarget.value) : undefined,
+    onBlur: onChanged
+      ? event => {
+          if (event.currentTarget.value !== props.value) onChanged(event.currentTarget.value);
+          props.onBlur?.(event as never);
+        }
+      : undefined,
+  };
+
+  const node = strongDefaultValue ? (
+    <StrongDefaultValueInput
+      Comp={Comp}
+      {...props}
+      {...(attrs as object)}
+    />
+  ) : (
     <Comp
       {...props}
-      onKeyDown={propagationStopper}
-      onChange={onInput ? event => onInput(event.currentTarget.value) : undefined}
-      onBlur={
-        onChanged
-          ? event => {
-              if (event.currentTarget.value !== props.value) onChanged(event.currentTarget.value);
-              props.onBlur?.(event as never);
-            }
-          : undefined
-      }
+      {...(attrs as object)}
     />
   );
 
@@ -41,5 +48,28 @@ export const TextInput = ({
     </label>
   ) : (
     node
+  );
+};
+
+const StrongDefaultValueInput = ({
+  onChanged,
+  onInput,
+  multiline,
+  label,
+  strongDefaultValue,
+  Comp,
+  ...props
+}: Props & { Comp: typeof Textarea | typeof Input }) => {
+  const inputRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null);
+  useEffect(() => {
+    if (inputRef.current === null) return;
+    inputRef.current.value = '' + (props.defaultValue || '');
+  }, [props.defaultValue]);
+
+  return (
+    <Comp
+      {...props}
+      ref={inputRef}
+    />
   );
 };

@@ -5,6 +5,7 @@ import { StyledLoadingSpinner } from './IconLoading';
 import { LazyIcon } from './LazyIcon';
 
 interface Props {
+  isRadio?: boolean;
   checked?: boolean;
   onChange?: (is: boolean) => void;
   onClick?: () => Promise<unknown>;
@@ -43,11 +44,17 @@ export function IconCheckbox(props: Props) {
         onClick={onClick}
       />
     ) : null;
+    const kind = props.isRadio
+      ? (props.negativeValue ? !props.checked : props.checked)
+        ? 'SolidRounded'
+        : undefined
+      : undefined;
 
     return props.prefix === undefined && props.postfix === undefined ? (
       (loadIcon ?? (
         <LazyIcon
-          icon={icon}
+          icon={props.isRadio ? 'RadioButton' : icon}
+          kind={kind}
           className={className}
           onClick={onClick}
         />
@@ -58,7 +65,12 @@ export function IconCheckbox(props: Props) {
         onClick={onClick}
       >
         {props.prefix}
-        {loadIcon ?? <LazyIcon icon={icon} />}
+        {loadIcon ?? (
+          <LazyIcon
+            icon={props.isRadio ? 'RadioButton' : icon}
+            kind={kind}
+          />
+        )}
         {props.postfix}
       </span>
     );
@@ -66,18 +78,18 @@ export function IconCheckbox(props: Props) {
 
   if (props.valueAtom !== undefined)
     return (
-      <WithSimpleValuer
+      <WithAtomValue
         valueAtom={props.valueAtom}
         negativeValue={props.negativeValue}
       >
         {icon => renderNode(icon)}
-      </WithSimpleValuer>
+      </WithAtomValue>
     );
 
   return renderNode(props.checked ? 'CheckmarkSquare04' : 'Square');
 }
 
-const WithSimpleValuer = (props: {
+const WithAtomValue = (props: {
   children: (icon: KnownStameskaIconName) => ReactNode;
   valueAtom: Atom<boolean>;
   negativeValue?: boolean;

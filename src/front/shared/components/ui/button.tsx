@@ -3,7 +3,9 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import * as React from 'react';
 
 import { cn } from '#shared/lib/utils';
+import { useToast } from '#shared/ui/modal/useToast';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
+import { StameskaIconKind } from 'stameska-icon/utils';
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
@@ -41,22 +43,57 @@ function Button({
   isLoading,
   children,
   asSpan,
+  disabled,
+  icon,
+  disabledReason,
   ...props
-}: React.ComponentProps<'button'> &
+}: OmitOwn<React.ComponentProps<'button'>, 'onClick'> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean;
     asSpan?: boolean;
     isLoading?: boolean;
+    icon?: KnownStameskaIconName;
+    iconKind?: StameskaIconKind;
+    disabledReason?: React.ReactNode;
+    onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>;
   }) {
   const Comp = asSpan ? 'span' : asChild ? Slot : 'button';
+  const [promiseIsLoading, setIsLoading] = React.useState(false);
+  const toast = useToast();
 
   return (
     <Comp
       data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(
+        buttonVariants({
+          variant,
+          size: icon && !children ? 'icon' : size,
+          className: [disabled && 'opacity-50', className],
+        }),
+      )}
+      disabled={disabled && !disabledReason}
       {...props}
+      onClick={
+        disabled
+          ? disabledReason
+            ? () => toast(disabledReason, { mood: 'ko' })
+            : undefined
+          : async event => {
+              const result = props.onClick?.(event);
+
+              if (result instanceof Promise) {
+                setIsLoading(true);
+                await result;
+              }
+
+              setIsLoading(false);
+            }
+      }
     >
-      {isLoading && <TheIconLoading />}
+      <TheIconLoading
+        icon={icon}
+        isLoading={promiseIsLoading || isLoading}
+      />
       {children}
     </Comp>
   );

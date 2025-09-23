@@ -34,7 +34,10 @@ export const App = () => {
           </AppDialogProvider>
         </BlockStylesProvider>
       </StyledIconProvider>
-      <Toaster position="bottom-center" />
+      <Toaster
+        position="bottom-center"
+        style={{ bottom: '100px' }}
+      />
     </QueryClientProvider>
   );
 };
