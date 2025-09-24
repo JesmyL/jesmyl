@@ -1,7 +1,6 @@
 import { Accordion } from '#shared/components/ui/accordion';
 import { Button } from '#shared/components/ui/button';
 import { Card } from '#shared/components/ui/card';
-import { mylib } from '#shared/lib/my-lib';
 import { ConditionalRender } from '#shared/ui/ConditionalRender';
 import { CopyTextButton } from '#shared/ui/CopyTextButton';
 import { useToast } from '#shared/ui/modal/useToast';
@@ -62,8 +61,6 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
         <ConditionalRender
           value={questionBlank.data}
           render={blank => {
-            const templateIdKeys = mylib.keys(blank.tmp);
-
             if (!blank.anon && !userAnswer.fio) answerErrorsSet.add('Не вписаны Фамилия и Имя');
 
             return (
@@ -91,9 +88,9 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
                   <Accordion.Root
                     type="multiple"
                     key={+isOpenAllItems}
-                    defaultValue={isOpenAllItems ? (templateIdKeys as string[]) : []}
+                    defaultValue={isOpenAllItems ? ((blank.ord ?? []) as never as string[]) : []}
                   >
-                    {templateIdKeys.map(templateId => {
+                    {blank.ord.map(templateId => {
                       const template = blank.tmp[templateId];
                       if (template == null || template.hidden || !template.dsc) return;
 

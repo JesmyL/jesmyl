@@ -41,6 +41,7 @@ export const questionerTSJRPCAddBlankTemplate: typeof questionerAdminServerTsjrp
   }
 
   const keyId = smylib.takeKeyId(blanks[blankw].tmp, QuestionerTemplateId.min);
+  blanks[blankw].ord.push(keyId);
   blanks[blankw].tmp[keyId] = blankTmp;
   questionerBlanksFileStore.saveValue();
 

@@ -19,6 +19,7 @@ export type QuestionerAdminTsjrpcModel = {
   changeTemplateTitle: (args: QuestionerTemplateSelector<{ value: string }>) => void;
   changeTemplateDescription: (args: QuestionerTemplateSelector<{ value: string }>) => void;
   changeTemplateRequiredSign: (args: QuestionerTemplateSelector<{ value: boolean }>) => void;
+  changeTemplatePosition: (args: QuestionerTemplateSelector) => void;
   switchTemplateHiddenSign: (args: QuestionerTemplateSelector) => void;
   changeTemplateRandomSortSign: (args: QuestionerTemplateSelector<{ value: boolean }>) => void;
   changeTemplateMinSign: (args: QuestionerTemplateSelector<{ value: number }>) => void;

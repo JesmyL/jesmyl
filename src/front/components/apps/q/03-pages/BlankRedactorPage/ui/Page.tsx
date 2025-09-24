@@ -3,7 +3,6 @@ import { Accordion } from '#shared/components/ui/accordion';
 import { Button } from '#shared/components/ui/button';
 import { Popover } from '#shared/components/ui/popover';
 import { propagationStopper } from '#shared/lib/event-funcs';
-import { mylib } from '#shared/lib/my-lib';
 import { ConditionalRender } from '#shared/ui/ConditionalRender';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
@@ -19,6 +18,7 @@ import { atom } from 'atomaric';
 import { QuestionerAdminTemplateContentProps, QuestionerBlankWid, QuestionerType } from 'shared/model/q';
 import { itIt } from 'shared/utils';
 import { QuestionerAddTemplateModalInner } from './AddTemplateModalInner';
+import { QuestionerBlankRedactorControls } from './Controls';
 
 const isOpenAddModalAtom = atom(false);
 
@@ -62,46 +62,14 @@ export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlan
             value={blankQuery.data}
             render={blank => (
               <>
-                <InputWithLoadingIcon
-                  icon="TextFont"
-                  label="Название"
-                  defaultValue={blank.title}
-                  onChange={value =>
-                    questionerAdminTsjrpcClient.changeBlankTitle({ blankw, value }).then(() => blankQuery.refetch())
-                  }
+                <QuestionerBlankRedactorControls
+                  onUpdate={blankQuery.refetch}
+                  blank={blank}
+                  blankw={blankw}
                 />
-
-                <InputWithLoadingIcon
-                  icon="TextAlignLeft"
-                  label="Описание"
-                  defaultValue={blank.dsc}
-                  multiline
-                  onChange={value =>
-                    questionerAdminTsjrpcClient
-                      .changeBlankDescription({ blankw, value })
-                      .then(() => blankQuery.refetch())
-                  }
-                />
-
-                <div
-                  onClick={() =>
-                    questionerAdminTsjrpcClient.switchBlankIsAnonymous({ blankw }).then(() => blankQuery.refetch())
-                  }
-                >
-                  <IconCheckbox
-                    isRadio
-                    checked={!!blank.anon}
-                    postfix="Анонимный опрос"
-                  />
-                  <IconCheckbox
-                    isRadio
-                    checked={!blank.anon}
-                    postfix="Запрашивать Фамилию/Имя"
-                  />
-                </div>
 
                 <Accordion.Root type="multiple">
-                  {mylib.keys(blank.tmp).map(templateId => {
+                  {blank.ord?.map((templateId, templateIdi) => {
                     const template = blank.tmp[templateId];
                     if (template == null) return;
 
@@ -125,44 +93,60 @@ export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlan
                           key={templateId}
                           templateId={templateId}
                           template={template}
+                          className={template.hidden ? 'opacity-50' : undefined}
+                          content={contentProps.adminRender(props as never)}
                           title={
-                            <div className="flex gap-3">
-                              {template.title || (
-                                <span className="text-x7 italic">
-                                  {questionerTemplateDescriptions[template.type].title}
-                                </span>
-                              )}
-                              {template.req && <span className="bold text-xKO">*</span>}
-                              {template.hidden ? (
-                                <Popover.Root>
-                                  <Popover.Trigger
-                                    onClick={propagationStopper}
-                                    asChild
-                                  >
-                                    <LazyIcon icon="ViewOffSlash" />
-                                  </Popover.Trigger>
-                                  <Popover.Content>Вопрос скрыт</Popover.Content>
-                                </Popover.Root>
-                              ) : (
-                                !!errors.length && (
+                            <div className="flex justify-between w-full">
+                              <div className="flex gap-3">
+                                {template.title || (
+                                  <span className="text-x7 italic">
+                                    {questionerTemplateDescriptions[template.type].title}
+                                  </span>
+                                )}
+                                {template.req && <span className="bold text-xKO">*</span>}
+                                {template.hidden ? (
                                   <Popover.Root>
                                     <Popover.Trigger
                                       onClick={propagationStopper}
                                       asChild
                                     >
-                                      <LazyIcon icon="ViewOff" />
+                                      <LazyIcon icon="ViewOffSlash" />
                                     </Popover.Trigger>
-                                    <Popover.Content>
-                                      {errors.map(error => (
-                                        <div key={'' + error}>{error}</div>
-                                      ))}
-                                    </Popover.Content>
+                                    <Popover.Content>Вопрос скрыт</Popover.Content>
                                   </Popover.Root>
-                                )
+                                ) : (
+                                  !!errors.length && (
+                                    <Popover.Root>
+                                      <Popover.Trigger
+                                        onClick={propagationStopper}
+                                        asChild
+                                      >
+                                        <LazyIcon icon="ViewOff" />
+                                      </Popover.Trigger>
+                                      <Popover.Content>
+                                        {errors.map(error => (
+                                          <div key={'' + error}>{error}</div>
+                                        ))}
+                                      </Popover.Content>
+                                    </Popover.Root>
+                                  )
+                                )}
+                              </div>
+                              {!templateIdi || (
+                                <Button
+                                  icon="SquareArrowMoveRightUp"
+                                  asSpan
+                                  onClick={event => {
+                                    event.stopPropagation();
+
+                                    return questionerAdminTsjrpcClient
+                                      .changeTemplatePosition({ blankw, templateId })
+                                      .then(() => blankQuery.refetch());
+                                  }}
+                                />
                               )}
                             </div>
                           }
-                          className={template.hidden ? 'opacity-50' : undefined}
                           actionIconsNode={
                             <Button
                               icon={template.hidden ? 'ViewOffSlash' : 'View'}
@@ -211,7 +195,6 @@ export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlan
                               }
                             />
                           }
-                          content={contentProps.adminRender(props as never)}
                         />
                       );
                     })(template.type);

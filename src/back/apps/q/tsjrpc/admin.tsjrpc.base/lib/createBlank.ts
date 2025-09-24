@@ -15,6 +15,7 @@ export const questionerTSJRPCCreateBlank: typeof questionerAdminServerTsjrpcBase
     title: 'Новый опрос',
     dsc: '',
     tmp: {},
+    ord: [],
     team: {
       [auth.login]: {
         fio: auth.fio ?? 'Неизвестный',

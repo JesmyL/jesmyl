@@ -1,10 +1,23 @@
+import { mylib } from '#shared/lib/my-lib';
 import { EllipsisText } from '#shared/ui/EllipsisText';
-import { QuestionerType, QuestionerUserAnswerResultContentProps } from 'shared/model/q';
+import { QuestionerAnswerId, QuestionerType, QuestionerUserAnswerResultContentProps } from 'shared/model/q';
 
 export const QuestionerResultSorterTemplateCardContent = ({
   userAnswer,
   template,
 }: QuestionerUserAnswerResultContentProps<QuestionerType.Sorter>) => {
+  const variantKeys = mylib.keys(template.variants);
+  let newAnswerIds: RKey<QuestionerAnswerId>[] = [];
+
+  if (userAnswer && userAnswer.length !== variantKeys.length) {
+    const variantKeySet = new Set(variantKeys);
+    userAnswer.forEach(answerId => {
+      variantKeySet.delete(('' + answerId) as never);
+    });
+
+    newAnswerIds = Array.from(variantKeySet);
+  }
+
   return (
     <>
       <div className="text-x7">{template.above}</div>
@@ -29,6 +42,16 @@ export const QuestionerResultSorterTemplateCardContent = ({
                   )}
                 </>
               )}
+            </div>
+          );
+        })}
+        {newAnswerIds.map(answerId => {
+          return (
+            <div
+              key={answerId}
+              className="flex gap-2 white-pre-line break-wrap opacity-50"
+            >
+              <EllipsisText text={template.variants[answerId]?.title} />
             </div>
           );
         })}

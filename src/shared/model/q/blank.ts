@@ -15,6 +15,7 @@ export type QuestionerBlank = {
   dsc: string;
   anon?: 1;
   tmp: PRecord<QuestionerTemplateId, QuestionerTemplate>;
+  ord: QuestionerTemplateId[];
   team: PRecord<SokiAuthLogin, QuestionerBlankUser>;
 };
 

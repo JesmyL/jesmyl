@@ -1,6 +1,5 @@
 import { Accordion } from '#shared/components/ui/accordion';
 import { Button } from '#shared/components/ui/button';
-import { MyLib } from '#shared/lib/my-lib';
 import { ConditionalRender } from '#shared/ui/ConditionalRender';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
@@ -35,8 +34,8 @@ export const QuestionerCheckAnswersPage = ({ blankw }: { blankw: QuestionerBlank
       }
       content={
         <ConditionalRender
-          value={questionBlank.data?.tmp && MyLib.entries(questionBlank.data.tmp)}
-          render={templates => {
+          value={questionBlank.data}
+          render={blank => {
             return (
               <ConditionalRender
                 value={userAnswers.data}
@@ -53,7 +52,9 @@ export const QuestionerCheckAnswersPage = ({ blankw }: { blankw: QuestionerBlank
                         <Accordion.Item value={'' + answeri}>
                           <Accordion.Trigger>{fio}</Accordion.Trigger>
                           <Accordion.Content>
-                            {templates.map(([templateId, template]) => {
+                            {blank.ord.map(templateId => {
+                              const template = blank.tmp[templateId];
+
                               if (template == null) return;
 
                               return (

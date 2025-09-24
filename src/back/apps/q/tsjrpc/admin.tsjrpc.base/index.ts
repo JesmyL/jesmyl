@@ -7,6 +7,7 @@ import {
   QuestionerBlankRole,
   QuestionerBlankSelector,
   QuestionerTemplate,
+  QuestionerTemplateId,
   QuestionerTemplateSelector,
   QuestionerType,
 } from 'shared/model/q';
@@ -75,6 +76,14 @@ export const questionerAdminServerTsjrpcBase =
           changeBlankTitle: updateBlank(({ value }, blank) => (blank.title = value)),
           changeBlankDescription: updateBlank(({ value }, blank) => (blank.dsc = value)),
           switchBlankIsAnonymous: updateBlank((_, blank) => (blank.anon = blank.anon ? undefined : 1)),
+
+          changeTemplatePosition: updateBlank(({ templateId }, blank) => {
+            const templateKeys: QuestionerTemplateId[] = Array.from(
+              new Set([...blank.ord, ...smylib.keys(blank.tmp).map(Number)]),
+            );
+            const index = templateKeys.indexOf(+templateId);
+            blank.ord = smylib.withInsertedBeforei(templateKeys, index - 1, index);
+          }),
 
           changeTemplateTitle: updateTemplate(({ value }, template) => (template.title = value)),
           changeTemplateDescription: updateTemplate(({ value }, template) => (template.dsc = value)),
