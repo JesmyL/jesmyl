@@ -1,12 +1,16 @@
 import { mylib } from '#shared/lib/my-lib';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
-import { QuestionerType, QuestionerUserAnswerResultContentProps } from 'shared/model/q';
+import { QuestionerType } from 'shared/model/q';
+import { QuestionerUserAnswerResultContentProps } from 'shared/model/q/answer';
 
 export const QuestionerResultRadioTemplateCardContent = ({
   template,
   userAnswer,
 }: QuestionerUserAnswerResultContentProps<QuestionerType.Radio>) => {
+  if (!userAnswer) return;
+
   const keys = mylib.keys(template.variants);
+  const unknownAnswerKeySet = new Set(mylib.keys(template.variants).slice(userAnswer.len));
 
   return (
     <>
@@ -19,22 +23,26 @@ export const QuestionerResultRadioTemplateCardContent = ({
             key={answerId}
             className="whitespace-pre-line my-5"
           >
-            <IconCheckbox
-              isRadio
-              checked={userAnswer === +answerId}
-              postfix={title}
-              className={
-                template.correct == null
-                  ? 'opacity-50'
-                  : template.correct === +answerId
-                    ? userAnswer === +answerId
-                      ? 'text-xOK'
-                      : ''
-                    : userAnswer === +answerId
-                      ? 'text-xKO'
-                      : 'opacity-50'
-              }
-            />
+            {unknownAnswerKeySet.has(answerId) ? (
+              <div className="opacity-50">{title}</div>
+            ) : (
+              <IconCheckbox
+                isRadio
+                checked={userAnswer.v === +answerId}
+                postfix={title}
+                className={
+                  template.correct == null
+                    ? 'opacity-50'
+                    : template.correct === +answerId
+                      ? userAnswer.v === +answerId
+                        ? 'text-xOK'
+                        : ''
+                      : userAnswer.v === +answerId
+                        ? 'text-xKO'
+                        : 'opacity-50'
+                }
+              />
+            )}
           </div>
         );
       })}

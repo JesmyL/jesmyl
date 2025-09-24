@@ -42,7 +42,7 @@ export const QuestionerCheckAnswersPage = ({ blankw }: { blankw: QuestionerBlank
                 render={answers => {
                   const openItems = isOpenAllItems ? answers.map((_, i) => '' + i) : [];
 
-                  return answers.map(({ answ, fio }, answeri) => {
+                  return answers.map(({ a: answer, fio }, answeri) => {
                     return (
                       <Accordion.Root
                         key={`${answeri}-${+!openItems.length}`}
@@ -63,7 +63,7 @@ export const QuestionerCheckAnswersPage = ({ blankw }: { blankw: QuestionerBlank
                                   title={template.title}
                                   content={questionerCardContents(template.type).resultRender({
                                     template: template as never,
-                                    userAnswer: answ[templateId] as never,
+                                    userAnswer: answer[templateId] as never,
                                   })}
                                 />
                               );

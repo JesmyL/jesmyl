@@ -1,8 +1,9 @@
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { QuestionerUserTsjrpcModel } from 'shared/api/tsjrpc/q/user.tsjrpc.model';
-import { QuestionerTemplate, QuestionerTemplateId } from 'shared/model/q';
-import { smylib } from 'shared/utils';
+import { QuestionerTemplate, QuestionerTemplateId, QuestionerType, QuestionerVariatedType } from 'shared/model/q';
+import { QuestionerUserAnswerValueBox } from 'shared/model/q/answer';
+import { SMyLib, smylib } from 'shared/utils';
 import { questionerBlanksFileStore, questionerUserAnswersFileStore } from '../file-stores';
 
 export const questionerUserServerTsjrpcBase =
@@ -32,9 +33,27 @@ export const questionerUserServerTsjrpcBase =
           },
 
           publicUserAnswer: ({ blankw, answer }) => {
-            const blanks = questionerUserAnswersFileStore.getValueWithAutoSave();
-            blanks[blankw] ??= { answers: [] };
-            blanks[blankw].answers.push(answer);
+            const totalAnswers = questionerUserAnswersFileStore.getValueWithAutoSave();
+            const blank = questionerBlanksFileStore.getValue()[blankw];
+
+            totalAnswers[blankw] ??= { answers: [] };
+            totalAnswers[blankw].answers.push(answer);
+
+            SMyLib.entries(answer.a).forEach(([templateId, answerValue]) => {
+              if (answerValue == null) return;
+              if (answerValue.v == null) {
+                delete answer.a[templateId];
+                return;
+              }
+
+              const template = blank?.tmp[templateId];
+              if (template == null) return;
+
+              if (template.type === QuestionerType.Check || template.type === QuestionerType.Radio) {
+                const userAnswer = answerValue as QuestionerUserAnswerValueBox[QuestionerVariatedType];
+                userAnswer.len = smylib.keys(template.variants).length ?? 0;
+              }
+            });
           },
         },
         onEachFeedback: {

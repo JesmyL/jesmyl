@@ -14,20 +14,16 @@ import { questionerUserTsjrpcClient } from '$q/processes/tsjrpc/user.tsjrpc';
 import { atom, useAtomValue } from 'atomaric';
 import { environment } from 'front/environment';
 import { useState } from 'react';
-import {
-  QuestionerBlankWid,
-  QuestionerType,
-  QuestionerUserAnswer,
-  QuestionerUserAnswerContentProps,
-} from 'shared/model/q';
+import { QuestionerBlankWid, QuestionerType } from 'shared/model/q';
+import { QuestionerUserAnswer, QuestionerUserAnswerContentProps } from 'shared/model/q/answer';
 import { itNIt } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
 import { useQuestionerUserBlankDetailsQuery } from '../api/useQuestionerUserBlankDetailsQuery';
 
-const answersAtom = atom({ fio: '', answ: {} } as QuestionerUserAnswer, {
-  storeKey: 'q:userAnswer',
+const answersAtom = atom({ fio: '', a: {} } as QuestionerUserAnswer, {
+  storeKey: 'q:userAnswerDraft',
   do: (_, get, setDeferred) => ({
-    setFio: (fio: string) => setDeferred({ ...get(), fio }),
+    setFio: (fio: string) => setDeferred({ ...get(), fio: fio || undefined }),
   }),
 });
 
@@ -97,18 +93,20 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
                       return (<Type extends QuestionerType>(type: Type) => {
                         const contentProps = questionerCardContents<Type>(type);
 
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                        const props: QuestionerUserAnswerContentProps<any> = {
+                        const props: QuestionerUserAnswerContentProps<QuestionerType> = {
                           template: template,
-                          userAnswer: userAnswer.answ[templateId],
+                          userAnswer: userAnswer.a[templateId],
                           onUpdate: updater => {
                             answersAtom.set(prev => {
                               try {
-                                const updatedValue = updater(prev.answ[templateId]);
+                                const updatedValue = updater(prev.a[templateId]?.v);
 
                                 return {
                                   ...prev,
-                                  answ: { ...prev.answ, [templateId]: updatedValue },
+                                  a: {
+                                    ...prev.a,
+                                    [templateId]: updatedValue === undefined ? undefined : { v: updatedValue },
+                                  },
                                 };
                               } catch (_e) {
                                 return prev;

@@ -12,12 +12,8 @@ import { QuestionerUserCommentTemplateCardContent } from '$q/basis/ui/user-templ
 import { QuestionerUserRadioTemplateCardContent } from '$q/basis/ui/user-templates/Radio.user';
 import { QuestionerUserSorterTemplateCardContent } from '$q/basis/ui/user-templates/Sorter.user';
 import { JSX } from 'react';
-import {
-  QuestionerAdminTemplateContentProps,
-  QuestionerType,
-  QuestionerUserAnswerContentProps,
-  QuestionerUserAnswerResultContentProps,
-} from 'shared/model/q';
+import { QuestionerAdminTemplateContentProps, QuestionerType } from 'shared/model/q';
+import { QuestionerUserAnswerContentProps, QuestionerUserAnswerResultContentProps } from 'shared/model/q/answer';
 import { questionerTemplateDescriptions } from './templateDescriptions';
 
 export const questionerCardContents = <Type extends QuestionerType>(type: Type) =>
@@ -57,7 +53,7 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
           const checkPrefix = `Ответ на вопрос "${title}" ${props.template.req ? 'должен' : 'может'} содержать`;
 
           return mylib.makeMaxMinReqInfo({
-            length: props.userAnswer?.length ?? 0,
+            length: props.userAnswer?.v.length ?? 0,
             isRequired: !!props.template.req,
             max,
             min,

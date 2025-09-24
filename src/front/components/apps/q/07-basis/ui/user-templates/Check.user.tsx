@@ -1,7 +1,8 @@
 import { mylib } from '#shared/lib/my-lib';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { useMemo } from 'react';
-import { QuestionerType, QuestionerUserAnswerContentProps } from 'shared/model/q';
+import { QuestionerType } from 'shared/model/q';
+import { QuestionerUserAnswerContentProps } from 'shared/model/q/answer';
 
 export const QuestionerUserCheckTemplateCardContent = ({
   template,
@@ -25,7 +26,7 @@ export const QuestionerUserCheckTemplateCardContent = ({
             className="whitespace-pre-line my-5"
           >
             <IconCheckbox
-              checked={userAnswer?.includes(+answerId)}
+              checked={userAnswer?.v.includes(+answerId)}
               postfix={title}
               onClick={async () => {
                 onUpdate(prev => {

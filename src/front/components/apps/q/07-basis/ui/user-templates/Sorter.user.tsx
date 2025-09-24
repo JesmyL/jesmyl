@@ -1,7 +1,8 @@
 import { Button } from '#shared/components/ui/button';
 import { mylib } from '#shared/lib/my-lib';
 import { useEffect, useMemo } from 'react';
-import { QuestionerType, QuestionerUserAnswerContentProps } from 'shared/model/q';
+import { QuestionerType } from 'shared/model/q';
+import { QuestionerUserAnswerContentProps } from 'shared/model/q/answer';
 import { twMerge } from 'tailwind-merge';
 
 export const QuestionerUserSorterTemplateCardContent = ({
@@ -14,11 +15,11 @@ export const QuestionerUserSorterTemplateCardContent = ({
   }, [template.variants]);
 
   useEffect(() => {
-    if (!userAnswer || keys.length === userAnswer.length) return;
+    if (!userAnswer || keys.length === userAnswer.v.length) return;
 
     onUpdate(() => {
-      const newAnswer = [...userAnswer];
-      const prevSet = new Set(userAnswer);
+      const newAnswer = [...userAnswer.v];
+      const prevSet = new Set(userAnswer.v);
 
       keys.forEach(answerId => {
         if (prevSet.has(+answerId)) return;
@@ -34,7 +35,7 @@ export const QuestionerUserSorterTemplateCardContent = ({
     <>
       <div className="text-x7">{template.above}</div>
       <div className="ml-3">
-        {(userAnswer ?? keys).map((answerId, answerIdi, answerIda) => {
+        {(userAnswer?.v ?? keys).map((answerId, answerIdi, answerIda) => {
           const variant = template.variants[answerId];
 
           return (

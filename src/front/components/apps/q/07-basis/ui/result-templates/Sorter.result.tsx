@@ -1,6 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { EllipsisText } from '#shared/ui/EllipsisText';
-import { QuestionerAnswerId, QuestionerType, QuestionerUserAnswerResultContentProps } from 'shared/model/q';
+import { QuestionerAnswerId, QuestionerType } from 'shared/model/q';
+import { QuestionerUserAnswerResultContentProps } from 'shared/model/q/answer';
 
 export const QuestionerResultSorterTemplateCardContent = ({
   userAnswer,
@@ -8,22 +9,21 @@ export const QuestionerResultSorterTemplateCardContent = ({
 }: QuestionerUserAnswerResultContentProps<QuestionerType.Sorter>) => {
   const variantKeys = mylib.keys(template.variants);
   let newAnswerIds: RKey<QuestionerAnswerId>[] = [];
+  const variantKeySet = new Set(variantKeys.map(Number));
+  userAnswer?.v.forEach(answerId => variantKeySet.delete(answerId));
 
-  if (userAnswer && userAnswer.length !== variantKeys.length) {
-    const variantKeySet = new Set(variantKeys);
-    userAnswer.forEach(answerId => {
-      variantKeySet.delete(('' + answerId) as never);
-    });
-
+  if (userAnswer && userAnswer.v.length !== variantKeys.length) {
     newAnswerIds = Array.from(variantKeySet);
   }
+
+  const correctAnswerIds = template.correct?.filter(answerId => !variantKeySet.has(answerId)) ?? [];
 
   return (
     <>
       <div className="text-x7">{template.above}</div>
       <div className="ml-3">
-        {userAnswer?.map((answerId, answerIdi) => {
-          const correctAnswerId = template.correct?.[answerIdi];
+        {userAnswer?.v.map((answerId, answerIdi) => {
+          const correctAnswerId = correctAnswerIds[answerIdi];
           const isCorrect = answerId === correctAnswerId;
           const userAnswerTitle = <EllipsisText text={template.variants[answerId]?.title} />;
 

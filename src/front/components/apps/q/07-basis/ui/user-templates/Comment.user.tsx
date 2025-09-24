@@ -1,13 +1,14 @@
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
 import { TextInput } from '#shared/ui/TextInput';
 import { useEffect, useState } from 'react';
-import { QuestionerType, QuestionerUserAnswerContentProps } from 'shared/model/q';
+import { QuestionerType } from 'shared/model/q';
+import { QuestionerUserAnswerContentProps } from 'shared/model/q/answer';
 
 export const QuestionerUserCommentTemplateCardContent = ({
   onUpdate,
   userAnswer,
 }: QuestionerUserAnswerContentProps<QuestionerType.Comment>) => {
-  const [value, setValue] = useState(userAnswer);
+  const [value, setValue] = useState(userAnswer?.v);
   const debounceValue = useDebounceValue(value);
 
   useEffect(() => {
@@ -15,7 +16,7 @@ export const QuestionerUserCommentTemplateCardContent = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounceValue]);
 
-  useEffect(() => setValue(userAnswer || ''), [userAnswer]);
+  useEffect(() => setValue(userAnswer?.v || ''), [userAnswer]);
 
   return (
     <>

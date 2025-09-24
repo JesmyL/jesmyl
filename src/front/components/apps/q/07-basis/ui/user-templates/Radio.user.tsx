@@ -1,7 +1,8 @@
 import { mylib } from '#shared/lib/my-lib';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { useMemo } from 'react';
-import { QuestionerType, QuestionerUserAnswerContentProps } from 'shared/model/q';
+import { QuestionerType } from 'shared/model/q';
+import { QuestionerUserAnswerContentProps } from 'shared/model/q/answer';
 
 export const QuestionerUserRadioTemplateCardContent = ({
   template,
@@ -26,7 +27,7 @@ export const QuestionerUserRadioTemplateCardContent = ({
           >
             <IconCheckbox
               isRadio
-              checked={userAnswer === +answerId}
+              checked={userAnswer?.v === +answerId}
               postfix={title}
               onClick={async () => onUpdate(prev => (prev !== +answerId ? +answerId : undefined))}
             />

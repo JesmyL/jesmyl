@@ -1,7 +1,8 @@
+import { QuestionerAnswerVariant } from './answer';
 import { QuestionerBlank, QuestionerBlankSelector } from './blank';
 import { QuestionerAnswerId, QuestionerTemplateId, QuestionerType } from './enums';
 
-type QuestionerT_A = {
+type QuestionerTemplateBox = {
   [QuestionerType.Radio]: Implement<
     {
       type: QuestionerType.Radio;
@@ -10,7 +11,6 @@ type QuestionerT_A = {
       rSort?: 1;
     } & QuestionerVariantedTemplate
   >;
-
   [QuestionerType.Check]: Implement<
     {
       type: QuestionerType.Check;
@@ -35,8 +35,8 @@ type QuestionerT_A = {
     QuestionerVariantedTemplate;
 };
 
-export type QuestionerTemplate = QuestionerT_A[QuestionerType];
-export type QuestionerTemplateByItsType<Type extends QuestionerType> = QuestionerT_A[Type];
+export type QuestionerTemplate = QuestionerTemplateBox[QuestionerType];
+export type QuestionerTemplateByItsType<Type extends QuestionerType> = QuestionerTemplateBox[Type];
 
 export type QuestionerAdminTemplateContentProps<Type extends QuestionerType> = {
   blank: QuestionerBlank;
@@ -45,30 +45,17 @@ export type QuestionerAdminTemplateContentProps<Type extends QuestionerType> = {
   onUpdate: () => void;
 };
 
-export type QuestionerUserAnswerContentProps<Type extends QuestionerType> = {
-  template: QuestionerTemplateByItsType<Type>;
-  userAnswer: QuestionerTemplateByItsType<Type>['correct'];
-  onUpdate: (
-    updater: (value: QuestionerTemplateByItsType<Type>['correct']) => QuestionerTemplateByItsType<Type>['correct'],
-  ) => void;
-};
-
-export type QuestionerUserAnswerResultContentProps<Type extends QuestionerType> = {
-  template: QuestionerTemplateByItsType<Type>;
-  userAnswer: QuestionerTemplateByItsType<Type>['correct'];
-};
-
 /////////////////////////////
 /////////////////////////////
 
 type QuestionerVariantedTemplate = {
-  variants: PRecord<QuestionerAnswerId, AnswerVariant>;
+  variants: PRecord<QuestionerAnswerId, QuestionerAnswerVariant>;
 };
 
-export type QuestionerRadioTemplate = QuestionerT_A[QuestionerType.Radio];
-export type QuestionerCheckTemplate = QuestionerT_A[QuestionerType.Check];
-export type QuestionerCommentTemplate = QuestionerT_A[QuestionerType.Comment];
-export type QuestionerSorterTemplate = QuestionerT_A[QuestionerType.Sorter];
+export type QuestionerRadioTemplate = QuestionerTemplateBox[QuestionerType.Radio];
+export type QuestionerCheckTemplate = QuestionerTemplateBox[QuestionerType.Check];
+export type QuestionerCommentTemplate = QuestionerTemplateBox[QuestionerType.Comment];
+export type QuestionerSorterTemplate = QuestionerTemplateBox[QuestionerType.Sorter];
 /////////////////////////////
 /////////////////////////////
 
@@ -86,15 +73,6 @@ type Implement<
     correct?: unknown;
   },
 > = T & TemplateDefaults;
-
-export type QuestionerUserAnswer = {
-  fio?: string;
-  answ: PRecord<QuestionerTemplateId, unknown>;
-};
-
-type AnswerVariant = {
-  title: string;
-};
 
 export type QuestionerTemplateSelector<With = object> = QuestionerBlankSelector<
   With & {
