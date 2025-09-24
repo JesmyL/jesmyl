@@ -30,6 +30,7 @@ type QuestionerT_A = {
     correct?: QuestionerAnswerId[];
     above?: string;
     below?: string;
+    noCorrect?: 1;
   }> &
     QuestionerVariantedTemplate;
 };

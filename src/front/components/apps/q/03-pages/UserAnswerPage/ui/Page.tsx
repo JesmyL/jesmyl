@@ -11,7 +11,7 @@ import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { questionerCardContents } from '$q/basis/lib/const/cardContents';
 import { questionerTemplateDescriptions } from '$q/basis/lib/const/templateDescriptions';
 import { QuestionerTemplateCard } from '$q/basis/ui/TemplateCard';
-import { questionerAdminTsjrpcClient } from '$q/processes/tsjrpc/admin.tsjrpc';
+import { questionerUserTsjrpcClient } from '$q/processes/tsjrpc/user.tsjrpc';
 import { atom, useAtomValue } from 'atomaric';
 import { environment } from 'front/environment';
 import { useState } from 'react';
@@ -27,8 +27,8 @@ import { useQuestionerUserBlankDetailsQuery } from '../api/useQuestionerUserBlan
 
 const answersAtom = atom({ fio: '', answ: {} } as QuestionerUserAnswer, {
   storeKey: 'q:userAnswer',
-  do: (set, get) => ({
-    setFio: (fio: string) => set({ ...get(), fio }),
+  do: (_, get, setDeferred) => ({
+    setFio: (fio: string) => setDeferred({ ...get(), fio }),
   }),
 });
 
@@ -78,7 +78,7 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
                         defaultValue={userAnswer.fio}
                         label={
                           <>
-                            Фамилия Имя<span className="text-xKO"> *</span>
+                            Фамилия Имя<span className={userAnswer.fio ? 'text-xOK' : 'text-xKO'}> *</span>
                           </>
                         }
                         onInput={value => answersAtom.do.setFio(value)}
@@ -177,7 +177,7 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
                       <div key={errori}>● {error}</div>
                     ))}
                     onClick={() =>
-                      questionerAdminTsjrpcClient
+                      questionerUserTsjrpcClient
                         .publicUserAnswer({
                           answer: {
                             ...userAnswer,

@@ -7,12 +7,11 @@ import {
   QuestionerBlankRole,
   QuestionerBlankSelector,
   QuestionerTemplate,
-  QuestionerTemplateId,
   QuestionerTemplateSelector,
   QuestionerType,
 } from 'shared/model/q';
 import { smylib, SMyLib } from 'shared/utils';
-import { questionerBlanksFileStore, questionerUserAnswersFileStore } from '../../file-stores';
+import { questionerBlanksFileStore } from '../../file-stores';
 import { questionerTSJRPCAddBlankTemplate } from './lib/addBlankTemplate';
 import { questionerTSJRPCCreateBlank } from './lib/createBlank';
 
@@ -72,32 +71,6 @@ export const questionerAdminServerTsjrpcBase =
 
             return blank && { ...blank, w: blankw };
           },
-          getUserBlank: async ({ blankw }, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth?.login, 'q', 'EDIT', 'U')) throw '';
-            const blank = questionerBlanksFileStore.getValue()[blankw];
-            if (blank == null) return;
-
-            const tmp: PRecord<QuestionerTemplateId, QuestionerTemplate> = { ...blank.tmp };
-
-            smylib.keys(tmp).forEach(templateId => {
-              const templateForUser = { ...tmp[templateId] } as QuestionerTemplate;
-              if ('correct' in templateForUser) delete templateForUser.correct;
-              tmp[templateId] = templateForUser;
-            });
-
-            return blank && { ...blank, w: blankw, tmp, team: undefined };
-          },
-
-          getUserAnswers: async ({ blankw }, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth?.login, 'q', 'EDIT', 'R')) throw '';
-            return questionerUserAnswersFileStore.getValue()[blankw]?.answers;
-          },
-
-          publicUserAnswer: ({ blankw, answer }) => {
-            const blanks = questionerUserAnswersFileStore.getValueWithAutoSave();
-            blanks[blankw] ??= { answers: [] };
-            blanks[blankw].answers.push(answer);
-          },
 
           changeBlankTitle: updateBlank(({ value }, blank) => (blank.title = value)),
           changeBlankDescription: updateBlank(({ value }, blank) => (blank.dsc = value)),
@@ -119,6 +92,9 @@ export const questionerAdminServerTsjrpcBase =
           }),
           changeTemplateBelowText: updateTemplate(({ text }, template) => {
             if (template.type === QuestionerType.Sorter) template.below = text || undefined;
+          }),
+          switchTemplateNoCorrectsSign: updateTemplate((_, template) => {
+            if (template.type === QuestionerType.Sorter) template.noCorrect = template.noCorrect ? undefined : 1;
           }),
           changeTemplateMinSign: updateTemplate(({ value }, template) => {
             if (template.type === QuestionerType.Check) {

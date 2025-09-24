@@ -4,7 +4,6 @@ import {
   QuestionerBlankSelector,
   QuestionerTemplateSelector,
   QuestionerType,
-  QuestionerUserAnswer,
 } from 'shared/model/q';
 
 export type QuestionerAdminTsjrpcModel = {
@@ -13,9 +12,6 @@ export type QuestionerAdminTsjrpcModel = {
 
   getAdminBlanks: () => QuestionerBlank[];
   getAdminBlank: (args: QuestionerBlankSelector) => QuestionerBlank | nil;
-  getUserBlank: (args: QuestionerBlankSelector) => OmitOwn<QuestionerBlank, 'team'> | nil;
-  getUserAnswers: (args: QuestionerBlankSelector) => QuestionerUserAnswer[] | nil;
-  publicUserAnswer: (args: QuestionerBlankSelector<{ answer: QuestionerUserAnswer }>) => void;
 
   changeBlankTitle: (args: QuestionerBlankSelector<{ value: string }>) => void;
   changeBlankDescription: (args: QuestionerBlankSelector<{ value: string }>) => void;
@@ -30,6 +26,7 @@ export type QuestionerAdminTsjrpcModel = {
   changeTemplateCorrectAnswerSign: (args: QuestionerTemplateSelector<{ answerId: QuestionerAnswerId }>) => void;
   changeTemplateAboveText: (args: QuestionerTemplateSelector<{ text: string }>) => void;
   changeTemplateBelowText: (args: QuestionerTemplateSelector<{ text: string }>) => void;
+  switchTemplateNoCorrectsSign: (args: QuestionerTemplateSelector) => void;
   changeTemplateAnswerVariantTitle: (
     args: QuestionerTemplateSelector<{ answerId: RKey<QuestionerAnswerId>; value: string }>,
   ) => void;

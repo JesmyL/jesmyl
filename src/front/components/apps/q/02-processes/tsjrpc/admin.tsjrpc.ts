@@ -11,7 +11,6 @@ export const questionerAdminTsjrpcClient = new (class Questioner extends TsjrpcC
 
         getAdminBlanks: true,
         getAdminBlank: true,
-        getUserBlank: true,
 
         changeBlankTitle: true,
         changeBlankDescription: true,
@@ -26,10 +25,9 @@ export const questionerAdminTsjrpcClient = new (class Questioner extends TsjrpcC
         switchBlankIsAnonymous: true,
         changeTemplateMinSign: true,
         changeTemplateMaxSign: true,
-        getUserAnswers: true,
-        publicUserAnswer: true,
         changeTemplateAboveText: true,
         changeTemplateBelowText: true,
+        switchTemplateNoCorrectsSign: true,
       },
     });
   }

@@ -2,6 +2,7 @@ import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Button } from '#shared/components/ui/button';
 import { mylib } from '#shared/lib/my-lib';
 import { TextInput } from '#shared/ui/TextInput';
+import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { questionerAdminTsjrpcClient } from '$q/processes/tsjrpc/admin.tsjrpc';
 import { QuestionerAdminTemplateContentProps, QuestionerType } from 'shared/model/q';
 
@@ -16,6 +17,14 @@ export const QuestionerAdminSorterTemplateCardContent = ({
   return (
     <>
       <div className="mb-10">
+        <IconCheckbox
+          checked={!!template.noCorrect}
+          postfix="Нет определённого ответа"
+          onChange={() =>
+            questionerAdminTsjrpcClient.switchTemplateNoCorrectsSign({ blankw: blank.w, templateId }).then(onUpdate)
+          }
+        />
+
         <InputWithLoadingIcon
           icon="LayoutTop"
           defaultValue={template.above || ''}
@@ -43,10 +52,9 @@ export const QuestionerAdminSorterTemplateCardContent = ({
         {variantKeys.map((answerId, answerIdi) => {
           return (
             <div key={answerId}>
-              {!answerIdi || (
+              {!answerIdi || !!template.noCorrect || (
                 <Button
                   icon="ArrowDataTransferVertical"
-                  className="my-3"
                   onClick={() =>
                     questionerAdminTsjrpcClient
                       .changeTemplateCorrectAnswerSign({ blankw: blank.w, templateId, answerId: +answerId })
@@ -58,6 +66,7 @@ export const QuestionerAdminSorterTemplateCardContent = ({
                 defaultValue={template.variants[answerId]?.title ?? ''}
                 strongDefaultValue
                 multiline
+                className="my-3"
                 onChanged={value =>
                   questionerAdminTsjrpcClient
                     .changeTemplateAnswerVariantTitle({ blankw: blank.w, templateId, answerId, value })
