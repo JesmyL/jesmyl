@@ -11,6 +11,7 @@ deployTheCode(
       'apps/bible': ['./src/back/apps/bible/*.json'],
       // 'apps/bible': ['./src/bibles/*.json'],
       'apps/index': ['./src/back/apps/index/*.json'],
+      'apps/q': ['./src/back/apps/q/*.json'],
     },
   },
 );
