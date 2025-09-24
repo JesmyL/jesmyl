@@ -27,5 +27,5 @@ export const throwIfNoUserScopeAccessRight = <
     // eslint-disable-next-line no-constant-condition
   } while (false);
 
-  throw 'Нет прав на это деййствие';
+  throw 'Нет прав на это действие';
 };

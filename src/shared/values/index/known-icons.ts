@@ -10,6 +10,8 @@ export const knownStameskaIconNames = [
   'Arrange',
   'ArrowDataTransferDiagonal',
   'ArrowDataTransferVertical',
+  'SquareArrowMoveRightUp',
+  'SquareArrowMoveDownLeft',
   'ArrowDown01',
   'ArrowDownDouble',
   'ArrowExpand01',

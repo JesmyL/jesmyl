@@ -106,6 +106,12 @@ export class SMyLib {
     }, []);
   }
 
+  ellipsisText(text: string | nil, maxLen: number = 30) {
+    if (!text) return '';
+    const cutText = text.slice(0, maxLen);
+    return `${cutText}${cutText.length !== text.length ? ' ...' : ''}`;
+  }
+
   clone<Val>(what: Val): Val {
     if (what === null || what === undefined) return what;
     else if (what.constructor === Object) {
