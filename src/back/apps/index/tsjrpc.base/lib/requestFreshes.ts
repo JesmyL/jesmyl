@@ -1,5 +1,12 @@
-import { IScheduleWidget, IScheduleWidgetUser, ScheduleWidgetRegType, scheduleWidgetRegTypeRights } from 'shared/api';
-import { itNNil, itNNull, smylib } from 'shared/utils';
+import {
+  IScheduleWidget,
+  IScheduleWidgetUser,
+  ScheduleWidgetRegType,
+  scheduleWidgetRegTypeRights,
+  scheduleWidgetUserRights,
+  ScheduleWidgetUserRoleRight,
+} from 'shared/api';
+import { itNNil, smylib } from 'shared/utils';
 import { knownStameskaIconNames, knownStameskaIconNamesMd5Hash } from 'shared/values/index/known-icons';
 import { stameskaIconPack } from 'stameska-icon/pack';
 import { StameskaIconPack } from 'stameska-icon/utils';
@@ -23,23 +30,23 @@ export const indexTSJRPCBaseRequestFreshes: typeof indexServerTsjrpcBase.request
     indexServerTsjrpcShareMethods.refreshAccessRights({ rights });
   }
 
-  const schedules = schedulesFileStore
-    .getValue()
-    .map((sch): IScheduleWidget | null => {
-      const removedSch = { w: sch.w, isRemoved: 1 } as IScheduleWidget;
+  const schedules: IScheduleWidget[] = [];
 
-      if (scheduleWidgetRegTypeRights.checkIsHasRights(sch.ctrl.type, ScheduleWidgetRegType.Public)) {
-        if (sch.m <= lastModfiedAt) return null;
-        return sch;
-      }
-      if (isNoAuth) return removedSch;
-      if (!sch.ctrl.users.some(someScheduleUser)) return removedSch;
+  schedulesFileStore.getValue().forEach((sch): number | null => {
+    const removedSch = { w: sch.w, isRemoved: 1 } as IScheduleWidget;
 
+    if (scheduleWidgetRegTypeRights.checkIsHasRights(sch.ctrl.type, ScheduleWidgetRegType.Public)) {
       if (sch.m <= lastModfiedAt) return null;
+      return schedules.push(sch);
+    }
 
-      return sch;
-    })
-    .filter(itNNull);
+    if (isNoAuth) return schedules.push(removedSch);
+    if (!sch.ctrl.users.some(someScheduleUser)) return schedules.push(removedSch);
+
+    if (sch.m <= lastModfiedAt) return null;
+
+    return schedules.push(sch);
+  });
 
   if (userIconsMd5Hash !== knownStameskaIconNamesMd5Hash || !userIconPacks?.length || !!schedules.length) {
     const userActualIconDict: PRecord<KnownStameskaIconName, StameskaIconPack | null> = {};
@@ -63,8 +70,23 @@ export const indexTSJRPCBaseRequestFreshes: typeof indexServerTsjrpcBase.request
     });
 
     const userIconPacksSet = new Set(userIconPacks);
+    const userAccessSchedules: IScheduleWidget[] = [];
 
-    schedules
+    schedulesFileStore.getValue().forEach(sch => {
+      if (scheduleWidgetRegTypeRights.checkIsHasRights(sch.ctrl.type, ScheduleWidgetRegType.Public)) {
+        userAccessSchedules.push(sch);
+      } else {
+        if (
+          scheduleWidgetUserRights.checkIsHasRights(
+            sch.ctrl.users.find(user => user.login === login)?.R,
+            ScheduleWidgetUserRoleRight.Read,
+          )
+        )
+          userAccessSchedules.push(sch);
+      }
+    });
+
+    userAccessSchedules
       .map(extractAllScheduleIcons)
       .flat(2)
       .filter(itNNil)
