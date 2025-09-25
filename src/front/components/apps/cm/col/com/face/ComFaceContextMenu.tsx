@@ -24,7 +24,10 @@ export function ComFaceContextMenu({ onClick, comWid }: Props) {
           toggleFavourite(comWid);
         }}
       >
-        <LazyIcon icon={isComMarked ? 'Star' : 'StarCircle'} />
+        <LazyIcon
+          icon="Star"
+          kind={isComMarked ? 'SolidRounded' : undefined}
+        />
         {isComMarked ? 'Удалить из Избранного' : 'Добавить в Избранное'}
       </ContextMenu.Item>
 

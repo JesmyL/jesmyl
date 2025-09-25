@@ -177,7 +177,6 @@ export const knownStameskaIconNames = [
   'SourceCodeCircle',
   'Square',
   'Star',
-  'StarCircle',
   'TaskEdit01',
   'Teacher',
   'Telegram',
