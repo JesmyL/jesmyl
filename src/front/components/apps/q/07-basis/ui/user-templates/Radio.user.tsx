@@ -29,7 +29,7 @@ export const QuestionerUserRadioTemplateCardContent = ({
               isRadio
               checked={userAnswer?.v === +answerId}
               postfix={title}
-              onClick={async () => onUpdate(prev => (prev !== +answerId ? +answerId : undefined))}
+              onClick={() => onUpdate(prev => (prev !== +answerId ? +answerId : undefined))}
             />
           </div>
         );

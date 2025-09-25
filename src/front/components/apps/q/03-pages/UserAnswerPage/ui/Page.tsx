@@ -20,14 +20,20 @@ import { itNIt } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
 import { useQuestionerUserBlankDetailsQuery } from '../api/useQuestionerUserBlankDetailsQuery';
 
-const answersAtom = atom({ fio: '', a: {} } as QuestionerUserAnswer, {
-  storeKey: 'q:userAnswerDraft',
-  do: (_, get, setDeferred) => ({
-    setFio: (fio: string) => setDeferred({ ...get(), fio: fio || undefined }),
-  }),
-});
+const answersAtomBox: PRecord<QuestionerBlankWid, ReturnType<typeof initAtom>> = {};
+
+const initAtom = (blankw: QuestionerBlankWid) => {
+  return atom({ fio: '', a: {} } as QuestionerUserAnswer & { isWasPublicate: boolean }, {
+    storeKey: `q:userAnswerDraft-${blankw}`,
+    do: (_, get, setDeferred) => ({
+      setFio: (fio: string) => setDeferred({ ...get(), fio: fio || undefined }),
+    }),
+  });
+};
 
 export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWid }) => {
+  const answersAtom = (answersAtomBox[blankw] ??= initAtom(blankw));
+
   const questionBlank = useQuestionerUserBlankDetailsQuery(blankw);
   const userAnswer = useAtomValue(answersAtom);
   const answerErrorsSet = new Set<string | null>();
@@ -65,10 +71,13 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
                   <Card.Title>
                     {blank.anon ? (
                       <>Анонимный опрос</>
+                    ) : userAnswer.isWasPublicate ? (
+                      userAnswer.fio
                     ) : (
                       <TextInput
                         strongDefaultValue
                         defaultValue={userAnswer.fio}
+                        disabled={userAnswer.isWasPublicate}
                         label={
                           <>
                             Фамилия Имя<span className={userAnswer.fio ? 'text-xOK' : 'text-xKO'}> *</span>
@@ -84,7 +93,7 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
                   <Accordion.Root
                     type="multiple"
                     key={+isOpenAllItems}
-                    defaultValue={isOpenAllItems ? ((blank.ord ?? []) as never as string[]) : []}
+                    defaultValue={isOpenAllItems ? (blank.ord.map(String) ?? []) : []}
                   >
                     {blank.ord.map(templateId => {
                       const template = blank.tmp[templateId];
@@ -96,7 +105,10 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
                         const props: QuestionerUserAnswerContentProps<QuestionerType> = {
                           template: template,
                           userAnswer: userAnswer.a[templateId],
+                          isCantRedact: userAnswer.isWasPublicate,
                           onUpdate: updater => {
+                            if (answersAtom.get().isWasPublicate) return;
+
                             answersAtom.set(prev => {
                               try {
                                 const updatedValue = updater(prev.a[templateId]?.v);
@@ -168,29 +180,31 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
                   </Accordion.Root>
                 </Card.Content>
                 <Card.Footer>
-                  <Button
-                    icon="MailSend02"
-                    disabled={!!answerErrorsSet.size}
-                    disabledReason={Array.from(answerErrorsSet).map((error, errori) => (
-                      <div key={errori}>● {error}</div>
-                    ))}
-                    onClick={() =>
-                      questionerUserTsjrpcClient
-                        .publicUserAnswer({
-                          answer: {
-                            ...userAnswer,
-                            fio: blank.anon ? undefined : userAnswer.fio,
-                          },
-                          blankw,
-                        })
-                        .then(() => {
-                          answersAtom.reset();
-                          toast('Ответ отправлен', { mood: 'ok' });
-                        })
-                    }
-                  >
-                    Отправить мои ответы
-                  </Button>
+                  {userAnswer.isWasPublicate || (
+                    <Button
+                      icon="MailSend02"
+                      disabled={!!answerErrorsSet.size}
+                      disabledReason={Array.from(answerErrorsSet).map((error, errori) => (
+                        <div key={errori}>● {error}</div>
+                      ))}
+                      onClick={() =>
+                        questionerUserTsjrpcClient
+                          .publicUserAnswer({
+                            answer: {
+                              ...userAnswer,
+                              fio: blank.anon ? undefined : userAnswer.fio,
+                            },
+                            blankw,
+                          })
+                          .then(() => {
+                            answersAtom.set(prev => ({ ...prev, isWasPublicate: true }));
+                            toast('Ответ отправлен', { mood: 'ok' });
+                          })
+                      }
+                    >
+                      Отправить мои ответы
+                    </Button>
+                  )}
                 </Card.Footer>
               </Card.Root>
             );

@@ -28,7 +28,7 @@ export const QuestionerUserCheckTemplateCardContent = ({
             <IconCheckbox
               checked={userAnswer?.v.includes(+answerId)}
               postfix={title}
-              onClick={async () => {
+              onClick={() => {
                 onUpdate(prev => {
                   const result = prev?.includes(+answerId)
                     ? prev.filter(id => id !== +answerId)

@@ -22,6 +22,7 @@ export type QuestionerUserAnswerValueBox = {
 export type QuestionerUserAnswerContentProps<Type extends QuestionerType> = {
   template: QuestionerTemplateByItsType<Type>;
   userAnswer: QuestionerUserAnswerValueBox[Type] | nil;
+  isCantRedact: boolean;
   onUpdate: (
     updater: (
       value: QuestionerUserAnswerValueBox[Type]['v'] | undefined,

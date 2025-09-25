@@ -9,34 +9,27 @@ export const QuestionerUserSorterTemplateCardContent = ({
   onUpdate,
   userAnswer,
   template,
+  isCantRedact,
 }: QuestionerUserAnswerContentProps<QuestionerType.Sorter>) => {
   const keys = useMemo(() => {
     return mylib.toRandomSorted(mylib.keys(template.variants));
   }, [template.variants]);
 
   useEffect(() => {
-    if (!userAnswer || keys.length === userAnswer.v.length) return;
+    if (isCantRedact || !userAnswer || keys.length === userAnswer.v.length) return;
 
-    onUpdate(() => {
-      const newAnswer = [...userAnswer.v];
-      const prevSet = new Set(userAnswer.v);
-
-      keys.forEach(answerId => {
-        if (prevSet.has(+answerId)) return;
-        newAnswer.push(+answerId);
-      });
-
-      return newAnswer;
-    });
+    onUpdate(() => Array.from(new Set([...userAnswer.v, ...keys.map(Number)])));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [keys.length, userAnswer]);
+  }, [keys.length, userAnswer, isCantRedact]);
 
   return (
     <>
       <div className="text-x7">{template.above}</div>
       <div className="ml-3">
         {(userAnswer?.v ?? keys).map((answerId, answerIdi, answerIda) => {
-          const variant = template.variants[answerId];
+          const title = template.variants[answerId]?.title;
+
+          if (isCantRedact) return <div>{title}</div>;
 
           return (
             <div
@@ -56,7 +49,7 @@ export const QuestionerUserSorterTemplateCardContent = ({
                 }
               />
 
-              <div className="white-pre-line bg-x3/10 p-3 rounded-md">{variant?.title}</div>
+              <div className="white-pre-line bg-x3/10 p-3 rounded-md">{title}</div>
 
               <Button
                 icon="SquareArrowMoveDownLeft"

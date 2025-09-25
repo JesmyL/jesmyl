@@ -7,8 +7,9 @@ import { QuestionerUserAnswerContentProps } from 'shared/model/q/answer';
 export const QuestionerUserCommentTemplateCardContent = ({
   onUpdate,
   userAnswer,
+  isCantRedact,
 }: QuestionerUserAnswerContentProps<QuestionerType.Comment>) => {
-  const [value, setValue] = useState(userAnswer?.v);
+  const [value, setValue] = useState(userAnswer?.v || '');
   const debounceValue = useDebounceValue(value);
 
   useEffect(() => {
@@ -18,7 +19,9 @@ export const QuestionerUserCommentTemplateCardContent = ({
 
   useEffect(() => setValue(userAnswer?.v || ''), [userAnswer]);
 
-  return (
+  return isCantRedact ? (
+    value
+  ) : (
     <>
       <TextInput
         multiline
