@@ -2,7 +2,7 @@ import { SokiServerClientSelector } from 'back/complect/soki/model';
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { SokiAuthLogin } from 'shared/api';
 import { CmUserStoreTsjrpcModel } from 'shared/api/tsjrpc/cm/user-store.tsjrpc.model';
-import { aboutComFavoritesFileStore, comCommentsFileStore } from './file-stores';
+import { aboutComFavoritesFileStore } from './file-stores';
 import { cmShareServerTsjrpcMethods } from './tsjrpc.shares';
 
 const valueSendBuilder = <Args extends object>(
@@ -27,15 +27,13 @@ export const cmUserStoreTsjrpcBaseServer = new (class CmUserStore extends Tsjrpc
     super({
       scope: 'CmUserStore',
       methods: {
-        setComComment: valueSendBuilder((authLogin, clientSelector, { comw, comment }) => {
-          const comments = comCommentsFileStore.getValueWithAutoSave();
-          const m = Date.now() + Math.random();
-          const commentBox = { comment, comw, m };
-
-          comments[authLogin] ??= {} as never;
-          comments[authLogin][comw] = commentBox;
-
-          cmShareServerTsjrpcMethods.refreshComComments({ comments: [commentBox], modifiedAt: m }, clientSelector);
+        setComComment: valueSendBuilder(() => {
+          // const comments = comCommentsFileStore.getValueWithAutoSave();
+          // const m = Date.now() + Math.random();
+          // const commentBox = { comment, comw, m };
+          // comments[authLogin] ??= {} as never;
+          // comments[authLogin][comw] = commentBox;
+          // cmShareServerTsjrpcMethods.refreshComComments({ comments: [commentBox], modifiedAt: m }, clientSelector);
         }),
 
         setAboutComFavorites: valueSendBuilder((authLogin, clientSelector, userFavorites) => {

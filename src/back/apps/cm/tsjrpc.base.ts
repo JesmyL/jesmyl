@@ -1,6 +1,6 @@
 import { FileStore } from 'back/complect/FileStore';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
-import { ICmComComment, ICmComCommentBlock } from 'shared/api';
+import { ICmComCommentBlock } from 'shared/api';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
 import { emptyObject, SMyLib, smylib } from 'shared/utils';
 import { cmEditCatServerTsjrpcBase } from './edit-cat.tsjrpc.base';
@@ -14,7 +14,6 @@ import {
   chordPackFileStore,
   cmConstantsConfigFileStore,
   comCommentBlocksFileStore,
-  comCommentsFileStore,
   comsFileStore,
   comwVisitsFileStore,
   eventPacksFileStore,
@@ -96,44 +95,44 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
           }
         },
 
-        exchangeFreshComComments: async ({ modifiedComments, clientDateNow }, { auth }) => {
-          if (auth?.login == null) return [];
+        exchangeFreshComComments: async () => {
+          // if (auth?.login == null) return [];
 
-          const withClientTimeDelta = Date.now() - clientDateNow;
+          // const withClientTimeDelta = Date.now() - clientDateNow;
 
-          const comments = comCommentsFileStore.getValue();
-          const userServerComments = (comments[auth.login] ??= {});
-          let localSavedCommentsMaxModifiedAt = 0;
-          const freshComments: ICmComComment[] = [];
-          // const resultComments: ICmComComment[] = [];
+          // const comments = comCommentsFileStore.getValue();
+          // const userServerComments = (comments[auth.login] ??= {});
+          // let localSavedCommentsMaxModifiedAt = 0;
+          // const freshComments: ICmComComment[] = [];
+          // // const resultComments: ICmComComment[] = [];
 
-          modifiedComments.forEach(({ comment, comw, m }) => {
-            const commentModifiedAt = m + withClientTimeDelta;
+          // modifiedComments.forEach(({ comment, comw, m }) => {
+          //   const commentModifiedAt = m + withClientTimeDelta;
 
-            // if (userServerComments[comw] != null && commentModifiedAt < userServerComments[comw].m) {
-            //   resultComments.push(userServerComments[comw]);
-            //   return;
-            // }
+          //   // if (userServerComments[comw] != null && commentModifiedAt < userServerComments[comw].m) {
+          //   //   resultComments.push(userServerComments[comw]);
+          //   //   return;
+          //   // }
 
-            userServerComments[comw] = {
-              comment,
-              comw,
-              m: commentModifiedAt,
-            };
+          //   userServerComments[comw] = {
+          //     comment,
+          //     comw,
+          //     m: commentModifiedAt,
+          //   };
 
-            // resultComments.push(userServerComments[comw]);
-            freshComments.push(userServerComments[comw]);
-            localSavedCommentsMaxModifiedAt = Math.max(localSavedCommentsMaxModifiedAt, commentModifiedAt);
-          });
+          //   // resultComments.push(userServerComments[comw]);
+          //   freshComments.push(userServerComments[comw]);
+          //   localSavedCommentsMaxModifiedAt = Math.max(localSavedCommentsMaxModifiedAt, commentModifiedAt);
+          // });
 
-          if (localSavedCommentsMaxModifiedAt) {
-            comCommentsFileStore.saveValue();
+          // if (localSavedCommentsMaxModifiedAt) {
+          //   comCommentsFileStore.saveValue();
 
-            // cmShareServerTsjrpcMethods.refreshComComments(
-            //   { comments: freshComments, modifiedAt: localSavedCommentsMaxModifiedAt },
-            //   { login: auth.login, ignoreClient: client },
-            // );
-          }
+          //   // cmShareServerTsjrpcMethods.refreshComComments(
+          //   //   { comments: freshComments, modifiedAt: localSavedCommentsMaxModifiedAt },
+          //   //   { login: auth.login, ignoreClient: client },
+          //   // );
+          // }
 
           return [];
         },
@@ -251,30 +250,3 @@ cmEditCatServerTsjrpcBase.$$register();
 cmEditComOrderServerTsjrpcBase.$$register();
 cmEditorTsjrpcBaseServer.$$register();
 cmUserStoreTsjrpcBaseServer.$$register();
-
-// TODO: remove after uncomment TODO below
-const commentBlocks = comCommentBlocksFileStore.getValueWithAutoSave();
-smylib.values(commentBlocks).forEach(userBlock => {
-  if (!userBlock) return;
-
-  smylib.values(userBlock).forEach(userServerComments => {
-    if (userServerComments == null || !userServerComments.d) return;
-
-    SMyLib.entries(userServerComments.d).forEach(([key, block]) => {
-      if (!block) return;
-      let isChanged = false;
-
-      for (let blocki = block.length - 1; blocki >= 0; blocki--) {
-        if (block[blocki]) break;
-        block.splice(-1);
-        isChanged = true;
-      }
-
-      if (!block.length && userServerComments.d) delete userServerComments.d[key];
-      // TODO: uncomment soon + restart server > remove
-      // if (userServerComments?.d && !smylib.keys(userServerComments.d).length) delete userServerComments.d;
-
-      if (isChanged) userServerComments.m = Date.now();
-    });
-  });
-});
