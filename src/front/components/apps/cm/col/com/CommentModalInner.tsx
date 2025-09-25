@@ -25,9 +25,11 @@ import { emptyArray } from 'shared/utils';
 import { useDeferredCallback } from 'shared/utils/useDeferredCallback';
 import { ComBlockCommentMakerCleans } from './complect/comment-parser/Cleans';
 import { Order } from './order/Order';
+import { CmTransferAltCommentModalInner } from './TransferAltCommentModalInner';
 
 const HashSwitcherIcon = 'Note03';
 const isShowInfoModalAtom = atom(false);
+const isOpenTransferModalAtom = atom(false);
 
 export const CmComCommentModalInner = ({ com }: { com: Com }) => {
   const ordSelectorId = useAtomValue(cmComCommentRedactOrdSelectorIdAtom);
@@ -133,61 +135,77 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
           nullTitle={<span className="text-x7">Общ</span>}
           onSelectId={cmComCommentAltKeyAtom.set}
           items={Array.from(registeredAltKeys).map(key => ({ id: key, title: key }))}
+          renderItem={item => (
+            <>
+              <LazyIcon icon="TextAlignLeft" />
+              {item}
+            </>
+          )}
           addContent={
-            registeredAltKeys.size < maxComCommentAlternativesCount && (
-              <Button
-                asSpan
-                className="text-x7"
-                onClick={async () => {
-                  const altKeysSet = new Set<string>();
+            <div className="flex flex-col gap-3">
+              {registeredAltKeys.size < maxComCommentAlternativesCount && (
+                <Button
+                  asSpan
+                  className="text-x7 w-full"
+                  onClick={async () => {
+                    const altKeysSet = new Set<string>();
 
-                  (await cmIDB.tb.localComCommentBlocks.toArray()).some(({ alt }) => {
-                    mylib.keys(alt).forEach(key => altKeysSet.add(key));
-                    return altKeysSet.size >= maxComCommentAlternativesCount;
-                  });
-
-                  if (altKeysSet.size < maxComCommentAlternativesCount)
-                    (await cmIDB.tb.comCommentBlocks.toArray()).some(({ alt }) => {
+                    (await cmIDB.tb.localComCommentBlocks.toArray()).some(({ alt }) => {
                       mylib.keys(alt).forEach(key => altKeysSet.add(key));
                       return altKeysSet.size >= maxComCommentAlternativesCount;
                     });
 
-                  cmComCommentRegisteredAltKeysAtom.set(
-                    new Set(Array.from(altKeysSet).slice(0, maxComCommentAlternativesCount)),
-                  );
+                    if (altKeysSet.size < maxComCommentAlternativesCount)
+                      (await cmIDB.tb.comCommentBlocks.toArray()).some(({ alt }) => {
+                        mylib.keys(alt).forEach(key => altKeysSet.add(key));
+                        return altKeysSet.size >= maxComCommentAlternativesCount;
+                      });
 
-                  if (cmComCommentRegisteredAltKeysAtom.get().size >= maxComCommentAlternativesCount) {
-                    toast('Добавлено максимальное количество альтернатив');
-                    return;
-                  }
+                    cmComCommentRegisteredAltKeysAtom.set(
+                      new Set(Array.from(altKeysSet).slice(0, maxComCommentAlternativesCount)),
+                    );
 
-                  const altCommentKey = (await prompt('Добавить новую альтернативу'))?.toLowerCase();
-                  const localComment = await cmIDB.tb.localComCommentBlocks.get(com.wid);
+                    if (cmComCommentRegisteredAltKeysAtom.get().size >= maxComCommentAlternativesCount) {
+                      toast('Добавлено максимальное количество альтернатив');
+                      return;
+                    }
 
-                  if (!altCommentKey || (localComment?.alt && altCommentKey in localComment.alt)) {
-                    return;
-                  }
-                  const maxLen = 10;
+                    const altCommentKey = (await prompt('Добавить новую альтернативу'))?.toLowerCase();
+                    const localComment = await cmIDB.tb.localComCommentBlocks.get(com.wid);
 
-                  if (altCommentKey.length > maxLen) {
-                    toast(`Слишком длинное название (${maxLen}+)`, { mood: 'ko' });
-                    return;
-                  }
+                    if (!altCommentKey || (localComment?.alt && altCommentKey in localComment.alt)) {
+                      return;
+                    }
+                    const maxLen = 10;
 
-                  await cmIDB.tb.localComCommentBlocks.put({
-                    ...localComment,
-                    comw: com.wid,
-                    m: Date.now(),
-                    alt: { ...localComment?.alt, [altCommentKey]: {} },
-                  });
+                    if (altCommentKey.length > maxLen) {
+                      toast(`Слишком длинное название (${maxLen}+)`, { mood: 'ko' });
+                      return;
+                    }
 
-                  cmComCommentRegisteredAltKeysAtom.do.add(altCommentKey);
-                }}
+                    await cmIDB.tb.localComCommentBlocks.put({
+                      ...localComment,
+                      comw: com.wid,
+                      m: Date.now(),
+                      alt: { ...localComment?.alt, [altCommentKey]: {} },
+                    });
+
+                    cmComCommentRegisteredAltKeysAtom.do.add(altCommentKey);
+                  }}
+                >
+                  <LazyIcon icon="PlusSign" />
+                  Добавить
+                </Button>
+              )}
+              <Button
+                asSpan
+                className="text-x7"
+                onClick={isOpenTransferModalAtom.do.toggle}
               >
-                <LazyIcon icon="PlusSign" />
-                Добавить
+                <LazyIcon icon="ArrowDataTransferHorizontal" />
+                Переместить
               </Button>
-            )
+            </div>
           }
         />
 
@@ -206,6 +224,9 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
         <ModalBody>
           <TheComCommentInfo HashSwitcherIcon={HashSwitcherIcon} />
         </ModalBody>
+      </Modal>
+      <Modal openAtom={isOpenTransferModalAtom}>
+        <CmTransferAltCommentModalInner com={com} />
       </Modal>
     </>
   );
