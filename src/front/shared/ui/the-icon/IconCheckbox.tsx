@@ -8,7 +8,7 @@ interface Props {
   isRadio?: boolean;
   checked?: boolean;
   onChange?: (is: boolean) => void;
-  onClick?: () => Promise<unknown>;
+  onClick?: () => Promise<unknown> | void;
   disabled?: boolean;
   prefix?: null | ReactNode;
   postfix?: null | ReactNode;
@@ -26,8 +26,11 @@ export function IconCheckbox(props: Props) {
     : props.onClick
       ? async () => {
           try {
+            const promiseLike = props.onClick!();
+            if (!(promiseLike instanceof Promise)) return;
+
             setIsLoading(true);
-            await props.onClick!();
+            await promiseLike;
             props.onChange?.(!props.checked);
             setIsLoading(false);
           } catch (_error) {
