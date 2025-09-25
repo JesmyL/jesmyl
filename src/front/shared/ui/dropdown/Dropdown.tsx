@@ -1,6 +1,7 @@
 import { Button } from '#shared/components/ui/button';
 import { DropdownMenu } from '#shared/components/ui/dropdown-menu';
 import { useEffect, useMemo, useState } from 'react';
+import { itIt } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
 import { useToast } from '../modal/useToast';
 import { useOnSendPromiseCallback } from '../sends/useOnSendPromiseCallback';
@@ -27,6 +28,8 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
       toast(error, { mood: 'ko' });
     },
   );
+
+  const renderItem = props.renderItem ?? itIt;
 
   return (
     <DropdownMenu.Root
@@ -62,12 +65,12 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
       <DropdownMenu.Content onClick={() => setDropped(false)}>
         {props.undTitle && (
           <DropdownMenu.Item onClick={() => onClick({ id: undefined, title: props.undTitle })}>
-            {props.undTitle}
+            {renderItem(props.undTitle)}
           </DropdownMenu.Item>
         )}
         {props.nullTitle && (
           <DropdownMenu.Item onClick={() => onClick({ id: null, title: props.nullTitle })}>
-            {props.nullTitle}
+            {renderItem(props.nullTitle)}
           </DropdownMenu.Item>
         )}
         {!props.disabled &&
@@ -86,7 +89,7 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
                   onClick(item);
                 }}
               >
-                {item.title}
+                {renderItem(item.title)}
               </DropdownMenu.Item>
             );
           })}
