@@ -26,12 +26,16 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
         takeShowError: takeShowErrorVarianted,
         customRequireMessage: null,
         takeUserAnswerError: props => {
-          return !props.template.req || props.userAnswer != null
-            ? null
-            : {
-                info: null,
-                check: `Ответ на вопрос "${props.template.title ?? questionerTemplateDescriptions[props.template.type].title}" обязателен`,
-              };
+          const isFill = props.userAnswer?.v != null;
+
+          return {
+            info: null,
+            check:
+              !props.template.req || isFill
+                ? null
+                : `Ответ на вопрос "${props.template.title ?? questionerTemplateDescriptions[props.template.type].title}" обязателен`,
+            isFill,
+          };
         },
       },
       [QuestionerType.Check]: {
@@ -49,27 +53,30 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
           const _maxVars = max == null ? '' : `${max} ${mylib.declension(max, 'вариант', 'варианта', 'вариантов')}`;
           const _minVars = min == null ? '' : `${min} ${mylib.declension(min, 'вариант', 'варианта', 'вариантов')}`;
 
-          const infoPrefix = `Вариантов ${props.template.req ? 'должно' : 'может'} быть`;
+          const infoPrefix = `${props.template.req ? 'Нужно' : 'Можно'} выбрать`;
           const checkPrefix = `Ответ на вопрос "${title}" ${props.template.req ? 'должен' : 'может'} содержать`;
 
-          return mylib.makeMaxMinReqInfo({
-            length: props.userAnswer?.v.length ?? 0,
-            isRequired: !!props.template.req,
-            max,
-            min,
+          return {
+            isFill: !!props.userAnswer?.v.length,
+            ...mylib.makeMaxMinReqInfo({
+              length: props.userAnswer?.v.length ?? 0,
+              isRequired: !!props.template.req,
+              max,
+              min,
 
-            infoEqText: `${infoPrefix} ${max}`,
-            infoBetweenText: `${infoPrefix} от ${min} до ${max}`,
-            infoMinText: `${infoPrefix} минимум ${_minVars}`,
-            infoMaxText: `${infoPrefix} максимум ${_maxVars}`,
+              infoEqText: `${infoPrefix} ${_minVars}`,
+              infoBetweenText: `${infoPrefix} от ${min} до ${max} вариантов`,
+              infoMinText: `${infoPrefix} минимум ${_minVars}`,
+              infoMaxText: `${infoPrefix} максимум ${_maxVars}`,
 
-            checkEqText: `${checkPrefix} ${_maxVars}`,
-            checkBetweenText: `${checkPrefix} от ${min} до ${max} вариантов`,
-            checkMinText: `${checkPrefix} минимум ${_minVars}`,
-            checkMaxText: `${checkPrefix} максимум ${_maxVars}`,
+              checkEqText: `${checkPrefix} ${_maxVars}`,
+              checkBetweenText: `${checkPrefix} от ${min} до ${max} вариантов`,
+              checkMinText: `${checkPrefix} минимум ${_minVars}`,
+              checkMaxText: `${checkPrefix} максимум ${_maxVars}`,
 
-            checkRequiredText: `Ответ на вопрос "${title}" обязателен`,
-          });
+              checkRequiredText: `Ответ на вопрос "${title}" обязателен`,
+            }),
+          };
         },
       },
       [QuestionerType.Comment]: {
@@ -79,10 +86,11 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
         takeUserAnswerError: props => {
           return {
             check:
-              !props.template.req || props.userAnswer
+              !props.template.req || props.userAnswer?.v
                 ? null
                 : `Комментарий ${props.template.title ? `"${props.template.title}" ` : ''}является обязательным`,
             info: null,
+            isFill: !!props.userAnswer?.v,
           };
         },
         customRequireMessage: <>Этот комментарий обязателен к заполнению</>,
@@ -93,8 +101,9 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
         resultRender: props => <QuestionerResultSorterTemplateCardContent {...props} />,
         takeUserAnswerError: props => {
           return {
-            check: props.userAnswer ? null : `Нужно отсортировать значения в пункте "${props.template.title}"`,
+            check: props.userAnswer?.v ? null : `Нужно отсортировать значения в пункте "${props.template.title}"`,
             info: null,
+            isFill: !!props.userAnswer?.v,
           };
         },
         customRequireMessage: <>Сортировка в этом блоке обязательна</>,
@@ -105,9 +114,11 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
         adminRender: (props: QuestionerAdminTemplateContentProps<Type>) => JSX.Element;
         resultRender: (props: QuestionerUserAnswerResultContentProps<Type>) => JSX.Element;
         takeShowError?: (props: QuestionerUserAnswerContentProps<Type>) => string;
-        takeUserAnswerError: (
-          props: QuestionerUserAnswerContentProps<Type>,
-        ) => { check: string | nil; info: string | nil } | null;
+        takeUserAnswerError: (props: QuestionerUserAnswerContentProps<Type>) => {
+          check: string | nil;
+          info: string | nil;
+          isFill: boolean;
+        };
         customRequireMessage: React.ReactNode;
       };
     }

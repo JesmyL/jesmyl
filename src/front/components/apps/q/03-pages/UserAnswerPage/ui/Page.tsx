@@ -117,8 +117,11 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
 
                         if (contentProps.takeShowError?.(props as never)) return null;
 
-                        const { check: answerCheckError, info: answerInfoError } =
-                          contentProps.takeUserAnswerError(props as never) ?? {};
+                        const {
+                          check: answerCheckError,
+                          info: answerInfoError,
+                          isFill: answerIsFill,
+                        } = contentProps.takeUserAnswerError(props as never);
 
                         if (answerCheckError) answerErrorsSet.add(answerCheckError);
 
@@ -146,12 +149,12 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
                             requiredSign={
                               <>
                                 {!template.req || (
-                                  <span className="text-xKO">
+                                  <span className={answerIsFill ? 'text-xOK' : 'text-xKO'}>
                                     ● {contentProps.customRequireMessage ?? 'Этот вопрос обязателен к ответу'}
                                   </span>
                                 )}
                                 {answerInfoError && (
-                                  <span className={answerCheckError || template.req ? 'text-xKO' : 'text-xOK'}>
+                                  <span className={answerCheckError ? 'text-xKO' : 'text-xOK'}>
                                     ● {answerInfoError}
                                   </span>
                                 )}

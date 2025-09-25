@@ -28,10 +28,11 @@ export const QuestionerBlankListPage = () => {
           {blanksQuery.data?.map(blank => {
             return (
               <Link
+                key={blank.w}
                 to="/q/r/$blank"
                 params={{ blank: '' + blank.w }}
               >
-                <FaceItem.Root key={blank.w}>
+                <FaceItem.Root>
                   <FaceItem.Logo>
                     <LazyIcon icon="Message01" />
                   </FaceItem.Logo>
