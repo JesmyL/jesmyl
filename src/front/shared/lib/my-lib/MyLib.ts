@@ -521,7 +521,7 @@ export class MyLib extends SMyLib {
     checkMaxText: string;
     infoMaxText: string;
     checkRequiredText: string;
-  }): { check: string | null; info: null | string } | null => {
+  }): { check: string | null; info: null | string } => {
     if (props.min != null && props.max != null) {
       const info = props.max === props.min ? props.infoEqText : props.infoBetweenText;
       const check = props.max === props.min ? props.checkEqText : props.checkBetweenText;
@@ -564,7 +564,7 @@ export class MyLib extends SMyLib {
         info: null,
       };
 
-    return null;
+    return { check: null, info: null };
   };
 }
 
