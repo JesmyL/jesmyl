@@ -1,9 +1,7 @@
-import { propsOfClicker } from '#shared/lib/clicker/propsOfClicker';
+import { ContextMenu } from '#shared/components/ui/context-menu';
 import { mylib } from '#shared/lib/my-lib';
-import { FloatPopup } from '#shared/ui/popup/FloatPopup';
-import { useFloatPopupCoords } from '#shared/ui/popup/FloatPopup/lib';
 import { useLastOpenComw } from '$cm/basis/lib/com-selections';
-import { useMemo } from 'react';
+import { useState } from 'react';
 import { CmComWid } from 'shared/api';
 import { ComFaceContextMenu } from '../ComFaceContextMenu';
 import { cmCurrentComwIdPrefix } from '../lib/consts';
@@ -17,59 +15,54 @@ interface Props extends ComFaceListProps {
 }
 
 export const ComListControlledContainer = (props: Props) => {
-  const [floatMenuCoords, setFloatMenuCoords] = useFloatPopupCoords<{ comw: CmComWid }>();
+  const [selectedComw, setSelectedComw] = useState<CmComWid | null>(null);
+  const [isSelected, setIsSelected] = useState(false);
   const lastOpenComw = useLastOpenComw();
 
-  const clickerProps = useMemo(
-    () =>
-      propsOfClicker({
-        onCtxMenu: event => {
-          event.preventDefault();
+  const onPoinertDown = (event: { target: unknown }) => {
+    if (props.selectable === false) return;
+    let foundElementWithFaceItemClassName = event.target as HTMLElement | null;
 
-          if (props.selectable === false) return;
-          let foundElementWithFaceItemClassName = event.target as HTMLElement | null;
+    while (foundElementWithFaceItemClassName) {
+      if (foundElementWithFaceItemClassName.classList.contains('face-item')) break;
+      foundElementWithFaceItemClassName = foundElementWithFaceItemClassName.parentElement;
+    }
 
-          while (foundElementWithFaceItemClassName) {
-            if (foundElementWithFaceItemClassName.classList.contains('face-item')) break;
-            foundElementWithFaceItemClassName = foundElementWithFaceItemClassName.parentElement;
-          }
+    if (!foundElementWithFaceItemClassName?.id.startsWith(cmCurrentComwIdPrefix)) return;
 
-          if (!foundElementWithFaceItemClassName?.id.startsWith(cmCurrentComwIdPrefix)) return;
+    const comw = +foundElementWithFaceItemClassName.id.slice(cmCurrentComwIdPrefix.length);
 
-          const comw = +foundElementWithFaceItemClassName.id.slice(cmCurrentComwIdPrefix.length);
+    if (mylib.isNaN(comw)) return;
 
-          if (mylib.isNaN(comw)) return;
-
-          setFloatMenuCoords({ x: event.clientX, y: event.clientY, comw });
-        },
-      }),
-    [props.selectable, setFloatMenuCoords],
-  );
+    setSelectedComw(comw);
+  };
 
   return (
     <>
       <ComListPreviousSibling />
-      <StyledComList
-        $ccomw={lastOpenComw}
-        $accentComw={floatMenuCoords?.comw}
-        $comTitles={props.titles}
-        className={props.className}
-        ref={props.listRef}
-        {...clickerProps}
-      >
-        {props.children}
-      </StyledComList>
-      {floatMenuCoords && (
-        <FloatPopup
-          onClose={setFloatMenuCoords}
-          coords={floatMenuCoords}
-        >
-          <ComFaceContextMenu
-            onClick={setFloatMenuCoords}
-            comWid={floatMenuCoords.comw}
-          />
-        </FloatPopup>
-      )}
+      <ContextMenu.Root onOpenChange={setIsSelected}>
+        <ContextMenu.Trigger>
+          <StyledComList
+            $ccomw={lastOpenComw}
+            $accentComw={isSelected ? selectedComw : null}
+            $comTitles={props.titles}
+            className={props.className}
+            ref={props.listRef}
+            onMouseDown={onPoinertDown}
+            onTouchStart={onPoinertDown}
+          >
+            {props.children}
+          </StyledComList>
+        </ContextMenu.Trigger>
+        <ContextMenu.Content>
+          {selectedComw && (
+            <ComFaceContextMenu
+              onClick={setSelectedComw}
+              comWid={selectedComw}
+            />
+          )}
+        </ContextMenu.Content>
+      </ContextMenu.Root>
     </>
   );
 };

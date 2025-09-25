@@ -1,9 +1,9 @@
+import { ContextMenu } from '#shared/components/ui/context-menu';
 import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
-import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useSelectedComs } from '$cm/base/useSelectedComs';
 import { useFavouriteComs } from '$cm/lists/favourites/useFavouriteComs';
 import { CmComWid } from 'shared/api';
-import styled from 'styled-components';
 
 interface Props {
   onClick: (reset: null) => void;
@@ -17,46 +17,39 @@ export function ComFaceContextMenu({ onClick, comWid }: Props) {
   const confirm = useConfirm();
 
   return (
-    <StyledMenu>
-      <TheIconButton
-        icon={isComMarked ? 'Star' : 'StarCircle'}
-        postfix={isComMarked ? 'Удалить из Избранного' : 'Добавить в Избранное'}
+    <>
+      <ContextMenu.Item
         onClick={() => {
           onClick(null);
           toggleFavourite(comWid);
         }}
-      />
-      <TheIconButton
-        icon={isSelected(comWid) ? 'RemoveCircleHalfDot' : 'AddCircleHalfDot'}
-        postfix={isSelected(comWid) ? 'Отменить выбор' : 'Выбрать'}
+      >
+        <LazyIcon icon={isComMarked ? 'Star' : 'StarCircle'} />
+        {isComMarked ? 'Удалить из Избранного' : 'Добавить в Избранное'}
+      </ContextMenu.Item>
+
+      <ContextMenu.Item
         onClick={() => {
           onClick(null);
           toggleSelectedCom(comWid);
         }}
-      />
+      >
+        <LazyIcon icon={isSelected(comWid) ? 'RemoveCircleHalfDot' : 'AddCircleHalfDot'} />
+        {isSelected(comWid) ? 'Отменить выбор' : 'Выбрать'}
+      </ContextMenu.Item>
+
       {!selectedComws.length || (
-        <TheIconButton
-          icon="CancelCircleHalfDot"
-          postfix="Очистить выбранные"
+        <ContextMenu.Item
           onClick={async () => {
             if (!(await confirm('Очистить список выбранных?'))) return;
             onClick(null);
             clearSelectedComws();
           }}
-        />
+        >
+          <LazyIcon icon="CancelCircleHalfDot" />
+          Очистить выбранные
+        </ContextMenu.Item>
       )}
-    </StyledMenu>
+    </>
   );
 }
-
-const StyledMenu = styled.div`
-  > * {
-    margin: 20px 10px;
-  }
-
-  > :first-child,
-  > :last-child {
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
-`;
