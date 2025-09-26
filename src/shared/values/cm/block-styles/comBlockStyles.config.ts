@@ -23,7 +23,16 @@ export const comBlockStylesConfig: IExportableStyleProp[] = [
   {
     key: CmBlockStyleKey.PTwo,
     title: ['Предприпев', 'Передприспів'],
-    tags: ['предприпев', 'предприпів', 'передприпів', 'передприспів'],
+    tags: [
+      'пред припев',
+      'предприпев',
+      'предприпів',
+      'пред припів',
+      'передприпів',
+      'перед припів',
+      'передприспів',
+      'перед приспів',
+    ],
     isBlockForTextableOnly: true,
   },
   {
