@@ -14,7 +14,7 @@ export const questionerUserServerTsjrpcBase =
         methods: {
           getUserBlank: async ({ blankw }) => {
             const blank = questionerBlanksFileStore.getValue()[blankw];
-            if (blank == null) return;
+            if (blank == null) return null;
 
             const tmp: PRecord<QuestionerTemplateId, QuestionerTemplate> = { ...blank.tmp };
 
@@ -24,12 +24,12 @@ export const questionerUserServerTsjrpcBase =
               tmp[templateId] = templateForUser;
             });
 
-            return blank && { ...blank, w: blankw, tmp, team: undefined };
+            return blank ? { ...blank, w: blankw, tmp, team: {} } : null;
           },
 
           getUserAnswers: async ({ blankw }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth?.login, 'q', 'EDIT', 'R')) throw '';
-            return questionerUserAnswersFileStore.getValue()[blankw]?.answers;
+            return questionerUserAnswersFileStore.getValue()[blankw]?.answers ?? [];
           },
 
           publicUserAnswer: ({ blankw, answer }) => {

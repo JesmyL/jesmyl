@@ -11,7 +11,7 @@ export type QuestionerAdminTsjrpcModel = {
   addBlankTemplate: (args: QuestionerBlankSelector<{ type: QuestionerType }>) => QuestionerBlank;
 
   getAdminBlanks: () => QuestionerBlank[];
-  getAdminBlank: (args: QuestionerBlankSelector) => QuestionerBlank | nil;
+  getAdminBlank: (args: QuestionerBlankSelector) => QuestionerBlank | null;
 
   changeBlankTitle: (args: QuestionerBlankSelector<{ value: string }>) => void;
   changeBlankDescription: (args: QuestionerBlankSelector<{ value: string }>) => void;

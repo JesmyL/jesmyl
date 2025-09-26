@@ -70,7 +70,7 @@ export const questionerAdminServerTsjrpcBase =
             if (throwIfNoUserScopeAccessRight(auth?.login, 'q', 'EDIT', 'U')) throw '';
             const blank = questionerBlanksFileStore.getValue()[blankw];
 
-            return blank && { ...blank, w: blankw };
+            return blank ? { ...blank, w: blankw } : null;
           },
 
           changeBlankTitle: updateBlank(({ value }, blank) => (blank.title = value)),
