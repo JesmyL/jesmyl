@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-namespace */
 import('../front/components/apps/bible/translations/search/input-panel/address/hooks/transformers');
 
@@ -11,7 +10,7 @@ namespace Nb09d67b661fb57bb15ee68ed2e7d8d57_1 {
   type $verse = $chapter;
   type $verseSeparator = string | '';
   type $finishVerse = $chapter;
-  
+
   type U1 = `${`-` | ''}${string | ''}`;
   type U2 = $bookName | $bookNameEn;
   type U3 = `${$chapter}${U4 | ''}`;
@@ -19,22 +18,24 @@ namespace Nb09d67b661fb57bb15ee68ed2e7d8d57_1 {
   type U5 = `:` | RepeatingString<string>;
   type U6 = `${OptRepeatingString<string>}${$verseSeparator}${OptRepeatingString<string>}`;
 
-  export interface I extends Record<
-    `/(?<bookNum>\\d?)(?:-?[ея]?)?\\s*(?:(?<bookName>[а-яё]+)|(?<bookNameEn>[a-z]*))\\s*(?:(?<chapter>\\d{1,3})(?:(?::|\\s+)(?<verse>\\d{1,3})(?:\\s*(?<verseSeparator>[-,]?)\\s*)(?<finishVerse>\\d{1,3})?)?)?/`,
-    {
-      $0: $0;
-      bookNum: $bookNum;
-      bookName?: $bookName;
-      bookNameEn?: $bookNameEn;
-      chapter: $chapter;
-      verse: $verse;
-      verseSeparator: $verseSeparator;
-      finishVerse?: $finishVerse
-    }
-  > { '': '' }
+  export interface I
+    extends Record<
+      `/(?<bookNum>\\d?)(?:-?[ея]?)?\\s*(?:(?<bookName>[а-яё]+)|(?<bookNameEn>[a-z]*))\\s*(?:(?<chapter>\\d{1,3})(?:(?::|\\s+)(?<verse>\\d{1,3})(?:\\s*(?<verseSeparator>[-,]?)\\s*)(?<finishVerse>\\d{1,3})?)?)?/`,
+      {
+        $0: $0;
+        bookNum: $bookNum;
+        bookName?: $bookName;
+        bookNameEn?: $bookNameEn;
+        chapter: $chapter;
+        verse: $verse;
+        verseSeparator: $verseSeparator;
+        finishVerse?: $finishVerse;
+      }
+    > {
+    '': '';
+  }
 }
 
-interface _GlobalScopedNamedRegExpMakerGeneratedTypes
-  extends Nb09d67b661fb57bb15ee68ed2e7d8d57_1.I {
-    '': ''
+interface _GlobalScopedNamedRegExpMakerGeneratedTypes extends Nb09d67b661fb57bb15ee68ed2e7d8d57_1.I {
+  '': '';
 }

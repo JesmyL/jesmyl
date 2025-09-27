@@ -69,6 +69,7 @@ export const usePrompt = () => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 const PromptListeners = ({
   confirmationResolvers,
   onClose,
