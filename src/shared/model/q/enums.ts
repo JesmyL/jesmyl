@@ -3,6 +3,7 @@ export const enum QuestionerType {
   Check = 917,
   Comment = 501,
   Sorter = 498,
+  TextInclude = 694,
 }
 
 export type QuestionerVariatedType = QuestionerType.Check | QuestionerType.Radio;

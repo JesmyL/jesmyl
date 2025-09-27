@@ -7,6 +7,7 @@ import {
   QuestionerSorterTemplate,
   QuestionerTemplate,
   QuestionerTemplateId,
+  QuestionerTextIncludeTemplate,
   QuestionerType,
 } from 'shared/model/q';
 import { smylib } from 'shared/utils';
@@ -33,10 +34,17 @@ export const questionerTSJRPCAddBlankTemplate: typeof questionerAdminServerTsjrp
       blankTmp = buildTemplate<QuestionerRadioTemplate, QuestionerType.Radio>({ type, variants: {}, req: 1, rSort: 1 });
       break;
     case QuestionerType.Comment:
-      blankTmp = buildTemplate<QuestionerCommentTemplate, QuestionerType.Comment>({ type });
+      blankTmp = buildTemplate<QuestionerCommentTemplate, QuestionerType.Comment>({ type, req: 1 });
       break;
     case QuestionerType.Sorter:
-      blankTmp = buildTemplate<QuestionerSorterTemplate, QuestionerType.Sorter>({ type, variants: {} });
+      blankTmp = buildTemplate<QuestionerSorterTemplate, QuestionerType.Sorter>({ type, variants: {}, req: 1 });
+      break;
+    case QuestionerType.TextInclude:
+      blankTmp = buildTemplate<QuestionerTextIncludeTemplate, QuestionerType.TextInclude>({
+        type,
+        req: 1,
+        text: '',
+      });
       break;
   }
 

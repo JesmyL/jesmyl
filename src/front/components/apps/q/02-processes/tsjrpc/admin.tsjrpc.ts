@@ -31,6 +31,9 @@ export const questionerAdminTsjrpcClient = new (class Questioner extends TsjrpcC
         changeTemplatePosition: true,
         changeTemplateCorrectAnswerIndex: true,
         switchTemplateNeedSelectSign: true,
+        switchTemplateSymbolExistance: true,
+        switchTemplateTextValue: true,
+        switchTemplateReplacementTextValue: true,
       },
     });
   }

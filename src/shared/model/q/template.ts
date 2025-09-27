@@ -21,9 +21,12 @@ type QuestionerTemplateBox = {
       rSort?: 1;
     } & QuestionerVariantedTemplate
   >;
-  [QuestionerType.Comment]: Implement<{
-    type: QuestionerType.Comment;
-    correct?: string;
+  [QuestionerType.TextInclude]: Implement<{
+    type: QuestionerType.TextInclude;
+    correct?: Record<string, string>;
+    text: string;
+    textVariants?: string[];
+    symbols?: string;
   }>;
   [QuestionerType.Sorter]: Implement<{
     type: QuestionerType.Sorter;
@@ -34,6 +37,10 @@ type QuestionerTemplateBox = {
     needSelect?: 1;
   }> &
     QuestionerVariantedTemplate;
+  [QuestionerType.Comment]: Implement<{
+    type: QuestionerType.Comment;
+    correct?: string;
+  }>;
 };
 
 export type QuestionerTemplate = QuestionerTemplateBox[QuestionerType];
@@ -46,11 +53,6 @@ export type QuestionerAdminTemplateContentProps<Type extends QuestionerType> = {
   onUpdate: () => void;
 };
 
-export const enum QuestionerSorterCorrectType {
-  NoCorrectValue = 1,
-  NeedSelectCorrects = 2,
-}
-
 /////////////////////////////
 /////////////////////////////
 
@@ -62,6 +64,7 @@ export type QuestionerRadioTemplate = QuestionerTemplateBox[QuestionerType.Radio
 export type QuestionerCheckTemplate = QuestionerTemplateBox[QuestionerType.Check];
 export type QuestionerCommentTemplate = QuestionerTemplateBox[QuestionerType.Comment];
 export type QuestionerSorterTemplate = QuestionerTemplateBox[QuestionerType.Sorter];
+export type QuestionerTextIncludeTemplate = QuestionerTemplateBox[QuestionerType.TextInclude];
 /////////////////////////////
 /////////////////////////////
 

@@ -17,11 +17,16 @@ export const questionerTemplateDescriptions: Record<QuestionerType, { title: str
     title: 'Сортировка',
     dsc: 'Нужно отсортировать список в правильном порядке',
   },
+  [QuestionerType.TextInclude]: {
+    title: 'Текстовая вставка',
+    dsc: 'В тексте есть пробелы - нужно их восстановить',
+  },
 };
 
 export const questionerTemplateDescriptionsOrder = [
   QuestionerType.Check,
   QuestionerType.Radio,
-  QuestionerType.Comment,
   QuestionerType.Sorter,
+  QuestionerType.TextInclude,
+  QuestionerType.Comment,
 ];

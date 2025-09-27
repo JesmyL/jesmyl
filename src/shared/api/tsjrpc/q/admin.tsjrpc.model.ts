@@ -30,6 +30,11 @@ export type QuestionerAdminTsjrpcModel = {
   changeTemplateBelowText: (args: QuestionerTemplateSelector<{ text: string }>) => void;
   switchTemplateNoCorrectsSign: (args: QuestionerTemplateSelector) => void;
   switchTemplateNeedSelectSign: (args: QuestionerTemplateSelector) => void;
+  switchTemplateSymbolExistance: (args: QuestionerTemplateSelector<{ symbol: string }>) => void;
+  switchTemplateTextValue: (args: QuestionerTemplateSelector<{ text: string }>) => void;
+  switchTemplateReplacementTextValue: (
+    args: QuestionerTemplateSelector<{ textValue: string; textCode: string }>,
+  ) => void;
   changeTemplateAnswerVariantTitle: (
     args: QuestionerTemplateSelector<{ answerId: RKey<QuestionerAnswerId>; value: string }>,
   ) => void;

@@ -1,12 +1,12 @@
 import { mylib } from '#shared/lib/my-lib';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { QuestionerType } from 'shared/model/q';
-import { QuestionerUserAnswerResultContentProps } from 'shared/model/q/answer';
+import { QuestionerResultContentProps } from 'shared/model/q/answer';
 
 export const QuestionerResultCheckTemplateCardContent = ({
   template,
   userAnswer,
-}: QuestionerUserAnswerResultContentProps<QuestionerType.Check>) => {
+}: QuestionerResultContentProps<QuestionerType.Check>) => {
   if (!userAnswer) return;
 
   const keys = mylib.keys(template.variants);

@@ -17,6 +17,9 @@ export type QuestionerUserAnswerValueBox = {
   [QuestionerType.Sorter]: {
     v: QuestionerAnswerId[];
   };
+  [QuestionerType.TextInclude]: {
+    v: Record<string, string>;
+  };
 };
 
 export type QuestionerUserAnswerContentProps<Type extends QuestionerType> = {
@@ -30,7 +33,7 @@ export type QuestionerUserAnswerContentProps<Type extends QuestionerType> = {
   ) => void;
 };
 
-export type QuestionerUserAnswerResultContentProps<Type extends QuestionerType> = {
+export type QuestionerResultContentProps<Type extends QuestionerType> = {
   template: QuestionerTemplateByItsType<Type>;
   userAnswer: QuestionerUserAnswerValueBox[Type] | nil;
 };

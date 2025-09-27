@@ -1,12 +1,12 @@
 import { mylib } from '#shared/lib/my-lib';
 import { EllipsisText } from '#shared/ui/EllipsisText';
 import { QuestionerAnswerId, QuestionerType } from 'shared/model/q';
-import { QuestionerUserAnswerResultContentProps } from 'shared/model/q/answer';
+import { QuestionerResultContentProps } from 'shared/model/q/answer';
 
 export const QuestionerResultSorterTemplateCardContent = ({
   userAnswer,
   template,
-}: QuestionerUserAnswerResultContentProps<QuestionerType.Sorter>) => {
+}: QuestionerResultContentProps<QuestionerType.Sorter>) => {
   const variantKeys = mylib.keys(template.variants);
   let newAnswerIds: RKey<QuestionerAnswerId>[] = [];
   const variantKeySet = new Set(variantKeys.map(Number));

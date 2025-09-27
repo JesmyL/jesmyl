@@ -1,3 +1,4 @@
+import { questionerTextIncludeSymbols } from '#shared/lib/const/q/textIncludeSymbols';
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { QuestionerAdminTsjrpcModel } from 'shared/api/tsjrpc/q/admin.tsjrpc.model';
@@ -15,6 +16,7 @@ import { smylib, SMyLib } from 'shared/utils';
 import { questionerBlanksFileStore } from '../../file-stores';
 import { questionerTSJRPCAddBlankTemplate } from './lib/addBlankTemplate';
 import { questionerTSJRPCCreateBlank } from './lib/createBlank';
+import { questionerTSJRPCFixTextIncludeTemplateTextValue } from './lib/fixTextIncludeTemplateTextValue';
 
 export const questionerAdminServerTsjrpcBase =
   new (class QuestionerAdmin extends TsjrpcBaseServer<QuestionerAdminTsjrpcModel> {
@@ -176,6 +178,38 @@ export const questionerAdminServerTsjrpcBase =
               template.correct = smylib.withInsertedBeforei(template.correct, answeri - 1, answeri);
 
               return;
+            }
+          }),
+
+          switchTemplateReplacementTextValue: updateTemplate(({ textValue, textCode }, template) => {
+            if (template.type === QuestionerType.TextInclude) {
+              template.correct ??= {};
+              template.correct[textCode] = textValue || '';
+            }
+          }),
+          switchTemplateTextValue: updateTemplate(({ text }, template) => {
+            if (template.type === QuestionerType.TextInclude) {
+              questionerTSJRPCFixTextIncludeTemplateTextValue(text, template);
+            }
+          }),
+          switchTemplateSymbolExistance: updateTemplate(({ symbol }, template) => {
+            if (template.type === QuestionerType.TextInclude) {
+              const allSymbolsSet = new Set((template.symbols || questionerTextIncludeSymbols).split(''));
+
+              if (allSymbolsSet.has(symbol)) {
+                if (template.text.includes(symbol)) {
+                  throw 'Этот символ уже исрользуется в тексте';
+                }
+                allSymbolsSet.delete(symbol);
+              } else allSymbolsSet.add(symbol);
+
+              template.symbols = Array.from(allSymbolsSet).sort().join('');
+
+              if (!template.symbols || template.symbols === questionerTextIncludeSymbols) {
+                delete template.symbols;
+              }
+
+              questionerTSJRPCFixTextIncludeTemplateTextValue(template.text, template);
             }
           }),
         },

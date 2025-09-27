@@ -3,17 +3,20 @@ import { QuestionerAdminCheckTemplateCardContent } from '$q/basis/ui/admin-templ
 import { QuestionerAdminCommentTemplateCardContent } from '$q/basis/ui/admin-templates/Comment.admin';
 import { QuestionerAdminRadioTemplateCardContent } from '$q/basis/ui/admin-templates/Radio.admin';
 import { QuestionerAdminSorterTemplateCardContent } from '$q/basis/ui/admin-templates/Sorter.admin';
+import { QuestionerAdminTextIncludeTemplateCardContent } from '$q/basis/ui/admin-templates/TextInclude.admin';
 import { QuestionerResultCheckTemplateCardContent } from '$q/basis/ui/result-templates/Check.result';
 import { QuestionerResultCommentTemplateCardContent } from '$q/basis/ui/result-templates/Comment.result';
 import { QuestionerResultRadioTemplateCardContent } from '$q/basis/ui/result-templates/Radio.result';
 import { QuestionerResultSorterTemplateCardContent } from '$q/basis/ui/result-templates/Sorter.result';
+import { QuestionerResultTextIncludeTemplateCardContent } from '$q/basis/ui/result-templates/TextInclude.result';
 import { QuestionerUserCheckTemplateCardContent } from '$q/basis/ui/user-templates/Check.user';
 import { QuestionerUserCommentTemplateCardContent } from '$q/basis/ui/user-templates/Comment.user';
 import { QuestionerUserRadioTemplateCardContent } from '$q/basis/ui/user-templates/Radio.user';
 import { QuestionerUserSorterTemplateCardContent } from '$q/basis/ui/user-templates/Sorter.user';
+import { QuestionerUserTextIncludeTemplateCardContent } from '$q/basis/ui/user-templates/TextInclude.user';
 import { JSX } from 'react';
 import { QuestionerAdminTemplateContentProps, QuestionerType } from 'shared/model/q';
-import { QuestionerUserAnswerContentProps, QuestionerUserAnswerResultContentProps } from 'shared/model/q/answer';
+import { QuestionerResultContentProps, QuestionerUserAnswerContentProps } from 'shared/model/q/answer';
 import { questionerTemplateDescriptions } from './templateDescriptions';
 
 export const questionerCardContents = <Type extends QuestionerType>(type: Type) =>
@@ -101,18 +104,39 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
         resultRender: props => <QuestionerResultSorterTemplateCardContent {...props} />,
         takeUserAnswerError: props => {
           return {
-            check: props.userAnswer?.v ? null : `Нужно отсортировать значения в пункте "${props.template.title}"`,
+            check:
+              !props.template.req || props.userAnswer?.v
+                ? null
+                : `Нужно отсортировать значения в пункте "${props.template.title}"`,
             info: null,
             isFill: !!props.userAnswer?.v,
           };
         },
         customRequireMessage: <>Сортировка в этом блоке обязательна</>,
       },
+      [QuestionerType.TextInclude]: {
+        adminRender: props => <QuestionerAdminTextIncludeTemplateCardContent {...props} />,
+        userRender: props => <QuestionerUserTextIncludeTemplateCardContent {...props} />,
+        resultRender: props => <QuestionerResultTextIncludeTemplateCardContent {...props} />,
+        takeUserAnswerError: props => {
+          const isFill = mylib.keys(props.userAnswer?.v ?? {}).length === props.template.textVariants?.length;
+
+          return {
+            check:
+              !props.template.req || isFill
+                ? null
+                : `Нужно восстановить все недостающие слова в пункте "${props.template.title}"`,
+            info: null,
+            isFill,
+          };
+        },
+        customRequireMessage: <>Нужно восстановить все недостающие слова</>,
+      },
     }) satisfies {
       [Type in QuestionerType]: {
         userRender: (props: QuestionerUserAnswerContentProps<Type>) => JSX.Element;
         adminRender: (props: QuestionerAdminTemplateContentProps<Type>) => JSX.Element;
-        resultRender: (props: QuestionerUserAnswerResultContentProps<Type>) => JSX.Element;
+        resultRender: (props: QuestionerResultContentProps<Type>) => JSX.Element;
         takeShowError?: (props: QuestionerUserAnswerContentProps<Type>) => string;
         takeUserAnswerError: (props: QuestionerUserAnswerContentProps<Type>) => {
           check: string | nil;

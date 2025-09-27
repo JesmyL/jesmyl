@@ -1,7 +1,7 @@
 import { AppName } from '#basis/model/App.model';
 import { bibleRoutingApp } from '$bible/app/bibleRoutingApp';
 import { cmRoutingApp } from '$cm/routing/cmRoutingApp';
-import { questionerRoutingApp } from '$q/tunerRoutingApp';
+import { questionerRoutingApp } from '$q/questionerRoutingApp';
 import { tunerRoutingApp } from 'front/components/apps/tuner/tunerRoutingApp';
 
 export type RoutingAppConfig = {

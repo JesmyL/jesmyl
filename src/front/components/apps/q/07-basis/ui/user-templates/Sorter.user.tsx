@@ -30,11 +30,13 @@ export const QuestionerUserSorterTemplateCardContent = ({
 
   return (
     <>
-      {template.needSelect && (
+      {!isCantRedact && template.needSelect && (
         <>
           <div className="mb-3">Сначала нужно выбрать подходящие варианты для сортировки:</div>
           <div className="flex gap-3 flex-wrap">
             {variantKeys.map(answerId => {
+              if (!template.variants[answerId]?.title) return;
+
               return (
                 <Badge
                   key={answerId}
@@ -43,7 +45,7 @@ export const QuestionerUserSorterTemplateCardContent = ({
                     onUpdate(prev => {
                       return prev?.includes(+answerId)
                         ? prev.filter(it => it != answerId)
-                        : (prev?.concat(+answerId) ?? []);
+                        : (prev?.concat(+answerId) ?? [+answerId]);
                     });
                   }}
                 >
