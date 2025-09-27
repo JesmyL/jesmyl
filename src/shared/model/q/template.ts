@@ -37,6 +37,7 @@ type QuestionerTemplateBox = {
     below?: string;
     noCorrect?: 1;
     needSelect?: 1;
+    len?: number;
   }> &
     QuestionerVariantedTemplate;
   [QuestionerType.Comment]: Implement<{

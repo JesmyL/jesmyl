@@ -103,13 +103,13 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
         userRender: props => <QuestionerUserSorterTemplateCardContent {...props} />,
         resultRender: props => <QuestionerResultSorterTemplateCardContent {...props} />,
         takeUserAnswerError: props => {
+          const isFill = !!props.template.len && props.userAnswer?.v.length === props.template.len;
+
           return {
             check:
-              !props.template.req || props.userAnswer?.v
-                ? null
-                : `Нужно отсортировать значения в пункте "${props.template.title}"`,
+              !props.template.req || isFill ? null : `Нужно отсортировать значения в пункте "${props.template.title}"`,
             info: null,
-            isFill: !!props.userAnswer?.v,
+            isFill,
           };
         },
         customRequireMessage: <>Сортировка в этом блоке обязательна</>,

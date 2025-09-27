@@ -37,6 +37,8 @@ export const questionerUserServerTsjrpcBase =
 
                 templateForUser.len = texts.length;
                 delete templateForUser.addTexts;
+              } else if (templateForUser.type === QuestionerType.Sorter) {
+                templateForUser.len = smylib.keys(templateForUser.correct ?? {}).length;
               }
 
               if ('correct' in templateForUser) delete templateForUser.correct;
