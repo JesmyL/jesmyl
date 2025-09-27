@@ -13,6 +13,7 @@ export interface DropdownProps<Id, Item extends DropdownItem<Id>> {
   addContent?: React.ReactNode;
   disabled?: boolean;
   hiddenIds?: (Id | null)[];
+  hiddenArrow?: boolean;
 }
 
 export interface DropdownItem<Id> {

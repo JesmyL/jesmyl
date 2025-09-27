@@ -55,10 +55,12 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
               className="rotate"
             />
           ) : (
-            <LazyIcon
-              icon="ArrowDown01"
-              className={twMerge(isDropped && 'rotate-180', 'transition-[rotate]')}
-            />
+            props.hiddenArrow || (
+              <LazyIcon
+                icon="ArrowDown01"
+                className={twMerge(isDropped && 'rotate-180', 'transition-[rotate]')}
+              />
+            )
           )}
         </Button>
       </DropdownMenu.Trigger>
