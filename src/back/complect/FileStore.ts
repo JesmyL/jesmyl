@@ -20,11 +20,8 @@ export class FileStore<Value> {
     this.value = defaultValue;
     if (registeredPaths.has(path)) throw new Error(`The path ${path} was registered again`);
     registeredPaths.add(path);
-    let isValueInit = false;
 
     this.getValue = () => {
-      if (isValueInit) return this.value;
-      isValueInit = true;
       this.getValue = () => this.value;
 
       return (this.value = this.readValue(defaultValue));
@@ -68,7 +65,7 @@ export class FileStore<Value> {
 
   getValueWithAutoSave = (): Value => {
     Promise.resolve().then(() => this.saveValue());
-    return this.value;
+    return this.getValue();
   };
 
   setValue = (val: Value | ((value: Value) => Value)) => {
@@ -79,12 +76,12 @@ export class FileStore<Value> {
   };
 
   updateValue = (updater: (value: Value) => Value) => {
-    this.value = updater(this.value);
-    this.writeValue(this.value);
+    this.value = updater(this.getValue());
+    this.writeValue(this.getValue());
   };
 
   saveValue = () => {
-    this.writeValue(this.value);
+    this.writeValue(this.getValue());
   };
 
   fileModifiedAt = (): number => {
@@ -103,7 +100,7 @@ export class FileStore<Value> {
     try {
       fs.watchFile(this.filePath, (curr, prev) => {
         this.value = this.readValue(this.defaultValue);
-        cb(this.value, curr, prev);
+        cb(this.getValue(), curr, prev);
       });
     } catch (_error) {
       this.saveValue();
