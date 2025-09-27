@@ -27436,8 +27436,8 @@
     "c": [
       "Gm Cm\nD Gm\nGm Cm\nD Gm",
       "Cm\nGm\nCm\nD\nGm",
-      "Gm Cm Gm Cm D",
-      "Cm Gm Cm D Dm/F-Dm/H\nCm Gm Cm Dsus4-D",
+      "Gm Adim Gm/A# Cm D",
+      "Cm Gm Cm D Dm/F-Dm/H\nCm Gm Cm Dsus4-D7",
       "Gm Cm"
     ],
     "o": [
@@ -27478,7 +27478,7 @@
     "b": 0,
     "k": 0,
     "bpm": 115,
-    "m": 1758826446241.3806,
+    "m": 1758959726648.8413,
     "s": 4
   },
   {
@@ -30263,7 +30263,7 @@
     "bpm": 120
   },
   {
-    "m": 1758863740387.9746,
+    "m": 1758945359109.8462,
     "n": "Всем людям нужен Бог",
     "w": 1758861545263,
     "l": 0,
@@ -30315,6 +30315,7 @@
       },
       { "w": 7, "c": 3, "t": 4, "s": "bridge", "p": [[0], [-1, 5], [0, 4], [2, 5]] }
     ],
-    "a": "https://holychords.pro/uploads/music/20200701/20200701164438_10.mp3"
+    "a": "https://holychords.pro/uploads/music/20200701/20200701164438_10.mp3",
+    "k": 0
   }
 ]
