@@ -1,10 +1,11 @@
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Button } from '#shared/components/ui/button';
 import { mylib } from '#shared/lib/my-lib';
-import { TextInput } from '#shared/ui/TextInput';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { questionerAdminTsjrpcClient } from '$q/processes/tsjrpc/admin.tsjrpc';
-import { QuestionerAdminTemplateContentProps, QuestionerType } from 'shared/model/q';
+import { useMemo } from 'react';
+import { QuestionerAdminTemplateContentProps, QuestionerAnswerId, QuestionerType } from 'shared/model/q';
 
 export const QuestionerAdminSorterTemplateCardContent = ({
   blank,
@@ -12,16 +13,30 @@ export const QuestionerAdminSorterTemplateCardContent = ({
   template,
   templateId,
 }: QuestionerAdminTemplateContentProps<QuestionerType.Sorter>) => {
-  const variantKeys = template.correct ?? mylib.keys(template.variants);
+  const variantKeys = useMemo(
+    () =>
+      Array.from(
+        new Set([...(template.correct ?? []), ...mylib.keys(template.variants).map(it => +it as QuestionerAnswerId)]),
+      ),
+    [template.correct, template.variants],
+  );
 
   return (
     <>
       <div className="mb-10">
         <IconCheckbox
           checked={!!template.noCorrect}
-          postfix="Нет определённого ответа"
+          postfix="Нет правильного порядка"
           onChange={() =>
             questionerAdminTsjrpcClient.switchTemplateNoCorrectsSign({ blankw: blank.w, templateId }).then(onUpdate)
+          }
+        />
+        <IconCheckbox
+          checked={!!template.needSelect}
+          disabled={!!template.noCorrect}
+          postfix="Нужно выбрать подходящие варианты"
+          onChange={() =>
+            questionerAdminTsjrpcClient.switchTemplateNeedSelectSign({ blankw: blank.w, templateId }).then(onUpdate)
           }
         />
 
@@ -46,28 +61,45 @@ export const QuestionerAdminSorterTemplateCardContent = ({
         />
       </div>
 
+      <div>Отмеченные варианты являются правильными</div>
+
       <div className="text-x7">{template.above}</div>
 
       <div>
         {variantKeys.map((answerId, answerIdi) => {
+          const isInCorrect = template.correct?.includes(+answerId);
+
           return (
             <div key={answerId}>
-              {!answerIdi || !!template.noCorrect || (
+              {!isInCorrect || !answerIdi || !!template.noCorrect || (
                 <Button
                   icon="ArrowDataTransferVertical"
                   onClick={() =>
                     questionerAdminTsjrpcClient
-                      .changeTemplateCorrectAnswerSign({ blankw: blank.w, templateId, answerId: +answerId })
+                      .changeTemplateCorrectAnswerIndex({ blankw: blank.w, templateId, answerId: +answerId })
                       .then(onUpdate)
                   }
                 />
               )}
-              <TextInput
+              <InputWithLoadingIcon
                 defaultValue={template.variants[answerId]?.title ?? ''}
                 strongDefaultValue
                 multiline
                 className="my-3"
-                onChanged={value =>
+                iconNode={
+                  !!template.noCorrect ||
+                  !template.needSelect || (
+                    <LazyIcon
+                      icon={isInCorrect ? 'CheckmarkSquare02' : 'Square'}
+                      onClick={() =>
+                        questionerAdminTsjrpcClient
+                          .changeTemplateCorrectAnswerSign({ blankw: blank.w, templateId, answerId: +answerId })
+                          .then(onUpdate)
+                      }
+                    />
+                  )
+                }
+                onChange={value =>
                   questionerAdminTsjrpcClient
                     .changeTemplateAnswerVariantTitle({ blankw: blank.w, templateId, answerId, value })
                     .then(onUpdate)

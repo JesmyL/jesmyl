@@ -25,9 +25,11 @@ export type QuestionerAdminTsjrpcModel = {
   changeTemplateMinSign: (args: QuestionerTemplateSelector<{ value: number }>) => void;
   changeTemplateMaxSign: (args: QuestionerTemplateSelector<{ value: number }>) => void;
   changeTemplateCorrectAnswerSign: (args: QuestionerTemplateSelector<{ answerId: QuestionerAnswerId }>) => void;
+  changeTemplateCorrectAnswerIndex: (args: QuestionerTemplateSelector<{ answerId: QuestionerAnswerId }>) => void;
   changeTemplateAboveText: (args: QuestionerTemplateSelector<{ text: string }>) => void;
   changeTemplateBelowText: (args: QuestionerTemplateSelector<{ text: string }>) => void;
   switchTemplateNoCorrectsSign: (args: QuestionerTemplateSelector) => void;
+  switchTemplateNeedSelectSign: (args: QuestionerTemplateSelector) => void;
   changeTemplateAnswerVariantTitle: (
     args: QuestionerTemplateSelector<{ answerId: RKey<QuestionerAnswerId>; value: string }>,
   ) => void;

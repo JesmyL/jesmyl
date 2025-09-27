@@ -31,6 +31,7 @@ type QuestionerTemplateBox = {
     above?: string;
     below?: string;
     noCorrect?: 1;
+    needSelect?: 1;
   }> &
     QuestionerVariantedTemplate;
 };
@@ -44,6 +45,11 @@ export type QuestionerAdminTemplateContentProps<Type extends QuestionerType> = {
   templateId: RKey<QuestionerTemplateId>;
   onUpdate: () => void;
 };
+
+export const enum QuestionerSorterCorrectType {
+  NoCorrectValue = 1,
+  NeedSelectCorrects = 2,
+}
 
 /////////////////////////////
 /////////////////////////////
@@ -62,7 +68,7 @@ export type QuestionerSorterTemplate = QuestionerTemplateBox[QuestionerType.Sort
 type TemplateDefaults = {
   title?: string;
   dsc?: string;
-  req?: 1;
+  req: 1 | und;
   hidden?: 1;
   correct?: unknown;
 };

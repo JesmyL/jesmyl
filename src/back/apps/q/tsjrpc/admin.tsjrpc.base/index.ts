@@ -103,7 +103,22 @@ export const questionerAdminServerTsjrpcBase =
             if (template.type === QuestionerType.Sorter) template.below = text || undefined;
           }),
           switchTemplateNoCorrectsSign: updateTemplate((_, template) => {
-            if (template.type === QuestionerType.Sorter) template.noCorrect = template.noCorrect ? undefined : 1;
+            if (template.type === QuestionerType.Sorter) {
+              template.noCorrect = template.noCorrect ? undefined : 1;
+              template.needSelect = undefined;
+            }
+          }),
+          switchTemplateNeedSelectSign: updateTemplate((_, template) => {
+            if (template.type === QuestionerType.Sorter) {
+              template.needSelect = template.needSelect ? undefined : 1;
+
+              if (!template.needSelect) {
+                const answerIds = smylib.keys(template.variants).map(Number);
+                if (template.correct?.length !== answerIds.length) {
+                  template.correct = Array.from(new Set([...(template.correct ?? []), ...answerIds]));
+                }
+              }
+            }
           }),
           changeTemplateMinSign: updateTemplate(({ value }, template) => {
             if (template.type === QuestionerType.Check) {
@@ -139,7 +154,7 @@ export const questionerAdminServerTsjrpcBase =
           }),
 
           changeTemplateCorrectAnswerSign: updateTemplate(({ answerId }, template) => {
-            if (template.type === QuestionerType.Check) {
+            if (template.type === QuestionerType.Check || template.type === QuestionerType.Sorter) {
               template.correct = template.correct?.includes(answerId)
                 ? template.correct.filter(id => id !== answerId)
                 : (template.correct?.concat(answerId) ?? [answerId]);
@@ -152,7 +167,9 @@ export const questionerAdminServerTsjrpcBase =
 
               return;
             }
+          }),
 
+          changeTemplateCorrectAnswerIndex: updateTemplate(({ answerId }, template) => {
             if (template.type === QuestionerType.Sorter) {
               template.correct ??= smylib.keys(template.variants).map(Number);
               const answeri = template.correct.indexOf(+answerId);
