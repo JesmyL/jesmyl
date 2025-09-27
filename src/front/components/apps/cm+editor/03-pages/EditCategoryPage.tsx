@@ -53,7 +53,7 @@ export const EditCategoryPage = () => {
             icon="TextFont"
             defaultValue={ccat.name}
             label="Название"
-            onChange={value => cmEditCatClientTsjrpcMethods.rename({ catw: ccat.wid, name: value })}
+            onChanged={value => cmEditCatClientTsjrpcMethods.rename({ catw: ccat.wid, name: value })}
           />
 
           <div className="flex between">

@@ -175,7 +175,7 @@ export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlan
                               icon="TextFont"
                               label={`Заголовок (${questionerTemplateDescriptions[template.type].title})`}
                               defaultValue={template.title || questionerTemplateDescriptions[template.type].title}
-                              onChange={value =>
+                              onChanged={value =>
                                 questionerAdminTsjrpcClient
                                   .changeTemplateTitle({ blankw, value, templateId })
                                   .then(() => blankQuery.refetch())
@@ -188,7 +188,7 @@ export const QuestionerBlankRedactorPage = ({ blankw }: { blankw: QuestionerBlan
                               label="Текст вопроса"
                               defaultValue={template.dsc ?? ''}
                               multiline
-                              onChange={value =>
+                              onChanged={value =>
                                 questionerAdminTsjrpcClient
                                   .changeTemplateDescription({ blankw, value, templateId })
                                   .then(() => blankQuery.refetch())

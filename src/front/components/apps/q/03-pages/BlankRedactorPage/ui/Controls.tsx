@@ -18,7 +18,7 @@ export const QuestionerBlankRedactorControls = ({
         icon="TextFont"
         label="Название"
         defaultValue={blank.title}
-        onChange={value => questionerAdminTsjrpcClient.changeBlankTitle({ blankw, value }).then(onUpdate)}
+        onChanged={value => questionerAdminTsjrpcClient.changeBlankTitle({ blankw, value }).then(onUpdate)}
       />
 
       <InputWithLoadingIcon
@@ -26,7 +26,7 @@ export const QuestionerBlankRedactorControls = ({
         label="Описание"
         defaultValue={blank.dsc}
         multiline
-        onChange={value => questionerAdminTsjrpcClient.changeBlankDescription({ blankw, value }).then(onUpdate)}
+        onChanged={value => questionerAdminTsjrpcClient.changeBlankDescription({ blankw, value }).then(onUpdate)}
       />
 
       <div onClick={() => questionerAdminTsjrpcClient.switchBlankIsAnonymous({ blankw }).then(onUpdate)}>

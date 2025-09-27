@@ -32,7 +32,7 @@ export const CmEditorTabComCategoryBinds = () => {
               className="bg-x1!"
               disabled={!checkAccess('cm', 'COM_CAT', 'U')}
               defaultValue={`${cat.dict?.[ccom.wid] || ''}`}
-              onChange={value => {
+              onChanged={value => {
                 if (!+value) {
                   return cmEditCatClientTsjrpcMethods.removeNativeComNum({ comw: ccom.wid, catw: cat.wid });
                 }

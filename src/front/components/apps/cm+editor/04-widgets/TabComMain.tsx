@@ -49,7 +49,7 @@ export const CmEditorTabComMain = () => {
         label="Название"
         defaultValue={ccom.name}
         isError={!!nameCorrects.errors?.length}
-        onChange={value => cmEditComClientTsjrpcMethods.rename({ comw: ccom.wid, value })}
+        onChanged={value => cmEditComClientTsjrpcMethods.rename({ comw: ccom.wid, value })}
         onInput={setName}
       />
       <TextCorrectMessages corrects={nameCorrects} />
@@ -59,7 +59,7 @@ export const CmEditorTabComMain = () => {
         label="Ударов в минуту"
         type="tel"
         defaultValue={'' + (ccom.beatsPerMinute ?? '')}
-        onChange={value => cmEditComClientTsjrpcMethods.setBpM({ comw: ccom.wid, value: +value })}
+        onChanged={value => cmEditComClientTsjrpcMethods.setBpM({ comw: ccom.wid, value: +value })}
         onInput={emptyFunc}
       />
       <div className="flex w-full between my-2">

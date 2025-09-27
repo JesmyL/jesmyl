@@ -22,7 +22,7 @@ export const CmEditConstantsPage = () => {
                 defaultValue={'' + defaultValue}
                 placeholder={'' + cmConstantsDefaultConfig[key]}
                 icon="RightToLeftListTriangle"
-                onChange={async value =>
+                onChanged={async value =>
                   cmEditorClientTsjrpcMethods.updateConstantsConfig({
                     config: {
                       [key]: (mylib.isNum(defaultValue)

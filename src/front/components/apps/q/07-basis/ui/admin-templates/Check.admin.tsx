@@ -17,7 +17,7 @@ export const QuestionerAdminCheckTemplateCardContent = (
             strongDefaultValue
             label="Минимум пунктов (1)"
             type="tel"
-            onChange={value =>
+            onChanged={value =>
               questionerAdminTsjrpcClient
                 .changeTemplateMinSign({ blankw: props.blank.w, templateId: props.templateId, value: +value })
                 .then(props.onUpdate)
@@ -29,7 +29,7 @@ export const QuestionerAdminCheckTemplateCardContent = (
             strongDefaultValue
             label="Максимум пунктов"
             type="tel"
-            onChange={value =>
+            onChanged={value =>
               questionerAdminTsjrpcClient
                 .changeTemplateMaxSign({ blankw: props.blank.w, templateId: props.templateId, value: +value })
                 .then(props.onUpdate)

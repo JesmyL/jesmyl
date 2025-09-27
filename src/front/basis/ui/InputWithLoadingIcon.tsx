@@ -6,7 +6,7 @@ import { StameskaIconKind } from 'stameska-icon/utils';
 import { twMerge } from 'tailwind-merge';
 
 type Props<ChangedValue> = {
-  onChange: (value: string) => Promise<ChangedValue>;
+  onChanged: (value: string) => Promise<ChangedValue>;
   onInput?: (value: string) => void;
   type?: 'email' | 'tel' | 'text';
   defaultValue: string;
@@ -28,7 +28,7 @@ type Props<ChangedValue> = {
 );
 
 export const InputWithLoadingIcon = <ChangedValue,>({
-  onChange,
+  onChanged,
   onInput,
   type,
   defaultValue,
@@ -78,7 +78,7 @@ export const InputWithLoadingIcon = <ChangedValue,>({
             setIsLoading(true);
 
             try {
-              await onChange(value);
+              await onChanged(value);
             } catch (_error) {
               //
             }

@@ -52,7 +52,7 @@ export const QuestionerAdminVariantedTemplateCardContent = ({
                   }
                 />
               }
-              onChange={value =>
+              onChanged={value =>
                 questionerAdminTsjrpcClient
                   .changeTemplateAnswerVariantTitle({ blankw: blank.w, templateId, answerId, value })
                   .then(onUpdate)

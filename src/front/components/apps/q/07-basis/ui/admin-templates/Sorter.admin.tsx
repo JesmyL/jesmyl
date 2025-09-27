@@ -45,7 +45,7 @@ export const QuestionerAdminSorterTemplateCardContent = ({
           defaultValue={template.above || ''}
           label="Верхняя ремарка"
           strongDefaultValue
-          onChange={text =>
+          onChanged={text =>
             questionerAdminTsjrpcClient.changeTemplateAboveText({ blankw: blank.w, templateId, text }).then(onUpdate)
           }
         />
@@ -55,7 +55,7 @@ export const QuestionerAdminSorterTemplateCardContent = ({
           defaultValue={template.below || ''}
           label="Нижняя ремарка"
           strongDefaultValue
-          onChange={text =>
+          onChanged={text =>
             questionerAdminTsjrpcClient.changeTemplateBelowText({ blankw: blank.w, templateId, text }).then(onUpdate)
           }
         />
@@ -99,7 +99,7 @@ export const QuestionerAdminSorterTemplateCardContent = ({
                     />
                   )
                 }
-                onChange={value =>
+                onChanged={value =>
                   questionerAdminTsjrpcClient
                     .changeTemplateAnswerVariantTitle({ blankw: blank.w, templateId, answerId, value })
                     .then(onUpdate)

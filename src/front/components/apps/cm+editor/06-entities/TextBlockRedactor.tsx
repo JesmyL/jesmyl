@@ -29,7 +29,7 @@ export const CmTextBlockRedactor = ({ texti, text, ccom, disabled }: Props) => {
         label=""
         className="bg-x1!"
         defaultValue={text}
-        onChange={value => ccom.changeTextBlock(texti, value)}
+        onChanged={value => ccom.changeTextBlock(texti, value)}
         onInput={setValue}
         isError={!!corrects.errors?.length}
         disabled={disabled}
