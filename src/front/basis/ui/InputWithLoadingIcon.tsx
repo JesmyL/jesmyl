@@ -1,7 +1,7 @@
 import { TextInput } from '#shared/ui/TextInput';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useState } from 'react';
+import { HTMLAttributes, useState } from 'react';
 import { StameskaIconKind } from 'stameska-icon/utils';
 import { twMerge } from 'tailwind-merge';
 
@@ -26,7 +26,8 @@ type Props<ChangedValue> = {
   | {
       iconNode: React.ReactNode;
     }
-);
+) &
+  HTMLAttributes<HTMLInputElement>;
 
 export const InputWithLoadingIcon = <ChangedValue,>({
   onChanged,
@@ -40,7 +41,8 @@ export const InputWithLoadingIcon = <ChangedValue,>({
   disabled,
   strongDefaultValue,
   className = '',
-  ...props
+  postfix,
+  ...attrs
 }: Props<ChangedValue>) => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -52,14 +54,14 @@ export const InputWithLoadingIcon = <ChangedValue,>({
             icon="Alert02"
             className="text-xKO"
           />
-        ) : 'icon' in props ? (
+        ) : 'icon' in attrs ? (
           <TheIconLoading
-            icon={props.icon}
-            iconKind={props.iconKind}
+            icon={attrs.icon}
+            iconKind={attrs.iconKind}
             isLoading={isLoading}
           />
         ) : (
-          props.iconNode
+          attrs.iconNode
         )}
       </div>
       <div className="w-full">
@@ -67,6 +69,7 @@ export const InputWithLoadingIcon = <ChangedValue,>({
 
         <div className="flex gap-3">
           <TextInput
+            {...attrs}
             multiline={multiline}
             className={twMerge('w-full pointer', className)}
             defaultValue={defaultValue}
@@ -88,7 +91,7 @@ export const InputWithLoadingIcon = <ChangedValue,>({
               setIsLoading(false);
             }}
           />
-          {props.postfix}
+          {postfix}
         </div>
       </div>
     </div>
