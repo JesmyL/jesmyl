@@ -192,6 +192,21 @@ export const questionerAdminServerTsjrpcBase =
               questionerTSJRPCFixTextIncludeTemplateTextValue(text, template);
             }
           }),
+
+          addTemplateTextValue: updateTemplate((_, template) => {
+            if (template.type === QuestionerType.TextInclude) {
+              template.addTexts ??= [];
+              template.addTexts.push('');
+            }
+          }),
+
+          changeTemplateTextValue: updateTemplate(({ text, texti }, template) => {
+            if (template.type === QuestionerType.TextInclude) {
+              template.addTexts ??= [];
+              template.addTexts[texti] = text;
+            }
+          }),
+
           switchTemplateSymbolExistance: updateTemplate(({ symbol }, template) => {
             if (template.type === QuestionerType.TextInclude) {
               const allSymbolsSet = new Set((template.symbols || questionerTextIncludeSymbols).split(''));

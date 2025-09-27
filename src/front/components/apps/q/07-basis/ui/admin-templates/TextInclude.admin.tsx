@@ -1,10 +1,12 @@
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Badge } from '#shared/components/ui/badge';
+import { Button } from '#shared/components/ui/button';
 import { questionerTextIncludeSymbols, takeQuestionerTextIncludeSymbols } from '#shared/lib/const/q/textIncludeSymbols';
 import { MyLib } from '#shared/lib/my-lib';
 import { questionerAdminTsjrpcClient } from '$q/processes/tsjrpc/admin.tsjrpc';
 import { useState } from 'react';
 import { QuestionerAdminTemplateContentProps, QuestionerType } from 'shared/model/q';
+import { itNIt } from 'shared/utils';
 import { QuestionerTextIncludeResultText } from '../-inner-ui/TextIncludeResultText';
 
 export const QuestionerAdminTextIncludeTemplateCardContent = ({
@@ -92,6 +94,33 @@ export const QuestionerAdminTextIncludeTemplateCardContent = ({
           );
         })}
       </div>
+
+      <div className="mt-7">Дополнительные варианты</div>
+
+      {template.addTexts?.map((text, texti) => {
+        return (
+          <InputWithLoadingIcon
+            key={texti}
+            icon="Text"
+            defaultValue={text}
+            onChanged={text =>
+              questionerAdminTsjrpcClient
+                .changeTemplateTextValue({ blankw: blank.w, templateId, text, texti })
+                .then(onUpdate)
+            }
+          />
+        );
+      })}
+
+      <Button
+        icon="Add02"
+        className="mt-5"
+        disabled={template.addTexts?.some(itNIt)}
+        disabledReason="Есть варианты без названия"
+        onClick={() => questionerAdminTsjrpcClient.addTemplateTextValue({ blankw: blank.w, templateId }).then(onUpdate)}
+      >
+        Добавить дополнительный вариант
+      </Button>
     </>
   );
 };

@@ -32,6 +32,8 @@ export type QuestionerAdminTsjrpcModel = {
   switchTemplateNeedSelectSign: (args: QuestionerTemplateSelector) => void;
   switchTemplateSymbolExistance: (args: QuestionerTemplateSelector<{ symbol: string }>) => void;
   switchTemplateTextValue: (args: QuestionerTemplateSelector<{ text: string }>) => void;
+  addTemplateTextValue: (args: QuestionerTemplateSelector) => void;
+  changeTemplateTextValue: (args: QuestionerTemplateSelector<{ texti: number; text: string }>) => void;
   switchTemplateReplacementTextValue: (
     args: QuestionerTemplateSelector<{ textValue: string; textCode: string }>,
   ) => void;

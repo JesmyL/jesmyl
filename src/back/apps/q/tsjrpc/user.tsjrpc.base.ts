@@ -3,7 +3,7 @@ import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { QuestionerUserTsjrpcModel } from 'shared/api/tsjrpc/q/user.tsjrpc.model';
 import { QuestionerTemplate, QuestionerTemplateId, QuestionerType, QuestionerVariatedType } from 'shared/model/q';
 import { QuestionerUserAnswerValueBox } from 'shared/model/q/answer';
-import { SMyLib, smylib } from 'shared/utils';
+import { itIt, SMyLib, smylib } from 'shared/utils';
 import { questionerBlanksFileStore, questionerUserAnswersFileStore } from '../file-stores';
 
 export const questionerUserServerTsjrpcBase =
@@ -22,9 +22,17 @@ export const questionerUserServerTsjrpcBase =
               const templateForUser = { ...tmp[templateId] } as QuestionerTemplate;
 
               if (templateForUser.type === QuestionerType.TextInclude)
-                templateForUser.textVariants = smylib
-                  .toRandomSorted(smylib.values(templateForUser.correct ?? {}))
-                  .map(it => it.toUpperCase());
+                templateForUser.textVariants = smylib.toRandomSorted(
+                  Array.from(
+                    new Set(
+                      smylib
+                        .values(templateForUser.correct ?? {})
+                        .concat(templateForUser.addTexts ?? [])
+                        .filter(itIt)
+                        .map(it => it.toUpperCase()),
+                    ),
+                  ),
+                );
 
               if ('correct' in templateForUser) delete templateForUser.correct;
               tmp[templateId] = templateForUser;

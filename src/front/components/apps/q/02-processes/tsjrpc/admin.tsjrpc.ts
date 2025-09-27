@@ -34,6 +34,8 @@ export const questionerAdminTsjrpcClient = new (class Questioner extends TsjrpcC
         switchTemplateSymbolExistance: true,
         switchTemplateTextValue: true,
         switchTemplateReplacementTextValue: true,
+        addTemplateTextValue: true,
+        changeTemplateTextValue: true,
       },
     });
   }

@@ -26,6 +26,7 @@ type QuestionerTemplateBox = {
     correct?: Record<string, string>;
     text: string;
     textVariants?: string[];
+    addTexts?: string[];
     symbols?: string;
   }>;
   [QuestionerType.Sorter]: Implement<{
