@@ -17,6 +17,7 @@ type Props<ChangedValue> = {
   isError?: boolean;
   disabled?: boolean;
   strongDefaultValue?: boolean;
+  postfix?: React.ReactNode;
 } & (
   | {
       icon: KnownStameskaIconName;
@@ -64,28 +65,31 @@ export const InputWithLoadingIcon = <ChangedValue,>({
       <div className="w-full">
         {label && <span className="nowrap">{label}</span>}
 
-        <TextInput
-          multiline={multiline}
-          className={twMerge('w-full pointer', className)}
-          defaultValue={defaultValue}
-          placeholder={placeholder}
-          strongDefaultValue={strongDefaultValue}
-          type={type}
-          disabled={disabled}
-          onInput={onInput}
-          onChanged={async value => {
-            if (isError || defaultValue === value) return;
-            setIsLoading(true);
+        <div className="flex gap-3">
+          <TextInput
+            multiline={multiline}
+            className={twMerge('w-full pointer', className)}
+            defaultValue={defaultValue}
+            placeholder={placeholder}
+            strongDefaultValue={strongDefaultValue}
+            type={type}
+            disabled={disabled}
+            onInput={onInput}
+            onChanged={async value => {
+              if (isError || defaultValue === value) return;
+              setIsLoading(true);
 
-            try {
-              await onChanged(value);
-            } catch (_error) {
-              //
-            }
+              try {
+                await onChanged(value.trim());
+              } catch (_error) {
+                //
+              }
 
-            setIsLoading(false);
-          }}
-        />
+              setIsLoading(false);
+            }}
+          />
+          {props.postfix}
+        </div>
       </div>
     </div>
   );
