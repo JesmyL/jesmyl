@@ -1,5 +1,5 @@
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
-import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { questionerAdminTsjrpcClient } from '$q/processes/tsjrpc/admin.tsjrpc';
 import { QuestionerBlank, QuestionerBlankWid } from 'shared/model/q';
 
@@ -29,18 +29,20 @@ export const QuestionerBlankRedactorControls = ({
         onChanged={value => questionerAdminTsjrpcClient.changeBlankDescription({ blankw, value }).then(onUpdate)}
       />
 
-      <div onClick={() => questionerAdminTsjrpcClient.switchBlankIsAnonymous({ blankw }).then(onUpdate)}>
-        <IconCheckbox
-          isRadio
-          checked={!!blank.anon}
-          postfix="Анонимный опрос"
-        />
-        <IconCheckbox
-          isRadio
-          checked={!blank.anon}
-          postfix="Запрашивать Фамилию/Имя"
-        />
-      </div>
+      <Dropdown
+        id={!!blank.anon}
+        items={[
+          {
+            id: true,
+            title: 'Анонимный опрос',
+          },
+          {
+            id: false,
+            title: 'Запрашивать Фамилию/Имя',
+          },
+        ]}
+        onSelectId={() => questionerAdminTsjrpcClient.switchBlankIsAnonymous({ blankw }).then(onUpdate)}
+      />
     </>
   );
 };

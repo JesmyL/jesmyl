@@ -119,7 +119,7 @@ export const questionerCardContents = <Type extends QuestionerType>(type: Type) 
         userRender: props => <QuestionerUserTextIncludeTemplateCardContent {...props} />,
         resultRender: props => <QuestionerResultTextIncludeTemplateCardContent {...props} />,
         takeUserAnswerError: props => {
-          const isFill = mylib.keys(props.userAnswer?.v ?? {}).length === props.template.textVariants?.length;
+          const isFill = mylib.keys(props.userAnswer?.v ?? {}).length === props.template.len;
 
           return {
             check:

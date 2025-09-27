@@ -21,18 +21,23 @@ export const questionerUserServerTsjrpcBase =
             smylib.keys(tmp).forEach(templateId => {
               const templateForUser = { ...tmp[templateId] } as QuestionerTemplate;
 
-              if (templateForUser.type === QuestionerType.TextInclude)
+              if (templateForUser.type === QuestionerType.TextInclude) {
+                const texts = smylib.values(templateForUser.correct ?? {});
+
                 templateForUser.textVariants = smylib.toRandomSorted(
                   Array.from(
                     new Set(
-                      smylib
-                        .values(templateForUser.correct ?? {})
+                      texts
                         .concat(templateForUser.addTexts ?? [])
                         .filter(itIt)
                         .map(it => it.toUpperCase()),
                     ),
                   ),
                 );
+
+                templateForUser.len = texts.length;
+                delete templateForUser.addTexts;
+              }
 
               if ('correct' in templateForUser) delete templateForUser.correct;
               tmp[templateId] = templateForUser;

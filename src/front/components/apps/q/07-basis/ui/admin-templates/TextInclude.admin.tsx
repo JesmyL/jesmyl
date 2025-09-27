@@ -18,6 +18,7 @@ export const QuestionerAdminTextIncludeTemplateCardContent = ({
   const allIncludeSymbols = takeQuestionerTextIncludeSymbols(template).split('');
   const availableSymbols = template.symbols?.split('') ?? allIncludeSymbols;
   const [isSymbolsUpdate, setIsSymbolsUpdate] = useState(false);
+  const [focusedVariant, setFocusedVariant] = useState<string | null>(null);
   const correctReplacements = template.correct ?? {};
 
   return (
@@ -69,6 +70,7 @@ export const QuestionerAdminTextIncludeTemplateCardContent = ({
       <QuestionerTextIncludeResultText
         correctReplacements={correctReplacements}
         template={template}
+        focused={focusedVariant}
       />
 
       <div>
@@ -80,6 +82,8 @@ export const QuestionerAdminTextIncludeTemplateCardContent = ({
               label={textCode}
               defaultValue={textValue}
               strongDefaultValue
+              onFocus={() => setTimeout(setFocusedVariant, 100, textCode)}
+              onBlur={() => setFocusedVariant(null)}
               onChanged={textValue =>
                 questionerAdminTsjrpcClient
                   .switchTemplateReplacementTextValue({
