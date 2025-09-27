@@ -27,7 +27,7 @@ type Props<ChangedValue> = {
       iconNode: React.ReactNode;
     }
 ) &
-  HTMLAttributes<HTMLInputElement>;
+  OmitOwn<HTMLAttributes<HTMLInputElement>, 'onInput'>;
 
 export const InputWithLoadingIcon = <ChangedValue,>({
   onChanged,
