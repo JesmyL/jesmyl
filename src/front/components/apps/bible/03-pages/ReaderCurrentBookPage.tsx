@@ -72,25 +72,27 @@ function Content() {
           )}
 
           <FullContent openAtom={isOpenBookSelectorAtom}>
-            {bookTitles.map(({ full: bookTitle }, booki) => {
-              return (
-                <div
-                  key={bookTitle}
-                  className={twMerge(
-                    'my-5 ml-2 pointer',
-                    booki === selectedBooki ? 'text-x7' : '',
-                    booki === currentBooki ? 'underline' : '',
-                    booki === 38 ? 'mb-10' : '',
-                  )}
-                  onClick={() => {
-                    setSelectedBooki(booki);
-                    isOpenChapterSelectorAtom.set(true);
-                  }}
-                >
-                  {bookTitle}
-                </div>
-              );
-            })}
+            <div className="grid grid-cols-6 gap-1 @container h-full">
+              {bookTitles.map(({ short: bookTitle, textColor }, booki) => {
+                return (
+                  <div
+                    key={bookTitle}
+                    className={twMerge(
+                      'flex justify-center h-[calc(100cvh/11)] bg-x2 pointer',
+
+                      booki === selectedBooki ? 'text-[black]' : textColor,
+                      booki === currentBooki && 'bg-x7',
+                    )}
+                    onClick={() => {
+                      setSelectedBooki(booki);
+                      isOpenChapterSelectorAtom.set(true);
+                    }}
+                  >
+                    {bookTitle}
+                  </div>
+                );
+              })}
+            </div>
           </FullContent>
 
           <FullContent openAtom={isOpenChapterSelectorAtom}>
