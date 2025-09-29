@@ -205,18 +205,20 @@ export function ScheduleKeyValueListAtt({
             />
           );
         })}
-        <div className="flex flex-end">
-          <ScheduleWidgetKeyValueItemGrabber.Drop
-            render={({ className, onDrop }) => (
-              <Button
-                icon="PinLocation01"
-                className={twMerge(className, 'mr-7 text-x7')}
-                onClick={() => onDrop(null)}
-              />
-            )}
-            value={null}
-          />
-        </div>
+        {isRedact && (
+          <div className="flex flex-end">
+            <ScheduleWidgetKeyValueItemGrabber.Drop
+              render={({ className, onDrop }) => (
+                <Button
+                  icon="PinLocation01"
+                  className={twMerge(className, 'mr-7 text-x7')}
+                  onClick={() => onDrop(null)}
+                />
+              )}
+              value={null}
+            />
+          </div>
+        )}
         {insertionNode}
         <ScheduleKeyValueListAttStatistic list={attValue.values} />
       </ScheduleWidgetKeyValueItemGrabber.Root>
