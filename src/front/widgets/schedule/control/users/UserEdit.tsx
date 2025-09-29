@@ -22,7 +22,7 @@ export function ScheduleWidgetUserEdit({ user }: { user: IScheduleWidgetUser }) 
     <>
       <StrongEditableField
         isRedact
-        setSelfRedact
+        isSelfRedact
         title="Имя"
         icon="User"
         value={user.fio || user.nick}

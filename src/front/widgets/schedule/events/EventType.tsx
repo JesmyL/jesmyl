@@ -126,7 +126,7 @@ export function ScheduleWidgetEventType(props: {
   return (
     <div className="relative">
       {props.isRedact || (
-        <div className="flex flex-end w-full absolute top-0 right-0 m-1 z-5">
+        <div className="flex flex-end w-full absolute top-0 right-0 m-1">
           <LazyIcon
             icon="Edit02"
             onClick={() => isRedactTypeiModalOpenAtom.set(props.typei)}

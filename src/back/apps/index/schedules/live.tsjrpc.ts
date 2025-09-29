@@ -46,6 +46,8 @@ export const schLiveTsjrpcServer = new (class SchLive extends TsjrpcBaseServer<S
         },
 
         requestStreamers: async ({ schw }, { client }) => {
+          if (client == null) return;
+
           const streamers =
             (theLiveData[schw] &&
               SMyLib.entries(theLiveData[schw])
@@ -83,6 +85,8 @@ export const schLiveTsjrpcServer = new (class SchLive extends TsjrpcBaseServer<S
         },
 
         watch: async ({ schw, streamerLogin }, { client }) => {
+          if (client == null) return;
+
           liveDataWatchers[schw] ??= {};
           const watchers = (liveDataWatchers[schw][streamerLogin] ??= new Set());
           watchers.add(client);
@@ -93,6 +97,7 @@ export const schLiveTsjrpcServer = new (class SchLive extends TsjrpcBaseServer<S
         },
 
         unwatch: async ({ schw, streamerLogin }, { client }) => {
+          if (client == null) return;
           liveDataWatchers[schw]?.[streamerLogin]?.delete(client);
         },
       },

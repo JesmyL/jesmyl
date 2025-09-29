@@ -8,30 +8,28 @@ import { indexServerTsjrpcShareMethods } from '../../tsjrpc.methods';
 import { modifySchedule } from '../schedule-modificators';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 
-const modifyRole =
-  <Value>(modifier: (role: IScheduleWidgetRole, value: Value) => void) =>
-  ({ props, value }: { props: ScheduleRoleScopeProps; value: Value }) =>
-    modifySchedule(false, props, sch => {
-      const role = sch.ctrl.roles.find(role => role.mi === props.roleMi);
-      if (role == null) throw new Error('role not found');
-      modifier(role, value);
-    });
+const modifyRole = <Props extends { props: ScheduleRoleScopeProps }>(
+  modifier: (role: IScheduleWidgetRole, props: Props) => void,
+) =>
+  modifySchedule<Props>(false, (sch, props) => {
+    const role = sch.ctrl.roles.find(role => role.mi === props.props.roleMi);
+    if (role == null) throw new Error('role not found');
+    modifier(role, props);
+  });
 
 export const schRolesTsjrpcBaseServer = new (class SchRoles extends TsjrpcBaseServer<SchRolesTsjrpcMethods> {
   constructor() {
     super({
       scope: 'SchRoles',
       methods: {
-        createRole: ({ props }) =>
-          modifySchedule(false, props, sch =>
-            sch.ctrl.roles.push({ mi: smylib.takeNextMi(sch.ctrl.roles, 0 as number), title: 'Помощьник' }),
-          ),
+        createRole: modifySchedule(false, sch =>
+          sch.ctrl.roles.push({ mi: smylib.takeNextMi(sch.ctrl.roles, 0 as number), title: 'Помощьник' }),
+        ),
 
-        setRoleCategoryTitle: ({ props, cati, title }) =>
-          modifySchedule(false, props, sch => (sch.ctrl.cats[cati] = title)),
-        addRoleCategory: ({ props }) => modifySchedule(false, props, sch => sch.ctrl.cats.push('')),
+        setRoleCategoryTitle: modifySchedule(false, (sch, { cati, title }) => (sch.ctrl.cats[cati] = title)),
+        addRoleCategory: modifySchedule(false, sch => sch.ctrl.cats.push('')),
 
-        setRoleIcon: modifyRole((role, value) => {
+        setRoleIcon: modifyRole((role, { value }) => {
           indexServerTsjrpcShareMethods.updateKnownIconPacks(
             {
               actualIconPacks: { [value]: stameskaIconPack[value] },
@@ -43,9 +41,9 @@ export const schRolesTsjrpcBaseServer = new (class SchRoles extends TsjrpcBaseSe
 
           role.icon = value;
         }),
-        setRoleTitle: modifyRole((role, value) => (role.title = value)),
-        setRoleUser: modifyRole((role, value) => (role.userMi = value)),
-        setCategoryForRole: modifyRole((role, value) => (role.cati = value)),
+        setRoleTitle: modifyRole((role, { value }) => (role.title = value)),
+        setRoleUser: modifyRole((role, { value }) => (role.userMi = value)),
+        setCategoryForRole: modifyRole((role, { value }) => (role.cati = value)),
         makeFreeRole: modifyRole(role => delete role.userMi),
       },
       onEachFeedback: {

@@ -15,27 +15,32 @@ import { onScheduleDayEventIsNeedTgInformSetEvent } from '../specific-modify-eve
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 
 onScheduleDayEventIsNeedTgInformSetEvent.listen(({ dayEventProps, value, isNeedRefreshTgInformTime }) => {
-  return modifyEvent(dayEventProps, event => (event.tgInform = value), isNeedRefreshTgInformTime);
+  return modifyEvent(event => (event.tgInform = value), isNeedRefreshTgInformTime)(
+    { props: dayEventProps },
+    { auth: undefined, client: null, visitInfo: undefined },
+  );
 });
 
-const modifyEvent = (
-  props: ScheduleDayEventScopeProps,
-  modifier: (event: IScheduleWidgetDayEvent, day: IScheduleWidgetDay, sch: IScheduleWidget) => void,
+const modifyEvent = <Props extends { props: ScheduleDayEventScopeProps }>(
+  modifier: (event: IScheduleWidgetDayEvent, props: Props, day: IScheduleWidgetDay, sch: IScheduleWidget) => void,
   isNeedRefreshTgInformTime?: boolean,
 ) =>
-  modifyScheduleDay(isNeedRefreshTgInformTime || false, (day, _, sch) => {
-    const event = day.list.find(event => event.mi === props.eventMi);
+  modifyScheduleDay<Props>(isNeedRefreshTgInformTime || false, (day, props, sch) => {
+    const event = day.list.find(event => event.mi === props.props.eventMi);
     if (event == null) throw new Error('day event not found');
-    modifier(event, day, sch);
-  })({ props, value: undefined });
+    modifier(event, props, day, sch);
+  });
 
 export const schDayEventsTsjrpcBaseServer =
   new (class SchDayEvents extends TsjrpcBaseServer<SchDayEventsTsjrpcMethods> {
     constructor() {
-      const setEventValue =
-        <Key extends keyof IScheduleWidgetDayEvent, Value extends IScheduleWidgetDayEvent[Key]>(key: Key) =>
-        ({ props, value }: { props: ScheduleDayEventScopeProps; value: Value }) =>
-          modifyEvent(props, event => (event[key] = value));
+      const setEventValue = <
+        Props extends { props: ScheduleDayEventScopeProps; value: Value },
+        Value extends IScheduleWidgetDayEvent[Key],
+        Key extends keyof IScheduleWidgetDayEvent,
+      >(
+        key: Key,
+      ) => modifyEvent<Props>((event, props) => (event[key] = props.value));
 
       const inEventTypeTtileOfDay = (sch: IScheduleWidget, props: ScheduleDayEventScopeProps) => {
         const eventTypei = sch.days[props.dayi]?.list.find(event => event.mi === props.eventMi)?.type;
@@ -47,27 +52,29 @@ export const schDayEventsTsjrpcBaseServer =
         );
       };
 
-      const modifyKeyValueAttachmentValueList = <Itemi extends number | null, ListField extends 'values' | 'list'>(
-        props: ScheduleDayEventAttachmentScopeProps,
-        itemMi: Itemi,
+      const modifyKeyValueAttachmentValueList = <
+        Props extends { props: ScheduleDayEventAttachmentScopeProps; itemMi?: number | null },
+        ListField extends 'values' | 'list',
+      >(
         listField: ListField,
         modifier: (
           values: Required<ScheduleWidgetAppAttCustomizableValue>[ListField],
-          itemi: Itemi,
+          props: Props,
+          itemi: number | null,
         ) => void | Required<ScheduleWidgetAppAttCustomizableValue>[ListField],
       ) =>
-        modifyEvent(props, (event, _, sch) => {
+        modifyEvent<Props>((event, props, _day, sch) => {
           event.atts ??= {};
-          event.atts[props.attKey] ??= {};
+          event.atts[props.props.attKey] ??= {};
 
-          let att = event.atts[props.attKey] as ScheduleWidgetAppAttCustomizableValue;
+          let att = event.atts[props.props.attKey] as ScheduleWidgetAppAttCustomizableValue;
 
           if (smylib.isArr(att)) {
             if (+att[0]! < 0) throw new Error('attachment type is anchor');
             const [dayi, eventMi] = att as unknown as [number, number];
 
             att = sch.days[dayi].list.find(event => event.mi === eventMi)?.atts?.[
-              props.attKey
+              props.props.attKey
             ] as ScheduleWidgetAppAttCustomizableValue;
 
             if (att == null) throw new Error('attachment anchor is invalid 84194422067');
@@ -77,66 +84,68 @@ export const schDayEventsTsjrpcBaseServer =
           let itemi = null;
           att[listFieldValue] ??= [] as never;
 
-          if (itemMi !== null) {
-            itemi = att[listFieldValue].findIndex(([, , mi]) => mi === itemMi);
+          if (props.itemMi != null) {
+            itemi = att[listFieldValue].findIndex(([, , mi]) => mi === props.itemMi);
+
             if (itemi < 0) throw new Error('value not found 019988172');
           }
 
-          const newList = modifier(att[listFieldValue] as never, itemi as Itemi);
+          const newList = modifier(att[listFieldValue] as never, props, itemi);
 
           if (newList !== undefined) att[listFieldValue] = newList;
           if (!att[listFieldValue].length) delete att[listFieldValue];
         });
 
-      const modifyKeyValueAttachmentListValue = (
-        props: ScheduleDayEventAttachmentScopeProps,
-        itemMi: number,
-        modifier: (listItem: (string | number)[], item: ScheduleWidgetAppAttCustomizableValueItem) => void,
-      ) => {
-        return modifyKeyValueAttachmentValueList(props, itemMi, 'values', (values, itemi) => {
+      const modifyKeyValueAttachmentListValue = <
+        Props extends { props: ScheduleDayEventAttachmentScopeProps; itemMi: number },
+      >(
+        modifier: (
+          listItem: (string | number)[],
+          props: Props,
+          item: ScheduleWidgetAppAttCustomizableValueItem,
+        ) => void,
+      ) =>
+        modifyKeyValueAttachmentValueList<Props, 'values'>('values', (values, props, itemi) => {
+          if (itemi == null) throw 'Error 76521387462345';
           const [, itemValue] = values[itemi];
           if (!smylib.isArr(itemValue)) throw new Error('att value list item not array type');
-          modifier(itemValue, values[itemi]);
+          modifier(itemValue, props, values[itemi]);
         });
-      };
 
       super({
         scope: 'SchDayEvents',
         methods: {
           setTopic: setEventValue('topic'),
           setDescription: setEventValue('dsc'),
-          setTm: ({ props, value }) => modifyEvent(props, event => (event.tm = value), true),
+          setTm: modifyEvent((event, props) => (event.tm = props.value), true),
 
           setIsNeedTgInform: ({ props: dayEventProps, value }) =>
             onScheduleDayEventIsNeedTgInformSetEvent.invoke({ dayEventProps, value, isNeedRefreshTgInformTime: true }),
 
-          toggleIsSecret: ({ props }) =>
-            modifyEvent(props, event => {
-              if (event.secret) delete event.secret;
-              else event.secret = 1;
-            }),
+          toggleIsSecret: modifyEvent(event => {
+            if (event.secret) delete event.secret;
+            else event.secret = 1;
+          }),
 
-          addAttachment: ({ props, attKey, defaultValue }) =>
-            modifyEvent(props, event => {
-              event.atts ??= {};
-              event.atts[attKey] = defaultValue;
-            }),
+          addAttachment: modifyEvent((event, props) => {
+            event.atts ??= {};
+            event.atts[props.attKey] = props.defaultValue;
+          }),
 
-          addAttachmentRef: ({ props, attKey, attRef }) =>
-            modifyEvent(props, event => {
-              event.atts ??= {};
-              event.atts[attKey] = attRef;
-            }),
+          addAttachmentRef: modifyEvent((event, props) => {
+            event.atts ??= {};
+            event.atts[props.attKey] = props.attRef;
+          }),
 
-          removeAttachment: ({ props, attKey }) =>
-            modifyEvent(props, event => {
-              event.atts ??= {};
-              delete event.atts[attKey];
-              if (!smylib.keys(event.atts).length) delete event.atts;
-            }),
+          removeAttachment: modifyEvent((event, props) => {
+            event.atts ??= {};
+            delete event.atts[props.attKey];
+            if (!smylib.keys(event.atts).length) delete event.atts;
+          }),
 
-          updateCheckListAttachmentValue: ({ props, itemMi, key, value }) =>
-            modifyKeyValueAttachmentValueList(props, null, 'list', values => {
+          updateCheckListAttachmentValue: modifyKeyValueAttachmentValueList(
+            'list',
+            (values, { itemMi, key, value }) => {
               if (itemMi == null) {
                 if (key == null || value == null) return;
                 values.push([key, value, smylib.takeNextMi(values, 0 as number, '2')]);
@@ -148,78 +157,79 @@ export const schDayEventsTsjrpcBaseServer =
 
               if (key != null) item[0] = key;
               if (value != null) item[1] = value;
-            }),
+            },
+          ),
 
-          putKeyValueAttachment: ({ props, key, value }) =>
-            modifyKeyValueAttachmentValueList(props, null, 'values', values => {
-              if (value === null) {
-                const index = values.findIndex(([, , mi]) => mi === key);
-                if (index < 0) throw new Error('value not found');
-                values.splice(index, 1);
-              } else values.push([key, value, smylib.takeNextMi(values, 0 as number, '2')]);
-            }),
+          putKeyValueAttachment: modifyKeyValueAttachmentValueList('values', (values, { key, value }) => {
+            if (value === null) {
+              const index = values.findIndex(([, , mi]) => mi === key);
+              if (index < 0) throw new Error('value not found');
+              values.splice(index, 1);
+            } else values.push([key, value, smylib.takeNextMi(values, 0 as number, '2')]);
+          }),
 
-          setKeyValueAttachmentValue: ({ props, itemMi, value }) =>
-            modifyKeyValueAttachmentValueList(props, itemMi, 'values', (values, itemi) => {
-              if (value === null) values.splice(itemi, 1);
-              else values[itemi][1] = value;
-            }),
+          setKeyValueAttachmentValue: modifyKeyValueAttachmentValueList('values', (values, { value }, itemi) => {
+            if (itemi == null) return;
+            if (value === null) values.splice(itemi, 1);
+            else values[itemi][1] = value;
+          }),
 
-          setKeyValueAttachmentKey: ({ props, itemMi, value }) =>
-            modifyKeyValueAttachmentValueList(props, itemMi, 'values', (values, itemi) => {
-              values[itemi][0] = value;
-            }),
+          setKeyValueAttachmentKey: modifyKeyValueAttachmentValueList('values', (values, { value }, itemi) => {
+            if (itemi == null) return;
+            values[itemi][0] = value;
+          }),
 
-          changeKeyValueAttachmentKey: ({ props, key, value }) =>
-            modifyKeyValueAttachmentValueList(props, null, 'values', values => {
-              const item = values.find(item => item[0] === key);
-              if (item == null) throw new Error('item not found');
-              item[0] = value;
-            }),
+          changeKeyValueAttachmentKey: modifyKeyValueAttachmentValueList('values', (values, { key, value }) => {
+            const item = values.find(item => item[0] === key);
+            if (item == null) throw new Error('item not found');
+            item[0] = value;
+          }),
 
-          addKeyValueAttachmentListItem: ({ props, itemMi, value }) =>
-            modifyKeyValueAttachmentListValue(props, itemMi, itemValue => {
-              itemValue.push(value);
-            }),
+          addKeyValueAttachmentListItem: modifyKeyValueAttachmentListValue((itemValue, { value }) => {
+            itemValue.push(value);
+          }),
 
-          setKeyValueAttachmentListItemValue: ({ props, itemMi, valuei, value }) =>
-            modifyKeyValueAttachmentListValue(props, itemMi, itemValue => {
-              itemValue[valuei] = value;
-            }),
+          setKeyValueAttachmentListItemValue: modifyKeyValueAttachmentListValue((itemValue, { value, valuei }) => {
+            itemValue[valuei] = value;
+          }),
 
-          removeKeyValueAttachmentListItemValue: ({ props, itemMi, value }) =>
-            modifyKeyValueAttachmentListValue(props, itemMi, itemValue => {
-              const index = itemValue.findIndex(val => val === value);
-              if (index < 0) throw new Error('value not found 238716818');
-              itemValue.splice(index, 1);
-            }),
+          removeKeyValueAttachmentListItemValue: modifyKeyValueAttachmentListValue((itemValue, { value }) => {
+            const index = itemValue.findIndex(val => val === value);
+            if (index < 0) throw new Error('value not found 238716818');
+            itemValue.splice(index, 1);
+          }),
 
-          moveKeyValueAttachmentListItem: ({ props, itemMi, value }) =>
-            modifyKeyValueAttachmentListValue(props, itemMi, (itemValue, item) => {
-              const index = itemValue.findIndex(val => val === value);
-              if (index < 0) throw new Error('value not found 238716818');
+          moveKeyValueAttachmentListItem: modifyKeyValueAttachmentListValue((itemValue, { value }, item) => {
+            const index = itemValue.findIndex(val => val === value);
+            if (index < 0) throw new Error('value not found 238716818');
 
-              item[1] = smylib.withInsertedBeforei(itemValue, index === 0 ? 2 : index - 1, index);
-            }),
+            item[1] = smylib.withInsertedBeforei(itemValue, index === 0 ? 2 : index - 1, index);
+          }),
 
-          moveKeyValueAttachment: ({ props, itemMi }) =>
-            modifyKeyValueAttachmentValueList(props, itemMi, 'values', (values, itemi) => {
-              return smylib.withInsertedBeforei(values, itemi === 0 ? 2 : itemi - 1, itemi);
-            }),
+          transferKeyValueAttachment: modifyKeyValueAttachmentValueList(
+            'values',
+            (values, { grabbedItemMi, targetItemMi }) => {
+              if (grabbedItemMi == null) return;
 
-          setRatePoint: ({ props, userMi, ratePoint }) =>
-            modifyEvent(props, event => {
-              event.rate ??= {} as never;
-              event.rate[userMi] ??= [ratePoint, ''];
-              event.rate[userMi][0] = ratePoint;
-            }),
+              return smylib.withInsertedBeforei(
+                values,
+                targetItemMi == null ? values.length : values.findIndex(item => targetItemMi === item[2]),
+                values.findIndex(item => grabbedItemMi === item[2]),
+              );
+            },
+          ),
 
-          setRateComment: ({ props, userMi, comment }) =>
-            modifyEvent(props, event => {
-              event.rate ??= {} as never;
-              event.rate[userMi] ??= [0, comment];
-              event.rate[userMi][1] = comment;
-            }),
+          setRatePoint: modifyEvent((event, { ratePoint, userMi }) => {
+            event.rate ??= {} as never;
+            event.rate[userMi] ??= [ratePoint, ''];
+            event.rate[userMi][0] = ratePoint;
+          }),
+
+          setRateComment: modifyEvent((event, { comment, userMi }) => {
+            event.rate ??= {} as never;
+            event.rate[userMi] ??= [0, comment];
+            event.rate[userMi][1] = comment;
+          }),
         },
         onEachFeedback: {
           setTopic: ({ props, value }, sch) => `${inEventTypeTtileOfDay(sch, props)} установлена тема "${value}"`,
@@ -267,7 +277,7 @@ export const schDayEventsTsjrpcBaseServer =
             `${inEventTypeTtileOfDay(sch, props)} изменён ключ ` +
             `списочного значения во вложении ${props.attTitle ?? props.attKey} - ${JSON.stringify([key, value])}`,
 
-          moveKeyValueAttachment: ({ props }, sch) =>
+          transferKeyValueAttachment: ({ props }, sch) =>
             `${inEventTypeTtileOfDay(sch, props)} изменён ` +
             `порядок в списочном значении во вложении ${props.attTitle ?? props.attKey}`,
 

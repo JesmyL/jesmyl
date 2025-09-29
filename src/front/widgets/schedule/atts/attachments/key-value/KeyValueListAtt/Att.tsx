@@ -18,7 +18,9 @@ import {
   ScheduleWidgetAppAttCustomized,
   ScheduleWidgetRightsCtrl,
 } from 'shared/api';
+import { twMerge } from 'tailwind-merge';
 import { ScheduleKeyValueListAttStatistic } from '../Statistic';
+import { ScheduleWidgetKeyValueItemGrabber } from './lib/itemGrabber';
 import { scheduleWidgetKeyValueListAttMakeGamesAdder } from './lib/makeGamesAdder';
 import { scheduleWidgetKeyValueListAttMakeListsAdder } from './lib/makeListsAdder';
 import { scheduleWidgetKeyValueListAttMakeRolesAdder } from './lib/makeRolesAdder';
@@ -167,36 +169,57 @@ export function ScheduleKeyValueListAtt({
 
   return (
     <div>
-      {attValue.values?.map(([key, value, itemMi], itemi, itema) => {
-        if (!isRedact && !value) return null;
+      <ScheduleWidgetKeyValueItemGrabber.Root
+        onDrop={({ grabbedValue, targetValue }) => {
+          return schDayEventsTsjrpcClient.transferKeyValueAttachment({
+            props: dayEventAttScopeProps,
+            grabbedItemMi: grabbedValue,
+            targetItemMi: targetValue,
+          });
+        }}
+      >
+        {attValue.values?.map(([key, value, itemMi]) => {
+          if (!isRedact && !value) return null;
 
-        return (
-          <ScheduleWidgetKeyValueListValueItem
-            isRedact={isRedact}
-            att={att}
-            attKey={key}
-            itemi={itemi}
-            itema={itema}
-            userR={userR}
-            value={value}
-            itemMi={itemMi}
-            rights={rights}
-            attValue={attValue}
-            dayEventAttScopeProps={dayEventAttScopeProps}
-            exclusiveUsers={exclusiveUsers}
-            exclusiveLists={exclusiveLists}
-            exclusiveRoles={exclusiveRoles}
-            exclusiveGames={exclusiveGames}
-            dropdownLists={dropdownLists}
-            dropdownRoles={dropdownRoles}
-            dropdownTitles={dropdownTitles}
-            dropdownUsers={dropdownUsers}
-            subItems={subItems}
+          return (
+            <ScheduleWidgetKeyValueListValueItem
+              key={itemMi}
+              isRedact={isRedact}
+              att={att}
+              attKey={key}
+              userR={userR}
+              value={value}
+              itemMi={itemMi}
+              rights={rights}
+              attValue={attValue}
+              scopeProps={{ ...dayEventAttScopeProps, itemMi }}
+              exclusiveUsers={exclusiveUsers}
+              exclusiveLists={exclusiveLists}
+              exclusiveRoles={exclusiveRoles}
+              exclusiveGames={exclusiveGames}
+              dropdownLists={dropdownLists}
+              dropdownRoles={dropdownRoles}
+              dropdownTitles={dropdownTitles}
+              dropdownUsers={dropdownUsers}
+              subItems={subItems}
+            />
+          );
+        })}
+        <div className="flex flex-end">
+          <ScheduleWidgetKeyValueItemGrabber.Drop
+            render={({ className, onDrop }) => (
+              <Button
+                icon="PinLocation01"
+                className={twMerge(className, 'mr-7 text-x7')}
+                onClick={() => onDrop(null)}
+              />
+            )}
+            value={null}
           />
-        );
-      })}
-      {insertionNode}
-      <ScheduleKeyValueListAttStatistic list={attValue.values} />
+        </div>
+        {insertionNode}
+        <ScheduleKeyValueListAttStatistic list={attValue.values} />
+      </ScheduleWidgetKeyValueItemGrabber.Root>
     </div>
   );
 }

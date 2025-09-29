@@ -219,7 +219,11 @@ export type SchDayEventsTsjrpcMethods = {
     value: string | number;
   }) => IScheduleWidget;
 
-  moveKeyValueAttachment: (args: { props: ScheduleDayEventAttachmentScopeProps; itemMi: number }) => IScheduleWidget;
+  transferKeyValueAttachment: (args: {
+    props: ScheduleDayEventAttachmentScopeProps;
+    grabbedItemMi: number | null;
+    targetItemMi: number | null;
+  }) => IScheduleWidget;
 
   moveKeyValueAttachmentListItem: (args: {
     props: ScheduleDayEventAttachmentScopeProps;

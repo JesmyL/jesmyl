@@ -12,42 +12,47 @@ import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 
 export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseServer<SchUsersTsjrpcMethods> {
   constructor() {
+    const modifyUser = <Props extends { props: ScheduleUserScopeProps }>(
+      modifier: (user: IScheduleWidgetUser, props: Props) => void,
+    ) =>
+      modifySchedule<Props>(false, (sch, props) => {
+        const user = sch.ctrl.users.find(user => user.mi === props.props.userMi);
+        if (user === undefined) throw new Error('User not found');
+        modifier(user, props);
+      });
+
     super({
       scope: 'SchUsers',
       methods: {
-        addUsersByExcel: ({ props, users }) =>
-          modifySchedule(false, props, sch => {
-            let lastUserMi = smylib.takeNextMi(sch.ctrl.users, IScheduleWidgetUserMi.def);
-            users.forEach(user => sch.ctrl.users.push({ ...user, mi: ++lastUserMi }));
-          }),
-        addMe: ({ props }, { auth }) =>
-          modifySchedule(false, props, sch => {
-            if (auth == null) throw new Error('Необходимо авторизоваться');
-            if (sch.ctrl.users.some(user => user.login === auth.login)) throw new Error('user exists');
-            const authClone: IScheduleWidgetUser & { level?: number } = {
-              ...auth,
-              mi: smylib.takeNextMi(sch.ctrl.users, IScheduleWidgetUserMi.def),
-            };
+        addUsersByExcel: modifySchedule(false, (sch, { users }) => {
+          let lastUserMi = smylib.takeNextMi(sch.ctrl.users, IScheduleWidgetUserMi.def);
+          users.forEach(user => sch.ctrl.users.push({ ...user, mi: ++lastUserMi }));
+        }),
+        addMe: modifySchedule(false, (sch, _, { auth }) => {
+          if (auth == null) throw new Error('Необходимо авторизоваться');
+          if (sch.ctrl.users.some(user => user.login === auth.login)) throw new Error('user exists');
+          const authClone: IScheduleWidgetUser & { level?: number } = {
+            ...auth,
+            mi: smylib.takeNextMi(sch.ctrl.users, IScheduleWidgetUserMi.def),
+          };
 
-            delete authClone.level;
+          delete authClone.level;
 
-            sch.ctrl.users.push(authClone);
-          }),
+          sch.ctrl.users.push(authClone);
+        }),
 
-        addUserListUnitMembership: ({ props, value }) =>
-          this.modifyUser(props, user => {
-            user.li ??= {};
-            user.li[props.cati] = value;
-          }),
-        removeUserListUnitMembership: ({ props }) =>
-          this.modifyUser(props, user => {
-            if (user.li == null) return;
-            delete user.li[props.cati];
-            if (!smylib.keys(user.li).length) delete user.li;
-          }),
+        addUserListUnitMembership: modifyUser((user, { props, value }) => {
+          user.li ??= {};
+          user.li[props.cati] = value;
+        }),
+        removeUserListUnitMembership: modifyUser((user, { props }) => {
+          if (user.li == null) return;
+          delete user.li[props.cati];
+          if (!smylib.keys(user.li).length) delete user.li;
+        }),
 
-        setUserFio: ({ props, fio: value }) => this.modifyUser(props, user => (user.fio = value)),
-        setUserRights: ({ props, R: value }) => this.modifyUser(props, user => (user.R = value)),
+        setUserFio: modifyUser((user, { fio }) => (user.fio = fio)),
+        setUserRights: modifyUser((user, { R }) => (user.R = R)),
       },
       onEachFeedback: {
         addMe:
@@ -79,11 +84,4 @@ export const schUsersTsjrpcBaseServer = new (class SchUsers extends TsjrpcBaseSe
       },
     });
   }
-
-  private modifyUser = (props: ScheduleUserScopeProps, modifier: (user: IScheduleWidgetUser) => void) =>
-    modifySchedule(false, props, sch => {
-      const user = sch.ctrl.users.find(user => user.mi === props.userMi);
-      if (user === undefined) throw new Error('User not found');
-      modifier(user);
-    });
 })();

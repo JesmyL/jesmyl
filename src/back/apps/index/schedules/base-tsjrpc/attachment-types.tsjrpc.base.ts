@@ -29,20 +29,28 @@ const newTatt = () =>
 export const schAttachmentTypesTsjrpcBaseServer =
   new (class SchAttachmentTypes extends TsjrpcBaseServer<SchAttachmentTypesTsjrpcMethods> {
     constructor() {
+      const modifyAttType = <Props extends { props: ScheduleAttachmentTypeScopeProps }>(
+        modifier: (tatt: ScheduleWidgetAppAttCustomized, props: Props) => void,
+      ) =>
+        modifySchedule<Props>(false, (sch, props) => {
+          const tatt = sch.tatts.find(tatt => tatt.mi === props.props.tattMi);
+          if (tatt == null) throw new Error('attachment type not found');
+          modifier(tatt, props);
+        });
+
       super({
         scope: 'SchAttachmentTypes',
         methods: {
-          create: ({ props }) =>
-            modifySchedule(false, props, sch =>
-              sch.tatts.push({
-                ...newTatt(),
-                mi: smylib.takeNextMi(sch.tatts, IScheduleWidgetAttachmentTypeMi.def),
-              }),
-            ),
+          create: modifySchedule(false, sch =>
+            sch.tatts.push({
+              ...newTatt(),
+              mi: smylib.takeNextMi(sch.tatts, IScheduleWidgetAttachmentTypeMi.def),
+            }),
+          ),
 
-          setTitle: ({ props, value }) => this.modifyAttType(props, tatt => (tatt.title = value)),
-          setDescription: ({ props, value }) => this.modifyAttType(props, tatt => (tatt.description = value)),
-          setIcon: ({ props, value }) => {
+          setTitle: modifyAttType((tatt, { value }) => (tatt.title = value)),
+          setDescription: modifyAttType((tatt, { value }) => (tatt.description = value)),
+          setIcon: modifyAttType((tatt, { value }) => {
             indexServerTsjrpcShareMethods.updateKnownIconPacks(
               {
                 actualIconPacks: { [value]: stameskaIconPack[value] },
@@ -52,35 +60,32 @@ export const schAttachmentTypesTsjrpcBaseServer =
               visit => !!visit?.version && visit?.version >= 1019,
             );
 
-            return this.modifyAttType(props, tatt => (tatt.icon = value));
-          },
-          setUse: ({ props, value }) => this.modifyAttType(props, tatt => (tatt.use = value)),
-          setRolesUses: ({ props, value }) => this.modifyAttType(props, tatt => (tatt.roles = value)),
-          setListsUses: ({ props, value }) => this.modifyAttType(props, tatt => (tatt.list = value)),
+            tatt.icon = value;
+          }),
+          setUse: modifyAttType((tatt, { value }) => (tatt.use = value)),
+          setRolesUses: modifyAttType((tatt, { value }) => (tatt.roles = value)),
+          setListsUses: modifyAttType((tatt, { value }) => (tatt.list = value)),
 
-          setTitleValue: ({ props, titlei, value }) =>
-            this.modifyAttType(props, tatt => {
-              tatt.titles ??= [];
-              tatt.titles[titlei] = value;
-            }),
+          setTitleValue: modifyAttType((tatt, { value, titlei }) => {
+            tatt.titles ??= [];
+            tatt.titles[titlei] = value;
+          }),
 
-          createTitleValue: ({ props }) =>
-            this.modifyAttType(props, tatt => {
-              tatt.titles ??= [];
-              tatt.titles.push('');
-            }),
+          createTitleValue: modifyAttType(tatt => {
+            tatt.titles ??= [];
+            tatt.titles.push('');
+          }),
 
-          setWhoCanLevel: ({ props, rule, value }) => this.modifyAttType(props, tatt => (tatt[rule] = value)),
-          toggleUserWhoCan: ({ props, rule, userMi }) =>
-            this.modifyAttType(props, tatt => {
-              const set = new Set(tatt[rule]);
+          setWhoCanLevel: modifyAttType((tatt, { rule, value }) => (tatt[rule] = value)),
+          toggleUserWhoCan: modifyAttType((tatt, { rule, userMi }) => {
+            const set = new Set(tatt[rule]);
 
-              if (set.has(userMi)) set.delete(userMi);
-              else set.add(userMi);
+            if (set.has(userMi)) set.delete(userMi);
+            else set.add(userMi);
 
-              if (set.size === 0) delete tatt[rule];
-              else tatt[rule] = Array.from(set);
-            }),
+            if (set.size === 0) delete tatt[rule];
+            else tatt[rule] = Array.from(set);
+          }),
         },
         onEachFeedback: {
           create: (_, sch) => `${this.inSchTitle(sch)} создан тип вложений`,
@@ -135,16 +140,6 @@ export const schAttachmentTypesTsjrpcBaseServer =
         },
       });
     }
-
-    private modifyAttType = (
-      props: ScheduleAttachmentTypeScopeProps,
-      modifier: (tatt: ScheduleWidgetAppAttCustomized) => void,
-    ) =>
-      modifySchedule(false, props, sch => {
-        const tatt = sch.tatts.find(tatt => tatt.mi === props.tattMi);
-        if (tatt == null) throw new Error('attachment type not found');
-        modifier(tatt);
-      });
 
     private inSchTitle = (sch: IScheduleWidget) => `В расписании ${scheduleTitleInBrackets(sch)}`;
   })();

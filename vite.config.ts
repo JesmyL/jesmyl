@@ -16,7 +16,7 @@ dns.setDefaultResultOrder('verbatim');
 
 const tsConfig = { ...tsconf };
 
-const alias = {};
+const alias: Record<string, string> = {};
 
 Object.entries(tsConfig.compilerOptions.paths).forEach(([aliasKey, [path]]) => {
   alias[aliasKey.slice(0, -2)] = `/src${path.slice(1, -2)}`;

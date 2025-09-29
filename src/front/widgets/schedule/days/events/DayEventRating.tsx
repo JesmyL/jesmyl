@@ -132,7 +132,7 @@ export function ScheduleWidgetDayEventRating(props: {
             title="Комментарий"
             className="my-2"
             isRedact
-            setSelfRedact
+            isSelfRedact
             multiline
             onSend={value =>
               schDayEventsTsjrpcClient.setRateComment({

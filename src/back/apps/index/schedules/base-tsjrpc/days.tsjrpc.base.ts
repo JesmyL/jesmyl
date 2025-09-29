@@ -11,7 +11,7 @@ onScheduleDayEventListSetEvent.listen(({ list, dayProps }) => {
   return modifyScheduleDay(true, day => {
     let miniMi = 0;
     day.list = list.map(event => ({ ...event, mi: miniMi++ }));
-  })({ props: dayProps, value: undefined });
+  })({ props: dayProps }, { auth: undefined, client: null, visitInfo: undefined });
 });
 
 onScheduleDayBeginTimeSetEvent.listen(({ dayProps, strWup }) => {
@@ -20,7 +20,7 @@ onScheduleDayBeginTimeSetEvent.listen(({ dayProps, strWup }) => {
     if (isNaN(wup)) throw new Error(`time ${strWup} is invalid`);
     day.list.forEach(event => delete event.tgInform);
     day.wup = wup;
-  })({ props: dayProps, value: undefined });
+  })({ props: dayProps }, { auth: undefined, client: null, visitInfo: undefined });
 });
 
 export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServer<SchDaysTsjrpcMethods> {
@@ -28,35 +28,34 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
     super({
       scope: 'SchDays',
       methods: {
-        addDay: ({ props }) =>
-          modifySchedule(true, props, sch =>
-            sch.days.push({
-              list: [],
-              mi: smylib.takeNextMi(sch.days, 0 as number),
-              wup: 7,
-            }),
-          ),
+        addDay: modifySchedule(true, sch =>
+          sch.days.push({
+            list: [],
+            mi: smylib.takeNextMi(sch.days, 0 as number),
+            wup: 7,
+          }),
+        ),
 
         setBeginTime: async ({ props: dayProps, value: strTm }) =>
           onScheduleDayBeginTimeSetEvent.invoke({ dayProps, strWup: strTm }),
         setEventList: async ({ props: dayProps, list }) => onScheduleDayEventListSetEvent.invoke({ dayProps, list }),
 
-        setTopic: modifyScheduleDay(false, (day, value) => (day.topic = value)),
-        setDescription: modifyScheduleDay(false, (day, value) => (day.dsc = value)),
-        addEvent: modifyScheduleDay(true, (day, type) =>
+        setTopic: modifyScheduleDay(false, (day, { value }) => (day.topic = value)),
+        setDescription: modifyScheduleDay(false, (day, { value }) => (day.dsc = value)),
+        addEvent: modifyScheduleDay(true, (day, { value }) =>
           day.list.push({
-            type,
+            type: value,
             mi: smylib.takeNextMi(day.list, IScheduleWidgetDayEventMi.def),
           }),
         ),
 
-        removeEvent: modifyScheduleDay(true, (day, { eventMi }) => {
-          const eventi = day.list.findIndex(event => event.mi === eventMi);
+        removeEvent: modifyScheduleDay(true, (day, { value }) => {
+          const eventi = day.list.findIndex(event => event.mi === value.eventMi);
           if (eventi < 0) throw new Error('event not found');
           day.list.splice(eventi, 1);
         }),
 
-        moveEvent: modifyScheduleDay(true, (day, { eventMi, beforei }) => {
+        moveEvent: modifyScheduleDay(true, (day, { value: { eventMi, beforei } }) => {
           const eventi = day.list.findIndex(event => event.mi === eventMi);
           if (eventi < 0) throw new Error('event not found');
 

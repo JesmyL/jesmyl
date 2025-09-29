@@ -32,7 +32,7 @@ export const ScheduleWidgetKeyValueListValueItem = ({
   rights,
   attKey,
   itemMi,
-  dayEventAttScopeProps,
+  scopeProps,
   isRedact,
   value,
   userR,
@@ -41,8 +41,6 @@ export const ScheduleWidgetKeyValueListValueItem = ({
   exclusiveLists,
   exclusiveRoles,
   exclusiveGames,
-  itemi,
-  itema,
   attValue,
   dropdownLists,
   dropdownRoles,
@@ -53,7 +51,7 @@ export const ScheduleWidgetKeyValueListValueItem = ({
   rights: ScheduleWidgetRights;
   attKey: string | number | boolean;
   itemMi: number;
-  dayEventAttScopeProps: ScheduleDayEventAttachmentScopeProps;
+  scopeProps: ScheduleDayEventAttachmentScopeProps & { itemMi: number };
   isRedact: boolean;
   value: string | number | (string | number)[] | null;
   userR: number;
@@ -62,8 +60,6 @@ export const ScheduleWidgetKeyValueListValueItem = ({
   exclusiveLists: IScheduleWidgetListUnit[] | undefined;
   exclusiveRoles: IScheduleWidgetRole[] | undefined;
   exclusiveGames: IScheduleWidgetTeamGame[] | undefined;
-  itemi: number;
-  itema: ScheduleWidgetAppAttCustomizableValueItem[];
   attValue: ScheduleWidgetAppAttCustomizableValue;
   dropdownLists: IScheduleWidgetListUnit[] | undefined;
   dropdownRoles: IScheduleWidgetRole[] | undefined;
@@ -110,7 +106,7 @@ export const ScheduleWidgetKeyValueListValueItem = ({
                 disabled={!customAttUseRights.checkIsCan(userR, att.U)}
                 onSend={() =>
                   schDayEventsTsjrpcClient.setKeyValueAttachmentKey({
-                    props: dayEventAttScopeProps,
+                    props: scopeProps,
                     itemMi,
                     value: !attKey,
                   })
@@ -124,10 +120,10 @@ export const ScheduleWidgetKeyValueListValueItem = ({
                 className="ml-3 -mt-4 mood-for-2 relative z-5"
                 value={attKey}
                 isRedact={isRedact}
-                setSelfRedact
+                isSelfRedact
                 onSend={value =>
                   schDayEventsTsjrpcClient.setKeyValueAttachmentKey({
-                    props: dayEventAttScopeProps,
+                    props: scopeProps,
                     itemMi,
                     value,
                   })
@@ -146,7 +142,7 @@ export const ScheduleWidgetKeyValueListValueItem = ({
                       icon={mylib.isArr(value) ? 'Text' : 'LeftToRightListDash'}
                       onSend={() =>
                         schDayEventsTsjrpcClient.setKeyValueAttachmentValue({
-                          props: dayEventAttScopeProps,
+                          props: scopeProps,
                           itemMi,
                           value: mylib.isArr(value) ? '+' : [],
                         })
@@ -156,7 +152,7 @@ export const ScheduleWidgetKeyValueListValueItem = ({
                 )}
               {mylib.isNum(attKey) && (
                 <ScheduleKeyValueListAttArrayItemKeyChange
-                  dayEventAttScopeProps={dayEventAttScopeProps}
+                  dayEventAttScopeProps={scopeProps}
                   theKey={attKey}
                   users={exclusiveUsers}
                   lists={exclusiveLists}
@@ -169,10 +165,8 @@ export const ScheduleWidgetKeyValueListValueItem = ({
         </div>
         {isRedact && customAttUseRights.checkIsCan(userR, att.U) && (
           <ScheduleWidgetKeyValueListAttPositionControls
-            items={itema}
-            dayEventAttScopeProps={dayEventAttScopeProps}
+            dayEventAttScopeProps={scopeProps}
             itemMi={itemMi}
-            itemi={itemi}
             value={value}
           />
         )}
@@ -180,7 +174,7 @@ export const ScheduleWidgetKeyValueListValueItem = ({
       <ScheduleWidgetAttKeyValueListSubItemsRedact
         isRedact={isRedact}
         attValue={attValue}
-        dayEventAttScopeProps={dayEventAttScopeProps}
+        dayEventAttScopeProps={scopeProps}
         dropdownLists={dropdownLists}
         dropdownRoles={dropdownRoles}
         dropdownTitles={dropdownTitles}

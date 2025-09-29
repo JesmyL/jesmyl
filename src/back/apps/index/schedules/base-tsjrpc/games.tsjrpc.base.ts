@@ -14,41 +14,40 @@ import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 
 export const schGamesTsjrpcBaseServer = new (class SchGames extends TsjrpcBaseServer<SchGamesTsjrpcMethods> {
   constructor() {
-    const modifyGame =
-      <Value>(modifier: (game: IScheduleWidgetTeamGame, value: Value) => void) =>
-      ({ props, value }: { props: ScheduleGameScopeProps; value: Value }) =>
-        modifySchedule(false, props, sch => {
-          const game = sch.games?.list.find(game => game.mi === props.gameMi);
-          if (game == null) throw new Error('game not found');
-          modifier(game, value);
-        });
+    const modifyGame = <Props extends { props: ScheduleGameScopeProps }>(
+      modifier: (game: IScheduleWidgetTeamGame, props: Props) => void,
+    ) =>
+      modifySchedule<Props>(false, (sch, props) => {
+        const game = sch.games?.list.find(game => game.mi === props.props.gameMi);
+        if (game == null) throw new Error('game not found');
+        modifier(game, props);
+      });
 
-    const modifyCriteria =
-      <Value>(modifier: (criteria: IScheduleWidgetTeamCriteria, value: Value) => void) =>
-      ({ props, value }: { props: ScheduleGameCriteriaScopeProps; value: Value }) =>
-        modifySchedule(false, props, sch => {
-          const criteria = sch.games?.criterias[props.criteriai];
-          if (criteria == null) throw new Error('criteria not found');
-          modifier(criteria, value);
-        });
+    const modifyCriteria = <Props extends { props: ScheduleGameCriteriaScopeProps }>(
+      modifier: (criteria: IScheduleWidgetTeamCriteria, props: Props) => void,
+    ) =>
+      modifySchedule<Props>(false, (sch, props) => {
+        const criteria = sch.games?.criterias[props.props.criteriai];
+        if (criteria == null) throw new Error('criteria not found');
+        modifier(criteria, props);
+      });
 
     super({
       scope: 'SchGames',
       methods: {
-        addGame: ({ props }) =>
-          modifySchedule(false, props, sch => {
-            sch.games ??= { criterias: [], list: [] };
-            sch.games.list.push({
-              title: `Игра ${sch.games.list.length + 1}`,
-              mi: smylib.takeNextMi(sch.games.list, IScheduleWidgetTeamGameMi.def),
-              teams: [],
-            });
-          }),
+        addGame: modifySchedule(false, sch => {
+          sch.games ??= { criterias: [], list: [] };
+          sch.games.list.push({
+            title: `Игра ${sch.games.list.length + 1}`,
+            mi: smylib.takeNextMi(sch.games.list, IScheduleWidgetTeamGameMi.def),
+            teams: [],
+          });
+        }),
 
-        setTeams: modifyGame((game, teams) => {
+        setTeams: modifyGame((game, { value }) => {
           let mi = 0;
 
-          game.teams = teams.map(({ users }) => {
+          game.teams = value.map(({ users }) => {
             return {
               mi: mi++,
               users,
@@ -57,27 +56,25 @@ export const schGamesTsjrpcBaseServer = new (class SchGames extends TsjrpcBaseSe
           });
         }),
 
-        setTitle: modifyGame((game, value) => (game.title = value)),
+        setTitle: modifyGame((game, { value }) => (game.title = value)),
 
-        addCriteria: ({ props }) =>
-          modifySchedule(false, props, sch => {
-            sch.games ??= { criterias: [], list: [] };
-            sch.games.criterias.push({ title: `Критерий ${sch.games.criterias.length + 1}`, sorts: {} as never });
-          }),
+        addCriteria: modifySchedule(false, sch => {
+          sch.games ??= { criterias: [], list: [] };
+          sch.games.criterias.push({ title: `Критерий ${sch.games.criterias.length + 1}`, sorts: {} as never });
+        }),
 
-        setCriteriaTitle: modifyCriteria((criteria, value) => (criteria.title = value)),
-        setSortedDict: modifyCriteria((criteria, value) => (criteria.sorts = { ...criteria.sorts, ...value })),
+        setCriteriaTitle: modifyCriteria((criteria, { value }) => (criteria.title = value)),
+        setSortedDict: modifyCriteria((criteria, { value }) => (criteria.sorts = { ...criteria.sorts, ...value })),
 
-        toggleStrikedUser: ({ props, userMi }) =>
-          modifySchedule(false, props, sch => {
-            sch.games ??= { criterias: [], list: [] };
-            const userSet = new Set((sch.games.strikedUsers ??= []));
+        toggleStrikedUser: modifySchedule(false, (sch, { userMi }) => {
+          sch.games ??= { criterias: [], list: [] };
+          const userSet = new Set((sch.games.strikedUsers ??= []));
 
-            if (userSet.has(userMi)) userSet.delete(userMi);
-            else userSet.add(userMi);
+          if (userSet.has(userMi)) userSet.delete(userMi);
+          else userSet.add(userMi);
 
-            sch.games.strikedUsers = Array.from(userSet);
-          }),
+          sch.games.strikedUsers = Array.from(userSet);
+        }),
       },
       onEachFeedback: {
         addCriteria: (_, sch) =>

@@ -80,7 +80,7 @@ export const ScheduleWidgetControl = () => {
                   <StrongEditableField
                     value={rights.schedule.tgChatReqs}
                     isRedact
-                    setSelfRedact
+                    isSelfRedact
                     title="TG-чат-реквизиты"
                     onSend={value => schGeneralTsjrpcClient.setTgChatRequisites({ props: scheduleScopeProps, value })}
                   />

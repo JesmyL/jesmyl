@@ -63,7 +63,7 @@ export const ScheduleWidgetAttKeyValueListSubItemsRedact = ({
             value={value}
             multiline
             isRedact={isRedact}
-            setSelfRedact={setSelfRedact}
+            isSelfRedact={setSelfRedact}
             onSend={value =>
               schDayEventsTsjrpcClient.setKeyValueAttachmentValue({
                 props: dayEventAttScopeProps,
@@ -158,7 +158,7 @@ export const ScheduleWidgetAttKeyValueListSubItemsRedact = ({
               className="mood-for-2 relative z-5 mt-2"
               placeholder="Новый подпункт"
               isRedact={isRedact}
-              setSelfRedact={setSelfRedact}
+              isSelfRedact={setSelfRedact}
               multiline
               onSend={val => {
                 while (value?.includes(val)) val += '1';

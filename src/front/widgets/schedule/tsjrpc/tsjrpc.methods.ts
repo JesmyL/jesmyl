@@ -77,7 +77,7 @@ export const schDayEventsTsjrpcClient = new (class SchDayEvents extends TsjrpcCl
         addKeyValueAttachmentListItem: true,
         setKeyValueAttachmentListItemValue: true,
         removeKeyValueAttachmentListItemValue: true,
-        moveKeyValueAttachment: true,
+        transferKeyValueAttachment: true,
         moveKeyValueAttachmentListItem: true,
         updateCheckListAttachmentValue: true,
       },

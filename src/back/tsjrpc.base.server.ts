@@ -7,7 +7,11 @@ import { jesmylChangesBot } from './sides/telegram-bot/control/jesmylChangesBot'
 import { tglogger } from './sides/telegram-bot/log/log-bot';
 import { userAuthStringified, userVisitStringified } from './utils';
 
-export type ServerTSJRPCTool = { client: WebSocket; auth: LocalSokiAuth | und; visitInfo: SokiVisit | und };
+export type ServerTSJRPCTool = {
+  client: WebSocket | null;
+  auth: LocalSokiAuth | und;
+  visitInfo: SokiVisit | und;
+};
 export type ServerTSJRPCBeforeEachTool = { minVersion?: number; minLevel?: number };
 
 export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRPCBaseMaker<

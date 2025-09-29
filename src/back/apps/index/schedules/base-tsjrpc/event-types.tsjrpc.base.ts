@@ -7,7 +7,14 @@ import { onScheduleEventTypesAddManyEvent } from '../specific-modify-events';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 
 onScheduleEventTypesAddManyEvent.listen(({ schProps, typeList }) => {
-  return modifySchedule(false, schProps, sch => (sch.types = sch.types.concat(typeList)));
+  return modifySchedule(false, sch => (sch.types = sch.types.concat(typeList)))(
+    { props: schProps },
+    {
+      auth: undefined,
+      client: null,
+      visitInfo: undefined,
+    },
+  );
 });
 
 export const schEventTypesTsjrpcBaseServer =
@@ -16,43 +23,38 @@ export const schEventTypesTsjrpcBaseServer =
       super({
         scope: 'SchEventTypes',
         methods: {
-          create: ({ props, title, tm }) => modifySchedule(false, props, sch => sch.types.push({ title, tm })),
-          setTitle: ({ props, value: title }) =>
-            modifySchedule(false, props, sch => {
-              sch.types[props.typei] ??= { title };
-              sch.types[props.typei].title = title;
-            }),
+          create: modifySchedule(false, (sch, { title, tm }) => sch.types.push({ title, tm })),
+          setTitle: modifySchedule(false, (sch, { props, value: title }) => {
+            sch.types[props.typei] ??= { title };
+            sch.types[props.typei].title = title;
+          }),
 
-          setTm: ({ props, tm }) =>
-            modifySchedule(true, props, sch => {
-              sch.types[props.typei] ??= { title: '?', tm };
-              sch.types[props.typei].tm = tm;
-            }),
+          setTm: modifySchedule(true, (sch, { props, tm }) => {
+            sch.types[props.typei] ??= { title: '?', tm };
+            sch.types[props.typei].tm = tm;
+          }),
 
-          bindAttImagine: ({ props, attTranslatorType: defaultValue }) =>
-            modifySchedule(false, props, sch => {
-              sch.types[props.typei] ??= { title: '?', atts: {} };
-              const type = sch.types[props.typei];
-              type.atts ??= {};
-              type.atts[props.attKey] = [defaultValue] as never;
-            }),
+          bindAttImagine: modifySchedule(false, (sch, { attTranslatorType, props }) => {
+            sch.types[props.typei] ??= { title: '?', atts: {} };
+            const type = sch.types[props.typei];
+            type.atts ??= {};
+            type.atts[props.attKey] = [attTranslatorType] as never;
+          }),
 
-          removeAttImagine: ({ props }) =>
-            modifySchedule(false, props, sch => {
-              if (sch.types[props.typei] == null) return;
-              const type = sch.types[props.typei];
-              if (type.atts == null) return;
-              delete type.atts[props.attKey];
-              if (!smylib.keys(type.atts).length) delete type.atts;
-            }),
+          removeAttImagine: modifySchedule(false, (sch, { props }) => {
+            if (sch.types[props.typei] == null) return;
+            const type = sch.types[props.typei];
+            if (type.atts == null) return;
+            delete type.atts[props.attKey];
+            if (!smylib.keys(type.atts).length) delete type.atts;
+          }),
 
-          setAttImaginePeriod: ({ props, value }) =>
-            modifySchedule(false, props, sch => {
-              if (sch.types[props.typei] == null) return;
-              const type = sch.types[props.typei];
-              if (type.atts == null) return;
-              type.atts[props.attKey][0] = value;
-            }),
+          setAttImaginePeriod: modifySchedule(false, (sch, { props, value }) => {
+            if (sch.types[props.typei] == null) return;
+            const type = sch.types[props.typei];
+            if (type.atts == null) return;
+            type.atts[props.attKey][0] = value;
+          }),
 
           putMany: ({ props: schProps, tatts: typeList }) =>
             onScheduleEventTypesAddManyEvent.invoke({ schProps, typeList }),

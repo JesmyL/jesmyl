@@ -79,21 +79,24 @@ export const newSchedule: IScheduleWidget = {
 };
 
 onScheduleUserTgInformSetEvent.listen(({ isNotInform, schProps, userLogin }) => {
-  return modifySchedule(false, schProps, sch => {
+  return modifySchedule(false, sch => {
     if (userLogin == null) throw new Error('Не авторизован');
 
     const user = sch.ctrl.users.find(user => user.login === userLogin);
     if (user == null) throw new Error('user not found');
     user.tgInform = isNotInform;
-  });
+  })({ props: schProps }, { auth: undefined, client: null, visitInfo: undefined });
 });
 
 export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBaseServer<SchGeneralTsjrpcModel> {
   constructor() {
-    const updateScheduleValue =
-      <Key extends keyof IScheduleWidget>(key: Key, isNeedRefreshTgInformTime?: boolean) =>
-      ({ props, value }: { props: ScheduleScopeProps; value: IScheduleWidget[Key] }) =>
-        modifySchedule(isNeedRefreshTgInformTime || false, props, sch => (sch[key] = value));
+    const updateScheduleValue = <
+      Props extends { props: ScheduleScopeProps; value: IScheduleWidget[Key] },
+      Key extends keyof IScheduleWidget,
+    >(
+      key: Key,
+      isNeedRefreshTgInformTime?: boolean,
+    ) => modifySchedule<Props>(isNeedRefreshTgInformTime || false, (sch, { value }) => (sch[key] = value));
 
     super({
       scope: 'SchGeneral',
@@ -136,25 +139,21 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
         setTgChatRequisites: updateScheduleValue('tgChatReqs', true),
         setTgInformTime: updateScheduleValue('tgInformTime', true),
 
-        setStartTime: ({ props, value }) =>
-          modifySchedule(true, props, sch => {
-            sch.prevStart = sch.start;
-            sch.start = value;
-          }),
+        setStartTime: modifySchedule(true, (sch, { value }) => {
+          sch.prevStart = sch.start;
+          sch.start = value;
+        }),
 
         setIsTgInformMe: ({ props: schProps, type: isNotInform }, { auth }) =>
           onScheduleUserTgInformSetEvent.invoke({ schProps, isNotInform, userLogin: auth?.login }),
 
-        toggleIsTgInform: ({ props }) =>
-          modifySchedule(true, props, sch => (sch.tgInform = sch.tgInform === 0 ? undefined : 0)),
+        toggleIsTgInform: modifySchedule(true, sch => (sch.tgInform = sch.tgInform === 0 ? undefined : 0)),
 
-        remove: ({ props }) => modifySchedule(true, props, sch => (sch.isRemoved = 1)),
-        copySchedule: ({ props, schedule: copiedSchedule }) =>
-          modifySchedule(false, props, sch => Object.assign(sch, copiedSchedule, { title: sch.title })),
+        remove: modifySchedule(true, sch => (sch.isRemoved = 1)),
+        copySchedule: modifySchedule(false, (sch, { schedule }) => Object.assign(sch, schedule, { title: sch.title })),
 
-        setScheduleRegisterType: ({ props, type: value }) =>
-          modifySchedule(false, props, sch => (sch.ctrl.type = value)),
-        setDefaultUserRights: ({ props, R: value }) => modifySchedule(false, props, sch => (sch.ctrl.defu = value)),
+        setScheduleRegisterType: modifySchedule(false, (sch, { type }) => (sch.ctrl.type = type)),
+        setDefaultUserRights: modifySchedule(false, (sch, { R }) => (sch.ctrl.defu = R)),
       },
       onEachFeedback: {
         create: (_, sch) => `Создано новое расписание ${scheduleTitleInBrackets(sch)}`,

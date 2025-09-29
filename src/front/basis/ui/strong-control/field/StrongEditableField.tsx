@@ -3,7 +3,7 @@ import { useToast } from '#shared/ui/modal/useToast';
 import { TextInput } from '#shared/ui/TextInput';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { StrongEditableFieldMultiline } from './StrongEditableFieldMultiline';
 
@@ -11,15 +11,15 @@ type Props<Key, Value> = {
   fieldKey?: Key;
   value?: Value;
   title?: string;
-  description?: ReactNode;
+  description?: React.ReactNode;
   disabled?: boolean;
   type?: 'text' | 'tel';
   icon?: KnownStameskaIconName;
   placeholder?: string;
   isRedact?: boolean;
-  setSelfRedact?: boolean;
+  isSelfRedact?: boolean;
   isImpossibleEmptyValue?: boolean;
-  postfix?: ReactNode;
+  postfix?: React.ReactNode;
   multiline?: boolean;
   textClassName?: string;
   className?: string;
@@ -44,7 +44,7 @@ export function StrongEditableField<Key extends string, Value extends string | P
     isShowDoneButton: true,
     onEditStart: props.onSelfRedactChange,
   });
-  const isRedact = props.setSelfRedact ? isSelfRedact : props.isRedact;
+  const isRedact = props.isSelfRedact ? isSelfRedact : props.isRedact;
 
   const sendValue = async () => {
     const isSendResuls =
@@ -107,11 +107,11 @@ export function StrongEditableField<Key extends string, Value extends string | P
     >
       {isRedact ? (
         <>
-          {(props.title || props.setSelfRedact) && (
+          {(props.title || props.isSelfRedact) && (
             <div className="flex gap-2">
               {props.icon && <LazyIcon icon={props.icon} />}
               {props.title}
-              {props.setSelfRedact && editIcon}
+              {props.isSelfRedact && editIcon}
               {indicatorNode}
             </div>
           )}
@@ -136,7 +136,7 @@ export function StrongEditableField<Key extends string, Value extends string | P
                 if (event.key === 'Enter' && (!props.multiline || event.ctrlKey)) sendValue();
               }}
             />
-            {props.title || props.setSelfRedact ? null : indicatorNode}
+            <div className="flex flex-col">{props.title || props.isSelfRedact ? null : indicatorNode}</div>
           </div>
         </>
       ) : (
@@ -162,7 +162,7 @@ export function StrongEditableField<Key extends string, Value extends string | P
           ) : (
             <>{props.title && <>{props.title} - </>}Без значения</>
           )}
-          {props.isRedact && props.setSelfRedact && editIcon}
+          {props.isRedact && props.isSelfRedact && editIcon}
         </div>
       )}
     </div>

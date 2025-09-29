@@ -54,7 +54,7 @@ export function ScheduleWidgetListUnit(props: Props) {
               title="Описание"
               fieldKey="dsc"
               multiline
-              setSelfRedact
+              isSelfRedact
               isRedact
               onSend={value => schListsTsjrpcClient.setUnitDescription({ props: unitScopeData, value, cati })}
             />
