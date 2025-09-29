@@ -1,7 +1,7 @@
 import { appAttsStore } from '#basis/lib/appScheduleAttrsStorage';
 import { MyLib, mylib } from '#shared/lib/my-lib';
 import { IScheduleWidget } from 'shared/api';
-import { ScheduleKeyValueListAtt } from './atts/attachments/key-value/KeyValueListAtt';
+import { ScheduleKeyValueListAtt } from './atts/attachments/key-value/KeyValueListAtt/Att';
 import { scheduleOwnAtts } from './atts/attachments/ownAtts';
 import { ScheduleWidgetAppAtts, ScheduleWidgetAttRefs } from './ScheduleWidget.model';
 
