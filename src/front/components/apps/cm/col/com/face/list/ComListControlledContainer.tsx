@@ -39,9 +39,9 @@ export const ComListControlledContainer = (props: Props) => {
 
   return (
     <>
-      <ComListPreviousSibling />
       <ContextMenu.Root onOpenChange={setIsSelected}>
         <ContextMenu.Trigger>
+          <ComListPreviousSibling />
           <StyledComList
             $ccomw={lastOpenComw}
             $accentComw={isSelected ? selectedComw : null}
