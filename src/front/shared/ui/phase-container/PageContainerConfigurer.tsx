@@ -1,5 +1,8 @@
+import { focusedInputElementAtom } from '#shared/lib/atoms/focusedInputElementAtom';
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
+import { isMobileDevice } from '#shared/lib/device-differences';
 import { Link } from '@tanstack/react-router';
+import { useAtomValue } from 'atomaric';
 import { useRef } from 'react';
 import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
@@ -13,6 +16,7 @@ const swiper = backSwipableContainerMaker(() => navigate());
 export const PageContainerConfigurer = (props: PageContainerConfigurerProps) => {
   const backButtonRef = useRef<HTMLAnchorElement>(null);
   navigate = () => backButtonRef.current?.click();
+  const focusedInput = useAtomValue(focusedInputElementAtom);
 
   const backButtonRenderPassNode = (
     <span className="flex pointer">
@@ -39,12 +43,12 @@ export const PageContainerConfigurer = (props: PageContainerConfigurerProps) => 
 
   return (
     <div
-      {...(props.withoutBackButton || props.withoutBackSwipe ? {} : swiper)}
+      {...(props.withoutBackButton || props.withoutBackSwipe || focusedInput ? {} : swiper)}
       className={twMerge('phase-container relative', props.className)}
     >
       <StyledPhaseContainerConfigurerHeader
         className="header flex between w-full"
-        st-hide-footer-menu={props.hideFooterMenu ? '' : undefined}
+        st-hide-footer-menu={props.hideFooterMenu || (isMobileDevice && focusedInput) ? '' : undefined}
       >
         {props.withoutBackButton
           ? props.headTitle && (
