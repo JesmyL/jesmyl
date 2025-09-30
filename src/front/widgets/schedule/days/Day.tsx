@@ -84,7 +84,7 @@ export const ScheduleWidgetDay = ({
         className={'ScheduleWidgetDay relative' + (isPastDay ? ' past' : '') + (isPrint ? ' print' : '')}
       >
         <div
-          className={'day-title flex gap-2 py-2 sticky top-0' + (print.title ? '' : ' not-printable')}
+          className={'day-title flex gap-2 py-2 sticky top-0 z-6' + (print.title ? '' : ' not-printable')}
           onClick={isCanOpenFull ? () => openFullDayAtom.set(dayi) : undefined}
         >
           {title}
