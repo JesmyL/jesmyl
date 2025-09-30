@@ -3,6 +3,7 @@ import { atom } from 'atomaric';
 export const focusedInputElementAtom = atom<Element | null>(null);
 
 let isFired = false;
+let prevElement: Element | null = null;
 
 const checkFocus = () => {
   if (isFired) return;
@@ -19,6 +20,15 @@ const checkFocus = () => {
         ? document.activeElement
         : null;
 
+    if (prevElement === element) return;
+
+    prevElement?.removeEventListener('blur', checkFocus, true);
+    prevElement?.removeEventListener('blur', checkFocus, false);
+
+    element?.addEventListener('blur', checkFocus, true);
+    element?.addEventListener('blur', checkFocus, false);
+
+    prevElement = element;
     focusedInputElementAtom.set(element);
   }, 300);
 };
