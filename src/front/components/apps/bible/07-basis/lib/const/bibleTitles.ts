@@ -98,7 +98,7 @@ export const bibleTitles = {
 };
 
 export const checkEachBibleTitles = (
-  book: (typeof bibleTitles)['titles'][number],
+  book: OmitOwn<(typeof bibleTitles)['titles'][number], 'setColor' | 'textColor'>,
   checker: (title: string) => boolean,
 ) => {
   return checker(book.short) || checker(book.full) || checker(book.min ?? '');
