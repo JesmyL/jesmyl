@@ -1,7 +1,7 @@
 {
   "T166cbf17596a0c2919e4df1a6d54e66": { "info": { "fio": "Павел 👨‍💻", "m": 1757600715118, "isRequest": true } },
   "T6558fe287d2ea93be3e19bbe64b5dfc": {
-    "info": { "fio": "Руслан", "m": 1757600615367, "isRequest": true },
+    "info": { "fio": "Руслан", "m": 1759179040705, "isRequest": true },
     "cm": {
       "EDIT": 4,
       "COM": 14,
@@ -13,13 +13,15 @@
       "COM_CAT": 6,
       "COM_REP": 15,
       "COM_MAIN": 6,
-      "CHORD": 12,
+      "CHORD": 14,
       "EVENT": 6,
       "MP3": 4
-    }
+    },
+    "q": { "EDIT": 12 },
+    "sch": { "SCH": 12 }
   },
   "T7f21a14d3133065ca2e48254f87ecf3": {
-    "info": { "fio": "danikpon", "m": 1757601141978, "isRequest": true },
+    "info": { "fio": "danikpon", "m": 1759179019187, "isRequest": true },
     "cm": {
       "EDIT": 4,
       "COM": 14,
@@ -36,9 +38,11 @@
       "EVENT": 6,
       "MP3": 4
     },
-    "sch": { "SCH": 12 }
+    "sch": { "SCH": 12 },
+    "q": { "EDIT": 12 }
   },
   "T88eae2a48675aa330a3438b156799d8": { "info": { "fio": "Кирилл", "m": 1757905644600, "isRequest": true } },
   "Tcd1de434b6554eaa585d6cbb6901d2a": { "info": { "fio": "Маша", "m": 1758121708642, "isRequest": true } },
-  "T1c9464bf7af18f1807c1b72a0963764": { "info": { "fio": "Zhanna", "m": 1758958231966, "isRequest": true } }
+  "T1c9464bf7af18f1807c1b72a0963764": { "info": { "fio": "Zhanna", "m": 1758958231966, "isRequest": true } },
+  "Tc9da4e7820d9bb29b87f2f073b1d118": { "info": { "fio": "Николай Глеч", "m": 1759063672334, "isRequest": true } }
 }
