@@ -1,4 +1,4 @@
-import Markdown from 'markdown-to-jsx';
+import { markdown } from '#shared/config/markdown';
 import { css } from 'styled-components';
 
 interface Props {
@@ -9,7 +9,7 @@ export const ScheduleWidgetMarkdownLiveTranslation = ({ md }: Props) => {
   return (
     md && (
       <div className="markdown-translation-screen">
-        <Markdown>{md}</Markdown>
+        <div dangerouslySetInnerHTML={{ __html: markdown.render(md) }} />
         <style>
           {'' +
             css`

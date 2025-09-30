@@ -1,8 +1,8 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
+import { markdown } from '#shared/config/markdown';
 import { mylib } from '#shared/lib/my-lib';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { schDayEventsTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
-import Markdown from 'markdown-to-jsx';
 import { ReactNode } from 'react';
 import {
   customAttUseRights,
@@ -180,7 +180,11 @@ export const ScheduleWidgetAttKeyValueListSubItemsRedact = ({
                   className="flex gap-2 ml-10"
                 >
                   <span className="flex self-start">{vali + 1}.</span>
-                  {mylib.isNum(val) ? <KeyValueListAttNumberMember value={val} /> : <Markdown>{val}</Markdown>}
+                  {mylib.isNum(val) ? (
+                    <KeyValueListAttNumberMember value={val} />
+                  ) : (
+                    <div dangerouslySetInnerHTML={{ __html: markdown.render(val) }} />
+                  )}
                 </div>
               );
             })}
