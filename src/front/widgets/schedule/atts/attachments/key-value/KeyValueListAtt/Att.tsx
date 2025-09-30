@@ -170,6 +170,7 @@ export function ScheduleKeyValueListAtt({
   return (
     <div>
       <ScheduleWidgetKeyValueItemGrabber.Root
+        uniqKey={att.mi}
         onDrop={({ grabbedValue, targetValue }) => {
           return schDayEventsTsjrpcClient.transferKeyValueAttachment({
             props: dayEventAttScopeProps,

@@ -1,33 +1,69 @@
-import { Atom, useAtomValue } from 'atomaric';
+import { contextCreator } from '#shared/lib/contextCreator';
+import { atom, useAtomValue } from 'atomaric';
 import { FC } from 'react';
-import styled from 'styled-components';
+import { makeRegExp } from 'regexpert';
+import styled, { css } from 'styled-components';
 
-export const makeElementGrabber = <Value, OnDropReturn = void>(
-  grabbedValueAtom: Atom<Value>,
-  options?: { classNamePrefix?: string; showClassNameIndicator?: string; RootComponent?: FC },
-) => {
+export const makeElementGrabber = <Value, OnDropReturn = void>(options?: {
+  classNamePrefix?: string;
+  showClassNameIndicator?: string;
+  RootComponent?: FC;
+  hiddenElementsCss: ReturnType<typeof css>;
+}) => {
+  const norm = (all: string) => `_${all.charCodeAt(0)}`;
+
   const {
     classNamePrefix = `grabber-${('' + Math.random()).slice(2)}`,
     showClassNameIndicator = 'grabber-shown',
-    RootComponent = styled.div`
-      .${classNamePrefix} {
-        &:not(.${showClassNameIndicator}) {
-          display: none;
-        }
-      }
+    hiddenElementsCss = `display: none;`,
+    RootComponent = styled.div<{
+      $currentRootKey: number | string | undefined;
+      $accentedValues: BothValues<Value | undefined>;
+    }>`
+      ${props => {
+        return css`
+          ${props.$accentedValues.grabbedValue === undefined || props.$accentedValues.targetValue === undefined
+            ? css`
+                .${classNamePrefix}:not(.${showClassNameIndicator}) {
+                  ${hiddenElementsCss}
+                }
+              `
+            : css`
+                .${classNamePrefix}:not(.${accentTargetClassName}):not(.${accentStopClassName}) {
+                  ${hiddenElementsCss}
+                }
+
+                .${accentStopClassName} {
+                  pointer-events: none;
+                }
+              `}
+
+          ${props.$currentRootKey !== undefined &&
+          css`
+            html &:not(.c-${props.$currentRootKey}) .${classNamePrefix} {
+              ${hiddenElementsCss}
+            }
+          `}
+        `;
+      }}
     `,
   } = options ?? {};
 
+  const accentStopClassName = 'grabber-accent-stop';
+  const accentTargetClassName = 'grabber-accent-target';
+
   type GrabRender = (props: {
-    onGrab: typeof grabbedValueAtom.set;
+    onGrab: (value: Value) => void;
     className: string | und;
     grabbedValue: Value;
   }) => React.ReactNode;
+
   type DropRender = (props: {
-    onDrop: (value: Value) => OnDropReturn;
+    onDrop: (value: Value) => Promise<OnDropReturn>;
     className: string | und;
     grabbedValue: Value;
   }) => React.ReactNode;
+
   type StopRender = (props: {
     //
     onStop: () => void;
@@ -35,47 +71,85 @@ export const makeElementGrabber = <Value, OnDropReturn = void>(
     grabbedValue: Value;
   }) => React.ReactNode;
 
+  type BothValues<Val> = { grabbedValue: Val; targetValue: Val };
+
+  let userOnDrop: (props: BothValues<Value>) => OnDropReturn = (() => {}) as never;
   const shownClassName = `${classNamePrefix} ${showClassNameIndicator}`;
-  let userOnDrop: (props: { grabbedValue: Value; targetValue: Value }) => OnDropReturn = (() => {}) as never;
+  const currentRootKeyAtom = atom<string | number | undefined>(undefined);
+  const [RootCtx, useRootCtx] = contextCreator<number | string | undefined>(undefined);
+  const accentedValuesAtom = atom<BothValues<Value>>({ grabbedValue: undefined!, targetValue: undefined! });
 
-  const makeGrabRenderProps: (grabbedValue: Value) => Parameters<GrabRender>[0] = grabbedValue => {
-    return {
-      onGrab: grabbedValueAtom.set,
-      className: grabbedValue == null ? shownClassName : classNamePrefix,
-      grabbedValue,
-    };
-  };
+  const makeGrabRenderProps = (
+    grabbedValue: Value,
 
-  const makeDropRenderProps: (grabbedValue: Value, value: Value) => Parameters<DropRender>[0] = (
-    grabbedValue,
-    targetValue,
-  ) => {
+    rootKey: string | number | undefined,
+  ): Parameters<GrabRender>[0] => {
     return {
-      onDrop: () => {
-        grabbedValueAtom.reset();
-        return userOnDrop({ grabbedValue, targetValue });
+      onGrab: value => {
+        currentRootKeyAtom.set(rootKey);
+        accentedValuesAtom.do.setPartial({ grabbedValue: value });
       },
-      className: grabbedValue != null && grabbedValue !== targetValue ? shownClassName : classNamePrefix,
+      className: grabbedValue === undefined ? shownClassName : classNamePrefix,
       grabbedValue,
     };
   };
 
-  const makeStopRenderProps: (grabbedValue: Value, value: Value) => Parameters<StopRender>[0] = (
-    grabbedValue,
-    value,
-  ) => {
+  const makeDropRenderProps = (grabbedValue: Value, targetValue: Value, value: Value): Parameters<DropRender>[0] => {
     return {
-      onStop: grabbedValueAtom.reset,
-      className: grabbedValue != null && grabbedValue === value ? shownClassName : classNamePrefix,
+      onDrop: async () => {
+        const result = userOnDrop({ grabbedValue, targetValue: value });
+
+        if (result instanceof Promise) {
+          accentedValuesAtom.do.setPartial({ targetValue: value });
+          await result;
+        }
+
+        accentedValuesAtom.reset();
+        currentRootKeyAtom.set(undefined);
+        return result;
+      },
+      className: `${targetValue !== undefined && targetValue === value ? `${accentTargetClassName} ` : ''}${grabbedValue !== undefined && grabbedValue !== value ? shownClassName : classNamePrefix}`,
+      grabbedValue,
+    };
+  };
+
+  const makeStopRenderProps = (grabbedValue: Value, value: Value): Parameters<StopRender>[0] => {
+    return {
+      onStop: () => {
+        currentRootKeyAtom.set(undefined);
+        accentedValuesAtom.reset();
+      },
+      className: `${grabbedValue !== undefined && grabbedValue === value ? `${accentStopClassName} ` : ''}${grabbedValue !== undefined && grabbedValue === value ? shownClassName : classNamePrefix}`,
       grabbedValue,
     };
   };
 
   return {
-    Root: ({ children, onDrop }: { onDrop?: typeof userOnDrop; children: React.ReactNode }) => {
+    Root: ({
+      children,
+      onDrop,
+      uniqKey,
+    }: {
+      onDrop?: typeof userOnDrop;
+      children: React.ReactNode;
+      uniqKey: string | number;
+    }) => {
       userOnDrop = onDrop ?? ((() => {}) as never);
+      uniqKey = `${uniqKey}`.replace(makeRegExp('/[^-a-z0-9_]/g'), norm);
+      const currentRootKey = useAtomValue(currentRootKeyAtom);
+      const accentedValues = useAtomValue(accentedValuesAtom);
 
-      return <RootComponent>{children}</RootComponent>;
+      return (
+        <RootCtx.Provider value={uniqKey}>
+          <RootComponent
+            $accentedValues={accentedValues}
+            $currentRootKey={currentRootKey}
+            className={`c-${uniqKey}`}
+          >
+            {children}
+          </RootComponent>
+        </RootCtx.Provider>
+      );
     },
     Grab: ({
       value,
@@ -84,34 +158,33 @@ export const makeElementGrabber = <Value, OnDropReturn = void>(
       renderStop,
     }: {
       value: Value;
-      render: (props: { onGrab: typeof grabbedValueAtom.set; className: string | und }) => React.ReactNode;
+      render: (props: { onGrab: (value: Value) => void; className: string | und }) => React.ReactNode;
       renderDrop?: DropRender;
       renderStop?: StopRender;
     }) => {
-      const grabbedValue = useAtomValue(grabbedValueAtom);
+      const { grabbedValue, targetValue } = useAtomValue(accentedValuesAtom);
+      const rootKey = useRootCtx();
 
       return (
         <>
-          {render(makeGrabRenderProps(grabbedValue))}
-          {renderDrop?.(makeDropRenderProps(grabbedValue, value))}
+          {render(makeGrabRenderProps(grabbedValue, rootKey))}
+          {renderDrop?.(makeDropRenderProps(grabbedValue, targetValue, value))}
           {renderStop?.(makeStopRenderProps(grabbedValue, value))}
         </>
       );
     },
     Drop: ({ render, value, renderStop }: { value: Value; render: DropRender; renderStop?: StopRender }) => {
-      const grabbedValue = useAtomValue(grabbedValueAtom);
+      const { grabbedValue, targetValue } = useAtomValue(accentedValuesAtom);
 
       return (
         <>
-          {render(makeDropRenderProps(grabbedValue, value))}
+          {render(makeDropRenderProps(grabbedValue, targetValue, value))}
           {renderStop?.(makeStopRenderProps(grabbedValue, value))}
         </>
       );
     },
     Stop: ({ render, value }: { value: Value; render: StopRender }) => {
-      const grabbedValue = useAtomValue(grabbedValueAtom);
-
-      return <>{render(makeStopRenderProps(grabbedValue, value))}</>;
+      return <>{render(makeStopRenderProps(useAtomValue(accentedValuesAtom).grabbedValue, value))}</>;
     },
   };
 };
