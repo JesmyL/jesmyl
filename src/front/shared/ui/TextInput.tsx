@@ -22,7 +22,7 @@ export const TextInput = ({ onChanged, onInput, multiline, label, strongDefaultV
     onChange: onInput ? event => onInput(event.currentTarget.value) : undefined,
     onBlur: onChanged
       ? event => {
-          if (event.currentTarget.value !== props.value) onChanged(event.currentTarget.value.trim());
+          if (event.currentTarget.value !== props.defaultValue) onChanged(event.currentTarget.value.trim());
           props.onBlur?.(event as never);
         }
       : undefined,
