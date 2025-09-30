@@ -33,7 +33,7 @@ export type CmEditComOrderTsjrpcModel = {
 
   toggleAnchorInheritVisibility: (args: {
     comw: CmComWid;
-    leadOrderWid: CmComOrderWid;
+    ordw: CmComOrderWid;
     anchorInheritIndex: number;
     leadOrderTitle: string;
   }) => IExportableCom;

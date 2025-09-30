@@ -107,7 +107,7 @@ export const CmEditorTabComOrders = () => {
 
                       return cmEditComOrderClientTsjrpcMethods.toggleAnchorInheritVisibility({
                         comw: ord.com.wid,
-                        leadOrderWid: ord.me.leadOrd.wid,
+                        ordw: ord.me.leadOrd.wid,
                         anchorInheritIndex: ord.me.anchorInheritIndex,
                         leadOrderTitle: ord.me.leadOrd.me.header(),
                       });

@@ -6,54 +6,56 @@ import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { cmConstantsConfigFileStore, comsFileStore } from './file-stores';
 import { cmShareServerTsjrpcMethods } from './tsjrpc.shares';
 
-export const modifyInvocableCom = async (comw: CmComWid, mapper: (com: IExportableCom) => void) => {
-  const com = comsFileStore.getValue().find(com => com.w === comw);
+export const modifyInvocableCom =
+  <Props extends { comw: CmComWid }>(mapper: (com: IExportableCom, props: Props) => void) =>
+  async (props: Props) => {
+    const com = comsFileStore.getValue().find(com => com.w === props.comw);
 
-  if (com === undefined) throw new Error(`Песня не найдена`);
+    if (com === undefined) throw new Error(`Песня не найдена`);
 
-  mapper(com);
-  com.m = Date.now() + Math.random();
+    mapper(com, props);
+    com.m = Date.now() + Math.random();
 
-  comsFileStore.saveValue();
-  cmShareServerTsjrpcMethods.editedCom({ com });
+    comsFileStore.saveValue();
+    cmShareServerTsjrpcMethods.editedCom({ com });
 
-  return com;
-};
+    return com;
+  };
 
-const simpleComKeyValueSetter = <Key extends keyof IExportableCom>(key: Key) => {
-  return ({ comw, value }: { comw: CmComWid; value: IExportableCom[Key] }) =>
-    modifyInvocableCom(comw, com => (com[key] = value));
-};
+const simpleComKeyValueSetter = <
+  Props extends { comw: CmComWid; value: IExportableCom[Key] },
+  Key extends keyof IExportableCom,
+>(
+  key: Key,
+) => modifyInvocableCom<Props>((com, { value }) => (com[key] = value));
 
-const insertInTextableBlock =
-  (coln: 'c' | 't') =>
-  ({ comw, insertToi, value }: { value: string; comw: CmComWid; insertToi: number }) =>
-    modifyInvocableCom(comw, com => {
-      if (com[coln] == null) return;
-      const list = com[coln];
+const insertInTextableBlock = <Props extends { value: string; comw: CmComWid; insertToi: number }>(coln: 'c' | 't') =>
+  modifyInvocableCom<Props>((com, { insertToi, value }) => {
+    if (com[coln] == null) return '';
+    const list = com[coln];
 
-      list.splice(insertToi, 0, value);
-      com.o?.forEach(ord => {
-        if (ord[coln] != null && ord[coln] >= insertToi) ord[coln]++;
-      });
+    list.splice(insertToi, 0, value);
+    com.o?.forEach(ord => {
+      if (ord[coln] != null && ord[coln] >= insertToi) ord[coln]++;
     });
 
-const removeTextableBlock =
-  (coln: 'c' | 't') =>
-  ({ comw, removei }: { comw: CmComWid; removei: number }) =>
-    modifyInvocableCom(comw, com => {
-      if (com[coln] == null) return;
-      const list = com[coln];
+    return '';
+  });
 
-      list.splice(removei, 1);
-      com.o?.forEach(ord => {
-        if (ord[coln] != null)
-          if (ord[coln] > removei) ord[coln]--;
-          else if (ord[coln] === removei) delete ord[coln];
-      });
+const removeTextableBlock = <Props extends { comw: CmComWid; removei: number }>(coln: 'c' | 't') =>
+  modifyInvocableCom<Props>((com, { removei }) => {
+    if (com[coln] == null) return;
+    const list = com[coln];
 
-      com.o = com.o?.filter(ord => ord.a != null || ord.c != null || ord.t != null);
+    list.splice(removei, 1);
+    com.o?.forEach(ord => {
+      if (ord[coln] != null)
+        if (ord[coln] > removei) ord[coln]--;
+        else if (ord[coln] === removei) delete ord[coln];
     });
+
+    com.o = com.o?.filter(ord => ord.a != null || ord.c != null || ord.t != null);
+  });
 
 export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBaseServer<CmEditComTsjrpcModel> {
   constructor() {
@@ -68,21 +70,19 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         changeTon: simpleComKeyValueSetter('p'),
         makeBemoled: simpleComKeyValueSetter('b'),
         changePushKind: simpleComKeyValueSetter('k'),
-        setAudioLinks: ({ comw, value }) => modifyInvocableCom(comw, com => (com.a = value.trim())),
+        setAudioLinks: modifyInvocableCom((com, { value }) => (com.a = value.trim())),
 
-        changeChordBlock: ({ texti: coli, comw, value }) =>
-          modifyInvocableCom(comw, com => (com.c = com.c?.with(coli, value) ?? [])),
-        changeTextBlock: ({ texti: coli, comw, value }) =>
-          modifyInvocableCom(comw, com => {
-            const incorrects = CmComUtils.textLinesLengthIncorrects(
-              value,
-              cmConstantsConfigFileStore.getValue().maxAvailableComLineLength,
-            );
+        changeChordBlock: modifyInvocableCom((com, { texti: coli, value }) => (com.c = com.c?.with(coli, value) ?? [])),
+        changeTextBlock: modifyInvocableCom((com, { texti: coli, value }) => {
+          const incorrects = CmComUtils.textLinesLengthIncorrects(
+            value,
+            cmConstantsConfigFileStore.getValue().maxAvailableComLineLength,
+          );
 
-            if (incorrects?.errors?.length) throw incorrects.errors[0].message;
+          if (incorrects?.errors?.length) throw incorrects.errors[0].message;
 
-            com.t = com.t?.with(coli, CmComUtils.transformToClearText(value)) ?? [];
-          }),
+          com.t = com.t?.with(coli, CmComUtils.transformToClearText(value)) ?? [];
+        }),
 
         insertChordBlock: insertInTextableBlock('c'),
         insertTextBlock: insertInTextableBlock('t'),
@@ -115,8 +115,8 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           return com;
         },
 
-        remove: ({ comw }) => modifyInvocableCom(comw, com => (com.isRemoved = 1)),
-        bringBackToLife: ({ comw }) => modifyInvocableCom(comw, com => delete com.isRemoved),
+        remove: modifyInvocableCom(com => (com.isRemoved = 1)),
+        bringBackToLife: modifyInvocableCom(com => delete com.isRemoved),
 
         takeRemovedComs: async () => comsFileStore.getValue().filter(com => com.isRemoved),
         destroy: async ({ comw }) => {

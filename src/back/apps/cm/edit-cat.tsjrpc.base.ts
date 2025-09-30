@@ -11,30 +11,28 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
       scope: 'CmEditCat',
       defaultBeforeEachTool: { minLevel: 50 },
       methods: {
-        rename: ({ catw, name }) => this.modifyCat(catw, cat => (cat.n = name)),
-        setKind: ({ catw, kind }) => this.modifyCat(catw, cat => (cat.k = kind)),
-        clearStack: ({ catw }) => this.modifyCat(catw, cat => delete cat.s),
+        rename: modifyCat((cat, { name }) => (cat.n = name)),
+        setKind: modifyCat((cat, { kind }) => (cat.k = kind)),
+        clearStack: modifyCat(cat => delete cat.s),
 
-        toggleComExistence: ({ comw, catw }) =>
-          this.modifyCat(catw, cat => {
-            const stackSet = new Set(cat.s);
+        toggleComExistence: modifyCat((cat, { comw }) => {
+          const stackSet = new Set(cat.s);
 
-            if (stackSet.has(comw)) stackSet.delete(comw);
-            else stackSet.add(comw);
+          if (stackSet.has(comw)) stackSet.delete(comw);
+          else stackSet.add(comw);
 
-            cat.s = Array.from(stackSet);
-          }),
+          cat.s = Array.from(stackSet);
+        }),
 
-        removeNativeComNum: ({ comw, catw }) =>
-          this.modifyCat(catw, cat => {
-            if (cat.d == null) return;
-            delete cat.d[comw];
-          }),
+        removeNativeComNum: modifyCat((cat, { comw }) => {
+          if (cat.d == null) return;
+          delete cat.d[comw];
+        }),
 
-        setNativeComNum: ({ comw, catw, value }) => this.modifyCat(catw, cat => (cat.d = { ...cat.d, [comw]: value })),
+        setNativeComNum: modifyCat((cat, { comw, value }) => (cat.d = { ...cat.d, [comw]: value })),
 
-        remove: ({ catw }) => this.modifyCat(catw, cat => (cat.isRemoved = 1)),
-        bringBackToLife: ({ catw }) => this.modifyCat(catw, cat => delete cat.isRemoved),
+        remove: modifyCat(cat => (cat.isRemoved = 1)),
+        bringBackToLife: modifyCat(cat => delete cat.isRemoved),
       },
       onEachFeedback: {
         rename: (_, cat) => `Категория "${cat.n}" переименована`,
@@ -57,16 +55,18 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
       },
     });
   }
+})();
 
-  private modifyCat = async (catw: CmCatWid, modifier: (cat: IExportableCat) => void) => {
-    const cat = catsFileStore.getValue().find(cat => cat.w === catw);
+function modifyCat<Props extends { catw: CmCatWid }>(modifier: (cat: IExportableCat, props: Props) => void) {
+  return (props: Props) => {
+    const cat = catsFileStore.getValue().find(cat => cat.w === props.catw);
 
     if (cat == null) throw new Error('Cat is not found');
 
-    modifier(cat);
+    modifier(cat, props);
     cat.m = Date.now();
     cmShareServerTsjrpcMethods.editedCat({ cat });
 
     return cat;
   };
-})();
+}
