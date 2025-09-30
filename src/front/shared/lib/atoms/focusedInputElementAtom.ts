@@ -38,6 +38,8 @@ const enevtNames: (keyof WindowEventMap)[] = [
   'mouseup',
   'mousedown',
   'touchstart',
+  'touchend',
+  'touchcancel',
   'keydown',
   'keyup',
   'keypress',
