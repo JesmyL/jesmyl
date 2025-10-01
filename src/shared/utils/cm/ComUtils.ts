@@ -110,12 +110,10 @@ export class CmComUtils {
   static takeCorrectComNumber = (comPositionNumber: number) =>
     comPositionNumber > 403 || comPositionNumber > 665 ? comPositionNumber + 1 : comPositionNumber;
 
+  static trimTextLines = (text: string) => text.trim().split(makeRegExp('/\n/')).map(itTrim).join('\n');
+
   static transformToClearText = (text: string) => {
-    return text
-      .split(makeRegExp('/\n/'))
-      .map(itTrim)
-      .join('\n')
-      .trim()
+    return this.trimTextLines(text)
       .replace(makeRegExp(`/[${this.doubleQuotesStr}]/g`), '"')
       .replace(makeRegExp(`/[${this.singleQuotesStr}]/g`), "'")
       .replace(makeRegExp(`/ ([,.!?:])/g`), '$1')

@@ -16,45 +16,50 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
 
+          const prev = com.n;
           com.n = value;
 
-          return `Песня ${getCmComNameInBrackets(com)} переименована`;
+          return `Песня "${prev}" переименована на ${getCmComNameInBrackets(com)}`;
         }),
 
         setBpM: modifyInvocableCom((com, { value }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
 
+          const prev = com.bpm;
           com.bpm = value;
 
-          return `Значение ударов в минуту для песни ${getCmComNameInBrackets(com)} установлено в ${value}`;
+          return `Значение ударов в минуту для песни ${getCmComNameInBrackets(com)} установлено в ${value} (было ${prev})`;
         }),
 
         setMeterSize: modifyInvocableCom((com, { value }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
 
+          const prev = com.s;
           com.s = value;
 
-          return `Размерность песни ${getCmComNameInBrackets(com)} установлено в значение ${value}/4`;
+          return `Размерность песни ${getCmComNameInBrackets(com)} установлено в значение ${value}/4 (было ${prev})`;
         }),
 
         changeLanguage: modifyInvocableCom((com, { value }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
 
+          const prev = com.l;
           com.l = value;
 
-          return `Язык песни ${getCmComNameInBrackets(com)} изменён на ${CmComUtils.cmComLanguages[value]}`;
+          return `Язык песни ${getCmComNameInBrackets(com)} изменён на ${CmComUtils.cmComLanguages[value]} (было ${prev == null ? null : CmComUtils.cmComLanguages[prev]})`;
         }),
 
         changeTon: modifyInvocableCom((com, { value }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
 
+          const prev = com.p;
           com.p = value;
 
-          return `Тональность песни ${getCmComNameInBrackets(com)} изменена на ${value}`;
+          return `Тональность песни ${getCmComNameInBrackets(com)} изменена на ${value} (было ${prev})`;
         }),
 
         makeBemoled: modifyInvocableCom((com, { value }, { auth }) => {
@@ -70,27 +75,31 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_TR', 'U')) throw '';
 
+          const prev = com.k;
           com.k = value;
 
-          return `Изменено значение правила группировок для слайдов в песне ${getCmComNameInBrackets(com)} - ${value}`;
+          return `Изменено значение правила группировок для слайдов в песне ${getCmComNameInBrackets(com)} - ${value} (было ${prev})`;
         }),
 
         setAudioLinks: modifyInvocableCom((com, { value }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_AUDIO', 'U')) throw '';
 
+          const prev = com.a;
           com.a = value.trim();
 
-          return `Изменение аудио-ссылок для песни ${getCmComNameInBrackets(com)}:\n\n${value}`;
+          return `Изменение аудио-ссылок для песни ${getCmComNameInBrackets(com)}:\n\n${value}\n\nбыло:${prev}`;
         }),
 
         changeChordBlock: modifyInvocableCom((com, { texti: coli, value }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_CH', 'U')) throw '';
 
-          com.c = com.c?.with(coli, value) ?? [];
+          com.c ??= [];
+          const prev = com.c[coli];
+          com.c[coli] = CmComUtils.trimTextLines(value);
 
-          return `Изменён аккордный блок в песне ${getCmComNameInBrackets(com)}:\n\n${value}`;
+          return `Изменён аккордный блок в песне ${getCmComNameInBrackets(com)}:\n\n${value}\n\nбыло:\n${prev}`;
         }),
         changeTextBlock: modifyInvocableCom((com, { texti: coli, value }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
@@ -103,9 +112,11 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
 
           if (incorrects?.errors?.length) throw incorrects.errors[0].message;
 
-          com.t = com.t?.with(coli, CmComUtils.transformToClearText(value)) ?? [];
+          com.t ??= [];
+          const prev = com.t[coli];
+          com.t[coli] = CmComUtils.transformToClearText(value);
 
-          return `Изменён текстовый блок в песне ${getCmComNameInBrackets(com)}:\n\n${value}`;
+          return `Изменён текстовый блок в песне ${getCmComNameInBrackets(com)}:\n\n${value}\n\nбыло:\n${prev}`;
         }),
 
         insertChordBlock: insertInTextableBlock('c', (com, { value }, { auth }) => {
