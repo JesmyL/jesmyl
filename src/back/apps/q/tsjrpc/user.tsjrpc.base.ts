@@ -14,7 +14,7 @@ export const questionerUserServerTsjrpcBase =
         methods: {
           getUserBlank: async ({ blankw }) => {
             const blank = questionerBlanksFileStore.getValue()[blankw];
-            if (blank == null) return null;
+            if (blank == null) return { value: null };
 
             const tmp: PRecord<QuestionerTemplateId, QuestionerTemplate> = { ...blank.tmp };
 
@@ -45,12 +45,14 @@ export const questionerUserServerTsjrpcBase =
               tmp[templateId] = templateForUser;
             });
 
-            return blank ? { ...blank, w: blankw, tmp, team: {} } : null;
+            return { value: blank ? { ...blank, w: blankw, tmp, team: {} } : null };
           },
 
           getUserAnswers: async ({ blankw }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth?.login, 'q', 'EDIT', 'R')) throw '';
-            return questionerUserAnswersFileStore.getValue()[blankw]?.answers ?? [];
+            return {
+              value: questionerUserAnswersFileStore.getValue()[blankw]?.answers ?? [],
+            };
           },
 
           publicUserAnswer: ({ blankw, answer }) => {
@@ -75,14 +77,10 @@ export const questionerUserServerTsjrpcBase =
                 userAnswer.len = smylib.keys(template.variants).length ?? 0;
               }
             });
-          },
-        },
-        onEachFeedback: {
-          getUserAnswers: null,
-          getUserBlank: null,
-          publicUserAnswer: ({ blankw, answer }) => {
-            const blank = questionerBlanksFileStore.getValue()[blankw];
-            return `Получен ответ на опрос ${blank?.title} от ${answer.fio ? `"${answer.fio}"` : 'Анонимного пользователя'}\n\n<blockquote expandable>${JSON.stringify(answer, null, 1)}</blockquote>`;
+
+            return {
+              description: `Получен ответ на опрос ${blank?.title} от ${answer.fio ? `"${answer.fio}"` : 'Анонимного пользователя'}\n\n<blockquote expandable>${JSON.stringify(answer, null, 1)}</blockquote>`,
+            };
           },
         },
       });

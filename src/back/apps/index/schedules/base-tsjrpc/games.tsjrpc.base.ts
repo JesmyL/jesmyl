@@ -1,6 +1,7 @@
 import { makeTwiceKnownName } from 'back/complect/makeTwiceKnownName';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import {
+  IScheduleWidget,
   IScheduleWidgetTeamCriteria,
   IScheduleWidgetTeamGame,
   IScheduleWidgetTeamGameMi,
@@ -15,21 +16,23 @@ import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 export const schGamesTsjrpcBaseServer = new (class SchGames extends TsjrpcBaseServer<SchGamesTsjrpcMethods> {
   constructor() {
     const modifyGame = <Props extends { props: ScheduleGameScopeProps }>(
-      modifier: (game: IScheduleWidgetTeamGame, props: Props) => void,
+      modifier: (game: IScheduleWidgetTeamGame, props: Props, sch: IScheduleWidget) => string | null,
     ) =>
       modifySchedule<Props>(false, (sch, props) => {
         const game = sch.games?.list.find(game => game.mi === props.props.gameMi);
         if (game == null) throw new Error('game not found');
-        modifier(game, props);
+
+        return modifier(game, props, sch);
       });
 
     const modifyCriteria = <Props extends { props: ScheduleGameCriteriaScopeProps }>(
-      modifier: (criteria: IScheduleWidgetTeamCriteria, props: Props) => void,
+      modifier: (criteria: IScheduleWidgetTeamCriteria, props: Props, sch: IScheduleWidget) => string | null,
     ) =>
       modifySchedule<Props>(false, (sch, props) => {
         const criteria = sch.games?.criterias[props.props.criteriai];
         if (criteria == null) throw new Error('criteria not found');
-        modifier(criteria, props);
+
+        return modifier(criteria, props, sch);
       });
 
     super({
@@ -42,9 +45,11 @@ export const schGamesTsjrpcBaseServer = new (class SchGames extends TsjrpcBaseSe
             mi: smylib.takeNextMi(sch.games.list, IScheduleWidgetTeamGameMi.def),
             teams: [],
           });
+
+          return `В расписании ${scheduleTitleInBrackets(sch)} добавлена новая игра`;
         }),
 
-        setTeams: modifyGame((game, { value }) => {
+        setTeams: modifyGame((game, { value }, sch) => {
           let mi = 0;
 
           game.teams = value.map(({ users }) => {
@@ -54,19 +59,41 @@ export const schGamesTsjrpcBaseServer = new (class SchGames extends TsjrpcBaseSe
               title: makeTwiceKnownName(),
             };
           });
+
+          return `В расписании ${scheduleTitleInBrackets(sch)} сформированы команды`;
         }),
 
-        setTitle: modifyGame((game, { value }) => (game.title = value)),
+        setTitle: modifyGame((game, { value, prevTitle }, sch) => {
+          game.title = value;
+
+          return `В расписании ${scheduleTitleInBrackets(sch)} игра "${prevTitle}" переименована на "${value}"`;
+        }),
 
         addCriteria: modifySchedule(false, sch => {
           sch.games ??= { criterias: [], list: [] };
           sch.games.criterias.push({ title: `Критерий ${sch.games.criterias.length + 1}`, sorts: {} as never });
+
+          return `В расписании ${scheduleTitleInBrackets(sch)} добавлен новый критерий сортировки для игр`;
         }),
 
-        setCriteriaTitle: modifyCriteria((criteria, { value }) => (criteria.title = value)),
-        setSortedDict: modifyCriteria((criteria, { value }) => (criteria.sorts = { ...criteria.sorts, ...value })),
+        setCriteriaTitle: modifyCriteria((criteria, { value, prevTitle }, sch) => {
+          criteria.title = value;
 
-        toggleStrikedUser: modifySchedule(false, (sch, { userMi }) => {
+          return (
+            `В расписании ${scheduleTitleInBrackets(sch)} критерий сортировки для игр ` +
+            `"${prevTitle}" переименован на "${value}"`
+          );
+        }),
+        setSortedDict: modifyCriteria((criteria, { value, criteriaTitle }, sch) => {
+          criteria.sorts = { ...criteria.sorts, ...value };
+
+          return (
+            `В расписании ${scheduleTitleInBrackets(sch)} для критерия сортировки игр ` +
+            `"${criteriaTitle}" отсортированы участники`
+          );
+        }),
+
+        toggleStrikedUser: modifySchedule(false, (sch, { userMi, userName }) => {
           sch.games ??= { criterias: [], list: [] };
           const userSet = new Set((sch.games.strikedUsers ??= []));
 
@@ -74,24 +101,12 @@ export const schGamesTsjrpcBaseServer = new (class SchGames extends TsjrpcBaseSe
           else userSet.add(userMi);
 
           sch.games.strikedUsers = Array.from(userSet);
+
+          return (
+            `В расписании ${scheduleTitleInBrackets(sch)} участник ${userName} ` +
+            `${sch.games?.strikedUsers?.includes(userMi) ? 'исключён из списка' : 'включён в список'} игроков`
+          );
         }),
-      },
-      onEachFeedback: {
-        addCriteria: (_, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} добавлен новый критерий сортировки для игр`,
-        addGame: (_, sch) => `В расписании ${scheduleTitleInBrackets(sch)} добавлена новая игра`,
-        setTeams: (_, sch) => `В расписании ${scheduleTitleInBrackets(sch)} сформированы команды`,
-        setTitle: ({ value, prevTitle }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} игра "${prevTitle}" переименована на "${value}"`,
-        setCriteriaTitle: ({ value, prevTitle }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} критерий сортировки для игр ` +
-          `"${prevTitle}" переименован на "${value}"`,
-        setSortedDict: ({ criteriaTitle }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} для критерия сортировки игр ` +
-          `"${criteriaTitle}" отсортированы участники`,
-        toggleStrikedUser: ({ userMi, userName }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} участник ${userName} ` +
-          `${sch.games?.strikedUsers?.includes(userMi) ? 'исключён из списка' : 'включён в список'} игроков`,
       },
     });
   }

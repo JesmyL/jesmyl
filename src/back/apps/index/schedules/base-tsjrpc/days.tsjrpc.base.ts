@@ -7,20 +7,28 @@ import { modifySchedule, modifyScheduleDay } from '../schedule-modificators';
 import { onScheduleDayBeginTimeSetEvent, onScheduleDayEventListSetEvent } from '../specific-modify-events';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 
-onScheduleDayEventListSetEvent.listen(({ list, dayProps }) => {
-  return modifyScheduleDay(true, day => {
-    let miniMi = 0;
-    day.list = list.map(event => ({ ...event, mi: miniMi++ }));
-  })({ props: dayProps }, { auth: undefined, client: null, visitInfo: undefined });
+onScheduleDayEventListSetEvent.listen(async ({ list, dayProps }) => {
+  return (
+    await modifyScheduleDay(true, day => {
+      let miniMi = 0;
+      day.list = list.map(event => ({ ...event, mi: miniMi++ }));
+
+      return null;
+    })({ props: dayProps }, { auth: undefined, client: null, visitInfo: undefined })
+  ).value;
 });
 
-onScheduleDayBeginTimeSetEvent.listen(({ dayProps, strWup }) => {
-  return modifyScheduleDay(true, day => {
-    const wup = +strWup.replace(makeRegExp('/:/'), '.');
-    if (isNaN(wup)) throw new Error(`time ${strWup} is invalid`);
-    day.list.forEach(event => delete event.tgInform);
-    day.wup = wup;
-  })({ props: dayProps }, { auth: undefined, client: null, visitInfo: undefined });
+onScheduleDayBeginTimeSetEvent.listen(async ({ dayProps, strWup }) => {
+  return (
+    await modifyScheduleDay(true, day => {
+      const wup = +strWup.replace(makeRegExp('/:/'), '.');
+      if (isNaN(wup)) throw new Error(`time ${strWup} is invalid`);
+      day.list.forEach(event => delete event.tgInform);
+      day.wup = wup;
+
+      return null;
+    })({ props: dayProps }, { auth: undefined, client: null, visitInfo: undefined })
+  ).value;
 });
 
 export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServer<SchDaysTsjrpcMethods> {
@@ -28,57 +36,67 @@ export const schDaysTsjrpcBaseServer = new (class SchDays extends TsjrpcBaseServ
     super({
       scope: 'SchDays',
       methods: {
-        addDay: modifySchedule(true, sch =>
+        addDay: modifySchedule(true, sch => {
           sch.days.push({
             list: [],
             mi: smylib.takeNextMi(sch.days, 0 as number),
             wup: 7,
-          }),
-        ),
+          });
 
-        setBeginTime: async ({ props: dayProps, value: strTm }) =>
-          onScheduleDayBeginTimeSetEvent.invoke({ dayProps, strWup: strTm }),
-        setEventList: async ({ props: dayProps, list }) => onScheduleDayEventListSetEvent.invoke({ dayProps, list }),
+          return `В расписании ${scheduleTitleInBrackets(sch)} добавлен день`;
+        }),
 
-        setTopic: modifyScheduleDay(false, (day, { value }) => (day.topic = value)),
-        setDescription: modifyScheduleDay(false, (day, { value }) => (day.dsc = value)),
-        addEvent: modifyScheduleDay(true, (day, { value }) =>
+        setBeginTime: async ({ props, value: strTm }) => {
+          return {
+            value: await onScheduleDayBeginTimeSetEvent.invoke({ dayProps: props, strWup: strTm }),
+            description: `В расписании ${scheduleTitleInBrackets(props.schw)}, в ${props.dayi + 1} дне установлено время начала - ${strTm}`,
+          };
+        },
+        setEventList: async ({ props: dayProps, list }) => {
+          return {
+            value: await onScheduleDayEventListSetEvent.invoke({ dayProps, list }),
+            description: `В расписании ${scheduleTitleInBrackets(dayProps.schw)}, в ${dayProps.dayi + 1} дне установлено расписание из текста`,
+          };
+        },
+
+        setTopic: modifyScheduleDay(false, (day, { value, props }, sch) => {
+          day.topic = value;
+
+          return `В расписании ${scheduleTitleInBrackets(sch)}, в ${props.dayi + 1} дне установлена тема "${value}"`;
+        }),
+        setDescription: modifyScheduleDay(false, (day, { value, props }, sch) => {
+          day.dsc = value;
+
+          return `В расписании ${scheduleTitleInBrackets(sch)}, в ${props.dayi + 1} дне установлено описание "${value}"`;
+        }),
+        addEvent: modifyScheduleDay(true, (day, { value, props }, sch) => {
           day.list.push({
             type: value,
             mi: smylib.takeNextMi(day.list, IScheduleWidgetDayEventMi.def),
-          }),
-        ),
+          });
 
-        removeEvent: modifyScheduleDay(true, (day, { value }) => {
+          return (
+            `В расписании ${scheduleTitleInBrackets(sch)}, в ${props.dayi + 1} ` +
+            `дне добавлено событие ${sch.types[value]?.title}`
+          );
+        }),
+
+        removeEvent: modifyScheduleDay(true, (day, { value, props }, sch) => {
           const eventi = day.list.findIndex(event => event.mi === value.eventMi);
           if (eventi < 0) throw new Error('event not found');
           day.list.splice(eventi, 1);
+
+          return `В расписании ${scheduleTitleInBrackets(sch)}, из ${props.dayi + 1} дня удалено событие ${value}`;
         }),
 
-        moveEvent: modifyScheduleDay(true, (day, { value: { eventMi, beforei } }) => {
+        moveEvent: modifyScheduleDay(true, (day, { value: { eventMi, beforei }, props }) => {
           const eventi = day.list.findIndex(event => event.mi === eventMi);
           if (eventi < 0) throw new Error('event not found');
 
           day.list = smylib.withInsertedBeforei(day.list, beforei, eventi);
+
+          return `В расписании ${scheduleTitleInBrackets(props.schw)}, в ${props.dayi + 1} дне перемещено событие`;
         }),
-      },
-      onEachFeedback: {
-        addDay: (_, sch) => `В расписании ${scheduleTitleInBrackets(sch)} добавлен день`,
-        setTopic: ({ props, value }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)}, в ${props.dayi + 1} дне установлена тема "${value}"`,
-        setEventList: ({ props }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)}, в ${props.dayi + 1} дне установлено расписание из текста`,
-        setDescription: ({ props, value }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)}, в ${props.dayi + 1} дне установлено описание "${value}"`,
-        setBeginTime: ({ props, value }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)}, в ${props.dayi + 1} дне установлено время начала - ${value}`,
-        addEvent: ({ props, value: type }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)}, в ${props.dayi + 1} ` +
-          `дне добавлено событие ${sch.types[type]?.title}`,
-        removeEvent: ({ props, value: eventTypeTitle }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)}, из ${props.dayi + 1} дня удалено событие ${eventTypeTitle}`,
-        moveEvent: ({ props }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)}, в ${props.dayi + 1} дне перемещено событие`,
       },
     });
   }

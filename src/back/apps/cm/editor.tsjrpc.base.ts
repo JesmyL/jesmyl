@@ -1,3 +1,4 @@
+import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { CmEditorTsjrpcModel } from 'shared/api/tsjrpc/cm/editor.tsjrpc.model';
 import { smylib } from 'shared/utils';
@@ -11,21 +12,20 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
   constructor() {
     super({
       scope: 'CmEditor',
-      defaultBeforeEachTool: { minLevel: 50 },
-      beforeEachTools: {
-        addMp3Rule: { minLevel: 50 },
-        requestFreshes: { minVersion: 50 },
-      },
       methods: {
-        setChords: async ({ chords }) => {
+        setChords: async ({ chords }, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'CHORD', 'U')) throw '';
+
           chordPackFileStore.setValue({ ...chordPackFileStore.getValue(), ...chords });
           const modifiedAt = chordPackFileStore.fileModifiedAt();
           cmShareServerTsjrpcMethods.editedChords({ chords, modifiedAt });
 
-          return chords;
+          return { value: chords, description: `Изменены аккорды ${smylib.keys(chords).join(', ')}` };
         },
 
-        setEEWords: async ({ words }) => {
+        setEEWords: async ({ words }, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'EE', 'U')) throw '';
+
           eePackFileStore.setValue({ ...eePackFileStore.getValue(), ...words });
           const modifiedAt = eePackFileStore.fileModifiedAt();
           cmShareEditorServerTsjrpcMethods.editedEEWords(
@@ -36,25 +36,35 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
             (_, auth) => !!auth && auth.level >= 50,
           );
 
-          return words;
+          return { value: words, description: `Изменены ё/е-правила в словах ${smylib.keys(words).join(', ')}` };
         },
 
         getResourceHTMLString: cmGetResourceHTMLString,
-        getMp3RulesList: async () => mp3ResourcesData.getValue(),
-        addMp3Rule: async ({ rule }) => {
+        getMp3RulesList: async () => ({ value: mp3ResourcesData.getValue() }),
+        addMp3Rule: async ({ rule }, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'MP3', 'U')) throw '';
+
           mp3ResourcesData.getValueWithAutoSave().push(rule);
+
+          return { description: `Добавлено MP3-правило` };
         },
-        setMp3Rule: async ({ rule }) => {
+        setMp3Rule: async ({ rule }, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'MP3', 'U')) throw '';
+
           const list = mp3ResourcesData.getValueWithAutoSave();
           const index = list.findIndex(r => r.w === rule.w);
           if (index < 0) throw new Error('rule not found');
           list.splice(index, 1, rule);
+
+          return { description: `Изменено MP3-правило` };
         },
 
         watchComBusies: watchEditComBusies,
         unwatchComBusies: unwatchEditComBusies,
 
-        requestFreshes: async ({ lastModfiedAt }, { client }) => {
+        requestFreshes: async ({ lastModfiedAt }, { client, auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'EDIT', 'R')) throw '';
+
           const eePackModifiedAt = eePackFileStore.fileModifiedAt();
           if (eePackModifiedAt > lastModfiedAt) {
             cmShareEditorServerTsjrpcMethods.refreshEEPack(
@@ -74,21 +84,6 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
             modifiedAt: cmConstantsConfigFileStore.fileModifiedAt(),
           });
         },
-      },
-      onEachFeedback: {
-        setChords: (_, chords) => `Изменены аккорды ${smylib.keys(chords).join(', ')}`,
-
-        getResourceHTMLString: null,
-        setEEWords: (_, words) => `Изменены ё/е-правила в словах ${smylib.keys(words).join(', ')}`,
-
-        getMp3RulesList: null,
-        addMp3Rule: () => `Добавлено MP3-правило`,
-        setMp3Rule: () => `Изменено MP3-правило`,
-
-        watchComBusies: null,
-        unwatchComBusies: null,
-        requestFreshes: null,
-        updateConstantsConfig: null,
       },
     });
   }

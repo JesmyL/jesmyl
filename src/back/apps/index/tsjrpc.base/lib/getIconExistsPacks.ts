@@ -21,7 +21,7 @@ export const indexTSJRPCBaseGetIconExistsPacks: typeof indexServerTsjrpcBase.get
 
     const exactIconName = nameBeats.join('').replace(postfixReplaceRegExp, '') as StameskaIconName;
 
-    if (stameskaIconPack[exactIconName] !== undefined) return { packs: [stameskaIconPack[exactIconName]] };
+    if (stameskaIconPack[exactIconName] !== undefined) return { value: { packs: [stameskaIconPack[exactIconName]] } };
 
     iconPacks = iconSearchCache[nameBeats.sort().join('')] ??= (() => {
       const foundIconPacks: StameskaIconPack[] = [];
@@ -36,7 +36,9 @@ export const indexTSJRPCBaseGetIconExistsPacks: typeof indexServerTsjrpcBase.get
   }
 
   return {
-    packs: (iconPacks ?? smylib.values(stameskaIconPack)).slice(page * pageSize, page * pageSize + pageSize),
+    value: {
+      packs: (iconPacks ?? smylib.values(stameskaIconPack)).slice(page * pageSize, page * pageSize + pageSize),
+    },
   };
 };
 

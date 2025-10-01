@@ -28,9 +28,6 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
 
     super({
       scope: 'Cm',
-      beforeEachTools: {
-        requestFreshes: { minLevel: 0 },
-      },
       methods: {
         requestFreshes: async ({ lastModfiedAt }, { client, auth }) => {
           sendBasicModifiedableList(lastModfiedAt, comsFileStore, comsFileStore.getValue, (coms, modifiedAt) => {
@@ -134,7 +131,7 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
           //   // );
           // }
 
-          return [];
+          return { value: [] };
         },
 
         exchangeFreshComCommentBlocks: async ({ modifiedComments, clientDateNow }, { auth }) => {
@@ -217,7 +214,7 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
             );
           }
 
-          return resultComments;
+          return { value: resultComments };
         },
 
         printComwVisit: async ({ comw }) => {
@@ -226,8 +223,8 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
           marks[comw]++;
         },
 
-        takeComwVisitsCount: async ({ comw }) => comwVisitsFileStore.getValue()[comw] ?? 0,
-        getComwVisits: async () => comwVisitsFileStore.getValue(),
+        takeComwVisitsCount: async ({ comw }) => ({ value: comwVisitsFileStore.getValue()[comw] ?? 0 }),
+        getComwVisits: async () => ({ value: comwVisitsFileStore.getValue() }),
       },
     });
   }

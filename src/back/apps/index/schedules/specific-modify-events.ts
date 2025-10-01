@@ -32,7 +32,7 @@ export const onScheduleUserTgInformSetEvent = Eventer.createValue<
     isNotInform: num;
     userLogin: SokiAuthLogin | nil;
   },
-  Promise<IScheduleWidget>
+  Promise<{ value: IScheduleWidget; description: string | null }>
 >();
 
 export const onScheduleDayBeginTimeSetEvent = Eventer.createValue<

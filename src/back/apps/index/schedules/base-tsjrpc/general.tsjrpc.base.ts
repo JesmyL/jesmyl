@@ -1,3 +1,4 @@
+import { sokiServer } from 'back/complect/soki/SokiServer';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import {
   IScheduleWidget,
@@ -78,14 +79,29 @@ export const newSchedule: IScheduleWidget = {
   },
 };
 
-onScheduleUserTgInformSetEvent.listen(({ isNotInform, schProps, userLogin }) => {
-  return modifySchedule(false, sch => {
+onScheduleUserTgInformSetEvent.listen(async ({ isNotInform, schProps, userLogin }) => {
+  let description = '';
+  const client = userLogin && sokiServer.clientsByLogin.get(userLogin)?.values().next().value;
+  const auth = client && sokiServer.auths.get(client);
+
+  const { value: sch } = await modifySchedule(false, sch => {
     if (userLogin == null) throw new Error('Не авторизован');
 
     const user = sch.ctrl.users.find(user => user.login === userLogin);
     if (user == null) throw new Error('user not found');
     user.tgInform = isNotInform;
+
+    description =
+      `В расписании ${scheduleTitleInBrackets(sch)} участник ${auth?.fio ?? '?'} (${auth?.nick ?? '?'}) ` +
+      `${isNotInform ? 'отключил' : 'включил'} TG-напоминания`;
+
+    return description;
   })({ props: schProps }, { auth: undefined, client: null, visitInfo: undefined });
+
+  return {
+    value: sch,
+    description,
+  };
 });
 
 export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBaseServer<SchGeneralTsjrpcModel> {
@@ -95,8 +111,14 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
       Key extends keyof IScheduleWidget,
     >(
       key: Key,
+      text: (sch: IScheduleWidget, props: Props) => string | null,
       isNeedRefreshTgInformTime?: boolean,
-    ) => modifySchedule<Props>(isNeedRefreshTgInformTime || false, (sch, { value }) => (sch[key] = value));
+    ) =>
+      modifySchedule<Props>(isNeedRefreshTgInformTime || false, (sch, props) => {
+        sch[key] = props.value;
+
+        return text(sch, props);
+      });
 
     super({
       scope: 'SchGeneral',
@@ -129,62 +151,87 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
           schedulesFileStore.saveValue();
           schServerTsjrpcShareMethods.editedSchedule({ sch });
 
-          return sch;
+          return {
+            value: sch,
+            description: `Создано новое расписание ${scheduleTitleInBrackets(sch)}`,
+          };
         },
 
-        rename: updateScheduleValue('title'),
-        setTopic: updateScheduleValue('topic'),
-        setDescription: updateScheduleValue('dsc'),
-        setFirstDayAsTech: updateScheduleValue('withTech', true),
-        setTgChatRequisites: updateScheduleValue('tgChatReqs', true),
-        setTgInformTime: updateScheduleValue('tgInformTime', true),
+        rename: updateScheduleValue('title', sch => `Расписание ${scheduleTitleInBrackets(sch)} переименовано`),
+        setTopic: updateScheduleValue(
+          'topic',
+          sch => `В расписании ${scheduleTitleInBrackets(sch)} изменена тема: ${sch.topic}`,
+        ),
+        setDescription: updateScheduleValue(
+          'dsc',
+          sch => `В расписании ${scheduleTitleInBrackets(sch)} изменено описание: ${sch.dsc}`,
+        ),
+        setFirstDayAsTech: updateScheduleValue(
+          'withTech',
+          sch =>
+            `В расписании ${scheduleTitleInBrackets(sch)} первый день сделан ${sch.withTech ? 'техническим' : 'обычным'}`,
+          true,
+        ),
+        setTgChatRequisites: updateScheduleValue(
+          'tgChatReqs',
+          sch => `В расписании ${scheduleTitleInBrackets(sch)} изменены реквизиты TG-чата: ${sch.tgChatReqs}`,
+          true,
+        ),
+        setTgInformTime: updateScheduleValue(
+          'tgInformTime',
+          sch =>
+            `В расписании ${scheduleTitleInBrackets(sch)} TG-напоминания будут ` +
+            `${sch.tgInformTime ? `за ${sch.tgInformTime} минут` : 'только в начале события'} `,
+          true,
+        ),
 
         setStartTime: modifySchedule(true, (sch, { value }) => {
           sch.prevStart = sch.start;
           sch.start = value;
+
+          return (
+            `В расписании ${scheduleTitleInBrackets(sch)} установлена дата начала - ` +
+            `${new Date(sch.start).toLocaleDateString('ru')}`
+          );
         }),
 
         setIsTgInformMe: ({ props: schProps, type: isNotInform }, { auth }) =>
           onScheduleUserTgInformSetEvent.invoke({ schProps, isNotInform, userLogin: auth?.login }),
 
-        toggleIsTgInform: modifySchedule(true, sch => (sch.tgInform = sch.tgInform === 0 ? undefined : 0)),
+        toggleIsTgInform: modifySchedule(true, sch => {
+          sch.tgInform = sch.tgInform === 0 ? undefined : 0;
 
-        remove: modifySchedule(true, sch => (sch.isRemoved = 1)),
-        copySchedule: modifySchedule(false, (sch, { schedule }) => Object.assign(sch, schedule, { title: sch.title })),
+          return `В расписании ${scheduleTitleInBrackets(sch)} TG-напоминания ${
+            sch.tgInform === 0 ? 'отключены' : 'включены'
+          }`;
+        }),
 
-        setScheduleRegisterType: modifySchedule(false, (sch, { type }) => (sch.ctrl.type = type)),
-        setDefaultUserRights: modifySchedule(false, (sch, { R }) => (sch.ctrl.defu = R)),
-      },
-      onEachFeedback: {
-        create: (_, sch) => `Создано новое расписание ${scheduleTitleInBrackets(sch)}`,
-        rename: (_, sch) => `Расписание ${scheduleTitleInBrackets(sch)} переименовано`,
-        setTopic: (_, sch) => `В расписании ${scheduleTitleInBrackets(sch)} изменена тема: ${sch.topic}`,
-        setDescription: (_, sch) => `В расписании ${scheduleTitleInBrackets(sch)} изменено описание: ${sch.dsc}`,
-        remove: (_, sch) => `Расписание ${scheduleTitleInBrackets(sch)} удалено`,
-        copySchedule: ({ schedule: copiedSch }) =>
-          `Расписание ${scheduleTitleInBrackets(copiedSch)} скопировано в ${scheduleTitleInBrackets} `,
+        remove: modifySchedule(true, sch => {
+          sch.isRemoved = 1;
 
-        setDefaultUserRights: ({ R: value }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} для новых участников установлены права по умолчанию: ` +
-          (scheduleWidgetUserRights.texts[scheduleWidgetUserRights.rightsBalance(value)].role?.[0] ?? 'Неизвестный'),
+          return `Расписание ${scheduleTitleInBrackets(sch)} удалено`;
+        }),
 
-        setFirstDayAsTech: (_, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} первый день сделан ${sch.withTech ? 'техническим' : 'обычным'}`,
-        setScheduleRegisterType: ({ type: value }, schedule) => {
-          if (!smylib.isNum(value)) return `В расписании <b>${scheduleTitleInBrackets(schedule)}</b> изменение типа`;
+        copySchedule: modifySchedule(false, (sch, { schedule }) => {
+          Object.assign(sch, schedule, { title: sch.title });
 
-          const isSwPublic = scheduleWidgetRegTypeRights.checkIsHasIndividualRights(
-            value,
-            ScheduleWidgetRegType.Public,
-          );
+          return `Расписание ${scheduleTitleInBrackets(sch)} скопировано в ${scheduleTitleInBrackets} `;
+        }),
+
+        setScheduleRegisterType: modifySchedule(false, (sch, { type }) => {
+          sch.ctrl.type = type;
+
+          if (!smylib.isNum(type)) return `В расписании <b>${scheduleTitleInBrackets(sch)}</b> изменение типа`;
+
+          const isSwPublic = scheduleWidgetRegTypeRights.checkIsHasIndividualRights(type, ScheduleWidgetRegType.Public);
 
           const isSwBeforeRegistration = scheduleWidgetRegTypeRights.checkIsHasIndividualRights(
-            value,
+            type,
             ScheduleWidgetRegType.BeforeRegistration,
           );
 
           const isSwHideContent = scheduleWidgetRegTypeRights.checkIsHasIndividualRights(
-            value,
+            type,
             ScheduleWidgetRegType.HideContent,
           );
 
@@ -198,7 +245,7 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
             )!;
 
             return (
-              `В расписании <b>${scheduleTitleInBrackets(schedule)}</b> изменение типа:` +
+              `В расписании <b>${scheduleTitleInBrackets(sch)}</b> изменение типа:` +
               `\n\n${ScheduleWidgetCleans.putInTgTag(isSwPublic ? '' : 's', publicRule.title)}` +
               `\n${ScheduleWidgetCleans.putInTgTag(
                 isSwPublic && isSwBeforeRegistration ? '' : 's',
@@ -210,30 +257,17 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
               )}`
             );
           } catch (_error) {
-            return `В расписании <b>${scheduleTitleInBrackets(schedule)}</b> изменение типа`;
+            return `В расписании <b>${scheduleTitleInBrackets(sch)}</b> изменение типа`;
           }
-        },
-        setStartTime: (_, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} установлена дата начала - ` +
-          `${new Date(sch.start).toLocaleDateString('ru')}`,
+        }),
+        setDefaultUserRights: modifySchedule(false, (sch, { R }) => {
+          sch.ctrl.defu = R;
 
-        setTgChatRequisites: (_, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} изменены реквизиты TG-чата: ${sch.tgChatReqs}`,
-
-        setTgInformTime: (_, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} TG-напоминания будут ` +
-          `${sch.tgInformTime ? `за ${sch.tgInformTime} минут` : 'только в начале события'} `,
-
-        toggleIsTgInform: (_, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} TG-напоминания ${
-            sch.tgInform === 0 ? 'отключены' : 'включены'
-          }`,
-
-        setIsTgInformMe:
-          ({ type: isNotInform }, sch) =>
-          ({ auth }) =>
-            `В расписании ${scheduleTitleInBrackets(sch)} участник ${auth?.fio ?? '?'} (${auth?.nick ?? '?'}) ` +
-            `${isNotInform ? 'отключил' : 'включил'} TG-напоминания`,
+          return (
+            `В расписании ${scheduleTitleInBrackets(sch)} для новых участников установлены права по умолчанию: ` +
+            (scheduleWidgetUserRights.texts[scheduleWidgetUserRights.rightsBalance(R)].role?.[0] ?? 'Неизвестный')
+          );
+        }),
       },
     });
   }

@@ -21,7 +21,7 @@ import { ScheduleKeyValueListAttLiItemDropdown } from '../../LiItemDropdown';
 export const ScheduleWidgetAttKeyValueListSubItemsRedact = ({
   isRedact,
   value,
-  attKey: key,
+  valueKey,
   setSelfRedact,
   dayEventAttScopeProps,
   itemMi,
@@ -44,7 +44,7 @@ export const ScheduleWidgetAttKeyValueListSubItemsRedact = ({
   itemMi: number;
   setSelfRedact: boolean;
   subItems: ((item: ScheduleWidgetAppAttCustomizableValueItem) => ReactNode) | null;
-  attKey: ScheduleWidgetAppAttCustomizableValueItem[0];
+  valueKey: ScheduleWidgetAppAttCustomizableValueItem[0];
   value: ScheduleWidgetAppAttCustomizableValueItem[1];
   userR: number;
   att: ScheduleWidgetAppAttCustomized;
@@ -55,10 +55,10 @@ export const ScheduleWidgetAttKeyValueListSubItemsRedact = ({
         !mylib.isNum(value) &&
         (mylib.isStr(value) ? (
           <StrongField
-            $indent={!isRedact && mylib.isBool(key)}
+            $indent={!isRedact && mylib.isBool(valueKey)}
             className={
               `ml-3 ${isRedact ? '-mt-3' : '-mt-9'} mood-for-2 relative z-5 ` +
-              (mylib.isBool(key) ? (key ? 'text-x3 opacity-50' : 'text-x3') : '')
+              (mylib.isBool(valueKey) ? (valueKey ? 'text-x3 opacity-50' : 'text-x3') : '')
             }
             value={value}
             multiline
@@ -152,7 +152,7 @@ export const ScheduleWidgetAttKeyValueListSubItemsRedact = ({
               />
             )}
 
-            {subItems?.([key, value, itemMi])}
+            {subItems?.([valueKey, value, itemMi])}
 
             <StrongEditableField
               className="mood-for-2 relative z-5 mt-2"

@@ -64,15 +64,17 @@ export const questionerAdminServerTsjrpcBase =
           getAdminBlanks: async (_, { auth: { login } = {} }) => {
             if (throwIfNoUserScopeAccessRight(login, 'q', 'EDIT', 'R')) throw '';
 
-            return SMyLib.entries(questionerBlanksFileStore.getValue())
-              .filter(blank => adminRoles.has(blank[1]?.team[login]?.r))
-              .map(bla => ({ ...bla[1]!, w: +bla[0] }));
+            return {
+              value: SMyLib.entries(questionerBlanksFileStore.getValue())
+                .filter(blank => adminRoles.has(blank[1]?.team[login]?.r))
+                .map(bla => ({ ...bla[1]!, w: +bla[0] })),
+            };
           },
           getAdminBlank: async ({ blankw }, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth?.login, 'q', 'EDIT', 'U')) throw '';
             const blank = questionerBlanksFileStore.getValue()[blankw];
 
-            return blank ? { ...blank, w: blankw } : null;
+            return { value: blank ? { ...blank, w: blankw } : null };
           },
 
           changeBlankTitle: updateBlank(({ value }, blank) => (blank.title = value)),

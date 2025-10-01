@@ -1,5 +1,6 @@
 import https from 'https';
 import { CmMp3ContainsPageResult } from 'shared/api';
+import { cmEditorTsjrpcBaseServer } from '../editor.tsjrpc.base';
 import { mp3ResourcesData } from '../file-stores';
 
 const fetch = (url: string) => {
@@ -28,14 +29,14 @@ const fetch = (url: string) => {
   });
 };
 
-export const cmGetResourceHTMLString = ({ src }: { src: string }) => {
-  return new Promise<CmMp3ContainsPageResult>((resolve, reject) => {
+export const cmGetResourceHTMLString: typeof cmEditorTsjrpcBaseServer.getResourceHTMLString = ({ src }) => {
+  return new Promise<{ value: CmMp3ContainsPageResult }>((resolve, reject) => {
     const rules = mp3ResourcesData.getValue();
     const rule = rules.find(({ url }) => src.startsWith(url));
 
     if (rule)
       fetch(src)
-        .then(html => resolve({ rule, html }))
+        .then(html => resolve({ value: { rule, html } }))
         .catch(error => reject(`Ошибка 97377213\n${error}`));
     else reject('Ошибка. Этот ресурс неизвестен');
   });

@@ -1,4 +1,5 @@
-import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
+import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
+import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { CmComWid, IExportableCom } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
 import { itNNil, smylib } from 'shared/utils';
@@ -6,74 +7,95 @@ import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { cmConstantsConfigFileStore, comsFileStore } from './file-stores';
 import { cmShareServerTsjrpcMethods } from './tsjrpc.shares';
 
-export const modifyInvocableCom =
-  <Props extends { comw: CmComWid }>(mapper: (com: IExportableCom, props: Props) => void) =>
-  async (props: Props) => {
-    const com = comsFileStore.getValue().find(com => com.w === props.comw);
-
-    if (com === undefined) throw new Error(`Песня не найдена`);
-
-    mapper(com, props);
-    com.m = Date.now() + Math.random();
-
-    comsFileStore.saveValue();
-    cmShareServerTsjrpcMethods.editedCom({ com });
-
-    return com;
-  };
-
-const simpleComKeyValueSetter = <
-  Props extends { comw: CmComWid; value: IExportableCom[Key] },
-  Key extends keyof IExportableCom,
->(
-  key: Key,
-) => modifyInvocableCom<Props>((com, { value }) => (com[key] = value));
-
-const insertInTextableBlock = <Props extends { value: string; comw: CmComWid; insertToi: number }>(coln: 'c' | 't') =>
-  modifyInvocableCom<Props>((com, { insertToi, value }) => {
-    if (com[coln] == null) return '';
-    const list = com[coln];
-
-    list.splice(insertToi, 0, value);
-    com.o?.forEach(ord => {
-      if (ord[coln] != null && ord[coln] >= insertToi) ord[coln]++;
-    });
-
-    return '';
-  });
-
-const removeTextableBlock = <Props extends { comw: CmComWid; removei: number }>(coln: 'c' | 't') =>
-  modifyInvocableCom<Props>((com, { removei }) => {
-    if (com[coln] == null) return;
-    const list = com[coln];
-
-    list.splice(removei, 1);
-    com.o?.forEach(ord => {
-      if (ord[coln] != null)
-        if (ord[coln] > removei) ord[coln]--;
-        else if (ord[coln] === removei) delete ord[coln];
-    });
-
-    com.o = com.o?.filter(ord => ord.a != null || ord.c != null || ord.t != null);
-  });
-
 export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBaseServer<CmEditComTsjrpcModel> {
   constructor() {
     super({
       scope: 'CmEditCom',
-      defaultBeforeEachTool: { minLevel: 50 },
       methods: {
-        rename: simpleComKeyValueSetter('n'),
-        setBpM: simpleComKeyValueSetter('bpm'),
-        setMeterSize: simpleComKeyValueSetter('s'),
-        changeLanguage: simpleComKeyValueSetter('l'),
-        changeTon: simpleComKeyValueSetter('p'),
-        makeBemoled: simpleComKeyValueSetter('b'),
-        changePushKind: simpleComKeyValueSetter('k'),
-        setAudioLinks: modifyInvocableCom((com, { value }) => (com.a = value.trim())),
+        rename: modifyInvocableCom((com, { value }, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
 
-        changeChordBlock: modifyInvocableCom((com, { texti: coli, value }) => (com.c = com.c?.with(coli, value) ?? [])),
-        changeTextBlock: modifyInvocableCom((com, { texti: coli, value }) => {
+          com.n = value;
+
+          return `Песня ${getCmComNameInBrackets(com)} переименована`;
+        }),
+
+        setBpM: modifyInvocableCom((com, { value }, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
+
+          com.bpm = value;
+
+          return `Значение ударов в минуту для песни ${getCmComNameInBrackets(com)} установлено в ${value}`;
+        }),
+
+        setMeterSize: modifyInvocableCom((com, { value }, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
+
+          com.s = value;
+
+          return `Размерность песни ${getCmComNameInBrackets(com)} установлено в значение ${value}/4`;
+        }),
+
+        changeLanguage: modifyInvocableCom((com, { value }, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
+
+          com.l = value;
+
+          return `Язык песни ${getCmComNameInBrackets(com)} изменён на ${CmComUtils.cmComLanguages[value]}`;
+        }),
+
+        changeTon: modifyInvocableCom((com, { value }, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
+
+          com.p = value;
+
+          return `Тональность песни ${getCmComNameInBrackets(com)} изменена на ${value}`;
+        }),
+
+        makeBemoled: modifyInvocableCom((com, { value }, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
+
+          com.b = value;
+
+          return `Песня ${getCmComNameInBrackets(com)} теперь ${value ? 'бемольная' : 'диезная'}`;
+        }),
+
+        changePushKind: modifyInvocableCom((com, { value }, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_TR', 'U')) throw '';
+
+          com.k = value;
+
+          return `Изменено значение правила группировок для слайдов в песне ${getCmComNameInBrackets(com)} - ${value}`;
+        }),
+
+        setAudioLinks: modifyInvocableCom((com, { value }, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_AUDIO', 'U')) throw '';
+
+          com.a = value.trim();
+
+          return `Изменение аудио-ссылок для песни ${getCmComNameInBrackets(com)}:\n\n${value}`;
+        }),
+
+        changeChordBlock: modifyInvocableCom((com, { texti: coli, value }, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_CH', 'U')) throw '';
+
+          com.c = com.c?.with(coli, value) ?? [];
+
+          return `Изменён аккордный блок в песне ${getCmComNameInBrackets(com)}:\n\n${value}`;
+        }),
+        changeTextBlock: modifyInvocableCom((com, { texti: coli, value }, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_TXT', 'U')) throw '';
+
           const incorrects = CmComUtils.textLinesLengthIncorrects(
             value,
             cmConstantsConfigFileStore.getValue().maxAvailableComLineLength,
@@ -82,15 +104,51 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           if (incorrects?.errors?.length) throw incorrects.errors[0].message;
 
           com.t = com.t?.with(coli, CmComUtils.transformToClearText(value)) ?? [];
+
+          return `Изменён текстовый блок в песне ${getCmComNameInBrackets(com)}:\n\n${value}`;
         }),
 
-        insertChordBlock: insertInTextableBlock('c'),
-        insertTextBlock: insertInTextableBlock('t'),
+        insertChordBlock: insertInTextableBlock('c', (com, { value }, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_CH', 'C')) throw '';
 
-        removeChordBlock: removeTextableBlock('c'),
-        removeTextBlock: removeTextableBlock('t'),
+          return (
+            `Вставлен${value ? '' : ' новый'} аккордный блок в песне ` +
+            `${getCmComNameInBrackets(com)}${value ? `:\n\n${value}` : ''}`
+          );
+        }),
+        insertTextBlock: insertInTextableBlock('t', (com, { value }, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_TXT', 'C')) throw '';
 
-        newCom: async ({ value: newCom }) => {
+          return (
+            `Вставлен${value ? '' : ' новый'} текстовый блок в песне ` +
+            `${getCmComNameInBrackets(com)}${value ? `:\n\n${value}` : ''}`
+          );
+        }),
+
+        removeChordBlock: removeTextableBlock('c', (com, { value }, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_CH', 'D')) throw '';
+
+          return (
+            `Удалён${value ? '' : ' новый'} аккордный блок в песне ` +
+            `${getCmComNameInBrackets(com)}${value ? `:\n\n${value}` : ''}`
+          );
+        }),
+        removeTextBlock: removeTextableBlock('t', (com, { value }, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_TXT', 'D')) throw '';
+
+          return (
+            `Удалён${value ? '' : ' новый'} текстовый блок в песне ` +
+            `${getCmComNameInBrackets(com)}${value ? `:\n\n${value}` : ''}`
+          );
+        }),
+
+        newCom: async ({ value: newCom }, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'C')) throw '';
+
           const incorrects = newCom.t
             ?.map(text =>
               CmComUtils.textLinesLengthIncorrects(
@@ -112,73 +170,46 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           comsFileStore.saveValue();
           cmShareServerTsjrpcMethods.editedCom({ com });
 
-          return com;
+          return { value: com, description: `Добавлена новая песня ${getCmComNameInBrackets(com)}` };
         },
 
-        remove: modifyInvocableCom(com => (com.isRemoved = 1)),
-        bringBackToLife: modifyInvocableCom(com => delete com.isRemoved),
+        remove: modifyInvocableCom((com, _, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'D')) throw '';
 
-        takeRemovedComs: async () => comsFileStore.getValue().filter(com => com.isRemoved),
-        destroy: async ({ comw }) => {
+          com.isRemoved = 1;
+
+          return `Песня ${getCmComNameInBrackets(com)} удалена`;
+        }),
+        bringBackToLife: modifyInvocableCom((com, _, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'C')) throw '';
+
+          delete com.isRemoved;
+
+          return `Удалённая песня ${getCmComNameInBrackets(com)} возвращена`;
+        }),
+
+        takeRemovedComs: async (_, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'C')) throw '';
+
+          return {
+            value: comsFileStore.getValue().filter(com => com.isRemoved),
+            description: '',
+          };
+        },
+        destroy: async ({ comw }, { auth }) => {
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'C')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'R')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'D')) throw '';
+
           const coms = comsFileStore.getValueWithAutoSave();
           const index = coms.findIndex(com => com.w === comw);
-          if (index < 0) return '';
+          if (index < 0) return { value: '', description: null };
           const name = coms[index].n;
           coms.splice(index, 1);
 
-          return name;
+          return { value: name, description: `Песня ${name} уничтожена` };
         },
-      },
-      onEachFeedback: {
-        changeLanguage: ({ value }, com) =>
-          `Язык песни ${getCmComNameInBrackets(com)} изменён на ${CmComUtils.cmComLanguages[value]}`,
-
-        changePushKind: ({ value }, com) =>
-          `Изменено значение правила группировок для слайдов в песне ${getCmComNameInBrackets(com)} - ${value}`,
-
-        changeTon: ({ value }, com) => `Тональность песни ${getCmComNameInBrackets(com)} изменена на ${value}`,
-
-        makeBemoled: ({ value }, com) =>
-          `Песня ${getCmComNameInBrackets(com)} теперь ${value ? 'бемольная' : 'диезная'}`,
-
-        rename: (_, com) => `Песня ${getCmComNameInBrackets(com)} переименована`,
-
-        setAudioLinks: ({ value }, com) =>
-          `Изменение аудио-ссылок для песни ${getCmComNameInBrackets(com)}:\n\n${value}`,
-
-        setBpM: ({ value }, com) =>
-          `Значение ударов в минуту для песни ${getCmComNameInBrackets(com)} установлено в ${value}`,
-
-        setMeterSize: ({ value }, com) =>
-          `Размерность песни ${getCmComNameInBrackets(com)} установлено в значение ${value}/4`,
-
-        changeChordBlock: ({ value }, com) =>
-          `Изменён аккордный блок в песне ${getCmComNameInBrackets(com)}:\n\n${value}`,
-
-        changeTextBlock: ({ value }, com) =>
-          `Изменён текстовый блок в песне ${getCmComNameInBrackets(com)}:\n\n${value}`,
-
-        insertChordBlock: ({ value }, com) =>
-          `Вставлен${value ? '' : ' новый'} аккордный блок в песне ` +
-          `${getCmComNameInBrackets(com)}${value ? `:\n\n${value}` : ''}`,
-        insertTextBlock: ({ value }, com) =>
-          `Вставлен${value ? '' : ' новый'} текстовый блок в песне ` +
-          `${getCmComNameInBrackets(com)}${value ? `:\n\n${value}` : ''}`,
-
-        removeTextBlock: ({ value }, com) =>
-          `Удалён${value ? '' : ' новый'} текстовый блок в песне ` +
-          `${getCmComNameInBrackets(com)}${value ? `:\n\n${value}` : ''}`,
-        removeChordBlock: ({ value }, com) =>
-          `Удалён${value ? '' : ' новый'} аккордный блок в песне ` +
-          `${getCmComNameInBrackets(com)}${value ? `:\n\n${value}` : ''}`,
-
-        newCom: (_, com) => `Добавлена новая песня ${getCmComNameInBrackets(com)}`,
-
-        remove: (_, com) => `Песня ${getCmComNameInBrackets(com)} удалена`,
-        destroy: (_, comName) => `Песня ${comName} уничтожена`,
-        bringBackToLife: (_, com) => `Удалённая песня ${getCmComNameInBrackets(com)} возвращена`,
-
-        takeRemovedComs: null,
       },
     });
   }
@@ -193,3 +224,59 @@ export const getCmComNameInBrackets = (comScalar: CmComWid | IExportableCom) => 
 
   return `"${comScalar.n}"`;
 };
+
+export function modifyInvocableCom<Props extends { comw: CmComWid }>(
+  mapper: (com: IExportableCom, props: Props, tool: ServerTSJRPCTool) => string | null,
+) {
+  return async (props: Props, tool: ServerTSJRPCTool) => {
+    const com = comsFileStore.getValue().find(com => com.w === props.comw);
+
+    if (com === undefined) throw new Error(`Песня не найдена`);
+
+    const description = mapper(com, props, tool);
+    com.m = Date.now() + Math.random();
+
+    comsFileStore.saveValue();
+    cmShareServerTsjrpcMethods.editedCom({ com });
+
+    return { value: com, description };
+  };
+}
+
+function insertInTextableBlock<Props extends { value: string; comw: CmComWid; insertToi: number }>(
+  coln: 'c' | 't',
+  text: (com: IExportableCom, props: Props, tool: ServerTSJRPCTool) => string,
+) {
+  return modifyInvocableCom<Props>((com, props, tool) => {
+    if (com[coln] == null) return '';
+    const list = com[coln];
+
+    list.splice(props.insertToi, 0, props.value);
+    com.o?.forEach(ord => {
+      if (ord[coln] != null && ord[coln] >= props.insertToi) ord[coln]++;
+    });
+
+    return text(com, props, tool);
+  });
+}
+
+function removeTextableBlock<Props extends { comw: CmComWid; removei: number }>(
+  coln: 'c' | 't',
+  text: (com: IExportableCom, props: Props, tool: ServerTSJRPCTool) => string,
+) {
+  return modifyInvocableCom<Props>((com, props, tool) => {
+    if (com[coln] == null) return null;
+    const list = com[coln];
+
+    list.splice(props.removei, 1);
+    com.o?.forEach(ord => {
+      if (ord[coln] != null)
+        if (ord[coln] > props.removei) ord[coln]--;
+        else if (ord[coln] === props.removei) delete ord[coln];
+    });
+
+    com.o = com.o?.filter(ord => ord.a != null || ord.c != null || ord.t != null);
+
+    return text(com, props, tool);
+  });
+}

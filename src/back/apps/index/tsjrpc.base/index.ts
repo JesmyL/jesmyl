@@ -39,14 +39,9 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
     super({
       scope: 'Index',
       beforeEachTools: {
-        getIndexValues: { minLevel: 0, minVersion: 0 },
-        getFreshAppVersion: { minLevel: 0, minVersion: 0 },
-        authMeByTelegramBotNumber: { minLevel: 0 },
-        authMeByTelegramInScheduleDay: { minLevel: 0 },
-        authMeByTelegramMiniButton: { minLevel: 0 },
-        authMeByTelegramNativeButton: { minLevel: 0 },
-        getDeviceId: { minLevel: 0, minVersion: 0 },
-        requestFreshes: { minLevel: 0 },
+        getIndexValues: { minVersion: 0 },
+        getFreshAppVersion: { minVersion: 0 },
+        getDeviceId: { minVersion: 0 },
       },
       methods: {
         requestFreshes: indexTSJRPCBaseRequestFreshes,
@@ -54,57 +49,57 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         updateUserAccessRight: indexTSJRPCBaseUpdateUserAccessRight,
 
         getDeviceId: async () => {
-          return (makeTwiceKnownName().replace(makeRegExp('/ /g'), '_') +
+          const deviceId =
+            makeTwiceKnownName().replace(makeRegExp('/ /g'), '_') +
             '_' +
             Array(5)
               .fill(0)
               .map(() => smylib.randomItem(deviceIdPostfixSymbols))
-              .join('')) as never;
+              .join('');
+
+          return {
+            value: deviceId as never,
+            description: `Запрос DeviceId - ${deviceId}`,
+          };
         },
 
-        authMeByTelegramNativeButton: indexAuthByTgUser,
-        authMeByTelegramMiniButton: indexAuthByTgUser,
-        authMeByTelegramInScheduleDay: indexAuthByTgUser,
+        authMeByTelegramNativeButton: async ({ user }, { auth }) => ({
+          value: await indexAuthByTgUser({ user }),
+          description:
+            `Авторизация ${auth?.fio} (@${auth?.nick ?? '??'}) через TG-auth-native кнопку\n\n` +
+            `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
+        }),
+        authMeByTelegramMiniButton: async ({ user }, { auth }) => ({
+          value: await indexAuthByTgUser({ user }),
+          description:
+            `Авторизация ${auth?.fio} (@${auth?.nick ?? '??'}) через TG-mini-icon кнопку\n\n` +
+            `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
+        }),
+        authMeByTelegramInScheduleDay: async ({ user }, { auth }) => ({
+          value: await indexAuthByTgUser({ user }),
+          description:
+            `Авторизация ${auth?.fio} (@${auth?.nick ?? '??'}) в расписании дня\n\n` +
+            `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
+        }),
 
-        authMeByTelegramBotNumber: async ({ secretNumber }) => {
+        authMeByTelegramBotNumber: async ({ secretNumber }, { auth }) => {
           const user = supportTelegramAuthorizations[secretNumber]?.().from;
 
           if (user == null) throw 'Не верный код';
-          return indexAuthByTgUser({ user });
+
+          return {
+            value: await indexAuthByTgUser({ user }),
+            description:
+              `Авторизация ${auth?.fio} (@${auth?.nick ?? '??'}) через TG-код\n\n<blockquote expandable>` +
+              `${JSON.stringify(auth, null, 1)}</blockquote>`,
+          };
         },
 
-        getFreshAppVersion: async () => appVersionFileStore.getValue().num,
-        getIndexValues: async () => valuesFileStore.getValue(),
+        getFreshAppVersion: async () => ({ value: appVersionFileStore.getValue().num }),
+        getIndexValues: async () => ({ value: valuesFileStore.getValue() }),
 
-        getAccessRightTitles: async () => accessRightTitlesFileStore.getValue(),
-        getUserAccessRights: async () => userAccessRightsFileStore.getValue(),
-      },
-      onEachFeedback: {
-        authMeByTelegramBotNumber: (_, { auth }) =>
-          `Авторизация ${auth.fio} (@${auth.nick ?? '??'}) через TG-код\n\n<blockquote expandable>` +
-          `${JSON.stringify(auth, null, 1)}</blockquote>`,
-
-        authMeByTelegramNativeButton: (_, { auth }) =>
-          `Авторизация ${auth.fio} (@${auth.nick ?? '??'}) через TG-auth-native кнопку\n\n` +
-          `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
-
-        authMeByTelegramMiniButton: (_, { auth }) =>
-          `Авторизация ${auth.fio} (@${auth.nick ?? '??'}) через TG-mini-icon кнопку\n\n` +
-          `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
-
-        authMeByTelegramInScheduleDay: (_, { auth }) =>
-          `Авторизация ${auth.fio} (@${auth.nick ?? '??'}) в расписании дня\n\n` +
-          `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
-
-        getDeviceId: (_, deviceId) => `Запрос DeviceId - ${deviceId}`,
-
-        requestFreshes: null,
-        getFreshAppVersion: null,
-        getIndexValues: null,
-        getAccessRightTitles: null,
-        getUserAccessRights: null,
-        updateUserAccessRight: null,
-        getIconExistsPacks: null,
+        getAccessRightTitles: async () => ({ value: accessRightTitlesFileStore.getValue() }),
+        getUserAccessRights: async () => ({ value: userAccessRightsFileStore.getValue() }),
       },
     });
   }

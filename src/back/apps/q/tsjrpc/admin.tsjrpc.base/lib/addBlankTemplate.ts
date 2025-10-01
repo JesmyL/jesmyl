@@ -53,5 +53,5 @@ export const questionerTSJRPCAddBlankTemplate: typeof questionerAdminServerTsjrp
   blanks[blankw].tmp[keyId] = blankTmp;
   questionerBlanksFileStore.saveValue();
 
-  return { ...blanks[blankw], w: blankw };
+  return { value: { ...blanks[blankw], w: blankw } };
 };

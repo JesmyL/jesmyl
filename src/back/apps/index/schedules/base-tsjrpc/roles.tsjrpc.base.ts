@@ -1,5 +1,6 @@
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
-import { IScheduleWidgetRole, ScheduleRoleScopeProps } from 'shared/api';
+import { title } from 'process';
+import { IScheduleWidget, IScheduleWidgetRole, ScheduleRoleScopeProps } from 'shared/api';
 import { SchRolesTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
 import { smylib } from 'shared/utils';
 import { knownStameskaIconNamesMd5Hash } from 'shared/values/index/known-icons';
@@ -9,12 +10,12 @@ import { modifySchedule } from '../schedule-modificators';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 
 const modifyRole = <Props extends { props: ScheduleRoleScopeProps }>(
-  modifier: (role: IScheduleWidgetRole, props: Props) => void,
+  modifier: (role: IScheduleWidgetRole, props: Props, sch: IScheduleWidget) => string | null,
 ) =>
   modifySchedule<Props>(false, (sch, props) => {
     const role = sch.ctrl.roles.find(role => role.mi === props.props.roleMi);
     if (role == null) throw new Error('role not found');
-    modifier(role, props);
+    return modifier(role, props, sch);
   });
 
 export const schRolesTsjrpcBaseServer = new (class SchRoles extends TsjrpcBaseServer<SchRolesTsjrpcMethods> {
@@ -22,14 +23,24 @@ export const schRolesTsjrpcBaseServer = new (class SchRoles extends TsjrpcBaseSe
     super({
       scope: 'SchRoles',
       methods: {
-        createRole: modifySchedule(false, sch =>
-          sch.ctrl.roles.push({ mi: smylib.takeNextMi(sch.ctrl.roles, 0 as number), title: 'Помощьник' }),
-        ),
+        createRole: modifySchedule(false, sch => {
+          sch.ctrl.roles.push({ mi: smylib.takeNextMi(sch.ctrl.roles, 0 as number), title: 'Помощьник' });
 
-        setRoleCategoryTitle: modifySchedule(false, (sch, { cati, title }) => (sch.ctrl.cats[cati] = title)),
-        addRoleCategory: modifySchedule(false, sch => sch.ctrl.cats.push('')),
+          return `В расписании ${scheduleTitleInBrackets(sch)} добавлена новая категория ролей`;
+        }),
 
-        setRoleIcon: modifyRole((role, { value }) => {
+        setRoleCategoryTitle: modifySchedule(false, (sch, { cati, title, prevTitle }) => {
+          sch.ctrl.cats[cati] = title;
+
+          return `В расписании ${scheduleTitleInBrackets(sch)} категория ролей "${prevTitle}" переименована на "${title}"`;
+        }),
+        addRoleCategory: modifySchedule(false, sch => {
+          sch.ctrl.cats.push('');
+
+          return `В расписании ${scheduleTitleInBrackets(sch)} добавлена новая категория ролей`;
+        }),
+
+        setRoleIcon: modifyRole((role, { value, roleTitle }, sch) => {
           indexServerTsjrpcShareMethods.updateKnownIconPacks(
             {
               actualIconPacks: { [value]: stameskaIconPack[value] },
@@ -40,27 +51,29 @@ export const schRolesTsjrpcBaseServer = new (class SchRoles extends TsjrpcBaseSe
           );
 
           role.icon = value;
+
+          return `В расписании ${scheduleTitleInBrackets(sch)} для роли ${roleTitle} задана иконка ${value}`;
         }),
-        setRoleTitle: modifyRole((role, { value }) => (role.title = value)),
-        setRoleUser: modifyRole((role, { value }) => (role.userMi = value)),
-        setCategoryForRole: modifyRole((role, { value }) => (role.cati = value)),
-        makeFreeRole: modifyRole(role => delete role.userMi),
-      },
-      onEachFeedback: {
-        createRole: (_, sch) => `В расписании ${scheduleTitleInBrackets(sch)} добавлена новая категория ролей`,
-        setRoleIcon: ({ value: icon, roleTitle }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} для роли ${roleTitle} задана иконка ${icon}`,
-        setRoleTitle: ({ value: title, prevTitle }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} роль "${prevTitle}" переименована на "${title}"`,
-        addRoleCategory: (_, sch) => `В расписании ${scheduleTitleInBrackets(sch)} добавлена новая категория ролей`,
-        setRoleCategoryTitle: ({ title, prevTitle }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} категория ролей "${prevTitle}" переименована на "${title}"`,
-        setCategoryForRole: ({ roleTitle, catTitle }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} роль ${roleTitle} теперь относится к категории "${catTitle}"`,
-        setRoleUser: ({ roleTitle, userName }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} за ролью ${roleTitle} закреплён участник ${userName}`,
-        makeFreeRole: ({ value: roleTitle }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} роль ${roleTitle} освобождена (стала вакантной)`,
+        setRoleTitle: modifyRole((role, { value, prevTitle }, sch) => {
+          role.title = value;
+
+          return `В расписании ${scheduleTitleInBrackets(sch)} роль "${prevTitle}" переименована на "${title}"`;
+        }),
+        setRoleUser: modifyRole((role, { value, roleTitle, userName }, sch) => {
+          role.userMi = value;
+
+          return `В расписании ${scheduleTitleInBrackets(sch)} за ролью ${roleTitle} закреплён участник ${userName}`;
+        }),
+        setCategoryForRole: modifyRole((role, { value, roleTitle, catTitle }, sch) => {
+          role.cati = value;
+
+          return `В расписании ${scheduleTitleInBrackets(sch)} роль ${roleTitle} теперь относится к категории "${catTitle}"`;
+        }),
+        makeFreeRole: modifyRole((role, { value }, sch) => {
+          delete role.userMi;
+
+          return `В расписании ${scheduleTitleInBrackets(sch)} роль ${value} освобождена (стала вакантной)`;
+        }),
       },
     });
   }

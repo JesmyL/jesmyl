@@ -13,7 +13,7 @@ export const indexTSJRPCBaseUpdateUserAccessRight: typeof indexServerTsjrpcBase.
 }) => {
   const rights = userAccessRightsFileStore.getValue();
 
-  if (rights[login] == null) return null;
+  if (rights[login] == null) return { value: null };
 
   rights[login][scope] ??= {};
   rights[login][scope][rule] = updateCRUDAccesRightValue(rights[login][scope][rule] ?? 0, operation, value);
@@ -28,5 +28,5 @@ export const indexTSJRPCBaseUpdateUserAccessRight: typeof indexServerTsjrpcBase.
   const { info, ...userRights } = rights[login];
   indexServerTsjrpcShareMethods.refreshAccessRights({ rights: userRights }, { login });
 
-  return rights;
+  return { value: rights };
 };

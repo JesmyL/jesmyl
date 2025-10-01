@@ -79,7 +79,7 @@
     "tailwindcss": "^4.0.12",
     "tone": "^15.0.4",
     "ts-regexp": "^0.1.3",
-    "tsjrpc": "^0.0.13",
+    "tsjrpc": "^0.0.18",
     "vaul": "^1.1.2",
     "vite-plugin-pwa": "^0.21.1",
     "web-vitals": "^0.2.4",

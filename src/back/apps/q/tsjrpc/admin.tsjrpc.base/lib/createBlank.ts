@@ -27,5 +27,5 @@ export const questionerTSJRPCCreateBlank: typeof questionerAdminServerTsjrpcBase
   const { w, ...savedBlank } = newBlank;
   blanks[w] = savedBlank;
 
-  return newBlank;
+  return { value: newBlank };
 };

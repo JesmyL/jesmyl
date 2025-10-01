@@ -12,10 +12,6 @@ export const bibleTsjrpcBaseServer = new (class Bible extends TsjrpcBaseServer<B
   constructor() {
     super({
       scope: 'Bible',
-      beforeEachTools: {
-        requestFreshes: { minLevel: 0 },
-        requestTranslate: { minLevel: 0 },
-      },
       methods: {
         requestFreshes: async ({ lastModifiedAt, myTranslates }, { client }) => {
           myTranslates.forEach(tName => {

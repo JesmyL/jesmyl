@@ -30,7 +30,7 @@ import { ScheduleWidgetAttKeyValueListSubItemsRedact } from './SubItems';
 
 export const ScheduleWidgetKeyValueListValueItem = ({
   rights,
-  attKey,
+  valueKey,
   itemMi,
   scopeProps,
   isRedact,
@@ -49,7 +49,7 @@ export const ScheduleWidgetKeyValueListValueItem = ({
   subItems,
 }: {
   rights: ScheduleWidgetRights;
-  attKey: string | number | boolean;
+  valueKey: string | number | boolean;
   itemMi: number;
   scopeProps: ScheduleDayEventAttachmentScopeProps & { itemMi: number };
   isRedact: boolean;
@@ -72,18 +72,18 @@ export const ScheduleWidgetKeyValueListValueItem = ({
 
   let setSelfRedact = !rights.isCanTotalRedact;
 
-  if (mylib.isNum(attKey)) {
-    generalNode = <KeyValueListAttNumberMember value={attKey} />;
+  if (mylib.isNum(valueKey)) {
+    generalNode = <KeyValueListAttNumberMember value={valueKey} />;
 
-    if (ScheduleWidgetCleans.checkIsTaleIdUnit(attKey, CustomAttUseTaleId.Roles))
-      role = extractScheduleWidgetRole(rights.schedule, attKey);
+    if (ScheduleWidgetCleans.checkIsTaleIdUnit(valueKey, CustomAttUseTaleId.Roles))
+      role = extractScheduleWidgetRole(rights.schedule, valueKey);
 
     if (!rights.isCanTotalRedact)
-      if (ScheduleWidgetCleans.checkIsTaleIdUnit(attKey, CustomAttUseTaleId.Roles))
+      if (ScheduleWidgetCleans.checkIsTaleIdUnit(valueKey, CustomAttUseTaleId.Roles))
         setSelfRedact =
           !!rights.myUser && extractScheduleWidgetRoleUser(rights.schedule, 0, role)?.login !== rights.myUser.login;
       else if (rights.myUser?.li) {
-        const id = Math.trunc(attKey);
+        const id = Math.trunc(valueKey);
         const unit = rights.schedule.lists.units.find(unit => unit.mi === id);
         if (unit) setSelfRedact = rights.myUser.li[unit.cati] !== -unit.mi;
       }
@@ -98,27 +98,27 @@ export const ScheduleWidgetKeyValueListValueItem = ({
         <div className="flex gap-2">
           {generalNode !== null ? (
             generalNode
-          ) : mylib.isBool(attKey) ? (
-            <div className={twMerge('flex gap-2 text-x3', attKey && 'opacity-50')}>
+          ) : mylib.isBool(valueKey) ? (
+            <div className={twMerge('flex gap-2 text-x3', valueKey && 'opacity-50')}>
               <TheIconSendButton
                 className="self-start relative z-15"
-                icon={attKey ? 'CheckmarkSquare02' : 'Square'}
+                icon={valueKey ? 'CheckmarkSquare02' : 'Square'}
                 disabled={!customAttUseRights.checkIsCan(userR, att.U)}
                 onSend={() =>
                   schDayEventsTsjrpcClient.setKeyValueAttachmentKey({
                     props: scopeProps,
                     itemMi,
-                    value: !attKey,
+                    value: !valueKey,
                   })
                 }
               />
               {mylib.isNum(value) && <KeyValueListAttNumberMember value={value} />}
             </div>
           ) : (
-            mylib.isStr(attKey) && (
+            mylib.isStr(valueKey) && (
               <StrongEditableField
                 className="ml-3 -mt-4 mood-for-2 relative z-5"
-                value={attKey}
+                value={valueKey}
                 isRedact={isRedact}
                 isSelfRedact
                 onSend={value =>
@@ -134,7 +134,7 @@ export const ScheduleWidgetKeyValueListValueItem = ({
           {isRedact && (
             <>
               {!mylib.isNum(value) &&
-                !mylib.isBool(attKey) &&
+                !mylib.isBool(valueKey) &&
                 !mylib.isNil(value) &&
                 (value === '+' || value.length < 1) && (
                   <Button size="icon">
@@ -150,10 +150,10 @@ export const ScheduleWidgetKeyValueListValueItem = ({
                     />
                   </Button>
                 )}
-              {mylib.isNum(attKey) && (
+              {mylib.isNum(valueKey) && (
                 <ScheduleKeyValueListAttArrayItemKeyChange
                   dayEventAttScopeProps={scopeProps}
-                  theKey={attKey}
+                  theKey={valueKey}
                   users={exclusiveUsers}
                   lists={exclusiveLists}
                   roles={exclusiveRoles}
@@ -183,7 +183,7 @@ export const ScheduleWidgetKeyValueListValueItem = ({
         setSelfRedact={setSelfRedact}
         subItems={subItems}
         value={value}
-        attKey={attKey}
+        valueKey={valueKey}
         att={att}
         userR={userR}
       />

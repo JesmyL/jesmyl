@@ -12,7 +12,6 @@ export const cmEditComExternalsTsjrpcBaseServer =
     constructor() {
       super({
         scope: 'CmEditComExternals',
-        defaultBeforeEachTool: { minLevel: 50 },
         methods: {
           setInScheduleEvent: async ({ schw, dayi, eventMi, list, fio }) => {
             const packs = eventPacksFileStore.getValueWithAutoSave();
@@ -37,19 +36,32 @@ export const cmEditComExternalsTsjrpcBaseServer =
             dayHistory.unshift({ s: list, w: m, e: eventMi, fio });
 
             cmShareServerTsjrpcMethods.refreshScheduleEventComPacks({ packs: [packs[schw]], modifiedAt: m });
+
+            return {
+              description:
+                `Обновлён список песен в расписании ` +
+                `"${schedulesFileStore.getValue().find(sch => sch.w === schw)?.title ?? '??'}":\n\n${list
+                  .map(comw => {
+                    const coms = comsFileStore.getValue().filter(com => !com.isRemoved);
+                    const comi = coms.findIndex(com => com.w === comw);
+                    if (comi < 0) return `<s>Нет песни</s>`;
+                    return `${CmComUtils.takeCorrectComNumber(comi + 1)}. ${coms[comi].n}`;
+                  })
+                  .join('\n')}`,
+            };
           },
 
           getScheduleEventHistory: async ({ schw, dayi }) => {
             const history = eventPackHistoryFileStore.getValue();
 
-            return history[schw]?.[dayi] ?? [];
+            return { value: history[schw]?.[dayi] ?? [] };
           },
           getScheduleEventHistoryStatistic: async ({ schw, dayi }) => {
             const comwCount = {} as Record<CmComWid, number>;
             let totalCount = 0;
             const packs = eventPackHistoryFileStore.getValue()[schw]?.[dayi];
 
-            if (packs === undefined) return { comwCount, totalCount };
+            if (packs === undefined) return { value: { comwCount, totalCount } };
 
             for (const pack of packs)
               for (const comw of pack.s) {
@@ -58,7 +70,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
                 totalCount++;
               }
 
-            return { comwCount, totalCount };
+            return { value: { comwCount, totalCount } };
           },
 
           removeScheduleEventHistoryItem: async ({ schw, dayi, writedAt }) => {
@@ -69,28 +81,13 @@ export const cmEditComExternalsTsjrpcBaseServer =
 
             history[schw]?.[dayi]?.splice(itemi, 1);
 
-            return history[schw]?.[dayi] ?? [];
+            return {
+              value: history[schw]?.[dayi] ?? [],
+              description:
+                `Удалена пачка песен из истории события в расписании ` +
+                `"${schedulesFileStore.getValue().find(sch => sch.w === schw)?.title ?? '??'}"`,
+            };
           },
-        },
-
-        onEachFeedback: {
-          setInScheduleEvent: ({ schw, list }) =>
-            `Обновлён список песен в расписании ` +
-            `"${schedulesFileStore.getValue().find(sch => sch.w === schw)?.title ?? '??'}":\n\n${list
-              .map(comw => {
-                const coms = comsFileStore.getValue().filter(com => !com.isRemoved);
-                const comi = coms.findIndex(com => com.w === comw);
-                if (comi < 0) return `<s>Нет песни</s>`;
-                return `${CmComUtils.takeCorrectComNumber(comi + 1)}. ${coms[comi].n}`;
-              })
-              .join('\n')}`,
-
-          removeScheduleEventHistoryItem: ({ schw }) =>
-            `Удалена пачка песен из истории события в расписании ` +
-            `"${schedulesFileStore.getValue().find(sch => sch.w === schw)?.title ?? '??'}"`,
-
-          getScheduleEventHistory: null,
-          getScheduleEventHistoryStatistic: null,
         },
       });
     }

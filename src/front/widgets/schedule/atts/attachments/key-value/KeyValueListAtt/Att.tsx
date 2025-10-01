@@ -187,7 +187,7 @@ export function ScheduleKeyValueListAtt({
               key={itemMi}
               isRedact={isRedact}
               att={att}
-              attKey={key}
+              valueKey={key}
               userR={userR}
               value={value}
               itemMi={itemMi}

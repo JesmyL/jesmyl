@@ -12,26 +12,35 @@ export type ServerTSJRPCTool = {
   auth: LocalSokiAuth | und;
   visitInfo: SokiVisit | und;
 };
-export type ServerTSJRPCBeforeEachTool = { minVersion?: number; minLevel?: number };
+export type ServerTSJRPCBeforeEachTool = { minVersion?: number };
 
 export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRPCBaseMaker<
+  { description?: null | string | ((tool: ServerTSJRPCTool) => string) },
   ServerTSJRPCTool,
-  string | ((tool: ServerTSJRPCTool) => string),
   ServerTSJRPCBeforeEachTool
 >({
-  onErrorMessage: ({ errorMessage, invoke: { method, scope }, tool: { auth, visitInfo } }) => {
-    tglogger.userErrors(
-      `${scope}.${method}()\n\n${errorMessage}\n\n${userAuthStringified(auth)}\n\n${userVisitStringified(visitInfo)}`,
-    );
-  },
-  feedbackOnEach: backConfig.isTest
+  onErrorMessage: backConfig.isTest
     ? emptyFunc
-    : ({ onEachesRet, invoke: { method, scope }, tool }) => {
-        if (onEachesRet === '') return;
+    : ({ errorMessage, invoke: { method, scope }, tool: { auth, visitInfo } }) => {
+        tglogger.userErrors(
+          `${scope}.${method}()\n\n${errorMessage}\n\n${userAuthStringified(auth)}\n\n${userVisitStringified(visitInfo)}`,
+        );
+      },
+  feedbackOnEach: backConfig.isTest
+    ? // ? props => console.info({ ...props, tool: { ...props.tool, client: 'HIDDEN' } })
+      emptyFunc
+    : props => {
+        if (!props.feedback?.description) return;
 
-        const title = smylib.isFunc(onEachesRet) ? onEachesRet(tool) : onEachesRet;
+        const {
+          feedback,
+          invoke: { method, scope },
+          tool,
+        } = props;
 
-        if (title === '') return;
+        const title = smylib.isFunc(feedback.description) ? feedback.description(tool) : feedback.description;
+        if (!title) return;
+
         const text = `<code>${scope}.${method}</code>\n\n<b>${title}</b>`;
 
         jesmylChangesBot.postMessage(
@@ -47,14 +56,7 @@ export const { maker: TsjrpcBaseServer, next: tsjrpcBaseServerNext } = makeTSJRP
     const userVersion = tool.visitInfo?.version ?? 0;
     const beforeTool = beforeEachTools?.[method] ?? defaultBeforeEachTool;
 
-    if (beforeTool === undefined) {
-      return { isStopPropagation: userVersion < minAvailableUserVersion };
-    } else {
-      if (beforeTool.minLevel && (tool.auth == undefined || tool.auth.level < (beforeTool.minLevel ?? 0)))
-        throw `Нет прав на это действие`;
-
-      return { isStopPropagation: userVersion < (beforeTool.minVersion ?? minAvailableUserVersion) };
-    }
+    return { isStopPropagation: userVersion < (beforeTool?.minVersion ?? minAvailableUserVersion) };
   },
 });
 

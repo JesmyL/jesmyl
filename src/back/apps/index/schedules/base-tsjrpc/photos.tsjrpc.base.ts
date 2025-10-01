@@ -11,13 +11,19 @@ export const schPhotosTsjrpcBaseServer = new (class SchPhotos extends TsjrpcBase
     super({
       scope: 'SchPhotos',
       methods: {
-        putSharedPhotos: async ({ photoDict }) => {
+        putSharedPhotos: async ({ photoDict, schw }) => {
           const loadedCount = smylib.keys(photoDict).length;
           const prevCachedCount = smylib.keys(sharedPhotoDict).length;
           Object.assign(sharedPhotoDict, photoDict);
           const newCachedCount = smylib.keys(sharedPhotoDict).length;
+          const value = { addedCount: newCachedCount - prevCachedCount, loadedCount };
 
-          return { addedCount: newCachedCount - prevCachedCount, loadedCount };
+          return {
+            value,
+            description:
+              `Были отправлены фото для расписания ${scheduleTitleInBrackets(schw)}\n` +
+              `Загружено: ${value.loadedCount}\nНовых: ${value.addedCount}`,
+          };
         },
 
         getSharedPhotos: async ({ schw }) => {
@@ -27,16 +33,11 @@ export const schPhotosTsjrpcBaseServer = new (class SchPhotos extends TsjrpcBase
             if (key.startsWith(keyPrefix)) photos.push({ key, src: sharedPhotoDict[key] });
           });
 
-          return photos;
+          return {
+            value: photos,
+            description: `Запрос списка фото для расписания ${scheduleTitleInBrackets(schw)}. Отправлено ${photos.length} шт`,
+          };
         },
-      },
-      onEachFeedback: {
-        putSharedPhotos: ({ schw }, counts) =>
-          `Были отправлены фото для расписания ${scheduleTitleInBrackets(schw)}\n` +
-          `Загружено: ${counts.loadedCount}\nНовых: ${counts.addedCount}`,
-
-        getSharedPhotos: ({ schw }, photos) =>
-          `Запрос списка фото для расписания ${scheduleTitleInBrackets(schw)}. Отправлено ${photos.length} шт`,
       },
     });
   }

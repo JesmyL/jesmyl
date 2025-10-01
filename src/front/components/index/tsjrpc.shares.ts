@@ -10,10 +10,10 @@ export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<I
     super({
       scope: 'Index',
       methods: {
-        refreshAccessRights: ({ rights }) => {
+        refreshAccessRights: async ({ rights }) => {
           indexUserAccessRightsAtom.set(rights);
         },
-        updateKnownIconPacks: ({ actualIconPacks, iconsMd5Hash }) => {
+        updateKnownIconPacks: async ({ actualIconPacks, iconsMd5Hash }) => {
           MyLib.entries(actualIconPacks).forEach(([iconName, pack]) => {
             if (pack !== null) indexIDB.tb.iconPacks.put({ key: iconName, pack });
             else indexIDB.tb.iconPacks.delete(iconName);

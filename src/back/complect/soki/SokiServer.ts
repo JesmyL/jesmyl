@@ -152,7 +152,16 @@ export class SokiServer {
       return;
     }
 
-    this.send(event, tool.client);
+    this.send(
+      {
+        ...event,
+        invokedResult:
+          smylib.isObj(event.invokedResult) && 'value' in event.invokedResult
+            ? event.invokedResult.value
+            : event.invokedResult,
+      },
+      tool.client,
+    );
   };
 
   private isLocalhost = (url: string | nil) =>

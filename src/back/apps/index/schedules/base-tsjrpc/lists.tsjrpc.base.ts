@@ -1,5 +1,6 @@
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import {
+  IScheduleWidget,
   IScheduleWidgetListCat,
   IScheduleWidgetListUnit,
   ScheduleListCategoryScopeProps,
@@ -16,33 +17,35 @@ import { scheduleTitleInBrackets } from './general.tsjrpc.base';
 export const schListsTsjrpcBaseServer = new (class SchLists extends TsjrpcBaseServer<SchListsTsjrpcMethods> {
   constructor() {
     const modifyCategory = <Props extends { props: ScheduleListCategoryScopeProps }>(
-      modifier: (cat: IScheduleWidgetListCat, props: Props) => void,
+      modifier: (cat: IScheduleWidgetListCat, props: Props, sch: IScheduleWidget) => string | null,
     ) =>
       modifySchedule<Props>(false, (sch, props) => {
         const cat = sch.lists.cats[props.props.cati];
         if (cat == null) throw new Error('category not found');
-        modifier(cat, props);
+        return modifier(cat, props, sch);
       });
 
     const modifyUnit = <Props extends { props: ScheduleUnitScopeProps }>(
-      modifier: (unit: IScheduleWidgetListUnit, props: Props) => void,
+      modifier: (unit: IScheduleWidgetListUnit, props: Props, sch: IScheduleWidget) => string | null,
     ) =>
       modifySchedule<Props>(false, (sch, props) => {
         const unit = sch.lists.units.find(unit => unit.mi === props.props.unitMi);
         if (unit == null) throw new Error('The list unit not found');
-        modifier(unit, props);
+        return modifier(unit, props, sch);
       });
 
     super({
       scope: 'SchLists',
       methods: {
-        createCategory: modifySchedule(false, sch =>
+        createCategory: modifySchedule(false, sch => {
           sch.lists.cats.push({
             title: '',
             icon: 'CheckList',
             titles: ['Руководители', 'Участники'],
-          }),
-        ),
+          });
+
+          return `В расписании ${scheduleTitleInBrackets(sch)} добавлена новая категория списков`;
+        }),
 
         createUnit: modifySchedule(false, (sch, { cati }) => {
           const mi = smylib.takeNextMi(sch.lists.units, 0 as number);
@@ -53,11 +56,35 @@ export const schListsTsjrpcBaseServer = new (class SchLists extends TsjrpcBaseSe
             dsc: '',
             title: `${sch.lists.cats[cati].title} ${mi}`,
           });
+
+          return `В расписании ${scheduleTitleInBrackets(sch)} добавлен новый список для категории ${
+            sch.lists.cats[cati].title
+          }`;
         }),
-        setCategoryTitle: modifyCategory((cat, { value }) => (cat.title = value)),
-        setCategoryMembersTitle: modifyCategory((cat, { value }) => (cat.titles[1] = value)),
-        setCategoryMentorsTitle: modifyCategory((cat, { value }) => (cat.titles[0] = value)),
-        setCategoryIcon: modifyCategory((cat, { value }) => {
+        setCategoryTitle: modifyCategory((cat, { value, props }, sch) => {
+          cat.title = value;
+
+          return (
+            `В расписании ${scheduleTitleInBrackets(sch)} для ${props.cati + 1} ` +
+            `категории списков задано название "${value}"`
+          );
+        }),
+        setCategoryMembersTitle: modifyCategory((cat, { value, props }, sch) => {
+          cat.titles[1] = value;
+
+          return `В расписании ${scheduleTitleInBrackets(sch)} для ${
+            props.cati + 1
+          } категории списков задано название для участников: "${value}"`;
+        }),
+        setCategoryMentorsTitle: modifyCategory((cat, { value, props }, sch) => {
+          cat.titles[0] = value;
+
+          return (
+            `В расписании ${scheduleTitleInBrackets(sch)} для ${props.cati + 1} ` +
+            `категории списков задано название для наставников: "${value}"`
+          );
+        }),
+        setCategoryIcon: modifyCategory((cat, { value, props }, sch) => {
           indexServerTsjrpcShareMethods.updateKnownIconPacks(
             {
               actualIconPacks: { [value]: stameskaIconPack[value] },
@@ -68,43 +95,28 @@ export const schListsTsjrpcBaseServer = new (class SchLists extends TsjrpcBaseSe
           );
 
           cat.icon = value;
+
+          return `В расписании ${scheduleTitleInBrackets(sch)} для ${
+            props.cati + 1
+          } категории списков задана иконка "${value}"`;
         }),
 
-        setUnitTitle: modifyUnit((unit, { value }) => (unit.title = value)),
-        setUnitDescription: modifyUnit((unit, { value }) => (unit.dsc = value)),
-      },
-      onEachFeedback: {
-        createCategory: (_, sch) => `В расписании ${scheduleTitleInBrackets(sch)} добавлена новая категория списков`,
-        createUnit: ({ cati }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} добавлен новый список для категории ${
-            sch.lists.cats[cati].title
-          }`,
+        setUnitTitle: modifyUnit((unit, { value, cati }, sch) => {
+          unit.title = value;
 
-        setCategoryTitle: ({ props, value }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} для ${props.cati + 1} ` +
-          `категории списков задано название "${value}"`,
+          return (
+            `В расписании ${scheduleTitleInBrackets(sch)} для ` +
+            `задано название для списка ${sch.lists.cats[cati]}: "${value}"`
+          );
+        }),
+        setUnitDescription: modifyUnit((unit, { value, cati }, sch) => {
+          unit.dsc = value;
 
-        setCategoryIcon: ({ props, value }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} для ${
-            props.cati + 1
-          } категории списков задана иконка "${value}"`,
-
-        setCategoryMembersTitle: ({ props, value }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} для ${
-            props.cati + 1
-          } категории списков задано название для участников: "${value}"`,
-
-        setCategoryMentorsTitle: ({ props, value }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} для ${props.cati + 1} ` +
-          `категории списков задано название для наставников: "${value}"`,
-
-        setUnitTitle: ({ value, cati }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} для ` +
-          `задано название для списка ${sch.lists.cats[cati]}: "${value}"`,
-
-        setUnitDescription: ({ value, cati }, sch) =>
-          `В расписании ${scheduleTitleInBrackets(sch)} для ` +
-          `задано описание для списка ${sch.lists.cats[cati]}: "${value}"`,
+          return (
+            `В расписании ${scheduleTitleInBrackets(sch)} для ` +
+            `задано описание для списка ${sch.lists.cats[cati]}: "${value}"`
+          );
+        }),
       },
     });
   }
