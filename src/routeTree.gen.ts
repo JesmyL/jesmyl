@@ -26,7 +26,6 @@ import { Route as QIImport } from './front/routes/q/i'
 import { Route as BibleTranImport } from './front/routes/bible/tran'
 import { Route as BibleSearchImport } from './front/routes/bible/search'
 import { Route as BibleIImport } from './front/routes/bible/i'
-import { Route as CmEditRouteImport } from './front/routes/cm/edit/route'
 import { Route as otherAppNameRouteImport } from './front/routes/!other.$appName/route'
 import { Route as ScheduleDaySchwIndexImport } from './front/routes/schedule-day/$schw/index'
 import { Route as QRIndexImport } from './front/routes/q/r/index'
@@ -62,6 +61,7 @@ import { Route as CmEditComsComwTabIndexImport } from './front/routes/cm/edit/co
 // Create Virtual Routes
 
 const ScheduleDayIndexLazyImport = createFileRoute('/schedule-day/')()
+const CmEditRouteLazyImport = createFileRoute('/cm/edit')()
 const CmEditIndexLazyImport = createFileRoute('/cm/edit/')()
 
 // Create/Update Routes
@@ -122,6 +122,14 @@ const BibleIndexRoute = BibleIndexImport.update({
   getParentRoute: () => BibleRouteRoute,
 } as any)
 
+const CmEditRouteLazyRoute = CmEditRouteLazyImport.update({
+  id: '/edit',
+  path: '/edit',
+  getParentRoute: () => CmRouteRoute,
+} as any).lazy(() =>
+  import('./front/routes/cm/edit/route.lazy').then((d) => d.Route),
+)
+
 const TunerIRoute = TunerIImport.update({
   id: '/i',
   path: '/i',
@@ -152,12 +160,6 @@ const BibleIRoute = BibleIImport.update({
   getParentRoute: () => BibleRouteRoute,
 } as any)
 
-const CmEditRouteRoute = CmEditRouteImport.update({
-  id: '/edit',
-  path: '/edit',
-  getParentRoute: () => CmRouteRoute,
-} as any)
-
 const otherAppNameRouteRoute = otherAppNameRouteImport.update({
   id: '/!other/$appName',
   path: '/!other/$appName',
@@ -167,7 +169,7 @@ const otherAppNameRouteRoute = otherAppNameRouteImport.update({
 const CmEditIndexLazyRoute = CmEditIndexLazyImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => CmEditRouteRoute,
+  getParentRoute: () => CmEditRouteLazyRoute,
 } as any).lazy(() =>
   import('./front/routes/cm/edit/index.lazy').then((d) => d.Route),
 )
@@ -247,43 +249,43 @@ const CmLiEventsRoute = CmLiEventsImport.update({
 const CmEditMp3RulesRoute = CmEditMp3RulesImport.update({
   id: '/mp3Rules',
   path: '/mp3Rules',
-  getParentRoute: () => CmEditRouteRoute,
+  getParentRoute: () => CmEditRouteLazyRoute,
 } as any)
 
 const CmEditEventsRoute = CmEditEventsImport.update({
   id: '/events',
   path: '/events',
-  getParentRoute: () => CmEditRouteRoute,
+  getParentRoute: () => CmEditRouteLazyRoute,
 } as any)
 
 const CmEditEERoute = CmEditEEImport.update({
   id: '/e-e',
   path: '/e-e',
-  getParentRoute: () => CmEditRouteRoute,
+  getParentRoute: () => CmEditRouteLazyRoute,
 } as any)
 
 const CmEditConstantsRoute = CmEditConstantsImport.update({
   id: '/constants',
   path: '/constants',
-  getParentRoute: () => CmEditRouteRoute,
+  getParentRoute: () => CmEditRouteLazyRoute,
 } as any)
 
 const CmEditChordRoute = CmEditChordImport.update({
   id: '/chord',
   path: '/chord',
-  getParentRoute: () => CmEditRouteRoute,
+  getParentRoute: () => CmEditRouteLazyRoute,
 } as any)
 
 const CmEditComsIndexRoute = CmEditComsIndexImport.update({
   id: '/coms/',
   path: '/coms/',
-  getParentRoute: () => CmEditRouteRoute,
+  getParentRoute: () => CmEditRouteLazyRoute,
 } as any)
 
 const CmEditCatsIndexRoute = CmEditCatsIndexImport.update({
   id: '/cats/',
   path: '/cats/',
-  getParentRoute: () => CmEditRouteRoute,
+  getParentRoute: () => CmEditRouteLazyRoute,
 } as any)
 
 const otherAppNameSettingsIndexRoute = otherAppNameSettingsIndexImport.update({
@@ -319,7 +321,7 @@ const CmLiCatCatwRoute = CmLiCatCatwImport.update({
 const CmEditCatsCatwRoute = CmEditCatsCatwImport.update({
   id: '/cats/$catw',
   path: '/cats/$catw',
-  getParentRoute: () => CmEditRouteRoute,
+  getParentRoute: () => CmEditRouteLazyRoute,
 } as any)
 
 const otherAppNameSettingsRightsRoute = otherAppNameSettingsRightsImport.update(
@@ -347,7 +349,7 @@ const otherAppNameActionsFilesIndexRoute =
 const CmEditComsComwTabRouteRoute = CmEditComsComwTabRouteImport.update({
   id: '/coms/$comw/$tab',
   path: '/coms/$comw/$tab',
-  getParentRoute: () => CmEditRouteRoute,
+  getParentRoute: () => CmEditRouteLazyRoute,
 } as any)
 
 const CmEditComsComwTabIndexRoute = CmEditComsComwTabIndexImport.update({
@@ -402,13 +404,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof otherAppNameRouteImport
       parentRoute: typeof rootRoute
     }
-    '/cm/edit': {
-      id: '/cm/edit'
-      path: '/edit'
-      fullPath: '/cm/edit'
-      preLoaderRoute: typeof CmEditRouteImport
-      parentRoute: typeof CmRouteImport
-    }
     '/bible/i': {
       id: '/bible/i'
       path: '/i'
@@ -444,6 +439,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TunerIImport
       parentRoute: typeof TunerRouteImport
     }
+    '/cm/edit': {
+      id: '/cm/edit'
+      path: '/edit'
+      fullPath: '/cm/edit'
+      preLoaderRoute: typeof CmEditRouteLazyImport
+      parentRoute: typeof CmRouteImport
+    }
     '/bible/': {
       id: '/bible/'
       path: '/'
@@ -477,35 +479,35 @@ declare module '@tanstack/react-router' {
       path: '/chord'
       fullPath: '/cm/edit/chord'
       preLoaderRoute: typeof CmEditChordImport
-      parentRoute: typeof CmEditRouteImport
+      parentRoute: typeof CmEditRouteLazyImport
     }
     '/cm/edit/constants': {
       id: '/cm/edit/constants'
       path: '/constants'
       fullPath: '/cm/edit/constants'
       preLoaderRoute: typeof CmEditConstantsImport
-      parentRoute: typeof CmEditRouteImport
+      parentRoute: typeof CmEditRouteLazyImport
     }
     '/cm/edit/e-e': {
       id: '/cm/edit/e-e'
       path: '/e-e'
       fullPath: '/cm/edit/e-e'
       preLoaderRoute: typeof CmEditEEImport
-      parentRoute: typeof CmEditRouteImport
+      parentRoute: typeof CmEditRouteLazyImport
     }
     '/cm/edit/events': {
       id: '/cm/edit/events'
       path: '/events'
       fullPath: '/cm/edit/events'
       preLoaderRoute: typeof CmEditEventsImport
-      parentRoute: typeof CmEditRouteImport
+      parentRoute: typeof CmEditRouteLazyImport
     }
     '/cm/edit/mp3Rules': {
       id: '/cm/edit/mp3Rules'
       path: '/mp3Rules'
       fullPath: '/cm/edit/mp3Rules'
       preLoaderRoute: typeof CmEditMp3RulesImport
-      parentRoute: typeof CmEditRouteImport
+      parentRoute: typeof CmEditRouteLazyImport
     }
     '/cm/li/events': {
       id: '/cm/li/events'
@@ -596,7 +598,7 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/cm/edit/'
       preLoaderRoute: typeof CmEditIndexLazyImport
-      parentRoute: typeof CmEditRouteImport
+      parentRoute: typeof CmEditRouteLazyImport
     }
     '/!other/$appName/settings/console': {
       id: '/!other/$appName/settings/console'
@@ -617,7 +619,7 @@ declare module '@tanstack/react-router' {
       path: '/cats/$catw'
       fullPath: '/cm/edit/cats/$catw'
       preLoaderRoute: typeof CmEditCatsCatwImport
-      parentRoute: typeof CmEditRouteImport
+      parentRoute: typeof CmEditRouteLazyImport
     }
     '/cm/li/cat/$catw': {
       id: '/cm/li/cat/$catw'
@@ -659,21 +661,21 @@ declare module '@tanstack/react-router' {
       path: '/cats'
       fullPath: '/cm/edit/cats'
       preLoaderRoute: typeof CmEditCatsIndexImport
-      parentRoute: typeof CmEditRouteImport
+      parentRoute: typeof CmEditRouteLazyImport
     }
     '/cm/edit/coms/': {
       id: '/cm/edit/coms/'
       path: '/coms'
       fullPath: '/cm/edit/coms'
       preLoaderRoute: typeof CmEditComsIndexImport
-      parentRoute: typeof CmEditRouteImport
+      parentRoute: typeof CmEditRouteLazyImport
     }
     '/cm/edit/coms/$comw/$tab': {
       id: '/cm/edit/coms/$comw/$tab'
       path: '/coms/$comw/$tab'
       fullPath: '/cm/edit/coms/$comw/$tab'
       preLoaderRoute: typeof CmEditComsComwTabRouteImport
-      parentRoute: typeof CmEditRouteImport
+      parentRoute: typeof CmEditRouteLazyImport
     }
     '/!other/$appName/actions/files/': {
       id: '/!other/$appName/actions/files/'
@@ -726,7 +728,7 @@ const CmEditComsComwTabRouteRouteWithChildren =
     CmEditComsComwTabRouteRouteChildren,
   )
 
-interface CmEditRouteRouteChildren {
+interface CmEditRouteLazyRouteChildren {
   CmEditChordRoute: typeof CmEditChordRoute
   CmEditConstantsRoute: typeof CmEditConstantsRoute
   CmEditEERoute: typeof CmEditEERoute
@@ -739,7 +741,7 @@ interface CmEditRouteRouteChildren {
   CmEditComsComwTabRouteRoute: typeof CmEditComsComwTabRouteRouteWithChildren
 }
 
-const CmEditRouteRouteChildren: CmEditRouteRouteChildren = {
+const CmEditRouteLazyRouteChildren: CmEditRouteLazyRouteChildren = {
   CmEditChordRoute: CmEditChordRoute,
   CmEditConstantsRoute: CmEditConstantsRoute,
   CmEditEERoute: CmEditEERoute,
@@ -752,12 +754,12 @@ const CmEditRouteRouteChildren: CmEditRouteRouteChildren = {
   CmEditComsComwTabRouteRoute: CmEditComsComwTabRouteRouteWithChildren,
 }
 
-const CmEditRouteRouteWithChildren = CmEditRouteRoute._addFileChildren(
-  CmEditRouteRouteChildren,
+const CmEditRouteLazyRouteWithChildren = CmEditRouteLazyRoute._addFileChildren(
+  CmEditRouteLazyRouteChildren,
 )
 
 interface CmRouteRouteChildren {
-  CmEditRouteRoute: typeof CmEditRouteRouteWithChildren
+  CmEditRouteLazyRoute: typeof CmEditRouteLazyRouteWithChildren
   CmIndexRoute: typeof CmIndexRoute
   CmLiEventsRoute: typeof CmLiEventsRoute
   CmLiFavRoute: typeof CmLiFavRoute
@@ -769,7 +771,7 @@ interface CmRouteRouteChildren {
 }
 
 const CmRouteRouteChildren: CmRouteRouteChildren = {
-  CmEditRouteRoute: CmEditRouteRouteWithChildren,
+  CmEditRouteLazyRoute: CmEditRouteLazyRouteWithChildren,
   CmIndexRoute: CmIndexRoute,
   CmLiEventsRoute: CmLiEventsRoute,
   CmLiFavRoute: CmLiFavRoute,
@@ -848,12 +850,12 @@ export interface FileRoutesByFullPath {
   '/q': typeof QRouteRouteWithChildren
   '/tuner': typeof TunerRouteRouteWithChildren
   '/!other/$appName': typeof otherAppNameRouteRouteWithChildren
-  '/cm/edit': typeof CmEditRouteRouteWithChildren
   '/bible/i': typeof BibleIRoute
   '/bible/search': typeof BibleSearchRoute
   '/bible/tran': typeof BibleTranRoute
   '/q/i': typeof QIRoute
   '/tuner/i': typeof TunerIRoute
+  '/cm/edit': typeof CmEditRouteLazyRouteWithChildren
   '/bible/': typeof BibleIndexRoute
   '/cm/': typeof CmIndexRoute
   '/tuner/': typeof TunerIndexRoute
@@ -943,12 +945,12 @@ export interface FileRoutesById {
   '/q': typeof QRouteRouteWithChildren
   '/tuner': typeof TunerRouteRouteWithChildren
   '/!other/$appName': typeof otherAppNameRouteRouteWithChildren
-  '/cm/edit': typeof CmEditRouteRouteWithChildren
   '/bible/i': typeof BibleIRoute
   '/bible/search': typeof BibleSearchRoute
   '/bible/tran': typeof BibleTranRoute
   '/q/i': typeof QIRoute
   '/tuner/i': typeof TunerIRoute
+  '/cm/edit': typeof CmEditRouteLazyRouteWithChildren
   '/bible/': typeof BibleIndexRoute
   '/cm/': typeof CmIndexRoute
   '/tuner/': typeof TunerIndexRoute
@@ -995,12 +997,12 @@ export interface FileRouteTypes {
     | '/q'
     | '/tuner'
     | '/!other/$appName'
-    | '/cm/edit'
     | '/bible/i'
     | '/bible/search'
     | '/bible/tran'
     | '/q/i'
     | '/tuner/i'
+    | '/cm/edit'
     | '/bible/'
     | '/cm/'
     | '/tuner/'
@@ -1087,12 +1089,12 @@ export interface FileRouteTypes {
     | '/q'
     | '/tuner'
     | '/!other/$appName'
-    | '/cm/edit'
     | '/bible/i'
     | '/bible/search'
     | '/bible/tran'
     | '/q/i'
     | '/tuner/i'
+    | '/cm/edit'
     | '/bible/'
     | '/cm/'
     | '/tuner/'
@@ -1229,22 +1231,6 @@ export const routeTree = rootRoute
         "/!other/$appName/actions/files/"
       ]
     },
-    "/cm/edit": {
-      "filePath": "cm/edit/route.tsx",
-      "parent": "/cm",
-      "children": [
-        "/cm/edit/chord",
-        "/cm/edit/constants",
-        "/cm/edit/e-e",
-        "/cm/edit/events",
-        "/cm/edit/mp3Rules",
-        "/cm/edit/",
-        "/cm/edit/cats/$catw",
-        "/cm/edit/cats/",
-        "/cm/edit/coms/",
-        "/cm/edit/coms/$comw/$tab"
-      ]
-    },
     "/bible/i": {
       "filePath": "bible/i.tsx",
       "parent": "/bible"
@@ -1264,6 +1250,22 @@ export const routeTree = rootRoute
     "/tuner/i": {
       "filePath": "tuner/i.tsx",
       "parent": "/tuner"
+    },
+    "/cm/edit": {
+      "filePath": "cm/edit/route.lazy.tsx",
+      "parent": "/cm",
+      "children": [
+        "/cm/edit/chord",
+        "/cm/edit/constants",
+        "/cm/edit/e-e",
+        "/cm/edit/events",
+        "/cm/edit/mp3Rules",
+        "/cm/edit/",
+        "/cm/edit/cats/$catw",
+        "/cm/edit/cats/",
+        "/cm/edit/coms/",
+        "/cm/edit/coms/$comw/$tab"
+      ]
     },
     "/bible/": {
       "filePath": "bible/index.tsx",

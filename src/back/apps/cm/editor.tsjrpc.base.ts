@@ -63,7 +63,11 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
         unwatchComBusies: unwatchEditComBusies,
 
         requestFreshes: async ({ lastModfiedAt }, { client, auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'EDIT', 'R')) throw '';
+          try {
+            if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'EDIT', 'R')) throw '';
+          } catch (_) {
+            return;
+          }
 
           const eePackModifiedAt = eePackFileStore.fileModifiedAt();
           if (eePackModifiedAt > lastModfiedAt) {
