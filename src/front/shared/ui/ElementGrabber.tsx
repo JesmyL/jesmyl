@@ -72,8 +72,10 @@ export const makeElementGrabber = <Value, OnDropReturn = void>(options?: {
   }) => React.ReactNode;
 
   type BothValues<Val> = { grabbedValue: Val; targetValue: Val };
+  type OnDrop = (props: BothValues<Value>) => OnDropReturn;
 
-  let userOnDrop: (props: BothValues<Value>) => OnDropReturn = (() => {}) as never;
+  const [UserOnDropContext, useUserOnDropContext] = contextCreator<OnDrop>((() => {}) as never);
+
   const shownClassName = `${classNamePrefix} ${showClassNameIndicator}`;
   const currentRootKeyAtom = atom<string | number | undefined>(undefined);
   const [RootCtx, useRootCtx] = contextCreator<number | string | undefined>(undefined);
@@ -94,7 +96,12 @@ export const makeElementGrabber = <Value, OnDropReturn = void>(options?: {
     };
   };
 
-  const makeDropRenderProps = (grabbedValue: Value, targetValue: Value, value: Value): Parameters<DropRender>[0] => {
+  const makeDropRenderProps = (
+    userOnDrop: OnDrop,
+    grabbedValue: Value,
+    targetValue: Value,
+    value: Value,
+  ): Parameters<DropRender>[0] => {
     return {
       onDrop: async () => {
         const result = userOnDrop({ grabbedValue, targetValue: value });
@@ -125,30 +132,23 @@ export const makeElementGrabber = <Value, OnDropReturn = void>(options?: {
   };
 
   return {
-    Root: ({
-      children,
-      onDrop,
-      uniqKey,
-    }: {
-      onDrop?: typeof userOnDrop;
-      children: React.ReactNode;
-      uniqKey: string | number;
-    }) => {
-      userOnDrop = onDrop ?? ((() => {}) as never);
+    Root: ({ children, onDrop, uniqKey }: { onDrop?: OnDrop; children: React.ReactNode; uniqKey: string | number }) => {
       uniqKey = `${uniqKey}`.replace(makeRegExp('/[^-a-z0-9_]/g'), norm);
       const currentRootKey = useAtomValue(currentRootKeyAtom);
       const accentedValues = useAtomValue(accentedValuesAtom);
 
       return (
-        <RootCtx.Provider value={uniqKey}>
-          <RootComponent
-            $accentedValues={accentedValues}
-            $currentRootKey={currentRootKey}
-            className={`c-${uniqKey}`}
-          >
-            {children}
-          </RootComponent>
-        </RootCtx.Provider>
+        <UserOnDropContext.Provider value={onDrop ?? ((() => {}) as never)}>
+          <RootCtx.Provider value={uniqKey}>
+            <RootComponent
+              $accentedValues={accentedValues}
+              $currentRootKey={currentRootKey}
+              className={`c-${uniqKey}`}
+            >
+              {children}
+            </RootComponent>
+          </RootCtx.Provider>
+        </UserOnDropContext.Provider>
       );
     },
     Grab: ({
@@ -163,22 +163,24 @@ export const makeElementGrabber = <Value, OnDropReturn = void>(options?: {
       renderStop?: StopRender;
     }) => {
       const { grabbedValue, targetValue } = useAtomValue(accentedValuesAtom);
+      const userOnDrop = useUserOnDropContext();
       const rootKey = useRootCtx();
 
       return (
         <>
           {render(makeGrabRenderProps(grabbedValue, rootKey))}
-          {renderDrop?.(makeDropRenderProps(grabbedValue, targetValue, value))}
+          {renderDrop?.(makeDropRenderProps(userOnDrop, grabbedValue, targetValue, value))}
           {renderStop?.(makeStopRenderProps(grabbedValue, value))}
         </>
       );
     },
     Drop: ({ render, value, renderStop }: { value: Value; render: DropRender; renderStop?: StopRender }) => {
       const { grabbedValue, targetValue } = useAtomValue(accentedValuesAtom);
+      const userOnDrop = useUserOnDropContext();
 
       return (
         <>
-          {render(makeDropRenderProps(grabbedValue, targetValue, value))}
+          {render(makeDropRenderProps(userOnDrop, grabbedValue, targetValue, value))}
           {renderStop?.(makeStopRenderProps(grabbedValue, value))}
         </>
       );
