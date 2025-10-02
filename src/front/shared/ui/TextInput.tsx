@@ -1,7 +1,7 @@
 import { Input } from '#shared/components/ui/input';
 import { Textarea } from '#shared/components/ui/textarea';
 import { propagationStopper } from '#shared/lib/event-funcs';
-import { AllHTMLAttributes, useEffect, useRef } from 'react';
+import { AllHTMLAttributes, useEffect, useRef, useState } from 'react';
 
 type Props = OmitOwn<
   AllHTMLAttributes<HTMLInputElement & HTMLTextAreaElement>,
@@ -17,12 +17,20 @@ type Props = OmitOwn<
 
 export const TextInput = ({ onChanged, onInput, multiline, label, strongDefaultValue, ...props }: Props) => {
   const Comp = multiline ? Textarea : Input;
+  const [firstValue, setFirstValue] = useState(props.defaultValue ?? props.value);
+
   const attrs: AllHTMLAttributes<HTMLInputElement & HTMLTextAreaElement> = {
+    ...props,
     onKeyDown: propagationStopper,
     onChange: onInput ? event => onInput(event.currentTarget.value) : undefined,
     onBlur: onChanged
       ? event => {
-          if (event.currentTarget.value !== props.defaultValue) onChanged(event.currentTarget.value.trim());
+          const value = event.currentTarget.value.trim();
+
+          if (value !== firstValue) {
+            onChanged(value);
+            setFirstValue(value);
+          }
           props.onBlur?.(event as never);
         }
       : undefined,
@@ -31,14 +39,10 @@ export const TextInput = ({ onChanged, onInput, multiline, label, strongDefaultV
   const node = strongDefaultValue ? (
     <StrongDefaultValueInput
       Comp={Comp}
-      {...props}
       {...(attrs as object)}
     />
   ) : (
-    <Comp
-      {...props}
-      {...(attrs as object)}
-    />
+    <Comp {...(attrs as object)} />
   );
 
   return label ? (

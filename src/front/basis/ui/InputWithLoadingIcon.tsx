@@ -9,7 +9,8 @@ type Props<ChangedValue> = {
   onChanged: (value: string) => Promise<ChangedValue>;
   onInput?: (value: string) => void;
   type?: 'email' | 'tel' | 'text';
-  defaultValue: string;
+  defaultValue?: string;
+  value?: string;
   label?: string;
   placeholder?: string;
   className?: string;
@@ -33,7 +34,6 @@ export const InputWithLoadingIcon = <ChangedValue,>({
   onChanged,
   onInput,
   type,
-  defaultValue,
   label,
   multiline,
   isError,
@@ -45,6 +45,7 @@ export const InputWithLoadingIcon = <ChangedValue,>({
   ...attrs
 }: Props<ChangedValue>) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [firstValue, setFirstValue] = useState(attrs.defaultValue ?? attrs.value);
 
   return (
     <div className="w-full flex gap-2 my-2">
@@ -72,18 +73,18 @@ export const InputWithLoadingIcon = <ChangedValue,>({
             {...attrs}
             multiline={multiline}
             className={twMerge('w-full pointer', className)}
-            defaultValue={defaultValue}
             placeholder={placeholder}
             strongDefaultValue={strongDefaultValue}
             type={type}
             disabled={disabled}
             onInput={onInput}
             onChanged={async value => {
-              if (isError || defaultValue === value) return;
+              if (isError || firstValue === value) return;
               setIsLoading(true);
 
               try {
                 await onChanged(value.trim());
+                setFirstValue(value.trim());
               } catch (_error) {
                 //
               }

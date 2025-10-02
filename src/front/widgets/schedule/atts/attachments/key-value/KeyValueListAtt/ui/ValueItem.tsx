@@ -28,26 +28,7 @@ import { KeyValueListAttNumberMember } from '../../KeyValueListAttNumberMember';
 import { ScheduleWidgetKeyValueListAttPositionControls } from './AttPositionControls';
 import { ScheduleWidgetAttKeyValueListSubItemsRedact } from './SubItems';
 
-export const ScheduleWidgetKeyValueListValueItem = ({
-  rights,
-  valueKey,
-  itemMi,
-  scopeProps,
-  isRedact,
-  value,
-  userR,
-  att,
-  exclusiveUsers,
-  exclusiveLists,
-  exclusiveRoles,
-  exclusiveGames,
-  attValue,
-  dropdownLists,
-  dropdownRoles,
-  dropdownTitles,
-  dropdownUsers,
-  subItems,
-}: {
+interface Props {
   rights: ScheduleWidgetRights;
   valueKey: string | number | boolean;
   itemMi: number;
@@ -66,7 +47,19 @@ export const ScheduleWidgetKeyValueListValueItem = ({
   dropdownTitles: string[] | undefined;
   dropdownUsers: IScheduleWidgetUser[];
   subItems: ((item: ScheduleWidgetAppAttCustomizableValueItem) => ReactNode) | null;
-}) => {
+}
+
+export const ScheduleWidgetKeyValueListValueItem = ({
+  rights,
+  valueKey,
+  itemMi,
+  scopeProps,
+  isRedact,
+  value,
+  userR,
+  att,
+  ...props
+}: Props) => {
   let role: IScheduleWidgetRole | und = undefined;
   let generalNode = null;
 
@@ -154,10 +147,10 @@ export const ScheduleWidgetKeyValueListValueItem = ({
                 <ScheduleKeyValueListAttArrayItemKeyChange
                   dayEventAttScopeProps={scopeProps}
                   theKey={valueKey}
-                  users={exclusiveUsers}
-                  lists={exclusiveLists}
-                  roles={exclusiveRoles}
-                  games={exclusiveGames}
+                  users={props.exclusiveUsers}
+                  lists={props.exclusiveLists}
+                  roles={props.exclusiveRoles}
+                  games={props.exclusiveGames}
                 />
               )}
             </>
@@ -173,15 +166,15 @@ export const ScheduleWidgetKeyValueListValueItem = ({
       </div>
       <ScheduleWidgetAttKeyValueListSubItemsRedact
         isRedact={isRedact}
-        attValue={attValue}
+        attValue={props.attValue}
         dayEventAttScopeProps={scopeProps}
-        dropdownLists={dropdownLists}
-        dropdownRoles={dropdownRoles}
-        dropdownTitles={dropdownTitles}
-        dropdownUsers={dropdownUsers}
+        dropdownLists={props.dropdownLists}
+        dropdownRoles={props.dropdownRoles}
+        dropdownTitles={props.dropdownTitles}
+        dropdownUsers={props.dropdownUsers}
         itemMi={itemMi}
         setSelfRedact={setSelfRedact}
-        subItems={subItems}
+        subItems={props.subItems}
         value={value}
         valueKey={valueKey}
         att={att}

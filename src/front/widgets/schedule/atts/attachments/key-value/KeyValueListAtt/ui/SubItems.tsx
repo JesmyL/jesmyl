@@ -18,22 +18,7 @@ import styled, { css } from 'styled-components';
 import { KeyValueListAttNumberMember } from '../../KeyValueListAttNumberMember';
 import { ScheduleKeyValueListAttLiItemDropdown } from '../../LiItemDropdown';
 
-export const ScheduleWidgetAttKeyValueListSubItemsRedact = ({
-  isRedact,
-  value,
-  valueKey,
-  setSelfRedact,
-  dayEventAttScopeProps,
-  itemMi,
-  dropdownUsers,
-  dropdownLists,
-  dropdownTitles,
-  attValue,
-  dropdownRoles,
-  subItems,
-  userR,
-  att,
-}: {
+interface Props {
   attValue: ScheduleWidgetAppAttCustomizableValue;
   dayEventAttScopeProps: ScheduleDayEventAttachmentScopeProps;
   dropdownLists: IScheduleWidgetListUnit[] | undefined;
@@ -48,7 +33,17 @@ export const ScheduleWidgetAttKeyValueListSubItemsRedact = ({
   value: ScheduleWidgetAppAttCustomizableValueItem[1];
   userR: number;
   att: ScheduleWidgetAppAttCustomized;
-}) => {
+}
+
+export const ScheduleWidgetAttKeyValueListSubItemsRedact = ({
+  isRedact,
+  value,
+  valueKey,
+  setSelfRedact,
+  dayEventAttScopeProps,
+  itemMi,
+  ...props
+}: Props) => {
   return (
     <>
       {(isRedact || value !== '+') &&
@@ -77,7 +72,7 @@ export const ScheduleWidgetAttKeyValueListSubItemsRedact = ({
             {value?.map((val, vali, vala) => {
               return (
                 <div key={vali}>
-                  {customAttUseRights.checkIsCan(userR, att.U) && (
+                  {customAttUseRights.checkIsCan(props.userR, props.att.U) && (
                     <div className="flex gap-2">
                       <span className="flex self-start">{vali + 1}.</span>
                       {vala.length > 1 && vali > 0 && (
@@ -137,11 +132,11 @@ export const ScheduleWidgetAttKeyValueListSubItemsRedact = ({
             {value && (
               <ScheduleKeyValueListAttLiItemDropdown
                 value={value}
-                topValues={attValue.values!}
-                users={dropdownUsers}
-                titles={dropdownTitles}
-                lists={dropdownLists}
-                roles={dropdownRoles}
+                topValues={props.attValue.values!}
+                users={props.dropdownUsers}
+                titles={props.dropdownTitles}
+                lists={props.dropdownLists}
+                roles={props.dropdownRoles}
                 onSend={value =>
                   schDayEventsTsjrpcClient.addKeyValueAttachmentListItem({
                     props: dayEventAttScopeProps,
@@ -152,7 +147,7 @@ export const ScheduleWidgetAttKeyValueListSubItemsRedact = ({
               />
             )}
 
-            {subItems?.([valueKey, value, itemMi])}
+            {props.subItems?.([valueKey, value, itemMi])}
 
             <StrongEditableField
               className="mood-for-2 relative z-5 mt-2"

@@ -6,15 +6,13 @@ import { ScheduleDayEventAttachmentScopeProps, ScheduleWidgetAppAttCustomizableV
 import { twMerge } from 'tailwind-merge';
 import { ScheduleWidgetKeyValueItemGrabber } from '../lib/itemGrabber';
 
-export const ScheduleWidgetKeyValueListAttPositionControls = ({
-  dayEventAttScopeProps,
-  itemMi,
-  value,
-}: {
+interface Props {
   dayEventAttScopeProps: ScheduleDayEventAttachmentScopeProps;
   itemMi: number;
   value: ScheduleWidgetAppAttCustomizableValueItem[1];
-}) => {
+}
+
+export const ScheduleWidgetKeyValueListAttPositionControls = ({ dayEventAttScopeProps, itemMi, value }: Props) => {
   return (
     <div className={twMerge('flex', mylib.isStr(value) && 'mr-7')}>
       <ScheduleWidgetKeyValueItemGrabber.Grab
