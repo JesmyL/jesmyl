@@ -29,6 +29,8 @@ type Props<Key, Value> = {
   onSelfRedactChange?: (is: boolean) => void;
 };
 
+let inputTimeout: TimeOut;
+
 export function StrongEditableField<Key extends string, Value extends string | Partial<Record<Key, string>>>(
   props: Props<Key, Value>,
 ) {
@@ -89,7 +91,8 @@ export function StrongEditableField<Key extends string, Value extends string | P
         <LazyIcon
           icon="LinkBackward"
           className="pointer"
-          onPointerDown={() => setStateValue(value)}
+          onMouseDown={() => setStateValue(value)}
+          onTouchStart={() => setStateValue(value)}
         />
       ) : (
         <LazyIcon
@@ -125,7 +128,9 @@ export function StrongEditableField<Key extends string, Value extends string | P
               type={props.type}
               disabled={props.disabled}
               onInput={val => {
-                setStateValue(val);
+                clearTimeout(inputTimeout);
+                inputTimeout = setTimeout(setStateValue, 500, val);
+
                 setIsUserChange(true);
                 props.onChanged?.(val);
               }}
