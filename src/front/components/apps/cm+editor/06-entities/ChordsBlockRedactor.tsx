@@ -23,6 +23,7 @@ export const CmChordsBlockRedactor = ({ text, texti, ccom, isDisabled }: Props) 
         label=""
         className="bg-x1!"
         defaultValue={text}
+        strongDefaultValue
         onChanged={value => ccom.changeChordsBlock(texti, value)}
         onInput={setValue}
         isError={!!corrects.errors?.length}
