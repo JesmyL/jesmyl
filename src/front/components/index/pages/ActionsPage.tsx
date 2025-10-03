@@ -41,8 +41,8 @@ export function IndexActionsPage() {
           <QrReader
             openAtom={isOpenAtom}
             onReadData={value => {
-              if (value.data.startsWith(hosts.host)) {
-                onHrefData(value.data);
+              if (value.startsWith(hosts.host)) {
+                onHrefData(value);
                 isOpenAtom.set(false);
               }
             }}

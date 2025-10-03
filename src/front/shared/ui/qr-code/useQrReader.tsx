@@ -1,35 +1,15 @@
-import { useActualRef } from '#shared/lib/hooks/useActualRef';
+import { IDetectedBarcode, Scanner } from '@yudiel/react-qr-scanner';
 import { Atom } from 'atomaric';
-import QrScanner from 'qr-scanner';
-import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { FullContent } from '../fullscreen-content/FullContent';
 
 interface Props {
   facingMode?: 'user' | 'environment';
-  onReadData: (result: QrScanner.ScanResult) => void;
+  onReadData: (firstText: string, resultx: IDetectedBarcode[]) => void;
   openAtom: Atom<boolean>;
 }
 
 export const QrReader = ({ facingMode = 'environment', onReadData, openAtom }: Props) => {
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const onReadDataRef = useActualRef(onReadData);
-
-  useEffect(() => {
-    if (videoRef.current === null) return;
-
-    const qrScanner = new QrScanner(videoRef.current, onReadDataRef.current, {
-      preferredCamera: facingMode,
-    });
-
-    qrScanner.start();
-    qrScanner.setInversionMode('both');
-
-    return () => {
-      qrScanner.pause();
-    };
-  }, [facingMode, onReadDataRef]);
-
   return (
     <FullContent
       openAtom={openAtom}
@@ -37,12 +17,18 @@ export const QrReader = ({ facingMode = 'environment', onReadData, openAtom }: P
       closable
     >
       <div className="bg-x1 flex center full-size">
-        <StyledVideo ref={videoRef} />
+        <StyledVideo
+          constraints={{ facingMode }}
+          onScan={result => {
+            if (result?.[0] == null) return;
+            onReadData(result[0].rawValue, result);
+          }}
+        />
       </div>
     </FullContent>
   );
 };
 
-const StyledVideo = styled.video`
+const StyledVideo = styled(Scanner)`
   height: 100vmax;
 `;
