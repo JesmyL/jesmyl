@@ -16,6 +16,8 @@ export const CmTransferAltCommentModalInner = ({ com }: { com: Com }) => {
   const [transferAltTo, setTransferAltTo] = useState<string | null>(registeredAltKeys.values().next().value ?? null);
   const items = Array.from(registeredAltKeys).map(key => ({ id: key, title: key }));
 
+  cmComCommentRegisteredAltKeysAtom.do.init();
+
   return (
     <>
       <ModalHeader>Переместить заметки</ModalHeader>

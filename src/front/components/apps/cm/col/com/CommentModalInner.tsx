@@ -42,6 +42,7 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
 
   if (ordSelectorId === null) return;
 
+  cmComCommentRegisteredAltKeysAtom.do.init();
   const visibleOrders = com.orders?.filter(ComBlockCommentMakerCleans.withHeaderTextOrderFilter) ?? [];
 
   const comCommentBlockTexts = takeCommentTexts(ordSelectorId) ?? [];
