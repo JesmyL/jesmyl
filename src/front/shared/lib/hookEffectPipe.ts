@@ -7,6 +7,7 @@ class EffectPipeMember {
 }
 
 type Elem = HTMLElement | typeof globalThis | Window | nil;
+type EventListenerOptions = Parameters<(typeof window)['addEventListener']>[2];
 
 export const addEventListenerPipe = <
   EventName extends keyof HTMLElementEventMap,
@@ -15,12 +16,12 @@ export const addEventListenerPipe = <
   elem: Elem,
   eventName: EventName,
   callback: (event: Event) => void,
-  turn?: boolean,
+  options?: EventListenerOptions,
 ) => {
   if (elem == null) return new EffectPipeMember(() => {});
-  elem.addEventListener(eventName, callback as never, turn);
+  elem.addEventListener(eventName, callback as never, options);
 
-  return new EffectPipeMember(() => elem.removeEventListener(eventName, callback as never, turn));
+  return new EffectPipeMember(() => elem.removeEventListener(eventName, callback as never, options));
 };
 
 export const addEventListenerWithDelayPipe = <
@@ -31,17 +32,17 @@ export const addEventListenerWithDelayPipe = <
   elem: () => Elem,
   eventName: EventName,
   callback: (event: Event) => void,
-  turn?: boolean,
+  options?: EventListenerOptions,
 ) => {
   let realElem = elem();
 
   const timeout = setTimeout(() => {
     realElem = elem();
-    realElem?.addEventListener(eventName, callback as never, turn);
+    realElem?.addEventListener(eventName, callback as never, options);
   }, delayTime);
 
   return new EffectPipeMember(() => {
-    realElem?.removeEventListener(eventName, callback as never, turn);
+    realElem?.removeEventListener(eventName, callback as never, options);
     clearTimeout(timeout);
   });
 };
@@ -60,7 +61,7 @@ export const addDebouncedEventListenerPipe = <
   elem: HTMLElement | typeof globalThis | Window,
   eventName: EventName,
   callback: (event: Event) => void,
-  turn?: boolean,
+  options?: EventListenerOptions,
 ) => {
   let timeout: TimeOut;
 
@@ -69,9 +70,9 @@ export const addDebouncedEventListenerPipe = <
     timeout = setTimeout(callback, timerMs, event);
   };
 
-  elem.addEventListener(eventName, debounceCallback as never, turn);
+  elem.addEventListener(eventName, debounceCallback as never, options);
 
-  return new EffectPipeMember(() => elem.removeEventListener(eventName, debounceCallback as never, turn));
+  return new EffectPipeMember(() => elem.removeEventListener(eventName, debounceCallback as never, options));
 };
 
 export const setTimeoutPipe = <Args extends any[]>(cb: (...args: Args) => void, time?: number, ...args: Args) => {
