@@ -3,7 +3,6 @@ import { mylib } from '#shared/lib/my-lib';
 import { ChordVisibleVariant, PlayerHideMode } from '$cm/Cm.model';
 import { defaultCmConfig } from '$cm/translation/complect/controlled/hooks/configs';
 import { CmTranslationScreenConfig } from '$cm/translation/complect/controlled/model';
-import { Atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import {
   ChordPack,
@@ -18,19 +17,6 @@ import {
   ScheduleComPack,
 } from 'shared/api';
 import { itNumSort } from 'shared/utils';
-import {
-  cmChordVisibleVariantAtom,
-  cmComFontSizeAtom,
-  cmComTopToolsAtom,
-  cmConstantsConfigAtom,
-  cmFavoriteComsAtom,
-  cmIsShowFavouritesInTranslationsAtom,
-  cmLastOpenComwAtom,
-  cmLaterComwListAtom,
-  cmPlayerHideModeAtom,
-  cmSelectedComwsAtom,
-  cmSpeedRollKfAtom,
-} from './atoms';
 
 export interface CmIDBStorage {
   chordPack: ChordPack;
@@ -143,30 +129,3 @@ class CmIDB extends DexieDB<CmIDBStorage> {
 }
 
 export const cmIDB = new CmIDB();
-
-(async () => {
-  const removeWithAtomSet = async <
-    Key extends keyof typeof cmIDB.tb,
-    Value extends Awaited<ReturnType<(typeof cmIDB.get)[Key]>>,
-  >(
-    key: Key,
-    atom: Atom<Value>,
-  ) => {
-    const value = (await cmIDB.get[key]()) as Value;
-    if (value == null) return;
-    atom.set(value);
-    cmIDB.remove[key]();
-  };
-
-  await removeWithAtomSet('favoriteComs', cmFavoriteComsAtom);
-  await removeWithAtomSet('selectedComws', cmSelectedComwsAtom);
-  await removeWithAtomSet('comTopTools', cmComTopToolsAtom);
-  await removeWithAtomSet('chordVisibleVariant', cmChordVisibleVariantAtom);
-  await removeWithAtomSet('comFontSize', cmComFontSizeAtom);
-  await removeWithAtomSet('laterComwList', cmLaterComwListAtom);
-  await removeWithAtomSet('playerHideMode', cmPlayerHideModeAtom);
-  await removeWithAtomSet('speedRollKf', cmSpeedRollKfAtom);
-  await removeWithAtomSet('lastOpenComw', cmLastOpenComwAtom);
-  await removeWithAtomSet('isShowFavouritesInTranslations', cmIsShowFavouritesInTranslationsAtom);
-  await removeWithAtomSet('constantsConfig', cmConstantsConfigAtom);
-})();
