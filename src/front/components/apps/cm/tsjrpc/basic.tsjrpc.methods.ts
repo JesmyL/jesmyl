@@ -12,6 +12,7 @@ export const cmTsjrpcClient = new (class Cm extends TsjrpcClient<CmTsjrpcModel> 
         getComwVisits: true,
         printComwVisit: true,
         takeComwVisitsCount: true,
+        replaceUserAltCommentBlocks: true,
       },
     });
   }

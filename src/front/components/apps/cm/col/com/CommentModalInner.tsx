@@ -204,7 +204,7 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
                 onClick={isOpenTransferModalAtom.do.toggle}
               >
                 <LazyIcon icon="ArrowDataTransferHorizontal" />
-                Переместить
+                Обмен
               </Button>
             </div>
           }

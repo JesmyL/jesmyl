@@ -7,7 +7,9 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmComCommentRegisteredAltKeysAtom } from '$cm/basis/lib/store/atoms';
 import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { Com } from '$cm/col/com/Com';
+import { cmTsjrpcClient } from '$cm/tsjrpc/basic.tsjrpc.methods';
 import { useAtomValue } from 'atomaric';
+import { useLiveQuery } from 'dexie-react-hooks';
 import { useState } from 'react';
 
 export const CmTransferAltCommentModalInner = ({ com }: { com: Com }) => {
@@ -15,6 +17,7 @@ export const CmTransferAltCommentModalInner = ({ com }: { com: Com }) => {
   const registeredAltKeys = useAtomValue(cmComCommentRegisteredAltKeysAtom);
   const [transferAltTo, setTransferAltTo] = useState<string | null>(registeredAltKeys.values().next().value ?? null);
   const items = Array.from(registeredAltKeys).map(key => ({ id: key, title: key }));
+  const localCommentBlock = useLiveQuery(() => cmIDB.tb.localComCommentBlocks.get(com.wid), [com.wid]);
 
   cmComCommentRegisteredAltKeysAtom.do.init();
 
@@ -43,38 +46,19 @@ export const CmTransferAltCommentModalInner = ({ com }: { com: Com }) => {
       <ModalFooter>
         <Button
           icon="ArrowDataTransferVertical"
-          disabled={transferAltFrom === transferAltTo}
-          onClick={async () => {
-            const commentBlock =
-              (await cmIDB.tb.localComCommentBlocks.get(com.wid)) ?? (await cmIDB.tb.comCommentBlocks.get(com.wid));
-            if (commentBlock == null) return;
-
-            const fromAlt = transferAltFrom == null ? commentBlock.d : commentBlock.alt?.[transferAltFrom];
-            const toAlt = transferAltTo == null ? commentBlock.d : commentBlock.alt?.[transferAltTo];
-
-            const alt = { ...commentBlock.alt };
-            const newComment = {
-              ...commentBlock,
-              comw: com.wid,
-              m: Date.now(),
-              alt,
-            };
-
-            if (transferAltFrom != null && transferAltTo != null) {
-              alt[transferAltFrom] = toAlt;
-              alt[transferAltTo] = fromAlt;
-            } else if (transferAltTo != null && transferAltFrom == null) {
-              newComment.d = toAlt ?? {};
-              alt[transferAltTo] = fromAlt;
-            } else if (transferAltFrom != null && transferAltTo == null) {
-              newComment.d = fromAlt ?? {};
-              alt[transferAltFrom] = toAlt;
-            }
-
-            await cmIDB.tb.localComCommentBlocks.put(newComment);
-          }}
+          disabled={transferAltFrom === transferAltTo || localCommentBlock != null}
+          disabledReason={
+            transferAltFrom === transferAltTo
+              ? 'Объекты перемещения одинаковые'
+              : localCommentBlock != null
+                ? 'Действие может быть выполнено только при отправке комментариев на сервер'
+                : undefined
+          }
+          onClick={() =>
+            cmTsjrpcClient.replaceUserAltCommentBlocks({ comw: com.wid, from: transferAltFrom, to: transferAltTo })
+          }
         >
-          Переместить
+          Обменять
         </Button>
       </ModalFooter>
     </>
