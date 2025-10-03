@@ -7,5 +7,5 @@ interface Props {
 }
 
 export function ModalBody({ children, className }: Props) {
-  return <StyledModalBody className={twMerge('p-2', className)}>{children}</StyledModalBody>;
+  return <StyledModalBody className={twMerge('p-2 @container', className)}>{children}</StyledModalBody>;
 }
