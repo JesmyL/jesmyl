@@ -25,7 +25,7 @@ const answersAtomBox: PRecord<QuestionerBlankWid, ReturnType<typeof initAtom>> =
 const initAtom = (blankw: QuestionerBlankWid) => {
   return atom({ fio: '', a: {} } as QuestionerUserAnswer & { isWasPublicate: boolean }, {
     storeKey: `q:userAnswerDraft-${blankw}`,
-    do: (_, get, setDeferred) => ({
+    do: (_set, get, _self, setDeferred) => ({
       setFio: (fio: string) => setDeferred({ ...get(), fio: fio || undefined }),
     }),
   });
