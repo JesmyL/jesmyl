@@ -1,7 +1,9 @@
 import { useCurrentAppSetter } from '#basis/lib/useCurrentAppSetter';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { useToast } from '#shared/ui/modal/useToast';
+import { cmShareComCommentPropsAtom } from '$cm/atoms';
 import { cmConstantsConfigAtom } from '$cm/basis/lib/store/atoms';
+import { CmComCommentSharePull } from '$cm/features/ComCommentSharePull';
 import { Outlet } from '@tanstack/react-router';
 import { atom, useAtomValue } from 'atomaric';
 import { useAuth } from 'front/components/index/atoms';
@@ -17,18 +19,25 @@ const comListOnActionAtom = atom<CmComWid[] | null>(null);
 export const CmApp = () => {
   useCurrentAppSetter('cm');
   const { maxSelectedComsCount } = useAtomValue(cmConstantsConfigAtom);
+  const comCommentShareProps = useAtomValue(cmShareComCommentPropsAtom);
 
   const auth = useAuth();
   const { selectedComws, setSelectedComws } = useSelectedComs();
   const toast = useToast();
 
   cmAppActions.useOnAction(({ props, navigateFromRoot }) => {
-    if (props.comws?.length) {
+    if ('comws' in props && props.comws?.length) {
       comListOnActionAtom.set(props.comws);
       return true;
     }
-    if (props.comw != null) {
+
+    if ('comw' in props && props.comw != null) {
       navigateFromRoot({ to: '/cm/i', search: { comw: props.comw } });
+      return true;
+    }
+
+    if ('shareCommentComw' in props && !!props.login && !!props.shareCommentComw) {
+      cmShareComCommentPropsAtom.set({ comw: props.shareCommentComw, login: props.login });
       return true;
     }
 
@@ -51,6 +60,7 @@ export const CmApp = () => {
       {auth.level >= 50 && <RenderEditorOnce />}
 
       <CmSharedComListActionInterpretator comListOnActionAtom={comListOnActionAtom} />
+      {comCommentShareProps && <CmComCommentSharePull shareProps={comCommentShareProps} />}
     </>
   );
 };

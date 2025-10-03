@@ -1,4 +1,5 @@
 import { CmComWid, ICmComComment, ICmComCommentBlock } from 'shared/api/complect/apps';
+import { SokiAuthLogin } from 'shared/api/complect/soki.model';
 
 export type CmTsjrpcModel = {
   requestFreshes: (args: { lastModfiedAt: number }) => void;
@@ -7,6 +8,10 @@ export type CmTsjrpcModel = {
     clientDateNow: number;
   }) => ICmComCommentBlock[];
   replaceUserAltCommentBlocks: (args: { comw: CmComWid; from: string | null; to: string | null }) => void;
+  pullUserAltCommentBlock: (args: {
+    comw: CmComWid;
+    login: SokiAuthLogin;
+  }) => OmitOwn<ICmComCommentBlock, 'comw'> | null;
 
   /** @deprecated */
   exchangeFreshComComments: (args: { modifiedComments: ICmComComment[]; clientDateNow: number }) => ICmComComment[];

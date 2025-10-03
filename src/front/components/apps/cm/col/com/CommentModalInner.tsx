@@ -8,8 +8,11 @@ import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { usePrompt } from '#shared/ui/modal/usePrompt';
 import { useToast } from '#shared/ui/modal/useToast';
+import { QrCodeFullScreen } from '#shared/ui/qr-code/QrCodeFullScreen';
 import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { WithAtom } from '#shared/ui/WithAtom';
+import { cmAppActions } from '$cm/app-actions/cm-app-actions';
 import {
   cmComCommentAltKeyAtom,
   cmComCommentRedactOrdSelectorIdAtom,
@@ -19,6 +22,7 @@ import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { useCmComCommentBlock } from '$cm/basis/lib/store/useCmComCommentBlock';
 import { Com } from '$cm/col/com/Com';
 import { TheComCommentInfo } from '$cm/col/com/complect/comment-parser/infos/TheComCommentInfo';
+import { useAuth } from '$index/atoms';
 import { atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { emptyArray } from 'shared/utils';
@@ -39,6 +43,7 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
   const prompt = usePrompt();
   const toast = useToast();
   const registeredAltKeys = useAtomValue(cmComCommentRegisteredAltKeysAtom);
+  const auth = useAuth();
 
   if (ordSelectorId === null) return;
 
@@ -66,14 +71,36 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
 
   return (
     <>
-      <ModalHeader className="flex gap-2">
-        <LazyIcon icon="TextAlignLeft" />
-        <span className="text-x7 nowrap">
-          #{ordNN} {ord?.me.header()}
+      <ModalHeader className="flex gap-2 justify-between">
+        <span className="flex gap-2">
+          <LazyIcon icon="TextAlignLeft" />
+          <span className="text-x7 nowrap">
+            #{ordNN} {ord?.me.header()}
+          </span>
+          <span className="text-x3 ellipsis">{com.name}</span>
         </span>
-        <span className="text-x3 ellipsis">{com.name}</span>
-        {ordSelectorId !== 'head' && (
-          <LazyIcon
+
+        {ordSelectorId === 'head' ? (
+          auth.login && (
+            <WithAtom init={false}>
+              {atom =>
+                auth.login && (
+                  <>
+                    <Button
+                      icon="QrCode"
+                      onClick={atom.do.toggle}
+                    />
+                    <QrCodeFullScreen
+                      openAtom={atom}
+                      text={cmAppActions.makeLink({ shareCommentComw: com.wid, login: auth.login })}
+                    />
+                  </>
+                )
+              }
+            </WithAtom>
+          )
+        ) : (
+          <Button
             icon="TextFont"
             onClick={() => cmComCommentRedactOrdSelectorIdAtom.set('head')}
           />

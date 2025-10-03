@@ -123,6 +123,10 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
           comCommentBlocksFileStore.saveValue();
         },
 
+        pullUserAltCommentBlock: async ({ comw, login }) => {
+          return { value: comCommentBlocksFileStore.getValue()[login]?.[comw] ?? null };
+        },
+
         exchangeFreshComComments: async () => {
           // if (auth?.login == null) return [];
 

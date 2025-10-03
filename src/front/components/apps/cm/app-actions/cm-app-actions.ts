@@ -1,9 +1,14 @@
 import { LinkAppActionFabric } from '#shared/lib/link-app-actions';
-import { CmComWid } from 'shared/api';
+import { CmComWid, SokiAuthLogin } from 'shared/api';
 
-type CmAppActionProps = {
-  comws?: CmComWid[];
-  comw?: CmComWid;
-};
+type CmAppActionProps =
+  | {
+      comws?: CmComWid[];
+      comw?: CmComWid;
+    }
+  | {
+      shareCommentComw: CmComWid;
+      login: SokiAuthLogin;
+    };
 
 export const cmAppActions = new LinkAppActionFabric<CmAppActionProps>('cm');
