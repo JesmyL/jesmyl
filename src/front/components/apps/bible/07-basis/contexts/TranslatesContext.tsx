@@ -1,3 +1,4 @@
+import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { bibleTranslatesIDB } from '$bible/basis/lib/store/bibleIDB';
 import { BibleTranslate } from '$bible/basis/model/base';
@@ -21,58 +22,60 @@ export function BibleTranslatesContextProvider({ children, isSetAllTranslates }:
   useEffect(() => {
     const subscribes: (() => void)[] = [];
 
-    return hookEffectLine()
-      .setTimeout(() => {
-        let tryTimeout: TimeOut;
-        let updateTimeout: TimeOut;
+    return hookEffectPipe()
+      .pipe(
+        setTimeoutPipe(() => {
+          let tryTimeout: TimeOut;
+          let updateTimeout: TimeOut;
 
-        const tryLoad = () => {
-          watchTranslates.forEach(tName => {
-            if (localTranslates[tName] !== undefined) {
-              if (!watchTranslates.some(tName => localTranslates[tName] === undefined)) {
-                clearTimeout(updateTimeout);
-                updateTimeout = setTimeout(() => setTranslates({ ...localTranslates }), 200);
-              }
-              return;
-            }
-
-            if (loadings[tName]) {
-              clearTimeout(tryTimeout);
-              tryTimeout = setTimeout(tryLoad, 100);
-              return;
-            }
-
-            loadings[tName] = true;
-
-            subscribes.push(
-              onTranslateSetEvents.listen(({ tName, value }) => {
-                mapChapters(tName, value);
-                setTranslates({ ...localTranslates });
-              }),
-            );
-
-            (async () => {
-              try {
-                const content = await bibleTranslatesIDB.get[tName]();
-                if (content) mapChapters(tName, content);
-                loadings[tName] = false;
-
+          const tryLoad = () => {
+            watchTranslates.forEach(tName => {
+              if (localTranslates[tName] !== undefined) {
                 if (!watchTranslates.some(tName => localTranslates[tName] === undefined)) {
-                  setTranslates({ ...localTranslates });
+                  clearTimeout(updateTimeout);
+                  updateTimeout = setTimeout(() => setTranslates({ ...localTranslates }), 200);
                 }
-              } catch (_error) {
-                loadings[tName] = false;
+                return;
               }
-            })();
-          });
-        };
 
-        tryLoad();
-      }, 500)
+              if (loadings[tName]) {
+                clearTimeout(tryTimeout);
+                tryTimeout = setTimeout(tryLoad, 100);
+                return;
+              }
+
+              loadings[tName] = true;
+
+              subscribes.push(
+                onTranslateSetEvents.listen(({ tName, value }) => {
+                  mapChapters(tName, value);
+                  setTranslates({ ...localTranslates });
+                }),
+              );
+
+              (async () => {
+                try {
+                  const content = await bibleTranslatesIDB.get[tName]();
+                  if (content) mapChapters(tName, content);
+                  loadings[tName] = false;
+
+                  if (!watchTranslates.some(tName => localTranslates[tName] === undefined)) {
+                    setTranslates({ ...localTranslates });
+                  }
+                } catch (_error) {
+                  loadings[tName] = false;
+                }
+              })();
+            });
+          };
+
+          tryLoad();
+        }, 500),
+      )
       .effect(...subscribes);
   }, [watchTranslates]);
 
-  return <BibleTranslatesContext.Provider value={translates}>{children}</BibleTranslatesContext.Provider>;
+  return <BibleTranslatesContext value={translates}>{children}</BibleTranslatesContext>;
 }
 
 interface ChapterCombine {

@@ -29,6 +29,7 @@ export default function TheIconLazy({
 
   if (pack !== undefined) {
     return (
+      // eslint-disable-next-line @eslint-react/dom/no-dangerously-set-innerhtml-with-children
       <svg
         {...makeStameskaIconSvgAttributeProps({ icon, className, kind, withoutAnimation })}
         {...props}
@@ -41,6 +42,7 @@ export default function TheIconLazy({
   if (cachedStaticProps[`${icon}/${kind}`] === undefined) {
     if (cachedPacks[icon] !== undefined) {
       return (
+        // eslint-disable-next-line @eslint-react/dom/no-dangerously-set-innerhtml-with-children
         <svg
           {...makeStameskaIconSvgAttributeProps({ icon, className, kind, withoutAnimation })}
           {...props}
@@ -65,6 +67,7 @@ export default function TheIconLazy({
   }
 
   return (
+    // eslint-disable-next-line @eslint-react/dom/no-dangerously-set-innerhtml-with-children
     <svg
       {...makeStameskaIconSvgAttributeProps({ icon, className, kind, withoutAnimation })}
       {...props}
@@ -119,6 +122,7 @@ const WithoutStaticProps = ({ icon, className, kind = 'StrokeRounded', withoutAn
   }, [icon, kind]);
 
   return (
+    // eslint-disable-next-line @eslint-react/dom/no-dangerously-set-innerhtml-with-children
     <svg
       {...makeStameskaIconSvgAttributeProps({ icon, className, kind, withoutAnimation })}
       {...props}

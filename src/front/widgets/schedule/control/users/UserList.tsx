@@ -7,7 +7,7 @@ import { ScheduleWidgetUser } from './User';
 export function ScheduleWidgetUserList({
   asUserPlusPrefix,
   filter,
-  title = <>Участники</>,
+  title,
   titlePostfix,
   isInitExpand,
 }: {
@@ -18,7 +18,7 @@ export function ScheduleWidgetUserList({
   isInitExpand?: boolean;
 }) {
   const rights = useScheduleWidgetRightsContext();
-  const [expandNode, isExpand] = useIsExpand(isInitExpand ?? false, title, titlePostfix);
+  const [expandNode, isExpand] = useIsExpand(isInitExpand ?? false, title ?? <>Участники</>, titlePostfix);
 
   const users = (
     filter === undefined ? [...rights.schedule.ctrl.users] : [...rights.schedule.ctrl.users].filter(filter)

@@ -10,8 +10,8 @@ export const BibleTranslationScreenKnownTextsContext = ({
   children?: React.ReactNode;
 }) => {
   return (
-    <BibleTextContentContext.Provider value={text}>
-      <BibleAddressTextContext.Provider value={addressText}>{children}</BibleAddressTextContext.Provider>
-    </BibleTextContentContext.Provider>
+    <BibleTextContentContext value={text}>
+      <BibleAddressTextContext value={addressText}>{children}</BibleAddressTextContext>
+    </BibleTextContentContext>
   );
 };

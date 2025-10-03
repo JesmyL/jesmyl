@@ -72,10 +72,10 @@ export const ComCopyTextModalInner = ({ com }: { com: Com }) => {
       </ModalBody>
       <ModalFooter className="flex w-full justify-between!">
         <div className="flex gap-2">
-          <IsComToolIconItemsContext.Provider value>
+          <IsComToolIconItemsContext value>
             <ChordsVariantComTool />
             <MiniAnchorSwitchComTool />
-          </IsComToolIconItemsContext.Provider>
+          </IsComToolIconItemsContext>
         </div>
         <CopyTextButton text={text} />
       </ModalFooter>

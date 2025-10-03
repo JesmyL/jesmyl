@@ -1,5 +1,6 @@
 import { error } from 'console';
 import { useEffect, useRef } from 'react';
+import { addEventListenerPipe, hookEffectPipe } from '../hookEffectPipe';
 import { excel2jsonParserBox } from '../parseExcel2Json';
 import { useActualRef } from './useActualRef';
 
@@ -15,23 +16,25 @@ export const useGetExcelValueList = (
     if (inputRef.current === null) return;
     const inputNode = inputRef.current;
 
-    return hookEffectLine()
-      .addEventListener(inputNode, 'change', () => {
-        if (!inputNode.files?.[0]) return;
-        const file = inputNode.files[0];
-        inputNode.value = null!;
+    return hookEffectPipe()
+      .pipe(
+        addEventListenerPipe(inputNode, 'change', () => {
+          if (!inputNode.files?.[0]) return;
+          const file = inputNode.files[0];
+          inputNode.value = null!;
 
-        (async () => {
-          try {
-            const parser = await excel2jsonParserBox();
-            const list = await parser(file);
+          (async () => {
+            try {
+              const parser = await excel2jsonParserBox();
+              const list = await parser(file);
 
-            onSuccessRef.current(list);
-          } catch (_error) {
-            onFailureRef.current?.('' + error);
-          }
-        })();
-      })
+              onSuccessRef.current(list);
+            } catch (_error) {
+              onFailureRef.current?.('' + error);
+            }
+          })();
+        }),
+      )
       .effect();
   }, [onFailureRef, onSuccessRef]);
 

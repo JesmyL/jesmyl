@@ -1,6 +1,7 @@
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
+import { hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { Atom, useAtomValue } from 'atomaric';
 import { TrustChildrenCheckType } from 'front/types/TrustChildrenCheckType';
 import { HTMLAttributes, ReactNode, useEffect } from 'react';
@@ -62,7 +63,7 @@ const Swiped = ({ close, ...props }: { close: () => void } & HTMLAttributes<HTML
       close();
     };
 
-    return hookEffectLine().effect(
+    return hookEffectPipe().effect(
       Eventer.listen(swipeEvents, closeAction),
       ThrowEvent.listenKeyDown('Escape', closeAction),
     );

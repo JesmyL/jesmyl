@@ -1,5 +1,6 @@
 import { TelegramWebAppApiOr } from '#basis/ui/tg-app/getTgApi';
 import { TelegramWebApp, TelegramWebAppInitData } from '#basis/ui/tg-app/model';
+import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { useAuth } from '$index/atoms';
 import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
@@ -44,16 +45,18 @@ const Child = ({ api, initData }: Props) => {
   useEffect(() => api?.disableVerticalSwipes(), [api]);
 
   useEffect(() => {
-    return hookEffectLine()
-      .setTimeout(() => {
-        if (auth.level) return;
-        indexTsjrpcClientMethods.authMeByTelegramInScheduleDay({ user: initData.user });
-      }, 300)
+    return hookEffectPipe()
+      .pipe(
+        setTimeoutPipe(() => {
+          if (auth.level) return;
+          indexTsjrpcClientMethods.authMeByTelegramInScheduleDay({ user: initData.user });
+        }, 300),
+      )
       .effect();
   }, [auth.level, initData.user]);
 
   return (
-    <ScheduleCurrentSchwContext.Provider value={schedule?.w ?? IScheduleWidgetWid.def}>
+    <ScheduleCurrentSchwContext value={schedule?.w ?? IScheduleWidgetWid.def}>
       <StyledBox>
         {schedule ? (
           <ScheduleWidgetAlarmContent
@@ -66,7 +69,7 @@ const Child = ({ api, initData }: Props) => {
           </div>
         )}
       </StyledBox>
-    </ScheduleCurrentSchwContext.Provider>
+    </ScheduleCurrentSchwContext>
   );
 };
 

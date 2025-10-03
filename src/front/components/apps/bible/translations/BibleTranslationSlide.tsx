@@ -1,3 +1,4 @@
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { BibleTranslationScreenKnownTextsContext } from '$bible/basis/contexts/KnownTextsContext';
 import { IndexSchWTranslationLiveDataValue } from '$index/Index.model';
 import { JSX, useEffect, useState } from 'react';
@@ -14,8 +15,8 @@ export function BibleTranslationSlide({
   useEffect(() => {
     let i = 0;
 
-    return hookEffectLine()
-      .addEventListener(window, 'resize', () => setUpdates(++i))
+    return hookEffectPipe()
+      .pipe(addEventListenerPipe(window, 'resize', () => setUpdates(++i)))
       .effect();
   }, []);
 

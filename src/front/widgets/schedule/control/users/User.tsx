@@ -32,9 +32,9 @@ export const ScheduleWidgetUser = (props: Props) => {
   );
 
   return (
-    <ScheduleUserScopePropsContext.Provider value={userScopeProps}>
+    <ScheduleUserScopePropsContext value={userScopeProps}>
       <ScheduleWidgetUserInContext {...props} />
-    </ScheduleUserScopePropsContext.Provider>
+    </ScheduleUserScopePropsContext>
   );
 };
 

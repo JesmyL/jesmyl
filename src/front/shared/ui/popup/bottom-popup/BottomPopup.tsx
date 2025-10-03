@@ -1,5 +1,6 @@
 import { Drawer } from '#shared/components/ui/drawer';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ReactNode, useEffect, useRef } from 'react';
 import { emptyFunc } from 'shared/utils';
@@ -25,10 +26,12 @@ export const BottomPopup = ({ children, onClose, isPreventCloseOnClick, id, titl
 
     const popupContainerNode = popupContainer.current;
 
-    return hookEffectLine()
-      .addEventListener(popupContainerNode, 'scroll', () => {
-        if (popupContainerNode.scrollTop === 0) onClose(false);
-      })
+    return hookEffectPipe()
+      .pipe(
+        addEventListenerPipe(popupContainerNode, 'scroll', () => {
+          if (popupContainerNode.scrollTop === 0) onClose(false);
+        }),
+      )
       .effect();
   }, [onClose]);
 
@@ -60,11 +63,9 @@ export const BottomPopup = ({ children, onClose, isPreventCloseOnClick, id, titl
           className="w-full overflow-scroll"
           st-no-scrollbar=""
         >
-          <BottomPopupOnCloseContext.Provider
-            value={isPreventCloseOnClick ? emptyFunc : () => setTimeout(onClose, 100, false)}
-          >
+          <BottomPopupOnCloseContext value={isPreventCloseOnClick ? emptyFunc : () => setTimeout(onClose, 100, false)}>
             <div className="bg-x1 py-5 text-x4">{children}</div>
-          </BottomPopupOnCloseContext.Provider>
+          </BottomPopupOnCloseContext>
         </div>
       </Drawer.Content>
     </Drawer.Above>

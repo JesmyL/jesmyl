@@ -29,9 +29,9 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>(props:
     }, [comw]);
 
     return (
-      <CmOpenComLinkRendererContext.Provider value={goToComLinkRenderer}>
-        <CmCurrentComPackContext.Provider value={comList}>
-          <CmCurrentComContext.Provider value={com}>
+      <CmOpenComLinkRendererContext value={goToComLinkRenderer}>
+        <CmCurrentComPackContext value={comList}>
+          <CmCurrentComContext value={com}>
             {tran ? (
               props.TranslationComponent ? (
                 <props.TranslationComponent />
@@ -43,9 +43,9 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>(props:
             ) : (
               <props.RouteComponent />
             )}
-          </CmCurrentComContext.Provider>
-        </CmCurrentComPackContext.Provider>
-      </CmOpenComLinkRendererContext.Provider>
+          </CmCurrentComContext>
+        </CmCurrentComPackContext>
+      </CmOpenComLinkRendererContext>
     );
   };
 

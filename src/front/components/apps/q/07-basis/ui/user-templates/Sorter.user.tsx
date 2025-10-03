@@ -63,7 +63,7 @@ export const QuestionerUserSorterTemplateCardContent = ({
         {sortAnswerIds.map((answerId, answerIdi, answerIda) => {
           const title = template.variants[answerId]?.title;
 
-          if (isCantRedact) return <div>{title}</div>;
+          if (isCantRedact) return <div key={answerId}>{title}</div>;
 
           return (
             <div

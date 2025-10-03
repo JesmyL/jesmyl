@@ -200,8 +200,15 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
         )}
 
         {!parseErrors.length && errorNodes}
-        {parseErrors.map(errorText => {
-          return <div className="text-xKO my-2">{errorText}</div>;
+        {parseErrors.map((errorText, errorTexti) => {
+          return (
+            <div
+              key={errorTexti}
+              className="text-xKO my-2"
+            >
+              {errorText}
+            </div>
+          );
         })}
 
         <SendButton

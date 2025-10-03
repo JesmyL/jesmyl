@@ -69,6 +69,7 @@ export const useScreenTranslationFaceLineListeners = (
         });
 
         win.onfocus = () => setCurrentConfigi(wini);
+        // eslint-disable-next-line @eslint-react/web-api/no-leaked-event-listener
         window.addEventListener('keydown', onKeyDown);
 
         return () => {

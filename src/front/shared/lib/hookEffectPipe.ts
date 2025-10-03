@@ -1,3 +1,5 @@
+import { itInvokeIt } from 'shared/utils';
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 class EffectPipeMember {
   reset: () => void;
@@ -97,10 +99,12 @@ export const hookEffectPipe = () => {
       resets = resets.concat(args);
       return ret;
     },
-    effect: (cb?: () => void) => () => {
-      resets.forEach(member => member?.reset());
-      cb?.();
-    },
+    effect:
+      (...cb: (() => void)[]) =>
+      () => {
+        resets.forEach(member => member?.reset());
+        cb.forEach(itInvokeIt);
+      },
   };
 
   return ret;

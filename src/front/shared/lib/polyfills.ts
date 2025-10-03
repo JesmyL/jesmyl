@@ -4,70 +4,6 @@ import { setSharedPolyfills } from 'shared/utils';
 export const setPolyfills = () => {
   setSharedPolyfills();
 
-  const remListens = (param: unknown[]) => {
-    const [element, ...otherProps] = param;
-    (element as { removeEventListener(...args: unknown[]): void }).removeEventListener(...otherProps);
-  };
-
-  const invokeEach = (cb: () => void) => cb();
-
-  (globalThis as { hookEffectLine: unknown }).hookEffectLine = () => {
-    const timeoutsSet = new Set<TimeOut>();
-    const eventListeners = new Set<Parameters<EffectListener>>();
-    const debounceTimers: TimeOut[] = [];
-    let debounceTimersRegistered = 0;
-
-    const setter = {
-      addEventListener: (...args: Parameters<EffectListener>) => {
-        eventListeners.add(args);
-        const [element, ...otherArgs] = args;
-        element.addEventListener(...otherArgs);
-
-        return setter;
-      },
-      addEventDebouncedListener: (...args: Parameters<DebouncedEffectListener>) => {
-        const timeri = debounceTimersRegistered++;
-        const [timerMs, element, eventName, callback] = args;
-        const debounceCallback = (event: Parameters<typeof callback>[0]) => {
-          clearTimeout(debounceTimers[timeri]);
-          debounceTimers[timeri] = setTimeout(callback, timerMs, event);
-        };
-
-        eventListeners.add([element, eventName, debounceCallback]);
-
-        element.addEventListener(eventName, debounceCallback);
-
-        return setter;
-      },
-
-      setTimeout: (cb: () => void, time?: number, ...args: unknown[]) => {
-        timeoutsSet.add(setTimeout(cb, time, ...args));
-
-        return setter;
-      },
-
-      clearTimeout: (timeout: TimeOut) => {
-        timeoutsSet.add(timeout);
-
-        return setter;
-      },
-
-      effect: (...onUnmounts: (() => void)[]) => {
-        return () => {
-          onUnmounts.forEach(invokeEach);
-          timeoutsSet.forEach(clearTimeout);
-          debounceTimers.forEach(clearTimeout);
-          eventListeners.forEach(remListens);
-
-          eventListeners.clear();
-          timeoutsSet.clear();
-        };
-      },
-    };
-
-    return setter;
-  };
-
   (function () {
     if (typeof window.Map === 'function') return;
 
@@ -181,36 +117,6 @@ export const setPolyfills = () => {
   })();
 };
 
-type EffectListener = <EventName extends keyof HTMLElementEventMap, Event extends HTMLElementEventMap[EventName]>(
-  elem: HTMLElement | typeof globalThis | Window,
-  eventName: EventName,
-  callback: (event: Event) => void,
-  turn?: boolean,
-) => HookEffectLineReturn;
-
-type DebouncedEffectListener = <
-  EventName extends keyof HTMLElementEventMap,
-  Event extends HTMLElementEventMap[EventName],
->(
-  timerMs: number,
-  elem: HTMLElement | typeof globalThis | Window,
-  eventName: EventName,
-  callback: (event: Event) => void,
-  turn?: boolean,
-) => HookEffectLineReturn;
-
-type HookEffectLineReturn = {
-  addEventListener: EffectListener;
-  addEventDebouncedListener: DebouncedEffectListener;
-  setTimeout: <Args extends unknown[]>(
-    cb: (...args: Args) => void,
-    time?: number,
-    ...args: Args
-  ) => HookEffectLineReturn;
-  clearTimeout: (timeout: TimeOut) => HookEffectLineReturn;
-  effect: (...onUnmounts: (() => void)[]) => () => void;
-};
-
 const prev: Record<string, unknown> = {};
 (globalThis as { inspectComponentProps: unknown }).inspectComponentProps = (
   curr: Record<string, unknown>,
@@ -233,8 +139,6 @@ declare global {
     ...args: Args
   ): () => void;
   function inspectComponentProps(curr: Record<string, unknown>, print?: boolean): void;
-
-  function hookEffectLine(): HookEffectLineReturn;
 
   interface Array<T> {
     toSorted: (compareFn?: (a: T, b: T) => number) => T[];

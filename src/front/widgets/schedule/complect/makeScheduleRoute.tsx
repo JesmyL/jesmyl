@@ -37,9 +37,9 @@ export const makeScheduleRoute = (
 
     if (search.schw != null)
       return (
-        <ScheduleCurrentSchwContext.Provider value={search.schw}>
+        <ScheduleCurrentSchwContext value={search.schw}>
           <ScheduleWidgetPage />
-        </ScheduleCurrentSchwContext.Provider>
+        </ScheduleCurrentSchwContext>
       );
 
     return <RouteComponent />;

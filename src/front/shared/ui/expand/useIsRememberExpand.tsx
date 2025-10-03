@@ -27,7 +27,10 @@ export const useIsRememberExpand = (
   );
 
   return [
-    <span className="flex gap-2 between my-2">
+    <span
+      key="expand-icon"
+      className="flex gap-2 between my-2"
+    >
       <span
         className="flex gap-2 flex-max pointer"
         onClick={() => switchExpand()}

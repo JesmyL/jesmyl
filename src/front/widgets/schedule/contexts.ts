@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { use } from 'react';
 import { ScheduleWidgetRights, defScheduleWidgetUserRights, defaultScheduleWidget } from './useScheduleWidget';
 
 export const ScheduleWidgetRightsContext = React.createContext<ScheduleWidgetRights>({
@@ -11,4 +11,4 @@ export const ScheduleWidgetRightsContext = React.createContext<ScheduleWidgetRig
   auth: { level: 0 },
   schedule: defaultScheduleWidget,
 });
-export const useScheduleWidgetRightsContext = () => useContext(ScheduleWidgetRightsContext);
+export const useScheduleWidgetRightsContext = () => use(ScheduleWidgetRightsContext);

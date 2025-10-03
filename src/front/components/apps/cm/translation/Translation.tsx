@@ -6,9 +6,9 @@ import { TranslationFullscreen } from './complect/fullscreen/TranslationFullscre
 export const CmTranslations = () => {
   return (
     <>
-      <CurrentForceViweAppContext.Provider value="cm">
+      <CurrentForceViweAppContext value="cm">
         {isTouchDevice ? <TranslationFullscreen /> : <CmTranslationControlled />}
-      </CurrentForceViweAppContext.Provider>
+      </CurrentForceViweAppContext>
     </>
   );
 };

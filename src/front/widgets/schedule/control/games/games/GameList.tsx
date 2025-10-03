@@ -33,12 +33,12 @@ export function ScheduleWidgetTeamGameList() {
         <>
           {rights.schedule.games?.list.map(game => {
             return (
-              <ScheduleGameContext.Provider
+              <ScheduleGameContext
                 key={game.mi}
                 value={game}
               >
                 <ScheduleWidgetTeamGame />
-              </ScheduleGameContext.Provider>
+              </ScheduleGameContext>
             );
           })}
         </>

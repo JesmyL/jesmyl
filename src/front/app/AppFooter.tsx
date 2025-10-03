@@ -25,7 +25,7 @@ export function AppFooter({ children }: { children: React.ReactNode; appName: Ap
   }, [appName, loc.hash, loc.pathname, loc.searchStr, place]);
 
   return (
-    <CurrentAppFooterItemPlaceContext.Provider value={`/${appName}/${place}/`}>
+    <CurrentAppFooterItemPlaceContext value={`/${appName}/${place}/`}>
       <StyledFooter>
         {children}
         <AppFooterItem
@@ -35,7 +35,7 @@ export function AppFooter({ children }: { children: React.ReactNode; appName: Ap
           idPostfix="other"
         />
       </StyledFooter>
-    </CurrentAppFooterItemPlaceContext.Provider>
+    </CurrentAppFooterItemPlaceContext>
   );
 }
 

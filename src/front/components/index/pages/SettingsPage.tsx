@@ -33,6 +33,7 @@ export function IndexSettingsPage() {
   const settingsList = [
     auth.level === 100 && (
       <Link
+        key="consol.e"
         to="/!other/$appName/settings/console"
         params={{ appName }}
       >
@@ -44,6 +45,7 @@ export function IndexSettingsPage() {
     ),
     auth.level === 100 && (
       <Link
+        key="access-rights"
         to="/!other/$appName/settings/rights"
         params={{ appName }}
       >
@@ -54,18 +56,21 @@ export function IndexSettingsPage() {
       </Link>
     ),
     <BrutalItem
+      key="show-player"
       iconNode={<LazyIcon icon="PlayListFavourite02" />}
       title="Показывать плеер"
       onClick={indexIsShowPlayerInFooterAtom.do.toggle}
       box={<IconCheckbox valueAtom={indexIsShowPlayerInFooterAtom} />}
     />,
     <BrutalItem
+      key="animations"
       iconNode={<LazyIcon icon="PaintBoard" />}
       title="Анимации"
       onClick={indexIsPlayAnimationsAtom.do.toggle}
       box={<IconCheckbox valueAtom={indexIsPlayAnimationsAtom} />}
     />,
     <BrutalItem
+      key="fonts"
       iconNode={<LazyIcon icon="Text" />}
       title="Шрифт"
       box={
@@ -76,6 +81,7 @@ export function IndexSettingsPage() {
       }
     />,
     <BrutalItem
+      key="errors"
       iconNode={<LazyIcon icon="RssError" />}
       title="Показать ошибки"
       onClick={() => {

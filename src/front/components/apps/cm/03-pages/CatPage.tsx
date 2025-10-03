@@ -96,14 +96,14 @@ export const CmCatPage = (props: Props) => {
                 )}
               </div>
               <div className="com-list">
-                <SetComListLimitsExtracterContext.Provider value={setComListLimitsExtracterRef}>
+                <SetComListLimitsExtracterContext value={setComListLimitsExtracterRef}>
                   <ComFaceList
                     key={+!term}
                     isPutCcomFaceOff={!!term}
                     list={limitedComs}
                     {...props}
                   />
-                </SetComListLimitsExtracterContext.Provider>
+                </SetComListLimitsExtracterContext>
               </div>
 
               <FullContent openAtom={isOpenRatingSortedComsAtom}>

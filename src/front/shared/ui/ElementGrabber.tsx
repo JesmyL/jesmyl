@@ -138,8 +138,8 @@ export const makeElementGrabber = <Value, OnDropReturn = void>(options?: {
       const accentedValues = useAtomValue(accentedValuesAtom);
 
       return (
-        <UserOnDropContext.Provider value={onDrop ?? ((() => {}) as never)}>
-          <RootCtx.Provider value={uniqKey}>
+        <UserOnDropContext value={onDrop ?? ((() => {}) as never)}>
+          <RootCtx value={uniqKey}>
             <RootComponent
               $accentedValues={accentedValues}
               $currentRootKey={currentRootKey}
@@ -147,8 +147,8 @@ export const makeElementGrabber = <Value, OnDropReturn = void>(options?: {
             >
               {children}
             </RootComponent>
-          </RootCtx.Provider>
-        </UserOnDropContext.Provider>
+          </RootCtx>
+        </UserOnDropContext>
       );
     },
     Grab: ({

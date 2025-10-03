@@ -79,7 +79,7 @@ export const ScheduleWidgetDay = ({
   });
 
   return (
-    <ScheduleDayScopePropsContext.Provider value={dayScopeProps}>
+    <ScheduleDayScopePropsContext value={dayScopeProps}>
       <StyledScheduleWidgetDay
         className={'ScheduleWidgetDay relative' + (isPastDay ? ' past' : '') + (isPrint ? ' print' : '')}
       >
@@ -189,7 +189,7 @@ export const ScheduleWidgetDay = ({
           />
         </FullContent>
       )}
-    </ScheduleDayScopePropsContext.Provider>
+    </ScheduleDayScopePropsContext>
   );
 };
 

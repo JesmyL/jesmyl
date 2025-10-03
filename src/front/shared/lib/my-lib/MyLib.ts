@@ -1,5 +1,6 @@
 import { makeRegExp } from 'regexpert';
 import { SMyLib, itIt } from 'shared/utils';
+import { addEventListenerPipe, hookEffectPipe } from '../hookEffectPipe';
 
 const constants = {
   REMOVE: ['REMOVE'] as const,
@@ -452,59 +453,61 @@ export class MyLib extends SMyLib {
     const tops = Array.from(topsMap.keys());
     let isResizing = false;
 
-    return hookEffectLine()
-      .addEventListener(window, 'resize', () => {
-        isResizing = true;
-        clearTimeout(resizeDebounceTimeOut);
-        resizeDebounceTimeOut = setTimeout(() => {
-          isResizing = false;
-          onResizeNum(num => num + 1);
-        }, 100);
-      })
-      .addEventListener(listNode, 'scroll', () => {
-        if (isResizing) return;
+    return hookEffectPipe()
+      .pipe(
+        addEventListenerPipe(window, 'resize', () => {
+          isResizing = true;
+          clearTimeout(resizeDebounceTimeOut);
+          resizeDebounceTimeOut = setTimeout(() => {
+            isResizing = false;
+            onResizeNum(num => num + 1);
+          }, 100);
+        }),
+        addEventListenerPipe(listNode, 'scroll', () => {
+          if (isResizing) return;
 
-        isScrollingRef.current = true;
-        clearTimeout(isScrollingTimeout);
-        isScrollingTimeout = setTimeout(() => (isScrollingRef.current = false), 300);
+          isScrollingRef.current = true;
+          clearTimeout(isScrollingTimeout);
+          isScrollingTimeout = setTimeout(() => (isScrollingRef.current = false), 300);
 
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-          let start = 0;
-          let end = tops.length - 1;
-          const scrollTop = listNode.scrollTop;
+          clearTimeout(scrollTimeout);
+          scrollTimeout = setTimeout(() => {
+            let start = 0;
+            let end = tops.length - 1;
+            const scrollTop = listNode.scrollTop;
 
-          if (scrollTop < 0) {
-            if (topsMap.has(0)) onElementEnterViewPort(topsMap.get(0)!);
+            if (scrollTop < 0) {
+              if (topsMap.has(0)) onElementEnterViewPort(topsMap.get(0)!);
 
-            return;
-          } else if (scrollTop >= tops[end] - 50) {
-            const top = topsMap.get(tops[end]);
-
-            if (top === undefined) return;
-            onElementEnterViewPort(top);
-
-            return;
-          }
-
-          while (start <= end) {
-            const middle = Math.floor((start + end) / 2);
-
-            if (
-              (tops[middle] <= scrollTop && tops[middle + 1] >= scrollTop) ||
-              (tops[middle] >= scrollTop && tops[middle + 1] <= scrollTop)
-            ) {
-              const top = topsMap.get(tops[middle]);
+              return;
+            } else if (scrollTop >= tops[end] - 50) {
+              const top = topsMap.get(tops[end]);
 
               if (top === undefined) return;
-
               onElementEnterViewPort(top);
-              break;
-            } else if (tops[middle] < scrollTop) start = middle + 1;
-            else end = middle - 1;
-          }
-        }, 10);
-      })
+
+              return;
+            }
+
+            while (start <= end) {
+              const middle = Math.floor((start + end) / 2);
+
+              if (
+                (tops[middle] <= scrollTop && tops[middle + 1] >= scrollTop) ||
+                (tops[middle] >= scrollTop && tops[middle + 1] <= scrollTop)
+              ) {
+                const top = topsMap.get(tops[middle]);
+
+                if (top === undefined) return;
+
+                onElementEnterViewPort(top);
+                break;
+              } else if (tops[middle] < scrollTop) start = middle + 1;
+              else end = middle - 1;
+            }
+          }, 10);
+        }),
+      )
       .effect();
   }
 

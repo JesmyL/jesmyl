@@ -9,8 +9,8 @@ function RouteComponent() {
   useCurrentAppSetter(appName as never);
 
   return (
-    <AppNameContext.Provider value={appName as never}>
+    <AppNameContext value={appName as never}>
       <Outlet />
-    </AppNameContext.Provider>
+    </AppNameContext>
   );
 }

@@ -36,9 +36,9 @@ export const makeCmEventNestedRoute = <Path extends keyof FileRoutesByPath>(prop
             schw={+schw}
           />
         ) : (
-          <CmMeetingLinkToEvent.Provider value={linkToEventRenderer}>
+          <CmMeetingLinkToEvent value={linkToEventRenderer}>
             <props.RouteComponent />
-          </CmMeetingLinkToEvent.Provider>
+          </CmMeetingLinkToEvent>
         )}
       </>
     );

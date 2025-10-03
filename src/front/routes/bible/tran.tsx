@@ -11,12 +11,12 @@ function RouteComponent() {
   return (
     <>
       <BibleTranslatesContextProvider>
-        <CurrentForceViweAppContext.Provider value="bible">
+        <CurrentForceViweAppContext value="bible">
           <BibleTranslationControlled
             head
             headTitle="Библия"
           />
-        </CurrentForceViweAppContext.Provider>
+        </CurrentForceViweAppContext>
       </BibleTranslatesContextProvider>
     </>
   );

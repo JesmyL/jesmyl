@@ -1,3 +1,4 @@
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '$bible/basis/lib/hooks/address/address';
 import { bibleJoinAddressAtom } from '$bible/basis/lib/store/atoms';
@@ -18,52 +19,54 @@ export const BibleTranslationPlanArchive = memo(function BibleTranslationPlanArc
     if (inputRef.current === null) return;
     const inputNode = inputRef.current;
 
-    return hookEffectLine()
-      .addEventListener(window, 'keydown', event => {
-        if (event.code === 'F1') {
-          event.preventDefault();
-          setSelectedItemi(0);
-          inputNode.focus();
-          return;
-        }
-      })
-      .addEventListener(inputNode, 'keydown', event => {
-        if (selectedItemi !== null) {
-          switch (event.code) {
-            case 'ArrowDown':
-              event.preventDefault();
-              event.stopPropagation();
-              if (selectedItemi + 1 < plan.length) setSelectedItemi(selectedItemi + 1);
-              break;
-            case 'ArrowUp':
-              event.preventDefault();
-              event.stopPropagation();
-              if (selectedItemi > 0) setSelectedItemi(selectedItemi - 1);
-              break;
-            case 'Enter': {
-              event.stopPropagation();
-              setSelectedItemi(null);
-              inputNode.blur();
-              const item = plan[selectedItemi];
-              if (mylib.isArr(item)) {
-                setAddress(...item);
-                bibleJoinAddressAtom.set(null);
-              } else {
-                bibleJoinAddressAtom.set(item);
-                setAddress(...getJoinAddressMaxes(item));
-              }
-
-              break;
-            }
-            case 'Escape':
-              event.stopPropagation();
-              setSelectedItemi(null);
-              inputNode.blur();
-              break;
+    return hookEffectPipe()
+      .pipe(
+        addEventListenerPipe(window, 'keydown', event => {
+          if (event.code === 'F1') {
+            event.preventDefault();
+            setSelectedItemi(0);
+            inputNode.focus();
+            return;
           }
-        }
-      })
-      .addEventListener(inputNode, 'blur', () => setSelectedItemi(null))
+        }),
+        addEventListenerPipe(inputNode, 'keydown', event => {
+          if (selectedItemi !== null) {
+            switch (event.code) {
+              case 'ArrowDown':
+                event.preventDefault();
+                event.stopPropagation();
+                if (selectedItemi + 1 < plan.length) setSelectedItemi(selectedItemi + 1);
+                break;
+              case 'ArrowUp':
+                event.preventDefault();
+                event.stopPropagation();
+                if (selectedItemi > 0) setSelectedItemi(selectedItemi - 1);
+                break;
+              case 'Enter': {
+                event.stopPropagation();
+                setSelectedItemi(null);
+                inputNode.blur();
+                const item = plan[selectedItemi];
+                if (mylib.isArr(item)) {
+                  setAddress(...item);
+                  bibleJoinAddressAtom.set(null);
+                } else {
+                  bibleJoinAddressAtom.set(item);
+                  setAddress(...getJoinAddressMaxes(item));
+                }
+
+                break;
+              }
+              case 'Escape':
+                event.stopPropagation();
+                setSelectedItemi(null);
+                inputNode.blur();
+                break;
+            }
+          }
+        }),
+        addEventListenerPipe(inputNode, 'blur', () => setSelectedItemi(null)),
+      )
       .effect();
   }, [getJoinAddressMaxes, plan, selectedItemi, setAddress]);
 

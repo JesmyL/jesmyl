@@ -1,3 +1,4 @@
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { BibleSearchZone } from '$bible/basis/model/base';
 import { JSX, memo, useEffect, useRef } from 'react';
 import { bibleSearchZoneAtom } from './atoms';
@@ -16,27 +17,29 @@ export const BibleSearchPanel = memo(function BibleSearchPanel(): JSX.Element {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    return hookEffectLine()
-      .addEventListener(window, 'keydown', event => {
-        switch (event.code) {
-          case 'F2':
-            setSearchZone('global', inputRef);
-            break;
-          case 'F3':
-            setSearchZone('inner', inputRef);
-            break;
-          case 'F4':
-            setSearchZone('address', inputRef);
-            break;
-          case 'Enter':
-          case 'Escape':
-            break;
-          default:
-            return;
-        }
+    return hookEffectPipe()
+      .pipe(
+        addEventListenerPipe(window, 'keydown', event => {
+          switch (event.code) {
+            case 'F2':
+              setSearchZone('global', inputRef);
+              break;
+            case 'F3':
+              setSearchZone('inner', inputRef);
+              break;
+            case 'F4':
+              setSearchZone('address', inputRef);
+              break;
+            case 'Enter':
+            case 'Escape':
+              break;
+            default:
+              return;
+          }
 
-        event.preventDefault();
-      })
+          event.preventDefault();
+        }),
+      )
       .effect();
   }, []);
 

@@ -1,3 +1,4 @@
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { excel2jsonParserBox } from '#shared/lib/parseExcel2Json';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
@@ -64,28 +65,30 @@ export function ScheduleWidgetUserAddByExcelContent({ close }: Props) {
     if (inputRef.current === null) return;
     const inputNode = inputRef.current;
 
-    return hookEffectLine()
-      .addEventListener(inputNode, 'change', () => {
-        if (!inputNode.files?.[0]) return;
-        const file = inputNode.files[0];
-        inputNode.value = null!;
+    return hookEffectPipe()
+      .pipe(
+        addEventListenerPipe(inputNode, 'change', () => {
+          if (!inputNode.files?.[0]) return;
+          const file = inputNode.files[0];
+          inputNode.value = null!;
 
-        (async () => {
-          try {
-            const parser = await excel2jsonParserBox();
-            const wetUsers = await parser(file);
+          (async () => {
+            try {
+              const parser = await excel2jsonParserBox();
+              const wetUsers = await parser(file);
 
-            setWetUsers(wetUsers);
-            const titlesSet = new Set<string>();
+              setWetUsers(wetUsers);
+              const titlesSet = new Set<string>();
 
-            wetUsers.forEach(wetUser => mylib.keys(wetUser).forEach(name => titlesSet.add(name)));
+              wetUsers.forEach(wetUser => mylib.keys(wetUser).forEach(name => titlesSet.add(name)));
 
-            setTitles(Array.from(titlesSet));
-          } catch (error) {
-            toast('' + error, { mood: 'ko' });
-          }
-        })();
-      })
+              setTitles(Array.from(titlesSet));
+            } catch (error) {
+              toast('' + error, { mood: 'ko' });
+            }
+          })();
+        }),
+      )
       .effect();
   }, [toast]);
 

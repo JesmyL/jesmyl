@@ -1,3 +1,4 @@
+import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { useIndexSchedules } from '$index/atoms';
 import { atom, useAtom } from 'atomaric';
@@ -27,18 +28,20 @@ export const useGetScheduleOrPull = (scheduleInstance: string | IScheduleWidgetW
       return;
     }
 
-    return hookEffectLine()
-      .setTimeout(async () => {
-        setIsLoading(true);
+    return hookEffectPipe()
+      .pipe(
+        setTimeoutPipe(async () => {
+          setIsLoading(true);
 
-        try {
-          // setSchedule(await serviceMaster('index')('takeDaySchedule', scheduleInstance));
-        } catch (error) {
-          setError('' + error);
-        }
+          try {
+            // setSchedule(await serviceMaster('index')('takeDaySchedule', scheduleInstance));
+          } catch (error) {
+            setError('' + error);
+          }
 
-        setIsLoading(false);
-      }, 600)
+          setIsLoading(false);
+        }, 600),
+      )
       .effect();
   }, [scheduleInstance, schedules, setSchedule]);
 

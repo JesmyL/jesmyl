@@ -1,3 +1,4 @@
+import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { NewWindow } from '#shared/ui/tags/NewWindow';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { useAtomSet } from 'atomaric';
@@ -21,8 +22,8 @@ export const ScheduleWidgetMarkdownTranslation = ({ md = '' }: Props) => {
   useEffect(() => setMarkdown(md), [md]);
 
   useEffect(() => {
-    return hookEffectLine()
-      .setTimeout(() => setMd(markdown), 300)
+    return hookEffectPipe()
+      .pipe(setTimeoutPipe(() => setMd(markdown), 300))
       .effect();
   }, [markdown, setMd]);
 

@@ -1,3 +1,4 @@
+import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { useBiblePrintShowSlideAddressCode } from '$bible/basis/lib/hooks/slide-sync';
 import { bibleVerseiAtom } from '$bible/basis/lib/store/atoms';
@@ -23,20 +24,22 @@ export default function BibleTranslationControlled({ head, headTitle }: Props): 
   }, [printShowAddress]);
 
   useEffect(() => {
-    return hookEffectLine()
-      .addEventListener(window, 'keydown', event => {
-        switch (event.code) {
-          case 'F2':
-          case 'F3':
-          case 'F4':
-          case 'ArrowUp':
-          case 'ArrowDown':
-          case 'ArrowLeft':
-          case 'ArrowRight':
-            event.preventDefault();
-            return;
-        }
-      })
+    return hookEffectPipe()
+      .pipe(
+        addEventListenerPipe(window, 'keydown', event => {
+          switch (event.code) {
+            case 'F2':
+            case 'F3':
+            case 'F4':
+            case 'ArrowUp':
+            case 'ArrowDown':
+            case 'ArrowLeft':
+            case 'ArrowRight':
+              event.preventDefault();
+              return;
+          }
+        }),
+      )
       .effect();
   }, []);
 

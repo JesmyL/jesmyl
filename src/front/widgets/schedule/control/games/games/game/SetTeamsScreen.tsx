@@ -1,3 +1,4 @@
+import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
@@ -41,46 +42,48 @@ export function ScheduleWidgetTeamGameSetTeamsScreen() {
 
     setIsRecompute(true);
 
-    return hookEffectLine()
-      .setTimeout(() => {
-        const sortedUsers = rights.schedule.ctrl.users
-          .filter(user => criteria[user.mi] !== undefined && !strikedUsers.includes(user.mi))
-          .sort((a, b) => criteria[a.mi] - criteria[b.mi])
-          .map(user => user.mi);
+    return hookEffectPipe()
+      .pipe(
+        setTimeoutPipe(() => {
+          const sortedUsers = rights.schedule.ctrl.users
+            .filter(user => criteria[user.mi] !== undefined && !strikedUsers.includes(user.mi))
+            .sort((a, b) => criteria[a.mi] - criteria[b.mi])
+            .map(user => user.mi);
 
-        let teamsNumbers: IScheduleWidgetUserMi[][] = Array.from({ length: teamsCount }, () => []);
-        const mapToPower = (team: IScheduleWidgetUserMi[]) =>
-          team.reduce((sum, userMi) => sum + criteria[userMi] + 1, 0);
+          let teamsNumbers: IScheduleWidgetUserMi[][] = Array.from({ length: teamsCount }, () => []);
+          const mapToPower = (team: IScheduleWidgetUserMi[]) =>
+            team.reduce((sum, userMi) => sum + criteria[userMi] + 1, 0);
 
-        const diffMap = new Map<number, number[][]>();
-        const arrayImage = { length: teamsCount };
+          const diffMap = new Map<number, number[][]>();
+          const arrayImage = { length: teamsCount };
 
-        const setInDiffMap = () => {
-          const teams: number[][] = Array.from(arrayImage, arrayMapper);
-          const randomUsers = mylib.toRandomSorted(sortedUsers);
+          const setInDiffMap = () => {
+            const teams: number[][] = Array.from(arrayImage, arrayMapper);
+            const randomUsers = mylib.toRandomSorted(sortedUsers);
 
-          for (let i = 0; i < randomUsers.length; i++) {
-            teams[i % teamsCount].push(randomUsers[i]);
-          }
+            for (let i = 0; i < randomUsers.length; i++) {
+              teams[i % teamsCount].push(randomUsers[i]);
+            }
 
-          const teamPowers = teams.map(mapToPower);
-          diffMap.set(Math.max(...teamPowers) - Math.min(...teamPowers), teams);
-        };
+            const teamPowers = teams.map(mapToPower);
+            diffMap.set(Math.max(...teamPowers) - Math.min(...teamPowers), teams);
+          };
 
-        for (let i = 0; i < retries; i++) setInDiffMap();
+          for (let i = 0; i < retries; i++) setInDiffMap();
 
-        const min = Math.min(...Array.from(diffMap.keys()));
+          const min = Math.min(...Array.from(diffMap.keys()));
 
-        teamsNumbers = diffMap.get(min)!;
-        setDiapason(min);
+          teamsNumbers = diffMap.get(min)!;
+          setDiapason(min);
 
-        const teams: { users: { mi: IScheduleWidgetUserMi; p: number }[] }[] = teamsNumbers.map(team => ({
-          users: team.map(mi => ({ mi, p: criteria[mi] })),
-        }));
+          const teams: { users: { mi: IScheduleWidgetUserMi; p: number }[] }[] = teamsNumbers.map(team => ({
+            users: team.map(mi => ({ mi, p: criteria[mi] })),
+          }));
 
-        setTeams(teams);
-        setIsRecompute(false);
-      }, 700)
+          setTeams(teams);
+          setIsRecompute(false);
+        }, 700),
+      )
       .effect();
   }, [criteriai, criterias, retries, rights.schedule.ctrl.users, strikedUsers, teamsCountStr]);
 

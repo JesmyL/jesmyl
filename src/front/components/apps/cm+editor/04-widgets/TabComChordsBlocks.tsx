@@ -33,7 +33,10 @@ export const CmEditorTabComChordsBlocks = () => {
       )}
       {(textList?.length ? textList : ['']).map((text, texti) => {
         return (
-          <div className="my-3">
+          <div
+            key={texti}
+            className="my-3"
+          >
             <div className="flex between">
               <CmTextableBlockAnchorTitles
                 chordi={texti}
@@ -64,7 +67,6 @@ export const CmEditorTabComChordsBlocks = () => {
               </span>
             </div>
             <CmChordsBlockRedactor
-              key={texti}
               text={text}
               texti={texti}
               ccom={ccom}

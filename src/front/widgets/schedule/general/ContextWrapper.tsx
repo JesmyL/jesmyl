@@ -22,10 +22,10 @@ export function ScheduleWidgetContextWrapper({
   if (!schedule) return null;
 
   return (
-    <ScheduleScopePropsContext.Provider value={scheduleScopeProps}>
-      <ScheduleWidgetAppAttsContext.Provider value={atts}>
-        <ScheduleWidgetRightsContext.Provider value={rights}>{children}</ScheduleWidgetRightsContext.Provider>
-      </ScheduleWidgetAppAttsContext.Provider>
-    </ScheduleScopePropsContext.Provider>
+    <ScheduleScopePropsContext value={scheduleScopeProps}>
+      <ScheduleWidgetAppAttsContext value={atts}>
+        <ScheduleWidgetRightsContext value={rights}>{children}</ScheduleWidgetRightsContext>
+      </ScheduleWidgetAppAttsContext>
+    </ScheduleScopePropsContext>
   );
 }

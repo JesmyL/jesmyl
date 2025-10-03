@@ -28,12 +28,12 @@ const mapToolsSelf = {} as { fun: (tool: MigratableComToolName) => void; comTopT
 function mapTools(this: und | typeof mapToolsSelf, key: MigratableComToolName) {
   if (this === undefined)
     return (
-      <ComToolNameContext.Provider
+      <ComToolNameContext
         key={key}
         value={`${key} tool-in-top`}
       >
         {toolsDict[key]}
-      </ComToolNameContext.Provider>
+      </ComToolNameContext>
     );
 
   return (
@@ -41,8 +41,8 @@ function mapTools(this: und | typeof mapToolsSelf, key: MigratableComToolName) {
       key={key}
       className={this.comTopTools.includes(key) ? '[&_.icon-box]:bg-x4 [&_.icon-box]:text-x2' : undefined}
     >
-      <ComToolNameContext.Provider value={key}>
-        <ComToolItemAttrsContext.Provider
+      <ComToolNameContext value={key}>
+        <ComToolItemAttrsContext
           value={{
             onIconClick: event => {
               event.stopPropagation();
@@ -52,8 +52,8 @@ function mapTools(this: und | typeof mapToolsSelf, key: MigratableComToolName) {
           }}
         >
           {toolsDict[key]}
-        </ComToolItemAttrsContext.Provider>
-      </ComToolNameContext.Provider>
+        </ComToolItemAttrsContext>
+      </ComToolNameContext>
     </div>
   );
 }
@@ -102,7 +102,5 @@ export const useMigratableListComTools = () => {
 export const useMigratableTopComTools = () => {
   const comTopTools = useAtomValue(cmComTopToolsAtom);
 
-  return (
-    <IsComToolIconItemsContext.Provider value={true}>{comTopTools.map(mapTools)}</IsComToolIconItemsContext.Provider>
-  );
+  return <IsComToolIconItemsContext value={true}>{comTopTools.map(mapTools)}</IsComToolIconItemsContext>;
 };

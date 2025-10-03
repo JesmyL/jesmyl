@@ -24,8 +24,8 @@ export const BibleCurrentTextsContext = (props: Props) => {
   const slideText = useBibleSlideText(addressCode);
 
   return (
-    <BibleTextContentContext.Provider value={slideText}>
-      <BibleAddressTextContext.Provider value={addressText}>{props.children}</BibleAddressTextContext.Provider>
-    </BibleTextContentContext.Provider>
+    <BibleTextContentContext value={slideText}>
+      <BibleAddressTextContext value={addressText}>{props.children}</BibleAddressTextContext>
+    </BibleTextContentContext>
   );
 };

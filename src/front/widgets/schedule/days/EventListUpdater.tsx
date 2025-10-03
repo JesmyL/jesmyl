@@ -1,3 +1,4 @@
+import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TextInput } from '#shared/ui/TextInput';
 import { useEffect, useMemo, useState } from 'react';
@@ -30,112 +31,116 @@ export const ScheduleWidgetEventListUpdater = ({ day, dayi, schedule, onClose, s
   useEffect(() => {
     setErrorText('');
 
-    return hookEffectLine()
-      .setTimeout(() => {
-        let text;
+    return hookEffectPipe()
+      .pipe(
+        setTimeoutPipe(() => {
+          let text;
 
-        try {
-          text = ScheduleWidgetCleans.text2PreparedText(value).text;
-        } catch (errorText) {
-          setErrorText('' + errorText);
-          return;
-        }
+          try {
+            text = ScheduleWidgetCleans.text2PreparedText(value).text;
+          } catch (errorText) {
+            setErrorText('' + errorText);
+            return;
+          }
 
-        const { dayWup, list, newTypes } = ScheduleWidgetCleans.preparedText2DayList(text, schedule);
+          const { dayWup, list, newTypes } = ScheduleWidgetCleans.preparedText2DayList(text, schedule);
 
-        const theDay = {
-          ...day,
-          list: list.map((event, eventi) => ({ ...event, mi: event?.mi ?? -eventi, type: event?.type ?? -1 })),
-        };
+          const theDay = {
+            ...day,
+            list: list.map((event, eventi) => ({ ...event, mi: event?.mi ?? -eventi, type: event?.type ?? -1 })),
+          };
 
-        const days = [...schedule.days];
-        const theSchedule = { ...schedule, days };
-        const times = indexScheduleGetDayEventTimes(theSchedule, theDay);
+          const days = [...schedule.days];
+          const theSchedule = { ...schedule, days };
+          const times = indexScheduleGetDayEventTimes(theSchedule, theDay);
 
-        days[dayi] = theDay;
-        const isShowPeriodsNotTs = list.includes(null);
+          days[dayi] = theDay;
+          const isShowPeriodsNotTs = list.includes(null);
 
-        setNode(
-          <div className="mt-2">
-            {!newTypes.length || (
-              <>
-                <h2>Новые события</h2>
-                {newTypes.map(({ title, tm }) => {
+          setNode(
+            <div className="mt-2">
+              {!newTypes.length || (
+                <>
+                  <h2>Новые события</h2>
+                  {newTypes.map(({ title, tm }) => {
+                    return (
+                      <div key={title}>
+                        {title} <span className="text-x7">{tm}м.</span>
+                      </div>
+                    );
+                  })}
+
+                  <SendButton
+                    title="Отправить только новые события"
+                    onSend={async () =>
+                      schEventTypesTsjrpcClient.putMany({ props: scheduleScopeProps, tatts: newTypes })
+                    }
+                  />
+                </>
+              )}
+
+              {day.wup !== dayWup && (
+                <SendButton
+                  title={`Установить время начала дня: ${ScheduleWidgetCleans.computeDayWakeUpTime(dayWup, 'string')}`}
+                  onSend={async () =>
+                    schDaysTsjrpcClient.setBeginTime({
+                      props: { ...scheduleScopeProps, dayi },
+                      value: '' + dayWup,
+                    })
+                  }
+                />
+              )}
+
+              {list.map((event, eventi) => {
+                if (event === null)
                   return (
-                    <div key={title}>
-                      {title} <span className="text-x7">{tm}м.</span>
+                    <div
+                      key={eventi}
+                      className="text-xKO"
+                    >
+                      Новое событие
                     </div>
                   );
-                })}
 
-                <SendButton
-                  title="Отправить только новые события"
-                  onSend={async () => schEventTypesTsjrpcClient.putMany({ props: scheduleScopeProps, tatts: newTypes })}
-                />
-              </>
-            )}
+                return (
+                  <StyledEvent
+                    key={eventi}
+                    schedule={theSchedule}
+                    dayScopeProps={dayScopeProps}
+                    bottomContent={retNull}
+                    day={theDay}
+                    dayi={dayi}
+                    isPastDay={false}
+                    event={event}
+                    eventTimes={times}
+                    eventi={eventi}
+                    isLastEvent
+                    isShowPeriodsNotTs={isShowPeriodsNotTs}
+                    onClickOnTs={emptyFunc}
+                    redact={false}
+                    isForceCanRedact={false}
+                    secretTime={0}
+                    isForceExpand={!!event.dsc}
+                    isForceHideRating
+                  />
+                );
+              })}
 
-            {day.wup !== dayWup && (
               <SendButton
-                title={`Установить время начала дня: ${ScheduleWidgetCleans.computeDayWakeUpTime(dayWup, 'string')}`}
-                onSend={async () =>
-                  schDaysTsjrpcClient.setBeginTime({
+                disabled={isShowPeriodsNotTs}
+                title="Отправить расписание"
+                onSuccess={() => onClose(false)}
+                onSend={() =>
+                  schDaysTsjrpcClient.setEventList({
                     props: { ...scheduleScopeProps, dayi },
-                    value: '' + dayWup,
+                    list: list.filter(itNNull),
                   })
                 }
               />
-            )}
-
-            {list.map((event, eventi) => {
-              if (event === null)
-                return (
-                  <div
-                    key={eventi}
-                    className="text-xKO"
-                  >
-                    Новое событие
-                  </div>
-                );
-
-              return (
-                <StyledEvent
-                  key={eventi}
-                  schedule={theSchedule}
-                  dayScopeProps={dayScopeProps}
-                  bottomContent={retNull}
-                  day={theDay}
-                  dayi={dayi}
-                  isPastDay={false}
-                  event={event}
-                  eventTimes={times}
-                  eventi={eventi}
-                  isLastEvent
-                  isShowPeriodsNotTs={isShowPeriodsNotTs}
-                  onClickOnTs={emptyFunc}
-                  redact={false}
-                  isForceCanRedact={false}
-                  secretTime={0}
-                  isForceExpand={!!event.dsc}
-                  isForceHideRating
-                />
-              );
-            })}
-
-            <SendButton
-              disabled={isShowPeriodsNotTs}
-              title="Отправить расписание"
-              onSuccess={() => onClose(false)}
-              onSend={() =>
-                schDaysTsjrpcClient.setEventList({
-                  props: { ...scheduleScopeProps, dayi },
-                  list: list.filter(itNNull),
-                })
-              }
-            />
-          </div>,
-        );
-      }, 300)
+            </div>,
+          );
+        }, 300),
+      )
       .effect();
   }, [day, dayScopeProps, dayi, onClose, schedule, scheduleScopeProps, value]);
 

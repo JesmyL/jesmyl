@@ -9,7 +9,10 @@ export function useIsExpand(
 ): [ReactNode, boolean, (isExpand?: boolean) => void] {
   const [isExpand, setIsExpand] = useState(initIsExpand);
   return [
-    <span className="flex gap-2 w-full between">
+    <span
+      key="node"
+      className="flex gap-2 w-full between"
+    >
       <span
         className="flex gap-2 flex-max pointer"
         onClick={() => setIsExpand(!isExpand)}
