@@ -9,6 +9,7 @@ import { environment } from './environment';
 
 export class SokiTrip {
   private ws?: WebSocket;
+  private isTokenSent = false;
 
   private isConnected = false;
   private connectionState = Eventer.createValue<boolean>();
@@ -55,6 +56,7 @@ export class SokiTrip {
         },
       });
 
+      this.isTokenSent = true;
       this.urls = [];
       this.onConnectionOpenEvent.invoke(true);
       this.isOpened = true;
@@ -71,6 +73,7 @@ export class SokiTrip {
     this.ws.onclose = () => {
       setTimeout(() => this.start(), 500);
       this.isOpened = false;
+      this.isTokenSent = false;
     };
 
     this.ws.onopen = this.sendRegistrationToken;
@@ -146,8 +149,9 @@ export class SokiTrip {
     const requestId = '' + Date.now() + Math.random();
     const fullEvent = { ...event, requestId };
 
-    if (this.ws && this.ws.readyState === this.ws.OPEN) this.sendForce(fullEvent);
-    else this.onConnectionOpenEvent.listenFirst(() => this.sendForce(fullEvent));
+    if (this.ws && this.ws.readyState === this.ws.OPEN && (this.isTokenSent || fullEvent.token)) {
+      this.sendForce(fullEvent);
+    } else this.onConnectionOpenEvent.listenFirst(() => this.sendForce(fullEvent));
 
     const result = Promise.withResolvers<InvokedResult>();
 
