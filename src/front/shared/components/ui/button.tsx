@@ -3,8 +3,9 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import * as React from 'react';
 
 import { cn } from '#shared/lib/utils';
-import { useToast } from '#shared/ui/modal/useToast';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { toast } from 'sonner';
 import { StameskaIconKind } from 'stameska-icon/utils';
 
 const buttonVariants = cva(
@@ -59,7 +60,6 @@ function Button({
   }) {
   const Comp = asSpan ? 'span' : asChild ? Slot : 'button';
   const [promiseIsLoading, setIsLoading] = React.useState(false);
-  const toast = useToast();
 
   return (
     <Comp
@@ -76,7 +76,11 @@ function Button({
       onClick={
         disabled
           ? disabledReason
-            ? () => toast(disabledReason, { mood: 'ko' })
+            ? () =>
+                toast(disabledReason, {
+                  icon: <LazyIcon icon="Alert01" />,
+                  className: 'bg-xKO! border-xKO!',
+                })
             : undefined
           : async event => {
               const result = props.onClick?.(event);
