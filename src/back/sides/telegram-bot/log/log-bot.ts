@@ -1,3 +1,4 @@
+import { backConfig } from 'back/config/backConfig';
 import { SendMessageOptions } from 'node-telegram-bot-api';
 import { jesmylTgBot } from '../bot';
 import { JesmylTelegramBot } from '../tg-bot';
@@ -9,7 +10,7 @@ export const logTelegramBot = new JesmylTelegramBot({
   uniqPrefix: '#',
 });
 
-logTelegramBot.postMessage('>>> Сервис логирования запущен');
+if (!backConfig.isTest) logTelegramBot.postMessage('>>> Сервис логирования запущен');
 
 logTelegramBot.onChatMessages((bot, message) => {
   bot.postMessage(`${message.text}\n\n#${message.message_id}`);
