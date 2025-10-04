@@ -6,7 +6,6 @@ export const cmUserStoreTsjrpcClient = new (class CmUserStore extends TsjrpcClie
     super({
       scope: 'CmUserStore',
       methods: {
-        setComComment: true,
         setAboutComFavorites: true,
       },
     });

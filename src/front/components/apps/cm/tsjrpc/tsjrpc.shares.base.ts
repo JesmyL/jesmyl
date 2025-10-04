@@ -50,8 +50,6 @@ export const cmShareTsjrpcBaseClient = new (class CmShareTsjrpcBaseClient extend
           cmIDB.updateLastModifiedAt(modifiedAt);
         },
 
-        refreshComComments: async () => {},
-
         refreshComCommentBlocks: async ({ comments, modifiedAt }) => {
           await Promise.all(
             comments.map(async comment => {

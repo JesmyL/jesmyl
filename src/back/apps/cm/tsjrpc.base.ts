@@ -131,48 +131,6 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
           return { value: comCommentBlocksFileStore.getValue()[login]?.[comw] ?? null };
         },
 
-        exchangeFreshComComments: async () => {
-          // if (auth?.login == null) return [];
-
-          // const withClientTimeDelta = Date.now() - clientDateNow;
-
-          // const comments = comCommentsFileStore.getValue();
-          // const userServerComments = (comments[auth.login] ??= {});
-          // let localSavedCommentsMaxModifiedAt = 0;
-          // const freshComments: ICmComComment[] = [];
-          // // const resultComments: ICmComComment[] = [];
-
-          // modifiedComments.forEach(({ comment, comw, m }) => {
-          //   const commentModifiedAt = m + withClientTimeDelta;
-
-          //   // if (userServerComments[comw] != null && commentModifiedAt < userServerComments[comw].m) {
-          //   //   resultComments.push(userServerComments[comw]);
-          //   //   return;
-          //   // }
-
-          //   userServerComments[comw] = {
-          //     comment,
-          //     comw,
-          //     m: commentModifiedAt,
-          //   };
-
-          //   // resultComments.push(userServerComments[comw]);
-          //   freshComments.push(userServerComments[comw]);
-          //   localSavedCommentsMaxModifiedAt = Math.max(localSavedCommentsMaxModifiedAt, commentModifiedAt);
-          // });
-
-          // if (localSavedCommentsMaxModifiedAt) {
-          //   comCommentsFileStore.saveValue();
-
-          //   // cmShareServerTsjrpcMethods.refreshComComments(
-          //   //   { comments: freshComments, modifiedAt: localSavedCommentsMaxModifiedAt },
-          //   //   { login: auth.login, ignoreClient: client },
-          //   // );
-          // }
-
-          return { value: [] };
-        },
-
         exchangeFreshComCommentBlocks: async ({ modifiedComments, clientDateNow }, { auth }) => {
           if (auth?.login == null) throw new Error('Не авторизован');
 

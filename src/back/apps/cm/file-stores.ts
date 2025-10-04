@@ -5,7 +5,6 @@ import {
   CmConstantsConfig,
   CmMp3Rule,
   EeStorePack,
-  ICmComComment,
   ICmComCommentBlock,
   IExportableCat,
   IScheduleWidgetWid,
@@ -65,43 +64,3 @@ export const cmConstantsConfigFileStore = new FileStore<CmConstantsConfig>(
 
   if (isConfigChanged) cmConstantsConfigFileStore.saveValue();
 })();
-
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-///////////////////////////////////////////////////
-/** @deprecated */
-type TCommentsStore = PRecord<SokiAuthLogin, PRecord<CmComWid, ICmComComment>>;
-/** @deprecated */
-export const comCommentsFileStore = new FileStore<TCommentsStore>('/apps/cm/comComments.json', {});
-
-// const blocks = comCommentBlocksFileStore.getValueWithAutoSave();
-// SMyLib.entries(comCommentsFileStore.getValue()).forEach(([login, commentDict]) => {
-//   if (blocks[login]) return;
-//   const block = (blocks[login] = {} as PRecord<CmComWid, OmitOwn<ICmComCommentBlock, 'comw'>>);
-
-//   SMyLib.entries(commentDict!).forEach(([comwStr, comment]) => {
-//     const d = {} as PRecord<CmComOrderWid | 'head', string[]>;
-//     const { regExp, transform } = ComBlockCommentMakerCleans.commentsAnySpecialNumberParseReg;
-//     const ma = comment?.comment?.matchAll(regExp);
-//     if (ma == null) return;
-//     const arr = Array.from(ma);
-//     for (const m of arr) {
-//       const re = transform(m);
-//       if (re.secretOrdWid) {
-//         const ordw = ComBlockCommentMakerCleans.makeSecretToWid(re.secretOrdWid);
-//         if (ordw != null) d[ordw] = [re.comment?.trim()];
-//       }
-//     }
-//     d.head = [comment?.comment?.split('#')[0].trim() ?? ''];
-//     block[comwStr] = { d, m: Date.now() };
-//   });
-// });
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////
-////////////////////////////////////////////////////

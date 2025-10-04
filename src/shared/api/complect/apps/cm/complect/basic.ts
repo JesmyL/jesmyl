@@ -92,14 +92,6 @@ export interface IExportableCom {
 
 export type IServerSideCom = OmitOwn<IExportableCom, 'al'> & { al?: HttpNumLeadLink[] | HttpNumLeadLink };
 
-/** @deprecated */
-export type ICmComComment = {
-  comw: CmComWid;
-  comment: string;
-  m: number;
-  isSavedLocal?: 1;
-};
-
 export type CmComCommentBlockSelector = CmComOrderWid | `${CmComOrderWid}_${CmComOrderWid}` | 'head';
 
 export type ICmComCommentBlock = {

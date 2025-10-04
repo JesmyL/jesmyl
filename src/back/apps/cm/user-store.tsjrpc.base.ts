@@ -27,15 +27,6 @@ export const cmUserStoreTsjrpcBaseServer = new (class CmUserStore extends Tsjrpc
     super({
       scope: 'CmUserStore',
       methods: {
-        setComComment: valueSendBuilder(() => {
-          // const comments = comCommentsFileStore.getValueWithAutoSave();
-          // const m = Date.now() + Math.random();
-          // const commentBox = { comment, comw, m };
-          // comments[authLogin] ??= {} as never;
-          // comments[authLogin][comw] = commentBox;
-          // cmShareServerTsjrpcMethods.refreshComComments({ comments: [commentBox], modifiedAt: m }, clientSelector);
-        }),
-
         setAboutComFavorites: valueSendBuilder((authLogin, clientSelector, userFavorites) => {
           const favorites = aboutComFavoritesFileStore.getValueWithAutoSave();
 

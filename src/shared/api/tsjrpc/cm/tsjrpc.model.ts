@@ -1,4 +1,4 @@
-import { CmComWid, ICmComComment, ICmComCommentBlock } from 'shared/api/complect/apps';
+import { CmComWid, ICmComCommentBlock } from 'shared/api/complect/apps';
 import { SokiAuthLogin } from 'shared/api/complect/soki.model';
 
 export type CmTsjrpcModel = {
@@ -12,9 +12,6 @@ export type CmTsjrpcModel = {
     comw: CmComWid;
     login: SokiAuthLogin;
   }) => OmitOwn<ICmComCommentBlock, 'comw'> | null;
-
-  /** @deprecated */
-  exchangeFreshComComments: (args: { modifiedComments: ICmComComment[]; clientDateNow: number }) => ICmComComment[];
 
   printComwVisit: (args: { comw: CmComWid }) => void;
   takeComwVisitsCount: (args: { comw: CmComWid }) => number;
