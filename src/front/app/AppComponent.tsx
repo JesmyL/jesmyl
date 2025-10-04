@@ -6,7 +6,7 @@ import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
 import { isFullscreenAtom } from '#shared/lib/atoms/fullscreen';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { LinkAppActionFabric } from '#shared/lib/link-app-actions';
-import { useToast } from '#shared/ui/modal/useToast';
+import { makeToastKOMoodConfig } from '#shared/ui/modal/toast.configs';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { schLinkAction } from '#widgets/schedule/links';
 import { Outlet, ParsedLocation, useLocation, useNavigate } from '@tanstack/react-router';
@@ -14,6 +14,7 @@ import { useAtomValue } from 'atomaric';
 import { soki } from 'front/soki';
 import { useEffect, useState } from 'react';
 import { emptyArray } from 'shared/utils';
+import { toast } from 'sonner';
 import { AppFooter } from './AppFooter';
 import { routingApps } from './lib/configs';
 import { lastVisitedRouteLsName } from './lib/consts';
@@ -22,25 +23,24 @@ export const AppComponent = () => {
   const loc = useLocation();
   const [isNeedFirstNavigate, setIsNeedFirstNavigate] = useState(true);
   const [isShowLogo, setIsShowLogo] = useState(true);
-  const toast = useToast();
   const appName = useAtomValue(currentAppNameAtom);
   const hideAppFooter = useAtomValue(hideAppFooterAtom);
   const isFullscreen = useAtomValue(isFullscreenAtom);
 
   useEffect(() => {
     const unauthListener = soki.onTokenInvalidEvent.listen(() => {
-      toast('Авторизация не действительна', { mood: 'ko' });
+      toast('Авторизация не действительна', makeToastKOMoodConfig());
     });
 
     const errorMessageListener = soki.onInvokeErrorMessageEvent.listen(errorMessage => {
-      toast(errorMessage, { mood: 'ko' });
+      toast(errorMessage, makeToastKOMoodConfig());
     });
 
     return () => {
       unauthListener();
       errorMessageListener();
     };
-  }, [toast]);
+  }, []);
 
   useFingersActions();
   useGlobalFontFamilySetter();

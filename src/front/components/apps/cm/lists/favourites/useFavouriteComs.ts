@@ -1,9 +1,10 @@
-import { useToast } from '#shared/ui/modal/useToast';
+import { makeToastKOMoodConfig } from '#shared/ui/modal/toast.configs';
 import { useComs } from '$cm/basis/lib/coms-selections';
 import { cmConstantsConfigAtom, cmFavoriteComsAtom } from '$cm/basis/lib/store/atoms';
 import { cmUserStoreTsjrpcClient } from '$cm/tsjrpc/user-store.tsjrpc.methods';
 import { useAuth } from '$index/atoms';
 import { useAtomValue } from 'atomaric';
+import { toast } from 'sonner';
 
 let saveTimeout: TimeOut;
 
@@ -11,7 +12,6 @@ export const useFavouriteComs = () => {
   const favourites = useAtomValue(cmFavoriteComsAtom);
   const { maxFavouritesCount } = useAtomValue(cmConstantsConfigAtom);
   const favouriteComsSet = new Set(favourites);
-  const toast = useToast();
   const auth = useAuth();
 
   const ret = {
@@ -28,7 +28,7 @@ export const useFavouriteComs = () => {
       cmFavoriteComsAtom.set(comws.slice(0, maxFavouritesCount));
 
       if (isOverLimit) {
-        toast(`Лимит - ${maxFavouritesCount} избранных`, { mood: 'ko' });
+        toast(`Лимит - ${maxFavouritesCount} избранных`, makeToastKOMoodConfig());
         return;
       }
 

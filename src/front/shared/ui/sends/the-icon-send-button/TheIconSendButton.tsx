@@ -1,5 +1,6 @@
-import { useToast } from '#shared/ui/modal/useToast';
+import { makeToastKOMoodConfig } from '#shared/ui/modal/toast.configs';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { toast } from 'sonner';
 import { SendButtonContentMaker } from '../send-button-content-maker/maker';
 import { SendButtonContentMakerProps } from '../send-button-content-maker/maker.model';
 
@@ -13,14 +14,12 @@ interface Props<Value> extends SendButtonContentMakerProps<Value> {
 }
 
 export function TheIconSendButton<Value>({ className = '', ...props }: Props<Value>) {
-  const toast = useToast();
-
   return (
     <SendButtonContentMaker
       {...props}
       onFailure={error => {
         props.onFailure?.(error);
-        toast(error, { mood: 'ko' });
+        toast(error, makeToastKOMoodConfig());
       }}
       content={(onClick, error, isLoading) => {
         return (

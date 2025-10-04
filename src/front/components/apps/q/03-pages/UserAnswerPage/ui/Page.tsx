@@ -3,7 +3,7 @@ import { Button } from '#shared/components/ui/button';
 import { Card } from '#shared/components/ui/card';
 import { ConditionalRender } from '#shared/ui/ConditionalRender';
 import { CopyTextButton } from '#shared/ui/CopyTextButton';
-import { useToast } from '#shared/ui/modal/useToast';
+import { makeToastOKMoodConfig } from '#shared/ui/modal/toast.configs';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { TextInput } from '#shared/ui/TextInput';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
@@ -17,6 +17,7 @@ import { useState } from 'react';
 import { QuestionerBlankWid, QuestionerType } from 'shared/model/q';
 import { QuestionerUserAnswer, QuestionerUserAnswerContentProps } from 'shared/model/q/answer';
 import { itNIt } from 'shared/utils';
+import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 import { useQuestionerUserBlankDetailsQuery } from '../api/useQuestionerUserBlankDetailsQuery';
 
@@ -37,7 +38,6 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
   const questionBlank = useQuestionerUserBlankDetailsQuery(blankw);
   const userAnswer = useAtomValue(answersAtom);
   const answerErrorsSet = new Set<string | null>();
-  const toast = useToast();
   const [isOpenAllItems, setIsOpenAllItems] = useState(true);
 
   return (
@@ -198,7 +198,7 @@ export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWi
                           })
                           .then(() => {
                             answersAtom.set(prev => ({ ...prev, isWasPublicate: true }));
-                            toast('Ответ отправлен', { mood: 'ok' });
+                            toast('Ответ отправлен', makeToastOKMoodConfig());
                           })
                       }
                     >

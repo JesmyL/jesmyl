@@ -23,11 +23,13 @@ export const cmLastOpenComwAtom = atom<CmComWid | und>(undefined, 'cm:lastOpenCo
 export const cmComCommentRedactOrdSelectorIdAtom = atom<CmComCommentBlockSelector | null>(null);
 export const cmComCommentAltKeyAtom = atom<string | null>(null, 'cm:comCurrentCommentAltKey');
 export const cmComCommentRegisteredAltKeysAtom = atom(new Set<string>(), {
-  do: (set, _get, self) => ({
+  do: (set, get, self) => ({
     init: async () => {
       if (!self.isInitialValue()) return;
 
       const max = cmConstantsConfigAtom.get().maxComCommentAlternativesCount;
+      if (!max || get().size >= max) return;
+
       const newKeySet = new Set<string>();
 
       [...(await cmIDB.tb.localComCommentBlocks.toArray()), ...(await cmIDB.tb.comCommentBlocks.toArray())].some(

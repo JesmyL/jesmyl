@@ -1,9 +1,10 @@
 import { useIsRedactArea } from '#shared/lib/hooks/useIsRedactArea';
-import { useToast } from '#shared/ui/modal/useToast';
+import { makeToastKOMoodConfig } from '#shared/ui/modal/toast.configs';
 import { TextInput } from '#shared/ui/TextInput';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useEffect, useState } from 'react';
+import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 import { StrongEditableFieldMultiline } from './StrongEditableFieldMultiline';
 
@@ -39,7 +40,6 @@ export function StrongEditableField<Key extends string, Value extends string | P
   const [isUserChange, setIsUserChange] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
-  const toast = useToast();
   const { editIcon, isSelfRedact } = useIsRedactArea({
     redactable: true,
     canRedact: true,
@@ -70,7 +70,7 @@ export function StrongEditableField<Key extends string, Value extends string | P
           setIsUserChange(false);
         })
         .catch(errorMessage => {
-          toast(errorMessage, { mood: 'ko' });
+          toast(errorMessage, makeToastKOMoodConfig());
           setIsError(true);
         });
     } else setStateValue(value);

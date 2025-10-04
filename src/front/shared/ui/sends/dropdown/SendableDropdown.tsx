@@ -1,8 +1,9 @@
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { DropdownItem, DropdownProps } from '#shared/ui/dropdown/Dropdown.model';
-import { useToast } from '#shared/ui/modal/useToast';
+import { makeToastKOMoodConfig } from '#shared/ui/modal/toast.configs';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 export function SendableDropdown<Id extends string | number, Item extends DropdownItem<Id> = DropdownItem<Id>>(
   props: DropdownProps<Id, Item> & {
@@ -10,7 +11,6 @@ export function SendableDropdown<Id extends string | number, Item extends Dropdo
   },
 ) {
   const [isLoading, setIsLoading] = useState(false);
-  const toast = useToast();
 
   return (
     <div className="relative">
@@ -25,7 +25,7 @@ export function SendableDropdown<Id extends string | number, Item extends Dropdo
             setIsLoading(true);
             await props.onSend(id);
           } catch (error) {
-            toast('' + error, { mood: 'ko' });
+            toast('' + error, makeToastKOMoodConfig());
           }
 
           setIsLoading(false);

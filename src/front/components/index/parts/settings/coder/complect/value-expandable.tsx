@@ -1,7 +1,8 @@
 import { CopyTextButton } from '#shared/ui/CopyTextButton';
 import { useIsRememberExpand } from '#shared/ui/expand/useIsRememberExpand';
-import { useToast } from '#shared/ui/modal/useToast';
+import { makeToastKOMoodConfig } from '#shared/ui/modal/toast.configs';
 import { ReactNode } from 'react';
+import { toast } from 'sonner';
 import { CoderResultNameStyled } from './styles';
 
 interface Props {
@@ -16,7 +17,6 @@ const valueExpandableStyle = { marginLeft: 20 };
 
 export const CoderValueExpandable = ({ shortValue, fullValue, name, onCopy, scope }: Props) => {
   const [, isExpand, setIsExpand] = useIsRememberExpand(scope);
-  const toast = useToast();
 
   return (
     <>
@@ -38,7 +38,7 @@ export const CoderValueExpandable = ({ shortValue, fullValue, name, onCopy, scop
                     try {
                       return onCopy();
                     } catch (error) {
-                      toast('' + error, { mood: 'ko' });
+                      toast('' + error, makeToastKOMoodConfig());
                     }
                   }}
                 />

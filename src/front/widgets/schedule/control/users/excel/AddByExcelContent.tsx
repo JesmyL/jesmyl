@@ -2,13 +2,14 @@ import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe
 import { mylib } from '#shared/lib/my-lib';
 import { excel2jsonParserBox } from '#shared/lib/parseExcel2Json';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
-import { useToast } from '#shared/ui/modal/useToast';
+import { makeToastKOMoodConfig } from '#shared/ui/modal/toast.configs';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { schUsersTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { toast } from 'sonner';
 
 interface Props {
   close: () => void;
@@ -25,7 +26,6 @@ export function ScheduleWidgetUserAddByExcelContent({ close }: Props) {
   const scheduleScopeProps = useScheduleScopePropsContext();
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const toast = useToast();
   const [wetUsers, setWetUsers] = useState<Record<string, string>[] | null>(null);
   const [titles, setTitles] = useState<string[]>([]);
   const [nameField, setNameField] = useState<string | null>(null);
@@ -84,13 +84,13 @@ export function ScheduleWidgetUserAddByExcelContent({ close }: Props) {
 
               setTitles(Array.from(titlesSet));
             } catch (error) {
-              toast('' + error, { mood: 'ko' });
+              toast('' + error, makeToastKOMoodConfig());
             }
           })();
         }),
       )
       .effect();
-  }, [toast]);
+  }, []);
 
   if (wetUsers === null)
     return (

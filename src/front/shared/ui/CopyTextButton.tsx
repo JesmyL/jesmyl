@@ -1,10 +1,10 @@
 import { atom, useAtomValue } from 'atomaric';
 import { ReactNode } from 'react';
+import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 import { Modal } from './modal/Modal/Modal';
 import { ModalBody } from './modal/Modal/ModalBody';
 import { ModalHeader } from './modal/Modal/ModalHeader';
-import { useToast } from './modal/useToast';
 import { TheIconButton } from './the-icon/TheIconButton';
 
 interface Props {
@@ -20,7 +20,6 @@ interface Props {
 const textToCopyAtom = atom('');
 
 export function CopyTextButton({ text, disabled, description, className, message, withoutIcon, onClose }: Props) {
-  const toast = useToast();
   const textToCopy = useAtomValue(textToCopyAtom);
 
   return (

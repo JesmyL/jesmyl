@@ -1,6 +1,6 @@
 import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
 import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
-import { useToast } from '#shared/ui/modal/useToast';
+import { makeToastKOMoodConfig } from '#shared/ui/modal/toast.configs';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -8,6 +8,7 @@ import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
 import { useConnectionState } from '$index/useConnectionState';
 import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
+import { toast } from 'sonner';
 import { useAuthErrors } from './atoms';
 import { IndexTelegramAuthStyledPage } from './IndexTelegramAuth.styled';
 import { TgNativeAuth } from './TgNativeAuth';
@@ -26,7 +27,6 @@ export const IndexTelegramAuthPage = () => {
   const [errors] = useAuthErrors();
   const navigate = useNavigate();
   const error = (message: string | nil) => message && <div className="login-error-message">{message}</div>;
-  const toast = useToast();
 
   return (
     <IndexTelegramAuthStyledPage
@@ -129,7 +129,7 @@ export const IndexTelegramAuthPage = () => {
                     }}
                     onFailure={errorMessage => {
                       setIsLoading(false);
-                      toast(errorMessage, { mood: 'ko' });
+                      toast(errorMessage, makeToastKOMoodConfig());
                     }}
                     onSend={async () => {
                       setIsLoading(true);

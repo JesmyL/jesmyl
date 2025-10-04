@@ -9,7 +9,7 @@ export const OrdersRedactorOrderToolsMoveBlock = (props: OrdersRedactorOrderTool
 
   return (
     <DisabledArea
-      isDisabled={isDisabled}
+      disabled={isDisabled}
       disabledReason="Следующий блок - продолжение"
       onClick={async () => {
         props.onClose(false);

@@ -1,9 +1,10 @@
 import { mylib } from '#shared/lib/my-lib';
 import { ReactNode } from 'react';
+import { toast } from 'sonner';
 import { StameskaIconKind } from 'stameska-icon/utils';
 import { twMerge } from 'tailwind-merge';
 import { ConfirmContent } from '../modal/confirm/ConfirmContent';
-import { useToast } from '../modal/useToast';
+import { makeToastKOMoodConfig } from '../modal/toast.configs';
 import { TheIconLoading } from './IconLoading';
 import { LazyIcon } from './LazyIcon';
 
@@ -26,7 +27,6 @@ export const TheIconButton = (props: Props) => {
   const className =
     `${props.className || ''}${(!props.disabled && props.onClick) || props.disabledReason ? ' pointer' : ''}` +
     `${props.disabled ? ' disabled' + (props.disabledReason ? ' clickable' : '') : ''}`;
-  const toast = useToast();
 
   return (
     <>
@@ -45,9 +45,10 @@ export const TheIconButton = (props: Props) => {
 
                         if (props.disabled) {
                           if (props.disabledReason) {
-                            toast(mylib.isFunc(props.disabledReason) ? props.disabledReason() : props.disabledReason, {
-                              mood: 'ko',
-                            });
+                            toast(
+                              mylib.isFunc(props.disabledReason) ? props.disabledReason() : props.disabledReason,
+                              makeToastKOMoodConfig(),
+                            );
                           }
                           return;
                         }

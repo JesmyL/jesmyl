@@ -6,11 +6,12 @@ import { useQuery } from '@tanstack/react-query';
 import { atom, useAtomValue } from 'atomaric';
 import { ReactNode, useState } from 'react';
 import { itIt } from 'shared/utils';
+import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 import { Modal } from '../modal/Modal/Modal';
 import { ModalBody } from '../modal/Modal/ModalBody';
 import { ModalHeader } from '../modal/Modal/ModalHeader';
-import { useToast } from '../modal/useToast';
+import { makeToastKOMoodConfig } from '../modal/toast.configs';
 import { TextInput } from '../TextInput';
 import { TheIconLoading } from '../the-icon/IconLoading';
 import { LazyIcon } from '../the-icon/LazyIcon';
@@ -32,7 +33,6 @@ export default function IconConfigurator(props: {
 
   const [loadingIcon, setLoadingIcon] = useState<KnownStameskaIconName | null>(null);
   const usedSet = new Set(props.used);
-  const toast = useToast();
   const searchTermDebounce = useDebounceValue(searchTerm, 1000);
   const { data: { iconSearchLink } = {}, isLoading: isIconSearchLinkLoading } = useIndexValuesQuery();
 
@@ -101,7 +101,7 @@ export default function IconConfigurator(props: {
                     try {
                       await props.onSend(icon);
                     } catch (error) {
-                      toast('' + error);
+                      toast('' + error, makeToastKOMoodConfig());
                     }
                     setLoadingIcon(null);
                   }}

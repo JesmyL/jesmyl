@@ -12,7 +12,7 @@ export const OrdersRedactorOrderToolsAnchorDelete = ({ com, ord, onClose }: Orde
 
   return (
     <DisabledArea
-      isDisabled={isDisabled}
+      disabled={isDisabled}
       disabledReason="Следующий блок - продолжение"
       onClick={async () => {
         if (

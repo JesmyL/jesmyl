@@ -7,7 +7,6 @@ import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { usePrompt } from '#shared/ui/modal/usePrompt';
-import { useToast } from '#shared/ui/modal/useToast';
 import { QrCodeFullScreen } from '#shared/ui/qr-code/QrCodeFullScreen';
 import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -27,6 +26,7 @@ import { atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { emptyArray } from 'shared/utils';
 import { useDeferredCallback } from 'shared/utils/useDeferredCallback';
+import { toast } from 'sonner';
 import { ComBlockCommentMakerCleans } from './complect/comment-parser/Cleans';
 import { Order } from './order/Order';
 import { CmTransferAltCommentModalInner } from './TransferAltCommentModalInner';
@@ -41,7 +41,6 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
   const deferredCallback = useDeferredCallback();
   const { takeCommentTexts, localCommentBlock, maxComCommentAlternativesCount } = useCmComCommentBlock(com.wid);
   const prompt = usePrompt();
-  const toast = useToast();
   const registeredAltKeys = useAtomValue(cmComCommentRegisteredAltKeysAtom);
   const auth = useAuth();
 
@@ -71,13 +70,13 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
 
   return (
     <>
-      <ModalHeader className="flex gap-2 justify-between">
+      <ModalHeader className="flex gap-2 justify-between @container">
         <span className="flex gap-2">
           <LazyIcon icon="TextAlignLeft" />
           <span className="text-x7 nowrap">
             #{ordNN} {ord?.me.header()}
           </span>
-          <span className="text-x3 ellipsis">{com.name}</span>
+          <span className="text-x3 ellipsis w-[calc(100cqw-40px*2-1.5em)]">{com.name}</span>
         </span>
 
         {ordSelectorId === 'head' ? (
@@ -171,60 +170,43 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
           )}
           addContent={
             <div className="flex flex-col gap-3">
-              {registeredAltKeys.size < maxComCommentAlternativesCount && (
-                <Button
-                  asSpan
-                  className="text-x7 w-full"
-                  onClick={async () => {
-                    const altKeysSet = new Set<string>();
+              <Button
+                asSpan
+                className="text-x7 w-full"
+                disabled={registeredAltKeys.size >= maxComCommentAlternativesCount}
+                onClick={async () => {
+                  if (cmComCommentRegisteredAltKeysAtom.get().size >= maxComCommentAlternativesCount) {
+                    toast('Добавлено максимальное количество альтернатив');
+                    return;
+                  }
 
-                    (await cmIDB.tb.localComCommentBlocks.toArray()).some(({ alt }) => {
-                      mylib.keys(alt).forEach(key => altKeysSet.add(key));
-                      return altKeysSet.size >= maxComCommentAlternativesCount;
-                    });
+                  const altCommentKey = (await prompt('Добавить новую альтернативу'))?.toLowerCase();
+                  const localComment = await cmIDB.tb.localComCommentBlocks.get(com.wid);
 
-                    if (altKeysSet.size < maxComCommentAlternativesCount)
-                      (await cmIDB.tb.comCommentBlocks.toArray()).some(({ alt }) => {
-                        mylib.keys(alt).forEach(key => altKeysSet.add(key));
-                        return altKeysSet.size >= maxComCommentAlternativesCount;
-                      });
+                  if (!altCommentKey || (localComment?.alt && altCommentKey in localComment.alt)) {
+                    return;
+                  }
+                  const maxLen = 10;
 
-                    cmComCommentRegisteredAltKeysAtom.set(
-                      new Set(Array.from(altKeysSet).slice(0, maxComCommentAlternativesCount)),
-                    );
+                  if (altCommentKey.length > maxLen) {
+                    toast(`Слишком длинное название (${maxLen}+)`);
+                    return;
+                  }
 
-                    if (cmComCommentRegisteredAltKeysAtom.get().size >= maxComCommentAlternativesCount) {
-                      toast('Добавлено максимальное количество альтернатив');
-                      return;
-                    }
+                  await cmIDB.tb.localComCommentBlocks.put({
+                    ...localComment,
+                    comw: com.wid,
+                    m: Date.now(),
+                    alt: { ...localComment?.alt, [altCommentKey]: {} },
+                  });
 
-                    const altCommentKey = (await prompt('Добавить новую альтернативу'))?.toLowerCase();
-                    const localComment = await cmIDB.tb.localComCommentBlocks.get(com.wid);
+                  cmComCommentRegisteredAltKeysAtom.do.add(altCommentKey);
+                }}
+              >
+                <LazyIcon icon="PlusSign" />
+                Добавить
+              </Button>
 
-                    if (!altCommentKey || (localComment?.alt && altCommentKey in localComment.alt)) {
-                      return;
-                    }
-                    const maxLen = 10;
-
-                    if (altCommentKey.length > maxLen) {
-                      toast(`Слишком длинное название (${maxLen}+)`, { mood: 'ko' });
-                      return;
-                    }
-
-                    await cmIDB.tb.localComCommentBlocks.put({
-                      ...localComment,
-                      comw: com.wid,
-                      m: Date.now(),
-                      alt: { ...localComment?.alt, [altCommentKey]: {} },
-                    });
-
-                    cmComCommentRegisteredAltKeysAtom.do.add(altCommentKey);
-                  }}
-                >
-                  <LazyIcon icon="PlusSign" />
-                  Добавить
-                </Button>
-              )}
               <Button
                 asSpan
                 className="text-x7"

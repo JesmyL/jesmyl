@@ -2,8 +2,9 @@ import { Button } from '#shared/components/ui/button';
 import { DropdownMenu } from '#shared/components/ui/dropdown-menu';
 import { useEffect, useMemo, useState } from 'react';
 import { itIt } from 'shared/utils';
+import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
-import { useToast } from '../modal/useToast';
+import { makeToastKOMoodConfig } from '../modal/toast.configs';
 import { useOnSendPromiseCallback } from '../sends/useOnSendPromiseCallback';
 import { LazyIcon } from '../the-icon/LazyIcon';
 import { DropdownItem, DropdownProps } from './Dropdown.model';
@@ -15,7 +16,6 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
 
   useEffect(() => setId(props.id), [props.id]);
 
-  const toast = useToast();
   const [onClick, error, isLoading] = useOnSendPromiseCallback(
     item => {
       return props.onSelect === undefined ? props.onSelectId?.(item.id) : props.onSelect(item);
@@ -25,7 +25,7 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
     },
     error => {
       setId(props.id);
-      toast(error, { mood: 'ko' });
+      toast(error, makeToastKOMoodConfig());
     },
   );
 

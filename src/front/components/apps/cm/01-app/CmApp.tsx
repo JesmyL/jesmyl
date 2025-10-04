@@ -1,6 +1,6 @@
 import { useCurrentAppSetter } from '#basis/lib/useCurrentAppSetter';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { useToast } from '#shared/ui/modal/useToast';
+import { makeToastKOMoodConfig } from '#shared/ui/modal/toast.configs';
 import { cmShareComCommentPropsAtom } from '$cm/atoms';
 import { cmConstantsConfigAtom } from '$cm/basis/lib/store/atoms';
 import { CmComCommentSharePull } from '$cm/features/ComCommentSharePull';
@@ -9,6 +9,7 @@ import { atom, useAtomValue } from 'atomaric';
 import { useAuth } from 'front/components/index/atoms';
 import React, { Suspense, memo, useEffect, useState } from 'react';
 import { CmComWid } from 'shared/api';
+import { toast } from 'sonner';
 import { cmAppActions } from '../app-actions/cm-app-actions';
 import { CmSharedComListActionInterpretator } from '../app-actions/SharedComList';
 import { useSelectedComs } from '../base/useSelectedComs';
@@ -23,7 +24,6 @@ export const CmApp = () => {
 
   const auth = useAuth();
   const { selectedComws, setSelectedComws } = useSelectedComs();
-  const toast = useToast();
 
   cmAppActions.useOnAction(({ props, navigateFromRoot }) => {
     if ('comws' in props && props.comws?.length) {
@@ -49,9 +49,9 @@ export const CmApp = () => {
       const copySelected = [...selectedComws];
       copySelected.length = maxSelectedComsCount;
       setSelectedComws(copySelected);
-      toast(`Можно выбрать максимум ${maxSelectedComsCount} песен`, { mood: 'ko' });
+      toast(`Можно выбрать максимум ${maxSelectedComsCount} песен`, makeToastKOMoodConfig());
     }
-  }, [maxSelectedComsCount, selectedComws, setSelectedComws, toast]);
+  }, [maxSelectedComsCount, selectedComws, setSelectedComws]);
 
   return (
     <>
