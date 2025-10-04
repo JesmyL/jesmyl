@@ -97,7 +97,7 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
         },
 
         replaceUserAltCommentBlocks: async ({ from: transferAltFrom, to: transferAltTo, comw }, { auth, client }) => {
-          if (!auth?.login) throw 'Для обмена альтернативными комментариями нужна авторизация';
+          if (!auth?.login) throw 'Для обмена специальными комментариями нужна авторизация';
           const commentBlock = comCommentBlocksFileStore.getValue()[auth.login]?.[comw];
           if (commentBlock == null) return;
 
