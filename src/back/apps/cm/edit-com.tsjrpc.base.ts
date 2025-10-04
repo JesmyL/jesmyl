@@ -1,9 +1,11 @@
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
-import { CmComWid, IExportableCom } from 'shared/api';
+import { CmComWid, IExportableCom, IServerSideCom } from 'shared/api';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
 import { itNNil, smylib } from 'shared/utils';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
+import { makeCmComHttpToNumLeadAudioLinks, makeCmComNumLeadToHttpAudioLinks } from './complect/com-http-links';
+import { mapCmExportableToImportableCom, mapCmImportableToExportableCom } from './complect/tools';
 import { cmConstantsConfigFileStore, comsFileStore } from './file-stores';
 import { cmShareServerTsjrpcMethods } from './tsjrpc.shares';
 
@@ -39,7 +41,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           const prev = com.s;
           com.s = value;
 
-          return `Размерность песни ${getCmComNameInBrackets(com)} установлено в значение ${value}/4 (было ${prev})`;
+          return `Размерность песни ${getCmComNameInBrackets(com)} установлено в значение ${value}/4 (было ${prev}/4)`;
         }),
 
         changeLanguage: modifyInvocableCom((com, { value }, { auth }) => {
@@ -85,8 +87,8 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_AUDIO', 'U')) throw '';
 
-          const prev = com.a;
-          com.a = value.trim();
+          const prev = makeCmComNumLeadToHttpAudioLinks(com.al);
+          com.al = makeCmComHttpToNumLeadAudioLinks(value);
 
           return `Изменение аудио-ссылок для песни ${getCmComNameInBrackets(com)}:\n\n${value}\n\nбыло:${prev}`;
         }),
@@ -177,7 +179,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
             m: Date.now(),
             t: newCom.t?.map(text => CmComUtils.transformToClearText(text)),
           };
-          comsFileStore.getValue().push(com);
+          comsFileStore.getValue().push(mapCmExportableToImportableCom(com));
           comsFileStore.saveValue();
           cmShareServerTsjrpcMethods.editedCom({ com });
 
@@ -203,7 +205,10 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'C')) throw '';
 
           return {
-            value: comsFileStore.getValue().filter(com => com.isRemoved),
+            value: comsFileStore
+              .getValue()
+              .filter(com => com.isRemoved)
+              .map(mapCmImportableToExportableCom),
             description: '',
           };
         },
@@ -226,7 +231,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
   }
 })();
 
-export const getCmComNameInBrackets = (comScalar: CmComWid | IExportableCom) => {
+export const getCmComNameInBrackets = (comScalar: CmComWid | IServerSideCom | IExportableCom) => {
   if (smylib.isNum(comScalar)) {
     const com = comsFileStore.getValue().find(com => com.w === comScalar);
     if (com == null) return '[Неизвестная песня]';
@@ -237,7 +242,7 @@ export const getCmComNameInBrackets = (comScalar: CmComWid | IExportableCom) => 
 };
 
 export function modifyInvocableCom<Props extends { comw: CmComWid }>(
-  mapper: (com: IExportableCom, props: Props, tool: ServerTSJRPCTool) => string | null,
+  mapper: (com: IServerSideCom, props: Props, tool: ServerTSJRPCTool) => string | null,
 ) {
   return async (props: Props, tool: ServerTSJRPCTool) => {
     const com = comsFileStore.getValue().find(com => com.w === props.comw);
@@ -248,15 +253,17 @@ export function modifyInvocableCom<Props extends { comw: CmComWid }>(
     com.m = Date.now() + Math.random();
 
     comsFileStore.saveValue();
-    cmShareServerTsjrpcMethods.editedCom({ com });
+    const expCom = mapCmImportableToExportableCom(com);
 
-    return { value: com, description };
+    cmShareServerTsjrpcMethods.editedCom({ com: expCom });
+
+    return { value: expCom, description };
   };
 }
 
 function insertInTextableBlock<Props extends { value: string; comw: CmComWid; insertToi: number }>(
   coln: 'c' | 't',
-  text: (com: IExportableCom, props: Props, tool: ServerTSJRPCTool) => string,
+  text: (com: IServerSideCom, props: Props, tool: ServerTSJRPCTool) => string,
 ) {
   return modifyInvocableCom<Props>((com, props, tool) => {
     if (com[coln] == null) return '';
@@ -273,7 +280,7 @@ function insertInTextableBlock<Props extends { value: string; comw: CmComWid; in
 
 function removeTextableBlock<Props extends { comw: CmComWid; removei: number }>(
   coln: 'c' | 't',
-  text: (com: IExportableCom, props: Props, tool: ServerTSJRPCTool) => string,
+  text: (com: IServerSideCom, props: Props, tool: ServerTSJRPCTool) => string,
 ) {
   return modifyInvocableCom<Props>((com, props, tool) => {
     if (com[coln] == null) return null;

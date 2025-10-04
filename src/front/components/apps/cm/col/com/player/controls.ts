@@ -1,11 +1,12 @@
 import { atom, useAtomValue } from 'atomaric';
+import { HttpLink } from 'shared/api';
 
 export const comPlayerAudioElement = document.createElement('audio');
 
 const comPlayerDurationAtom = atom(0.01);
 const comPlayerCurrentTimeAtom = atom(0);
 
-export const comPlayerPlaySrcAtom = atom<string | null>(null);
+export const comPlayerPlaySrcAtom = atom<HttpLink | null>(null);
 export const comPlayerEndedTickAtom = atom(false);
 export const comPlayerErrorTickAtom = atom(false);
 export const comPlayerIsPlayAtom = atom(false);

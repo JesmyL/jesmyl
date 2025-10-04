@@ -8,18 +8,26 @@ import {
   ICmComComment,
   ICmComCommentBlock,
   IExportableCat,
-  IExportableCom,
   IScheduleWidgetWid,
+  IServerSideCom,
   ScheduleComPack,
   ScheduleComPackHistory,
   SokiAuthLogin,
   TAboutComFavoriteItem,
 } from 'shared/api';
-import { smylib } from 'shared/utils';
+import { itIt, smylib } from 'shared/utils';
 import { cmConstantsDefaultConfig } from 'shared/values/cm/cmConstantsDefaultConfig';
+import { makeCmComHttpToNumLeadAudioLinks } from './complect/com-http-links';
 
-export const comsFileStore = new FileStore<IExportableCom[]>('/apps/cm/coms.json', []);
+export const comsFileStore = new FileStore<IServerSideCom[]>('/apps/cm/coms.json', []);
 export const catsFileStore = new FileStore<IExportableCat[]>('/apps/cm/cats.json', []);
+
+comsFileStore.getValue().forEach(com => {
+  if (com.al) return;
+
+  com.m = Date.now();
+  com.al = 'a' in com ? makeCmComHttpToNumLeadAudioLinks(('' + com.a).split('\n').filter(itIt) as never) : undefined;
+});
 
 export const eventPacksFileStore = new FileStore(
   '/apps/cm/schEventPacks.json',

@@ -76,7 +76,7 @@ export const useCatSpecialSearches = (): Record<`@${string}`, CatSpecialSearches
 
   return useMemo(
     () => ({
-      '@audioLess': { title: 'Песни без аудио', map: async coms => coms.filter(com => !com.audio.trim()) },
+      '@audioLess': { title: 'Песни без аудио', map: async coms => coms.filter(com => !com.audio.length) },
       '@lineLen:': {
         title: `Со сторкой больше чем:элементов[${maxAvailableComLineLength}]`,
         map: async (coms, term) => {

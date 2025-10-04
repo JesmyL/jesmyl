@@ -8,7 +8,7 @@ import { ComAudioControlledList } from '$cm+editor/widgets/AudioControlledList';
 import { useCheckUserAccessRightsInScope } from '$index/checkers';
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
-import { CmMp3Rule } from 'shared/api';
+import { CmMp3Rule, HttpLink } from 'shared/api';
 import { itIt } from 'shared/utils';
 
 type Props = { topHTML?: string; topCom?: EditableCom; topMp3Rule?: CmMp3Rule };
@@ -19,8 +19,8 @@ export const CmEditorTabComAudio = ({ topHTML, topCom, topMp3Rule }: Props) => {
 
   const [innerHTML, setInnerHTML] = useState(topHTML);
   const [mp3Rule, setMp3Rule] = useState<CmMp3Rule | und>(topMp3Rule);
-  const [hrefs, setHrefs] = useState<string[]>([]);
-  const [removedHrefs, setRemovedHrefs] = useState<string[]>([]);
+  const [hrefs, setHrefs] = useState<HttpLink[]>([]);
+  const [removedHrefs, setRemovedHrefs] = useState<HttpLink[]>([]);
   const [openAddBlock, setOpenAddBlock] = useState(false);
   const checkAccess = useCheckUserAccessRightsInScope();
 
@@ -31,21 +31,21 @@ export const CmEditorTabComAudio = ({ topHTML, topCom, topMp3Rule }: Props) => {
   const removeSrc = (src: string) =>
     cmEditComClientTsjrpcMethods.setAudioLinks({
       comw: ccom.wid,
-      value: Array.from(new Set(ccom.audio.split(/\n/).filter(s => s && s !== src))).join('\n'),
+      value: Array.from(new Set(ccom.audio.filter(s => s && s !== src))),
     });
 
-  const addSrc = (src: string) =>
+  const addSrc = (src: HttpLink) =>
     cmEditComClientTsjrpcMethods.setAudioLinks({
       comw: ccom.wid,
-      value: Array.from(new Set(ccom.audio.split(/\n/).concat(src).filter(itIt))).join('\n'),
+      value: Array.from(new Set(ccom.audio.concat(src).filter(itIt))),
     });
 
   return (
     <>
       <h2>Прикреплённые аудио</h2>
-      {ccom.audio ? (
+      {ccom.audio.length ? (
         <ComAudioControlledList
-          srcs={ccom.audio.split('\n').filter(itIt)}
+          srcs={ccom.audio}
           icon="CancelCircle"
           isCanDelete={checkAccess('cm', 'COM_AUDIO', 'D')}
           onToggle={async src => {

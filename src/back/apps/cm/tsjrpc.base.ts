@@ -3,6 +3,7 @@ import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { ICmComCommentBlock } from 'shared/api';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
 import { emptyObject, SMyLib, smylib } from 'shared/utils';
+import { mapCmImportableToExportableCom } from './complect/tools';
 import { cmEditCatServerTsjrpcBase } from './edit-cat.tsjrpc.base';
 import { cmEditComExternalsTsjrpcBaseServer } from './edit-com-externals.tsjrpc.base';
 import { cmEditComOrderServerTsjrpcBase } from './edit-com-order.tsjrpc.base';
@@ -32,7 +33,10 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
         requestFreshes: async ({ lastModfiedAt }, { client, auth }) => {
           sendBasicModifiedableList(lastModfiedAt, comsFileStore, comsFileStore.getValue, (coms, modifiedAt) => {
             const existComws = comsFileStore.getValue().filter(filterNotRemoved).map(extractItemw);
-            cmShareServerTsjrpcMethods.refreshComList({ coms, modifiedAt, existComws }, client);
+            cmShareServerTsjrpcMethods.refreshComList(
+              { coms: coms.map(mapCmImportableToExportableCom), modifiedAt, existComws },
+              client,
+            );
           });
 
           sendBasicModifiedableList(lastModfiedAt, catsFileStore, catsFileStore.getValue, (cats, modifiedAt) => {

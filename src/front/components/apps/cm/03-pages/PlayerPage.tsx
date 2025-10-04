@@ -45,7 +45,7 @@ export const CmPlayerPage = () => {
   const navigate = useNavigate();
   const endedTick = useAtomValue(comPlayerEndedTickAtom);
   const errorTick = useAtomValue(comPlayerErrorTickAtom);
-  const [src] = com?.audio.split('\n') ?? [''];
+  const [src] = com?.audio ?? [''];
 
   useEffect(resetIsCanPlayEffect, []);
 
@@ -89,8 +89,7 @@ export const CmPlayerPage = () => {
         const nextCom = findNextCom(search.comw, coms);
         if (nextCom == null) return search as never;
 
-        const [src] = nextCom.audio.split('\n');
-        comPlayerPlaySrcAtom.set(src);
+        comPlayerPlaySrcAtom.set(nextCom.audio[0]);
 
         return { ...(search as object), comw: nextCom.wid };
       },
@@ -131,10 +130,12 @@ export const CmPlayerPage = () => {
         <>
           <DocTitle title={com?.name} />
           <StyledPlayer className="sticky top-0 bg-x2 flex min-h-20 gap-3 px-3 mb-3">
-            <ComPlayerPlayButton
-              src={src}
-              className="mx-5 scale-300!"
-            />
+            {src && (
+              <ComPlayerPlayButton
+                src={src}
+                className="mx-5 scale-300!"
+              />
+            )}
 
             <ComPlayerTrack src={src} />
           </StyledPlayer>

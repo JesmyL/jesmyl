@@ -1,4 +1,4 @@
-import { CmComWid, IExportableCom } from 'shared/api/complect/apps';
+import { CmComWid, HttpLink, IExportableCom } from 'shared/api/complect/apps';
 
 type SimpleComValueSetter<Value> = (args: { comw: CmComWid; value: Value }) => IExportableCom;
 
@@ -13,7 +13,7 @@ export type CmEditComTsjrpcModel = {
   changeTon: SimpleComValueSetter<number>;
   makeBemoled: SimpleComValueSetter<num>;
   changePushKind: SimpleComValueSetter<number>;
-  setAudioLinks: SimpleComValueSetter<string>;
+  setAudioLinks: SimpleComValueSetter<HttpLink[]>;
 
   changeChordBlock: (args: { texti: number; comw: CmComWid; value: string }) => IExportableCom;
   changeTextBlock: (args: { texti: number; comw: CmComWid; value: string }) => IExportableCom;

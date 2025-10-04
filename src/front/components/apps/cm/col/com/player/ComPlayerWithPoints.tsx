@@ -1,20 +1,21 @@
 import { DropdownMenu } from '#shared/components/ui/dropdown-menu';
 import { useState } from 'react';
+import { HttpLink } from 'shared/api';
 import styled, { css, keyframes } from 'styled-components';
 import { ComPlayer } from './ComPlayer';
 import { ComPlayerMarksConfigurerEditMenuButton } from './ComPlayerMarksConfigurerEditMenuButton';
 import { ComPlayerMarksMovers } from './ComPlayerMarksMovers';
 
 interface Props {
-  audioSrcs: string;
+  audioLinks: HttpLink[];
 }
 
-export const ComPlayerWithPoints = ({ audioSrcs }: Props) => {
+export const ComPlayerWithPoints = ({ audioLinks }: Props) => {
   const [isOpenMenu, setIsOpenMenu] = useState(false);
 
   return (
     <ComPlayer
-      audioSrcs={audioSrcs}
+      audioLinks={audioLinks}
       timeRender={(timeNode, currentSrc) => (
         <DropdownMenu.Root
           open={isOpenMenu}

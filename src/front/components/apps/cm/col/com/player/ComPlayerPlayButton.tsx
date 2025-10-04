@@ -1,10 +1,11 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useAtomValue } from 'atomaric';
+import { HttpLink } from 'shared/api';
 import { comPlayerIsPlayAtom, comPlayerPlaySrcAtom } from './controls';
 
 interface Props {
   className?: string;
-  src: string;
+  src: HttpLink;
   isPlayOwnOnly?: boolean;
 }
 

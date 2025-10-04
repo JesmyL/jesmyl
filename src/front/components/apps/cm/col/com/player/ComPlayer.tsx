@@ -1,20 +1,19 @@
 import { useState } from 'react';
-import { makeRegExp } from 'regexpert';
+import { HttpLink } from 'shared/api';
 import { itIt } from 'shared/utils';
 import styled, { css, keyframes } from 'styled-components';
 import { ComPlayerPlayButton } from './ComPlayerPlayButton';
 import { ComPlayerTrack } from './ComPlayerTrack';
 
 interface Props {
-  audioSrcs: string;
-  timeRender?: (timeNode: React.ReactNode, currentSrc: string) => React.ReactNode;
+  audioLinks: HttpLink[];
+  timeRender?: (timeNode: React.ReactNode, currentSrc: HttpLink) => React.ReactNode;
   isPlayOwnOnly?: boolean;
 }
 
-export const ComPlayer = ({ audioSrcs, timeRender, isPlayOwnOnly }: Props) => {
+export const ComPlayer = ({ audioLinks, timeRender, isPlayOwnOnly }: Props) => {
   const [currentVariant, setCurrentVariant] = useState(0);
-  const variants = audioSrcs.split(makeRegExp('/\n+/')).map(src => src.trim());
-  const src = variants[currentVariant];
+  const src = audioLinks[currentVariant];
 
   return (
     <>
@@ -29,11 +28,11 @@ export const ComPlayer = ({ audioSrcs, timeRender, isPlayOwnOnly }: Props) => {
           timeRender={timeRender ? timeNode => timeRender(timeNode, src) : itIt}
         />
 
-        {variants.length > 1 && (
+        {audioLinks.length > 1 && (
           <div
             className="current-variant-badge flex center pointer"
             onClick={() => {
-              setCurrentVariant(currentVariant > variants.length - 2 ? 0 : currentVariant + 1);
+              setCurrentVariant(currentVariant > audioLinks.length - 2 ? 0 : currentVariant + 1);
             }}
           >
             {currentVariant + 1}

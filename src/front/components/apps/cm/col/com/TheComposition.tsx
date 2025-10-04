@@ -63,8 +63,6 @@ export function TheComposition() {
 
   if (ccom == null) return <ComNotFoundPage />;
 
-  const comAudio = ccom.audio.trim();
-
   let controlledComNode = (
     <TheControlledCom
       com={ccom}
@@ -81,7 +79,7 @@ export function TheComposition() {
   return (
     <StyledComContainer
       $isInLaterList={laterComws.includes(ccom.wid)}
-      className={playerHideMode && comAudio ? ` with-open-player ${playerHideMode}` : ''}
+      className={playerHideMode && ccom.audio?.length ? ` with-open-player ${playerHideMode}` : ''}
       headTitle={<CmComNumber comw={ccom.wid} />}
       onMoreClick={setIsOpenTools}
       contentClass="composition-content p-2"
@@ -107,7 +105,7 @@ export function TheComposition() {
       content={
         <>
           <DocTitle title={ccom.name} />
-          {!hideAppFooter && comAudio && <ComPlayerWithPoints audioSrcs={comAudio} />}
+          {!hideAppFooter && !!ccom.audio?.length && <ComPlayerWithPoints audioLinks={ccom.audio} />}
           {isShowCatBinds && (
             <div className="opacity-50 w-full text-x7">
               <CmComCatMentions com={ccom} />

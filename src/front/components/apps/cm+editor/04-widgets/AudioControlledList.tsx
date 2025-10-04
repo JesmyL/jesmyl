@@ -1,16 +1,17 @@
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { ComPlayer } from '$cm/col/com/player/ComPlayer';
 import { useState } from 'react';
+import { HttpLink } from 'shared/api';
 
 interface Props {
-  srcs: string[];
-  onToggle: (src: string) => Promise<unknown>;
+  srcs: HttpLink[];
+  onToggle: (link: HttpLink) => Promise<unknown>;
   icon: KnownStameskaIconName;
   isCanDelete?: boolean;
 }
 
 export const ComAudioControlledList = ({ srcs, onToggle, icon, isCanDelete }: Props) => {
-  const [tracksInProcess, setTracksInProcess] = useState<string[]>([]);
+  const [tracksInProcess, setTracksInProcess] = useState<HttpLink[]>([]);
 
   return (
     <>
@@ -21,7 +22,7 @@ export const ComAudioControlledList = ({ srcs, onToggle, icon, isCanDelete }: Pr
             className="com-audio-track flex gap-2 my-2 w-full"
           >
             <ComPlayer
-              audioSrcs={src}
+              audioLinks={[src]}
               isPlayOwnOnly
             />
             {isCanDelete !== false && (

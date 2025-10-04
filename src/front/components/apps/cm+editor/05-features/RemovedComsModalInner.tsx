@@ -1,4 +1,3 @@
-import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
@@ -7,21 +6,20 @@ import { cmEditComClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsj
 import { Com } from '$cm/col/com/Com';
 import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
 import { TheCom } from '$cm/col/com/TheCom';
+import { useQuery } from '@tanstack/react-query';
 import { atom } from 'atomaric';
 import { useMemo } from 'react';
 import { CmComWid } from 'shared/api';
-import { emptyArray } from 'shared/utils';
 
 const openComwAtom = atom<CmComWid | null>(null);
 
 export const RemovedComsModalInner = () => {
-  const [icoms] = useInvocatedValue(
-    emptyArray,
-    ({ aborter }) => cmEditComClientTsjrpcMethods.takeRemovedComs(undefined, { aborter }),
-    emptyArray,
-  );
+  const { data: icoms } = useQuery({
+    queryKey: ['takeRemovedComs'],
+    queryFn: () => cmEditComClientTsjrpcMethods.takeRemovedComs(),
+  });
 
-  const coms = useMemo(() => icoms.map(icom => new Com(icom)), [icoms]);
+  const coms = useMemo(() => icoms?.map(icom => new Com(icom)) ?? [], [icoms]);
 
   return (
     <>

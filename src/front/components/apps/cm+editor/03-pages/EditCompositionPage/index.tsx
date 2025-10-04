@@ -121,9 +121,9 @@ export const CmEditCompositionPage = () => {
             })}
           </div>
 
-          {isOpenPlayer && ccom.audio && (
+          {isOpenPlayer && !!ccom.audio?.length && (
             <div className="sticky com-player">
-              <ComPlayer audioSrcs={ccom.audio} />
+              <ComPlayer audioLinks={ccom.audio} />
             </div>
           )}
           <StyledOutlet>{TabComponent && <TabComponent />}</StyledOutlet>

@@ -2,11 +2,12 @@ import { mylib, MyLib } from '#shared/lib/my-lib';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { useAtomValue } from 'atomaric';
+import { HttpLink } from 'shared/api';
 import { ComPlayer } from './ComPlayer';
 import { ComPlayerMarksConfigurerTimeMark } from './ComPlayerMarksConfigurerTimeMark';
 import { comPlayerPlaySrcAtom, useComPlayerCurrentTime } from './controls';
 
-export const ComPlayerMarksConfigurer = ({ src }: { src: string }) => {
+export const ComPlayerMarksConfigurer = ({ src }: { src: HttpLink }) => {
   const playSrc = useAtomValue(comPlayerPlaySrcAtom);
   const currentTime = useComPlayerCurrentTime();
   const trackMarks = cmIDB.useAudioTrackMarks(playSrc ?? src);
@@ -14,7 +15,7 @@ export const ComPlayerMarksConfigurer = ({ src }: { src: string }) => {
   return (
     <>
       <div className="text-2xl mb-5">Настройка точек песни</div>
-      <ComPlayer audioSrcs={src} />
+      <ComPlayer audioLinks={[src]} />
       <button
         className="flex justify-center gap-2 px-2 py-1 min-w-35 border-x2! border-4! rounded-lg mt-2!"
         disabled={currentTime === 0}

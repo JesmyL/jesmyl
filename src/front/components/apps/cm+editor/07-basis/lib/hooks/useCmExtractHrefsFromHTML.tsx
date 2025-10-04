@@ -1,26 +1,26 @@
 import { useEffect } from 'react';
 import { makeRegExp } from 'regexpert';
-import { CmMp3Rule } from 'shared/api';
-import { itIt } from 'shared/utils';
+import { CmMp3Rule, HttpLink } from 'shared/api';
+import { itIt, itNNull } from 'shared/utils';
 
 export const useCmExtractHrefsFromHTML = (
   html: string | nil,
   mp3Rule: CmMp3Rule | nil,
-  setHrefs: (value: React.SetStateAction<string[]>) => void,
-  audio: string | nil,
+  setHrefs: (value: React.SetStateAction<HttpLink[]>) => void,
+  audioLinks: HttpLink[] | nil,
 ) => {
   useEffect(() => {
     if (html && mp3Rule) {
-      const existsHrefs = new Set(audio?.split('\n'));
+      const existsHrefs = new Set(audioLinks);
       const div = document.createElement('div');
       div.innerHTML = html;
       const { attr, query, url, repReg, repText = '' } = mp3Rule;
-      let mapSrc = itIt<string>;
+      let mapSrc = itIt<HttpLink>;
 
       if (repReg)
         try {
           const regToReplace = makeRegExp(repReg);
-          mapSrc = (src: string) => src.replace(regToReplace, repText);
+          mapSrc = (src: HttpLink) => src.replace(regToReplace, repText) as HttpLink;
         } catch (_error) {
           //
         }
@@ -58,19 +58,19 @@ export const useCmExtractHrefsFromHTML = (
                   serverUrl.pathname = attrUrl.pathname;
                   serverUrl.search = attrUrl.search;
 
-                  const src = serverUrl.toString();
-                  if (existsHrefs.has(src)) return '';
+                  const src = serverUrl.toString() as HttpLink;
+                  if (existsHrefs.has(src)) return null;
                   return mapSrc(src);
                 }
 
-                return '';
+                return null;
               })
-              .filter(itIt),
+              .filter(itNNull),
           ),
         ),
       );
 
       div.remove();
     }
-  }, [audio, html, mp3Rule, setHrefs]);
+  }, [audioLinks, html, mp3Rule, setHrefs]);
 };

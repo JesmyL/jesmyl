@@ -81,7 +81,7 @@ export const CmCatPage = (props: Props) => {
         content={
           props.cat && (
             <>
-              {playComSrc && <ComPlayer audioSrcs={playComSrc} />}
+              {playComSrc && <ComPlayer audioLinks={[playComSrc]} />}
               {props.topNodeRender?.(term)}
               <div
                 className="flex between sticky list-title"

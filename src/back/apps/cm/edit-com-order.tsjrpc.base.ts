@@ -1,7 +1,7 @@
 import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { ServerTSJRPCTool, TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { makeRegExp } from 'regexpert';
-import { CmComOrderWid, CmComWid, IExportableCom, IExportableOrder } from 'shared/api';
+import { CmComOrderWid, CmComWid, IExportableOrder, IServerSideCom } from 'shared/api';
 import { CmEditComOrderTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-order.tsjrpc.model';
 import { itNNil, smylib } from 'shared/utils';
 import { getCmComNameInBrackets, modifyInvocableCom } from './edit-com.tsjrpc.base';
@@ -235,7 +235,7 @@ export const cmEditComOrderServerTsjrpcBase =
   })();
 
 function modifyOrd<Props extends { ordw: CmComOrderWid; comw: CmComWid }>(
-  modifier: (ord: IExportableOrder, props: Props, com: IExportableCom, tool: ServerTSJRPCTool) => string | null,
+  modifier: (ord: IExportableOrder, props: Props, com: IServerSideCom, tool: ServerTSJRPCTool) => string | null,
 ) {
   return modifyInvocableCom<Props>((com, props, tool) => {
     const ord = com.o?.find(ord => ord.w === props.ordw);

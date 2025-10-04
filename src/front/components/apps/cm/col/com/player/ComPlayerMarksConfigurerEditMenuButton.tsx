@@ -2,11 +2,12 @@ import { DropdownMenu } from '#shared/components/ui/dropdown-menu';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { atom } from 'atomaric';
+import { HttpLink } from 'shared/api';
 import { ComPlayerMarksConfigurer } from './ComPlayerMarksConfigurer';
 
 const isMarksConfigurerOpenAtom = atom(false);
 
-export const ComPlayerMarksConfigurerEditMenuButton = ({ src, onClick }: { src: string; onClick: () => void }) => {
+export const ComPlayerMarksConfigurerEditMenuButton = ({ src, onClick }: { src: HttpLink; onClick: () => void }) => {
   return (
     <>
       <DropdownMenu.Item
@@ -20,7 +21,9 @@ export const ComPlayerMarksConfigurerEditMenuButton = ({ src, onClick }: { src: 
         Редактировать
       </DropdownMenu.Item>
 
-      <FullContent openAtom={isMarksConfigurerOpenAtom}>{src && <ComPlayerMarksConfigurer src={src} />}</FullContent>
+      <FullContent openAtom={isMarksConfigurerOpenAtom}>
+        <ComPlayerMarksConfigurer src={src} />
+      </FullContent>
     </>
   );
 };

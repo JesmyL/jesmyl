@@ -19,7 +19,7 @@ import { useNavigate } from '@tanstack/react-router';
 import { Atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
-import { CmComMod, CmComWid, CmMp3Rule, IExportableCom } from 'shared/api';
+import { CmComMod, CmComWid, CmMp3Rule, HttpLink, IExportableCom } from 'shared/api';
 import { itIt, itNNil } from 'shared/utils';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import styled from 'styled-components';
@@ -35,10 +35,10 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
   const eeStore = cmEditorIDB.useValue.eeStore();
   const { maxAvailableComLineLength } = useAtomValue(cmConstantsConfigAtom);
 
-  const [hrefs, setHrefs] = useState<string[]>([]);
+  const [hrefs, setHrefs] = useState<HttpLink[]>([]);
   const [removedAudioHrefs, setRemovedAudioHrefs] = useState<string[]>([]);
 
-  useCmExtractHrefsFromHTML(innerHTML, mp3Rule, setHrefs, newCom.a);
+  useCmExtractHrefsFromHTML(innerHTML, mp3Rule, setHrefs, newCom.al);
 
   useEffect(() => {
     if (newCom.n) return;
@@ -55,7 +55,7 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
   };
 
   const errorNodes = MyLib.entries({
-    'Нет прикреплённых аудио': !innerHTML || newCom.a?.length,
+    'Нет прикреплённых аудио': !innerHTML || newCom.al?.length,
     'Нет разобранных текстов': newCom.t?.filter(itIt).length,
     'Нет разобранных аккордов': newCom.c?.filter(itIt).length,
     'Нет разобранных порядковых блоков': newCom.o?.length,
@@ -142,13 +142,13 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
         {innerHTML && (
           <>
             <h2>Прикреплённые аудио</h2>
-            {newCom.a ? (
+            {newCom.al?.length ? (
               <ComAudioControlledList
-                srcs={newCom.a.split('\n').filter(itIt)}
+                srcs={newCom.al?.filter(itIt)}
                 icon="CancelCircle"
                 onToggle={async src => {
-                  const audio = Array.from(new Set(newCom.a?.split(/\n/).filter(s => s && s !== src))).join('\n');
-                  setNewCom(prev => ({ ...prev, a: audio }));
+                  const audio = Array.from(new Set(newCom.al?.filter(s => s && s !== src)));
+                  setNewCom(prev => ({ ...prev, al: audio }));
 
                   setRemovedAudioHrefs(removedAudioHrefs.concat(src));
                 }}
@@ -162,8 +162,8 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
               srcs={hrefs}
               icon="PlusSignCircle"
               onToggle={async src => {
-                const audio = Array.from(new Set((newCom.a?.split(/\n/) ?? []).concat(src).filter(itIt))).join('\n');
-                setNewCom(prev => ({ ...prev, a: audio }));
+                const audio = Array.from(new Set((newCom.al ?? []).concat(src).filter(itIt)));
+                setNewCom(prev => ({ ...prev, al: audio }));
 
                 setHrefs(hrefs.filter(href => href !== src));
               }}

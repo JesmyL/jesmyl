@@ -73,7 +73,7 @@ export interface IExportableCom {
   /** бемольная ли песня */
   b?: num;
   /** аудио файлы */
-  a?: string;
+  al?: HttpLink[];
   /** список текстов */
   t?: string[];
   /** список аккорлов */
@@ -89,6 +89,8 @@ export interface IExportableCom {
 
   isRemoved?: 1;
 }
+
+export type IServerSideCom = OmitOwn<IExportableCom, 'al'> & { al?: HttpNumLeadLink[] | HttpNumLeadLink };
 
 /** @deprecated */
 export type ICmComComment = {
@@ -139,6 +141,10 @@ export interface IExportableCols {
 export type MigratableEditableComToolName = 'edit-com';
 
 export type MigratableComToolName = MenuComToolNameList | MigratableEditableComToolName;
+
+export type HttpLink = `http${string}`;
+export type HttpNumLeadLinkKey = `${number}~`;
+export type HttpNumLeadLink = `${HttpNumLeadLinkKey}${string}`;
 
 export type MenuComToolNameList =
   | 'fullscreen-mode'
