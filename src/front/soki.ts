@@ -149,7 +149,7 @@ export class SokiTrip {
     const requestId = '' + Date.now() + Math.random();
     const fullEvent = { ...event, requestId };
 
-    if (this.ws && this.ws.readyState === this.ws.OPEN && (this.isTokenSent || fullEvent.token)) {
+    if (this.ws && this.ws.readyState === this.ws.OPEN && (this.isTokenSent || 'token' in fullEvent)) {
       this.sendForce(fullEvent);
     } else this.onConnectionOpenEvent.listenFirst(() => this.sendForce(fullEvent));
 
