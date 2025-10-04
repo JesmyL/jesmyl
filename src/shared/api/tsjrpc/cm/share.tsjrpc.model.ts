@@ -2,6 +2,7 @@ import {
   ChordPack,
   CmCatWid,
   CmComWid,
+  CmConstantsConfig,
   ICmComCommentBlock,
   IExportableCat,
   IExportableCom,
@@ -23,4 +24,5 @@ export type CmShareTsjrpcModel = {
   refreshAboutComFavorites: (args: { value: TAboutComFavoriteItem }) => void;
 
   refreshScheduleEventComPacks: (args: { packs: ScheduleComPack[]; modifiedAt: number }) => void;
+  refreshConstantsConfig: (args: { config: Partial<CmConstantsConfig>; modifiedAt: number }) => unknown;
 };

@@ -83,7 +83,7 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
 
         updateConstantsConfig: async ({ config }) => {
           cmConstantsConfigFileStore.updateValue(prev => ({ ...prev, ...config }));
-          cmShareEditorServerTsjrpcMethods.refreshConstantsConfig({
+          cmShareServerTsjrpcMethods.refreshConstantsConfig({
             config,
             modifiedAt: cmConstantsConfigFileStore.fileModifiedAt(),
           });

@@ -3,7 +3,6 @@ import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContaine
 import { useBiblePrintShowSlideAddressCode } from '$bible/basis/lib/hooks/slide-sync';
 import { bibleVerseiAtom } from '$bible/basis/lib/store/atoms';
 import { BibleModulesTranslationsControl } from '$bible/entities/ModulesTranslationsControl';
-import { bibleTsjrpcBaseClient } from '$bible/processes/tsjrpc';
 import { JSX, ReactNode, useEffect } from 'react';
 import styled from 'styled-components';
 import { ScreenTranslationControlPanel } from '../../+complect/translations/controls/ControllPanel';
@@ -71,5 +70,3 @@ const Container = styled.div`
   --max-size: 300px;
   --min-size: 200px;
 `;
-
-bibleTsjrpcBaseClient.$$register();

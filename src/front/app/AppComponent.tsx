@@ -15,9 +15,12 @@ import { soki } from 'front/soki';
 import { useEffect, useState } from 'react';
 import { emptyArray } from 'shared/utils';
 import { toast } from 'sonner';
+import { appInitialInvokes } from './app-initial-invokes';
 import { AppFooter } from './AppFooter';
 import { routingApps } from './lib/configs';
 import { lastVisitedRouteLsName } from './lib/consts';
+
+appInitialInvokes();
 
 export const AppComponent = () => {
   const loc = useLocation();

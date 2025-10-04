@@ -19,6 +19,7 @@ export const cmShareServerTsjrpcMethods = new (class CmShare extends TsjrpcServe
         refreshAboutComFavorites: true,
 
         refreshScheduleEventComPacks: true,
+        refreshConstantsConfig: true,
       },
     });
   }

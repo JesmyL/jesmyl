@@ -30,7 +30,7 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
     super({
       scope: 'Cm',
       methods: {
-        requestFreshes: async ({ lastModfiedAt }, { client, auth }) => {
+        requestFreshes: async ({ lastModfiedAt }, { client, auth, visitInfo }) => {
           sendBasicModifiedableList(lastModfiedAt, comsFileStore, comsFileStore.getValue, (coms, modifiedAt) => {
             const existComws = comsFileStore.getValue().filter(filterNotRemoved).map(extractItemw);
             cmShareServerTsjrpcMethods.refreshComList(
@@ -44,11 +44,10 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
             cmShareServerTsjrpcMethods.refreshCatList({ cats, modifiedAt, existCatws }, client);
           });
 
-          const chordPackModifiedAt = chordPackFileStore.fileModifiedAt();
-          if (!chordPackModifiedAt || chordPackModifiedAt > lastModfiedAt) {
+          if (chordPackFileStore.fileModifiedAt() > lastModfiedAt) {
             cmShareServerTsjrpcMethods.refreshChordPack(
               {
-                modifiedAt: chordPackModifiedAt,
+                modifiedAt: chordPackFileStore.fileModifiedAt(),
                 pack: chordPackFileStore.getValue(),
               },
               client,
@@ -65,6 +64,14 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
               }
             },
           );
+
+          if (visitInfo && visitInfo.version > 1039)
+            if (cmConstantsConfigFileStore.fileModifiedAt() > lastModfiedAt) {
+              cmShareServerTsjrpcMethods.refreshConstantsConfig({
+                config: cmConstantsConfigFileStore.getValue(),
+                modifiedAt: cmConstantsConfigFileStore.fileModifiedAt(),
+              });
+            }
 
           if (auth?.login != null) {
             const login = auth.login;

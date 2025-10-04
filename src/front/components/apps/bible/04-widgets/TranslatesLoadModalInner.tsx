@@ -5,15 +5,13 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { bibleAllTranslates, translateDescriptions } from '$bible/basis/lib/const/consts';
 import { useBibleMyTranslates } from '$bible/basis/lib/hooks/translates';
 import { removeBibleTranslate } from '$bible/basis/lib/utils';
-import { bibleTsjrpcBaseClient, bibleTsjrpcClient } from '$bible/processes/tsjrpc';
-import { useEffect, useState } from 'react';
+import { bibleTsjrpcClient } from '$bible/processes/tsjrpc';
+import { useState } from 'react';
 import { BibleTranslateName } from 'shared/api';
 
 export default function TranslatesLoadModalInner() {
   const [myTranslates] = useBibleMyTranslates();
   const [translateOnLoad, setTranslateOnLoad] = useState<BibleTranslateName | null>(null);
-
-  useEffect(() => bibleTsjrpcBaseClient.$$register(), []);
 
   return (
     <>

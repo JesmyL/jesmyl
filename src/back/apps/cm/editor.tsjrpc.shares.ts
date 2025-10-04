@@ -10,7 +10,6 @@ export const cmShareEditorServerTsjrpcMethods =
           editedEEWords: true,
           refreshEEPack: true,
           comBusies: true,
-          refreshConstantsConfig: true,
         },
       });
     }
