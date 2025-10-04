@@ -24,8 +24,7 @@ export const deployTheCode = async (front, back) => {
       return;
     }
 
-    const isIgnoreVersionUpdate = process.argv.includes('--IVU');
-    const [num, resetVersion] = await updateVersion(isIgnoreVersionUpdate);
+    const [num, resetVersion] = await updateVersion(process.argv.includes('--IVU'));
 
     try {
       console.info(`Lint check for v${num} is running...`);
@@ -38,7 +37,7 @@ export const deployTheCode = async (front, back) => {
       console.info('Copying files on server');
 
       await sendFilesOnServer(builtFiles, back);
-      if (!isIgnoreVersionUpdate) await sendFilesOnServer([`./${versionFilePath}`], back);
+      await sendFilesOnServer([`./${versionFilePath}`], back);
 
       console.info('Front files sent on server');
     } catch (error) {
