@@ -264,7 +264,7 @@ export class MyLib extends SMyLib {
     if (!parent) return;
 
     const attrName = 'animation.ts';
-    const attrVal = (Date.now() + Math.random()).toString();
+    const attrVal = '' + Date.now() + Math.random();
     const is = (pos: RegExp | string) => ~(position || 'center').search(pos);
     const isStatic = getComputedStyle(parent).position === 'static';
     const prevPosition = parent.style.position;

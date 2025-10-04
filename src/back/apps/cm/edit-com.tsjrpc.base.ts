@@ -254,7 +254,7 @@ export function modifyInvocableCom<Props extends { comw: CmComWid }>(
     if (com === undefined) throw new Error(`Песня не найдена`);
 
     const description = mapper(com, props, tool);
-    com.m = Date.now() + Math.random();
+    com.m = Date.now();
 
     comsFileStore.saveValue();
     const expCom = mapCmImportableToExportableCom(com);

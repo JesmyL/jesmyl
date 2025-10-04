@@ -17,7 +17,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
             const packs = eventPacksFileStore.getValueWithAutoSave();
             const history = eventPackHistoryFileStore.getValueWithAutoSave();
 
-            const m = Date.now() + Math.random();
+            const m = Date.now();
             packs[schw] ??= { pack: {}, m, schw };
             packs[schw].m = m;
             packs[schw].pack[dayi] ??= {};

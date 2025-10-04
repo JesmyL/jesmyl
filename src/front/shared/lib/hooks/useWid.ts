@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import { makeRegExp } from 'regexpert';
 
 const deps: [] = [];
 
@@ -7,6 +6,5 @@ export const enum UsedWid {
   def = '',
 }
 
-export const makeWid = () =>
-  ('wid_' + Date.now() + Math.random() + Math.random()).replace(makeRegExp('/\\./g'), '_') as UsedWid;
+export const makeWid = () => ('wid_' + Date.now() + `${Math.random()}`.slice(2)) as UsedWid;
 export const useWid = () => useMemo(makeWid, deps);

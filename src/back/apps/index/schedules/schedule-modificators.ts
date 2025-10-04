@@ -14,7 +14,7 @@ export const modifySchedule =
     if (sch === undefined) throw new Error('schedule not found');
 
     const description = modifier(sch, props, tool);
-    sch.m = Date.now() + Math.random();
+    sch.m = Date.now();
     schedulesFileStore.saveValue();
 
     schServerTsjrpcShareMethods.editedSchedule({ sch });
