@@ -6,8 +6,16 @@
       1551768058548, 1551770021776, 1605353683636, 1607345768420, 1609761208284, 1609953328330, 1609955214660,
       1534249035184, 1536945317452, 1534006585256, 1538320243090
     ],
-    "m": 1759425991080.1108,
-    "tools": ["edit-com", "chord-images", "com-comment", "fullscreen-mode", "chords-variant", "hide-metronome"]
+    "m": 1759478578451.9038,
+    "tools": [
+      "edit-com",
+      "chord-images",
+      "com-comment",
+      "fullscreen-mode",
+      "chords-variant",
+      "hide-metronome",
+      "qr-share"
+    ]
   },
   "08a0e6ba7792e902569816a81b846b25": {
     "comws": [
@@ -26,16 +34,8 @@
   },
   "T2844a791f6cb5702a875a0bad8e9397": {
     "comws": [1520015756000, 1520183439000, 1548911188044],
-    "m": 1738501853635.771,
-    "tools": [
-      "mark-com",
-      "chords-variant",
-      "fullscreen-mode",
-      "cats-binds",
-      "selected-toggle",
-      "edit-com",
-      "show-translation"
-    ]
+    "m": 1759508829756.995,
+    "tools": ["edit-com", "com-comment"]
   },
   "T5ac14798620164a61ff9460e3953cc4": {
     "comws": [

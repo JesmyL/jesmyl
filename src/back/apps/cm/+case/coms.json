@@ -83,9 +83,10 @@
     "a": "https://holychords.pro/uploads/music/20190418/2019041819423969.mp3\n",
     "bpm": 72,
     "s": 4,
-    "m": 1743881876198.0518,
+    "m": 1759570591690,
     "p": 0,
-    "k": 0
+    "k": 0,
+    "al": "1~20190418//19423969.mp3"
   },
   {
     "c": ["D A Em Hm\nG A\nD A Em Hm\nG A", "G D A\nG D A\nD A Em Hm\nG A D", "D\nD A Em Hm\nG A D\nD"],
@@ -140,7 +141,8 @@
     "w": 1517582537000,
     "a": "https://holychords.pro/uploads/music/20210208/20210208092053.mp3\n",
     "bpm": 123,
-    "m": 1748781188152.7268
+    "m": 1759570591690,
+    "al": "1~20210208//092053.mp3"
   },
   {
     "c": ["Em\nC\nAm D\nEm H7", "Em C Am\nH7 .Em-H7..Em"],
@@ -170,7 +172,8 @@
     ],
     "w": 1517582947000,
     "a": "https://holychords.pro/uploads/music/20200105/2020010521122681.mp3\n",
-    "m": 1744803324288.1694
+    "m": 1759570591691,
+    "al": "1~20200105//21122681.mp3"
   },
   {
     "c": ["Am F\nAm F\nAm F\nAm F\nF G", "Am F\nC\nG Am\nF\nC\nG Am"],
@@ -229,7 +232,8 @@
     ],
     "w": 1517583318000,
     "a": "https://holychords.pro/uploads/music/20200410/202004101616021.mp3\n",
-    "m": 1517583318000.4587
+    "m": 1759570591691,
+    "al": "1~20200410//1616021.mp3"
   },
   {
     "c": ["Dm A#\nGm\nC-Am7\nDm A#\nGm\nC-Am7", "Dm\nF\nA#\nC\nDm\nF\nA#\nC", "Dm A# Dm", "Dm A# Gm C-Am7\nDm A# Gm C"],
@@ -250,7 +254,8 @@
     ],
     "w": 1517588687000,
     "a": "https://holychords.pro/uploads/music/20200603/2020060321542028.mp3\n",
-    "m": 1737291369216
+    "m": 1759570591691,
+    "al": "1~20200603//21542028.mp3"
   },
   {
     "c": ["Am\nAm\nDm\nE7", "F\nAm\nDm\nE7 Am"],
@@ -274,7 +279,8 @@
     "l": 1,
     "a": "https://holychords.pro/uploads/music/20200203/2020020320050131.mp3\n",
     "p": 7,
-    "m": 1517636383000.4253
+    "m": 1759570591691,
+    "al": "1~20200203//20050131.mp3"
   },
   {
     "c": [
@@ -369,8 +375,9 @@
     ],
     "w": 1517638442000,
     "a": "https://holychords.pro/uploads/music/20200623/202006231223087.mp3\n",
-    "m": 1752999980041.3374,
-    "bpm": 125
+    "m": 1759570591691,
+    "bpm": 125,
+    "al": "1~20200623//1223087.mp3"
   },
   {
     "c": ["G C\nG D G\nG C\nG D G", "D G\nC G D\nG C\nG D G", "G Am Em D"],
@@ -453,7 +460,8 @@
     ],
     "w": 1517639268000,
     "a": "https://holychords.pro/uploads/music/20200511/2020051123012451.mp3\n",
-    "m": 1749056521577.8027
+    "m": 1759570591691,
+    "al": "1~20200511//23012451.mp3"
   },
   {
     "c": ["E A E\nC#m F#m H\nE A E\nC#m H E"],
@@ -546,7 +554,8 @@
     ],
     "w": 1517640012000,
     "a": "https://holychords.pro/uploads/music/20200623/2020062312022071.mp3\n",
-    "m": 1517640012000.706
+    "m": 1759570591691,
+    "al": "1~20200623//12022071.mp3"
   },
   {
     "c": ["Em7 C2 G Dsus", "Em C G D Em\nC G D\nEm C\nG D C", "D Em\nC\nG\nD\nC\nEm C", "G D\nAm C\nG\nF\nAm C"],
@@ -580,7 +589,8 @@
     "w": 1517640866000,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_80_11.mp3\n",
     "bpm": 75,
-    "m": 1744803468942.1309
+    "m": 1759570591691,
+    "al": "1~20200701//164457_80_11.mp3"
   },
   {
     "c": ["G D Am C\nG D Am C\nG D Am C\nAm G D", "G Hm C\nAm G C D\nG Hm C D G"],
@@ -634,7 +644,8 @@
     "w": 1517742441000,
     "l": 1,
     "a": "https://holychords.pro/uploads/music/20191022/2019102220461916.mp3\n",
-    "m": 1517742441000.2302
+    "m": 1759570591691,
+    "al": "1~20191022//20461916.mp3"
   },
   {
     "c": ["G Hm\nC D G\nG Hm\nC D G", "C D Hm Em\nC D Hm Em\nC D Hm Em\nC D G"],
@@ -687,7 +698,8 @@
     ],
     "w": 1517742996000,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164515_22_83.mp3\n",
-    "m": 1735885460920
+    "m": 1759570591691,
+    "al": "1~20200701//164515_22_83.mp3"
   },
   {
     "c": ["D\nD\nG A G A", "G A D Hm\nG A Hm A", "D Hm G A"],
@@ -720,7 +732,7 @@
       "По Тебе моя плоть томится,\nПо Тебе моя плоть томится\nОт ранней зари, от ранней зари."
     ],
     "w": 1517743879000,
-    "m": 1755691945127.9568
+    "m": 1759570591691
   },
   {
     "c": ["Dm Gm\nC A7\nDm Gm\nA7 Dm-D", "Gm-C F Dm\nGm A7 .Dm-D7..Dm"],
@@ -773,7 +785,8 @@
     ],
     "w": 1517744220000,
     "a": "https://holychords.pro/uploads/music/20200312/2020031200215028.mp3\n",
-    "m": 1752765213681.2502
+    "m": 1759570591691,
+    "al": "1~20200312//00215028.mp3"
   },
   {
     "c": ["G D\nD G\nG D\nD G\nG C-D\nG C-D", "D G\nC D G\nD G\nC D G"],
@@ -846,7 +859,8 @@
     ],
     "w": 1517746904000,
     "a": "https://holychords.pro/uploads/music/20200626/20200626121059.mp3\n",
-    "m": 1517746904000.9216
+    "m": 1759570591691,
+    "al": "1~20200626//121059.mp3"
   },
   {
     "c": ["C Am\nDm G7\nC Am\nDm G7\nEm Am\nEm Am\nDm F#m G7\nC"],
@@ -868,7 +882,7 @@
     ],
     "w": 1517835343000,
     "l": 1,
-    "m": 1517835343000.379
+    "m": 1759570591691
   },
   {
     "c": ["Dm\nA\nA7 Dm\nGm\nDm\nA Dm"],
@@ -891,7 +905,8 @@
     ],
     "w": 1517836994000,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_36_7.mp3\n",
-    "m": 1744808546676.9934
+    "m": 1759570591691,
+    "al": "1~20200701//164457_36_7.mp3"
   },
   {
     "c": ["Dm A Dm\nF C F Dm A Dm\nDm A Dm\nF C F Dm A Dm", "F C Dm A\nDm C F C F\nDm A Dm\nF C F Dm A Dm"],
@@ -972,7 +987,8 @@
     ],
     "w": 1517837889000,
     "a": "https://holychords.pro/uploads/music/20200711/20200711104604.mp3\n",
-    "m": 1740891718319.6108
+    "m": 1759570591691,
+    "al": "1~20200711//104604.mp3"
   },
   {
     "c": ["F#\nH F#\nF# D#m G#m-C#7\nF#\nH F#\nF# C# F#", "F#\nC#\nF#-F#7 H G#m\nF# C# F#"],
@@ -994,7 +1010,8 @@
     "w": 1517846071000,
     "a": "https://holychords.pro/uploads/music/20191108/2019110823375462.mp3\n",
     "p": 10,
-    "m": 1517846071000.4944
+    "m": 1759570591691,
+    "al": "1~20191108//23375462.mp3"
   },
   {
     "c": [
@@ -1059,7 +1076,8 @@
     "a": "https://holychords.pro/uploads/music/20190328/2019032815374144.mp3\n",
     "bpm": 62,
     "s": 4,
-    "m": 1754231910581.547
+    "m": 1759570591691,
+    "al": "1~20190328//15374144.mp3"
   },
   {
     "c": ["G C D-C\nG C D-C\nG C D-C\nG C D", "G C D\nC G\nC D\nC G\nC D\nHm Em\nC D7 G", "G C D C\nG C D C"],
@@ -1104,7 +1122,8 @@
     ],
     "w": 1517848115000,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164515_89_61.mp3\n",
-    "m": 1757137076074.8057
+    "m": 1759570591691,
+    "al": "1~20200701//164515_89_61.mp3"
   },
   {
     "c": ["C Em\nF G\nC Em\nF G", "C Em F G\nC Em F\nE Am\nF G C"],
@@ -1185,7 +1204,7 @@
       "И сердца свои мы открываем,\nДля того, чтоб в них Ты смог войти.\nМы судьбу свою Тебе вверяем,\nНа пути, которым нам идти."
     ],
     "w": 1517848972000,
-    "m": 1517848972000.453
+    "m": 1759570591691
   },
   {
     "c": ["Dm A#\nC Dm", "Gm C Dm\nGm C Dm\nGm C Dm\nA#-C Dm"],
@@ -1235,7 +1254,7 @@
       "Пусть больше любви и силы\nДаст мой Бог, мой Дух Святой."
     ],
     "w": 1517849551000,
-    "m": 1517849551000.7615
+    "m": 1759570591691
   },
   {
     "c": ["Em H Em\nC D G\nEm H C\nAm H Em", "G D G\nAm Em H\nEm D G\nAm H Em"],
@@ -1330,7 +1349,8 @@
     ],
     "w": 1517853661000,
     "a": "https://holychords.pro/uploads/music/20200626/20200626121215.mp3\n",
-    "m": 1755625463281.9224
+    "m": 1759570591691,
+    "al": "1~20200626//121215.mp3"
   },
   {
     "c": ["Em Am\nH7 Em\nEm Am\nH7 Em", "Am D\nG Em\nAm H7\nEm D..H7 G-E..Em", "Em D C Em\nAm G C Em", "Em D C Em"],
@@ -1401,8 +1421,9 @@
     ],
     "w": 1517854709000,
     "a": "https://holychords.pro/uploads/music/20201201/20201201220441.mp3\n",
-    "m": 1755345412828.9836,
-    "bpm": 200
+    "m": 1759570591691,
+    "bpm": 200,
+    "al": "1~20201201//220441.mp3"
   },
   {
     "c": ["Em Am\nH7 Em\nEm Am\nH7 Em", "E Am\nD G-H7\nEm Am\nH7 Em", "E Am\nD G-H7\nEm Am\nH7 Em"],
@@ -1486,7 +1507,8 @@
     ],
     "w": 1517855414000,
     "a": "https://holychords.pro/uploads/music/20200623/2020062312053424.mp3\n",
-    "m": 1745759516118.6274
+    "m": 1759570591691,
+    "al": "1~20200623//12053424.mp3"
   },
   {
     "c": ["Am Dm\nE7 Am\nAm Dm\nF E7", "Am Dm\nG C-E7\nAm Dm\nE7 Am"],
@@ -1555,7 +1577,8 @@
     ],
     "w": 1517856274000,
     "a": "https://holychords.pro/uploads/music/20200623/2020062312080192.mp3\n",
-    "m": 1517856274000.065
+    "m": 1759570591691,
+    "al": "1~20200623//12080192.mp3"
   },
   {
     "c": [
@@ -1614,7 +1637,7 @@
       "Очищай меня,\nСвятость Твоя меня наполнит.\nОчищай меня,\nВесь мой грех сожжён навеки."
     ],
     "w": 1517856819000,
-    "m": 1753022801570.5862
+    "m": 1759570591691
   },
   {
     "c": ["D Em Hm7 A\nD Em Hm7 A", "D\nG D Em A\nHm7 D\nG D A D", "D A Hm7\nG D Em A\nD A Hm7\nG D A D"],
@@ -1650,7 +1673,8 @@
     ],
     "w": 1517857756000,
     "a": "https://holychords.pro/uploads/music/20190310/2019031020060333.mp3\n",
-    "m": 1749386114240.5767
+    "m": 1759570591691,
+    "al": "1~20190310//20060333.mp3"
   },
   {
     "c": ["G D\nEm\nC G\nD D7", "G D\nEm\nC G\nD D7\nG D\nEm\nC G\nD G"],
@@ -1679,7 +1703,7 @@
     ],
     "w": 1517860273000,
     "l": 0,
-    "m": 1744809355561.9583
+    "m": 1759570591691
   },
   {
     "c": [
@@ -1775,9 +1799,10 @@
     ],
     "w": 1517895005000,
     "a": "https://holychords.pro/uploads/music/20190815/2019081513071941.mp3\n",
-    "m": 1757859221143.6863,
+    "m": 1759570591691,
     "s": 4,
-    "bpm": 67
+    "bpm": 67,
+    "al": "1~20190815//13071941.mp3"
   },
   {
     "c": ["C\nAm\nA7 Dm\nF G\nE Am\nF G C", "F G\nE Am\nF G C-Am\nF G\nE Am\nF G\nC"],
@@ -1798,7 +1823,8 @@
     "a": "https://holychords.pro/uploads/music/20190817/2019081704155011.mp3",
     "bpm": 65,
     "k": 2,
-    "m": 1737291997900
+    "m": 1759570591691,
+    "al": "1~20190817//04155011.mp3"
   },
   {
     "c": ["C Am\nDm\nF G", "F G\n.C..Em A7\nDm7 G .C-C7..C"],
@@ -1829,7 +1855,8 @@
     ],
     "w": 1517898223000,
     "a": "https://holychords.pro/uploads/music/20220128/20220128195211.mp3",
-    "m": 1517898223000.7883
+    "m": 1759570591691,
+    "al": "1~20220128//195211.mp3"
   },
   {
     "c": ["Em-F# Hm\nEm-F# Hm\nEm-A D G\nC F#", "Hm G\nEm F#\nHm G\nEm F# Hm", "F# Hm F# Hm"],
@@ -1902,7 +1929,8 @@
     "a": "https://holychords.pro/uploads/music/20210501/20210501165205.mp3\n",
     "p": 10,
     "bpm": 70,
-    "m": 1735911602159
+    "m": 1759570591691,
+    "al": "1~20210501//165205.mp3"
   },
   {
     "c": ["E E/D# C#m\nA C#m7 H\nE E/D C#m\nA H", "E C#m7\nA H\nE C#m7\nA H", "E C#m\nA C#m7 H\nE C#m\nA H"],
@@ -1973,7 +2001,7 @@
     ],
     "w": 1517900413000,
     "p": 3,
-    "m": 1753620002779.3125
+    "m": 1759570591691
   },
   {
     "c": ["Em C D G\nC Am H7 Em\nEm C D G\nC Am H7 Em", "E Am D G\nC Am H7 Em\nE Am D G\nC Am H7 Em", "C Am H7 Em"],
@@ -2043,7 +2071,8 @@
     ],
     "w": 1517901224000,
     "a": "https://holychords.pro/uploads/music/20190816/2019081612350276.mp3\n",
-    "m": 1741523301218.611
+    "m": 1759570591691,
+    "al": "1~20190816//12350276.mp3"
   },
   {
     "c": [
@@ -2093,7 +2122,8 @@
     ],
     "w": 1518085325000,
     "a": "https://holychords.pro/uploads/music/20210113/20210113072715.mp3\n",
-    "m": 1755721243135.948
+    "m": 1759570591691,
+    "al": "1~20210113//072715.mp3"
   },
   {
     "c": ["G D Am C\nG D C\nG D Am C\nG D C", "G \nD\nEm C", "D Hm C\nD Hm C"],
@@ -2140,7 +2170,8 @@
     "l": 1,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164415_26.mp3\n",
     "k": 1,
-    "m": 1518088560000.8936
+    "m": 1759570591691,
+    "al": "1~20200701//164415_26.mp3"
   },
   {
     "c": ["G D H7\nEm C D\nG D H7\nEm C D", "G D H7 Em\nC D-G\nD H7-Em\nC D-G", "G D H7\nEm C D"],
@@ -2182,7 +2213,8 @@
     ],
     "w": 1518100846000,
     "a": "https://holychords.pro/uploads/music/20190724/20190724130243100.mp3\n",
-    "m": 1518100846000.977
+    "m": 1759570591691,
+    "al": "1~20190724//130243100.mp3"
   },
   {
     "c": ["D A F#m Hm\nG D Em-A\nG A\nF# Hm\nG Em A-A7", "D F#m\nG A7\nD F#m\nG A7\nF#m-F#7\nHm G\nEm\n.G..A .A..D"],
@@ -2233,7 +2265,8 @@
     ],
     "w": 1518101303000,
     "a": "https://holychords.pro/uploads/music/20200313/2020031309074849.mp3\n",
-    "m": 1518101303000.849
+    "m": 1759570591691,
+    "al": "1~20200313//09074849.mp3"
   },
   {
     "c": [
@@ -2308,7 +2341,8 @@
     "w": 1518102575000,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164415_58.mp3\n",
     "k": 2,
-    "m": 1518102575000.5042
+    "m": 1759570591691,
+    "al": "1~20200701//164415_58.mp3"
   },
   {
     "c": ["G C D\nG C-D\nG C D\nC D G", "C D\nG Em\nC D\nC D G"],
@@ -2390,7 +2424,8 @@
     ],
     "w": 1518109665000,
     "a": "https://holychords.pro/uploads/music/20210123/20210123194152.mp3\n",
-    "m": 1518109665000.746
+    "m": 1759570591691,
+    "al": "1~20210123//194152.mp3"
   },
   {
     "c": ["C Em Am C\nF G C-G", "C Em Am C\nF G C-G\nC Em Am C\nF G C", "Am F C\nF Dm E\nC Em Am C\nF G C"],
@@ -2459,7 +2494,8 @@
     "w": 1520006204000,
     "l": 1,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_26_100.mp3\n",
-    "m": 1520006204000.7031
+    "m": 1759570591691,
+    "al": "1~20200701//164457_26_100.mp3"
   },
   {
     "c": ["C Am Dm G\nC Am C G\nC Am Dm G\nC Am C G", "C Dm\nDm G\nC Dm\nG C"],
@@ -2525,7 +2561,7 @@
       "Пусть мы не птицы, нет у нас крыльев,\nНо землю нашу мы облетим.\nИ всем расскажем, Кто нас избавил\nОт этой жизни греха, суеты."
     ],
     "w": 1520007949000,
-    "m": 1520007949000.273
+    "m": 1759570591691
   },
   {
     "c": ["D\nHm\nG\nG\nA A7", "G A\nD H7\nEm\nA .D-D7..D"],
@@ -2548,7 +2584,8 @@
     ],
     "w": 1520009148000,
     "a": "https://ps.vkuseraudio.net/audio/ee/jwmUl-JHgq_DrSrWT5hgmKVetLj9zzFN9MbKBw/32XzhbNTFHWUxpNlc.mp3?extra=H8WjSv9kmTI3fzqHQNZeICFwbprwBVBJmSVJ37ZjFNQlXYizqWdv_P-jlM-XG97cm6sBc0rvl5CeR2z1SvVSE-hfH4pyHO5lZm9kLPYJCcbYu8iMBmwCxyEVLWBwuTI2VYLQg-lRzXgN60J2qz_fd6Wpqi8i\n",
-    "m": 1520009148000.164
+    "m": 1759570591691,
+    "al": "3~jwmUl-JHgq_DrSrWT5hgmKVetLj9zzFN9MbKBw/32XzhbNTFHWUxpNlc.mp3?extra=H8WjSv9kmTI3fzqHQNZeICFwbprwBVBJmSVJ37ZjFNQlXYizqWdv_P-jlM-XG97cm6sBc0rvl5CeR2z1SvVSE-hfH4pyHO5lZm9kLPYJCcbYu8iMBmwCxyEVLWBwuTI2VYLQg-lRzXgN60J2qz_fd6Wpqi8i"
   },
   {
     "c": ["C\nAm\nDm G\nC\nAm\nDm G", "Am Em F G\nAm Em F G\nAm Em F\nDm G\nDm G"],
@@ -2582,7 +2619,8 @@
     ],
     "w": 1520009975000,
     "a": "https://holychords.pro/uploads/music/20191004/2019100413143932.mp3\n",
-    "m": 1749995837378.5093
+    "m": 1759570591691,
+    "al": "1~20191004//13143932.mp3"
   },
   {
     "c": ["Am\nDm\nE7\nAm", "A7 Dm\nG C\nAm Dm\nE7 Am"],
@@ -2616,7 +2654,8 @@
     ],
     "w": 1520010862000,
     "a": "https://holychords.pro/uploads/music/20190817/2019081701412951.mp3\n",
-    "m": 1520010862000.4636
+    "m": 1759570591691,
+    "al": "1~20190817//01412951.mp3"
   },
   {
     "c": ["Em C\nAm Hm Em\nEm C\nAm Hm Em", "G D\nEm Hm\nC D\nHm Em", "G D\nEm Hm\nC D\nHm Em\nC H7-Em"],
@@ -2703,7 +2742,8 @@
     "w": 1520011961000,
     "l": 1,
     "a": "https://holychords.pro/uploads/music/20210614/20210614010339.mp3\n",
-    "m": 1520011961000.0222
+    "m": 1759570591691,
+    "al": "1~20210614//010339.mp3"
   },
   {
     "c": ["Em\n\nC\nG\nH\nEm\n\nC\n\nAm\n\nH\n", "Em C\nG H\nEm C G\nH\nEm C G\nH\nEm C G\nH Em"],
@@ -2739,7 +2779,8 @@
     "w": 1520012746000,
     "a": "https://holychords.pro/uploads/music/20200709/20200709194828.mp3\n",
     "k": 2,
-    "m": 1735591489127
+    "m": 1759570591691,
+    "al": "1~20200709//194828.mp3"
   },
   {
     "c": ["Em Am\nD G H7\nEm Am\nD H7", "Em Am\nD G-H7\nEm Am\nC H7 Em"],
@@ -2807,7 +2848,8 @@
     ],
     "w": 1520014131000,
     "a": "https://holychords.pro/uploads/music/20201119/20201119110253.mp3\n",
-    "m": 1520014131000.2083
+    "m": 1759570591691,
+    "al": "1~20201119//110253.mp3"
   },
   {
     "c": ["D A Em A", "D A Em\nA\nD A Em\nA", "Em D A \nEm\nD A\nEm D A\nEm\nD A", "D A\nEm G A D\nD A\nEm G A D"],
@@ -2841,7 +2883,8 @@
     ],
     "w": 1520014922000,
     "a": "https://holychords.pro/uploads/music/20191104/2019110423552694.mp3\n",
-    "m": 1520014922000.8093
+    "m": 1759570591691,
+    "al": "1~20191104//23552694.mp3"
   },
   {
     "c": [
@@ -2884,7 +2927,8 @@
     ],
     "w": 1520015756000,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_64_23.mp3\n",
-    "m": 1753016951109.0278
+    "m": 1759570591691,
+    "al": "1~20200701//164457_64_23.mp3"
   },
   {
     "c": ["Am\nDm7\nAm Dm Esus-E7\nAm E\nA Dm\nAm .Dm..E7 .Esus-E7..Am"],
@@ -2941,7 +2985,7 @@
     ],
     "w": 1520057307000,
     "bpm": 60,
-    "m": 1520057307000.804
+    "m": 1759570591691
   },
   {
     "c": ["G C2 G C2", "G C2 G C2\nG Hm Em C Em D", "G-D-Em C2-D\nG-D-Em C2-D", "G-D-Em C2-D\nG"],
@@ -2993,7 +3037,7 @@
     ],
     "w": 1520060210000,
     "l": 1,
-    "m": 1520060210000.6675
+    "m": 1759570591691
   },
   {
     "c": ["G D G\nD\nG D G\nD G", "C-D G\nC-D G\nC D Em\nC D\nG"],
@@ -3014,7 +3058,8 @@
     ],
     "w": 1520062426000,
     "a": "https://livepleer.com/uploaded/mp3/378/Bogya_rosa-Poseshchay_Gospod_menya-[livepleer.com].mp3\n",
-    "m": 1520062426000.7773
+    "m": 1759570591691,
+    "al": "9~378/Bogya_rosa-Poseshchay_Gospod_menya-[livepleer.com].mp3"
   },
   {
     "c": ["Em C G D", "Em C G\nD\nEm C G\nD", "C Em D\nC\nC Em D\nC H7"],
@@ -3036,7 +3081,7 @@
     ],
     "w": 1520104075000,
     "l": 1,
-    "m": 1520104075000.8682
+    "m": 1759570591691
   },
   {
     "c": ["Dm\nGm\nA-A7\nDm-D", "Gm-C\nF-Dm\nGm-A7\nDm.-D", "Gm-C\nF-Dm\nGm-A7\nDm"],
@@ -3058,7 +3103,8 @@
     ],
     "w": 1520183439000,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164536_98_41.mp3\n",
-    "m": 1520183439000.3723
+    "m": 1759570591691,
+    "al": "1~20200701//164536_98_41.mp3"
   },
   {
     "c": [
@@ -3121,7 +3167,8 @@
     "w": 1523963298000,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164515_76_36.mp3\n",
     "p": 7,
-    "m": 1753628052525.264
+    "m": 1759570591691,
+    "al": "1~20200701//164515_76_36.mp3"
   },
   {
     "c": ["Am Dm\nE E7 Am-E7\nAm Dm\nE7 Am-E7", "Am Dm\nG C-E7\nAm Dm\nE7 Am"],
@@ -3202,7 +3249,8 @@
     ],
     "w": 1525851786000,
     "a": "https://holychords.pro/uploads/music/20191210/201912102051062.mp3\n",
-    "m": 1525851786000.6555
+    "m": 1759570591691,
+    "al": "1~20191210//2051062.mp3"
   },
   {
     "c": ["Em Am\nH7 Em H7\nEm Am\nH7 Em", "E Am D\nG H7 Em\nAm H7\nEm\nE..Em"],
@@ -3265,7 +3313,8 @@
     ],
     "w": 1525858693000,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164515_68_61.mp3\n",
-    "m": 1754809282304.8713
+    "m": 1759570591692,
+    "al": "1~20200701//164515_68_61.mp3"
   },
   {
     "c": [
@@ -3343,7 +3392,8 @@
     ],
     "w": 1530368314000,
     "a": "https://holychords.pro/uploads/music/20200401/202004012036245.mp3\n",
-    "m": 1744810205521.8977
+    "m": 1759570591692,
+    "al": "1~20200401//2036245.mp3"
   },
   {
     "c": [
@@ -3389,9 +3439,10 @@
     "w": 1530414408972,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164515_80.mp3\n",
     "p": 0,
-    "m": 1759427887427.22,
+    "m": 1759570591692,
     "bpm": 127,
-    "s": 4
+    "s": 4,
+    "al": "1~20200701//164515_80.mp3"
   },
   {
     "c": ["A2\nF#m7\nD\nE\nA2\nF#m7\nD\nE", "A2\n\nF#m7\nD\nE A2", "A2\nF#m7\nD\nE A2"],
@@ -3415,7 +3466,8 @@
     ],
     "w": 1530432508380,
     "a": "https://holychords.pro/uploads/music/20191031/2019103118143161.mp3\n",
-    "m": 1756978248730.3682
+    "m": 1759570591692,
+    "al": "1~20191031//18143161.mp3"
   },
   {
     "c": ["Am F C E7 Am\nF C E7 Am\nF C E7 Am\nF C E7 Am", "Am F C E7 Am\nF C\nE7 Am"],
@@ -3478,7 +3530,8 @@
     ],
     "w": 1530433331820,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164548_63_45.mp3\n",
-    "m": 1741535008309.9634
+    "m": 1759570591692,
+    "al": "1~20200701//164548_63_45.mp3"
   },
   {
     "c": ["Em Am\nH7 Em\nC Am\nH7 Em", "E Am\nD G\nC Am\nH7 .Em ..Em"],
@@ -3547,7 +3600,8 @@
     ],
     "w": 1530435548000,
     "a": "https://data.ipleer.com/listen/180100001/THYrQkNiVCtWR3JKbUdnVGdPV1VlNEVVeHE3NnNuY3FuR2tJWHE2bFpLbndXamd4aVQ3bXgwYXlibGdLK1dNZjI5T0MxMjRIRGJLL2dTRzZMMFh3MDFRSlZ3WVdPTFA2bDE3UDJmVlRrTnllWWdWdFlhL0J0QXNTSXE5UXV1Q3c/Hristianskaya_molodezh_-_Ty_ne_odin_idesh_po_zhizni._(iPleer.com).mp3\n",
-    "m": 1530435548000.8877
+    "m": 1759570591692,
+    "al": "https://data.ipleer.com/listen/180100001/THYrQkNiVCtWR3JKbUdnVGdPV1VlNEVVeHE3NnNuY3FuR2tJWHE2bFpLbndXamd4aVQ3bXgwYXlibGdLK1dNZjI5T0MxMjRIRGJLL2dTRzZMMFh3MDFRSlZ3WVdPTFA2bDE3UDJmVlRrTnllWWdWdFlhL0J0QXNTSXE5UXV1Q3c/Hristianskaya_molodezh_-_Ty_ne_odin_idesh_po_zhizni._(iPleer.com).mp3"
   },
   {
     "c": ["C F/C C\nC Em\nF G Am\nF G C", "F C G\nF G Am\nF G Am\nF G .Am..C", "C G Am F\nC G Am F"],
@@ -3645,7 +3699,8 @@
     ],
     "w": 1530436801570,
     "a": "https://holychords.pro/uploads/music/20191101/2019110122415173.mp3\n",
-    "m": 1757857211148.5276
+    "m": 1759570591692,
+    "al": "1~20191101//22415173.mp3"
   },
   {
     "c": [
@@ -3719,7 +3774,8 @@
     ],
     "w": 1530446423428,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164415_45.mp3\n",
-    "m": 1530446423428.8894
+    "m": 1759570591692,
+    "al": "1~20200701//164415_45.mp3"
   },
   {
     "c": ["G\nD Em\nD C\nD C", "C D\nEm D\nEm D\nC D", "G D Em\nD C\nD C\nD G", "G D Em\nD C\nD C", "G-D C-D G"],
@@ -3785,7 +3841,8 @@
     ],
     "w": 1530509188544,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164415_29.mp3\n",
-    "m": 1755435720444.044
+    "m": 1759570591692,
+    "al": "1~20200701//164415_29.mp3"
   },
   {
     "c": ["Dm\nGm A\nA\nDm\nDm\nD7 Gm\nGm Dm\nA7 Dm"],
@@ -3824,7 +3881,8 @@
     ],
     "w": 1530900684140,
     "a": "https://ia801205.us.archive.org/13/items/songsofrevival/2088%20%D0%94%D0%B0%D0%B6%D0%B5%20%D0%B5%D1%81%D0%BB%D0%B8%20%D0%B2%D0%BE%D0%BA%D1%80%D1%83%D0%B3%20%D1%82%D0%B5%D0%BC%D0%BD%D0%BE.mp3\n",
-    "m": 1530900684140.5935
+    "m": 1759570591692,
+    "al": "8~2088%20%D0%94%D0%B0%D0%B6%D0%B5%20%D0%B5%D1%81%D0%BB%D0%B8%20%D0%B2%D0%BE%D0%BA%D1%80%D1%83%D0%B3%20%D1%82%D0%B5%D0%BC%D0%BD%D0%BE.mp3"
   },
   {
     "c": [
@@ -3903,7 +3961,8 @@
     "a": "https://holychords.pro/uploads/music/20200719/20200719182038.mp3\n",
     "bpm": 145,
     "s": 3,
-    "m": 1755436674705.8704
+    "m": 1759570591692,
+    "al": "1~20200719//182038.mp3"
   },
   {
     "c": ["Dm Gm\nC F\nDm Gm\nC F-A7", "Dm\nGm\nC F A7\nDm\nGm C\nF A7"],
@@ -3946,7 +4005,8 @@
     ],
     "w": 1531027971200,
     "a": "https://holychords.pro/uploads/music/20200621/2020062122401075.mp3\n",
-    "m": 1531027971200.6296
+    "m": 1759570591692,
+    "al": "1~20200621//22401075.mp3"
   },
   {
     "c": [
@@ -4005,7 +4065,8 @@
     ],
     "w": 1531064135576,
     "a": "https://holychords.pro/uploads/music/20210705/20210705100157.mp3\n",
-    "m": 1531064135576.5225
+    "m": 1759570591692,
+    "al": "1~20210705//100157.mp3"
   },
   {
     "c": [
@@ -4068,7 +4129,8 @@
     "w": 1534006585256,
     "a": "https://holychords.pro/uploads/music/20230309/20230309165639.mp3",
     "bpm": 60,
-    "m": 1740069451244.6833
+    "m": 1759570591692,
+    "al": "1~20230309//165639.mp3"
   },
   {
     "c": ["D G D\nD G A\nD G A Hm\nEm A D", "D G D Hm\nG A D-Dsus-D\nD G D Hm\nEm A D"],
@@ -4107,7 +4169,8 @@
     ],
     "w": 1534056786164,
     "a": "https://holychords.pro/uploads/music/20191116/2019111618253973.mp3\n",
-    "m": 1534056786164.6482
+    "m": 1759570591692,
+    "al": "1~20191116//18253973.mp3"
   },
   {
     "c": ["D G D\nA G D-A", ".D..G...A ...G D-A"],
@@ -4130,7 +4193,8 @@
     "t": ["Имя Господа - крепкая башня,\nБежит в неё праведник и он спасён.", "Славьте Имя Его! Всевышнего!"],
     "w": 1534102260440,
     "a": "https://holychords.pro/uploads/music/20210126/20210126210354.mp3\n",
-    "m": 1534102260440.9517
+    "m": 1759570591692,
+    "al": "1~20210126//210354.mp3"
   },
   {
     "c": ["D A Hm-G\nD A\nD A Hm-G\nA D", ".D..G .A..D .Hm..A\nG .D..A ..D"],
@@ -4170,7 +4234,8 @@
     ],
     "w": 1534139848020,
     "a": "https://holychords.pro/uploads/music/20210430/20210430083915.mp3\n",
-    "m": 1534139848020.0774
+    "m": 1759570591692,
+    "al": "1~20210430//083915.mp3"
   },
   {
     "c": [
@@ -4249,7 +4314,8 @@
     ],
     "w": 1534140323560,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_6_45.mp3\n",
-    "m": 1735270788377
+    "m": 1759570591692,
+    "al": "1~20200701//164457_6_45.mp3"
   },
   {
     "c": ["Dm\nC\nA#\nC A7", "Dm Gm\n.C..A# .F..Gm\nC A7\nDm Gm\n.C..A# .F..Gm\nA7 Dm"],
@@ -4286,7 +4352,8 @@
     ],
     "w": 1534141476440,
     "a": "https://holychords.pro/uploads/music/20190815/2019081513514522.mp3\n",
-    "m": 1534141476440.4702
+    "m": 1759570591692,
+    "al": "1~20190815//13514522.mp3"
   },
   {
     "c": [
@@ -4363,7 +4430,8 @@
     ],
     "w": 1534247088340,
     "a": "https://holychords.pro/uploads/music/20210204/20210204123030.mp3\n",
-    "m": 1744811335609.027
+    "m": 1759570591692,
+    "al": "1~20210204//123030.mp3"
   },
   {
     "c": ["Em\nAm7\nH7\nEm-H7\nEm\nAm\nH7\nEm", "Em\nAm\nD\nG H7\nEm\nAm\nH7 Em"],
@@ -4382,7 +4450,8 @@
     ],
     "w": 1534249035184,
     "a": "https://holychords.pro/uploads/music/20230327/20230327154957.mp3",
-    "m": 1754227172361.899
+    "m": 1759570591692,
+    "al": "1~20230327//154957.mp3"
   },
   {
     "c": ["D Hm\nG A\nD Hm\nG A", "D\nHm\nG\nA"],
@@ -4423,7 +4492,8 @@
     ],
     "w": 1534357834296,
     "a": "https://youthsongs.ru/youthsongs.ru/wp-content/uploads/2010/10/%D0%98%D0%BC%D0%B5%D1%8E-%D0%B4%D0%B8%D0%B2%D0%BD%D1%8B%D0%B9-%D1%82%D0%B5%D0%BB%D0%B5%D1%84%D0%BE%D0%BD-%D0%BC%D0%BE%D0%BB%D0%B8%D1%82%D0%B2%D1%8B-%D1%82%D0%B5%D0%BB%D0%B5%D1%84%D0%BE%D0%BD-%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80.mp3?_=2",
-    "m": 1534357834296.4624
+    "m": 1759570591692,
+    "al": "https://youthsongs.ru/youthsongs.ru/wp-content/uploads/2010/10/%D0%98%D0%BC%D0%B5%D1%8E-%D0%B4%D0%B8%D0%B2%D0%BD%D1%8B%D0%B9-%D1%82%D0%B5%D0%BB%D0%B5%D1%84%D0%BE%D0%BD-%D0%BC%D0%BE%D0%BB%D0%B8%D1%82%D0%B2%D1%8B-%D1%82%D0%B5%D0%BB%D0%B5%D1%84%D0%BE%D0%BD-%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80.mp3?_=2"
   },
   {
     "c": ["D A D\nA D", "Hm\nG A D"],
@@ -4471,7 +4541,7 @@
       "Пусть проходят дни, пролетают года\nТы приходи скорей здесь ждут тебя"
     ],
     "w": 1534358340932,
-    "m": 1534358340932.7185
+    "m": 1759570591692
   },
   {
     "c": ["G D\nG\nC G Em\nAm D G"],
@@ -4487,7 +4557,7 @@
       "Грехи все оставлю, прощенье попрошу\nЭтим я небо уже приобрету. \nВеруя в Иисуса Спасителя \nБуду на небе я навсегда."
     ],
     "w": 1534358885436,
-    "m": 1534358885436.2603
+    "m": 1759570591692
   },
   {
     "c": ["Em C\nG D", "Am Em\nG D", "Em C\nG D Em", "Am Em\nG D Em"],
@@ -4644,7 +4714,8 @@
     ],
     "w": 1534419779920,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164548_80_13.mp3",
-    "m": 1742355355282.781
+    "m": 1759570591692,
+    "al": "1~20200701//164548_80_13.mp3"
   },
   {
     "c": ["D\nG\nA D", "D G\nD G\nD G\nA", "D Em\nA D"],
@@ -4672,7 +4743,8 @@
     ],
     "w": 1534448517744,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164415_72.mp3",
-    "m": 1534448517744.0518
+    "m": 1759570591692,
+    "al": "1~20200701//164415_72.mp3"
   },
   {
     "c": ["E\nA\nE ..H7 H7..E"],
@@ -4690,7 +4762,7 @@
       "Ты можешь грустным быть\nЯ могу грустным быть\nНо так не должно быть всегда"
     ],
     "w": 1534449547570,
-    "m": 1534449547570.9695
+    "m": 1759570591692
   },
   {
     "c": ["C G\nAm F\nC G C", "F C\nG C\nF C\nG C\nC"],
@@ -4751,7 +4823,8 @@
     ],
     "w": 1534533998190,
     "a": "https://hvalite.com/uploads/audio/examples/5a333f4e9d12dadec65a8a3b537b1a43.mp3",
-    "m": 1735455597773
+    "m": 1759570591692,
+    "al": "6~5a333f4e9d12dadec65a8a3b537b1a43.mp3"
   },
   {
     "c": ["Am Dm\nE7 Am\nC\nDm E7", "Am Dm\nG7 Em/C\nF Dm\nF E7 Am"],
@@ -4783,7 +4856,7 @@
       "На земле моя жизнь окончится,\nПролетит незаметно, как птица.\nИ мне очень, очень хочется\nЗа Россию всегда молиться!"
     ],
     "w": 1536944288884,
-    "m": 1742355591953.569
+    "m": 1759570591692
   },
   {
     "c": ["Em C\nH7 Em\nEm C\nH7 Em", "Em Am\nH7\nEm Am\nH7 Em"],
@@ -4823,7 +4896,7 @@
       "Как сладок нежный голос Твой!\nО, помилуй нас.\nСогрей меня Своей рукой!\nО, помилуй нас."
     ],
     "w": 1536944909560,
-    "m": 1746346043207.3198,
+    "m": 1759570591692,
     "b": 0
   },
   {
@@ -4928,7 +5001,8 @@
     ],
     "w": 1536945317452,
     "a": "https://holychords.pro/uploads/music/20200302/2020030214062060.mp3",
-    "m": 1536945317452.788
+    "m": 1759570591692,
+    "al": "1~20200302//14062060.mp3"
   },
   {
     "c": ["Am F\nC G\nAm F\nC G", "Am F\nC G\nAm F\nC G"],
@@ -4997,7 +5071,8 @@
     ],
     "w": 1536946182280,
     "a": "https://kg-music.club/wp-content/uploads/2019/02/08-%D0%9F%D0%BE%D0%BA%D0%BB%D0%BE%D0%BD%D1%8E%D1%81%D1%8C-%D0%A2%D0%B5%D0%B1%D0%B5-%D0%98%D0%B8%D1%81%D1%83%D1%81-%D0%9A%D1%80%D0%B0%D0%B5%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9-%D0%9A%D0%B0%D0%BC%D0%B5%D0%BD%D1%8C-kg-music.club_.mp3",
-    "m": 1536946182280.3062
+    "m": 1759570591692,
+    "al": "5~2019/02/08-%D0%9F%D0%BE%D0%BA%D0%BB%D0%BE%D0%BD%D1%8E%D1%81%D1%8C-%D0%A2%D0%B5%D0%B1%D0%B5-%D0%98%D0%B8%D1%81%D1%83%D1%81-%D0%9A%D1%80%D0%B0%D0%B5%D1%83%D0%B3%D0%BE%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9-%D0%9A%D0%B0%D0%BC%D0%B5%D0%BD%D1%8C-kg-music.club_.mp3"
   },
   {
     "c": ["C\nAm\nDm\nG E7", "Am Dm\nG C E7\nAm Dm\nF E7 ..Am"],
@@ -5031,7 +5106,8 @@
     ],
     "w": 1536947069600,
     "a": "https://holychords.pro/uploads/music/20201119/20201119130025.mp3",
-    "m": 1536947069600.1045
+    "m": 1759570591692,
+    "al": "1~20201119//130025.mp3"
   },
   {
     "c": ["Em H7\nEm\nEm H7\nEm-E", "Am D G C\nAm H7 Em-E\nAm D G C\nAm H7 Em", "Am D G C\nAm H7 .Em-E..Em"],
@@ -5103,7 +5179,8 @@
     "w": 1536947668560,
     "a": "https://holychords.pro/uploads/music/20200224/202002241705506.mp3",
     "bpm": 75,
-    "m": 1536947668560.9248
+    "m": 1759570591692,
+    "al": "1~20200224//1705506.mp3"
   },
   {
     "c": [
@@ -5134,8 +5211,9 @@
     ],
     "w": 1536948845570,
     "a": "https://holychords.pro/uploads/music/20191210/201912101915537.mp3\n",
-    "m": 1748838158112.4841,
-    "bpm": 85
+    "m": 1759570591692,
+    "bpm": 85,
+    "al": "1~20191210//1915537.mp3"
   },
   {
     "c": ["Em G\nC D7\nEm G\nC D7", "G D Am Em\nG D Am H7\nG D Am Em\nG D Am-H7 Em", "G Am Em C H7 Em"],
@@ -5216,7 +5294,8 @@
     ],
     "w": 1538320243090,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_91.mp3",
-    "m": 1745760319087.3108
+    "m": 1759570591692,
+    "al": "1~20200701//164457_91.mp3"
   },
   {
     "c": ["Fm D# C#\nA#m D#\nFm D# C#\nA#m D#", "Fm G#\nA#m G#-D#\nFm G#\nA#m A#m/G Fm"],
@@ -5271,7 +5350,8 @@
     "w": 1538383850744,
     "p": 11,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_62_65.mp3",
-    "m": 1746975727716.2288
+    "m": 1759570591692,
+    "al": "1~20200701//164457_62_65.mp3"
   },
   {
     "c": ["Am-D Hm-Em\nAm-C H7\nAm-D Hm-Em\nAm-C H7", "Am D Hm Em\nAm D G Em\nAm D H7 Em\nC Am H7 Em"],
@@ -5338,7 +5418,8 @@
     ],
     "w": 1538384520836,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164536_80_87.mp3",
-    "m": 1538384520836.7268
+    "m": 1759570591692,
+    "al": "1~20200701//164536_80_87.mp3"
   },
   {
     "c": ["C Am7\nDm7 G\nDm7 Am7\nDm7 C-G"],
@@ -5362,7 +5443,8 @@
     "t": ["Эту песню неба ангелы поют:\nСлава Агнцу Божьему!\nАллилуйя! Аллилуйя!\nАллилуйя! Слава Тебе!"],
     "w": 1538385191056,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_14_30_45.mp3",
-    "m": 1538385191056.7092
+    "m": 1759570591692,
+    "al": "1~20200701//164457_14_30_45.mp3"
   },
   {
     "c": ["Em H7 D A\nC G H7\nEm H7 D A\nC G H7", "Em C G D\nEm C D\nEm C G D-C\nD Em"],
@@ -5440,7 +5522,8 @@
     ],
     "w": 1538386185010,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164438_79.mp3\nhttps://holychords.pro/uploads/music/20200319/2020031913084926.mp3",
-    "m": 1538386185010.211
+    "m": 1759570591692,
+    "al": ["1~20200701//164438_79.mp3", "1~20200319//13084926.mp3"]
   },
   {
     "c": ["A Hm\nD E\nA Hm\nD E", "Hm-E A\nHm-E A"],
@@ -5505,7 +5588,7 @@
       "За горизонтом неведомы дали\nБожьей любви неземной.\nЗа горизонтом нет слёз и печали,\nОтче, Ты с нами я - Твой!"
     ],
     "w": 1538387067160,
-    "m": 1756978564544.57
+    "m": 1759570591692
   },
   {
     "c": ["Am C Dm E7\nAm Dm G C\nDm E\nAm D\nDm E Am", "F C\nDm E Am\nF C\nDm F E"],
@@ -5595,7 +5678,8 @@
     "a": "https://holychords.pro/uploads/music/20210421/20210421194944.mp3",
     "bpm": 110,
     "s": 3,
-    "m": 1744551844489.2195
+    "m": 1759570591692,
+    "al": "1~20210421//194944.mp3"
   },
   {
     "c": ["Em C\nG-D\nEm C\nG-D", "Am C\nHm D\nAm C\nG D"],
@@ -5639,7 +5723,8 @@
     ],
     "w": 1538389364332,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164515_91_53.mp3",
-    "m": 1755846793386.2107
+    "m": 1759570591692,
+    "al": "1~20200701//164515_91_53.mp3"
   },
   {
     "c": ["Am Dm\nE Am\nF\nG C\nAm Dm\nG C\nDm Am\nDm E-E7", "Am\nDm\nG\nC E7\nAm\nDm\nAm E\nAm"],
@@ -5674,7 +5759,8 @@
     ],
     "w": 1538389859304,
     "a": "https://holychords.pro/uploads/music/20221005/20221005124453.mp3",
-    "m": 1757839792488.8318
+    "m": 1759570591692,
+    "al": "1~20221005//124453.mp3"
   },
   {
     "c": ["Am Dm E7 Am\nDm G C\nAm Dm E7 Am\nDm-E7 Am", "Dm G\nC Am\nDm-E7 Am"],
@@ -5740,7 +5826,7 @@
       "Не слыхал человек и не видел то глаз,\nКак там в небе небес, что там будет для нас.\nНо я знаю одно - красотой всех небес\nБудет Тот, кто понёс на Голгофу наш крест."
     ],
     "w": 1538391282656,
-    "m": 1538391282656.407
+    "m": 1759570591692
   },
   {
     "c": ["Am F C G Am\nF C G Am\nF C G Am\nF C G Am", "F C G Am F C G", "F C G Am F C G Am\nF C G Am F C G C"],
@@ -5808,7 +5894,7 @@
     ],
     "w": 1542738586612,
     "p": 7,
-    "m": 1542738586612.3682
+    "m": 1759570591692
   },
   {
     "c": ["Am F Am F\nC G Dm\nF\nAm F Am F\nC G Dm\nF", "C Em\nAm F\nC Em\nAm F"],
@@ -5844,7 +5930,8 @@
     ],
     "w": 1543671991348,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_3_67.mp3",
-    "m": 1543671991348.6946
+    "m": 1759570591692,
+    "al": "1~20200701//164457_3_67.mp3"
   },
   {
     "c": ["Em Am\nD G\nC Am\nH Em", "Am H7\nEm\nC\n\nAm H Em-D-C\nAm H\nEm\nC\n\nAm H"],
@@ -5905,7 +5992,8 @@
     ],
     "w": 1543692668496,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164438_79_68.mp3",
-    "m": 1744811594363.5815
+    "m": 1759570591692,
+    "al": "1~20200701//164438_79_68.mp3"
   },
   {
     "c": ["C D\nG D Em\nC D\nHm Em", "Em Hm\nC D Em\nEm Hm\nC D Em"],
@@ -5987,8 +6075,9 @@
     ],
     "w": 1544029700840,
     "a": "https://holychords.pro/uploads/music/20200414/2020041402102058.mp3",
-    "m": 1755345820182.6326,
-    "bpm": 120
+    "m": 1759570591692,
+    "bpm": 120,
+    "al": "1~20200414//02102058.mp3"
   },
   {
     "c": ["Em Am\nH Em", "Am\nH Em", ".E7..D...C .Am..G...Am\nH7 Em"],
@@ -6075,7 +6164,8 @@
     ],
     "w": 1544640382680,
     "a": "https://holychords.pro/uploads/music/20191216/2019121616053035.mp3",
-    "m": 1544640382680.0627
+    "m": 1759570591692,
+    "al": "1~20191216//16053035.mp3"
   },
   {
     "c": ["Am Dm\nE7 Am\nDm\nE7 Am", "E7 Am\nDm\nG C\nE7 Am"],
@@ -6099,7 +6189,8 @@
     ],
     "w": 1544722050970,
     "a": "https://holychords.pro/uploads/music/20210830/20210830115102.mp3",
-    "m": 1544722050970.374
+    "m": 1759570591692,
+    "al": "1~20210830//115102.mp3"
   },
   {
     "c": ["Dm\nA Dm\nDm\nA Dm-C\nF\nC A\nDm\nA Dm.-C"],
@@ -6138,7 +6229,8 @@
     ],
     "w": 1544722864428,
     "a": "https://holychords.pro/uploads/music/20201118/20201118171341.mp3\nhttps://holychords.pro/uploads/music/20220104/20220104230839.mp3",
-    "m": 1735590223178
+    "m": 1759570591692,
+    "al": ["1~20201118//171341.mp3", "1~20220104//230839.mp3"]
   },
   {
     "c": ["D G D\nHm C#/A E A\nD G D/F#\nHm Em A D", "A D G D\nHm E A\nA D G D/F#\nHm Em A D", "D Hm A/C# G"],
@@ -6224,7 +6316,8 @@
     "bpm": 55,
     "s": 3,
     "p": 10,
-    "m": 1750532910108.868
+    "m": 1759570591692,
+    "al": ["1~20200311//2012493.mp3", "1~20191002//12474332.mp3"]
   },
   {
     "c": ["Dm A Dm", "Dm\nGm-A Dm\nDm\nGm-A Dm\nGm\nDm\nA# Dm\nA Dm"],
@@ -6264,7 +6357,8 @@
     ],
     "w": 1544724443336,
     "a": "https://holychords.pro/uploads/music/20200429/2020042909081239.mp3\nhttps://holychords.pro/uploads/music/20200701/20200701164549_63.mp3",
-    "m": 1544724443336.5059
+    "m": 1759570591692,
+    "al": ["1~20200429//09081239.mp3", "1~20200701//164549_63.mp3"]
   },
   {
     "c": ["Am Dm E Am\nDm E Am\nDm E Am F\nDm E Am .A"],
@@ -6346,7 +6440,8 @@
     ],
     "w": 1544725246296,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_28_31.mp3",
-    "m": 1544725246296.4773
+    "m": 1759570591692,
+    "al": "1~20200701//164457_28_31.mp3"
   },
   {
     "c": ["Em Am\nD G\nC Am H7\nEm Am\nD G\nC Am H7", "Em\nAm H7 Em\nAm H7 Em\nAm D G C\nAm H7", "Em"],
@@ -6393,7 +6488,8 @@
     ],
     "w": 1544991356210,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164438_46_68.mp3",
-    "m": 1544991356210.6284
+    "m": 1759570591692,
+    "al": "1~20200701//164438_46_68.mp3"
   },
   {
     "c": ["G D\nEm Hm\nAm D\nC D", "G Em\nC D\nG Em\nC G\nC D G"],
@@ -6463,7 +6559,8 @@
     ],
     "w": 1545104628972,
     "a": "https://holychords.pro/uploads/music/20210207/20210207122858.mp3",
-    "m": 1752689244095.5159
+    "m": 1759570591692,
+    "al": "1~20210207//122858.mp3"
   },
   {
     "c": ["F#m D A\nF#m D E\nD A F#m-E", "D A E\nD\nA E\nD F#m D-E"],
@@ -6516,7 +6613,8 @@
     "p": 3,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164515_21_29.mp3",
     "bpm": 82,
-    "m": 1736687757469
+    "m": 1759570591692,
+    "al": "1~20200701//164515_21_29.mp3"
   },
   {
     "c": ["Am Dm\nG C\nF Dm\nE Am-E7", "Am Dm\nG C\nF Dm\nE7 Am"],
@@ -6583,7 +6681,8 @@
     ],
     "w": 1545106593650,
     "a": "https://holychords.pro/uploads/music/20191116/2019111618110318.mp3",
-    "m": 1545106593650.0999
+    "m": 1759570591692,
+    "al": "1~20191116//18110318.mp3"
   },
   {
     "c": ["Em C G\nEm C G\nAm D", "Em C\nG\nD\nEm\nC\nG D", "Em\nC\nG\nD Em..-C-G-D"],
@@ -6627,7 +6726,8 @@
     ],
     "w": 1545107175820,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164137_91.mp3",
-    "m": 1545107175820.1384
+    "m": 1759570591692,
+    "al": "1~20200701//164137_91.mp3"
   },
   {
     "c": ["Am G C\nAm G C E", "C G\nDm Am\nF G Am"],
@@ -6739,7 +6839,7 @@
     ],
     "w": 1545631143560,
     "bpm": 124,
-    "m": 1754289157157.11
+    "m": 1759570591692
   },
   {
     "c": ["Am\nC\nD Em\nC Em\nD Em\nC-G Am Em\nC Em\nD C D-Em", "G Am\nG Am\nEm C Am\nD\nG Am\nG Am\nG C\nAm D Em"],
@@ -6773,7 +6873,8 @@
     ],
     "w": 1545654157164,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164515_66_11.mp3",
-    "m": 1745857520951.5537
+    "m": 1759570591692,
+    "al": "1~20200701//164515_66_11.mp3"
   },
   {
     "c": ["D A Hm\nA G A\nD A Hm\nA G A", "D-A G\nD-A G\nEm\nA D", "Dsus D D2-D\n.Dsus..G D A"],
@@ -6829,7 +6930,8 @@
     ],
     "w": 1545833460628,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_38_67.mp3\n",
-    "m": 1545833460628.3926
+    "m": 1759570591692,
+    "al": "1~20200701//164457_38_67.mp3"
   },
   {
     "c": ["Em C\nH7 Em\nEm C\nH7 Em", "\nEm Am H7\nEm Am H7 Em"],
@@ -6884,7 +6986,7 @@
       "И Божий Сын взошёл на крест\nРазрушив силы тьмы\nПо слову в третий день воскрес\nТеперь свободны мы!"
     ],
     "w": 1546328240110,
-    "m": 1546328240110.2595
+    "m": 1759570591692
   },
   {
     "c": ["E F#m\nA\nH\nE", "E F#m\nA H\nE F#m\nA H"],
@@ -6933,7 +7035,8 @@
     "w": 1546331814920,
     "l": 1,
     "a": "https://holychords.pro/uploads/music/20200105/2020010520453422.mp3\nhttps://holychords.pro/uploads/music/20200701/20200701164547_48_58.mp3",
-    "m": 1546331814920.2322
+    "m": 1759570591692,
+    "al": ["1~20200105//20453422.mp3", "1~20200701//164547_48_58.mp3"]
   },
   {
     "c": ["Dm Gm Dm\nDm Gm Dm-D7\nGm C\nF A#\nGm A Dm-D7", "Gm C\nF A#\nGm A Dm-D7..Dm"],
@@ -7018,7 +7121,8 @@
     ],
     "w": 1546348868110,
     "a": "https://holychords.pro/uploads/music/20210616/20210616114601.mp3",
-    "m": 1744876607242.2715
+    "m": 1759570591692,
+    "al": "1~20210616//114601.mp3"
   },
   {
     "c": [
@@ -7061,7 +7165,8 @@
     ],
     "w": 1547104410136,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_72_10.mp3",
-    "m": 1547104410136.1453
+    "m": 1759570591692,
+    "al": "1~20200701//164457_72_10.mp3"
   },
   {
     "c": ["Em D\nC H7\nEm D\nC H7\nAm D\nG D Em\nAm Em\nH7", "Hm E\nF#m\nHm E F# A\nC# Hm"],
@@ -7106,7 +7211,8 @@
     ],
     "w": 1547121581400,
     "a": "https://holychords.pro/uploads/music/20191022/2019102216004565.mp3\nhttps://holychords.pro/uploads/music/20200218/2020021805511617.mp3",
-    "m": 1547121581400.6895
+    "m": 1759570591692,
+    "al": ["1~20191022//16004565.mp3", "1~20200218//05511617.mp3"]
   },
   {
     "c": [
@@ -7212,7 +7318,8 @@
     ],
     "w": 1548877880870,
     "a": "https://holychords.pro/uploads/music/20230122/20230122061135.mp3",
-    "m": 1755692682504.3032
+    "m": 1759570591692,
+    "al": "1~20230122//061135.mp3"
   },
   {
     "c": ["Em D Am7 C\nD Em", "G D\nAm7 Em\nC D Em"],
@@ -7249,7 +7356,7 @@
       "И идёт вместе с Ним,\nИдёт вместе с Ним,\nВсю жизнь, всю жизнь вместе с Ним."
     ],
     "w": 1548878406880,
-    "m": 1548878406880.3447
+    "m": 1759570591692
   },
   {
     "c": ["E D A Am E", "E D\nA Am E\nE D\nA Am E", "A\nE\nA Am E"],
@@ -7291,7 +7398,7 @@
     ],
     "w": 1548878848496,
     "bpm": 80,
-    "m": 1736686246593
+    "m": 1759570591692
   },
   {
     "c": [
@@ -7368,7 +7475,8 @@
     "w": 1548880317132,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164515_25.mp3",
     "bpm": 70,
-    "m": 1548880317132.1836
+    "m": 1759570591692,
+    "al": "1~20200701//164515_25.mp3"
   },
   {
     "c": ["C D H7 Em\nC D Am H7\nAm7 D G H7 Em\nAm7 H7 .Em..C ..H7 .E..Em", "Am7 D G H7 Em\nAm7 H7 C H7 Em"],
@@ -7437,7 +7545,8 @@
     ],
     "w": 1548911188044,
     "a": "https://holychords.pro/uploads/music/20191108/2019110823431979.mp3",
-    "m": 1548911188044.93
+    "m": 1759570591693,
+    "al": "1~20191108//23431979.mp3"
   },
   {
     "c": [
@@ -7509,9 +7618,10 @@
     ],
     "w": 1548912465710,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164515_68_14_97.mp3\n",
-    "m": 1758465667943.92,
+    "m": 1759570591695,
     "bpm": 180,
-    "s": 3
+    "s": 3,
+    "al": "1~20200701//164515_68_14_97.mp3"
   },
   {
     "c": ["Dm-Dm/C\nGm/A#-Gm\nC-A\nDm D\nCm\nD\nGm A\nDm .D", "Dm-Dm/C Gm/A#-Gm\nC-A Dm"],
@@ -7562,7 +7672,8 @@
     ],
     "w": 1548913246052,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_67_32.mp3\nhttps://holychords.pro/uploads/music/20200312/2020031216583385.mp3",
-    "m": 1745089659608.8364
+    "m": 1759570591695,
+    "al": ["1~20200701//164457_67_32.mp3", "1~20200312//16583385.mp3"]
   },
   {
     "c": ["G D Em\nC\nAm7 D\nD7", "G D\nEm D\nC G\nC D ..G"],
@@ -7598,7 +7709,8 @@
     ],
     "w": 1548914797644,
     "a": "https://holychords.pro/uploads/music/20201119/20201119104913.mp3",
-    "m": 1734876359670
+    "m": 1759570591695,
+    "al": "1~20201119//104913.mp3"
   },
   {
     "c": ["D G A F#m\nG A\nD G F#\nHm G A", "Hm G Em A\nG A D\nHm G Em A\nG A D"],
@@ -7651,7 +7763,8 @@
     ],
     "w": 1548915379316,
     "a": "https://holychords.pro/uploads/music/20210202/20210202201431.mp3",
-    "m": 1548915379316.3652
+    "m": 1759570591695,
+    "al": "1~20210202//201431.mp3"
   },
   {
     "c": ["A# Gm A# Gm", "A# Gm\nCm\nD# F", "A# Gm\nCm D#\n.F ..A#", "D# Gm F\nD# Gm F"],
@@ -7689,7 +7802,8 @@
     "w": 1548917413824,
     "p": 2,
     "a": "https://holychords.pro/uploads/music/20190724/2019072413391028.mp3",
-    "m": 1754496199935.3171
+    "m": 1759570591695,
+    "al": "1~20190724//13391028.mp3"
   },
   {
     "c": ["Em\nAm\nD\nG-H7\nEm\nAm\nC\nAm H7", "Em\nAm\nD\nG-H7\nEm Am\n.Em..H7...Em"],
@@ -7710,7 +7824,8 @@
     ],
     "w": 1548918386730,
     "a": "https://holychords.pro/uploads/music/20211204/20211204095620.mp3",
-    "m": 1548918386730.8594
+    "m": 1759570591695,
+    "al": "1~20211204//095620.mp3"
   },
   {
     "c": ["D F#m G D\nG D Em-A7\nD F#m G D\nG D/A A D", "D F#m G D\nG A D"],
@@ -7777,7 +7892,8 @@
     ],
     "w": 1548919045690,
     "a": "https://holychords.pro/uploads/music/20191103/2019110321132637.mp3",
-    "m": 1737288393031
+    "m": 1759570591695,
+    "al": "1~20191103//21132637.mp3"
   },
   {
     "c": ["Dm Gm\nC F-A\nDm Gm\nDm A7 Dm", "D Gm\nC F\nA# Gm\nDm A7 Dm", "Dm A7 Dm"],
@@ -7861,7 +7977,8 @@
     ],
     "w": 1548919483460,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164536_50_82.mp3",
-    "m": 1752765664032.1665
+    "m": 1759570591695,
+    "al": "1~20200701//164536_50_82.mp3"
   },
   {
     "c": [
@@ -7916,7 +8033,8 @@
     ],
     "w": 1548922803200,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164515_73_3.mp3",
-    "m": 1757248466170.5347
+    "m": 1759570591695,
+    "al": "1~20200701//164515_73_3.mp3"
   },
   {
     "c": ["Dm C\nA# A\nF C\nGm A", "A# Gm A\nA# Gm\nA", "Dm F\nGm A\nDm F", "Gm A Dm"],
@@ -7964,7 +8082,8 @@
     ],
     "w": 1549276765590,
     "a": "https://holychords.pro/uploads/music/20210514/20210514211118.mp3",
-    "m": 1749990673544.9448
+    "m": 1759570591695,
+    "al": "1~20210514//211118.mp3"
   },
   {
     "c": ["F A# F C F", "F A#\nF C\nF A#\nF C F"],
@@ -8049,7 +8168,8 @@
     "a": "https://holychords.pro/uploads/music/20200701/20200701164536_31_54.mp3\n",
     "bpm": 60,
     "s": 3,
-    "m": 1551180061040.724
+    "m": 1759570591695,
+    "al": "1~20200701//164536_31_54.mp3"
   },
   {
     "c": ["F C\nDm A# C", "F\nC Am7\nDm A#-C", "G"],
@@ -8076,7 +8196,8 @@
     "w": 1551195668480,
     "p": 0,
     "a": "https://holychords.pro/uploads/music/20190501/2019050118484071.mp3",
-    "m": 1551195668480.154
+    "m": 1759570591695,
+    "al": "1~20190501//18484071.mp3"
   },
   {
     "c": ["Em Am\nH Em\nAm\nD G-H Em-H\nEm", "C Fm Hm\nC Fm\nHm\nD# G# C-Fm-C\nFm", "Gm Cm\nD Gm\nCm\nF H D-Gm-D\nGm"],
@@ -8098,7 +8219,7 @@
       "Я это прочёл для примера,\nКак могучий Самсон без волос,\nВ чьём сердце нетвёрдая вера,\nВ чьём сердце не властен Христос.\nВ чьём сердце не властен Христос."
     ],
     "w": 1551245648264,
-    "m": 1551245648264.5654
+    "m": 1759570591695
   },
   {
     "c": ["F C Dm\nAm A#\nC F-C", "F C Dm Am A#\nC F .C"],
@@ -8198,7 +8319,8 @@
     "w": 1551412465160,
     "l": 1,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_97_49.mp3",
-    "m": 1551412465160.5835
+    "m": 1759570591695,
+    "al": "1~20200701//164457_97_49.mp3"
   },
   {
     "c": [
@@ -8227,7 +8349,8 @@
     "w": 1551414831100,
     "p": 3,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164515_69_91.mp3",
-    "m": 1743946716297.4094
+    "m": 1759570591695,
+    "al": "1~20200701//164515_69_91.mp3"
   },
   {
     "c": ["Em-C G H7\nAm-G D\nEm-C G H7\nAm-G D", "C\nEm G\nC\nH H7", "Am D\nG C\nAm H7\nEm E7"],
@@ -8301,7 +8424,8 @@
     ],
     "w": 1551415594890,
     "a": "https://holychords.pro/uploads/music/20191025/2019102509181267.mp3",
-    "m": 1745088935317.5676
+    "m": 1759570591695,
+    "al": "1~20191025//09181267.mp3"
   },
   {
     "c": ["D\nG\nD Hm\nEm A", "D D7\nG Gm\nD A Hm\nEm A\nG D", "D F#m\nD D7\nG Cm"],
@@ -8350,7 +8474,7 @@
     ],
     "w": 1551469582068,
     "k": 3,
-    "m": 1551469582068.7292
+    "m": 1759570591695
   },
   {
     "c": ["C Am F G\nC Am\nF G C", "F G\nC Am\nF G C"],
@@ -8386,7 +8510,7 @@
       "И потому узнают все,\nЧто вы Мои ученики,\nЧто между вами любовь."
     ],
     "w": 1551500088684,
-    "m": 1551500088684.8599
+    "m": 1759570591695
   },
   {
     "c": ["G\nD\nA\nD G D"],
@@ -8408,7 +8532,8 @@
     ],
     "w": 1551500365570,
     "a": "https://holychords.pro/uploads/music/20200401/2020040121204464.mp3",
-    "m": 1551500365570.571
+    "m": 1759570591695,
+    "al": "1~20200401//21204464.mp3"
   },
   {
     "c": ["Am Dm\nE7 Am\nF C\nDm E7", "F\nAm\nDm E\nE7 .F..Am"],
@@ -8462,7 +8587,7 @@
       "В Небеса Ты возьмёшь,\nИ с Собой заберёшь,\nЛишь живу этим я,\nИисус - жизнь моя!"
     ],
     "w": 1551500371560,
-    "m": 1551500371560.113
+    "m": 1759570591695
   },
   {
     "c": ["C H/G Am G\nF G C\nC H/G Am G\nF G C", "Am F C\nF Dm E\nC H/G Am G\nF G C"],
@@ -8529,7 +8654,8 @@
     ],
     "w": 1551504440904,
     "a": "https://holychords.pro/uploads/music/20191031/2019103116011743.mp3",
-    "m": 1551504440904.1655
+    "m": 1759570591695,
+    "al": "1~20191031//16011743.mp3"
   },
   {
     "c": ["Dm Gm\nC F\nA# Gm\nAsus A7", "Dm Gm\nC F\nA# Gm\nA7 Dm"],
@@ -8583,7 +8709,8 @@
     ],
     "w": 1551505182620,
     "a": "https://holychords.pro/uploads/music/20201102/20201102111000.mp3",
-    "m": 1551505182620.2808
+    "m": 1759570591695,
+    "al": "1~20201102//111000.mp3"
   },
   {
     "c": ["Em A\nD Hm\nEm F#\nHm A D", "Em A D Hm\nEm F# .Hm-H..Hm", "Hm Em F#\nHm Em F#"],
@@ -8636,7 +8763,8 @@
     ],
     "w": 1551509897024,
     "a": "https://kg-music.club/wp-content/uploads/2018/12/%D0%9C%D0%B8%D0%BB%D0%BE%D1%81%D1%82%D0%B8-%D0%A2%D0%B2%D0%BE%D0%B5%D0%B9-%D0%BF%D0%BE%D0%BB%D0%BD%D0%B0-%D0%B2%D1%81%D1%8F-%D0%B7%D0%B5%D0%BC%D0%BB%D1%8F__%D0%9C%D0%B0%D1%80%D0%B8%D1%8F-%D0%9B%D0%B5%D0%B4%D1%8F%D0%B5%D0%B2%D0%B0-kg-music.club_.mp3",
-    "m": 1551509897024.877
+    "m": 1759570591695,
+    "al": "5~2018/12/%D0%9C%D0%B8%D0%BB%D0%BE%D1%81%D1%82%D0%B8-%D0%A2%D0%B2%D0%BE%D0%B5%D0%B9-%D0%BF%D0%BE%D0%BB%D0%BD%D0%B0-%D0%B2%D1%81%D1%8F-%D0%B7%D0%B5%D0%BC%D0%BB%D1%8F__%D0%9C%D0%B0%D1%80%D0%B8%D1%8F-%D0%9B%D0%B5%D0%B4%D1%8F%D0%B5%D0%B2%D0%B0-kg-music.club_.mp3"
   },
   {
     "c": ["C\nAm\nF G", "C4 C A4 Am\nF2 F G4 G\nC4 C A4 Am\nF2 F G4 G"],
@@ -8666,7 +8794,8 @@
     ],
     "w": 1551510718348,
     "a": "https://holychords.pro/uploads/music/20210814/20210814173455.mp3",
-    "m": 1551510718348.3008
+    "m": 1759570591695,
+    "al": "1~20210814//173455.mp3"
   },
   {
     "c": ["Em Hm\nEm Hm\nC G\nAm D", "G\nEm\nC Am D\nG\nEm Em/D\nC D G"],
@@ -8707,7 +8836,8 @@
     ],
     "w": 1551511990084,
     "a": "https://holychords.pro/uploads/music/20201120/20201120085250.mp3",
-    "m": 1551511990084.5266
+    "m": 1759570591695,
+    "al": "1~20201120//085250.mp3"
   },
   {
     "c": ["D Em-A D-D7\nG A D-D7", "G A/G\nF#m Hm\nEm A D.-D7"],
@@ -8761,7 +8891,7 @@
       "Хочет встретиться с тобой,\nЧтобы дать душе покой,\nДвери сердца для Иисуса ты открой!"
     ],
     "w": 1551512458776,
-    "m": 1551512458776.0874
+    "m": 1759570591695
   },
   {
     "c": [".G..D...C D", "C G\nC G\nC G D Em\nC D G"],
@@ -8790,7 +8920,7 @@
       "Слава! Царю царей!"
     ],
     "w": 1551513250144,
-    "m": 1551513250144.4602
+    "m": 1759570591695
   },
   {
     "c": [
@@ -8866,8 +8996,9 @@
     ],
     "w": 1551513855388,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164548_52_93.mp3",
-    "m": 1756224089004.9985,
-    "b": 0
+    "m": 1759570591695,
+    "b": 0,
+    "al": "1~20200701//164548_52_93.mp3"
   },
   {
     "c": ["Am Dm E7 Am\nDm G C E7", ".Am..F...Dm .E7..C...Am\nH7 E7 Am"],
@@ -8949,7 +9080,8 @@
     ],
     "w": 1551588442630,
     "a": "https://holychords.pro/uploads/music/20230121/20230121154455.mp3",
-    "m": 1551588442630.3467
+    "m": 1759570591695,
+    "al": "1~20230121//154455.mp3"
   },
   {
     "c": ["D Em\nA D\nEm\nA D", "G A\nD Hm\nEm A\nD ..A .D7..D"],
@@ -8983,7 +9115,8 @@
     ],
     "w": 1551634187548,
     "a": "https://holychords.pro/uploads/music/20200903/20200903225024.mp3",
-    "m": 1551634187548.161
+    "m": 1759570591696,
+    "al": "1~20200903//225024.mp3"
   },
   {
     "c": [
@@ -9043,7 +9176,8 @@
     ],
     "w": 1551636377420,
     "a": "https://holychords.pro/uploads/music/20230120/20230120142322.mp3",
-    "m": 1752411497497.3806
+    "m": 1759570591696,
+    "al": "1~20230120//142322.mp3"
   },
   {
     "c": [
@@ -9151,7 +9285,8 @@
     "w": 1551767355220,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164138_77.mp3",
     "k": 2,
-    "m": 1747572227062.1353
+    "m": 1759570591696,
+    "al": "1~20200701//164138_77.mp3"
   },
   {
     "c": ["D A\nHm7 G\nD-A Hm7-G-A", "D A Hm-G-A"],
@@ -9239,7 +9374,8 @@
     ],
     "w": 1551768058548,
     "a": "https://holychords.pro/uploads/music/20190603/2019060307105988.mp3",
-    "m": 1551768058548.7524
+    "m": 1759570591696,
+    "al": "1~20190603//07105988.mp3"
   },
   {
     "c": ["G\nC\nG/A# Em\nC", "C-Am7\nEm-G\nC D\nEm", "C G D Em\nC G D Em\nC G D Em\nC G D Em", "C G D Em\nC G D"],
@@ -9275,7 +9411,8 @@
     ],
     "w": 1551768849160,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_67_23.mp3\n",
-    "m": 1551768849160.1248
+    "m": 1759570591696,
+    "al": "1~20200701//164457_67_23.mp3"
   },
   {
     "c": ["Em\n\nC D Em\nEm\n\nC D Em", "Am7\n\nHm7\nEm\nAm7\n\nC D Em", "C G D\nEm\nC G\nAm7 Hm7 Em"],
@@ -9297,7 +9434,8 @@
     ],
     "w": 1551770021776,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164515_38_39.mp3\n",
-    "m": 1756990834687.8516
+    "m": 1759570591696,
+    "al": "1~20200701//164515_38_39.mp3"
   },
   {
     "c": ["Am Dm\nE7 Am\nAm Dm\nF Am/E E7 Am", "F G C-Am\nDm E7 Am-Am/G\nF G C-Am\nDm E7 Am"],
@@ -9364,7 +9502,8 @@
     ],
     "w": 1551776884070,
     "a": "https://holychords.pro/uploads/music/20201030/20201030022412.mp3",
-    "m": 1551776884070.9119
+    "m": 1759570591696,
+    "al": "1~20201030//022412.mp3"
   },
   {
     "c": ["Am\nDm\nE7\nAm", "Dm\nAm\nE7\nAm", "Am Dm E7 Am"],
@@ -9392,7 +9531,8 @@
     ],
     "w": 1551858355800,
     "a": "https://holychords.pro/uploads/music/20190704/2019070410370392.mp3",
-    "m": 1744553525250.9841
+    "m": 1759570591696,
+    "al": "1~20190704//10370392.mp3"
   },
   {
     "c": ["Em Am\nH7 Em\nEm Am\nH7 Em-E7", "Am Em\nH7 Em-E7\nAm Em\nH7 Em"],
@@ -9473,7 +9613,8 @@
     ],
     "w": 1553261639292,
     "a": "https://hvalite.com/uploads/audio/examples/097f7b434c9288f5af0f099dd7b501c5.mp3",
-    "m": 1553261639292.3801
+    "m": 1759570591696,
+    "al": "6~097f7b434c9288f5af0f099dd7b501c5.mp3"
   },
   {
     "c": ["Em C G D-Em\nC G D-Em\nC G\nD C-D", "G-D-Em C\nG D Em C\nG-D-Em C\nG D Em C\nG D Em C"],
@@ -9553,7 +9694,8 @@
     ],
     "w": 1553264185290,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_75_18.mp3",
-    "m": 1553264185290.757
+    "m": 1759570591696,
+    "al": "1~20200701//164457_75_18.mp3"
   },
   {
     "c": ["A E\nF#m D\nA E\nF#m D", "A-E\nF#m-D\nA-E\nF#m-D", "F#m E D\nF#m E D..A"],
@@ -9609,7 +9751,8 @@
     "w": 1553363378800,
     "l": 1,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164549_27_16.mp3",
-    "m": 1756990941742.904
+    "m": 1759570591696,
+    "al": "1~20200701//164549_27_16.mp3"
   },
   {
     "n": "Кто моря все горстью исчерпал?",
@@ -9698,7 +9841,8 @@
       { "w": 7, "a": 1 }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164536_1_18.mp3\n",
-    "m": 1746365436877.737
+    "m": 1759570591696,
+    "al": "1~20200701//164536_1_18.mp3"
   },
   {
     "n": "Это Бог наш",
@@ -9778,7 +9922,8 @@
       { "w": 9, "s": "final", "c": 5 }
     ],
     "a": "https://holychords.pro/uploads/music/20191002/2019100211040745.mp3",
-    "m": 1756268860855.784
+    "m": 1759570591696,
+    "al": "1~20191002//11040745.mp3"
   },
   {
     "n": "Ему имя Чудный",
@@ -9875,7 +10020,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20190601/2019060111585883.mp3",
-    "m": 1605192922220.5925
+    "m": 1759570591696,
+    "al": "1~20190601//11585883.mp3"
   },
   {
     "n": "Как глубока любовь Отца",
@@ -9939,7 +10085,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20191002/2019100211252617.mp3",
-    "m": 1605193643340.8928
+    "m": 1759570591696,
+    "al": "1~20191002//11252617.mp3"
   },
   {
     "n": "День настанет, когда я увижу Тебя",
@@ -9970,7 +10117,8 @@
     "a": "https://holychords.pro/uploads/music/20200701/20200701164438_60_21.mp3",
     "bpm": 62,
     "s": 3,
-    "m": 1605353683636.7153
+    "m": 1759570591696,
+    "al": "1~20200701//164438_60_21.mp3"
   },
   {
     "n": "Бог з нами",
@@ -10056,7 +10204,8 @@
     ],
     "l": 1,
     "a": "https://holychords.pro/uploads/music/20200613/2020061323300060.mp3",
-    "m": 1605861806468.069
+    "m": 1759570591696,
+    "al": "1~20200613//23300060.mp3"
   },
   {
     "n": "Благословений потоки",
@@ -10083,7 +10232,8 @@
       { "a": 1, "w": 9 }
     ],
     "a": "https://holychords.pro/uploads/music/20191028/2019102820464363.mp3",
-    "m": 1605954623830.0156
+    "m": 1759570591696,
+    "al": "1~20191028//20464363.mp3"
   },
   {
     "n": "Через внешние дворы",
@@ -10112,7 +10262,8 @@
       { "a": 1, "r": 2, "w": 3 }
     ],
     "a": "https://holychords.pro/uploads/music/20210515/20210515223125.mp3\n",
-    "m": 1606394994976.9795
+    "m": 1759570591696,
+    "al": "1~20210515//223125.mp3"
   },
   {
     "n": "В минуту жизни трудную",
@@ -10166,7 +10317,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20190820/2019082022545563.mp3",
-    "m": 1606970071612.4204
+    "m": 1759570591696,
+    "al": "1~20190820//22545563.mp3"
   },
   {
     "n": "Последние дни",
@@ -10225,8 +10377,9 @@
       { "t": 3, "c": 2, "s": "bridge", "m": 1, "p": [[-1, 6], [0, 5, 8, 12], [0]], "w": 4 },
       { "a": 1, "r": 2, "w": 5 }
     ],
-    "m": 1744970978537.4424,
-    "a": "https://cdn.mp3xa.me/IYxkdvlY2cNWt6ELIBCToQ/1744662151/L29ubGluZS9tcDMvMjAyMC8wMi_QndCe0K3QnCAtINCf0L7RgdC70LXQtNC90LjQtSDQlNC90LgubXAz"
+    "m": 1759570591696,
+    "a": "https://cdn.mp3xa.me/IYxkdvlY2cNWt6ELIBCToQ/1744662151/L29ubGluZS9tcDMvMjAyMC8wMi_QndCe0K3QnCAtINCf0L7RgdC70LXQtNC90LjQtSDQlNC90LgubXAz",
+    "al": "https://cdn.mp3xa.me/IYxkdvlY2cNWt6ELIBCToQ/1744662151/L29ubGluZS9tcDMvMjAyMC8wMi_QndCe0K3QnCAtINCf0L7RgdC70LXQtNC90LjQtSDQlNC90LgubXAz"
   },
   {
     "n": "Ты нашёл меня",
@@ -10292,7 +10445,7 @@
         "w": 4
       }
     ],
-    "m": 1607009057880.3945
+    "m": 1759570591696
   },
   {
     "n": "Бог мир полюбил, и Он любит тебя",
@@ -10324,7 +10477,7 @@
       { "t": 3, "c": 0, "s": " one", "p": [[2, 10], [2, 12], [8], [2, 7, 11]], "w": 4 },
       { "a": 1, "w": 5, "r": 2 }
     ],
-    "m": 1607322738820.4734
+    "m": 1759570591696
   },
   {
     "n": "Неужели уйдёшь",
@@ -10405,7 +10558,8 @@
     ],
     "b": 0,
     "a": "https://holychords.pro/uploads/music/20220308/20220308195637.mp3",
-    "m": 1607345768420.1575
+    "m": 1759570591696,
+    "al": "1~20220308//195637.mp3"
   },
   {
     "n": "Под рукой Всевышнего",
@@ -10493,7 +10647,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20201118/20201118205311.mp3\n",
-    "m": 1607346106376.2397
+    "m": 1759570591696,
+    "al": "1~20201118//205311.mp3"
   },
   {
     "n": "Что ты медлишь на грешном пути",
@@ -10560,7 +10715,8 @@
       { "a": 1, "w": 5 }
     ],
     "a": "https://holychords.pro/uploads/music/20211007/20211007113908.mp3",
-    "m": 1607363965696.757
+    "m": 1759570591696,
+    "al": "1~20211007//113908.mp3"
   },
   {
     "n": "Верность Твоя велика, о мой Боже",
@@ -10629,9 +10785,10 @@
       { "a": 2, "w": 6 }
     ],
     "a": "https://holychords.pro/uploads/music/20200224/2020022412113063.mp3",
-    "m": 1758822596731.713,
+    "m": 1759570591697,
     "bpm": 80,
-    "s": 3
+    "s": 3,
+    "al": "1~20200224//12113063.mp3"
   },
   {
     "n": "Как овечку",
@@ -10734,7 +10891,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20200629/2020062910541142.mp3",
-    "m": 1607434729620.4695
+    "m": 1759570591697,
+    "al": "1~20200629//10541142.mp3"
   },
   {
     "n": "Вот собрались мы опять",
@@ -10815,7 +10973,8 @@
     ],
     "a": "https://holychords.pro/uploads/music/20200628/2020062800301345.mp3",
     "s": 3,
-    "m": 1754495791437.683
+    "m": 1759570591697,
+    "al": "1~20200628//00301345.mp3"
   },
   {
     "n": "Дух Святой, Дух благодати",
@@ -10879,7 +11038,7 @@
         "w": 3
       }
     ],
-    "m": 1608480467404.3665
+    "m": 1759570591697
   },
   {
     "n": "Всё, что видит, всё, что слышит",
@@ -10968,7 +11127,7 @@
         "r": 2
       }
     ],
-    "m": 1608497845424.014
+    "m": 1759570591697
   },
   {
     "n": "В Христе одном надежда есть",
@@ -11051,7 +11210,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20220912/20220912130346.mp3",
-    "m": 1608498187790.0847
+    "m": 1759570591697,
+    "al": "1~20220912//130346.mp3"
   },
   {
     "n": "В двери закрытые поздней порой",
@@ -11132,7 +11292,8 @@
       { "a": 1, "w": 7 }
     ],
     "a": "https://holychords.pro/uploads/music/20230217/20230217142101.mp3",
-    "m": 1608498788716.278
+    "m": 1759570591697,
+    "al": "1~20230217//142101.mp3"
   },
   {
     "n": "Только Ты один так коснулся сердца моего",
@@ -11198,7 +11359,7 @@
       },
       { "a": 1, "w": 5 }
     ],
-    "m": 1608499061068.2073
+    "m": 1759570591697
   },
   {
     "n": "Верую, Господи, истинно верую",
@@ -11227,7 +11388,8 @@
       { "a": 2, "w": 9, "inh": { "r": { "0": 2 } } }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_21_48.mp3",
-    "m": 1757355558347.2673
+    "m": 1759570591697,
+    "al": "1~20200701//164457_21_48.mp3"
   },
   {
     "n": "Бог всего творенья",
@@ -11302,7 +11464,7 @@
         "r": 2
       }
     ],
-    "m": 1609137947936.9036
+    "m": 1759570591697
   },
   {
     "n": "Я хочу за Тобою идти",
@@ -11385,7 +11547,8 @@
       { "a": 2, "w": 8, "r": { "2-3": 2 } }
     ],
     "a": "https://holychords.pro/uploads/music/20200623/2020062312290378.mp3",
-    "m": 1751204972444.4392
+    "m": 1759570591697,
+    "al": "1~20200623//12290378.mp3"
   },
   {
     "n": "Иисус, о Тебе я пою",
@@ -11455,7 +11618,8 @@
       { "a": 1, "w": 5 }
     ],
     "a": "https://holychords.pro/uploads/music/20201228/20201228190906.mp3\nhttps://holychords.pro/uploads/music/20210222/20210222183642.mp3",
-    "m": 1752410392962.332
+    "m": 1759570591697,
+    "al": ["1~20201228//190906.mp3", "1~20210222//183642.mp3"]
   },
   {
     "n": "Мой Господь надо мной распростёр небеса",
@@ -11522,7 +11686,8 @@
       { "a": 1, "w": 5 }
     ],
     "a": "https://holychords.pro/uploads/music/20220328/20220328110938.mp3",
-    "m": 1609213795616.944
+    "m": 1759570591697,
+    "al": "1~20220328//110938.mp3"
   },
   {
     "n": "Дети света",
@@ -11552,7 +11717,8 @@
       { "a": 4, "w": 10 }
     ],
     "a": "https://holychords.pro/uploads/music/20190224/2019022414031193.mp3",
-    "m": 1609238347324.5483
+    "m": 1759570591697,
+    "al": "1~20190224//14031193.mp3"
   },
   {
     "n": "Ты избрал нас, чтоб спасти",
@@ -11609,7 +11775,8 @@
       { "t": 10, "c": 5, "p": [[4], [4]], "s": "final", "w": 13 }
     ],
     "a": "https://holychords.pro/uploads/music/20190610/2019061012062846.mp3",
-    "m": 1740230564730.866
+    "m": 1759570591697,
+    "al": "1~20190610//12062846.mp3"
   },
   {
     "n": "Славу оставив неба",
@@ -11646,7 +11813,7 @@
       { "a": 2, "w": 8 }
     ],
     "p": 7,
-    "m": 1609796817370.733
+    "m": 1759570591697
   },
   {
     "n": "Снова весна",
@@ -11716,7 +11883,8 @@
     ],
     "p": 7,
     "a": "https://holychords.pro/uploads/music/20210213/20210213163114.mp3\nhttps://holychords.pro/uploads/music/20200217/2020021708594790.mp3",
-    "m": 1609831714650.4253
+    "m": 1759570591697,
+    "al": ["1~20210213//163114.mp3", "1~20200217//08594790.mp3"]
   },
   {
     "n": "Край чудесный нас ждёт там на небе",
@@ -11784,7 +11952,7 @@
       },
       { "a": 1, "w": 7 }
     ],
-    "m": 1609832553308.8784
+    "m": 1759570591697
   },
   {
     "n": "Шалом, мои друзья",
@@ -11810,7 +11978,7 @@
       { "t": 5, "c": 0, "p": [[1, 9], [2, 7], [9], [2, 7]], "s": " one", "w": 7 },
       { "a": 6, "w": 8 }
     ],
-    "m": 1609852760520.7393
+    "m": 1759570591697
   },
   {
     "n": "Спасенье моё, надежда моя",
@@ -11859,7 +12027,7 @@
       { "a": 2, "w": 4, "r": 2 },
       { "t": 2, "c": 3, "p": [[3, 8]], "s": "+", "m": 1, "w": 5 }
     ],
-    "m": 1609868367440.3962
+    "m": 1759570591697
   },
   {
     "n": "Не оставлю Я вас не забуду",
@@ -11958,7 +12126,7 @@
         "r": 0
       }
     ],
-    "m": 1757859868043.0278,
+    "m": 1759570591697,
     "b": 0
   },
   {
@@ -12048,7 +12216,7 @@
         "w": 5
       }
     ],
-    "m": 1609924392924.2556
+    "m": 1759570591697
   },
   {
     "n": "Я в бессмертье иду",
@@ -12130,7 +12298,7 @@
         "r": { "2-3": 2 }
       }
     ],
-    "m": 1609924873810.5598
+    "m": 1759570591697
   },
   {
     "n": "Радости моей предела нет",
@@ -12197,7 +12365,8 @@
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164515_45_47.mp3",
     "bpm": 110,
-    "m": 1609953328330.5442
+    "m": 1759570591697,
+    "al": "1~20200701//164515_45_47.mp3"
   },
   {
     "n": "Церковь - тело Христово",
@@ -12306,7 +12475,8 @@
     ],
     "a": "https://holychords.pro/uploads/music/20191002/2019100211370230.mp3\n",
     "k": 3,
-    "m": 1609955214660.387
+    "m": 1759570591697,
+    "al": "1~20191002//11370230.mp3"
   },
   {
     "n": "Бой за любовь",
@@ -12373,7 +12543,8 @@
       { "a": 2, "w": 5 }
     ],
     "a": "https://holychords.pro/uploads/music/20200424/2020042423185379.mp3",
-    "m": 1610016278144.099
+    "m": 1759570591697,
+    "al": "1~20200424//23185379.mp3"
   },
   {
     "n": "Милость Твоя вознеслась над судом",
@@ -12465,7 +12636,8 @@
       { "a": 7, "w": 11 }
     ],
     "a": "https://holychords.pro/uploads/music/20190915/2019091517372032.mp3",
-    "m": 1735456643473
+    "m": 1759570591697,
+    "al": "1~20190915//17372032.mp3"
   },
   {
     "n": "Кто играет струнами дождей?",
@@ -12571,7 +12743,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164438_12.mp3\n",
-    "m": 1610363410236.745
+    "m": 1759570591697,
+    "al": "1~20200701//164438_12.mp3"
   },
   {
     "n": "Семья, семья, семья моя",
@@ -12638,9 +12811,10 @@
       { "a": 1, "w": 5, "r": 2 }
     ],
     "a": "https://holychords.pro/uploads/music/20201121/20201121235633.mp3",
-    "m": 1749904916139.9653,
+    "m": 1759570591697,
     "bpm": 103,
-    "s": 4
+    "s": 4,
+    "al": "1~20201121//235633.mp3"
   },
   {
     "n": "Хорошо, когда вместе в общеньи",
@@ -12708,7 +12882,8 @@
       { "a": 1, "w": 5, "r": { "2-3": 2 } }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164548_62.mp3",
-    "m": 1756647840959.043
+    "m": 1759570591697,
+    "al": "1~20200701//164548_62.mp3"
   },
   {
     "n": "На далёком холме, средь деревьев и скал",
@@ -12784,7 +12959,8 @@
       { "a": 2, "w": 6, "r": 2 }
     ],
     "a": "https://holychords.pro/uploads/music/20191109/2019110901031919.mp3",
-    "m": 1755439376477.6484
+    "m": 1759570591697,
+    "al": "1~20191109//01031919.mp3"
   },
   {
     "n": "Ангелы в небе Господа славят",
@@ -12867,7 +13043,8 @@
       { "w": 7, "a": 1 }
     ],
     "a": "https://holychords.pro/uploads/music/20190404/2019040418451823.mp3",
-    "m": 1610443752890.193
+    "m": 1759570591697,
+    "al": "1~20190404//18451823.mp3"
   },
   {
     "n": "Слушайте повесть любви в простоте",
@@ -12954,7 +13131,8 @@
       { "a": 1, "w": 7, "r": 2 }
     ],
     "a": "https://holychords.pro/uploads/music/20191015/2019101516443828.mp3",
-    "m": 1735612407344
+    "m": 1759570591697,
+    "al": "1~20191015//16443828.mp3"
   },
   {
     "n": "Мужайся душа",
@@ -13022,7 +13200,8 @@
       { "a": 2, "w": 7, "r": 2 }
     ],
     "a": "https://holychords.pro/uploads/music/20200326/2020032601085797.mp3\n",
-    "m": 1610553816544.2246
+    "m": 1759570591697,
+    "al": "1~20200326//01085797.mp3"
   },
   {
     "n": "О, молитва",
@@ -13174,7 +13353,8 @@
     ],
     "k": 4,
     "a": "https://holychords.pro/uploads/music/20200418/202004182056383.mp3",
-    "m": 1610562738056.9485
+    "m": 1759570591697,
+    "al": "1~20200418//2056383.mp3"
   },
   {
     "n": "Океан Божьей любви",
@@ -13295,7 +13475,8 @@
     ],
     "a": "https://holychords.pro/uploads/music/20211130/20211130223420.mp3",
     "p": 10,
-    "m": 1610715483150.05
+    "m": 1759570591697,
+    "al": "1~20211130//223420.mp3"
   },
   {
     "n": "Как часто мы блуждаем",
@@ -13313,7 +13494,8 @@
       { "w": 3, "a": 1 }
     ],
     "a": "https://fonki.pro/plugin/sounds/uploads/2016091511513644.mp3",
-    "m": 1610806453330.9436
+    "m": 1759570591697,
+    "al": "4~2016091511513644.mp3"
   },
   {
     "n": "Ближе, Господь, к Тебе",
@@ -13377,7 +13559,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20211217/20211217170239.mp3",
-    "m": 1748725082901.73
+    "m": 1759570591697,
+    "al": "1~20211217//170239.mp3"
   },
   {
     "n": "Бог есть любовь о какое счастье",
@@ -13421,7 +13604,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20191102/2019110210103581.mp3",
-    "m": 1610807848790.704
+    "m": 1759570591697,
+    "al": "1~20191102//10103581.mp3"
   },
   {
     "n": "Всё Иисусу отдаю я",
@@ -13517,7 +13701,8 @@
       { "a": 2, "w": 11 }
     ],
     "a": "https://holychords.pro/uploads/music/20200623/2020062312201123.mp3\nhttps://holychords.pro/uploads/music/20200701/20200701164515_23_71.mp3",
-    "m": 1610808338304.302
+    "m": 1759570591697,
+    "al": ["1~20200623//12201123.mp3", "1~20200701//164515_23_71.mp3"]
   },
   {
     "n": "Как прекрасно всё то, что Твоё",
@@ -13544,7 +13729,7 @@
       { "t": 6, "c": 1, "p": [[3], [3], [3], [4, 13]], "s": "++>", "w": 7 },
       { "a": 2, "w": 8 }
     ],
-    "m": 1754231888733.5986
+    "m": 1759570591697
   },
   {
     "n": "Мы бодрей на жизненном пути пойдём",
@@ -13577,7 +13762,7 @@
       { "t": 3, "c": 0, "p": [[0], [0, 12], [0], [0, 6, 12]], "s": " one", "w": 4 },
       { "a": 1, "w": 5, "r": 2 }
     ],
-    "m": 1754829466578.0886
+    "m": 1759570591697
   },
   {
     "n": "Так уж бывает летней порой",
@@ -13613,7 +13798,7 @@
       { "t": 4, "c": 0, "p": [[0, 7], [0, 10], [8], [1, 10]], "s": "one", "w": 6 },
       { "a": 1, "w": 7 }
     ],
-    "m": 1611044441052.5723
+    "m": 1759570591697
   },
   {
     "n": "Хвала Тебе, наш Господь!",
@@ -13650,7 +13835,8 @@
       { "t": 2, "c": 3, "p": [[1, 6], [1, 6], [1]], "s": "final", "m": 1, "w": 7, "r": { "0-1": 2 } }
     ],
     "a": "https://holychords.pro/uploads/music/20191024/2019102414504953.mp3",
-    "m": 1611045090092.4482
+    "m": 1759570591697,
+    "al": "1~20191024//14504953.mp3"
   },
   {
     "n": "Христос мой, как о Тебе молчать",
@@ -13733,7 +13919,7 @@
       },
       { "w": 14, "a": 13, "r": 2 }
     ],
-    "m": 1755507636778.213
+    "m": 1759570591697
   },
   {
     "n": "Однажды Я поклялся хранить тебя",
@@ -13800,7 +13986,7 @@
       },
       { "a": 1, "w": 5 }
     ],
-    "m": 1755626872233.8147
+    "m": 1759570591697
   },
   {
     "n": "Что вину мне может смыть?",
@@ -13868,7 +14054,7 @@
       },
       { "a": 1, "w": 7 }
     ],
-    "m": 1611054365860.265
+    "m": 1759570591697
   },
   {
     "n": "Всё от Него и Им сотворено",
@@ -13940,7 +14126,8 @@
       { "a": 1, "w": 7 }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164415_89.mp3",
-    "m": 1611055868000.7288
+    "m": 1759570591697,
+    "al": "1~20200701//164415_89.mp3"
   },
   {
     "n": "Не в словах молитвенных речей",
@@ -14042,7 +14229,7 @@
         "w": 6
       }
     ],
-    "m": 1611056422244.7522
+    "m": 1759570591697
   },
   {
     "n": "Полный благости",
@@ -14092,7 +14279,7 @@
         "w": 2
       }
     ],
-    "m": 1611056911816.9954
+    "m": 1759570591697
   },
   {
     "n": "Тихая ночь, дивная ночь",
@@ -14148,7 +14335,7 @@
         "w": 2
       }
     ],
-    "m": 1611057144276.9688
+    "m": 1759570591697
   },
   {
     "n": "Построил на крови Христа",
@@ -14231,7 +14418,7 @@
       },
       { "a": 1, "w": 7 }
     ],
-    "m": 1611062926790.735
+    "m": 1759570591697
   },
   {
     "n": "Церковь Божья, поднимайся",
@@ -14266,7 +14453,7 @@
       { "t": 4, "c": 0, "p": [[0, 10], [0, 9], [8], [0, 4, 9]], "s": "one", "w": 6 },
       { "a": 1, "w": 7 }
     ],
-    "m": 1611154354990.5015
+    "m": 1759570591697
   },
   {
     "n": "Струн души рука Христа касается",
@@ -14347,7 +14534,7 @@
         "r": { "2-3": 2 }
       }
     ],
-    "m": 1756618817932.1892
+    "m": 1759570591697
   },
   {
     "n": "Ты прав",
@@ -14466,7 +14653,7 @@
       { "a": 3, "r": 2, "w": 12 },
       { "a": 9, "w": 13 }
     ],
-    "m": 1611254710480.8271
+    "m": 1759570591697
   },
   {
     "n": "В Твоём святом присутствии",
@@ -14483,7 +14670,7 @@
       { "t": 2, "c": 0, "p": [[0, 7], [0, 8], [0, 8], [5]], "s": "one", "m": 0, "w": 2, "r": 2 },
       { "a": 1, "w": 3 }
     ],
-    "m": 1611330965588.2727
+    "m": 1759570591697
   },
   {
     "n": "Нужно всем состраданье",
@@ -14526,7 +14713,7 @@
       },
       { "w": 5, "a": 1, "r": 2 }
     ],
-    "m": 1611337899204.133
+    "m": 1759570591697
   },
   {
     "n": "Вся земля так довго на цей день чекала",
@@ -14604,7 +14791,7 @@
       }
     ],
     "l": 1,
-    "m": 1611592127840.4487
+    "m": 1759570591697
   },
   {
     "n": "Ой, у Віфлеємі",
@@ -14640,7 +14827,7 @@
       { "t": 1, "c": 1, "p": [[0, 6, 9, 10, 12, 14, 17]], "s": "+", "w": 15 }
     ],
     "l": 1,
-    "m": 1750243085118.9766,
+    "m": 1759570591697,
     "k": 0
   },
   {
@@ -14689,8 +14876,9 @@
       }
     ],
     "p": 2,
-    "m": 1750215553889.8003,
-    "a": "https://holychords.pro/uploads/music/20211221/20211221105138.mp3"
+    "m": 1759570591697,
+    "a": "https://holychords.pro/uploads/music/20211221/20211221105138.mp3",
+    "al": "1~20211221//105138.mp3"
   },
   {
     "n": "Знаешь, там за рекой город",
@@ -14771,7 +14959,8 @@
     ],
     "a": "https://files.realrocks.ru/lofi/491494/491494.mp3?ts=1639474740754\n",
     "p": 10,
-    "m": 1759343637990.9824
+    "m": 1759570591697,
+    "al": "https://files.realrocks.ru/lofi/491494/491494.mp3?ts=1639474740754"
   },
   {
     "n": "На далёком холме старый крест виден мне",
@@ -14794,8 +14983,9 @@
       { "t": 4, "c": 0, "p": [[3], [4], [4, 13], [11], [2, 12]], "s": "one", "w": 6 },
       { "a": 1, "w": 7 }
     ],
-    "m": 1750215432098.319,
-    "a": "https://holychords.pro/storage/music/wLMU52tEkPneqLhT5uRm0XreBTRTyCa3tFec4OB4.mp3"
+    "m": 1759570591697,
+    "a": "https://holychords.pro/storage/music/wLMU52tEkPneqLhT5uRm0XreBTRTyCa3tFec4OB4.mp3",
+    "al": "2~wLMU52tEkPneqLhT5uRm0XreBTRTyCa3tFec4OB4.mp3"
   },
   {
     "n": "Скоро город изменится",
@@ -14847,7 +15037,7 @@
       { "a": 1, "w": 19 },
       { "a": 2, "w": 20 }
     ],
-    "m": 1611865317630.281
+    "m": 1759570591697
   },
   {
     "n": "Скоро Он придёт",
@@ -14950,8 +15140,9 @@
       }
     ],
     "bpm": 66,
-    "m": 1755627242600.1824,
-    "a": "https://holychords.pro/uploads/music/20200701/20200701164140_58.mp3"
+    "m": 1759570591697,
+    "a": "https://holychords.pro/uploads/music/20200701/20200701164140_58.mp3",
+    "al": "1~20200701//164140_58.mp3"
   },
   {
     "n": "Блаженства",
@@ -15002,7 +15193,8 @@
       { "t": 3, "c": 3, "p": [[1], [2, 14], [0, 7]], "s": "one", "m": 1, "w": 6 }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164515_5_18.mp3",
-    "m": 1744950801618.273
+    "m": 1759570591698,
+    "al": "1~20200701//164515_5_18.mp3"
   },
   {
     "n": "Баллада о трёх сыновьях",
@@ -15154,7 +15346,7 @@
         "w": 10
       }
     ],
-    "m": 1611991044916.6877
+    "m": 1759570591698
   },
   {
     "n": "Спасибо, Бог, за лунный свет",
@@ -15218,7 +15410,7 @@
       { "w": 17, "a": 10 },
       { "a": 11, "w": 18 }
     ],
-    "m": 1611992311504.626
+    "m": 1759570591698
   },
   {
     "n": "Отче наш, сущий на небесах",
@@ -15258,7 +15450,7 @@
       { "a": 8, "w": 14 },
       { "t": 4, "c": 1, "p": [[-1], [-1], [-1], [-1]], "s": "final", "w": 15 }
     ],
-    "m": 1611993599984.5598
+    "m": 1759570591698
   },
   {
     "n": "В комнату войдя я дверь затворю",
@@ -15344,8 +15536,9 @@
       },
       { "a": 3, "w": 7 }
     ],
-    "m": 1742747534711.2805,
-    "a": "https://holychords.pro/uploads/music/20200701/20200701164457_53_38.mp3"
+    "m": 1759570591698,
+    "a": "https://holychords.pro/uploads/music/20200701/20200701164457_53_38.mp3",
+    "al": "1~20200701//164457_53_38.mp3"
   },
   {
     "n": "Кто же я, что Ты позволил",
@@ -15410,7 +15603,7 @@
       },
       { "a": 1, "w": 5 }
     ],
-    "m": 1756182912531.813
+    "m": 1759570591698
   },
   {
     "n": "В мире много блудных сынов",
@@ -15460,7 +15653,8 @@
       { "a": 2, "w": 8 }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_80_62.mp3",
-    "m": 1612008514440.6743
+    "m": 1759570591698,
+    "al": "1~20200701//164457_80_62.mp3"
   },
   {
     "n": "В городе тихая осень",
@@ -15527,7 +15721,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_64_82.mp3",
-    "m": 1612012144884.16
+    "m": 1759570591698,
+    "al": "1~20200701//164457_64_82.mp3"
   },
   {
     "n": "Мимо текла, текла река",
@@ -15553,7 +15748,7 @@
       { "t": 6, "c": 0, "p": [[4], [5], [4], [6, 14]], "s": "one", "w": 6 },
       { "t": 7, "c": 1, "p": [[6], [5], [4], [4, 10]], "s": "two", "w": 7, "r": { ".": 2, "~3:2": 1 } }
     ],
-    "m": 1612013474224.2202
+    "m": 1759570591698
   },
   {
     "n": "В часы тревог, унынья и сомненья",
@@ -15633,7 +15828,7 @@
       },
       { "a": 1, "w": 7, "r": 2 }
     ],
-    "m": 1755590002423.4055
+    "m": 1759570591698
   },
   {
     "n": "Бог мой, храни меня!",
@@ -15734,7 +15929,7 @@
         "r": 2
       }
     ],
-    "m": 1746171083210.821
+    "m": 1759570591698
   },
   {
     "n": "Ты - вечное сиянье небесного Отца",
@@ -15776,10 +15971,11 @@
       { "a": 7, "w": 11 }
     ],
     "p": 3,
-    "m": 1758463713263.1228,
+    "m": 1759570591698,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164515_89_72.mp3",
     "bpm": 92,
-    "s": 4
+    "s": 4,
+    "al": "1~20200701//164515_89_72.mp3"
   },
   {
     "n": "Только Ты, Господь, - упование моё",
@@ -15846,7 +16042,8 @@
       { "a": 2, "w": 6, "r": { ".": 4, "~1:3": 1 } }
     ],
     "a": "https://holychords.pro/uploads/music/20191022/2019102218570134.mp3",
-    "m": 1756183485180.5583
+    "m": 1759570591698,
+    "al": "1~20191022//18570134.mp3"
   },
   {
     "n": "Моя молитва да стремится",
@@ -15903,7 +16100,7 @@
       },
       { "a": 1, "w": 3 }
     ],
-    "m": 1612018175630.0222
+    "m": 1759570591698
   },
   {
     "n": "Иисус, души Спаситель",
@@ -15959,7 +16156,7 @@
         "w": 5
       }
     ],
-    "m": 1612018704468.4094
+    "m": 1759570591698
   },
   {
     "n": "Бог с нами в долине удачи",
@@ -15990,7 +16187,7 @@
       { "t": 8, "c": 0, "p": [[3], [2], [1, 9], [2]], "s": "+", "w": 10 },
       { "a": 2, "w": 11 }
     ],
-    "m": 1612019467880.0466
+    "m": 1759570591698
   },
   {
     "n": "Ты - мой Бог Святой",
@@ -16014,7 +16211,8 @@
       { "a": 1, "w": 7 }
     ],
     "a": "https://holychords.pro/uploads/music/20220313/20220313182651.mp3\nhttps://holychords.pro/uploads/music/20200701/20200701164457_91_88.mp3",
-    "m": 1751557240247.6584
+    "m": 1759570591698,
+    "al": ["1~20220313//182651.mp3", "1~20200701//164457_91_88.mp3"]
   },
   {
     "n": "Просыпаюсь на заре",
@@ -16035,7 +16233,8 @@
       { "w": 5, "s": "final", "c": 2, "t": 3, "p": [[-1, 6], [4]] }
     ],
     "a": "https://holychords.pro/uploads/music/20210924/20210924073724.mp3",
-    "m": 1756623175376.6946
+    "m": 1759570591698,
+    "al": "1~20210924//073724.mp3"
   },
   {
     "n": "Сердце чистое создай мне, Боже",
@@ -16114,7 +16313,7 @@
       },
       { "a": 2, "w": 6 }
     ],
-    "m": 1612034596110.691
+    "m": 1759570591698
   },
   {
     "n": "Что тaкое радость, милый друг?",
@@ -16169,7 +16368,8 @@
       { "a": 1, "w": 5 }
     ],
     "a": "https://holychords.pro/uploads/music/20200313/2020031309123125.mp3",
-    "m": 1612035252470.5742
+    "m": 1759570591698,
+    "al": "1~20200313//09123125.mp3"
   },
   {
     "n": "Опускаясь на колени",
@@ -16205,7 +16405,8 @@
       { "a": 8, "w": 11, "r": { "0-3": 2 } }
     ],
     "a": "https://holychords.pro/uploads/music/20220203/20220203012709.mp3",
-    "m": 1612036082836.5408
+    "m": 1759570591698,
+    "al": "1~20220203//012709.mp3"
   },
   {
     "n": "Пришёл конец всему",
@@ -16224,7 +16425,7 @@
       { "a": 6, "w": 8 },
       { "t": 3, "p": [[5], [7], [8, 16], [6], [8], [8, 16]], "s": "final", "c": 1, "w": 9 }
     ],
-    "m": 1612036797604.052
+    "m": 1759570591698
   },
   {
     "n": "Буду Бога хвалить доколе жив",
@@ -16241,7 +16442,8 @@
       { "t": 2, "c": 1, "p": [[3], [4], [3, 11], [3], [2], [3, 12]], "s": "two", "m": 1, "w": 2, "r": 2 }
     ],
     "a": "https://holychords.pro/uploads/music/20200807/20200807220520.mp3",
-    "m": 1612037066980.365
+    "m": 1759570591698,
+    "al": "1~20200807//220520.mp3"
   },
   {
     "n": "Я в мрачной тьме потерян был",
@@ -16314,7 +16516,8 @@
       { "a": 2, "w": 4 }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164515_62_59.mp3",
-    "m": 1612037413812.075
+    "m": 1759570591698,
+    "al": "1~20200701//164515_62_59.mp3"
   },
   {
     "n": "В этом городе Ты - Бог",
@@ -16347,7 +16550,8 @@
       { "w": 6, "t": 4, "s": "final", "c": 3, "p": [[1], [1, 12], [2]] }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_50_24.mp3\nhttps://holychords.pro/uploads/music/20200701/20200701164457_54.mp3",
-    "m": 1612038388930.0466
+    "m": 1759570591698,
+    "al": ["1~20200701//164457_50_24.mp3", "1~20200701//164457_54.mp3"]
   },
   {
     "n": "Будь со мной, Христос",
@@ -16401,7 +16605,7 @@
         "r": { "0": 2, "1-3": 2 }
       }
     ],
-    "m": 1749997055579.0215
+    "m": 1759570591698
   },
   {
     "n": "Хвалите, хвалите Бога небес",
@@ -16443,7 +16647,8 @@
       { "a": 2, "w": 4 }
     ],
     "a": "https://holychords.pro/uploads/music/20201018/20201018194023.mp3",
-    "m": 1612041125870.3418
+    "m": 1759570591698,
+    "al": "1~20201018//194023.mp3"
   },
   {
     "n": "Хто чекає на тебе",
@@ -16522,7 +16727,8 @@
     ],
     "l": 1,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164548_51_65.mp3",
-    "m": 1612196498784.855
+    "m": 1759570591698,
+    "al": "1~20200701//164548_51_65.mp3"
   },
   {
     "n": "Он так любит всех нас",
@@ -16545,8 +16751,9 @@
     ],
     "p": 7,
     "a": "https://holychords.pro/uploads/music/20201119/20201119121848.mp3",
-    "m": 1749397770999.859,
-    "s": 3
+    "m": 1759570591698,
+    "s": 3,
+    "al": "1~20201119//121848.mp3"
   },
   {
     "n": "Я поднимаю очи с надеждой",
@@ -16591,7 +16798,8 @@
       { "w": 5, "a": 1 }
     ],
     "a": "https://holychords.pro/uploads/music/20230217/20230217194603.mp3",
-    "m": 1612611505760.1223
+    "m": 1759570591698,
+    "al": "1~20230217//194603.mp3"
   },
   {
     "n": "Солнца луч",
@@ -16629,7 +16837,8 @@
       { "a": 6, "w": 13 }
     ],
     "a": "https://holychords.pro/uploads/music/20190606/2019060618502347.mp3",
-    "m": 1612793020956.9202
+    "m": 1759570591698,
+    "al": "1~20190606//18502347.mp3"
   },
   {
     "n": "Смерть за любовь",
@@ -16695,7 +16904,8 @@
       { "a": 3, "w": 8 }
     ],
     "a": "https://holychords.pro/uploads/music/20190928/2019092812560731.mp3",
-    "m": 1612878728464.0803
+    "m": 1759570591698,
+    "al": "1~20190928//12560731.mp3"
   },
   {
     "n": "Что за Дитя в хлеву чужом",
@@ -16767,7 +16977,8 @@
       { "a": 2, "w": 6 }
     ],
     "a": "https://holychords.pro/uploads/music/20201206/20201206121338.mp3\nhttps://holychords.pro/uploads/music/20200701/20200701164535_80.mp3",
-    "m": 1612890397508.7107
+    "m": 1759570591698,
+    "al": ["1~20201206//121338.mp3", "1~20200701//164535_80.mp3"]
   },
   {
     "n": "Ныне все верные",
@@ -16878,7 +17089,8 @@
       { "a": 2, "w": 12 }
     ],
     "a": "https://holychords.pro/uploads/music/20200626/20200626121223.mp3",
-    "m": 1612891591880.167
+    "m": 1759570591698,
+    "al": "1~20200626//121223.mp3"
   },
   {
     "n": "Вот Спаситель с небес к нам нисшёл",
@@ -16963,10 +17175,11 @@
         ]
       }
     ],
-    "m": 1758465113009.2053,
+    "m": 1759570591698,
     "bpm": 113,
     "s": 4,
-    "a": "https://holychords.pro/uploads/music/20231031/20231031231604.mp3"
+    "a": "https://holychords.pro/uploads/music/20231031/20231031231604.mp3",
+    "al": "1~20231031//231604.mp3"
   },
   {
     "n": "О, какой беспредельный, великий восторг",
@@ -17064,7 +17277,8 @@
       { "a": 1, "w": 11 }
     ],
     "a": "https://holychords.pro/uploads/music/20200626/20200626121225.mp3",
-    "m": 1745736922408.41
+    "m": 1759570591698,
+    "al": "1~20200626//121225.mp3"
   },
   {
     "n": "Замечательный день",
@@ -17095,7 +17309,7 @@
       { "w": 4, "a": 1 },
       { "w": 5, "a": 2 }
     ],
-    "m": 1613148580120.9949
+    "m": 1759570591698
   },
   {
     "n": "Прекрасен Ты",
@@ -17175,7 +17389,7 @@
       },
       { "a": 2, "w": 8, "r": 2 }
     ],
-    "m": 1613224435644.012
+    "m": 1759570591698
   },
   {
     "n": "Вифлеемская звезда",
@@ -17210,7 +17424,8 @@
       { "a": 2, "w": 4 }
     ],
     "a": "https://fonki.pro/plugin/sounds/uploads/2016072714552747.mp3\n",
-    "m": 1613812316740.369
+    "m": 1759570591698,
+    "al": "4~2016072714552747.mp3"
   },
   {
     "n": "С Иисусом в моей лодке",
@@ -17231,7 +17446,7 @@
       { "t": 0, "p": [[4], [1]], "s": "+", "c": 0, "w": 5 },
       { "t": 3, "p": [[1, 7]], "s": "+", "c": 2, "w": 6 }
     ],
-    "m": 1613898633144.7725
+    "m": 1759570591698
   },
   {
     "n": "Одиночество",
@@ -17248,7 +17463,7 @@
       { "t": 2, "p": [[0], [0], [0], [3], [0], [0], [0], [3]], "s": "one", "c": 0, "w": 2 },
       { "a": 1, "w": 3, "o": 0 }
     ],
-    "m": 1614067895076.5303
+    "m": 1759570591698
   },
   {
     "n": "Не спеши страдать",
@@ -17274,7 +17489,7 @@
       },
       { "t": 1, "p": [[6], [6], [6], [1, 6], [0, 3, 10, 13], [0, 3, 9]], "s": "two", "m": 1, "c": 1, "w": 1 }
     ],
-    "m": 1614406911104.9558
+    "m": 1759570591698
   },
   {
     "n": "Чудное озеро Генисаретское",
@@ -17344,7 +17559,8 @@
     "a": "https://holychords.pro/uploads/music/20200512/2020051210455222.mp3",
     "bpm": 65,
     "s": 3,
-    "m": 1614587308044.93
+    "m": 1759570591698,
+    "al": "1~20200512//10455222.mp3"
   },
   {
     "n": "Как дышит в семени цветок",
@@ -17425,7 +17641,8 @@
       { "a": 1, "w": 7 }
     ],
     "a": "https://holychords.pro/uploads/music/20200623/2020062312263061.mp3",
-    "m": 1614616071650.9907
+    "m": 1759570591698,
+    "al": "1~20200623//12263061.mp3"
   },
   {
     "n": "Голгофа, Голгофа, Голгофа",
@@ -17505,7 +17722,8 @@
       { "t": 6, "p": [[-2, -1, 3, 7]], "s": "final", "m": 1, "c": 4, "w": 9 }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164515_95_8.mp3",
-    "m": 1614618502650.1785
+    "m": 1759570591698,
+    "al": "1~20200701//164515_95_8.mp3"
   },
   {
     "n": "Благодатная скала",
@@ -17581,7 +17799,8 @@
     ],
     "a": "https://holychords.pro/uploads/music/20200630/2020063008295648.mp3",
     "k": 2,
-    "m": 1614629177372.8794
+    "m": 1759570591698,
+    "al": "1~20200630//08295648.mp3"
   },
   {
     "n": "Я значим не самим собой",
@@ -17676,8 +17895,9 @@
       { "a": 4, "r": 2, "w": 12 }
     ],
     "a": "https://holychords.pro/uploads/music/20201111/20201111205058.mp3",
-    "m": 1745152305799.607,
-    "bpm": 145
+    "m": 1759570591698,
+    "bpm": 145,
+    "al": "1~20201111//205058.mp3"
   },
   {
     "n": "Держит Он меня",
@@ -17795,7 +18015,8 @@
     ],
     "p": 9,
     "a": "https://holychords.pro/uploads/music/20200805/20200805160430.mp3",
-    "m": 1755024984110.168
+    "m": 1759570591698,
+    "al": "1~20200805//160430.mp3"
   },
   {
     "n": "О, Господь, мой крест беру я",
@@ -17933,7 +18154,8 @@
       { "w": 13, "s": "final", "c": 8, "t": null }
     ],
     "a": "https://holychords.pro/uploads/music/20200115/2020011513582531.mp3\n",
-    "m": 1741526056436.0833
+    "m": 1759570591698,
+    "al": "1~20200115//13582531.mp3"
   },
   {
     "n": "Глубже всех морей и океанов",
@@ -18005,7 +18227,8 @@
     "p": 2,
     "bpm": 60,
     "s": 3,
-    "m": 1614755527240.9885
+    "m": 1759570591698,
+    "al": "1~20200701//164536_27_36.mp3"
   },
   {
     "n": "Звёзды потускнеют",
@@ -18125,7 +18348,8 @@
     ],
     "p": 7,
     "a": "https://fonki.pro/plugin/sounds/uploads/2016071016184168.mp3",
-    "m": 1614755948210.5027
+    "m": 1759570591698,
+    "al": "4~2016071016184168.mp3"
   },
   {
     "n": "Я к Тебе, Господь, взываю",
@@ -18197,7 +18421,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20200626/20200626121157.mp3\n",
-    "m": 1614782296550.8428
+    "m": 1759570591698,
+    "al": "1~20200626//121157.mp3"
   },
   {
     "n": "Как же Ты велик",
@@ -18240,7 +18465,8 @@
     ],
     "b": 0,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164549_87.mp3",
-    "m": 1753000303765.7695
+    "m": 1759570591698,
+    "al": "1~20200701//164549_87.mp3"
   },
   {
     "n": "Жить для Иисуса, с Ним умирать",
@@ -18294,8 +18520,9 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20200630/2020063011110171.mp3",
-    "m": 1753605067538.8271,
-    "p": 5
+    "m": 1759570591698,
+    "p": 5,
+    "al": "1~20200630//11110171.mp3"
   },
   {
     "n": "Взойдём на Голгофу",
@@ -18392,7 +18619,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20210122/20210122214654.mp3",
-    "m": 1617771017336.9106
+    "m": 1759570591698,
+    "al": "1~20210122//214654.mp3"
   },
   {
     "n": "О, Господь, в молитве",
@@ -18461,7 +18689,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20220524/20220524180913.mp3",
-    "m": 1618043744780.0325
+    "m": 1759570591698,
+    "al": "1~20220524//180913.mp3"
   },
   {
     "n": "Грешник",
@@ -18511,7 +18740,8 @@
       { "a": 2, "w": 7 }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164535_28_17.mp3",
-    "m": 1618576705290.558
+    "m": 1759570591698,
+    "al": "1~20200701//164535_28_17.mp3"
   },
   {
     "n": "Покой",
@@ -18615,7 +18845,8 @@
       { "t": 6, "p": [[-2, 2]], "s": "final", "c": 4, "m": 1, "w": 13 }
     ],
     "a": "https://holychords.pro/uploads/music/20190928/2019092812114061.mp3",
-    "m": 1619453719920.3853
+    "m": 1759570591698,
+    "al": "1~20190928//12114061.mp3"
   },
   {
     "n": "Красота Иисуса, светись во мне!",
@@ -18688,7 +18919,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20210203/20210203223107.mp3",
-    "m": 1749387788930.5688
+    "m": 1759570591698,
+    "al": "1~20210203//223107.mp3"
   },
   {
     "n": "Славьте Бога, славьте в песнопеньях!",
@@ -18713,7 +18945,8 @@
       { "a": 1, "w": 7 }
     ],
     "a": "https://holychords.pro/uploads/music/20201111/20201111141138.mp3",
-    "m": 1619555455092.9363
+    "m": 1759570591698,
+    "al": "1~20201111//141138.mp3"
   },
   {
     "n": "Помнишь день, когда весна",
@@ -18798,7 +19031,8 @@
       { "a": 2, "w": 6 }
     ],
     "a": "https://holychords.pro/uploads/music/20220927/20220927125042.mp3",
-    "m": 1619983520330.1152
+    "m": 1759570591698,
+    "al": "1~20220927//125042.mp3"
   },
   {
     "n": "Дай сердце такое мне",
@@ -18873,7 +19107,7 @@
         "r": { "4": 2 }
       }
     ],
-    "m": 1738508967575.3748,
+    "m": 1759570591698,
     "bpm": 115
   },
   {
@@ -18912,7 +19146,8 @@
       { "a": 2, "w": 7, "r": 2 }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164547_28.mp3",
-    "m": 1620039666110.6357
+    "m": 1759570591698,
+    "al": "1~20200701//164547_28.mp3"
   },
   {
     "n": "Страшно бушует житейское море",
@@ -18969,7 +19204,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20231025/20231025165320.mp3",
-    "m": 1620741822264.8735
+    "m": 1759570591698,
+    "al": "1~20231025//165320.mp3"
   },
   {
     "w": 1621451185856,
@@ -19062,10 +19298,11 @@
     "b": 0,
     "l": 0,
     "a": "https://fonki.pro/plugin/sounds/uploads/2016050714285167.mp3",
-    "m": 1755890837607.9397,
+    "m": 1759570591698,
     "bpm": 71,
     "s": 4,
-    "p": 1
+    "p": 1,
+    "al": "4~2016050714285167.mp3"
   },
   {
     "n": "Ночное небо распростёрлось над землёй",
@@ -19151,7 +19388,7 @@
       },
       { "w": 12, "a": 6 }
     ],
-    "m": 1735455628899
+    "m": 1759570591698
   },
   {
     "w": 1621605499304,
@@ -19193,7 +19430,7 @@
       { "w": 10, "p": [[0, 9], [1, 9], [9], [10]], "t": 6, "s": "one", "c": 0 },
       { "w": 11, "a": 1 }
     ],
-    "m": 1621605499304.0515
+    "m": 1759570591698
   },
   {
     "w": 1622193050080,
@@ -19215,7 +19452,7 @@
         "m": 1
       }
     ],
-    "m": 1757865428867.3066,
+    "m": 1759570591698,
     "b": 1
   },
   {
@@ -19287,7 +19524,7 @@
       { "w": 4, "a": 0 }
     ],
     "p": 11,
-    "m": 1622194126600.3162
+    "m": 1759570591698
   },
   {
     "w": 1622568666320,
@@ -19355,7 +19592,7 @@
       },
       { "w": 5, "a": 1 }
     ],
-    "m": 1622568666320.664
+    "m": 1759570591698
   },
   {
     "w": 1623180300220,
@@ -19396,8 +19633,9 @@
     ],
     "bpm": 60,
     "s": 3,
-    "m": 1742134764893.9045,
-    "a": "https://holychords.pro/uploads/music/20190508/2019050812322720.mp3"
+    "m": 1759570591698,
+    "a": "https://holychords.pro/uploads/music/20190508/2019050812322720.mp3",
+    "al": "1~20190508//12322720.mp3"
   },
   {
     "w": 1623181786630,
@@ -19497,7 +19735,7 @@
         "r": { "2-3": 2 }
       }
     ],
-    "m": 1623181786630.8486
+    "m": 1759570591698
   },
   {
     "w": 1623531571216,
@@ -19572,7 +19810,8 @@
     ],
     "a": "https://holychords.pro/uploads/music/20191113/2019111315555736.mp3",
     "p": 3,
-    "m": 1623531571216.188
+    "m": 1759570591698,
+    "al": "1~20191113//15555736.mp3"
   },
   {
     "w": 1623665460620,
@@ -19648,7 +19887,8 @@
     ],
     "l": 1,
     "a": "https://holychords.pro/uploads/music/20200115/2020011517190727.mp3",
-    "m": 1736358811467
+    "m": 1759570591698,
+    "al": "1~20200115//17190727.mp3"
   },
   {
     "w": 1623785109572,
@@ -19771,7 +20011,7 @@
         "r": 2
       }
     ],
-    "m": 1735612452577
+    "m": 1759570591698
   },
   {
     "w": 1623785923860,
@@ -19867,7 +20107,7 @@
         "m": 0
       }
     ],
-    "m": 1747572941075.0828
+    "m": 1759570591698
   },
   {
     "w": 1624987440980,
@@ -19900,7 +20140,7 @@
       { "w": 6, "a": 1 }
     ],
     "l": 1,
-    "m": 1624987440980.8838
+    "m": 1759570591698
   },
   {
     "w": 1625035474064,
@@ -19983,7 +20223,7 @@
       },
       { "w": 7, "a": 1 }
     ],
-    "m": 1625035474064.8145
+    "m": 1759570591698
   },
   {
     "w": 1625037242436,
@@ -20007,7 +20247,7 @@
       },
       { "w": 3, "p": [[0], [3], [0], [4], [0], [4], [0], [3, 6]], "c": 0, "t": 2, "s": "one", "m": 0, "r": { "7": 2 } }
     ],
-    "m": 1625037242436.629
+    "m": 1759570591698
   },
   {
     "w": 1625727920956,
@@ -20040,7 +20280,8 @@
       { "w": 12, "a": 9 }
     ],
     "a": "https://holychords.pro/uploads/music/20200506/2020050622271582.mp3",
-    "m": 1753602761388.4958
+    "m": 1759570591698,
+    "al": "1~20200506//22271582.mp3"
   },
   {
     "w": 1625728607560,
@@ -20096,7 +20337,8 @@
       { "w": 5, "a": 1 }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_25_20.mp3",
-    "m": 1625728607560.3247
+    "m": 1759570591699,
+    "al": "1~20200701//164457_25_20.mp3"
   },
   {
     "w": 1625988533680,
@@ -20186,7 +20428,8 @@
     ],
     "l": 1,
     "a": "https://holychords.pro/uploads/music/20191124/2019112423090132.mp3\nhttps://holychords.pro/uploads/music/20220810/20220810211218.mp3",
-    "m": 1625988533680.6284
+    "m": 1759570591699,
+    "al": ["1~20191124//23090132.mp3", "1~20220810//211218.mp3"]
   },
   {
     "w": 1626712236684,
@@ -20221,7 +20464,7 @@
       { "w": 6, "p": [[0, 8], [3], [0], [4]], "c": 0, "t": 4, "s": "one", "m": 0 },
       { "w": 7, "a": 1, "r": 2 }
     ],
-    "m": 1626712236684.1052
+    "m": 1759570591699
   },
   {
     "w": 1628844861136,
@@ -20319,7 +20562,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20200412/2020041212124740.mp3",
-    "m": 1628844861136.513
+    "m": 1759570591699,
+    "al": "1~20200412//12124740.mp3"
   },
   {
     "w": 1629297439190,
@@ -20445,7 +20689,7 @@
         "r": 2
       }
     ],
-    "m": 1629297439190.706
+    "m": 1759570591699
   },
   {
     "w": 1629869007444,
@@ -20516,7 +20760,7 @@
       },
       { "w": 6, "a": 2 }
     ],
-    "m": 1629869007444.8328
+    "m": 1759570591699
   },
   {
     "w": 1630950934100,
@@ -20561,7 +20805,7 @@
         "m": 1
       }
     ],
-    "m": 1744881869092.603,
+    "m": 1759570591699,
     "isRemoved": 1
   },
   {
@@ -20609,7 +20853,8 @@
       { "w": 4, "s": "final", "c": 2 }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_17_55.mp3",
-    "m": 1752413653793.2966
+    "m": 1759570591699,
+    "al": "1~20200701//164457_17_55.mp3"
   },
   {
     "w": 1631945552830,
@@ -20662,7 +20907,8 @@
     ],
     "a": "https://holychords.pro/uploads/music/20200731/20200731204240.mp3\n",
     "p": 7,
-    "m": 1631945552830.8845
+    "m": 1759570591699,
+    "al": "1~20200731//204240.mp3"
   },
   {
     "w": 1633035412828,
@@ -20684,7 +20930,7 @@
       { "w": 5, "p": [[5], [5], [2, 9], [5], [5], [4, 9]], "c": 3, "t": 3, "s": "bridge", "m": 1, "r": 4 },
       { "w": 6, "p": [[2, 4], [3], [2], [2, 5], [2], [1]], "c": 1, "t": 4, "s": "two", "m": 0 }
     ],
-    "m": 1757831670847.558
+    "m": 1759570591699
   },
   {
     "w": 1633441264690,
@@ -20782,7 +21028,8 @@
       { "w": 10, "a": 2, "r": 2 }
     ],
     "a": "https://ia801205.us.archive.org/13/items/songsofrevival/0707%20%D0%A2%D0%B5%D1%87%D0%B5%D1%82%20%D0%BB%D0%B8%20%D0%B6%D0%B8%D0%B7%D0%BD%D1%8C%20%D0%BC%D0%B8%D1%80%D0%BD%D0%BE1.MP3\n",
-    "m": 1633441264690.0403
+    "m": 1759570591699,
+    "al": "8~0707%20%D0%A2%D0%B5%D1%87%D0%B5%D1%82%20%D0%BB%D0%B8%20%D0%B6%D0%B8%D0%B7%D0%BD%D1%8C%20%D0%BC%D0%B8%D1%80%D0%BD%D0%BE1.MP3"
   },
   {
     "w": 1633461428760,
@@ -20876,9 +21123,10 @@
       { "w": 11, "a": 0, "s": "final" }
     ],
     "a": "https://holychords.pro/uploads/music/20191208/2019120818020176.mp3\n",
-    "m": 1752341653431.603,
+    "m": 1759570591699,
     "bpm": 130,
-    "s": 4
+    "s": 4,
+    "al": "1~20191208//18020176.mp3"
   },
   {
     "w": 1633462183930,
@@ -20970,7 +21218,8 @@
       { "w": 10, "a": 2 }
     ],
     "a": "https://fonki.pro/plugin/sounds/uploads/2016060621482010.mp3\n",
-    "m": 1633462183930.8625
+    "m": 1759570591699,
+    "al": "4~2016060621482010.mp3"
   },
   {
     "w": 1633462593336,
@@ -21097,7 +21346,8 @@
     ],
     "a": "https://holychords.pro/uploads/music/20200524/2020052413224841.mp3\n",
     "k": 1,
-    "m": 1633462593336.9934
+    "m": 1759570591699,
+    "al": "1~20200524//13224841.mp3"
   },
   {
     "w": 1633462857370,
@@ -21147,7 +21397,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_84.mp3\n",
-    "m": 1633462857370.0347
+    "m": 1759570591699,
+    "al": "1~20200701//164457_84.mp3"
   },
   {
     "w": 1633463815588,
@@ -21166,7 +21417,8 @@
       { "w": 3, "c": 0, "t": 3, "s": "one", "m": 0 }
     ],
     "a": "https://holychords.pro/uploads/music/20200623/2020062312284659.mp3\n",
-    "m": 1633463815588.664
+    "m": 1759570591699,
+    "al": "1~20200623//12284659.mp3"
   },
   {
     "w": 1633898101650,
@@ -21187,7 +21439,8 @@
       { "w": 5, "a": 1 }
     ],
     "a": "https://holychords.pro/uploads/music/20200130/202001302218321.mp3\nhttps://holychords.pro/uploads/music/20220809/20220809112513.mp3",
-    "m": 1633898101650.2378
+    "m": 1759570591699,
+    "al": ["1~20200130//2218321.mp3", "1~20220809//112513.mp3"]
   },
   {
     "w": 1634049320416,
@@ -21219,7 +21472,8 @@
       { "w": 10, "a": 2 }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164438_45.mp3\n",
-    "m": 1748784866399.1516
+    "m": 1759570591699,
+    "al": "1~20200701//164438_45.mp3"
   },
   {
     "w": 1634050300504,
@@ -21273,7 +21527,8 @@
       { "w": 7, "a": 2, "r": 2 }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164137_62.mp3\n",
-    "m": 1754831478878.8713
+    "m": 1759570591699,
+    "al": "1~20200701//164137_62.mp3"
   },
   {
     "w": 1634058275504,
@@ -21298,7 +21553,8 @@
       { "w": 8, "a": 1, "r": { "a0:0": 2 }, "inh": { "r": [{ "3:1a": 2 }] } }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_64.mp3\n",
-    "m": 1634058275504.0737
+    "m": 1759570591699,
+    "al": "1~20200701//164457_64.mp3"
   },
   {
     "w": 1634188046492,
@@ -21318,7 +21574,8 @@
       { "w": 4, "p": [[8], [8], [3, 11], [-1, 5, 8]], "c": 2, "t": 3, "s": "final", "m": 1 }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164415_87.mp3\n",
-    "m": 1634188046492.667
+    "m": 1759570591699,
+    "al": "1~20200701//164415_87.mp3"
   },
   {
     "w": 1634619709010,
@@ -21402,7 +21659,7 @@
       { "w": 7, "a": 1 }
     ],
     "bpm": 63,
-    "m": 1747241940278.271,
+    "m": 1759570591699,
     "p": 9
   },
   {
@@ -21471,7 +21728,7 @@
       },
       { "w": 5, "a": 1 }
     ],
-    "m": 1634620549304.1196
+    "m": 1759570591699
   },
   {
     "w": 1635588798520,
@@ -21540,7 +21797,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20190310/2019031020095048.mp3",
-    "m": 1745158369152.5225
+    "m": 1759570591699,
+    "al": "1~20190310//20095048.mp3"
   },
   {
     "w": 1636272767104,
@@ -21583,7 +21841,8 @@
     ],
     "l": 1,
     "a": "https://holychords.pro/uploads/music/20200315/2020031507535525.mp3",
-    "m": 1636272767104.5771
+    "m": 1759570591699,
+    "al": "1~20200315//07535525.mp3"
   },
   {
     "w": 1636523811188,
@@ -21652,7 +21911,8 @@
     ],
     "a": "https://holychords.pro/uploads/music/20200629/2020062919373017.mp3",
     "p": 9,
-    "m": 1636523811188.1726
+    "m": 1759570591699,
+    "al": "1~20200629//19373017.mp3"
   },
   {
     "w": 1636805139050,
@@ -21712,7 +21972,8 @@
       { "w": 6, "a": 2, "r": { "0-3:0": 2 } }
     ],
     "a": "https://holychords.pro/uploads/music/20200416/2020041616174123.mp3",
-    "m": 1636805139050.4702
+    "m": 1759570591699,
+    "al": "1~20200416//16174123.mp3"
   },
   {
     "w": 1637581980250,
@@ -21780,7 +22041,7 @@
         "r": { "2-3": 2 }
       }
     ],
-    "m": 1637581980250.077
+    "m": 1759570591699
   },
   {
     "w": 1639465178824,
@@ -21849,7 +22110,8 @@
       { "w": 5, "a": 1, "r": { "2-3": 2 } }
     ],
     "a": "https://holychords.pro/uploads/music/20210403/20210403092406.mp3",
-    "m": 1639465178824.5996
+    "m": 1759570591699,
+    "al": "1~20210403//092406.mp3"
   },
   {
     "w": 1639465542476,
@@ -21909,7 +22171,8 @@
       { "w": 5, "p": [[-1, 10], [-1, 10], [-1, 10], [11], [9]], "c": 1, "t": 5, "s": "two", "m": 0, "r": 2 }
     ],
     "a": "https://holychords.pro/uploads/music/20190502/2019050219085021.mp3",
-    "m": 1755891239688.4302
+    "m": 1759570591699,
+    "al": "1~20190502//19085021.mp3"
   },
   {
     "w": 1639466628610,
@@ -21968,8 +22231,9 @@
       { "w": 7, "a": 1, "r": 3 }
     ],
     "a": "https://holychords.pro/uploads/music/20200702/2020070201183531.mp3",
-    "m": 1742135606543.7874,
-    "bpm": 127
+    "m": 1759570591699,
+    "bpm": 127,
+    "al": "1~20200702//01183531.mp3"
   },
   {
     "w": 1639847863652,
@@ -22096,7 +22360,8 @@
       { "w": 14, "a": 7, "s": "final" }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164536_30_16.mp3",
-    "m": 1639847863652.6616
+    "m": 1759570591699,
+    "al": "1~20200701//164536_30_16.mp3"
   },
   {
     "w": 1640034261064,
@@ -22177,7 +22442,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20220401/20220401170806.mp3",
-    "m": 1745759802160.7954
+    "m": 1759570591699,
+    "al": "1~20220401//170806.mp3"
   },
   {
     "w": 1640844686784,
@@ -22286,7 +22552,8 @@
       { "w": 8, "a": 2, "r": 2 }
     ],
     "a": "https://fonki.pro/plugin/sounds/uploads/2016063006153846.mp3",
-    "m": 1754771883304.879
+    "m": 1759570591699,
+    "al": "4~2016063006153846.mp3"
   },
   {
     "w": 1642532222984,
@@ -22316,7 +22583,8 @@
       { "w": 7, "a": 3 }
     ],
     "a": "https://holychords.pro/uploads/music/20210116/20210116125151.mp3",
-    "m": 1642532222984.258
+    "m": 1759570591699,
+    "al": "1~20210116//125151.mp3"
   },
   {
     "w": 1642577146090,
@@ -22438,7 +22706,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20210607/20210607084646.mp3",
-    "m": 1642577146090.321
+    "m": 1759570591699,
+    "al": "1~20210607//084646.mp3"
   },
   {
     "w": 1644998077224,
@@ -22574,7 +22843,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20200117/2020011702342965.mp3",
-    "m": 1744529335475.8943
+    "m": 1759570591699,
+    "al": "1~20200117//02342965.mp3"
   },
   {
     "w": 1646036516170,
@@ -22672,7 +22942,8 @@
       { "w": 9, "s": "final", "c": 3 }
     ],
     "a": "https://holychords.pro/uploads/music/20200214/202002141005297.mp3",
-    "m": 1746965450229.3486
+    "m": 1759570591699,
+    "al": "1~20200214//1005297.mp3"
   },
   {
     "w": 1647252965570,
@@ -22792,8 +23063,9 @@
       { "w": 9, "a": 2, "r": { "a0:0": 2 }, "inh": { "r": [{ "3:2a": 2 }] } }
     ],
     "a": "https://holychords.pro/uploads/music/20190405/2019040521504269.mp3\n",
-    "m": 1759464003304.0625,
-    "s": 3
+    "m": 1759570591699,
+    "s": 3,
+    "al": "1~20190405//21504269.mp3"
   },
   {
     "w": 1647721969864,
@@ -22861,7 +23133,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20190531/2019053101334035.mp3",
-    "m": 1735565267413
+    "m": 1759570591699,
+    "al": "1~20190531//01334035.mp3"
   },
   {
     "w": 1650982344828,
@@ -22938,7 +23211,8 @@
     "b": 1,
     "p": 9,
     "a": "https://holychords.pro/uploads/music/20200623/202006231150506.mp3",
-    "m": 1752412870385.3115
+    "m": 1759570591699,
+    "al": "1~20200623//1150506.mp3"
   },
   {
     "w": 1651015190664,
@@ -22962,7 +23236,7 @@
       { "w": 8, "p": [[2], [3, 8, 13]], "t": 3, "s": "one", "c": 0 },
       { "w": 9, "a": 5 }
     ],
-    "m": 1651015190664.2708
+    "m": 1759570591699
   },
   {
     "w": 1651015575424,
@@ -23033,7 +23307,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20210203/20210203231820.mp3",
-    "m": 1754118785213.2346
+    "m": 1759570591699,
+    "al": "1~20210203//231820.mp3"
   },
   {
     "w": 1651516689300,
@@ -23119,7 +23394,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20221029/20221029101231.mp3",
-    "m": 1651516689300.822
+    "m": 1759570591699,
+    "al": "1~20221029//101231.mp3"
   },
   {
     "w": 1651518481924,
@@ -23201,7 +23477,8 @@
       { "w": 12, "a": 6 }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/2020070115384853.mp3",
-    "m": 1651518481924.0398
+    "m": 1759570591699,
+    "al": "1~20200701//15384853.mp3"
   },
   {
     "w": 1652272651937,
@@ -23240,7 +23517,8 @@
       { "w": 15, "p": [[0, 4, 11]], "t": 9, "s": "+", "c": 0 }
     ],
     "a": "https://holychords.pro/uploads/music/20210204/20210204004132.mp3",
-    "m": 1652272651937.6792
+    "m": 1759570591699,
+    "al": "1~20210204//004132.mp3"
   },
   {
     "w": 1652432279310,
@@ -23293,7 +23571,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20230213/20230213084737.mp3",
-    "m": 1746978230309.539
+    "m": 1759570591699,
+    "al": "1~20230213//084737.mp3"
   },
   {
     "w": 1652959767876,
@@ -23349,7 +23628,8 @@
       { "w": 12, "a": 3 }
     ],
     "a": "https://holychords.pro/uploads/music/20210203/20210203230415.mp3",
-    "m": 1652959767876.2107
+    "m": 1759570591699,
+    "al": "1~20210203//230415.mp3"
   },
   {
     "w": 1653302730862,
@@ -23436,7 +23716,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20200416/2020041621422468.mp3\nhttps://holychords.pro/uploads/music/20191124/2019112423163192.mp3",
-    "m": 1744956267436.2517
+    "m": 1759570591699,
+    "al": ["1~20200416//21422468.mp3", "1~20191124//23163192.mp3"]
   },
   {
     "w": 1653368590160,
@@ -23464,7 +23745,7 @@
       { "w": 11, "p": [[1], [1, 5, 8], [2, 5, 8], [2, 4, 6], [1, 4, 7]], "t": 4, "s": "one", "c": 0 },
       { "w": 14, "a": 6 }
     ],
-    "m": 1744526541680.7761
+    "m": 1759570591699
   },
   {
     "w": 1653369977696,
@@ -23553,9 +23834,10 @@
     "b": 1,
     "a": "https://holychords.pro/uploads/music/20200623/2020062312244783.mp3",
     "p": 11,
-    "m": 1738509058650.6548,
+    "m": 1759570591699,
     "bpm": 92,
-    "s": 4
+    "s": 4,
+    "al": "1~20200623//12244783.mp3"
   },
   {
     "w": 1653371118424,
@@ -23588,7 +23870,8 @@
       { "w": 7, "a": 1 }
     ],
     "a": "https://holychords.pro/uploads/music/20200623/2020062312241613.mp3",
-    "m": 1653371118424.5972
+    "m": 1759570591699,
+    "al": "1~20200623//12241613.mp3"
   },
   {
     "w": 1654031251200,
@@ -23631,7 +23914,8 @@
       { "w": 11, "a": 9 }
     ],
     "a": "https://holychords.pro/uploads/music/20220309/20220309113503.mp3",
-    "m": 1654031251200.998
+    "m": 1759570591699,
+    "al": "1~20220309//113503.mp3"
   },
   {
     "w": 1654863524355,
@@ -23725,7 +24009,8 @@
       }
     ],
     "a": "https://kg-music.club/wp-content/uploads/2019/11/%D0%94%D0%B2%D0%BE%D0%B9%D0%BD%D0%B0%D1%8F-%D0%B6%D0%B8%D0%B7%D0%BD%D1%8C-Anna-Balan-Hodgkins-kg-music.club_.mp3",
-    "m": 1735393002635
+    "m": 1759570591699,
+    "al": "5~2019/11/%D0%94%D0%B2%D0%BE%D0%B9%D0%BD%D0%B0%D1%8F-%D0%B6%D0%B8%D0%B7%D0%BD%D1%8C-Anna-Balan-Hodgkins-kg-music.club_.mp3"
   },
   {
     "w": 1655367416183,
@@ -23795,7 +24080,8 @@
     ],
     "p": 9,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164139_13.mp3",
-    "m": 1751204218629.5625
+    "m": 1759570591699,
+    "al": "1~20200701//164139_13.mp3"
   },
   {
     "w": 1655713478320,
@@ -23862,7 +24148,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164549_13.mp3",
-    "m": 1743507676890.403
+    "m": 1759570591699,
+    "al": "1~20200701//164549_13.mp3"
   },
   {
     "w": 1656194711299,
@@ -23942,7 +24229,8 @@
       }
     ],
     "a": "https://holychords.pro/uploads/music/20200202/2020020204244152.mp3",
-    "m": 1656194711299.626
+    "m": 1759570591699,
+    "al": "1~20200202//04244152.mp3"
   },
   {
     "w": 1658860751232,
@@ -23985,7 +24273,8 @@
       { "w": 5, "a": 1 }
     ],
     "a": "https://holychords.pro/uploads/music/20200309/2020030911314085.mp3",
-    "m": 1755065072228.1792
+    "m": 1759570591699,
+    "al": "1~20200309//11314085.mp3"
   },
   {
     "w": 1659213404428,
@@ -24012,7 +24301,8 @@
       { "w": 10, "a": 1 }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164515_100_3.mp3",
-    "m": 1744478422851.8108
+    "m": 1759570591699,
+    "al": "1~20200701//164515_100_3.mp3"
   },
   {
     "w": 1661361580322,
@@ -24052,7 +24342,8 @@
     ],
     "a": "https://holychords.pro/uploads/music/20190927/2019092721425847.mp3\nhttps://holychords.pro/uploads/music/20200701/20200701164515_57_51.mp3",
     "p": 10,
-    "m": 1754830842048.4177
+    "m": 1759570591699,
+    "al": ["1~20190927//21425847.mp3", "1~20200701//164515_57_51.mp3"]
   },
   {
     "w": 1662461765147,
@@ -24100,7 +24391,8 @@
     ],
     "p": 9,
     "a": "https://holychords.pro/uploads/music/20220127/20220127090914.mp3",
-    "m": 1662461765147.2192
+    "m": 1759570591699,
+    "al": "1~20220127//090914.mp3"
   },
   {
     "w": 1664372579699,
@@ -24176,7 +24468,8 @@
       { "w": 6, "c": 4, "s": "final" }
     ],
     "a": "https://holychords.pro/uploads/music/20191211/2019121112354655.mp3",
-    "m": 1664372579699.4226
+    "m": 1759570591699,
+    "al": "1~20191211//12354655.mp3"
   },
   {
     "w": 1665129948681,
@@ -24251,7 +24544,8 @@
       { "w": 6, "t": 4, "s": "+", "c": 3, "p": [[-1, 6, 9, 10]] }
     ],
     "a": "https://holychords.pro/uploads/music/20190829/2019082922235035.mp3",
-    "m": 1744915127284.531
+    "m": 1759570591699,
+    "al": "1~20190829//22235035.mp3"
   },
   {
     "w": 1665171910788,
@@ -24274,7 +24568,8 @@
       { "w": 6, "a": 2, "r": 2 }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164548_20_33.mp3",
-    "m": 1757356265138.4727
+    "m": 1759570591699,
+    "al": "1~20200701//164548_20_33.mp3"
   },
   {
     "w": 1665858936504,
@@ -24295,7 +24590,8 @@
       { "w": 5, "a": 1 }
     ],
     "a": "https://alliluya.com/attachments/article/1547/Hor-quotKredoquot--ruk-Lyubov_-Guseva-Tysyachi-zvezd-ili-molitva-quotVeruyu~.mp3",
-    "m": 1665858936504.2805
+    "m": 1759570591699,
+    "al": "7~1547/Hor-quotKredoquot--ruk-Lyubov_-Guseva-Tysyachi-zvezd-ili-molitva-quotVeruyu~.mp3"
   },
   {
     "n": "В чудный вечер Рождества",
@@ -24414,7 +24710,8 @@
     ],
     "k": 0,
     "a": "https://holychords.pro/uploads/music/20220107/20220107192220.mp3",
-    "m": 1673287574930.0308
+    "m": 1759570591699,
+    "al": "1~20220107//192220.mp3"
   },
   {
     "n": "Помилуй, милый Бог",
@@ -24538,7 +24835,8 @@
     ],
     "k": 0,
     "a": "https://holychords.pro/uploads/music/20211013/20211013135438.mp3",
-    "m": 1673586435877.098
+    "m": 1759570591699,
+    "al": "1~20211013//135438.mp3"
   },
   {
     "n": "Ночь рождества",
@@ -24621,7 +24919,8 @@
     ],
     "k": 0,
     "a": "https://holychords.pro/uploads/music/20201231/20201231203649.mp3",
-    "m": 1673633522333.217
+    "m": 1759570591699,
+    "al": "1~20201231//203649.mp3"
   },
   {
     "n": "Это тайна для меня",
@@ -24694,7 +24993,8 @@
     ],
     "k": 0,
     "a": "https://hvalite.com/uploads/audio/examples/54f6b724e112e1156c75e57257eeb079.mp3",
-    "m": 1673636796149.07
+    "m": 1759570591699,
+    "al": "6~54f6b724e112e1156c75e57257eeb079.mp3"
   },
   {
     "n": "У Бога нет сирот",
@@ -24771,7 +25071,8 @@
     "k": 0,
     "b": 0,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_59_11.mp3",
-    "m": 1744550842370.741
+    "m": 1759570591699,
+    "al": "1~20200701//164457_59_11.mp3"
   },
   {
     "n": "Я знаю, Бог не ошибается ",
@@ -24880,7 +25181,8 @@
     "k": 0,
     "b": 0,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_24_77.mp3",
-    "m": 1744428807211.294
+    "m": 1759570591700,
+    "al": "1~20200701//164457_24_77.mp3"
   },
   {
     "n": "О, эта благодать",
@@ -24921,7 +25223,8 @@
       "Кто правит миром в суде и правде\nИ ярче солнца свет Его славы?\nГосподь, Царь славы и Царь для всех царей.",
       "Агнец Божий заклан за нас.\nАгнец Божий славу достоин принять.\nАгнец Божий заклан за нас.\nОн достоин. Достоин. Достоин Он."
     ],
-    "m": 1742735686689.2903
+    "m": 1759570591700,
+    "al": "1~20200701//164536_26_89.mp3"
   },
   {
     "n": "Обними меня, Отец",
@@ -24996,7 +25299,8 @@
       "Лишь только с Тобою\nМогу быть сам собою я\nЯ сердце открою\nВпущу в него Тебя.\nПрийди в мой дом\nВойди и царствуй в нём\nОдин я так слаб,\nНо лишь с Тобой силён\nМы всё пройдём вдвоём!",
       "Ты скала моя\nСкрой от бурь меня\nЛишь в руках Твоих\nНахожу я мир\nЛишь в Твоей любви"
     ],
-    "m": 1676400132758.9478
+    "m": 1759570591700,
+    "al": "1~20200115//18391499.mp3"
   },
   {
     "n": "За грешных нас",
@@ -25031,7 +25335,8 @@
       "Иисуса Жертва - наше исцеленье\nОт безнадёжности греха и мук вины.\nУ ног Его пронзённых мы прощенье\nМожем все получить.\nВ Христе душой мы больше не сироты,\nНо есть у нас Отец теперь на небесах!\nОт рабства тьмы Он выведет, когда попросим,\nДав свободу от зла!"
     ],
     "b": 0,
-    "m": 1744979564499.8389
+    "m": 1759570591700,
+    "al": "1~20200701//164515_70_56.mp3"
   },
   {
     "n": "Ты так благ",
@@ -25086,7 +25391,8 @@
       "Пусть в мою душу хлынет поток небес,\nпроблемы смоет прочь.\nНавеки Вечный, Ты - моя крепость!\nДоверюсь я Тебе!"
     ],
     "b": 0,
-    "m": 1677252764612.6846
+    "m": 1759570591700,
+    "al": "5~2022/08/%D0%A2%D1%8B-%D1%82%D0%B0%D0%BA-%D0%B1%D0%BB%D0%B0%D0%B3-%D0%BA%D0%BE-%D0%BC%D0%BD%D0%B5-%D0%9A%D0%91%D0%A6-%D1%80%D0%B5%D1%81%D0%BF%D1%83%D0%B1%D0%BB%D0%B8%D0%BA%D0%B0-%D0%9C%D0%BE%D0%BB%D0%B4%D0%BE%D0%B2%D0%B0-kg-music.club_.mp3"
   },
   {
     "n": "Душа моя вечная",
@@ -25114,8 +25420,9 @@
       "В небе тёмном догорают звёзды,\nТучи скрыли луч на небосводе,\nА моя душа жаждет вечности.\nВижу корабли на горизонте,\nУнесут меня на встречу с Богом,\nДуша моя - вечная.",
       "Растаял тонким льдом\nВчерашний день. Зачем грустить о нём?\nКогда же я прорвусь\nСквозь мрак и пепел ввысь, в Божий свет?\nЖиву одной мечтой\nНа небе засиять звездой"
     ],
-    "m": 1743567301666.8418,
-    "b": 1
+    "m": 1759570591700,
+    "b": 1,
+    "al": "1~20211119//094343.mp3"
   },
   {
     "n": "Создатель, Автор и Творец",
@@ -25191,7 +25498,8 @@
       "Меня спасла Твоя любовь\nЯвила искупление",
       "Благодарю, благодарю."
     ],
-    "m": 1680251271799.8086
+    "m": 1759570591700,
+    "al": ["1~20200701//164515_29_90.mp3", "1~20190730//10034753.mp3"]
   },
   {
     "n": "Снова я нуждаюсь как дитя",
@@ -25219,7 +25527,8 @@
       "Снова иду я ко кресту\nЗнаю что только там найду\nСилу любить, силу прощать,\nСилу идти, силу летать.\nСнова иду..."
     ],
     "b": 0,
-    "m": 1680258857845.1948
+    "m": 1759570591700,
+    "al": "1~20200701//164547_55_85.mp3"
   },
   {
     "n": "Быть ближе к Тебе",
@@ -25278,7 +25587,8 @@
       "Пусть дни летят как миг, а годы как вода,\nМир пред Тобой как пыль и легче сна Земля...\nПусть времени поток куда-то вдаль спешит -\nЕму не обогнать порыв моей души:"
     ],
     "b": 0,
-    "m": 1680259720965.066
+    "m": 1759570591700,
+    "al": "1~20200701//164457_50.mp3"
   },
   {
     "n": "Сын Божий воскрес",
@@ -25337,10 +25647,11 @@
       "во тьму с небес\nи в сердца пролился.",
       "во тьму с небес.\nСын Божий воскрес."
     ],
-    "m": 1745075593368.1135,
+    "m": 1759570591700,
     "k": 0,
     "bpm": 180,
-    "s": 3
+    "s": 3,
+    "al": "1~20221203//184633.mp3"
   },
   {
     "n": "О, Боже мой, благодарю",
@@ -25415,7 +25726,8 @@
       "Везде я чувствую, везде\nТебя, Господь, в ночной тиши,\nИ в отдалённейшей звезде,\nи в глубине моей души.\nВезде я чувствую, везде\nТебя, Господь, в ночной тиши,\nИ в отдалённейшей звезде,\nи в глубине моей души.",
       "Пока живу, Тебе молюсь\nТебя люблю, дышу Тобой,\nКогда умру, с Тобой сольюсь,\nКак звёзды с утренней зарёй."
     ],
-    "m": 1680263155419.7551
+    "m": 1759570591700,
+    "al": "1~20200701//164536_46_8.mp3"
   },
   {
     "n": "Миллионы ",
@@ -25498,7 +25810,8 @@
     "p": 0,
     "a": "https://holychords.pro/uploads/music/20221229/20221229135340.mp3",
     "l": 0,
-    "m": 1753000630196.8467
+    "m": 1759570591700,
+    "al": "1~20221229//135340.mp3"
   },
   {
     "n": " Иисус, Ты жизнь отдал",
@@ -25540,7 +25853,8 @@
     "p": 0,
     "a": "https://holychords.pro/uploads/music/20200305/2020030518565463.mp3",
     "l": 0,
-    "m": 1686671906496.779
+    "m": 1759570591700,
+    "al": "1~20200305//18565463.mp3"
   },
   {
     "n": "  Посреди скорбей есть сила",
@@ -25631,7 +25945,8 @@
     "p": 0,
     "a": "https://holychords.pro/uploads/music/20220309/20220309104326.mp3",
     "l": 0,
-    "m": 1756650745384.985
+    "m": 1759570591700,
+    "al": "1~20220309//104326.mp3"
   },
   {
     "n": "Ты - мой Господь, Царь всего вокруг",
@@ -25685,7 +26000,8 @@
     "l": 0,
     "a": "https://holychords.pro/uploads/music/20221008/20221008195505.mp3",
     "bpm": 65,
-    "m": 1755609568393.0442
+    "m": 1759570591700,
+    "al": "1~20221008//195505.mp3"
   },
   {
     "n": "Ты - Отца живое Слово",
@@ -25754,7 +26070,8 @@
     "p": 5,
     "a": "https://holychords.pro/uploads/music/20220201/20220201185917.mp3",
     "l": 0,
-    "m": 1749279173068.748
+    "m": 1759570591700,
+    "al": "1~20220201//185917.mp3"
   },
   {
     "n": "Отче Небесный, Боже могучий",
@@ -25809,7 +26126,8 @@
     "a": "https://holychords.pro/uploads/music/20210908/20210908203745.mp3",
     "l": 0,
     "b": 0,
-    "m": 1751806911930.025
+    "m": 1759570591700,
+    "al": "1~20210908//203745.mp3"
   },
   {
     "n": "Бездонная любовь",
@@ -25869,8 +26187,9 @@
     "l": 0,
     "k": 0,
     "b": 0,
-    "m": 1759428022298.1262,
-    "bpm": 114
+    "m": 1759570643962.8938,
+    "bpm": 114,
+    "al": "1~20200701//164536_88_57.mp3"
   },
   {
     "n": "Вовеки хвала на устах моих",
@@ -25945,7 +26264,8 @@
     "p": 0,
     "a": "https://holychords.pro/uploads/music/20210902/20210902104123.mp3",
     "l": 0,
-    "m": 1758367963165.6035
+    "m": 1759570591700,
+    "al": "1~20210902//104123.mp3"
   },
   {
     "n": "Достоин Ты хвалы",
@@ -26013,7 +26333,8 @@
     "a": "https://holychords.pro/uploads/music/20210208/20210208130216.mp3",
     "l": 0,
     "b": 0,
-    "m": 1698065078262.4106
+    "m": 1759570591700,
+    "al": "1~20210208//130216.mp3"
   },
   {
     "n": "Осанна",
@@ -26071,7 +26392,8 @@
     "p": 0,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_19_5.mp3",
     "l": 0,
-    "m": 1744979982568.1516
+    "m": 1759570591700,
+    "al": "1~20200701//164457_19_5.mp3"
   },
   {
     "n": "Ожидали мы во мраке",
@@ -26176,9 +26498,10 @@
     "p": 0,
     "a": "https://holychords.pro/uploads/music/20200411/2020041108150417.mp3",
     "l": 0,
-    "m": 1758449987621.0862,
+    "m": 1759570591700,
     "bpm": 133,
-    "s": 4
+    "s": 4,
+    "al": "1~20200411//08150417.mp3"
   },
   {
     "n": "Ты родился в этот мир",
@@ -26242,7 +26565,8 @@
     "a": "https://holychords.pro/uploads/music/20200701/20200701164137_18.mp3",
     "l": 0,
     "b": 0,
-    "m": 1736670307056
+    "m": 1759570591700,
+    "al": "1~20200701//164137_18.mp3"
   },
   {
     "n": "Приди, приди, Эммануил",
@@ -26290,7 +26614,8 @@
     "p": 0,
     "a": "https://holychords.pro/uploads/music/20220105/20220105124259.mp3",
     "l": 0,
-    "m": 1702737073867.3325
+    "m": 1759570591700,
+    "al": "1~20220105//124259.mp3"
   },
   {
     "n": "Придите к Младенцу, что в яслях лежит",
@@ -26361,7 +26686,8 @@
     "p": 0,
     "a": "https://holychords.pro/uploads/music/20211221/20211221104320.mp3",
     "l": 0,
-    "m": 1703406592248.736
+    "m": 1759570591700,
+    "al": "1~20211221//104320.mp3"
   },
   {
     "n": "Зачем, мой Господь",
@@ -26408,7 +26734,8 @@
     "p": 0,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_60.mp3",
     "l": 0,
-    "m": 1744554881030.7163
+    "m": 1759570591700,
+    "al": "1~20200701//164457_60.mp3"
   },
   {
     "n": "Ангелов к нам весть дошла",
@@ -26496,7 +26823,8 @@
     "p": 0,
     "a": "https://holychords.pro/uploads/music/20211210/20211210020216.mp3",
     "l": 0,
-    "m": 1704635030322.6057
+    "m": 1759570591700,
+    "al": "1~20211210//020216.mp3"
   },
   {
     "n": "Ты же Божий человек",
@@ -26553,8 +26881,9 @@
     "a": "https://holychords.pro/uploads/music/20230913/20230913223643.mp3",
     "l": 0,
     "b": 0,
-    "m": 1739710392446.3022,
-    "k": 3
+    "m": 1759570591700,
+    "k": 3,
+    "al": "1~20230913//223643.mp3"
   },
   {
     "n": "Распятая любовь",
@@ -26613,7 +26942,8 @@
     "a": "https://holychords.pro/uploads/music/20200701/20200701164548_60_69.mp3",
     "l": 0,
     "b": 0,
-    "m": 1707226414919.665
+    "m": 1759570591700,
+    "al": "1~20200701//164548_60_69.mp3"
   },
   {
     "n": "За любовь, за милость, за спасение",
@@ -26648,7 +26978,8 @@
     "a": "https://holychords.pro/uploads/music/20231031/20231031153434.mp3",
     "l": 0,
     "b": 0,
-    "m": 1707652033508.585
+    "m": 1759570591700,
+    "al": "1~20231031//153434.mp3"
   },
   {
     "n": "Я не знаю лучше места, чем у ног Христа",
@@ -26731,7 +27062,8 @@
     "p": 0,
     "a": "https://holychords.pro/uploads/music/20220428/20220428114105.mp3",
     "l": 0,
-    "m": 1708576799704.0793
+    "m": 1759570591700,
+    "al": "1~20220428//114105.mp3"
   },
   {
     "n": "Ты молись",
@@ -26760,7 +27092,8 @@
     "a": "https://holychords.pro/uploads/music/20200701/20200701164415_14.mp3",
     "l": 0,
     "b": 0,
-    "m": 1744979054752.7634
+    "m": 1759570591700,
+    "al": "1~20200701//164415_14.mp3"
   },
   {
     "n": "Я знаю теперь, что такое любовь",
@@ -26822,7 +27155,8 @@
     "a": "https://holychords.pro/uploads/music/20200701/20200701164549_6.mp3",
     "l": 0,
     "b": 0,
-    "m": 1756644213781.7798
+    "m": 1759570591700,
+    "al": "1~20200701//164549_6.mp3"
   },
   {
     "n": "Бывают минуты и даже мгновенья",
@@ -26885,7 +27219,8 @@
     "l": 0,
     "b": 0,
     "bpm": 80,
-    "m": 1710060142345.0828
+    "m": 1759570591700,
+    "al": "1~20230225//141317.mp3"
   },
   {
     "n": "Это Твоя благодать",
@@ -26935,7 +27270,8 @@
     "a": "https://holychords.pro/uploads/music/20190405/2019040521121466.mp3",
     "l": 0,
     "b": 0,
-    "m": 1750598270351.9062
+    "m": 1759570591700,
+    "al": "1~20190405//21121466.mp3"
   },
   {
     "n": "Кто бы дал мне слёзы сокрушенья",
@@ -27031,7 +27367,8 @@
     "p": 9,
     "a": "https://holychords.pro/uploads/music/20220115/20220115223504.mp3",
     "l": 0,
-    "m": 1759174409099.6086
+    "m": 1759570591700,
+    "al": "1~20220115//223504.mp3"
   },
   {
     "n": "Он жив! Он жив! Собой Он смерть попрал",
@@ -27058,7 +27395,8 @@
     "p": 0,
     "a": "https://holychords.pro/uploads/music/20220418/20220418224426.mp3",
     "l": 0,
-    "m": 1714982567138.0913
+    "m": 1759570591700,
+    "al": "1~20220418//224426.mp3"
   },
   {
     "n": "Бог, наш Создатель",
@@ -27141,7 +27479,8 @@
     "p": 5,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164535_77_66.mp3",
     "l": 0,
-    "m": 1715526572569.3262
+    "m": 1759570591700,
+    "al": "1~20200701//164535_77_66.mp3"
   },
   {
     "n": "Видимое временно",
@@ -27200,7 +27539,8 @@
     "l": 0,
     "b": 0,
     "bpm": 121,
-    "m": 1742814238873.0693
+    "m": 1759570591700,
+    "al": "1~20210203//115612.mp3"
   },
   {
     "n": "Иона, Иона, далеко от дома",
@@ -27270,7 +27610,7 @@
     ],
     "p": 0,
     "l": 0,
-    "m": 1721505316303.0227
+    "m": 1759570591700
   },
   {
     "n": "Орлы",
@@ -27321,7 +27661,8 @@
     "a": "https://holychords.pro/uploads/music/20200211/2020021100321449.mp3",
     "l": 0,
     "b": 0,
-    "m": 1759171320262.118
+    "m": 1759570591700,
+    "al": "1~20200211//00321449.mp3"
   },
   {
     "n": "У Твоих Ног ночью и днём",
@@ -27385,8 +27726,9 @@
     "a": "https://holychords.pro/uploads/music/20200701/20200701164515_15.mp3",
     "l": 0,
     "b": 0,
-    "m": 1755589802977.5835,
-    "bpm": 170
+    "m": 1759570591700,
+    "bpm": 170,
+    "al": "1~20200701//164515_15.mp3"
   },
   {
     "n": "Всё, что сотворил Ты",
@@ -27425,7 +27767,8 @@
     "a": "https://holychords.pro/uploads/music/20210130/20210130022015.mp3",
     "l": 0,
     "b": 0,
-    "m": 1726250132001.9343
+    "m": 1759570591700,
+    "al": "1~20210130//022015.mp3"
   },
   {
     "n": "Осень настала, как быстро деревья пожелтели",
@@ -27475,8 +27818,9 @@
     "b": 1,
     "k": 0,
     "bpm": 115,
-    "m": 1759063066865.4412,
-    "s": 4
+    "m": 1759570591700,
+    "s": 4,
+    "al": "2~f38vph0A18hnf12MZjqvAiOmpC8t8EmeVSY8Qoyo.mp3"
   },
   {
     "n": "Благословен тот дом, где в каждом чистом сердце",
@@ -27549,7 +27893,8 @@
     "a": "https://holychords.pro/uploads/music/20190502/2019050211472221.mp3",
     "l": 0,
     "b": 0,
-    "m": 1751201442032.7588
+    "m": 1759570591700,
+    "al": "1~20190502//11472221.mp3"
   },
   {
     "n": "Весть об Иисусе скажи мне",
@@ -27632,7 +27977,8 @@
     "a": "https://holychords.pro/uploads/music/20191015/2019101516582796.mp3",
     "l": 0,
     "b": 0,
-    "m": 1728807999611.4175
+    "m": 1759570591700,
+    "al": "1~20191015//16582796.mp3"
   },
   {
     "n": "Идите и научите",
@@ -27679,7 +28025,7 @@
     ],
     "p": 3,
     "l": 0,
-    "m": 1756051258054.0413,
+    "m": 1759570591700,
     "b": 1
   },
   {
@@ -27722,9 +28068,10 @@
     "a": "https://holychords.pro/uploads/music/20230314/20230314130644.mp3",
     "l": 0,
     "b": 0,
-    "m": 1755020126275.5432,
+    "m": 1759570591700,
     "s": 4,
-    "bpm": 142
+    "bpm": 142,
+    "al": "1~20230314//130644.mp3"
   },
   {
     "n": "Тобой гореть и не быть тёплым",
@@ -27781,7 +28128,8 @@
     "l": 0,
     "b": 0,
     "bpm": 117,
-    "m": 1755786074426.27
+    "m": 1759570591700,
+    "al": "1~20221029//002110.mp3"
   },
   {
     "n": "Путь к Голгофе далёк",
@@ -27861,7 +28209,8 @@
     "a": "https://holychords.pro/uploads/music/20190917/20190917183518100.mp3",
     "l": 0,
     "b": 0,
-    "m": 1757228174832.1956
+    "m": 1759570591700,
+    "al": "1~20190917//183518100.mp3"
   },
   {
     "n": "Мой Господь, в этот час я склоняюсь в мольбе",
@@ -27951,7 +28300,8 @@
     "a": "https://holychords.pro/uploads/music/20230325/20230325202223.mp3",
     "l": 0,
     "b": 0,
-    "m": 1742731646887.7783
+    "m": 1759570591700,
+    "al": "1~20230325//202223.mp3"
   },
   {
     "n": "Мой дом и я служить хотим",
@@ -27973,7 +28323,8 @@
     "a": "https://holychords.pro/uploads/music/20200703/2020070310571670.mp3",
     "l": 0,
     "b": 0,
-    "m": 1748783461657.275
+    "m": 1759570591700,
+    "al": "1~20200703//10571670.mp3"
   },
   {
     "n": "Говорят, ты за меня молилась",
@@ -28043,7 +28394,8 @@
     "a": "https://holychords.pro/uploads/music/20200623/2020062311550942.mp3",
     "l": 0,
     "b": 0,
-    "m": 1740893538907.2686
+    "m": 1759570591700,
+    "al": "1~20200623//11550942.mp3"
   },
   {
     "n": "И если б не было любви",
@@ -28160,7 +28512,8 @@
     "a": "https://holychords.pro/uploads/music/20210203/20210203221813.mp3",
     "l": 0,
     "b": 1,
-    "m": 1756224095518.3174
+    "m": 1759570591700,
+    "al": "1~20210203//221813.mp3"
   },
   {
     "n": "Гряди, Эммануил!",
@@ -28262,7 +28615,8 @@
     "a": "https://holychords.pro/uploads/music/20200701/20200701164547_31_12.mp3",
     "l": 0,
     "b": 0,
-    "m": 1738748748347.9102
+    "m": 1759570591700,
+    "al": "1~20200701//164547_31_12.mp3"
   },
   {
     "n": "Приди, приди, Эммануил - Томлин",
@@ -28334,7 +28688,7 @@
     ],
     "p": 0,
     "l": 0,
-    "m": 1734859771603
+    "m": 1759570591700
   },
   {
     "n": "За Рождество",
@@ -28385,12 +28739,13 @@
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_62_31.mp3",
     "l": 0,
     "b": 0,
-    "m": 1735459469543
+    "m": 1759570591700,
+    "al": "1~20200701//164457_62_31.mp3"
   },
   {
     "n": "Тихая ночь - РБЦ",
     "w": 1735418830271,
-    "m": 1735492279493,
+    "m": 1759570591700,
     "t": [
       "Тихая ночь, дивная ночь!\nДремлет всё, лишь не спит\nВ благоговенье святая чета;\nЧудным Младенцем полны их сердца,\nРадость в душе их горит.\nРадость в душе их горит.",
       "Тихая ночь, дивная ночь!\nГлас с небес возвестил:\nРадуйтесь, ныне родился Христос,\nМир и спасение всем Он принёс,\nСвыше нас Свет посетил!\nСвыше нас Свет посетил!",
@@ -28453,7 +28808,7 @@
   {
     "n": "Люблю, Господь, Твой дом",
     "w": 1735965773982,
-    "m": 1756631020099.4197,
+    "m": 1759570591700,
     "t": [
       "Люблю, Господь, Твой дом,\nЧертог любви Твоей;\nЛюблю я Церковь из людей,\nИскупленных Христом.",
       "Люблю, предвечный Бог,\nЯ Церковь - Твой алмаз;\nТы, как зрачок лучистых глаз,\nХранишь её порог.",
@@ -28531,12 +28886,13 @@
     ],
     "p": 7,
     "a": "https://holychords.pro/uploads/music/20210203/20210203225152.mp3",
-    "l": 0
+    "l": 0,
+    "al": "1~20210203//225152.mp3"
   },
   {
     "n": "Придите к Младенцу, верные, с веселием",
     "w": 1736667335545,
-    "m": 1758982039199.9727,
+    "m": 1759570591700,
     "t": [
       "Придите к Младенцу, верные, с весельем,\nПридите скорее к Нему в Вифлеем.\nЦарь вам родился, Царь всего творенИя.",
       "Придите поклониться,\nПридите поклониться,\nПридите поклониться Господу.",
@@ -28558,7 +28914,7 @@
   {
     "n": "Кровью Агнца освящён",
     "w": 1737136617366,
-    "m": 1754236754660.2146,
+    "m": 1759570591700,
     "t": [
       "Кровью Агнца освящён\nИ очищен от греха\nЯ навек Тобой спасён,\nПреклоняюсь у креста.\nОтдаю Тебе хвалу,\nМой Господь, великий Бог\nПоклоненье и любовь\nЯ кладу у Твоих ног.",
       "Тебе Единому, славному, вечному\nДушу открою и буду беспечен я\nРадостью сердце моё наполняется\nЯ умаляюсь, а Ты возвышаешься.\nТебе вся слава, Тебе поклонение\nТы- мой Господь, а я- лишь творение,\nТвой отпечаток ноги на песке,\nВолны все смоют, но я останусь в Тебе,\nОстанусь в Тебе!",
@@ -28589,7 +28945,7 @@
     "l": 0
   },
   {
-    "m": 1746341305969.7983,
+    "m": 1759570591700,
     "n": "Взойдём на Голгофу мой брат",
     "w": 1739719694442,
     "l": 0,
@@ -28682,10 +29038,11 @@
         ]
       }
     ],
-    "a": "https://holychords.pro/storage/music/ONrDLyB5kS0Yt0Pa2b5w5F2W6AWRilV96w3Oy6Ke.mp3"
+    "a": "https://holychords.pro/storage/music/ONrDLyB5kS0Yt0Pa2b5w5F2W6AWRilV96w3Oy6Ke.mp3",
+    "al": "2~ONrDLyB5kS0Yt0Pa2b5w5F2W6AWRilV96w3Oy6Ke.mp3"
   },
   {
-    "m": 1755859162248.5361,
+    "m": 1759570591700,
     "n": "Радостную песнь воспойте в небесах!",
     "w": 1740741768303,
     "l": 0,
@@ -28748,10 +29105,11 @@
       },
       { "w": 8, "a": 1, "r": 2 }
     ],
-    "a": "https://holychords.pro/storage/music/ONrDLyB5kS0Yt0Pa2b5w5F2W6AWRilV96w3Oy6Ke.mp3"
+    "a": "https://holychords.pro/storage/music/ONrDLyB5kS0Yt0Pa2b5w5F2W6AWRilV96w3Oy6Ke.mp3",
+    "al": "2~ONrDLyB5kS0Yt0Pa2b5w5F2W6AWRilV96w3Oy6Ke.mp3"
   },
   {
-    "m": 1746346431176.678,
+    "m": 1759570591700,
     "n": "Господь! Когда ученикам",
     "w": 1740750387202,
     "l": 0,
@@ -28815,7 +29173,7 @@
     "k": 3
   },
   {
-    "m": 1747572481355.2024,
+    "m": 1759570591701,
     "n": "Я есмь овца Иисуса, Он - Пастырь добрый мой",
     "w": 1740905535415,
     "l": 0,
@@ -28837,7 +29195,7 @@
     "a": ""
   },
   {
-    "m": 1741062519429.8435,
+    "m": 1759570591701,
     "n": "От небесных вершин до глубоких морей",
     "w": 1740923804411,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164415_25_7.mp3",
@@ -28892,10 +29250,11 @@
       },
       { "w": 9, "a": 1, "r": 2 },
       { "w": 8, "s": "final", "c": 2, "t": 3, "p": [[0, 6]], "r": 3 }
-    ]
+    ],
+    "al": "1~20200701//164415_25_7.mp3"
   },
   {
-    "m": 1743184227828.0837,
+    "m": 1759570591701,
     "n": "Боже, я всего лишь человек",
     "w": 1741283723700,
     "l": 0,
@@ -28960,10 +29319,11 @@
       { "w": 5, "a": 2, "r": 0 },
       { "w": 6, "a": 2 }
     ],
-    "a": "https://holychords.pro/uploads/music/20230728/20230728215327.mp3"
+    "a": "https://holychords.pro/uploads/music/20230728/20230728215327.mp3",
+    "al": "1~20230728//215327.mp3"
   },
   {
-    "m": 1759221880280.6128,
+    "m": 1759570591701,
     "n": "Теплий дощ",
     "w": 1741365215965,
     "l": 1,
@@ -29042,10 +29402,11 @@
       },
       { "w": 5, "a": 2, "r": 2 }
     ],
-    "a": "https://holychords.pro/uploads/music/20200701/20200701164132.mp3"
+    "a": "https://holychords.pro/uploads/music/20200701/20200701164132.mp3",
+    "al": "1~20200701//164132.mp3"
   },
   {
-    "m": 1749394098692.8076,
+    "m": 1759570591701,
     "n": "Славная Церковь",
     "w": 1741430962829,
     "a": "https://holychords.pro/uploads/music/20210219/20210219135235.mp3",
@@ -29112,10 +29473,11 @@
       },
       { "w": 8, "a": 1 },
       { "w": 11, "a": 9, "s": "final" }
-    ]
+    ],
+    "al": "1~20210219//135235.mp3"
   },
   {
-    "m": 1752999703493.9678,
+    "m": 1759570591701,
     "n": "Бог есть Любовь",
     "w": 1741883251071,
     "a": "https://holychords.pro/storage/music/th6s3O7Ftk2hOAPDHVg58s8urigdqV9u7sIvE6hO.mp3",
@@ -29170,10 +29532,11 @@
       { "w": 9, "a": 1 },
       { "w": 11, "s": "+", "c": 5, "t": 5, "p": [[5]] }
     ],
-    "bpm": 73
+    "bpm": 73,
+    "al": "2~th6s3O7Ftk2hOAPDHVg58s8urigdqV9u7sIvE6hO.mp3"
   },
   {
-    "m": 1753000343302.7668,
+    "m": 1759570591701,
     "n": "Ты великолепен",
     "w": 1742107357770,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164457_6_99.mp3",
@@ -29213,10 +29576,11 @@
         ]
       }
     ],
-    "bpm": 67
+    "bpm": 67,
+    "al": "1~20200701//164457_6_99.mp3"
   },
   {
-    "m": 1745221508403.9,
+    "m": 1759570591701,
     "n": "Я знаю, кто я в Тебе",
     "w": 1743094084891,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164536_91_88.mp3",
@@ -29261,10 +29625,11 @@
     ],
     "p": 10,
     "bpm": 172,
-    "s": 3
+    "s": 3,
+    "al": "1~20200701//164536_91_88.mp3"
   },
   {
-    "m": 1744963806154.1125,
+    "m": 1759570591701,
     "n": "Бог взывает к сердцам, верным ему",
     "w": 1743319867014,
     "l": 0,
@@ -29316,10 +29681,11 @@
       },
       { "w": 4, "c": 2, "t": 4, "s": "bridge" }
     ],
-    "a": "https://holychords.pro/uploads/music/20230330/20230330012121.mp3"
+    "a": "https://holychords.pro/uploads/music/20230330/20230330012121.mp3",
+    "al": "1~20230330//012121.mp3"
   },
   {
-    "m": 1755856685985.4822,
+    "m": 1759570591701,
     "n": "Агнец Божий",
     "w": 1743849296823,
     "a": "https://holychords.pro/uploads/music/20210430/20210430092407.mp3",
@@ -29353,10 +29719,11 @@
     "b": 1,
     "k": 0,
     "bpm": 130,
-    "s": 4
+    "s": 4,
+    "al": "1~20210430//092407.mp3"
   },
   {
-    "m": 1745088836564.9954,
+    "m": 1759570591701,
     "n": "Кто есть на небе у меня",
     "w": 1744530858501,
     "a": "https://holychords.pro/uploads/music/20200629/2020062920340965.mp3",
@@ -29410,10 +29777,11 @@
         "p": [[5, 12], [3], [5, 11], [3], [5, 11], [4, 9], [5, 12], [3]],
         "r": { "4-7": 2 }
       }
-    ]
+    ],
+    "al": "1~20200629//20340965.mp3"
   },
   {
-    "m": 1757592423588.4536,
+    "m": 1759570591701,
     "n": "Я боль твою возьму",
     "w": 1746592122150,
     "l": 0,
@@ -29446,10 +29814,11 @@
       { "w": 6, "a": 1, "r": 2 },
       { "w": 8, "a": 7, "s": "final" }
     ],
-    "a": "https://holychords.pro/uploads/music/20200701/20200701164457_33_36.mp3"
+    "a": "https://holychords.pro/uploads/music/20200701/20200701164457_33_36.mp3",
+    "al": "1~20200701//164457_33_36.mp3"
   },
   {
-    "m": 1752989269494.107,
+    "m": 1759570591701,
     "n": "Грех победить, о желаешь ли ты",
     "w": 1746902108287,
     "a": "https://holychords.pro/uploads/music/20230907/20230907230414.mp3",
@@ -29521,10 +29890,11 @@
         ]
       },
       { "w": 7, "a": 1 }
-    ]
+    ],
+    "al": "1~20230907//230414.mp3"
   },
   {
-    "m": 1758449656137.511,
+    "m": 1759570591701,
     "n": "Иисус, в начале Ты был Словом",
     "w": 1746957686605,
     "a": "https://holychords.pro/uploads/music/20200701/20200701164515_64_57.mp3",
@@ -29559,10 +29929,11 @@
       { "w": 11, "a": 7, "r": { "5-6": 3 } }
     ],
     "bpm": 130,
-    "s": 4
+    "s": 4,
+    "al": "1~20200701//164515_64_57.mp3"
   },
   {
-    "m": 1753000588670.9124,
+    "m": 1759570591701,
     "n": "Господь, Ты - Верен и Ты - Суверен",
     "w": 1747470943032,
     "l": 0,
@@ -29597,7 +29968,7 @@
     ]
   },
   {
-    "m": 1748939028871.5405,
+    "m": 1759570591701,
     "n": "Как человек пришёл Ты в этот мир",
     "w": 1748234028604,
     "a": "https://holychords.pro/uploads/music/20190816/2019081622201826.mp3",
@@ -29664,10 +30035,11 @@
     ],
     "k": 1,
     "bpm": 70,
-    "s": 4
+    "s": 4,
+    "al": "1~20190816//22201826.mp3"
   },
   {
-    "m": 1750753213834.6501,
+    "m": 1759570591701,
     "n": "Дарит солнце растениям свет",
     "w": 1749885445760,
     "l": 0,
@@ -29718,10 +30090,11 @@
       { "w": 11, "s": "final", "c": 1 }
     ],
     "b": 1,
-    "a": "https://holychords.pro/uploads/music/20200603/2020060314431728.mp3"
+    "a": "https://holychords.pro/uploads/music/20200603/2020060314431728.mp3",
+    "al": "1~20200603//14431728.mp3"
   },
   {
-    "m": 1757218620013.9397,
+    "m": 1759570591701,
     "n": "Навеки не оставлю",
     "w": 1751188309297,
     "a": "https://holychords.pro/uploads/music/20200623/2020062312263697.mp3",
@@ -29806,10 +30179,11 @@
         ]
       },
       { "w": 13, "a": 1, "c": 4, "r": 2 }
-    ]
+    ],
+    "al": "1~20200623//12263697.mp3"
   },
   {
-    "m": 1752314864981.6555,
+    "m": 1759570591701,
     "n": "Что унываешь, что смущаешься, душа моя",
     "w": 1752313222276,
     "l": 0,
@@ -29859,10 +30233,11 @@
       { "w": 7, "c": 4, "s": "play" },
       { "w": 8, "a": 2, "r": { "0-3:1": 2 } }
     ],
-    "a": "https://holychords.pro/uploads/music/20230617/20230617141428.mp3"
+    "a": "https://holychords.pro/uploads/music/20230617/20230617141428.mp3",
+    "al": "1~20230617//141428.mp3"
   },
   {
-    "m": 1755343084124.86,
+    "m": 1759570591701,
     "n": "Прославь Того, Кто свет создал",
     "w": 1752930411968,
     "l": 0,
@@ -29935,10 +30310,11 @@
     "a": "https://holychords.pro/uploads/music/20220201/20220201184902.mp3",
     "p": 3,
     "bpm": 72,
-    "s": 3
+    "s": 3,
+    "al": "1~20220201//184902.mp3"
   },
   {
-    "m": 1754120328461.015,
+    "m": 1759570591701,
     "n": "Завершился день, село солнышко",
     "w": 1754072662813,
     "l": 0,
@@ -29959,10 +30335,11 @@
       { "w": 3, "a": 1, "r": { "a0:0": 2 } },
       { "w": 4, "s": "+", "c": 0, "t": 3, "r": { "0:3a": 2 } }
     ],
-    "a": "https://holychords.pro/uploads/music/20200524/2020052414130559.mp3"
+    "a": "https://holychords.pro/uploads/music/20200524/2020052414130559.mp3",
+    "al": "1~20200524//14130559.mp3"
   },
   {
-    "m": 1755452763027.5881,
+    "m": 1759570591701,
     "n": "Радость, радость непрестанно!",
     "w": 1755410138914,
     "a": "https://holychords.pro/uploads/music/20231103/20231103150531.mp3",
@@ -30039,10 +30416,11 @@
       },
       { "w": 9, "a": 1 }
     ],
-    "k": 1
+    "k": 1,
+    "al": "1~20231103//150531.mp3"
   },
   {
-    "m": 1757852918191.11,
+    "m": 1759570591701,
     "n": "Святый, Святый, Святый, Божий Сын!",
     "w": 1757495160711,
     "l": 0,
@@ -30140,10 +30518,11 @@
     ],
     "a": "https://holychords.pro/uploads/music/20230608/20230608111744.mp3",
     "s": 4,
-    "bpm": 160
+    "bpm": 160,
+    "al": "1~20230608//111744.mp3"
   },
   {
-    "m": 1757533291703.4226,
+    "m": 1759570591701,
     "n": "Иисус, за Кровь Твою, я Тебя благодарю",
     "w": 1757500116792,
     "l": 0,
@@ -30161,10 +30540,11 @@
       { "w": 4, "a": 1 },
       { "w": 5, "a": 2 }
     ],
-    "a": "https://holychords.pro/uploads/music/20200701/20200701164415_89_3.mp3"
+    "a": "https://holychords.pro/uploads/music/20200701/20200701164415_89_3.mp3",
+    "al": "1~20200701//164415_89_3.mp3"
   },
   {
-    "m": 1757852222484.6152,
+    "m": 1759570591701,
     "n": "Только Богом, только верой",
     "w": 1757535459767,
     "a": "https://holychords.pro/uploads/music/20210228/20210228224948.mp3",
@@ -30258,10 +30638,11 @@
       { "w": 10, "a": 0, "s": "final" }
     ],
     "s": 4,
-    "bpm": 120
+    "bpm": 120,
+    "al": "1~20210228//224948.mp3"
   },
   {
-    "m": 1759083727176.046,
+    "m": 1759570591701,
     "n": "Всем людям нужен Бог",
     "w": 1758861545263,
     "l": 0,
@@ -30319,10 +30700,11 @@
       { "w": 12, "a": 6, "r": 2 }
     ],
     "a": "https://holychords.pro/uploads/music/20200701/20200701164438_10.mp3",
-    "k": 0
+    "k": 0,
+    "al": "1~20200701//164438_10.mp3"
   },
   {
-    "m": 1758991756588.3298,
+    "m": 1759570591701,
     "n": "Дорогие минуты нам Бог даровал",
     "w": 1758987421162,
     "a": "https://holychords.pro/uploads/music/20200623/2020062312254257.mp3",
@@ -30341,10 +30723,11 @@
       { "w": 5, "c": 0, "t": 2, "s": "one", "p": [[3], [0], [3, 11], [3], [2], [2]] },
       { "w": 9, "c": 0, "t": 3, "s": " one", "p": [[4], [1], [3, 12], [2], [2], [3]] },
       { "w": 13, "c": 0, "t": 4, "s": "one", "p": [[2], [2], [3, 12], [3], [3], [1]] }
-    ]
+    ],
+    "al": "1~20200623//12254257.mp3"
   },
   {
-    "m": 1759049576354.1472,
+    "m": 1759570591701,
     "n": "В нашей жизни самое прекрасное",
     "w": 1759004484092,
     "a": "https://holychords.pro/uploads/music/20200704/202007040905042.mp3",
@@ -30382,10 +30765,11 @@
       { "w": 22, "a": 1 },
       { "w": 18, "c": 0, "t": 6, "s": "one", "p": [[0, 12], [0, 13], [0, 11], [12]] },
       { "w": 23, "a": 1, "r": 2 }
-    ]
+    ],
+    "al": "1~20200704//0905042.mp3"
   },
   {
-    "m": 1759042906333.7258,
+    "m": 1759570591701,
     "n": "Встаёт заря, и солнце с торжеством восходит",
     "w": 1759042824171,
     "l": 0,
@@ -30402,6 +30786,7 @@
       { "w": 3, "c": 1, "t": 2, "s": "one" },
       { "w": 4, "a": 2 }
     ],
-    "a": "https://holychords.pro/uploads/music/20190502/2019050211561540.mp3"
+    "a": "https://holychords.pro/uploads/music/20190502/2019050211561540.mp3",
+    "al": "1~20190502//11561540.mp3"
   }
 ]
