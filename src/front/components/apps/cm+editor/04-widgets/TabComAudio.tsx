@@ -9,7 +9,6 @@ import { useCheckUserAccessRightsInScope } from '$index/checkers';
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmMp3Rule, HttpLink } from 'shared/api';
-import { itIt } from 'shared/utils';
 
 type Props = { topHTML?: string; topCom?: EditableCom; topMp3Rule?: CmMp3Rule };
 
@@ -28,17 +27,8 @@ export const CmEditorTabComAudio = ({ topHTML, topCom, topMp3Rule }: Props) => {
 
   if (!ccom) return null;
 
-  const removeSrc = (src: string) =>
-    cmEditComClientTsjrpcMethods.setAudioLinks({
-      comw: ccom.wid,
-      value: Array.from(new Set(ccom.audio.filter(s => s && s !== src))),
-    });
-
-  const addSrc = (src: HttpLink) =>
-    cmEditComClientTsjrpcMethods.setAudioLinks({
-      comw: ccom.wid,
-      value: Array.from(new Set(ccom.audio.concat(src).filter(itIt))),
-    });
+  const toggleLinkExistance = (link: HttpLink) =>
+    cmEditComClientTsjrpcMethods.toggleAudioLink({ comw: ccom.wid, link });
 
   return (
     <>
@@ -49,7 +39,7 @@ export const CmEditorTabComAudio = ({ topHTML, topCom, topMp3Rule }: Props) => {
           icon="CancelCircle"
           isCanDelete={checkAccess('cm', 'COM_AUDIO', 'D')}
           onToggle={async src => {
-            await removeSrc(src);
+            await toggleLinkExistance(src);
             setRemovedHrefs(removedHrefs.concat(src));
           }}
         />
@@ -63,7 +53,7 @@ export const CmEditorTabComAudio = ({ topHTML, topCom, topMp3Rule }: Props) => {
             srcs={removedHrefs}
             icon="PlusSignCircle"
             onToggle={async src => {
-              await addSrc(src);
+              await toggleLinkExistance(src);
               setRemovedHrefs(removedHrefs.filter(href => href !== src));
             }}
           />
@@ -96,7 +86,7 @@ export const CmEditorTabComAudio = ({ topHTML, topCom, topMp3Rule }: Props) => {
               srcs={hrefs}
               icon="PlusSignCircle"
               onToggle={async src => {
-                await addSrc(src);
+                await toggleLinkExistance(src);
                 setHrefs(hrefs.filter(href => href !== src));
               }}
             />

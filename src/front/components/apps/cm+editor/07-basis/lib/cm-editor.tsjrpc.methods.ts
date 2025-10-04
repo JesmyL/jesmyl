@@ -39,7 +39,7 @@ export const cmEditComClientTsjrpcMethods = new (class CmEditCom extends TsjrpcC
         changeTon: true,
         makeBemoled: true,
         changePushKind: true,
-        setAudioLinks: true,
+        toggleAudioLink: true,
 
         changeChordBlock: true,
         changeTextBlock: true,

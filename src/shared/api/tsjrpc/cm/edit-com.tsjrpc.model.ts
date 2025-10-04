@@ -13,7 +13,7 @@ export type CmEditComTsjrpcModel = {
   changeTon: SimpleComValueSetter<number>;
   makeBemoled: SimpleComValueSetter<num>;
   changePushKind: SimpleComValueSetter<number>;
-  setAudioLinks: SimpleComValueSetter<HttpLink[]>;
+  toggleAudioLink: (args: { comw: CmComWid; link: HttpLink }) => void;
 
   changeChordBlock: (args: { texti: number; comw: CmComWid; value: string }) => IExportableCom;
   changeTextBlock: (args: { texti: number; comw: CmComWid; value: string }) => IExportableCom;

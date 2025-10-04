@@ -83,14 +83,18 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           return `Изменено значение правила группировок для слайдов в песне ${getCmComNameInBrackets(com)} - ${value} (было ${prev})`;
         }),
 
-        setAudioLinks: modifyInvocableCom((com, { value }, { auth }) => {
+        toggleAudioLink: modifyInvocableCom((com, { link }, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_AUDIO', 'U')) throw '';
 
           const prev = makeCmComNumLeadToHttpAudioLinks(com.al);
-          com.al = makeCmComHttpToNumLeadAudioLinks(value);
+          const isThereInPrev = prev?.includes(link);
 
-          return `Изменение аудио-ссылок для песни ${getCmComNameInBrackets(com)}:\n\n${value}\n\nбыло:${prev}`;
+          com.al = makeCmComHttpToNumLeadAudioLinks(
+            isThereInPrev ? prev?.filter(pLink => pLink !== link) : [...(prev ?? []), link],
+          );
+
+          return `Изменение аудио-ссылок для песни ${getCmComNameInBrackets(com)}:\n\n${isThereInPrev ? 'удалено' : 'добавлено'}:\n${link}\n\nбыло:\n${prev}`;
         }),
 
         changeChordBlock: modifyInvocableCom((com, { texti: coli, value }, { auth }) => {
