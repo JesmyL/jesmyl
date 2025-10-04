@@ -71,12 +71,12 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
   return (
     <>
       <ModalHeader className="flex gap-2 justify-between @container">
-        <span className="flex gap-2">
+        <span className="flex gap-2 w-[calc(100cqw-23px*2)]">
           <LazyIcon icon="TextAlignLeft" />
           <span className="text-x7 nowrap">
             #{ordNN} {ord?.me.header()}
           </span>
-          <span className="text-x3 ellipsis w-[calc(100cqw-40px*2-1.5em)]">{com.name}</span>
+          <span className="text-x3 ellipsis">{com.name}</span>
         </span>
 
         {ordSelectorId === 'head' ? (
