@@ -17,13 +17,13 @@ export const checkUserScopeAccessRight = <
   Rule extends keyof IndexAppAccessRightTitles[Scope],
   Rights extends Partial<{ [K in Scope]: Partial<{ [K in Rule]: number }> }>,
 >(
-  rights: Rights,
+  rights: Rights | nil,
   scope: Scope,
   rule: Rule | Rule[],
   operation: CRUDOperation | CRUDOperation[] = 'R',
 ) => {
   try {
-    if (rights[scope] == null) return false;
+    if (rights == null || rights[scope] == null) return false;
 
     rule = mylib.isArr(rule) ? rule : [rule];
     operation = mylib.isArr(operation) ? operation : [operation];
