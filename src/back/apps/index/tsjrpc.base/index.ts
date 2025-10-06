@@ -9,6 +9,7 @@ import { smylib } from 'shared/utils';
 import {
   accessRightTitlesFileStore,
   appVersionFileStore,
+  indexStameskaIconsFileStore,
   userAccessRightsFileStore,
   valuesFileStore,
 } from '../file-stores';
@@ -100,6 +101,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
 
         getAccessRightTitles: async () => ({ value: accessRightTitlesFileStore.getValue() }),
         getUserAccessRights: async () => ({ value: userAccessRightsFileStore.getValue() }),
+        getIconPack: async ({ icon }) => ({ value: { pack: indexStameskaIconsFileStore.getValue()[icon] } }),
       },
     });
   }

@@ -1,5 +1,6 @@
 import { indexIsPlayAnimationsAtom } from '$index/atoms';
 import { indexIDB } from '$index/db/index-idb';
+import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
 import { HTMLAttributes, useEffect, useState } from 'react';
 import { emptyFunc, itInvokeIt } from 'shared/utils';
 import {
@@ -58,7 +59,7 @@ export default function TheIconLazy({
       <WithoutStaticProps
         icon={icon}
         kind={kind}
-        withoutAnimation={withoutAnimation}
+        withoutAnimation
         className={className}
         children={children}
         {...props}
@@ -94,15 +95,24 @@ indexIDB.tb.iconPacks.hook('creating', () => {
   }, 1000);
 });
 
+const packFetches: PRecord<KnownStameskaIconName, Promise<{ pack: StameskaIconPack }>> = {};
+
 const WithoutStaticProps = ({ icon, className, kind = 'StrokeRounded', withoutAnimation, ...props }: LazyIconProps) => {
   const [staticIconProps, setStaticIconProps] = useState<ReturnType<typeof makeStameskaIconSvgHTMLProp>>();
 
   useEffect(() => {
+    let fetchTimeout: TimeOut;
+
     (async () => {
       const pack = icon && (await indexIDB.tb.iconPacks.get(icon))?.pack;
 
+      fetchTimeout = setTimeout(async () => {
+        updatePack((await (packFetches[icon] ??= indexTsjrpcClientMethods.getIconPack({ icon }))).pack, emptyFunc);
+      }, 3000);
+
       const updatePack = (pack: StameskaIconPack | nil, elseCb: () => void) => {
         if (pack) {
+          clearTimeout(fetchTimeout);
           cachedPacks[icon] ??= pack;
           cachedStaticProps[`${icon}/${kind}`] = makeStameskaIconSvgHTMLProp(pack, kind);
         } else elseCb();
@@ -119,6 +129,8 @@ const WithoutStaticProps = ({ icon, className, kind = 'StrokeRounded', withoutAn
           });
       });
     })();
+
+    return () => clearTimeout(fetchTimeout);
   }, [icon, kind]);
 
   return (

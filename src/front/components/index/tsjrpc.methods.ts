@@ -4,6 +4,7 @@ import { soki } from 'front/soki';
 import { LocalSokiAuth } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { indexAppUserAccessRightsMatrixAtom } from './atoms';
+import { indexIDB } from './db/index-idb';
 
 const tgAuthorize = async ({ auth, token }: { auth: LocalSokiAuth; token: string }) => {
   await authIDB.set.auth(auth);
@@ -35,6 +36,9 @@ export const indexTsjrpcClientMethods = new (class Index extends TsjrpcClient<In
         updateUserAccessRight: async rights => {
           if (rights == null) return;
           indexAppUserAccessRightsMatrixAtom.set(rights);
+        },
+        getIconPack: ({ pack }) => {
+          indexIDB.tb.iconPacks.put({ key: pack[0] as never, pack });
         },
       },
     });

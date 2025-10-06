@@ -29,4 +29,5 @@ export type IndexTsjrpcModel = {
   getIconExistsPacks: (args: { page: number; pageSize: number; searchTerm: string }) => {
     packs: StameskaIconPack[];
   };
+  getIconPack: (args: { icon: KnownStameskaIconName }) => { pack: StameskaIconPack };
 };
