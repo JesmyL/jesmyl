@@ -18,7 +18,7 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
 
           chordPackFileStore.setValue({ ...chordPackFileStore.getValue(), ...chords });
           const modifiedAt = chordPackFileStore.fileModifiedAt();
-          cmShareServerTsjrpcMethods.editedChords({ chords, modifiedAt });
+          cmShareServerTsjrpcMethods.editedChords({ chords, modifiedAt }, null);
 
           return { value: chords, description: `Изменены аккорды ${smylib.keys(chords).join(', ')}` };
         },
@@ -83,10 +83,13 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
 
         updateConstantsConfig: async ({ config }) => {
           cmConstantsConfigFileStore.updateValue(prev => ({ ...prev, ...config }));
-          cmShareServerTsjrpcMethods.refreshConstantsConfig({
-            config,
-            modifiedAt: cmConstantsConfigFileStore.fileModifiedAt(),
-          });
+          cmShareServerTsjrpcMethods.refreshConstantsConfig(
+            {
+              config,
+              modifiedAt: cmConstantsConfigFileStore.fileModifiedAt(),
+            },
+            tool => !!(tool && tool.version > 1039),
+          );
         },
       },
     });

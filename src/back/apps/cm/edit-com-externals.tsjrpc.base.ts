@@ -35,7 +35,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
 
             dayHistory.unshift({ s: list, w: m, e: eventMi, fio });
 
-            cmShareServerTsjrpcMethods.refreshScheduleEventComPacks({ packs: [packs[schw]], modifiedAt: m });
+            cmShareServerTsjrpcMethods.refreshScheduleEventComPacks({ packs: [packs[schw]], modifiedAt: m }, null);
 
             return {
               description:

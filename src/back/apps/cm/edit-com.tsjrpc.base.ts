@@ -185,7 +185,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           };
           comsFileStore.getValue().push(mapCmExportableToImportableCom(com));
           comsFileStore.saveValue();
-          cmShareServerTsjrpcMethods.editedCom({ com });
+          cmShareServerTsjrpcMethods.editedCom({ com }, null);
 
           return { value: com, description: `Добавлена новая песня ${getCmComNameInBrackets(com)}` };
         },
@@ -259,7 +259,7 @@ export function modifyInvocableCom<Props extends { comw: CmComWid }>(
     comsFileStore.saveValue();
     const expCom = mapCmImportableToExportableCom(com);
 
-    cmShareServerTsjrpcMethods.editedCom({ com: expCom });
+    cmShareServerTsjrpcMethods.editedCom({ com: expCom }, null);
 
     return { value: expCom, description };
   };

@@ -27,7 +27,7 @@ export const indexTSJRPCBaseRequestFreshes: typeof indexServerTsjrpcBase.request
 
   if (login != null && userRights[login] != null && userRights[login].info.m > lastModfiedAt) {
     const { info, ...rights } = userRights[login];
-    indexServerTsjrpcShareMethods.refreshAccessRights({ rights });
+    indexServerTsjrpcShareMethods.refreshAccessRights({ rights }, client);
   }
 
   const schedules: IScheduleWidget[] = [];

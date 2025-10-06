@@ -95,7 +95,7 @@ function modifyCat<Props extends { catw: CmCatWid }, Tools>(
     const description = modifier(cat, props, tools);
 
     cat.m = Date.now();
-    cmShareServerTsjrpcMethods.editedCat({ cat });
+    cmShareServerTsjrpcMethods.editedCat({ cat }, null);
 
     return { value: cat, description };
   };

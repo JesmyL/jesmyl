@@ -67,10 +67,13 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
 
           if (visitInfo && visitInfo.version > 1039)
             if (cmConstantsConfigFileStore.fileModifiedAt() > lastModfiedAt) {
-              cmShareServerTsjrpcMethods.refreshConstantsConfig({
-                config: cmConstantsConfigFileStore.getValue(),
-                modifiedAt: cmConstantsConfigFileStore.fileModifiedAt(),
-              });
+              cmShareServerTsjrpcMethods.refreshConstantsConfig(
+                {
+                  config: cmConstantsConfigFileStore.getValue(),
+                  modifiedAt: cmConstantsConfigFileStore.fileModifiedAt(),
+                },
+                client,
+              );
             }
 
           if (auth?.login != null) {

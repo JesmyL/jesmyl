@@ -17,7 +17,7 @@ export const modifySchedule =
     sch.m = Date.now();
     schedulesFileStore.saveValue();
 
-    schServerTsjrpcShareMethods.editedSchedule({ sch });
+    schServerTsjrpcShareMethods.editedSchedule({ sch }, null);
     if (isNeedRefreshTgInformTime) scheduleTgInformer.inform(sch.w);
 
     return { value: sch, description };
