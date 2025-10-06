@@ -1,19 +1,20 @@
-import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
 import { Accordion } from '#shared/components/ui/accordion';
 import { MyLib } from '#shared/lib/my-lib';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { indexAppUserAccessRightsMatrixAtom } from '$index/atoms';
 import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
+import { useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { accessRightsCRUDOperations, checkUserScopeAccessRight } from 'shared/utils/index/utils';
 
 export function AccessRightsPage() {
-  const [rightTitles] = useInvocatedValue({} as never, () => indexTsjrpcClientMethods.getAccessRightTitles(), []);
+  const { data: rightTitles } = useQuery({
+    queryKey: ['Index.getAccessRightTitles'],
+    queryFn: () => indexTsjrpcClientMethods.getAccessRightTitles(),
+  });
   const userRights = useAtomValue(indexAppUserAccessRightsMatrixAtom);
-
-  const rightTitlesEntries = MyLib.entries(rightTitles);
 
   useEffect(() => {
     (async () => {
@@ -21,6 +22,10 @@ export function AccessRightsPage() {
       indexAppUserAccessRightsMatrixAtom.set(rights);
     })();
   }, []);
+
+  if (rightTitles == null) return;
+
+  const rightTitlesEntries = MyLib.entries(rightTitles);
 
   return (
     <PageContainerConfigurer
@@ -50,42 +55,41 @@ export function AccessRightsPage() {
                               {info.title} ({scope})
                             </h2>
 
-                            <div className="ml-3">
-                              {MyLib.entries(rightTitles).map(([rule, title]) => {
-                                return (
-                                  <div
-                                    key={rule}
-                                    className="flex gap-3 my-3"
-                                  >
-                                    {accessRightsCRUDOperations.map(operation => {
-                                      const checked = checkUserScopeAccessRight(userRights, scope, rule, operation);
+                            <table className="ml-2">
+                              {crudTableTHeader}
+                              <tbody>
+                                {MyLib.entries(rightTitles).map(([rule, title]) => {
+                                  return (
+                                    <tr key={rule}>
+                                      {accessRightsCRUDOperations.map(operation => {
+                                        const checked = checkUserScopeAccessRight(userRights, scope, rule, operation);
 
-                                      return (
-                                        <label
-                                          key={operation}
-                                          className="flex gap-1"
-                                        >
-                                          <span>{operation}</span>
-                                          <IconCheckbox
-                                            checked={checked}
-                                            onClick={() =>
-                                              indexTsjrpcClientMethods.updateUserAccessRight({
-                                                login: userLogin,
-                                                operation,
-                                                rule,
-                                                scope,
-                                                value: !checked,
-                                              })
-                                            }
-                                          />
-                                        </label>
-                                      );
-                                    })}
-                                    {title}
-                                  </div>
-                                );
-                              })}
-                            </div>
+                                        return (
+                                          <td key={operation}>
+                                            <IconCheckbox
+                                              className="ml-1"
+                                              checked={checked}
+                                              onClick={() =>
+                                                indexTsjrpcClientMethods.updateUserAccessRight({
+                                                  login: userLogin,
+                                                  operation,
+                                                  rule,
+                                                  scope,
+                                                  value: !checked,
+                                                })
+                                              }
+                                            />
+                                          </td>
+                                        );
+                                      })}
+                                      <td>
+                                        <span className="mx-2">{title}</span>
+                                      </td>
+                                    </tr>
+                                  );
+                                })}
+                              </tbody>
+                            </table>
                           </div>
                         );
                       })}
@@ -100,3 +104,14 @@ export function AccessRightsPage() {
     />
   );
 }
+
+const crudTableTHeader = (
+  <thead>
+    <tr>
+      {accessRightsCRUDOperations.map(operation => {
+        return <th key={operation}>{operation}</th>;
+      })}
+      <th>Название</th>
+    </tr>
+  </thead>
+);
