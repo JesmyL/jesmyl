@@ -170,7 +170,6 @@ export function ScheduleKeyValueListAtt({
   return (
     <div>
       <ScheduleWidgetKeyValueItemGrabber.Root
-        uniqKey={att.mi}
         onDrop={({ grabbedValue, targetValue }) => {
           return schDayEventsTsjrpcClient.transferKeyValueAttachment({
             props: dayEventAttScopeProps,
@@ -209,14 +208,16 @@ export function ScheduleKeyValueListAtt({
         {isRedact && (
           <div className="flex flex-end">
             <ScheduleWidgetKeyValueItemGrabber.Drop
-              render={({ className, onDrop }) => (
-                <Button
-                  icon="PinLocation01"
-                  className={twMerge(className, 'mr-7 text-x7')}
-                  onClick={() => onDrop(null)}
-                />
-              )}
               value={null}
+              render={({ className, onDrop, grabbedValue }) =>
+                (!attValue.values || grabbedValue !== attValue.values[attValue.values.length - 1][2]) && (
+                  <Button
+                    icon="PinLocation01"
+                    className={twMerge(className, 'mr-7 text-x7')}
+                    onClick={() => onDrop(null)}
+                  />
+                )
+              }
             />
           </div>
         )}
