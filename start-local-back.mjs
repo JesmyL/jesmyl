@@ -9,9 +9,13 @@ const errorsToPass = new Set([
 
 if (!'is need update files') {
   ['cm', 'index'].forEach(appName => {
-    walkAllFiles(`src/back/apps/${appName}/+case`, (filePath, name) => {
+    const cb = (filePath, name) => {
+      if (!name.endsWith('.json')) return;
       fs.writeFileSync(`src/back/file-stores/apps/${appName}/${name}`, '' + fs.readFileSync(filePath));
-    });
+    };
+
+    walkAllFiles(`src/back/apps/${appName}/+case`, cb);
+    walkAllFiles(`src/back/apps/${appName}`, cb);
   });
 }
 
