@@ -7,6 +7,8 @@ export const useCheckUserAccessRightsInScope = () => {
   const rights = useAtomValue(indexUserAccessRightsAtom);
   const auth = useAuth();
 
+  if (auth.level === 100) return () => true;
+
   return <
     Scope extends keyof IndexAppAccessRightTitles,
     Rule extends keyof OmitOwn<IndexAppAccessRightTitles[Scope], 'info'>,
@@ -14,5 +16,5 @@ export const useCheckUserAccessRightsInScope = () => {
     scope: Scope,
     rule: Rule,
     operation?: Parameters<typeof checkUserScopeAccessRight>[3],
-  ) => auth.level === 100 || checkUserScopeAccessRight(rights as never, scope, rule, operation);
+  ) => checkUserScopeAccessRight(rights as never, scope, rule, operation);
 };
