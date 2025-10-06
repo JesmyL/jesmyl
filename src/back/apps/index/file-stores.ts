@@ -3,6 +3,7 @@ import { NounPronsType } from 'back/complect/model';
 import { IndexAppAccessRightTitles, IndexAppUserAccessRights } from 'shared/model/index/access-rights';
 import { IndexValues } from 'shared/model/index/other';
 import { emptyFunc } from 'shared/utils';
+import { stameskaIconPack } from 'stameska-icon/pack';
 
 export const nounsFileStore = new FileStore<NounPronsType>('/apps/index/nouns.json', { words: {} });
 export const pronounsFileStore = new FileStore<NounPronsType>('/apps/index/pronouns.json', { words: {} });
@@ -14,6 +15,9 @@ export const accessRightTitlesFileStore = new FileStore<IndexAppAccessRightTitle
   '/apps/index/rightTitles.json',
   {} as never,
 );
+
+export const indexStameskaIconsFileStore = new FileStore<typeof stameskaIconPack>('/stameska-icons', null as never);
+// if (indexStameskaIconsFileStore.getValue() == null) indexStameskaIconsFileStore.setValue(stameskaIconPack);
 
 accessRightTitlesFileStore.watchFile(emptyFunc);
 

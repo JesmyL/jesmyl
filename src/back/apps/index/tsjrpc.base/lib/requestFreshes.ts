@@ -8,10 +8,9 @@ import {
 } from 'shared/api';
 import { itNNil, smylib } from 'shared/utils';
 import { knownStameskaIconNames, knownStameskaIconNamesMd5Hash } from 'shared/values/index/known-icons';
-import { stameskaIconPack } from 'stameska-icon/pack';
 import { StameskaIconPack } from 'stameska-icon/utils';
 import { indexServerTsjrpcBase } from '..';
-import { userAccessRightsFileStore } from '../../file-stores';
+import { indexStameskaIconsFileStore, userAccessRightsFileStore } from '../../file-stores';
 import { schedulesFileStore } from '../../schedules/file-stores';
 import { schServerTsjrpcShareMethods } from '../../schedules/tsjrpc.shares';
 import { indexServerTsjrpcShareMethods } from '../../tsjrpc.methods';
@@ -66,7 +65,7 @@ export const indexTSJRPCBaseRequestFreshes: typeof indexServerTsjrpcBase.request
     });
 
     knownIconNamesSet.forEach(knownIconName => {
-      userActualIconDict[knownIconName] = stameskaIconPack[knownIconName];
+      userActualIconDict[knownIconName] = indexStameskaIconsFileStore.getValue()[knownIconName];
     });
 
     const userIconPacksSet = new Set(userIconPacks);
@@ -92,7 +91,7 @@ export const indexTSJRPCBaseRequestFreshes: typeof indexServerTsjrpcBase.request
       .filter(itNNil)
       .forEach(iconName => {
         if (userIconPacksSet.has(iconName)) return;
-        userActualIconDict[iconName] = stameskaIconPack[iconName];
+        userActualIconDict[iconName] = indexStameskaIconsFileStore.getValue()[iconName];
       });
 
     if (knownStameskaIconNamesMd5Hash !== userIconsMd5Hash || smylib.keys(userActualIconDict).length)

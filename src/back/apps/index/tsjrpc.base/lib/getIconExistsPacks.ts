@@ -1,8 +1,9 @@
 import { makeRegExp } from 'regexpert';
 import { itIt, smylib } from 'shared/utils';
-import { StameskaIconName, stameskaIconPack } from 'stameska-icon/pack';
+import { StameskaIconName } from 'stameska-icon/pack';
 import { StameskaIconKind, StameskaIconPack } from 'stameska-icon/utils';
 import { indexServerTsjrpcBase } from '..';
+import { indexStameskaIconsFileStore } from '../../file-stores';
 
 export const indexTSJRPCBaseGetIconExistsPacks: typeof indexServerTsjrpcBase.getIconExistsPacks = async ({
   pageSize,
@@ -21,14 +22,15 @@ export const indexTSJRPCBaseGetIconExistsPacks: typeof indexServerTsjrpcBase.get
 
     const exactIconName = nameBeats.join('').replace(postfixReplaceRegExp, '') as StameskaIconName;
 
-    if (stameskaIconPack[exactIconName] !== undefined) return { value: { packs: [stameskaIconPack[exactIconName]] } };
+    const stameskaIcons = indexStameskaIconsFileStore.getValue();
+    if (stameskaIcons[exactIconName] !== undefined) return { value: { packs: [stameskaIcons[exactIconName]] } };
 
     iconPacks = iconSearchCache[nameBeats.sort().join('')] ??= (() => {
       const foundIconPacks: StameskaIconPack[] = [];
 
-      smylib.keys(stameskaIconPack).forEach(iconName => {
+      smylib.keys(stameskaIcons).forEach(iconName => {
         if (!nameBeats.some(beat => iconName.includes(beat))) return;
-        foundIconPacks.push(stameskaIconPack[iconName]);
+        foundIconPacks.push(stameskaIcons[iconName]);
       });
 
       return foundIconPacks;
@@ -37,7 +39,10 @@ export const indexTSJRPCBaseGetIconExistsPacks: typeof indexServerTsjrpcBase.get
 
   return {
     value: {
-      packs: (iconPacks ?? smylib.values(stameskaIconPack)).slice(page * pageSize, page * pageSize + pageSize),
+      packs: (iconPacks ?? smylib.values(indexStameskaIconsFileStore.getValue())).slice(
+        page * pageSize,
+        page * pageSize + pageSize,
+      ),
     },
   };
 };

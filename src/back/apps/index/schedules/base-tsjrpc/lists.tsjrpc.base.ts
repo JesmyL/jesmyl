@@ -9,7 +9,7 @@ import {
 import { SchListsTsjrpcMethods } from 'shared/api/tsjrpc/schedules/tsjrpc.model';
 import { smylib } from 'shared/utils';
 import { knownStameskaIconNamesMd5Hash } from 'shared/values/index/known-icons';
-import { stameskaIconPack } from 'stameska-icon/pack';
+import { indexStameskaIconsFileStore } from '../../file-stores';
 import { indexServerTsjrpcShareMethods } from '../../tsjrpc.methods';
 import { modifySchedule } from '../schedule-modificators';
 import { scheduleTitleInBrackets } from './general.tsjrpc.base';
@@ -87,7 +87,7 @@ export const schListsTsjrpcBaseServer = new (class SchLists extends TsjrpcBaseSe
         setCategoryIcon: modifyCategory((cat, { value, props }, sch) => {
           indexServerTsjrpcShareMethods.updateKnownIconPacks(
             {
-              actualIconPacks: { [value]: stameskaIconPack[value] },
+              actualIconPacks: { [value]: indexStameskaIconsFileStore.getValue()[value] },
               iconsMd5Hash: knownStameskaIconNamesMd5Hash,
             },
             // TODO: remove soon
