@@ -8,6 +8,8 @@ export const indexServerTsjrpcShareMethods = new (class Sch extends TsjrpcServer
       methods: {
         refreshAccessRights: true,
         updateKnownIconPacks: true,
+        userModal: true,
+        userToast: true,
       },
     });
   }

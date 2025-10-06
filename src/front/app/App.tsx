@@ -1,5 +1,11 @@
 import { defaultQueryClient } from '#basis/lib/config/queryClient';
 import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
+import { rootAppModalTextContentAtom } from '#shared/lib/atoms/rootAppModalTextContentAtom';
+import { Modal } from '#shared/ui/modal/Modal/Modal';
+import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
+import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
+import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { WithAtomValue } from '#shared/ui/WithAtomValue';
 import { authIDB } from '$index/db/auth-idb';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
@@ -31,6 +37,21 @@ export const App = () => {
         <BlockStylesProvider>
           <AppDialogProvider title="app">
             <RouterProvider router={router} />
+
+            <Modal
+              openAtom={rootAppModalTextContentAtom}
+              checkIsOpen={checkUserModalTextContentShow}
+            >
+              <WithAtomValue atom={rootAppModalTextContentAtom}>
+                {props => (
+                  <>
+                    <ModalHeader>{props.header || 'Сообщение'}</ModalHeader>
+                    <ModalBody>{props.text}</ModalBody>
+                    {props.footer && <ModalFooter>{props.footer}</ModalFooter>}
+                  </>
+                )}
+              </WithAtomValue>
+            </Modal>
           </AppDialogProvider>
         </BlockStylesProvider>
       </StyledIconProvider>
@@ -43,6 +64,7 @@ export const App = () => {
 };
 
 const StyledIconProvider = makeStameskaIconStyledProvider(styled, css, keyframes);
+const checkUserModalTextContentShow = (it: { text: React.ReactNode }) => !!it.text;
 
 soki.onTokenInvalidEvent.listen(() => {
   authIDB.remove.auth();
