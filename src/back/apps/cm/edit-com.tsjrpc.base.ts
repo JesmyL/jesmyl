@@ -15,7 +15,6 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
       scope: 'CmEditCom',
       methods: {
         rename: modifyInvocableCom((com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
 
           const prev = com.n;
@@ -25,7 +24,6 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         setBpM: modifyInvocableCom((com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
 
           const prev = com.bpm;
@@ -35,7 +33,6 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         setMeterSize: modifyInvocableCom((com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
 
           const prev = com.s;
@@ -45,7 +42,6 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         changeLanguage: modifyInvocableCom((com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
 
           const prev = com.l;
@@ -55,7 +51,6 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         changeTon: modifyInvocableCom((com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
 
           const prev = com.p;
@@ -65,7 +60,6 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         makeBemoled: modifyInvocableCom((com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
 
           com.b = value;
@@ -74,7 +68,6 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         changePushKind: modifyInvocableCom((com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_TR', 'U')) throw '';
 
           const prev = com.k;
@@ -84,7 +77,6 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         toggleAudioLink: modifyInvocableCom((com, { link }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_AUDIO', 'U')) throw '';
 
           const prev = makeCmComNumLeadToHttpAudioLinks(com.al);
@@ -98,7 +90,6 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         changeChordBlock: modifyInvocableCom((com, { texti: coli, value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_CH', 'U')) throw '';
 
           com.c ??= [];
@@ -108,7 +99,6 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           return `Изменён аккордный блок в песне ${getCmComNameInBrackets(com)}:\n\n${value}\n\nбыло:\n${prev}`;
         }),
         changeTextBlock: modifyInvocableCom((com, { texti: coli, value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_TXT', 'U')) throw '';
 
           const incorrects = CmComUtils.textLinesLengthIncorrects(
@@ -126,7 +116,6 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         insertChordBlock: insertInTextableBlock('c', (com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_CH', 'C')) throw '';
 
           return (
@@ -135,7 +124,6 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           );
         }),
         insertTextBlock: insertInTextableBlock('t', (com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_TXT', 'C')) throw '';
 
           return (
@@ -145,7 +133,6 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         removeChordBlock: removeTextableBlock('c', (com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_CH', 'D')) throw '';
 
           return (
@@ -154,7 +141,6 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           );
         }),
         removeTextBlock: removeTextableBlock('t', (com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_TXT', 'D')) throw '';
 
           return (
@@ -197,6 +183,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
 
           return `Песня ${getCmComNameInBrackets(com)} удалена`;
         }),
+
         bringBackToLife: modifyInvocableCom((com, _, { auth }) => {
           if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'C')) throw '';
 
@@ -249,6 +236,8 @@ export function modifyInvocableCom<Props extends { comw: CmComWid }>(
   mapper: (com: IServerSideCom, props: Props, tool: ServerTSJRPCTool) => string | null,
 ) {
   return async (props: Props, tool: ServerTSJRPCTool) => {
+    if (throwIfNoUserScopeAccessRight(tool.auth?.login, 'cm', 'COM', 'U')) throw '';
+
     const com = comsFileStore.getValue().find(com => com.w === props.comw);
 
     if (com === undefined) throw new Error(`Песня не найдена`);
