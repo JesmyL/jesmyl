@@ -6,6 +6,7 @@ import {
   cmFavoriteComsAtom,
   cmSelectedComwsAtom,
 } from '$cm/basis/lib/store/atoms';
+import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { indexUserAccessRightsAtom } from '$index/atoms';
 import { authIDB } from '$index/db/auth-idb';
 
@@ -28,6 +29,10 @@ export const UserMore = ({ onClose }: { onClose: (isOpen: false) => void }) => {
           cmSelectedComwsAtom.reset();
           cmComCommentAltKeyAtom.reset();
           cmFavoriteComsAtom.reset();
+
+          cmIDB.tb.comCommentBlocks.clear();
+          cmIDB.tb.localComCommentBlocks.clear();
+          cmIDB.set.lastModifiedAt(0);
 
           window.location.reload();
           onClose(false);
