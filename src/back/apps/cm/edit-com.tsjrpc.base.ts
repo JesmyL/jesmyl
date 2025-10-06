@@ -15,7 +15,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
       scope: 'CmEditCom',
       methods: {
         rename: modifyInvocableCom((com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_MAIN', 'U')) throw '';
 
           const prev = com.n;
           com.n = value;
@@ -24,7 +24,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         setBpM: modifyInvocableCom((com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_MAIN', 'U')) throw '';
 
           const prev = com.bpm;
           com.bpm = value;
@@ -33,7 +33,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         setMeterSize: modifyInvocableCom((com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_MAIN', 'U')) throw '';
 
           const prev = com.s;
           com.s = value;
@@ -42,7 +42,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         changeLanguage: modifyInvocableCom((com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_MAIN', 'U')) throw '';
 
           const prev = com.l;
           com.l = value;
@@ -51,7 +51,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         changeTon: modifyInvocableCom((com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_MAIN', 'U')) throw '';
 
           const prev = com.p;
           com.p = value;
@@ -60,7 +60,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         makeBemoled: modifyInvocableCom((com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_MAIN', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_MAIN', 'U')) throw '';
 
           com.b = value;
 
@@ -68,7 +68,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         changePushKind: modifyInvocableCom((com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_TR', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_TR', 'U')) throw '';
 
           const prev = com.k;
           com.k = value;
@@ -77,7 +77,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         toggleAudioLink: modifyInvocableCom((com, { link }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_AUDIO', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_AUDIO', 'U')) throw '';
 
           const prev = makeCmComNumLeadToHttpAudioLinks(com.al);
           const isThereInPrev = prev?.includes(link);
@@ -90,7 +90,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         changeChordBlock: modifyInvocableCom((com, { texti: coli, value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_CH', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_CH', 'U')) throw '';
 
           com.c ??= [];
           const prev = com.c[coli];
@@ -99,7 +99,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           return `Изменён аккордный блок в песне ${getCmComNameInBrackets(com)}:\n\n${value}\n\nбыло:\n${prev}`;
         }),
         changeTextBlock: modifyInvocableCom((com, { texti: coli, value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_TXT', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_TXT', 'U')) throw '';
 
           const incorrects = CmComUtils.textLinesLengthIncorrects(
             value,
@@ -116,7 +116,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         insertChordBlock: insertInTextableBlock('c', (com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_CH', 'C')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_CH', 'C')) throw '';
 
           return (
             `Вставлен${value ? '' : ' новый'} аккордный блок в песне ` +
@@ -124,7 +124,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           );
         }),
         insertTextBlock: insertInTextableBlock('t', (com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_TXT', 'C')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_TXT', 'C')) throw '';
 
           return (
             `Вставлен${value ? '' : ' новый'} текстовый блок в песне ` +
@@ -133,7 +133,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         removeChordBlock: removeTextableBlock('c', (com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_CH', 'D')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_CH', 'D')) throw '';
 
           return (
             `Удалён${value ? '' : ' новый'} аккордный блок в песне ` +
@@ -141,7 +141,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           );
         }),
         removeTextBlock: removeTextableBlock('t', (com, { value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_TXT', 'D')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_TXT', 'D')) throw '';
 
           return (
             `Удалён${value ? '' : ' новый'} текстовый блок в песне ` +
@@ -150,7 +150,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         newCom: async ({ value: newCom }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'C')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'C')) throw '';
 
           const incorrects = newCom.t
             ?.map(text =>
@@ -177,7 +177,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         },
 
         remove: modifyInvocableCom((com, _, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'D')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'D')) throw '';
 
           com.isRemoved = 1;
 
@@ -185,7 +185,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         bringBackToLife: modifyInvocableCom((com, _, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'C')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'C')) throw '';
 
           delete com.isRemoved;
 
@@ -193,7 +193,7 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
         }),
 
         takeRemovedComs: async (_, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'C')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'C')) throw '';
 
           return {
             value: comsFileStore
@@ -204,10 +204,10 @@ export const cmEditComServerTsjrpcBase = new (class CmEditCom extends TsjrpcBase
           };
         },
         destroy: async ({ comw }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'C')) throw '';
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'R')) throw '';
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'U')) throw '';
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM', 'D')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'C')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'R')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM', 'D')) throw '';
 
           const coms = comsFileStore.getValueWithAutoSave();
           const index = coms.findIndex(com => com.w === comw);

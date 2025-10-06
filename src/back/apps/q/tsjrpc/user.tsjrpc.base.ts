@@ -49,7 +49,7 @@ export const questionerUserServerTsjrpcBase =
           },
 
           getUserAnswers: async ({ blankw }, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth?.login, 'q', 'EDIT', 'R')) throw '';
+            if (throwIfNoUserScopeAccessRight(auth, 'q', 'EDIT', 'R')) throw '';
             return {
               value: questionerUserAnswersFileStore.getValue()[blankw]?.answers ?? [],
             };

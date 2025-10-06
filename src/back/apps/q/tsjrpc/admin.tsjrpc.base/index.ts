@@ -71,7 +71,7 @@ export const questionerAdminServerTsjrpcBase =
             };
           },
           getAdminBlank: async ({ blankw }, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth?.login, 'q', 'EDIT', 'U')) throw '';
+            if (throwIfNoUserScopeAccessRight(auth, 'q', 'EDIT', 'U')) throw '';
             const blank = questionerBlanksFileStore.getValue()[blankw];
 
             return { value: blank ? { ...blank, w: blankw } : null };

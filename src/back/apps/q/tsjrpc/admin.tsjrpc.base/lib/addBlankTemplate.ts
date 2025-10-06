@@ -17,7 +17,7 @@ export const questionerTSJRPCAddBlankTemplate: typeof questionerAdminServerTsjrp
   { blankw, type },
   { auth },
 ) => {
-  if (throwIfNoUserScopeAccessRight(auth?.login, 'q', 'EDIT', 'R')) throw '';
+  if (throwIfNoUserScopeAccessRight(auth, 'q', 'EDIT', 'R')) throw '';
 
   const blanks = questionerBlanksFileStore.getValue();
   if (blanks[blankw] == null) throw 'Not Found';

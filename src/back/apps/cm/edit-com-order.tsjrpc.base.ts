@@ -13,14 +13,14 @@ export const cmEditComOrderServerTsjrpcBase =
         scope: 'CmEditComOrder',
         methods: {
           clearOwnRepeats: modifyOrd((ord, { orderTitle }, com, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_REP', 'U')) throw '';
+            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_REP', 'U')) throw '';
 
             delete ord.r;
 
             return `Сброшено значение повторений для блока ${orderTitle} в песне ${getCmComNameInBrackets(com)}`;
           }),
           setRepeats: modifyOrd((ord, { value, inhIndex, orderTitle, textValue }, com, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_REP', 'U')) throw '';
+            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_REP', 'U')) throw '';
 
             if (inhIndex !== undefined) {
               ord.inh ??= {};
@@ -35,14 +35,14 @@ export const cmEditComOrderServerTsjrpcBase =
             return `Изменены повторения для блока ${orderTitle} в песне ${getCmComNameInBrackets(com)}:\n\n${textValue}`;
           }),
           setType: modifyOrd((ord, { type, newTypeTitle, orderTitle }, com, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_ORD', 'U')) throw '';
+            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
             ord.s = type;
 
             return `В песне ${getCmComNameInBrackets(com)} название блока ${orderTitle} изменено на ${newTypeTitle}`;
           }),
           bindChordBlock: modifyOrd((ord, { chordi, isAnchor, orderTitle }, com, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_ORD', 'U')) throw '';
+            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
             ord.c = chordi;
 
@@ -53,7 +53,7 @@ export const cmEditComOrderServerTsjrpcBase =
           }),
 
           toggleVisibility: modifyOrd((ord, { orderTitle }, com, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_ORD', 'U')) throw '';
+            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
             ord.v = ord.v ? 0 : 1;
 
@@ -64,7 +64,7 @@ export const cmEditComOrderServerTsjrpcBase =
           }),
 
           toggleAnchorInheritVisibility: modifyOrd((ord, { anchorInheritIndex, leadOrderTitle }, com, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_ORD', 'U')) throw '';
+            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
             ord.inh ??= {};
             ord.inh.v ??= {};
@@ -81,7 +81,7 @@ export const cmEditComOrderServerTsjrpcBase =
           }),
 
           moveOrdAfter: modifyInvocableCom((com, { insertAfterOrdwOrFirst, ordw, orderTitle }, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_ORD', 'U')) throw '';
+            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
             com.o ??= [];
 
@@ -98,7 +98,7 @@ export const cmEditComOrderServerTsjrpcBase =
           }),
 
           remove: modifyInvocableCom((com, { ordw, isAnchor, orderTitle }, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_ORD', 'D')) throw '';
+            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'D')) throw '';
 
             com.o ??= [];
             com.o = com.o.filter(ord => ord.w !== ordw && ord.a !== ordw);
@@ -107,7 +107,7 @@ export const cmEditComOrderServerTsjrpcBase =
           }),
 
           addAnchorOrder: modifyInvocableCom((com, { insertAfterOrdw, targetOrdw, orderTitle }, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_ORD', 'U')) throw '';
+            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
             com.o ??= [];
 
@@ -127,7 +127,7 @@ export const cmEditComOrderServerTsjrpcBase =
           }),
 
           setTexti: modifyOrd((ord, { texti, orderTitle }, com, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_ORD', 'U')) throw '';
+            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
             ord.t = texti;
 
@@ -135,7 +135,7 @@ export const cmEditComOrderServerTsjrpcBase =
           }),
 
           toggleVisibilityInMiniMode: modifyOrd((ord, { orderTitle }, com, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_ORD', 'U')) throw '';
+            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
             ord.o = ord.o ? undefined : 1;
 
@@ -146,7 +146,7 @@ export const cmEditComOrderServerTsjrpcBase =
           }),
 
           toggleTitleVisibility: modifyOrd((ord, { orderTitle }, com, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_ORD', 'U')) throw '';
+            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
             ord.e = ord.e ? undefined : 1;
 
@@ -158,7 +158,7 @@ export const cmEditComOrderServerTsjrpcBase =
 
           insertNewBlock: modifyInvocableCom(
             (com, { insertAfterOrdwOrFirst, type, chordi, texti, orderTitle }, { auth }) => {
-              if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_ORD', 'C')) throw '';
+              if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'C')) throw '';
 
               com.o ??= [];
               const afterOrdi =
@@ -180,7 +180,7 @@ export const cmEditComOrderServerTsjrpcBase =
           ),
 
           setPositionsLine: modifyOrd((ord, { linei, line, lineChangesText, orderTitle }, com, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_APPS', 'U')) throw '';
+            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_APPS', 'U')) throw '';
 
             let targetOrd = ord;
             if (ord.a != null) {
@@ -198,7 +198,7 @@ export const cmEditComOrderServerTsjrpcBase =
           }),
 
           trimOverPositions: modifyOrd((ord, { orderTitle }, com, { auth }) => {
-            if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'COM_APPS', 'U')) throw '';
+            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_APPS', 'U')) throw '';
 
             if (com.t == null) throw 'В песне нет текстов';
 

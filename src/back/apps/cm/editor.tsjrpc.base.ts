@@ -14,7 +14,7 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
       scope: 'CmEditor',
       methods: {
         setChords: async ({ chords }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'CHORD', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'CHORD', 'U')) throw '';
 
           chordPackFileStore.setValue({ ...chordPackFileStore.getValue(), ...chords });
           const modifiedAt = chordPackFileStore.fileModifiedAt();
@@ -24,7 +24,7 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
         },
 
         setEEWords: async ({ words }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'EE', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EE', 'U')) throw '';
 
           eePackFileStore.setValue({ ...eePackFileStore.getValue(), ...words });
           const modifiedAt = eePackFileStore.fileModifiedAt();
@@ -33,7 +33,14 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
               words,
               modifiedAt,
             },
-            (_, auth) => !!auth && auth.level >= 50,
+            (_, auth) => {
+              try {
+                throwIfNoUserScopeAccessRight(auth, 'cm', 'EDIT', 'R');
+              } catch (_) {
+                return false;
+              }
+              return true;
+            },
           );
 
           return { value: words, description: `Изменены ё/е-правила в словах ${smylib.keys(words).join(', ')}` };
@@ -42,14 +49,14 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
         getResourceHTMLString: cmGetResourceHTMLString,
         getMp3RulesList: async () => ({ value: mp3ResourcesData.getValue() }),
         addMp3Rule: async ({ rule }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'MP3', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'MP3', 'U')) throw '';
 
           mp3ResourcesData.getValueWithAutoSave().push(rule);
 
           return { description: `Добавлено MP3-правило` };
         },
         setMp3Rule: async ({ rule }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'MP3', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'MP3', 'U')) throw '';
 
           const list = mp3ResourcesData.getValueWithAutoSave();
           const index = list.findIndex(r => r.w === rule.w);
@@ -64,7 +71,7 @@ export const cmEditorTsjrpcBaseServer = new (class CmEditor extends TsjrpcBaseSe
 
         requestFreshes: async ({ lastModfiedAt }, { client, auth }) => {
           try {
-            if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'EDIT', 'R')) throw '';
+            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EDIT', 'R')) throw '';
           } catch (_) {
             return;
           }

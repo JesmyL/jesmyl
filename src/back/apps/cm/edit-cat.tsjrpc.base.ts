@@ -12,7 +12,7 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
       scope: 'CmEditCat',
       methods: {
         rename: modifyCat((cat, { name }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'CAT', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'U')) throw '';
 
           const prevName = cat.n;
           cat.n = name;
@@ -20,21 +20,21 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
           return `Категория "${prevName}" переименована на "${cat.n}"`;
         }),
         setKind: modifyCat((cat, { kind }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'CAT', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'U')) throw '';
 
           cat.k = kind;
 
           return `Тип категории "${cat.n}" - ${kind}`;
         }),
         clearStack: modifyCat((cat, _, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'CAT', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'U')) throw '';
           delete cat.s;
 
           return `Список песен, принадлежащих категории "${cat.n}", очищен`;
         }),
 
         toggleComExistence: modifyCat((cat, { comw }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'CAT', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'U')) throw '';
 
           const stackSet = new Set(cat.s);
 
@@ -49,7 +49,7 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
         }),
 
         removeNativeComNum: modifyCat((cat, { comw }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'CAT', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'U')) throw '';
 
           if (cat.d == null) return null;
           delete cat.d[comw];
@@ -58,7 +58,7 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
         }),
 
         setNativeComNum: modifyCat((cat, { comw, value }, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'CAT', 'U')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'U')) throw '';
 
           cat.d = { ...cat.d, [comw]: value };
 
@@ -66,14 +66,14 @@ export const cmEditCatServerTsjrpcBase = new (class CmEditCat extends TsjrpcBase
         }),
 
         remove: modifyCat((cat, _, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'CAT', 'D')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'D')) throw '';
 
           cat.isRemoved = 1;
 
           return `Категория "${cat.n}" удалена`;
         }),
         bringBackToLife: modifyCat((cat, _, { auth }) => {
-          if (throwIfNoUserScopeAccessRight(auth?.login, 'cm', 'CAT', 'D')) throw '';
+          if (throwIfNoUserScopeAccessRight(auth, 'cm', 'CAT', 'D')) throw '';
 
           delete cat.isRemoved;
 
