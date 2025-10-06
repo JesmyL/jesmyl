@@ -19,7 +19,6 @@ import { schedulesFileStore } from '../file-stores';
 import { schLiveTsjrpcServer } from '../live.tsjrpc';
 import { modifySchedule } from '../schedule-modificators';
 import { onScheduleUserTgInformSetEvent } from '../specific-modify-events';
-import { schServerTsjrpcShareMethods } from '../tsjrpc.shares';
 import { schAttachmentTypesTsjrpcBaseServer } from './attachment-types.tsjrpc.base';
 import { schDayEventsTsjrpcBaseServer } from './day-events.tsjrpc.base';
 import { schDaysTsjrpcBaseServer } from './days.tsjrpc.base';
@@ -149,7 +148,6 @@ export const schGeneralTsjrpcBaseServer = new (class SchGeneral extends TsjrpcBa
 
           schedulesFileStore.getValue().push(sch);
           schedulesFileStore.saveValue();
-          schServerTsjrpcShareMethods.editedSchedule({ sch });
 
           return {
             value: sch,
