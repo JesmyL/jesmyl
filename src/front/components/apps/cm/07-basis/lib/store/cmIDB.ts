@@ -33,8 +33,6 @@ export interface CmIDBStorage {
 
   translationScreenConfigs: CmTranslationScreenConfig[];
 
-  // remove
-  favoriteComs: CmComWid[] | null;
   comTopTools: MigratableComToolName[] | null;
   constantsConfig: CmConstantsConfig | null;
   lastOpenComw?: CmComWid | null;
@@ -54,7 +52,6 @@ class CmIDB extends DexieDB<CmIDBStorage> {
       lastModifiedAt: { $byDefault: 0 },
       translationScreenConfigs: { $byDefault: [defaultCmConfig] },
 
-      favoriteComs: { $byDefault: null },
       selectedComws: { $byDefault: null },
       comTopTools: { $byDefault: null },
       chordVisibleVariant: { $byDefault: null },
