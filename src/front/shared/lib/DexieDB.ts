@@ -23,8 +23,6 @@ export class DexieDB<Store> {
     [K in keyof Store]: Store[K] extends unknown[] ? EntityTable<Store[K][number], keyof Store[K][number]> : never;
   }>;
 
-  private selectors = {} as { [K in keyof Required<Store>]: K };
-
   hook: TableHooks<unknown> = ((...args: []) =>
     (this.getKeyvalues() as { hook(...args: unknown[]): unknown }).hook(...args)) as never;
 
@@ -51,42 +49,64 @@ export class DexieDB<Store> {
   ) {
     this.tb = this.db = new Dexie(storageName) as never;
 
-    const stores = {} as Record<keyof Store, string>;
+    const returnIfKeyInDefaults = <Cb>(key: string | symbol, cb: Cb) => {
+      if (key in defaults) return cb;
+    };
 
-    smylib.keys(defaults).forEach(key => {
-      if (byDefaultField in defaults[key]) {
-        this.selectors[key] = key;
-        this.get[key] = (async () => {
+    this.get = new Proxy(this.get, {
+      get: (_, key) =>
+        returnIfKeyInDefaults(key, async () => {
           const store = await this.getKeyvalues().get({ key });
-          if (store === undefined) return this.defaults[key][byDefaultField];
+          if (store === undefined) return this.defaults[key as keyof Store][byDefaultField];
           return store.val;
-        }) as never;
+        }),
+    });
 
-        this.remove[key] = () => this.getKeyvalues().where({ key }).delete();
+    this.useValue = new Proxy(this.useValue, {
+      get: (_, key) =>
+        returnIfKeyInDefaults(key, () => {
+          return (
+            justUseLiveQuery(() => this.getKeyvalues().get({ key }) as never as { val: never })?.val ??
+            (this.defaults[key as keyof Store][byDefaultField] as never)
+          );
+        }),
+    });
 
-        this.set[key] = async value => {
+    this.remove = new Proxy(this.remove, {
+      get: (_, key) => returnIfKeyInDefaults(key, () => this.getKeyvalues().where({ key }).delete()),
+    });
+
+    this.use = new Proxy(this.use, {
+      get: (_, key) =>
+        returnIfKeyInDefaults(key, () => [this.useValue[key as keyof Store](), this.useSet[key as keyof Store]()]),
+    });
+
+    this.useSet = new Proxy(this.useSet, {
+      get: (_, key) =>
+        returnIfKeyInDefaults(key, () =>
+          justUseCallback((value: unknown) => this.set[key as keyof Store](value as never), emptyArray),
+        ),
+    });
+
+    this.set = new Proxy(this.set, {
+      get: (_, key) => {
+        return returnIfKeyInDefaults(key, async (value: Parameters<(typeof this.set)[keyof Store]>[0]) => {
           if (smylib.isFunc(value)) {
-            return await this.getKeyvalues().put({ val: value(await this.get[key]()), key } as never);
+            return await this.getKeyvalues().put({
+              val: value(await this.get[key as keyof Store]()),
+              key,
+            } as never);
           } else {
             return await this.getKeyvalues().put({ val: value, key } as never);
           }
-        };
+        });
+      },
+    });
 
-        this.use[key] = () => [this.useValue[key](), this.useSet[key]()];
+    const stores = {} as Record<keyof Store, string>;
 
-        this.useSet[key] = () => justUseCallback((value: unknown) => this.set[key](value as never), emptyArray);
-
-        const defaultValue = this.defaults[key][byDefaultField];
-
-        this.useValue[key] = () => {
-          return (
-            justUseLiveQuery(() => this.getKeyvalues().get({ key }) as never as { val: never })?.val ??
-            (defaultValue as never)
-          );
-        };
-
-        return;
-      }
+    smylib.keys(defaults).forEach(key => {
+      if (byDefaultField in defaults[key]) return;
 
       stores[key] = SMyLib.entries(defaults[key])
         .map(([key, val]) => `${val === '++' ? val : ''}${key as never}`)
