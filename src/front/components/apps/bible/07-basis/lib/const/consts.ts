@@ -11,7 +11,7 @@ export const translateDescriptions: Record<BibleTranslateName, string> = {
   [BibleTranslateName.kas]: 'Новый Завет. Перевод Кассиана (Безобразова)',
 };
 
-export const translateFilter: Record<BibleTranslateName, (booki: BibleBooki) => boolean> = {
+export const bibleTranslateFilter: Record<BibleTranslateName, (booki: BibleBooki) => boolean> = {
   [BibleTranslateName.kas]: booki => booki < 39,
   [BibleTranslateName.rst]: () => false,
   [BibleTranslateName.nrt]: () => false,

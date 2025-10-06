@@ -1,6 +1,7 @@
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BibleTranslatesContextProvider } from '$bible/basis/contexts/TranslatesContext';
+import { bibleTranslateFilter } from '$bible/basis/lib/const/consts';
 import { useBibleTranslatesContext } from '$bible/basis/lib/contexts/translates';
 import { useBibleAddressBooki } from '$bible/basis/lib/hooks/address/books';
 import { useBibleAddressChapteri } from '$bible/basis/lib/hooks/address/chapters';
@@ -82,6 +83,7 @@ function Content() {
 
                       booki === selectedBooki ? 'text-[black]' : textColor,
                       booki === currentBooki && 'bg-x7',
+                      bibleTranslateFilter[showTranslates[0]](booki) && 'disabled',
                     )}
                     onClick={() => {
                       setSelectedBooki(booki);

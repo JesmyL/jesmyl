@@ -1,4 +1,4 @@
-import { translateFilter } from '$bible/basis/lib/const/consts';
+import { bibleTranslateFilter } from '$bible/basis/lib/const/consts';
 import { useBibleMyTranslates, useBibleShowTranslates } from '$bible/basis/lib/hooks/translates';
 import { bibleBookiAtom } from '$bible/basis/lib/store/atoms';
 import { useAtomValue } from 'atomaric';
@@ -19,7 +19,7 @@ export const BibleModulesTranslationsControl = memo(function BibleModules({
     <div className="flex gap-2 my-2">
       {myTranslates.map(tName => {
         const isShow = showTranslates.includes(tName);
-        if (isHideEmptyBook && translateFilter[tName](booki)) return null;
+        if (isHideEmptyBook && bibleTranslateFilter[tName](booki)) return null;
 
         return (
           <div
