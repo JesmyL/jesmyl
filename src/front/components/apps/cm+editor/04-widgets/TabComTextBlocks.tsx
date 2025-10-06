@@ -3,7 +3,7 @@ import { cmEditComClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsj
 import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { CmTextableBlockAnchorTitles } from '$cm+editor/entities/TextableBlockAnchorTitles';
 import { CmTextBlockRedactor } from '$cm+editor/entities/TextBlockRedactor';
-import { useCheckUserAccessRightsInScope } from '$index/checkers';
+import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 
 export const CmEditorTabTextBlocks = () => {
   const ccom = useEditableCcom();

@@ -1,4 +1,4 @@
-import { useCheckUserAccessRightsInScope } from '$index/checkers';
+import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { OrdersRedactorOrderToolsProps } from './model';
 import { OrdersRedactorOrderToolsAnchor } from './ui/Anchor';
 import { OrdersRedactorOrderToolsAnchorDelete } from './ui/AnchorDelete';

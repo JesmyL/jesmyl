@@ -1,5 +1,5 @@
 import { EditChordPage } from '$cm+editor/pages/EditChordPage';
-import { useCheckUserAccessRightsInScope } from '$index/checkers';
+import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/cm/edit/chord')({

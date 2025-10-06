@@ -1,7 +1,7 @@
 import { useAppNameContext } from '#basis/lib/contexts';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useCheckUserAccessRightsInScope } from '$index/checkers';
+import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { useIndexSchedules } from 'front/components/index/atoms';
 import { useConnectionState } from 'front/components/index/useConnectionState';

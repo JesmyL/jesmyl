@@ -9,7 +9,7 @@ import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer
 import { ChordRedactableTrack } from '$cm+editor/entities/ChordRedactableTrack';
 import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { ChordCard } from '$cm/col/com/chord-card/ChordCard';
-import { useCheckUserAccessRightsInScope } from '$index/checkers';
+import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { atom, useAtom } from 'atomaric';
 import { useEffect, useMemo, useState } from 'react';

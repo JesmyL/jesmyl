@@ -1,7 +1,7 @@
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer';
-import { useCheckUserAccessRightsInScope } from '$index/checkers';
+import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { Link } from '@tanstack/react-router';
 
 export const CmEditorPage = () => {

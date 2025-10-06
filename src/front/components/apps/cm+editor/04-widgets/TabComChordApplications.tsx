@@ -6,7 +6,7 @@ import { ChordVisibleVariant } from '$cm/Cm.model';
 import { ComLine } from '$cm/col/com/line/ComLine';
 import { TheOrder } from '$cm/col/com/order/TheOrder';
 import { TheCom } from '$cm/col/com/TheCom';
-import { useCheckUserAccessRightsInScope } from '$index/checkers';
+import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import React from 'react';
 import { makeRegExp } from 'regexpert';
 import { emptyArray, itIt } from 'shared/utils';

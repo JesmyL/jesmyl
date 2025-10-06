@@ -3,7 +3,7 @@ import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { RemovedComsModalInner } from '$cm+editor/features/RemovedComsModalInner';
 import { NewComposition } from '$cm+editor/widgets/NewComposition';
-import { useCheckUserAccessRightsInScope } from '$index/checkers';
+import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { atom } from 'atomaric';
 import { useEffect } from 'react';
 

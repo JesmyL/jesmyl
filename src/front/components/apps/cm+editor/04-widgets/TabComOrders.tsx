@@ -11,7 +11,7 @@ import { OrdersRedactorOrderTools } from '$cm+editor/features/EditOrderTools';
 import { OrdersRedactorOrderToolsProps } from '$cm+editor/features/EditOrderTools/model';
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { TheOrder } from '$cm/col/com/order/TheOrder';
-import { useCheckUserAccessRightsInScope } from '$index/checkers';
+import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 

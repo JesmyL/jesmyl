@@ -4,7 +4,7 @@ import { cmEditComClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsj
 import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { CmChordsBlockRedactor } from '$cm+editor/entities/ChordsBlockRedactor';
 import { CmTextableBlockAnchorTitles } from '$cm+editor/entities/TextableBlockAnchorTitles';
-import { useCheckUserAccessRightsInScope } from '$index/checkers';
+import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { makeRegExp } from 'regexpert';
 
 export const CmEditorTabComChordsBlocks = () => {

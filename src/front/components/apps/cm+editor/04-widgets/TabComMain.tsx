@@ -10,7 +10,7 @@ import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { TextCorrectMessages } from '$cm+editor/entities/TextBlockIncorrectMessages';
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { TheCom } from '$cm/col/com/TheCom';
-import { useCheckUserAccessRightsInScope } from '$index/checkers';
+import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { useAtomSet } from 'atomaric';
 import { useState } from 'react';
 import { emptyFunc } from 'shared/utils';

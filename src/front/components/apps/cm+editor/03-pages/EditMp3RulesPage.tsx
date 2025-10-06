@@ -3,7 +3,7 @@ import { cmEditorClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjr
 import { useCmMp3Rules } from '$cm+editor/basis/lib/hooks/useCmMp3Rules';
 import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer';
 import { Mp3RuleEditor } from '$cm+editor/widgets/Mp3RuleEditor';
-import { useCheckUserAccessRightsInScope } from '$index/checkers';
+import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { useState } from 'react';
 import { CmMp3Rule } from 'shared/api';
 

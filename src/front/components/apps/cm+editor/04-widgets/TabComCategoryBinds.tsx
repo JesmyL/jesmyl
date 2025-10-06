@@ -6,7 +6,7 @@ import { cmEditCatClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsj
 import { EditableCat } from '$cm+editor/basis/lib/EditableCat';
 import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { cmIDB } from '$cm/basis/lib/store/cmIDB';
-import { useCheckUserAccessRightsInScope } from '$index/checkers';
+import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React, { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';

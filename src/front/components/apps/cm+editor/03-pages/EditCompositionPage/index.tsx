@@ -12,7 +12,7 @@ import {
 import { editCompositionNavs } from '$cm+editor/pages/EditCompositionPage/lib/tabs.config';
 import { CmComNumber } from '$cm/col/com/complect/ComNumber';
 import { ComPlayer } from '$cm/col/com/player/ComPlayer';
-import { useCheckUserAccessRightsInScope } from '$index/checkers';
+import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { useConnectionState } from '$index/useConnectionState';
 import { Link, useNavigate, useParams } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';

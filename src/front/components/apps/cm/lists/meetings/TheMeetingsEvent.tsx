@@ -5,8 +5,8 @@ import { ScheduleWidgetWatchLiveTranslationButton } from '#widgets/schedule/live
 import { ScheduleDayEventPathProps } from '#widgets/schedule/ScheduleWidget.model';
 import { useCmOpenComLinkRendererContext } from '$cm/basis/lib/contexts/current-com-list';
 import { useAuth } from '$index/atoms';
-import { useCheckUserAccessRightsInScope } from '$index/checkers';
 import { indexIDB } from '$index/db/index-idb';
+import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { Link } from '@tanstack/react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { CmMeetingEventEdits } from './EventEdits';

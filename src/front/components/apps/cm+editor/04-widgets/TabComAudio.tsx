@@ -5,7 +5,7 @@ import { useCmExtractHrefsFromHTML } from '$cm+editor/basis/lib/hooks/useCmExtra
 import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { ObserveUrlResource } from '$cm+editor/basis/ui/ObserveUrlResource';
 import { ComAudioControlledList } from '$cm+editor/widgets/AudioControlledList';
-import { useCheckUserAccessRightsInScope } from '$index/checkers';
+import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmMp3Rule, HttpLink } from 'shared/api';

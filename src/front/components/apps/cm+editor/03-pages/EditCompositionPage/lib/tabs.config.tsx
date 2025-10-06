@@ -8,7 +8,7 @@ import { CmEditorTabComOrders } from '$cm+editor/widgets/TabComOrders';
 import { CmEditorTabComRepeats } from '$cm+editor/widgets/TabComRepeats';
 import { CmEditorTabTextBlocks } from '$cm+editor/widgets/TabComTextBlocks';
 import { CmEditorTabWatch } from '$cm+editor/widgets/TabComWatch';
-import { useCheckUserAccessRightsInScope } from '$index/checkers';
+import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 
 export const editCompositionNavs = {
   watch: {

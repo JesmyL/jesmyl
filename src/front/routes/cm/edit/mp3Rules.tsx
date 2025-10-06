@@ -1,5 +1,5 @@
 import { EditMp3RulesPage } from '$cm+editor/pages/EditMp3RulesPage';
-import { useCheckUserAccessRightsInScope } from '$index/checkers';
+import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/cm/edit/mp3Rules')({

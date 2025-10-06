@@ -1,7 +1,7 @@
 import { AppFooter } from '$app/AppFooter';
 import { AppFooterItem } from '$app/AppFooterItem';
 import { indexIsShowPlayerInFooterAtom, useAuth } from '$index/atoms';
-import { useCheckUserAccessRightsInScope } from '$index/checkers';
+import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { useAtomValue } from 'atomaric';
 
 export const CmFooter = () => {
