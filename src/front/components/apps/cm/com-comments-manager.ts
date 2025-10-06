@@ -12,7 +12,7 @@ export const useTrySendComCommentBlocks = () => {
 
   useEffect(() => {
     if (!localBlocks?.length) return;
-    if (!auth) {
+    if (!auth.login) {
       toast('Не авторизован', makeToastKOMoodConfig());
       return;
     }
