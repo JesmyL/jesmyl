@@ -54,15 +54,8 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
   let ord: Order | und;
   let ordNN = 0;
 
-  if (mylib.isNum(ordSelectorId)) {
-    const ordi = visibleOrders.findIndex(ord => ord.wid === ordSelectorId);
-    ord = visibleOrders[ordi];
-    ordNN = ordi + 1;
-  } else if (ordSelectorId !== 'head') {
-    const [leadOrdWid, watchOrdWid] = ordSelectorId.split('_').map(Number);
-    const ordi = visibleOrders.findIndex(
-      ord => ord.me.leadOrd?.wid === leadOrdWid && ord.me.watchOrd?.wid === watchOrdWid,
-    );
+  if (ordSelectorId !== 'head') {
+    const ordi = visibleOrders.findIndex(ord => ord.isMySelector(ordSelectorId));
 
     ord = visibleOrders[ordi];
     ordNN = ordi + 1;

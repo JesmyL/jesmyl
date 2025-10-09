@@ -1,11 +1,11 @@
 import { DexieDB } from '#shared/lib/DexieDB';
-import { mylib } from '#shared/lib/my-lib';
 import { ChordVisibleVariant, PlayerHideMode } from '$cm/Cm.model';
 import { defaultCmConfig } from '$cm/translation/complect/controlled/hooks/configs';
 import { CmTranslationScreenConfig } from '$cm/translation/complect/controlled/model';
 import { useLiveQuery } from 'dexie-react-hooks';
 import {
   ChordPack,
+  CmComAudioMarkPack,
   CmComWid,
   CmConstantsConfig,
   ICmComCommentBlock,
@@ -15,7 +15,6 @@ import {
   MigratableComToolName,
   ScheduleComPack,
 } from 'shared/api';
-import { itNumSort } from 'shared/utils';
 
 export interface CmIDBStorage {
   chordPack: ChordPack;
@@ -28,7 +27,7 @@ export interface CmIDBStorage {
   coms: IExportableCom[];
   fixedComs: IFixedCom[];
   cats: IExportableCat[];
-  audioTrackMarks: { src: string; marks: KRecord<number, string> }[];
+  audioTrackMarks: { src: string; marks?: CmComAudioMarkPack; m: number }[];
   scheduleComPacks: ScheduleComPack[];
 
   translationScreenConfigs: CmTranslationScreenConfig[];
@@ -89,33 +88,8 @@ class CmIDB extends DexieDB<CmIDBStorage> {
     });
   }
 
-  useAudioTrackMarks = (src: string) => useLiveQuery(() => this.tb.audioTrackMarks.get({ src }), [src]);
-
-  addAudioTrackMark = async (src: string, time: number, text: string) => {
-    const prevMarks = await this.tb.audioTrackMarks.get({ src });
-    let addMarks: KRecord<number, string> = {};
-    const marks: KRecord<number, string> = {};
-
-    if (prevMarks != null) addMarks = { ...prevMarks.marks };
-    addMarks[time] = text;
-
-    mylib
-      .keys(addMarks)
-      .map(Number)
-      .sort(itNumSort)
-      .forEach(time => (marks[time] = addMarks[time]));
-
-    this.tb.audioTrackMarks.put({ src, marks });
-  };
-
-  deleteAudioTrackMark = async (src: string, time: number) => {
-    const prevMarks = await this.tb.audioTrackMarks.get({ src });
-    const marks: KRecord<number, string> = { ...prevMarks?.marks };
-
-    delete marks[time];
-
-    this.tb.audioTrackMarks.put({ src, marks });
-  };
+  useAudioTrackMarks = (src: string | nil) =>
+    useLiveQuery(async () => (src ? this.tb.audioTrackMarks.get({ src }) : undefined), [src]);
 }
 
 export const cmIDB = new CmIDB();

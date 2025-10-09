@@ -10,6 +10,7 @@ import {
   StyledIsThereOtherFirstRedactorUserDetect,
 } from '$cm+editor/entities/EditCompositionBusyInfo';
 import { editCompositionNavs } from '$cm+editor/pages/EditCompositionPage/lib/tabs.config';
+import { useCmComEditorTrySendAudioMarks } from '$cm+editor/widgets/TabComAudioMarks/api/useCmComEditorTrySendAudioMarks';
 import { CmComNumber } from '$cm/col/com/complect/ComNumber';
 import { ComPlayer } from '$cm/col/com/player/ComPlayer';
 import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
@@ -31,6 +32,8 @@ export const CmEditCompositionPage = () => {
   const TabComponent =
     (tab && editCompositionNavs[tab].checkTabAccess(checkAccess) && editCompositionNavs[tab]?.Component) ||
     editCompositionNavs.watch.Component;
+
+  useCmComEditorTrySendAudioMarks();
 
   useEffect(() => {
     return hookEffectPipe()
@@ -126,7 +129,7 @@ export const CmEditCompositionPage = () => {
               <ComPlayer audioLinks={ccom.audio} />
             </div>
           )}
-          <StyledOutlet>{TabComponent && <TabComponent />}</StyledOutlet>
+          <StyledOutlet>{TabComponent && <TabComponent ccom={ccom} />}</StyledOutlet>
         </>
       }
     />

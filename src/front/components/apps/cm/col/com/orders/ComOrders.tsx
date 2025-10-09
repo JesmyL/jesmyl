@@ -36,8 +36,8 @@ export function ComOrders(props: IComOrdersProps) {
             ordi={ordi}
             visibleOrdi={visibleOrdi}
             asLineComponent={asLineComponent}
-            asHeaderComponent={({ headerNode }) => {
-              return ord.me.style?.isModulation ? (
+            asHeaderComponent={headerProps => {
+              const node = ord.me.style?.isModulation ? (
                 <span
                   className={'pointer flex ' + (isExcludedModulation ? 'text-xKO' : 'text-x7')}
                   onClick={event => {
@@ -49,11 +49,14 @@ export function ComOrders(props: IComOrdersProps) {
                     className="pointer"
                     icon={isExcludedModulation ? 'View' : 'ViewOffSlash'}
                   />
-                  {headerNode}
+                  {headerProps.headerNode}
                 </span>
               ) : (
-                headerNode
+                headerProps.headerNode
               );
+
+              if (props.asHeaderComponent === undefined) return node;
+              return props.asHeaderComponent({ ...headerProps, headerNode: node });
             }}
           />
         );

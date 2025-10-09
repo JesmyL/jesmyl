@@ -105,7 +105,12 @@ export function TheComposition() {
       content={
         <>
           <DocTitle title={ccom.name} />
-          {!hideAppFooter && !!ccom.audio?.length && <ComPlayerWithPoints audioLinks={ccom.audio} />}
+          {!hideAppFooter && !!ccom.audio?.length && (
+            <ComPlayerWithPoints
+              audioLinks={ccom.audio}
+              com={ccom}
+            />
+          )}
           {isShowCatBinds && (
             <div className="opacity-50 w-full text-x7">
               <CmComCatMentions com={ccom} />

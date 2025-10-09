@@ -1,15 +1,12 @@
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
-import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
+import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { translationPushKinds } from '$cm/col/com/translationPushKinds';
 import { useCmScreenTranslationCurrentConfig } from '$cm/translation/complect/controlled/hooks/configs';
 import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 
-export const CmEditorTabComOnTranslations = () => {
-  const ccom = useEditableCcom();
+export const CmEditorTabComOnTranslations = ({ ccom }: { ccom: EditableCom }) => {
   const currentConfig = useCmScreenTranslationCurrentConfig();
   const checkAccess = useCheckUserAccessRightsInScope();
-
-  if (!ccom) return null;
 
   return (
     <>

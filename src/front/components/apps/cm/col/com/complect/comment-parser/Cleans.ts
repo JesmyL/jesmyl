@@ -4,46 +4,14 @@ import { BibleBookTranslates } from '$bible/basis/contexts/TranslatesContext';
 import { bibleLowerBooks, bibleTitles } from '$bible/basis/lib/const/bibleTitles';
 import { bibleAllTranslates, translateDescriptions } from '$bible/basis/lib/const/consts';
 import { makeNamedRegExp, makeRegExp } from 'regexpert';
-import { BibleTranslateName, CmComCommentBlockSelector, CmComOrderWid } from 'shared/api';
+import { BibleTranslateName } from 'shared/api';
 import { css } from 'styled-components';
 import { Order } from '../../order/Order';
 
 let titlesMap: Map<string, number>;
 let titlesLine: string[];
-const orderWidSecretifyLine = `iwvthjkfsz` as const;
-const orderInheritiSecretifyLine = `IWVTHJKFSZ` as const;
-
 export class ComBlockCommentMakerCleans {
-  static makeOrdSelector = (ord: Order): CmComCommentBlockSelector =>
-    ord.me.leadOrd && ord.me.watchOrd ? `${ord.me.leadOrd.wid}_${ord.me.watchOrd.wid}` : ord.wid;
-
-  static commentsParseReg = (specialNumber: number | string) =>
-    makeNamedRegExp(
-      `/(?<before>^|\\n)(?<beforeSpaces> *)(?<hashes>#{1,2})(?<blockHashPosition>${specialNumber})(?<associations>_?(?<secretOrdWid>[${orderWidSecretifyLine}]*)(?<secretOrdInheritWid>[${orderInheritiSecretifyLine}]*)(?<modificators>!?))? *(?<info>\\[(?<blockHeader>.+?)\\])?(?<beforeCommentSpaces> *)(?<comment>[\\w\\W]*?)(?=\\n *#|$)/g`,
-    );
-  static commentsAnySpecialNumberParseReg = this.commentsParseReg('\\d*');
-
   static withHeaderTextOrderFilter = (ord: Order) => !ord.isHeaderNoneForce && ord.isVisible;
-
-  static makeSecretToWid = (infoWidStr: string) =>
-    infoWidStr
-      ? (+('' + infoWidStr || '').replace(
-          makeRegExp(`/[${orderWidSecretifyLine}]/g`),
-          all => '' + orderWidSecretifyLine.indexOf(all),
-        ) as CmComOrderWid)
-      : null;
-
-  static makeWidToSecret = (wid: CmComOrderWid) =>
-    ('' + wid).replace(makeRegExp('/./g'), all => orderWidSecretifyLine[+all]);
-
-  static makeSecretToInheritWid = (infoWidStr: string | nil) =>
-    infoWidStr
-      ? (+('' + infoWidStr || '').replace(
-          makeRegExp(`/[${orderInheritiSecretifyLine}]/g`),
-          all => '' + orderInheritiSecretifyLine.indexOf(all),
-        ) as CmComOrderWid)
-      : null;
-
   static makePseudoComment = (text: string) => makePseudoElementCorrectContentText(text.trim());
 
   static makePseudoCommentContentCss = (text: string) => css`

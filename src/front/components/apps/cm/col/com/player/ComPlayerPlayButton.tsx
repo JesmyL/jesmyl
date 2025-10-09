@@ -1,7 +1,7 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { comPlayerIsPlayAtom, comPlayerPlaySrcAtom } from '$cm/basis/lib/control/current-play-com';
 import { useAtomValue } from 'atomaric';
 import { HttpLink } from 'shared/api';
-import { comPlayerIsPlayAtom, comPlayerPlaySrcAtom } from './controls';
 
 interface Props {
   className?: string;

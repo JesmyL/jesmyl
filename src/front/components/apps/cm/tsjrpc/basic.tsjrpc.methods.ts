@@ -1,4 +1,5 @@
 import { TsjrpcClient } from '#basis/lib/Tsjrpc.client';
+import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
 
 export const cmTsjrpcClient = new (class Cm extends TsjrpcClient<CmTsjrpcModel> {
@@ -13,6 +14,11 @@ export const cmTsjrpcClient = new (class Cm extends TsjrpcClient<CmTsjrpcModel> 
         takeComwVisitsCount: true,
         replaceUserAltCommentBlocks: true,
         pullUserAltCommentBlock: true,
+
+        takeFreshComAudioMarksPack: pack => {
+          if (pack == null) return;
+          cmIDB.tb.audioTrackMarks.put(pack);
+        },
       },
     });
   }

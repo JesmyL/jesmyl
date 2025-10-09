@@ -1,8 +1,8 @@
 import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
+import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { EditableComOrder } from '$cm+editor/basis/lib/EditableComOrder';
-import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { IEditableComLineProps } from '$cm+editor/basis/model/Repeats';
 import { CmComRepeatsRemoveButton } from '$cm+editor/entities/ComRepeatsRemoveButton';
 import { ChordVisibleVariant } from '$cm/Cm.model';
@@ -14,7 +14,7 @@ import { makeRegExp } from 'regexpert';
 import { OrderRepeats } from 'shared/api';
 import styled from 'styled-components';
 
-export const CmEditorTabComRepeats = () => {
+export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
   const [start, setStart] = useState<IEditableComLineProps | null>(null);
   const [pos, setPos] = useState({ '--x': 0, '--y': 0 });
   const [isChordBlock, setIsChordBlock] = useState(false);
@@ -24,7 +24,6 @@ export const CmEditorTabComRepeats = () => {
   const checkAccess = useCheckUserAccessRightsInScope();
   const isCantRedact = !checkAccess('cm', 'COM_REP', 'U');
 
-  const ccom = useEditableCcom();
   const { textLinei: startLinei, wordi: startWordi, orderUnit: startOrd } = start || {};
   let startedFlashes = 0;
   let beforeFlashes = 0;
@@ -33,7 +32,7 @@ export const CmEditorTabComRepeats = () => {
 
   const setField = useCallback(
     (ord?: EditableComOrder | null, repeateds?: OrderRepeats | nil, prevs?: OrderRepeats | nil) => {
-      if (isCantRedact || !ord || !ccom) return;
+      if (isCantRedact || !ord) return;
 
       const reps = typeof prevs === 'number' ? { '.': prevs } : prevs || {};
       const repds = typeof repeateds === 'number' ? { '.': repeateds } : repeateds || {};

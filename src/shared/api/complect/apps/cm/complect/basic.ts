@@ -92,7 +92,8 @@ export interface IExportableCom {
 
 export type IServerSideCom = OmitOwn<IExportableCom, 'al'> & { al?: HttpNumLeadLink[] | HttpNumLeadLink };
 
-export type CmComCommentBlockSelector = CmComOrderWid | `${CmComOrderWid}_${CmComOrderWid}` | 'head';
+export type CmComCommentBlockSelector = CmComOrderSelector | 'head';
+export type CmComOrderSelector = CmComOrderWid | `${CmComOrderWid}_${CmComOrderWid}`;
 
 export type ICmComCommentBlock = {
   comw: CmComWid;
@@ -137,6 +138,12 @@ export type MigratableComToolName = MenuComToolNameList | MigratableEditableComT
 export type HttpLink = `http${string}`;
 export type HttpNumLeadLinkKey = `${number}~`;
 export type HttpNumLeadLink = `${HttpNumLeadLinkKey}${string}`;
+
+export type CmComAudioMarkSelector = [CmComOrderSelector] | string;
+export type CmComAudioMarkPack = PRecord<number, CmComAudioMarkSelector>;
+
+type MarkAddKey = number;
+export type CmComAudioMarkEditPack = PRecord<MarkAddKey, CmComAudioMarkSelector | `+${MarkAddKey}+` | null>;
 
 export type MenuComToolNameList =
   | 'fullscreen-mode'

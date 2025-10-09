@@ -416,6 +416,18 @@ export class SMyLib {
 
     return items;
   }
+
+  convertSecondsInStrTime(seconds: number) {
+    return (
+      Math.floor(seconds / 60)
+        .toFixed(0)
+        .padStart(2, '0') +
+      ':' +
+      Math.floor(seconds % 60)
+        .toFixed(0)
+        .padStart(2, '0')
+    );
+  }
 }
 
 export const smylib = new SMyLib();

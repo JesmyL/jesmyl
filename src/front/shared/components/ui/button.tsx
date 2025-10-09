@@ -3,8 +3,8 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import * as React from 'react';
 
 import { cn } from '#shared/lib/utils';
+import { makeToastKOMoodConfig } from '#shared/ui/modal/toast.configs';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { toast } from 'sonner';
 import { StameskaIconKind } from 'stameska-icon/utils';
 
@@ -47,6 +47,8 @@ function Button({
   disabled,
   icon,
   disabledReason,
+  withoutAnimation,
+  iconKind,
   ...props
 }: OmitOwn<React.ComponentProps<'button'>, 'onClick'> &
   VariantProps<typeof buttonVariants> & {
@@ -54,6 +56,7 @@ function Button({
     asSpan?: boolean;
     isLoading?: boolean;
     icon?: KnownStameskaIconName;
+    withoutAnimation?: boolean;
     iconKind?: StameskaIconKind;
     disabledReason?: React.ReactNode;
     onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void | Promise<unknown>;
@@ -76,11 +79,7 @@ function Button({
       onClick={
         disabled
           ? disabledReason
-            ? () =>
-                toast(disabledReason, {
-                  icon: <LazyIcon icon="Alert01" />,
-                  className: 'bg-xKO! border-xKO!',
-                })
+            ? () => toast(disabledReason, makeToastKOMoodConfig())
             : undefined
           : async event => {
               const result = props.onClick?.(event);
@@ -96,6 +95,8 @@ function Button({
     >
       <TheIconLoading
         icon={icon}
+        iconKind={iconKind}
+        withoutAnimation={withoutAnimation}
         isLoading={promiseIsLoading || isLoading}
       />
       {children}

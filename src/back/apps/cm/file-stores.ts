@@ -1,10 +1,12 @@
 import { FileStore } from 'back/complect/FileStore';
 import {
   ChordPack,
+  CmComAudioMarkPack,
   CmComWid,
   CmConstantsConfig,
   CmMp3Rule,
   EeStorePack,
+  HttpNumLeadLink,
   ICmComCommentBlock,
   IExportableCat,
   IScheduleWidgetWid,
@@ -25,6 +27,9 @@ export const eventPacksFileStore = new FileStore(
   {} as Record<IScheduleWidgetWid, ScheduleComPack>,
 );
 export const eventPackHistoryFileStore = new FileStore<ScheduleComPackHistory>('/apps/cm/schEventPackHistory.json', {});
+export const cmComAudioMarkPacksFileStore = new FileStore<
+  PRecord<HttpNumLeadLink, { m: number; marks?: CmComAudioMarkPack }>
+>('/apps/cm/comAudioMarkPacks.json', {});
 
 export const comwVisitsFileStore = new FileStore<PRecord<CmComWid, number>>('/apps/cm/comwVisits.json', {});
 

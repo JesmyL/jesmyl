@@ -6,7 +6,7 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { removedCompositionsAtom } from '$cm+editor/basis/lib/atoms/com';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { cmEditorIDB } from '$cm+editor/basis/lib/cmEditorIDB';
-import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
+import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { TextCorrectMessages } from '$cm+editor/entities/TextBlockIncorrectMessages';
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { TheCom } from '$cm/col/com/TheCom';
@@ -22,14 +22,11 @@ const meterSizeItems: DropdownItem<3 | 4>[] = [
   { id: 3, title: '3/4' },
 ];
 
-export const CmEditorTabComMain = () => {
-  const ccom = useEditableCcom();
+export const CmEditorTabComMain = ({ ccom }: { ccom: EditableCom }) => {
   const setRemovedComs = useAtomSet(removedCompositionsAtom);
   const [name, setName] = useState('');
   const eeStore = cmEditorIDB.useValue.eeStore();
   const checkAccess = useCheckUserAccessRightsInScope();
-
-  if (!ccom) return null;
   const nameCorrects = CmComUtils.takeTextBlockIncorrects(name, eeStore);
 
   const comNode = (

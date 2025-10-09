@@ -1,6 +1,6 @@
 import { StyledLoadingSpinner } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
+import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { useUpdateLinePositions } from '$cm+editor/basis/lib/hooks/useUpdateChordLinePositions';
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { ComLine } from '$cm/col/com/line/ComLine';
@@ -12,8 +12,7 @@ import { makeRegExp } from 'regexpert';
 import { emptyArray, itIt } from 'shared/utils';
 import { CmEditorTabComChordApplicationsStyledContent } from './styled/CmEditorTabComChordApplicationsStyledContent.styled';
 
-export const CmEditorTabComChordApplications = () => {
-  const ccom = useEditableCcom();
+export const CmEditorTabComChordApplications = ({ ccom }: { ccom: EditableCom }) => {
   const { updateLinePositions, linesOnUpdateSet, ordLinePositionsOnSend } = useUpdateLinePositions();
   const checkAccess = useCheckUserAccessRightsInScope();
 
@@ -28,7 +27,7 @@ export const CmEditorTabComChordApplications = () => {
 
   return (
     <CmEditorTabComChordApplicationsStyledContent id="chord-application-redactor">
-      {ccom?.orders?.map((ord, ordi) => {
+      {ccom.orders?.map((ord, ordi) => {
         if (!ord.isVisible) return null;
         const chords = ord.chords?.split('\n').map(line => line.split(' '));
 

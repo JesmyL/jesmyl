@@ -2,7 +2,7 @@ import { mylib } from '#shared/lib/my-lib';
 import { BaseNamed } from '$cm/base/BaseNamed';
 import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { makeRegExp } from 'regexpert';
-import { IExportableCom, IExportableOrder } from 'shared/api';
+import { CmComOrderSelector, IExportableCom, IExportableOrder } from 'shared/api';
 import { emptyArray, itIt } from 'shared/utils';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { comBlockStyles } from 'shared/values/cm/block-styles/BlockStyles';
@@ -200,6 +200,10 @@ export class Com extends BaseNamed<IExportableCom> {
 
     return texts;
   }
+
+  getOrderBySelector = (ordSelector: CmComOrderSelector) => {
+    return this.orders?.find(ord => ord.isMySelector(ordSelector));
+  };
 
   translationMap(kind: number | und, isPushChordedBlocks = false) {
     const kinds = translationPushKinds[kind ?? this.translationPushKind];

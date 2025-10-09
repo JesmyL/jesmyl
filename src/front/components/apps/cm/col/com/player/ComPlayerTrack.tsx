@@ -1,6 +1,5 @@
 import { Slider } from '#shared/components/ui/slider';
 import { mylib } from '#shared/lib/my-lib';
-import { useAtomSet, useAtomValue } from 'atomaric';
 import {
   comPlayerAudioElement,
   comPlayerIsPlayAtom,
@@ -8,7 +7,8 @@ import {
   isUserSlideTrackDTO,
   useComPlayerCurrentTime,
   useComPlayerDuration,
-} from './controls';
+} from '$cm/basis/lib/control/current-play-com';
+import { useAtomSet, useAtomValue } from 'atomaric';
 
 let userChangeTimeout: TimeOut;
 

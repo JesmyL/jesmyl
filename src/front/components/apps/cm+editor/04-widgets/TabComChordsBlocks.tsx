@@ -1,18 +1,14 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
-import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
+import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { CmChordsBlockRedactor } from '$cm+editor/entities/ChordsBlockRedactor';
 import { CmTextableBlockAnchorTitles } from '$cm+editor/entities/TextableBlockAnchorTitles';
 import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { makeRegExp } from 'regexpert';
 
-export const CmEditorTabComChordsBlocks = () => {
-  const ccom = useEditableCcom();
+export const CmEditorTabComChordsBlocks = ({ ccom }: { ccom: EditableCom }) => {
   const checkAccess = useCheckUserAccessRightsInScope();
-
-  if (!ccom) return null;
-
   const textList = ccom.transposedBlocks();
   const isDisabled = !checkAccess('cm', 'COM_CH', 'U');
 

@@ -1,26 +1,44 @@
-import { DropdownMenu } from '#shared/components/ui/dropdown-menu';
-import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { Button } from '#shared/components/ui/button';
+import { addEventListenerPipe, hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { comPlayerAudioElement, comPlayerPlaySrcAtom } from '$cm/basis/lib/control/current-play-com';
 import { cmIDB } from '$cm/basis/lib/store/cmIDB';
+import { cmTsjrpcClient } from '$cm/tsjrpc/basic.tsjrpc.methods';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useRef } from 'react';
-import { comPlayerAudioElement, comPlayerPlaySrcAtom } from './controls';
+import { CmComOrderSelector, HttpLink } from 'shared/api';
+import { Com } from '../Com';
 
-export const ComPlayerMarksMovers = ({ src }: { src: string }) => {
+export const ComPlayerMarksMovers = ({ src, com }: { src: HttpLink; com: Com }) => {
   const titleRef = useRef<HTMLDivElement>(null);
-  const prevRef = useRef<HTMLDivElement>(null);
-  const repeatRef = useRef<HTMLDivElement>(null);
-  const nextRef = useRef<HTMLDivElement>(null);
+  const prevRef = useRef<HTMLButtonElement>(null);
+  const repeatRef = useRef<HTMLButtonElement>(null);
+  const nextRef = useRef<HTMLButtonElement>(null);
   const playSrc = useAtomValue(comPlayerPlaySrcAtom);
 
   const audioTrackMarks = cmIDB.useAudioTrackMarks(playSrc ?? src);
+
+  useEffect(() => {
+    if (com?.wid == null) return;
+
+    return hookEffectPipe()
+      .pipe(
+        setTimeoutPipe(() => {
+          com.audio.forEach(async src => {
+            const markPack = await cmIDB.tb.audioTrackMarks.get(src);
+            cmTsjrpcClient.takeFreshComAudioMarksPack({ lastModfiedAt: markPack?.m || 0, src });
+          });
+        }, 100),
+      )
+      .effect();
+  }, [com.audio, com?.wid]);
 
   useEffect(() => {
     if (titleRef.current === null || audioTrackMarks == null) return;
 
     const titleNode = titleRef.current;
     const marks = mylib.keys(audioTrackMarks.marks).map(Number);
+    const selectorToTitleDict: PRecord<CmComOrderSelector, string> = {};
 
     let prev = 0;
     let repeat = 0;
@@ -36,14 +54,25 @@ export const ComPlayerMarksMovers = ({ src }: { src: string }) => {
       repeat = marks[repeati] ?? 0;
       next = marks.find(findNextTime) ?? 0;
 
-      titleNode.innerText = audioTrackMarks.marks[repeat] ?? 'Начало';
+      if (audioTrackMarks.marks != null) {
+        const repeatMark = audioTrackMarks.marks[repeat];
 
-      if (repeat === marks[marks.length - 1]) {
-        nextRef.current?.classList.add('disabled');
-      } else nextRef.current?.classList.remove('disabled');
+        if (mylib.isStr(repeatMark)) {
+          titleNode.innerText = repeatMark ?? '';
+        } else if (repeatMark != null) {
+          titleNode.innerText = selectorToTitleDict[repeatMark[0]] ??=
+            com.getOrderBySelector(repeatMark[0])?.me.header() ?? '';
+        } else titleNode.innerText = 'Начало';
+      }
+
+      if (nextRef.current !== null)
+        if (repeat === marks[marks.length - 1]) {
+          nextRef.current.disabled = true;
+        } else nextRef.current.disabled = false;
     };
 
     updatePoints();
+    comPlayerPlaySrcAtom.set(src);
 
     return hookEffectPipe()
       .pipe(
@@ -59,34 +88,34 @@ export const ComPlayerMarksMovers = ({ src }: { src: string }) => {
           comPlayerAudioElement.play();
           comPlayerAudioElement.currentTime = next;
         }),
-        addEventListenerPipe(comPlayerAudioElement, 'timeupdate', () => {
-          updatePoints();
-        }),
+        addEventListenerPipe(comPlayerAudioElement, 'timeupdate', updatePoints),
       )
       .effect();
-  }, [audioTrackMarks]);
+  }, [audioTrackMarks, com, src]);
 
   if (audioTrackMarks == null) return null;
 
   return (
-    <>
-      <div
-        className="ellipsis"
-        ref={titleRef}
+    <div className="absolute right-10 top-10 flex flex-end gap-3 min-w-[50vw]">
+      <Button
+        icon="ArrowLeft02"
+        ref={prevRef}
       />
-      <div className="flex justify-around w-full">
-        <DropdownMenu.Item ref={prevRef}>
-          <LazyIcon icon="ArrowLeft02" />
-        </DropdownMenu.Item>
 
-        <DropdownMenu.Item ref={repeatRef}>
-          <LazyIcon icon="Refresh" />
-        </DropdownMenu.Item>
+      <Button
+        ref={repeatRef}
+        icon="Refresh"
+      >
+        <span
+          className="ellipsis"
+          ref={titleRef}
+        />
+      </Button>
 
-        <DropdownMenu.Item ref={nextRef}>
-          <LazyIcon icon="ArrowRight02" />
-        </DropdownMenu.Item>
-      </div>
-    </>
+      <Button
+        ref={nextRef}
+        icon="ArrowRight02"
+      />
+    </div>
   );
 };

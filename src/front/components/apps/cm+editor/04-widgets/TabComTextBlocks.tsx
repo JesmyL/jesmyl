@@ -1,12 +1,11 @@
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
-import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
+import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { CmTextableBlockAnchorTitles } from '$cm+editor/entities/TextableBlockAnchorTitles';
 import { CmTextBlockRedactor } from '$cm+editor/entities/TextBlockRedactor';
 import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 
-export const CmEditorTabTextBlocks = () => {
-  const ccom = useEditableCcom();
+export const CmEditorTabTextBlocks = ({ ccom }: { ccom: EditableCom }) => {
   const checkAccess = useCheckUserAccessRightsInScope();
 
   if (!ccom) return null;

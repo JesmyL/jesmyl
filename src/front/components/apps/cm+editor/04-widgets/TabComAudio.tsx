@@ -2,7 +2,6 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { useCmExtractHrefsFromHTML } from '$cm+editor/basis/lib/hooks/useCmExtractHrefsFromHTML';
-import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { ObserveUrlResource } from '$cm+editor/basis/ui/ObserveUrlResource';
 import { ComAudioControlledList } from '$cm+editor/widgets/AudioControlledList';
 import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
@@ -10,14 +9,9 @@ import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmMp3Rule, HttpLink } from 'shared/api';
 
-type Props = { topHTML?: string; topCom?: EditableCom; topMp3Rule?: CmMp3Rule };
-
-export const CmEditorTabComAudio = ({ topHTML, topCom, topMp3Rule }: Props) => {
-  const cEditableCom = useEditableCcom();
-  const ccom = topCom ?? cEditableCom;
-
-  const [innerHTML, setInnerHTML] = useState(topHTML);
-  const [mp3Rule, setMp3Rule] = useState<CmMp3Rule | und>(topMp3Rule);
+export const CmEditorTabComAudio = ({ ccom }: { ccom: EditableCom }) => {
+  const [innerHTML, setInnerHTML] = useState('');
+  const [mp3Rule, setMp3Rule] = useState<CmMp3Rule | und>(undefined);
   const [hrefs, setHrefs] = useState<HttpLink[]>([]);
   const [removedHrefs, setRemovedHrefs] = useState<HttpLink[]>([]);
   const [openAddBlock, setOpenAddBlock] = useState(false);
@@ -63,7 +57,7 @@ export const CmEditorTabComAudio = ({ topHTML, topCom, topMp3Rule }: Props) => {
         (openAddBlock ? (
           <>
             <h2>Добавить аудио</h2>
-            {!topHTML && (
+            {
               <ObserveUrlResource
                 onSuccess={({ html, rule }) => {
                   setInnerHTML(html);
@@ -81,7 +75,7 @@ export const CmEditorTabComAudio = ({ topHTML, topCom, topMp3Rule }: Props) => {
                   () => `"${ccom.name}"`,
                 ]}
               />
-            )}
+            }
             <ComAudioControlledList
               srcs={hrefs}
               icon="PlusSignCircle"

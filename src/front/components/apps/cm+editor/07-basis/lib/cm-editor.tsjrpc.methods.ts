@@ -1,9 +1,12 @@
 import { TsjrpcClient } from '#basis/lib/Tsjrpc.client';
+import { mylib } from '#shared/lib/my-lib';
+import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { CmEditCatTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-cat.tsjrpc.model';
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
 import { CmEditComOrderTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-order.tsjrpc.model';
 import { CmEditComTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com.tsjrpc.model';
 import { CmEditorTsjrpcModel } from 'shared/api/tsjrpc/cm/editor.tsjrpc.model';
+import { cmComEditorAudioMarksEditPacksAtom } from './atoms/com';
 
 export const cmEditCatClientTsjrpcMethods = new (class CmEditCat extends TsjrpcClient<CmEditCatTsjrpcModel> {
   constructor() {
@@ -70,6 +73,10 @@ export const cmEditComExternalsClientTsjrpcMethods =
           getScheduleEventHistory: true,
           getScheduleEventHistoryStatistic: true,
           removeScheduleEventHistoryItem: true,
+          updateAudioMarks: ({ marks, src }) => {
+            cmIDB.tb.audioTrackMarks.put({ marks, src });
+            cmComEditorAudioMarksEditPacksAtom.do.removeMarks(src, mylib.keys(marks));
+          },
         },
       });
     }

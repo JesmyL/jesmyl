@@ -28,7 +28,7 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
     (async () => {
       const cssContentList =
         visibleOrders?.map(ord => {
-          const ordSelectorId = ComBlockCommentMakerCleans.makeOrdSelector(ord);
+          const ordSelectorId = ord.makeSelector();
 
           const commentLines = takeCommentTexts(ordSelectorId);
           if (commentLines == null) return '';
@@ -76,7 +76,7 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
         }) ?? [];
 
       const numeredOrderHeaders = visibleOrders?.map((ord, ordi) => {
-        const ordSelectorId = ComBlockCommentMakerCleans.makeOrdSelector(ord);
+        const ordSelectorId = ord.makeSelector();
 
         return css`
           [ord-selector='${ordSelectorId}'] .styled-header {

@@ -4,7 +4,7 @@ export const WithState = <Value,>({
   init,
   children,
 }: {
-  init: Value;
+  init: Value | (() => Value);
   children: (value: Value, set: Dispatch<SetStateAction<Value>>) => React.ReactNode;
 }) => {
   const state = useState(init);

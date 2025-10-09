@@ -40,18 +40,6 @@ export class MyLib extends SMyLib {
     return arg == null ? args[0] : arg;
   }
 
-  convertSecondsInStrTime(seconds: number) {
-    return (
-      Math.floor(seconds / 60)
-        .toFixed(0)
-        .padStart(2, '0') +
-      ':' +
-      Math.floor(seconds % 60)
-        .toFixed(0)
-        .padStart(2, '0')
-    );
-  }
-
   findLastIndex<Value>(arr?: Value[], cb: (val: Value, index: number, array: Value[]) => unknown = () => false) {
     if (!Array.isArray(arr)) return null;
     if (!this.isFunc(cb)) return arr.length - 1;

@@ -1,10 +1,16 @@
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
-import { CmComWid } from 'shared/api';
+import { CmComAudioMarkPack, CmComWid } from 'shared/api';
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
-import { smylib } from 'shared/utils';
+import { itNumSort, SMyLib, smylib } from 'shared/utils';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { schedulesFileStore } from '../index/schedules/file-stores';
-import { comsFileStore, eventPackHistoryFileStore, eventPacksFileStore } from './file-stores';
+import { makeCmComNumLeadLinkFromHttp } from './complect/com-http-links';
+import {
+  cmComAudioMarkPacksFileStore,
+  comsFileStore,
+  eventPackHistoryFileStore,
+  eventPacksFileStore,
+} from './file-stores';
 import { cmShareServerTsjrpcMethods } from './tsjrpc.shares';
 
 export const cmEditComExternalsTsjrpcBaseServer =
@@ -87,6 +93,47 @@ export const cmEditComExternalsTsjrpcBaseServer =
                 `Удалена пачка песен из истории события в расписании ` +
                 `"${schedulesFileStore.getValue().find(sch => sch.w === schw)?.title ?? '??'}"`,
             };
+          },
+
+          updateAudioMarks: async ({ marks, src }) => {
+            const allMarkPacks = cmComAudioMarkPacksFileStore.getValue();
+            const numLeadSrc = makeCmComNumLeadLinkFromHttp(src);
+
+            allMarkPacks[numLeadSrc] ??= { m: Date.now() };
+            allMarkPacks[numLeadSrc].marks ??= {};
+            allMarkPacks[numLeadSrc].m = Date.now();
+
+            const srcPackMarks = allMarkPacks[numLeadSrc].marks;
+
+            SMyLib.entries(marks).forEach(([time, selector]) => {
+              if (selector == null) {
+                delete srcPackMarks[time];
+                return;
+              }
+
+              if (selector === `+${time}+`) {
+                srcPackMarks[time] = smylib.convertSecondsInStrTime(+time);
+                return;
+              }
+
+              srcPackMarks[time] = selector;
+            });
+
+            if (smylib.keys(srcPackMarks).length) {
+              const sortedMarksPack: CmComAudioMarkPack = {};
+
+              smylib
+                .keys(srcPackMarks)
+                .map(Number)
+                .sort(itNumSort)
+                .forEach(time => (sortedMarksPack[time] = srcPackMarks[time]));
+
+              allMarkPacks[numLeadSrc].marks = sortedMarksPack;
+            } else delete allMarkPacks[numLeadSrc].marks;
+
+            cmComAudioMarkPacksFileStore.saveValue();
+
+            return { value: { marks: allMarkPacks[numLeadSrc].marks, src }, description: null };
           },
         },
       });

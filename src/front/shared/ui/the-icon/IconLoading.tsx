@@ -7,6 +7,7 @@ interface Props extends HTMLAttributes<HTMLOrSVGElement> {
   isLoading?: boolean;
   icon?: KnownStameskaIconName;
   iconKind?: StameskaIconKind;
+  withoutAnimation?: boolean;
 }
 
 export const TheIconLoading = (props: Props) => {
@@ -32,6 +33,7 @@ export const TheIconLoading = (props: Props) => {
         <LazyIcon
           icon={icon}
           kind={iconKind}
+          withoutAnimation={props.withoutAnimation}
           {...attrs}
         />
       ) : (

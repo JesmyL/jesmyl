@@ -4,20 +4,19 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditCatClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { EditableCat } from '$cm+editor/basis/lib/EditableCat';
-import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
+import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React, { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
 
-export const CmEditorTabComCategoryBinds = () => {
-  const ccom = useEditableCcom();
+export const CmEditorTabComCategoryBinds = ({ ccom }: { ccom: EditableCom }) => {
   const icats = useLiveQuery(() => cmIDB.db.cats.toArray());
   const cats = useMemo(() => icats?.map(icat => new EditableCat(icat, [])), [icats]);
   const checkAccess = useCheckUserAccessRightsInScope();
 
-  if (!ccom || cats == null) return null;
+  if (cats == null) return null;
 
   return (
     <>

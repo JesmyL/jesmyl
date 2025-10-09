@@ -3,6 +3,7 @@ import { SourceBased } from '#shared/lib/SourceBased';
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { makeRegExp } from 'regexpert';
 import {
+  CmComOrderSelector,
   IExportableOrder,
   IExportableOrderFieldValues,
   InheritancableOrder,
@@ -421,4 +422,14 @@ export class Order extends SourceBased<IExportableOrder> {
   repeatedText(repeats: OrderRepeats | null = this.repeats) {
     return CmComOrderUtils.makeRepeatedText(CmComUtils.transformToDisplayedText(this.text).text, repeats);
   }
+
+  makeSelector = (): CmComOrderSelector =>
+    this.me.leadOrd && this.me.watchOrd ? `${this.me.leadOrd.wid}_${this.me.watchOrd.wid}` : this.wid;
+
+  isMySelector = (selector: CmComOrderSelector) => {
+    if (mylib.isNum(selector)) return this.wid === selector;
+    if (this.me.leadOrd == null || this.me.watchOrd == null) return false;
+    const parts = selector.split('_');
+    return this.me.leadOrd.wid === +parts[0] && this.me.watchOrd.wid === +parts[1];
+  };
 }

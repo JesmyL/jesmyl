@@ -1,3 +1,4 @@
+import { Button } from '#shared/components/ui/button';
 import { mylib } from '#shared/lib/my-lib';
 import { ReactNode } from 'react';
 import { toast } from 'sonner';
@@ -5,8 +6,6 @@ import { StameskaIconKind } from 'stameska-icon/utils';
 import { twMerge } from 'tailwind-merge';
 import { ConfirmContent } from '../modal/confirm/ConfirmContent';
 import { makeToastKOMoodConfig } from '../modal/toast.configs';
-import { TheIconLoading } from './IconLoading';
-import { LazyIcon } from './LazyIcon';
 
 interface Props {
   icon: KnownStameskaIconName;
@@ -59,16 +58,13 @@ export const TheIconButton = (props: Props) => {
                 }
               >
                 {props.prefix}
-                {props.isLoading ? (
-                  <TheIconLoading className={props.iconClassName} />
-                ) : (
-                  <LazyIcon
-                    icon={props.icon}
-                    kind={props.kind}
-                    className={props.iconClassName}
-                    withoutAnimation={props.withoutAnimation}
-                  />
-                )}
+                <Button
+                  icon={props.icon}
+                  iconKind={props.kind}
+                  isLoading={props.isLoading}
+                  className={props.iconClassName}
+                  withoutAnimation={props.withoutAnimation}
+                />
                 {props.postfix}
               </span>
             </>

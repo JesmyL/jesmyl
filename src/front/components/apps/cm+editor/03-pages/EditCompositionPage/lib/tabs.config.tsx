@@ -1,4 +1,6 @@
+import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { CmEditorTabComAudio } from '$cm+editor/widgets/TabComAudio';
+import { CmEditorTabComAudioMarks } from '$cm+editor/widgets/TabComAudioMarks';
 import { CmEditorTabComCategoryBinds } from '$cm+editor/widgets/TabComCategoryBinds';
 import { CmEditorTabComChordApplications } from '$cm+editor/widgets/TabComChordApplications';
 import { CmEditorTabComChordsBlocks } from '$cm+editor/widgets/TabComChordsBlocks';
@@ -37,7 +39,7 @@ export const editCompositionNavs = {
     checkTabAccess: checkAccess => checkAccess('cm', 'COM_CH'),
   },
   audio: {
-    Component: CmEditorTabComAudio as never,
+    Component: CmEditorTabComAudio,
     icon: 'Voice',
     checkTabAccess: checkAccess => checkAccess('cm', 'COM_AUDIO'),
   },
@@ -50,6 +52,11 @@ export const editCompositionNavs = {
     Component: CmEditorTabComRepeats,
     icon: 'Layers01',
     checkTabAccess: checkAccess => checkAccess('cm', 'COM_REP'),
+  },
+  points: {
+    Component: CmEditorTabComAudioMarks,
+    icon: 'PinLocation01',
+    checkTabAccess: checkAccess => checkAccess('cm', 'COM_AMARK'),
   },
   tr: {
     Component: CmEditorTabComOnTranslations,
@@ -64,7 +71,7 @@ export const editCompositionNavs = {
 } satisfies Record<
   string,
   {
-    Component: () => React.ReactNode;
+    Component: (props: { ccom: EditableCom }) => React.ReactNode;
     icon: KnownStameskaIconName;
     checkTabAccess: (checker: ReturnType<typeof useCheckUserAccessRightsInScope>) => void;
   }

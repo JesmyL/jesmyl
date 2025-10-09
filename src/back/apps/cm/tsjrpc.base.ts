@@ -3,6 +3,7 @@ import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { ICmComCommentBlock } from 'shared/api';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
 import { emptyObject, SMyLib, smylib } from 'shared/utils';
+import { makeCmComNumLeadLinkFromHttp } from './complect/com-http-links';
 import { mapCmImportableToExportableCom } from './complect/tools';
 import { cmEditCatServerTsjrpcBase } from './edit-cat.tsjrpc.base';
 import { cmEditComExternalsTsjrpcBaseServer } from './edit-com-externals.tsjrpc.base';
@@ -13,6 +14,7 @@ import {
   aboutComFavoritesFileStore,
   catsFileStore,
   chordPackFileStore,
+  cmComAudioMarkPacksFileStore,
   cmConstantsConfigFileStore,
   comCommentBlocksFileStore,
   comsFileStore,
@@ -232,6 +234,13 @@ export const cmServerTsjrpcBase = new (class Cm extends TsjrpcBaseServer<CmTsjrp
 
         takeComwVisitsCount: async ({ comw }) => ({ value: comwVisitsFileStore.getValue()[comw] ?? 0 }),
         getComwVisits: async () => ({ value: comwVisitsFileStore.getValue() }),
+
+        takeFreshComAudioMarksPack: async ({ lastModfiedAt, src }) => {
+          const allMarkPacks = cmComAudioMarkPacksFileStore.getValue();
+          const srcMarksPack = allMarkPacks[makeCmComNumLeadLinkFromHttp(src)];
+
+          return { value: !srcMarksPack || srcMarksPack.m <= lastModfiedAt ? null : { ...srcMarksPack, src } };
+        },
       },
     });
   }

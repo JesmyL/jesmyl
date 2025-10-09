@@ -1,42 +1,38 @@
-import { DropdownMenu } from '#shared/components/ui/dropdown-menu';
+import { Badge } from '#shared/components/ui/badge';
 import { useState } from 'react';
 import { HttpLink } from 'shared/api';
+import { itNIt } from 'shared/utils';
 import styled, { css, keyframes } from 'styled-components';
+import { Com } from '../Com';
 import { ComPlayer } from './ComPlayer';
-import { ComPlayerMarksConfigurerEditMenuButton } from './ComPlayerMarksConfigurerEditMenuButton';
 import { ComPlayerMarksMovers } from './ComPlayerMarksMovers';
 
 interface Props {
   audioLinks: HttpLink[];
+  com: Com;
 }
 
-export const ComPlayerWithPoints = ({ audioLinks }: Props) => {
-  const [isOpenMenu, setIsOpenMenu] = useState(false);
+export const ComPlayerWithPoints = ({ audioLinks, com }: Props) => {
+  const [isOpenButtons, setIsOpenButtons] = useState(false);
 
   return (
     <ComPlayer
       audioLinks={audioLinks}
-      timeRender={(timeNode, currentSrc) => (
-        <DropdownMenu.Root
-          open={isOpenMenu}
-          onOpenChange={setIsOpenMenu}
+      addRender={src =>
+        isOpenButtons && (
+          <ComPlayerMarksMovers
+            src={src}
+            com={com}
+          />
+        )
+      }
+      timeRender={timeNode => (
+        <Badge
+          variant={isOpenButtons ? 'destructive' : 'secondary'}
+          onClick={() => setIsOpenButtons(itNIt)}
         >
-          <DropdownMenu.Trigger
-            className="bg-x1 h-6 w-13 pointer text-x3 rounded-2xl"
-            onClick={() => setIsOpenMenu(true)}
-          >
-            {timeNode}
-          </DropdownMenu.Trigger>
-
-          <DropdownMenu.Content className="bg-x2 text-x4 **:text-x4 flex flex-col gap-3">
-            <ComPlayerMarksMovers src={currentSrc} />
-
-            <ComPlayerMarksConfigurerEditMenuButton
-              src={currentSrc}
-              onClick={() => setIsOpenMenu(false)}
-            />
-          </DropdownMenu.Content>
-        </DropdownMenu.Root>
+          {timeNode}
+        </Badge>
       )}
     />
   );

@@ -45,7 +45,7 @@ export const useComCommentBlockFastReactions = (listRef: React.RefObject<HTMLDiv
 
       await wait(500);
 
-      cmComCommentRedactOrdSelectorIdAtom.set(ComBlockCommentMakerCleans.makeOrdSelector(ord));
+      cmComCommentRedactOrdSelectorIdAtom.set(ord.makeSelector());
     };
 
     return hookEffectPipe()

@@ -4,7 +4,6 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { TheButton } from '#shared/ui/TheButton';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
-import { useEditableCcom } from '$cm+editor/basis/lib/hooks/useEditableCom';
 import { CmComOrderOnClickBetweenData } from '$cm+editor/basis/model/Orders';
 import { OrdersRedactorAdditions } from '$cm+editor/features/EditOrderAddBlock';
 import { OrdersRedactorOrderTools } from '$cm+editor/features/EditOrderTools';
@@ -15,8 +14,7 @@ import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRights
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-export const CmEditorTabComOrders = () => {
-  const ccom = useEditableCcom();
+export const CmEditorTabComOrders = ({ ccom }: { ccom: EditableCom }) => {
   const [newBlockAdderPopupCom, setNewBlockAdderPopupCom] = useState<EditableCom | false>(false);
   const [toolProps, setToolProps] = useState<OrdersRedactorOrderToolsProps | false>(false);
   const [clickBetweenData, setClickBetweenOrds] = useState<CmComOrderOnClickBetweenData | null>(null);

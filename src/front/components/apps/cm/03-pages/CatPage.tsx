@@ -7,9 +7,9 @@ import {
 } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { SetComListLimitsExtracterContext } from '$cm/base/SetComListLimitsExtracterContext';
 import { comPlayerHeaderStickyCss } from '$cm/basis/css/com-player';
+import { comPlayerPlaySrcAtom } from '$cm/basis/lib/control/current-play-com';
 import { Cat } from '$cm/col/cat/Cat';
 import { ComPlayer } from '$cm/col/com/player/ComPlayer';
-import { comPlayerPlaySrcAtom } from '$cm/col/com/player/controls';
 import { CmComListSearchFilterInput } from '$cm/features/CmComListSearchFilterInput';
 import { CmRatingSortedComList } from '$cm/widgets/RatingSortedComList';
 import { FileRoutesByPath } from '@tanstack/react-router';

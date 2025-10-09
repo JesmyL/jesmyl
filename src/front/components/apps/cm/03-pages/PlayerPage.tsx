@@ -3,17 +3,17 @@ import { DocTitle } from '#shared/ui/tags/DocTitle';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useCom } from '$cm/basis/lib/com-selections';
 import { useComs } from '$cm/basis/lib/coms-selections';
-import { cmLastOpenComwAtom } from '$cm/basis/lib/store/atoms';
-import { Com } from '$cm/col/com/Com';
-import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
-import { ComPlayerPlayButton } from '$cm/col/com/player/ComPlayerPlayButton';
-import { ComPlayerTrack } from '$cm/col/com/player/ComPlayerTrack';
 import {
   comPlayerEndedTickAtom,
   comPlayerErrorTickAtom,
   comPlayerIsPlayAtom,
   comPlayerPlaySrcAtom,
-} from '$cm/col/com/player/controls';
+} from '$cm/basis/lib/control/current-play-com';
+import { cmLastOpenComwAtom } from '$cm/basis/lib/store/atoms';
+import { Com } from '$cm/col/com/Com';
+import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
+import { ComPlayerPlayButton } from '$cm/col/com/player/ComPlayerPlayButton';
+import { ComPlayerTrack } from '$cm/col/com/player/ComPlayerTrack';
 import { useFavouriteComs } from '$cm/lists/favourites/useFavouriteComs';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { atom, useAtomValue } from 'atomaric';
