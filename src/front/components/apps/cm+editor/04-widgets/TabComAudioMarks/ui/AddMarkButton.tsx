@@ -12,7 +12,8 @@ export const CmEditorTabWithComAudioMarks_AddMarkButton = ({ src }: { src: HttpL
       className="flex justify-center gap-2 px-2 py-1 min-w-35 border-x2! border-4! rounded-lg mt-2!"
       disabled={currentTime === 0}
       onClick={() => {
-        cmComEditorAudioMarksEditPacksAtom.do.putMarks(src, { [currentTime]: `+${currentTime}+` });
+        const fixedTime = +currentTime.toFixed(3);
+        cmComEditorAudioMarksEditPacksAtom.do.putMarks(src, { [fixedTime]: `+${fixedTime}+` });
       }}
     >
       {currentTime}

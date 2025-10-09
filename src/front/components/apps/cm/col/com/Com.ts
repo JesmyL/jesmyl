@@ -282,6 +282,10 @@ export class Com extends BaseNamed<IExportableCom> {
     return inCats.concat(natives);
   }
 
+  visibleOrders = () => {
+    return this.orders?.filter((ord: Order) => !ord.isHeaderNoneForce && ord.isVisible);
+  };
+
   private updateChordLabels() {
     this._chordLabels = [];
     this._usedChords = {};

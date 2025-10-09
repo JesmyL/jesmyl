@@ -7,7 +7,6 @@ import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { wait } from 'shared/utils';
 import { Com } from '../../Com';
-import { ComBlockCommentMakerCleans } from './Cleans';
 
 export const useComCommentBlockFastReactions = (listRef: React.RefObject<HTMLDivElement | null>, com: Com) => {
   const isMiniAnchor = useAtomValue(cmIsComMiniAnchorAtom);
@@ -30,9 +29,8 @@ export const useComCommentBlockFastReactions = (listRef: React.RefObject<HTMLDiv
         return;
       }
 
-      const comOrders = com.orders;
-      if (comOrders === null) return;
-      const visibleOrders = comOrders.filter(ComBlockCommentMakerCleans.withHeaderTextOrderFilter);
+      const visibleOrders = com.visibleOrders();
+      if (visibleOrders == null) return;
 
       const { node, foundClassNames } = getParentNodeWithClassName(event, 'styled-block', ['styled-header']);
 
@@ -54,5 +52,5 @@ export const useComCommentBlockFastReactions = (listRef: React.RefObject<HTMLDiv
         addEventListenerWithDelayPipe(1000, () => listRef.current, 'touchstart', onDown),
       )
       .effect();
-  }, [com.orders, isMiniAnchor, listRef]);
+  }, [com, isMiniAnchor, listRef]);
 };

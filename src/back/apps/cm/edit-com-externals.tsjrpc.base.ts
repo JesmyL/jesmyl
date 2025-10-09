@@ -100,18 +100,21 @@ export const cmEditComExternalsTsjrpcBaseServer =
             const numLeadSrc = makeCmComNumLeadLinkFromHttp(src);
 
             allMarkPacks[numLeadSrc] ??= { m: Date.now() };
-            allMarkPacks[numLeadSrc].marks ??= {};
+            allMarkPacks[numLeadSrc].marks ??= { '0': 'Начало' };
             allMarkPacks[numLeadSrc].m = Date.now();
 
             const srcPackMarks = allMarkPacks[numLeadSrc].marks;
 
             SMyLib.entries(marks).forEach(([time, selector]) => {
+              const addTime = `+${time}+`;
+              time = +(+time).toFixed(3);
+
               if (selector == null) {
                 delete srcPackMarks[time];
                 return;
               }
 
-              if (selector === `+${time}+`) {
+              if (selector === addTime || selector === `+${time}+`) {
                 srcPackMarks[time] = smylib.convertSecondsInStrTime(+time);
                 return;
               }

@@ -35,15 +35,14 @@ export const CmComPlayerMarksConfigurerTimeMark = ({ selector, time, src, com, i
   const [isRedactTime, setIsRedactTime] = useState(false);
 
   return (
-    <div className="flex flex-wrap gap-2 py-3">
+    <div className="py-3">
       {isRedactTime ? (
         <>
           <TextInput
-            type="tel"
             className="bg-x2! text-x4! px-2 py-1 w-[7em]"
             value={timeValue}
             maxLength={10}
-            onInput={value => setTimeValue(value)}
+            onInput={value => setTimeValue(prev => (mylib.isNaN(+value) ? prev : value))}
           />
           <TheIconButton
             icon="CheckmarkCircle01"
@@ -68,41 +67,43 @@ export const CmComPlayerMarksConfigurerTimeMark = ({ selector, time, src, com, i
           <LazyIcon icon="Edit02" />
         </button>
       )}
-      <TextInput
-        className={twMerge('w-auto', mylib.isArr(selector) && 'text-x7!')}
-        defaultValue={defaultValue}
-        strongDefaultValue
-        maxLength={20}
-        onChanged={value =>
-          cmEditComExternalsClientTsjrpcMethods
-            .updateAudioMarks({
-              src,
-              marks: { [time]: value },
-            })
-            .then(() => onPin(null))
-        }
-      />
-      {pinTime == null && (
-        <Button
-          icon="PinLocation01"
-          onClick={() => onPin(time)}
+      <div className="flex gap-3">
+        <TextInput
+          className={twMerge('w-auto', mylib.isArr(selector) && 'text-x7!')}
+          defaultValue={defaultValue}
+          strongDefaultValue
+          maxLength={20}
+          onChanged={value =>
+            cmEditComExternalsClientTsjrpcMethods
+              .updateAudioMarks({
+                src,
+                marks: { [time]: value },
+              })
+              .then(() => onPin(null))
+          }
         />
-      )}
-      {pinTime == time && (
-        <Button
-          icon="Cancel01"
-          onClick={() => onPin(null)}
-        />
-      )}
-      {pinTime == null && (
-        <TheIconButton
-          icon="Delete02"
-          className="text-xKO"
-          isLoading={isRemoving}
-          confirm={<>Удалить точку {time}?</>}
-          onClick={() => cmComEditorAudioMarksEditPacksAtom.do.removeMark(src, time)}
-        />
-      )}
+        {pinTime == null && (
+          <Button
+            icon="PinLocation01"
+            onClick={() => onPin(time)}
+          />
+        )}
+        {pinTime == time && (
+          <Button
+            icon="Cancel01"
+            onClick={() => onPin(null)}
+          />
+        )}
+        {pinTime == null && (
+          <TheIconButton
+            icon="Delete02"
+            className="text-xKO"
+            isLoading={isRemoving}
+            confirm={<>Удалить точку {time}?</>}
+            onClick={() => cmComEditorAudioMarksEditPacksAtom.do.removeMark(src, time)}
+          />
+        )}
+      </div>
     </div>
   );
 };

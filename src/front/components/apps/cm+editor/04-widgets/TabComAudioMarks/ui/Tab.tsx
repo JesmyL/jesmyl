@@ -11,6 +11,7 @@ import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { ComOrders } from '$cm/col/com/orders/ComOrders';
 import { ComPlayer } from '$cm/col/com/player/ComPlayer';
+import { ComPlayerMarksMovers } from '$cm/col/com/player/ComPlayerMarksMovers';
 import { atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { CmComAudioMarkSelector, HttpLink } from 'shared/api';
@@ -65,7 +66,16 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
 
               return (
                 <>
-                  <ComPlayer audioLinks={[editSrc]} />
+                  <ComPlayer
+                    className="relative mb-20 sticky top-10!"
+                    audioLinks={[editSrc]}
+                    addRender={src => (
+                      <ComPlayerMarksMovers
+                        src={src}
+                        com={ccom}
+                      />
+                    )}
+                  />
 
                   <CmEditorTabWithComAudioMarks_AddMarkButton src={editSrc} />
 

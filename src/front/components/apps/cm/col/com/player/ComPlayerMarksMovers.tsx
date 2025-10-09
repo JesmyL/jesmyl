@@ -39,6 +39,7 @@ export const ComPlayerMarksMovers = ({ src, com }: { src: HttpLink; com: Com }) 
     const titleNode = titleRef.current;
     const marks = mylib.keys(audioTrackMarks.marks).map(Number);
     const selectorToTitleDict: PRecord<CmComOrderSelector, string> = {};
+    const visibleOrders = com.visibleOrders() ?? [];
 
     let prev = 0;
     let repeat = 0;
@@ -60,8 +61,14 @@ export const ComPlayerMarksMovers = ({ src, com }: { src: HttpLink; com: Com }) 
         if (mylib.isStr(repeatMark)) {
           titleNode.innerText = repeatMark ?? '';
         } else if (repeatMark != null) {
-          titleNode.innerText = selectorToTitleDict[repeatMark[0]] ??=
-            com.getOrderBySelector(repeatMark[0])?.me.header() ?? '';
+          if (selectorToTitleDict[repeatMark[0]] == null) {
+            const ord = com.getOrderBySelector(repeatMark[0]);
+            if (ord != null) {
+              selectorToTitleDict[repeatMark[0]] = `#${visibleOrders.indexOf(ord) + 1} ${ord.me.header()}`;
+            }
+          }
+
+          titleNode.innerText = selectorToTitleDict[repeatMark[0]] ?? '';
         } else titleNode.innerText = 'Начало';
       }
 

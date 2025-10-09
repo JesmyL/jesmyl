@@ -10,44 +10,39 @@ interface Props {
   timeRender?: (timeNode: React.ReactNode, currentSrc: HttpLink) => React.ReactNode;
   addRender?: (currentSrc: HttpLink) => React.ReactNode;
   isPlayOwnOnly?: boolean;
+  className?: string;
 }
 
-export const ComPlayer = ({ audioLinks, timeRender, isPlayOwnOnly, addRender }: Props) => {
+export const ComPlayer = ({ audioLinks, timeRender, isPlayOwnOnly, addRender, className }: Props) => {
   const [currentVariant, setCurrentVariant] = useState(0);
   const src = audioLinks[currentVariant];
 
-  const node = (
-    <StyledPlayer className="composition-player flex gap-2 px-2">
-      <ComPlayerPlayButton
-        src={src}
-        isPlayOwnOnly={isPlayOwnOnly}
-      />
-      <ComPlayerTrack
-        src={src}
-        isPlayOwnOnly={isPlayOwnOnly}
-        timeRender={timeRender ? timeNode => timeRender(timeNode, src) : itIt}
-      />
+  return (
+    <div className={className}>
+      <StyledPlayer className="composition-player flex gap-2 px-2">
+        <ComPlayerPlayButton
+          src={src}
+          isPlayOwnOnly={isPlayOwnOnly}
+        />
+        <ComPlayerTrack
+          src={src}
+          isPlayOwnOnly={isPlayOwnOnly}
+          timeRender={timeRender ? timeNode => timeRender(timeNode, src) : itIt}
+        />
 
-      {audioLinks.length > 1 && (
-        <div
-          className="current-variant-badge flex center pointer"
-          onClick={() => {
-            setCurrentVariant(currentVariant > audioLinks.length - 2 ? 0 : currentVariant + 1);
-          }}
-        >
-          {currentVariant + 1}
-        </div>
-      )}
-    </StyledPlayer>
-  );
-
-  return addRender ? (
-    <div className="fixed top-[var(--header-height)] w-full z-20">
-      {node}
-      {addRender(src)}
+        {audioLinks.length > 1 && (
+          <div
+            className="current-variant-badge flex center pointer"
+            onClick={() => {
+              setCurrentVariant(currentVariant > audioLinks.length - 2 ? 0 : currentVariant + 1);
+            }}
+          >
+            {currentVariant + 1}
+          </div>
+        )}
+      </StyledPlayer>
+      {addRender?.(src)}
     </div>
-  ) : (
-    node
   );
 };
 

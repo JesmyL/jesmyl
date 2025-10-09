@@ -17,6 +17,7 @@ export const ComPlayerWithPoints = ({ audioLinks, com }: Props) => {
 
   return (
     <ComPlayer
+      className="fixed top-[var(--header-height)] w-full z-20"
       audioLinks={audioLinks}
       addRender={src =>
         isOpenButtons && (

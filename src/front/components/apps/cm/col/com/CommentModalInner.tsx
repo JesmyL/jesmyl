@@ -27,7 +27,6 @@ import { useEffect, useState } from 'react';
 import { emptyArray } from 'shared/utils';
 import { useDeferredCallback } from 'shared/utils/useDeferredCallback';
 import { toast } from 'sonner';
-import { ComBlockCommentMakerCleans } from './complect/comment-parser/Cleans';
 import { Order } from './order/Order';
 import { CmTransferAltCommentModalInner } from './TransferAltCommentModalInner';
 
@@ -47,7 +46,7 @@ export const CmComCommentModalInner = ({ com }: { com: Com }) => {
   if (ordSelectorId === null) return;
 
   cmComCommentRegisteredAltKeysAtom.do.init();
-  const visibleOrders = com.orders?.filter(ComBlockCommentMakerCleans.withHeaderTextOrderFilter) ?? [];
+  const visibleOrders = com.visibleOrders() ?? [];
 
   const comCommentBlockTexts = takeCommentTexts(ordSelectorId) ?? [];
 
