@@ -20,7 +20,7 @@ interface Props {
 export const CmComEditorAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ time, com, src }: Props) => {
   const trackMarks = cmIDB.useAudioTrackMarks(src);
   const selector = trackMarks?.marks?.[time];
-  const title = useMakeMarkTitleBySelector(com, selector);
+  const title = useMakeMarkTitleBySelector(time, com, selector, trackMarks?.marks);
   const [currentTime, setCurrentTime] = useState('' + time);
 
   const addMaker = (add: number) => () => {

@@ -3,15 +3,17 @@ import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe
 import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
 import { BibleModulesTranslationsControl } from '$bible/entities/ModulesTranslationsControl';
 import { cmIsComMiniAnchorAtom } from '$cm/atoms';
+import { useCmComOrdwToPlayButtonNodeDict } from '$cm/basis/lib/hooks/useCmComOrdwToPlayButtonNodeDict';
 import { cmComFontSizeAtom, cmSpeedRollKfAtom } from '$cm/basis/lib/store/atoms';
 import { ChordVisibleVariant } from '$cm/Cm.model';
 import { Link } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useRef } from 'react';
-import styled, { RuleSet, css } from 'styled-components';
+import styled, { css, RuleSet } from 'styled-components';
 import { Com } from './Com';
 import { useComCommentBlockCss } from './complect/comment-parser/useComCommentBlock';
 import { useComCommentBlockFastReactions } from './complect/comment-parser/useComCommentBlockFastReactions';
+import { isCmComOpenAudioMoversAtom } from './complect/state/atoms';
 import { TheCom } from './TheCom';
 
 let onPrevCom: () => void;
@@ -32,6 +34,8 @@ export const TheControlledCom = ({ com, comList, chordVisibleVariant }: Props) =
   const isMiniAnchor = useAtomValue(cmIsComMiniAnchorAtom);
   const listRef = useRef<HTMLDivElement>(null);
   const { commentCss, isThereUnsettedTranslate } = useComCommentBlockCss(com);
+  const isOpenButtons = useAtomValue(isCmComOpenAudioMoversAtom);
+  const ordwToPlayButtonNodeDict = useCmComOrdwToPlayButtonNodeDict(com);
 
   const comi = comList.findIndex(c => c.wid === com.wid);
   const nextComw = comi < comList.length - 1 ? comList[comi + 1]?.wid : comList[0]?.wid;
@@ -84,10 +88,20 @@ export const TheControlledCom = ({ com, comList, chordVisibleVariant }: Props) =
           >
             <TheCom
               com={com}
-              fontSize={fontSize}
+              fontSize={isOpenButtons ? Math.abs(fontSize) : fontSize}
               chordVisibleVariant={chordVisibleVariant}
               isMiniAnchor={isMiniAnchor}
               listRef={listRef}
+              asHeaderComponent={
+                ordwToPlayButtonNodeDict && isOpenButtons
+                  ? ({ ord, headerNode }) => (
+                      <div className="flex gap-1 flex-wrap max-w-[80%]">
+                        {headerNode}
+                        {ordwToPlayButtonNodeDict[ord.wid]}
+                      </div>
+                    )
+                  : undefined
+              }
             />
           </WithScrollProgress>
         </div>

@@ -6,6 +6,7 @@ import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/basis/lib/atoms/c
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { comPlayerAudioElement } from '$cm/basis/lib/control/current-play-com';
+import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { CmComAudioMarkSelector, HttpLink } from 'shared/api';
 import { twMerge } from 'tailwind-merge';
 import { useMakeMarkTitleBySelector } from '../lib/useMakeMarkTitleBySelector';
@@ -22,7 +23,8 @@ interface Props {
 }
 
 export const CmComPlayerMarksConfigurerTimeMark = ({ selector, time, src, com, isRemoving, onPin, pinTime }: Props) => {
-  const defaultValue = useMakeMarkTitleBySelector(com, selector);
+  const trackMarks = cmIDB.useAudioTrackMarks(src);
+  const defaultValue = useMakeMarkTitleBySelector(time, com, selector, trackMarks?.marks);
 
   return (
     <div className="py-3">

@@ -2,6 +2,7 @@ import { useBibleScreenTranslationFontSizeAdapter } from '#shared/lib/hooks/useF
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ReactNode, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 import { Com } from '../Com';
 import { ComBlockCommentMakerCleans } from '../complect/comment-parser/Cleans';
 import { TheOrder } from '../order/TheOrder';
@@ -17,7 +18,7 @@ export function ComOrders(props: IComOrdersProps) {
 
   const content = (
     <StyledOrdList
-      className="com-ord-list"
+      className={twMerge('com-ord-list', props.className)}
       ref={props.listRef}
       $fontSize={fontSize}
     >

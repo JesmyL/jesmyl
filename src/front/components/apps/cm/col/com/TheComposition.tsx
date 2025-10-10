@@ -33,12 +33,15 @@ import { useMigratableTopComTools } from './tools/lib/useMigratableComTools';
 import { CmComCatMentions } from './useGetCatMentions';
 
 export function TheComposition() {
+  const comListRef = useRef<HTMLDivElement>(null);
+  const [isOpenTools, setIsOpenTools] = useState(false);
+
   const ccom = useFixedCcom();
   const [chordVisibleVariant] = useChordVisibleVariant();
   const { addLaterComw, laterComws } = useLaterComList();
-  const [isOpenTools, setIsOpenTools] = useState(false);
   const comToolsNode = useMigratableTopComTools();
   const { list } = useCmCurrentComPackContext();
+  const isComCommentIncludesBibleAddress = useCheckIsComCommentIncludesBibleAddress(ccom);
 
   const playerHideMode = useAtomValue(cmPlayerHideModeAtom);
   const hideAppFooter = useAtomValue(hideAppFooterAtom);
@@ -55,11 +58,9 @@ export function TheComposition() {
       .effect();
   }, [addLaterComw, ccom?.wid]);
 
-  const comListRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (comListRef.current) comListRef.current.scrollTop = 0;
   }, [ccom?.wid]);
-  const isComCommentIncludesBibleAddress = useCheckIsComCommentIncludesBibleAddress(ccom);
 
   if (ccom == null) return <ComNotFoundPage />;
 

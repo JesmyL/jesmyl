@@ -10,8 +10,10 @@ import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/basis/lib/atoms/c
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { comPlayerAudioElement } from '$cm/basis/lib/control/current-play-com';
+import { useCmComOrdwToPlayButtonNodeDict } from '$cm/basis/lib/hooks/useCmComOrdwToPlayButtonNodeDict';
 import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { ChordVisibleVariant } from '$cm/Cm.model';
+import { useComCommentBlockCss } from '$cm/col/com/complect/comment-parser/useComCommentBlock';
 import { ComOrders } from '$cm/col/com/orders/ComOrders';
 import { ComPlayer } from '$cm/col/com/player/ComPlayer';
 import { ComPlayerMarksMovers } from '$cm/col/com/player/ComPlayerMarksMovers';
@@ -19,6 +21,7 @@ import { atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { CmComAudioMarkSelector, HttpLink } from 'shared/api';
 import { toast } from 'sonner';
+import styled, { RuleSet } from 'styled-components';
 import { cmComEditorAudioMarksRedactorOpenTimeConfiguratorAtom } from '../state/atoms';
 import { CmComPlayerMarksConfigurerTimeMark } from './ComPlayerMarksConfigurerTimeMark';
 import { CmComEditorAudioMarksRedactorOpenTimeConfiguratorModalInner } from './TimeConfiguratorModalInner';
@@ -29,6 +32,8 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
   const editSrc = useAtomValue(srcOnEditAtom);
   const trackMarks = cmIDB.useAudioTrackMarks(editSrc);
   const marksOnUpdating = useAtomValue(cmComEditorAudioMarksEditPacksAtom);
+  const ordwToPlayButtonNodeDict = useCmComOrdwToPlayButtonNodeDict(ccom);
+  const { commentCss } = useComCommentBlockCss(ccom, true);
 
   useEffect(() => {
     if (!ccom.audio.length) {
@@ -70,7 +75,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
               return (
                 <>
                   <ComPlayer
-                    className="relative mb-20 sticky"
+                    className="mb-20 sticky top-8! bg-x1 pb-5"
                     audioLinks={[editSrc]}
                     addRender={src => (
                       <div className="relative flex gap-5 w-full -top-8!">
@@ -130,16 +135,16 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                     );
                   })}
 
-                  <ComOrders
+                  <StyledComOrders
+                    $commentStyles={commentCss}
                     chordVisibleVariant={ChordVisibleVariant.Maximal}
+                    fontSize={20}
                     com={ccom}
                     asHeaderComponent={({ headerNode, ord }) => (
-                      <>
-                        {headerNode}
+                      <div className="flex flex-wrap gap-3">
                         {pinTime == null ? (
                           <Button
                             icon="PlusSign"
-                            className="ml-3"
                             onClick={() => {
                               if (editSrc == null || comPlayerAudioElement.currentTime < 0.001) {
                                 toast('Песня не воспроизводилась', makeToastKOMoodConfig());
@@ -155,7 +160,6 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                         ) : (
                           <Button
                             icon="PinLocation01"
-                            className="ml-3"
                             onClick={() =>
                               cmEditComExternalsClientTsjrpcMethods
                                 .updateAudioMarks({
@@ -166,7 +170,9 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                             }
                           />
                         )}
-                      </>
+                        {headerNode}
+                        {ordwToPlayButtonNodeDict?.[ord.wid]}
+                      </div>
                     )}
                   />
 
@@ -188,3 +194,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
     </div>
   );
 };
+
+const StyledComOrders = styled(ComOrders)<{ $commentStyles?: RuleSet<object> | string }>`
+  ${props => props.$commentStyles}
+`;

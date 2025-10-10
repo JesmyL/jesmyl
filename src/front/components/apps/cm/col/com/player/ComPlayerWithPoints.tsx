@@ -1,9 +1,9 @@
 import { Badge } from '#shared/components/ui/badge';
-import { useState } from 'react';
+import { useAtomValue } from 'atomaric';
 import { HttpLink } from 'shared/api';
-import { itNIt } from 'shared/utils';
 import styled, { css, keyframes } from 'styled-components';
 import { Com } from '../Com';
+import { isCmComOpenAudioMoversAtom } from '../complect/state/atoms';
 import { ComPlayer } from './ComPlayer';
 import { ComPlayerMarksMovers } from './ComPlayerMarksMovers';
 
@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const ComPlayerWithPoints = ({ audioLinks, com }: Props) => {
-  const [isOpenButtons, setIsOpenButtons] = useState(false);
+  const isOpenButtons = useAtomValue(isCmComOpenAudioMoversAtom);
 
   return (
     <ComPlayer
@@ -30,7 +30,7 @@ export const ComPlayerWithPoints = ({ audioLinks, com }: Props) => {
       timeRender={timeNode => (
         <Badge
           variant={isOpenButtons ? 'destructive' : 'secondary'}
-          onClick={() => setIsOpenButtons(itNIt)}
+          onClick={isCmComOpenAudioMoversAtom.do.toggle}
         >
           {timeNode}
         </Badge>

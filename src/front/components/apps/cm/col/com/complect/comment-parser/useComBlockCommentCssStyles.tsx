@@ -12,7 +12,7 @@ import { StyledComLine } from '../../line/StyledComLine.styler';
 import { Order } from '../../order/Order';
 import { ComBlockCommentMakerCleans } from './Cleans';
 
-export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order[] | und) => {
+export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order[] | und, isSetHashesOnly = false) => {
   const altCommentKey = useAtomValue(cmComCommentAltKeyAtom);
   const [styles, setStyles] = useState<
     Partial<{
@@ -26,54 +26,55 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
 
   useEffect(() => {
     (async () => {
-      const cssContentList =
-        visibleOrders?.map(ord => {
-          const ordSelectorId = ord.makeSelector();
+      const cssContentList = isSetHashesOnly
+        ? null
+        : (visibleOrders?.map(ord => {
+            const ordSelectorId = ord.makeSelector();
 
-          const commentLines = takeCommentTexts(ordSelectorId);
-          if (commentLines == null) return '';
+            const commentLines = takeCommentTexts(ordSelectorId);
+            if (commentLines == null) return '';
 
-          let isNumeredLines = false;
+            let isNumeredLines = false;
 
-          const linesStyle = commentLines.map((line, linei) => {
-            if (!line) return;
-            isNumeredLines ||= !!line.match(makeRegExp(`/(?<=^|\\n)[^а-я]*\\d/`));
+            const linesStyle = commentLines.map((line, linei) => {
+              if (!line) return;
+              isNumeredLines ||= !!line.match(makeRegExp(`/(?<=^|\\n)[^а-я]*\\d/`));
+
+              return css`
+                .styled-header ${commentHolderSelectors[linei] || '::after'} {
+                  ${ComBlockCommentMakerCleans.makePseudoCommentContentCss(line)}
+                  ${ComBlockCommentMakerCleans.makePseudoCommentContentAccentsCss(line)}
+                }
+              `;
+            });
 
             return css`
-              .styled-header ${commentHolderSelectors[linei] || '::after'} {
-                ${ComBlockCommentMakerCleans.makePseudoCommentContentCss(line)}
-                ${ComBlockCommentMakerCleans.makePseudoCommentContentAccentsCss(line)}
-              }
-            `;
-          });
+              [ord-selector='${ordSelectorId}'] {
+                ${linesStyle}
 
-          return css`
-            [ord-selector='${ordSelectorId}'] {
-              ${linesStyle}
+                &:has(.styled-header) {
+                  counter-reset: com-line;
+                }
 
-              &:has(.styled-header) {
-                counter-reset: com-line;
-              }
-
-              ${isNumeredLines &&
-              css`
-                ${plusInheritBlockStyleSelector.repeat(0)} ${StyledComLine},
+                ${isNumeredLines &&
+                css`
+                  ${plusInheritBlockStyleSelector.repeat(0)} ${StyledComLine},
                 ${plusInheritBlockStyleSelector.repeat(1)} ${StyledComLine},
                 ${plusInheritBlockStyleSelector.repeat(2)} ${StyledComLine},
                 ${plusInheritBlockStyleSelector.repeat(3)} ${StyledComLine},
                 ${plusInheritBlockStyleSelector.repeat(4)} ${StyledComLine},
                 ${plusInheritBlockStyleSelector.repeat(5)} ${StyledComLine} {
-                  counter-increment: com-line;
+                    counter-increment: com-line;
 
-                  &::before {
-                    content: counter(com-line) '_';
-                    opacity: 0.7;
+                    &::before {
+                      content: counter(com-line) '_';
+                      opacity: 0.7;
+                    }
                   }
-                }
-              `}
-            }
-          `;
-        }) ?? [];
+                `}
+              }
+            `;
+          }) ?? []);
 
       const numeredOrderHeaders = visibleOrders?.map((ord, ordi) => {
         const ordSelectorId = ord.makeSelector();
@@ -147,7 +148,7 @@ export const useComBlockCommentCssStyles = (comw: CmComWid, visibleOrders: Order
     })()
       .then(styles => setStyles(styles))
       .catch(emptyFunc);
-  }, [altCommentKey, currentBibleTranslate, takeCommentTexts, translates, visibleOrders]);
+  }, [altCommentKey, currentBibleTranslate, takeCommentTexts, translates, visibleOrders, isSetHashesOnly]);
 
   return styles;
 };

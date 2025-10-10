@@ -45,12 +45,15 @@ export const ComPlayerMarksMovers = ({ src, com, repeatButtonClassName }: Props)
 
     const titleNode = titleRef.current;
     const marks = mylib.keys(audioTrackMarks.marks).map(Number);
-    const selectorToTitleDict: PRecord<CmComOrderSelector, string> = {};
+    const selectorToTitleDict: PRecord<`${number}/${CmComOrderSelector}`, string> = {};
     const visibleOrders = com.visibleOrders() ?? [];
 
     let prev = 0;
     let repeat = 0;
     let next = 0;
+    let lastTitleSelector = '';
+    let prevButton: Element | nil = null;
+    let isInitialButtonClassNameSet = true;
 
     const findNextTime = (num: number) => num > comPlayerAudioElement.currentTime;
     const findRepeatTime = (num: number) => num <= comPlayerAudioElement.currentTime;
@@ -68,21 +71,54 @@ export const ComPlayerMarksMovers = ({ src, com, repeatButtonClassName }: Props)
         if (mylib.isStr(repeatMark)) {
           titleNode.innerText = repeatMark ?? '';
         } else if (repeatMark != null) {
-          if (selectorToTitleDict[repeatMark[0]] == null) {
+          const titleSelector = `${repeat}/${repeatMark[0]}` as const;
+
+          if (isInitialButtonClassNameSet || lastTitleSelector !== titleSelector) {
+            isInitialButtonClassNameSet = false;
+            const htmlButtonSelector = `[com-audio-mark-selector="${titleSelector}"]`;
+            const block = document.querySelector(`.composition-block:has(${htmlButtonSelector})`);
+            const button = (block ?? document)?.querySelector(htmlButtonSelector);
+
+            (block ?? button)?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+
+            prevButton?.classList.remove('text-x7');
+            prevButton = button;
+            prevButton?.classList.add('text-x7');
+          }
+
+          lastTitleSelector = titleSelector;
+
+          if (selectorToTitleDict[titleSelector] == null) {
             const ord = com.getOrderBySelector(repeatMark[0]);
+
             if (ord != null) {
-              selectorToTitleDict[repeatMark[0]] = `#${visibleOrders.indexOf(ord) + 1} ${ord.me.header()}`;
+              let blockRepeatsCount = 0;
+
+              mylib.keys(audioTrackMarks.marks).find(itTime => {
+                if (audioTrackMarks.marks?.[itTime] == null || mylib.isStr(audioTrackMarks.marks[itTime])) return false;
+
+                if (ord.isMySelector(audioTrackMarks.marks[itTime][0])) blockRepeatsCount++;
+                else blockRepeatsCount = 0;
+
+                return repeat === +itTime;
+              });
+
+              selectorToTitleDict[titleSelector] =
+                `#${visibleOrders.indexOf(ord) + 1} ${ord.me.header()} ${blockRepeatsCount > 1 ? `×${blockRepeatsCount}` : ''}`;
             }
           }
 
-          titleNode.innerText = selectorToTitleDict[repeatMark[0]] ?? '';
+          titleNode.innerText = selectorToTitleDict[titleSelector] ?? '';
         } else titleNode.innerText = 'Начало';
       }
 
-      if (nextRef.current !== null)
-        if (repeat === marks[marks.length - 1]) {
-          nextRef.current.disabled = true;
-        } else nextRef.current.disabled = false;
+      if (nextRef.current !== null) {
+        nextRef.current.disabled = repeati === marks.length - 1;
+      }
+
+      if (prevRef.current !== null) {
+        prevRef.current.disabled = repeati === 0;
+      }
     };
 
     updatePoints();
@@ -103,8 +139,12 @@ export const ComPlayerMarksMovers = ({ src, com, repeatButtonClassName }: Props)
           comPlayerAudioElement.currentTime = next;
         }),
         addEventListenerPipe(comPlayerAudioElement, 'timeupdate', updatePoints),
+        addEventListenerPipe(comPlayerAudioElement, 'ended', () => {
+          comPlayerAudioElement.currentTime = 0;
+          updatePoints();
+        }),
       )
-      .effect();
+      .effect(() => prevButton?.classList.remove('text-x7'));
   }, [audioTrackMarks, com, src]);
 
   if (audioTrackMarks == null) return null;

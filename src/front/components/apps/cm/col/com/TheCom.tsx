@@ -12,6 +12,7 @@ interface Props {
   isMiniAnchor?: boolean;
   fontSize?: number;
   listRef?: RefObject<HTMLDivElement | null>;
+  asHeaderComponent?: Parameters<typeof ComOrders>[0]['asHeaderComponent'];
 }
 
 export const TheCom = ({
@@ -21,6 +22,7 @@ export const TheCom = ({
   isMiniAnchor,
   fontSize,
   listRef,
+  asHeaderComponent,
 }: Props) => {
   const ccom = useCcom();
   const com = topCom ?? ccom;
@@ -35,6 +37,7 @@ export const TheCom = ({
       isMiniAnchor={isMiniAnchor}
       showInvisibles={showInvisibles}
       listRef={listRef}
+      asHeaderComponent={asHeaderComponent}
     />
   );
 };

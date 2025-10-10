@@ -12,4 +12,5 @@ export interface IComOrdersProps {
   chordVisibleVariant: ChordVisibleVariant;
   showInvisibles?: boolean;
   listRef?: RefObject<HTMLDivElement | null>;
+  className?: string;
 }
