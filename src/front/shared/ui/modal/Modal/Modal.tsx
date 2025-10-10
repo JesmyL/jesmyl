@@ -8,7 +8,7 @@ import { TrustChildrenCheckType } from 'front/types/TrustChildrenCheckType';
 import { useEffect } from 'react';
 import { StyledModalScreen, StyledModalScreenWrapper } from '../styled';
 
-export const Modal = <Value, TrustValue extends Value>({
+export const Modal = <Value, TrustValue extends Value = Exclude<Value, nil | '' | false>>({
   mood,
   children,
   isRenderHere,

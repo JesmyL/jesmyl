@@ -86,7 +86,11 @@ function Button({
 
               if (result instanceof Promise) {
                 setIsLoading(true);
-                await result;
+                try {
+                  await result;
+                } catch (_) {
+                  //
+                }
               }
 
               setIsLoading(false);
