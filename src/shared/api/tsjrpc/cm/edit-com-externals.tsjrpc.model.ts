@@ -32,4 +32,9 @@ export type CmEditComExternalsTsjrpcModel = {
     src: HttpLink;
     marks?: CmComAudioMarkPack;
   };
+
+  changeAudioMarkTime: (args: { src: HttpLink; time: number; newTime: number }) => null | {
+    src: HttpLink;
+    marks?: CmComAudioMarkPack;
+  };
 };

@@ -1,73 +1,45 @@
 import { Button } from '#shared/components/ui/button';
 import { mylib } from '#shared/lib/my-lib';
 import { TextInput } from '#shared/ui/TextInput';
-import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/basis/lib/atoms/com';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
-import { useMemo, useState } from 'react';
+import { comPlayerAudioElement } from '$cm/basis/lib/control/current-play-com';
 import { CmComAudioMarkSelector, HttpLink } from 'shared/api';
 import { twMerge } from 'tailwind-merge';
+import { useMakeMarkTitleBySelector } from '../lib/useMakeMarkTitleBySelector';
+import { cmComEditorAudioMarksRedactorOpenTimeConfiguratorAtom } from '../state/atoms';
 
 interface Props {
   time: number;
+  com: EditableCom;
   selector: CmComAudioMarkSelector | nil;
   src: HttpLink;
-  com: EditableCom;
   isRemoving: boolean;
   pinTime: RKey<number> | null;
   onPin: (time: RKey<number> | null) => void;
 }
 
 export const CmComPlayerMarksConfigurerTimeMark = ({ selector, time, src, com, isRemoving, onPin, pinTime }: Props) => {
-  const defaultValue = useMemo(() => {
-    if (mylib.isArr(selector)) {
-      const ord = com.getOrderBySelector(selector[0]);
-
-      return ord ? ord.me.header() + (mylib.isNum(selector[0]) ? '' : '+') : '?????';
-    }
-
-    return selector ?? '';
-  }, [com, selector]);
-
-  const [timeValue, setTimeValue] = useState('' + time);
-  const [isRedactTime, setIsRedactTime] = useState(false);
+  const defaultValue = useMakeMarkTitleBySelector(com, selector);
 
   return (
     <div className="py-3">
-      {isRedactTime ? (
-        <>
-          <TextInput
-            className="bg-x2! text-x4! px-2 py-1 w-[7em]"
-            value={timeValue}
-            maxLength={10}
-            onInput={value => setTimeValue(prev => (mylib.isNaN(+value) ? prev : value))}
-          />
-          <TheIconButton
-            icon="CheckmarkCircle01"
-            className="text-xOK"
-            onClick={async () => {
-              setIsRedactTime(false);
-              if (time === +timeValue) return;
+      <button className="text-x3 flex gap-2 mb-3">
+        <span>
+          {time} ({mylib.convertSecondsInStrTime(time)})
+        </span>
+      </button>
 
-              cmComEditorAudioMarksEditPacksAtom.do.removeMark(src, time);
-              cmComEditorAudioMarksEditPacksAtom.do.putMarks(src, { [timeValue]: `+${+timeValue}+` });
-            }}
-          />
-        </>
-      ) : (
-        <button
-          className="text-x3 flex gap-2"
-          onClick={() => setIsRedactTime(true)}
-        >
-          <span>
-            {time} ({mylib.convertSecondsInStrTime(time)})
-          </span>
-          <LazyIcon icon="Edit02" />
-        </button>
-      )}
-      <div className="flex gap-3">
+      <div className="flex gap-3 flex-wrap">
+        <Button
+          icon="Play"
+          onClick={() => {
+            comPlayerAudioElement.currentTime = time;
+            comPlayerAudioElement.play();
+          }}
+        />
         <TextInput
           className={twMerge('w-auto', mylib.isArr(selector) && 'text-x7!')}
           defaultValue={defaultValue}
@@ -75,19 +47,10 @@ export const CmComPlayerMarksConfigurerTimeMark = ({ selector, time, src, com, i
           maxLength={20}
           onChanged={value =>
             cmEditComExternalsClientTsjrpcMethods
-              .updateAudioMarks({
-                src,
-                marks: { [time]: value },
-              })
+              .updateAudioMarks({ src, marks: { [time]: value } })
               .then(() => onPin(null))
           }
         />
-        {pinTime == null && (
-          <Button
-            icon="PinLocation01"
-            onClick={() => onPin(time)}
-          />
-        )}
         {pinTime == time && (
           <Button
             icon="Cancel01"
@@ -95,13 +58,23 @@ export const CmComPlayerMarksConfigurerTimeMark = ({ selector, time, src, com, i
           />
         )}
         {pinTime == null && (
-          <TheIconButton
-            icon="Delete02"
-            className="text-xKO"
-            isLoading={isRemoving}
-            confirm={<>Удалить точку {time}?</>}
-            onClick={() => cmComEditorAudioMarksEditPacksAtom.do.removeMark(src, time)}
-          />
+          <div className="flex gap-2">
+            <Button
+              icon="PinLocation01"
+              onClick={() => onPin(time)}
+            />
+            <TheIconButton
+              icon="Delete02"
+              className="text-xKO"
+              isLoading={isRemoving}
+              confirm={<>Удалить точку {time}?</>}
+              onClick={() => cmComEditorAudioMarksEditPacksAtom.do.removeMark(src, time)}
+            />
+            <Button
+              icon="Settings01"
+              onClick={() => cmComEditorAudioMarksRedactorOpenTimeConfiguratorAtom.set(time)}
+            />
+          </div>
         )}
       </div>
     </div>

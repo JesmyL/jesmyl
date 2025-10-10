@@ -7,9 +7,16 @@ import { cmTsjrpcClient } from '$cm/tsjrpc/basic.tsjrpc.methods';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useRef } from 'react';
 import { CmComOrderSelector, HttpLink } from 'shared/api';
+import { twMerge } from 'tailwind-merge';
 import { Com } from '../Com';
 
-export const ComPlayerMarksMovers = ({ src, com }: { src: HttpLink; com: Com }) => {
+interface Props {
+  src: HttpLink;
+  com: Com;
+  repeatButtonClassName?: string;
+}
+
+export const ComPlayerMarksMovers = ({ src, com, repeatButtonClassName }: Props) => {
   const titleRef = useRef<HTMLDivElement>(null);
   const prevRef = useRef<HTMLButtonElement>(null);
   const repeatRef = useRef<HTMLButtonElement>(null);
@@ -103,7 +110,7 @@ export const ComPlayerMarksMovers = ({ src, com }: { src: HttpLink; com: Com }) 
   if (audioTrackMarks == null) return null;
 
   return (
-    <div className="absolute right-10 top-10 flex flex-end gap-3 min-w-[50vw]">
+    <div className="flex gap-3 w-full">
       <Button
         icon="ArrowLeft02"
         ref={prevRef}
@@ -112,6 +119,7 @@ export const ComPlayerMarksMovers = ({ src, com }: { src: HttpLink; com: Com }) 
       <Button
         ref={repeatRef}
         icon="Refresh"
+        className={twMerge('w-full max-w-[calc(100vw-115px)]', repeatButtonClassName)}
       >
         <span
           className="ellipsis"

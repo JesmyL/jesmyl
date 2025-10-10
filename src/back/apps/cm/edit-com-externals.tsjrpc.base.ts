@@ -138,6 +138,35 @@ export const cmEditComExternalsTsjrpcBaseServer =
 
             return { value: { marks: allMarkPacks[numLeadSrc].marks, src }, description: null };
           },
+
+          changeAudioMarkTime: async ({ newTime, src, time }) => {
+            const allMarkPacks = cmComAudioMarkPacksFileStore.getValue();
+            const numLeadSrc = makeCmComNumLeadLinkFromHttp(src);
+
+            if (allMarkPacks[numLeadSrc]?.marks == null) return { value: null };
+
+            const marks = allMarkPacks[numLeadSrc].marks;
+            if (marks[newTime] !== undefined) throw 'Такое время уже зарегистрировано';
+
+            marks[newTime] = marks[time];
+            delete marks[time];
+
+            allMarkPacks[numLeadSrc].m = Date.now();
+
+            const sortedMarksPack: CmComAudioMarkPack = {};
+
+            smylib
+              .keys(marks)
+              .map(Number)
+              .sort(itNumSort)
+              .forEach(time => (sortedMarksPack[time] = marks[time]));
+
+            allMarkPacks[numLeadSrc].marks = sortedMarksPack;
+
+            cmComAudioMarkPacksFileStore.saveValue();
+
+            return { value: { marks: allMarkPacks[numLeadSrc].marks, src }, description: null };
+          },
         },
       });
     }

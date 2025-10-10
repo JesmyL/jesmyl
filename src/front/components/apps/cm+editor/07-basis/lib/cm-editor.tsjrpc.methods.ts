@@ -77,6 +77,11 @@ export const cmEditComExternalsClientTsjrpcMethods =
             cmIDB.tb.audioTrackMarks.put({ marks, src });
             cmComEditorAudioMarksEditPacksAtom.do.removeMarks(src, mylib.keys(marks));
           },
+          changeAudioMarkTime: pack => {
+            if (pack == null) return;
+            cmIDB.tb.audioTrackMarks.put({ marks: pack.marks, src: pack.src });
+            cmComEditorAudioMarksEditPacksAtom.do.removeMarks(pack.src, mylib.keys(pack.marks));
+          },
         },
       });
     }

@@ -41,7 +41,7 @@ export const ComPlayer = ({ audioLinks, timeRender, isPlayOwnOnly, addRender, cl
           </div>
         )}
       </StyledPlayer>
-      {addRender?.(src)}
+      {addRender && <div className="relative top-10 flex gap-3 max-w-[100vw]">{addRender(src)}</div>}
     </div>
   );
 };
