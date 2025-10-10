@@ -114,8 +114,7 @@ export class SMyLib {
 
   clone =
     typeof structuredClone === 'function'
-      ? (obj: Parameters<typeof structuredClone>[0], options?: Parameters<typeof structuredClone>[1]) =>
-          structuredClone(obj, options)
+      ? <Val>(obj: Val, options?: Parameters<typeof structuredClone>[1]): Val => structuredClone(obj, options)
       : <Val>(what: Val): Val => {
           if (what === null || what === undefined) return what;
           else if (this.isArr(what)) {
