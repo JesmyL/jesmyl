@@ -112,19 +112,23 @@ export class SMyLib {
     return `${cutText}${cutText.length !== text.length ? ' ...' : ''}`;
   }
 
-  clone<Val>(what: Val): Val {
-    if (what === null || what === undefined) return what;
-    else if (what.constructor === Object) {
-      const newObj: Record<string, unknown> = {};
-      for (const whatn in what) newObj[whatn] = this.clone(what[whatn as never]);
-      return newObj as Val;
-    } else if (this.isArr(what)) {
-      const newObj: unknown[] = [];
-      for (const whatn in what) newObj[whatn] = this.clone(what[whatn as never]);
-      return newObj as Val;
-    }
-    return what;
-  }
+  clone =
+    typeof structuredClone === 'function'
+      ? structuredClone
+      : <Val>(what: Val): Val => {
+          if (what === null || what === undefined) return what;
+          else if (this.isArr(what)) {
+            const arr: unknown[] = [];
+            for (const key in what) arr[key] = this.clone(what[key]);
+            return arr as Val;
+          } else if (what.constructor === Object) {
+            const obj: Record<string, unknown> = {};
+            for (const key in what) obj[key] = this.clone(what[key]);
+            return obj as Val;
+          }
+
+          return what;
+        };
 
   takeNextMi<Mi extends number, Item extends { [k in MiKey]: Mi }, MiKey extends string = 'mi'>(
     list: Item[],
