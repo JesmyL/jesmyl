@@ -49,6 +49,18 @@ export class MyLib extends SMyLib {
     return -1;
   }
 
+  findElementScrollParent = (element: Element | nil): Element['parentElement'] | null => {
+    if (element == null) return null;
+
+    while (true) {
+      if (element.scrollHeight !== element.clientHeight) break;
+      if (element.parentElement === null) return null;
+      element = element.parentElement;
+    }
+
+    return element as never;
+  };
+
   numberSearchReplacements: [RegExp, string][] = [
     [/0/g, '[ 0]'],
     [/1/g, '[^а-яё1]'],

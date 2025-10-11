@@ -1,6 +1,7 @@
 import { RefObject, useEffect, useMemo } from 'react';
 import { emptyFunc, Eventer } from 'shared/utils';
 import { addEventListenerPipe, hookEffectPipe } from '../hookEffectPipe';
+import { mylib } from '../my-lib';
 
 export const useOnScrolledToLimitEventer = (listRef: RefObject<HTMLDivElement | null>) => {
   const eventerScope = useMemo(() => Eventer.createValue<'start' | 'end'>(), []);
@@ -9,13 +10,8 @@ export const useOnScrolledToLimitEventer = (listRef: RefObject<HTMLDivElement | 
     let onUnmount = emptyFunc;
     const timeout = setTimeout(() => {
       if (listRef.current === null) return;
-      let target = listRef.current;
-
-      while (true) {
-        if (target.scrollHeight !== target.clientHeight) break;
-        if (target.parentElement === null) return;
-        target = target.parentElement as never;
-      }
+      const target = mylib.findElementScrollParent(listRef.current);
+      if (target == null) return;
 
       let prevIsTopBorder = false;
       let prevIsBottomBorder = true;
