@@ -24,7 +24,7 @@ interface Props {
 
 export const CmComPlayerMarksConfigurerTimeMark = ({ selector, time, src, com, isRemoving, onPin, pinTime }: Props) => {
   const trackMarks = cmIDB.useAudioTrackMarks(src);
-  const { title: defaultValue } = useMakeMarkTitleBySelector(time, com, selector, trackMarks?.marks);
+  const { title } = useMakeMarkTitleBySelector(time, com, selector, trackMarks?.marks);
 
   return (
     <div className="py-3">
@@ -44,7 +44,7 @@ export const CmComPlayerMarksConfigurerTimeMark = ({ selector, time, src, com, i
         />
         <TextInput
           className={twMerge('w-auto', mylib.isArr(selector) && 'text-x7!')}
-          defaultValue={defaultValue}
+          defaultValue={title}
           strongDefaultValue
           maxLength={20}
           onChanged={value =>
@@ -69,7 +69,7 @@ export const CmComPlayerMarksConfigurerTimeMark = ({ selector, time, src, com, i
               icon="Delete02"
               className="text-xKO"
               isLoading={isRemoving}
-              confirm={<>Удалить точку {time}?</>}
+              confirm={<>Удалить точку {title}?</>}
               onClick={() => cmComEditorAudioMarksEditPacksAtom.do.removeMark(src, time)}
             />
             <Button

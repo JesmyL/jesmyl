@@ -32,7 +32,18 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
   const editSrc = useAtomValue(srcOnEditAtom);
   const trackMarks = cmIDB.useAudioTrackMarks(editSrc);
   const marksOnUpdating = useAtomValue(cmComEditorAudioMarksEditPacksAtom);
-  const ordwToPlayButtonNodeDict = useCmComOrdwToPlayButtonNodeDict(ccom);
+  const ordwToPlayButtonNodeDict = useCmComOrdwToPlayButtonNodeDict(ccom, (playNode, time) => (
+    <div
+      key={time}
+      className="flex flex-col gap-2"
+    >
+      {playNode}
+      <Button
+        icon="Settings01"
+        onClick={() => cmComEditorAudioMarksRedactorOpenTimeConfiguratorAtom.set(time)}
+      />
+    </div>
+  ));
   const { commentCss } = useComCommentBlockCss(ccom, true);
 
   useEffect(() => {

@@ -2,6 +2,8 @@ import { Button } from '#shared/components/ui/button';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/basis/lib/atoms/com';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { comPlayerAudioElement } from '$cm/basis/lib/control/current-play-com';
@@ -43,7 +45,15 @@ export const CmComEditorAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
 
   return (
     <>
-      <ModalHeader>{title}</ModalHeader>
+      <ModalHeader className="flex w-full justify-between">
+        {title}
+        <TheIconButton
+          icon="Delete02"
+          className="text-xKO"
+          confirm={<>Удалить точку {title}?</>}
+          onClick={() => cmComEditorAudioMarksEditPacksAtom.do.removeMark(src, time)}
+        />
+      </ModalHeader>
       <ModalBody>
         <div className="flex justify-around">
           <Button
