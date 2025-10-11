@@ -5,7 +5,7 @@ import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { comPlayerAudioElement, comPlayerPlaySrcAtom } from '$cm/basis/lib/control/current-play-com';
 import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { cmTsjrpcClient } from '$cm/tsjrpc/basic.tsjrpc.methods';
-import { atom, useAtomValue } from 'atomaric';
+import { Atom, useAtomValue } from 'atomaric';
 import { useEffect, useRef } from 'react';
 import { CmComOrderSelector, HttpLink } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
@@ -16,9 +16,9 @@ interface Props {
   src: HttpLink;
   com: Com;
   repeatButtonClassName?: string;
+  preSwitchTimeAtom: Atom<number>;
 }
 
-const preSwitchTimeAtom = atom(2, 'cm:comAudioPreSwitchTime');
 const preSwitchTimeSelectItems = [-1, 0, 1, 2, 3, 4].map(id => ({
   id,
   title: <span className="w-[.7em]">{id < 0 ? '×' : id}</span>,
@@ -27,7 +27,7 @@ const preSwitchTimeSelectItems = [-1, 0, 1, 2, 3, 4].map(id => ({
 const currentButtonClassName = 'text-x7';
 const prevButtonClassName = 'text-x7/70';
 
-export const ComPlayerMarksMovers = ({ src, com, repeatButtonClassName }: Props) => {
+export const ComPlayerMarksMovers = ({ src, com, repeatButtonClassName, preSwitchTimeAtom }: Props) => {
   const titleRef = useRef<HTMLDivElement>(null);
   const prevRef = useRef<HTMLButtonElement>(null);
   const repeatRef = useRef<HTMLButtonElement>(null);

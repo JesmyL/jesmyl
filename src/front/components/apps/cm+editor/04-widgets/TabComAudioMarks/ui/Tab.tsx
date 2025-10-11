@@ -27,6 +27,7 @@ import { CmComPlayerMarksConfigurerTimeMark } from './ComPlayerMarksConfigurerTi
 import { CmComEditorAudioMarksRedactorOpenTimeConfiguratorModalInner } from './TimeConfiguratorModalInner';
 
 const srcOnEditAtom = atom<null | HttpLink>(null, 'cm+editor:srcOnMarkEdit');
+const preSwitchTimeAtom = atom(-1, 'cm+editor:comAudioPreSwitchTime');
 
 export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
   const editSrc = useAtomValue(srcOnEditAtom);
@@ -106,6 +107,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                           src={src}
                           com={ccom}
                           repeatButtonClassName="max-w-[calc(100vw-228px)]"
+                          preSwitchTimeAtom={preSwitchTimeAtom}
                         />
                       </div>
                     )}

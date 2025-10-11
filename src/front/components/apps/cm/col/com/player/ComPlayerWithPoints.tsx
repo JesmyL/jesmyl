@@ -1,5 +1,5 @@
 import { Badge } from '#shared/components/ui/badge';
-import { useAtomValue } from 'atomaric';
+import { atom, useAtomValue } from 'atomaric';
 import { HttpLink } from 'shared/api';
 import styled, { css, keyframes } from 'styled-components';
 import { Com } from '../Com';
@@ -11,6 +11,7 @@ interface Props {
   audioLinks: HttpLink[];
   com: Com;
 }
+const preSwitchTimeAtom = atom(2, 'cm:comAudioPreSwitchTime');
 
 export const ComPlayerWithPoints = ({ audioLinks, com }: Props) => {
   const isOpenButtons = useAtomValue(isCmComOpenAudioMoversAtom);
@@ -24,6 +25,7 @@ export const ComPlayerWithPoints = ({ audioLinks, com }: Props) => {
           <ComPlayerMarksMovers
             src={src}
             com={com}
+            preSwitchTimeAtom={preSwitchTimeAtom}
           />
         )
       }
