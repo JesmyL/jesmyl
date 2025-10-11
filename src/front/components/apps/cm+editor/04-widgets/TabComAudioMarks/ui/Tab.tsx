@@ -94,7 +94,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                         <ComPlayerMarksMovers
                           src={src}
                           com={ccom}
-                          repeatButtonClassName="max-w-[calc(100vw-170px)]"
+                          repeatButtonClassName="max-w-[calc(100vw-228px)]"
                         />
                       </div>
                     )}

@@ -1,12 +1,14 @@
 import { Button } from '#shared/components/ui/button';
 import { addEventListenerPipe, hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
+import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { comPlayerAudioElement, comPlayerPlaySrcAtom } from '$cm/basis/lib/control/current-play-com';
 import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { cmTsjrpcClient } from '$cm/tsjrpc/basic.tsjrpc.methods';
-import { useAtomValue } from 'atomaric';
+import { atom, useAtomValue } from 'atomaric';
 import { useEffect, useRef } from 'react';
 import { CmComOrderSelector, HttpLink } from 'shared/api';
+import { emptyFunc } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
 import { Com } from '../Com';
 
@@ -16,12 +18,22 @@ interface Props {
   repeatButtonClassName?: string;
 }
 
+const preSwitchTimeAtom = atom(2, 'cm:comAudioPreSwitchTime');
+const preSwitchTimeSelectItems = [-1, 0, 1, 2, 3, 4].map(id => ({
+  id,
+  title: <span className="w-[.7em]">{id < 0 ? '×' : id}</span>,
+}));
+
+const currentButtonClassName = 'text-x7';
+const prevButtonClassName = 'text-x7/70';
+
 export const ComPlayerMarksMovers = ({ src, com, repeatButtonClassName }: Props) => {
   const titleRef = useRef<HTMLDivElement>(null);
   const prevRef = useRef<HTMLButtonElement>(null);
   const repeatRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
   const playSrc = useAtomValue(comPlayerPlaySrcAtom);
+  const preSwitchTime = useAtomValue(preSwitchTimeAtom);
 
   const audioTrackMarks = cmIDB.useAudioTrackMarks(playSrc ?? src);
 
@@ -42,83 +54,101 @@ export const ComPlayerMarksMovers = ({ src, com, repeatButtonClassName }: Props)
 
   useEffect(() => {
     if (titleRef.current === null || audioTrackMarks == null) return;
+    const audioMarkPack = audioTrackMarks.marks;
 
     const titleNode = titleRef.current;
-    const marks = mylib.keys(audioTrackMarks.marks).map(Number);
+    const marks = mylib.keys(audioMarkPack).map(Number);
     const selectorToTitleDict: PRecord<`${number}/${CmComOrderSelector}`, string> = {};
     const visibleOrders = com.visibleOrders() ?? [];
 
-    let prev = 0;
-    let repeat = 0;
-    let next = 0;
+    let prevMarkTime = 0;
+    let currentMarkTime = 0;
+    let nextMarkTime = 0;
+
     let lastTitleSelector = '';
     let prevButton: Element | nil = null;
     let isInitialButtonClassNameSet = true;
 
-    const findNextTime = (num: number) => num > comPlayerAudioElement.currentTime;
-    const findRepeatTime = (num: number) => num <= comPlayerAudioElement.currentTime;
+    const findNextMarkTime = (num: number) => num > comPlayerAudioElement.currentTime;
+    const findCurrentMarkTime = (num: number) => num <= comPlayerAudioElement.currentTime;
+
+    const updateMarkBlockView =
+      audioMarkPack == null || preSwitchTime < 0
+        ? emptyFunc
+        : () => {
+            const actualMarkTime =
+              preSwitchTime !== 0 &&
+              comPlayerAudioElement.currentTime < nextMarkTime &&
+              comPlayerAudioElement.currentTime > nextMarkTime - preSwitchTime
+                ? nextMarkTime
+                : currentMarkTime;
+
+            const actualMarkSelector = audioMarkPack[actualMarkTime];
+
+            if (mylib.isStr(actualMarkSelector)) {
+              titleNode.innerText = actualMarkSelector;
+
+              prevButton?.classList.remove(currentButtonClassName);
+              if (actualMarkTime) prevButton?.classList.add(prevButtonClassName);
+            } else if (actualMarkSelector != null) {
+              const titleSelector = `${actualMarkTime}/${actualMarkSelector[0]}` as const;
+
+              if (isInitialButtonClassNameSet || lastTitleSelector !== titleSelector) {
+                isInitialButtonClassNameSet = false;
+                const htmlButtonSelector = `[com-audio-mark-selector="${titleSelector}"]`;
+                const block = document.querySelector(`.composition-block:has(${htmlButtonSelector})`);
+                const button = (block ?? document)?.querySelector(htmlButtonSelector);
+
+                if (+preSwitchTime >= 0) (block ?? button)?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+
+                prevButton?.classList.remove(currentButtonClassName, prevButtonClassName);
+                prevButton = button;
+              }
+
+              prevButton?.classList.add(currentButtonClassName);
+
+              lastTitleSelector = titleSelector;
+
+              if (selectorToTitleDict[titleSelector] == null) {
+                const ord = com.getOrderBySelector(actualMarkSelector[0]);
+
+                if (ord != null) {
+                  let blockRepeatsCount = 0;
+
+                  mylib.keys(audioMarkPack).find(itTime => {
+                    if (audioMarkPack[itTime] == null || mylib.isStr(audioMarkPack[itTime])) return false;
+
+                    if (ord.isMySelector(audioMarkPack[itTime][0])) blockRepeatsCount++;
+                    else blockRepeatsCount = 0;
+
+                    return actualMarkTime === +itTime;
+                  });
+
+                  selectorToTitleDict[titleSelector] =
+                    `#${visibleOrders.indexOf(ord) + 1} ${ord.me.header()} ${blockRepeatsCount > 1 ? `×${blockRepeatsCount}` : ''}`;
+                }
+              }
+
+              titleNode.innerText = selectorToTitleDict[titleSelector] ?? '';
+            } else titleNode.innerText = 'Начало';
+          };
 
     const updatePoints = () => {
-      const repeati = marks.findLastIndex(findRepeatTime);
+      const currentMarkTimei = marks.findLastIndex(findCurrentMarkTime);
 
-      prev = marks[repeati - 1] ?? 0;
-      repeat = marks[repeati] ?? 0;
-      next = marks.find(findNextTime) ?? 0;
-
-      if (audioTrackMarks.marks != null) {
-        const repeatMark = audioTrackMarks.marks[repeat];
-
-        if (mylib.isStr(repeatMark)) {
-          titleNode.innerText = repeatMark ?? '';
-        } else if (repeatMark != null) {
-          const titleSelector = `${repeat}/${repeatMark[0]}` as const;
-
-          if (isInitialButtonClassNameSet || lastTitleSelector !== titleSelector) {
-            isInitialButtonClassNameSet = false;
-            const htmlButtonSelector = `[com-audio-mark-selector="${titleSelector}"]`;
-            const block = document.querySelector(`.composition-block:has(${htmlButtonSelector})`);
-            const button = (block ?? document)?.querySelector(htmlButtonSelector);
-
-            (block ?? button)?.scrollIntoView({ block: 'center', behavior: 'smooth' });
-
-            prevButton?.classList.remove('text-x7');
-            prevButton = button;
-            prevButton?.classList.add('text-x7');
-          }
-
-          lastTitleSelector = titleSelector;
-
-          if (selectorToTitleDict[titleSelector] == null) {
-            const ord = com.getOrderBySelector(repeatMark[0]);
-
-            if (ord != null) {
-              let blockRepeatsCount = 0;
-
-              mylib.keys(audioTrackMarks.marks).find(itTime => {
-                if (audioTrackMarks.marks?.[itTime] == null || mylib.isStr(audioTrackMarks.marks[itTime])) return false;
-
-                if (ord.isMySelector(audioTrackMarks.marks[itTime][0])) blockRepeatsCount++;
-                else blockRepeatsCount = 0;
-
-                return repeat === +itTime;
-              });
-
-              selectorToTitleDict[titleSelector] =
-                `#${visibleOrders.indexOf(ord) + 1} ${ord.me.header()} ${blockRepeatsCount > 1 ? `×${blockRepeatsCount}` : ''}`;
-            }
-          }
-
-          titleNode.innerText = selectorToTitleDict[titleSelector] ?? '';
-        } else titleNode.innerText = 'Начало';
-      }
+      prevMarkTime = marks[currentMarkTimei - 1] ?? 0;
+      currentMarkTime = marks[currentMarkTimei] ?? 0;
+      nextMarkTime = marks.find(findNextMarkTime) ?? 0;
 
       if (nextRef.current !== null) {
-        nextRef.current.disabled = repeati === marks.length - 1;
+        nextRef.current.disabled = currentMarkTimei === marks.length - 1;
       }
 
       if (prevRef.current !== null) {
-        prevRef.current.disabled = repeati === 0;
+        prevRef.current.disabled = currentMarkTimei === 0;
       }
+
+      updateMarkBlockView();
     };
 
     updatePoints();
@@ -128,15 +158,15 @@ export const ComPlayerMarksMovers = ({ src, com, repeatButtonClassName }: Props)
       .pipe(
         addEventListenerPipe(prevRef.current, 'click', () => {
           comPlayerAudioElement.play();
-          comPlayerAudioElement.currentTime = prev;
+          comPlayerAudioElement.currentTime = prevMarkTime;
         }),
         addEventListenerPipe(repeatRef.current, 'click', () => {
           comPlayerAudioElement.play();
-          comPlayerAudioElement.currentTime = repeat;
+          comPlayerAudioElement.currentTime = currentMarkTime;
         }),
         addEventListenerPipe(nextRef.current, 'click', () => {
           comPlayerAudioElement.play();
-          comPlayerAudioElement.currentTime = next;
+          comPlayerAudioElement.currentTime = nextMarkTime;
         }),
         addEventListenerPipe(comPlayerAudioElement, 'timeupdate', updatePoints),
         addEventListenerPipe(comPlayerAudioElement, 'ended', () => {
@@ -145,7 +175,7 @@ export const ComPlayerMarksMovers = ({ src, com, repeatButtonClassName }: Props)
         }),
       )
       .effect(() => prevButton?.classList.remove('text-x7'));
-  }, [audioTrackMarks, com, src]);
+  }, [audioTrackMarks, com, src, preSwitchTime]);
 
   if (audioTrackMarks == null) return null;
 
@@ -156,10 +186,17 @@ export const ComPlayerMarksMovers = ({ src, com, repeatButtonClassName }: Props)
         ref={prevRef}
       />
 
+      <Dropdown
+        id={preSwitchTime}
+        items={preSwitchTimeSelectItems}
+        onSelectId={preSwitchTimeAtom.set}
+        hiddenArrow
+      />
+
       <Button
         ref={repeatRef}
         icon="Refresh"
-        className={twMerge('w-full max-w-[calc(100vw-115px)]', repeatButtonClassName)}
+        className={twMerge('w-full max-w-[calc(100vw-173px)]', repeatButtonClassName)}
       >
         <span
           className="ellipsis"
