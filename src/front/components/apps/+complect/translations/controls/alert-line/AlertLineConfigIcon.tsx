@@ -30,6 +30,7 @@ const StypedIconContainer = styled.div<{ $color: string; $background: string | u
 
   ${props => css`
     --icon-color: ${props.$color};
+    color: ${props.$color};
     background: ${props.$background};
     opacity: ${props.$isSelected ? '.5' : '1'};
   `}

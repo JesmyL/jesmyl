@@ -31,7 +31,18 @@ const makeAuthFromUser = async (user: OmitOwn<TelegramBot.User, 'is_bot'>) => {
   } satisfies LocalSokiAuth;
 };
 
-export const indexAuthByTgUser = async ({ user }: { user: TelegramNativeAuthUserData }) => {
-  const auth = await makeAuthFromUser(user);
-  return { token: jwt.sign(auth, tokenSecretFileStore.getValue().token, { expiresIn: '100 D' }), auth };
-};
+export const indexAuthByTgUser =
+  (title: string) =>
+  async ({ user }: { user: TelegramNativeAuthUserData }) => {
+    const auth = await makeAuthFromUser(user);
+
+    return {
+      value: {
+        auth,
+        token: jwt.sign(auth, tokenSecretFileStore.getValue().token, { expiresIn: '100 D' }),
+      },
+      description:
+        `Авторизация ${auth?.fio} (@${auth?.nick ?? '??'}) ${title}\n\n` +
+        `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
+    };
+  };

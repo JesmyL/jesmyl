@@ -12,7 +12,7 @@ export const useMakeMarkTitleBySelector = (
   return useMemo(() => {
     if (mylib.isArr(selector)) {
       const ord = com.getOrderBySelector(selector[0]);
-      if (marks == null || ord == null) return '?????';
+      if (marks == null || ord == null) return { title: '?????', ord: null };
 
       const visibleOrders = com.visibleOrders() ?? [];
       let repeats = 0;
@@ -26,9 +26,12 @@ export const useMakeMarkTitleBySelector = (
         return time === +itTime;
       });
 
-      return `#${visibleOrders.indexOf(ord) + 1} ${ord.me.header()}${mylib.isNum(selector[0]) ? '' : '+'} ${repeats > 1 ? `×${repeats}` : ''}`;
+      return {
+        title: `#${visibleOrders.indexOf(ord) + 1} ${ord.me.header()}${mylib.isNum(selector[0]) ? '' : '+'} ${repeats > 1 ? `×${repeats}` : ''}`,
+        ord,
+      };
     }
 
-    return selector ?? '';
+    return { title: selector ?? '', ord: null };
   }, [com, marks, selector, time]);
 };

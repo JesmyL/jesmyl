@@ -24,7 +24,7 @@ interface Props {
 
 export const CmComPlayerMarksConfigurerTimeMark = ({ selector, time, src, com, isRemoving, onPin, pinTime }: Props) => {
   const trackMarks = cmIDB.useAudioTrackMarks(src);
-  const defaultValue = useMakeMarkTitleBySelector(time, com, selector, trackMarks?.marks);
+  const { title: defaultValue } = useMakeMarkTitleBySelector(time, com, selector, trackMarks?.marks);
 
   return (
     <div className="py-3">

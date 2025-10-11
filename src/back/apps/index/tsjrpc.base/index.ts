@@ -64,36 +64,16 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
           };
         },
 
-        authMeByTelegramNativeButton: async ({ user }, { auth }) => ({
-          value: await indexAuthByTgUser({ user }),
-          description:
-            `Авторизация ${auth?.fio} (@${auth?.nick ?? '??'}) через TG-auth-native кнопку\n\n` +
-            `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
-        }),
-        authMeByTelegramMiniButton: async ({ user }, { auth }) => ({
-          value: await indexAuthByTgUser({ user }),
-          description:
-            `Авторизация ${auth?.fio} (@${auth?.nick ?? '??'}) через TG-mini-icon кнопку\n\n` +
-            `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
-        }),
-        authMeByTelegramInScheduleDay: async ({ user }, { auth }) => ({
-          value: await indexAuthByTgUser({ user }),
-          description:
-            `Авторизация ${auth?.fio} (@${auth?.nick ?? '??'}) в расписании дня\n\n` +
-            `<blockquote expandable>${JSON.stringify(auth, null, 1)}</blockquote>`,
-        }),
+        authMeByTelegramNativeButton: indexAuthByTgUser('через TG-auth-native кнопку'),
+        authMeByTelegramMiniButton: indexAuthByTgUser('через TG-mini-icon кнопку'),
+        authMeByTelegramInScheduleDay: indexAuthByTgUser('в расписании дня'),
 
-        authMeByTelegramBotNumber: async ({ secretNumber }, { auth }) => {
+        authMeByTelegramBotNumber: async ({ secretNumber }) => {
           const user = supportTelegramAuthorizations[secretNumber]?.().from;
 
-          if (user == null) throw 'Не верный код';
+          if (user == null) throw 'Не верный код авторизации';
 
-          return {
-            value: await indexAuthByTgUser({ user }),
-            description:
-              `Авторизация ${auth?.fio} (@${auth?.nick ?? '??'}) через TG-код\n\n<blockquote expandable>` +
-              `${JSON.stringify(auth, null, 1)}</blockquote>`,
-          };
+          return await indexAuthByTgUser('через TG-код')({ user });
         },
 
         getFreshAppVersion: async () => ({ value: appVersionFileStore.getValue().num }),

@@ -6,6 +6,8 @@ import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-e
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { comPlayerAudioElement } from '$cm/basis/lib/control/current-play-com';
 import { cmIDB } from '$cm/basis/lib/store/cmIDB';
+import { ChordVisibleVariant } from '$cm/Cm.model';
+import { TheOrder } from '$cm/col/com/order/TheOrder';
 import { useState } from 'react';
 import { HttpLink } from 'shared/api';
 import { useMakeMarkTitleBySelector } from '../lib/useMakeMarkTitleBySelector';
@@ -20,7 +22,7 @@ interface Props {
 export const CmComEditorAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ time, com, src }: Props) => {
   const trackMarks = cmIDB.useAudioTrackMarks(src);
   const selector = trackMarks?.marks?.[time];
-  const title = useMakeMarkTitleBySelector(time, com, selector, trackMarks?.marks);
+  const { title, ord } = useMakeMarkTitleBySelector(time, com, selector, trackMarks?.marks);
   const [currentTime, setCurrentTime] = useState('' + time);
 
   const addMaker = (add: number) => () => {
@@ -43,45 +45,66 @@ export const CmComEditorAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
     <>
       <ModalHeader>{title}</ModalHeader>
       <ModalBody>
-        <div className="flex gap-2 justify-center">
+        <div className="flex justify-around">
           <Button
-            icon="PlusSign"
-            onClick={addMaker(1)}
+            icon="PlayCircle"
+            onClick={() => {
+              comPlayerAudioElement.currentTime = +currentTime;
+              comPlayerAudioElement.play();
+            }}
           />
-          .
-          <Button
-            icon="PlusSign"
-            onClick={addMaker(0.1)}
-          />
-          <Button
-            icon="PlusSign"
-            onClick={addMaker(0.01)}
-          />
-          <Button
-            icon="PlusSign"
-            onClick={addMaker(0.001)}
-          />
+          <div>
+            <div className="flex gap-2 justify-center">
+              <Button
+                icon="PlusSign"
+                onClick={addMaker(1)}
+              />
+              .
+              <Button
+                icon="PlusSign"
+                onClick={addMaker(0.1)}
+              />
+              <Button
+                icon="PlusSign"
+                onClick={addMaker(0.01)}
+              />
+              <Button
+                icon="PlusSign"
+                onClick={addMaker(0.001)}
+              />
+            </div>
+            <div className="flex justify-center text-2xl">{currentTime}</div>
+            <div className="flex gap-2 justify-center">
+              <Button
+                icon="MinusSign"
+                onClick={addMaker(-1)}
+              />
+              .
+              <Button
+                icon="MinusSign"
+                onClick={addMaker(-0.1)}
+              />
+              <Button
+                icon="MinusSign"
+                onClick={addMaker(-0.01)}
+              />
+              <Button
+                icon="MinusSign"
+                onClick={addMaker(-0.001)}
+              />
+            </div>
+          </div>
         </div>
-        <div className="flex justify-center text-2xl">{currentTime}</div>
-        <div className="flex gap-2 justify-center">
-          <Button
-            icon="MinusSign"
-            onClick={addMaker(-1)}
+
+        {ord && (
+          <TheOrder
+            chordVisibleVariant={ChordVisibleVariant.None}
+            com={com}
+            ord={ord}
+            ordi={0}
+            asHeaderComponent={() => null}
           />
-          .
-          <Button
-            icon="MinusSign"
-            onClick={addMaker(-0.1)}
-          />
-          <Button
-            icon="MinusSign"
-            onClick={addMaker(-0.01)}
-          />
-          <Button
-            icon="MinusSign"
-            onClick={addMaker(-0.001)}
-          />
-        </div>
+        )}
       </ModalBody>
       <ModalFooter>
         <Button
