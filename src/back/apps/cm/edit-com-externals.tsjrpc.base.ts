@@ -98,6 +98,11 @@ export const cmEditComExternalsTsjrpcBaseServer =
           updateAudioMarks: async ({ marks, src }) => {
             const allMarkPacks = cmComAudioMarkPacksFileStore.getValue();
             const numLeadSrc = makeCmComNumLeadLinkFromHttp(src);
+            let description: string | null = null;
+
+            if (allMarkPacks[numLeadSrc] == null) {
+              description = `Создан новый пак аудио-маркеров для песни ${src}`;
+            }
 
             allMarkPacks[numLeadSrc] ??= { m: Date.now() };
             allMarkPacks[numLeadSrc].marks ??= { '0': 'Начало' };
@@ -136,7 +141,10 @@ export const cmEditComExternalsTsjrpcBaseServer =
 
             cmComAudioMarkPacksFileStore.saveValue();
 
-            return { value: { marks: allMarkPacks[numLeadSrc].marks, src }, description: null };
+            return {
+              description,
+              value: { marks: allMarkPacks[numLeadSrc].marks, src },
+            };
           },
 
           changeAudioMarkTime: async ({ newTime, src, time }) => {
