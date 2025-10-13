@@ -54,5 +54,10 @@
     "info": { "fio": "Лидия Толмачева", "m": 1759653931875, "isRequest": true },
     "cm": { "EDIT": 4, "COM": 4, "COM_CH": 6 }
   },
-  "T47c1243fea387ce9cc7fcf4df4cc50b": { "info": { "fio": "ℳ𝒶𝓇𝒾𝓎𝒶", "m": 1759932850999, "isRequest": true } }
+  "T47c1243fea387ce9cc7fcf4df4cc50b": { "info": { "fio": "ℳ𝒶𝓇𝒾𝓎𝒶", "m": 1759932850999, "isRequest": true } },
+  "T5bf2641668ea893e95047be453a5044": {
+    "info": { "fio": "Артём ✞", "m": 1760206789507, "isRequest": true },
+    "cm": { "COM": 4, "EDIT": 4, "COM_AMARK": 6 }
+  },
+  "Tb8af8436e5ef85a9facce88fc764090": { "info": { "fio": "Диана Снежко", "m": 1760209617527, "isRequest": true } }
 }

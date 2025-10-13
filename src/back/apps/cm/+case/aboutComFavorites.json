@@ -57,8 +57,8 @@
   },
   "T6558fe287d2ea93be3e19bbe64b5dfc": {
     "comws": [1718543236522, 1741883251071, 1612878728464],
-    "m": 1757221663780.6436,
-    "tools": ["edit-com", "fullscreen-mode", "com-comment", "cats-binds", "hide-metronome", "chord-hard-level"]
+    "m": 1760268858416,
+    "tools": ["edit-com", "com-comment", "cats-binds", "hide-metronome", "chords-variant"]
   },
   "T8574ab57c74159d39de20665af3eebe": { "comws": [1634188046492], "m": 1729802274224 },
   "T8656fec3ec9f81c86770b916f7503fc": {
@@ -183,5 +183,9 @@
   "T574efd5d74bac3244ba8e3697cecded": {
     "m": 1759043870630.0618,
     "comws": [1525858693000, 1639465178824, 1611049959750, 1759004484092]
+  },
+  "T5bf2641668ea893e95047be453a5044": {
+    "m": 1760205330509,
+    "tools": ["mark-com", "fullscreen-mode", "chords-variant", "com-comment"]
   }
 }
