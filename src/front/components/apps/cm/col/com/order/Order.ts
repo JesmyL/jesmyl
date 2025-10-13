@@ -4,6 +4,7 @@ import { ChordVisibleVariant } from '$cm/Cm.model';
 import { makeRegExp } from 'regexpert';
 import {
   CmComOrderSelector,
+  CmComOrderWid,
   IExportableOrder,
   IExportableOrderFieldValues,
   InheritancableOrder,
@@ -40,7 +41,10 @@ export class Order extends SourceBased<IExportableOrder> {
     return this.top.m;
   }
 
-  get wid() {
+  get wid(): CmComOrderWid {
+    if (this.me.leadOrd != null && this.me.watchOrd != null)
+      return this.me.leadOrd.me.top.w + this.me.watchOrd.me.top.w / 100;
+
     return this.me.source?.top.w ?? this.top.w;
   }
 
@@ -423,13 +427,17 @@ export class Order extends SourceBased<IExportableOrder> {
     return CmComOrderUtils.makeRepeatedText(CmComUtils.transformToDisplayedText(this.text).text, repeats);
   }
 
-  makeSelector = (): CmComOrderSelector =>
-    this.me.leadOrd && this.me.watchOrd ? `${this.me.leadOrd.wid}_${this.me.watchOrd.wid}` : this.wid;
+  makeSelector = (): CmComOrderSelector => this.wid;
 
   isMySelector = (selector: CmComOrderSelector) => {
-    if (mylib.isNum(selector)) return this.wid === selector;
+    const truncatedNum = Math.trunc(selector);
+    if (truncatedNum === selector) return this.wid === selector;
     if (this.me.leadOrd == null || this.me.watchOrd == null) return false;
-    const parts = selector.split('_');
-    return this.me.leadOrd.wid === +parts[0] && this.me.watchOrd.wid === +parts[1];
+
+    return this.me.leadOrd.wid === truncatedNum && this.me.watchOrd.wid === Math.ceil((selector - truncatedNum) * 100);
   };
+
+  isVisibleWithHeader() {
+    return !this.isHeaderNoneForce && this.isVisible;
+  }
 }

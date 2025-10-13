@@ -153,40 +153,42 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                     chordVisibleVariant={ChordVisibleVariant.Maximal}
                     fontSize={20}
                     com={ccom}
-                    asHeaderComponent={({ headerNode, ord }) => (
-                      <div className="flex flex-wrap gap-3">
-                        {pinTime == null ? (
-                          <Button
-                            icon="PlusSign"
-                            onClick={() => {
-                              if (editSrc == null || comPlayerAudioElement.currentTime < 0.001) {
-                                toast('Песня не воспроизводилась', makeToastKOMoodConfig());
-                                return;
-                              }
+                    asHeaderComponent={({ headerNode, ord }) =>
+                      ord.isVisibleWithHeader() && (
+                        <div className="flex flex-wrap gap-3">
+                          {pinTime == null ? (
+                            <Button
+                              icon="PlusSign"
+                              onClick={() => {
+                                if (editSrc == null || comPlayerAudioElement.currentTime < 0.001) {
+                                  toast('Песня не воспроизводилась', makeToastKOMoodConfig());
+                                  return;
+                                }
 
-                              const fixedTime = +comPlayerAudioElement.currentTime.toFixed(3);
-                              cmComEditorAudioMarksEditPacksAtom.do.putMarks(editSrc, {
-                                [fixedTime]: [ord.makeSelector()] as CmComAudioMarkSelector,
-                              });
-                            }}
-                          />
-                        ) : (
-                          <Button
-                            icon="PinLocation01"
-                            onClick={() =>
-                              cmEditComExternalsClientTsjrpcMethods
-                                .updateAudioMarks({
-                                  src: editSrc,
-                                  marks: { [pinTime]: [ord.makeSelector()] as CmComAudioMarkSelector },
-                                })
-                                .then(() => setPinTime(null))
-                            }
-                          />
-                        )}
-                        {headerNode}
-                        {ordwToPlayButtonNodeDict?.[ord.wid]}
-                      </div>
-                    )}
+                                const fixedTime = +comPlayerAudioElement.currentTime.toFixed(3);
+                                cmComEditorAudioMarksEditPacksAtom.do.putMarks(editSrc, {
+                                  [fixedTime]: [ord.makeSelector()] as CmComAudioMarkSelector,
+                                });
+                              }}
+                            />
+                          ) : (
+                            <Button
+                              icon="PinLocation01"
+                              onClick={() =>
+                                cmEditComExternalsClientTsjrpcMethods
+                                  .updateAudioMarks({
+                                    src: editSrc,
+                                    marks: { [pinTime]: [ord.makeSelector()] as CmComAudioMarkSelector },
+                                  })
+                                  .then(() => setPinTime(null))
+                              }
+                            />
+                          )}
+                          {headerNode}
+                          {ordwToPlayButtonNodeDict?.[ord.wid]}
+                        </div>
+                      )
+                    }
                   />
 
                   <Modal openAtom={cmComEditorAudioMarksRedactorOpenTimeConfiguratorAtom}>

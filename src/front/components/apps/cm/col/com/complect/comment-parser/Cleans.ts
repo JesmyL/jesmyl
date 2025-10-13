@@ -6,12 +6,10 @@ import { bibleAllTranslates, translateDescriptions } from '$bible/basis/lib/cons
 import { makeNamedRegExp, makeRegExp } from 'regexpert';
 import { BibleTranslateName } from 'shared/api';
 import { css } from 'styled-components';
-import { Order } from '../../order/Order';
 
 let titlesMap: Map<string, number>;
 let titlesLine: string[];
 export class ComBlockCommentMakerCleans {
-  static withHeaderTextOrderFilter = (ord: Order) => !ord.isHeaderNoneForce && ord.isVisible;
   static makePseudoComment = (text: string) => makePseudoElementCorrectContentText(text.trim());
 
   static makePseudoCommentContentCss = (text: string) => css`

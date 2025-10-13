@@ -4,7 +4,6 @@ import { ReactNode, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 import { Com } from '../Com';
-import { ComBlockCommentMakerCleans } from '../complect/comment-parser/Cleans';
 import { TheOrder } from '../order/TheOrder';
 import { IComOrdersProps } from './ComOrders.model';
 
@@ -23,7 +22,8 @@ export function ComOrders(props: IComOrdersProps) {
       $fontSize={fontSize}
     >
       {com.orders?.map((ord, ordi) => {
-        if (ComBlockCommentMakerCleans.withHeaderTextOrderFilter(ord)) visibleOrdi++;
+        if (ord.isVisibleWithHeader()) visibleOrdi++;
+
         const isExcludedModulation = exMods.includes(ord.wid);
         const specialClassId =
           ord.texti == null ? ` com-chorded-block-${specChordedi++} ` : ` com-texted-block-${specTextedi++} `;

@@ -93,7 +93,7 @@ export interface IExportableCom {
 export type IServerSideCom = OmitOwn<IExportableCom, 'al'> & { al?: HttpNumLeadLink[] | HttpNumLeadLink };
 
 export type CmComCommentBlockSelector = CmComOrderSelector | 'head';
-export type CmComOrderSelector = CmComOrderWid | `${CmComOrderWid}_${CmComOrderWid}`;
+export type CmComOrderSelector = CmComOrderWid;
 
 export type ICmComCommentBlock = {
   comw: CmComWid;
