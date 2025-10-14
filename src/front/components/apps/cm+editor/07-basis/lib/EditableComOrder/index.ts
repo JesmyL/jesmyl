@@ -13,9 +13,7 @@ export class EditableComOrder extends Order {
     this.com = com;
   }
 
-  comOrders() {
-    return this.com.orders;
-  }
+  comOrders = () => this.com.orders;
 
   get regions(): EditableOrderRegion<EditableComOrder>[] | und {
     if (this._regions === undefined) this.setRegions();
@@ -23,7 +21,7 @@ export class EditableComOrder extends Order {
     return this._regions;
   }
 
-  setRepeats(_val?: OrderRepeats | null) {}
+  setRepeats = (val?: OrderRepeats | null) => val ?? null;
 
   get fieldValues() {
     return this.getBasicOr('f', {});
