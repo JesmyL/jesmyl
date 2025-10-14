@@ -1,3 +1,4 @@
+import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LoadIndicatedContent } from '#shared/ui/load-indicated-content/LoadIndicatedContent';
 import {
@@ -32,18 +33,17 @@ interface Props {
 
 const isOpenRatingSortedComsAtom = atom(false);
 const termAtoms: PRecord<CmCatWid, Atom<string>> = {};
-const debounceTermAtoms: PRecord<CmCatWid, Atom<string>> = {};
 
 export const CmCatPage = (props: Props) => {
   const termAtom = (termAtoms[props.cat?.wid ?? CmCatWid.def] ??= atom(''));
-  const debounceTermAtom = (debounceTermAtoms[props.cat?.wid ?? CmCatWid.def] ??= atom(''));
 
   const term = useAtomValue(termAtom);
+  const debouncedTerm = useDebounceValue(term);
+
   const [searchedComs, setSearchedComs] = useState<Com[]>([]);
   const setComListLimitsExtracterRef = useRef<(start: number | nil, finish: number | nil) => void>(emptyFunc);
   const listRef = useRef<HTMLDivElement>(null);
   const categoryTitleRef = useRef<HTMLDivElement>(null);
-  const debouncedTerm = useAtomValue(debounceTermAtom);
   const playComSrc = useAtomValue(comPlayerPlaySrcAtom);
 
   useEffect(() => {
