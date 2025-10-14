@@ -129,16 +129,16 @@ export const CmPlayerPage = () => {
       content={
         <>
           <DocTitle title={com?.name} />
-          <StyledPlayer className="sticky top-0 bg-x2 flex min-h-20 gap-3 px-3 mb-3">
-            {src && (
+          {src && (
+            <StyledPlayer className="sticky top-0 bg-x2 flex min-h-20 gap-3 px-3 mb-3">
               <ComPlayerPlayButton
                 src={src}
                 className="mx-5 scale-300!"
               />
-            )}
 
-            <ComPlayerTrack src={src} />
-          </StyledPlayer>
+              <ComPlayerTrack src={src} />
+            </StyledPlayer>
+          )}
 
           <ComFaceList
             key={+isOpenAllComs}

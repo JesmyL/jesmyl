@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { HttpLink } from 'shared/api';
-import { itIt } from 'shared/utils';
 import styled, { css, keyframes } from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 import { ComPlayerPlayButton } from './ComPlayerPlayButton';
@@ -10,25 +9,20 @@ interface Props {
   audioLinks: HttpLink[];
   timeRender?: (timeNode: React.ReactNode, currentSrc: HttpLink) => React.ReactNode;
   addRender?: (currentSrc: HttpLink) => React.ReactNode;
-  isPlayOwnOnly?: boolean;
   className?: string;
 }
 
-export const ComPlayer = ({ audioLinks, timeRender, isPlayOwnOnly, addRender, className }: Props) => {
+export const ComPlayer = ({ audioLinks, timeRender, addRender, className }: Props) => {
   const [currentVariant, setCurrentVariant] = useState(0);
   const src = audioLinks[currentVariant];
 
   return (
     <div className={twMerge(className, 'w-full')}>
       <StyledPlayer className="composition-player flex gap-2 px-2 w-full">
-        <ComPlayerPlayButton
-          src={src}
-          isPlayOwnOnly={isPlayOwnOnly}
-        />
+        <ComPlayerPlayButton src={src} />
         <ComPlayerTrack
           src={src}
-          isPlayOwnOnly={isPlayOwnOnly}
-          timeRender={timeRender ? timeNode => timeRender(timeNode, src) : itIt}
+          timeRender={timeRender}
         />
 
         {audioLinks.length > 1 && (
@@ -42,7 +36,7 @@ export const ComPlayer = ({ audioLinks, timeRender, isPlayOwnOnly, addRender, cl
           </div>
         )}
       </StyledPlayer>
-      {addRender && <div className="relative top-10 flex gap-3 max-w-[100vw]">{addRender(src)}</div>}
+      {addRender && <div className="relative top-2 flex gap-3 max-w-[100vw]">{addRender(src)}</div>}
     </div>
   );
 };

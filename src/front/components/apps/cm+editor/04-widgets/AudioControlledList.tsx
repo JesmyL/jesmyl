@@ -21,10 +21,7 @@ export const ComAudioControlledList = ({ srcs, onToggle, icon, isCanDelete }: Pr
             key={src}
             className="com-audio-track flex gap-2 my-2 w-full"
           >
-            <ComPlayer
-              audioLinks={[src]}
-              isPlayOwnOnly
-            />
+            <ComPlayer audioLinks={[src]} />
             {isCanDelete !== false && (
               <TheIconLoading
                 isLoading={tracksInProcess.includes(src)}

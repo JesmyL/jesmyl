@@ -16,6 +16,7 @@ import { useLaterComList } from '$cm/base/useLaterComList';
 import { comPlayerHeaderStickyCss } from '$cm/basis/css/com-player';
 import { useFixedCcom } from '$cm/basis/lib/com-selections';
 import { useCmCurrentComPackContext } from '$cm/basis/lib/contexts/current-com-list';
+import { comPlayerPlaySrcAtom } from '$cm/basis/lib/control/current-play-com';
 import { cmComCommentRedactOrdSelectorIdAtom, cmPlayerHideModeAtom } from '$cm/basis/lib/store/atoms';
 import { cmTsjrpcClient } from '$cm/tsjrpc/basic.tsjrpc.methods';
 import { Link } from '@tanstack/react-router';
@@ -26,7 +27,7 @@ import { CmComCommentModalInner } from './CommentModalInner';
 import { ComNotFoundPage } from './ComNotFoundPage';
 import { useCheckIsComCommentIncludesBibleAddress } from './complect/comment-parser/useCheckIsComCommentIncludesBibleAddress';
 import { CmComNumber } from './complect/ComNumber';
-import { ComPlayerWithPoints } from './player/ComPlayerWithPoints';
+import { ComPlayerWithMarks } from './player/ComPlayerWithMarks';
 import { TheControlledCom } from './TheControlledCom';
 import { ComTools } from './tools/ComTools';
 import { useMigratableTopComTools } from './tools/lib/useMigratableComTools';
@@ -46,6 +47,7 @@ export function TheComposition() {
   const playerHideMode = useAtomValue(cmPlayerHideModeAtom);
   const hideAppFooter = useAtomValue(hideAppFooterAtom);
   const isShowCatBinds = useAtomValue(cmIsShowCatBindsInCompositionAtom);
+  const playSrc = useAtomValue(comPlayerPlaySrcAtom);
 
   useEffect(() => {
     if (ccom?.wid == null) return;
@@ -63,6 +65,8 @@ export function TheComposition() {
   }, [ccom?.wid]);
 
   if (ccom == null) return <ComNotFoundPage />;
+
+  const isPlayOtherAudio = !!playSrc && !ccom.audio.includes(playSrc);
 
   let controlledComNode = (
     <TheControlledCom
@@ -107,9 +111,17 @@ export function TheComposition() {
         <>
           <DocTitle title={ccom.name} />
           {!hideAppFooter && !!ccom.audio?.length && (
-            <ComPlayerWithPoints
+            <ComPlayerWithMarks
               audioLinks={ccom.audio}
               com={ccom}
+              className={isPlayOtherAudio ? 'top-[calc(var(--header-height)+31px)]' : undefined}
+            />
+          )}
+          {!hideAppFooter && isPlayOtherAudio && (
+            <ComPlayerWithMarks
+              audioLinks={[playSrc]}
+              com={ccom}
+              hideMarksForce
             />
           )}
           {isShowCatBinds && (

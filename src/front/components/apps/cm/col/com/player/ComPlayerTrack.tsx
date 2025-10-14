@@ -8,46 +8,63 @@ import {
   useComPlayerCurrentTime,
   useComPlayerDuration,
 } from '$cm/basis/lib/control/current-play-com';
-import { useAtomSet, useAtomValue } from 'atomaric';
+import { useAtomValue } from 'atomaric';
+import { HttpLink } from 'shared/api';
 
 let userChangeTimeout: TimeOut;
 
 interface Props {
-  src: string;
-  timeRender?: (timeNode: React.ReactNode) => React.ReactNode;
-  isPlayOwnOnly?: boolean;
+  src: HttpLink;
+  timeRender?: (timeNode: React.ReactNode, src: HttpLink) => React.ReactNode;
 }
 
-export const ComPlayerTrack = ({ timeRender, src, isPlayOwnOnly }: Props) => {
+export const ComPlayerTrack = (props: Props) => {
   const playSrc = useAtomValue(comPlayerPlaySrcAtom);
-  const isOtherPlaySrc = playSrc && playSrc !== src;
-  let duration = useComPlayerDuration();
-  let currentTime = useComPlayerCurrentTime();
 
-  if (isPlayOwnOnly && isOtherPlaySrc) {
-    duration = 0;
-    currentTime = 0;
+  if (playSrc && playSrc !== props.src) {
+    const time = mylib.convertSecondsInStrTime(0);
+
+    return (
+      <Track
+        currentTime={0}
+        duration={0}
+        time={props.timeRender?.(time, props.src) ?? time}
+      />
+    );
   }
+
+  return <TrackWithCurrents {...props} />;
+};
+
+const TrackWithCurrents = (props: Props) => {
+  const currentTime = useComPlayerCurrentTime();
   const time = mylib.convertSecondsInStrTime(currentTime);
 
-  const setIsPlay = useAtomSet(comPlayerIsPlayAtom);
+  return (
+    <Track
+      currentTime={currentTime}
+      duration={useComPlayerDuration()}
+      time={props.timeRender?.(time, props.src) ?? time}
+    />
+  );
+};
 
+const Track = (props: { currentTime: number; duration: number; time: React.ReactNode }) => {
   return (
     <>
       <Slider
-        value={[currentTime || 0]}
+        value={[props.currentTime || 0]}
         min={0}
         step={1}
-        max={duration}
-        color={isOtherPlaySrc ? 'x5' : 'x7'}
-        disabled={duration < 2}
+        max={props.duration}
+        disabled={props.duration < 2}
         onValueChange={([value]) => {
-          setIsPlay(false);
+          comPlayerIsPlayAtom.set(false);
           isUserSlideTrackDTO.isSlide = true;
           clearTimeout(userChangeTimeout);
           userChangeTimeout = setTimeout(() => {
             isUserSlideTrackDTO.isSlide = false;
-            setIsPlay(true);
+            comPlayerIsPlayAtom.set(true);
           }, 300);
 
           const time = value as number;
@@ -55,7 +72,7 @@ export const ComPlayerTrack = ({ timeRender, src, isPlayOwnOnly }: Props) => {
           comPlayerAudioElement.currentTime = time;
         }}
       />
-      {timeRender?.(time) ?? time}
+      {props.time}
     </>
   );
 };

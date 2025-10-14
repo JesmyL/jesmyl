@@ -2,6 +2,7 @@ import { Badge } from '#shared/components/ui/badge';
 import { atom, useAtomValue } from 'atomaric';
 import { HttpLink } from 'shared/api';
 import styled, { css, keyframes } from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 import { Com } from '../Com';
 import { isCmComOpenAudioMoversAtom } from '../complect/state/atoms';
 import { ComPlayer } from './ComPlayer';
@@ -10,33 +11,40 @@ import { ComPlayerMarksMovers } from './ComPlayerMarksMovers';
 interface Props {
   audioLinks: HttpLink[];
   com: Com;
+  className?: string;
+  hideMarksForce?: boolean;
 }
 const preSwitchTimeAtom = atom(2, 'cm:comAudioPreSwitchTime');
 
-export const ComPlayerWithPoints = ({ audioLinks, com }: Props) => {
+export const ComPlayerWithMarks = (props: Props) => {
   const isOpenButtons = useAtomValue(isCmComOpenAudioMoversAtom);
 
   return (
     <ComPlayer
-      className="fixed top-[var(--header-height)] w-full z-20"
-      audioLinks={audioLinks}
+      className={twMerge('fixed top-[var(--header-height)] left-0 w-full z-20', props.className)}
+      audioLinks={props.audioLinks}
       addRender={src =>
+        !props.hideMarksForce &&
         isOpenButtons && (
           <ComPlayerMarksMovers
             src={src}
-            com={com}
+            com={props.com}
             preSwitchTimeAtom={preSwitchTimeAtom}
           />
         )
       }
-      timeRender={timeNode => (
-        <Badge
-          variant={isOpenButtons ? 'destructive' : 'secondary'}
-          onClick={isCmComOpenAudioMoversAtom.do.toggle}
-        >
-          {timeNode}
-        </Badge>
-      )}
+      timeRender={
+        props.hideMarksForce
+          ? undefined
+          : timeNode => (
+              <Badge
+                variant={isOpenButtons ? 'destructive' : 'secondary'}
+                onClick={isCmComOpenAudioMoversAtom.do.toggle}
+              >
+                {timeNode}
+              </Badge>
+            )
+      }
     />
   );
 };
