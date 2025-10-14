@@ -168,9 +168,7 @@ export class Order extends SourceBased<IExportableOrder> {
     } else if (this.me.source) this.me.source.top.r = val;
   }
 
-  setRepeats(val: OrderRepeats | null) {
-    this.repeats = val;
-  }
+  setRepeats = (val: OrderRepeats | null) => (this.repeats = val);
 
   get regions(): EditableOrderRegion<Order>[] | und {
     if (this._regions === undefined) this.setRegions();
@@ -178,45 +176,39 @@ export class Order extends SourceBased<IExportableOrder> {
     return this._regions;
   }
 
-  isCanShowChordsInText(chordVisibleVariant: ChordVisibleVariant) {
+  isCanShowChordsInText = (chordVisibleVariant: ChordVisibleVariant) => {
     return !!(
       (!this.chordsi || this.chordsi > -1) &&
       (chordVisibleVariant === 2 || (chordVisibleVariant === 1 && this.isMin))
     );
-  }
+  };
 
-  getWatchInheritance<Key extends keyof InheritancableOrder>(fieldn: Key) {
+  getWatchInheritance = <Key extends keyof InheritancableOrder>(fieldn: Key) => {
     return (
       this.me.isAnchorInherit
         ? (this.me.watchOrd?.me.source?.top.inh?.[fieldn]?.[this.me.anchorInheritIndex || 0] ??
           this.me.watchOrd?.getBasic(fieldn))
         : null
     ) as InheritancableOrder[Key] | nil;
-  }
+  };
 
-  getLeadInheritance<Key extends keyof InheritancableOrder>(fieldn: Key) {
+  getLeadInheritance = <Key extends keyof InheritancableOrder>(fieldn: Key) => {
     return (
       this.me.isAnchorInherit ? this.me.leadOrd?.me.source?.top.inh?.[fieldn]?.[this.me.anchorInheritIndex || 0] : null
     ) as InheritancableOrder[Key] | nil;
-  }
+  };
 
-  resetRegions() {
+  resetRegions = () => {
     delete this._regions;
-  }
+  };
 
-  comOrders() {
-    return this.com.orders;
-  }
+  comOrders = () => this.com.orders;
 
-  self<Ord extends Order>(): Ord {
-    return this as never;
-  }
+  self = <Ord extends Order>(): Ord => this as never;
 
-  isRealText() {
-    return !!(this.text && this.isVisible);
-  }
+  isRealText = () => !!(this.text && this.isVisible);
 
-  lineChordLabels(chordHardLevel: 2 | 1 | 3, specialLinei: number, specialOrdi: number) {
+  lineChordLabels = (chordHardLevel: 2 | 1 | 3, specialLinei: number, specialOrdi: number) => {
     let chordsLabels = (this.chordLabels ?? this.com.chordLabels[specialOrdi])?.[specialLinei] ?? [];
 
     if (chordHardLevel < 3) {
@@ -241,12 +233,12 @@ export class Order extends SourceBased<IExportableOrder> {
     }
 
     return chordsLabels;
-  }
+  };
 
   setRegions = <Ord extends Order>() =>
     (this._regions = Order.makeRegions(this.self<Ord>(), this.text, this.repeats, this.comOrders()));
 
-  static makeRepeatsFromRegions<Ord extends Order>(regions: EditableOrderRegion<Ord>[] | und) {
+  static makeRepeatsFromRegions = <Ord extends Order>(regions: EditableOrderRegion<Ord>[] | und) => {
     const repeats = {} as SpecialOrderRepeats;
 
     regions?.forEach(re => {
@@ -289,14 +281,14 @@ export class Order extends SourceBased<IExportableOrder> {
     });
 
     return repeats;
-  }
+  };
 
-  static makeRegions<Ord extends Order>(
+  static makeRegions = <Ord extends Order>(
     self: Ord | null,
     text: string,
     repeats: OrderRepeats | nil,
     comOrders: Order[] | null,
-  ) {
+  ) => {
     const txt = (text || '').split(makeRegExp('/\\n+/')).map((txt: string) => txt.split(makeRegExp('/\\s+/')));
     const lines = txt.length;
 
@@ -421,11 +413,11 @@ export class Order extends SourceBased<IExportableOrder> {
             }
           },
         );
-  }
+  };
 
-  repeatedText(repeats: OrderRepeats | null = this.repeats) {
+  repeatedText = (repeats: OrderRepeats | null = this.repeats) => {
     return CmComOrderUtils.makeRepeatedText(CmComUtils.transformToDisplayedText(this.text).text, repeats);
-  }
+  };
 
   makeSelector = (): CmComOrderSelector => this.wid;
 
@@ -437,7 +429,5 @@ export class Order extends SourceBased<IExportableOrder> {
     return this.me.leadOrd.wid === truncatedNum && this.me.watchOrd.wid === Math.ceil((selector - truncatedNum) * 100);
   };
 
-  isVisibleWithHeader() {
-    return !this.isHeaderNoneForce && this.isVisible;
-  }
+  isVisibleWithHeader = () => !this.isHeaderNoneForce && this.isVisible;
 }
