@@ -101,6 +101,7 @@ export class MyLib extends SMyLib {
       : searchWord.split(makeRegExp("/[^а-яёa-z0-9ґї'ʼє]+/i")).filter(itIt);
     const words = normalWords.map(word => word.toLowerCase());
     const wordRegs = normalWords.map(word => this.internationalWordReg(word, isNumberSearch));
+    const constants = [this.c.INDEX, this.c.POSITION];
 
     return items.reduce((ferries: RetItem[], item, itemi) => {
       let rate = 0;
@@ -110,7 +111,7 @@ export class MyLib extends SMyLib {
       if (
         places.some((place, placei) => {
           deep = placei;
-          const num = ([this.c.INDEX, this.c.POSITION] as Trace[]).indexOf(place as never);
+          const num = constants.indexOf(place as never);
           if (num > -1) {
             if (
               words.some(word =>
