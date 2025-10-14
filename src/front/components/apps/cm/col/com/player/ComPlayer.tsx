@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { HttpLink } from 'shared/api';
 import { itIt } from 'shared/utils';
 import styled, { css, keyframes } from 'styled-components';
+import { twMerge } from 'tailwind-merge';
 import { ComPlayerPlayButton } from './ComPlayerPlayButton';
 import { ComPlayerTrack } from './ComPlayerTrack';
 
@@ -18,8 +19,8 @@ export const ComPlayer = ({ audioLinks, timeRender, isPlayOwnOnly, addRender, cl
   const src = audioLinks[currentVariant];
 
   return (
-    <div className={className}>
-      <StyledPlayer className="composition-player flex gap-2 px-2">
+    <div className={twMerge(className, 'w-full')}>
+      <StyledPlayer className="composition-player flex gap-2 px-2 w-full">
         <ComPlayerPlayButton
           src={src}
           isPlayOwnOnly={isPlayOwnOnly}

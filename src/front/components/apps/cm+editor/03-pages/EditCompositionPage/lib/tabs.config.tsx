@@ -43,6 +43,11 @@ export const editCompositionNavs = {
     icon: 'Voice',
     checkTabAccess: checkAccess => checkAccess('cm', 'COM_AUDIO'),
   },
+  points: {
+    Component: CmEditorTabComAudioMarks,
+    icon: 'PinLocation01',
+    checkTabAccess: checkAccess => checkAccess('cm', 'COM_AMARK'),
+  },
   cat: {
     Component: CmEditorTabComCategoryBinds,
     icon: 'BookOpen02',
@@ -52,11 +57,6 @@ export const editCompositionNavs = {
     Component: CmEditorTabComRepeats,
     icon: 'Layers01',
     checkTabAccess: checkAccess => checkAccess('cm', 'COM_REP'),
-  },
-  points: {
-    Component: CmEditorTabComAudioMarks,
-    icon: 'PinLocation01',
-    checkTabAccess: checkAccess => checkAccess('cm', 'COM_AMARK'),
   },
   tr: {
     Component: CmEditorTabComOnTranslations,
