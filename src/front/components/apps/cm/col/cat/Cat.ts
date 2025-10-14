@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
 import { BaseNamed } from '$cm/base/BaseNamed';
-import { IExportableCat } from 'shared/api';
+import { CmComWid, IExportableCat } from 'shared/api';
 import { Com } from '../com/Com';
 
 export class Cat extends BaseNamed<IExportableCat> {
@@ -28,7 +28,7 @@ export class Cat extends BaseNamed<IExportableCat> {
   }
 
   get dict() {
-    return this.getBasicOr('d', {});
+    return this.getBasic('d');
   }
   set dict(val) {
     this.setExportable('d', val);
@@ -41,7 +41,7 @@ export class Cat extends BaseNamed<IExportableCat> {
     this.setExportable('k', val);
   }
 
-  get comws() {
+  get comws(): CmComWid[] {
     return this.top.s ?? mylib.keys(this.top.d ?? {}).map(Number);
   }
 

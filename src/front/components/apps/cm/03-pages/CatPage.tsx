@@ -11,11 +11,11 @@ import { comPlayerHeaderStickyCss } from '$cm/basis/css/com-player';
 import { comPlayerPlaySrcAtom } from '$cm/basis/lib/control/current-play-com';
 import { Cat } from '$cm/col/cat/Cat';
 import { ComPlayer } from '$cm/col/com/player/ComPlayer';
-import { CmComListSearchFilterInput } from '$cm/features/CmComListSearchFilterInput';
+import { CmWithComListSearchFilterInput } from '$cm/features/CmComListSearchFilterInput';
 import { CmRatingSortedComList } from '$cm/widgets/RatingSortedComList';
 import { FileRoutesByPath } from '@tanstack/react-router';
 import { Atom, atom, useAtomValue } from 'atomaric';
-import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 import { CmCatWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import styled from 'styled-components';
@@ -40,7 +40,6 @@ export const CmCatPage = (props: Props) => {
   const term = useAtomValue(termAtom);
   const debouncedTerm = useDebounceValue(term);
 
-  const [searchedComs, setSearchedComs] = useState<Com[]>([]);
   const setComListLimitsExtracterRef = useRef<(start: number | nil, finish: number | nil) => void>(emptyFunc);
   const listRef = useRef<HTMLDivElement>(null);
   const categoryTitleRef = useRef<HTMLDivElement>(null);
@@ -55,70 +54,80 @@ export const CmCatPage = (props: Props) => {
     setComListLimitsExtracterRef.current(0, 50);
   }, [term.length]);
 
-  const limitedComs = useMemo(() => {
-    if (!term.length) return searchedComs;
-
-    return searchedComs?.slice(0, 30);
-  }, [searchedComs, term.length]);
-
   return (
     <LoadIndicatedContent isLoading={!props.cat}>
-      <StyledCatPhaseContainer
-        className="cat-content"
-        withoutBackButton={props.withoutBackButton}
-        headClass="flex between w-full"
-        backButtonPath={props.backButtonPath}
-        onMoreClick={isOpenRatingSortedComsAtom.do.toggle}
-        head={
-          <CmComListSearchFilterInput
-            Constructor={Com}
-            onSearch={setSearchedComs}
-            coms={props.coms}
-            termAtom={termAtom}
-          />
-        }
-        contentRef={listRef}
-        content={
-          props.cat && (
-            <>
-              {playComSrc && (
-                <ComPlayer
-                  className="fixed top-[var(--header-height)] w-full z-20"
-                  audioLinks={[playComSrc]}
-                />
-              )}
-              {props.topNodeRender?.(term)}
-              <div
-                className="flex between sticky list-title"
-                ref={categoryTitleRef}
-              >
-                <div>{props.cat.name}:</div>
-                {searchedComs && (
-                  <div>
-                    {props.comsCount === searchedComs.length ? '' : `${searchedComs.length} / `}
-                    {props.comsCount}
-                  </div>
-                )}
-              </div>
-              <div className="com-list">
-                <SetComListLimitsExtracterContext value={setComListLimitsExtracterRef}>
-                  <ComFaceList
-                    key={+!term}
-                    isPutCcomFaceOff={!!term}
-                    list={limitedComs}
-                    {...props}
-                  />
-                </SetComListLimitsExtracterContext>
-              </div>
+      <CmWithComListSearchFilterInput
+        Constructor={Com}
+        coms={props.coms}
+        termAtom={termAtom}
+      >
+        {({ inputNode, catNumberSearch, searchedComs, limitedComs }) => {
+          return (
+            <StyledCatPhaseContainer
+              className="cat-content"
+              withoutBackButton={props.withoutBackButton}
+              headClass="flex between w-full"
+              backButtonPath={props.backButtonPath}
+              onMoreClick={isOpenRatingSortedComsAtom.do.toggle}
+              head={inputNode}
+              contentRef={listRef}
+              content={
+                props.cat && (
+                  <>
+                    {playComSrc && (
+                      <ComPlayer
+                        className="fixed top-[var(--header-height)] w-full z-20"
+                        audioLinks={[playComSrc]}
+                      />
+                    )}
+                    {props.topNodeRender?.(term)}
+                    <div
+                      className="flex between sticky list-title"
+                      ref={categoryTitleRef}
+                    >
+                      <div>{props.cat.name}:</div>
+                      {searchedComs && (
+                        <div>
+                          {props.comsCount === searchedComs.length ? '' : `${searchedComs.length} / `}
+                          {props.comsCount}
+                        </div>
+                      )}
+                    </div>
+                    <div className="com-list">
+                      <SetComListLimitsExtracterContext
+                        key={+!term}
+                        value={setComListLimitsExtracterRef}
+                      >
+                        {catNumberSearch && (
+                          <ComFaceList
+                            isPutCcomFaceOff={!!term}
+                            list={catNumberSearch.comws}
+                            comDescription={com => (
+                              <div className="text-[.7em] absolute -bottom-[.5em] left-[64px] text-x7/50">
+                                {catNumberSearch.descriptions[com.wid]}
+                              </div>
+                            )}
+                          />
+                        )}
+                        <ComFaceList
+                          isPutCcomFaceOff={!!term}
+                          list={limitedComs}
+                          {...props}
+                        />
+                      </SetComListLimitsExtracterContext>
+                    </div>
 
-              <FullContent openAtom={isOpenRatingSortedComsAtom}>
-                <div className="sticky top-0 py-5 bg-x5">Рейтинг</div>
-                <CmRatingSortedComList coms={props.coms} />
-              </FullContent>
-            </>
-          )
-        }
-      />
+                    <FullContent openAtom={isOpenRatingSortedComsAtom}>
+                      <div className="sticky top-0 py-5 bg-x5">Рейтинг</div>
+                      <CmRatingSortedComList coms={props.coms} />
+                    </FullContent>
+                  </>
+                )
+              }
+            />
+          );
+        }}
+      </CmWithComListSearchFilterInput>
     </LoadIndicatedContent>
   );
 };
