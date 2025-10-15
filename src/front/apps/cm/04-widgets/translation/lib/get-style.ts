@@ -1,5 +1,5 @@
-import { useScreenTranslationPositionsStyles } from '#features/translations/complect/hooks/position-styles';
-import { useScreenTranslationTextStyles } from '#features/translations/complect/hooks/text-styles';
+import { useScreenTranslationPositionsStyles } from '#features/broadcast/complect/hooks/position-styles';
+import { useScreenTranslationTextStyles } from '#features/broadcast/complect/hooks/text-styles';
 import { CSSProperties, useMemo } from 'react';
 import { CmTranslationTextScreenConfig } from '../model/model';
 

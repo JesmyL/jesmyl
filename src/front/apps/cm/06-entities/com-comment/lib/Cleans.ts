@@ -1,8 +1,12 @@
 import { makePseudoElementCorrectContentText } from '#shared/lib/getParentNodeWithClassName';
 import { mylib } from '#shared/lib/my-lib';
-import { BibleBookTranslates } from '$bible/basis/contexts/TranslatesContext';
-import { bibleLowerBooks, bibleTitles } from '$bible/basis/lib/const/bibleTitles';
-import { bibleAllTranslates, translateDescriptions } from '$bible/basis/lib/const/consts';
+import {
+  bibleAllTranslates,
+  BibleBookTranslates,
+  bibleLowerBooks,
+  bibleTitles,
+  translateDescriptions,
+} from '$bible/ext';
 import { makeNamedRegExp, makeRegExp } from 'regexpert';
 import { BibleTranslateName } from 'shared/api';
 import { css } from 'styled-components';

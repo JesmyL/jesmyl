@@ -1,7 +1,7 @@
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
-import { BibleModulesTranslationsControl } from '$bible/entities/ModulesTranslationsControl';
+import { BibleModulesTranslationsControl } from '$bible/ext';
 import { CmCom } from '$cm/entities/com';
 import { isCmComAudioPlayerOpenMoversAtom } from '$cm/entities/com-audio-player';
 import { useCmComCommentBlockCss, useCmComCommentBlockFastReactions } from '$cm/entities/com-comment';

@@ -1,6 +1,6 @@
-import { defaultComplectConfig } from '#features/translations/consts';
-import { AlertLineConfig, ScreenTranslationConfig } from '#features/translations/model';
-import { TranslationViewApp } from '#features/translations/Translations.model';
+import { defaultComplectConfig } from '#features/broadcast/consts';
+import { AlertLineConfig, ScreenTranslationConfig } from '#features/broadcast/model';
+import { TranslationViewApp } from '#features/broadcast/Translations.model';
 import { DexieDB } from '#shared/lib/DexieDB';
 
 type Store = {

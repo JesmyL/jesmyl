@@ -1,5 +1,4 @@
-import { useBibleTranslatesContext } from '$bible/basis/lib/contexts/translates';
-import { bibleShowTranslatesAtom } from '$bible/basis/lib/store/atoms';
+import { bibleShowTranslatesAtom, useBibleTranslatesContext } from '$bible/ext';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';

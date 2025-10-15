@@ -1,4 +1,4 @@
-import { CurrentForceViweAppContext } from '#features/translations/Translation.contexts';
+import { CurrentForceViweAppContext } from '#features/broadcast/Translation.contexts';
 import { isTouchDevice } from '#shared/lib/device-differences';
 import { CmTranslationControlled } from '$cm/widgets/translation';
 import { CmTranslationFullscreen } from './TranslationFullscreen';

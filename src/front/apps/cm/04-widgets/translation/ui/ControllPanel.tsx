@@ -1,4 +1,4 @@
-import { ScreenTranslationControlPanel } from '#features/translations/controls/ControllPanel';
+import { ScreenTranslationControlPanel } from '#features/broadcast/controls/ControllPanel';
 import { useCmTranslationScreenComTextNavigations } from '$cm/features/translation';
 
 export const CmTranslationControlPanel = () => {

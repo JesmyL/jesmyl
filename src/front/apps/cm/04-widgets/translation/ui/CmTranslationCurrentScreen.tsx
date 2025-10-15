@@ -1,9 +1,6 @@
-import { useIsScreenTranslationTextVisible } from '#features/translations/atoms';
-import {
-  useGetScreenTranslationConfig,
-  useScreenTranslationCurrentConfigi,
-} from '#features/translations/hooks/configs';
-import { TranslationScreenProps } from '#features/translations/Translations.model';
+import { useIsScreenTranslationTextVisible } from '#features/broadcast/atoms';
+import { useGetScreenTranslationConfig, useScreenTranslationCurrentConfigi } from '#features/broadcast/hooks/configs';
+import { TranslationScreenProps } from '#features/broadcast/Translations.model';
 import { FontSizeContainProps } from '#shared/ui/font-size-contain/FontSizeContain.model';
 import { cmTranslationBlockAtom } from '$cm/entities/translation';
 import { useCmTranslationCurrentComTexts } from '$cm/features/translation';

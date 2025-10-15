@@ -1,4 +1,4 @@
-import { useScreenTranslationWindows } from '#features/translations/hooks/windows';
+import { useScreenTranslationWindows } from '#features/broadcast/hooks/windows';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import {
   useCmTranslationScreenComNavigations,

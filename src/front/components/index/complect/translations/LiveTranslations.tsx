@@ -1,7 +1,7 @@
-import { useScreenTranslationWindows } from '#features/translations/hooks/windows';
-import { useTranslationInitialSlideSet } from '#features/translations/initial-slide-context';
+import { useScreenTranslationWindows } from '#features/broadcast/hooks/windows';
+import { useTranslationInitialSlideSet } from '#features/broadcast/initial-slide-context';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { BibleTranslatesContextProvider } from '$bible/basis/contexts/TranslatesContext';
+import { BibleTranslatesContextProvider } from '$bible/shared/state/TranslatesContext';
 import { CmTranslationFollowInitialSlide } from '$cm/features/translation/ui/FollowTranslationInitialSlide';
 import { useAuth } from '$index/atoms';
 import { indexIDB } from '$index/db/index-idb';

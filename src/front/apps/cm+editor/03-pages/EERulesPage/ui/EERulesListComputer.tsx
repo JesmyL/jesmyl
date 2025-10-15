@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { bibleTranslatesIDB } from '$bible/basis/lib/store/bibleIDB';
+import { bibleTranslatesIDB } from '$bible/ext';
 import { useEditableCats } from '$cm+editor/shared/lib/useEditableCat';
 import { useEditableComs } from '$cm+editor/shared/lib/useEditableCom';
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';

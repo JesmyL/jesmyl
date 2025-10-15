@@ -1,6 +1,6 @@
 import { soki } from '#shared/soki';
 import { schTsjrpcBaseClient } from '#widgets/schedule/tsjrpc/tsjrpc.base';
-import { bibleTsjrpcBaseClient } from '$bible/processes/tsjrpc';
+import { bibleTsjrpcBaseClient } from '$bible/shared/lib/tsjrpc';
 import { cmEditorInitialInvokes } from '$cm+editor/shared/lib/cm+editor-initial-invokes';
 import { cmShareEditorTsjrpcBaseClient } from '$cm+editor/shared/lib/cm-editor.tsjrpc.base';
 import { indexUserAccessRightsAtom } from '$index/atoms';

@@ -24,7 +24,7 @@ const aliasesWithMaxImportPathParts = Object.entries({
 const knownExportNamesPrefixes = ['I', 'The', 'Styled', 'is', 'make', 'check', 'use', 'take'];
 const availablePagePostfix = ['Layout', 'Page'];
 
-const appNames = ['cm', 'cm+editor'];
+const appNames = ['cm', 'cm+editor', 'bible'];
 
 const isNeedReport = true;
 

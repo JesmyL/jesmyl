@@ -1,10 +1,10 @@
-import { ScreenTranslationControlPanelShowMdButton } from '#features/translations/controls/ShowMdButton';
+import { ScreenTranslationControlPanelShowMdButton } from '#features/broadcast/controls/ShowMdButton';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { BibleTranslationSlide } from '$bible/translations/BibleTranslationSlide';
+import { BibleBroadcastSlide } from '$bible/entities/broadcast/ui/BibleTranslationSlide';
 import { CmTranslationLiveScreen } from '$cm/features/translation/ui/Screen';
 import { liveDataAtom, liveDataStreamersAtom } from '$index/atoms';
 import { schLiveTsjrpcBaseClient, schLiveTsjrpcClient } from '$index/complect/translations/live.tsjrpc';
@@ -78,7 +78,7 @@ export const ScheduleWidgetLiveTranslation = ({ schw, isShowMarkdownOnly }: Prop
           ) : liveData.cm !== undefined ? (
             <CmTranslationLiveScreen {...liveData.cm} />
           ) : liveData.bible !== undefined ? (
-            <BibleTranslationSlide {...liveData.bible} />
+            <BibleBroadcastSlide {...liveData.bible} />
           ) : null}
         </>
       )}

@@ -2,11 +2,11 @@ import {
   defaultScreenTranslationBackgroundConfig,
   defaultScreenTranslationPositionConfig,
   defaultScreenTranslationTextConfig,
-} from '#features/translations/complect/defaults';
+} from '#features/broadcast/complect/defaults';
 import {
   useMakeScreenTranslationConfigsFillPack,
   useScreenTranslationCurrentConfigi,
-} from '#features/translations/hooks/configs';
+} from '#features/broadcast/hooks/configs';
 import { BackgroundConfigProps } from '#shared/ui/configurators/model';
 import { cmIDB } from '$cm/shared/state';
 import { CmTranslationScreenConfig } from '../model/model';

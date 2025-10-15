@@ -9,7 +9,7 @@ import {
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { DocTitle } from '#shared/ui/tags/DocTitle';
 import { Metronome } from '#widgets/metronome';
-import { BibleTranslatesContextProvider } from '$bible/basis/contexts/TranslatesContext';
+import { BibleTranslatesContextProvider } from '$bible/ext';
 import {
   CmComCatMentions,
   CmComNotFoundPage,

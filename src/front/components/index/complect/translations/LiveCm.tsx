@@ -1,4 +1,4 @@
-import { useSwitchCurrentTranslationTextApp } from '#features/translations/hooks/current-app';
+import { useSwitchCurrentTranslationTextApp } from '#features/broadcast/hooks/current-app';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useCmComCurrent } from '$cm/entities/com/lib/com-selections';
 import { cmTranslationBlockAtom } from '$cm/entities/translation/state/atoms';

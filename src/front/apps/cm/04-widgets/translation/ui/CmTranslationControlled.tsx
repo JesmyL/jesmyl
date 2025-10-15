@@ -1,4 +1,4 @@
-import { TranslationSlidePreview } from '#features/translations/controls/Preview';
+import { TranslationSlidePreview } from '#features/broadcast/controls/Preview';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { CmCom, useCmComOpenComLinkRendererContext } from '$cm/entities/com';
 import { CmComFaceList } from '$cm/entities/com-face';

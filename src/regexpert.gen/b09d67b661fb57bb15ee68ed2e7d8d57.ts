@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import('../front/components/apps/bible/translations/search/input-panel/address/hooks/transformers');
+import('../front/apps/bible/06-entities/broadcast-search/lib/transformers');
 
 namespace Nb09d67b661fb57bb15ee68ed2e7d8d57_1 {
   type $0 = `${$bookNum}${U1 | ''}${OptRepeatingString<string>}${U2}${OptRepeatingString<string>}${U3 | ''}`;

@@ -1,12 +1,13 @@
-import { useSwitchCurrentTranslationTextApp } from '#features/translations/hooks/current-app';
+import { useSwitchCurrentTranslationTextApp } from '#features/broadcast/hooks/current-app';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { BibleLiveTranslation } from '$bible/translations/BibleLiveTranslation';
+import { BibleBroadcastLive } from '$bible/widgets/broadcast/ui/BibleLiveTranslation';
+
 import { IndexSchWTranslationLiveDataValue } from '$index/Index.model';
 import React, { memo, useCallback } from 'react';
 import { schLiveTsjrpcClient } from './live.tsjrpc';
 import { LiveTranslationAppProps } from './model';
 
-const BibleTranslationControlled = React.lazy(() => import('$bible/translations/BibleTranslationControlled'));
+const BibleTranslationControlled = React.lazy(() => import('$bible/widgets/broadcast/ui/BibleTranslationControlled'));
 
 export const IndexScheduleWidgetBibleTranslationsControlled: React.FC<LiveTranslationAppProps> = memo(function BibleTr({
   isCantTranslateLive,
@@ -23,7 +24,7 @@ export const IndexScheduleWidgetBibleTranslationsControlled: React.FC<LiveTransl
   return (
     <>
       {isCantTranslateLive || (
-        <BibleLiveTranslation
+        <BibleBroadcastLive
           fio={fio}
           onSend={onSend}
         />

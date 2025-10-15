@@ -1,4 +1,4 @@
-import { ScreenTranslateConfigurationNameChanger } from '#features/translations/complect/NameChanger';
+import { ScreenTranslateConfigurationNameChanger } from '#features/broadcast/complect/NameChanger';
 import { useDebounceAction } from '#shared/lib/hooks/useDebounceAction';
 import { BackgroundConfigurator } from '#shared/ui/configurators/Background';
 import { ColorConfigurator } from '#shared/ui/configurators/Color';

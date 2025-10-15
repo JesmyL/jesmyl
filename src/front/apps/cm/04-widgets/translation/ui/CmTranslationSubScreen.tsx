@@ -1,6 +1,6 @@
-import { ScreenTranslationPositionConfig } from '#features/translations/complect/model';
-import { ScreenTranslateCurrentPositionConfigurators } from '#features/translations/complect/position/Position';
-import { useApplyScreenFontFamilyEffect } from '#features/translations/hooks/set-font-family';
+import { ScreenTranslationPositionConfig } from '#features/broadcast/complect/model';
+import { ScreenTranslateCurrentPositionConfigurators } from '#features/broadcast/complect/position/Position';
+import { useApplyScreenFontFamilyEffect } from '#features/broadcast/hooks/set-font-family';
 import { FontSizeContain } from '#shared/ui/font-size-contain/FontSizeContain';
 import { FontSizeContainProps } from '#shared/ui/font-size-contain/FontSizeContain.model';
 import { useCallback } from 'react';
