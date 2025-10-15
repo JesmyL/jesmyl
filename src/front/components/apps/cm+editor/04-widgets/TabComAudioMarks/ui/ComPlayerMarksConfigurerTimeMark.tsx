@@ -5,8 +5,8 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/basis/lib/atoms/com';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
-import { comPlayerAudioElement } from '$cm/basis/lib/control/current-play-com';
-import { cmIDB } from '$cm/basis/lib/store/cmIDB';
+import { cmComAudioPlayerHTMLElement } from 'front/apps/cm/06-entities/com-audio-player/state/current-play-com';
+import { cmIDB } from 'front/apps/cm/07-shared/state/cmIDB';
 import { CmComAudioMarkSelector, HttpLink } from 'shared/api';
 import { twMerge } from 'tailwind-merge';
 import { useMakeMarkTitleBySelector } from '../lib/useMakeMarkTitleBySelector';
@@ -38,8 +38,8 @@ export const CmComPlayerMarksConfigurerTimeMark = ({ selector, time, src, com, i
         <Button
           icon="Play"
           onClick={() => {
-            comPlayerAudioElement.currentTime = time;
-            comPlayerAudioElement.play();
+            cmComAudioPlayerHTMLElement.currentTime = time;
+            cmComAudioPlayerHTMLElement.play();
           }}
         />
         <TextInput

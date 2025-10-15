@@ -7,11 +7,11 @@ import { TheButton } from '#shared/ui/TheButton';
 import { cmEditorClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer';
 import { ChordRedactableTrack } from '$cm+editor/entities/ChordRedactableTrack';
-import { cmIDB } from '$cm/basis/lib/store/cmIDB';
-import { ChordCard } from '$cm/col/com/chord-card/ChordCard';
 import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { atom, useAtom } from 'atomaric';
+import { CmChordCard } from 'front/apps/cm/06-entities/chord-card/ui/ChordCard';
+import { cmIDB } from 'front/apps/cm/07-shared/state/cmIDB';
 import { useEffect, useMemo, useState } from 'react';
 import { ChordPack, ChordTrack } from 'shared/api';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
@@ -176,7 +176,7 @@ export const EditChordPage = () => {
             ) : currentChordName ? (
               <>
                 <h2 className="text-center">{currentChordName}</h2>
-                <ChordCard chordName={currentChordName} />
+                <CmChordCard chordName={currentChordName} />
               </>
             ) : (
               <div>Выбери аккорд для редактирования</div>

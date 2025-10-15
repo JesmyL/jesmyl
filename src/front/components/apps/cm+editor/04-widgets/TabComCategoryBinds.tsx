@@ -5,9 +5,9 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditCatClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { EditableCat } from '$cm+editor/basis/lib/EditableCat';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
-import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { cmIDB } from 'front/apps/cm/07-shared/state/cmIDB';
 import React, { useMemo } from 'react';
 import { makeRegExp } from 'regexpert';
 

@@ -1,6 +1,6 @@
 import { TsjrpcClient } from '#basis/lib/Tsjrpc.client';
 import { mylib } from '#shared/lib/my-lib';
-import { cmIDB } from '$cm/basis/lib/store/cmIDB';
+import { cmIDB } from 'front/apps/cm/07-shared/state/cmIDB';
 import { CmEditCatTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-cat.tsjrpc.model';
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
 import { CmEditComOrderTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-order.tsjrpc.model';

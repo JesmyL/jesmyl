@@ -1,4 +1,4 @@
-import { IExportableOrderMe } from '$cm/col/com/order/Order.model';
+import { ICmComOrderExportableMe } from 'front/apps/cm/06-entities/com-order/model/Order.model';
 import { EditableComOrder } from '../../EditableComOrder';
 import { EditableComCorrects } from './10-Corrects';
 
@@ -8,7 +8,7 @@ export class EditableComOrders extends EditableComCorrects {
   get ords() {
     if (this._ords == null) this._ords = this.getBasic('o')?.map(this.mapTopOrdInOrdMe) ?? [];
 
-    return this._ords as IExportableOrderMe[];
+    return this._ords as ICmComOrderExportableMe[];
   }
 
   get orders(): EditableComOrder[] | null {

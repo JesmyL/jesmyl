@@ -1,8 +1,8 @@
-import { makeCmComNestedRoute } from '$cm/basis/lib/cmComNestedRouteMaker';
-import { CmComListContextValue } from '$cm/basis/lib/contexts/current-com-list';
-import { useFavouriteComs } from '$cm/lists/favourites/useFavouriteComs';
-import { CmFavoriteComsPage } from '$cm/pages/FavouriteComsPage';
+import { useCmComFavouriteList } from '$cm/entities/com-favourite/lib/useFavouriteComs';
+import { CmComListContextValue } from '$cm/entities/com/lib/current-com-list';
 import { createFileRoute } from '@tanstack/react-router';
+import { CmFavouriteComsPage } from 'front/apps/cm/03-pages/FavouriteComsPage/ui/FavouriteComsPage';
+import { makeCmComNestedRoute } from 'front/apps/cm/07-shared/lib/cmComNestedRouteMaker';
 import { useMemo } from 'react';
 
 export const Route = createFileRoute('/cm/li/fav')(
@@ -14,11 +14,11 @@ export const Route = createFileRoute('/cm/li/fav')(
 );
 
 function RouteComponent() {
-  return <CmFavoriteComsPage />;
+  return <CmFavouriteComsPage />;
 }
 
 function useComListPack(): CmComListContextValue {
-  const list = useFavouriteComs().favouriteComs;
+  const list = useCmComFavouriteList().favouriteComs;
 
   return useMemo(() => {
     return { list, pageTitlePostfix: ' - Избранное' };

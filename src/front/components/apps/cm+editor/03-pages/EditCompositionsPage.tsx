@@ -3,13 +3,13 @@ import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer';
 import { EditCompositionsMore } from '$cm+editor/features/EditCompositionsMore';
-import { useComs } from '$cm/basis/lib/coms-selections';
-import { TheCatSpecialSearches } from '$cm/col/cat/SpecialSearches';
-import { CatSpecialSearches } from '$cm/col/cat/useCatSpecialSearches';
-import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
-import { CmWithComListSearchFilterInput } from '$cm/features/CmComListSearchFilterInput';
+import { CmCatSpecialSearches } from '$cm/entities/cat/ui/SpecialSearches';
+import { useCmComList } from '$cm/entities/com/lib/coms-selections';
 import { useNavigate } from '@tanstack/react-router';
 import { atom, useAtom } from 'atomaric';
+import { ICmCatSpecialSearches } from 'front/apps/cm/06-entities/cat/lib/useCatSpecialSearches';
+import { CmComFaceList } from 'front/apps/cm/06-entities/com-face/ui/ComFaceList';
+import { CmComWithComListSearchFilterInput } from 'front/apps/cm/06-entities/com/ui/CmComListSearchFilterInput';
 import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
@@ -17,10 +17,10 @@ const termAtom = atom('');
 const debounceTermAtom = atom('');
 
 export const EditCompositionsPage = () => {
-  const coms = useComs();
+  const coms = useCmComList();
   const [isOpenMorePopup, setIsOpenMorePopup] = useState(false);
   const listRef = useRef<HTMLDivElement>(null);
-  const [mapper, setMapper] = useState<CatSpecialSearches['map'] | null>(null);
+  const [mapper, setMapper] = useState<ICmCatSpecialSearches['map'] | null>(null);
   const [term, setTerm] = useAtom(termAtom);
   const navigate = useNavigate();
   const debouncedTerm = useAtom(debounceTermAtom);
@@ -31,7 +31,7 @@ export const EditCompositionsPage = () => {
 
   return (
     <>
-      <CmWithComListSearchFilterInput
+      <CmComWithComListSearchFilterInput
         Constructor={EditableCom}
         termAtom={termAtom}
         comsMapper={mapper}
@@ -48,7 +48,7 @@ export const EditCompositionsPage = () => {
               content={
                 <>
                   {term.startsWith('@') && (
-                    <TheCatSpecialSearches
+                    <CmCatSpecialSearches
                       term={term}
                       setTerm={setTerm}
                       setMapper={setMapper}
@@ -56,7 +56,7 @@ export const EditCompositionsPage = () => {
                   )}
 
                   {catNumberSearch && (
-                    <ComFaceList
+                    <CmComFaceList
                       isPutCcomFaceOff={!!term}
                       list={catNumberSearch.comws}
                       comDescription={com => (
@@ -66,7 +66,7 @@ export const EditCompositionsPage = () => {
                       )}
                     />
                   )}
-                  <ComFaceList
+                  <CmComFaceList
                     key={+!term}
                     list={searchedComs}
                     isPutCcomFaceOff={!!term}
@@ -82,7 +82,7 @@ export const EditCompositionsPage = () => {
             />
           );
         }}
-      </CmWithComListSearchFilterInput>
+      </CmComWithComListSearchFilterInput>
       {isOpenMorePopup && (
         <BottomPopup onClose={setIsOpenMorePopup}>
           <EditCompositionsMore onClose={setIsOpenMorePopup} />

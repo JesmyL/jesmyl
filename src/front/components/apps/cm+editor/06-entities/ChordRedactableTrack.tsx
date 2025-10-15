@@ -1,6 +1,6 @@
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { ChordCardTracked } from '$cm/col/com/chord-card/ChordCardTracked';
+import { CmChordCardTracked } from 'front/apps/cm/06-entities/chord-card/ui/ChordCardTracked';
 import React from 'react';
 import { ChordTrack } from 'shared/api';
 
@@ -27,7 +27,7 @@ export const ChordRedactableTrack = ({
         }}
       />
       <div className="flex gap-2">
-        <ChordCardTracked
+        <CmChordCardTracked
           track={redactableChord}
           bottomPadding={20}
           additions={(lads, strings, stringsCount, leftMargin, betweenStr, betweenLad, track, mutes, baseLad) => {

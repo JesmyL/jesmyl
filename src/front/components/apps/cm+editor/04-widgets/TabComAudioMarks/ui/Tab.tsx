@@ -9,15 +9,15 @@ import { WithState } from '#shared/ui/WithState';
 import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/basis/lib/atoms/com';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
-import { comPlayerAudioElement } from '$cm/basis/lib/control/current-play-com';
-import { useCmComOrdwToPlayButtonNodeDict } from '$cm/basis/lib/hooks/useCmComOrdwToPlayButtonNodeDict';
-import { cmIDB } from '$cm/basis/lib/store/cmIDB';
-import { ChordVisibleVariant } from '$cm/Cm.model';
-import { useComCommentBlockCss } from '$cm/col/com/complect/comment-parser/useComCommentBlock';
-import { ComOrders } from '$cm/col/com/orders/ComOrders';
-import { ComPlayer } from '$cm/col/com/player/ComPlayer';
-import { ComPlayerMarksMovers } from '$cm/col/com/player/ComPlayerMarksMovers';
 import { atom, useAtomValue } from 'atomaric';
+import { cmComAudioPlayerHTMLElement } from 'front/apps/cm/06-entities/com-audio-player/state/current-play-com';
+import { CmComAudioPlayer } from 'front/apps/cm/06-entities/com-audio-player/ui/ComPlayer';
+import { CmComAudioPlayerMarksMovers } from 'front/apps/cm/06-entities/com-audio-player/ui/ComPlayerMarksMovers';
+import { useCmComCommentBlockCss } from 'front/apps/cm/06-entities/com-comment/lib/useComCommentBlock';
+import { useCmComOrderWidToPlayButtonNodeDict } from 'front/apps/cm/06-entities/com-order/lib/useCmComOrdwToPlayButtonNodeDict';
+import { CmComOrderList } from 'front/apps/cm/06-entities/com-order/ui/ComOrders';
+import { ChordVisibleVariant } from 'front/apps/cm/07-shared/model/Cm.model';
+import { cmIDB } from 'front/apps/cm/07-shared/state/cmIDB';
 import { useEffect } from 'react';
 import { CmComAudioMarkSelector, HttpLink } from 'shared/api';
 import { toast } from 'sonner';
@@ -33,7 +33,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
   const editSrc = useAtomValue(srcOnEditAtom);
   const trackMarks = cmIDB.useAudioTrackMarks(editSrc);
   const marksOnUpdating = useAtomValue(cmComEditorAudioMarksEditPacksAtom);
-  const ordwToPlayButtonNodeDict = useCmComOrdwToPlayButtonNodeDict(ccom, (playNode, time) => (
+  const ordwToPlayButtonNodeDict = useCmComOrderWidToPlayButtonNodeDict(ccom, (playNode, time) => (
     <div
       key={time}
       className="flex flex-col gap-2"
@@ -45,7 +45,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
       />
     </div>
   ));
-  const { commentCss } = useComCommentBlockCss(ccom, true);
+  const { commentCss } = useCmComCommentBlockCss(ccom, true);
 
   useEffect(() => {
     if (!ccom.audio.length) {
@@ -86,7 +86,7 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
             render={editSrc => {
               return (
                 <>
-                  <ComPlayer
+                  <CmComAudioPlayer
                     className="mb-20 sticky top-8! bg-x1 pb-5"
                     audioLinks={[editSrc]}
                     addRender={src => (
@@ -94,16 +94,16 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                         <Button
                           icon="PlusSign"
                           onClick={() => {
-                            if (editSrc == null || comPlayerAudioElement.currentTime < 0.001) {
+                            if (editSrc == null || cmComAudioPlayerHTMLElement.currentTime < 0.001) {
                               toast('Песня не воспроизводилась', makeToastKOMoodConfig());
                               return;
                             }
 
-                            const fixedTime = +comPlayerAudioElement.currentTime.toFixed(3);
+                            const fixedTime = +cmComAudioPlayerHTMLElement.currentTime.toFixed(3);
                             cmComEditorAudioMarksEditPacksAtom.do.putMarks(editSrc, { [fixedTime]: `+${fixedTime}+` });
                           }}
                         />
-                        <ComPlayerMarksMovers
+                        <CmComAudioPlayerMarksMovers
                           src={src}
                           com={ccom}
                           repeatButtonClassName="max-w-[calc(100vw-228px)]"
@@ -160,12 +160,12 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                             <Button
                               icon="PlusSign"
                               onClick={() => {
-                                if (editSrc == null || comPlayerAudioElement.currentTime < 0.001) {
+                                if (editSrc == null || cmComAudioPlayerHTMLElement.currentTime < 0.001) {
                                   toast('Песня не воспроизводилась', makeToastKOMoodConfig());
                                   return;
                                 }
 
-                                const fixedTime = +comPlayerAudioElement.currentTime.toFixed(3);
+                                const fixedTime = +cmComAudioPlayerHTMLElement.currentTime.toFixed(3);
                                 cmComEditorAudioMarksEditPacksAtom.do.putMarks(editSrc, {
                                   [fixedTime]: [ord.makeSelector()] as CmComAudioMarkSelector,
                                 });
@@ -210,6 +210,6 @@ export const CmEditorTabComAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
   );
 };
 
-const StyledComOrders = styled(ComOrders)<{ $commentStyles?: RuleSet<object> | string }>`
+const StyledComOrders = styled(CmComOrderList)<{ $commentStyles?: RuleSet<object> | string }>`
   ${props => props.$commentStyles}
 `;

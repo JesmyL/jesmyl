@@ -1,8 +1,8 @@
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { cmEditorIDB } from '$cm+editor/basis/lib/cmEditorIDB';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
-import { cmConstantsConfigAtom } from '$cm/basis/lib/store/atoms';
 import { useAtomValue } from 'atomaric';
+import { cmConstantsConfigAtom } from 'front/apps/cm/07-shared/state/atoms';
 import { useState } from 'react';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { TextCorrectMessages } from './TextBlockIncorrectMessages';

@@ -1,13 +1,13 @@
 import { AppName } from '#basis/model/App.model';
 import { BibleTranslationScreenConfig } from '$bible/translations/model';
-import { CmSchWTranslationLiveDataValue } from '$cm/translation/complect/live/model';
+import { CmTranslationSchWgtLiveDataValue } from 'front/apps/cm/05-features/translation/model/model';
 import { LocalSokiAuth } from 'shared/api';
 
 export type IndexErrorScope = keyof ClientRegisterData;
 
 export type IndexSchWTranslationLiveDataValue = {
   fio: string;
-  cm?: CmSchWTranslationLiveDataValue;
+  cm?: CmTranslationSchWgtLiveDataValue;
   bible?: { text: string; addressText: string; config: BibleTranslationScreenConfig };
   markdown?: string;
 };

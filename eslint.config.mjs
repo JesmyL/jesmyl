@@ -4,8 +4,10 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
+import customESLintConfigs from './custom-eslint.mjs';
 
 export default tseslint.config(
+  ...customESLintConfigs(),
   { ignores: ['dist', 'build', '**/*.js', 'src/**/the-icon/icons'] },
   {
     extends: [js.configs.recommended, tseslint.configs.recommended, eslintReact.configs['recommended-typescript']],

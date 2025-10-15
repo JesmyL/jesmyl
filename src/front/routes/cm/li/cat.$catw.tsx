@@ -1,8 +1,8 @@
-import { makeCmComNestedRoute } from '$cm/basis/lib/cmComNestedRouteMaker';
-import { CmComListContextValue } from '$cm/basis/lib/contexts/current-com-list';
-import { useCat } from '$cm/col/cat/useCcat';
-import { CmCatPage } from '$cm/pages/CatPage';
+import { CmComListContextValue } from '$cm/entities/com/lib/current-com-list';
 import { createFileRoute } from '@tanstack/react-router';
+import { CmCatPage } from 'front/apps/cm/03-pages/CatPage/ui/CatPage';
+import { useCmCat } from 'front/apps/cm/06-entities/cat/lib/useCcat';
+import { makeCmComNestedRoute } from 'front/apps/cm/07-shared/lib/cmComNestedRouteMaker';
 import { useMemo } from 'react';
 
 export const Route = createFileRoute('/cm/li/cat/$catw')(
@@ -15,7 +15,7 @@ export const Route = createFileRoute('/cm/li/cat/$catw')(
 
 function RouteComponent() {
   const { catw } = Route.useParams() as { catw: string };
-  const cat = useCat(+catw);
+  const cat = useCmCat(+catw);
 
   return (
     <CmCatPage
@@ -29,7 +29,7 @@ function RouteComponent() {
 
 function useComListPack(): CmComListContextValue {
   const { catw } = Route.useParams() as { catw: string };
-  const cat = useCat(+catw);
+  const cat = useCmCat(+catw);
 
   return useMemo(() => {
     return { list: cat?.coms ?? [], pageTitlePostfix: ` - ${cat?.name ?? 'Категория'}` };

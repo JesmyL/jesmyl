@@ -1,5 +1,5 @@
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
-import { ComPlayer } from '$cm/col/com/player/ComPlayer';
+import { CmComAudioPlayer } from 'front/apps/cm/06-entities/com-audio-player/ui/ComPlayer';
 import { useState } from 'react';
 import { HttpLink } from 'shared/api';
 
@@ -21,7 +21,7 @@ export const ComAudioControlledList = ({ srcs, onToggle, icon, isCanDelete }: Pr
             key={src}
             className="com-audio-track flex gap-2 my-2 w-full"
           >
-            <ComPlayer audioLinks={[src]} />
+            <CmComAudioPlayer audioLinks={[src]} />
             {isCanDelete !== false && (
               <TheIconLoading
                 isLoading={tracksInProcess.includes(src)}

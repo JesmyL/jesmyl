@@ -1,7 +1,7 @@
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
-import { cmIDB } from '$cm/basis/lib/store/cmIDB';
 import { useParams } from '@tanstack/react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { cmIDB } from 'front/apps/cm/07-shared/state/cmIDB';
 import { useMemo } from 'react';
 import { CmComWid } from 'shared/api';
 

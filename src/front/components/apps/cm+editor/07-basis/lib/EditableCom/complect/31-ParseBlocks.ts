@@ -1,6 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
-import { INewExportableOrder } from '$cm/col/com/order/Order.model';
 import { makeRegExp } from 'regexpert';
+import { IExportableOrder } from 'shared/api';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { comBlockStyles } from 'shared/values/cm/block-styles/BlockStyles';
 import { StyleBlock } from 'shared/values/cm/block-styles/StyleBlock';
@@ -127,7 +127,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
     const chords: string[] = [];
     const unitSlogGroups = Object.values(slogUnits).sort((a, b) => b.length - a.length);
 
-    const orders: INewExportableOrder[] = [];
+    const orders: IExportableOrder[] = [];
 
     units.forEach((unit, uniti) => {
       if (unit.style === undefined && comBlockStyles) {
@@ -168,7 +168,7 @@ export class EditableComParseBlocks extends EditableComBlocks {
         unit.chordsi = chordsi;
       }
 
-      const ord: INewExportableOrder = { w: wid++ };
+      const ord: IExportableOrder = { w: wid++ };
 
       const similarOrd = orders.find(
         ord => ord.c === unit.chordsi && ord.t === unit.texti && ord.s === unit.style?.key,

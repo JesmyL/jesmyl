@@ -1,8 +1,8 @@
 import { BibleCurrentTextsContext } from '$bible/basis/contexts/CurrentTextsContext';
 import { BibleTranslatesContextProvider } from '$bible/basis/contexts/TranslatesContext';
 import { BibleTranslationCurrentScreen } from '$bible/translations/screen/BibleTranslationCurrentScreen';
-import { CmTranslationCurrentScreen } from '$cm/translation/complect/controlled/screen/CmTranslationCurrentScreen';
 import { useAtomValue } from 'atomaric';
+import { CmTranslationCurrentScreen } from 'front/apps/cm/04-widgets/translation/ui/CmTranslationCurrentScreen';
 import styled, { css } from 'styled-components';
 import { complectIDB } from '../_idb/complectIDB';
 import { AlertLineSlideText } from './controls/alert-line/AlertLineSlideText';

@@ -1,6 +1,6 @@
-import { CmPlayerPage } from '$cm/pages/PlayerPage';
 import { useAuth } from '$index/atoms';
 import { createFileRoute } from '@tanstack/react-router';
+import { CmPlayerPage } from 'front/apps/cm/03-pages/PlayerPage/ui/PlayerPage';
 import { CmComWid } from 'shared/api';
 
 export const Route = createFileRoute('/cm/player/')({

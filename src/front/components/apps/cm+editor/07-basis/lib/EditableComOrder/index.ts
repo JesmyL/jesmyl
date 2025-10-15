@@ -1,21 +1,24 @@
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
-import { Order } from '$cm/col/com/order/Order';
-import { EditableOrderRegion, IExportableOrderMe } from '$cm/col/com/order/Order.model';
+import { CmComOrder } from 'front/apps/cm/06-entities/com-order/lib/Order';
+import {
+  CmComOrderEditableRegion,
+  ICmComOrderExportableMe,
+} from 'front/apps/cm/06-entities/com-order/model/Order.model';
 import { InheritancableOrder, OrderRepeats } from 'shared/api';
 import { EditableCom } from '../EditableCom';
 
-export class EditableComOrder extends Order {
-  _regions?: EditableOrderRegion<EditableComOrder>[];
+export class EditableComOrder extends CmComOrder {
+  _regions?: CmComOrderEditableRegion<EditableComOrder>[];
   com: EditableCom;
 
-  constructor(me: IExportableOrderMe, com: EditableCom) {
+  constructor(me: ICmComOrderExportableMe, com: EditableCom) {
     super(me, com);
     this.com = com;
   }
 
   comOrders = () => this.com.orders;
 
-  get regions(): EditableOrderRegion<EditableComOrder>[] | und {
+  get regions(): CmComOrderEditableRegion<EditableComOrder>[] | und {
     if (this._regions === undefined) this.setRegions();
 
     return this._regions;

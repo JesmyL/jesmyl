@@ -6,10 +6,10 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/basis/lib/atoms/com';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
-import { comPlayerAudioElement } from '$cm/basis/lib/control/current-play-com';
-import { cmIDB } from '$cm/basis/lib/store/cmIDB';
-import { ChordVisibleVariant } from '$cm/Cm.model';
-import { TheOrder } from '$cm/col/com/order/TheOrder';
+import { cmComAudioPlayerHTMLElement } from 'front/apps/cm/06-entities/com-audio-player/state/current-play-com';
+import { TheCmComOrder } from 'front/apps/cm/06-entities/com-order/ui/TheOrder';
+import { ChordVisibleVariant } from 'front/apps/cm/07-shared/model/Cm.model';
+import { cmIDB } from 'front/apps/cm/07-shared/state/cmIDB';
 import { useState } from 'react';
 import { HttpLink } from 'shared/api';
 import { useMakeMarkTitleBySelector } from '../lib/useMakeMarkTitleBySelector';
@@ -35,9 +35,9 @@ export const CmComEditorAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
 
       if (+result < 0) return prev;
 
-      comPlayerAudioElement.pause();
-      comPlayerAudioElement.currentTime = +result;
-      setTimeout(() => comPlayerAudioElement.play(), 500);
+      cmComAudioPlayerHTMLElement.pause();
+      cmComAudioPlayerHTMLElement.currentTime = +result;
+      setTimeout(() => cmComAudioPlayerHTMLElement.play(), 500);
 
       return result;
     });
@@ -59,8 +59,8 @@ export const CmComEditorAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
           <Button
             icon="PlayCircle"
             onClick={() => {
-              comPlayerAudioElement.currentTime = +currentTime;
-              comPlayerAudioElement.play();
+              cmComAudioPlayerHTMLElement.currentTime = +currentTime;
+              cmComAudioPlayerHTMLElement.play();
             }}
           />
           <div>
@@ -107,7 +107,7 @@ export const CmComEditorAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
         </div>
 
         {ord && (
-          <TheOrder
+          <TheCmComOrder
             chordVisibleVariant={ChordVisibleVariant.None}
             com={com}
             ord={ord}

@@ -4,9 +4,9 @@ import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
-import { ChordVisibleVariant } from '$cm/Cm.model';
-import { TheOrder } from '$cm/col/com/order/TheOrder';
 import { atom } from 'atomaric';
+import { TheCmComOrder } from 'front/apps/cm/06-entities/com-order/ui/TheOrder';
+import { ChordVisibleVariant } from 'front/apps/cm/07-shared/model/Cm.model';
 import { OrdersRedactorOrderToolsProps } from '../model';
 
 const isModalOpenAtom = atom(false);
@@ -28,7 +28,7 @@ export const OrdersRedactorOrderToolsChordBind = ({ com, ord, ordi }: OrdersReda
             <b>Устанавливаем Аккорды для блока</b>
             <br />
             <br />
-            <TheOrder
+            <TheCmComOrder
               ord={ord}
               ordi={ordi}
               com={com}

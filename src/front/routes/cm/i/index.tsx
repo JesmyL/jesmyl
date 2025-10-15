@@ -1,10 +1,10 @@
-import { makeCmComNestedRoute } from '$cm/basis/lib/cmComNestedRouteMaker';
-import { useComs } from '$cm/basis/lib/coms-selections';
-import { CmComListContextValue } from '$cm/basis/lib/contexts/current-com-list';
-import { useCat } from '$cm/col/cat/useCcat';
-import { TheAllCatPage } from '$cm/pages/AllCatPage';
-import { cmInitialInvokes } from '$cm/routing/cm-initial-invokes';
+import { useCmCat } from '$cm/entities/cat/lib/useCcat';
+import { useCmComList } from '$cm/entities/com/lib/coms-selections';
+import { CmComListContextValue } from '$cm/entities/com/lib/current-com-list';
 import { createFileRoute } from '@tanstack/react-router';
+import { CmAllCatPage } from 'front/apps/cm/03-pages/AllCatPage/ui/Page';
+import { makeCmComNestedRoute } from 'front/apps/cm/07-shared/lib/cmComNestedRouteMaker';
+import { cmInitialInvokes } from 'front/apps/cm/07-shared/tsjrpc/cm-initial-invokes';
 import { useMemo } from 'react';
 
 export const Route = createFileRoute('/cm/i/')(
@@ -16,12 +16,12 @@ export const Route = createFileRoute('/cm/i/')(
 );
 
 function RouteComponent() {
-  return <TheAllCatPage />;
+  return <CmAllCatPage />;
 }
 
 function useComListPack() {
-  const cat = useCat(0);
-  const coms = useComs();
+  const cat = useCmCat(0);
+  const coms = useCmComList();
 
   return useMemo((): CmComListContextValue => {
     if (cat == null) return { list: [] };

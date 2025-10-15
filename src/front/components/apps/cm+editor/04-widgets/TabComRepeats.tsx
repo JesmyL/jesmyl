@@ -5,10 +5,10 @@ import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { EditableComOrder } from '$cm+editor/basis/lib/EditableComOrder';
 import { IEditableComLineProps } from '$cm+editor/basis/model/Repeats';
 import { CmComRepeatsRemoveButton } from '$cm+editor/entities/ComRepeatsRemoveButton';
-import { ChordVisibleVariant } from '$cm/Cm.model';
-import { ComLine } from '$cm/col/com/line/ComLine';
-import { TheOrder } from '$cm/col/com/order/TheOrder';
 import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
+import { CmComOrderLine } from 'front/apps/cm/06-entities/com-order-line/ui/ComLine';
+import { TheCmComOrder } from 'front/apps/cm/06-entities/com-order/ui/TheOrder';
+import { ChordVisibleVariant } from 'front/apps/cm/07-shared/model/Cm.model';
 import { CSSProperties, useCallback, useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { OrderRepeats } from 'shared/api';
@@ -109,7 +109,7 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
                   }
             }
           >
-            <TheOrder
+            <TheCmComOrder
               chordVisibleVariant={ChordVisibleVariant.None}
               com={ccom}
               ord={ord}
@@ -148,7 +148,7 @@ export const CmEditorTabComRepeats = ({ ccom }: { ccom: EditableCom }) => {
               }}
               asLineComponent={props => {
                 return (
-                  <ComLine
+                  <CmComOrderLine
                     {...props}
                     setWordClass={(props, wordi) => {
                       if (!start) return '';

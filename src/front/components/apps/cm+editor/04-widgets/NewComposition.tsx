@@ -11,12 +11,12 @@ import { ObserveUrlResource } from '$cm+editor/basis/ui/ObserveUrlResource';
 import { NewComNameChange } from '$cm+editor/entities/NameChangeWithCorrects';
 import { CmNewComTextableListRedactor } from '$cm+editor/entities/TextableListRedactor';
 import { ComAudioControlledList } from '$cm+editor/widgets/AudioControlledList';
-import { cmConstantsConfigAtom } from '$cm/basis/lib/store/atoms';
-import { ChordVisibleVariant } from '$cm/Cm.model';
-import { Com } from '$cm/col/com/Com';
-import { ComOrders } from '$cm/col/com/orders/ComOrders';
 import { useNavigate } from '@tanstack/react-router';
 import { Atom, useAtomValue } from 'atomaric';
+import { CmComOrderList } from 'front/apps/cm/06-entities/com-order/ui/ComOrders';
+import { CmCom } from 'front/apps/cm/06-entities/com/lib/Com';
+import { ChordVisibleVariant } from 'front/apps/cm/07-shared/model/Cm.model';
+import { cmConstantsConfigAtom } from 'front/apps/cm/07-shared/state/atoms';
 import { useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmComMod, CmComWid, CmMp3Rule, HttpLink, IExportableCom } from 'shared/api';
@@ -192,9 +192,9 @@ export const NewComposition = ({ openAtom }: { openAtom: Atom<boolean> }) => {
         {newCom.o && (
           <>
             <h2>Порядковые блоки</h2>
-            <ComOrders
+            <CmComOrderList
               chordVisibleVariant={ChordVisibleVariant.None}
-              com={new Com(newCom)}
+              com={new CmCom(newCom)}
             />
           </>
         )}

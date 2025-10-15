@@ -1,5 +1,5 @@
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
-import { Order } from '$cm/col/com/order/Order';
+import { CmComOrder } from 'front/apps/cm/06-entities/com-order/lib/Order';
 import { useState } from 'react';
 import { CmComOrderWid } from 'shared/api';
 
@@ -11,7 +11,7 @@ export const useUpdateLinePositions = () => {
   );
   const [linesOnUpdateSet, setLinesOnUpdateSet] = useState<PRecord<CmComOrderWid, Set<number>>>({});
 
-  const updateLinePositions = (ord: Order, linei: number, pos: number) => {
+  const updateLinePositions = (ord: CmComOrder, linei: number, pos: number) => {
     const key = `${ord.wid}/${linei}` as const;
     const line = [...(ordLinePositionsOnSend[key] ?? ord.positions?.[linei] ?? [])];
 

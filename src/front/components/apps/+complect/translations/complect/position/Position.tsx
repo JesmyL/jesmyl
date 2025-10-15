@@ -1,4 +1,4 @@
-import { useUpdateCmCurrentTranslationConfig } from '$cm/translation/complect/controlled/hooks/update-config';
+import { useCmTranslationUpdateCurrentConfig } from 'front/apps/cm/04-widgets/translation/hooks/update-config';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled, { RuleSet, css } from 'styled-components';
 import { useFixedResizerLines } from '../atoms';
@@ -31,7 +31,7 @@ export const ScreenTranslateCurrentPositionConfigurators = ({
   wrapperRef,
   updateConfig: topUpdateConfig,
 }: Props) => {
-  const currUpdateConfig = useUpdateCmCurrentTranslationConfig();
+  const currUpdateConfig = useCmTranslationUpdateCurrentConfig();
   const updateConfig = topUpdateConfig ?? currUpdateConfig;
 
   const [top, setTop] = useState(config.top);

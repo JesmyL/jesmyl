@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-namespace */
-import('../front/components/apps/cm/col/com/complect/comment-parser/Cleans');
+import('../front/apps/cm/06-entities/com-comment/lib/Cleans');
 
 namespace N6919875af70bbcb2cef09ae314751706_1 {
   type $0 = `${$translate | ''}${$book}${OptRepeatingString<` `>}${$chapter}:${$verseDiapason}`;

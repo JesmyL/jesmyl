@@ -1,9 +1,9 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { BibleTranslatesContextProvider } from '$bible/basis/contexts/TranslatesContext';
-import { FollowTranslationInitialSlide } from '$cm/translation/complect/live/FollowTranslationInitialSlide';
 import { useAuth } from '$index/atoms';
 import { indexIDB } from '$index/db/index-idb';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { CmTranslationFollowInitialSlide } from 'front/apps/cm/05-features/translation/ui/FollowTranslationInitialSlide';
 import { complectIDB } from 'front/components/apps/+complect/_idb/complectIDB';
 import { useScreenTranslationWindows } from 'front/components/apps/+complect/translations/hooks/windows';
 import { useTranslationInitialSlideSet } from 'front/components/apps/+complect/translations/initial-slide-context';
@@ -25,7 +25,7 @@ export const IndexScheduleWidgetTranslations = ({ schw }: { schw: IScheduleWidge
   useEffect(() => {
     if (!schedule) return;
 
-    setInitialSlide(<FollowTranslationInitialSlide schw={schedule.w} />);
+    setInitialSlide(<CmTranslationFollowInitialSlide schw={schedule.w} />);
   }, [schedule, setInitialSlide]);
 
   useEffect(() => {

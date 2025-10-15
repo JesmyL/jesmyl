@@ -1,12 +1,12 @@
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
-import { IExportableOrderMe } from '$cm/col/com/order/Order.model';
+import { ICmComOrderExportableMe } from 'front/apps/cm/06-entities/com-order/model/Order.model';
 import { makeRegExp } from 'regexpert';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
 import { EditableComOrder } from '../EditableComOrder';
 import { EditableComParseBlocks } from './complect/31-ParseBlocks';
 
 export class EditableCom extends EditableComParseBlocks {
-  orderConstructor(me: IExportableOrderMe) {
+  orderConstructor(me: ICmComOrderExportableMe) {
     return new EditableComOrder(me, this);
   }
 

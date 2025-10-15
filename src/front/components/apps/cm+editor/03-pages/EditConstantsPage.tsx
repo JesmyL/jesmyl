@@ -2,8 +2,8 @@ import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { mylib, MyLib } from '#shared/lib/my-lib';
 import { cmEditorClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer';
-import { cmConstantsConfigAtom } from '$cm/basis/lib/store/atoms';
 import { useAtomValue } from 'atomaric';
+import { cmConstantsConfigAtom } from 'front/apps/cm/07-shared/state/atoms';
 import { cmConstantsDefaultConfig } from 'shared/values/cm/cmConstantsDefaultConfig';
 
 export const CmEditConstantsPage = () => {

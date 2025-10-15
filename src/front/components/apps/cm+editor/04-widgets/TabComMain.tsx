@@ -8,10 +8,10 @@ import { cmEditComClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsj
 import { cmEditorIDB } from '$cm+editor/basis/lib/cmEditorIDB';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { TextCorrectMessages } from '$cm+editor/entities/TextBlockIncorrectMessages';
-import { ChordVisibleVariant } from '$cm/Cm.model';
-import { TheCom } from '$cm/col/com/TheCom';
 import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { useAtomSet } from 'atomaric';
+import { TheCmCom } from 'front/apps/cm/04-widgets/com/ui/TheCom';
+import { ChordVisibleVariant } from 'front/apps/cm/07-shared/model/Cm.model';
 import { useState } from 'react';
 import { emptyFunc } from 'shared/utils';
 import { CmComUtils } from 'shared/utils/cm/ComUtils';
@@ -30,7 +30,7 @@ export const CmEditorTabComMain = ({ ccom }: { ccom: EditableCom }) => {
   const nameCorrects = CmComUtils.takeTextBlockIncorrects(name, eeStore);
 
   const comNode = (
-    <TheCom
+    <TheCmCom
       com={ccom}
       chordVisibleVariant={ChordVisibleVariant.Maximal}
       isMiniAnchor={false}

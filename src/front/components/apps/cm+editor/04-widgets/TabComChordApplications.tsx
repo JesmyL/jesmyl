@@ -2,11 +2,11 @@ import { StyledLoadingSpinner } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
 import { useUpdateLinePositions } from '$cm+editor/basis/lib/hooks/useUpdateChordLinePositions';
-import { ChordVisibleVariant } from '$cm/Cm.model';
-import { ComLine } from '$cm/col/com/line/ComLine';
-import { TheOrder } from '$cm/col/com/order/TheOrder';
-import { TheCom } from '$cm/col/com/TheCom';
 import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
+import { TheCmCom } from 'front/apps/cm/04-widgets/com/ui/TheCom';
+import { CmComOrderLine } from 'front/apps/cm/06-entities/com-order-line/ui/ComLine';
+import { TheCmComOrder } from 'front/apps/cm/06-entities/com-order/ui/TheOrder';
+import { ChordVisibleVariant } from 'front/apps/cm/07-shared/model/Cm.model';
 import React from 'react';
 import { makeRegExp } from 'regexpert';
 import { emptyArray, itIt } from 'shared/utils';
@@ -18,7 +18,7 @@ export const CmEditorTabComChordApplications = ({ ccom }: { ccom: EditableCom })
 
   if (!checkAccess('cm', 'COM_APPS', 'U'))
     return (
-      <TheCom
+      <TheCmCom
         com={ccom}
         chordVisibleVariant={ChordVisibleVariant.Maximal}
         isMiniAnchor={false}
@@ -33,7 +33,7 @@ export const CmEditorTabComChordApplications = ({ ccom }: { ccom: EditableCom })
 
         return (
           <React.Fragment key={ordi}>
-            <TheOrder
+            <TheCmComOrder
               ord={ord}
               ordi={ordi}
               chordVisibleVariant={ChordVisibleVariant.Maximal}
@@ -59,7 +59,7 @@ export const CmEditorTabComChordApplications = ({ ccom }: { ccom: EditableCom })
                       com-letter-chorded="pre"
                       onClick={() => updateLinePositions(ord, textLinei, -1)}
                     />
-                    <ComLine
+                    <CmComOrderLine
                       key={textLinei}
                       {...props}
                       chordedOrd

@@ -1,8 +1,8 @@
-import { useSelectedComs } from '$cm/base/useSelectedComs';
-import { makeCmComNestedRoute } from '$cm/basis/lib/cmComNestedRouteMaker';
-import { CmComListContextValue } from '$cm/basis/lib/contexts/current-com-list';
-import { SelectedComs } from '$cm/pages/SelectedComsPage';
+import { CmComListContextValue } from '$cm/entities/com/lib/current-com-list';
 import { createFileRoute } from '@tanstack/react-router';
+import { CmSelectedComs } from 'front/apps/cm/03-pages/SelectedComsPage/ui/SelectedComsPage';
+import { useCmComSelectedList } from 'front/apps/cm/06-entities/com/lib/useSelectedComs';
+import { makeCmComNestedRoute } from 'front/apps/cm/07-shared/lib/cmComNestedRouteMaker';
 import { useMemo } from 'react';
 
 export const Route = createFileRoute('/cm/li/sel')(
@@ -14,11 +14,11 @@ export const Route = createFileRoute('/cm/li/sel')(
 );
 
 function RouteComponent() {
-  return <SelectedComs />;
+  return <CmSelectedComs />;
 }
 
 function useComListPack(): CmComListContextValue {
-  const list = useSelectedComs().selectedComs;
+  const list = useCmComSelectedList().selectedComs;
 
   return useMemo(() => {
     return {

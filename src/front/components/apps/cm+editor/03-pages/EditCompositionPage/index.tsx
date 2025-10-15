@@ -11,12 +11,12 @@ import {
 } from '$cm+editor/entities/EditCompositionBusyInfo';
 import { editCompositionNavs } from '$cm+editor/pages/EditCompositionPage/lib/tabs.config';
 import { useCmComEditorTrySendAudioMarks } from '$cm+editor/widgets/TabComAudioMarks/api/useCmComEditorTrySendAudioMarks';
-import { CmComNumber } from '$cm/col/com/complect/ComNumber';
-import { ComPlayer } from '$cm/col/com/player/ComPlayer';
 import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { useConnectionState } from '$index/useConnectionState';
 import { Link, useNavigate, useParams } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
+import { CmComAudioPlayer } from 'front/apps/cm/06-entities/com-audio-player/ui/ComPlayer';
+import { CmComNumber } from 'front/apps/cm/06-entities/com/ui/ComNumber';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -126,7 +126,7 @@ export const CmEditCompositionPage = () => {
 
           {isOpenPlayer && !!ccom.audio?.length && (
             <div className="sticky com-player">
-              <ComPlayer audioLinks={ccom.audio} />
+              <CmComAudioPlayer audioLinks={ccom.audio} />
             </div>
           )}
           <StyledOutlet>{TabComponent && <TabComponent ccom={ccom} />}</StyledOutlet>

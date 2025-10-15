@@ -1,11 +1,11 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { translationBlockAtom } from '$cm/atoms';
-import { useCcom } from '$cm/basis/lib/com-selections';
-import { CmTranslationControlled } from '$cm/translation/complect/controlled/CmTranslationControlled';
-import { useCmScreenTranslationConfigs } from '$cm/translation/complect/controlled/hooks/configs';
-import { useCmScreenTranslationComNavigations } from '$cm/translation/complect/hooks/com-navigation';
+import { useCmComCurrent } from '$cm/entities/com/lib/com-selections';
+import { cmTranslationBlockAtom } from '$cm/entities/translation/state/atoms';
 import { IndexSchWTranslationLiveDataValue } from '$index/Index.model';
 import { useAtomValue } from 'atomaric';
+import { useCmTranslationScreenConfigs } from 'front/apps/cm/04-widgets/translation/hooks/configs';
+import { CmTranslationControlled } from 'front/apps/cm/04-widgets/translation/ui/CmTranslationControlled';
+import { useCmTranslationScreenComNavigations } from 'front/apps/cm/05-features/translation/lib/com-navigation';
 import { useSwitchCurrentTranslationTextApp } from 'front/components/apps/+complect/translations/hooks/current-app';
 import { useEffect } from 'react';
 import { schLiveTsjrpcClient } from './live.tsjrpc';
@@ -17,11 +17,11 @@ export const ScheduleWidgetLiveCmTranslations = ({
   headTitle,
   schedule,
 }: LiveTranslationAppProps) => {
-  const ccom = useCcom();
-  const [config] = useCmScreenTranslationConfigs();
+  const ccom = useCmComCurrent();
+  const [config] = useCmTranslationScreenConfigs();
   const switchCurrApp = useSwitchCurrentTranslationTextApp();
-  const currTexti = useAtomValue(translationBlockAtom);
-  const { coms } = useCmScreenTranslationComNavigations();
+  const currTexti = useAtomValue(cmTranslationBlockAtom);
+  const { coms } = useCmTranslationScreenComNavigations();
 
   useEffect(() => {
     if (isCantTranslateLive || !ccom) return;

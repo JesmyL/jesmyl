@@ -7,8 +7,8 @@ import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheButton } from '#shared/ui/TheButton';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { EditableComOrder } from '$cm+editor/basis/lib/EditableComOrder';
-import { Order } from '$cm/col/com/order/Order';
 import { atom } from 'atomaric';
+import { CmComOrder } from 'front/apps/cm/06-entities/com-order/lib/Order';
 import { makeRegExp } from 'regexpert';
 import { OrderRepeats } from 'shared/api';
 
@@ -66,7 +66,7 @@ export const CmComRepeatsRemoveButton = ({ isChordBlock, startOrd, ord, textLine
               const { startLinei, startWordi, endLinei, endWordi, startOrd, endOrd, startKey, count } = flash;
 
               const fill = (
-                ord?: Order | null,
+                ord?: CmComOrder | null,
                 l?: number | nil,
                 w?: number | nil,
                 isBeg?: boolean,

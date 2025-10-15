@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const CoderResultNameStyled = styled.span`
+export const StyledCoderResultName = styled.span`
   & {
     flex-wrap: nowrap;
     color: #bc81a0;

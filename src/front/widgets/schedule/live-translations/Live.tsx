@@ -4,11 +4,11 @@ import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { BibleTranslationSlide } from '$bible/translations/BibleTranslationSlide';
-import { CmLiveTranslationScreen } from '$cm/translation/complect/live/Screen';
 import { liveDataAtom, liveDataStreamersAtom } from '$index/atoms';
 import { schLiveTsjrpcBaseClient, schLiveTsjrpcClient } from '$index/complect/translations/live.tsjrpc';
 import { useConnectionState } from '$index/useConnectionState';
 import { atom, useAtomValue } from 'atomaric';
+import { CmTranslationLiveScreen } from 'front/apps/cm/05-features/translation/ui/Screen';
 import { ScreenTranslationControlPanelShowMdButton } from 'front/components/apps/+complect/translations/controls/ShowMdButton';
 import { useEffect, useState } from 'react';
 import { IScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
@@ -76,7 +76,7 @@ export const ScheduleWidgetLiveTranslation = ({ schw, isShowMarkdownOnly }: Prop
               <ScreenTranslationControlPanelShowMdButton />
             </div>
           ) : liveData.cm !== undefined ? (
-            <CmLiveTranslationScreen {...liveData.cm} />
+            <CmTranslationLiveScreen {...liveData.cm} />
           ) : liveData.bible !== undefined ? (
             <BibleTranslationSlide {...liveData.bible} />
           ) : null}

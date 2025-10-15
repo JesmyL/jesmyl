@@ -5,9 +5,9 @@ import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
-import { ChordVisibleVariant } from '$cm/Cm.model';
-import { TheOrder } from '$cm/col/com/order/TheOrder';
 import { atom } from 'atomaric';
+import { TheCmComOrder } from 'front/apps/cm/06-entities/com-order/ui/TheOrder';
+import { ChordVisibleVariant } from 'front/apps/cm/07-shared/model/Cm.model';
 import { OrdersRedactorOrderToolsProps } from '../model';
 
 const intervals = '.'
@@ -30,7 +30,7 @@ export const OrdersRedactorOrderToolsModulation = ({ com, ord, ordi }: OrdersRed
       <Modal openAtom={isModalOpenAtom}>
         <ModalHeader>Установка значения модуляции</ModalHeader>
         <ModalBody>
-          <TheOrder
+          <TheCmComOrder
             ord={ord}
             ordi={ordi}
             chordVisibleVariant={ChordVisibleVariant.Maximal}

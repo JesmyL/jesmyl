@@ -7,10 +7,10 @@ import { removedCategoriesAtom } from '$cm+editor/basis/lib/atoms/cat';
 import { cmEditCatClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { useEditableCcat } from '$cm+editor/basis/lib/hooks/useEditableCat';
 import { PageCmEditorContainer } from '$cm+editor/basis/ui/PageCmEditorContainer';
-import { catTrackers } from '$cm/col/cat/useCatSpecialSearches';
-import { ComFaceList } from '$cm/col/com/face/list/ComFaceList';
+import { cmCatTrackers } from '$cm/entities/cat/lib/useCatSpecialSearches';
 import { useParams } from '@tanstack/react-router';
 import { useAtom } from 'atomaric';
+import { CmComFaceList } from 'front/apps/cm/06-entities/com-face/ui/ComFaceList';
 import { useState } from 'react';
 import { CmCatWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
@@ -61,7 +61,7 @@ export const EditCategoryPage = () => {
             <div className="w-[50%]">
               <Dropdown
                 id={ccat.kind}
-                items={catTrackers}
+                items={cmCatTrackers}
                 onSelect={kind => {
                   cmEditCatClientTsjrpcMethods.setKind({ catw: ccat.wid, kind: kind.id });
                 }}
@@ -98,7 +98,7 @@ export const EditCategoryPage = () => {
           </div>
           {isShowComs ? (
             <LoadIndicatedContent isLoading={!ccat.coms.length}>
-              <ComFaceList
+              <CmComFaceList
                 list={ccat.coms}
                 importantOnClick={emptyFunc}
               />

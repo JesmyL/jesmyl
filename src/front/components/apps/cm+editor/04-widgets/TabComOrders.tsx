@@ -8,9 +8,9 @@ import { CmComOrderOnClickBetweenData } from '$cm+editor/basis/model/Orders';
 import { OrdersRedactorAdditions } from '$cm+editor/features/EditOrderAddBlock';
 import { OrdersRedactorOrderTools } from '$cm+editor/features/EditOrderTools';
 import { OrdersRedactorOrderToolsProps } from '$cm+editor/features/EditOrderTools/model';
-import { ChordVisibleVariant } from '$cm/Cm.model';
-import { TheOrder } from '$cm/col/com/order/TheOrder';
 import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
+import { TheCmComOrder } from 'front/apps/cm/06-entities/com-order/ui/TheOrder';
+import { ChordVisibleVariant } from 'front/apps/cm/07-shared/model/Cm.model';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
@@ -116,7 +116,7 @@ export const CmEditorTabComOrders = ({ ccom }: { ccom: EditableCom }) => {
                 )}
               </div>
 
-              <TheOrder
+              <TheCmComOrder
                 ord={ord}
                 ordi={ordi}
                 com={ccom}

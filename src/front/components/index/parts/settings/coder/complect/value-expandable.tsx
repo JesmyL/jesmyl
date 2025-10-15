@@ -3,7 +3,7 @@ import { useIsRememberExpand } from '#shared/ui/expand/useIsRememberExpand';
 import { makeToastKOMoodConfig } from '#shared/ui/modal/toast.configs';
 import { ReactNode } from 'react';
 import { toast } from 'sonner';
-import { CoderResultNameStyled } from './styles';
+import { StyledCoderResultName } from './styles';
 
 interface Props {
   shortValue: string;
@@ -26,7 +26,7 @@ export const CoderValueExpandable = ({ shortValue, fullValue, name, onCopy, scop
       >
         {name != null && (
           <span>
-            <CoderResultNameStyled>{name}: </CoderResultNameStyled>
+            <StyledCoderResultName>{name}: </StyledCoderResultName>
           </span>
         )}
         {isExpand

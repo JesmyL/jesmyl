@@ -6,9 +6,9 @@ import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/basis/lib/cm-editor.tsjrpc.methods';
 import { EditableCom } from '$cm+editor/basis/lib/EditableCom';
-import { ChordVisibleVariant } from '$cm/Cm.model';
-import { ComOrders } from '$cm/col/com/orders/ComOrders';
 import { atom } from 'atomaric';
+import { CmComOrderList } from 'front/apps/cm/06-entities/com-order/ui/ComOrders';
+import { ChordVisibleVariant } from 'front/apps/cm/07-shared/model/Cm.model';
 import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
@@ -65,7 +65,7 @@ export const CmComEditTransposition = ({ ccom }: { ccom: EditableCom }) => {
               />
             );
           })}
-          <ComOrders
+          <CmComOrderList
             com={ccom}
             chordVisibleVariant={ChordVisibleVariant.Maximal}
           />

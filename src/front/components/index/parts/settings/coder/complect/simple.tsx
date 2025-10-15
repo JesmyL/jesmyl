@@ -1,13 +1,13 @@
 import { mylib } from '#shared/lib/my-lib';
 import { CopyTextButton } from '#shared/ui/CopyTextButton';
 import styled from 'styled-components';
-import { CoderResultNameStyled } from './styles';
+import { StyledCoderResultName } from './styles';
 
 export const CoderResultSimple = ({ name, value }: { value: unknown; name?: string | number }) => (
   <span className="flex gap-2">
     {name == null ? null : (
       <span>
-        <CoderResultNameStyled>{name}: </CoderResultNameStyled>
+        <StyledCoderResultName>{name}: </StyledCoderResultName>
       </span>
     )}
     {value instanceof Error ? (

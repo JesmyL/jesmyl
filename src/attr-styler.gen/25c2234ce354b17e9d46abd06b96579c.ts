@@ -1,4 +1,4 @@
-import('../front/components/apps/cm/col/com/line/StyledComLine.styler');
+import('../front/apps/cm/06-entities/com-order-line/style/StyledComLine.styler');
 
 import 'react';
 
@@ -11,4 +11,3 @@ declare module 'react' {
     'com-word-index'?: number | string;
   }
 }
-
