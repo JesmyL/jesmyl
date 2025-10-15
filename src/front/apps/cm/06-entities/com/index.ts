@@ -1,3 +1,5 @@
+export * from './ui/CmComListSearchFilterInput';
+
 export * from './lib/Com';
 export * from './lib/com-selections';
 export * from './lib/coms-selections';

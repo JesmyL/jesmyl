@@ -1,12 +1,12 @@
+import { useScreenTranslationWindows } from '#features/translations/hooks/windows';
+import { useTranslationInitialSlideSet } from '#features/translations/initial-slide-context';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { BibleTranslatesContextProvider } from '$bible/basis/contexts/TranslatesContext';
+import { CmTranslationFollowInitialSlide } from '$cm/features/translation/ui/FollowTranslationInitialSlide';
 import { useAuth } from '$index/atoms';
 import { indexIDB } from '$index/db/index-idb';
+import { complectIDB } from '$index/state/complectIDB';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { CmTranslationFollowInitialSlide } from 'front/apps/cm/05-features/translation/ui/FollowTranslationInitialSlide';
-import { complectIDB } from 'front/components/apps/+complect/_idb/complectIDB';
-import { useScreenTranslationWindows } from 'front/components/apps/+complect/translations/hooks/windows';
-import { useTranslationInitialSlideSet } from 'front/components/apps/+complect/translations/initial-slide-context';
 import { useEffect, useState } from 'react';
 import { IScheduleWidgetWid } from 'shared/api';
 import { itNNull } from 'shared/utils';

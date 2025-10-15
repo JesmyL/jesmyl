@@ -1,13 +1,13 @@
-import { bibleIDB } from '$bible/basis/lib/store/bibleIDB';
 import {
   defaultScreenTranslationBackgroundConfig,
   defaultScreenTranslationPositionConfig,
   defaultScreenTranslationTextConfig,
-} from 'front/components/apps/+complect/translations/complect/defaults';
+} from '#features/translations/complect/defaults';
 import {
   useMakeScreenTranslationConfigsFillPack,
   useScreenTranslationCurrentConfigi,
-} from 'front/components/apps/+complect/translations/hooks/configs';
+} from '#features/translations/hooks/configs';
+import { bibleIDB } from '$bible/basis/lib/store/bibleIDB';
 import { BibleTranslationScreenConfig } from '../model';
 
 export const defaultBibleConfig: BibleTranslationScreenConfig = {

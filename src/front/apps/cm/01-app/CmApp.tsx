@@ -14,7 +14,9 @@ import React, { memo, Suspense, useEffect, useState } from 'react';
 import { CmComWid } from 'shared/api';
 import { toast } from 'sonner';
 
-const CmEditorPage = React.lazy(() => import('$cm+editor/app/EditorPage').then(m => ({ default: m.CmEditorPage })));
+const CmEditorPage = React.lazy(() =>
+  import('front/apps/cm+editor/01-app/EditorPage').then(m => ({ default: m.CmEditorPage })),
+);
 const comListOnActionAtom = atom<CmComWid[] | null>(null);
 
 export const CmApp = () => {

@@ -1,6 +1,6 @@
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { JSX, memo } from 'react';
-import { ScreenTranslationsFaceLine } from '../../+complect/translations/complect/config-line/FaceLine';
+import { ScreenTranslationsFaceLine } from '../../../../features/translations/complect/config-line/FaceLine';
 import { BibleTranslateCurrentScreenConfigurations } from './CurrentConfigs';
 import { useBibleScreenTranslationCurrentConfig } from './hooks/configs';
 import { useUpdateBibleCurrentTranslationConfig } from './hooks/update-config';

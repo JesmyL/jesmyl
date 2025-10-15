@@ -2,7 +2,7 @@ import { BibleTranslationAnyAddress } from '$bible/basis/model/base';
 import { useBibleTranslationAddToHistory } from '$bible/translations/archive/history/hooks/history';
 import { atom, useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
-import { useSetIsScreenTranslationTextVisible } from '../../../../+complect/translations/atoms';
+import { useSetIsScreenTranslationTextVisible } from '../../../../../../features/translations/atoms';
 import { bibleBookiAtom, bibleChapteriAtom, bibleJoinAddressAtom, bibleVerseiAtom } from '../store/atoms';
 
 const showAddressCodeAtom = atom<BibleTranslationAnyAddress | nil>(null);

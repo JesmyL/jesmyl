@@ -1,0 +1,97 @@
+import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
+import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
+import { CmEditorCat } from '$cm+editor/entities/cat';
+import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
+import { cmEditCatClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
+import { cmIDB } from '$cm/ext';
+import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
+import { useLiveQuery } from 'dexie-react-hooks';
+import React, { useMemo } from 'react';
+import { makeRegExp } from 'regexpert';
+
+export const CmEditorComTabCategoryBinds = ({ ccom }: { ccom: EditableCom }) => {
+  const icats = useLiveQuery(() => cmIDB.db.cats.toArray());
+  const cats = useMemo(() => icats?.map(icat => new CmEditorCat(icat, [])), [icats]);
+  const checkAccess = useCheckUserAccessRightsInScope();
+
+  if (cats == null) return null;
+
+  return (
+    <>
+      <div className="cat-list-title">Сборники</div>
+      {cats.map(cat => {
+        return cat.kind !== 'dict' ? null : (
+          <React.Fragment key={cat.wid}>
+            <InputWithLoadingIcon
+              icon="BookOpen02"
+              label={cat.name}
+              type="tel"
+              className="bg-x1!"
+              disabled={!checkAccess('cm', 'COM_CAT', 'U')}
+              defaultValue={`${cat.dict?.[ccom.wid] || ''}`}
+              onChanged={value => {
+                if (!+value) {
+                  return cmEditCatClientTsjrpcMethods.removeNativeComNum({ comw: ccom.wid, catw: cat.wid });
+                }
+
+                if (value.match(makeRegExp('/\\D/'))) return Promise.reject();
+
+                return cmEditCatClientTsjrpcMethods.setNativeComNum({
+                  comw: ccom.wid,
+                  catw: cat.wid,
+                  value: +value,
+                });
+              }}
+            />
+            {cat.dict?.[ccom.wid] != null && (
+              <TheIconButton
+                icon="Cancel01"
+                postfix={isNaN(cat.dict?.[ccom.wid as never]) ? 'Корректно очистить' : 'Удалить'}
+                confirm={`Очистить номер из сборника ${cat.name}?`}
+                className="pointer text-xKO ml-5 mb-2"
+                disabled={!checkAccess('cm', 'COM_CAT', 'U')}
+                disabledReason="Заперщено"
+                onClick={() =>
+                  cmEditCatClientTsjrpcMethods.removeNativeComNum({
+                    comw: ccom.wid,
+                    catw: cat.wid,
+                  })
+                }
+              />
+            )}
+          </React.Fragment>
+        );
+      })}
+      <div className="cat-list-title">Списки</div>
+      {cats.map(cat => {
+        return (
+          cat.kind !== 'list' || (
+            <div
+              key={cat.wid}
+              className="my-5"
+            >
+              <IconCheckbox
+                prefix={
+                  <>
+                    <LazyIcon icon="ListView" />
+                    <span>{cat.name} </span>
+                  </>
+                }
+                checked={cat.stack?.some(comw => ccom.wid === comw)}
+                disabled={!checkAccess('cm', 'COM_CAT', 'U')}
+                onClick={() =>
+                  cmEditCatClientTsjrpcMethods.toggleComExistence({
+                    comw: ccom.wid,
+                    catw: cat.wid,
+                  })
+                }
+              />
+            </div>
+          )
+        );
+      })}
+    </>
+  );
+};

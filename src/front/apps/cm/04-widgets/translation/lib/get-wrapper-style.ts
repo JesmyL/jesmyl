@@ -1,4 +1,4 @@
-import { useScreenTranslationBackgroundStyles } from 'front/components/apps/+complect/translations/complect/hooks/background-styles';
+import { useScreenTranslationBackgroundStyles } from '#features/translations/complect/hooks/background-styles';
 import { CSSProperties, useMemo } from 'react';
 import { CmTranslationScreenConfig } from '../model/model';
 

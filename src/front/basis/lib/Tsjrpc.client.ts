@@ -1,5 +1,5 @@
-import { environment } from 'front/environment';
-import { soki } from 'front/soki';
+import { environment } from '#shared/environment';
+import { soki } from '#shared/soki';
 import { TsjrpcClientTool } from 'shared/api';
 import { makeTSJRPCMethodsMaker } from 'tsjrpc';
 

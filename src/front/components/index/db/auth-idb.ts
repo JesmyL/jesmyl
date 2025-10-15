@@ -1,5 +1,5 @@
+import { environment } from '#shared/environment';
 import { DexieDB } from '#shared/lib/DexieDB';
-import { environment } from 'front/environment';
 import { LocalSokiAuth } from 'shared/api';
 
 interface Storage {

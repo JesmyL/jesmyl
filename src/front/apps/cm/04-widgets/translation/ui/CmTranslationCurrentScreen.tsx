@@ -1,13 +1,13 @@
+import { useIsScreenTranslationTextVisible } from '#features/translations/atoms';
+import {
+  useGetScreenTranslationConfig,
+  useScreenTranslationCurrentConfigi,
+} from '#features/translations/hooks/configs';
+import { TranslationScreenProps } from '#features/translations/Translations.model';
 import { FontSizeContainProps } from '#shared/ui/font-size-contain/FontSizeContain.model';
 import { cmTranslationBlockAtom } from '$cm/entities/translation';
 import { useCmTranslationCurrentComTexts } from '$cm/features/translation';
 import { useAtomValue } from 'atomaric';
-import { useIsScreenTranslationTextVisible } from 'front/components/apps/+complect/translations/atoms';
-import {
-  useGetScreenTranslationConfig,
-  useScreenTranslationCurrentConfigi,
-} from 'front/components/apps/+complect/translations/hooks/configs';
-import { TranslationScreenProps } from 'front/components/apps/+complect/translations/Translations.model';
 import { useCmTranslationScreenConfig } from '../hooks/configs';
 import { useCmTranslationScreenWinResizeListen } from '../lib/win-resize-lesten';
 import { CmTranslationScreen } from './CmTranslationScreen';

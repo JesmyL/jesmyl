@@ -1,4 +1,4 @@
-import('../front/styleds/complect/styles.styler');
+import('../front/shared/style/complect/styles.styler');
 
 import 'react';
 
@@ -8,4 +8,3 @@ declare module 'react' {
     'st-no-scrollbar'?: '';
   }
 }
-

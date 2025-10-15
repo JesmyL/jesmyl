@@ -3,7 +3,7 @@ import {
   ScreenTranslationPositionConfig,
   ScreenTranslationSimpleTextConfig,
   ScreenTranslationTextConfig,
-} from '../../+complect/translations/complect/model';
+} from '../../../../features/translations/complect/model';
 
 export interface BibleTranslationScreenConfig extends BackgroundConfigProps, ScreenTranslationTextConfig {
   addressPanel: ScreenTranslationPositionConfig;

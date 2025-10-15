@@ -1,12 +1,11 @@
+import { useSwitchCurrentTranslationTextApp } from '#features/translations/hooks/current-app';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useCmComCurrent } from '$cm/entities/com/lib/com-selections';
 import { cmTranslationBlockAtom } from '$cm/entities/translation/state/atoms';
+import { useCmTranslationScreenComNavigations } from '$cm/features/translation';
+import { CmTranslationControlled, useCmTranslationScreenConfigs } from '$cm/widgets/translation';
 import { IndexSchWTranslationLiveDataValue } from '$index/Index.model';
 import { useAtomValue } from 'atomaric';
-import { useCmTranslationScreenConfigs } from 'front/apps/cm/04-widgets/translation/hooks/configs';
-import { CmTranslationControlled } from 'front/apps/cm/04-widgets/translation/ui/CmTranslationControlled';
-import { useCmTranslationScreenComNavigations } from 'front/apps/cm/05-features/translation/lib/com-navigation';
-import { useSwitchCurrentTranslationTextApp } from 'front/components/apps/+complect/translations/hooks/current-app';
 import { useEffect } from 'react';
 import { schLiveTsjrpcClient } from './live.tsjrpc';
 import { LiveTranslationAppProps } from './model';

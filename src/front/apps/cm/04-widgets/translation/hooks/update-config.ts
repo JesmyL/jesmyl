@@ -1,5 +1,5 @@
+import { useScreenTranslationCurrentConfigi } from '#features/translations/hooks/configs';
 import { cmIDB } from '$cm/shared/state';
-import { useScreenTranslationCurrentConfigi } from 'front/components/apps/+complect/translations/hooks/configs';
 import { useCallback } from 'react';
 import { CmTranslationScreenConfig } from '../model/model';
 import { cmTranslationDefaultConfig } from './configs';

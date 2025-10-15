@@ -1,4 +1,4 @@
-import { cmEditorInitialInvokes } from '$cm+editor/processes/cm+editor-initial-invokes';
+import { cmEditorInitialInvokes } from '$cm+editor/shared/lib/cm+editor-initial-invokes';
 import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { createLazyFileRoute, Outlet } from '@tanstack/react-router';
 

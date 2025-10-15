@@ -10,7 +10,7 @@ import { OpacityConfigurator } from '#shared/ui/configurators/Opacity';
 import { ScreenTranslateConfigurationTextAlign } from '#shared/ui/configurators/TextAlign';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { useCallback } from 'react';
-import { ScreenTranslateConfigurationNameChanger } from '../../+complect/translations/complect/NameChanger';
+import { ScreenTranslateConfigurationNameChanger } from '../../../../features/translations/complect/NameChanger';
 import { useUpdateBibleCurrentTranslationConfig } from './hooks/update-config';
 import { BibleTranslationScreenConfig } from './model';
 

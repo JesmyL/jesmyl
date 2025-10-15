@@ -1,10 +1,10 @@
 import { Dialog } from '#shared/components/ui/dialog';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
+import { TrustChildrenCheckType } from '#shared/model/TrustChildrenCheckType';
 import { Portal } from '#shared/ui/Portal';
 import { RootAnchoredContent } from '#shared/ui/RootAnchoredContent';
 import { Atom, useAtomValue } from 'atomaric';
-import { TrustChildrenCheckType } from 'front/types/TrustChildrenCheckType';
 import { useEffect } from 'react';
 import { StyledModalScreen, StyledModalScreenWrapper } from '../styled';
 

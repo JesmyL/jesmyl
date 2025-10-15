@@ -1,4 +1,4 @@
-import { useScreenTranslationCurrentConfigi } from 'front/components/apps/+complect/translations/hooks/configs';
+import { useScreenTranslationCurrentConfigi } from '#features/translations/hooks/configs';
 import { useCallback } from 'react';
 import { BibleTranslationScreenConfig } from '../model';
 import { defaultBibleConfig, useBibleScreenTranslationConfigsSet } from './configs';

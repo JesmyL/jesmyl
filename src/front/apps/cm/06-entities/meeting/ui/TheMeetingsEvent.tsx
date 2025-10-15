@@ -3,7 +3,7 @@ import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContaine
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ScheduleWidgetWatchLiveTranslationButton } from '#widgets/schedule/live-translations/WatchLiveButton';
 import { ScheduleDayEventPathProps } from '#widgets/schedule/ScheduleWidget.model';
-import { CmMeetingEventEdits } from '$cm+editor/entities/meetings/EventEdits';
+import { CmEditorMeetingEventEdits } from '$cm+editor/ext';
 import { useCmComOpenComLinkRendererContext } from '$cm/entities/com';
 import { useAuth } from '$index/atoms';
 import { indexIDB } from '$index/db/index-idb';
@@ -57,7 +57,7 @@ export const CmMeetingEvent = ({ dayi, eventMi, schw }: Props) => {
             })
           ) : null}
           {checkAccess('cm', 'EVENT', 'U') && (
-            <CmMeetingEventEdits
+            <CmEditorMeetingEventEdits
               packComws={packComws}
               dayi={dayi}
               eventMi={eventMi}

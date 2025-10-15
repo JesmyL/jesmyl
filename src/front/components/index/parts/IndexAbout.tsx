@@ -1,6 +1,5 @@
 import { useIndexValuesQuery } from '#basis/api/useIndexValuesQuery';
 import { propagationStopper } from '#shared/lib/event-funcs';
-
 import { QRCode } from '#shared/ui/qr-code/QRCode';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
@@ -9,9 +8,11 @@ import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
 import { useConnectionState, useIsOnline } from '$index/useConnectionState';
 import { useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'atomaric';
-import { checkIsThereNewSWAtom, reloadSW } from 'front/sw-register';
 import { useEffect, useState } from 'react';
 import { jversion } from 'shared/values';
+
+// eslint-disable-next-line front-import-aliases/check
+import { checkIsThereNewSWAtom, reloadSW } from 'front/sw-register';
 
 export function IndexAbout() {
   const [cacheNames, setCacheNames] = useState<string[]>([]);

@@ -1,3 +1,4 @@
+import { TranslationSlidePreview } from '#features/translations/controls/Preview';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { CmCom, useCmComOpenComLinkRendererContext } from '$cm/entities/com';
 import { CmComFaceList } from '$cm/entities/com-face';
@@ -7,7 +8,6 @@ import {
   useCmTranslationScreenComTextNavigations,
 } from '$cm/features/translation';
 import { useAtom } from 'atomaric';
-import { TranslationSlidePreview } from 'front/components/apps/+complect/translations/controls/Preview';
 import { ReactNode } from 'react';
 import { itNIt } from 'shared/utils';
 import styled from 'styled-components';

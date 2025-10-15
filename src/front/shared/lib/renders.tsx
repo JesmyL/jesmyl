@@ -1,5 +1,5 @@
-import { StyledGlobalStyles } from 'front/styleds/styledGlobalStyles';
-import { styledDefaultTheme } from 'front/styleds/styledTheme';
+import { StyledGlobalStyles } from '#shared/style/styledGlobalStyles';
+import { styledDefaultTheme } from '#shared/style/styledTheme';
 import { ReactNode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { StyleSheetManager, ThemeProvider } from 'styled-components';

@@ -1,10 +1,10 @@
 import { useCmCat } from '$cm/entities/cat/lib/useCcat';
 import { useCmComList } from '$cm/entities/com/lib/coms-selections';
 import { CmComListContextValue } from '$cm/entities/com/lib/current-com-list';
+import { CmAllCatPage } from '$cm/pages/AllCatPage';
+import { makeCmComNestedRoute } from '$cm/shared/lib';
+import { cmInitialInvokes } from '$cm/shared/tsjrpc';
 import { createFileRoute } from '@tanstack/react-router';
-import { CmAllCatPage } from 'front/apps/cm/03-pages/AllCatPage/ui/Page';
-import { makeCmComNestedRoute } from 'front/apps/cm/07-shared/lib/cmComNestedRouteMaker';
-import { cmInitialInvokes } from 'front/apps/cm/07-shared/tsjrpc/cm-initial-invokes';
 import { useMemo } from 'react';
 
 export const Route = createFileRoute('/cm/i/')(

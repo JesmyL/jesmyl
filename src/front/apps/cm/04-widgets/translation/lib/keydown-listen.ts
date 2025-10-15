@@ -1,9 +1,9 @@
+import { useScreenTranslationWindows } from '#features/translations/hooks/windows';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import {
   useCmTranslationScreenComNavigations,
   useCmTranslationScreenComTextNavigations,
 } from '$cm/features/translation';
-import { useScreenTranslationWindows } from 'front/components/apps/+complect/translations/hooks/windows';
 import { useEffect } from 'react';
 
 const win = { win: window };

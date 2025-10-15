@@ -1,6 +1,6 @@
+import { soki } from '#shared/soki';
 import { bibleMyTranslatesAtom } from '$bible/basis/lib/store/atoms';
 import { bibleTranslatesIDB } from '$bible/basis/lib/store/bibleIDB';
-import { soki } from 'front/soki';
 import { bibleTsjrpcClient } from './tsjrpc';
 
 export const bibleInitialInvokes = () => {

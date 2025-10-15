@@ -1,9 +1,9 @@
-import { useIsScreenTranslationTextVisible } from 'front/components/apps/+complect/translations/atoms';
+import { useIsScreenTranslationTextVisible } from '#features/translations/atoms';
 import {
   useScreenTranslationCurrentConfig,
   useScreenTranslationCurrentConfigi,
-} from 'front/components/apps/+complect/translations/hooks/configs';
-import { TranslationScreenProps } from 'front/components/apps/+complect/translations/Translations.model';
+} from '#features/translations/hooks/configs';
+import { TranslationScreenProps } from '#features/translations/Translations.model';
 import { useBibleScreenTranslationConfig } from '../hooks/configs';
 import { BibleTranslationScreen } from './BibleTranslationScreen';
 

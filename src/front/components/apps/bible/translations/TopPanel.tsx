@@ -1,7 +1,7 @@
 import { JSX, useState } from 'react';
 import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
-import { TranslationSlidePreview } from '../../+complect/translations/controls/Preview';
+import { TranslationSlidePreview } from '../../../../features/translations/controls/Preview';
 import { BibleLists } from './lists/Lists';
 
 export const BibleTranslationControlledTopPanel = function TopPanel(): JSX.Element {

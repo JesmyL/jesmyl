@@ -1,9 +1,9 @@
+import { ScreenTranslateCurrentPositionConfigurators } from '#features/translations/complect/position/Position';
+import { useSetScreenTranslationInteractiveBackground } from '#features/translations/hooks/interactive-back';
+import { useApplyScreenFontFamilyEffect } from '#features/translations/hooks/set-font-family';
+import { TranslationScreenProps } from '#features/translations/Translations.model';
 import { FontSizeContain } from '#shared/ui/font-size-contain/FontSizeContain';
 import { FontSizeContainProps } from '#shared/ui/font-size-contain/FontSizeContain.model';
-import { ScreenTranslateCurrentPositionConfigurators } from 'front/components/apps/+complect/translations/complect/position/Position';
-import { useSetScreenTranslationInteractiveBackground } from 'front/components/apps/+complect/translations/hooks/interactive-back';
-import { useApplyScreenFontFamilyEffect } from 'front/components/apps/+complect/translations/hooks/set-font-family';
-import { TranslationScreenProps } from 'front/components/apps/+complect/translations/Translations.model';
 import { useRef } from 'react';
 import { useCmTranslationScreenStyle } from '../lib/get-style';
 import { useCmTranslationScreenWrapperStyle } from '../lib/get-wrapper-style';

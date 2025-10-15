@@ -1,10 +1,10 @@
 import { useAppNameContext } from '#basis/lib/contexts';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { useIndexSchedules } from '$index/atoms';
 import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
+import { useConnectionState } from '$index/useConnectionState';
 import { Link, useNavigate } from '@tanstack/react-router';
-import { useIndexSchedules } from 'front/components/index/atoms';
-import { useConnectionState } from 'front/components/index/useConnectionState';
 import { schLinkAction } from '../links';
 import { ScheduleCreateWidgetButton } from './CreateButton';
 

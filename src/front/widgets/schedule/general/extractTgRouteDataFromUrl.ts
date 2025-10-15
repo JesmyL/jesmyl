@@ -1,5 +1,5 @@
 import { TelegramWebAppInitData } from '#basis/ui/tg-app/model';
-import { environment } from 'front/environment';
+import { environment } from '#shared/environment';
 
 const url = environment.initialUrl;
 const hashParamName = 'tgWebAppData';

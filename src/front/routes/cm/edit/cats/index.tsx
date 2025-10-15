@@ -1,4 +1,4 @@
-import { EditCategoriesPage } from '$cm+editor/pages/EditCategoriesPage';
+import { CmEditorCategoriesPage } from '$cm+editor/pages/CategoriesPage';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/cm/edit/cats/')({
@@ -6,5 +6,5 @@ export const Route = createFileRoute('/cm/edit/cats/')({
 });
 
 function RouteComponent() {
-  return <EditCategoriesPage />;
+  return <CmEditorCategoriesPage />;
 }

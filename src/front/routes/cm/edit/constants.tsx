@@ -1,4 +1,4 @@
-import { CmEditConstantsPage } from '$cm+editor/pages/EditConstantsPage';
+import { CmEditorConstantsPage } from '$cm+editor/pages/ConstantsPage';
 import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { createFileRoute } from '@tanstack/react-router';
 
@@ -8,5 +8,5 @@ export const Route = createFileRoute('/cm/edit/constants')({
 
 function RouteComponent() {
   const checkAccess = useCheckUserAccessRightsInScope();
-  if (checkAccess('cm', 'CONST', 'R')) return <CmEditConstantsPage />;
+  if (checkAccess('cm', 'CONST', 'R')) return <CmEditorConstantsPage />;
 }

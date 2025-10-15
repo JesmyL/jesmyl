@@ -1,4 +1,4 @@
-import { complectIDB } from 'front/components/apps/+complect/_idb/complectIDB';
+import { complectIDB } from '$index/state/complectIDB';
 import { ReactNode, useCallback } from 'react';
 import { LazyIcon } from '../the-icon/LazyIcon';
 

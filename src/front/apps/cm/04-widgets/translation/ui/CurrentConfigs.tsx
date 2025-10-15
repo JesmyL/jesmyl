@@ -1,3 +1,4 @@
+import { ScreenTranslateConfigurationNameChanger } from '#features/translations/complect/NameChanger';
 import { useDebounceAction } from '#shared/lib/hooks/useDebounceAction';
 import { BackgroundConfigurator } from '#shared/ui/configurators/Background';
 import { ColorConfigurator } from '#shared/ui/configurators/Color';
@@ -6,7 +7,6 @@ import { FontWeightConfigurator } from '#shared/ui/configurators/FontWeight/ui';
 import { ScreenTranslateConfigurationTextAlign } from '#shared/ui/configurators/TextAlign';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { ScreenTranslateConfigurationNameChanger } from 'front/components/apps/+complect/translations/complect/NameChanger';
 import { useCallback } from 'react';
 import { cmTranslationSubConfigNext } from '../const/defaults';
 import { useCmTranslationUpdateCurrentConfig } from '../hooks/update-config';

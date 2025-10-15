@@ -2,8 +2,8 @@ import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMak
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
 import { hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { TrustChildrenCheckType } from '#shared/model/TrustChildrenCheckType';
 import { Atom, useAtomValue } from 'atomaric';
-import { TrustChildrenCheckType } from 'front/types/TrustChildrenCheckType';
 import { HTMLAttributes, ReactNode, useEffect } from 'react';
 import { Eventer, EventerListeners } from 'shared/utils';
 import styled from 'styled-components';

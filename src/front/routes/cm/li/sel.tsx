@@ -1,8 +1,8 @@
 import { CmComListContextValue } from '$cm/entities/com/lib/current-com-list';
+import { useCmComSelectedList } from '$cm/ext';
+import { CmSelectedComs } from '$cm/pages/SelectedComsPage';
+import { makeCmComNestedRoute } from '$cm/shared/lib';
 import { createFileRoute } from '@tanstack/react-router';
-import { CmSelectedComs } from 'front/apps/cm/03-pages/SelectedComsPage/ui/SelectedComsPage';
-import { useCmComSelectedList } from 'front/apps/cm/06-entities/com/lib/useSelectedComs';
-import { makeCmComNestedRoute } from 'front/apps/cm/07-shared/lib/cmComNestedRouteMaker';
 import { useMemo } from 'react';
 
 export const Route = createFileRoute('/cm/li/sel')(

@@ -1,6 +1,6 @@
 import { TsjrpcClient } from '#basis/lib/Tsjrpc.client';
+import { soki } from '#shared/soki';
 import { authIDB } from '$index/db/auth-idb';
-import { soki } from 'front/soki';
 import { LocalSokiAuth } from 'shared/api';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { indexAppUserAccessRightsMatrixAtom } from './atoms';

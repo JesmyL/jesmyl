@@ -1,5 +1,5 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
-import { complectIDB } from 'front/components/apps/+complect/_idb/complectIDB';
+import { complectIDB } from '$index/state/complectIDB';
 import { useEffect } from 'react';
 import { isNIs } from 'shared/utils';
 

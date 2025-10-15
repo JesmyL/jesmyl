@@ -1,5 +1,5 @@
+import { useScreenTranslationBackgroundStyles } from '#features/translations/complect/hooks/background-styles';
 import { BibleTranslationScreenConfig } from '$bible/translations/model';
-import { useScreenTranslationBackgroundStyles } from 'front/components/apps/+complect/translations/complect/hooks/background-styles';
 import { CSSProperties, useMemo } from 'react';
 
 export const addressGridArea = 'address-grid-area';

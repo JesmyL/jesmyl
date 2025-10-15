@@ -1,6 +1,6 @@
+import { useScreenTranslationPositionsStyles } from '#features/translations/complect/hooks/position-styles';
+import { useScreenTranslationTextStyles } from '#features/translations/complect/hooks/text-styles';
 import { BibleTranslationScreenConfig } from '$bible/translations/model';
-import { useScreenTranslationPositionsStyles } from 'front/components/apps/+complect/translations/complect/hooks/position-styles';
-import { useScreenTranslationTextStyles } from 'front/components/apps/+complect/translations/complect/hooks/text-styles';
 import { CSSProperties, useMemo } from 'react';
 
 export const useGetBibleScreenTranslationAddressTextWrapperStyle = (

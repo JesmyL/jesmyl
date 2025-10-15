@@ -1,5 +1,5 @@
 import { TsjrpcBaseClient } from '#basis/lib/TsjrpcBase.client';
-import { indexIDB } from 'front/components/index/db/index-idb';
+import { indexIDB } from '$index/db/index-idb';
 
 import { SchTsjrpcSharesModel } from 'shared/api';
 

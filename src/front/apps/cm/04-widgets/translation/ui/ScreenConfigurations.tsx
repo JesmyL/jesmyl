@@ -1,4 +1,4 @@
-import { ScreenTranslationsFaceLine } from 'front/components/apps/+complect/translations/complect/config-line/FaceLine';
+import { ScreenTranslationsFaceLine } from '#features/translations/complect/config-line/FaceLine';
 import { useCmTranslationCurrentScreenConfig } from '../hooks/configs';
 import { useCmTranslationUpdateConfig } from '../hooks/update-config';
 import { CmTranslationCurrentScreenConfigurations } from './CurrentConfigs';

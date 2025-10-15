@@ -1,6 +1,7 @@
 import { Accordion } from '#shared/components/ui/accordion';
 import { Button } from '#shared/components/ui/button';
 import { Card } from '#shared/components/ui/card';
+import { environment } from '#shared/environment';
 import { ConditionalRender } from '#shared/ui/ConditionalRender';
 import { CopyTextButton } from '#shared/ui/CopyTextButton';
 import { makeToastOKMoodConfig } from '#shared/ui/modal/toast.configs';
@@ -12,7 +13,6 @@ import { questionerTemplateDescriptions } from '$q/basis/lib/const/templateDescr
 import { QuestionerTemplateCard } from '$q/basis/ui/TemplateCard';
 import { questionerUserTsjrpcClient } from '$q/processes/tsjrpc/user.tsjrpc';
 import { atom, useAtomValue } from 'atomaric';
-import { environment } from 'front/environment';
 import { useState } from 'react';
 import { QuestionerBlankWid, QuestionerType } from 'shared/model/q';
 import { QuestionerUserAnswer, QuestionerUserAnswerContentProps } from 'shared/model/q/answer';

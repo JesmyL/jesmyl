@@ -1,6 +1,6 @@
+import { CurrentForceViweAppContext } from '#features/translations/Translation.contexts';
 import { isTouchDevice } from '#shared/lib/device-differences';
 import { CmTranslationControlled } from '$cm/widgets/translation';
-import { CurrentForceViweAppContext } from 'front/components/apps/+complect/translations/Translation.contexts';
 import { CmTranslationFullscreen } from './TranslationFullscreen';
 
 export const CmTranslation = () => {

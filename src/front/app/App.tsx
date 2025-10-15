@@ -1,6 +1,7 @@
 import { defaultQueryClient } from '#basis/lib/config/queryClient';
 import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
 import { rootAppModalTextContentAtom } from '#shared/lib/atoms/rootAppModalTextContentAtom';
+import { soki } from '#shared/soki';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
@@ -10,7 +11,6 @@ import { authIDB } from '$index/db/auth-idb';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { configureAtomaric } from 'atomaric';
-import { soki } from 'front/soki';
 import { useSyncExternalStore } from 'react';
 import { routeTree } from 'routeTree.gen';
 import { BlockStylesProvider } from 'shared/values/cm/block-styles/BlockStylesProvider';

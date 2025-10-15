@@ -1,4 +1,4 @@
-import { useIndexSchedules } from 'front/components/index/atoms';
+import { useIndexSchedules } from '$index/atoms';
 import { useActualSchw } from '../useSch';
 import { ScheduleWidgetAlarmContent } from './AlarmContent';
 

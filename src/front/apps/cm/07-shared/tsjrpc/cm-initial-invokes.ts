@@ -1,4 +1,4 @@
-import { soki } from 'front/soki';
+import { soki } from '#shared/soki';
 import { cmIDB } from '../state/cmIDB';
 import { cmTsjrpcClient } from './basic.tsjrpc.methods';
 import { cmShareTsjrpcBaseClient } from './tsjrpc.shares.base';

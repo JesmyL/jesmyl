@@ -1,4 +1,4 @@
-import { EditMp3RulesPage } from '$cm+editor/pages/EditMp3RulesPage';
+import { CmEditorMp3RulesPage } from '$cm+editor/pages/Mp3RulesPage';
 import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { createFileRoute } from '@tanstack/react-router';
 
@@ -8,5 +8,5 @@ export const Route = createFileRoute('/cm/edit/mp3Rules')({
 
 function RouteComponent() {
   const checkAccess = useCheckUserAccessRightsInScope();
-  if (checkAccess('cm', 'MP3', 'R')) return <EditMp3RulesPage />;
+  if (checkAccess('cm', 'MP3', 'R')) return <CmEditorMp3RulesPage />;
 }

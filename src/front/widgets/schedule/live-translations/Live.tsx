@@ -1,15 +1,15 @@
+import { ScreenTranslationControlPanelShowMdButton } from '#features/translations/controls/ShowMdButton';
 import { Modal } from '#shared/ui/modal/Modal/Modal';
 import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
 import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { BibleTranslationSlide } from '$bible/translations/BibleTranslationSlide';
+import { CmTranslationLiveScreen } from '$cm/features/translation/ui/Screen';
 import { liveDataAtom, liveDataStreamersAtom } from '$index/atoms';
 import { schLiveTsjrpcBaseClient, schLiveTsjrpcClient } from '$index/complect/translations/live.tsjrpc';
 import { useConnectionState } from '$index/useConnectionState';
 import { atom, useAtomValue } from 'atomaric';
-import { CmTranslationLiveScreen } from 'front/apps/cm/05-features/translation/ui/Screen';
-import { ScreenTranslationControlPanelShowMdButton } from 'front/components/apps/+complect/translations/controls/ShowMdButton';
 import { useEffect, useState } from 'react';
 import { IScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
 import { ScheduleWidgetMarkdownLiveTranslation } from './MarkdownLive';

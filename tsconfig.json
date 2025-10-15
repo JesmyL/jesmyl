@@ -19,17 +19,18 @@
     "types": ["vite-plugin-pwa/info.d.ts", "vite-plugin-pwa/client.d.ts"],
     "paths": {
       "#shared/*": ["./front/shared/*"],
+      "#features/*": ["./front/features/*"],
       "#widgets/*": ["./front/widgets/*"],
       "#basis/*": ["./front/basis/*"],
 
-      "$cm+editor/app/*": ["./front/components/apps/cm+editor/01-app/*"],
-      "$cm+editor/processes/*": ["./front/components/apps/cm+editor/02-processes/*"],
-      "$cm+editor/pages/*": ["./front/components/apps/cm+editor/03-pages/*"],
-      "$cm+editor/widgets/*": ["./front/components/apps/cm+editor/04-widgets/*"],
-      "$cm+editor/features/*": ["./front/components/apps/cm+editor/05-features/*"],
-      "$cm+editor/entities/*": ["./front/components/apps/cm+editor/06-entities/*"],
-      "$cm+editor/basis/*": ["./front/components/apps/cm+editor/07-basis/*"],
-      "$cm+editor/*": ["./front/components/apps/cm+editor/*"],
+      "$cm+editor/app/*": ["./front/apps/cm+editor/01-app/*"],
+      "$cm+editor/processes/*": ["./front/apps/cm+editor/02-processes/*"],
+      "$cm+editor/pages/*": ["./front/apps/cm+editor/03-pages/*"],
+      "$cm+editor/widgets/*": ["./front/apps/cm+editor/04-widgets/*"],
+      "$cm+editor/features/*": ["./front/apps/cm+editor/05-features/*"],
+      "$cm+editor/entities/*": ["./front/apps/cm+editor/06-entities/*"],
+      "$cm+editor/shared/*": ["./front/apps/cm+editor/07-shared/*"],
+      "$cm+editor/*": ["./front/apps/cm+editor/*"],
 
       "$cm/app/*": ["./front/apps/cm/01-app/*"],
       "$cm/processes/*": ["./front/apps/cm/02-processes/*"],
@@ -37,7 +38,6 @@
       "$cm/widgets/*": ["./front/apps/cm/04-widgets/*"],
       "$cm/features/*": ["./front/apps/cm/05-features/*"],
       "$cm/entities/*": ["./front/apps/cm/06-entities/*"],
-      "$cm/basis/*": ["./front/apps/cm/07-basis/*"],
       "$cm/shared/*": ["./front/apps/cm/07-shared/*"],
       "$cm/*": ["./front/apps/cm/*"],
 
@@ -59,6 +59,8 @@
       "$q/basis/*": ["./front/components/apps/q/07-basis/*"],
       "$q/*": ["./front/components/apps/q/*"],
 
+      "$tuner/*": ["./front/apps/tuner/*"],
+
       "$index/*": ["./front/components/index/*"],
       "$app/*": ["./front/app/*"],
 
@@ -68,6 +70,6 @@
       "bibles/*": ["./bibles/*"]
     }
   },
-  "include": ["src", "cypress/**/*.ts", "regexpert.gen", "src/front/components/apps/tuner/app.js"],
+  "include": ["src", "cypress/**/*.ts", "regexpert.gen"],
   "exclude": ["**/*.*js"]
 }

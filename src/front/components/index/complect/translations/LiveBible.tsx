@@ -1,7 +1,7 @@
+import { useSwitchCurrentTranslationTextApp } from '#features/translations/hooks/current-app';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { BibleLiveTranslation } from '$bible/translations/BibleLiveTranslation';
 import { IndexSchWTranslationLiveDataValue } from '$index/Index.model';
-import { useSwitchCurrentTranslationTextApp } from 'front/components/apps/+complect/translations/hooks/current-app';
 import React, { memo, useCallback } from 'react';
 import { schLiveTsjrpcClient } from './live.tsjrpc';
 import { LiveTranslationAppProps } from './model';

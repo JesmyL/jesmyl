@@ -1,7 +1,7 @@
+import { CmMeetingsPage } from '$cm/pages/MeetingsPage';
+import { makeCmEventNestedRoute } from '$cm/shared/lib';
 import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { createFileRoute } from '@tanstack/react-router';
-import { CmMeetingsPage } from 'front/apps/cm/03-pages/MeetingsPage/ui/MeetingsPage';
-import { makeCmEventNestedRoute } from 'front/apps/cm/07-shared/lib/cmEventNestedRouteMaker';
 
 export const Route = createFileRoute('/cm/edit/events')(
   makeCmEventNestedRoute({

@@ -5,7 +5,7 @@ import { bibleVerseiAtom } from '$bible/basis/lib/store/atoms';
 import { BibleModulesTranslationsControl } from '$bible/entities/ModulesTranslationsControl';
 import { JSX, ReactNode, useEffect } from 'react';
 import styled from 'styled-components';
-import { ScreenTranslationControlPanel } from '../../+complect/translations/controls/ControllPanel';
+import { ScreenTranslationControlPanel } from '../../../../features/translations/controls/ControllPanel';
 import { BibleTranslationControlledBottomPanel } from './BottomPanel';
 import { BibleTranslationControlledTopPanel } from './TopPanel';
 import { BibleSearchPanel } from './search/Panel';
