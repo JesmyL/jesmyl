@@ -94,7 +94,7 @@ export const CmEditorComTabAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                     className="mb-20 sticky top-8! bg-x1 pb-5"
                     audioLinks={[editSrc]}
                     addRender={src => (
-                      <div className="relative flex gap-5 w-full -top-8!">
+                      <div className="flex gap-5 w-full">
                         <Button
                           icon="PlusSign"
                           onClick={() => {
