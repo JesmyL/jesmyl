@@ -429,7 +429,7 @@ export class CmComOrder extends SourceBased<IExportableOrder> {
     if (truncatedNum === selector) return this.wid === selector;
     if (this.me.leadOrd == null || this.me.watchOrd == null) return false;
 
-    return this.me.leadOrd.wid === truncatedNum && this.me.watchOrd.wid === Math.ceil((selector - truncatedNum) * 100);
+    return this.me.leadOrd.wid === truncatedNum && this.me.watchOrd.wid === Math.floor((selector - truncatedNum) * 100);
   };
 
   isVisibleWithHeader = () => !this.isHeaderNoneForce && this.isVisible;
