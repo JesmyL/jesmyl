@@ -25,5 +25,5 @@ export const indexIsPlayAnimationsAtom = atom(false, 'index:isPlayAnimations');
 export const indexIsShowPlayerInFooterAtom = atom(false, 'index:isShowPlayerInFooter');
 
 export const indexAppUserAccessRightsMatrixAtom = atom<IndexAppUserAccessRightsAndRoles | null>(null);
-export const indexUserAccessRightsAtom = atom<IndexAppUserAccessRightsWithoutInfo>({}, 'index:userRights');
+export const indexUserAccessRightsAtom = atom<IndexAppUserAccessRightsWithoutInfo>({}, 'index:myAccessRights');
 export const indexOpenAccessRoleRedactorAtom = atom<UserAccessRole | null>(null);
