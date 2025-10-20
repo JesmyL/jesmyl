@@ -9,7 +9,7 @@ export const makeUserAccessRights = (login: SokiAuthLogin | nil) => {
   const userRights = rights[login];
   let userRightsResult: IndexAppUserAccessRightsWithoutInfo = {};
 
-  if (userRights.info.role != null && roles[userRights.info.role]) {
+  if (userRights.info.role != null) {
     const titles = accessRightTitlesFileStore.getValue();
 
     if (userRights.info.role === 'TOP') {
@@ -21,6 +21,17 @@ export const makeUserAccessRights = (login: SokiAuthLogin | nil) => {
         for (const ruleName in titles[scopeName as 'general']) {
           if (ruleName === 'info') continue;
           userRightsResult[scopeName as 'general']![ruleName as 'ALL'] = 15;
+        }
+      }
+    } else {
+      const roleRules = roles[userRights.info.role];
+
+      if (roleRules != null) {
+        for (const scopeName in roleRules) {
+          if (scopeName === 'info' || !(scopeName in roleRules)) continue;
+
+          const { info, ...rules } = roleRules[scopeName as 'general'] ?? {};
+          userRightsResult[scopeName as 'general'] = rules;
         }
       }
     }

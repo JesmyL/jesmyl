@@ -15,8 +15,10 @@ import {
   valuesFileStore,
 } from '../file-stores';
 import { schGeneralTsjrpcBaseServer } from '../schedules/base-tsjrpc/general.tsjrpc.base';
+import { indexServerTsjrpcShareMethods } from '../tsjrpc.methods';
 import { indexTSJRPCBaseGetIconExistsPacks } from './lib/getIconExistsPacks';
 import { indexAuthByTgUser } from './lib/makeAuthFromUser';
+import { makeUserAccessRights } from './lib/makeUserAccessRights';
 import { indexTSJRPCBaseRequestFreshes } from './lib/requestFreshes';
 import { indexTSJRPCBaseUpdateUserAccessRight } from './lib/updateUserAccessRight';
 
@@ -64,6 +66,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
           rights[login].info.m = Date.now();
 
           userAccessRightsAndRolesFileStore.saveValue();
+          indexServerTsjrpcShareMethods.refreshAccessRights({ rights: makeUserAccessRights(login) }, { login });
 
           return { value: { rights, roles } };
         },
@@ -97,6 +100,14 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
           if (!smylib.keys(roles[role][scope]).length) delete roles[role][scope];
 
           userAccessRightsAndRolesFileStore.saveValue();
+
+          indexServerTsjrpcShareMethods.refreshAccessRights({ rights: {} }, (_, auth, client) => {
+            if (auth?.login != null && rights[auth.login]?.info.role === role) {
+              indexServerTsjrpcShareMethods.refreshAccessRights({ rights: makeUserAccessRights(auth.login) }, client);
+            }
+
+            return false;
+          });
 
           return { value: { rights, roles } };
         },
