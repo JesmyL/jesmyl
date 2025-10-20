@@ -19,6 +19,11 @@ declare global {
   type KRecord<Key extends string | number, Value> = (Record<`${Key}`, Value> | Record<Key, Value>) &
     Record<`${Key}` | Key, Value>;
   type PRecord<Key extends string | number, Value> = Partial<KRecord<Key, Value>>;
+
+  /** Record with <Required key, Partial key, Value> */
+  type RPRecord<ReqiredKey extends string | number, Key extends string | number, Value> = KRecord<ReqiredKey, Value> &
+    Partial<KRecord<Exclude<Key, ReqiredKey>, Value>>;
+
   type RKey<Key extends number> = Key | `${Key}`;
 
   type OmitOwn<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
