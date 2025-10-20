@@ -104,8 +104,10 @@ export class FileStore<Value> {
       });
     } catch (_error) {
       this.saveValue();
-      if (this.watchFileTries-- < 0) return;
+      if (this.watchFileTries-- < 0) return this;
       this.watchFile(cb);
     }
+
+    return this;
   };
 }
