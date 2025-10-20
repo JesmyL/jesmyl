@@ -1,31 +1,28 @@
 import { Accordion } from '#shared/components/ui/accordion';
 import { MyLib } from '#shared/lib/my-lib';
+import { ConditionalRender } from '#shared/ui/ConditionalRender';
+import { Modal } from '#shared/ui/modal/Modal/Modal';
+import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
+import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
-import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
-import { indexAppUserAccessRightsMatrixAtom } from '$index/atoms';
+import { WithAtomValue } from '#shared/ui/WithAtomValue';
+import { indexAppUserAccessRightsMatrixAtom, indexOpenAccessRoleRedactorAtom } from '$index/atoms';
+import { AccessRightsUpdateTable } from '$index/parts/ui/AccessRightsUpdateTable';
 import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
-import { useQuery } from '@tanstack/react-query';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
-import { accessRightsCRUDOperations, checkUserScopeAccessRight } from 'shared/utils/index/utils';
+import { checkUserScopeAccessRight } from 'shared/utils/index/utils';
+import { IndexUserRoleSelector } from '../parts/ui/UserRoleSelector';
 
 export function AccessRightsPage() {
-  const { data: rightTitles } = useQuery({
-    queryKey: ['Index.getAccessRightTitles'],
-    queryFn: () => indexTsjrpcClientMethods.getAccessRightTitles(),
-  });
-  const userRights = useAtomValue(indexAppUserAccessRightsMatrixAtom);
+  const userRightsAndRoles = useAtomValue(indexAppUserAccessRightsMatrixAtom);
 
   useEffect(() => {
     (async () => {
-      const rights = await indexTsjrpcClientMethods.getUserAccessRights();
-      indexAppUserAccessRightsMatrixAtom.set(rights);
+      const rightsAndRoles = await indexTsjrpcClientMethods.getUserAccessRightsAndRoles();
+      indexAppUserAccessRightsMatrixAtom.set(rightsAndRoles);
     })();
   }, []);
-
-  if (rightTitles == null) return;
-
-  const rightTitlesEntries = MyLib.entries(rightTitles);
 
   return (
     <PageContainerConfigurer
@@ -37,81 +34,93 @@ export function AccessRightsPage() {
             type="single"
             collapsible
           >
-            {MyLib.entries(userRights).map(([userLogin, userRights]) => {
-              if (userRights == null) return null;
+            <ConditionalRender
+              value={userRightsAndRoles?.rights}
+              render={rights =>
+                MyLib.entries(rights).map(([userLogin, userRights]) => {
+                  if (userRights == null) return null;
 
-              return (
-                <Accordion.Item
-                  key={userLogin}
-                  value={userLogin}
-                >
-                  <Accordion.Trigger>{userRights.info.fio}</Accordion.Trigger>
-                  <Accordion.Content>
-                    <div className="ml-3">
-                      {rightTitlesEntries.map(([scope, { info, ...rightTitles }]) => {
-                        return (
-                          <div key={scope}>
-                            <h2>
-                              {info.title} ({scope})
-                            </h2>
+                  return (
+                    <Accordion.Item
+                      key={userLogin}
+                      value={userLogin}
+                    >
+                      <Accordion.Trigger>
+                        <span className="flex gap-3">
+                          {userRights.info.fio}
+                          {userRights.info.role && <span className="text-x7">({userRights.info.role})</span>}
+                        </span>
+                      </Accordion.Trigger>
+                      <Accordion.Content>
+                        <IndexUserRoleSelector
+                          userLogin={userLogin}
+                          userRights={userRights}
+                        />
 
-                            <table className="ml-2">
-                              {crudTableTHeader}
-                              <tbody>
-                                {MyLib.entries(rightTitles).map(([rule, title]) => {
-                                  return (
-                                    <tr key={rule}>
-                                      {accessRightsCRUDOperations.map(operation => {
-                                        const checked = checkUserScopeAccessRight(userRights, scope, rule, operation);
-
-                                        return (
-                                          <td key={operation}>
-                                            <IconCheckbox
-                                              className="ml-1"
-                                              checked={checked}
-                                              onClick={() =>
-                                                indexTsjrpcClientMethods.updateUserAccessRight({
-                                                  login: userLogin,
-                                                  operation,
-                                                  rule,
-                                                  scope,
-                                                  value: !checked,
-                                                })
-                                              }
-                                            />
-                                          </td>
-                                        );
-                                      })}
-                                      <td>
-                                        <span className="mx-2">{title}</span>
-                                      </td>
-                                    </tr>
-                                  );
-                                })}
-                              </tbody>
-                            </table>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </Accordion.Content>
-                </Accordion.Item>
-              );
-            })}
+                        <div className="ml-3">
+                          <AccessRightsUpdateTable
+                            takeIsChecked={(scope, rule, operation) =>
+                              checkUserScopeAccessRight(
+                                userRights.info.role ? userRightsAndRoles?.roles[userRights.info.role] : null,
+                                userRights.info.role === 'TOP' ? { ...userRights, general: { ALL: 15 } } : userRights,
+                                scope as never,
+                                rule,
+                                operation,
+                              )
+                            }
+                            takeRuleClassName={(scope, rule) =>
+                              userRights[scope as never]?.[rule] != null ? 'text-x7' : undefined
+                            }
+                            onChange={({ operation, rule, scope }) =>
+                              indexTsjrpcClientMethods.updateUserAccessRight({
+                                login: userLogin,
+                                operation,
+                                rule,
+                                scope,
+                              })
+                            }
+                          />
+                        </div>
+                      </Accordion.Content>
+                    </Accordion.Item>
+                  );
+                })
+              }
+            />
           </Accordion.Root>
+
+          <Modal
+            openAtom={indexOpenAccessRoleRedactorAtom}
+            className="z-1000"
+          >
+            <WithAtomValue atom={indexOpenAccessRoleRedactorAtom}>
+              {role => (
+                <>
+                  <ModalHeader>{role}</ModalHeader>
+                  {role && (
+                    <ModalBody>
+                      <AccessRightsUpdateTable
+                        onChange={({ operation, rule, scope }) =>
+                          indexTsjrpcClientMethods.updateRoleAccessRight({ operation, role, rule, scope })
+                        }
+                        takeIsChecked={(scope, rule, operation) =>
+                          checkUserScopeAccessRight(
+                            userRightsAndRoles?.roles[role],
+                            null,
+                            scope as never,
+                            rule,
+                            operation,
+                          )
+                        }
+                      />
+                    </ModalBody>
+                  )}
+                </>
+              )}
+            </WithAtomValue>
+          </Modal>
         </>
       }
     />
   );
 }
-
-const crudTableTHeader = (
-  <thead>
-    <tr>
-      {accessRightsCRUDOperations.map(operation => {
-        return <th key={operation}>{operation}</th>;
-      })}
-      <th>Название</th>
-    </tr>
-  </thead>
-);

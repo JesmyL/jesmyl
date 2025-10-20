@@ -1,32 +1,35 @@
 import { smylib } from 'shared/utils';
-import { updateCRUDAccesRightValue } from 'shared/utils/index/utils';
+import { switchCRUDAccesRightValue } from 'shared/utils/index/utils';
 import { indexServerTsjrpcBase } from '..';
-import { userAccessRightsFileStore } from '../../file-stores';
+import { userAccessRightsAndRolesFileStore } from '../../file-stores';
 import { indexServerTsjrpcShareMethods } from '../../tsjrpc.methods';
+import { makeUserAccessRights } from './makeUserAccessRights';
 
 export const indexTSJRPCBaseUpdateUserAccessRight: typeof indexServerTsjrpcBase.updateUserAccessRight = async ({
   login,
   rule,
   scope,
-  value,
   operation,
 }) => {
-  const rights = userAccessRightsFileStore.getValue();
+  if (scope === 'general') throw 'Эти права доступа менять нельзя';
+
+  const { rights, roles } = userAccessRightsAndRolesFileStore.getValue();
 
   if (rights[login] == null) return { value: null };
+  const userRights = rights[login];
 
-  rights[login][scope] ??= {};
-  rights[login][scope][rule] = updateCRUDAccesRightValue(rights[login][scope][rule] ?? 0, operation, value);
+  userRights[scope] ??= {};
+  userRights[scope][rule] = switchCRUDAccesRightValue(userRights[scope][rule] ?? 0, operation);
 
-  rights[login].info ??= { fio: 'unknown', m: Date.now() };
-  rights[login].info.m = Date.now();
+  userRights.info ??= { fio: 'unknown 856278', m: 0 };
+  userRights.info.m = Date.now();
 
-  if (!rights[login][scope][rule]) delete rights[login][scope][rule];
-  if (!smylib.keys(rights[login][scope]).length) delete rights[login][scope];
+  if (!userRights[scope][rule]) delete userRights[scope][rule];
+  if (!smylib.keys(userRights[scope]).length) delete userRights[scope];
 
-  userAccessRightsFileStore.saveValue();
-  const { info, ...userRights } = rights[login];
-  indexServerTsjrpcShareMethods.refreshAccessRights({ rights: userRights }, { login });
+  userAccessRightsAndRolesFileStore.saveValue();
 
-  return { value: rights };
+  indexServerTsjrpcShareMethods.refreshAccessRights({ rights: makeUserAccessRights(login) }, { login });
+
+  return { value: { rights, roles } };
 };

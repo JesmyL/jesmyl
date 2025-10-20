@@ -1,13 +1,10 @@
 import { useAtomValue } from 'atomaric';
 import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
-import { checkUserScopeAccessRight } from 'shared/utils/index/utils';
-import { indexUserAccessRightsAtom, useAuth } from './atoms';
+import { checkUserScopeAccessRight, CRUDOperation } from 'shared/utils/index/utils';
+import { indexUserAccessRightsAtom } from './atoms';
 
 export const useCheckUserAccessRightsInScope = () => {
   const rights = useAtomValue(indexUserAccessRightsAtom);
-  const auth = useAuth();
-
-  if (auth.level === 100) return () => true;
 
   return <
     Scope extends keyof IndexAppAccessRightTitles,
@@ -15,6 +12,6 @@ export const useCheckUserAccessRightsInScope = () => {
   >(
     scope: Scope,
     rule: Rule,
-    operation?: Parameters<typeof checkUserScopeAccessRight>[3],
-  ) => checkUserScopeAccessRight(rights as never, scope, rule, operation);
+    operation?: CRUDOperation | CRUDOperation[],
+  ) => checkUserScopeAccessRight(null, rights, scope, rule, operation);
 };

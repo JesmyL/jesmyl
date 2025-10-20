@@ -1,8 +1,8 @@
-import { userAccessRightsFileStore } from 'back/apps/index/file-stores';
+import { userAccessRightsAndRolesFileStore } from 'back/apps/index/file-stores';
 import { LocalSokiAuth, SokiAuthLogin } from 'shared/api';
 import { IndexAppAccessRightTitles } from 'shared/model/index/access-rights';
 import { smylib } from 'shared/utils';
-import { checkUserScopeAccessRight } from 'shared/utils/index/utils';
+import { checkUserScopeAccessRight, CRUDOperation } from 'shared/utils/index/utils';
 import WebSocket from 'ws';
 import { sokiServer } from './soki/SokiServer';
 
@@ -13,7 +13,7 @@ export const throwIfNoUserScopeAccessRight = <
   selector: SokiAuthLogin | LocalSokiAuth | WebSocket | nil,
   scope: Scope,
   rule: Rule,
-  operation?: Parameters<typeof checkUserScopeAccessRight>[3],
+  operation?: CRUDOperation | CRUDOperation[],
 ): selector is nil => {
   do {
     if (selector == null) break;
@@ -41,10 +41,14 @@ export const throwIfNoUserScopeAccessRight = <
 
     if (login == null) break;
 
-    const userScope = userAccessRightsFileStore.getValue()[login];
+    const userRights = userAccessRightsAndRolesFileStore.getValue().rights[login];
 
-    if (userScope == null) break;
-    if (checkUserScopeAccessRight(userScope, scope, rule, operation)) return false;
+    if (userRights == null) break;
+    const roleRights = userRights.info.role
+      ? userAccessRightsAndRolesFileStore.getValue().roles[userRights.info.role]
+      : null;
+
+    if (checkUserScopeAccessRight(roleRights, userRights, scope, rule, operation)) return false;
 
     // eslint-disable-next-line no-constant-condition
   } while (false);

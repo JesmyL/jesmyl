@@ -1,4 +1,4 @@
-import { userAccessRightsFileStore } from 'back/apps/index/file-stores';
+import { userAccessRightsAndRolesFileStore } from 'back/apps/index/file-stores';
 import { hosts } from 'shared/api';
 import { jesmylTgBot } from '../bot';
 import { prodTelegramBot } from '../prod/prod-bot';
@@ -83,14 +83,13 @@ export const baseCallbackCatcher = jesmylTgBot.catchCallbackQuery(async (query, 
 
     return answer(requisites);
   } else if (query.data === requestAccessRights_) {
-    const rights = userAccessRightsFileStore.getValueWithAutoSave();
+    const rights = userAccessRightsAndRolesFileStore.getValueWithAutoSave().rights;
     const user = query.from;
 
     rights[JesmylTelegramBot.makeLoginFromId(query.from.id)] ??= {
       info: {
         fio: `${user.first_name}${user.last_name ? ` ${user.last_name}` : ''}`,
         m: Date.now(),
-        isRequest: true,
       },
     };
 

@@ -5,15 +5,18 @@ import {
   scheduleWidgetRegTypeRights,
   scheduleWidgetUserRights,
   ScheduleWidgetUserRoleRight,
+  SokiAuthLogin,
 } from 'shared/api';
 import { itNNil, smylib } from 'shared/utils';
 import { knownStameskaIconNames, knownStameskaIconNamesMd5Hash } from 'shared/values/index/known-icons';
 import { StameskaIconPack } from 'stameska-icon/utils';
+import { WebSocket } from 'ws';
 import { indexServerTsjrpcBase } from '..';
-import { indexStameskaIconsFileStore, userAccessRightsFileStore } from '../../file-stores';
+import { indexStameskaIconsFileStore, userAccessRightsAndRolesFileStore } from '../../file-stores';
 import { schedulesFileStore } from '../../schedules/file-stores';
 import { schServerTsjrpcShareMethods } from '../../schedules/tsjrpc.shares';
 import { indexServerTsjrpcShareMethods } from '../../tsjrpc.methods';
+import { makeUserAccessRights } from './makeUserAccessRights';
 
 export const indexTSJRPCBaseRequestFreshes: typeof indexServerTsjrpcBase.requestFreshes = async (
   { lastModfiedAt, iconPacks: userIconPacks, iconsMd5Hash: userIconsMd5Hash },
@@ -22,11 +25,20 @@ export const indexTSJRPCBaseRequestFreshes: typeof indexServerTsjrpcBase.request
   const isNoAuth = auth == null;
   const login = auth?.login;
   const someScheduleUser = (user: IScheduleWidgetUser) => user.login === login;
-  const userRights = userAccessRightsFileStore.getValue();
 
-  if (login != null && userRights[login] != null && userRights[login].info.m > lastModfiedAt) {
-    const { info, ...rights } = userRights[login];
-    indexServerTsjrpcShareMethods.refreshAccessRights({ rights }, client);
+  if (login != null && client != null) {
+    const rightsAndRoles = userAccessRightsAndRolesFileStore.getValue();
+    const userRights = rightsAndRoles.rights[login];
+
+    if (userRights != null && userRights.info.m > lastModfiedAt) {
+      refreshUserAccessRights(login, client);
+    } else {
+      const userRole = userRights?.info.role ? rightsAndRoles.roles[userRights.info.role] : null;
+
+      if (smylib.isObj(userRole) && userRole.info.m > lastModfiedAt) {
+        refreshUserAccessRights(login, client);
+      }
+    }
   }
 
   const schedules: IScheduleWidget[] = [];
@@ -118,3 +130,6 @@ const extractAllScheduleIcons = (sch: IScheduleWidget) => {
       ]
     : [];
 };
+
+const refreshUserAccessRights = (login: SokiAuthLogin, client: WebSocket) =>
+  indexServerTsjrpcShareMethods.refreshAccessRights({ rights: makeUserAccessRights(login) }, client);

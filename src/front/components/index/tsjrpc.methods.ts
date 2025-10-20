@@ -32,11 +32,25 @@ export const indexTsjrpcClientMethods = new (class Index extends TsjrpcClient<In
         getIconExistsPacks: true,
 
         getAccessRightTitles: true,
-        getUserAccessRights: true,
-        updateUserAccessRight: async rights => {
-          if (rights == null) return;
-          indexAppUserAccessRightsMatrixAtom.set(rights);
+        getUserAccessRightsAndRoles: true,
+
+        updateUserAccessRight: async rightsAndRoles => {
+          if (rightsAndRoles == null) return;
+          indexAppUserAccessRightsMatrixAtom.set(rightsAndRoles);
         },
+        updateUserAccessRole: async rightsAndRoles => {
+          if (rightsAndRoles == null) return;
+          indexAppUserAccessRightsMatrixAtom.set(rightsAndRoles);
+        },
+        addNewAccessRole: async rightsAndRoles => {
+          if (rightsAndRoles == null) return;
+          indexAppUserAccessRightsMatrixAtom.set(rightsAndRoles);
+        },
+        updateRoleAccessRight: async rightsAndRoles => {
+          if (rightsAndRoles == null) return;
+          indexAppUserAccessRightsMatrixAtom.set(rightsAndRoles);
+        },
+
         getIconPack: ({ pack }) => {
           indexIDB.tb.iconPacks.put({ key: pack[0] as never, pack });
         },

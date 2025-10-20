@@ -1,11 +1,12 @@
 import { DeviceId } from 'shared/api/complect/enums';
-import { LocalSokiAuth, TelegramNativeAuthUserData } from 'shared/api/complect/soki.model';
+import { LocalSokiAuth, SokiAuthLogin, TelegramNativeAuthUserData } from 'shared/api/complect/soki.model';
 import {
   IndexAppAccessRightTitles,
-  IndexAppUserAccessRights,
-  UpdateUserAccessRight,
+  IndexAppUserAccessRightsAndRoles,
+  UserAccessRole,
 } from 'shared/model/index/access-rights';
 import { IndexValues } from 'shared/model/index/other';
+import { CRUDOperation } from 'shared/utils/index/utils';
 import { StameskaIconPack } from 'stameska-icon/utils';
 
 export type IndexTsjrpcModel = {
@@ -24,8 +25,35 @@ export type IndexTsjrpcModel = {
   getIndexValues: () => IndexValues;
 
   getAccessRightTitles: () => IndexAppAccessRightTitles;
-  getUserAccessRights: () => IndexAppUserAccessRights;
-  updateUserAccessRight: UpdateUserAccessRight;
+  getUserAccessRightsAndRoles: () => IndexAppUserAccessRightsAndRoles;
+
+  updateUserAccessRight: <
+    Scope extends keyof IndexAppAccessRightTitles,
+    Rule extends keyof IndexAppAccessRightTitles[Scope],
+  >(args: {
+    login: SokiAuthLogin;
+    scope: Scope;
+    rule: Rule;
+    operation: CRUDOperation;
+  }) => IndexAppUserAccessRightsAndRoles | null;
+
+  updateRoleAccessRight: <
+    Scope extends keyof IndexAppAccessRightTitles,
+    Rule extends keyof IndexAppAccessRightTitles[Scope],
+  >(args: {
+    role: UserAccessRole;
+    scope: Scope;
+    rule: Rule;
+    operation: CRUDOperation;
+  }) => IndexAppUserAccessRightsAndRoles | null;
+
+  updateUserAccessRole: (args: {
+    login: SokiAuthLogin;
+    role: UserAccessRole | nil;
+  }) => IndexAppUserAccessRightsAndRoles | null;
+
+  addNewAccessRole: (args: { role: UserAccessRole }) => IndexAppUserAccessRightsAndRoles | null;
+
   getIconExistsPacks: (args: { page: number; pageSize: number; searchTerm: string }) => {
     packs: StameskaIconPack[];
   };

@@ -22,7 +22,7 @@ export const appInitialInvokes = () => {
   bibleTsjrpcBaseClient.$$register();
 
   cmShareEditorTsjrpcBaseClient.$$register();
-  if (rights && checkUserScopeAccessRight(rights, 'cm', 'EDIT')) cmEditorInitialInvokes();
+  if (rights && checkUserScopeAccessRight(null, rights, 'cm', 'EDIT')) cmEditorInitialInvokes();
 
   const getFreshes = async () => {
     const lastModfiedAt = await indexIDB.get.lastModifiedAt();

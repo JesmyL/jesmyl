@@ -6,11 +6,12 @@ import { exec } from 'child_process';
 import { makeRegExp } from 'regexpert';
 import { IndexTsjrpcModel } from 'shared/api/tsjrpc/index/basics.tsjrpc.model';
 import { smylib } from 'shared/utils';
+import { switchCRUDAccesRightValue } from 'shared/utils/index/utils';
 import {
   accessRightTitlesFileStore,
   appVersionFileStore,
   indexStameskaIconsFileStore,
-  userAccessRightsFileStore,
+  userAccessRightsAndRolesFileStore,
   valuesFileStore,
 } from '../file-stores';
 import { schGeneralTsjrpcBaseServer } from '../schedules/base-tsjrpc/general.tsjrpc.base';
@@ -49,6 +50,57 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         getIconExistsPacks: indexTSJRPCBaseGetIconExistsPacks,
         updateUserAccessRight: indexTSJRPCBaseUpdateUserAccessRight,
 
+        updateUserAccessRole: async ({ login, role }, { auth }) => {
+          if (auth?.login == null) throw 'Не авторизован 56552391123';
+          if (auth.login === login) throw 'Нельзя поменять роль себе же';
+
+          const { rights, roles } = userAccessRightsAndRolesFileStore.getValue();
+          const authUserRole = rights[auth.login]?.info.role;
+
+          if (authUserRole == null || authUserRole !== 'TOP') throw 'Нет прав на это действие 55412304234670';
+
+          rights[login] ??= { info: { fio: 'unknown 1523612', m: 0 } };
+          rights[login].info.role = role ?? undefined;
+          rights[login].info.m = Date.now();
+
+          userAccessRightsAndRolesFileStore.saveValue();
+
+          return { value: { rights, roles } };
+        },
+
+        addNewAccessRole: async ({ role }) => {
+          const { roles, rights } = userAccessRightsAndRolesFileStore.getValue();
+          if (roles[role] !== undefined) throw 'Такая роль уже существует';
+
+          roles[role] = { info: { m: Date.now() } };
+
+          userAccessRightsAndRolesFileStore.saveValue();
+
+          return { value: { roles, rights } };
+        },
+
+        updateRoleAccessRight: async ({ operation, rule, scope, role }, { auth }) => {
+          if (auth?.login == null) throw 'Не авторизован 77237192';
+
+          const { rights, roles } = userAccessRightsAndRolesFileStore.getValue();
+          const authUserRole = rights[auth.login]?.info.role;
+
+          if (authUserRole == null || authUserRole !== 'TOP') throw 'Нет прав на это действие 068234765';
+
+          roles[role] ??= { info: { m: 0 } };
+          roles[role][scope] ??= {};
+          roles[role].info.m = Date.now();
+
+          roles[role][scope][rule] = switchCRUDAccesRightValue(roles[role][scope][rule] ?? 0, operation);
+
+          if (!roles[role][scope][rule]) delete roles[role][scope][rule];
+          if (!smylib.keys(roles[role][scope]).length) delete roles[role][scope];
+
+          userAccessRightsAndRolesFileStore.saveValue();
+
+          return { value: { rights, roles } };
+        },
+
         getDeviceId: async () => {
           const deviceId =
             makeTwiceKnownName().replace(makeRegExp('/ /g'), '_') +
@@ -80,7 +132,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
         getIndexValues: async () => ({ value: valuesFileStore.getValue() }),
 
         getAccessRightTitles: async () => ({ value: accessRightTitlesFileStore.getValue() }),
-        getUserAccessRights: async () => ({ value: userAccessRightsFileStore.getValue() }),
+        getUserAccessRightsAndRoles: async () => ({ value: userAccessRightsAndRolesFileStore.getValue() }),
         getIconPack: async ({ icon }) => ({ value: { pack: indexStameskaIconsFileStore.getValue()[icon] } }),
       },
     });

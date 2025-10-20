@@ -1,7 +1,11 @@
 import { atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { SokiAuthLogin } from 'shared/api';
-import { IndexAppUserAccessRights, IndexAppUserAccessRightsWithoutInfo } from 'shared/model/index/access-rights';
+import {
+  IndexAppUserAccessRightsAndRoles,
+  IndexAppUserAccessRightsWithoutInfo,
+  UserAccessRole,
+} from 'shared/model/index/access-rights';
 import { authIDB } from './db/auth-idb';
 import { indexIDB } from './db/index-idb';
 import { IndexSchWTranslationLiveDataValue } from './Index.model';
@@ -20,5 +24,6 @@ export const useAppFontFamily = () => indexIDB.use.appFontFamily();
 export const indexIsPlayAnimationsAtom = atom(false, 'index:isPlayAnimations');
 export const indexIsShowPlayerInFooterAtom = atom(false, 'index:isShowPlayerInFooter');
 
-export const indexAppUserAccessRightsMatrixAtom = atom<IndexAppUserAccessRights>({});
+export const indexAppUserAccessRightsMatrixAtom = atom<IndexAppUserAccessRightsAndRoles | null>(null);
 export const indexUserAccessRightsAtom = atom<IndexAppUserAccessRightsWithoutInfo>({}, 'index:userRights');
+export const indexOpenAccessRoleRedactorAtom = atom<UserAccessRole | null>(null);
