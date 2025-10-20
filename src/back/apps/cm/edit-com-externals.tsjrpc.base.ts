@@ -1,3 +1,4 @@
+import { throwIfNoUserScopeAccessRight } from 'back/complect/throwIfNoUserScopeAccessRight';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { CmComAudioMarkPack, CmComWid } from 'shared/api';
 import { CmEditComExternalsTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-com-externals.tsjrpc.model';
@@ -19,7 +20,9 @@ export const cmEditComExternalsTsjrpcBaseServer =
       super({
         scope: 'CmEditComExternals',
         methods: {
-          setInScheduleEvent: async ({ schw, dayi, eventMi, list, fio }) => {
+          setInScheduleEvent: async ({ schw, dayi, eventMi, list, fio }, { auth }) => {
+            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'U')) throw '';
+
             const packs = eventPacksFileStore.getValueWithAutoSave();
             const history = eventPackHistoryFileStore.getValueWithAutoSave();
 
@@ -57,12 +60,16 @@ export const cmEditComExternalsTsjrpcBaseServer =
             };
           },
 
-          getScheduleEventHistory: async ({ schw, dayi }) => {
+          getScheduleEventHistory: async ({ schw, dayi }, { auth }) => {
+            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'R')) throw '';
+
             const history = eventPackHistoryFileStore.getValue();
 
             return { value: history[schw]?.[dayi] ?? [] };
           },
-          getScheduleEventHistoryStatistic: async ({ schw, dayi }) => {
+          getScheduleEventHistoryStatistic: async ({ schw, dayi }, { auth }) => {
+            if (throwIfNoUserScopeAccessRight(auth, 'cm', 'EVENT', 'R')) throw '';
+
             const comwCount = {} as Record<CmComWid, number>;
             let totalCount = 0;
             const packs = eventPackHistoryFileStore.getValue()[schw]?.[dayi];
