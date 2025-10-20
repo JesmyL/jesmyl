@@ -32,7 +32,7 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
   const isMiniAnchor = useAtomValue(cmComIsComMiniAnchorAtom);
   const listRef = useRef<HTMLDivElement>(null);
   const { commentCss, isThereUnsettedTranslate } = useCmComCommentBlockCss(com);
-  const isOpenButtons = useAtomValue(isCmComAudioPlayerOpenMoversAtom);
+  const isOpenMoversButtons = useAtomValue(isCmComAudioPlayerOpenMoversAtom);
   const ordwToPlayButtonNodeDict = useCmComOrderWidToPlayButtonNodeDict(com);
 
   const comi = comList.findIndex(c => c.wid === com.wid);
@@ -86,12 +86,12 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
           >
             <TheCmCom
               com={com}
-              fontSize={isOpenButtons ? Math.abs(fontSize) : fontSize}
+              fontSize={isOpenMoversButtons ? Math.abs(fontSize) : fontSize}
               chordVisibleVariant={chordVisibleVariant}
               isMiniAnchor={isMiniAnchor}
               listRef={listRef}
               asHeaderComponent={
-                ordwToPlayButtonNodeDict && isOpenButtons
+                ordwToPlayButtonNodeDict && isOpenMoversButtons
                   ? ({ ord, headerNode }) => (
                       <div className="flex gap-1 flex-wrap max-w-[80%]">
                         {headerNode}

@@ -1,6 +1,7 @@
 import { getParentNodeWithClassName } from '#shared/lib/getParentNodeWithClassName';
 import { addEventListenerWithDelayPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
+import { isCmComAudioPlayerOpenMoversAtom } from '$cm/entities/com-audio-player';
 import { cmComIsComMiniAnchorAtom } from '$cm/entities/index';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
@@ -10,9 +11,10 @@ import { cmComCommentRedactOrdSelectorIdAtom } from '../state/atoms';
 
 export const useCmComCommentBlockFastReactions = (listRef: React.RefObject<HTMLDivElement | null>, com: CmCom) => {
   const isMiniAnchor = useAtomValue(cmComIsComMiniAnchorAtom);
+  const isOpenMoversButtons = useAtomValue(isCmComAudioPlayerOpenMoversAtom);
 
   useEffect(() => {
-    if (isMiniAnchor) return;
+    if (isOpenMoversButtons || isMiniAnchor) return;
     let isFirstClick = true;
     let firstEvent = '';
 
@@ -52,5 +54,5 @@ export const useCmComCommentBlockFastReactions = (listRef: React.RefObject<HTMLD
         addEventListenerWithDelayPipe(1000, () => listRef.current, 'touchstart', onDown),
       )
       .effect();
-  }, [com, isMiniAnchor, listRef]);
+  }, [com, isMiniAnchor, isOpenMoversButtons, listRef]);
 };
