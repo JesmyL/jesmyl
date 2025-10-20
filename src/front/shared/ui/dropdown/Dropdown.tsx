@@ -30,6 +30,7 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
   );
 
   const renderItem = props.renderItem ?? itIt;
+  const afterClickAction = () => setDropped(false);
 
   return (
     <DropdownMenu.Root
@@ -67,12 +68,12 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
       <DropdownMenu.Content onClick={() => setDropped(false)}>
         {props.undTitle && (
           <DropdownMenu.Item onClick={() => onClick({ id: undefined, title: props.undTitle })}>
-            {renderItem(props.undTitle)}
+            {renderItem(props.undTitle, undefined!, afterClickAction)}
           </DropdownMenu.Item>
         )}
         {props.nullTitle && (
           <DropdownMenu.Item onClick={() => onClick({ id: null, title: props.nullTitle })}>
-            {renderItem(props.nullTitle)}
+            {renderItem(props.nullTitle, null!, afterClickAction)}
           </DropdownMenu.Item>
         )}
         {!props.disabled &&
@@ -91,7 +92,7 @@ export function Dropdown<Id, Item extends DropdownItem<Id> = DropdownItem<Id>>(p
                   onClick(item);
                 }}
               >
-                {renderItem(item.title)}
+                {renderItem(item.title, item.id, afterClickAction)}
               </DropdownMenu.Item>
             );
           })}

@@ -9,7 +9,7 @@ export interface DropdownProps<Id, Item extends DropdownItem<Id>> {
   className?: string;
   undTitle?: React.ReactNode;
   nullTitle?: React.ReactNode;
-  renderItem?: (node: React.ReactNode) => React.ReactNode;
+  renderItem?: (node: React.ReactNode, id: Id, afterClickAction: () => void) => React.ReactNode;
   addContent?: React.ReactNode;
   disabled?: boolean;
   hiddenIds?: (Id | null)[];

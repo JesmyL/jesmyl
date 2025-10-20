@@ -24,6 +24,7 @@ export interface TelegramNativeAuthUserData extends OmitOwn<User, 'language_code
 
 export const enum SokiAuthLogin {
   def = '{SokiAuthLogin}',
+  other = '{other SokiAuthLogin}',
 }
 
 export interface LocalSokiAuth {

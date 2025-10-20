@@ -45,6 +45,7 @@ export function IconCheckbox(props: Props) {
         icon="Loading03"
         className={className}
         onClick={onClick}
+        withoutAnimation
       />
     ) : null;
     const kind = props.isRadio
@@ -59,6 +60,7 @@ export function IconCheckbox(props: Props) {
           icon={props.isRadio ? 'RadioButton' : icon}
           kind={kind}
           className={className}
+          withoutAnimation
           onClick={onClick}
         />
       ))
@@ -72,6 +74,7 @@ export function IconCheckbox(props: Props) {
           <LazyIcon
             icon={props.isRadio ? 'RadioButton' : icon}
             kind={kind}
+            withoutAnimation
           />
         )}
         {props.postfix}
