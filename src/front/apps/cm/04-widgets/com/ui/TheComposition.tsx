@@ -22,6 +22,7 @@ import {
 import {
   CmComAudioPlayerWithMarks,
   cmComAudioPlayerHeaderStickyCss,
+  cmComAudioPlayerIsPlayAtom,
   cmComAudioPlayerPlaySrcAtom,
 } from '$cm/entities/com-audio-player';
 import {
@@ -67,7 +68,11 @@ export function TheCmComComposition() {
 
   useEffect(() => {
     if (comListRef.current) comListRef.current.scrollTop = 0;
-  }, [ccom?.wid]);
+
+    if (!cmComAudioPlayerIsPlayAtom.get() && !ccom?.audio.includes(cmComAudioPlayerPlaySrcAtom.get()!)) {
+      if (ccom?.audio[0]) cmComAudioPlayerPlaySrcAtom.set(ccom.audio[0]);
+    }
+  }, [ccom?.audio, ccom?.wid]);
 
   if (ccom == null) return <CmComNotFoundPage />;
 
