@@ -3,7 +3,7 @@ import { toast } from 'sonner';
 import { StameskaIconKind, StameskaIconPack } from 'stameska-icon/utils';
 
 export type IndexTsjrpcSharesModel = {
-  refreshAccessRights: (args: { rights: IndexAppUserAccessRightsWithoutInfo }) => unknown;
+  refreshAccessRights: (args: { rights: IndexAppUserAccessRightsWithoutInfo; lastModifiedAt: number }) => unknown;
   updateKnownIconPacks: (args: {
     actualIconPacks: PRecord<KnownStameskaIconName, StameskaIconPack | null>;
     iconsMd5Hash: string;

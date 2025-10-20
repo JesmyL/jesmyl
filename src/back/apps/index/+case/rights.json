@@ -1,50 +1,33 @@
 {
-  "roles": { "TOP": { "info": { "m": 0 } } },
-  "rights": {
-    "T166cbf17596a0c2919e4df1a6d54e66": {
-      "info": { "role": "TOP", "fio": "Павел 👨‍💻", "m": 1760949272949 }
-    },
-    "T6558fe287d2ea93be3e19bbe64b5dfc": {
-      "info": { "fio": "Руслан", "m": 1760155434247 },
+  "roles": {
+    "TOP": { "info": { "m": 0 } },
+    "ADMIN": {
+      "info": { "m": 1760949796256 },
       "cm": {
         "EDIT": 4,
         "COM": 14,
         "COM_APPS": 6,
         "COM_ORD": 14,
-        "COM_TXT": 15,
-        "COM_CH": 15,
+        "COM_TXT": 14,
+        "COM_CH": 14,
         "COM_AUDIO": 14,
-        "COM_CAT": 6,
+        "COM_CAT": 14,
         "COM_REP": 15,
-        "COM_MAIN": 6,
-        "CHORD": 14,
-        "EVENT": 6,
-        "MP3": 4
-      },
-      "q": { "EDIT": 12 },
-      "sch": { "SCH": 12 }
-    },
-    "T7f21a14d3133065ca2e48254f87ecf3": {
-      "info": { "fio": "danikpon", "m": 1760155456568 },
-      "cm": {
-        "EDIT": 4,
-        "COM": 14,
-        "COM_APPS": 6,
-        "COM_ORD": 14,
-        "COM_TXT": 15,
-        "COM_CH": 15,
-        "COM_AUDIO": 14,
-        "COM_CAT": 6,
-        "COM_REP": 6,
+        "COM_AMARK": 15,
         "COM_TR": 4,
         "COM_MAIN": 6,
-        "CHORD": 14,
+        "CHORD": 6,
         "EVENT": 6,
         "MP3": 4
       },
-      "sch": { "SCH": 12 },
-      "q": { "EDIT": 12 }
-    },
+      "q": { "EDIT": 14 },
+      "sch": { "SCH": 14 }
+    }
+  },
+  "rights": {
+    "T166cbf17596a0c2919e4df1a6d54e66": { "info": { "role": "TOP", "fio": "Павел 👨‍💻", "m": 1760949655008 } },
+    "T6558fe287d2ea93be3e19bbe64b5dfc": { "info": { "fio": "Руслан", "m": 1760949775940, "role": "ADMIN" } },
+    "T7f21a14d3133065ca2e48254f87ecf3": { "info": { "fio": "danikpon", "m": 1760949859005, "role": "ADMIN" } },
     "T88eae2a48675aa330a3438b156799d8": { "info": { "fio": "Кирилл", "m": 1757905644600 } },
     "Tcd1de434b6554eaa585d6cbb6901d2a": { "info": { "fio": "Маша", "m": 1758121708642 } },
     "T1c9464bf7af18f1807c1b72a0963764": { "info": { "fio": "Zhanna", "m": 1758958231966 } },

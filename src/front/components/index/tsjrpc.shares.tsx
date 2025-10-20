@@ -14,8 +14,9 @@ export const indexTsjrpcBaseClient = new (class Index extends TsjrpcBaseClient<I
     super({
       scope: 'Index',
       methods: {
-        refreshAccessRights: async ({ rights }) => {
+        refreshAccessRights: async ({ rights, lastModifiedAt }) => {
           indexUserAccessRightsAtom.set(rights);
+          indexIDB.updateLastModifiedAt(lastModifiedAt);
         },
         updateKnownIconPacks: async ({ actualIconPacks, iconsMd5Hash }) => {
           MyLib.entries(actualIconPacks).forEach(([iconName, pack]) => {

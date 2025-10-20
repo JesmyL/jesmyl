@@ -66,7 +66,13 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
           rights[login].info.m = Date.now();
 
           userAccessRightsAndRolesFileStore.saveValue();
-          indexServerTsjrpcShareMethods.refreshAccessRights({ rights: makeUserAccessRights(login) }, { login });
+          indexServerTsjrpcShareMethods.refreshAccessRights(
+            {
+              rights: makeUserAccessRights(login),
+              lastModifiedAt: rights[login].info.m,
+            },
+            { login },
+          );
 
           return { value: { rights, roles } };
         },
@@ -92,7 +98,7 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
 
           roles[role] ??= { info: { m: 0 } };
           roles[role][scope] ??= {};
-          roles[role].info.m = Date.now();
+          const lastModifiedAt = (roles[role].info.m = Date.now());
 
           roles[role][scope][rule] = switchCRUDAccesRightValue(roles[role][scope][rule] ?? 0, operation);
 
@@ -101,9 +107,15 @@ export const indexServerTsjrpcBase = new (class Index extends TsjrpcBaseServer<I
 
           userAccessRightsAndRolesFileStore.saveValue();
 
-          indexServerTsjrpcShareMethods.refreshAccessRights({ rights: {} }, (_, auth, client) => {
+          indexServerTsjrpcShareMethods.refreshAccessRights({ rights: {}, lastModifiedAt: 0 }, (_, auth, client) => {
             if (auth?.login != null && rights[auth.login]?.info.role === role) {
-              indexServerTsjrpcShareMethods.refreshAccessRights({ rights: makeUserAccessRights(auth.login) }, client);
+              indexServerTsjrpcShareMethods.refreshAccessRights(
+                {
+                  rights: makeUserAccessRights(auth.login),
+                  lastModifiedAt,
+                },
+                client,
+              );
             }
 
             return false;

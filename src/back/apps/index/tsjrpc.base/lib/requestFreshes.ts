@@ -31,12 +31,12 @@ export const indexTSJRPCBaseRequestFreshes: typeof indexServerTsjrpcBase.request
     const userRights = rightsAndRoles.rights[login];
 
     if (userRights != null && userRights.info.m > lastModfiedAt) {
-      refreshUserAccessRights(login, client);
+      refreshUserAccessRights(login, client, userRights.info.m);
     } else {
       const userRole = userRights?.info.role ? rightsAndRoles.roles[userRights.info.role] : null;
 
       if (smylib.isObj(userRole) && userRole.info.m > lastModfiedAt) {
-        refreshUserAccessRights(login, client);
+        refreshUserAccessRights(login, client, userRole.info.m);
       }
     }
   }
@@ -131,5 +131,5 @@ const extractAllScheduleIcons = (sch: IScheduleWidget) => {
     : [];
 };
 
-const refreshUserAccessRights = (login: SokiAuthLogin, client: WebSocket) =>
-  indexServerTsjrpcShareMethods.refreshAccessRights({ rights: makeUserAccessRights(login) }, client);
+const refreshUserAccessRights = (login: SokiAuthLogin, client: WebSocket, lastModifiedAt: number) =>
+  indexServerTsjrpcShareMethods.refreshAccessRights({ rights: makeUserAccessRights(login), lastModifiedAt }, client);

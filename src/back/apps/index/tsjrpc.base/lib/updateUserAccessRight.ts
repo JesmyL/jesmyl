@@ -29,7 +29,13 @@ export const indexTSJRPCBaseUpdateUserAccessRight: typeof indexServerTsjrpcBase.
 
   userAccessRightsAndRolesFileStore.saveValue();
 
-  indexServerTsjrpcShareMethods.refreshAccessRights({ rights: makeUserAccessRights(login) }, { login });
+  indexServerTsjrpcShareMethods.refreshAccessRights(
+    {
+      rights: makeUserAccessRights(login),
+      lastModifiedAt: userRights.info.m,
+    },
+    { login },
+  );
 
   return { value: { rights, roles } };
 };
