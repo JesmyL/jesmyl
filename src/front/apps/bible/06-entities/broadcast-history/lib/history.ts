@@ -1,13 +1,13 @@
 import { mylib } from '#shared/lib/my-lib';
-import { BibleTranslationAddress } from '$bible/shared/model/base';
+import { BibleBroadcastAddress } from '$bible/shared/model/base';
 import { bibleIDB } from '$bible/shared/state/bibleIDB';
 import { useCallback } from 'react';
 
-export const useBibleBroadcastHistory = () => bibleIDB.useValue.translationHistory();
+export const useBibleBroadcastHistory = () => bibleIDB.useValue.broadcastHistory();
 
 export const useBibleBroadcastHistoryAddToHistory = () => {
-  return useCallback(async (item: BibleTranslationAddress, isReplaceFirstNearVersei = false) => {
-    const history = await bibleIDB.get.translationHistory();
+  return useCallback(async (item: BibleBroadcastAddress, isReplaceFirstNearVersei = false) => {
+    const history = await bibleIDB.get.broadcastHistory();
 
     const previ = history.findIndex(historyItem => mylib.isEq(historyItem, item, true));
     const newHistory = [...history];
@@ -23,10 +23,10 @@ export const useBibleBroadcastHistoryAddToHistory = () => {
     newHistory.unshift(item);
     if (newHistory.length > 50) newHistory.length = 50;
 
-    bibleIDB.set.translationHistory(newHistory);
+    bibleIDB.set.broadcastHistory(newHistory);
   }, []);
 };
 
 export const useBibleBroadcastHistoryClearHistorySetter = () => {
-  return useCallback(() => bibleIDB.set.translationHistory([]), []);
+  return useCallback(() => bibleIDB.set.broadcastHistory([]), []);
 };

@@ -1,4 +1,4 @@
-import { TsjrpcBaseClient } from '#basis/lib/TsjrpcBase.client';
+import { TsjrpcBaseClient } from '#basis/tsjrpc/TsjrpcBase.client';
 import { CmShareEditorTsjrpcModel } from 'shared/api/tsjrpc/cm/editor.tsjrpc.shares.model';
 import { cmEditorIDB } from '../state/cmEditorIDB';
 import { comEditorBusiesAtom } from '../state/com';

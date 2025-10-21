@@ -1,5 +1,5 @@
 import { DexieDB } from '#shared/lib/DexieDB';
-import { CmTranslationScreenConfig, cmTranslationDefaultConfig } from '$cm/widgets/translation';
+import { CmBroadcastScreenConfig, cmBroadcastDefaultConfig } from '$cm/widgets/broadcast';
 import { useLiveQuery } from 'dexie-react-hooks';
 import {
   ChordPack,
@@ -29,12 +29,12 @@ export interface CmIDBStorage {
   audioTrackMarks: { src: string; marks?: CmComAudioMarkPack; m: number }[];
   scheduleComPacks: ScheduleComPack[];
 
-  translationScreenConfigs: CmTranslationScreenConfig[];
+  broadcastScreenConfigs: CmBroadcastScreenConfig[];
 
   comTopTools: MigratableComToolName[] | null;
   constantsConfig: CmConstantsConfig | null;
   lastOpenComw?: CmComWid | null;
-  isShowFavouritesInTranslations: boolean | null;
+  isShowFavouritesInBroadcast: boolean | null;
   selectedComws: CmComWid[] | null;
   laterComwList: number[] | null;
   chordVisibleVariant: ChordVisibleVariant | null;
@@ -48,7 +48,7 @@ class CmIDB extends DexieDB<CmIDBStorage> {
     super('cm', {
       chordPack: { $byDefault: {} },
       lastModifiedAt: { $byDefault: 0 },
-      translationScreenConfigs: { $byDefault: [cmTranslationDefaultConfig] },
+      broadcastScreenConfigs: { $byDefault: () => [cmBroadcastDefaultConfig] },
 
       selectedComws: { $byDefault: null },
       comTopTools: { $byDefault: null },
@@ -58,7 +58,7 @@ class CmIDB extends DexieDB<CmIDBStorage> {
       playerHideMode: { $byDefault: null },
       speedRollKf: { $byDefault: null },
       lastOpenComw: { $byDefault: null },
-      isShowFavouritesInTranslations: { $byDefault: null },
+      isShowFavouritesInBroadcast: { $byDefault: null },
       constantsConfig: { $byDefault: null },
 
       coms: {

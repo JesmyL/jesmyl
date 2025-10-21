@@ -1,13 +1,13 @@
 import { propagationStopper } from '#shared/lib/event-funcs';
-import { useScreenTranslationCurrentConfig, useScreenTranslationCurrentConfigi } from '../hooks/configs';
-import { useScreenTranslationWindows } from '../hooks/windows';
-import { useUpdateScreenTranslationConfig } from '../hooks/with-config';
+import { useScreenBroadcastCurrentConfig, useScreenBroadcastCurrentConfigi } from '../hooks/configs';
+import { useScreenBroadcastWindows } from '../hooks/windows';
+import { useUpdateScreenBroadcastConfig } from '../hooks/with-config';
 
 export const ScreenTranslateConfigurationNameChanger = () => {
-  const config = useScreenTranslationCurrentConfig();
-  const updateConfig = useUpdateScreenTranslationConfig();
-  const currentConfigi = useScreenTranslationCurrentConfigi();
-  const windows = useScreenTranslationWindows();
+  const config = useScreenBroadcastCurrentConfig();
+  const updateConfig = useUpdateScreenBroadcastConfig();
+  const currentConfigi = useScreenBroadcastCurrentConfigi();
+  const windows = useScreenBroadcastWindows();
 
   if (config == null) return null;
 

@@ -1,19 +1,19 @@
 import { useCallback } from 'react';
 import {
-  useCurrentTranslationConfigiValue,
-  useScreenTranslationConfigsSet,
-  useScreenTranslationConfigsValue,
+  useCurrentBroadcastConfigiValue,
+  useScreenBroadcastConfigsSet,
+  useScreenBroadcastConfigsValue,
 } from '../atoms';
 import { defaultComplectConfig } from '../consts';
-import { ScreenTranslationConfig } from '../model';
+import { ScreenBroadcastConfig } from '../model';
 
-export const useMakeScreenTranslationConfigsFillPack = <Config>(configs: Config[], defaultConfig: Config) => {
-  return useScreenTranslationConfigsValue().map((_, configi) => configs[configi] ?? defaultConfig);
+export const useMakeScreenBroadcastConfigsFillPack = <Config>(configs: Config[], defaultConfig: Config) => {
+  return useScreenBroadcastConfigsValue().map((_, configi) => configs[configi] ?? defaultConfig);
 };
 
-export const useAddScreenTranslationConfig = () => {
-  const configs = useScreenTranslationConfigsValue();
-  const set = useScreenTranslationConfigsSet();
+export const useAddScreenBroadcastConfig = () => {
+  const configs = useScreenBroadcastConfigsValue();
+  const set = useScreenBroadcastConfigsSet();
 
   return useCallback(() => {
     set([...configs, { ...defaultComplectConfig, title: defaultComplectConfig.title + ' №' + (configs.length + 1) }]);
@@ -22,19 +22,19 @@ export const useAddScreenTranslationConfig = () => {
   }, [configs, set]);
 };
 
-export const useRemoveScreenTranslationConfig = () => {
-  const configs = useScreenTranslationConfigsValue();
-  const set = useScreenTranslationConfigsSet();
+export const useRemoveScreenBroadcastConfig = () => {
+  const configs = useScreenBroadcastConfigsValue();
+  const set = useScreenBroadcastConfigsSet();
 
   return useCallback((configi: number) => set(configs.toSpliced(configi, 1)), [configs, set]);
 };
 
-export const useGetScreenTranslationConfig = () => {
-  const configs = useScreenTranslationConfigsValue();
-  return useCallback((configi: number): ScreenTranslationConfig | nil => configs[configi], [configs]);
+export const useGetScreenBroadcastConfig = () => {
+  const configs = useScreenBroadcastConfigsValue();
+  return useCallback((configi: number): ScreenBroadcastConfig | nil => configs[configi], [configs]);
 };
 
-export const useScreenTranslationCurrentConfigi: () => number = () => useCurrentTranslationConfigiValue();
+export const useScreenBroadcastCurrentConfigi: () => number = () => useCurrentBroadcastConfigiValue();
 
-export const useScreenTranslationCurrentConfig = (): ScreenTranslationConfig | und =>
-  useScreenTranslationConfigsValue()[useScreenTranslationCurrentConfigi()];
+export const useScreenBroadcastCurrentConfig = (): ScreenBroadcastConfig | und =>
+  useScreenBroadcastConfigsValue()[useScreenBroadcastCurrentConfigi()];

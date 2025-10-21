@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { BibleBroadcastArchive } from '../../broadcast-archive/ui/Archive';
 import { useBibleBroadcastPlan, useBibleBroadcastPlanClearSetter } from '../lib/plan';
 
-export const BibleBroadcastPlanArchive = memo(function BibleTranslationPlanArchive(): JSX.Element {
+export const BibleBroadcastPlanArchive = memo(function BibleBroadcastPlanArchive(): JSX.Element {
   const plan = useBibleBroadcastPlan();
   const clearPlan = useBibleBroadcastPlanClearSetter();
   const [selectedItemi, setSelectedItemi] = useState<number | null>(null);

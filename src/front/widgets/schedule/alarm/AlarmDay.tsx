@@ -1,5 +1,5 @@
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
-import { useAuth } from '$index/atoms';
+import { useAuth } from '$index/shared/state';
 import { useMemo } from 'react';
 import { ScheduleWidgetTopicTitle } from '../complect/TopicTitle';
 import { ScheduleWidgetDay, ScheduleWidgetDayProps } from '../days/Day';

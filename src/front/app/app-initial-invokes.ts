@@ -3,12 +3,13 @@ import { schTsjrpcBaseClient } from '#widgets/schedule/tsjrpc/tsjrpc.base';
 import { bibleTsjrpcBaseClient } from '$bible/shared/lib/tsjrpc';
 import { cmEditorInitialInvokes } from '$cm+editor/shared/lib/cm+editor-initial-invokes';
 import { cmShareEditorTsjrpcBaseClient } from '$cm+editor/shared/lib/cm-editor.tsjrpc.base';
-import { indexUserAccessRightsAtom } from '$index/atoms';
-import { schLiveTsjrpcBaseClient } from '$index/complect/translations/live.tsjrpc';
-import { indexDeviceIdAtom, lastUpdatedIconsMd5HashAtom } from '$index/db/atoms';
-import { indexIDB } from '$index/db/index-idb';
-import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
-import { indexTsjrpcBaseClient } from '$index/tsjrpc.shares';
+import {
+  indexDeviceIdAtom,
+  indexIDB,
+  indexUserAccessRightsAtom,
+  lastUpdatedIconsMd5HashAtom,
+} from '$index/shared/state';
+import { indexTsjrpcBaseClient, indexTsjrpcClientMethods, schLiveTsjrpcBaseClient } from '$index/shared/tsjrpc';
 import { DeviceId } from 'shared/api';
 import { checkUserScopeAccessRight } from 'shared/utils/index/utils';
 

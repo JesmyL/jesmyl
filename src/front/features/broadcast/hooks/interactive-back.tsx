@@ -7,7 +7,7 @@ const style: CSSProperties = {
   objectFit: 'cover',
 };
 
-export const useSetScreenTranslationInteractiveBackground = (currentBackground: BackgroundNameType | und) => {
+export const useSetBroadcastScreenInteractiveBackground = (currentBackground: BackgroundNameType | und) => {
   const [background, setBackground] = useState<ReactNode | null>(null);
 
   useEffect(() => {

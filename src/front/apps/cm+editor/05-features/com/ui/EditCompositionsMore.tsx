@@ -1,8 +1,8 @@
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { Modal } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { CmEditorComCreate, CmEditorComRemovedComsModalInner } from '$cm+editor/widgets/com';
-import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { atom } from 'atomaric';
 import { useEffect } from 'react';
 

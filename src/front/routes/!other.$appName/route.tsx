@@ -1,5 +1,5 @@
-import { AppNameContext } from '#basis/lib/contexts';
 import { useCurrentAppSetter } from '#basis/lib/useCurrentAppSetter';
+import { AppNameContext } from '#basis/state/contexts';
 import { createFileRoute, Outlet } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/!other/$appName')({ component: RouteComponent });

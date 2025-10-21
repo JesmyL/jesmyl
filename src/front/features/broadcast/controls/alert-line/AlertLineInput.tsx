@@ -1,9 +1,9 @@
-import { translationShowAlertLineConfigIdAtom } from '#features/broadcast/initial-slide-context';
+import { broadcastShowAlertLineConfigIdAtom } from '#features/broadcast/initial-slide-context';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { Modal } from '#shared/ui/modal';
 import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { complectIDB } from '$index/state/complectIDB';
+import { complectIDB } from '$index/shared/state';
 import { atom, useAtom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React from 'react';
@@ -14,8 +14,8 @@ const isOpenSettingsModalAtom = atom(false);
 
 export const AlertLineInput = () => {
   const configs = useLiveQuery(() => complectIDB.tb.alertLineConfigs.toArray());
-  const [alertLine, setAlertLine] = complectIDB.use.translationAlertLine();
-  const [showAlertConfigId, setShowAlertConfigId] = useAtom(translationShowAlertLineConfigIdAtom);
+  const [alertLine, setAlertLine] = complectIDB.use.broadcastAlertLine();
+  const [showAlertConfigId, setShowAlertConfigId] = useAtom(broadcastShowAlertLineConfigIdAtom);
 
   return (
     <>

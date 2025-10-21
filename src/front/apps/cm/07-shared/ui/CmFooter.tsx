@@ -1,7 +1,7 @@
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { AppFooter } from '$app/AppFooter';
 import { AppFooterItem } from '$app/AppFooterItem';
-import { indexIsShowPlayerInFooterAtom, useAuth } from '$index/atoms';
-import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
+import { indexIsShowPlayerInFooterAtom, useAuth } from '$index/shared/state';
 import { useAtomValue } from 'atomaric';
 
 export const CmFooter = () => {

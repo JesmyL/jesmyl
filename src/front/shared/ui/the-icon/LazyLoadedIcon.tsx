@@ -1,6 +1,5 @@
-import { indexIsPlayAnimationsAtom } from '$index/atoms';
-import { indexIDB } from '$index/db/index-idb';
-import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
+import { indexIDB, indexIsPlayAnimationsAtom } from '$index/shared/state';
+import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { HTMLAttributes, useEffect, useState } from 'react';
 import { emptyFunc, itInvokeIt } from 'shared/utils';
 import {

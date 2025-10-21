@@ -1,11 +1,12 @@
 import { MyLib } from '#shared/lib/my-lib';
 import { cmComTopToolsAtom } from '$cm/entities/index';
 import { cmUserStoreTsjrpcClient } from '$cm/shared/tsjrpc';
-import { useAuth } from '$index/atoms';
+import { useAuth } from '$index/shared/state';
 import { useAtom, useAtomValue } from 'atomaric';
 import React from 'react';
 import { MigratableComToolName } from 'shared/api';
 import { CmComToolIsComToolIconItemsContext, CmComToolItemAttrsContext, CmComToolNameContext } from '../state/contexts';
+import { CmComToolBroadcast } from '../ui/BroadcastComTool';
 import { CmComToolCatsBinds } from '../ui/CatsBindsComTool';
 import { CmComToolChordHardLevel } from '../ui/ChordHardLevelComTool';
 import { CmComToolChordImages } from '../ui/ChordImagesComTool';
@@ -19,7 +20,6 @@ import { CmComToolMiniAnchorSwitch } from '../ui/MiniAnchorSwitchComTool';
 import { CmComToolOpenPlayer } from '../ui/OpenPlayerComTool';
 import { CmComToolQrComShare } from '../ui/QrComShareComTool';
 import { CmComToolSelected } from '../ui/SelectedComTool';
-import { CmComToolTranslation } from '../ui/TranslationComTool';
 
 const RedactComTool = React.lazy(() => import('../ui/RedactComTool'));
 
@@ -62,7 +62,7 @@ const toolsDict: Record<MigratableComToolName, React.ReactNode> = {
   'mark-com': <CmComToolFavorite />,
   'fullscreen-mode': <CmComToolFullscreen />,
   'chords-variant': <CmComToolChordsVariant />,
-  'show-translation': <CmComToolTranslation />,
+  'show-translation': <CmComToolBroadcast />,
   'chord-images': <CmComToolChordImages />,
   'selected-toggle': <CmComToolSelected />,
   'open-player': <CmComToolOpenPlayer />,

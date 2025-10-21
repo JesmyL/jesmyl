@@ -1,7 +1,7 @@
-import { defaultScreenTranslationBackgroundConfig } from './complect/defaults';
-import { AlertLineConfig, ScreenTranslationConfig } from './model';
+import { defaultScreenBroadcastBackgroundConfig } from './complect/defaults';
+import { AlertLineConfig, ScreenBroadcastConfig } from './model';
 
-export const defaultComplectConfig: ScreenTranslationConfig = { title: 'Трансляция', proportion: 1 };
+export const defaultComplectConfig: ScreenBroadcastConfig = { title: 'Трансляция', proportion: 1 };
 
 export const defaultAlertLineConfig: OmitOwn<AlertLineConfig, 'id'> = {
   title: 'Срочно!',
@@ -11,5 +11,5 @@ export const defaultAlertLineConfig: OmitOwn<AlertLineConfig, 'id'> = {
   speed: 30,
   text: '',
   color: '#ec6969',
-  ...defaultScreenTranslationBackgroundConfig,
+  ...defaultScreenBroadcastBackgroundConfig,
 };

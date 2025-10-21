@@ -1,6 +1,6 @@
 import { useBibleSlideText } from '$bible/shared/hooks/useBibleSlideText';
-import { BibleTranslationJoinAddress } from '$bible/shared/model/base';
+import { BibleBroadcastJoinAddress } from '$bible/shared/model/base';
 
-export function BibleBroadcastArchiveJoinedContentText({ item }: { item: BibleTranslationJoinAddress }) {
+export function BibleBroadcastArchiveJoinedContentText({ item }: { item: BibleBroadcastJoinAddress }) {
   return <>{useBibleSlideText(item, true)}</>;
 }

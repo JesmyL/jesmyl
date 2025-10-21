@@ -1,6 +1,6 @@
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { useSetBibleAddressIndexes } from '$bible/shared/hooks';
-import { useBibleTranslationSlideSyncContentSetter } from '$bible/shared/hooks/slide-sync';
+import { useBibleBroadcastSlideSyncContentSetter } from '$bible/shared/hooks/slide-sync';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import {
@@ -21,7 +21,7 @@ export const BibleBroadcastSearchPanelSearchTextInput = ({ inputRef }: Props) =>
   const searchTerm = useAtomValue(bibleBroadcastSearchTermAtom);
   const resultSelected = useBibleBroadcastSearchResultSelectedValue();
   const setResultSelected = useBibleBroadcastSearchResultSelectedSet();
-  const syncSlide = useBibleTranslationSlideSyncContentSetter();
+  const syncSlide = useBibleBroadcastSlideSyncContentSetter();
 
   const setAddress = useSetBibleAddressIndexes();
   const [resultList] = useBibleBroadcastSearchSearchResultList();

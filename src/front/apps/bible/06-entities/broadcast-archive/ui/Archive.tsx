@@ -1,7 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useGetterJoinedAddressMaxValues, useSetBibleAddressIndexes } from '$bible/shared/hooks';
-import { BibleTranslationAddress } from '$bible/shared/model/base';
+import { BibleBroadcastAddress } from '$bible/shared/model/base';
 import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
 import { JSX, memo } from 'react';
 import { BibleBroadcastArchiveJoinedAddressText } from './JoinedAddress';
@@ -11,13 +11,13 @@ import { BibleBroadcastArchiveSingleContentText } from './SingleContentText';
 
 interface Props {
   title: string;
-  list: BibleTranslationAddress[];
+  list: BibleBroadcastAddress[];
   onRemove: () => void;
 }
 
 const itemClassName = 'nowrap pointer mb-2';
 
-export const BibleBroadcastArchive = memo(function BibleTranslationArchive({
+export const BibleBroadcastArchive = memo(function BibleBroadcastArchive({
   title,
   list,
   onRemove,

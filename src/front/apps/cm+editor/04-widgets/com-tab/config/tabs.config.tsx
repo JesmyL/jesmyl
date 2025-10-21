@@ -1,12 +1,12 @@
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
-import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { CmEditorComTabAudio } from '../ui/TabComAudio';
 import { CmEditorComTabAudioMarks } from '../ui/TabComAudioMarks';
 import { CmEditorComTabCategoryBinds } from '../ui/TabComCategoryBinds';
 import { CmEditorComTabChordApplications } from '../ui/TabComChordApplications';
 import { CmEditorComTabChordsBlocks } from '../ui/TabComChordsBlocks';
 import { CmEditorComTabMain } from '../ui/TabComMain';
-import { CmEditorComTabComOnTranslations } from '../ui/TabComOnTranslations';
+import { CmEditorComTabComOnBroadcast } from '../ui/TabComOnBroadcast';
 import { CmEditorComTabComOrders } from '../ui/TabComOrders';
 import { CmEditorComTabComRepeats } from '../ui/TabComRepeats';
 import { CmEditorComTabTextBlocks } from '../ui/TabComTextBlocks';
@@ -59,7 +59,7 @@ export const cmEditorComTabCompositionNavs = {
     checkTabAccess: checkAccess => checkAccess('cm', 'COM_REP'),
   },
   tr: {
-    Component: CmEditorComTabComOnTranslations,
+    Component: CmEditorComTabComOnBroadcast,
     icon: 'Computer',
     checkTabAccess: checkAccess => checkAccess('cm', 'COM_TR'),
   },

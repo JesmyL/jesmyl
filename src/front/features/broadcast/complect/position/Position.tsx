@@ -1,9 +1,9 @@
-import { useCmTranslationUpdateCurrentConfig } from '$cm/widgets/translation/hooks/update-config';
+import { useCmBroadcastUpdateCurrentConfig } from '$cm/widgets/broadcast/hooks/update-config';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled, { RuleSet, css } from 'styled-components';
 import { useFixedResizerLines } from '../atoms';
-import { defaultScreenTranslationPositionConfig } from '../defaults';
-import { FixedResizerLines, ScreenTranslationPositionConfig } from '../model';
+import { defaultScreenBroadcastPositionConfig } from '../defaults';
+import { FixedResizerLines, ScreenBroadcastPositionConfig } from '../model';
 import { PositionConfiguratorsResizersHalfWrapperFixer } from './complect/HalfWrapperFixer';
 import { ShowHalfFixersKeyActiveMode } from './complect/model';
 import { PositionConfiguratorsResizers } from './complect/Resizers';
@@ -17,8 +17,8 @@ type Bottom = 'bottom' | ' bottom' | '';
 export type ScreenResizerResizeOnly = `${Top}${Right}${Bottom}${Left}`;
 
 interface Props {
-  config: ScreenTranslationPositionConfig;
-  updateConfig?: (config: Partial<ScreenTranslationPositionConfig>) => void;
+  config: ScreenBroadcastPositionConfig;
+  updateConfig?: (config: Partial<ScreenBroadcastPositionConfig>) => void;
   resizeOnly?: ScreenResizerResizeOnly;
   isCantMove?: boolean;
   wrapperRef: React.RefObject<HTMLDivElement | null>;
@@ -31,7 +31,7 @@ export const ScreenTranslateCurrentPositionConfigurators = ({
   wrapperRef,
   updateConfig: topUpdateConfig,
 }: Props) => {
-  const currUpdateConfig = useCmTranslationUpdateCurrentConfig();
+  const currUpdateConfig = useCmBroadcastUpdateCurrentConfig();
   const updateConfig = topUpdateConfig ?? currUpdateConfig;
 
   const [top, setTop] = useState(config.top);
@@ -112,7 +112,7 @@ export const ScreenTranslateCurrentPositionConfigurators = ({
   const onRectDoubleClick = useCallback(() => {
     if (isCantMove) return;
     setOnMove(null);
-    updateConfig(defaultScreenTranslationPositionConfig);
+    updateConfig(defaultScreenBroadcastPositionConfig);
   }, [isCantMove, setOnMove, updateConfig]);
 
   return (
@@ -171,7 +171,7 @@ const Rect = styled.div<{
   $resizeOnly: ScreenResizerResizeOnly | und;
   $isCantMove: boolean | und;
   $fixedResizerLines: FixedResizerLines | null;
-  $config: ScreenTranslationPositionConfig;
+  $config: ScreenBroadcastPositionConfig;
 }>`
   position: absolute;
   z-index: 100;

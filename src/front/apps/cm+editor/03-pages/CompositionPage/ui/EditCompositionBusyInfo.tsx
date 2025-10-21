@@ -1,7 +1,7 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmEditorClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { comEditorBusiesAtom } from '$cm+editor/shared/state/com';
-import { indexDeviceIdAtom } from '$index/db/atoms';
+import { indexDeviceIdAtom } from '$index/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { CmComWid } from 'shared/api';

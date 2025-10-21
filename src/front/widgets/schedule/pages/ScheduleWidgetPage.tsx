@@ -1,7 +1,7 @@
+import { useConnectionState } from '#basis/lib/useConnectionState';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
-import { useAuth, useIndexSchedules } from '$index/atoms';
-import { useConnectionState } from '$index/useConnectionState';
+import { useAuth, useIndexSchedules } from '$index/shared/state';
 import { Link } from '@tanstack/react-router';
 import { useScheduleCurrentSchwContext, useScheduleScopePropsContext } from '../complect/lib/contexts';
 import { ScheduleWidget } from '../ScheduleWidget';

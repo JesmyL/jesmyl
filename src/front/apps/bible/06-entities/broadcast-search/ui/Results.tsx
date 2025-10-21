@@ -1,7 +1,7 @@
 import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
 import { useBibleAddressBooki, useBibleAddressChapteri } from '$bible/shared/hooks';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
-import { BibleBooki, BibleChapteri, BibleTranslationSingleAddress, BibleVersei } from '$bible/shared/model/base';
+import { BibleBooki, BibleBroadcastSingleAddress, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
 import { bibleJoinAddressAtom } from '$bible/shared/state/atoms';
 import { useAtomValue } from 'atomaric';
 import { JSX, useCallback, useEffect, useState } from 'react';
@@ -20,7 +20,7 @@ interface Props {
 }
 
 const mapWordsReplaceYoLetter = (word: string) => escapeRegExpSymbols(word).replace(makeRegExp('/[ёе]/g'), '[её]');
-const mapRetArrFunc = (): BibleTranslationSingleAddress[] => [];
+const mapRetArrFunc = (): BibleBroadcastSingleAddress[] => [];
 const getSplitReg = (lowerWords: string[]) =>
   makeRegExp(`/(${lowerWords.map(mapWordsReplaceYoLetter).sort(sortStringsByLength).join('|')})/gi`);
 

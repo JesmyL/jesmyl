@@ -1,5 +1,5 @@
-import { AccessRightsPage } from '$index/pages/AccessRightsPage';
-import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { IndexAccessRightsPage } from '$index/pages/AccessRightsPage/ui/AccessRightsPage';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/!other/$appName/settings/rights')({
@@ -8,5 +8,5 @@ export const Route = createFileRoute('/!other/$appName/settings/rights')({
 
 function RouteComponent() {
   const checkAccess = useCheckUserAccessRightsInScope();
-  if (checkAccess('general', 'ALL')) return <AccessRightsPage />;
+  if (checkAccess('general', 'ALL')) return <IndexAccessRightsPage />;
 }

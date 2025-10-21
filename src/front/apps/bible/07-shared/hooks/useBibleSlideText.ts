@@ -5,14 +5,14 @@ import { bibleTitles } from '../const/bibleTitles';
 import { translateDescriptions } from '../const/consts';
 import { verseTranslateTitleCssClassName } from '../const/ids';
 import { useBibleTranslatesContext } from '../contexts/translates';
-import { BibleSingleAddressCode, BibleTranslationAnyAddress, BibleTranslationJoinAddress } from '../model/base';
+import { BibleBroadcastAnyAddress, BibleBroadcastJoinAddress, BibleSingleAddressCode } from '../model/base';
 import { BibleBookTranslates } from '../state/TranslatesContext';
 import { useBibleShowTranslatesValue } from './translates';
 
 const numSortFunc = (a: number, b: number) => a - b;
 
 export const useBibleSlideText = (
-  address: BibleTranslationAnyAddress | nil,
+  address: BibleBroadcastAnyAddress | nil,
   isSetFirstTranslate?: boolean,
   isSetAddress?: boolean,
 ) => {
@@ -52,7 +52,7 @@ const makeSlideSingleAddressText = (
 const makeSlideJoinedAddressText = (
   showTranslates: BibleTranslateName[],
   translates: BibleBookTranslates,
-  joinAddress: BibleTranslationJoinAddress | nil,
+  joinAddress: BibleBroadcastJoinAddress | nil,
   isSetFirstTranslate?: boolean,
   isSetAddress?: boolean,
 ) => {

@@ -1,11 +1,11 @@
 import { useCallback } from 'react';
-import { ScreenTranslationPositionConfig } from '../../model';
+import { ScreenBroadcastPositionConfig } from '../../model';
 
 export const useScreenPositionConfigMouseDownCallback = (
   isCantMove: boolean | und,
   rectRef: React.RefObject<HTMLDivElement | null>,
   wrapperRef: React.RefObject<HTMLDivElement | null>,
-  updateConfig: (config: Partial<ScreenTranslationPositionConfig>) => void,
+  updateConfig: (config: Partial<ScreenBroadcastPositionConfig>) => void,
   setOnMove: (callback: ((event: MouseEvent) => void) | null) => void,
 ) => {
   return useCallback(() => {

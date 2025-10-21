@@ -1,4 +1,4 @@
-import { TsjrpcClient } from '#basis/lib/Tsjrpc.client';
+import { TsjrpcClient } from '#basis/tsjrpc/Tsjrpc.client';
 import { CmTsjrpcModel } from 'shared/api/tsjrpc/cm/tsjrpc.model';
 import { cmIDB } from '../state/cmIDB';
 

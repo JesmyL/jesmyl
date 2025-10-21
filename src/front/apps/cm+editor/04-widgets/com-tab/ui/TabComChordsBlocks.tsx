@@ -1,10 +1,10 @@
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { CmEditorChordBlockRedactor } from '$cm+editor/entities/chord';
 import { CmEditorComOrderAddTextableBlockAnchorTitles } from '$cm+editor/features/com-order';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { makeRegExp } from 'regexpert';
 
 export const CmEditorComTabChordsBlocks = ({ ccom }: { ccom: EditableCom }) => {

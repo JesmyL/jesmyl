@@ -1,7 +1,7 @@
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { PageCmEditorContainer } from '$cm+editor/shared/ui/PageCmEditorContainer';
-import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { Link } from '@tanstack/react-router';
 
 export const CmEditorPage = () => {

@@ -1,6 +1,6 @@
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
-import { useIndexSchedules } from '$index/atoms';
+import { useIndexSchedules } from '$index/shared/state';
 import { atom, useAtom } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { IScheduleWidget, IScheduleWidgetWid } from 'shared/api';

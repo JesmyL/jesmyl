@@ -1,5 +1,5 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useAuth } from '$index/atoms';
+import { useAuth } from '$index/shared/state';
 import { Link } from '@tanstack/react-router';
 
 export const CmChordCardUndefined = ({ chord }: { chord: string }) => {

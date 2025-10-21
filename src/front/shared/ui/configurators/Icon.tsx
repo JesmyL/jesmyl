@@ -1,7 +1,7 @@
 import { useIndexValuesQuery } from '#basis/api/useIndexValuesQuery';
 import { Button } from '#shared/components/ui/button';
 import { useDebounceValue } from '#shared/lib/hooks/useDebounceValue';
-import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
+import { indexTsjrpcClientMethods } from '$index/shared/tsjrpc';
 import { useQuery } from '@tanstack/react-query';
 import { atom, useAtomValue } from 'atomaric';
 import { ReactNode, useState } from 'react';

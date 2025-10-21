@@ -1,4 +1,4 @@
-import { hideAppFooterAtom } from '#basis/lib/atoms/hideAppFooterAtom';
+import { hideAppFooterAtom } from '#basis/state/hideAppFooterAtom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { Modal } from '#shared/ui/modal';
 import {

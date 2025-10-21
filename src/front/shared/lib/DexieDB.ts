@@ -4,6 +4,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 import { useCallback } from 'react';
 
 import { emptyArray, smylib, SMyLib } from 'shared/utils';
+import { mylib } from './my-lib';
 
 const keyvalues = '%keyvalues%';
 const byDefaultField = '$byDefault';
@@ -42,25 +43,31 @@ export class DexieDB<Store> {
       [K in keyof Store]: Store[K] extends any[]
         ?
             | Omit<Partial<Record<'_', '++'> & Record<keyof Store[K][number], true | '++'>>, ByDefaultField>
-            | Record<ByDefaultField, Store[K]>
-        : Record<ByDefaultField, Store[K]>;
+            | Record<ByDefaultField, (() => Store[K]) | Store[K]>
+        : Record<ByDefaultField, (() => Store[K]) | Store[K]>;
     }>,
     version = 1,
   ) {
     this.tb = this.db = new Dexie(storageName) as never;
 
-    const returnIfKeyInDefaults = <Cb>(key: string | symbol, cb: Cb) => {
+    const returnIfKeyInDefaults = <Cb>(key: keyof Store | string | symbol, cb: Cb) => {
       if (key in defaults) return cb;
     };
 
-    this.get = new Proxy(this.get, {
-      get: (_, key) =>
-        returnIfKeyInDefaults(key, async () => {
-          const store = await this.getKeyvalues().get({ key });
-          if (store === undefined) return this.defaults[key as keyof Store][byDefaultField];
-          return store.val;
-        }),
-    });
+    const gget = (_: unknown, key: keyof Store) =>
+      returnIfKeyInDefaults(key, async () => {
+        const store = await this.getKeyvalues().get({ key });
+        if (store === undefined) {
+          if (mylib.isFunc(this.defaults[key][byDefaultField])) {
+            this.defaults[key][byDefaultField] = this.defaults[key][byDefaultField]();
+          }
+
+          return this.defaults[key as keyof Store][byDefaultField];
+        }
+        return store.val;
+      });
+
+    this.get = new Proxy(this.get, { get: gget as never });
 
     this.useValue = new Proxy(this.useValue, {
       get: (_, key) =>

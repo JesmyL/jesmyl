@@ -1,5 +1,5 @@
-import { useScreenTranslationPositionsStyles } from '#features/broadcast/complect/hooks/position-styles';
-import { useScreenTranslationTextStyles } from '#features/broadcast/complect/hooks/text-styles';
+import { useScreenBroadcastPositionsStyles } from '#features/broadcast/complect/hooks/position-styles';
+import { useScreenBroadcastTextStyles } from '#features/broadcast/complect/hooks/text-styles';
 import { MyLib } from '#shared/lib/my-lib';
 import { verseTranslateTitleCssVariableName } from '$bible/shared/const/ids';
 import { CSSProperties, useMemo } from 'react';
@@ -20,12 +20,12 @@ const packInnerStyles = <Config extends Partial<Record<'insertedtext' | 'textinb
   }, {});
 };
 
-export const useBibleBroadcastScreenTranslationScreenStyle = (
+export const useBibleBroadcastScreenScreenStyle = (
   isVisible: boolean,
   currentConfig: BibleBroadcastScreenConfig | und,
 ) => {
-  const positions = useScreenTranslationPositionsStyles(currentConfig?.screen);
-  const textStyles = useScreenTranslationTextStyles(currentConfig);
+  const positions = useScreenBroadcastPositionsStyles(currentConfig?.screen);
+  const textStyles = useScreenBroadcastTextStyles(currentConfig);
 
   return useMemo((): CSSProperties => {
     if (currentConfig === undefined)

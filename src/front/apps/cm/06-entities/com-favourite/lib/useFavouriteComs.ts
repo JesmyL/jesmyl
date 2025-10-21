@@ -3,7 +3,7 @@ import { useCmComList } from '$cm/entities/com';
 import { cmComFavoriteComsAtom } from '$cm/entities/index';
 import { cmConstantsConfigAtom } from '$cm/shared/state';
 import { cmUserStoreTsjrpcClient } from '$cm/shared/tsjrpc';
-import { useAuth } from '$index/atoms';
+import { useAuth } from '$index/shared/state';
 import { useAtomValue } from 'atomaric';
 import { toast } from 'sonner';
 

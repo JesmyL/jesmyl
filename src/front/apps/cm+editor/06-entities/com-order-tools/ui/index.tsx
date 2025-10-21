@@ -1,4 +1,4 @@
-import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { CmEditorComOrderToolsProps } from '../model';
 import { CmEditorComOrderToolsAnchor } from './Anchor';
 import { CmEditorComOrderToolsAnchorDelete } from './AnchorDelete';

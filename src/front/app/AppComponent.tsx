@@ -1,7 +1,7 @@
-import { currentAppNameAtom } from '#basis/lib/atoms/currentAppNameAtom';
-import { hideAppFooterAtom } from '#basis/lib/atoms/hideAppFooterAtom';
 import { useFingersActions } from '#basis/lib/global-listeners/useFingersActions';
 import { useGlobalFontFamilySetter } from '#basis/lib/global-listeners/useGlobalFontFamilySetter';
+import { currentAppNameAtom } from '#basis/state/currentAppNameAtom';
+import { hideAppFooterAtom } from '#basis/state/hideAppFooterAtom';
 import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
 import { isFullscreenAtom } from '#shared/lib/atoms/fullscreen';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';

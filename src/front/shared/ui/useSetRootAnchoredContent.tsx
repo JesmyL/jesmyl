@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useSetAppRootAnchorNodesContext } from '#basis/lib/App.contexts';
+import { useSetAppRootAnchorNodesContext } from '#basis/state/App.contexts';
 import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
 import { useWid } from '#shared/lib/hooks/useWid';
 import { Atom } from 'atomaric';

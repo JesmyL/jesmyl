@@ -4,12 +4,12 @@ export const isShowTranslatedTextAtom = atom(true);
 const isShowAtom = atom(true);
 const initialSlideAtom = atom<React.ReactNode>(null);
 
-export const useTranslationIsInitialSlideShowSet = () => useAtomSet(isShowAtom);
-export const useTranslationIsInitialSlideShow = () => useAtomValue(isShowAtom);
+export const useBroadcastIsInitialSlideShowSet = () => useAtomSet(isShowAtom);
+export const useBroadcastIsInitialSlideShow = () => useAtomValue(isShowAtom);
 
-export const useTranslationInitialSlideSet = () => useAtomSet(initialSlideAtom);
+export const useBroadcastInitialSlideSet = () => useAtomSet(initialSlideAtom);
 
-export const useTranslationInitialSlideValue = () => {
+export const useBroadcastInitialSlideValue = () => {
   const initialSlide = useAtomValue(initialSlideAtom);
   const isShow = useAtomValue(isShowAtom);
 
@@ -18,4 +18,4 @@ export const useTranslationInitialSlideValue = () => {
   return null;
 };
 
-export const translationShowAlertLineConfigIdAtom = atom<number | null>(null);
+export const broadcastShowAlertLineConfigIdAtom = atom<number | null>(null);

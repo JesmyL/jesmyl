@@ -1,5 +1,5 @@
 import { BibleAddressTextContext, BibleTextContentContext } from '../contexts/texts';
-import { useBibleTranslationJoinAddress } from '../hooks/address/address';
+import { useBibleBroadcastJoinAddress } from '../hooks/address/address';
 import { useBibleAddressBooki } from '../hooks/address/books';
 import { useBibleAddressChapteri } from '../hooks/address/chapters';
 import { useBibleAddressVersei } from '../hooks/address/verses';
@@ -16,7 +16,7 @@ export const BibleCurrentTextsContext = (props: Props) => {
   const booki = useBibleAddressBooki();
   const chapteri = useBibleAddressChapteri();
   const versei = useBibleAddressVersei();
-  const actualJoinAddress = useBibleTranslationJoinAddress();
+  const actualJoinAddress = useBibleBroadcastJoinAddress();
   const showAddressCode = useBibleShowSlideAddressCode();
 
   const addressCode = props.isPreview ? (actualJoinAddress ?? [booki, chapteri, versei]) : showAddressCode;

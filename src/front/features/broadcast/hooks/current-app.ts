@@ -1,13 +1,12 @@
+import { complectIDB } from '$index/shared/state';
 import { useCallback } from 'react';
-import { complectIDB } from '../../../components/index/state/complectIDB';
-import { TranslationViewApp } from '../Translations.model';
+import { BroadcastViewApp } from '../Broadcast.model';
 
-export const useSwitchCurrentTranslationTextApp = () => {
-  const app = complectIDB.useValue.currentTranslationTextApp();
+export const useSwitchCurrentBroadcastTextApp = () => {
+  const app = complectIDB.useValue.currentBroadcastTextApp();
 
   return useCallback(
-    (setApp?: TranslationViewApp) =>
-      complectIDB.set.currentTranslationTextApp(setApp ?? (app === 'cm' ? 'bible' : 'cm')),
+    (setApp?: BroadcastViewApp) => complectIDB.set.currentBroadcastTextApp(setApp ?? (app === 'cm' ? 'bible' : 'cm')),
     [app],
   );
 };

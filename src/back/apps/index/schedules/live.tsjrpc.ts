@@ -1,12 +1,12 @@
+import { IndexSchWBroadcastLiveDataValue } from '$index/shared/model/Index.model';
 import { TsjrpcBaseServer } from 'back/tsjrpc.base.server';
 import { TsjrpcServerMethods } from 'back/tsjrpc.server';
-import { IndexSchWTranslationLiveDataValue } from 'front/components/index/Index.model';
 import { IScheduleWidgetWid, SokiAuthLogin } from 'shared/api';
 import { SchLiveTsjrpcModel, SchLiveTsjrpcSharesModel } from 'shared/api/tsjrpc/schedules/live.tsjrpc.model';
 import { itNNull, SMyLib } from 'shared/utils';
 import { WebSocket } from 'ws';
 
-const theLiveData = {} as PRecord<IScheduleWidgetWid, PRecord<SokiAuthLogin, IndexSchWTranslationLiveDataValue>>;
+const theLiveData = {} as PRecord<IScheduleWidgetWid, PRecord<SokiAuthLogin, IndexSchWBroadcastLiveDataValue>>;
 const liveDataWatchers: PRecord<IScheduleWidgetWid, PRecord<SokiAuthLogin, Set<WebSocket>>> = {};
 const streamersWaiters: PRecord<IScheduleWidgetWid, Set<WebSocket>> = {};
 

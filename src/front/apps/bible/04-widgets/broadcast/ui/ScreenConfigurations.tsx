@@ -1,4 +1,4 @@
-import { ScreenTranslationsFaceLine } from '#features/broadcast/complect/config-line/FaceLine';
+import { ScreenBroadcastFaceLine } from '#features/broadcast/complect/config-line/FaceLine';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
 import { useBibleBroadcastScreenCurrentConfig, useBibleBroadcastUpdateCurrentConfig } from '$bible/entities/broadcast';
 import { JSX, memo } from 'react';
@@ -10,7 +10,7 @@ export const BibleBroadcastScreenConfigurations = memo(function BibleTranslateSc
 
   return (
     <div className="mt-5">
-      <ScreenTranslationsFaceLine updateConfig={updateConfig} />
+      <ScreenBroadcastFaceLine updateConfig={updateConfig} />
       {currentConfig && (
         <ExpandableContent title="Настроить">
           <div className="ml-2">

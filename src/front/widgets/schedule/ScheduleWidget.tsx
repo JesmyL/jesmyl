@@ -7,7 +7,7 @@ import { QrCodeFullScreen } from '#shared/ui/qr-code/QrCodeFullScreen';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useAuth } from '$index/atoms';
+import { useAuth } from '$index/shared/state';
 import { atom } from 'atomaric';
 import { useEffect, useMemo, useState } from 'react';
 import { makeRegExp } from 'regexpert';
@@ -23,7 +23,7 @@ import { ScheduleWidgetContextWrapper } from './general/ContextWrapper';
 import { ScheduleWidgetCopy } from './general/Copy';
 import { schLinkAction } from './links';
 import { ScheduleWidgetLists } from './lists/Lists';
-import { ScheduleWidgetWatchLiveTranslationButton } from './live-translations/WatchLiveButton';
+import { ScheduleWidgetWatchLiveBroadcastButton } from './live-broadcast/WatchLiveButton';
 import { ScheduleWidgetMyUserTgInform } from './tg-inform/UserTgInform';
 import { schDaysTsjrpcClient, schGeneralTsjrpcClient, schUsersTsjrpcClient } from './tsjrpc/tsjrpc.methods';
 import { ScheduleWidgetRights, useScheduleWidgetRights } from './useScheduleWidget';
@@ -223,7 +223,7 @@ export function ScheduleWidget({
                   scheduleScopeProps={scheduleScopeProps}
                 />
 
-                <ScheduleWidgetWatchLiveTranslationButton
+                <ScheduleWidgetWatchLiveBroadcastButton
                   schw={schedule.w}
                   postfix="Следить за трансляцией"
                 />

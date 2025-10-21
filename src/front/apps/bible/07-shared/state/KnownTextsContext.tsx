@@ -1,6 +1,6 @@
 import { BibleAddressTextContext, BibleTextContentContext } from '../contexts/texts';
 
-export const BibleTranslationScreenKnownTextsContext = ({
+export const BibleBroadcastScreenKnownTextsContext = ({
   addressText,
   text,
   children,

@@ -1,8 +1,8 @@
 import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import {
   bibleAllTranslates,
-  BibleModulesTranslationsRedactButton,
   bibleTitles,
+  BibleTranslateModulesRedactButton,
   translateDescriptions,
   useBibleMyTranslates,
 } from '$bible/ext';
@@ -56,7 +56,7 @@ export function TheCmComCommentBibleTextsInfo() {
           {'Загруженные переводы: '}
           <span className="text-x7">{myTranslates.join(', ')}</span>
           <span className="align-middle m-2">
-            <BibleModulesTranslationsRedactButton />
+            <BibleTranslateModulesRedactButton />
           </span>
         </p>
 

@@ -1,9 +1,9 @@
 import { CSSProperties, useMemo } from 'react';
-import { defaultScreenTranslationTextConfig } from '../defaults';
-import { ScreenTranslationTextConfig } from '../model';
+import { defaultScreenBroadcastTextConfig } from '../defaults';
+import { ScreenBroadcastTextConfig } from '../model';
 
-export const useScreenTranslationTextStyles = (config: ScreenTranslationTextConfig | und) => {
-  const theConfig = config ?? defaultScreenTranslationTextConfig;
+export const useScreenBroadcastTextStyles = (config: ScreenBroadcastTextConfig | und) => {
+  const theConfig = config ?? defaultScreenBroadcastTextConfig;
 
   return useMemo((): CSSProperties => {
     const fontFamily = 'montserrat,main,calibri,georgia,times,serif,verdana,arial';

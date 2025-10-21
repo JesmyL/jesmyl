@@ -1,6 +1,6 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { extractScheduleWidgetRoleUser } from '#widgets/schedule/useScheduleWidget';
-import { useAuth } from '$index/atoms';
+import { useAuth } from '$index/shared/state';
 import { IScheduleWidget, IScheduleWidgetRole } from 'shared/api';
 
 export function ScheduleWidgetRoleFace({ role, schedule }: { role?: IScheduleWidgetRole; schedule: IScheduleWidget }) {

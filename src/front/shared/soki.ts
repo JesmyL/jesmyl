@@ -1,10 +1,9 @@
-import { tsjrpcBaseClientNext } from '#basis/lib/TsjrpcBase.client';
-import { indexDeviceIdAtom } from '$index/db/atoms';
+import { tsjrpcBaseClientNext } from '#basis/tsjrpc/TsjrpcBase.client';
+import { authIDB, indexDeviceIdAtom } from '$index/shared/state';
 import { makeRegExp } from 'regexpert';
 import { SokiError, TsjrpcClientEvent, TsjrpcClientTool, TsjrpcServerEvent } from 'shared/api';
 import { Eventer } from 'shared/utils';
 import { jversion } from 'shared/values';
-import { authIDB } from '../components/index/db/auth-idb';
 import { environment } from './environment';
 
 export class SokiTrip {

@@ -10,12 +10,12 @@ import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
 import {
   useBibleAddressBooki,
   useBibleAddressChapteri,
-  useBibleTranslationAddressIndexesSetter,
-  useBibleTranslationJoinAddress,
+  useBibleBroadcastAddressIndexesSetter,
+  useBibleBroadcastJoinAddress,
 } from '$bible/shared/hooks';
-import { useBibleTranslationSlideSyncContentSetter } from '$bible/shared/hooks/slide-sync';
+import { useBibleBroadcastSlideSyncContentSetter } from '$bible/shared/hooks/slide-sync';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
-import { BibleTranslationAddress, BibleTranslationJoinAddress, BibleVersei } from '$bible/shared/model/base';
+import { BibleBroadcastAddress, BibleBroadcastJoinAddress, BibleVersei } from '$bible/shared/model/base';
 import { bibleJoinAddressAtom, bibleVerseiAtom } from '$bible/shared/state/atoms';
 import { useEffect, useState } from 'react';
 import { useBibleBroadcastPlanAddToPlan } from '../../broadcast-plan/lib/plan';
@@ -27,14 +27,12 @@ export const BibleBroadcastScreenKeyListener = (versei: BibleVersei, win?: Windo
   const currentChapteri = useBibleAddressChapteri();
   const showTranslates = useBibleShowTranslatesValue();
   const htmlChapters = useBibleTranslatesContext()[showTranslates[0]]?.chapters;
-  const joinAddress = useBibleTranslationJoinAddress();
-  const currentJoinAddress = useBibleTranslationJoinAddress();
-  const syncSlide = useBibleTranslationSlideSyncContentSetter();
+  const joinAddress = useBibleBroadcastJoinAddress();
+  const currentJoinAddress = useBibleBroadcastJoinAddress();
+  const syncSlide = useBibleBroadcastSlideSyncContentSetter();
   const addToPlan = useBibleBroadcastPlanAddToPlan();
-  const setAddress = useBibleTranslationAddressIndexesSetter();
-  const actualAddressRef = useActualRef<BibleTranslationAddress>(
-    joinAddress ?? [currentBooki, currentChapteri, versei],
-  );
+  const setAddress = useBibleBroadcastAddressIndexesSetter();
+  const actualAddressRef = useActualRef<BibleBroadcastAddress>(joinAddress ?? [currentBooki, currentChapteri, versei]);
 
   useEffect(() => {
     if (numberCollection === '') return;
@@ -160,7 +158,7 @@ export const BibleBroadcastScreenKeyListener = (versei: BibleVersei, win?: Windo
             if (chapter !== undefined && versei < chapter.length - 1) verses.add(versei + 1);
           } else if (versei > 0) verses.delete(versei);
 
-          const newJoin: BibleTranslationJoinAddress = {
+          const newJoin: BibleBroadcastJoinAddress = {
             ...currentJoinAddress,
             [currentBooki]: { ...currentJoinAddress?.[currentBooki], [currentChapteri]: Array.from(verses) },
           } as never;

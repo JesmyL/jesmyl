@@ -1,7 +1,7 @@
-import { BibleBroadcastScreenConfig, useBibleBroadcastScreenTranslationScreenStyle } from '$bible/entities/broadcast';
+import { BibleBroadcastScreenConfig, useBibleBroadcastScreenScreenStyle } from '$bible/entities/broadcast';
 import { verseTranslateTitleCssClassName, verseTranslateTitleCssVariableName } from '$bible/shared/const/ids';
 import { useBibleTextContentContext } from '$bible/shared/contexts/texts';
-import { useBibleScreenTranslationFontSizeScreenAdapter } from '$bible/shared/lib';
+import { useBibleBroadcastScreenFontSizeScreenAdapter } from '$bible/shared/lib';
 import styled from 'styled-components';
 import '../style/Content.scss';
 
@@ -15,10 +15,10 @@ interface Props {
 }
 
 export function BibleBroadcastScreenContent(props: Props) {
-  const screenStyle = useBibleBroadcastScreenTranslationScreenStyle(props.isVisible, props.bibleConfig);
+  const screenStyle = useBibleBroadcastScreenScreenStyle(props.isVisible, props.bibleConfig);
   const textContent = useBibleTextContentContext();
 
-  const [screenWrapperRef, screenContentRef] = useBibleScreenTranslationFontSizeScreenAdapter(
+  const [screenWrapperRef, screenContentRef] = useBibleBroadcastScreenFontSizeScreenAdapter(
     textContent,
     props.bibleConfig,
     props.windowResizeUpdatesNum,

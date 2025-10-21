@@ -1,5 +1,5 @@
 import { contextCreator } from '#shared/lib/contextCreator';
-import { useAuth } from '$index/atoms';
+import { useAuth } from '$index/shared/state/atoms';
 import { useMemo } from 'react';
 import {
   IScheduleWidget,

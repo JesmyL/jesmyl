@@ -1,3 +1,3 @@
-export * from './ui/BibleTranslationSlideMiniInfo';
-export * from './ui/ModulesTranslationsControl';
-export * from './ui/ModulesTranslationsRedactButton';
+export * from './ui/BibleBroadcastSlideMiniInfo';
+export * from './ui/ModulesBroadcastControl';
+export * from './ui/ModulesBroadcastRedactButton';

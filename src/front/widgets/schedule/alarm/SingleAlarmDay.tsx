@@ -1,5 +1,5 @@
-import { hideAppFooterAtom } from '#basis/lib/atoms/hideAppFooterAtom';
-import { indexIDB } from '$index/db/index-idb';
+import { hideAppFooterAtom } from '#basis/state/hideAppFooterAtom';
+import { indexIDB } from '$index/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useEffect } from 'react';
 import { IScheduleWidgetWid, ScheduleWidgetCleans } from 'shared/api';

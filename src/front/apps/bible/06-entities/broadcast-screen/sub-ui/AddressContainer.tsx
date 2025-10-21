@@ -1,5 +1,5 @@
-import { useSetScreenTranslationInteractiveBackground } from '#features/broadcast/hooks/interactive-back';
-import { BibleBroadcastScreenConfig, useBibleBroadcastScreenTranslationAddressStyle } from '$bible/entities/broadcast';
+import { useSetBroadcastScreenInteractiveBackground } from '#features/broadcast/hooks/interactive-back';
+import { BibleBroadcastScreenConfig, useBibleBroadcastScreenAddressStyle } from '$bible/entities/broadcast';
 import { useRef } from 'react';
 import { BibleBroadcastScreenAddressContent } from './AddressContent';
 import { BibleBroadcastScreenAddressContentPositionConfiguration } from './AddressContentPositionConfiguration';
@@ -15,12 +15,12 @@ interface Props {
 }
 
 export const BibleBroadcastScreenAddressContainer: React.FC<Props> = props => {
-  const addressBackground = useSetScreenTranslationInteractiveBackground(
+  const addressBackground = useSetBroadcastScreenInteractiveBackground(
     props.bibleConfig?.address.isWithBackground ? props.bibleConfig.address.backgroundInteractive : undefined,
   );
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-  const addressContainerStyle = useBibleBroadcastScreenTranslationAddressStyle(props.isVisible, props.bibleConfig);
+  const addressContainerStyle = useBibleBroadcastScreenAddressStyle(props.isVisible, props.bibleConfig);
 
   return (
     <>

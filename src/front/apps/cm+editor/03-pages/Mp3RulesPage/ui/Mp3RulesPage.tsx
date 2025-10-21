@@ -1,9 +1,9 @@
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmEditorClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { useCmMp3Rules } from '$cm+editor/shared/lib/useCmMp3Rules';
 import { PageCmEditorContainer } from '$cm+editor/shared/ui/PageCmEditorContainer';
 import { CmEditorMp3RuleEditor } from '$cm+editor/widgets/mp3-rule';
-import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { useState } from 'react';
 import { CmMp3Rule } from 'shared/api';
 

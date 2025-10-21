@@ -4,10 +4,10 @@ import { Atom } from 'atomaric';
 import { BibleTranslateName } from 'shared/api';
 import {
   BibleBooki,
+  BibleBroadcastAddress,
+  BibleBroadcastJoinAddress,
   BibleChapteri,
   BibleTranslate,
-  BibleTranslationAddress,
-  BibleTranslationJoinAddress,
   BibleVersei,
 } from '../model/base';
 import {
@@ -25,11 +25,11 @@ export interface BibleIDBStorage {
   versei: BibleVersei | null;
   showTranslates: BibleTranslateName[] | null;
   myTranslates: BibleTranslateName[] | null;
-  joinAddress: BibleTranslationJoinAddress | nil;
+  joinAddress: BibleBroadcastJoinAddress | nil;
 
-  translationPlan: BibleTranslationAddress[];
-  translationHistory: BibleTranslationAddress[];
-  translationScreenConfigs: BibleBroadcastScreenConfig[];
+  broadcastPlan: BibleBroadcastAddress[];
+  broadcastHistory: BibleBroadcastAddress[];
+  broadcastScreenConfigs: BibleBroadcastScreenConfig[];
 }
 
 interface BibleTranslatesIDBStorage extends Record<BibleTranslateName, null | BibleTranslate> {
@@ -56,9 +56,9 @@ export const bibleIDB = new BibleIDB('bible', {
   showTranslates: { $byDefault: null },
   myTranslates: { $byDefault: null },
 
-  translationPlan: { $byDefault: [] },
-  translationHistory: { $byDefault: [] },
-  translationScreenConfigs: { $byDefault: [] },
+  broadcastPlan: { $byDefault: [] },
+  broadcastHistory: { $byDefault: [] },
+  broadcastScreenConfigs: { $byDefault: [] },
 });
 
 (async () => {

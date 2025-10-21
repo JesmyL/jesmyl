@@ -8,7 +8,7 @@ import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/con
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { schRolesTsjrpcClient } from '#widgets/schedule/tsjrpc/tsjrpc.methods';
 import { extractScheduleWidgetRoleUser } from '#widgets/schedule/useScheduleWidget';
-import { useAuth } from '$index/atoms';
+import { useAuth } from '$index/shared/state';
 import { atom } from 'atomaric';
 import React, { useMemo } from 'react';
 import { IScheduleWidgetRole, ScheduleRoleScopeProps, scheduleWidgetUserRights } from 'shared/api';

@@ -1,36 +1,36 @@
 import {
-  defaultScreenTranslationBackgroundConfig,
-  defaultScreenTranslationPositionConfig,
-  defaultScreenTranslationTextConfig,
+  defaultScreenBroadcastBackgroundConfig,
+  defaultScreenBroadcastPositionConfig,
+  defaultScreenBroadcastTextConfig,
 } from '#features/broadcast/complect/defaults';
 import {
-  useMakeScreenTranslationConfigsFillPack,
-  useScreenTranslationCurrentConfigi,
+  useMakeScreenBroadcastConfigsFillPack,
+  useScreenBroadcastCurrentConfigi,
 } from '#features/broadcast/hooks/configs';
 import { bibleIDB } from '$bible/shared/state/bibleIDB';
 import { BibleBroadcastScreenConfig } from '../model/model';
 
 export const bibleBroadcastDefaultConfig: BibleBroadcastScreenConfig = {
-  ...defaultScreenTranslationTextConfig,
-  ...defaultScreenTranslationBackgroundConfig,
+  ...defaultScreenBroadcastTextConfig,
+  ...defaultScreenBroadcastBackgroundConfig,
   insertedtext: { color: '#ffffff', opacity: 0.7 },
   textinbrackets: { color: '#ffffff', display: 'none' },
   godswords: { color: '#ffffff', display: 'none' },
   addressPanel: { height: 20, left: 0, top: 80, width: 100 },
 
-  screen: defaultScreenTranslationPositionConfig,
+  screen: defaultScreenBroadcastPositionConfig,
 
   address: {
-    ...defaultScreenTranslationPositionConfig,
-    ...defaultScreenTranslationTextConfig,
-    ...defaultScreenTranslationBackgroundConfig,
+    ...defaultScreenBroadcastPositionConfig,
+    ...defaultScreenBroadcastTextConfig,
+    ...defaultScreenBroadcastBackgroundConfig,
     isOnBottom: true,
   },
 };
 
-export const useBibleBroadcastScreenConfigsSet = () => bibleIDB.useSet.translationScreenConfigs();
+export const useBibleBroadcastScreenConfigsSet = () => bibleIDB.useSet.broadcastScreenConfigs();
 export const useBibleBroadcastScreenConfigs = () =>
-  useMakeScreenTranslationConfigsFillPack(bibleIDB.useValue.translationScreenConfigs(), bibleBroadcastDefaultConfig);
+  useMakeScreenBroadcastConfigsFillPack(bibleIDB.useValue.broadcastScreenConfigs(), bibleBroadcastDefaultConfig);
 
 export const useBibleBroadcastScreenConfig = (configi: number | und): BibleBroadcastScreenConfig | und => {
   const configs = useBibleBroadcastScreenConfigs();
@@ -38,4 +38,4 @@ export const useBibleBroadcastScreenConfig = (configi: number | und): BibleBroad
 };
 
 export const useBibleBroadcastScreenCurrentConfig = (): BibleBroadcastScreenConfig | und =>
-  useBibleBroadcastScreenConfigs()[useScreenTranslationCurrentConfigi()];
+  useBibleBroadcastScreenConfigs()[useScreenBroadcastCurrentConfigi()];

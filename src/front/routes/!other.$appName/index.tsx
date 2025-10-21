@@ -1,4 +1,4 @@
-import { IndexOtherPage } from '$index/pages/OtherPage';
+import { IndexOtherPage } from '$index/pages/OtherPage/ui/OtherPage';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/!other/$appName/')({ component: RouteComponent });

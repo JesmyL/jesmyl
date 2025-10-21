@@ -1,25 +1,25 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { memo } from 'react';
 import styled from 'styled-components';
-import { useScreenTranslationConfigsValue } from '../atoms';
-import { useWatchScreenTranslations } from '../hooks/watch-translation';
-import { useScreenTranslationCurrentWindow, useScreenTranslationWindows } from '../hooks/windows';
-import { useTranslationIsInitialSlideShow, useTranslationIsInitialSlideShowSet } from '../initial-slide-context';
+import { useScreenBroadcastConfigsValue } from '../atoms';
+import { useWatchScreenBroadcast } from '../hooks/watch-broadcast';
+import { useScreenBroadcastCurrentWindow, useScreenBroadcastWindows } from '../hooks/windows';
+import { useBroadcastIsInitialSlideShow, useBroadcastIsInitialSlideShowSet } from '../initial-slide-context';
 import { AlertLineInput } from './alert-line/AlertLineInput';
-import { ScreenTranslationControlPanelShowMdButton } from './ShowMdButton';
+import { ScreenBroadcastControlPanelShowMdButton } from './ShowMdButton';
 
 interface Props {
   onPrev: () => void;
   onNext: () => void;
 }
 
-export const ScreenTranslationControlPanel = memo(function ControlPanel({ onNext, onPrev }: Props) {
-  const configs = useScreenTranslationConfigsValue();
-  const windows = useScreenTranslationWindows();
-  const currWin = useScreenTranslationCurrentWindow();
-  const watchTranslation = useWatchScreenTranslations();
-  const setIsInitialSlideShow = useTranslationIsInitialSlideShowSet();
-  const isInitialSlideShow = useTranslationIsInitialSlideShow();
+export const ScreenBroadcastControlPanel = memo(function ControlPanel({ onNext, onPrev }: Props) {
+  const configs = useScreenBroadcastConfigsValue();
+  const windows = useScreenBroadcastWindows();
+  const currWin = useScreenBroadcastCurrentWindow();
+  const watchBroadcast = useWatchScreenBroadcast();
+  const setIsInitialSlideShow = useBroadcastIsInitialSlideShowSet();
+  const isInitialSlideShow = useBroadcastIsInitialSlideShow();
 
   return (
     <div>
@@ -38,13 +38,13 @@ export const ScreenTranslationControlPanel = memo(function ControlPanel({ onNext
         </ControlButton>
         <ControlButton
           title={currWin ? undefined : 'Enter'}
-          className="start-translation flex pointer"
+          className="start-broadcast flex pointer"
           disabled={!configs.length}
-          onClick={watchTranslation}
+          onClick={watchBroadcast}
         >
           {windows.length ? <LazyIcon icon="Computer" /> : <LazyIcon icon="Play" />}
         </ControlButton>
-        <ScreenTranslationControlPanelShowMdButton Parent={ControlButton} />
+        <ScreenBroadcastControlPanelShowMdButton Parent={ControlButton} />
         <ControlButton
           className="pointer"
           title="Backspace"
@@ -76,7 +76,7 @@ const ControlButton = styled.button`
   height: 30px;
   color: var(--color--4);
 
-  &.start-translation {
+  &.start-broadcast {
     --icon-color: var(--color--5);
 
     background-color: var(--color--7);

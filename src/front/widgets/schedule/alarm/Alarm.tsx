@@ -1,4 +1,4 @@
-import { useIndexSchedules } from '$index/atoms';
+import { useIndexSchedules } from '$index/shared/state';
 import { useActualSchw } from '../useSch';
 import { ScheduleWidgetAlarmContent } from './AlarmContent';
 

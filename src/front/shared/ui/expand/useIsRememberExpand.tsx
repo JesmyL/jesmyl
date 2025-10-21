@@ -1,4 +1,4 @@
-import { complectIDB } from '$index/state/complectIDB';
+import { complectIDB } from '$index/shared/state';
 import { ReactNode, useCallback } from 'react';
 import { LazyIcon } from '../the-icon/LazyIcon';
 

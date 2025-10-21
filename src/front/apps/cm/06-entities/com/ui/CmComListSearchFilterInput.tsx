@@ -1,4 +1,4 @@
-import { isNumberSearchAtom } from '#basis/lib/atoms/isNumberSearchAtom';
+import { isNumberSearchAtom } from '#basis/state/isNumberSearchAtom';
 import { mylib } from '#shared/lib/my-lib';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
 import { useCmCatList } from '$cm/entities/cat';

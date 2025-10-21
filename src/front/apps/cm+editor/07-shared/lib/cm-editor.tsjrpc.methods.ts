@@ -1,4 +1,4 @@
-import { TsjrpcClient } from '#basis/lib/Tsjrpc.client';
+import { TsjrpcClient } from '#basis/tsjrpc/Tsjrpc.client';
 import { mylib } from '#shared/lib/my-lib';
 import { cmIDB } from '$cm/ext';
 import { CmEditCatTsjrpcModel } from 'shared/api/tsjrpc/cm/edit-cat.tsjrpc.model';

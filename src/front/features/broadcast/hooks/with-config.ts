@@ -1,13 +1,13 @@
 import { useCallback } from 'react';
-import { useScreenTranslationConfigsSet, useScreenTranslationConfigsValue } from '../atoms';
-import { ScreenTranslationConfig } from '../model';
+import { useScreenBroadcastConfigsSet, useScreenBroadcastConfigsValue } from '../atoms';
+import { ScreenBroadcastConfig } from '../model';
 
-export const useUpdateScreenTranslationConfig = () => {
-  const configs = useScreenTranslationConfigsValue();
-  const set = useScreenTranslationConfigsSet();
+export const useUpdateScreenBroadcastConfig = () => {
+  const configs = useScreenBroadcastConfigsValue();
+  const set = useScreenBroadcastConfigsSet();
 
   return useCallback(
-    (configi: number, config: Partial<ScreenTranslationConfig> | null) => {
+    (configi: number, config: Partial<ScreenBroadcastConfig> | null) => {
       const newConfigs = [...configs];
 
       if (config === null) newConfigs.splice(configi, 1);

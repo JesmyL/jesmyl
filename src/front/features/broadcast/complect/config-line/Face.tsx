@@ -1,23 +1,23 @@
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
-import { ScreenTranslationConfig } from '../../model';
+import { ScreenBroadcastConfig } from '../../model';
 
-interface ScreenTranslationsFaceProps {
+interface ScreenBroadcastFaceProps {
   configi: number;
-  config: ScreenTranslationConfig;
+  config: ScreenBroadcastConfig;
   putOnClick: (configi: number) => (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
   putOnClose?: (configi: number) => PropagationStopper;
   className: string;
 }
 
-export const ScreenTranslationsFace = ({
+export const ScreenBroadcastFace = ({
   configi,
   config,
   putOnClick,
   putOnClose,
   className,
-}: ScreenTranslationsFaceProps) => {
+}: ScreenBroadcastFaceProps) => {
   return (
     <Face
       className={twMerge('inline-flex gap-2 between pointer ml-2', className)}

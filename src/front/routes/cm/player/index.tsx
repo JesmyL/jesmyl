@@ -1,5 +1,5 @@
 import { CmPlayerPage } from '$cm/pages/PlayerPage';
-import { useAuth } from '$index/atoms';
+import { useAuth } from '$index/shared/state';
 import { createFileRoute } from '@tanstack/react-router';
 import { CmComWid } from 'shared/api';
 

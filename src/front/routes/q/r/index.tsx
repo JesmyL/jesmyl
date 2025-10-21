@@ -1,4 +1,4 @@
-import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { QuestionerBlankListPage } from '$q/pages/BlankListPage/ui/Page';
 import { createFileRoute } from '@tanstack/react-router';
 

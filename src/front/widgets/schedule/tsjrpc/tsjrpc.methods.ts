@@ -1,4 +1,4 @@
-import { TsjrpcClient } from '#basis/lib/Tsjrpc.client';
+import { TsjrpcClient } from '#basis/tsjrpc/Tsjrpc.client';
 import {
   SchAttachmentTypesTsjrpcMethods,
   SchDayEventsTsjrpcMethods,

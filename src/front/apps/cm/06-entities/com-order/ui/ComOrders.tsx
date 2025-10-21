@@ -1,4 +1,4 @@
-import { useBibleScreenTranslationFontSizeAdapter } from '#shared/lib/hooks/useFontSizeAdapter';
+import { useBibleBroadcastScreenFontSizeAdapter } from '#shared/lib/hooks/useFontSizeAdapter';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ReactNode, useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -77,7 +77,7 @@ export function CmComOrderList(props: ICmComOrderListProps) {
 
 const OrdersWithAdaptiveFontSize = ({ content, com }: { content: ReactNode; com: CmCom }) => {
   const [windowResizes, setWindowResizes] = useState(0);
-  const [wrapperRef, contentRef] = useBibleScreenTranslationFontSizeAdapter(com.name, windowResizes, true);
+  const [wrapperRef, contentRef] = useBibleBroadcastScreenFontSizeAdapter(com.name, windowResizes, true);
 
   useEffect(() => {
     const onResize = () => setWindowResizes(num => num + 1);

@@ -1,6 +1,7 @@
 import { isTouchDevice } from '#shared/lib/device-differences';
 import { mylib } from '#shared/lib/my-lib';
 import { ScheduleDayEventPathProps } from '#widgets/schedule/ScheduleWidget.model';
+import { CmBroadcastFullscreen } from '$cm/entities/broadcast';
 import { CmComListContextValue, CmComOpenRouteProps } from '$cm/entities/com';
 import {
   CmMeetingEvent,
@@ -8,8 +9,7 @@ import {
   CmMeetingToEventLinkRender,
   useCmMeetingComFaceList,
 } from '$cm/entities/meeting';
-import { CmTranslationFullscreen } from '$cm/entities/translation';
-import { IndexScheduleWidgetTranslations } from '$index/complect/translations/LiveTranslations';
+import { CmScheduleWidgetBroadcast } from '$cm/widgets/schedule-widget-broadcast';
 import { FileRoutesByPath, Link, useParams, useSearch } from '@tanstack/react-router';
 import { useMemo } from 'react';
 import { IScheduleWidgetWid } from 'shared/api';
@@ -67,11 +67,11 @@ export const makeCmEventNestedRoute = <Path extends keyof FileRoutesByPath>(prop
     path: props.path,
     RouteComponent: EventRouteComponent,
     useComListPack: props.useComListPack ?? useComListPack,
-    TranslationComponent: () => {
+    BroadcastComponent: () => {
       const { schw: paramSchw } = useParams({ from: props.path }) as { schw?: `${IScheduleWidgetWid}` };
       const { schw = paramSchw } = useSearch({ from: props.path }) as Search;
 
-      return isTouchDevice ? <CmTranslationFullscreen /> : <IndexScheduleWidgetTranslations schw={+schw!} />;
+      return isTouchDevice ? <CmBroadcastFullscreen /> : <CmScheduleWidgetBroadcast schw={+schw!} />;
     },
   });
 

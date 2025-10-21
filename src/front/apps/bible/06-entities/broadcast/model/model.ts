@@ -1,22 +1,22 @@
 import {
-  ScreenTranslationPositionConfig,
-  ScreenTranslationSimpleTextConfig,
-  ScreenTranslationTextConfig,
+  ScreenBroadcastPositionConfig,
+  ScreenBroadcastSimpleTextConfig,
+  ScreenBroadcastTextConfig,
 } from '#features/broadcast/complect/model';
 import { BackgroundConfigProps } from '#shared/ui/configurators/model';
 
-export interface BibleBroadcastScreenConfig extends BackgroundConfigProps, ScreenTranslationTextConfig {
-  addressPanel: ScreenTranslationPositionConfig;
+export interface BibleBroadcastScreenConfig extends BackgroundConfigProps, ScreenBroadcastTextConfig {
+  addressPanel: ScreenBroadcastPositionConfig;
 
-  screen: ScreenTranslationPositionConfig;
+  screen: ScreenBroadcastPositionConfig;
 
-  insertedtext?: ScreenTranslationSimpleTextConfig;
-  textinbrackets?: ScreenTranslationSimpleTextConfig;
-  godswords?: ScreenTranslationSimpleTextConfig;
+  insertedtext?: ScreenBroadcastSimpleTextConfig;
+  textinbrackets?: ScreenBroadcastSimpleTextConfig;
+  godswords?: ScreenBroadcastSimpleTextConfig;
 
   address: {
     isOnBottom: boolean;
   } & BackgroundConfigProps &
-    ScreenTranslationPositionConfig &
-    ScreenTranslationTextConfig;
+    ScreenBroadcastPositionConfig &
+    ScreenBroadcastTextConfig;
 }

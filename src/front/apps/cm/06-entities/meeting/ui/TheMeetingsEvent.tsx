@@ -1,13 +1,12 @@
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { isMobileDevice } from '#shared/lib/device-differences';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { ScheduleWidgetWatchLiveTranslationButton } from '#widgets/schedule/live-translations/WatchLiveButton';
+import { ScheduleWidgetWatchLiveBroadcastButton } from '#widgets/schedule/live-broadcast/WatchLiveButton';
 import { ScheduleDayEventPathProps } from '#widgets/schedule/ScheduleWidget.model';
 import { CmEditorMeetingEventEdits } from '$cm+editor/ext';
 import { useCmComOpenComLinkRendererContext } from '$cm/entities/com';
-import { useAuth } from '$index/atoms';
-import { indexIDB } from '$index/db/index-idb';
-import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
+import { indexIDB, useAuth } from '$index/shared/state';
 import { Link } from '@tanstack/react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useCmMeetingComFaceList } from '../lib/useMeetingComFaceList';
@@ -46,7 +45,7 @@ export const CmMeetingEvent = ({ dayi, eventMi, schw }: Props) => {
       head={
         <div className="flex gap-3 pr-3">
           {isMobileDevice ? (
-            <ScheduleWidgetWatchLiveTranslationButton schw={schedule.w} />
+            <ScheduleWidgetWatchLiveBroadcastButton schw={schedule.w} />
           ) : auth.level ? (
             linkToCom({
               children: <TheIconButton icon="Computer" />,

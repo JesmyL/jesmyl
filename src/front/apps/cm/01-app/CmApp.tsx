@@ -7,7 +7,7 @@ import { CmComSharedListActionInterpretator } from '$cm/features/com';
 import { CmComCommentSharePull } from '$cm/features/com-comment';
 import { cmAppActions } from '$cm/shared/const';
 import { cmConstantsConfigAtom } from '$cm/shared/state';
-import { useAuth } from '$index/atoms';
+import { useAuth } from '$index/shared/state';
 import { Outlet } from '@tanstack/react-router';
 import { atom, useAtomValue } from 'atomaric';
 import React, { memo, Suspense, useEffect, useState } from 'react';

@@ -1,9 +1,9 @@
-import { useAppNameContext } from '#basis/lib/contexts';
+import { useAppNameContext } from '#basis/state/contexts';
 import { mylib } from '#shared/lib/my-lib';
 import { FullContentValue } from '#shared/ui/fullscreen-content/FullContent';
 import { useFullContent } from '#shared/ui/fullscreen-content/useFullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useIndexSchedules } from '$index/atoms';
+import { useIndexSchedules } from '$index/shared/state';
 import { Link } from '@tanstack/react-router';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import {

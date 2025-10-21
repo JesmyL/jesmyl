@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { useFixedResizerLinesSet } from '../../atoms';
-import { FixedResizerLines, ScreenTranslationPositionConfig } from '../../model';
+import { FixedResizerLines, ScreenBroadcastPositionConfig } from '../../model';
 
 interface Props {
   prop: 'vert' | 'horz';
   fixedResizerLines: FixedResizerLines | null;
-  config: ScreenTranslationPositionConfig;
-  updateConfig: (config: Partial<ScreenTranslationPositionConfig>) => void;
+  config: ScreenBroadcastPositionConfig;
+  updateConfig: (config: Partial<ScreenBroadcastPositionConfig>) => void;
 }
 
 export const PositionConfiguratorsResizersHalfFixer = ({ prop, config, fixedResizerLines, updateConfig }: Props) => {

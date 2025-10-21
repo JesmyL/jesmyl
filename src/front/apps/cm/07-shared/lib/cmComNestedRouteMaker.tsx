@@ -1,3 +1,4 @@
+import { CmBroadcast } from '$cm/entities/broadcast';
 import {
   CmComCurrentComPackContext,
   CmComCurrentContext,
@@ -8,7 +9,6 @@ import {
   useCmCom,
 } from '$cm/entities/com';
 import { cmComLastOpenComwAtom } from '$cm/entities/index';
-import { CmTranslation } from '$cm/entities/translation';
 import { TheCmComComposition } from '$cm/widgets/com';
 import { FileRoutesByPath, Link, useSearch } from '@tanstack/react-router';
 import { JSX, useEffect } from 'react';
@@ -17,7 +17,7 @@ interface Props<Path extends keyof FileRoutesByPath> {
   path: Path;
   RouteComponent: () => JSX.Element;
   useComListPack: () => CmComListContextValue;
-  TranslationComponent?: () => JSX.Element;
+  BroadcastComponent?: () => JSX.Element;
 }
 
 export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>(props: Props<Path>) => {
@@ -35,10 +35,10 @@ export const makeCmComNestedRoute = <Path extends keyof FileRoutesByPath>(props:
         <CmComCurrentComPackContext value={comList}>
           <CmComCurrentContext value={com}>
             {tran ? (
-              props.TranslationComponent ? (
-                <props.TranslationComponent />
+              props.BroadcastComponent ? (
+                <props.BroadcastComponent />
               ) : (
-                <CmTranslation />
+                <CmBroadcast />
               )
             ) : com || comw !== undefined ? (
               <TheCmComComposition />

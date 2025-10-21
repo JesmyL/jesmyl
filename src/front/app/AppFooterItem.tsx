@@ -1,4 +1,4 @@
-import { footerItemPlaceLsPrefix, useCurrentAppFooterItemPlaceContext } from '#basis/lib/App.contexts';
+import { footerItemPlaceLsPrefix, useCurrentAppFooterItemPlaceContext } from '#basis/state/App.contexts';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { FileRoutesByPath, Link } from '@tanstack/react-router';
 import styled from 'styled-components';

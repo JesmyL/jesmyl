@@ -1,10 +1,10 @@
-import { defaultQueryClient } from '#basis/lib/config/queryClient';
+import { defaultQueryClient } from '#basis/config/queryClient';
 import { AppDialogProvider } from '#basis/ui/AppDialogProvider';
 import { rootAppModalTextContentAtom } from '#shared/lib/atoms/rootAppModalTextContentAtom';
 import { soki } from '#shared/soki';
 import { Modal, ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { WithAtomValue } from '#shared/ui/WithAtomValue';
-import { authIDB } from '$index/db/auth-idb';
+import { authIDB } from '$index/shared/state';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { configureAtomaric } from 'atomaric';

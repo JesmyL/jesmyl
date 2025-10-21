@@ -5,7 +5,7 @@ import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { ScheduleDayEventPathProps } from '#widgets/schedule/ScheduleWidget.model';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { CmComFaceList, CmComMoveSelectedButton, useCmComSelectedList } from '$cm/ext';
-import { useAuth } from '$index/atoms';
+import { useAuth } from '$index/shared/state';
 import { atom } from 'atomaric';
 import { CmComWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';

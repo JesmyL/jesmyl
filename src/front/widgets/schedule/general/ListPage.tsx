@@ -1,9 +1,9 @@
-import { useAppNameContext } from '#basis/lib/contexts';
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { useConnectionState } from '#basis/lib/useConnectionState';
+import { useAppNameContext } from '#basis/state/contexts';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { useIndexSchedules } from '$index/atoms';
-import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
-import { useConnectionState } from '$index/useConnectionState';
+import { useIndexSchedules } from '$index/shared/state';
 import { Link, useNavigate } from '@tanstack/react-router';
 import { schLinkAction } from '../links';
 import { ScheduleCreateWidgetButton } from './CreateButton';

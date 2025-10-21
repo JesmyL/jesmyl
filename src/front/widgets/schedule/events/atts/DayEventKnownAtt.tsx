@@ -15,7 +15,7 @@ import {
 } from 'shared/api';
 import { isNIs, retNull } from 'shared/utils';
 import { ScheduleWidgetDayEventAttResult } from './DayEventAttResult';
-import { ScheduleWidgetDayEventPeriodicTranslation } from './DayEventPeriodicTranslationAtt';
+import { ScheduleWidgetDayEventPeriodicBroadcast } from './DayEventPeriodicAttBroadcast';
 
 export type ScheduleDayEventKnownAttProps = {
   day: IScheduleWidgetDay;
@@ -84,7 +84,7 @@ export const DayEventKnownAtt = (props: ScheduleDayEventKnownAttProps) => {
         );
 
         attContent = isExpand && (
-          <ScheduleWidgetDayEventPeriodicTranslation
+          <ScheduleWidgetDayEventPeriodicBroadcast
             att={attValue}
             attKey={props.attKey}
             schedule={props.schedule}

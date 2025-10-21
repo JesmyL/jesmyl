@@ -2,7 +2,7 @@ import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
-import { ScheduleWidgetMarkdownTranslation } from '#widgets/schedule/live-translations/markdown/Translation';
+import { ScheduleWidgetMarkdownBroadcast } from '#widgets/schedule/live-broadcast/markdown/Broadcast';
 import { atom } from 'atomaric';
 import { useMemo, useState } from 'react';
 import { useScheduleGameContext } from '../lib/contexts';
@@ -98,7 +98,7 @@ export const ScheduleWidgetTeamGameTranslateTeamsButton = function TranslateTeam
             onClick={() => setCols(cols + 1)}
           />
         </div>
-        <ScheduleWidgetMarkdownTranslation md={grid} />
+        <ScheduleWidgetMarkdownBroadcast md={grid} />
       </FullContent>
     </>
   );

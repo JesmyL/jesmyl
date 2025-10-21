@@ -1,6 +1,6 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import styled, { css } from 'styled-components';
-import { useScreenTranslationBackgroundStyles } from '../../complect/hooks/background-styles';
+import { useScreenBroadcastBackgroundStyles } from '../../complect/hooks/background-styles';
 import { AlertLineConfig } from '../../model';
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 };
 
 export default function AlertLineConfigIcon({ config, isSelected, onClick }: Props) {
-  const background = useScreenTranslationBackgroundStyles(config);
+  const background = useScreenBroadcastBackgroundStyles(config);
 
   return (
     <StypedIconContainer

@@ -1,4 +1,4 @@
-import { hideAppFooterAtom } from '#basis/lib/atoms/hideAppFooterAtom';
+import { hideAppFooterAtom } from '#basis/state/hideAppFooterAtom';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { Atom, useAtomValue } from 'atomaric';

@@ -2,7 +2,7 @@ import { FontStyleType } from '#shared/ui/configurators/FontStyle/model';
 import { FontWeightType } from '#shared/ui/configurators/FontWeight';
 import { BackgroundConfigProps } from '#shared/ui/configurators/model';
 
-export interface ScreenTranslationConfig {
+export interface ScreenBroadcastConfig {
   title: string;
   proportion: number;
 }

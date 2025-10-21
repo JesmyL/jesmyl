@@ -1,3 +1,4 @@
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { MyLib, mylib } from '#shared/lib/my-lib';
 import { TextInput } from '#shared/ui/TextInput';
@@ -8,7 +9,6 @@ import { CmEditorChordRedactableTrack } from '$cm+editor/entities/chord';
 import { cmEditorClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { PageCmEditorContainer } from '$cm+editor/shared/ui/PageCmEditorContainer';
 import { CmChordCard, cmIDB } from '$cm/ext';
-import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 import { atom, useAtom } from 'atomaric';
 import { useEffect, useMemo, useState } from 'react';

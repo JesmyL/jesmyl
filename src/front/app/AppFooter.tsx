@@ -1,5 +1,5 @@
-import { CurrentAppFooterItemPlaceContext, footerItemPlaceLsPrefix } from '#basis/lib/App.contexts';
 import { AppName } from '#basis/model/App.model';
+import { CurrentAppFooterItemPlaceContext, footerItemPlaceLsPrefix } from '#basis/state/App.contexts';
 import { isTouchDevice } from '#shared/lib/device-differences';
 import { useLocation } from '@tanstack/react-router';
 import { useEffect } from 'react';

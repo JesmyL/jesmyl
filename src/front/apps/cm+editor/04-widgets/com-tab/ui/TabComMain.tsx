@@ -1,3 +1,4 @@
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { InputWithLoadingIcon } from '#basis/ui/InputWithLoadingIcon';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
@@ -9,7 +10,6 @@ import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.ts
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { removedCompositionsAtom } from '$cm+editor/shared/state/com';
 import { ChordVisibleVariant, TheCmCom } from '$cm/ext';
-import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { useAtomSet } from 'atomaric';
 import { useState } from 'react';
 import { emptyFunc } from 'shared/utils';

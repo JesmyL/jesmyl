@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { indexIDB } from '$index/db/index-idb';
+import { indexIDB } from '$index/shared/state/index-idb';
 import { useEffect } from 'react';
 import { IScheduleWidgetWid } from 'shared/api';
 

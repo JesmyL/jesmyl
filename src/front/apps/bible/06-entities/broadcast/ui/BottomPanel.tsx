@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { BibleBroadcastHistoryArchive } from '../../broadcast-history/ui/HistoryArchive';
 import { BibleBroadcastPlanArchive } from '../../broadcast-plan/ui/PlanArchive';
 
-export const BibleBroadcastControlledBottomPanel = memo(function BibleTranslationControlledBottomPanel(): JSX.Element {
+export const BibleBroadcastControlledBottomPanel = memo(function BibleBroadcastControlledBottomPanel(): JSX.Element {
   return (
     <BottomGrid className="mt-5">
       <div grid-configs="">

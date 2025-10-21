@@ -1,17 +1,17 @@
-import { useIsScreenTranslationTextVisible } from '#features/broadcast/atoms';
-import { useBibleScreenTranslationFontSizeAdapter } from '#shared/lib/hooks/useFontSizeAdapter';
+import { useIsScreenBroadcastTextVisible } from '#features/broadcast/atoms';
+import { useBibleBroadcastScreenFontSizeAdapter } from '#shared/lib/hooks/useFontSizeAdapter';
 import { BibleBroadcastScreenConfig } from '$bible/entities/broadcast';
 
-export const useBibleScreenTranslationFontSizeAddressAdapter = (
+export const useBibleBroadcastScreenFontSizeAddressAdapter = (
   content: string,
   currentConfig: BibleBroadcastScreenConfig | und,
   windowResizeUpdatesNum: number | und,
 ) => {
-  return useBibleScreenTranslationFontSizeAdapter(
+  return useBibleBroadcastScreenFontSizeAdapter(
     content,
     '' +
       windowResizeUpdatesNum +
-      useIsScreenTranslationTextVisible() +
+      useIsScreenBroadcastTextVisible() +
       (currentConfig === undefined
         ? '-'
         : currentConfig.address.height +

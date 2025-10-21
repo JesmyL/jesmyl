@@ -2,8 +2,8 @@ import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { atom } from 'atomaric';
 import styled, { css } from 'styled-components';
-import { useScreenTranslationCurrentConfig } from '../hooks/configs';
-import { TranslationScreen } from '../TranslationScreen';
+import { BroadcastScreen } from '../BroadcastScreen';
+import { useScreenBroadcastCurrentConfig } from '../hooks/configs';
 
 interface Props {
   isPreview?: boolean;
@@ -11,13 +11,13 @@ interface Props {
 
 const isSettingsOpenAtom = atom(false);
 
-export const TranslationSlidePreview = ({ isPreview = true }: Props) => {
-  const currentConfig = useScreenTranslationCurrentConfig();
+export const BroadcastSlidePreview = ({ isPreview = true }: Props) => {
+  const currentConfig = useScreenBroadcastCurrentConfig();
 
   return (
     <Wrapper className="pointer">
       {currentConfig === undefined ? (
-        <TranslationScreen
+        <BroadcastScreen
           win={window}
           isPreview={isPreview}
         />
@@ -25,7 +25,7 @@ export const TranslationSlidePreview = ({ isPreview = true }: Props) => {
         <>
           <div className="flex center full-size bg-x2">
             <ScreenWithBackground $proportion={currentConfig.proportion}>
-              <TranslationScreen
+              <BroadcastScreen
                 win={window}
                 isPreview={isPreview}
               />
@@ -43,7 +43,7 @@ export const TranslationSlidePreview = ({ isPreview = true }: Props) => {
           <FullContainer className="flex center bg-x3">
             {currentConfig && (
               <ScreenWithBackground $proportion={currentConfig.proportion}>
-                <TranslationScreen
+                <BroadcastScreen
                   isTech
                   isPreview={isPreview}
                 />

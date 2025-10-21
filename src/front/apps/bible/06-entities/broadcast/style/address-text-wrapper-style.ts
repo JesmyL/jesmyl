@@ -1,13 +1,11 @@
-import { useScreenTranslationPositionsStyles } from '#features/broadcast/complect/hooks/position-styles';
-import { useScreenTranslationTextStyles } from '#features/broadcast/complect/hooks/text-styles';
+import { useScreenBroadcastPositionsStyles } from '#features/broadcast/complect/hooks/position-styles';
+import { useScreenBroadcastTextStyles } from '#features/broadcast/complect/hooks/text-styles';
 import { CSSProperties, useMemo } from 'react';
 import { BibleBroadcastScreenConfig } from '../model/model';
 
-export const useBibleBroadcastScreenTranslationAddressTextWrapperStyle = (
-  currentConfig: BibleBroadcastScreenConfig | und,
-) => {
-  const textStyles = useScreenTranslationTextStyles(currentConfig?.address);
-  const positions = useScreenTranslationPositionsStyles(currentConfig?.address);
+export const useBibleBroadcastScreenAddressTextWrapperStyle = (currentConfig: BibleBroadcastScreenConfig | und) => {
+  const textStyles = useScreenBroadcastTextStyles(currentConfig?.address);
+  const positions = useScreenBroadcastPositionsStyles(currentConfig?.address);
 
   return useMemo((): CSSProperties => {
     return currentConfig !== undefined

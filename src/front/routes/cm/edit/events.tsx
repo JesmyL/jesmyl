@@ -1,6 +1,6 @@
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { CmMeetingsPage } from '$cm/pages/MeetingsPage';
 import { makeCmEventNestedRoute } from '$cm/shared/lib';
-import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/cm/edit/events')(

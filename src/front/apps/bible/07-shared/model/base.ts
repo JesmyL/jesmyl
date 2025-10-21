@@ -19,11 +19,11 @@ export type BibleTranslate = { chapters: string[][][] };
 
 export type BibleSingleAddressCode = [BibleBooki, BibleChapteri, BibleVersei];
 
-export type BibleTranslationJoinAddress = Record<BibleBooki, Record<BibleChapteri, BibleVersei[]>>;
-export type BibleTranslationAnyAddress = BibleTranslationJoinAddress | [BibleBooki, BibleChapteri, BibleVersei];
+export type BibleBroadcastJoinAddress = Record<BibleBooki, Record<BibleChapteri, BibleVersei[]>>;
+export type BibleBroadcastAnyAddress = BibleBroadcastJoinAddress | [BibleBooki, BibleChapteri, BibleVersei];
 
-export type BibleTranslationSingleAddress = [number, number, number];
-export type BibleTranslationAddress = BibleTranslationSingleAddress | BibleTranslationJoinAddress;
+export type BibleBroadcastSingleAddress = [number, number, number];
+export type BibleBroadcastAddress = BibleBroadcastSingleAddress | BibleBroadcastJoinAddress;
 
 export type BibleSearchZone = 'global' | 'inner' | 'address';
 

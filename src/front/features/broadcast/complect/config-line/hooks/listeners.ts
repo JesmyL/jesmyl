@@ -2,23 +2,23 @@ import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { useAtomSet } from 'atomaric';
 import { useEffect } from 'react';
 import { isNIs, itNNull } from 'shared/utils';
-import { useSetIsScreenTranslationTextVisible } from '../../../atoms';
-import { TranslationWindow } from '../../../hooks/windows';
-import { isShowTranslatedTextAtom, useTranslationIsInitialSlideShowSet } from '../../../initial-slide-context';
-import { ScreenTranslationConfig } from '../../../model';
+import { useSetIsScreenBroadcastTextVisible } from '../../../atoms';
+import { BroadcastWindow } from '../../../hooks/windows';
+import { isShowTranslatedTextAtom, useBroadcastIsInitialSlideShowSet } from '../../../initial-slide-context';
+import { ScreenBroadcastConfig } from '../../../model';
 
 const invokeEach = (cb: () => void) => cb();
 
-export const useScreenTranslationFaceLineListeners = (
-  configs: ScreenTranslationConfig[],
+export const useScreenBroadcastFaceLineListeners = (
+  configs: ScreenBroadcastConfig[],
   currentConfigi: number,
   setCurrentConfigi: (configi: number) => void,
-  updateConfig: (configi: number, config: Partial<ScreenTranslationConfig> | null) => void,
-  windows: readonly (nil | TranslationWindow)[],
+  updateConfig: (configi: number, config: Partial<ScreenBroadcastConfig> | null) => void,
+  windows: readonly (nil | BroadcastWindow)[],
 ) => {
-  const switchIsVisible = useSetIsScreenTranslationTextVisible();
+  const switchIsVisible = useSetIsScreenBroadcastTextVisible();
   const currentConfigiRef = useActualRef(currentConfigi);
-  const isInitialSlideShowSet = useTranslationIsInitialSlideShowSet();
+  const isInitialSlideShowSet = useBroadcastIsInitialSlideShowSet();
   const setIsShowTranslatedText = useAtomSet(isShowTranslatedTextAtom);
 
   useEffect(() => {

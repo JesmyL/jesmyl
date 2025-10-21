@@ -1,12 +1,12 @@
 import { mylib } from '#shared/lib/my-lib';
 import { useBibleBroadcastListSingleAddressSetter } from '$bible/entities/broadcast-list';
 import { useBibleBroadcastSearchResultSelectedSet } from '$bible/entities/broadcast-search';
-import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '$bible/shared/model/base';
+import { BibleBooki, BibleBroadcastJoinAddress, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
 import { useAtomValue } from 'atomaric';
 import { useCallback } from 'react';
 import { bibleJoinAddressAtom } from '../../state/atoms';
 
-export const useBibleTranslationAddressIndexesSetter = () => {
+export const useBibleBroadcastAddressIndexesSetter = () => {
   const setAddress = useBibleBroadcastListSingleAddressSetter();
   const setResultSelected = useBibleBroadcastSearchResultSelectedSet();
 
@@ -58,10 +58,10 @@ export const useSetBibleAddressWithForceJoinReset = () => {
   );
 };
 
-export const useBibleTranslationJoinAddress = () => useAtomValue(bibleJoinAddressAtom);
+export const useBibleBroadcastJoinAddress = () => useAtomValue(bibleJoinAddressAtom);
 
 export const useGetterJoinedAddressMaxValues = () =>
-  useCallback((joinAddress: BibleTranslationJoinAddress) => {
+  useCallback((joinAddress: BibleBroadcastJoinAddress) => {
     const booki = Math.max(...mylib.keys(joinAddress)) as BibleBooki;
     const chapteri = Math.max(...mylib.keys(joinAddress[booki])) as BibleChapteri;
 

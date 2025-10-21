@@ -1,4 +1,4 @@
-import { SetAppRootAnchorNodesContext } from '#basis/lib/App.contexts';
+import { SetAppRootAnchorNodesContext } from '#basis/state/App.contexts';
 import React, { useState } from 'react';
 
 export const AppDialogProvider = ({ children, title: _ }: { children: React.ReactNode; title: string }) => {

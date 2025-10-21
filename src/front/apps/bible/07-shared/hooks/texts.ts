@@ -1,7 +1,7 @@
 import { mylib, MyLib } from '#shared/lib/my-lib';
 import { bibleTitles } from '../const/bibleTitles';
 import { useBibleTranslatesContext } from '../contexts/translates';
-import { BibleTranslationAnyAddress } from '../model/base';
+import { BibleBroadcastAnyAddress } from '../model/base';
 import { useBibleAddressBooki } from './address/books';
 import { useBibleShowTranslatesValue } from './translates';
 
@@ -15,7 +15,7 @@ export const useBibleCurrentChapterList = () => {
 export const useBibleBookList = () => bibleTitles.titles;
 
 export const makeBibleJoinedAddressText = (
-  addressCode: BibleTranslationAnyAddress | nil,
+  addressCode: BibleBroadcastAnyAddress | nil,
   titleVariant: 'full' | 'short' = 'full',
 ) => {
   if (addressCode == null) return '';

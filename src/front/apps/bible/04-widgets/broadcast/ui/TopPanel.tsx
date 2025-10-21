@@ -1,4 +1,4 @@
-import { TranslationSlidePreview } from '#features/broadcast/controls/Preview';
+import { BroadcastSlidePreview } from '#features/broadcast/controls/Preview';
 import { BibleBroadcastList } from '$bible/entities/broadcast-list';
 import { JSX, useState } from 'react';
 import styled from 'styled-components';
@@ -18,7 +18,7 @@ export const BibleBroadcastControlledTopPanel = function TopPanel(): JSX.Element
           {' / '}
           <div className={twMerge('pointer', !isPreview && 'text-x7')}>Слайд</div>
         </div>
-        <TranslationSlidePreview isPreview={isPreview} />
+        <BroadcastSlidePreview isPreview={isPreview} />
       </div>
       <BibleBroadcastList />
     </StyledTopPanel>

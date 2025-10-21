@@ -1,10 +1,10 @@
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { useCmExtractHrefsFromHTML } from '$cm+editor/shared/lib/useCmExtractHrefsFromHTML';
 import { ObserveUrlResource } from '$cm+editor/shared/ui/ObserveUrlResource';
 import { CmEditorComAudioControlledList } from '$cm+editor/widgets/com-audio';
-import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import { useState } from 'react';
 import { makeRegExp } from 'regexpert';
 import { CmMp3Rule, HttpLink } from 'shared/api';

@@ -18,7 +18,7 @@ import {
 import { CmComOrder } from '$cm/entities/com-order';
 import { cmAppActions } from '$cm/shared/const';
 import { cmIDB } from '$cm/shared/state';
-import { useAuth } from '$index/atoms';
+import { useAuth } from '$index/shared/state';
 import { atom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { emptyArray } from 'shared/utils';

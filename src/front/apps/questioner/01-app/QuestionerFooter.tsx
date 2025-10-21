@@ -1,6 +1,6 @@
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { AppFooter } from '$app/AppFooter';
 import { AppFooterItem } from '$app/AppFooterItem';
-import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 
 export const QuestionerFooter = () => {
   const checkAccessRights = useCheckUserAccessRightsInScope();

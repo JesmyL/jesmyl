@@ -1,16 +1,16 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { FunctionComponent, memo } from 'react';
-import { useIsCanShowTextTranslation } from '../atoms';
+import { useIsCanShowTextBroadcast } from '../atoms';
 
 interface Props {
   Parent?: FunctionComponent<{ children: React.ReactNode; onClick?: Function; className?: string }>;
 }
 
-export const ScreenTranslationControlPanelShowMdButton = memo(function ShowMdButton({ Parent }: Props) {
-  const [isCanShowTextTranslation, setIsCanShowTextTranslation] = useIsCanShowTextTranslation();
+export const ScreenBroadcastControlPanelShowMdButton = memo(function ShowMdButton({ Parent }: Props) {
+  const [isCanShowTextBroadcast, setIsCanShowTextBroadcast] = useIsCanShowTextBroadcast();
 
   const onClick = () => {
-    setIsCanShowTextTranslation(!isCanShowTextTranslation);
+    setIsCanShowTextBroadcast(!isCanShowTextBroadcast);
   };
 
   if (Parent)
@@ -21,7 +21,7 @@ export const ScreenTranslationControlPanelShowMdButton = memo(function ShowMdBut
       >
         <LazyIcon
           icon="TvSmart"
-          kind={isCanShowTextTranslation ? 'SolidRounded' : 'StrokeRounded'}
+          kind={isCanShowTextBroadcast ? 'SolidRounded' : 'StrokeRounded'}
         />
       </Parent>
     );
@@ -29,7 +29,7 @@ export const ScreenTranslationControlPanelShowMdButton = memo(function ShowMdBut
   return (
     <LazyIcon
       icon="TvSmart"
-      kind={isCanShowTextTranslation ? 'SolidRounded' : 'StrokeRounded'}
+      kind={isCanShowTextBroadcast ? 'SolidRounded' : 'StrokeRounded'}
       onClick={onClick}
     />
   );

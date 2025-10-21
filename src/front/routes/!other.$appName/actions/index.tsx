@@ -1,4 +1,4 @@
-import { IndexActionsPage } from '$index/pages/ActionsPage';
+import { IndexActionsPage } from '$index/pages/ActionsPage/ui/ActionsPage';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/!other/$appName/actions/')({

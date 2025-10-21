@@ -10,7 +10,7 @@ import { StyleBlock } from 'shared/values/cm/block-styles/StyleBlock';
 import { CmCat } from '../../cat/lib/Cat';
 import { CmComOrder } from '../../com-order/lib/Order';
 import { CmComOrderTopHeaderBag, ICmComOrderExportableMe } from '../../com-order/model/Order.model';
-import { cmComTranslationPushKinds } from '../const/translationPushKinds';
+import { cmComBroadcastPushKinds } from '../const/broadcastPushKinds';
 
 export class CmCom extends BaseNamed<IExportableCom> {
   initial: Partial<IExportableCom & { pos: number }>;
@@ -71,10 +71,10 @@ export class CmCom extends BaseNamed<IExportableCom> {
     this.resetChordLabels();
   }
 
-  get translationPushKind() {
+  get broadcastPushKind() {
     return this.getBasicOr('k', 0);
   }
-  set translationPushKind(val) {
+  set broadcastPushKind(val) {
     this.setExportable('k', val);
   }
 
@@ -194,7 +194,7 @@ export class CmCom extends BaseNamed<IExportableCom> {
       ?.reduce((text, ord) => text + (!ord.isRealText() ? '' : (text ? '\n' : '') + ord.repeatedText()), '')
       .split(makeRegExp('/\\n/'));
 
-    const texts = this.translationMap(kind)
+    const texts = this.broadcastMap(kind)
       .map(peaceSize => textBeats?.splice(0, peaceSize))
       .filter(itIt);
 
@@ -205,8 +205,8 @@ export class CmCom extends BaseNamed<IExportableCom> {
     return this.orders?.find(ord => ord.isMySelector(ordSelector));
   };
 
-  translationMap(kind: number | und, isPushChordedBlocks = false) {
-    const kinds = cmComTranslationPushKinds[kind ?? this.translationPushKind];
+  broadcastMap(kind: number | und, isPushChordedBlocks = false) {
+    const kinds = cmComBroadcastPushKinds[kind ?? this.broadcastPushKind];
     let curr = 0;
     const orders = this.orders ?? [];
     const len = orders.length;

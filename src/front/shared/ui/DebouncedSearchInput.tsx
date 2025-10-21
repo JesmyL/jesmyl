@@ -1,4 +1,4 @@
-import { isNumberSearchAtom } from '#basis/lib/atoms/isNumberSearchAtom';
+import { isNumberSearchAtom } from '#basis/state/isNumberSearchAtom';
 import { UsedWid, useWid } from '#shared/lib/hooks/useWid';
 import { atom, Atom, useAtom, useAtomSet, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';

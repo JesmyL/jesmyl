@@ -5,7 +5,7 @@ const metric = 'px';
 const defaultStep = 3;
 const minStep = 1;
 
-export const useBibleScreenTranslationFontSizeAdapter = (
+export const useBibleBroadcastScreenFontSizeAdapter = (
   content: string,
   subUpdater: string | number,
   isCheckWidthOnly?: boolean,

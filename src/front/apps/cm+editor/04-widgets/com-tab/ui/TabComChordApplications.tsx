@@ -1,8 +1,8 @@
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
 import { StyledLoadingSpinner } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { ChordVisibleVariant, CmComOrderLine, TheCmCom, TheCmComOrder } from '$cm/ext';
-import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
 import React from 'react';
 import { makeRegExp } from 'regexpert';
 import { emptyArray, itIt } from 'shared/utils';

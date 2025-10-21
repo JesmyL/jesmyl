@@ -1,5 +1,5 @@
-import { TsjrpcClient } from '#basis/lib/Tsjrpc.client';
-import { TsjrpcBaseClient } from '#basis/lib/TsjrpcBase.client';
+import { TsjrpcClient } from '#basis/tsjrpc/Tsjrpc.client';
+import { TsjrpcBaseClient } from '#basis/tsjrpc/TsjrpcBase.client';
 import { BibleTsjrpcBaseModel, BibleTsjrpcModel } from 'shared/api/tsjrpc/bible/tsjrpc.model';
 import { BibleTranslate } from '../model/base';
 import { bibleMyTranslatesAtom } from '../state/atoms';

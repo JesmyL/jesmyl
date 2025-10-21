@@ -1,14 +1,14 @@
-import { useScreenTranslationBackgroundStyles } from '#features/broadcast/complect/hooks/background-styles';
+import { useScreenBroadcastBackgroundStyles } from '#features/broadcast/complect/hooks/background-styles';
 import { CSSProperties, useMemo } from 'react';
 import { BibleBroadcastScreenConfig } from '../model/model';
 
 export const bibleBroadcastAddressGridArea = 'address-grid-area';
 
-export const useBibleBroadcastScreenTranslationAddressStyle = (
+export const useBibleBroadcastScreenAddressStyle = (
   isVisible: boolean,
   currentConfig: BibleBroadcastScreenConfig | und,
 ) => {
-  const background = useScreenTranslationBackgroundStyles(currentConfig?.address);
+  const background = useScreenBroadcastBackgroundStyles(currentConfig?.address);
 
   return useMemo((): CSSProperties => {
     if (currentConfig === undefined) return {};

@@ -1,4 +1,4 @@
-import { IndexAuthorizationPage } from '$index/parts/auth/IndexAuthorization';
+import { IndexAuthorizePage } from '$index/entities/Authorize';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/!other/$appName/auth/')({
@@ -6,5 +6,5 @@ export const Route = createFileRoute('/!other/$appName/auth/')({
 });
 
 function RouteComponent() {
-  return <IndexAuthorizationPage />;
+  return <IndexAuthorizePage />;
 }

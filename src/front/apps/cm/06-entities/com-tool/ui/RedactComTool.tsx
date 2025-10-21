@@ -1,5 +1,5 @@
 import { useCmComCurrent } from '$cm/entities/com';
-import { useAuth } from '$index/atoms';
+import { useAuth } from '$index/shared/state';
 import { Link } from '@tanstack/react-router';
 import { CmComTool } from '../ComTool';
 

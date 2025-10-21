@@ -10,7 +10,7 @@ export * from './lib/useSelectedComs';
 
 export * from './model/com';
 
-export * from './const/translationPushKinds';
+export * from './const/broadcastPushKinds';
 
 export * from './ui/CmComListSearchFilterInput';
 export * from './ui/ComCatMentions';

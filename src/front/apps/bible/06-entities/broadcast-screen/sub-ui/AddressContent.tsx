@@ -1,9 +1,6 @@
-import {
-  BibleBroadcastScreenConfig,
-  useBibleBroadcastScreenTranslationAddressTextWrapperStyle,
-} from '$bible/entities/broadcast';
+import { BibleBroadcastScreenConfig, useBibleBroadcastScreenAddressTextWrapperStyle } from '$bible/entities/broadcast';
 import { useBibleAddressTextContext } from '$bible/shared/contexts/texts';
-import { useBibleScreenTranslationFontSizeAddressAdapter } from '$bible/shared/lib';
+import { useBibleBroadcastScreenFontSizeAddressAdapter } from '$bible/shared/lib';
 
 interface Props {
   screeni: number | und;
@@ -13,10 +10,10 @@ interface Props {
 }
 
 export function BibleBroadcastScreenAddressContent(props: Props) {
-  const addressTextWrapperStyle = useBibleBroadcastScreenTranslationAddressTextWrapperStyle(props.bibleConfig);
+  const addressTextWrapperStyle = useBibleBroadcastScreenAddressTextWrapperStyle(props.bibleConfig);
   const addressText = useBibleAddressTextContext();
 
-  const [addressWrapperRef, addressContentRef] = useBibleScreenTranslationFontSizeAddressAdapter(
+  const [addressWrapperRef, addressContentRef] = useBibleBroadcastScreenFontSizeAddressAdapter(
     addressText,
     props.bibleConfig,
     props.windowResizeUpdatesNum,

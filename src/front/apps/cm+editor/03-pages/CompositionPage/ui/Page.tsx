@@ -1,3 +1,5 @@
+import { useCheckUserAccessRightsInScope } from '#basis/lib/useCheckUserAccessRightsInScope';
+import { useConnectionState } from '#basis/lib/useConnectionState';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { MyLib, mylib } from '#shared/lib/my-lib';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
@@ -7,8 +9,6 @@ import { removedCompositionsAtom } from '$cm+editor/shared/state/com';
 import { PageCmEditorContainer } from '$cm+editor/shared/ui/PageCmEditorContainer';
 import { cmEditorComTabCompositionNavs } from '$cm+editor/widgets/com-tab';
 import { CmComAudioPlayer, CmComNumber } from '$cm/ext';
-import { useCheckUserAccessRightsInScope } from '$index/useCheckUserAccessRightsInScope';
-import { useConnectionState } from '$index/useConnectionState';
 import { Link, useNavigate, useParams } from '@tanstack/react-router';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';

@@ -61,7 +61,15 @@
 
       "$tuner/*": ["./front/apps/tuner/*"],
 
-      "$index/*": ["./front/components/index/*"],
+      "$index/app/*": ["./front/apps/+index/01-app/*"],
+      "$index/processes/*": ["./front/apps/+index/02-processes/*"],
+      "$index/pages/*": ["./front/apps/+index/03-pages/*"],
+      "$index/widgets/*": ["./front/apps/+index/04-widgets/*"],
+      "$index/features/*": ["./front/apps/+index/05-features/*"],
+      "$index/entities/*": ["./front/apps/+index/06-entities/*"],
+      "$index/shared/*": ["./front/apps/+index/07-shared/*"],
+      "$index/*": ["./front/components/+index/*"],
+
       "$app/*": ["./front/app/*"],
 
       "shared/*": ["./shared/*"],

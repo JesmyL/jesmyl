@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { FixedResizerLines, ScreenTranslationPositionConfig } from '../../model';
+import { FixedResizerLines, ScreenBroadcastPositionConfig } from '../../model';
 import { ScreenResizerResizeOnly } from '../Position';
 import { PositionConfiguratorsResizersHalfFixer } from './HalfFixer';
 import { usePositionConfiguratorResizerBorderMaker } from './hooks/border-maker';
@@ -7,11 +7,11 @@ import { ShowHalfFixersKeyActiveMode } from './model';
 
 interface Props {
   setOnMove: (callback: ((event: MouseEvent) => void) | null) => void;
-  updateConfig: (config: Partial<ScreenTranslationPositionConfig>) => void;
+  updateConfig: (config: Partial<ScreenBroadcastPositionConfig>) => void;
   rectRef: React.RefObject<HTMLDivElement | null>;
   wrapperRef: React.RefObject<HTMLDivElement | null>;
   resizeOnly?: ScreenResizerResizeOnly;
-  config: ScreenTranslationPositionConfig;
+  config: ScreenBroadcastPositionConfig;
   fixedResizerLines: FixedResizerLines | null;
   showHalfFixersKeyActiveMode: ShowHalfFixersKeyActiveMode;
 }
@@ -101,7 +101,7 @@ const boardColor = 'white';
 
 const Resizers = styled.div<{
   $fixedResizerLines: FixedResizerLines | null;
-  $config: ScreenTranslationPositionConfig;
+  $config: ScreenBroadcastPositionConfig;
   $showHalfFixersKeyActiveMode: ShowHalfFixersKeyActiveMode;
 }>`
   .resizer {

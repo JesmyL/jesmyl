@@ -9,9 +9,9 @@ import { FontSizeConfigurator } from '#shared/ui/configurators/FontSize';
 import { FontStyleConfigurator } from '#shared/ui/configurators/FontStyle';
 import { FontWeightConfigurator } from '#shared/ui/configurators/FontWeight/ui';
 import { TextInput } from '#shared/ui/TextInput';
+import { complectIDB } from '$index/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React, { useDeferredValue, useEffect, useRef, useState } from 'react';
-import { complectIDB } from '../../../../components/index/state/complectIDB';
 import { AlertLineConfig } from '../../model';
 
 const LazyAlertLineConfigIcon = React.lazy(() => import('./AlertLineConfigIcon'));

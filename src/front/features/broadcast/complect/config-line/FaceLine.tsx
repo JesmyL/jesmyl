@@ -1,33 +1,33 @@
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useCallback } from 'react';
 import styled from 'styled-components';
-import { useCurrentTranslationConfigiSet, useScreenTranslationConfigsValue } from '../../atoms';
-import { useAddScreenTranslationConfig, useScreenTranslationCurrentConfigi } from '../../hooks/configs';
-import { useWatchScreenTranslations } from '../../hooks/watch-translation';
-import { useScreenTranslationWindows } from '../../hooks/windows';
-import { useUpdateScreenTranslationConfig } from '../../hooks/with-config';
-import { ScreenTranslationConfig } from '../../model';
-import { ScreenTranslationsFace } from './Face';
-import { useScreenTranslationFaceLineListeners } from './hooks/listeners';
-import { useScreenTranslationPutOnFaceClose } from './hooks/put-on-face-close';
+import { useCurrentBroadcastConfigiSet, useScreenBroadcastConfigsValue } from '../../atoms';
+import { useAddScreenBroadcastConfig, useScreenBroadcastCurrentConfigi } from '../../hooks/configs';
+import { useWatchScreenBroadcast } from '../../hooks/watch-broadcast';
+import { useScreenBroadcastWindows } from '../../hooks/windows';
+import { useUpdateScreenBroadcastConfig } from '../../hooks/with-config';
+import { ScreenBroadcastConfig } from '../../model';
+import { ScreenBroadcastFace } from './Face';
+import { useScreenBroadcastFaceLineListeners } from './hooks/listeners';
+import { useScreenBroadcastPutOnFaceClose } from './hooks/put-on-face-close';
 
 interface Props<Config> {
   updateConfig: (config: Config | null, configi: number) => void;
 }
 
-export const ScreenTranslationsFaceLine = <Config,>(props: Props<Config>) => {
-  const configs: ScreenTranslationConfig[] = useScreenTranslationConfigsValue();
-  const windows = useScreenTranslationWindows();
-  const updateConfig = useUpdateScreenTranslationConfig();
-  const setCurrentConfigi = useCurrentTranslationConfigiSet();
-  const addConfig = useAddScreenTranslationConfig();
+export const ScreenBroadcastFaceLine = <Config,>(props: Props<Config>) => {
+  const configs: ScreenBroadcastConfig[] = useScreenBroadcastConfigsValue();
+  const windows = useScreenBroadcastWindows();
+  const updateConfig = useUpdateScreenBroadcastConfig();
+  const setCurrentConfigi = useCurrentBroadcastConfigiSet();
+  const addConfig = useAddScreenBroadcastConfig();
 
-  const currentConfigi = useScreenTranslationCurrentConfigi();
-  const watchTranslation = useWatchScreenTranslations();
+  const currentConfigi = useScreenBroadcastCurrentConfigi();
+  const watchBroadcast = useWatchScreenBroadcast();
 
-  useScreenTranslationFaceLineListeners(configs, currentConfigi, setCurrentConfigi, updateConfig, windows);
+  useScreenBroadcastFaceLineListeners(configs, currentConfigi, setCurrentConfigi, updateConfig, windows);
 
-  const putOnFaceClose = useScreenTranslationPutOnFaceClose(
+  const putOnFaceClose = useScreenBroadcastPutOnFaceClose(
     configs,
     currentConfigi,
     setCurrentConfigi,
@@ -39,14 +39,14 @@ export const ScreenTranslationsFaceLine = <Config,>(props: Props<Config>) => {
     (configi: number) => {
       return () => {
         if (windows.length && windows[configi] == null) {
-          watchTranslation();
+          watchBroadcast();
           return;
         }
 
         setCurrentConfigi(configi);
       };
     },
-    [setCurrentConfigi, watchTranslation, windows],
+    [setCurrentConfigi, watchBroadcast, windows],
   );
 
   const onAdd = useCallback(() => setCurrentConfigi(addConfig()), [addConfig, setCurrentConfigi]);
@@ -56,7 +56,7 @@ export const ScreenTranslationsFaceLine = <Config,>(props: Props<Config>) => {
       <ConfigLine className="mb-2 no-scrollbar children-middle">
         {configs.map((config, configi, configa) => {
           return (
-            <ScreenTranslationsFace
+            <ScreenBroadcastFace
               key={configi}
               configi={configi}
               config={config}

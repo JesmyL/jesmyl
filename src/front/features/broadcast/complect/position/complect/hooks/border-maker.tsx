@@ -1,5 +1,5 @@
 import { useFixedResizerLinesSet } from '../../../atoms';
-import { FixedResizerLines, ScreenTranslationPositionConfig } from '../../../model';
+import { FixedResizerLines, ScreenBroadcastPositionConfig } from '../../../model';
 
 const minSize = 2;
 
@@ -7,8 +7,8 @@ export const usePositionConfiguratorResizerBorderMaker = (
   rectRef: React.RefObject<HTMLDivElement | null>,
   wrapperRef: React.RefObject<HTMLDivElement | null>,
   setOnMove: (callback: ((event: MouseEvent) => void) | null) => void,
-  updateConfig: (config: Partial<ScreenTranslationPositionConfig>) => void,
-  config: ScreenTranslationPositionConfig,
+  updateConfig: (config: Partial<ScreenBroadcastPositionConfig>) => void,
+  config: ScreenBroadcastPositionConfig,
   fixedResizerLines: FixedResizerLines | null,
 ) => {
   const setLines = useFixedResizerLinesSet();

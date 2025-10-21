@@ -1,17 +1,17 @@
+import { complectIDB } from '$index/shared/state';
 import { atom, useAtom, useAtomSet, useAtomValue } from 'atomaric';
-import { complectIDB } from '../../components/index/state/complectIDB';
 
-const isCanShowTextTranslationAtom = atom(false);
-export const useIsCanShowTextTranslation = () => useAtom(isCanShowTextTranslationAtom);
+const isCanShowTextBroadcastAtom = atom(false);
+export const useIsCanShowTextBroadcast = () => useAtom(isCanShowTextBroadcastAtom);
 
-const currentTranslationConfigiAtom = atom(0);
-export const useCurrentTranslationConfigiSet = () => useAtomSet(currentTranslationConfigiAtom);
-export const useCurrentTranslationConfigiValue = () => useAtomValue(currentTranslationConfigiAtom);
+const currentBroadcastConfigiAtom = atom(0);
+export const useCurrentBroadcastConfigiSet = () => useAtomSet(currentBroadcastConfigiAtom);
+export const useCurrentBroadcastConfigiValue = () => useAtomValue(currentBroadcastConfigiAtom);
 
-const isTranslationTextVisibleAtom = atom(true);
-export const useIsScreenTranslationTextVisible = () => useAtomValue(isTranslationTextVisibleAtom);
+const isBroadcastTextVisibleAtom = atom(true);
+export const useIsScreenBroadcastTextVisible = () => useAtomValue(isBroadcastTextVisibleAtom);
 
-export const useSetIsScreenTranslationTextVisible = () => useAtomSet(isTranslationTextVisibleAtom);
+export const useSetIsScreenBroadcastTextVisible = () => useAtomSet(isBroadcastTextVisibleAtom);
 
-export const useScreenTranslationConfigsSet = () => complectIDB.useSet.screenTranslationConfigs();
-export const useScreenTranslationConfigsValue = () => complectIDB.useValue.screenTranslationConfigs();
+export const useScreenBroadcastConfigsSet = () => complectIDB.useSet.screenBroadcastConfigs();
+export const useScreenBroadcastConfigsValue = () => complectIDB.useValue.screenBroadcastConfigs();

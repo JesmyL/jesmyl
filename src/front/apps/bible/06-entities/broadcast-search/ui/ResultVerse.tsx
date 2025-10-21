@@ -1,5 +1,5 @@
 import { useBibleTranslatesContext } from '$bible/shared/contexts/translates';
-import { useBibleTranslationAddressIndexesSetter } from '$bible/shared/hooks';
+import { useBibleBroadcastAddressIndexesSetter } from '$bible/shared/hooks';
 import { useBibleBookList } from '$bible/shared/hooks/texts';
 import { useBibleShowTranslatesValue } from '$bible/shared/hooks/translates';
 import { BibleBooki, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
@@ -26,7 +26,7 @@ export const BibleBroadcastSearchResultVerse = memo(function BibleSearchResultVe
   const books = useBibleBookList();
   const textBits =
     useBibleTranslatesContext()[showTranslates[0]]?.chapters?.[booki]?.[chapteri]?.[versei]?.split(splitReg);
-  const addressSetter = useBibleTranslationAddressIndexesSetter();
+  const addressSetter = useBibleBroadcastAddressIndexesSetter();
 
   return (
     <div

@@ -1,19 +1,19 @@
 import { useCallback } from 'react';
-import { useRemoveScreenTranslationConfig } from '../../../hooks/configs';
-import { TranslationWindow, useUpdateScreenTranslationWindows } from '../../../hooks/windows';
-import { useUpdateScreenTranslationConfig } from '../../../hooks/with-config';
-import { ScreenTranslationConfig } from '../../../model';
+import { useRemoveScreenBroadcastConfig } from '../../../hooks/configs';
+import { BroadcastWindow, useUpdateScreenBroadcastWindows } from '../../../hooks/windows';
+import { useUpdateScreenBroadcastConfig } from '../../../hooks/with-config';
+import { ScreenBroadcastConfig } from '../../../model';
 
-export const useScreenTranslationPutOnFaceClose = <Config>(
-  configs: ScreenTranslationConfig[],
+export const useScreenBroadcastPutOnFaceClose = <Config>(
+  configs: ScreenBroadcastConfig[],
   currentConfigi: number,
   setCurrentConfigi: (configi: number) => void,
-  windows: readonly (nil | TranslationWindow)[],
+  windows: readonly (nil | BroadcastWindow)[],
   updateExternalConfig: (config: Config | null, configi: number) => void,
 ) => {
-  const updateConfig = useUpdateScreenTranslationConfig();
-  const updateWindows = useUpdateScreenTranslationWindows();
-  const removeConfig = useRemoveScreenTranslationConfig();
+  const updateConfig = useUpdateScreenBroadcastConfig();
+  const updateWindows = useUpdateScreenBroadcastWindows();
+  const removeConfig = useRemoveScreenBroadcastConfig();
 
   return useCallback(
     (configi: number): PropagationStopper => {

@@ -2,7 +2,7 @@ import { MyLib, mylib } from '#shared/lib/my-lib';
 import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { useAuth, useIndexSchedules } from '$index/atoms';
+import { useAuth, useIndexSchedules } from '$index/shared/state';
 import { atom } from 'atomaric';
 import { useState } from 'react';
 import {

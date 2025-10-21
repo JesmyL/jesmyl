@@ -1,4 +1,4 @@
-import { TsjrpcBaseClient } from '#basis/lib/TsjrpcBase.client';
+import { TsjrpcBaseClient } from '#basis/tsjrpc/TsjrpcBase.client';
 import { cmComFavoriteComsAtom, cmComTopToolsAtom } from '$cm/entities/index';
 import { CmShareTsjrpcModel } from 'shared/api/tsjrpc/cm/share.tsjrpc.model';
 import { cmConstantsConfigAtom } from '../state/atoms';

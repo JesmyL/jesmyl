@@ -1,4 +1,4 @@
-import { useAppNameContext } from '#basis/lib/contexts';
+import { useAppNameContext } from '#basis/state/contexts';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { ScheduleWidgetAppAtts } from '#widgets/schedule/ScheduleWidget.model';
 import { makeCmEventNestedRoute } from '$cm/shared/lib';

@@ -1,4 +1,4 @@
-import { useScreenTranslationCurrentConfigi } from '#features/broadcast/hooks/configs';
+import { useScreenBroadcastCurrentConfigi } from '#features/broadcast/hooks/configs';
 import { useCallback } from 'react';
 import { bibleBroadcastDefaultConfig, useBibleBroadcastScreenConfigsSet } from '../config/configs';
 import { BibleBroadcastScreenConfig } from '../model/model';
@@ -26,5 +26,5 @@ export const useBibleBroadcastUpdateConfig = (topConfigi?: number) => {
 };
 
 export const useBibleBroadcastUpdateCurrentConfig = () => {
-  return useBibleBroadcastUpdateConfig(useScreenTranslationCurrentConfigi());
+  return useBibleBroadcastUpdateConfig(useScreenBroadcastCurrentConfigi());
 };

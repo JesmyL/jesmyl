@@ -1,6 +1,6 @@
 import { makeBibleJoinedAddressText } from '$bible/shared/hooks/texts';
-import { BibleTranslationJoinAddress } from '$bible/shared/model/base';
+import { BibleBroadcastJoinAddress } from '$bible/shared/model/base';
 
-export function BibleBroadcastArchiveJoinedAddressText({ item }: { item: BibleTranslationJoinAddress }) {
+export function BibleBroadcastArchiveJoinedAddressText({ item }: { item: BibleBroadcastJoinAddress }) {
   return <>{makeBibleJoinedAddressText(item, 'short')}</>;
 }

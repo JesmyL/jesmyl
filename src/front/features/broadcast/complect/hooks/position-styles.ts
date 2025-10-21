@@ -1,9 +1,9 @@
 import { CSSProperties, useMemo } from 'react';
-import { defaultScreenTranslationPositionConfig } from '../defaults';
-import { ScreenTranslationPositionConfig } from '../model';
+import { defaultScreenBroadcastPositionConfig } from '../defaults';
+import { ScreenBroadcastPositionConfig } from '../model';
 
-export const useScreenTranslationPositionsStyles = (config: ScreenTranslationPositionConfig | und) => {
-  const theConfig = config ?? defaultScreenTranslationPositionConfig;
+export const useScreenBroadcastPositionsStyles = (config: ScreenBroadcastPositionConfig | und) => {
+  const theConfig = config ?? defaultScreenBroadcastPositionConfig;
 
   return useMemo((): CSSProperties => {
     return {

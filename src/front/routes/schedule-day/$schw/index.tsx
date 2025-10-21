@@ -1,5 +1,5 @@
 import { makeScheduleRoute } from '#widgets/schedule/complect/makeScheduleRoute';
-import { indexIDB } from '$index/db/index-idb';
+import { indexIDB } from '$index/shared/state';
 import { createFileRoute, Navigate } from '@tanstack/react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
 

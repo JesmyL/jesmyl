@@ -1,8 +1,8 @@
 import { addEventListenerPipe, clearTimeoutPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
-import { useBibleAddressVersei, useBibleTranslationJoinAddress } from '$bible/shared/hooks';
-import { useBibleTranslationSlideSyncContentSetter } from '$bible/shared/hooks/slide-sync';
-import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress } from '$bible/shared/model/base';
+import { useBibleAddressVersei, useBibleBroadcastJoinAddress } from '$bible/shared/hooks';
+import { useBibleBroadcastSlideSyncContentSetter } from '$bible/shared/hooks/slide-sync';
+import { BibleBooki, BibleBroadcastJoinAddress, BibleChapteri } from '$bible/shared/model/base';
 import { bibleJoinAddressAtom, bibleVerseiAtom } from '$bible/shared/state/atoms';
 import { useEffect } from 'react';
 import { bibleBroadcastListVerseiIdPrefix } from '../const/ids';
@@ -12,8 +12,8 @@ export const useBibleBroadcastListVerseListeners = (
   currentBooki: BibleBooki,
   currentChapteri: BibleChapteri,
 ) => {
-  const currentJoinAddress = useBibleTranslationJoinAddress();
-  const syncSlide = useBibleTranslationSlideSyncContentSetter();
+  const currentJoinAddress = useBibleBroadcastJoinAddress();
+  const syncSlide = useBibleBroadcastSlideSyncContentSetter();
   const currentVersei = useBibleAddressVersei();
   const currentJoin = currentJoinAddress?.[currentBooki]?.[currentChapteri];
 
@@ -57,11 +57,11 @@ export const useBibleBroadcastListVerseListeners = (
               return;
             }
 
-            let newJoin = { ...currentJoinAddress } as BibleTranslationJoinAddress;
+            let newJoin = { ...currentJoinAddress } as BibleBroadcastJoinAddress;
             bibleVerseiAtom.set(versei);
 
             if (currentJoinAddress == null) {
-              const verses = ((newJoin[currentBooki] = {} as BibleTranslationJoinAddress[BibleBooki])[currentChapteri] =
+              const verses = ((newJoin[currentBooki] = {} as BibleBroadcastJoinAddress[BibleBooki])[currentChapteri] =
                 [] as number[]);
 
               if (ctrlKey) {

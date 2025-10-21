@@ -5,10 +5,10 @@ import {
   useBibleAddressBooki,
   useBibleAddressChapteri,
   useBibleAddressVersei,
-  useBibleTranslationJoinAddress,
+  useBibleBroadcastJoinAddress,
   useGetterJoinedAddressMaxValues,
 } from '$bible/shared/hooks';
-import { BibleBooki, BibleChapteri, BibleTranslationJoinAddress, BibleVersei } from '$bible/shared/model/base';
+import { BibleBooki, BibleBroadcastJoinAddress, BibleChapteri, BibleVersei } from '$bible/shared/model/base';
 import { BibleTranslatesContextProvider } from '$bible/shared/state/TranslatesContext';
 import { useEffect } from 'react';
 import styled, { css } from 'styled-components';
@@ -25,7 +25,7 @@ const scrollIntoViewBookAndChapterOptions = { block: 'center' } as const;
 const scrollIntoViewVerseOptions = { block: 'center', behavior: 'smooth' } as const;
 
 export function BibleBroadcastList() {
-  const joinAddress = useBibleTranslationJoinAddress();
+  const joinAddress = useBibleBroadcastJoinAddress();
   const currentBooki = useBibleAddressBooki();
   const currentChapteri = useBibleAddressChapteri();
   const currentVersei = useBibleAddressVersei();
@@ -88,7 +88,7 @@ const currentStyle = css`
 `;
 
 const Lists = styled.div<{
-  $joinAddress: BibleTranslationJoinAddress | nil;
+  $joinAddress: BibleBroadcastJoinAddress | nil;
   $booki: BibleBooki;
   $chapteri: BibleChapteri;
   $versei: BibleVersei;

@@ -1,4 +1,4 @@
-import { IndexConsolePage } from '$index/parts/settings/Console';
+import { IndexConsolePage } from '$index/widgets/Console/ui/Console';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/!other/$appName/settings/console')({

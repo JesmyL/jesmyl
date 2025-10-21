@@ -1,6 +1,6 @@
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { CmMeetingSchPackFace } from '$cm/entities/meeting';
-import { indexIDB } from '$index/db/index-idb';
+import { indexIDB } from '$index/shared/state';
 import { useLiveQuery } from 'dexie-react-hooks';
 
 export const CmMeetingsPage = () => {
