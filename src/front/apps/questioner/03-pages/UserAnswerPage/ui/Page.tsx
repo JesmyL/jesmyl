@@ -1,0 +1,216 @@
+import { Accordion } from '#shared/components/ui/accordion';
+import { Button } from '#shared/components/ui/button';
+import { Card } from '#shared/components/ui/card';
+import { environment } from '#shared/environment';
+import { ConditionalRender } from '#shared/ui/ConditionalRender';
+import { CopyTextButton } from '#shared/ui/CopyTextButton';
+import { makeToastOKMoodConfig } from '#shared/ui/modal/toast.configs';
+import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
+import { TextInput } from '#shared/ui/TextInput';
+import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
+import { questionerCardContents } from '$q/shared/const/cardContents';
+import { questionerTemplateDescriptions } from '$q/shared/const/templateDescriptions';
+import { questionerUserTsjrpcClient } from '$q/shared/tsjrpc/user.tsjrpc';
+import { QuestionerTemplateCard } from '$q/shared/ui/TemplateCard';
+import { atom, useAtomValue } from 'atomaric';
+import { useState } from 'react';
+import { QuestionerBlankWid, QuestionerType } from 'shared/model/q';
+import { QuestionerUserAnswer, QuestionerUserAnswerContentProps } from 'shared/model/q/answer';
+import { itNIt } from 'shared/utils';
+import { toast } from 'sonner';
+import { twMerge } from 'tailwind-merge';
+import { useQuestionerUserAnswerDetailsQuery } from '../api/useQuestionerUserBlankDetailsQuery';
+
+const answersAtomBox: PRecord<QuestionerBlankWid, ReturnType<typeof initAtom>> = {};
+
+const initAtom = (blankw: QuestionerBlankWid) => {
+  return atom({ fio: '', a: {} } as QuestionerUserAnswer & { isWasPublicate: boolean }, {
+    storeKey: `q:userAnswerDraft-${blankw}`,
+    do: (_set, get, _self, setDeferred) => ({
+      setFio: (fio: string) => setDeferred({ ...get(), fio: fio || undefined }),
+    }),
+  });
+};
+
+export const QuestionerUserAnswerPage = ({ blankw }: { blankw: QuestionerBlankWid }) => {
+  const answersAtom = (answersAtomBox[blankw] ??= initAtom(blankw));
+
+  const questionBlank = useQuestionerUserAnswerDetailsQuery(blankw);
+  const userAnswer = useAtomValue(answersAtom);
+  const answerErrorsSet = new Set<string | null>();
+  const [isOpenAllItems, setIsOpenAllItems] = useState(true);
+
+  return (
+    <PageContainerConfigurer
+      className="QuestionerAnswersPage"
+      headTitle={questionBlank.data?.title || 'Мои ответы'}
+      withoutBackButton
+      head={
+        <div className="flex gap-3">
+          {questionBlank.isLoading && <TheIconLoading />}
+          <CopyTextButton
+            text={`${environment.initialUrl}/q/i?q=${blankw}`}
+            message="Ссылка скопирована"
+          />
+          <Button
+            icon="ArrowDownDouble"
+            className={twMerge(isOpenAllItems && 'rotate-180')}
+            onClick={() => setIsOpenAllItems(itNIt)}
+          />
+        </div>
+      }
+      content={
+        <ConditionalRender
+          value={questionBlank.data}
+          render={blank => {
+            if (!blank.anon && !userAnswer.fio) answerErrorsSet.add('Не вписаны Фамилия и Имя');
+
+            return (
+              <Card.Root>
+                <Card.Header>
+                  <Card.Title>
+                    {blank.anon ? (
+                      <>Анонимный опрос</>
+                    ) : userAnswer.isWasPublicate ? (
+                      userAnswer.fio
+                    ) : (
+                      <TextInput
+                        strongDefaultValue
+                        defaultValue={userAnswer.fio}
+                        disabled={userAnswer.isWasPublicate}
+                        label={
+                          <>
+                            Фамилия Имя<span className={userAnswer.fio ? 'text-xOK' : 'text-xKO'}> *</span>
+                          </>
+                        }
+                        onInput={value => answersAtom.do.setFio(value)}
+                      />
+                    )}
+                  </Card.Title>
+                  <Card.Description>{blank.dsc}</Card.Description>
+                </Card.Header>
+                <Card.Content>
+                  <Accordion.Root
+                    type="multiple"
+                    key={+isOpenAllItems}
+                    defaultValue={isOpenAllItems ? (blank.ord.map(String) ?? []) : []}
+                  >
+                    {blank.ord.map(templateId => {
+                      const template = blank.tmp[templateId];
+                      if (template == null || template.hidden || !template.dsc) return;
+
+                      return (<Type extends QuestionerType>(type: Type) => {
+                        const contentProps = questionerCardContents<Type>(type);
+
+                        const props: QuestionerUserAnswerContentProps<QuestionerType> = {
+                          template: template,
+                          userAnswer: userAnswer.a[templateId],
+                          isCantRedact: userAnswer.isWasPublicate,
+                          onUpdate: updater => {
+                            if (answersAtom.get().isWasPublicate) return;
+
+                            answersAtom.set(prev => {
+                              try {
+                                const updatedValue = updater(prev.a[templateId]?.v);
+
+                                return {
+                                  ...prev,
+                                  a: {
+                                    ...prev.a,
+                                    [templateId]: updatedValue === undefined ? undefined : { v: updatedValue },
+                                  },
+                                };
+                              } catch (_e) {
+                                return prev;
+                              }
+                            });
+                          },
+                        };
+
+                        if (contentProps.takeShowError?.(props as never)) return null;
+
+                        const {
+                          check: answerCheckError,
+                          info: answerInfoError,
+                          isFill: answerIsFill,
+                        } = contentProps.takeUserAnswerError(props as never);
+
+                        if (answerCheckError) answerErrorsSet.add(answerCheckError);
+
+                        return (
+                          <QuestionerTemplateCard
+                            key={templateId}
+                            templateId={templateId}
+                            template={template}
+                            title={
+                              <span>
+                                {template.title || questionerTemplateDescriptions[type].title}
+                                {template.req && (
+                                  <span
+                                    className={twMerge(
+                                      'bold',
+                                      template.req ? (answerCheckError ? 'text-xKO' : 'text-xOK') : '',
+                                    )}
+                                  >
+                                    {' *'}
+                                  </span>
+                                )}
+                              </span>
+                            }
+                            description={template.dsc}
+                            requiredSign={
+                              <>
+                                {!template.req || (
+                                  <span className={answerIsFill ? 'text-xOK' : 'text-xKO'}>
+                                    ● {contentProps.customRequireMessage ?? 'Этот вопрос обязателен к ответу'}
+                                  </span>
+                                )}
+                                {answerInfoError && (
+                                  <span className={answerCheckError ? 'text-xKO' : 'text-xOK'}>
+                                    ● {answerInfoError}
+                                  </span>
+                                )}
+                              </>
+                            }
+                            content={contentProps.userRender(props as never)}
+                          />
+                        );
+                      })(template.type);
+                    })}
+                  </Accordion.Root>
+                </Card.Content>
+                <Card.Footer>
+                  {userAnswer.isWasPublicate || (
+                    <Button
+                      icon="MailSend02"
+                      disabled={!!answerErrorsSet.size}
+                      disabledReason={Array.from(answerErrorsSet).map((error, errori) => (
+                        <div key={errori}>● {error}</div>
+                      ))}
+                      onClick={() =>
+                        questionerUserTsjrpcClient
+                          .publicUserAnswer({
+                            answer: {
+                              ...userAnswer,
+                              fio: blank.anon ? undefined : userAnswer.fio,
+                            },
+                            blankw,
+                          })
+                          .then(() => {
+                            answersAtom.set(prev => ({ ...prev, isWasPublicate: true }));
+                            toast('Ответ отправлен', makeToastOKMoodConfig());
+                          })
+                      }
+                    >
+                      Отправить мои ответы
+                    </Button>
+                  )}
+                </Card.Footer>
+              </Card.Root>
+            );
+          }}
+        />
+      }
+    />
+  );
+};

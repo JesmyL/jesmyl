@@ -24,7 +24,7 @@ const aliasesWithMaxImportPathParts = Object.entries({
 const knownExportNamesPrefixes = ['I', 'The', 'Styled', 'is', 'make', 'check', 'use', 'take'];
 const availablePagePostfix = ['Layout', 'Page'];
 
-const appNames = ['cm', 'cm+editor', 'bible'];
+const appNames = fs.readdirSync('./src/front/apps/');
 
 const isNeedReport = true;
 
@@ -167,7 +167,8 @@ export default () => [
         }),
       ];
     })
-    .flat(15),
+    .flat(15)
+    .filter(it => it),
 
   ...appNames
     .map(appName => {
@@ -181,18 +182,30 @@ export default () => [
         ),
       ];
     })
-    .flat(2),
+    .flat(15)
+    .filter(it => it),
 ];
 
 const makeExportedNamePrefixController = (appName, pathPart, fileNameMapper = it => it) => {
   const path = `./src/front/apps/${appName}/${pathPart}`;
+
+  try {
+    if (!fs.statSync(path + '/').isDirectory()) return;
+  } catch (e) {
+    return;
+  }
+
   const fileNames = fs.readdirSync(path);
 
   return fileNames
     .map(fileName => {
       const wholePath = `${path}/${fileName}`;
 
-      if (!fs.statSync(wholePath).isDirectory()) return null;
+      try {
+        if (!fs.statSync(wholePath).isDirectory()) return null;
+      } catch (e) {
+        return null;
+      }
 
       const name = 'check';
       const rule = {

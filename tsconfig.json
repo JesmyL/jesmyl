@@ -50,14 +50,14 @@
       "$bible/shared/*": ["./front/apps/bible/07-shared/*"],
       "$bible/*": ["./front/apps/bible/*"],
 
-      "$q/app/*": ["./front/components/apps/q/01-app/*"],
-      "$q/processes/*": ["./front/components/apps/q/02-processes/*"],
-      "$q/pages/*": ["./front/components/apps/q/03-pages/*"],
-      "$q/widgets/*": ["./front/components/apps/q/04-widgets/*"],
-      "$q/features/*": ["./front/components/apps/q/05-features/*"],
-      "$q/entities/*": ["./front/components/apps/q/06-entities/*"],
-      "$q/basis/*": ["./front/components/apps/q/07-basis/*"],
-      "$q/*": ["./front/components/apps/q/*"],
+      "$q/app/*": ["./front/apps/questioner/01-app/*"],
+      "$q/processes/*": ["./front/apps/questioner/02-processes/*"],
+      "$q/pages/*": ["./front/apps/questioner/03-pages/*"],
+      "$q/widgets/*": ["./front/apps/questioner/04-widgets/*"],
+      "$q/features/*": ["./front/apps/questioner/05-features/*"],
+      "$q/entities/*": ["./front/apps/questioner/06-entities/*"],
+      "$q/shared/*": ["./front/apps/questioner/07-shared/*"],
+      "$q/*": ["./front/apps/questioner/*"],
 
       "$tuner/*": ["./front/apps/tuner/*"],
 
