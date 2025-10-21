@@ -1,4 +1,4 @@
-import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
+import { useConfirm } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { cmComCommentAltKeyAtom } from '$cm/entities/com-comment/state/atoms';
 import { cmComFavoriteComsAtom, cmComSelectedComwsAtom, cmComTopToolsAtom } from '$cm/entities/com/state/atoms';

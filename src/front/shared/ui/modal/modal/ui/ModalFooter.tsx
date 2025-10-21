@@ -1,4 +1,4 @@
-import { StyledModalFooter } from '../styled';
+import { StyledModalFooter } from '../style/styled';
 
 interface Props {
   children: React.ReactNode;

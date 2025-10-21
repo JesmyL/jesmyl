@@ -1,12 +1,12 @@
+import { translationShowAlertLineConfigIdAtom } from '#features/broadcast/initial-slide-context';
 import { propagationStopper } from '#shared/lib/event-funcs';
-import { Modal } from '#shared/ui/modal/Modal/Modal';
+import { Modal } from '#shared/ui/modal';
 import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
+import { complectIDB } from '$index/state/complectIDB';
 import { atom, useAtom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
 import React from 'react';
-import { complectIDB } from '../../../../components/index/state/complectIDB';
-import { translationShowAlertLineConfigIdAtom } from '../../initial-slide-context';
 import { AlertLineSettingsModalInner } from './AlertLineSettings';
 
 const LazyAlertLineConfigIcon = React.lazy(() => import('./AlertLineConfigIcon'));

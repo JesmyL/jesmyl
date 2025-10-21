@@ -1,5 +1,5 @@
 import { DisabledArea } from '#shared/ui/DisabledArea';
-import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
+import { useConfirm } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { cmEditComOrderClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { twMerge } from 'tailwind-merge';

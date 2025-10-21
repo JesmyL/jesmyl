@@ -1,7 +1,4 @@
-import { Modal } from '#shared/ui/modal/Modal/Modal';
-import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
-import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
-import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { Modal, ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { TextInput } from '#shared/ui/TextInput';

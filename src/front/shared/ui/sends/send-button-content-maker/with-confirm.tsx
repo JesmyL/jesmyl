@@ -1,4 +1,4 @@
-import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
+import { useConfirm } from '#shared/ui/modal';
 import { useState } from 'react';
 import { SendButtonContentMakerBody } from './maker-body';
 import { SendButtonContentMakerProps } from './maker.model';

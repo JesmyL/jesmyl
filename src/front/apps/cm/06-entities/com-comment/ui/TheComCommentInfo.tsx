@@ -1,4 +1,4 @@
-import { Modal } from '#shared/ui/modal/Modal/Modal';
+import { Modal } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { atom } from 'atomaric';
 import { CmComCommentForExample } from './ForExample';

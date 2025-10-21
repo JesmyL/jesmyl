@@ -1,6 +1,6 @@
 import { CopyTextButton } from '#shared/ui/CopyTextButton';
 import { useIsRememberExpand } from '#shared/ui/expand/useIsRememberExpand';
-import { makeToastKOMoodConfig } from '#shared/ui/modal/toast.configs';
+import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { ReactNode } from 'react';
 import { toast } from 'sonner';
 import { StyledCoderResultName } from './styles';

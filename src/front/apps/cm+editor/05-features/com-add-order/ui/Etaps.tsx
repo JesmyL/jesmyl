@@ -1,6 +1,4 @@
-import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
-import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
-import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { CmEditorComOrderAddTextableBlockAnchorTitles } from '$cm+editor/features/com-order';

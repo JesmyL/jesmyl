@@ -1,5 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { Modal } from '#shared/ui/modal/Modal/Modal';
+import { Modal } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';

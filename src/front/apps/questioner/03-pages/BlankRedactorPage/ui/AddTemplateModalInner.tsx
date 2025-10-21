@@ -1,7 +1,6 @@
 import { Button } from '#shared/components/ui/button';
 import { Card } from '#shared/components/ui/card';
-import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
-import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import {
   questionerTemplateDescriptions,

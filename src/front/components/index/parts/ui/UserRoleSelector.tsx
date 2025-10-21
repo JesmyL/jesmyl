@@ -1,7 +1,7 @@
 import { Button } from '#shared/components/ui/button';
 import { MyLib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
-import { usePrompt } from '#shared/ui/modal/usePrompt';
+import { usePrompt } from '#shared/ui/modal';
 import { indexAppUserAccessRightsMatrixAtom, indexOpenAccessRoleRedactorAtom } from '$index/atoms';
 import { indexTsjrpcClientMethods } from '$index/tsjrpc.methods';
 import { useAtomValue } from 'atomaric';

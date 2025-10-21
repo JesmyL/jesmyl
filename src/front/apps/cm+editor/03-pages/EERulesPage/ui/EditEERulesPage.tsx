@@ -2,7 +2,7 @@ import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { DropdownItem } from '#shared/ui/dropdown/Dropdown.model';
-import { Modal } from '#shared/ui/modal/Modal/Modal';
+import { Modal } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';

@@ -1,8 +1,6 @@
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { CopyTextButton } from '#shared/ui/CopyTextButton';
-import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
-import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
-import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { CmCom, useCmComChordVisibleVariant } from '$cm/entities/com';
 import {

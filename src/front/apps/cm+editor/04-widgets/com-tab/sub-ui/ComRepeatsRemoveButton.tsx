@@ -1,8 +1,5 @@
 import { mylib } from '#shared/lib/my-lib';
-import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
-import { Modal } from '#shared/ui/modal/Modal/Modal';
-import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
-import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { Modal, ModalBody, ModalHeader, useConfirm } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { TheButton } from '#shared/ui/TheButton';
 import { EditableComOrder } from '$cm+editor/shared/classes/EditableComOrder';

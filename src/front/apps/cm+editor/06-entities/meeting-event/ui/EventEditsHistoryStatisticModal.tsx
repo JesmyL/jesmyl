@@ -1,7 +1,6 @@
 import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
 import { MyLib, mylib } from '#shared/lib/my-lib';
-import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
-import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { CmComFaceList } from '$cm/ext';

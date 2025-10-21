@@ -1,9 +1,7 @@
 import { mylib } from '#shared/lib/my-lib';
 import { atom, useAtomValue } from 'atomaric';
 import { ReactNode } from 'react';
-import { Modal } from './modal/Modal/Modal';
-import { ModalBody } from './modal/Modal/ModalBody';
-import { ModalHeader } from './modal/Modal/ModalHeader';
+import { Modal, ModalBody, ModalHeader } from './modal';
 import { TheIconButton } from './the-icon/TheIconButton';
 
 type PrepareResult = {

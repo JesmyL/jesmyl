@@ -1,5 +1,5 @@
 import { toast } from 'sonner';
-import { makeToastKOMoodConfig } from './modal/toast.configs';
+import { makeToastKOMoodConfig } from './modal';
 
 const className = 'opacity-50';
 

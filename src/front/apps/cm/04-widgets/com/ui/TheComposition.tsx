@@ -1,6 +1,6 @@
 import { hideAppFooterAtom } from '#basis/lib/atoms/hideAppFooterAtom';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { Modal } from '#shared/ui/modal/Modal/Modal';
+import { Modal } from '#shared/ui/modal';
 import {
   PageContainerConfigurer,
   StyledPhaseContainerConfigurerHead,

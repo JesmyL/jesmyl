@@ -2,9 +2,7 @@ import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditab
 import { StrongDiv } from '#basis/ui/strong-control/StrongDiv';
 import { MyLib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
-import { Modal } from '#shared/ui/modal/Modal/Modal';
-import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
-import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { SendableDropdown } from '#shared/ui/sends/dropdown/SendableDropdown';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { atom } from 'atomaric';

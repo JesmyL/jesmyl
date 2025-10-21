@@ -1,6 +1,4 @@
-import { Modal } from '#shared/ui/modal/Modal/Modal';
-import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
-import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { atom } from 'atomaric';

@@ -1,9 +1,7 @@
 import { Accordion } from '#shared/components/ui/accordion';
 import { MyLib } from '#shared/lib/my-lib';
 import { ConditionalRender } from '#shared/ui/ConditionalRender';
-import { Modal } from '#shared/ui/modal/Modal/Modal';
-import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
-import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { WithAtomValue } from '#shared/ui/WithAtomValue';
 import { indexAppUserAccessRightsMatrixAtom, indexOpenAccessRoleRedactorAtom } from '$index/atoms';

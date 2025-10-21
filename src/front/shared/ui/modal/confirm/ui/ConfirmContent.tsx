@@ -1,5 +1,5 @@
-import { ConfirmedContentProps } from './model';
-import { useConfirm } from './useConfirm';
+import { useConfirm } from '../lib/useConfirm';
+import { ConfirmedContentProps } from '../model/model';
 
 export const ConfirmContent = (props: ConfirmedContentProps) => {
   if (props.confirm) return <WithConfirm {...props} />;

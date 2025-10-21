@@ -1,6 +1,6 @@
 import { useInvocatedValue } from '#basis/lib/useInvocatedValue';
 import { JesmylLogo } from '#basis/ui/jesmyl-logo/JesmylLogo';
-import { makeToastKOMoodConfig } from '#shared/ui/modal/toast.configs';
+import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { TextInput } from '#shared/ui/TextInput';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';

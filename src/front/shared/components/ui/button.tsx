@@ -3,7 +3,7 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import * as React from 'react';
 
 import { cn } from '#shared/lib/utils';
-import { makeToastKOMoodConfig } from '#shared/ui/modal/toast.configs';
+import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { toast } from 'sonner';
 import { StameskaIconKind } from 'stameska-icon/utils';

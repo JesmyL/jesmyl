@@ -1,5 +1,4 @@
-import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
-import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import {
   bibleAllTranslates,
   BibleModulesTranslationsRedactButton,

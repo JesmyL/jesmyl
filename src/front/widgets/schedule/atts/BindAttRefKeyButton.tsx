@@ -1,8 +1,6 @@
 import { StrongDiv } from '#basis/ui/strong-control/StrongDiv';
 import { mylib } from '#shared/lib/my-lib';
-import { Modal } from '#shared/ui/modal/Modal/Modal';
-import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
-import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { atom } from 'atomaric';
 import { ReactNode } from 'react';

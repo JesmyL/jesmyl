@@ -1,4 +1,4 @@
-import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
+import { useConfirm } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { EditableComOrder } from '$cm+editor/shared/classes/EditableComOrder';

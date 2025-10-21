@@ -1,4 +1,4 @@
-import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
+import { useConfirm } from '#shared/ui/modal';
 import { BottomPopupItem } from '#shared/ui/popup/bottom-popup/BottomPopupItem';
 import { StyledLoadingSpinner } from '#shared/ui/the-icon/IconLoading';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';

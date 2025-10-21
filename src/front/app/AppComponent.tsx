@@ -7,7 +7,7 @@ import { isFullscreenAtom } from '#shared/lib/atoms/fullscreen';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { LinkAppActionFabric } from '#shared/lib/link-app-actions';
 import { soki } from '#shared/soki';
-import { makeToastKOMoodConfig } from '#shared/ui/modal/toast.configs';
+import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { schLinkAction } from '#widgets/schedule/links';
 import { Outlet, ParsedLocation, useLocation, useNavigate } from '@tanstack/react-router';

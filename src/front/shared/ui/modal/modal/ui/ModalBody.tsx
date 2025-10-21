@@ -1,5 +1,5 @@
 import { twMerge } from 'tailwind-merge';
-import { StyledModalBody } from '../styled';
+import { StyledModalBody } from '../style/styled';
 
 interface Props {
   children: React.ReactNode;

@@ -2,7 +2,7 @@ import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe
 import { mylib } from '#shared/lib/my-lib';
 import { excel2jsonParserBox } from '#shared/lib/parseExcel2Json';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
-import { makeToastKOMoodConfig } from '#shared/ui/modal/toast.configs';
+import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { SendButton } from '#shared/ui/sends/send-button/SendButton';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useScheduleScopePropsContext } from '#widgets/schedule/complect/lib/contexts';

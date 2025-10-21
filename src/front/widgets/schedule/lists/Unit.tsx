@@ -1,6 +1,6 @@
 import { StrongEditableField } from '#basis/ui/strong-control/field/StrongEditableField';
 import { ExpandableContent } from '#shared/ui/expand/ExpandableContent';
-import { Modal } from '#shared/ui/modal/Modal/Modal';
+import { Modal } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { atom } from 'atomaric';
 import { useMemo } from 'react';

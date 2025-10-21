@@ -1,7 +1,5 @@
 import { ScreenTranslationControlPanelShowMdButton } from '#features/broadcast/controls/ShowMdButton';
-import { Modal } from '#shared/ui/modal/Modal/Modal';
-import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
-import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { Modal, ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { BibleBroadcastSlide } from '$bible/entities/broadcast/ui/BibleTranslationSlide';

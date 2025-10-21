@@ -1,6 +1,5 @@
 import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
-import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
-import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';

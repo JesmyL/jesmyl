@@ -1,7 +1,5 @@
 import { Button } from '#shared/components/ui/button';
-import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
-import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
-import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import {
   cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom,

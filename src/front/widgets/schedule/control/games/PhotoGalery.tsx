@@ -1,7 +1,6 @@
 import { mylib } from '#shared/lib/my-lib';
 import { DebouncedSearchInput } from '#shared/ui/DebouncedSearchInput';
-import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
-import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { ModalBody, ModalHeader } from '#shared/ui/modal';
 import { useScheduleWidgetRightsContext } from '#widgets/schedule/contexts';
 import { atom, useAtomValue } from 'atomaric';
 import { useMemo } from 'react';

@@ -1,4 +1,4 @@
-import { makeToastKOMoodConfig } from '#shared/ui/modal/toast.configs';
+import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { toast } from 'sonner';
 import { SendButtonContentMaker } from '../send-button-content-maker/maker';

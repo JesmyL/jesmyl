@@ -4,8 +4,7 @@ import { ReactNode } from 'react';
 import { toast } from 'sonner';
 import { StameskaIconKind } from 'stameska-icon/utils';
 import { twMerge } from 'tailwind-merge';
-import { ConfirmContent } from '../modal/confirm/ConfirmContent';
-import { makeToastKOMoodConfig } from '../modal/toast.configs';
+import { ConfirmContent, makeToastKOMoodConfig } from '../modal';
 
 interface Props {
   icon: KnownStameskaIconName;

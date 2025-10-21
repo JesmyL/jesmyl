@@ -1,4 +1,4 @@
-import { ConfirmContent } from '#shared/ui/modal/confirm/ConfirmContent';
+import { ConfirmContent } from '#shared/ui/modal';
 import { ReactNode } from 'react';
 import { twMerge } from 'tailwind-merge';
 

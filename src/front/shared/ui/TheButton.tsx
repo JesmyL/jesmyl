@@ -1,9 +1,9 @@
 import { HTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 import { twMerge } from 'tailwind-merge';
-import { ConfirmContent } from './modal/confirm/ConfirmContent';
+import { ConfirmContent } from './modal';
 
-const xColors = ['x2', 'x3', 'x5'];
+const xColors = ['x2', 'x3', 'x5'] as const;
 
 type Props = {
   color?: (typeof xColors)[number];

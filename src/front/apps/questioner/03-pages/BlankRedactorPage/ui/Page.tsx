@@ -4,7 +4,7 @@ import { Button } from '#shared/components/ui/button';
 import { Popover } from '#shared/components/ui/popover';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { ConditionalRender } from '#shared/ui/ConditionalRender';
-import { Modal } from '#shared/ui/modal/Modal/Modal';
+import { Modal } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';

@@ -1,7 +1,7 @@
 import { TsjrpcBaseClient } from '#basis/lib/TsjrpcBase.client';
 import { rootAppModalTextContentAtom } from '#shared/lib/atoms/rootAppModalTextContentAtom';
 import { MyLib } from '#shared/lib/my-lib';
-import { makeToastKOMoodConfig, makeToastOKMoodConfig } from '#shared/ui/modal/toast.configs';
+import { makeToastKOMoodConfig, makeToastOKMoodConfig } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { IndexTsjrpcSharesModel } from 'shared/api/tsjrpc/index/tsjrpc.methods.model';
 import { toast } from 'sonner';

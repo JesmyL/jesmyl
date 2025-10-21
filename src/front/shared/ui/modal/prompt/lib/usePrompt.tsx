@@ -4,10 +4,10 @@ import { TextInput } from '#shared/ui/TextInput';
 import { useSetRootAnchoredContent } from '#shared/ui/useSetRootAnchoredContent';
 import { atom } from 'atomaric';
 import { ReactNode, useCallback, useEffect } from 'react';
-import { Modal } from './Modal/Modal';
-import { ModalBody } from './Modal/ModalBody';
-import { ModalFooter } from './Modal/ModalFooter';
-import { ModalHeader } from './Modal/ModalHeader';
+import { Modal } from '../../modal/ui/Modal';
+import { ModalBody } from '../../modal/ui/ModalBody';
+import { ModalFooter } from '../../modal/ui/ModalFooter';
+import { ModalHeader } from '../../modal/ui/ModalHeader';
 
 const isOpenAtom = atom(false);
 

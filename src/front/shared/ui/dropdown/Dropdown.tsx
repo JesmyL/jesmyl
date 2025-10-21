@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { itIt } from 'shared/utils';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
-import { makeToastKOMoodConfig } from '../modal/toast.configs';
+import { makeToastKOMoodConfig } from '../modal';
 import { useOnSendPromiseCallback } from '../sends/useOnSendPromiseCallback';
 import { LazyIcon } from '../the-icon/LazyIcon';
 import { DropdownItem, DropdownProps } from './Dropdown.model';

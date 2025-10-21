@@ -1,4 +1,4 @@
-import { StyledModalHeader } from '../styled';
+import { StyledModalHeader } from '../style/styled';
 
 interface Props {
   children: React.ReactNode;

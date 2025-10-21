@@ -1,4 +1,4 @@
-import { makeToastKOMoodConfig } from '#shared/ui/modal/toast.configs';
+import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { useCmComList } from '$cm/entities/com';
 import { cmComFavoriteComsAtom } from '$cm/entities/index';
 import { cmConstantsConfigAtom } from '$cm/shared/state';

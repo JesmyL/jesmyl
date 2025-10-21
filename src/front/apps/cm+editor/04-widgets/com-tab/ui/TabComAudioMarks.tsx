@@ -2,8 +2,7 @@ import { Button } from '#shared/components/ui/button';
 import { ButtonGroup } from '#shared/components/ui/button-group';
 import { MyLib, mylib } from '#shared/lib/my-lib';
 import { ConditionalRender } from '#shared/ui/ConditionalRender';
-import { Modal } from '#shared/ui/modal/Modal/Modal';
-import { makeToastKOMoodConfig } from '#shared/ui/modal/toast.configs';
+import { makeToastKOMoodConfig, Modal } from '#shared/ui/modal';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { WithState } from '#shared/ui/WithState';
 import {

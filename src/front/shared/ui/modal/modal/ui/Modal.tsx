@@ -7,7 +7,7 @@ import { RootAnchoredContent } from '#shared/ui/RootAnchoredContent';
 import { Atom, useAtomValue } from 'atomaric';
 import { useEffect } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { StyledModalScreen, StyledModalScreenWrapper } from '../styled';
+import { StyledModalScreen, StyledModalScreenWrapper } from '../style/styled';
 
 export const Modal = <Value, TrustValue extends Value = Exclude<Value, nil | '' | false>>({
   mood,

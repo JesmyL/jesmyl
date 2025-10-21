@@ -1,6 +1,6 @@
 import { useCurrentAppSetter } from '#basis/lib/useCurrentAppSetter';
 import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { makeToastKOMoodConfig } from '#shared/ui/modal/toast.configs';
+import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { useCmComSelectedList } from '$cm/entities/com';
 import { cmComShareComCommentPropsAtom } from '$cm/entities/index';
 import { CmComSharedListActionInterpretator } from '$cm/features/com';

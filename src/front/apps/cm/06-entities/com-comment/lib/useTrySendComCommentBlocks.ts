@@ -1,4 +1,4 @@
-import { makeToastKOMoodConfig } from '#shared/ui/modal/toast.configs';
+import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { cmIDB } from '$cm/shared/state';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { useAuth } from '$index/atoms';

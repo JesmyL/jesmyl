@@ -1,5 +1,4 @@
-import { Modal } from '#shared/ui/modal/Modal/Modal';
-import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
+import { Modal, ModalBody } from '#shared/ui/modal';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { atom } from 'atomaric';
 import { scheduleWidgetUserRights } from 'shared/api';

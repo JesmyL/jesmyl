@@ -1,6 +1,6 @@
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
 import { DropdownItem, DropdownProps } from '#shared/ui/dropdown/Dropdown.model';
-import { makeToastKOMoodConfig } from '#shared/ui/modal/toast.configs';
+import { makeToastKOMoodConfig } from '#shared/ui/modal';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';
 import { useState } from 'react';
 import { toast } from 'sonner';

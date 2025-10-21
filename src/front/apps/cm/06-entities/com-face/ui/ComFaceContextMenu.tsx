@@ -1,5 +1,5 @@
 import { ContextMenu } from '#shared/components/ui/context-menu';
-import { useConfirm } from '#shared/ui/modal/confirm/useConfirm';
+import { useConfirm } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { useCmComSelectedList } from '$cm/entities/com';
 import { useCmComFavouriteList } from '$cm/entities/com-favourite';

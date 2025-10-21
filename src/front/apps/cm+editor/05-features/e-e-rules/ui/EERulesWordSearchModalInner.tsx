@@ -1,5 +1,5 @@
 import { DexiedValueSetter } from '#shared/lib/DexieDB';
-import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
+import { ModalBody } from '#shared/ui/modal';
 import { TextInput } from '#shared/ui/TextInput';
 import { CmEditorIDBStorage } from '$cm+editor/shared/state/cmEditorIDB';
 import { useState } from 'react';

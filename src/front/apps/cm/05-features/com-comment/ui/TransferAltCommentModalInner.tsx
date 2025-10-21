@@ -1,8 +1,6 @@
 import { Button } from '#shared/components/ui/button';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
-import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
-import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
-import { ModalHeader } from '#shared/ui/modal/Modal/ModalHeader';
+import { ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { CmCom } from '$cm/entities/com';
 import { cmComCommentRegisteredAltKeysAtom } from '$cm/entities/com-comment';

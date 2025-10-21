@@ -4,7 +4,7 @@ import { Card } from '#shared/components/ui/card';
 import { environment } from '#shared/environment';
 import { ConditionalRender } from '#shared/ui/ConditionalRender';
 import { CopyTextButton } from '#shared/ui/CopyTextButton';
-import { makeToastOKMoodConfig } from '#shared/ui/modal/toast.configs';
+import { makeToastOKMoodConfig } from '#shared/ui/modal';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
 import { TextInput } from '#shared/ui/TextInput';
 import { TheIconLoading } from '#shared/ui/the-icon/IconLoading';

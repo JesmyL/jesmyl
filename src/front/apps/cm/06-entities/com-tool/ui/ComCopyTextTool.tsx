@@ -1,4 +1,4 @@
-import { Modal } from '#shared/ui/modal/Modal/Modal';
+import { Modal } from '#shared/ui/modal';
 import { useCmComCurrent } from '$cm/entities/com';
 import { CmComCopyTextModalInner } from '$cm/features/com';
 import { atom } from 'atomaric';

@@ -1,6 +1,6 @@
+import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
-import { LazyIcon } from '../the-icon/LazyIcon';
 
 export const makeToastKOMoodConfig = (className?: string | nil): Parameters<typeof toast>[1] => ({
   icon: <LazyIcon icon="Alert01" />,

@@ -1,9 +1,7 @@
 import { StrongDiv } from '#basis/ui/strong-control/StrongDiv';
 import { propagationStopper } from '#shared/lib/event-funcs';
 import { MyLib, mylib } from '#shared/lib/my-lib';
-import { Modal } from '#shared/ui/modal/Modal/Modal';
-import { ModalBody } from '#shared/ui/modal/Modal/ModalBody';
-import { ModalFooter } from '#shared/ui/modal/Modal/ModalFooter';
+import { Modal, ModalBody, ModalFooter } from '#shared/ui/modal';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { atom } from 'atomaric';
 import { ReactNode } from 'react';
