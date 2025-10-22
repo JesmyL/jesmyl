@@ -1,6 +1,6 @@
 import { createFileRoute, Navigate } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/cm/edit/coms/$comw/$tab/')({
+export const Route = createFileRoute('/cm/edit/coms/$comw/')({
   component: RouteComponent,
 });
 
