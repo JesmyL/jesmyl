@@ -21,24 +21,22 @@ interface Props {
 export const CmComAudioPlayerTrack = (props: Props) => {
   const playSrc = useAtomValue(cmComAudioPlayerPlaySrcAtom);
 
-  if (playSrc && playSrc !== props.src) {
-    const time = mylib.convertSecondsInStrTime(0);
+  if (!playSrc || playSrc === props.src) return <TrackWithCurrents {...props} />;
 
-    return (
-      <Track
-        currentTime={0}
-        duration={0}
-        time={props.timeRender?.(time, props.src) ?? time}
-      />
-    );
-  }
+  const time = <code>{mylib.convertSecondsInStrTime(0)}</code>;
 
-  return <TrackWithCurrents {...props} />;
+  return (
+    <Track
+      currentTime={0}
+      duration={0}
+      time={props.timeRender?.(time, props.src) ?? time}
+    />
+  );
 };
 
 const TrackWithCurrents = (props: Props) => {
   const currentTime = useCmComAudioPlayerCurrentTime();
-  const time = mylib.convertSecondsInStrTime(currentTime);
+  const time = <code>{mylib.convertSecondsInStrTime(currentTime)}</code>;
 
   return (
     <Track
