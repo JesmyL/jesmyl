@@ -424,13 +424,7 @@ export class CmComOrder extends SourceBased<IExportableOrder> {
 
   makeSelector = (): CmComOrderSelector => this.wid;
 
-  isMySelector = (selector: CmComOrderSelector) => {
-    const truncatedNum = Math.trunc(selector);
-    if (truncatedNum === selector) return this.wid === selector;
-    if (this.me.leadOrd == null || this.me.watchOrd == null) return false;
-
-    return this.me.leadOrd.wid === truncatedNum && this.me.watchOrd.wid === +`${selector}`.split('.')[1].padEnd(2, '0');
-  };
+  isMySelector = (selector: CmComOrderSelector) => this.wid === selector;
 
   isVisibleWithHeader = () => !this.isHeaderNoneForce && this.isVisible;
 }
