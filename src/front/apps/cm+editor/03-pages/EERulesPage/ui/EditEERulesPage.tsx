@@ -1,3 +1,6 @@
+import { Badge } from '#shared/components/ui/badge';
+import { Button } from '#shared/components/ui/button';
+import { ButtonGroup } from '#shared/components/ui/button-group';
 import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
@@ -6,12 +9,11 @@ import { Modal } from '#shared/ui/modal';
 import { TheIconSendButton } from '#shared/ui/sends/the-icon-send-button/TheIconSendButton';
 import { IconCheckbox } from '#shared/ui/the-icon/IconCheckbox';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import { TheButton } from '#shared/ui/TheButton';
 import { CmEditorEERulesWord, CmEditorEERulesWordSearchModalInner } from '$cm+editor/features/e-e-rules';
 import { cmEditorClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { cmEditorIDB } from '$cm+editor/shared/state/cmEditorIDB';
 import { PageCmEditorContainer } from '$cm+editor/shared/ui/PageCmEditorContainer';
-import { atom, useAtom, useAtomSet, useAtomValue } from 'atomaric';
+import { atom, useAtom, useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { EeStorePack } from 'shared/api';
 import { CmEditorEERulesListComputer } from './EERulesListComputer';
@@ -30,10 +32,7 @@ export const CmEditorEERulesPage = () => {
   const [pageSize, setPageSize] = useAtom(pageSizeAtom);
   const [currentPage, setCurrentPage] = useAtom(currentPageAtom);
   const [isCheckBible, setIsCheckBible] = useAtom(isCheckBibleAtom);
-  const setEditedWords = useAtomSet(eeEditedWordsAtom);
-  const setIgnoredWordsSet = cmEditorIDB.useSet.ignoredEESet();
   const eeStoreRef = useActualRef(cmEditorIDB.useValue.eeStore());
-  // const [isOpenSearchWord, setIsOpenSearchWord] = useState(false);
 
   const [updates, setUpdates] = useState(0);
   const [isShowListComputer, setIsShowListComputer] = useState(false);
@@ -43,7 +42,8 @@ export const CmEditorEERulesPage = () => {
 
   useEffect(() => setIsShowListComputer(false), [updates]);
 
-  const words = mylib.keys(editedWordsRef.current);
+  const editedWords = mylib.keys(editedWordsRef.current);
+  const eeStoreKeys = mylib.keys(eeStoreRef.current);
 
   return (
     <PageCmEditorContainer
@@ -52,25 +52,25 @@ export const CmEditorEERulesPage = () => {
       head={
         <TheIconSendButton
           icon="Sent"
-          disabled={!words.length}
+          disabled={!editedWords.length}
           className="m-2"
           confirm={
-            `Отправить ${words.length} ${mylib.declension(words.length, 'слово', 'слова', 'слов')}: ` +
-            `${words.join(', ')}`
+            `Отправить ${editedWords.length} ${mylib.declension(editedWords.length, 'слово', 'слова', 'слов')}: ` +
+            `${editedWords.join(', ')}`
           }
           onSend={() => cmEditorClientTsjrpcMethods.setEEWords({ words: editedWordsRef.current })}
-          onSuccess={() => setEditedWords({})}
+          onSuccess={() => eeEditedWordsAtom.set({})}
         />
       }
       content={
         <>
           <div className="flex gap-2">
-            <TheButton
+            <Button
               className="m-2"
               onClick={() => setIsShowListComputer(true)}
             >
-              Проверить наличие неизвестных слов
-            </TheButton>
+              Проверить
+            </Button>
             <TheIconButton
               icon="SearchVisual"
               onClick={isOpenSearchWordAtom.do.toggle}
@@ -89,56 +89,66 @@ export const CmEditorEERulesPage = () => {
               eeStoreRef={eeStoreRef}
             />
           ) : (
-            <>
-              {sizes.map(size => (
-                <button
-                  key={size}
-                  className="m-2"
-                  disabled={pageSize === size}
-                  onClick={() => setPageSize(size)}
-                >
-                  {size}
-                </button>
-              ))}
-              <Dropdown
-                onSelect={({ id }) => setCurrentPage(id)}
-                items={Array(Math.ceil(listBox.list.length / pageSize))
-                  .fill(0)
-                  .map((_, page): DropdownItem<number> => {
-                    const words = listBox.list.slice(page * pageSize, page * pageSize + pageSize);
+            !listBox.list.length || (
+              <>
+                <ButtonGroup.Root className="my-3">
+                  {sizes.map(size => (
+                    <Button
+                      key={size}
+                      disabled={pageSize === size}
+                      onClick={() => setPageSize(size)}
+                    >
+                      {size}
+                    </Button>
+                  ))}
+                </ButtonGroup.Root>
+                <Badge className="mr-2 mb-2">
+                  Слов: {eeStoreKeys.length} / {listBox.list.length} (
+                  {((eeStoreKeys.length / listBox.list.length) * 100).toFixed(3)}
+                  %)
+                </Badge>
+                <Dropdown
+                  onSelect={({ id }) => setCurrentPage(id)}
+                  items={Array(Math.ceil(listBox.list.length / pageSize))
+                    .fill(0)
+                    .map((_, page): DropdownItem<number> => {
+                      const words = listBox.list.slice(page * pageSize, page * pageSize + pageSize);
 
-                    return {
-                      title: words[0],
-                      id: page,
-                      disabled: currentPage === page,
-                      color: words.some(word => eeStoreRef.current[word] == null) ? 'ko' : null,
-                    };
-                  })}
-              />
-              слов: {listBox.list.length}
-              {listBox.list.slice(currentPage * pageSize, currentPage * pageSize + pageSize).map(word => {
-                return (
-                  <CmEditorEERulesWord
-                    key={word}
-                    word={word}
-                    setEditedWords={setEditedWords}
-                    ignoredWordsSetRef={ignoredWordsSetRef}
-                    eeStoreRef={eeStoreRef}
-                    editedWordsRef={editedWordsRef as never}
-                    setIgnoredWordsSet={setIgnoredWordsSet}
-                  />
-                );
-              })}
-            </>
+                      return {
+                        title: (
+                          <span
+                            className={words.some(word => eeStoreRef.current[word] == null) ? undefined : 'text-xOK'}
+                          >
+                            {words[0]}
+                          </span>
+                        ),
+                        id: page,
+                        disabled: currentPage === page,
+                      };
+                    })}
+                />
+                {listBox.list.slice(currentPage * pageSize, currentPage * pageSize + pageSize).map(word => {
+                  return (
+                    <CmEditorEERulesWord
+                      key={word}
+                      word={word}
+                      setEditedWords={eeEditedWordsAtom.set}
+                      ignoredWordsSetRef={ignoredWordsSetRef}
+                      eeStoreRef={eeStoreRef}
+                      editedWordsRef={editedWordsRef}
+                    />
+                  );
+                })}
+              </>
+            )
           )}
 
           <Modal openAtom={isOpenSearchWordAtom}>
             <CmEditorEERulesWordSearchModalInner
-              setEditedWords={setEditedWords}
+              setEditedWords={eeEditedWordsAtom.set}
               eeStoreRef={eeStoreRef}
               ignoredWordsSetRef={ignoredWordsSetRef}
-              editedWordsRef={editedWordsRef as never}
-              setIgnoredWordsSet={setIgnoredWordsSet}
+              editedWordsRef={editedWordsRef}
             />
           </Modal>
         </>

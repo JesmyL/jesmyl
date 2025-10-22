@@ -1,7 +1,5 @@
-import { DexiedValueSetter } from '#shared/lib/DexieDB';
 import { ModalBody } from '#shared/ui/modal';
 import { TextInput } from '#shared/ui/TextInput';
-import { CmEditorIDBStorage } from '$cm+editor/shared/state/cmEditorIDB';
 import { useState } from 'react';
 import { EeStorePack } from 'shared/api';
 import styled from 'styled-components';
@@ -11,14 +9,12 @@ type Props = {
   editedWordsRef: { current: EeStorePack };
   eeStoreRef: { current: EeStorePack };
   setEditedWords: (setter: (words: EeStorePack) => EeStorePack) => void;
-  setIgnoredWordsSet: DexiedValueSetter<CmEditorIDBStorage, 'ignoredEESet', void>;
   ignoredWordsSetRef: { current: Set<string> };
 };
 
 export const CmEditorEERulesWordSearchModalInner = ({
   editedWordsRef,
   setEditedWords,
-  setIgnoredWordsSet,
   eeStoreRef,
   ignoredWordsSetRef,
 }: Props) => {
@@ -39,7 +35,6 @@ export const CmEditorEERulesWordSearchModalInner = ({
           ignoredWordsSetRef={ignoredWordsSetRef}
           setEditedWords={setEditedWords}
           editedWordsRef={editedWordsRef as never}
-          setIgnoredWordsSet={setIgnoredWordsSet}
         />
       )}
     </StyledModalBody>
