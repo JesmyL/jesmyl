@@ -2,7 +2,7 @@ import { useAppNameContext } from '#basis/state/contexts';
 import { LinkAppActionFabric } from '#shared/lib/link-app-actions';
 import { BrutalItem } from '#shared/ui/brutal-item/BrutalItem';
 import { PageContainerConfigurer } from '#shared/ui/phase-container/PageContainerConfigurer';
-import { QrReader } from '#shared/ui/qr-code/useQrReader';
+import { QrReader } from '#shared/ui/qr-code/QrReader';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { Link } from '@tanstack/react-router';
 import { atom } from 'atomaric';

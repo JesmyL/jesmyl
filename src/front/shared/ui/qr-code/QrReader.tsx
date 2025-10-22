@@ -1,6 +1,5 @@
 import { IDetectedBarcode, Scanner } from '@yudiel/react-qr-scanner';
 import { Atom } from 'atomaric';
-import styled from 'styled-components';
 import { FullContent } from '../fullscreen-content/FullContent';
 
 interface Props {
@@ -17,8 +16,9 @@ export const QrReader = ({ facingMode = 'environment', onReadData, openAtom }: P
       closable
     >
       <div className="bg-x1 flex center full-size">
-        <StyledVideo
+        <Scanner
           constraints={{ facingMode }}
+          sound={false}
           onScan={result => {
             if (result?.[0] == null) return;
             onReadData(result[0].rawValue, result);
@@ -28,7 +28,3 @@ export const QrReader = ({ facingMode = 'environment', onReadData, openAtom }: P
     </FullContent>
   );
 };
-
-const StyledVideo = styled(Scanner)`
-  height: 100vmax;
-`;
