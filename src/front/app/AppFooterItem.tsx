@@ -1,4 +1,5 @@
-import { footerItemPlaceLsPrefix, useCurrentAppFooterItemPlaceContext } from '#basis/state/App.contexts';
+import { FooterPlacementManager } from '#basis/lib/FooterPlacementManager';
+import { useCurrentAppFooterItemPlaceContext } from '#basis/state/App.contexts';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import { FileRoutesByPath, Link } from '@tanstack/react-router';
 import styled from 'styled-components';
@@ -17,11 +18,7 @@ export function AppFooterItem({ to, icon, title, className, children, idPostfix:
   const place = useCurrentAppFooterItemPlaceContext();
   const isActive = to === place || `${to}/` === place;
 
-  if (!isActive && place) {
-    to = (localStorage.getItem(footerItemPlaceLsPrefix + to) ??
-      localStorage.getItem(footerItemPlaceLsPrefix + `${to}/`) ??
-      to) as never;
-  }
+  if (!isActive && place) to = FooterPlacementManager.makePlaceLink(to);
 
   return (
     <StyledLink

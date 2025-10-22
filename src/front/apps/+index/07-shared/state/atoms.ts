@@ -1,7 +1,7 @@
 import { IndexSchWBroadcastLiveDataValue } from '$index/shared/model/Index.model';
 import { atom } from 'atomaric';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { DeviceId, SokiAuthLogin } from 'shared/api';
+import { DeviceId, SokiAppName, SokiAuthLogin } from 'shared/api';
 import {
   IndexAppUserAccessRightsAndRoles,
   IndexAppUserAccessRightsWithoutInfo,
@@ -34,3 +34,5 @@ export const indexIsShowPlayerInFooterAtom = atom(false, 'index:isShowPlayerInFo
 export const indexAppUserAccessRightsMatrixAtom = atom<IndexAppUserAccessRightsAndRoles | null>(null);
 export const indexUserAccessRightsAtom = atom<IndexAppUserAccessRightsWithoutInfo>({}, 'index:myAccessRights');
 export const indexOpenAccessRoleRedactorAtom = atom<UserAccessRole | null>(null);
+
+export const indexFavouriteAppsAtom = atom(new Set<SokiAppName>(), 'index:favouriteApps');

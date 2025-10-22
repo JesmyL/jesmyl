@@ -27,15 +27,12 @@ export const IndexOtherPage = () => {
   const connectionStateNode = useConnectionState();
   const appList = appNames
     .map(appName => {
-      const config = routingApps[appName];
-      if (currentAppName === appName || appName === 'index') return null;
-
-      if (config == null || auth == null) return null;
+      if (appName === 'index' || routingApps[appName] == null || auth == null) return null;
 
       return (
         <IndexAppFace
           key={appName}
-          config={config}
+          config={routingApps[appName]}
         />
       );
     })
@@ -45,7 +42,16 @@ export const IndexOtherPage = () => {
     <PageContainerConfigurer
       className="relative"
       withoutBackButton
-      headTitle={routingApps[currentAppName]?.title || 'Другое'}
+      headTitle={
+        routingApps[currentAppName]?.title ? (
+          <span className="flex gap-2">
+            <LazyIcon icon={routingApps[currentAppName].icon} />
+            {routingApps[currentAppName].title}
+          </span>
+        ) : (
+          'Другое'
+        )
+      }
       head={
         <div className="flex gap-2">
           {connectionStateNode}

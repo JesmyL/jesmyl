@@ -1,11 +1,13 @@
+import { FooterPlacementManager } from '#basis/lib/FooterPlacementManager';
 import { AppName } from '#basis/model/App.model';
-import { CurrentAppFooterItemPlaceContext, footerItemPlaceLsPrefix } from '#basis/state/App.contexts';
+import { CurrentAppFooterItemPlaceContext } from '#basis/state/App.contexts';
 import { isTouchDevice } from '#shared/lib/device-differences';
 import { useLocation } from '@tanstack/react-router';
-import { useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useEffect } from 'react';
+import styled, { css } from 'styled-components';
 import { AppFooterItem } from './AppFooterItem';
-import { lastVisitedRouteLsName } from './lib/consts';
+
+const AppFooterSwipeable = React.lazy(() => import('#features/app-footer-swipeable'));
 
 export function AppFooter({ children }: { children: React.ReactNode; appName: AppName }) {
   const loc = useLocation();
@@ -15,36 +17,45 @@ export function AppFooter({ children }: { children: React.ReactNode; appName: Ap
   useEffect(() => {
     if ((isTouchDevice && loc.pathname.includes('-!-')) || !appName || !place) return;
 
-    const lsName = `${footerItemPlaceLsPrefix}/${appName}/${place}/`;
     const url = `${loc.pathname}${loc.searchStr.length > 1 ? loc.searchStr : ''}${loc.hash.length > 1 ? loc.hash : ''}`;
 
-    if (url === `/${appName}/${place}`) localStorage.removeItem(lsName);
-    else localStorage.setItem(lsName, url);
-
-    localStorage.setItem(lastVisitedRouteLsName, url);
+    FooterPlacementManager.onPlaceUrlChange(appName, place, url);
   }, [appName, loc.hash, loc.pathname, loc.searchStr, place]);
 
   return (
     <CurrentAppFooterItemPlaceContext value={`/${appName}/${place}/`}>
       <StyledFooter>
-        {children}
-        <AppFooterItem
-          icon="CircleArrowRight02"
-          title="Другое"
-          to={`/!other/${(appName?.startsWith('!') ? place : appName) as never}`}
-          idPostfix="other"
-        />
+        <AppFooterSwipeable
+          Div={StyledAppFooter}
+          currentAppName={appName}
+        >
+          {children}
+        </AppFooterSwipeable>
+
+        <div className="flex justify-center custom-align-items">
+          <AppFooterItem
+            icon="CircleArrowRight02"
+            title="Другое"
+            to={`/!other/${(appName?.startsWith('!') ? place : appName) as never}`}
+            idPostfix="other"
+          />
+        </div>
       </StyledFooter>
     </CurrentAppFooterItemPlaceContext>
   );
 }
 
-const StyledFooter = styled.div.attrs({ className: 'footer-menu' })`
+const StyledAppFooter = styled.div`
   display: flex;
-  position: absolute;
-  bottom: var(--footer-bottom);
   justify-content: space-around;
   align-items: flex-start;
+`;
+
+const StyledFooter = styled.div.attrs({ className: 'footer-menu' })`
+  display: grid;
+
+  position: absolute;
+  bottom: var(--footer-bottom);
   padding-top: 10px;
   opacity: var(--footer-opacity);
   transition: var(--fullscreen-transition);
@@ -52,4 +63,12 @@ const StyledFooter = styled.div.attrs({ className: 'footer-menu' })`
   width: 100vw;
   height: var(--footer-height);
   overflow: hidden;
+
+  ${[1, 2, 3, 4, 5, 6, 7].map(
+    num => css`
+      &:has(${StyledAppFooter} > :nth-child(${num})) {
+        grid-template-columns: ${num}fr 1fr;
+      }
+    `,
+  )}
 `;

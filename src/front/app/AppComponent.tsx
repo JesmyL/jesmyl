@@ -1,3 +1,4 @@
+import { FooterPlacementManager } from '#basis/lib/FooterPlacementManager';
 import { useFingersActions } from '#basis/lib/global-listeners/useFingersActions';
 import { useGlobalFontFamilySetter } from '#basis/lib/global-listeners/useGlobalFontFamilySetter';
 import { currentAppNameAtom } from '#basis/state/currentAppNameAtom';
@@ -18,7 +19,6 @@ import { toast } from 'sonner';
 import { appInitialInvokes } from './app-initial-invokes';
 import { AppFooter } from './AppFooter';
 import { routingApps } from './lib/configs';
-import { lastVisitedRouteLsName } from './lib/consts';
 
 appInitialInvokes();
 
@@ -112,7 +112,7 @@ const FirstNaver = ({ onSet, loc }: { onSet: (is: false) => void; loc: ParsedLoc
   useEffect(() => {
     onSet(false);
     if (loc.pathname.length > 1 || loc.searchStr || loc.hash) return;
-    navigate({ to: localStorage.getItem(lastVisitedRouteLsName) || '/cm/i' });
+    navigate({ to: FooterPlacementManager.lastVisitedRouteUrl });
   }, [loc.hash, loc.pathname.length, loc.searchStr, navigate, onSet]);
 
   return <></>;

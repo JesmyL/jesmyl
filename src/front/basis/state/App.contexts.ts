@@ -7,4 +7,3 @@ export const [SetAppRootAnchorNodesContext, useSetAppRootAnchorNodesContext] =
 export const [CurrentAppFooterItemPlaceContext, useCurrentAppFooterItemPlaceContext] = contextCreator<
   `/${string}/${string}/` | und
 >(undefined);
-export const footerItemPlaceLsPrefix = 'nav-link:';
