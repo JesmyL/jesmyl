@@ -3,56 +3,75 @@ import { propagationStopper } from '#shared/lib/event-funcs';
 import { ThrowEvent } from '#shared/lib/eventer/ThrowEvent';
 import { hookEffectPipe } from '#shared/lib/hookEffectPipe';
 import { TrustChildrenCheckType } from '#shared/model/TrustChildrenCheckType';
-import { Atom, useAtomValue } from 'atomaric';
-import { HTMLAttributes, ReactNode, useEffect } from 'react';
+import { atom, Atom } from 'atomaric';
+import { HTMLAttributes, ReactNode, useEffect, useMemo } from 'react';
 import { Eventer, EventerListeners } from 'shared/utils';
 import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 import { Portal } from '../Portal';
 import { RootAnchoredContent } from '../RootAnchoredContent';
 import { TheIconButton } from '../the-icon/TheIconButton';
+import { WithAtomValue } from '../WithAtomValue';
 
 const swipeEvents: EventerListeners<void> = [];
 
 const swiper = backSwipableContainerMaker(() => Eventer.invoke(swipeEvents, undefined));
 
-export type FullContentOpenMode = null | 'open' | 'closable';
 export type FullContentValue<PassValue = unknown> = (close: () => void, passValue?: PassValue) => ReactNode;
 
 export const FullContent = <Value, TrustValue extends Value>(
   props: TrustChildrenCheckType<Value, TrustValue> & {
-    openAtom: Atom<Value>;
     closable?: boolean;
     className?: string;
     containerClassName?: string;
-  },
+    hideCloseButton?: boolean;
+    onClose?: () => void;
+  } & ({ openAtom: Atom<Value> } | { forceOpen: true }),
 ) => {
-  const value = useAtomValue(props.openAtom);
-  const isOpen = props.checkIsOpen === undefined ? value === 0 || !!value : props.checkIsOpen(value);
+  const openAtom = useMemo(() => {
+    if ('openAtom' in props) return props.openAtom;
+
+    const boolAtom = atom(false);
+    boolAtom.set(true);
+
+    return boolAtom as never as Atom<Value>;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
-    <RootAnchoredContent openAtom={props.openAtom}>
-      {isOpen && (
-        <Portal>
-          <Swiped
-            close={props.openAtom.reset}
-            onClick={props.closable ? props.openAtom.reset : propagationStopper}
-            className={props.className}
-          >
-            {props.closable || (
-              <StyledCloseButton
-                icon="Cancel01"
-                className="pointer close-button"
-                onClick={props.openAtom.reset}
-              />
+    <WithAtomValue atom={openAtom}>
+      {value => {
+        const isOpen = props.checkIsOpen === undefined ? value === 0 || !!value : props.checkIsOpen(value);
+
+        return (
+          <RootAnchoredContent openAtom={openAtom}>
+            {isOpen && (
+              <Portal>
+                <Swiped
+                  close={() => {
+                    openAtom.reset();
+                    props.onClose?.();
+                  }}
+                  onClick={props.closable ? openAtom.reset : propagationStopper}
+                  className={props.className}
+                >
+                  {props.hideCloseButton || props.closable || (
+                    <StyledCloseButton
+                      icon="Cancel01"
+                      className="pointer close-button"
+                      onClick={openAtom.reset}
+                    />
+                  )}
+                  <StyledContainer className={twMerge(props.containerClassName ?? 'p-5')}>
+                    {typeof props.children === 'function' ? props.children(value as never) : props.children}
+                  </StyledContainer>
+                </Swiped>
+              </Portal>
             )}
-            <StyledContainer className={twMerge(props.containerClassName ?? 'p-5')}>
-              {typeof props.children === 'function' ? props.children(value as never) : props.children}
-            </StyledContainer>
-          </Swiped>
-        </Portal>
-      )}
-    </RootAnchoredContent>
+          </RootAnchoredContent>
+        );
+      }}
+    </WithAtomValue>
   );
 };
 
