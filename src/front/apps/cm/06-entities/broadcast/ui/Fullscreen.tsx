@@ -1,7 +1,6 @@
-import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { propsOfClicker } from '#shared/lib/clicker/propsOfClicker';
-import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { FontSizeContain } from '#shared/ui/font-size-contain/FontSizeContain';
+import { FullContent } from '#shared/ui/fullscreen-content/FullContent';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
 import {
   useCmBroadcastClose,
@@ -9,29 +8,21 @@ import {
   useCmBroadcastScreenComTextNavigations,
 } from '$cm/features/broadcast';
 import { atom, useAtom } from 'atomaric';
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect, useReducer } from 'react';
 import styled, { css, keyframes } from 'styled-components';
 
-const emptyObj = {};
 const forceUpdater = (it: number) => it + 1;
 const style = { padding: '5px' };
 
-const isShowAtom = atom(true);
+const isShowInfoAtom = atom(true);
 
 export const CmBroadcastFullscreen = () => {
   const [forceUpdates, forceUpdate] = useReducer(forceUpdater, 0);
-  const [isShowInfo, setIsShowInfo] = useAtom(isShowAtom);
-  const [swipes, setSwipes] = useState(emptyObj);
+  const [isShowInfo, setIsShowInfo] = useAtom(isShowInfoAtom);
 
   const { text, nextText, prevText } = useCmBroadcastScreenComTextNavigations();
   const { nextCom, prevCom } = useCmBroadcastScreenComNavigations();
   const closeBroadcast = useCmBroadcastClose();
-
-  const closeBroadcastRef = useActualRef(closeBroadcast);
-
-  useEffect(() => {
-    setSwipes(backSwipableContainerMaker(() => closeBroadcastRef.current()));
-  }, [closeBroadcastRef]);
 
   useEffect(() => {
     window.addEventListener('resize', forceUpdate);
@@ -39,65 +30,71 @@ export const CmBroadcastFullscreen = () => {
   }, []);
 
   return (
-    <StyledContainer
-      className="BroadcastFullscreen"
-      {...swipes}
-      $isShowInfo={isShowInfo}
+    <FullContent
+      containerClassName="p-0"
+      hideCloseButton
+      forceOpen
+      onClose={closeBroadcast}
     >
-      <StyledWrapper>
-        <StyledScreen
-          className="flex center"
-          html={text}
-          style={style}
-          subUpdates={forceUpdates}
-        />
-        <div
-          className="top-area info-area left pointer"
-          {...propsOfClicker({ onDblClick: prevCom })}
-        >
-          <div className="description">
-            дважды клик&nbsp;-
-            <br />
-            предыдущая песня
+      <StyledContainer
+        className="BroadcastFullscreen"
+        $isShowInfo={isShowInfo}
+      >
+        <StyledWrapper>
+          <StyledScreen
+            className="flex center"
+            html={text}
+            style={style}
+            subUpdates={forceUpdates}
+          />
+          <div
+            className="top-area info-area left pointer"
+            {...propsOfClicker({ onDblClick: prevCom })}
+          >
+            <div className="description">
+              дважды клик&nbsp;-
+              <br />
+              предыдущая песня
+            </div>
           </div>
-        </div>
-        <div
-          className="top-area info-area right pointer"
-          {...propsOfClicker({ onDblClick: nextCom })}
-        >
-          <div className="description">
-            дважды клик&nbsp;-
-            <br />
-            следующая песня
+          <div
+            className="top-area info-area right pointer"
+            {...propsOfClicker({ onDblClick: nextCom })}
+          >
+            <div className="description">
+              дважды клик&nbsp;-
+              <br />
+              следующая песня
+            </div>
           </div>
-        </div>
-        <LazyIcon
-          icon="Cancel01"
-          className="close-info-button pointer"
-          onClick={() => setIsShowInfo(false)}
-        />
-        <div
-          className="bottom-area info-area left pointer"
-          onClick={prevText}
-        >
-          <div className="description">
-            клик&nbsp;-
-            <br />
-            предыдущий слайд
+          <LazyIcon
+            icon="Cancel01"
+            className="close-info-button pointer"
+            onClick={() => setIsShowInfo(false)}
+          />
+          <div
+            className="bottom-area info-area left pointer"
+            onClick={prevText}
+          >
+            <div className="description">
+              клик&nbsp;-
+              <br />
+              предыдущий слайд
+            </div>
           </div>
-        </div>
-        <div
-          className="bottom-area info-area right pointer"
-          onClick={nextText}
-        >
-          <div className="description">
-            клик&nbsp;-
-            <br />
-            следующий слайд
+          <div
+            className="bottom-area info-area right pointer"
+            onClick={nextText}
+          >
+            <div className="description">
+              клик&nbsp;-
+              <br />
+              следующий слайд
+            </div>
           </div>
-        </div>
-      </StyledWrapper>
-    </StyledContainer>
+        </StyledWrapper>
+      </StyledContainer>
+    </FullContent>
   );
 };
 
