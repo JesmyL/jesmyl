@@ -13,7 +13,7 @@ import {
   MigratableComToolName,
   ScheduleComPack,
 } from 'shared/api';
-import { ChordVisibleVariant, PlayerHideMode } from '../model/Cm.model';
+import { ChordVisibleVariant } from '../model/Cm.model';
 
 export interface CmIDBStorage {
   chordPack: ChordPack;
@@ -39,7 +39,6 @@ export interface CmIDBStorage {
   laterComwList: number[] | null;
   chordVisibleVariant: ChordVisibleVariant | null;
   comFontSize: number | null;
-  playerHideMode: PlayerHideMode | null;
   speedRollKf: number | null;
 }
 
@@ -55,7 +54,6 @@ class CmIDB extends DexieDB<CmIDBStorage> {
       chordVisibleVariant: { $byDefault: null },
       comFontSize: { $byDefault: null },
       laterComwList: { $byDefault: null },
-      playerHideMode: { $byDefault: null },
       speedRollKf: { $byDefault: null },
       lastOpenComw: { $byDefault: null },
       isShowFavouritesInBroadcast: { $byDefault: null },

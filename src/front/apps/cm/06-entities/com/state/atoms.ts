@@ -1,4 +1,4 @@
-import { ChordVisibleVariant, PlayerHideMode } from '$cm/shared/model';
+import { ChordVisibleVariant } from '$cm/shared/model';
 import { atom } from 'atomaric';
 import { CmComWid, MigratableComToolName, SokiAuthLogin } from 'shared/api';
 
@@ -18,7 +18,7 @@ export const cmComTopToolsAtom = atom<MigratableComToolName[]>(
 export const cmComIsShowFavouritesInBroadcastsAtom = atom(false, 'cm:isShowFavouritesInBroadcast');
 export const cmComFontSizeAtom = atom(14, 'cm:comFontSize');
 export const cmComSpeedRollKfAtom = atom(10, 'cm:speedRollKf');
-export const cmComPlayerHideModeAtom = atom<PlayerHideMode>('expand', 'cm:playerHideMode');
+export const cmComIsAudioPlayerHiddenAtom = atom(false, 'cm:isAudioPlayerHidden');
 export const cmComLaterComwListAtom = atom<CmComWid[]>([], 'cm:laterComwList');
 export const cmComSelectedComwsAtom = atom<CmComWid[]>([], 'cm:selectedComws');
 export const cmComLastOpenComwAtom = atom<CmComWid | und>(undefined, 'cm:lastOpenComw');

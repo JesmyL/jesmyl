@@ -9,10 +9,6 @@ export enum ChordVisibleVariant {
   Maximal = 2,
 }
 
-export type FavoriteMeetings = Record<'events' | 'contexts', number[]>;
-
-export type PlayerHideMode = 'expand' | 'min' | '';
-
 export interface LiveBroadcastAppProps {
   isCantTranslateLive: boolean;
   fio: string;

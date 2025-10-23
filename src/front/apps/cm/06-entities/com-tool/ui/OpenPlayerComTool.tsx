@@ -1,16 +1,18 @@
-import { cmComPlayerHideModeAtom } from '$cm/entities/index';
-import { useAtom } from 'atomaric';
+import { WithAtomValue } from '#shared/ui/WithAtomValue';
+import { cmComIsAudioPlayerHiddenAtom } from '$cm/entities/index';
 import { CmComTool } from '../ComTool';
 
 export const CmComToolOpenPlayer = () => {
-  const [playerHideMode, setPlayerHideMode] = useAtom(cmComPlayerHideModeAtom);
-
   return (
-    <CmComTool
-      title="Проигрыватель"
-      icon="PlayCircle"
-      iconKind={playerHideMode ? 'SolidRounded' : 'StrokeRounded'}
-      onClick={() => setPlayerHideMode(playerHideMode ? '' : 'min')}
-    />
+    <WithAtomValue atom={cmComIsAudioPlayerHiddenAtom}>
+      {isHidden => (
+        <CmComTool
+          title="Проигрыватель"
+          icon="PlayCircle"
+          iconKind={isHidden ? 'StrokeRounded' : 'SolidRounded'}
+          onClick={cmComIsAudioPlayerHiddenAtom.do.toggle}
+        />
+      )}
+    </WithAtomValue>
   );
 };

@@ -1,13 +1,7 @@
-import { hideAppFooterAtom } from '#basis/state/hideAppFooterAtom';
-import { hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { Modal } from '#shared/ui/modal';
-import {
-  PageContainerConfigurer,
-  StyledPhaseContainerConfigurerHead,
-  StyledPhaseContainerConfigurerHeadTitle,
-} from '#shared/ui/phase-container/PageContainerConfigurer';
 import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { DocTitle } from '#shared/ui/tags/DocTitle';
+import { WithAtomTruthfulValue } from '#shared/ui/WithAtomTruthfulValue';
 import { Metronome } from '#widgets/metronome';
 import { BibleTranslatesContextProvider } from '$bible/ext';
 import {
@@ -17,66 +11,32 @@ import {
   useCmComChordVisibleVariant,
   useCmComCurrentComPackContext,
   useCmComCurrentFixedCom,
-  useCmComLaterList,
 } from '$cm/entities/com';
-import {
-  CmComAudioPlayerWithMarks,
-  cmComAudioPlayerHeaderStickyCss,
-  cmComAudioPlayerIsPlayAtom,
-  cmComAudioPlayerPlaySrcAtom,
-} from '$cm/entities/com-audio-player';
 import {
   cmComCommentRedactOrdSelectorIdAtom,
   useCmComCommentCheckIsIncludesBibleAddress,
 } from '$cm/entities/com-comment';
 import { CmComToolList, useCmComToolMigratableTop } from '$cm/entities/com-tool';
-import { cmComIsShowCatBindsInCompositionAtom, cmComPlayerHideModeAtom } from '$cm/entities/index';
+import { cmComIsShowCatBindsInCompositionAtom } from '$cm/entities/index';
 import { CmComCommentModalInner } from '$cm/features/com-comment';
-import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { Link } from '@tanstack/react-router';
-import { useAtomValue } from 'atomaric';
-import { useEffect, useRef, useState } from 'react';
-import styled, { css } from 'styled-components';
+import { useState } from 'react';
+import { useCmComCompositionControls } from '../lib/useComCompositionControls';
+import { StyledCmComCompositionContainer } from '../style/Composition';
+import { CmComAudioPlayerInCompositionPage } from './AudioPlayer';
 import { TheCmComControlled } from './TheControlledCom';
 
 export function TheCmComComposition() {
-  const comListRef = useRef<HTMLDivElement>(null);
   const [isOpenTools, setIsOpenTools] = useState(false);
 
   const ccom = useCmComCurrentFixedCom();
+  const { laterComws, comListRef } = useCmComCompositionControls(ccom);
   const [chordVisibleVariant] = useCmComChordVisibleVariant();
-  const { addLaterComw, laterComws } = useCmComLaterList();
   const comToolsNode = useCmComToolMigratableTop();
   const { list } = useCmComCurrentComPackContext();
   const isComCommentIncludesBibleAddress = useCmComCommentCheckIsIncludesBibleAddress(ccom);
 
-  const playerHideMode = useAtomValue(cmComPlayerHideModeAtom);
-  const hideAppFooter = useAtomValue(hideAppFooterAtom);
-  const isShowCatBinds = useAtomValue(cmComIsShowCatBindsInCompositionAtom);
-  const playSrc = useAtomValue(cmComAudioPlayerPlaySrcAtom);
-
-  useEffect(() => {
-    if (ccom?.wid == null) return;
-
-    return hookEffectPipe()
-      .pipe(
-        setTimeoutPipe(() => addLaterComw(ccom.wid), 3000),
-        setTimeoutPipe(() => cmTsjrpcClient.printComwVisit({ comw: ccom.wid }), 77_777),
-      )
-      .effect();
-  }, [addLaterComw, ccom?.wid]);
-
-  useEffect(() => {
-    if (comListRef.current) comListRef.current.scrollTop = 0;
-
-    if (!cmComAudioPlayerIsPlayAtom.get() && !ccom?.audio.includes(cmComAudioPlayerPlaySrcAtom.get()!)) {
-      if (ccom?.audio[0]) cmComAudioPlayerPlaySrcAtom.set(ccom.audio[0]);
-    }
-  }, [ccom?.audio, ccom?.wid]);
-
   if (ccom == null) return <CmComNotFoundPage />;
-
-  const isPlayOtherAudio = !!playSrc && !ccom.audio.includes(playSrc);
 
   let controlledComNode = (
     <TheCmComControlled
@@ -92,9 +52,9 @@ export function TheCmComComposition() {
     );
 
   return (
-    <StyledComContainer
+    <StyledCmComCompositionContainer
       $isInLaterList={laterComws.includes(ccom.wid)}
-      className={playerHideMode && ccom.audio?.length ? ` with-open-player ${playerHideMode}` : ''}
+      className="TheCmComComposition"
       headTitle={<CmComNumber comw={ccom.wid} />}
       onMoreClick={setIsOpenTools}
       contentClass="composition-content p-2"
@@ -104,7 +64,7 @@ export function TheCmComComposition() {
         <Link
           ref={linkRef}
           to="."
-          search={prev => ({ ...(prev as object), comw: undefined }) as object}
+          search={prev => ({ ...(prev as object), comw: undefined })}
         >
           {backNode}
         </Link>
@@ -120,25 +80,14 @@ export function TheCmComComposition() {
       content={
         <>
           <DocTitle title={ccom.name} />
-          {!hideAppFooter && !!ccom.audio?.length && (
-            <CmComAudioPlayerWithMarks
-              audioLinks={ccom.audio}
-              com={ccom}
-              className={isPlayOtherAudio ? 'top-[calc(var(--header-height)+31px)]' : undefined}
-            />
-          )}
-          {!hideAppFooter && isPlayOtherAudio && (
-            <CmComAudioPlayerWithMarks
-              audioLinks={[playSrc]}
-              com={ccom}
-              hideMarksForce
-            />
-          )}
-          {isShowCatBinds && (
+
+          <CmComAudioPlayerInCompositionPage ccom={ccom} />
+
+          <WithAtomTruthfulValue atom={cmComIsShowCatBindsInCompositionAtom}>
             <div className="opacity-50 w-full text-x7">
               <CmComCatMentions com={ccom} />
             </div>
-          )}
+          </WithAtomTruthfulValue>
 
           {controlledComNode}
 
@@ -167,50 +116,3 @@ export function TheCmComComposition() {
     />
   );
 }
-
-const StyledComContainer = styled(PageContainerConfigurer)<{ $isInLaterList: boolean }>`
-  ${props =>
-    props.$isInLaterList &&
-    css`
-      ${StyledPhaseContainerConfigurerHeadTitle} {
-        font-weight: bold;
-      }
-    `}
-
-  ${StyledPhaseContainerConfigurerHead} {
-    display: flex;
-    gap: 10px;
-    padding-left: 10px;
-    max-width: calc(100vw - 130px);
-    height: 40px;
-    overflow-x: scroll;
-    overflow-y: hidden;
-    white-space: nowrap;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-  }
-
-  .composition-content {
-    padding-top: 150px;
-    transition: padding-top 0.2s;
-
-    ${cmComAudioPlayerHeaderStickyCss}
-  }
-
-  &.hide-metronome .com-metronome {
-    display: none;
-  }
-
-  &.with-open-player .composition-player {
-    opacity: 1;
-    pointer-events: all;
-  }
-
-  html [st-fullscreen] :is(&, &.with-open-player) .composition-player {
-    opacity: 0;
-    margin-top: calc(0px - var(--com-player-size));
-    pointer-events: none;
-  }
-`;
