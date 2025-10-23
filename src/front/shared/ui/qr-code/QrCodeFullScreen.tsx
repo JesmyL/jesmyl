@@ -14,7 +14,7 @@ export const QrCodeFullScreen = ({ text, copyText, openAtom }: Props) => {
     <FullContent
       closable
       openAtom={openAtom}
-      containerClassName="flex center column gap-2 full-size"
+      containerClassName="p-0 flex center column gap-2 full-size"
     >
       <QRCode
         text={text}

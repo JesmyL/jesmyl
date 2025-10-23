@@ -47,7 +47,7 @@ export const CmComLocalListToolsPopup = ({ coms }: { coms: CmCom[] | und }) => {
 
       <FullContent
         openAtom={isOpenListAtom}
-        containerClassName=""
+        containerClassName="p-0"
       >
         <CmComFullscreenExpandList coms={coms} />
       </FullContent>

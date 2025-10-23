@@ -40,7 +40,7 @@ export const ScheduleWidgetWatchLiveBroadcastButton = ({
 
       <FullContent
         openAtom={isOpenAtom}
-        containerClassName=""
+        containerClassName="p-0"
       >
         <ScheduleWidgetLiveBroadcast schw={schw} />
       </FullContent>

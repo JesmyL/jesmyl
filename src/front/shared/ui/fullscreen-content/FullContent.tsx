@@ -62,7 +62,7 @@ export const FullContent = <Value, TrustValue extends Value>(
                       onClick={openAtom.reset}
                     />
                   )}
-                  <StyledContainer className={twMerge(props.containerClassName ?? 'p-5')}>
+                  <StyledContainer className={twMerge('p-5', props.containerClassName)}>
                     {typeof props.children === 'function' ? props.children(value as never) : props.children}
                   </StyledContainer>
                 </Swiped>
