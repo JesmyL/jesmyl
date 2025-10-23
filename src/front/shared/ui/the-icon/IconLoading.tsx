@@ -1,4 +1,4 @@
-import { HTMLAttributes } from 'react';
+import { HTMLAttributes, memo } from 'react';
 import { StameskaIconKind } from 'stameska-icon/utils';
 import styled, { keyframes } from 'styled-components';
 import { LazyIcon } from './LazyIcon';
@@ -10,7 +10,7 @@ interface Props extends HTMLAttributes<HTMLOrSVGElement> {
   withoutAnimation?: boolean;
 }
 
-export const TheIconLoading = (props: Props) => {
+export const TheIconLoading = memo((props: Props) => {
   const { isLoading, icon, iconKind, ...attrs } = props;
   if (!('isLoading' in props))
     return (
@@ -41,7 +41,7 @@ export const TheIconLoading = (props: Props) => {
       )}
     </>
   );
-};
+});
 
 const rotate = keyframes`
   from {
