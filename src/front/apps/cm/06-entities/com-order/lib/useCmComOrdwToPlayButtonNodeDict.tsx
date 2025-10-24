@@ -3,6 +3,7 @@ import { useActualRef } from '#shared/lib/hooks/useActualRef';
 import { MyLib, mylib } from '#shared/lib/my-lib';
 import { CmCom } from '$cm/entities/com';
 import { cmComAudioPlayerHTMLElement, cmComAudioPlayerPlaySrcAtom } from '$cm/entities/com-audio-player';
+import { makeCmComAudioMarkTitleBySelector } from '$cm/ext';
 import { cmIDB } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
@@ -27,8 +28,8 @@ export const useCmComOrderWidToPlayButtonNodeDict = (
       afterOrdwOtherPlayButtonNodeDict,
       asContentAfterOrder: ({ ord }: { ord: CmComOrder }) => {
         return (
-          !ord.me.next?.me.isInherit &&
-          (ord.me.isInherit && ord.me.leadOrd != null
+          !ord.me.next?.me.style?.isHeaderNoneForce &&
+          (ord.me.isAnchorInheritPlus && ord.me.leadOrd != null
             ? afterOrdwOtherPlayButtonNodeDict[ord.me.leadOrd.makeSelector()]
             : afterOrdwOtherPlayButtonNodeDict[ord.makeSelector()])
         );
@@ -56,7 +57,20 @@ export const useCmComOrderWidToPlayButtonNodeDict = (
                 cmComAudioPlayerHTMLElement.play();
               }}
             >
-              {selector || (+time === 0 ? 'Начало' : '...')}
+              {
+                makeCmComAudioMarkTitleBySelector(
+                  +time,
+                  com,
+                  selector,
+                  audioTrackMarks.marks,
+                  false,
+                  (repeats, title) => (
+                    <>
+                      {repeats} <span className="text-x3">{title}</span>
+                    </>
+                  ),
+                ).title
+              }
             </Button>,
             +time,
             selector,

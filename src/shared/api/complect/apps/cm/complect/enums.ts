@@ -8,6 +8,7 @@ export const enum CmComMod {
 
 export const enum CmComOrderWid {
   def = -1,
+  never = -100000,
 }
 
 export const enum CmCatWid {

@@ -1,4 +1,5 @@
 import { Button } from '#shared/components/ui/button';
+import { mylib } from '#shared/lib/my-lib';
 import { ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom } from '$cm+editor/entities/com-audio';
@@ -8,9 +9,10 @@ import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/shared/state/com'
 import {
   ChordVisibleVariant,
   cmComAudioPlayerHTMLElement,
+  CmComOrderLine,
   cmIDB,
   makeCmComAudioMarkTitleBySelector,
-  TheCmComOrder,
+  TheCmComOrderSolid,
 } from '$cm/ext';
 import { useState } from 'react';
 import { HttpLink } from 'shared/api';
@@ -115,12 +117,28 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
         </div>
 
         {ord && (
-          <TheCmComOrder
+          <TheCmComOrderSolid
             chordVisibleVariant={ChordVisibleVariant.None}
             com={com}
             ord={ord}
             ordi={0}
             asHeaderComponent={() => null}
+            asLineComponent={
+              mylib.isStr(selector)
+                ? props => (
+                    <div className="flex gap-3 my-2">
+                      <Button
+                        icon="PinLocation01"
+                        disabled={selector === `${props.textLinei + 1}`}
+                        onClick={() =>
+                          cmComEditorAudioMarksEditPacksAtom.do.renameMark(src, time, `${props.textLinei + 1}`)
+                        }
+                      />
+                      <CmComOrderLine {...props} />
+                    </div>
+                  )
+                : undefined
+            }
           />
         )}
       </ModalBody>

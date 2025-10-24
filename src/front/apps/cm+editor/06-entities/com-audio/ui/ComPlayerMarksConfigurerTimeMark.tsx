@@ -19,7 +19,6 @@ interface Props {
 
 export const CmEditorComAudioMarksConfigurerTimeMark = ({ selector, time, src, com, onPin, pinTime }: Props) => {
   const trackMarks = cmIDB.useAudioTrackMarks(src);
-  const { title } = makeCmComAudioMarkTitleBySelector(time, com, selector, trackMarks?.marks);
 
   return (
     <div className="py-3">
@@ -39,7 +38,7 @@ export const CmEditorComAudioMarksConfigurerTimeMark = ({ selector, time, src, c
         />
         <TextInput
           className={twMerge('w-auto', mylib.isArr(selector) && 'text-x7!')}
-          defaultValue={title}
+          defaultValue={makeCmComAudioMarkTitleBySelector(time, com, selector, trackMarks?.marks, true).title}
           strongDefaultValue
           maxLength={20}
           onChanged={value =>

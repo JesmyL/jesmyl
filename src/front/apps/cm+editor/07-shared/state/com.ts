@@ -19,6 +19,9 @@ export const cmComEditorAudioMarksEditPacksAtom = atom({} as PRecord<HttpLink, C
 
       self.do.setPartial({ [src]: newMarks });
     },
+    renameMark: (src: HttpLink, time: RKey<number>, title: string) => {
+      self.do.setPartial({ [src]: { ...get()[src], [time]: title } });
+    },
     removeMarks: (src: HttpLink, times: RKey<number>[]) => {
       const newMarks: CmComAudioMarkEditPack = { ...get()[src] };
       times.forEach(time => delete newMarks[time]);
