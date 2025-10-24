@@ -186,6 +186,10 @@ export class CmComOrder extends SourceBased<IExportableOrder> {
     );
   };
 
+  isInSolidLineWithInvisibles() {
+    return this.me.isInherit || this.me.isAnchorInherit || this.me.isAnchorInheritPlus;
+  }
+
   getWatchInheritance = <Key extends keyof InheritancableOrder>(fieldn: Key) => {
     return (
       this.me.isAnchorInherit
