@@ -8,7 +8,6 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
   com: CmCom,
   selector: CmComAudioMarkSelector | nil,
   marks: CmComAudioMarkPack | nil,
-  isMakeTitleTextWithoutRepeatsCompute = false,
   mapLineTitle: (repeats: string, text: string) => LineTitle = (repeats, text) => `${repeats} ${text}` as never,
 ) => {
   if (mylib.isArr(selector)) {
@@ -23,10 +22,6 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
       ord,
     };
   }
-
-  let title = `${selector || (time === 0 ? 'Начало' : '...')}` as LineTitle;
-
-  if (isMakeTitleTextWithoutRepeatsCompute) return { title, ord: null };
 
   let repeats = 1;
   let lastSelector: CmComAudioMarkSelector[0] = CmComOrderWid.never;
@@ -45,29 +40,30 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
   }
 
   const ord = com.getOrderBySelector(lastSelector);
+  let title = `${selector || (time === 0 ? 'Начало' : '...')}`;
 
   if (selector && !mylib.isNaN(+selector) && ord) {
-    let lines = ord.repeatedText().replace(makeRegExp('/([/\\\\]|&nbsp;)/g'), ' ').split('\n');
+    let lines = takeOrdLines(ord);
     let lineText = lines[+selector - 1];
 
     if (lineText == null) {
       let nextOrd: CmComOrder | nil = ord.me.next;
 
       while (nextOrd != null) {
-        lines = lines.concat(nextOrd.repeatedText().replace(makeRegExp('/([/\\\\]|&nbsp;)/g'), ' ').split('\n'));
+        lines = lines.concat(takeOrdLines(nextOrd));
 
         if ((lineText = lines[+selector - 1]) != null) break;
         nextOrd = nextOrd?.me.next;
       }
     }
 
-    title = lineText
-      ? mapLineTitle(`${repeats > 1 ? `${'/'.repeat(repeats)} ` : ''}`, `${selector} ${lineText}`)
-      : title;
+    title = lineText ? `${selector} ${lineText.trim()}` : title;
   }
 
+  const repeatsText = `${repeats > 1 ? `${'/'.repeat(repeats)} ` : ''}`;
+
   return {
-    title,
+    title: selector && !mylib.isNaN(+selector) ? mapLineTitle(repeatsText, title) : `${repeatsText} ${title}`,
     ord,
   };
 };
@@ -86,3 +82,6 @@ const computeOrdRepeats = (time: number, marks: CmComAudioMarkPack, selector: Cm
 
   return repeats;
 };
+
+const takeOrdLines = (ord: CmComOrder) =>
+  ord.repeatedText().replace(makeRegExp('/ ?([/\\\\]|&nbsp;)+ ?/g'), ' ').split('\n');

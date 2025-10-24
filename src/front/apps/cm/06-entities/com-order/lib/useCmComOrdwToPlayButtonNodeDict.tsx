@@ -29,7 +29,7 @@ export const useCmComOrderWidToPlayButtonNodeDict = (
       asContentAfterOrder: ({ ord }: { ord: CmComOrder }) => {
         return (
           !ord.me.next?.me.style?.isHeaderNoneForce &&
-          (ord.me.isAnchorInheritPlus && ord.me.leadOrd != null
+          ((ord.me.isAnchorInheritPlus || ord.me.isAnchorInherit || ord.me.isInherit) && ord.me.leadOrd != null
             ? afterOrdwOtherPlayButtonNodeDict[ord.me.leadOrd.makeSelector()]
             : afterOrdwOtherPlayButtonNodeDict[ord.makeSelector()])
         );
@@ -58,18 +58,11 @@ export const useCmComOrderWidToPlayButtonNodeDict = (
               }}
             >
               {
-                makeCmComAudioMarkTitleBySelector(
-                  +time,
-                  com,
-                  selector,
-                  audioTrackMarks.marks,
-                  false,
-                  (repeats, title) => (
-                    <>
-                      {repeats} <span className="text-x3">{title}</span>
-                    </>
-                  ),
-                ).title
+                makeCmComAudioMarkTitleBySelector(+time, com, selector, audioTrackMarks.marks, (repeats, title) => (
+                  <span className="text-x7">
+                    {repeats} {title}
+                  </span>
+                )).title
               }
             </Button>,
             +time,

@@ -37,8 +37,10 @@ export const CmEditorComAudioMarksConfigurerTimeMark = ({ selector, time, src, c
           }}
         />
         <TextInput
-          className={twMerge('w-auto', mylib.isArr(selector) && 'text-x7!')}
-          defaultValue={makeCmComAudioMarkTitleBySelector(time, com, selector, trackMarks?.marks, true).title}
+          className={twMerge('w-auto', selector && (mylib.isArr(selector) || !mylib.isNaN(+selector)) && 'text-x7!')}
+          defaultValue={
+            makeCmComAudioMarkTitleBySelector(time, com, selector, trackMarks?.marks, (_, title) => title).title
+          }
           strongDefaultValue
           maxLength={20}
           onChanged={value =>
