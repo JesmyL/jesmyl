@@ -474,6 +474,9 @@ export class CmCom extends BaseNamed<IExportableCom> {
           const newAncOrd = this.orderConstructor(ancMe);
           orders.push(newAncOrd);
 
+          if (prev) prev.me.next = newAncOrd;
+          prev = newAncOrd;
+
           anc = ords[++anci];
           ancStyle = getStyle(anc);
         }
