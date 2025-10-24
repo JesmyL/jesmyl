@@ -152,7 +152,7 @@ export const CmComAudioPlayerMarksMovers = ({ src, com, repeatButtonClassName, p
   if (audioTrackMarks == null) return null;
 
   return (
-    <div className="flex gap-3 w-full">
+    <div className="flex gap-3 w-full justify-center">
       <Button
         icon="ArrowLeft02"
         ref={prevRef}
