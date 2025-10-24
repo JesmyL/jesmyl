@@ -1,4 +1,4 @@
-export { CmEditorCompositionsCatSpecialSearches as CmCatSpecialSearches } from '$cm+editor/pages/CompositionsPage/ui/SpecialSearches';
+export { CmEditorCompositionsCatSpecialSearches } from '$cm+editor/pages/CompositionsPage/ui/SpecialSearches';
 export { CmCat, useCmCatICcat } from '$cm/entities/cat';
 export { type CmCatTracker } from '$cm/entities/cat/model/Cat.model';
 export { CmChordCard } from '$cm/entities/chord-card/ui/ChordCard';
@@ -26,6 +26,7 @@ export {
 } from '$cm/entities/com-order';
 export { CmComOrderLine } from '$cm/entities/com-order-line';
 export { type CmBroadcastSchWgtLiveDataValue } from '$cm/features/broadcast/model/model';
+export { makeCmComAudioMarkTitleBySelector } from '$cm/shared/lib/makeCmComAudioMarkTitleBySelector';
 export { cmOnUserLogout } from '$cm/shared/lib/onUserLogout';
 export { ChordVisibleVariant } from '$cm/shared/model';
 export { cmConstantsConfigAtom, cmIDB } from '$cm/shared/state';

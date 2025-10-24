@@ -1,5 +1,6 @@
 import { backSwipableContainerMaker } from '#shared/lib/backSwipableContainerMaker';
 import { addEventListenerPipe, hookEffectPipe } from '#shared/lib/hookEffectPipe';
+import { mylib } from '#shared/lib/my-lib';
 import { RolledContent } from '#shared/ui/fullscreen-content/RolledContent';
 import { BibleTranslateModulesControl } from '$bible/ext';
 import { CmCom } from '$cm/entities/com';
@@ -33,7 +34,19 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
   const listRef = useRef<HTMLDivElement>(null);
   const { commentCss, isThereUnsettedTranslate } = useCmComCommentBlockCss(com);
   const isOpenMoversButtons = useAtomValue(isCmComAudioPlayerOpenMoversAtom);
-  const ordwToPlayButtonNodeDict = useCmComOrderWidToPlayButtonNodeDict(com);
+  const { afterOrdwOtherPlayButtonNodeDict, asContentAfterOrder, ordwPlayButtonNodeDict } =
+    useCmComOrderWidToPlayButtonNodeDict(com, (node, time, selector) =>
+      mylib.isStr(selector) ? (
+        <div
+          key={time}
+          className="my-3"
+        >
+          {node}
+        </div>
+      ) : (
+        node
+      ),
+    );
 
   const comi = comList.findIndex(c => c.wid === com.wid);
   const nextComw = comi < comList.length - 1 ? comList[comi + 1]?.wid : comList[0]?.wid;
@@ -84,18 +97,21 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
             className="relative h-full"
             $listHeight={listRef.current?.clientHeight}
           >
+            {isOpenMoversButtons && afterOrdwOtherPlayButtonNodeDict.before}
+
             <TheCmCom
               com={com}
               fontSize={isOpenMoversButtons ? Math.abs(fontSize) : fontSize}
               chordVisibleVariant={chordVisibleVariant}
               isMiniAnchor={isMiniAnchor}
               listRef={listRef}
+              asContentAfterOrder={isOpenMoversButtons ? asContentAfterOrder : undefined}
               asHeaderComponent={
-                ordwToPlayButtonNodeDict && isOpenMoversButtons
+                isOpenMoversButtons
                   ? ({ ord, headerNode }) => (
                       <div className="flex gap-1 flex-wrap max-w-[80%]">
                         {headerNode}
-                        {ordwToPlayButtonNodeDict[ord.wid]}
+                        {ordwPlayButtonNodeDict[ord.wid]}
                       </div>
                     )
                   : undefined

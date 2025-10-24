@@ -1,6 +1,6 @@
 import { useBibleBroadcastScreenFontSizeAdapter } from '#shared/lib/hooks/useFontSizeAdapter';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 import { CmCom } from '../../com/lib/Com';
@@ -29,37 +29,39 @@ export function CmComOrderList(props: ICmComOrderListProps) {
           ord.texti == null ? ` com-chorded-block-${specChordedi++} ` : ` com-texted-block-${specTextedi++} `;
 
         return (
-          <TheCmComOrder
-            key={ordi}
-            {...props}
-            specialClassId={specialClassId}
-            ord={ord}
-            ordi={ordi}
-            visibleOrdi={visibleOrdi}
-            asLineComponent={asLineComponent}
-            asHeaderComponent={headerProps => {
-              const node = ord.me.style?.isModulation ? (
-                <span
-                  className={'pointer flex ' + (isExcludedModulation ? 'text-xKO' : 'text-x7')}
-                  onClick={event => {
-                    event.stopPropagation();
-                    updateExMods(com.toggleModulationInclusion(ord));
-                  }}
-                >
-                  <LazyIcon
-                    className="pointer"
-                    icon={isExcludedModulation ? 'View' : 'ViewOffSlash'}
-                  />
-                  {headerProps.headerNode}
-                </span>
-              ) : (
-                headerProps.headerNode
-              );
+          <React.Fragment key={ordi}>
+            <TheCmComOrder
+              {...props}
+              specialClassId={specialClassId}
+              ord={ord}
+              ordi={ordi}
+              visibleOrdi={visibleOrdi}
+              asLineComponent={asLineComponent}
+              asHeaderComponent={headerProps => {
+                const node = ord.me.style?.isModulation ? (
+                  <span
+                    className={'pointer flex ' + (isExcludedModulation ? 'text-xKO' : 'text-x7')}
+                    onClick={event => {
+                      event.stopPropagation();
+                      updateExMods(com.toggleModulationInclusion(ord));
+                    }}
+                  >
+                    <LazyIcon
+                      className="pointer"
+                      icon={isExcludedModulation ? 'View' : 'ViewOffSlash'}
+                    />
+                    {headerProps.headerNode}
+                  </span>
+                ) : (
+                  headerProps.headerNode
+                );
 
-              if (props.asHeaderComponent === undefined) return node;
-              return props.asHeaderComponent({ ...headerProps, headerNode: node });
-            }}
-          />
+                if (props.asHeaderComponent === undefined) return node;
+                return props.asHeaderComponent({ ...headerProps, headerNode: node });
+              }}
+            />
+            {props.asContentAfterOrder?.({ ord })}
+          </React.Fragment>
         );
       })}
     </StyledOrdList>

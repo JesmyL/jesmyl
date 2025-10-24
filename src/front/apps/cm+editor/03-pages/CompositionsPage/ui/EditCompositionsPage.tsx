@@ -3,7 +3,12 @@ import { BottomPopup } from '#shared/ui/popup/bottom-popup/BottomPopup';
 import { CmEditorComListEditMore } from '$cm+editor/features/com';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { PageCmEditorContainer } from '$cm+editor/shared/ui/PageCmEditorContainer';
-import { CmCatSpecialSearches, CmComFaceList, CmComWithComListSearchFilterInput, useCmComList } from '$cm/ext';
+import {
+  CmComFaceList,
+  CmComWithComListSearchFilterInput,
+  CmEditorCompositionsCatSpecialSearches,
+  useCmComList,
+} from '$cm/ext';
 import { useNavigate } from '@tanstack/react-router';
 import { atom, useAtom } from 'atomaric';
 import { useEffect, useRef, useState } from 'react';
@@ -45,7 +50,7 @@ export const CmEditorCompositionsPage = () => {
               content={
                 <>
                   {term.startsWith('@') && (
-                    <CmCatSpecialSearches
+                    <CmEditorCompositionsCatSpecialSearches
                       term={term}
                       setTerm={setTerm}
                       setMapper={setMapper}

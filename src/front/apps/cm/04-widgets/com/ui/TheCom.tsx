@@ -11,6 +11,7 @@ interface Props {
   fontSize?: number;
   listRef?: RefObject<HTMLDivElement | null>;
   asHeaderComponent?: Parameters<typeof CmComOrderList>[0]['asHeaderComponent'];
+  asContentAfterOrder?: Parameters<typeof CmComOrderList>[0]['asContentAfterOrder'];
 }
 
 export const TheCmCom = ({
@@ -21,6 +22,7 @@ export const TheCmCom = ({
   fontSize,
   listRef,
   asHeaderComponent,
+  asContentAfterOrder,
 }: Props) => {
   const ccom = useCmComCurrent();
   const com = topCom ?? ccom;
@@ -36,6 +38,7 @@ export const TheCmCom = ({
       showInvisibles={showInvisibles}
       listRef={listRef}
       asHeaderComponent={asHeaderComponent}
+      asContentAfterOrder={asContentAfterOrder}
     />
   );
 };

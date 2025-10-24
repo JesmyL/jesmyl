@@ -1,14 +1,17 @@
 import { Button } from '#shared/components/ui/button';
 import { ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
-import {
-  cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom,
-  useCmEditorComAudioMakeMarkTitleBySelector,
-} from '$cm+editor/entities/com-audio';
+import { cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom } from '$cm+editor/entities/com-audio';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/shared/state/com';
-import { ChordVisibleVariant, cmComAudioPlayerHTMLElement, cmIDB, TheCmComOrder } from '$cm/ext';
+import {
+  ChordVisibleVariant,
+  cmComAudioPlayerHTMLElement,
+  cmIDB,
+  makeCmComAudioMarkTitleBySelector,
+  TheCmComOrder,
+} from '$cm/ext';
 import { useState } from 'react';
 import { HttpLink } from 'shared/api';
 
@@ -21,14 +24,19 @@ interface Props {
 export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ time, com, src }: Props) => {
   const trackMarks = cmIDB.useAudioTrackMarks(src);
   const selector = trackMarks?.marks?.[time];
-  const { title, ord } = useCmEditorComAudioMakeMarkTitleBySelector(time, com, selector, trackMarks?.marks);
+  const { title, ord } = makeCmComAudioMarkTitleBySelector(time, com, selector, trackMarks?.marks);
   const [currentTime, setCurrentTime] = useState('' + time);
 
   const addMaker = (add: number) => () => {
     setCurrentTime(prev => {
       let result = (+prev + add).toFixed(3);
 
-      if (result.endsWith('.000')) result = add > 0 ? `${result.slice(0, -4)}.001` : `${+result.slice(0, -4) - 1}.999`;
+      if (result.endsWith('.000')) {
+        result =
+          add > 0
+            ? `${result.slice(0, -4)}${Math.abs(add) === 0.1 ? `.100` : Math.abs(add) === 0.01 ? `.010` : `.001`}`
+            : `${+result.slice(0, -4) - 1}${Math.abs(add) === 0.1 ? `.900` : Math.abs(add) === 0.01 ? `.990` : `.999`}`;
+      }
 
       if (+result < 0) return prev;
 
@@ -48,7 +56,10 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
           icon="Delete02"
           className="text-xKO"
           confirm={<>Удалить точку {title}?</>}
-          onClick={() => cmComEditorAudioMarksEditPacksAtom.do.removeMark(src, time)}
+          onClick={() => {
+            cmComEditorAudioMarksEditPacksAtom.do.removeMark(src, time);
+            cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom.reset();
+          }}
         />
       </ModalHeader>
       <ModalBody>

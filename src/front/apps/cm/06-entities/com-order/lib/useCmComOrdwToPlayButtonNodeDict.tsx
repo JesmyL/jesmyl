@@ -6,34 +6,77 @@ import { cmComAudioPlayerHTMLElement, cmComAudioPlayerPlaySrcAtom } from '$cm/en
 import { cmIDB } from '$cm/shared/state';
 import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
-import { CmComOrderWid } from 'shared/api';
+import { CmComAudioMarkSelector, CmComOrderWid } from 'shared/api';
 import { itIt } from 'shared/utils';
+import { CmComOrder } from './Order';
 
 export const useCmComOrderWidToPlayButtonNodeDict = (
   com: CmCom,
-  mapNode: (node: React.ReactNode, time: number) => React.ReactNode = itIt,
+  mapNode: (node: React.ReactNode, time: number, selector: CmComAudioMarkSelector) => React.ReactNode = itIt,
 ) => {
   const src = useAtomValue(cmComAudioPlayerPlaySrcAtom);
   const audioTrackMarks = cmIDB.useAudioTrackMarks(src);
   const actualMapNodeRef = useActualRef(mapNode);
 
   return useMemo(() => {
-    if (audioTrackMarks?.marks == null) return null;
-    const result: PRecord<CmComOrderWid, React.ReactNode[]> = {};
+    const ordwPlayButtonNodeDict: PRecord<CmComOrderWid, React.ReactNode[]> = {};
+    const afterOrdwOtherPlayButtonNodeDict: PRecord<'before' | CmComOrderWid, React.ReactNode[]> = {};
+
+    const result = {
+      ordwPlayButtonNodeDict,
+      afterOrdwOtherPlayButtonNodeDict,
+      asContentAfterOrder: ({ ord }: { ord: CmComOrder }) => {
+        return (
+          !ord.me.next?.me.isInherit &&
+          (ord.me.isInherit && ord.me.leadOrd != null
+            ? afterOrdwOtherPlayButtonNodeDict[ord.me.leadOrd.makeSelector()]
+            : afterOrdwOtherPlayButtonNodeDict[ord.makeSelector()])
+        );
+      },
+    };
+
+    if (audioTrackMarks?.marks == null) return result;
+
+    let lastOrdwOrNull: 'before' | CmComOrderWid = 'before';
 
     MyLib.entries(audioTrackMarks.marks).forEach(([time, selector]) => {
-      if (selector == null || mylib.isStr(selector)) return;
+      if (selector == null) return;
+
+      if (mylib.isStr(selector)) {
+        afterOrdwOtherPlayButtonNodeDict[lastOrdwOrNull] ??= [];
+        afterOrdwOtherPlayButtonNodeDict[lastOrdwOrNull]?.push(
+          actualMapNodeRef.current(
+            <Button
+              key={time}
+              icon="PlayCircle"
+              com-audio-mark-time-selector={time}
+              onClick={event => {
+                event.stopPropagation();
+                cmComAudioPlayerHTMLElement.currentTime = +time;
+                cmComAudioPlayerHTMLElement.play();
+              }}
+            >
+              {selector || (+time === 0 ? 'Начало' : '...')}
+            </Button>,
+            +time,
+            selector,
+          ),
+        );
+        return;
+      }
 
       const ordw = com.getOrderBySelector(selector[0])?.wid;
       if (ordw == null) return;
 
-      result[ordw] ??= [];
-      result[ordw].push(
+      lastOrdwOrNull = ordw;
+
+      ordwPlayButtonNodeDict[ordw] ??= [];
+      ordwPlayButtonNodeDict[ordw].push(
         actualMapNodeRef.current(
           <Button
             key={time}
             icon="PlayCircle"
-            com-audio-mark-selector={`${time}/${selector[0]}`}
+            com-audio-mark-time-selector={time}
             onClick={event => {
               event.stopPropagation();
               cmComAudioPlayerHTMLElement.currentTime = +time;
@@ -41,9 +84,12 @@ export const useCmComOrderWidToPlayButtonNodeDict = (
             }}
           />,
           +time,
+          selector,
         ),
       );
     });
+
+    if (mylib.isArr(audioTrackMarks.marks?.[0])) delete afterOrdwOtherPlayButtonNodeDict.before;
 
     return result;
   }, [audioTrackMarks?.marks, com, actualMapNodeRef]);

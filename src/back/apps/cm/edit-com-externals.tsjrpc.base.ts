@@ -112,7 +112,7 @@ export const cmEditComExternalsTsjrpcBaseServer =
             }
 
             allMarkPacks[numLeadSrc] ??= { m: Date.now() };
-            allMarkPacks[numLeadSrc].marks ??= { '0': 'Начало' };
+            allMarkPacks[numLeadSrc].marks ??= { '0': '' };
             allMarkPacks[numLeadSrc].m = Date.now();
 
             const srcPackMarks = allMarkPacks[numLeadSrc].marks;

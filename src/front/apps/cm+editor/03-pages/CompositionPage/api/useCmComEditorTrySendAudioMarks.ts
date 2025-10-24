@@ -15,7 +15,7 @@ export const useCmEditorCompositionTrySendAudioMarks = () => {
         if (marks == null) return;
         cmEditComExternalsClientTsjrpcMethods.updateAudioMarks({ src, marks });
       });
-    }, 1000);
+    }, 200);
 
     return () => clearTimeout(timeout);
   }, [marksOnLoad]);

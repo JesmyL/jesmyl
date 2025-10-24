@@ -1,14 +1,11 @@
 import { Button } from '#shared/components/ui/button';
 import { mylib } from '#shared/lib/my-lib';
 import { TextInput } from '#shared/ui/TextInput';
-import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/shared/state/com';
-import { cmComAudioPlayerHTMLElement, cmIDB } from '$cm/ext';
+import { cmComAudioPlayerHTMLElement, cmIDB, makeCmComAudioMarkTitleBySelector } from '$cm/ext';
 import { CmComAudioMarkSelector, HttpLink } from 'shared/api';
 import { twMerge } from 'tailwind-merge';
-import { useCmEditorComAudioMakeMarkTitleBySelector } from '../lib/useMakeMarkTitleBySelector';
 import { cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom } from '../state/atoms';
 
 interface Props {
@@ -16,22 +13,13 @@ interface Props {
   com: EditableCom;
   selector: CmComAudioMarkSelector | nil;
   src: HttpLink;
-  isRemoving: boolean;
   pinTime: RKey<number> | null;
   onPin: (time: RKey<number> | null) => void;
 }
 
-export const CmEditorComAudioMarksConfigurerTimeMark = ({
-  selector,
-  time,
-  src,
-  com,
-  isRemoving,
-  onPin,
-  pinTime,
-}: Props) => {
+export const CmEditorComAudioMarksConfigurerTimeMark = ({ selector, time, src, com, onPin, pinTime }: Props) => {
   const trackMarks = cmIDB.useAudioTrackMarks(src);
-  const { title } = useCmEditorComAudioMakeMarkTitleBySelector(time, com, selector, trackMarks?.marks);
+  const { title } = makeCmComAudioMarkTitleBySelector(time, com, selector, trackMarks?.marks);
 
   return (
     <div className="py-3">
@@ -72,17 +60,12 @@ export const CmEditorComAudioMarksConfigurerTimeMark = ({
               icon="PinLocation01"
               onClick={() => onPin(time)}
             />
-            <TheIconButton
-              icon="Delete02"
-              className="text-xKO"
-              isLoading={isRemoving}
-              confirm={<>Удалить точку {title}?</>}
-              onClick={() => cmComEditorAudioMarksEditPacksAtom.do.removeMark(src, time)}
-            />
-            <Button
-              icon="Settings01"
-              onClick={() => cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom.set(time)}
-            />
+            {time === 0 || (
+              <Button
+                icon="Settings01"
+                onClick={() => cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom.set(time)}
+              />
+            )}
           </div>
         )}
       </div>

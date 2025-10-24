@@ -2,11 +2,12 @@ import { Button } from '#shared/components/ui/button';
 import { addEventListenerPipe, hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
+import { makeCmComAudioMarkTitleBySelector } from '$cm/ext';
 import { cmIDB } from '$cm/shared/state';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { Atom, useAtomValue } from 'atomaric';
 import { useEffect, useRef } from 'react';
-import { CmComOrderSelector, HttpLink } from 'shared/api';
+import { HttpLink } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
 import { CmCom } from '../../com/lib/Com';
@@ -25,7 +26,6 @@ const preSwitchTimeSelectItems = [-1, 0, 1, 2, 3, 4].map(id => ({
 }));
 
 const currentButtonClassName = 'text-x7';
-const prevButtonClassName = 'text-x7/70';
 
 export const CmComAudioPlayerMarksMovers = ({ src, com, repeatButtonClassName, preSwitchTimeAtom }: Props) => {
   const titleRef = useRef<HTMLDivElement>(null);
@@ -58,14 +58,13 @@ export const CmComAudioPlayerMarksMovers = ({ src, com, repeatButtonClassName, p
 
     const titleNode = titleRef.current;
     const marks = mylib.keys(audioMarkPack).map(Number);
-    const selectorToTitleDict: PRecord<`${number}/${CmComOrderSelector}`, string> = {};
-    const visibleOrders = com.visibleOrders() ?? [];
+    const selectorToTitleDict: PRecord<number, string> = {};
 
     let prevMarkTime = 0;
     let currentMarkTime = 0;
     let nextMarkTime = 0;
 
-    let lastTitleSelector = '';
+    let lastMarkTime = 0;
     let prevButton: Element | nil = null;
     let isInitialButtonClassNameSet = true;
 
@@ -83,54 +82,27 @@ export const CmComAudioPlayerMarksMovers = ({ src, com, repeatButtonClassName, p
                 ? nextMarkTime
                 : currentMarkTime;
 
-            const actualMarkSelector = audioMarkPack[actualMarkTime];
+            if (isInitialButtonClassNameSet || lastMarkTime !== actualMarkTime) {
+              titleNode.innerText = selectorToTitleDict[actualMarkTime] ??= makeCmComAudioMarkTitleBySelector(
+                actualMarkTime,
+                com,
+                audioMarkPack[actualMarkTime],
+                audioMarkPack,
+              ).title;
 
-            if (mylib.isStr(actualMarkSelector)) {
-              titleNode.innerText = actualMarkSelector;
+              isInitialButtonClassNameSet = false;
+              const htmlButtonSelector = `[com-audio-mark-time-selector="${actualMarkTime}"]`;
+              const block = document.querySelector(`.composition-block:has(${htmlButtonSelector})`);
+              const button = (block ?? document)?.querySelector(htmlButtonSelector);
+
+              if (+preSwitchTime >= 0) (block ?? button)?.scrollIntoView({ block: 'center', behavior: 'smooth' });
 
               prevButton?.classList.remove(currentButtonClassName);
-              if (actualMarkTime) prevButton?.classList.add(prevButtonClassName);
-            } else if (actualMarkSelector != null) {
-              const titleSelector = `${actualMarkTime}/${actualMarkSelector[0]}` as const;
+              button?.classList.add(currentButtonClassName);
+              prevButton = button;
+            }
 
-              if (isInitialButtonClassNameSet || lastTitleSelector !== titleSelector) {
-                isInitialButtonClassNameSet = false;
-                const htmlButtonSelector = `[com-audio-mark-selector="${titleSelector}"]`;
-                const block = document.querySelector(`.composition-block:has(${htmlButtonSelector})`);
-                const button = (block ?? document)?.querySelector(htmlButtonSelector);
-
-                if (+preSwitchTime >= 0) (block ?? button)?.scrollIntoView({ block: 'center', behavior: 'smooth' });
-
-                prevButton?.classList.remove(currentButtonClassName, prevButtonClassName);
-                prevButton = button;
-              }
-
-              prevButton?.classList.add(currentButtonClassName);
-
-              lastTitleSelector = titleSelector;
-
-              if (selectorToTitleDict[titleSelector] == null) {
-                const ord = com.getOrderBySelector(actualMarkSelector[0]);
-
-                if (ord != null) {
-                  let blockRepeatsCount = 0;
-
-                  mylib.keys(audioMarkPack).find(itTime => {
-                    if (audioMarkPack[itTime] == null || mylib.isStr(audioMarkPack[itTime])) return false;
-
-                    if (ord.isMySelector(audioMarkPack[itTime][0])) blockRepeatsCount++;
-                    else blockRepeatsCount = 0;
-
-                    return actualMarkTime === +itTime;
-                  });
-
-                  selectorToTitleDict[titleSelector] =
-                    `#${visibleOrders.indexOf(ord) + 1} ${ord.me.header()} ${blockRepeatsCount > 1 ? `×${blockRepeatsCount}` : ''}`;
-                }
-              }
-
-              titleNode.innerText = selectorToTitleDict[titleSelector] ?? '';
-            } else titleNode.innerText = 'Начало';
+            lastMarkTime = actualMarkTime;
           };
 
     const updatePoints = () => {
@@ -174,7 +146,7 @@ export const CmComAudioPlayerMarksMovers = ({ src, com, repeatButtonClassName, p
           updatePoints();
         }),
       )
-      .effect(() => prevButton?.classList.remove('text-x7'));
+      .effect(() => prevButton?.classList.remove(currentButtonClassName));
   }, [audioTrackMarks, com, src, preSwitchTime]);
 
   if (audioTrackMarks == null) return null;
