@@ -25,7 +25,7 @@ export {
   type ICmComOrderExportableMe,
 } from '$cm/entities/com-order';
 export { CmComOrderLine } from '$cm/entities/com-order-line';
-export { TheCmComOrderSolid } from '$cm/entities/com-order/ui/TheSolidOrder';
+export { TheCmComOrderSolid } from '$cm/entities/com-order/ui/TheOrderSolid';
 export { type CmBroadcastSchWgtLiveDataValue } from '$cm/features/broadcast/model/model';
 export { makeCmComAudioMarkTitleBySelector } from '$cm/shared/lib/makeCmComAudioMarkTitleBySelector';
 export { cmOnUserLogout } from '$cm/shared/lib/onUserLogout';

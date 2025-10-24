@@ -5,7 +5,7 @@ export function TheCmComOrderSolid(props: Parameters<typeof TheCmComOrder>[0]) {
   const ords: CmComOrder[] = [props.ord];
   const lineCounts: number[] = [0, props.ord.text.split('\n').length];
 
-  while (nextOrd && (nextOrd.me.isAnchorInherit || nextOrd.me.isAnchorInheritPlus)) {
+  while (nextOrd && (nextOrd.me.isInherit || nextOrd.me.isAnchorInherit || nextOrd.me.isAnchorInheritPlus)) {
     lineCounts.push(lineCounts[lineCounts.length - 1] + nextOrd.text.split('\n').length);
     ords.push(nextOrd);
     nextOrd = nextOrd.me.next;
