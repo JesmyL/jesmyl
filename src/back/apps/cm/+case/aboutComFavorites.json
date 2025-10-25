@@ -6,8 +6,8 @@
       1551768058548, 1551770021776, 1605353683636, 1607345768420, 1609761208284, 1609953328330, 1609955214660,
       1534249035184, 1536945317452, 1534006585256, 1538320243090
     ],
-    "m": 1761283822409,
-    "tools": ["edit-com", "chord-images", "com-comment", "open-player"]
+    "m": 1761367178815,
+    "tools": ["edit-com", "chord-images", "com-comment", "open-player", "fullscreen-mode", "selected-toggle"]
   },
   "08a0e6ba7792e902569816a81b846b25": {
     "comws": [
