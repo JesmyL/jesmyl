@@ -12,6 +12,7 @@ interface Props {
   listRef?: RefObject<HTMLDivElement | null>;
   asHeaderComponent?: Parameters<typeof CmComOrderList>[0]['asHeaderComponent'];
   asContentAfterOrder?: Parameters<typeof CmComOrderList>[0]['asContentAfterOrder'];
+  asLineComponent?: Parameters<typeof CmComOrderList>[0]['asLineComponent'];
 }
 
 export const TheCmCom = ({
@@ -21,6 +22,7 @@ export const TheCmCom = ({
   isMiniAnchor,
   fontSize,
   listRef,
+  asLineComponent,
   asHeaderComponent,
   asContentAfterOrder,
 }: Props) => {
@@ -39,6 +41,7 @@ export const TheCmCom = ({
       listRef={listRef}
       asHeaderComponent={asHeaderComponent}
       asContentAfterOrder={asContentAfterOrder}
+      asLineComponent={asLineComponent}
     />
   );
 };

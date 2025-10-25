@@ -4,6 +4,7 @@ export interface ICmComOrderLineProps extends ICmComOrderProps {
   textLine: string;
   textLinei: number;
   textLines: number;
+  solidTextLinei: number;
   wordCount: number;
   words: string[];
   prevLinesCount?: number;

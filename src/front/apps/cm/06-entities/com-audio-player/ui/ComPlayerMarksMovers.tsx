@@ -2,7 +2,11 @@ import { Button } from '#shared/components/ui/button';
 import { addEventListenerPipe, hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
 import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
-import { makeCmComAudioMarkTitleBySelector } from '$cm/ext';
+import { CmComOrder, makeCmComAudioMarkTitleBySelector } from '$cm/ext';
+import {
+  checkIsCmComAudioMarkTitleIsLineSelector,
+  makeCmComAudioMarkLineiFromSelector,
+} from '$cm/shared/lib/makeCmComAudioMarkTitleBySelector';
 import { cmIDB } from '$cm/shared/state';
 import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
 import { Atom, useAtomValue } from 'atomaric';
@@ -25,7 +29,7 @@ const preSwitchTimeSelectItems = [-1, 0, 1, 2, 3, 4].map(id => ({
   title: <span className="w-[.7em]">{id < 0 ? '×' : id}</span>,
 }));
 
-const currentButtonClassName = 'text-x7';
+const currentAccentClassName = 'text-x7';
 
 export const CmComAudioPlayerMarksMovers = ({ src, com, repeatButtonClassName, preSwitchTimeAtom }: Props) => {
   const titleRef = useRef<HTMLDivElement>(null);
@@ -58,7 +62,7 @@ export const CmComAudioPlayerMarksMovers = ({ src, com, repeatButtonClassName, p
 
     const titleNode = titleRef.current;
     const marks = mylib.keys(audioMarkPack).map(Number);
-    const selectorToTitleDict: PRecord<number, string> = {};
+    const selectorToTitlePropsDict: PRecord<number, { title: string; ord: CmComOrder | nil }> = {};
 
     let prevMarkTime = 0;
     let currentMarkTime = 0;
@@ -66,7 +70,7 @@ export const CmComAudioPlayerMarksMovers = ({ src, com, repeatButtonClassName, p
 
     let lastMarkTime = 0;
     let prevButton: Element | nil = null;
-    let isInitialButtonClassNameSet = true;
+    let isInitialButtonClassNameNeedSet = true;
 
     const findNextMarkTime = (num: number) => num > cmComAudioPlayerHTMLElement.currentTime;
     const findCurrentMarkTime = (num: number) => num <= cmComAudioPlayerHTMLElement.currentTime;
@@ -82,23 +86,36 @@ export const CmComAudioPlayerMarksMovers = ({ src, com, repeatButtonClassName, p
                 ? nextMarkTime
                 : currentMarkTime;
 
-            if (isInitialButtonClassNameSet || lastMarkTime !== actualMarkTime) {
-              titleNode.innerText = selectorToTitleDict[actualMarkTime] ??= makeCmComAudioMarkTitleBySelector(
+            if (isInitialButtonClassNameNeedSet || lastMarkTime !== actualMarkTime) {
+              isInitialButtonClassNameNeedSet = false;
+              const selector = audioMarkPack[actualMarkTime];
+
+              const titleProps = (selectorToTitlePropsDict[actualMarkTime] ??= makeCmComAudioMarkTitleBySelector(
                 actualMarkTime,
                 com,
-                audioMarkPack[actualMarkTime],
+                selector,
                 audioMarkPack,
-              ).title;
+              ));
 
-              isInitialButtonClassNameSet = false;
+              titleNode.innerText = titleProps.title;
+
               const htmlButtonSelector = `[com-audio-mark-time-selector="${actualMarkTime}"]`;
               const block = document.querySelector(`.composition-block:has(${htmlButtonSelector})`);
+
               const button = (block ?? document)?.querySelector(htmlButtonSelector);
 
-              if (+preSwitchTime >= 0) (block ?? button)?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+              if (+preSwitchTime >= 0) {
+                const lineNode = checkIsCmComAudioMarkTitleIsLineSelector(selector)
+                  ? document.querySelector(
+                      `[solid-com-order-selector="${titleProps.ord?.wid}"] [solid-order-text-linei="${makeCmComAudioMarkLineiFromSelector(selector)}"]`,
+                    )
+                  : null;
 
-              prevButton?.classList.remove(currentButtonClassName);
-              button?.classList.add(currentButtonClassName);
+                (lineNode ?? block ?? button)?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+              }
+
+              prevButton?.classList.remove(currentAccentClassName);
+              button?.classList.add(currentAccentClassName);
               prevButton = button;
             }
 
@@ -146,7 +163,7 @@ export const CmComAudioPlayerMarksMovers = ({ src, com, repeatButtonClassName, p
           updatePoints();
         }),
       )
-      .effect(() => prevButton?.classList.remove(currentButtonClassName));
+      .effect(() => prevButton?.classList.remove(currentAccentClassName));
   }, [audioTrackMarks, com, src, preSwitchTime]);
 
   if (audioTrackMarks == null) return null;

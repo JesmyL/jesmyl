@@ -1,15 +1,14 @@
 import { useBibleBroadcastScreenFontSizeAdapter } from '#shared/lib/hooks/useFontSizeAdapter';
 import { LazyIcon } from '#shared/ui/the-icon/LazyIcon';
-import React, { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { twMerge } from 'tailwind-merge';
 import { CmCom } from '../../com/lib/Com';
 import { ICmComOrderListProps } from '../model/ComOrders.model';
-import { TheCmComOrder } from './TheOrder';
+import { TheCmComOrderSolid } from './TheOrderSolid';
 
 export function CmComOrderList(props: ICmComOrderListProps) {
-  const { com, fontSize, asLineComponent } = props;
-  const [exMods, updateExMods] = useState<number[]>(com.excludedModulations);
+  const [exMods, updateExMods] = useState<number[]>(props.com.excludedModulations);
 
   let specChordedi = 0;
   let specTextedi = 0;
@@ -19,31 +18,33 @@ export function CmComOrderList(props: ICmComOrderListProps) {
     <StyledOrdList
       className={twMerge('com-ord-list', props.className)}
       ref={props.listRef}
-      $fontSize={fontSize}
+      $fontSize={props.fontSize}
     >
-      {com.orders?.map((ord, ordi) => {
-        if (ord.isVisibleWithHeader()) visibleOrdi++;
+      {props.com.orders
+        ?.filter(ord => !ord.isInSolidLineWithInvisibles())
+        .map((ord, ordi) => {
+          if (ord.isVisibleWithHeader()) visibleOrdi++;
 
-        const isExcludedModulation = exMods.includes(ord.wid);
-        const specialClassId =
-          ord.texti == null ? ` com-chorded-block-${specChordedi++} ` : ` com-texted-block-${specTextedi++} `;
+          const isExcludedModulation = exMods.includes(ord.wid);
+          const specialClassId =
+            ord.texti == null ? ` com-chorded-block-${specChordedi++} ` : ` com-texted-block-${specTextedi++} `;
 
-        return (
-          <React.Fragment key={ordi}>
-            <TheCmComOrder
+          return (
+            <TheCmComOrderSolid
+              key={ord.wid}
               {...props}
               specialClassId={specialClassId}
               ord={ord}
               ordi={ordi}
               visibleOrdi={visibleOrdi}
-              asLineComponent={asLineComponent}
+              asContentAfterOrder={props.asContentAfterOrder}
               asHeaderComponent={headerProps => {
                 const node = ord.me.style?.isModulation ? (
                   <span
                     className={'pointer flex ' + (isExcludedModulation ? 'text-xKO' : 'text-x7')}
                     onClick={event => {
                       event.stopPropagation();
-                      updateExMods(com.toggleModulationInclusion(ord));
+                      updateExMods(props.com.toggleModulationInclusion(ord));
                     }}
                   >
                     <LazyIcon
@@ -60,19 +61,17 @@ export function CmComOrderList(props: ICmComOrderListProps) {
                 return props.asHeaderComponent({ ...headerProps, headerNode: node });
               }}
             />
-            {props.asContentAfterOrder?.({ ord })}
-          </React.Fragment>
-        );
-      })}
+          );
+        })}
     </StyledOrdList>
   );
 
-  return fontSize && fontSize > 0 ? (
+  return props.fontSize && props.fontSize > 0 ? (
     content
   ) : (
     <OrdersWithAdaptiveFontSize
       content={content}
-      com={com}
+      com={props.com}
     />
   );
 }

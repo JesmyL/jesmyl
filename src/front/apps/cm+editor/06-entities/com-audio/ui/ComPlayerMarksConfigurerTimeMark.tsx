@@ -3,7 +3,12 @@ import { mylib } from '#shared/lib/my-lib';
 import { TextInput } from '#shared/ui/TextInput';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
-import { cmComAudioPlayerHTMLElement, cmIDB, makeCmComAudioMarkTitleBySelector } from '$cm/ext';
+import {
+  checkIsCmComAudioMarkTitleIsLineSelector,
+  cmComAudioPlayerHTMLElement,
+  cmIDB,
+  makeCmComAudioMarkTitleBySelector,
+} from '$cm/ext';
 import { CmComAudioMarkSelector, HttpLink } from 'shared/api';
 import { twMerge } from 'tailwind-merge';
 import { cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom } from '../state/atoms';
@@ -37,7 +42,10 @@ export const CmEditorComAudioMarksConfigurerTimeMark = ({ selector, time, src, c
           }}
         />
         <TextInput
-          className={twMerge('w-auto', selector && (mylib.isArr(selector) || !mylib.isNaN(+selector)) && 'text-x7!')}
+          className={twMerge(
+            'w-auto',
+            selector && (mylib.isArr(selector) || checkIsCmComAudioMarkTitleIsLineSelector(selector)) && 'text-x7!',
+          )}
           defaultValue={
             makeCmComAudioMarkTitleBySelector(time, com, selector, trackMarks?.marks, (_, title) => title).title
           }

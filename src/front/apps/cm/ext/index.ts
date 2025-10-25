@@ -27,7 +27,11 @@ export {
 export { CmComOrderLine } from '$cm/entities/com-order-line';
 export { TheCmComOrderSolid } from '$cm/entities/com-order/ui/TheOrderSolid';
 export { type CmBroadcastSchWgtLiveDataValue } from '$cm/features/broadcast/model/model';
-export { makeCmComAudioMarkTitleBySelector } from '$cm/shared/lib/makeCmComAudioMarkTitleBySelector';
+export {
+  checkIsCmComAudioMarkTitleIsLineSelector,
+  makeCmComAudioMarkTitleAsLineSelector,
+  makeCmComAudioMarkTitleBySelector,
+} from '$cm/shared/lib/makeCmComAudioMarkTitleBySelector';
 export { cmOnUserLogout } from '$cm/shared/lib/onUserLogout';
 export { ChordVisibleVariant } from '$cm/shared/model';
 export { cmConstantsConfigAtom, cmIDB } from '$cm/shared/state';

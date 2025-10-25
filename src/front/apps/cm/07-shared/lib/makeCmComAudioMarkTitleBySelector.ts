@@ -3,6 +3,12 @@ import { CmCom, CmComOrder } from '$cm/ext';
 import { makeRegExp } from 'regexpert';
 import { CmComAudioMarkPack, CmComAudioMarkSelector, CmComOrderWid } from 'shared/api';
 
+export const makeCmComAudioMarkTitleAsLineSelector = (linei: number) => `~${linei + 1}`;
+export const makeCmComAudioMarkLineiFromSelector = (selector: string) => +selector.slice(1) - 1;
+
+export const checkIsCmComAudioMarkTitleIsLineSelector = (selector: CmComAudioMarkSelector | nil): selector is string =>
+  mylib.isStr(selector) && selector.startsWith('~') && !mylib.isNaN(+selector.slice(1));
+
 export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | React.ReactNode = string>(
   time: number,
   com: CmCom,
@@ -18,7 +24,7 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
     const repeats = computeOrdRepeats(time, marks, selector[0]);
 
     return {
-      title: `#${visibleOrders.indexOf(ord) + 1} ${ord.me.header()}${Math.trunc(selector[0]) === selector[0] ? '' : '+'} ${repeats > 1 ? `×${repeats}` : ''}`,
+      title: `#${visibleOrders.indexOf(ord) + 1} ${ord.me.header()}${Math.trunc(selector[0]) === selector[0] ? '' : '+'}${repeats > 1 ? ` ×${repeats}` : ''}`,
       ord,
     };
   }
@@ -42,28 +48,31 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
   const ord = com.getOrderBySelector(lastSelector);
   let title = `${selector || (time === 0 ? 'Начало' : '...')}`;
 
-  if (selector && !mylib.isNaN(+selector) && ord) {
-    let lines = takeOrdLines(ord);
-    let lineText = lines[+selector - 1];
+  if (checkIsCmComAudioMarkTitleIsLineSelector(selector) && ord) {
+    let lines = ord.repeatedText().split('\n');
+    const linei = makeCmComAudioMarkLineiFromSelector(selector);
+    let lineText = lines[linei];
 
     if (lineText == null) {
       let nextOrd: CmComOrder | nil = ord.me.next;
 
-      while (nextOrd != null) {
-        lines = lines.concat(takeOrdLines(nextOrd));
+      while (nextOrd?.isInSolidLineWithInvisibles()) {
+        if (nextOrd.isVisible) lines = lines.concat(nextOrd.repeatedText().split('\n'));
 
-        if ((lineText = lines[+selector - 1]) != null) break;
+        if ((lineText = lines[linei]) != null) break;
         nextOrd = nextOrd?.me.next;
       }
     }
 
-    title = lineText ? `${selector} ${lineText.trim()}` : title;
+    title = lineText ? `${linei + 1} ${lineText.replace(makeRegExp('/ *([/\\\\]|&nbsp;)+ */g'), ' ').trim()}` : title;
   }
 
   const repeatsText = `${repeats > 1 ? `${'/'.repeat(repeats)} ` : ''}`;
 
   return {
-    title: selector && !mylib.isNaN(+selector) ? mapLineTitle(repeatsText, title) : `${repeatsText} ${title}`,
+    title: checkIsCmComAudioMarkTitleIsLineSelector(selector)
+      ? mapLineTitle(repeatsText, title)
+      : `${repeatsText} ${title}`,
     ord,
   };
 };
@@ -82,6 +91,3 @@ const computeOrdRepeats = (time: number, marks: CmComAudioMarkPack, selector: Cm
 
   return repeats;
 };
-
-const takeOrdLines = (ord: CmComOrder) =>
-  ord.repeatedText().replace(makeRegExp('/ ?([/\\\\]|&nbsp;)+ ?/g'), ' ').split('\n');

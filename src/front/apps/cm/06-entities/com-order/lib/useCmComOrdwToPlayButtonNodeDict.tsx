@@ -9,9 +9,9 @@ import { useAtomValue } from 'atomaric';
 import { useMemo } from 'react';
 import { CmComAudioMarkSelector, CmComOrderWid } from 'shared/api';
 import { itIt } from 'shared/utils';
-import { CmComOrder } from './Order';
 
 export const useCmComOrderWidToPlayButtonNodeDict = (
+  isNeedCompute: boolean,
   com: CmCom,
   mapNode: (node: React.ReactNode, time: number, selector: CmComAudioMarkSelector) => React.ReactNode = itIt,
 ) => {
@@ -23,20 +23,9 @@ export const useCmComOrderWidToPlayButtonNodeDict = (
     const ordwPlayButtonNodeDict: PRecord<CmComOrderWid, React.ReactNode[]> = {};
     const afterOrdwOtherPlayButtonNodeDict: PRecord<'before' | CmComOrderWid, React.ReactNode[]> = {};
 
-    const result = {
-      ordwPlayButtonNodeDict,
-      afterOrdwOtherPlayButtonNodeDict,
-      asContentAfterOrder: ({ ord }: { ord: CmComOrder }) => {
-        return (
-          !ord.me.next?.me.style?.isHeaderNoneForce &&
-          ((ord.me.isAnchorInheritPlus || ord.me.isAnchorInherit || ord.me.isInherit) && ord.me.leadOrd != null
-            ? afterOrdwOtherPlayButtonNodeDict[ord.me.leadOrd.makeSelector()]
-            : afterOrdwOtherPlayButtonNodeDict[ord.makeSelector()])
-        );
-      },
-    };
+    const result = { ordwPlayButtonNodeDict, afterOrdwOtherPlayButtonNodeDict };
 
-    if (audioTrackMarks?.marks == null) return result;
+    if (!isNeedCompute || audioTrackMarks?.marks == null) return result;
 
     let lastOrdwOrNull: 'before' | CmComOrderWid = 'before';
 
@@ -57,13 +46,15 @@ export const useCmComOrderWidToPlayButtonNodeDict = (
                 cmComAudioPlayerHTMLElement.play();
               }}
             >
-              {
-                makeCmComAudioMarkTitleBySelector(+time, com, selector, audioTrackMarks.marks, (repeats, title) => (
-                  <span className="text-x7">
-                    {repeats} {title}
-                  </span>
-                )).title
-              }
+              <span className="text-x3">
+                {
+                  makeCmComAudioMarkTitleBySelector(+time, com, selector, audioTrackMarks.marks, (repeats, title) => (
+                    <span className="text-x7">
+                      {repeats} {title}
+                    </span>
+                  )).title
+                }
+              </span>
             </Button>,
             +time,
             selector,
@@ -99,5 +90,5 @@ export const useCmComOrderWidToPlayButtonNodeDict = (
     if (mylib.isArr(audioTrackMarks.marks?.[0])) delete afterOrdwOtherPlayButtonNodeDict.before;
 
     return result;
-  }, [audioTrackMarks?.marks, com, actualMapNodeRef]);
+  }, [isNeedCompute, audioTrackMarks?.marks, com, actualMapNodeRef]);
 };

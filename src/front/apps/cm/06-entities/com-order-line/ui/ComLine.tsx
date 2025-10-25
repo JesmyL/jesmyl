@@ -6,14 +6,33 @@ import { ICmComOrderLineProps } from '../model/line';
 import { StyledCmComOrderLine } from '../style/StyledComLine.styler';
 
 export const CmComOrderLine = (props: ICmComOrderLineProps) => {
+  const {
+    chordedOrd,
+    com,
+    isJoinLetters,
+    ord,
+    ordi,
+    textLine,
+    textLinei,
+    textLines,
+    wordCount,
+    words,
+    positions,
+    prevLinesCount,
+    setWordClass,
+    visibleOrdi,
+    solidTextLinei,
+    ...attrs
+  } = props;
+
   const className = `composition-line line-num-${props.textLinei}`;
   const chordHardLevel = useAtomValue(cmComChordHardLevelAtom);
 
   if (!props.chordedOrd)
     return (
       <StyledCmComOrderLine
+        {...attrs}
         className={className}
-        onClick={props.onClick}
       >
         {props.words.map((word, wordi) => {
           return (
@@ -151,8 +170,8 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
 
   return (
     <StyledCmComOrderLine
+      {...attrs}
       className={className}
-      onClick={props.onClick}
     >
       {wordsNodes}
     </StyledCmComOrderLine>

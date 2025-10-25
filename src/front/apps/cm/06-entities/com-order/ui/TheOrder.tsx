@@ -177,6 +177,7 @@ export function TheCmComOrder(props: Props) {
                 chordedOrd,
                 textLine,
                 textLinei,
+                solidTextLinei: -1,
                 textLines: textLinea.length,
                 ord,
                 ordi,
@@ -192,6 +193,7 @@ export function TheCmComOrder(props: Props) {
                 chordedOrd={chordedOrd}
                 textLine={textLine}
                 textLinei={textLinei}
+                solidTextLinei={-1}
                 prevLinesCount={1}
                 textLines={textLinea.length}
                 ord={ord}

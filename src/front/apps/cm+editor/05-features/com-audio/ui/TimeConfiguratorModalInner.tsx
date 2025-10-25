@@ -11,6 +11,7 @@ import {
   cmComAudioPlayerHTMLElement,
   CmComOrderLine,
   cmIDB,
+  makeCmComAudioMarkTitleAsLineSelector,
   makeCmComAudioMarkTitleBySelector,
   TheCmComOrderSolid,
 } from '$cm/ext';
@@ -129,9 +130,13 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
                     <div className="flex gap-3 my-2">
                       <Button
                         icon="PinLocation01"
-                        disabled={selector === `${props.textLinei + 1}`}
+                        disabled={selector === makeCmComAudioMarkTitleAsLineSelector(props.solidTextLinei)}
                         onClick={() =>
-                          cmComEditorAudioMarksEditPacksAtom.do.renameMark(src, time, `${props.textLinei + 1}`)
+                          cmComEditorAudioMarksEditPacksAtom.do.renameMark(
+                            src,
+                            time,
+                            makeCmComAudioMarkTitleAsLineSelector(props.solidTextLinei),
+                          )
                         }
                       />
                       <CmComOrderLine {...props} />
