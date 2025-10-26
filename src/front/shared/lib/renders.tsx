@@ -8,7 +8,7 @@ export const renderComponentInNewWindow = (
   reactNode: ReactNode | ((win: typeof window) => ReactNode),
   url?: string | URL,
   target?: string,
-  features?: string,
+  features = `top=100,left=300,width=300,height=300,directories=no,titlebar=no,menubar=no,toolbar=no,location=no,status=no,scrollbars=no`,
   htmlNode?: HTMLElement,
 ) => {
   const win = window.open(url, target, features);

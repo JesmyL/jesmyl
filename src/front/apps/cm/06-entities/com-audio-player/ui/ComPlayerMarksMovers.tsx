@@ -1,27 +1,18 @@
 import { Button } from '#shared/components/ui/button';
-import { addEventListenerPipe, hookEffectPipe, setTimeoutPipe } from '#shared/lib/hookEffectPipe';
-import { mylib } from '#shared/lib/my-lib';
 import { Dropdown } from '#shared/ui/dropdown/Dropdown';
-import { CmComOrder, makeCmComAudioMarkTitleBySelector } from '$cm/ext';
-import {
-  checkIsCmComAudioMarkTitleIsLineSelector,
-  makeCmComAudioMarkLineiFromSelector,
-} from '$cm/shared/lib/makeCmComAudioMarkTitleBySelector';
-import { cmIDB } from '$cm/shared/state';
-import { cmTsjrpcClient } from '$cm/shared/tsjrpc';
+import { useFetchFreshComAudioMarksPack } from '$cm/shared/api/useFetchFreshComAudioMarksPack';
 import { Atom, useAtomValue } from 'atomaric';
-import { useEffect, useRef } from 'react';
 import { HttpLink } from 'shared/api';
-import { emptyFunc } from 'shared/utils';
 import { twMerge } from 'tailwind-merge';
 import { CmCom } from '../../com/lib/Com';
-import { cmComAudioPlayerHTMLElement, cmComAudioPlayerPlaySrcAtom } from '../state/current-play-com';
+import { useCmComAudioPlayerMoversController } from '../lib/useCmComAudioPlayerMoversController';
 
 interface Props {
   src: HttpLink;
   com: CmCom;
   repeatButtonClassName?: string;
   preSwitchTimeAtom: Atom<number>;
+  win?: Window | nil;
 }
 
 const preSwitchTimeSelectItems = [-1, 0, 1, 2, 3, 4].map(id => ({
@@ -29,144 +20,17 @@ const preSwitchTimeSelectItems = [-1, 0, 1, 2, 3, 4].map(id => ({
   title: <span className="w-[.7em]">{id < 0 ? '×' : id}</span>,
 }));
 
-const currentAccentClassName = 'text-x7';
+export const CmComAudioPlayerMarksMovers = (props: Props) => {
+  const preSwitchTime = useAtomValue(props.preSwitchTimeAtom);
 
-export const CmComAudioPlayerMarksMovers = ({ src, com, repeatButtonClassName, preSwitchTimeAtom }: Props) => {
-  const titleRef = useRef<HTMLDivElement>(null);
-  const prevRef = useRef<HTMLButtonElement>(null);
-  const repeatRef = useRef<HTMLButtonElement>(null);
-  const nextRef = useRef<HTMLButtonElement>(null);
-  const playSrc = useAtomValue(cmComAudioPlayerPlaySrcAtom);
-  const preSwitchTime = useAtomValue(preSwitchTimeAtom);
+  useFetchFreshComAudioMarksPack(props.com);
 
-  const audioTrackMarks = cmIDB.useAudioTrackMarks(playSrc ?? src);
-
-  useEffect(() => {
-    if (com?.wid == null) return;
-
-    return hookEffectPipe()
-      .pipe(
-        setTimeoutPipe(() => {
-          com.audio.forEach(async src => {
-            const markPack = await cmIDB.tb.audioTrackMarks.get(src);
-            cmTsjrpcClient.takeFreshComAudioMarksPack({ lastModfiedAt: markPack?.m || 0, src });
-          });
-        }, 100),
-      )
-      .effect();
-  }, [com.audio, com?.wid]);
-
-  useEffect(() => {
-    if (titleRef.current === null || audioTrackMarks == null) return;
-    const audioMarkPack = audioTrackMarks.marks;
-
-    const titleNode = titleRef.current;
-    const marks = mylib.keys(audioMarkPack).map(Number);
-    const selectorToTitlePropsDict: PRecord<number, { title: string; ord: CmComOrder | nil }> = {};
-
-    let prevMarkTime = 0;
-    let currentMarkTime = 0;
-    let nextMarkTime = 0;
-
-    let lastMarkTime = 0;
-    let prevButton: Element | nil = null;
-    let isInitialButtonClassNameNeedSet = true;
-
-    const findNextMarkTime = (num: number) => num > cmComAudioPlayerHTMLElement.currentTime;
-    const findCurrentMarkTime = (num: number) => num <= cmComAudioPlayerHTMLElement.currentTime;
-
-    const updateMarkBlockView =
-      audioMarkPack == null || preSwitchTime < 0
-        ? emptyFunc
-        : () => {
-            const actualMarkTime =
-              preSwitchTime !== 0 &&
-              cmComAudioPlayerHTMLElement.currentTime < nextMarkTime &&
-              cmComAudioPlayerHTMLElement.currentTime > nextMarkTime - preSwitchTime
-                ? nextMarkTime
-                : currentMarkTime;
-
-            if (isInitialButtonClassNameNeedSet || lastMarkTime !== actualMarkTime) {
-              isInitialButtonClassNameNeedSet = false;
-              const selector = audioMarkPack[actualMarkTime];
-
-              const titleProps = (selectorToTitlePropsDict[actualMarkTime] ??= makeCmComAudioMarkTitleBySelector(
-                actualMarkTime,
-                com,
-                selector,
-                audioMarkPack,
-              ));
-
-              titleNode.innerText = titleProps.title;
-
-              const htmlButtonSelector = `[com-audio-mark-time-selector="${actualMarkTime}"]`;
-              const block = document.querySelector(`.composition-block:has(${htmlButtonSelector})`);
-
-              const button = (block ?? document)?.querySelector(htmlButtonSelector);
-
-              if (+preSwitchTime >= 0) {
-                const lineNode = checkIsCmComAudioMarkTitleIsLineSelector(selector)
-                  ? document.querySelector(
-                      `[solid-com-order-selector="${titleProps.ord?.wid}"] [solid-order-text-linei="${makeCmComAudioMarkLineiFromSelector(selector)}"]`,
-                    )
-                  : null;
-
-                (lineNode ?? block ?? button)?.scrollIntoView({ block: 'center', behavior: 'smooth' });
-              }
-
-              prevButton?.classList.remove(currentAccentClassName);
-              button?.classList.add(currentAccentClassName);
-              prevButton = button;
-            }
-
-            lastMarkTime = actualMarkTime;
-          };
-
-    const updatePoints = () => {
-      const currentMarkTimei = marks.findLastIndex(findCurrentMarkTime);
-
-      prevMarkTime = marks[currentMarkTimei - 1] ?? 0;
-      currentMarkTime = marks[currentMarkTimei] ?? 0;
-      nextMarkTime = marks.find(findNextMarkTime) ?? 0;
-
-      if (nextRef.current !== null) {
-        nextRef.current.disabled = currentMarkTimei === marks.length - 1;
-      }
-
-      if (prevRef.current !== null) {
-        prevRef.current.disabled = currentMarkTimei === 0;
-      }
-
-      updateMarkBlockView();
-    };
-
-    updatePoints();
-    cmComAudioPlayerPlaySrcAtom.set(src);
-
-    return hookEffectPipe()
-      .pipe(
-        addEventListenerPipe(prevRef.current, 'click', () => {
-          cmComAudioPlayerHTMLElement.play();
-          cmComAudioPlayerHTMLElement.currentTime = prevMarkTime;
-        }),
-        addEventListenerPipe(repeatRef.current, 'click', () => {
-          cmComAudioPlayerHTMLElement.play();
-          cmComAudioPlayerHTMLElement.currentTime = currentMarkTime;
-        }),
-        addEventListenerPipe(nextRef.current, 'click', () => {
-          cmComAudioPlayerHTMLElement.play();
-          cmComAudioPlayerHTMLElement.currentTime = nextMarkTime;
-        }),
-        addEventListenerPipe(cmComAudioPlayerHTMLElement, 'timeupdate', updatePoints),
-        addEventListenerPipe(cmComAudioPlayerHTMLElement, 'ended', () => {
-          cmComAudioPlayerHTMLElement.currentTime = 0;
-          updatePoints();
-        }),
-      )
-      .effect(() => prevButton?.classList.remove(currentAccentClassName));
-  }, [audioTrackMarks, com, src, preSwitchTime]);
-
-  if (audioTrackMarks == null) return null;
+  const { nextRef, prevRef, repeatRef, titleRef } = useCmComAudioPlayerMoversController(
+    props.src,
+    props.com,
+    preSwitchTime,
+    props.win,
+  );
 
   return (
     <div className="flex gap-3 w-full justify-center">
@@ -178,14 +42,14 @@ export const CmComAudioPlayerMarksMovers = ({ src, com, repeatButtonClassName, p
       <Dropdown
         id={preSwitchTime}
         items={preSwitchTimeSelectItems}
-        onSelectId={preSwitchTimeAtom.set}
+        onSelectId={props.preSwitchTimeAtom.set}
         hiddenArrow
       />
 
       <Button
         ref={repeatRef}
         icon="Refresh"
-        className={twMerge('w-full max-w-[calc(100vw-173px)]', repeatButtonClassName)}
+        className={twMerge('w-full max-w-[calc(100vw-173px)]', props.repeatButtonClassName)}
       >
         <span
           className="ellipsis"

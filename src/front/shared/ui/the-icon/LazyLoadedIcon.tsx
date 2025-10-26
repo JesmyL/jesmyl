@@ -25,7 +25,7 @@ export default function TheIconLazy({
   pack,
   ...props
 }: LazyIconProps) {
-  withoutAnimation = withoutAnimation ?? indexIsPlayAnimationsAtom.get();
+  withoutAnimation = withoutAnimation ?? !indexIsPlayAnimationsAtom.get();
 
   if (pack !== undefined) {
     return (

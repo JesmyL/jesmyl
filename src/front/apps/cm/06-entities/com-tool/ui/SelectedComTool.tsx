@@ -9,7 +9,7 @@ export const CmComToolSelected = () => {
     ccom && (
       <CmComTool
         title={isSelected(ccom.wid) ? 'Убрать из выбранных' : 'Выбрать песню'}
-        icon="CheckmarkCircle02"
+        icon="CheckmarkBadge01"
         iconKind={isSelected(ccom.wid) ? 'SolidRounded' : 'StrokeRounded'}
         onClick={() => toggleSelectedCom(ccom.wid)}
       />
