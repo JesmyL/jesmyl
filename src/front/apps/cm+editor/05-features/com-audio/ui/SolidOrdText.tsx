@@ -11,6 +11,7 @@ import {
 } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
 import { CmComAudioMarkSelector, HttpLink } from 'shared/api';
+import { twMerge } from 'tailwind-merge';
 
 interface Props {
   com: CmCom;
@@ -36,7 +37,7 @@ export const CmEditorComAudioSolidOrdTextController = ({ com, ord, selector, src
               const lineSelector = makeCmComAudioMarkTitleAsLineSelector(props.solidTextLinei);
 
               return (
-                <div className="flex gap-3 my-2">
+                <div className={twMerge('flex gap-3 my-2', selector === lineSelector ? 'text-x7' : '')}>
                   <Button
                     icon="PinLocation01"
                     isLoading={marksEditPack?.[time] === lineSelector}
