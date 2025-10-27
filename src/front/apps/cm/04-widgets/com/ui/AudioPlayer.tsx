@@ -7,6 +7,7 @@ import {
 import { cmComIsAudioPlayerHiddenAtom } from '$cm/entities/index';
 import { CmCom } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
+import { useEffect } from 'react';
 
 export const CmComAudioPlayerInCompositionPage = ({ ccom }: { ccom: CmCom }) => {
   const playSrc = useAtomValue(cmComAudioPlayerPlaySrcAtom);
@@ -15,6 +16,10 @@ export const CmComAudioPlayerInCompositionPage = ({ ccom }: { ccom: CmCom }) => 
   const isPlayerHidden = useAtomValue(cmComIsAudioPlayerHiddenAtom);
 
   const isPlayOtherAudio = !!playSrc && !ccom.audio.includes(playSrc);
+
+  useEffect(() => {
+    if (!isPlay && isPlayOtherAudio) cmComAudioPlayerPlaySrcAtom.set(ccom.audio[0]);
+  }, [ccom.audio, isPlay, isPlayOtherAudio]);
 
   return (
     !isHiddenFooter &&
