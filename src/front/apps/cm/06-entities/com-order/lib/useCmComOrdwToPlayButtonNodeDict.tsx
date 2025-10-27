@@ -63,7 +63,7 @@ export const useCmComOrderWidToPlayButtonNodeDict = (
         return;
       }
 
-      const ordw = com.getOrderBySelector(selector[0])?.wid;
+      const ordw = com.getOrderBySelector(selector[0]).ord?.wid;
       if (ordw == null) return;
 
       lastOrdwOrNull = ordw;

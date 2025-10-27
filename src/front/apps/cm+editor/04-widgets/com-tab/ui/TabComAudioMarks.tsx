@@ -167,7 +167,7 @@ export const CmEditorComTabAudioMarks = ({ ccom }: { ccom: EditableCom }) => {
                     com={ccom}
                     asContentAfterOrder={({ ord }) => afterOrdwOtherPlayButtonNodeDict[ord.makeSelector()]}
                     asHeaderComponent={({ headerNode, ord }) =>
-                      ord.isVisibleWithHeader() && (
+                      ord.isVisibleOrd() && (
                         <div className="flex flex-wrap gap-3">
                           {pinTime == null ? (
                             <Button

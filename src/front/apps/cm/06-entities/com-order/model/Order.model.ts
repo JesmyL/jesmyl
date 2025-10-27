@@ -89,7 +89,6 @@ export interface ICmComOrderProps {
   chordedOrd: boolean;
   ord: CmComOrder;
   ordi: number;
-  visibleOrdi?: number;
   positions?: number[];
   isJoinLetters: boolean;
   com: CmCom;

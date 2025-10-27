@@ -143,10 +143,6 @@ export const TheCmComControlled = ({ com, comList, chordVisibleVariant }: Props)
   );
 };
 
-const StyledRollControled = styled(RolledContent)<{ $commentStyles?: RuleSet<object> | string }>`
-  ${props => props.$commentStyles}
-`;
-
 const WithScrollProgress = styled.div<{ $listHeight: number | null | und }>`
   ${props => {
     if (props.$listHeight == null || window.innerHeight > props.$listHeight) return null;
@@ -178,4 +174,12 @@ const WithScrollProgress = styled.div<{ $listHeight: number | null | und }>`
       }
     `;
   }};
+`;
+
+const StyledRollControled = styled(RolledContent)<{ $commentStyles?: RuleSet<object> | string }>`
+  ${props => props.$commentStyles}
+
+  [st-hide-footer-menu] & ${WithScrollProgress} {
+    padding-bottom: var(--footer-initial-height);
+  }
 `;

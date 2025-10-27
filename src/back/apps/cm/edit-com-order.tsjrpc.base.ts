@@ -55,7 +55,9 @@ export const cmEditComOrderServerTsjrpcBase =
           toggleVisibility: modifyOrd((ord, { orderTitle }, com, { auth }) => {
             if (throwIfNoUserScopeAccessRight(auth, 'cm', 'COM_ORD', 'U')) throw '';
 
+            ord.v ??= 1;
             ord.v = ord.v ? 0 : 1;
+            if (ord.v === 1) delete ord.v;
 
             return (
               `В песне ${getCmComNameInBrackets(com)} порядковый блок ` +

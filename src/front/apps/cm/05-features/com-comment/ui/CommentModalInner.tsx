@@ -42,7 +42,6 @@ export const CmComCommentModalInner = ({ com }: { com: CmCom }) => {
   if (ordSelectorId === null) return;
 
   cmComCommentRegisteredAltKeysAtom.do.init();
-  const visibleOrders = com.visibleOrders() ?? [];
 
   const comCommentBlockTexts = takeCommentTexts(ordSelectorId) ?? [];
 
@@ -50,10 +49,10 @@ export const CmComCommentModalInner = ({ com }: { com: CmCom }) => {
   let ordNN = 0;
 
   if (ordSelectorId !== 'head') {
-    const ordi = visibleOrders.findIndex(ord => ord.isMySelector(ordSelectorId));
+    const { ord: ordBySelector, visibleOrdi } = com.getOrderBySelector(ordSelectorId);
 
-    ord = visibleOrders[ordi];
-    ordNN = ordi + 1;
+    ord = ordBySelector;
+    ordNN = visibleOrdi + 1;
   }
 
   return (

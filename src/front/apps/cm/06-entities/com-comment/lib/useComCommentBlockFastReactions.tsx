@@ -31,16 +31,13 @@ export const useCmComCommentBlockFastReactions = (listRef: React.RefObject<HTMLD
         return;
       }
 
-      const visibleOrders = com.visibleOrders();
-      if (visibleOrders == null) return;
-
       const { node, foundClassNames } = getParentNodeWithClassName(event, 'styled-block', ['styled-header']);
 
       if (node === null || !foundClassNames['styled-header']) return;
 
-      const orderNN = +node.getAttribute('visible-ord-nn')!;
-      if (mylib.isNaN(orderNN)) return;
-      const ord = visibleOrders[orderNN - 1];
+      const selector = +node.getAttribute('ord-selector')!;
+      if (mylib.isNaN(selector)) return;
+      const { ord } = com.getOrderBySelector(selector);
       if (ord == null) return;
 
       await wait(500);

@@ -1,21 +1,16 @@
 import { bibleShowTranslatesAtom, useBibleTranslatesContext } from '$bible/ext';
+import { CmCom } from '$cm/ext';
 import { useAtomValue } from 'atomaric';
 import { useEffect, useState } from 'react';
 import { makeRegExp } from 'regexpert';
-import { CmComWid } from 'shared/api';
 import { emptyFunc } from 'shared/utils';
 import { RuleSet, css } from 'styled-components';
 import { StyledCmComOrderLine } from '../../com-order-line/style/StyledComLine.styler';
-import { CmComOrder } from '../../com-order/lib/Order';
 import { cmComCommentAltKeyAtom } from '../state/atoms';
 import { CmComCommentMakerCleans } from './Cleans';
 import { useCmComCommentBlock } from './useCmComCommentBlock';
 
-export const useCmComCommentBlockCssStyles = (
-  comw: CmComWid,
-  visibleOrders: CmComOrder[] | und,
-  isSetHashesOnly = false,
-) => {
+export const useCmComCommentBlockCssStyles = (com: CmCom, isSetHashesOnly = false) => {
   const altCommentKey = useAtomValue(cmComCommentAltKeyAtom);
   const [styles, setStyles] = useState<
     Partial<{
@@ -24,11 +19,12 @@ export const useCmComCommentBlockCssStyles = (
     }>
   >({});
   const translates = useBibleTranslatesContext();
-  const { takeCommentTexts } = useCmComCommentBlock(comw);
+  const { takeCommentTexts } = useCmComCommentBlock(com.wid);
   const currentBibleTranslate = useAtomValue(bibleShowTranslatesAtom)[0];
 
   useEffect(() => {
     (async () => {
+      const visibleOrders = com.visibleOrders();
       const cssContentList = isSetHashesOnly
         ? null
         : (visibleOrders?.map(ord => {
@@ -151,7 +147,7 @@ export const useCmComCommentBlockCssStyles = (
     })()
       .then(styles => setStyles(styles))
       .catch(emptyFunc);
-  }, [altCommentKey, currentBibleTranslate, takeCommentTexts, translates, visibleOrders, isSetHashesOnly]);
+  }, [altCommentKey, currentBibleTranslate, takeCommentTexts, translates, com, isSetHashesOnly]);
 
   return styles;
 };

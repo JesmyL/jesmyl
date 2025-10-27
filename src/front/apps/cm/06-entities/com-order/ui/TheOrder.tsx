@@ -15,7 +15,6 @@ interface Props {
   isMiniAnchor?: boolean;
   ord: CmComOrder;
   ordi: number;
-  visibleOrdi?: number;
   com: CmCom;
   chordVisibleVariant: ChordVisibleVariant;
   showInvisibles?: boolean;
@@ -33,7 +32,7 @@ export function TheCmComOrder(props: Props) {
   )
     return null;
 
-  const { ordi, com, visibleOrdi } = props;
+  const { ordi, com } = props;
   const styleAttributes = ord.me.style?.takeBlockAttributes(ord.me.leadOrd?.me.style?.key);
 
   if (props.isMiniAnchor && ord.isAnchor && !ord.isOpened) {
@@ -98,7 +97,6 @@ export function TheCmComOrder(props: Props) {
           chordedOrd,
           ord,
           ordi,
-          visibleOrdi,
           com: props.com,
           isJoinLetters: true,
           headerNode,
@@ -111,7 +109,6 @@ export function TheCmComOrder(props: Props) {
     return (
       <div
         id={`com-block-${ordi}`}
-        visible-ord-nn={(visibleOrdi ?? ordi) + 1}
         ord-selector={ord.makeSelector()}
         className={
           (props.specialClassId || '') + 'composition-block styled-block' + (ord.isVisible ? '' : ' ord-invisible')
@@ -153,7 +150,6 @@ export function TheCmComOrder(props: Props) {
   return (
     <div
       id={`com-block-${ordi}`}
-      visible-ord-nn={(visibleOrdi ?? ordi) + 1}
       ord-selector={ord.makeSelector()}
       {...styleAttributes}
       className={
@@ -181,7 +177,6 @@ export function TheCmComOrder(props: Props) {
                 textLines: textLinea.length,
                 ord,
                 ordi,
-                visibleOrdi,
                 wordCount: words.length,
                 words,
                 prevLinesCount: 1,
@@ -198,7 +193,6 @@ export function TheCmComOrder(props: Props) {
                 textLines={textLinea.length}
                 ord={ord}
                 ordi={ordi}
-                visibleOrdi={visibleOrdi}
                 wordCount={words.length}
                 words={words}
                 com={props.com}

@@ -17,14 +17,13 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
   mapLineTitle: (repeats: string, text: string) => LineTitle = (repeats, text) => `${repeats} ${text}` as never,
 ) => {
   if (mylib.isArr(selector)) {
-    const ord = com.getOrderBySelector(selector[0]);
+    const { ord, visibleOrdi } = com.getOrderBySelector(selector[0]);
     if (marks == null || ord == null) return { title: '?', ord: null };
 
-    const visibleOrders = com.visibleOrders() ?? [];
     const repeats = computeOrdRepeats(time, marks, selector[0]);
 
     return {
-      title: `#${visibleOrders.indexOf(ord) + 1} ${ord.me.header()}${Math.trunc(selector[0]) === selector[0] ? '' : '+'}${repeats > 1 ? ` ×${repeats}` : ''}`,
+      title: `#${visibleOrdi + 1} ${ord.me.header()}${Math.trunc(selector[0]) === selector[0] ? '' : '+'}${repeats > 1 ? ` ×${repeats}` : ''}`,
       ord,
     };
   }
@@ -45,7 +44,7 @@ export const makeCmComAudioMarkTitleBySelector = <LineTitle extends string | Rea
     });
   }
 
-  const ord = com.getOrderBySelector(lastSelector);
+  const ord = com.getOrderBySelector(lastSelector).ord;
   let title = `${selector || (time === 0 ? 'Начало' : '...')}`;
 
   if (checkIsCmComAudioMarkTitleIsLineSelector(selector) && ord) {

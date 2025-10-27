@@ -430,5 +430,5 @@ export class CmComOrder extends SourceBased<IExportableOrder> {
 
   isMySelector = (selector: CmComOrderSelector) => this.wid === selector;
 
-  isVisibleWithHeader = () => !this.isHeaderNoneForce && this.isVisible;
+  isVisibleOrd = () => !this.isHeaderNoneForce && this.isVisible;
 }

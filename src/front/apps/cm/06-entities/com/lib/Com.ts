@@ -202,7 +202,15 @@ export class CmCom extends BaseNamed<IExportableCom> {
   }
 
   getOrderBySelector = (ordSelector: CmComOrderSelector) => {
-    return this.orders?.find(ord => ord.isMySelector(ordSelector));
+    let visibleOrdi = -1;
+
+    const ord = this.orders?.find(ord => {
+      if (ord.isVisibleOrd()) visibleOrdi++;
+
+      return ord.isMySelector(ordSelector);
+    });
+
+    return { ord, visibleOrdi };
   };
 
   broadcastMap(kind: number | und, isPushChordedBlocks = false) {
@@ -283,7 +291,7 @@ export class CmCom extends BaseNamed<IExportableCom> {
   }
 
   visibleOrders = () => {
-    return this.orders?.filter((ord: CmComOrder) => !ord.isHeaderNoneForce && ord.isVisible);
+    return this.orders?.filter((ord: CmComOrder) => ord.isVisibleOrd());
   };
 
   private updateChordLabels() {

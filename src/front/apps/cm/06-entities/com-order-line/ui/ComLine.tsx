@@ -20,7 +20,6 @@ export const CmComOrderLine = (props: ICmComOrderLineProps) => {
     positions,
     prevLinesCount,
     setWordClass,
-    visibleOrdi,
     solidTextLinei,
     ...attrs
   } = props;

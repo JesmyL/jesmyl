@@ -1,11 +1,11 @@
 import { CmComOrder, CmComOrderLine, TheCmComOrder } from '$cm/ext';
 import React from 'react';
 
-export function TheCmComOrderSolid(
+export const TheCmComOrderSolid = (
   props: Parameters<typeof TheCmComOrder>[0] & {
     asContentAfterOrder?: (props: { ord: CmComOrder }) => React.ReactNode;
   },
-) {
+) => {
   let nextOrd = props.ord.me.next;
   const ords: CmComOrder[] = [props.ord];
   const lineCounts: number[] = [0, props.ord.text.split('\n').length];
@@ -27,6 +27,7 @@ export function TheCmComOrderSolid(
             <TheCmComOrder
               {...props}
               ord={ord}
+              ordi={ordi + props.ordi}
               asHeaderComponent={
                 props.asHeaderComponent ? headerProps => props.asHeaderComponent?.({ ...headerProps, ord }) : undefined
               }
@@ -53,4 +54,4 @@ export function TheCmComOrderSolid(
       {props.asContentAfterOrder?.({ ord: props.ord })}
     </div>
   );
-}
+};
