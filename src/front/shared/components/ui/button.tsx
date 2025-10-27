@@ -100,7 +100,7 @@ function Button({
       <TheIconLoading
         icon={icon}
         iconKind={iconKind}
-        withoutAnimation={withoutAnimation}
+        withoutAnimation={withoutAnimation || isLoading}
         isLoading={promiseIsLoading || isLoading}
       />
       {children}
