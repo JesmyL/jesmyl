@@ -1,22 +1,14 @@
 import { Button } from '#shared/components/ui/button';
-import { mylib } from '#shared/lib/my-lib';
 import { ModalBody, ModalFooter, ModalHeader } from '#shared/ui/modal';
 import { TheIconButton } from '#shared/ui/the-icon/TheIconButton';
 import { cmEditorComAudioMarksRedactorOpenTimeConfiguratorAtom } from '$cm+editor/entities/com-audio';
 import { EditableCom } from '$cm+editor/shared/classes/EditableCom';
 import { cmEditComExternalsClientTsjrpcMethods } from '$cm+editor/shared/lib/cm-editor.tsjrpc.methods';
 import { cmComEditorAudioMarksEditPacksAtom } from '$cm+editor/shared/state/com';
-import {
-  ChordVisibleVariant,
-  cmComAudioPlayerHTMLElement,
-  CmComOrderLine,
-  cmIDB,
-  makeCmComAudioMarkTitleAsLineSelector,
-  makeCmComAudioMarkTitleBySelector,
-  TheCmComOrderSolid,
-} from '$cm/ext';
+import { cmComAudioPlayerHTMLElement, cmIDB, makeCmComAudioMarkTitleBySelector } from '$cm/ext';
 import { useState } from 'react';
 import { HttpLink } from 'shared/api';
+import { CmEditorComAudioSolidOrdTextController } from './SolidOrdText';
 
 interface Props {
   time: number;
@@ -118,32 +110,12 @@ export const CmEditorComAudioMarksRedactorOpenTimeConfiguratorModalInner = ({ ti
         </div>
 
         {ord && (
-          <TheCmComOrderSolid
-            chordVisibleVariant={ChordVisibleVariant.None}
+          <CmEditorComAudioSolidOrdTextController
             com={com}
             ord={ord}
-            ordi={0}
-            asHeaderComponent={() => null}
-            asLineComponent={
-              mylib.isStr(selector)
-                ? props => (
-                    <div className="flex gap-3 my-2">
-                      <Button
-                        icon="PinLocation01"
-                        disabled={selector === makeCmComAudioMarkTitleAsLineSelector(props.solidTextLinei)}
-                        onClick={() =>
-                          cmComEditorAudioMarksEditPacksAtom.do.renameMark(
-                            src,
-                            time,
-                            makeCmComAudioMarkTitleAsLineSelector(props.solidTextLinei),
-                          )
-                        }
-                      />
-                      <CmComOrderLine {...props} />
-                    </div>
-                  )
-                : undefined
-            }
+            selector={selector}
+            src={src}
+            time={time}
           />
         )}
       </ModalBody>

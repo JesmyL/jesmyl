@@ -70,7 +70,7 @@ export const useCmComOrderAudioMarkControl = (
       const ordw = com.getOrderBySelector(selector[0]).ord?.wid;
       if (ordw == null) return;
 
-      lastOrdwOrNull = Math.trunc(ordw);
+      lastOrdwOrNull = ordw;
 
       ordwPlayButtonNodeDict[ordw] ??= [];
       ordwPlayButtonNodeDict[ordw].push(
